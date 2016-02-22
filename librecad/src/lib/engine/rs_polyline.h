@@ -36,38 +36,18 @@
 /**
  * Holds the data that defines a polyline.
  */
-class RS_PolylineData : public RS_Flags {
-public:
-    RS_PolylineData() {
-        startpoint = endpoint = RS_Vector(false);
-    }
-    RS_PolylineData(const RS_Vector& startpoint,
+struct RS_PolylineData : public RS_Flags {
+	RS_PolylineData();
+	~RS_PolylineData()=default;
+	RS_PolylineData(const RS_Vector& startpoint,
                     const RS_Vector& endpoint,
-                    bool closed) {
+					bool closed);
 
-        this->startpoint = startpoint;
-        this->endpoint = endpoint;
-        if (closed==true) {
-            setFlag(RS2::FlagClosed);
-        }
-    }
-
-    friend class RS_Polyline;
-
-    friend std::ostream& operator << (std::ostream& os,
-                                      const RS_PolylineData& pd) {
-        os << "(" << pd.startpoint <<
-        "/" << pd.endpoint <<
-        ")";
-        return os;
-    }
-
-private:
     RS_Vector startpoint;
     RS_Vector endpoint;
 };
 
-
+std::ostream& operator << (std::ostream& os, const RS_PolylineData& pd);
 
 /**
  * Class for a poly line entity (lots of connected lines and arcs).
@@ -76,18 +56,12 @@ private:
  */
 class RS_Polyline : public RS_EntityContainer {
 public:
-    RS_Polyline(RS_EntityContainer* parent=NULL);
+	RS_Polyline(RS_EntityContainer* parent=nullptr);
     RS_Polyline(RS_EntityContainer* parent,
                 const RS_PolylineData& d);
-    virtual ~RS_Polyline();
+	virtual ~RS_Polyline() = default;
 
-    virtual RS_Entity* clone() {
-        RS_Polyline* p = new RS_Polyline(*this);
-        p->setOwner(isOwner());
-        p->initId();
-        p->detach();
-        return p;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityPolyline */
     virtual RS2::EntityType rtti() const {
@@ -100,61 +74,40 @@ public:
     }
 
     /** sets a new start point of the polyline */
-    void setStartpoint(RS_Vector& v) {
-        data.startpoint = v;
-        if (!data.endpoint.valid) {
-            data.endpoint = v;
-        }
-    }
+	void setStartpoint(RS_Vector const& v);
 
     /** @return Start point of the entity */
-    virtual RS_Vector getStartpoint() const {
-        return data.startpoint;
-    }
+	virtual RS_Vector getStartpoint() const;
 
     /** sets a new end point of the polyline */
-    void setEndpoint(RS_Vector& v) {
-        data.endpoint = v;
-    }
+	void setEndpoint(RS_Vector const& v);
 
     /** @return End point of the entity */
-    virtual RS_Vector getEndpoint() const {
-        return data.endpoint;
-    }
+	virtual RS_Vector getEndpoint() const;
 
-        double getClosingBulge();
+	double getClosingBulge() const;
 
-        void updateEndpoints();
+	void updateEndpoints();
 
     /** @return true if the polyline is closed. false otherwise */
-    bool isClosed() const {
-        return data.getFlag(RS2::FlagClosed);
-    }
+	bool isClosed() const;
 
-        void setClosed(bool cl) {
-                if (cl) {
-                        data.setFlag(RS2::FlagClosed);
-                }
-                else {
-                        data.delFlag(RS2::FlagClosed);
-                }
-        }
+	void setClosed(bool cl);
 
     void setClosed(bool cl, double bulge);//RLZ: rewrite this:
 
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
     virtual RS_Vector getMiddlePoint(void)const {
             return RS_Vector(false);
-    }
-    virtual RS_Vector getNearestRef(const RS_Vector& coord,
-                                     double* dist = NULL);
-    virtual RS_Vector getNearestSelectedRef(const RS_Vector& coord,
-                                     double* dist = NULL);
-
+	}
+    virtual RS_Vector getNearestRef( const RS_Vector& coord,
+                                     double* dist = nullptr) const;
+    virtual RS_Vector getNearestSelectedRef( const RS_Vector& coord,
+                                             double* dist = nullptr) const;
     virtual RS_Entity* addVertex(const RS_Vector& v,
                 double bulge=0.0, bool prepend=false);
 
-    void appendVertexs(const QList< QPair<RS_Vector*, double> > vl);
+	void appendVertexs(const std::vector< std::pair<RS_Vector, double> >& vl);
 
         virtual void setNextBulge(double bulge) {
                 nextBulge = bulge;
@@ -192,7 +145,7 @@ protected:
 protected:
     RS_PolylineData data;
     RS_Entity* closingEntity;
-        double nextBulge;
+	double nextBulge;
 };
 
 #endif

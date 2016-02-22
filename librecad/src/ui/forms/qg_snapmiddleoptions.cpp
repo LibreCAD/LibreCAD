@@ -22,7 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "qg_snapmiddleoptions.h"
 
-#include <qvariant.h>
+#include <QVariant>
+#include "ui_qg_snapmiddleoptions.h"
 
 /*
  *  Constructs a QG_SnapMiddleOptions as a child of 'parent'
@@ -33,9 +34,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 QG_SnapMiddleOptions::QG_SnapMiddleOptions(int& i, QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, middlePoints(&i)
+	, ui(new Ui::Ui_SnapMiddleOptions{})
 {
-    setupUi(this);
-    middlePoints=&i;
+	ui->setupUi(this);
 }
 
 /*
@@ -43,8 +45,7 @@ QG_SnapMiddleOptions::QG_SnapMiddleOptions(int& i, QWidget* parent, Qt::WindowFl
  */
 QG_SnapMiddleOptions::~QG_SnapMiddleOptions()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+	saveSettings();
 }
 
 /*
@@ -53,10 +54,10 @@ QG_SnapMiddleOptions::~QG_SnapMiddleOptions()
  */
 void QG_SnapMiddleOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
-void QG_SnapMiddleOptions::destroy() {
+void QG_SnapMiddleOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Snap");
     RS_SETTINGS->writeEntry("/MiddlePoints", *middlePoints);
     RS_SETTINGS->endGroup();
@@ -64,30 +65,30 @@ void QG_SnapMiddleOptions::destroy() {
 
 void QG_SnapMiddleOptions::setMiddlePoints( int& i, bool initial) {
     middlePoints = &i;
-    if(initial) {
+	if (initial) {
     RS_SETTINGS->beginGroup("/Snap");
     *middlePoints=RS_SETTINGS->readNumEntry("/MiddlePoints", 1);
-    if( !( *middlePoints>=1 && *middlePoints<=99)) {
+	if( !(*middlePoints>=1 && *middlePoints<=99)) {
         *middlePoints=1;
         RS_SETTINGS->writeEntry("/MiddlePoints", 1);
     }
-    sbMiddlePoints->setValue(*middlePoints);
+	ui->sbMiddlePoints->setValue(*middlePoints);
     RS_SETTINGS->endGroup();
     } else {
-        *middlePoints=sbMiddlePoints->value();
+		*middlePoints=ui->sbMiddlePoints->value();
     }
 
 }
 
 void QG_SnapMiddleOptions::updateMiddlePoints() {
-    if (middlePoints != NULL) {
-        *middlePoints = sbMiddlePoints->value();
+	if (middlePoints) {
+		*middlePoints = ui->sbMiddlePoints->value();
     }
 }
 
 void QG_SnapMiddleOptions::on_sbMiddlePoints_valueChanged(int i)
 {
-    if (middlePoints != NULL) {
+	if (middlePoints) {
         *middlePoints = i;/*
     RS_SETTINGS->beginGroup("/Snap");
     RS_SETTINGS->writeEntry("/MiddlePoints", *middlePoints);

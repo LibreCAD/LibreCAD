@@ -30,26 +30,16 @@
 
 #include "rs_atomicentity.h"
 
-
-
 /**
  * Holds the data that defines a point.
  */
-class RS_PointData {
-public:
-    RS_PointData(const RS_Vector& pos) {
-        this->pos = pos;
-    }
+struct RS_PointData {
+    RS_PointData(const RS_Vector& pos): pos(pos) {}
 
-    friend std::ostream& operator << (std::ostream& os, const RS_PointData& pd) {
-        os << "(" << pd.pos << ")";
-        return os;
-    }
+    friend std::ostream& operator << (std::ostream& os, const RS_PointData& pd);
 
     RS_Vector pos;
 };
-
-
 
 /**
  * Class for a point entity.
@@ -61,64 +51,51 @@ public:
     RS_Point(RS_EntityContainer* parent,
              const RS_PointData& d);
 
-    virtual RS_Entity* clone() {
-        RS_Point* p = new RS_Point(*this);
-        p->initId();
-        return p;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS_ENTITY_POINT */
-    virtual RS2::EntityType rtti() const {
-        return RS2::EntityPoint;
-    }
+    virtual RS2::EntityType rtti() const;
 
     /**
          * @return Start point of the entity.
          */
-    virtual RS_Vector getStartpoint() const {
-        return data.pos;
-    }
+    virtual RS_Vector getStartpoint() const;
     /**
          * @return End point of the entity.
          */
-    virtual RS_Vector getEndpoint() const {
-        return data.pos;
-    }
+    virtual RS_Vector getEndpoint() const;
 
         virtual void moveStartpoint(const RS_Vector& pos);
 
     /** @return Copy of data that defines the point. */
-    RS_PointData getData() const {
-        return data;
-    }
+    RS_PointData getData() const;
 
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
 
     /** @return Position of the point */
-    RS_Vector getPos() {
-        return data.pos;
-    }
+    RS_Vector getPos() const;
 
     /** Sets a new position for this point. */
-    void setPos(const RS_Vector& pos) {
-        data.pos = pos;
-    }
+    void setPos(const RS_Vector& pos);
+    virtual RS_Vector getCenter() const;
+    virtual double getRadius() const;
+    virtual bool isTangent(const RS_CircleData& circleData) const;
 
     virtual RS_Vector getMiddlePoint(void)const;
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                         double* dist = NULL)const;
+                                         double* dist = nullptr)const;
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-            bool onEntity = true, double* dist = NULL, RS_Entity** entity = NULL)const;
+            bool onEntity = true, double* dist = nullptr, RS_Entity** entity = nullptr)const;
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-                                       double* dist = NULL);
+                                       double* dist = nullptr)const;
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
-                                       double* dist = NULL,
+                                       double* dist = nullptr,
                                        int middlePoints = 1)const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-                                     double* dist = NULL);
+                                     double* dist = nullptr)const;
     virtual double getDistanceToPoint(const RS_Vector& coord,
-                                      RS_Entity** entity=NULL,
+                                      RS_Entity** entity=nullptr,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
                                                                           double solidDist = RS_MAXDOUBLE)const;
 
@@ -138,7 +115,5 @@ public:
 protected:
     RS_PointData data;
     //RS_Vector point;
-}
-;
-
+};
 #endif

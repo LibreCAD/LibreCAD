@@ -42,13 +42,9 @@ class RS_ActionSetRelativeZero : public RS_PreviewActionInterface {
 public:
     RS_ActionSetRelativeZero(RS_EntityContainer& container,
                              RS_GraphicView& graphicView);
-    ~RS_ActionSetRelativeZero() {}
+	~RS_ActionSetRelativeZero();
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionSetRelativeZero;
-	}
 
     virtual void trigger();
     virtual void mouseMoveEvent(QMouseEvent* e);
@@ -58,10 +54,9 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
 
 private:
-    RS_Vector pt;
+	std::unique_ptr<RS_Vector> pt;
 };
 
 #endif

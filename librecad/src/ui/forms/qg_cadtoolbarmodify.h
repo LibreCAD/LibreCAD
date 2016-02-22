@@ -26,66 +26,39 @@
 #ifndef QG_CADTOOLBARMODIFY_H
 #define QG_CADTOOLBARMODIFY_H
 
+#include <vector>
+#include "lc_cadtoolbarinterface.h"
+
 class QG_CadToolBar;
 class QG_ActionHandler;
 
-#include "rs.h"
-#include "ui_qg_cadtoolbarmodify.h"
-
-class QG_CadToolBarModify : public QWidget, public Ui::QG_CadToolBarModify
+class QG_CadToolBarModify : public LC_CadToolBarInterface
 {
     Q_OBJECT
 
 public:
-    QG_CadToolBarModify(QWidget* parent = 0, Qt::WindowFlags fl = 0);
-    ~QG_CadToolBarModify();
+	QG_CadToolBarModify(QG_CadToolBar* parent = 0, Qt::WindowFlags fl = 0);
+	~QG_CadToolBarModify() = default;
     //restore action from checked button
-    void restoreAction();
+	virtual void restoreAction();
     virtual void showCadToolBar(RS2::ActionType actionType);
+	RS2::ToolBarId rtti() const
+	{
+		return RS2::ToolBarModify;
+	}
+	virtual void addSubActions(const std::vector<QAction*>& actions, bool addGroup=true);
 
 public slots:
-    virtual void mousePressEvent( QMouseEvent * e );
-    virtual void contextMenuEvent( QContextMenuEvent * e );
-    virtual void setCadToolBar( QG_CadToolBar * tb );
-    virtual void modifyMove();
-    virtual void modifyRotate();
-    virtual void modifyScale();
-    virtual void modifyMirror();
-    virtual void modifyMoveRotate();
-    virtual void modifyRotate2();
-    virtual void modifyTrim();
-    virtual void modifyTrim2();
-    virtual void modifyTrimAmount();
-    virtual void modifyCut();
-    virtual void modifyBevel();
-    virtual void modifyRound();
-    virtual void modifyEntity();
-    virtual void modifyDelete();
-    virtual void modifyAttributes();
-    virtual void modifyStretch();
-    virtual void modifyExplode();
-    virtual void modifyExplodeText();
-    virtual void modifyOffset();
-    virtual void modifyRevertDirection();
-    virtual void back();
-    virtual void resetToolBar();
-
-protected:
-    QG_ActionHandler* actionHandler;
-    QG_CadToolBar* cadToolBar;
-
-protected slots:
-    virtual void languageChange();
+	virtual void resetToolBar();
 
 private slots:
     void on_bBack_clicked();
 
 private:
-    void init();
-    QList<QToolButton*> buttonList;
-    QG_CadToolBar* parentTB;
-    QToolButton* bHidden;
-
+	QAction *bMove=nullptr, *bRotate=nullptr, *bScale=nullptr, *bMirror=nullptr, *bMoveRotate=nullptr, *bRotate2=nullptr,
+	*bRevertDirection=nullptr, *bTrim=nullptr, *bTrim2=nullptr, *bTrimAmount=nullptr, *bOffset=nullptr,  *bBevel=nullptr,
+	*bRound=nullptr, *bCut=nullptr, *bStretch=nullptr, *bEntity=nullptr, *bAttributes=nullptr, *bDelete=nullptr,
+	*bDeleteQuick=nullptr, *bExplodeText=nullptr,*bExplode=nullptr;
 };
 
 #endif // QG_CADTOOLBARMODIFY_H

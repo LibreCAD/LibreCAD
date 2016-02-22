@@ -89,8 +89,8 @@ static const FT_Outline_Funcs funcs
   };
 
 std::string clearZeros(double num/*, int precision*/){
-    char numLine [precision+5];
-    snprintf(numLine,precision+5, numFormat, num);
+	std::string numLine(precision+5, '\0');
+	snprintf(&(numLine[0]),precision+5, numFormat, num);
     std::string str = numLine;
     int i = str.length()- 1;
     while (str.at(i) == '0' && i>1) {
@@ -109,7 +109,7 @@ int moveTo(FT_Vector* to, void* fp) {
     } else {
         prevx = to->x;
         prevy = to->y;
-        if (fp!=NULL) {
+        if (fp) {
             if (startcontour) {
                 startcontour = false;
                 fprintf((FILE*)fp, "%s,%s",clearZeros((double)(to->x-xMin)*factor).c_str(), clearZeros((double)to->y*factor).c_str());
@@ -128,7 +128,7 @@ int lineTo(FT_Vector* to, void* fp) {
         if (to->x < xMin)
             xMin = to->x;
     } else {
-        if (fp!=NULL) {
+        if (fp) {
             if (startcontour) {
                 fprintf((FILE*)fp, "%s,%s",clearZeros((double)(to->x-xMin)*factor).c_str(), clearZeros((double)to->y*factor).c_str());
                 startcontour = false;
@@ -156,7 +156,7 @@ int conicTo(FT_Vector* control, FT_Vector* to, void* fp) {
         double px, py;
         double ox = prevx;
         double oy = prevy;
-        if (fp!=NULL) {
+        if (fp) {
             if (startcontour) {
                 fprintf((FILE*)fp, "%s,%s",clearZeros((ox-xMin)*factor).c_str(), clearZeros(oy*factor).c_str());
                 startcontour = false;
@@ -190,7 +190,7 @@ int cubicTo(FT_Vector* /*control1*/, FT_Vector* /*control2*/, FT_Vector* to, voi
         if (to->x < xMin)
             xMin = to->x;
     } else {
-        if (fp!=NULL) {
+        if (fp) {
             if (startcontour) {
                 fprintf((FILE*)fp, "%s,%s",clearZeros((double)(to->x-xMin)*factor).c_str(), clearZeros((double)to->y*factor).c_str());
                 startcontour = false;
@@ -232,7 +232,7 @@ FT_Error convertGlyph(FT_ULong charcode) {
     }
 
     // write glyph header
-    if (fpLff!=NULL) {
+    if (fpLff) {
         fprintf(fpLff, "\n[#%04X]\n", (unsigned)charcode);
     }
 
@@ -243,7 +243,7 @@ FT_Error convertGlyph(FT_ULong charcode) {
     firstpass = false;
     startcontour = true;
     error = FT_Outline_Decompose(&(og->outline), &funcs, fpLff);
-    if (fpLff!=NULL) {
+    if (fpLff) {
         fprintf(fpLff, "\n");
     }
 

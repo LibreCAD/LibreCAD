@@ -26,6 +26,11 @@
 #include "qg_dimlinearoptions.h"
 
 #include "rs_settings.h"
+#include "rs_math.h"
+#include "rs_debug.h"
+
+#include "ui_qg_dimlinearoptions.h"
+#include "rs_actiondimlinear.h"
 
 /*
  *  Constructs a QG_DimLinearOptions as a child of 'parent', with the
@@ -33,9 +38,9 @@
  */
 QG_DimLinearOptions::QG_DimLinearOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, ui(new Ui::Ui_DimLinearOptions{})
 {
-    setupUi(this);
-
+	ui->setupUi(this);
 }
 
 /*
@@ -43,8 +48,7 @@ QG_DimLinearOptions::QG_DimLinearOptions(QWidget* parent, Qt::WindowFlags fl)
  */
 QG_DimLinearOptions::~QG_DimLinearOptions()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+	saveSettings();
 }
 
 /*
@@ -53,18 +57,18 @@ QG_DimLinearOptions::~QG_DimLinearOptions()
  */
 void QG_DimLinearOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
-void QG_DimLinearOptions::destroy() {
+void QG_DimLinearOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Dimension");
-    RS_SETTINGS->writeEntry("/Angle", leAngle->text());
+	RS_SETTINGS->writeEntry("/Angle", ui->leAngle->text());
     RS_SETTINGS->endGroup();
 }
 
 void QG_DimLinearOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDimLinear) {
-        action = (RS_ActionDimLinear*)a;
+    if (a && a->rtti()==RS2::ActionDimLinear) {
+		action = static_cast<RS_ActionDimLinear*>(a);
 
         QString sa;
         if (!update) {
@@ -74,24 +78,24 @@ void QG_DimLinearOptions::setAction(RS_ActionInterface* a, bool update) {
             sa = RS_SETTINGS->readEntry("/Angle", "0.0");
             RS_SETTINGS->endGroup();
         }
-        leAngle->setText(sa);
+		ui->leAngle->setText(sa);
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
                         "QG_DimLinearOptions::setAction: wrong action type");
-        action = NULL;
+		action = nullptr;
     }
 }
 
 void QG_DimLinearOptions::updateAngle(const QString & a) {
-    if (action!=NULL) {
+    if (action) {
         action->setAngle(RS_Math::deg2rad(RS_Math::eval(a)));
     }
 }
 
 void QG_DimLinearOptions::setHor() {
-    leAngle->setText("0");
+	ui->leAngle->setText("0");
 }
 
 void QG_DimLinearOptions::setVer() {
-    leAngle->setText("90");
+	ui->leAngle->setText("90");
 }

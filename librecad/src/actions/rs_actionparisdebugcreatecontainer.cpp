@@ -39,6 +39,7 @@ RS_ActionPARISDebugCreateContainer::RS_ActionPARISDebugCreateContainer(
         : RS_ActionInterface("rs_actionparischeckcont",
                      container, graphicView) {
 
+	actionType=RS2::ActionPARISDebugCreateContainer;
     //QMessageBox::about(NULL, "info", "check container");
     RS_Document* theDoc = (RS_Document*) &container;
 
@@ -47,23 +48,14 @@ RS_ActionPARISDebugCreateContainer::RS_ActionPARISDebugCreateContainer(
 	}
 
     RS_EntityContainer* con = new RS_EntityContainer(theDoc, true);
-    QListIterator<RS_Entity*> it = theDoc->createIterator();
-    RS_Entity* e;
-
-    while (it.hasNext()) {
-        e = it.next();
-        if (e->isSelected()) {
-            con->addEntity(e);
-            e->setParent(con);
-        }
-    }
+	for(RS_Entity* e: *theDoc){
+		if (e && e->isSelected()) {
+			con->addEntity(e);
+			e->setParent(con);
+		}
+	}
 
     theDoc -> addEntity(con);
-}
-
-
-
-RS_ActionPARISDebugCreateContainer::~RS_ActionPARISDebugCreateContainer() {
 }
 
 #endif

@@ -36,17 +36,17 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../align/align.cpp" line="42"/>
         <source>first target point:</source>
-        <translation>Primer punt de destí:</translation>
+        <translation>primer punt de destí:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="44"/>
         <source>second base point:</source>
-        <translation>Segon punt d&apos;origen:</translation>
+        <translation>segon punt d&apos;origen:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="46"/>
         <source>second target point:</source>
-        <translation>Segon punt de destí:</translation>
+        <translation>segon punt de destí:</translation>
     </message>
 </context>
 <context>
@@ -279,41 +279,46 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     </message>
     <message>
         <location filename="../list/list.cpp" line="210"/>
+        <source>SPLINEPOINTS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="213"/>
         <source>HATCH</source>
         <translation>Ombrejat</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="213"/>
+        <location filename="../list/list.cpp" line="216"/>
         <source>DIMLEADER</source>
         <translation>Cota guia</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="216"/>
+        <location filename="../list/list.cpp" line="219"/>
         <source>DIMALIGNED</source>
         <translation>Cota alineada</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="219"/>
+        <location filename="../list/list.cpp" line="222"/>
         <source>DIMLINEAR</source>
         <translation>Cota lineal</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="222"/>
+        <location filename="../list/list.cpp" line="225"/>
         <source>DIMRADIAL</source>
         <translation>Cota radial</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="225"/>
+        <location filename="../list/list.cpp" line="228"/>
         <source>DIMDIAMETRIC</source>
         <translation>Cota diametral</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="228"/>
+        <location filename="../list/list.cpp" line="231"/>
         <source>DIMANGULAR</source>
         <translation>Cota angular</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="231"/>
+        <location filename="../list/list.cpp" line="234"/>
         <source>UNKNOWN</source>
         <translation>Desconegut</translation>
     </message>
@@ -344,6 +349,19 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <location filename="../sample/sample.cpp" line="33"/>
         <source>Sample plugin</source>
         <translation>Connector de mostra</translation>
+    </message>
+</context>
+<context>
+    <name>PicFile</name>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="38"/>
+        <source>Read PIC file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="44"/>
+        <source>import PIC file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -688,7 +706,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
 <context>
     <name>lc_Listdlg</name>
     <message>
-        <location filename="../list/list.cpp" line="248"/>
+        <location filename="../list/list.cpp" line="251"/>
         <source>List entities</source>
         <translation>Llista les entitats</translation>
     </message>
@@ -753,32 +771,96 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../sample/sample.cpp" line="132"/>
         <source>Sample plugin</source>
-        <translation>Connector d&apos;exemple</translation>
+        <translation>Connector de mostra</translation>
+    </message>
+</context>
+<context>
+    <name>picPunto</name>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="67"/>
+        <source>File...</source>
+        <translation type="unfinished">Fitxer...</translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="77"/>
+        <source>Scale:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="81"/>
+        <source>Accept</source>
+        <translation type="unfinished">D&apos;acord</translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="85"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancel·la</translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="113"/>
+        <source>Select file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="121"/>
+        <source>Scale Factor is empty or invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="134"/>
+        <source>The file %1 not exist</source>
+        <translation type="unfinished">El fitxer %1 no existeix</translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="139"/>
+        <source>Can&apos;t open the file %1</source>
+        <translation type="unfinished">No es pot obrir el fitxer %1</translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="146"/>
+        <source>%1 objects imported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="168"/>
+        <source>picPunto drawLine: first point is empty %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="181"/>
+        <source>picPunto drawLine: next point is empty %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="260"/>
+        <location filename="../picfile/picfile.cpp" line="269"/>
+        <source>format error in %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>plot</name>
     <message>
-        <location filename="../plotequation/plot.cpp" line="20"/>
-        <location filename="../plotequation/plot.cpp" line="27"/>
+        <location filename="../plotequation/plot.cpp" line="21"/>
+        <location filename="../plotequation/plot.cpp" line="28"/>
         <source>Plot plugin</source>
         <translation>Connector d&apos;impressió</translation>
     </message>
     <message>
-        <location filename="../plotequation/plot.cpp" line="27"/>
+        <location filename="../plotequation/plot.cpp" line="28"/>
         <source>Draw</source>
-        <translation type="unfinished">Dibuixa</translation>
+        <translation>Dibuixa</translation>
     </message>
 </context>
 <context>
     <name>plotDialog</name>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="6"/>
+        <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
         <translation>Equació d&apos;impressió</translation>
     </message>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="9"/>
+        <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>This plugin allows you to plot mathematical equations.
 If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
 You can use pi when you need the value of pi (i.e. (3*pi)).
@@ -791,39 +873,57 @@ Useu t o x en la vostra equació com a variable/paràmetre.
 </translation>
     </message>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="13"/>
+        <location filename="../plotequation/plotdialog.cpp" line="22"/>
         <source>Equation 1:</source>
         <translation>Equació 1:</translation>
     </message>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="14"/>
+        <location filename="../plotequation/plotdialog.cpp" line="23"/>
         <source>Equation 2:</source>
         <translation>Equació 2:</translation>
     </message>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="17"/>
+        <location filename="../plotequation/plotdialog.cpp" line="26"/>
         <source>start value:</source>
         <translation>Valor inicial:</translation>
     </message>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="18"/>
+        <location filename="../plotequation/plotdialog.cpp" line="27"/>
         <source>end value:</source>
         <translation>Valor final:</translation>
     </message>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="19"/>
+        <location filename="../plotequation/plotdialog.cpp" line="28"/>
         <source>step size:</source>
         <translation>Mida del pas:</translation>
     </message>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="23"/>
+        <location filename="../plotequation/plotdialog.cpp" line="32"/>
         <source>Draw</source>
         <translation>Dibuixa</translation>
     </message>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="24"/>
+        <location filename="../plotequation/plotdialog.cpp" line="33"/>
         <source>Cancel</source>
         <translation>Cancel·la</translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="59"/>
+        <source>Line Segments</source>
+        <comment>Plot Equation to generate RS_Line segments</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="60"/>
+        <source>Polyline</source>
+        <comment>Plot Equation to generate RS_Polyline</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="61"/>
+        <source>SplinePoints</source>
+        <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -844,7 +944,7 @@ Useu t o x en la vostra equació com a variable/paràmetre.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="211"/>
         <source>Height:</source>
-        <translation>Altura:</translation>
+        <translation>Alçada:</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="212"/>

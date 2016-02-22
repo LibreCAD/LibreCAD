@@ -26,16 +26,21 @@
 
 #include "qg_dialogfactory.h"
 
-#include <qmessagebox.h>
-#include <qfiledialog.h>
+#include <QMessageBox>
+#include <QFileDialog>
 #include <QImageReader>
 #include <QString>
+#include <QFileDialog>
+#include <QToolBar>
 
 #include "rs_patternlist.h"
 #include "rs_settings.h"
 #include "rs_system.h"
 #include "rs_actioninterface.h"
 #include "rs_document.h"
+#include "rs_hatch.h"
+#include "lc_splinepoints.h"
+#include "rs_dimlinear.h"
 
 #include "rs_actiondimlinear.h"
 
@@ -43,7 +48,6 @@
 #include "qg_arctangentialoptions.h"
 #include "qg_beveloptions.h"
 #include "qg_blockdialog.h"
-#include "qg_cadtoolbar.h"
 #include "qg_circleoptions.h"
 #include "qg_circletan2options.h"
 #include "qg_commandwidget.h"
@@ -66,12 +70,14 @@
 #include "qg_dlgmtext.h"
 #include "qg_dlgoptionsdrawing.h"
 #include "qg_dlgoptionsgeneral.h"
+#include "qg_dlgoptionsmakercam.h"
 #include "qg_dlgpoint.h"
 #include "qg_dlgpolyline.h"
 #include "qg_dlgrotate.h"
 #include "qg_dlgrotate2.h"
 #include "qg_dlgscale.h"
 #include "qg_dlgspline.h"
+#include "lc_dlgsplinepoints.h"
 #include "qg_dlgtext.h"
 #include "qg_imageoptions.h"
 #include "qg_insertoptions.h"
@@ -100,15 +106,19 @@
 #include "qg_polylineoptions.h"
 #include "qg_polylineequidistantoptions.h"
 #include "qg_layerwidget.h"
-#include "qg_mainwindowinterface.h"
 #include "rs_actionprintpreview.h"
-#include <QDebug>
+#include "rs_blocklist.h"
+#include "qg_polylineequidistantoptions.h"
+#include "qg_snapmiddleoptions.h"
+#include "qg_snapdistoptions.h"
+#include "rs_vector.h"
+#include "rs_debug.h"
 
 #if QT_VERSION < 0x040400
 #include "emu_qt44.h"
 #endif
 
-//QG_DialogFactory* QG_DialogFactory::uniqueInstance = NULL;
+//QG_DialogFactory* QG_DialogFactory::uniqueInstance = nullptr;
 
 /**
  * Constructor.
@@ -118,48 +128,39 @@
  */
 QG_DialogFactory::QG_DialogFactory(QWidget* parent, QToolBar* ow)
         : RS_DialogFactoryInterface()
-        ,m_pLineAngleOptions(NULL)
+		,parent(parent)
+		,m_pLineAngleOptions(nullptr)
 {
         RS_DEBUG->print("QG_DialogFactory::QG_DialogFactory");
 
-    this->parent = parent;
     setOptionWidget(ow);
 
-    coordinateWidget = NULL;
-    mouseWidget = NULL;
-    selectionWidget = NULL;
-    cadToolBar = NULL;
-    commandWidget = NULL;
-    mainWindow = NULL;
-    leftHintCurrent=new QString("");
-    rightHintCurrent=new QString("");
-    leftHintSaved=new QString("");
-    rightHintSaved=new QString("");
-    hintKeeping=new bool(true);
-    polylineEquidistantOptions=NULL;
-    snapMiddleOptions=NULL;
-    snapDistOptions=NULL;
-    modifyOffsetOptions=NULL;
-    printPreviewOptions=NULL;
+	coordinateWidget = nullptr;
+	mouseWidget = nullptr;
+	selectionWidget = nullptr;
+	commandWidget = nullptr;
+	polylineEquidistantOptions=nullptr;
+	snapMiddleOptions=nullptr;
+	snapDistOptions=nullptr;
+	modifyOffsetOptions=nullptr;
+	printPreviewOptions=nullptr;
         RS_DEBUG->print("QG_DialogFactory::QG_DialogFactory: OK");
 }
-
 
 
 /**
  * Destructor
  */
 QG_DialogFactory::~QG_DialogFactory() {
-    delete leftHintCurrent;
-    delete rightHintCurrent;
-    delete leftHintSaved;
-    delete rightHintSaved;
-    delete hintKeeping;
     RS_DEBUG->print("QG_DialogFactory::~QG_DialogFactory");
     RS_DEBUG->print("QG_DialogFactory::~QG_DialogFactory: OK");
 }
 
-
+void QG_DialogFactory::setOptionWidget(QToolBar* ow) {
+	RS_DEBUG->print("QG_DialogFactory::setOptionWidget");
+	optionWidget = ow;
+	RS_DEBUG->print("QG_DialogFactory::setOptionWidget: OK");
+}
 
 
 /**
@@ -171,20 +172,6 @@ void QG_DialogFactory::requestWarningDialog(const QString& warning) {
                              QMessageBox::Ok);
 }
 
-
-
-/**
- * Requests a new document from the main window.
- */
-RS_GraphicView* QG_DialogFactory::requestNewDocument(const QString& fileName, RS_Document* doc) {
-        if (mainWindow!=NULL) {
-                mainWindow->createNewDocument(fileName, doc);
-                return mainWindow->getGraphicView();
-        }
-        return NULL;
-}
-
-
 /**
  * Shows a dialog for adding a layer. Doesn't add the layer.
  * This is up to the caller.
@@ -194,18 +181,18 @@ RS_GraphicView* QG_DialogFactory::requestNewDocument(const QString& fileName, RS
  */
 RS_Layer* QG_DialogFactory::requestNewLayerDialog(RS_LayerList* layerList) {
 
-    RS_Layer* layer = NULL;
+	RS_Layer* layer = nullptr;
 
     QString layer_name = "", newLayerName = "";
-    int i = 2;
 
-    if (layerList!=NULL) {
+	if (layerList) {
         layer_name = QString(layerList->getActive()->getName());
         if (layer_name.isEmpty() || !layer_name.compare("0", Qt::CaseInsensitive) ) {
             layer_name = "noname";
         }
         newLayerName = QString(layer_name);
-        while(layerList->find(newLayerName) != NULL) {
+		int i = 2;
+		while(layerList->find(newLayerName)) {
             newLayerName = QString("%1%2").arg(layer_name).arg(i++);
         }
     }
@@ -221,7 +208,7 @@ RS_Layer* QG_DialogFactory::requestNewLayerDialog(RS_LayerList* layerList) {
         dlg.updateLayer();
     } else {
         delete layer;
-        layer = NULL;
+		layer = nullptr;
     }
     return layer;
 }
@@ -236,37 +223,38 @@ RS_Layer* QG_DialogFactory::requestNewLayerDialog(RS_LayerList* layerList) {
  */
 RS_Layer* QG_DialogFactory::requestLayerRemovalDialog(RS_LayerList* layerList) {
 
-    RS_Layer* layer = NULL;
-    if (layerList==NULL) {
+	RS_Layer* layer = nullptr;
+	if (!layerList) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QG_DialogFactory::requestLayerRemovalDialog(): "
-                "layerList is NULL");
-        return NULL;
+				"layerList is nullptr");
+		return nullptr;
     }
     /*
-       if (layerList==NULL) {
-           if (container!=NULL && container->rtti()==RS2::EntityGraphic) {
+	   if (!layerList) {
+		   if (container && container->rtti()==RS2::EntityGraphic) {
                layerList = (RS_LayerList*)container;
            } else {
-               return NULL;
+			   return nullptr;
            }
        }*/
 
     // Layer for parameter livery
     layer = layerList->getActive();
 
-    if (layer!=NULL) {
+	if (layer) {
         if (layer->getName()!="0") {
             QMessageBox msgBox(
                     QMessageBox::Warning,
                     QMessageBox::tr("Remove Layer"),
                     QMessageBox::tr("Layer \"%1\" and all "
-                                    "entities on it will be removed.")
+									"entities on it will be removed.\n"
+									"This action can NOT be undone.")
                     .arg(layer->getName()),
                     QMessageBox::Ok | QMessageBox::Cancel);
             if (msgBox.exec()==QMessageBox::Ok) {}
             else {
-                layer = NULL;
+				layer = nullptr;
             }
         } else {
             QMessageBox::information(parent,
@@ -288,32 +276,32 @@ RS_Layer* QG_DialogFactory::requestLayerRemovalDialog(RS_LayerList* layerList) {
  * returned. Modifying the layer is up to the caller.
  *
  * @return A pointer to a new layer with the changed attributes
- *         or NULL if the dialog was cancelled.
+ *         or nullptr if the dialog was cancelled.
  */
 RS_Layer* QG_DialogFactory::requestEditLayerDialog(RS_LayerList* layerList) {
 
     RS_DEBUG->print("QG_DialogFactory::requestEditLayerDialog");
 
-    RS_Layer* layer = NULL;
+	RS_Layer* layer = nullptr;
     /*
-       if (layerList==NULL) {
-           if (container!=NULL && container->rtti()==RS2::EntityGraphic) {
+	   if (!layerList) {
+		   if (container && container->rtti()==RS2::EntityGraphic) {
                layerList = (RS_LayerList*)container;
            } else {
-               return NULL;
+			   return nullptr;
            }
        }
     */
 
-    if (layerList==NULL) {
+	if (!layerList) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QG_DialogFactory::requestEditLayerDialog(): "
-                "layerList is NULL");
-        return NULL;
+				"layerList is nullptr");
+		return nullptr;
     }
 
     // Layer for parameter livery
-    if (layerList->getActive()!=NULL) {
+	if (layerList->getActive()) {
         layer = new RS_Layer(*layerList->getActive());
 
         QG_LayerDialog dlg(parent, QMessageBox::tr("Layer Dialog"));
@@ -324,7 +312,7 @@ RS_Layer* QG_DialogFactory::requestEditLayerDialog(RS_LayerList* layerList) {
             dlg.updateLayer();
         } else {
             delete layer;
-            layer = NULL;
+			layer = nullptr;
         }
     }
 
@@ -341,14 +329,14 @@ RS_Layer* QG_DialogFactory::requestEditLayerDialog(RS_LayerList* layerList) {
  * should be added.
  */
 RS_BlockData QG_DialogFactory::requestNewBlockDialog(RS_BlockList* blockList) {
-    //RS_Block* block = NULL;
+	//RS_Block* block = nullptr;
     RS_BlockData ret;
     ret = RS_BlockData("", RS_Vector(false), false);
 
-    if (blockList==NULL) {
+	if (!blockList) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QG_DialogFactory::requestNewBlockDialog(): "
-                "blockList is NULL");
+				"blockList is nullptr");
         return ret;
     }
 
@@ -369,25 +357,25 @@ RS_BlockData QG_DialogFactory::requestNewBlockDialog(RS_BlockList* blockList) {
 /**
  * Shows a dialog for renaming the currently active block.
  *
- * @return a pointer to the modified block or NULL on cancellation.
+ * @return a pointer to the modified block or nullptr on cancellation.
  */
 RS_BlockData QG_DialogFactory::requestBlockAttributesDialog(RS_BlockList* blockList) {
-    //RS_Block* block = NULL;
+	//RS_Block* block = nullptr;
     RS_BlockData ret;
     ret = RS_BlockData("", RS_Vector(false), false);
 
-    if (blockList==NULL) {
+	if (!blockList) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QG_DialogFactory::requestBlockAttributesDialog(): "
-                "blockList is NULL");
+				"blockList is nullptr");
         return ret;
     }
     /*
-       if (blockList==NULL) {
-           if (container!=NULL && container->rtti()==RS2::EntityGraphic) {
+	   if (!blockList) {
+		   if (container && container->rtti()==RS2::EntityGraphic) {
                blockList = (RS_BlockList*)container;
            } else {
-               return NULL;
+			   return nullptr;
            }
        }*/
 
@@ -416,19 +404,19 @@ RS_BlockData QG_DialogFactory::requestBlockAttributesDialog(RS_BlockList* blockL
  * @return a pointer to the block that should be removed.
  */
 RS_Block* QG_DialogFactory::requestBlockRemovalDialog(RS_BlockList* blockList) {
-    RS_Block* block = NULL;
+	RS_Block* block = nullptr;
 
-    if (blockList==NULL) {
+	if (!blockList) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QG_DialogFactory::requestBlockRemovalDialog(): "
-                "blockList is NULL");
-        return NULL;
+				"blockList is nullptr");
+		return nullptr;
     }
 
     // Block for parameter livery
     block = blockList->getActive();
 
-    if (block!=NULL) {
+	if (block) {
         int remove =
             QMessageBox::warning(parent,
                                      QMessageBox::tr("Remove Block"),
@@ -439,110 +427,12 @@ RS_Block* QG_DialogFactory::requestBlockRemovalDialog(RS_BlockList* blockList) {
                                      QMessageBox::Cancel);
         if (remove==QMessageBox::Ok) {}
         else {
-            block = NULL;
+			block = nullptr;
         }
     }
 
     return block;
 }
-
-
-
-/**
- * Shows a dialog for choosing a file name. Saving the file is up to
- * the caller.
- *
- * @return File name with path and extension to determine the file type
- *         or an empty string if the dialog was cancelled.
- */
-/*
-QString QG_DialogFactory::requestFileSaveAsDialog() {
-    // read default settings:
-    RS_SETTINGS->beginGroup("/Paths");
-    QString defDir = RS_SETTINGS->readEntry("/Save",
-                       RS_SYSTEM->getHomeDir());
-    QString defFilter = RS_SETTINGS->readEntry("/SaveFilter",
-                          "Drawing Exchange (*.dxf)");
-    RS_SETTINGS->endGroup();
-
-    // prepare file save as dialog:
-    QFileDialog fileDlg(this,0,true);
-    QStringList filters;
-    bool done = false;
-    bool cancel = false;
-    QString fn = "";
-
-    filters.append("Drawing Exchange (*.dxf)");
-    filters.append("Font (*.cxf)");
-#if QT_VERSION < 0x040400
-    emu_qt44_QFileDialog_setNameFilters(fileDlg, filters);
-#else
-    fileDlg.setNameFilters(filters);
-#endif
-    fileDlg.setMode(QFileDialog::AnyFile);
-    fileDlg.setCaption(tr("Save Drawing As"));
-    fileDlg.setDir(defDir);
-    fileDlg.setSelectedFilter(defFilter);
-
-    // run dialog:
-    do {
-        // accepted:
-        if (fileDlg.exec()==QDialog::Accepted) {
-                fn = fileDlg.selectedFile();
-                        cancel = false;
-
-            // append default extension:
-            if (fn.find('.')==-1) {
-                if (fileDlg.selectedFilter()=="Font (*.cxf)") {
-                    fn+=".cxf";
-                } else {
-                    fn+=".dxf";
-                }
-            }
-
-            // overwrite warning:
-            if(QFileInfo(fn).exists()) {
-                int choice =
-                    QMessageBox::warning(this, tr("Save Drawing As"),
-                                         tr("%1 already exists.\n"
-                                            "Do you want to replace it?")
-                                         .arg(fn),
-                                         tr("Yes"), tr("No"),
-                                         tr("Cancel"), 0, 1 );
-
-                switch (choice) {
-                case 0:
-                    done = true;
-                    break;
-                case 1:
-                case 2:
-                default:
-                    done = false;
-                    break;
-                }
-            } else {
-                done = true;
-            }
-        }
-                else {
-            done = true;
-            cancel = true;
-                        fn = "";
-        }
-    } while(!done);
-
-    // store new default settings:
-    if (!cancel) {
-        RS_SETTINGS->beginGroup("/Paths");
-        RS_SETTINGS->writeEntry("/Save", QFileInfo(fn).dirPath(true));
-        RS_SETTINGS->writeEntry("/SaveFilter", fileDlg.selectedFilter());
-        RS_SETTINGS->endGroup();
-    }
-
-    return fn;
-}
-*/
-
 
 
 /**
@@ -552,95 +442,57 @@ QString QG_DialogFactory::requestFileSaveAsDialog() {
  * @return File name with path and extension to determine the file type
  *         or an empty string if the dialog was cancelled.
  */
-QString QG_DialogFactory::requestImageOpenDialog() {
-    QString fn = "";
+QString QG_DialogFactory::requestImageOpenDialog()
+{
+    QString strFileName = "";
 
     // read default settings:
     RS_SETTINGS->beginGroup("/Paths");
-    QString defDir = RS_SETTINGS->readEntry("/OpenImage",
-                       RS_SYSTEM->getHomeDir());
-    QString defFilter = RS_SETTINGS->readEntry("/ImageFilter",
-                          "Portable Network Graphic (*.png)");
+    QString defDir = RS_SETTINGS->readEntry("/OpenImage", RS_SYSTEM->getHomeDir());
+    QString defFilter = RS_SETTINGS->readEntry( "/ImageFilter", "");
     RS_SETTINGS->endGroup();
 
-    bool cancel = false;
-
-    QFileDialog fileDlg(NULL, "");
-    fileDlg.setModal(true);
-
-    // RVT_PORT
-    //Q3StrList f = QImageReader::supportedImageFormats();
-    //QStringList formats = QStringList::fromStrList(f);
     QStringList filters;
     QString all = "";
-    //filters = QStringList::fromStrList(formats);
-
     bool haveJpeg= false;
-    foreach (QByteArray format, QImageReader::supportedImageFormats()) {
+	for(const QByteArray& format: QImageReader::supportedImageFormats()) {
         if (format.toUpper() == "JPG" || format.toUpper() == "JPEG" ){
             if (!haveJpeg) {
                 haveJpeg = true;
-                filters.append("jpeg (*.jpeg *.jpg) ");
+                filters.append("jpeg (*.jpeg *.jpg)");
                 all += " *.jpeg *.jpg";
             }
         } else {
-            filters.append(QString("%1 (*.%1) ").arg(QString(format)));
+            filters.append(QString("%1 (*.%1)").arg(QString(format)));
             all += QString(" *.%1").arg(QString(format));
         }
-                /* RVT_PORT
-                 QString ext = (*it);
-        QString st;
-        if (ext=="JPEG") {
-            st = QString("%1 (*.%2 *.jpg)").arg(extToFormat(*it))
-                 .arg(QString(*it).lower());
-        } else {
-            st = QString("%1 (*.%2)").arg(extToFormat(*it))
-                 .arg(QString(*it).lower());
-        }
-        filters.append(st);
-
-        if (!all.isEmpty()) {
-            all += " ";
-        }
-
-        if (ext=="JPEG") {
-            all += QString("*.%1 *.jpg").arg(QString(*it).lower());
-        } else {
-            all += QString("*.%1").arg(QString(*it).lower());
-        } */
     }
-    filters.append(QObject::tr("All Image Files (%1) ").arg(all));
+    QString strAllImageFiles = QObject::tr("All Image Files (%1)").arg(all);
+    filters.append(strAllImageFiles);
     filters.append(QObject::tr("All Files (*.*)"));
 
-    //filters.append("Drawing Exchange (*.)");
-    //filters.append("Font (*.cxf)");
-
-#if QT_VERSION < 0x040400
-    emu_qt44_QFileDialog_setNameFilters(fileDlg, filters);
-#else
-    fileDlg.setNameFilters(filters);
-#endif
-
+	QFileDialog fileDlg(nullptr, "");
+    fileDlg.setModal(true);
     fileDlg.setFileMode(QFileDialog::ExistingFile);
     fileDlg.setWindowTitle(QObject::tr("Open Image"));
     fileDlg.setDirectory(defDir);
 #if QT_VERSION >= 0x040400
+    fileDlg.setNameFilters(filters);
+    if (defFilter.isEmpty())
+        defFilter = strAllImageFiles;
     fileDlg.selectNameFilter(defFilter);
+#else
+    emu_qt44_QFileDialog_setNameFilters(fileDlg, filters);
 #endif
 
-    if (fileDlg.exec()==QDialog::Accepted) {
-//        fn = fileDlg.selectedFile();
-        QStringList sf = fileDlg.selectedFiles();
-        if (!sf.isEmpty()) fn = sf.first();
-        cancel = false;
-    } else {
-        cancel = true;
-    }
+    if (QDialog::Accepted == fileDlg.exec()) {
+        QStringList strSelectedFiles = fileDlg.selectedFiles();
+        if (!strSelectedFiles.isEmpty())
+            strFileName = strSelectedFiles.first();
 
-    // store new default settings:
-    if (!cancel) {
+        // store new default settings:
         RS_SETTINGS->beginGroup("/Paths");
-        RS_SETTINGS->writeEntry("/OpenImage", QFileInfo(fn).absolutePath());
+        RS_SETTINGS->writeEntry("/OpenImage", QFileInfo(strFileName).absolutePath());
 #if QT_VERSION < 0x040400
         RS_SETTINGS->writeEntry("/ImageFilter", emu_qt44_QFileDialog_selectedNameFilter(fileDlg));
 #else
@@ -649,7 +501,7 @@ QString QG_DialogFactory::requestImageOpenDialog() {
         RS_SETTINGS->endGroup();
     }
 
-    return fn;
+    return strFileName;
 }
 
 
@@ -658,14 +510,14 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
                                       bool on, bool update) {
         RS_DEBUG->print("QG_DialogFactory::requestOptions");
 
-    if (action==NULL) {
+	if (!action) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-                "QG_DialogFactory::requestOptions: action is NULL");
+				"QG_DialogFactory::requestOptions: action is nullptr");
         return;
     }
 
     switch (action->rtti()) {
-    case RS2::ActionPrintPreview:
+	case RS2::ActionFilePrintPreview:
         requestPrintPreviewOptions(action, on, update);
         break;
 
@@ -756,7 +608,7 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
     case RS2::ActionDimLinearVer:
     case RS2::ActionDimLinearHor:
         requestDimensionOptions(action, on, update);
-        if (((RS_ActionDimLinear*)action)->hasFixedAngle()==false) {
+		if (!((RS_ActionDimLinear*)action)->hasFixedAngle()) {
             requestDimLinearOptions(action, on, update);
         }
         break;
@@ -811,14 +663,14 @@ void QG_DialogFactory::requestPrintPreviewOptions(RS_ActionInterface* action,
         bool on, bool update) {
 
     if(!on) {
-        if (printPreviewOptions!=NULL) {
+		if (printPreviewOptions) {
             delete printPreviewOptions;
-            printPreviewOptions = NULL;
+			printPreviewOptions = nullptr;
         }
         return;
     }
-    if (optionWidget!=NULL ) {
-        if (printPreviewOptions==NULL) {
+	if (optionWidget ) {
+		if (!printPreviewOptions) {
             printPreviewOptions = new QG_PrintPreviewOptions();
             printPreviewOptions ->setAction(action, false);
             optionWidget->addWidget(printPreviewOptions);
@@ -835,15 +687,15 @@ void QG_DialogFactory::requestPrintPreviewOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestLineOptions(RS_ActionInterface* action,
         bool on) {
-    static QG_LineOptions* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_LineOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_LineOptions();
+		if (on) {
+			toolWidget = new QG_LineOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action);
             toolWidget->show();
@@ -859,15 +711,15 @@ void QG_DialogFactory::requestLineOptions(RS_ActionInterface* action,
 void QG_DialogFactory::requestPolylineOptions(RS_ActionInterface* action,
         bool on, bool update) {
 
-    static QG_PolylineOptions* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_PolylineOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_PolylineOptions();
+		if (on) {
+			toolWidget = new QG_PolylineOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
             toolWidget->show();
@@ -882,14 +734,14 @@ void QG_DialogFactory::requestPolylineEquidistantOptions(RS_ActionInterface* act
                                                          bool on, bool /*update*/ ) {
 
     if(!on) {
-        if (polylineEquidistantOptions!=NULL) {
+		if (polylineEquidistantOptions) {
             delete polylineEquidistantOptions;
-            polylineEquidistantOptions = NULL;
+			polylineEquidistantOptions = nullptr;
         }
         return;
     }
-    if (optionWidget!=NULL ) {
-        if (polylineEquidistantOptions==NULL) {
+	if (optionWidget ) {
+		if (!polylineEquidistantOptions) {
             polylineEquidistantOptions = new QG_PolylineEquidistantOptions();
 
             optionWidget->addWidget(polylineEquidistantOptions);
@@ -910,15 +762,15 @@ void QG_DialogFactory::requestPolylineEquidistantOptions(RS_ActionInterface* act
  */
 void QG_DialogFactory::requestLineParallelOptions(RS_ActionInterface* action,
         bool on, bool update) {
-    static QG_LineParallelOptions* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_LineParallelOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-           toolWidget = new QG_LineParallelOptions();
+		if (on) {
+		   toolWidget = new QG_LineParallelOptions(optionWidget);
            optionWidget->addWidget(toolWidget);
            toolWidget->setAction(action, update);
                         toolWidget->show();
@@ -934,15 +786,15 @@ void QG_DialogFactory::requestLineParallelOptions(RS_ActionInterface* action,
 void QG_DialogFactory::requestLineParallelThroughOptions(
     RS_ActionInterface* action,
     bool on, bool update) {
-    static QG_LineParallelThroughOptions* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_LineParallelThroughOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_LineParallelThroughOptions();
+		if (on) {
+			toolWidget = new QG_LineParallelThroughOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
                         toolWidget->show();
@@ -957,18 +809,18 @@ void QG_DialogFactory::requestLineParallelThroughOptions(
 void QG_DialogFactory::requestLineAngleOptions(RS_ActionInterface* action,
                                                bool on, bool update) {
 
-    if (optionWidget!=NULL) {
-        if (on==true) {
-            if(m_pLineAngleOptions==NULL)
+	if (optionWidget) {
+		if (on) {
+			if(!m_pLineAngleOptions)
                 m_pLineAngleOptions = new QG_LineAngleOptions();
             optionWidget->addWidget(m_pLineAngleOptions);
             m_pLineAngleOptions->setAction(action, update);
             //toolWidget->setData(&angle, &length, fixedAngle, update);
             m_pLineAngleOptions->show();
         }else{
-            if (m_pLineAngleOptions==NULL) return;
+			if (!m_pLineAngleOptions) return;
             delete m_pLineAngleOptions;
-            m_pLineAngleOptions = NULL;
+			m_pLineAngleOptions = nullptr;
         }
     }
 }
@@ -981,15 +833,14 @@ void QG_DialogFactory::requestLineAngleOptions(RS_ActionInterface* action,
 void QG_DialogFactory::requestLineRelAngleOptions(RS_ActionInterface* action,
         bool on, bool update) {
 
-    static QG_LineRelAngleOptions* toolWidget = NULL;
-
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_LineRelAngleOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_LineRelAngleOptions();
+		if (on) {
+			toolWidget = new QG_LineRelAngleOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
             //toolWidget->setData(&angle, &length, fixedAngle, update);
@@ -1006,15 +857,15 @@ void QG_DialogFactory::requestLineRelAngleOptions(RS_ActionInterface* action,
 void QG_DialogFactory::requestLineBisectorOptions(RS_ActionInterface* action,
         bool on, bool update) {
 
-    static QG_LineBisectorOptions* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_LineBisectorOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_LineBisectorOptions();
+		if (on) {
+			toolWidget = new QG_LineBisectorOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
                         toolWidget->show();
@@ -1029,15 +880,15 @@ void QG_DialogFactory::requestLineBisectorOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestLinePolygonOptions(RS_ActionInterface* action,
         bool on, bool update) {
-    static QG_LinePolygonOptions* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_LinePolygonOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_LinePolygonOptions();
+		if (on) {
+			toolWidget = new QG_LinePolygonOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
                         toolWidget->show();
@@ -1052,15 +903,15 @@ void QG_DialogFactory::requestLinePolygonOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestLinePolygon2Options(RS_ActionInterface* action,
         bool on, bool update) {
-    static QG_LinePolygon2Options* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_LinePolygon2Options* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_LinePolygon2Options();
+		if (on) {
+			toolWidget = new QG_LinePolygon2Options(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
                         toolWidget->show();
@@ -1076,15 +927,15 @@ void QG_DialogFactory::requestLinePolygon2Options(RS_ActionInterface* action,
 void QG_DialogFactory::requestArcOptions(RS_ActionInterface* action,
         bool on, bool update) {
 
-    static QG_ArcOptions* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_ArcOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_ArcOptions();
+		if (on) {
+			toolWidget = new QG_ArcOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
             //toolWidget->setData(&data);
@@ -1101,15 +952,15 @@ void QG_DialogFactory::requestArcOptions(RS_ActionInterface* action,
 void QG_DialogFactory::requestArcTangentialOptions(RS_ActionInterface* action,
         bool on, bool update) {
 
-    static QG_ArcTangentialOptions* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_ArcTangentialOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_ArcTangentialOptions();
+		if (on) {
+			toolWidget = new QG_ArcTangentialOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
             //toolWidget->setData(&data);
@@ -1121,8 +972,8 @@ void QG_DialogFactory::requestArcTangentialOptions(RS_ActionInterface* action,
 
 void QG_DialogFactory::updateArcTangentialOptions(const double& d, bool byRadius)
 {
-    if (arcTangentialOptions==NULL) return;
-    if(byRadius){
+	if (!arcTangentialOptions) return;
+	if (byRadius){
         arcTangentialOptions->updateAngle(QString::number(d,'g',5));
     }else{
         arcTangentialOptions->updateRadius(QString::number(d,'g',5));
@@ -1136,15 +987,15 @@ void QG_DialogFactory::updateArcTangentialOptions(const double& d, bool byRadius
  */
 void QG_DialogFactory::requestCircleOptions(RS_ActionInterface* action,
                                             bool on, bool update) {
-    static QG_CircleOptions* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_CircleOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_CircleOptions();
+		if (on) {
+			toolWidget = new QG_CircleOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
             toolWidget->show();
@@ -1158,15 +1009,15 @@ void QG_DialogFactory::requestCircleOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestCircleTan2Options(RS_ActionInterface* action,
                                             bool on, bool update) {
-    static QG_CircleTan2Options* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_CircleTan2Options* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_CircleTan2Options();
+		if (on) {
+			toolWidget = new QG_CircleTan2Options(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
             toolWidget->show();
@@ -1180,15 +1031,15 @@ void QG_DialogFactory::requestCircleTan2Options(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestSplineOptions(RS_ActionInterface* action,
         bool on, bool update) {
-    static QG_SplineOptions* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_SplineOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_SplineOptions();
+		if (on) {
+			toolWidget = new QG_SplineOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
                         toolWidget->show();
@@ -1204,15 +1055,15 @@ void QG_DialogFactory::requestSplineOptions(RS_ActionInterface* action,
 void QG_DialogFactory::requestMTextOptions(RS_ActionInterface* action,
         bool on, bool update) {
 
-    static QG_MTextOptions* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_MTextOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_MTextOptions();
+		if (on) {
+			toolWidget = new QG_MTextOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
                         toolWidget->show();
@@ -1227,15 +1078,15 @@ void QG_DialogFactory::requestMTextOptions(RS_ActionInterface* action,
 void QG_DialogFactory::requestTextOptions(RS_ActionInterface* action,
         bool on, bool update) {
 
-    static QG_TextOptions* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_TextOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_TextOptions();
+		if (on) {
+			toolWidget = new QG_TextOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
                         toolWidget->show();
@@ -1250,15 +1101,15 @@ void QG_DialogFactory::requestTextOptions(RS_ActionInterface* action,
 void QG_DialogFactory::requestInsertOptions(RS_ActionInterface* action,
         bool on, bool update) {
 
-    static QG_InsertOptions* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_InsertOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_InsertOptions();
+		if (on) {
+			toolWidget = new QG_InsertOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
                         toolWidget->show();
@@ -1274,15 +1125,15 @@ void QG_DialogFactory::requestInsertOptions(RS_ActionInterface* action,
 void QG_DialogFactory::requestImageOptions(RS_ActionInterface* action,
         bool on, bool update) {
 
-    static QG_ImageOptions* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_ImageOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_ImageOptions();
+		if (on) {
+			toolWidget = new QG_ImageOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
                         toolWidget->show();
@@ -1297,16 +1148,16 @@ void QG_DialogFactory::requestImageOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestDimensionOptions(RS_ActionInterface* action,
         bool on, bool update) {
-    //static QLabel* l = NULL;
-    static QG_DimOptions* toolWidget = NULL;
+	//static QLabel* l = nullptr;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_DimOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_DimOptions();
+		if (on) {
+			toolWidget = new QG_DimOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
                         toolWidget->show();
@@ -1321,16 +1172,15 @@ void QG_DialogFactory::requestDimensionOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestDimLinearOptions(RS_ActionInterface* action,
         bool on, bool update) {
-    //static QLabel* l = NULL;
-    static QG_DimLinearOptions* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_DimLinearOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_DimLinearOptions();
+		if (on) {
+			toolWidget = new QG_DimLinearOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
                         toolWidget->show();
@@ -1344,14 +1194,14 @@ void QG_DialogFactory::requestDimLinearOptions(RS_ActionInterface* action,
 void QG_DialogFactory::requestSnapMiddleOptions(int& middlePoints, bool on) {
 
     if(!on) {
-        if (snapMiddleOptions!=NULL) {
+		if (snapMiddleOptions) {
             delete snapMiddleOptions;
-            snapMiddleOptions = NULL;
+			snapMiddleOptions = nullptr;
         }
         return;
     }
-    if (optionWidget!=NULL ) {
-        if (snapMiddleOptions==NULL) {
+	if (optionWidget ) {
+		if (!snapMiddleOptions) {
             snapMiddleOptions = new QG_SnapMiddleOptions(middlePoints);
             optionWidget->addWidget(snapMiddleOptions);
             snapMiddleOptions->setMiddlePoints(middlePoints);
@@ -1369,14 +1219,14 @@ void QG_DialogFactory::requestSnapMiddleOptions(int& middlePoints, bool on) {
  */
 void QG_DialogFactory::requestSnapDistOptions(double& dist, bool on) {
     if(!on) {
-        if (snapDistOptions!=NULL) {
+		if (snapDistOptions) {
             delete snapDistOptions;
-            snapDistOptions = NULL;
+			snapDistOptions = nullptr;
         }
         return;
     }
-    if (optionWidget!=NULL ) {
-        if ( snapDistOptions==NULL) {
+	if (optionWidget ) {
+		if (!snapDistOptions) {
             snapDistOptions = new QG_SnapDistOptions();
             optionWidget->addWidget(snapDistOptions);
         snapDistOptions->setDist(dist);
@@ -1395,15 +1245,15 @@ void QG_DialogFactory::requestSnapDistOptions(double& dist, bool on) {
  */
 void QG_DialogFactory::requestMoveRotateOptions(RS_ActionInterface* action,
         bool on, bool update) {
-    static QG_MoveRotateOptions* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_MoveRotateOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_MoveRotateOptions();
+		if (on) {
+			toolWidget = new QG_MoveRotateOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
                         toolWidget->show();
@@ -1418,15 +1268,15 @@ void QG_DialogFactory::requestMoveRotateOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestTrimAmountOptions(RS_ActionInterface* action,
         bool on, bool update) {
-    static QG_TrimAmountOptions* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_TrimAmountOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_TrimAmountOptions();
+		if (on) {
+			toolWidget = new QG_TrimAmountOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
                         toolWidget->show();
@@ -1441,15 +1291,15 @@ void QG_DialogFactory::requestTrimAmountOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestBevelOptions(RS_ActionInterface* action,
         bool on, bool update) {
-    static QG_BevelOptions* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_BevelOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_BevelOptions();
+		if (on) {
+			toolWidget = new QG_BevelOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
             toolWidget->show();
@@ -1464,15 +1314,15 @@ void QG_DialogFactory::requestBevelOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestRoundOptions(RS_ActionInterface* action,
         bool on, bool update) {
-    static QG_RoundOptions* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_RoundOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_RoundOptions();
+		if (on) {
+			toolWidget = new QG_RoundOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
             toolWidget->show();
@@ -1486,14 +1336,14 @@ void QG_DialogFactory::requestRoundOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestModifyOffsetOptions(double& dist, bool on) {
     if(!on) {
-        if (modifyOffsetOptions!=NULL) {
+		if (modifyOffsetOptions) {
             delete modifyOffsetOptions;
-            modifyOffsetOptions = NULL;
+			modifyOffsetOptions = nullptr;
         }
         return;
     }
-    if (optionWidget!=NULL ) {
-        if ( modifyOffsetOptions==NULL) {
+	if (optionWidget ) {
+		if (!modifyOffsetOptions) {
             modifyOffsetOptions = new QG_ModifyOffsetOptions();
             optionWidget->addWidget(modifyOffsetOptions);
             modifyOffsetOptions->setDist(dist);
@@ -1512,64 +1362,20 @@ void QG_DialogFactory::requestModifyOffsetOptions(double& dist, bool on) {
  */
 void QG_DialogFactory::requestLibraryInsertOptions(RS_ActionInterface* action,
         bool on, bool update) {
-    static QG_LibraryInsertOptions* toolWidget = NULL;
 
-    if (optionWidget!=NULL) {
-        if (toolWidget!=NULL) {
+	if (optionWidget) {
+		static QG_LibraryInsertOptions* toolWidget = nullptr;
+		if (toolWidget) {
             delete toolWidget;
-            toolWidget = NULL;
+			toolWidget = nullptr;
         }
-        if (on==true) {
-            toolWidget = new QG_LibraryInsertOptions();
+		if (on) {
+			toolWidget = new QG_LibraryInsertOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
                         toolWidget->show();
         }
     }
-}
-
-
-
-/**
- * Shows the given toolbar.
- */
-void QG_DialogFactory::requestToolBar(RS2::ToolBarId id) {
-    if (cadToolBar!=NULL) {
-        cadToolBar->showToolBar(id);
-    }
-}
-
-void QG_DialogFactory::requestPreviousToolBar() {
-    if (cadToolBar!=NULL) {
-        cadToolBar->showPreviousToolBar(false);
-    }
-}
-
-
-void QG_DialogFactory::resetToolBar() {
-    if (cadToolBar!=NULL) {
-        cadToolBar->resetToolBar();
-    }
-}
-
-/**
- * Shows the select toolbar with the given action to launch.
- */
-void QG_DialogFactory::requestToolBarSelect(RS_ActionInterface* selectAction,
-        RS2::ActionType nextAction) {
-    if (cadToolBar!=NULL) {
-        cadToolBar->showToolBarSelect(selectAction, nextAction);
-    }
-}
-
-/**
-  * Show the cad toolbar according to action type
-  * Author: Dongxu Li
-  **/
-void QG_DialogFactory::showCadToolBar(RS2::ActionType actionType) {
-if(cadToolBar != NULL){
-    cadToolBar->showCadToolBar(actionType);
-}
 }
 
 
@@ -1684,9 +1490,7 @@ bool QG_DialogFactory::requestRotate2Dialog(RS_Rotate2Data& data) {
  * Shows a dialog to edit the given entity.
  */
 bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
-    if (entity==NULL) {
-        return false;
-    }
+	if (!entity) return false;
 
     bool ret = false;
 
@@ -1742,7 +1546,7 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
         break;
 
     case RS2::EntitySpline: {
-            QG_DlgSpline dlg(parent);
+			QG_DlgSpline dlg(nullptr, false);
             dlg.setSpline(*((RS_Spline*)entity));
             if (dlg.exec()) {
                 dlg.updateSpline();
@@ -1750,6 +1554,16 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             }
         }
         break;
+
+	case RS2::EntitySplinePoints: {
+			LC_DlgSplinePoints dlg(nullptr, false);
+			dlg.setSpline(*static_cast<LC_SplinePoints*>(entity));
+			if (dlg.exec()) {
+				dlg.updateSpline();
+				ret = true;
+			}
+		}
+		break;
 
     case RS2::EntityInsert: {
             QG_DlgInsert dlg(parent);
@@ -1854,7 +1668,7 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
  */
  /*
 bool QG_DialogFactory::requestDimAlignedDialog(RS_DimAligned* dim) {
-    if (dim==NULL) {
+	if (dim==nullptr) {
         return false;
     }
 
@@ -1875,9 +1689,7 @@ bool QG_DialogFactory::requestDimAlignedDialog(RS_DimAligned* dim) {
  * Shows a dialog to edit the attributes of the given multi-line text entity.
  */
 bool QG_DialogFactory::requestMTextDialog(RS_MText* text) {
-    if (text==NULL) {
-        return false;
-    }
+	if (!text) return false;
 
     QG_DlgMText dlg(parent);
     dlg.setText(*text, true);
@@ -1894,9 +1706,7 @@ bool QG_DialogFactory::requestMTextDialog(RS_MText* text) {
  * Shows a dialog to edit the attributes of the given text entity.
  */
 bool QG_DialogFactory::requestTextDialog(RS_Text* text) {
-    if (text==NULL) {
-        return false;
-    }
+	if (!text) return false;
 
     QG_DlgText dlg(parent);
     dlg.setText(*text, true);
@@ -1913,9 +1723,7 @@ bool QG_DialogFactory::requestTextDialog(RS_Text* text) {
  * Shows a dialog to edit pattern / hatch attributes of the given entity.
  */
 bool QG_DialogFactory::requestHatchDialog(RS_Hatch* hatch) {
-    if (hatch==NULL) {
-        return false;
-    }
+	if (!hatch) return false;
 
     RS_PATTERNLIST->init();
 
@@ -1923,9 +1731,9 @@ bool QG_DialogFactory::requestHatchDialog(RS_Hatch* hatch) {
     dlg.setHatch(*hatch, true);
     if (dlg.exec()) {
         dlg.updateHatch();
+        dlg.saveSettings();
         return true;
     }
-
     return false;
 }
 
@@ -1948,77 +1756,46 @@ void QG_DialogFactory::requestOptionsDrawingDialog(RS_Graphic& graphic) {
     dlg.exec();
 }
 
+bool QG_DialogFactory::requestOptionsMakerCamDialog() {
 
-/**
- * Back to last menu in cad toolbar.
- */
-void QG_DialogFactory::requestPreviousMenu() {
-    if (cadToolBar!=NULL) {
-        cadToolBar->showToolBarMain();
-    }
+    QG_DlgOptionsMakerCam dlg(parent);
+
+    return (dlg.exec() == QDialog::Accepted);
 }
 
+QString QG_DialogFactory::requestFileSaveAsDialog(const QString& caption /* = QString() */,
+                                                  const QString& dir /* = QString() */,
+                                                  const QString& filter /* = QString() */,
+                                                  QString* selectedFilter /* = 0 */) {
 
+    return QFileDialog::getSaveFileName(parent, caption, dir, filter, selectedFilter);
+}
 
 /**
  * Called whenever the mouse position changed.
  */
 void QG_DialogFactory::updateCoordinateWidget(const RS_Vector& abs,
         const RS_Vector& rel, bool updateFormat) {
-    if (coordinateWidget!=NULL) {
+	if (coordinateWidget) {
         coordinateWidget->setCoordinates(abs, rel, updateFormat);
     }
 }
 
-
-
-/**
- * Called when an action has a mouse hint.
- * @left mouse hint for left button
- * @right mouse hint for right button
- * @keeping whether to keep the mouse hints to be restored after interruption, default to true
- */
-
 void QG_DialogFactory::updateMouseWidget(const QString& left,
-        const QString& right, bool keeping /* = true */) {
-
-    if ( left != *leftHintCurrent || right != *rightHintCurrent ) {
-         if ( *hintKeeping ) {//whether the current hints should be save to HintSaved
-            *leftHintSaved=*leftHintCurrent;
-            *rightHintSaved=*rightHintCurrent;
-         }
-         *leftHintCurrent= left.isNull()? QString(""):left;
-         *rightHintCurrent=right.isNull()? QString(""):right;
-         *hintKeeping=keeping;
-        if (mouseWidget!=NULL) {
-            mouseWidget->setHelp(*leftHintCurrent, *rightHintCurrent);
-            }
-    if (commandWidget!=NULL) {
-        commandWidget->setCommand(*leftHintCurrent);
-    }
-   }
-}
-
-/**
- * Called to restore saved mouse hints
- */
-void QG_DialogFactory::restoreMouseWidget(void) {
-    *leftHintCurrent=*leftHintSaved;
-    *rightHintCurrent=*rightHintSaved;
-    if (mouseWidget!=NULL) {
-   // || leftHintSaved->isNull() || rightHintSaved->isNull())) {
-        mouseWidget->setHelp(*leftHintCurrent, *rightHintCurrent);
-    }
-    if (commandWidget!=NULL) {
-        commandWidget->setCommand(*leftHintCurrent);
-    }
+										 const QString& right) {
+	if (mouseWidget) {
+		mouseWidget->setHelp(left, right);
+	}
+	if (commandWidget) {
+		commandWidget->setCommand(left);
+	}
 }
 
 /**
  * Called whenever the selection changed.
  */
 void QG_DialogFactory::updateSelectionWidget(int num, double length) {
-    if (selectionWidget!=NULL) {
+	if (selectionWidget) {
         selectionWidget->setNumber(num);
         selectionWidget->setTotalLength(length);
     }
@@ -2030,7 +1807,7 @@ void QG_DialogFactory::updateSelectionWidget(int num, double length) {
  */
 void QG_DialogFactory::commandMessage(const QString& message) {
         RS_DEBUG->print("QG_DialogFactory::commandMessage");
-    if (commandWidget!=NULL) {
+	if (commandWidget) {
         commandWidget->appendHistory(message);
     }
         RS_DEBUG->print("QG_DialogFactory::commandMessage: OK");

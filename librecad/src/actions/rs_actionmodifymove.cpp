@@ -27,31 +27,37 @@
 #include "rs_actionmodifymove.h"
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_coordinateevent.h"
+#include "rs_modification.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
-
+struct RS_ActionModifyMove::Points {
+	RS_MoveData data;
+	RS_Vector referencePoint;
+	RS_Vector targetPoint;
+};
 
 RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Move Entities",
-                           container, graphicView) {}
-
-
-QAction* RS_ActionModifyMove::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("&Move / Copy")
-    QAction* action = new QAction(tr("&Move / Copy"),  NULL);
-        action->setIcon(QIcon(":/extui/modifymove.png"));
-    //action->zetStatusTip(tr("Move or copy entities one or multiple times"));
-    return action;
+						   container, graphicView)
+		, pPoints(new Points{})
+{
+	actionType=RS2::ActionModifyMove;
 }
+
+RS_ActionModifyMove::~RS_ActionModifyMove() = default;
 
 void RS_ActionModifyMove::trigger() {
 
     RS_DEBUG->print("RS_ActionModifyMove::trigger()");
 
     RS_Modification m(*container, graphicView);
-    m.move(data);
+	m.move(pPoints->data);
 
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
     finish(false);
@@ -68,16 +74,16 @@ void RS_ActionModifyMove::mouseMoveEvent(QMouseEvent* e) {
         RS_Vector mouse = snapPoint(e);
         switch (getStatus()) {
         case SetReferencePoint:
-            referencePoint = mouse;
+			pPoints->referencePoint = mouse;
             break;
 
         case SetTargetPoint:
-            if (referencePoint.valid) {
-                targetPoint = mouse;
+			if (pPoints->referencePoint.valid) {
+				pPoints->targetPoint = mouse;
 
                 deletePreview();
                 preview->addSelectionFrom(*container);
-                preview->move(targetPoint-referencePoint);
+				preview->move(pPoints->targetPoint-pPoints->referencePoint);
                 drawPreview();
             }
             break;
@@ -112,21 +118,21 @@ void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetReferencePoint:
-        referencePoint = pos;
-        graphicView->moveRelativeZero(referencePoint);
+		pPoints->referencePoint = pos;
+		graphicView->moveRelativeZero(pPoints->referencePoint);
         setStatus(SetTargetPoint);
         break;
 
     case SetTargetPoint:
-        targetPoint = pos;
-        graphicView->moveRelativeZero(targetPoint);
+		pPoints->targetPoint = pos;
+		graphicView->moveRelativeZero(pPoints->targetPoint);
         setStatus(ShowDialog);
-        if (RS_DIALOGFACTORY->requestMoveDialog(data)) {
-            if(data.number<0){
-                data.number=abs(data.number);
-                RS_DIALOGFACTORY->commandMessage(QString(tr("Invalid number of copies, use %1 ")).arg(data.number));
+		if (RS_DIALOGFACTORY->requestMoveDialog(pPoints->data)) {
+			if(pPoints->data.number<0){
+				pPoints->data.number=abs(pPoints->data.number);
+				RS_DIALOGFACTORY->commandMessage(tr("Invalid number of copies, use %1 ").arg(pPoints->data.number));
             }
-            data.offset = targetPoint - referencePoint;
+			pPoints->data.offset = pPoints->targetPoint - pPoints->referencePoint;
             trigger();
         }
         break;
@@ -153,7 +159,7 @@ void RS_ActionModifyMove::updateMouseButtonHints() {
                                                 tr("Back"));
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+            RS_DIALOGFACTORY->updateMouseWidget();
             break;
         }
     }
@@ -166,16 +172,5 @@ void RS_ActionModifyMove::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
         }
 }
-
-
-
-//void RS_ActionModifyMove::updateToolBar() {
-//    if( isFinished()) {
-//        if(RS_DIALOGFACTORY != NULL) {
-//            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-//        }
-//    }
-//}
-
 
 // EOF

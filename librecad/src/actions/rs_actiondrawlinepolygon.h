@@ -37,7 +37,6 @@
  */
 class RS_ActionDrawLinePolygonCenCor : public RS_PreviewActionInterface {
 	Q_OBJECT
-private:
     enum Status {
         SetCenter,    /**< Setting center. */
 		SetCorner,    /**< Setting corner. */
@@ -47,13 +46,7 @@ private:
 public:
     RS_ActionDrawLinePolygonCenCor(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDrawLinePolygonCenCor() {}
-
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-	
-	virtual RS2::ActionType rtti() {
-                return RS2::ActionDrawLinePolygonCenCor;
-	}
+	virtual ~RS_ActionDrawLinePolygonCenCor() override;
 
     virtual void trigger();
 	
@@ -69,9 +62,8 @@ public:
     virtual void showOptions();
 
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
-	int getNumber() {
+	int getNumber() const{
 		return number;
 	}
 
@@ -80,10 +72,8 @@ public:
 	}
 
 private:
-	/** Center of polygon */
-	RS_Vector center;
-	/** Edge */
-	RS_Vector corner;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 	/** Number of edges. */
 	int number;
 	/** Last status before entering text. */

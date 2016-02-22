@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QG_PolylineEquidistantOptions</class>
- <widget class="QWidget" name="QG_PolylineEquidistantOptions">
+ <class>PolylineEquidistantOptions</class>
+ <widget class="QWidget" name="PolylineEquidistantOptions">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -69,7 +69,7 @@
    <item>
     <widget class="QLineEdit" name="leDist">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -146,9 +146,9 @@
  <connections>
   <connection>
    <sender>leDist</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>QG_PolylineEquidistantOptions</receiver>
-   <slot>updateDist(QString)</slot>
+   <signal>editingFinished()</signal>
+   <receiver>PolylineEquidistantOptions</receiver>
+   <slot>updateDist()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>20</x>
@@ -160,11 +160,11 @@
     </hint>
    </hints>
   </connection>
-   <connection>
+  <connection>
    <sender>leNumber</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>QG_PolylineEquidistantOptions</receiver>
-   <slot>updateNumber(QString)</slot>
+   <signal>editingFinished()</signal>
+   <receiver>PolylineEquidistantOptions</receiver>
+   <slot>updateNumber()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>20</x>

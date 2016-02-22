@@ -33,8 +33,7 @@
 /**
  * Holds the data that defines a text entity.
  */
-class RS_TextData {
-public:
+struct RS_TextData {
     /**
      * Vertical alignments.
      */
@@ -69,7 +68,7 @@ public:
     /**
      * Default constructor. Leaves the data object uninitialized.
      */
-    RS_TextData() {}
+	RS_TextData() = default;
 
     /**
      * Constructor with initialisation.
@@ -100,28 +99,8 @@ public:
                 const QString& text,
                 const QString& style,
                 double angle,
-                RS2::UpdateMode updateMode = RS2::Update) {
-        this->insertionPoint = insertionPoint;
-        this->secondPoint = secondPoint;
-        this->height = height;
-        this->widthRel = widthRel;
-        this->valign = valign;
-        this->halign = halign;
-        this->textGeneration = textGeneration;
-        this->style = style;
-        this->angle = angle;
-        this->text = text;
-        this->updateMode = updateMode;
-    }
+				RS2::UpdateMode updateMode = RS2::Update);
 
-    friend class RS_Text;
-
-    friend std::ostream& operator << (std::ostream& os, const RS_TextData& td) {
-        os << "(" << td.text.toLatin1().data() << ")";
-        return os;
-    }
-
-public:
     /** Insertion point */
     RS_Vector insertionPoint;
     /** Second point for fit or aligned*/
@@ -146,7 +125,7 @@ public:
     RS2::UpdateMode updateMode;
 };
 
-
+std::ostream& operator << (std::ostream& os, const RS_TextData& td);
 
 /**
  * Class for a text entity.
@@ -160,15 +139,9 @@ class RS_Text : public RS_EntityContainer {
 public:
     RS_Text(RS_EntityContainer* parent,
             const RS_TextData& d);
-    virtual ~RS_Text() {}
+	virtual ~RS_Text() = default;
 
-    virtual RS_Entity* clone() {
-        RS_Text* t = new RS_Text(*this);
-        t->setOwner(isOwner());
-        t->initId();
-        t->detach();
-        return t;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityText */
     virtual RS2::EntityType rtti() const {
@@ -254,9 +227,7 @@ public:
      */
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                          double* dist = NULL)const;
-    virtual RS_VectorSolutions getRefPoints();
-    virtual RS_Vector getNearestRef(const RS_Vector& coord,
-                                    double* dist = NULL);
+	virtual RS_VectorSolutions getRefPoints() const;
 
     virtual void move(const RS_Vector& offset);
     virtual void rotate(const RS_Vector& center, const double& angle);

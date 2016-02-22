@@ -19,13 +19,24 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-
+#include<vector>
+#include <QAction>
+#include <QMouseEvent>
 #include "rs_actiondrawcircleinscribe.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
+#include "rs_circle.h"
+#include "rs_line.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
+
+struct RS_ActionDrawCircleInscribe::Points {
+	RS_CircleData cData;
+	RS_Vector coord;
+	std::vector<RS_Line*> lines;
+};
 
 /**
  * Constructor.
@@ -35,46 +46,38 @@ RS_ActionDrawCircleInscribe::RS_ActionDrawCircleInscribe(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw circle inscribed",
-                           container, graphicView),
-          cData(RS_Vector(0.,0.),1.)
+						   container, graphicView)
+		, pPoints(new Points{})
+		, valid(false)
 {
+	actionType=RS2::ActionDrawCircleInscribe;
 }
 
+RS_ActionDrawCircleInscribe::~RS_ActionDrawCircleInscribe() = default;
 
-
-RS_ActionDrawCircleInscribe::~RS_ActionDrawCircleInscribe() {
-
+void RS_ActionDrawCircleInscribe::clearLines(bool checkStatus)
+{
+	while(pPoints->lines.size() ){
+		if(checkStatus && (int) pPoints->lines.size()<=getStatus() )
+			break;
+		pPoints->lines.back()->setHighlighted(false);
+		graphicView->drawEntity(pPoints->lines.back());
+		pPoints->lines.pop_back();
+	}
 }
 
-
-QAction* RS_ActionDrawCircleInscribe::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action;
-
-    action = new QAction(tr("Circle &Inscribed"), NULL);
-    action->setIcon(QIcon(":/extui/circleinscribe.png"));
-    return action;
-}
 
 void RS_ActionDrawCircleInscribe::init(int status) {
     RS_PreviewActionInterface::init(status);
     if(status>=0) {
         RS_Snapper::suspend();
-    }
-
-    if (status==SetLine1) {
-        lines.clear();
-    }
+	}
+	clearLines(true);
 }
 
 void RS_ActionDrawCircleInscribe::finish(bool updateTB){
-    if(lines.size()>0){
-        for(int i=0;i<lines.size();i++) {
-            if(lines.at(i) != NULL) lines.at(i)->setHighlighted(false);
-        }
-        graphicView->redraw(RS2::RedrawDrawing);
-        lines.clear();
-    }
-    RS_PreviewActionInterface::finish(updateTB);
+	clearLines();
+	RS_PreviewActionInterface::finish(updateTB);
 }
 
 
@@ -82,23 +85,20 @@ void RS_ActionDrawCircleInscribe::trigger() {
     RS_PreviewActionInterface::trigger();
 
 
-    RS_Circle* circle=new RS_Circle(container, cData);
+	RS_Circle* circle=new RS_Circle(container, pPoints->cData);
 
     deletePreview();
     container->addEntity(circle);
 
     // upd. undo list:
-    if (document!=NULL) {
+	if (document) {
         document->startUndoCycle();
         document->addUndoable(circle);
         document->endUndoCycle();
     }
 
-    for(int i=0;i<lines.size();i++) lines[i]->setHighlighted(false);
-    graphicView->redraw(RS2::RedrawDrawing);
-//    drawSnapper();
+	clearLines(false);
 
-    lines.clear();
     setStatus(SetLine1);
 
     RS_DEBUG->print("RS_ActionDrawCircle4Line::trigger():"
@@ -112,33 +112,25 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent* e) {
 
     if(getStatus() == SetLine3) {
         RS_Entity*  en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
-        if(en == NULL) return;
+		if(!en) return;
         if(!(en->isVisible() && en->rtti()== RS2::EntityLine)) return;
         for(int i=0;i<getStatus();i++) {
-            if(en->getId() == lines[i]->getId()) return; //do not pull in the same line again
+            if(en->getId() == pPoints->lines[i]->getId()) return; //do not pull in the same line again
         }
-        if(en->getParent() != NULL) {
-            if ( en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
-                 || en->getParent()->rtti() == RS2::EntitySpline
-                 || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
-                 || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
-                 || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
-                 || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
-                 || en->getParent()->rtti() == RS2::EntityDimRadial    /**< Radial Dimension */
-                 || en->getParent()->rtti() == RS2::EntityDimDiametric /**< Diametric Dimension */
-                 || en->getParent()->rtti() == RS2::EntityDimAngular   /**< Angular Dimension */
-                 || en->getParent()->rtti() == RS2::EntityDimLeader    /**< Leader Dimension */
-                 ){
-                return;
-            }
-        }
-        coord= graphicView->toGraph(e->x(), e->y());
-        lines.resize(getStatus());
-        lines.push_back(static_cast<RS_Line*>(en));
-//        lines[getStatus()]=static_cast<RS_Line*>(en);
+		if(en->getParent() && en->getParent()->ignoredOnModification())
+			return;
+		pPoints->coord= graphicView->toGraph(e->x(), e->y());
+		deletePreview();
+		while(pPoints->lines.size()==3){
+			pPoints->lines.back()->setHighlighted(false);
+			graphicView->drawEntity(pPoints->lines.back());
+			pPoints->lines.pop_back();
+		}
+		en->setHighlighted(true);
+		pPoints->lines.push_back(static_cast<RS_Line*>(en));
+		graphicView->drawEntity(pPoints->lines.back());
         if(preparePreview()) {
-            deletePreview();
-            RS_Circle* e=new RS_Circle(preview, cData);
+			RS_Circle* e=new RS_Circle(preview.get(), pPoints->cData);
             preview->addEntity(e);
             drawPreview();
         }
@@ -151,10 +143,10 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent* e) {
 bool RS_ActionDrawCircleInscribe::preparePreview(){
     valid=false;
     if(getStatus() == SetLine3) {
-        RS_Circle c(preview,cData);
-        valid= c.createInscribe(coord, lines);
+		RS_Circle c(preview.get(), pPoints->cData);
+		valid= c.createInscribe(pPoints->coord, pPoints->lines);
         if(valid){
-            cData=c.getData();
+			pPoints->cData = c.getData();
         }
     }
     return valid;
@@ -163,40 +155,32 @@ bool RS_ActionDrawCircleInscribe::preparePreview(){
 void RS_ActionDrawCircleInscribe::mouseReleaseEvent(QMouseEvent* e) {
     // Proceed to next status
     if (e->button()==Qt::LeftButton) {
-        if (e==NULL) {
+		if (!e) {
             return;
         }
         RS_Entity*  en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
-        if(en == NULL) return;
+		if(!en) return;
         if(!(en->isVisible() && en->rtti()== RS2::EntityLine)) return;
         for(int i=0;i<getStatus();i++) {
-            if(en->getId() == lines[i]->getId()) return; //do not pull in the same line again
+            if(en->getId() == pPoints->lines[i]->getId()) return; //do not pull in the same line again
         }
-        if(en->getParent() != NULL) {
-            if ( en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
-                    || en->getParent()->rtti() == RS2::EntitySpline
-                    || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
-                    || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
-                    || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimRadial    /**< Radial Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimDiametric /**< Diametric Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimAngular   /**< Angular Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimLeader    /**< Leader Dimension */
-                    ){
-                return;
+		if(en->getParent()) {
+			if ( en->getParent()->ignoredOnModification()) return;
         }
-        }
-        lines.resize(getStatus());
-        lines.push_back(static_cast<RS_Line*>(en));
-        coord= graphicView->toGraph(e->x(), e->y());
+		while((int) pPoints->lines.size()>getStatus()){
+			pPoints->lines.back()->setHighlighted(false);
+			graphicView->drawEntity(pPoints->lines.back());
+			pPoints->lines.pop_back();
+		}
+		pPoints->lines.push_back(static_cast<RS_Line*>(en));
+		pPoints->coord= graphicView->toGraph(e->x(), e->y());
         switch (getStatus()) {
         case SetLine1:
         case SetLine2:
-            en->setHighlighted(true);
-            setStatus(getStatus()+1);
-            graphicView->redraw(RS2::RedrawDrawing);
-            break;
+			en->setHighlighted(true);
+			setStatus(getStatus()+1);
+			graphicView->redraw(RS2::RedrawDrawing);
+			break;
         case SetLine3:
             if( preparePreview()) {
                 trigger();
@@ -207,12 +191,12 @@ void RS_ActionDrawCircleInscribe::mouseReleaseEvent(QMouseEvent* e) {
         }
     } else if (e->button()==Qt::RightButton) {
         // Return to last status:
-        if(getStatus()>0){
-            lines[getStatus()-1]->setHighlighted(false);
-            lines.pop_back();
+		if(getStatus()>0){
+			clearLines(true);
+			pPoints->lines.back()->setHighlighted(false);
+			pPoints->lines.pop_back();
             graphicView->redraw(RS2::RedrawDrawing);
             deletePreview();
-
         }
         init(getStatus()-1);
     }
@@ -230,7 +214,7 @@ void RS_ActionDrawCircle4Line::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+		if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -241,7 +225,7 @@ void RS_ActionDrawCircle4Line::commandEvent(RS_CommandEvent* e) {
     case SetFocus1: {
             bool ok;
             double m = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 ratio = m / major.magnitude();
                 if (!isArc) {
                     trigger();
@@ -249,7 +233,7 @@ void RS_ActionDrawCircle4Line::commandEvent(RS_CommandEvent* e) {
                     setStatus(SetAngle1);
                 }
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+				if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -259,11 +243,11 @@ void RS_ActionDrawCircle4Line::commandEvent(RS_CommandEvent* e) {
     case SetAngle1: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 angle1 = RS_Math::deg2rad(a);
                 setStatus(SetAngle2);
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+				if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -273,11 +257,11 @@ void RS_ActionDrawCircle4Line::commandEvent(RS_CommandEvent* e) {
     case SetAngle2: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 angle2 = RS_Math::deg2rad(a);
                 trigger();
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+				if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -299,7 +283,7 @@ QStringList RS_ActionDrawCircleInscribe::getAvailableCommands() {
 
 
 void RS_ActionDrawCircleInscribe::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+	if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetLine1:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first line"),
@@ -317,7 +301,7 @@ void RS_ActionDrawCircleInscribe::updateMouseButtonHints() {
             break;
 
         default:
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+            RS_DIALOGFACTORY->updateMouseWidget();
             break;
         }
     }
@@ -326,17 +310,7 @@ void RS_ActionDrawCircleInscribe::updateMouseButtonHints() {
 
 
 void RS_ActionDrawCircleInscribe::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
-
-
-
-//void RS_ActionDrawCircleInscribe::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
 
 // EOF

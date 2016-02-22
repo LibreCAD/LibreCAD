@@ -28,7 +28,8 @@
 #ifndef RS_UNDO_H
 #define RS_UNDO_H
 
-#include <QList>
+#include <memory>
+#include <vector>
 
 class RS_UndoCycle;
 class RS_Undoable;
@@ -42,16 +43,13 @@ class RS_Undoable;
  */
 class RS_Undo {
 public:
-    RS_Undo();
-    virtual ~RS_Undo();
-
-    void addUndoCycle(RS_UndoCycle* i);
+	virtual ~RS_Undo() = default;
 
     virtual bool undo();
     virtual bool redo();
 
-    virtual RS_UndoCycle* getUndoCycle();
-    virtual RS_UndoCycle* getRedoCycle();
+//	virtual std::shared_ptr<RS_UndoCycle> getUndoCycle();
+//	virtual std::shared_ptr<RS_UndoCycle> getRedoCycle();
 
     virtual int countUndoCycles();
     virtual int countRedoCycles();
@@ -68,18 +66,20 @@ public:
     virtual void removeUndoable(RS_Undoable* u) = 0;
 
     /**
-      * enable/disable redo/undo buttons in main application window
-      * Author: Dongxu Li
+	  *\brief enable/disable redo/undo buttons in main application window
+	  *\author: Dongxu Li
       **/
-    virtual void setGUIButtons();
+	void setGUIButtons() const;
 
     friend std::ostream& operator << (std::ostream& os, RS_Undo& a);
 
     static bool test();
 
-protected:
+private:
+
+	void addUndoCycle(std::shared_ptr<RS_UndoCycle> const& i);
     //! List of undo list items. every item is something that can be undone.
-    QList<RS_UndoCycle*> undoList;
+	std::vector<std::shared_ptr<RS_UndoCycle>> undoList;
 
     /**
      * Index that points to the current position in the undo list.
@@ -87,12 +87,12 @@ protected:
      * The item after will be redone (if there is an item) when redo
      * is called.
      */
-    int undoPointer;
+	int undoPointer = -1;
 
     /**
      * Current undo cycle.
      */
-    RS_UndoCycle* currentCycle;
+	std::shared_ptr<RS_UndoCycle> currentCycle;
 
 };
 

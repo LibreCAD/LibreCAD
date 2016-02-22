@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -25,7 +26,7 @@
 **********************************************************************/
 #include "qg_layerdialog.h"
 
-#include <qmessagebox.h>
+#include <QMessageBox>
 #include "rs_layer.h"
 #include "rs_layerlist.h"
 
@@ -47,13 +48,6 @@ QG_LayerDialog::QG_LayerDialog(QWidget* parent, QString name, bool modal, Qt::Wi
     init();
 }
 
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_LayerDialog::~QG_LayerDialog()
-{
-    // no need to delete child widgets, Qt does it all for us
-}
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -69,7 +63,7 @@ void QG_LayerDialog::setLayer(RS_Layer* l) {
 	layerName = layer->getName();
     leName->setText(layerName);
     wPen->setPen(layer->getPen(), false, false, tr("Default Pen"));
-    cbConstructionLayer->setChecked(l->isConstructionLayer());
+    cbConstructionLayer->setChecked(l->isConstruction());
 
     if (layer->getName()=="0") {
         leName->setEnabled(false);
@@ -79,14 +73,14 @@ void QG_LayerDialog::setLayer(RS_Layer* l) {
 void QG_LayerDialog::updateLayer() {
     layer->setName(leName->text());
     layer->setPen(wPen->getPen());
-    layer->setConstructionLayer(cbConstructionLayer->isChecked());
+    layer->setConstruction(cbConstructionLayer->isChecked());
 }
 
 void QG_LayerDialog::validate() {
-	if (layerList != NULL && 
+	if (layerList &&
                 (editLayer == false || layerName != leName->text())) {
                 RS_Layer* l = layerList->find(leName->text());
-		if (l != NULL) {
+		if (l) {
 			QMessageBox::information(parentWidget(),
 									 QMessageBox::tr("Layer Properties"),
 									 QMessageBox::tr("Layer with a name \"%1\" "
@@ -109,6 +103,7 @@ void QG_LayerDialog::setLayerList( RS_LayerList * ll ){
 }
 
 void QG_LayerDialog::init(){
+	leName->setFocus();
 	layer = NULL;
 	layerList = NULL;
 	layerName = "";

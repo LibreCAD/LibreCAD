@@ -25,14 +25,14 @@
 **********************************************************************/
 #include "qg_dlgtext.h"
 
-//#include "qg_fontbox.h"
-#include <qtextcodec.h>
+#include <QTextCodec>
 #include <QTextStream>
 #include <QFileDialog>
 #include "rs_system.h"
 #include "rs_settings.h"
 #include "rs_font.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgText as a child of 'parent', with the
@@ -169,11 +169,11 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
         angle = QString("%1").arg(RS_Math::rad2deg(text->getAngle()));
         wPen->setPen(text->getPen(false), true, false, "Pen");
         RS_Graphic* graphic = text->getGraphic();
-        if (graphic!=NULL) {
+        if (graphic) {
             cbLayer->init(*(graphic->getLayerList()), false, false);
         }
         RS_Layer* lay = text->getLayer(false);
-        if (lay!=NULL) {
+        if (lay) {
             cbLayer->setLayer(*lay);
         }
     }
@@ -194,7 +194,7 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
  * Updates the text entity represented by the dialog to fit the choices of the user.
  */
 void QG_DlgText::updateText() {
-    if (text!=NULL) {
+    if (text) {
         text->setStyle(cbFont->currentText());
         text->setHeight(leHeight->text().toDouble());
         text->setWidthRel(leWidthRel->text().toDouble());
@@ -203,7 +203,7 @@ void QG_DlgText::updateText() {
         text->setAlignment(getAlignment());
         text->setAngle(RS_Math::deg2rad(leAngle->text().toDouble()));
     }
-    if (text!=NULL && !isNew) {
+    if (text && !isNew) {
         text->setPen(wPen->getPen());
         text->setLayer(cbLayer->currentText());
         text->update();
@@ -386,7 +386,7 @@ void QG_DlgText::setFont(const QString& f) {
 }
 
 /*void QG_DlgText::defaultChanged(bool) {
-    if (cbDefault->isChecked() && font!=NULL) {
+    if (cbDefault->isChecked() && font) {
         leLineSpacingFactor->setText(
                         QString("%1").arg(font->getLineSpacingFactor()));
     }

@@ -27,6 +27,7 @@
 
 #include "rs_insert.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgInsert as a child of 'parent', with the
@@ -65,11 +66,11 @@ void QG_DlgInsert::setInsert(RS_Insert& i) {
     //pen = insert->getPen();
     wPen->setPen(insert->getPen(false), true, false, "Pen");
     RS_Graphic* graphic = insert->getGraphic();
-    if (graphic!=NULL) {
+    if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
     RS_Layer* lay = insert->getLayer(false);
-    if (lay!=NULL) {
+    if (lay) {
         cbLayer->setLayer(*lay);
     }
     QString s;

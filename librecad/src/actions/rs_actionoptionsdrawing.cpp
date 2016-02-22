@@ -36,20 +36,8 @@ RS_ActionOptionsDrawing::RS_ActionOptionsDrawing(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Drawing Options",
                     container, graphicView) {
+	actionType=RS2::ActionOptionsDrawing;
 }
-
-
-QAction* RS_ActionOptionsDrawing::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Drawing")
-	QAction* action = new QAction(tr("Current &Drawing Preferences"), NULL);
-// Preferences shortcut was itroduced on 4.6
-#if QT_VERSION >= 0x040600
-	action->setShortcut(QKeySequence::Preferences);
-#endif 
-	//action->zetStatusTip(tr("Settings for the current Drawing"));
-    return action;
-}
-
 
 void RS_ActionOptionsDrawing::init(int status) {
     RS_ActionInterface::init(status);
@@ -60,7 +48,7 @@ void RS_ActionOptionsDrawing::init(int status) {
 
 
 void RS_ActionOptionsDrawing::trigger() {
-    if (graphic!=NULL) {
+    if (graphic) {
         RS_DIALOGFACTORY->requestOptionsDrawingDialog(*graphic);
         RS_DIALOGFACTORY->updateCoordinateWidget(RS_Vector(0.0,0.0),
                 RS_Vector(0.0,0.0),

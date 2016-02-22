@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include <QMouseEvent>
 #include "rs_actionselect.h"
 
 #include "rs_dialogfactory.h"
@@ -31,16 +32,17 @@
 #include "rs_actionselectsingle.h"
 
 
-RS_ActionSelect::RS_ActionSelect(RS_EntityContainer& container,
+RS_ActionSelect::RS_ActionSelect(QG_ActionHandler* a_handler,
+                                 RS_EntityContainer& container,
                                  RS_GraphicView& graphicView,
                                  RS2::ActionType nextAction,
-                                 QVector<RS2::EntityType>* entityTypeList)
-
-    :RS_ActionInterface("Select Entities", container, graphicView) {
-    this->entityTypeList=entityTypeList;
-
-    this->nextAction = nextAction;
-    selectSingle=false;
+								 std::initializer_list<RS2::EntityType> const& entityTypeList)
+	:RS_ActionInterface("Select Entities", container, graphicView)
+	,entityTypeList(entityTypeList)
+	,nextAction(nextAction)
+    ,action_handler(a_handler)
+{
+	actionType=RS2::ActionSelect;
 }
 
 
@@ -57,17 +59,8 @@ void RS_ActionSelect::init(int status) {
 
 void RS_ActionSelect::resume(){
     RS_ActionInterface::resume();
-    if(selectSingle==false){
-        finish();
-    }else{
-        deleteSnapper();
-    }
+    deleteSnapper();
 }
-
-void RS_ActionSelect::requestFinish(bool keep){
-    selectSingle=keep;
-}
-
 
 void RS_ActionSelect::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
@@ -78,44 +71,10 @@ void RS_ActionSelect::mouseReleaseEvent(QMouseEvent* e) {
 
 int RS_ActionSelect::countSelected() {
         int ret=container->countSelected();
-        if(ret==0 && RS_DIALOGFACTORY!=NULL){
+        if(ret==0 && RS_DIALOGFACTORY){
             RS_DIALOGFACTORY->commandMessage(tr("No entity selected!"));
         }
         return ret;
-}
-
-void RS_ActionSelect::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()){
-            if(container->countSelected()==0){
-                //some nextAction segfault with empty selection
-                //todo: make actions safe with empty selection, issue#235
-                RS_DIALOGFACTORY->commandMessage(tr("No entity selected!"));
-                //do not keep toolbar select after this action finishes, issue#291
-//                RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
-                RS_DIALOGFACTORY->requestPreviousToolBar();
-            } else{
-                if ( entityTypeList != NULL &&  entityTypeList->size() >= 1 ){
-                    //only select entity types from the given list
-                    //fixme, need to handle resolution level
-
-                    for (RS_Entity* e=container->firstEntity();
-                         e!=NULL;
-                         e=container->nextEntity()) {
-                        if (e!=NULL && e->isSelected()) {
-                            if ( entityTypeList->contains( e->rtti() ) == false ){
-                                e->setSelected(false);
-                            }
-                        }
-                    }
-                }
-                RS_DIALOGFACTORY->requestPreviousToolBar();
-            }
-        }else{
-            RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
-        }
-
-    }
 }
 
 void RS_ActionSelect::updateMouseButtonHints() {
@@ -179,7 +138,7 @@ void RS_ActionSelect::updateMouseButtonHints() {
 
 
 void RS_ActionSelect::updateMouseCursor() {
-    if(graphicView!=NULL){
+    if(graphicView){
         if(isFinished()){
             graphicView->setMouseCursor(RS2::ArrowCursor);
         }else{
@@ -187,4 +146,14 @@ void RS_ActionSelect::updateMouseCursor() {
         }
     }
 }
+
+void RS_ActionSelect::keyPressEvent(QKeyEvent* e)
+{
+    if (e->key()==Qt::Key_Enter && countSelected() > 0)
+    {
+        finish();
+        action_handler->setCurrentAction(nextAction);
+    }
+}
+
 // EOF

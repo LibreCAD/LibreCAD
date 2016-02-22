@@ -24,11 +24,15 @@
 **
 **********************************************************************/
 
-#include "doc_plugin_interface.h"
 #include "qc_actiongetent.h"
+#include <QMouseEvent>
+#include <QKeyEvent>
+#include "doc_plugin_interface.h"
 #include "rs_dialogfactory.h"
 #include "rs_selection.h"
 #include "rs_snapper.h"
+#include "rs_debug.h"
+// #include <QDebug>
 
 
 QC_ActionGetEnt::QC_ActionGetEnt(RS_EntityContainer& container,
@@ -36,15 +40,16 @@ QC_ActionGetEnt::QC_ActionGetEnt(RS_EntityContainer& container,
         :RS_ActionInterface("Get Entity", container, graphicView) {
     completed = false;
     mesage = tr("Select object:");
-    en = NULL;
+    en = nullptr;
 }
+
 
 
 void QC_ActionGetEnt::updateMouseButtonHints() {
     if (!completed)
         RS_DIALOGFACTORY->updateMouseWidget(mesage, tr("Cancel"));
     else
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        RS_DIALOGFACTORY->updateMouseWidget();
 }
 
 
@@ -57,11 +62,12 @@ void QC_ActionGetEnt::setMesage(QString msg){
 }
 
 void QC_ActionGetEnt::trigger() {
-    if (en!=NULL) {
+    if (en) {
         RS_Selection s(*container, graphicView);
         s.selectSingle(en);
         completed = true;
         updateMouseButtonHints();
+        finish();
     } else {
         RS_DEBUG->print("QC_ActionGetEnt::trigger: Entity is NULL\n");
     }
@@ -69,10 +75,23 @@ void QC_ActionGetEnt::trigger() {
 
 void QC_ActionGetEnt::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
-        init(getStatus()-1);
+        completed = true;
+        updateMouseButtonHints();
+        finish();
     } else {
         en = catchEntity(e);
         trigger();
+    }
+}
+
+void QC_ActionGetEnt::keyPressEvent(QKeyEvent* e)
+{
+    // qDebug() << "QC_ActionGetEnt::keyPressEvent";
+    if (e->key()==Qt::Key_Escape)
+    {
+		RS_DIALOGFACTORY->updateMouseWidget();
+        completed = true;
+        // qDebug() << "escape QC_ActionGetEnt";
     }
 }
 
@@ -80,7 +99,7 @@ void QC_ActionGetEnt::mouseReleaseEvent(QMouseEvent* e) {
  * Add selected entity from 'container' to the selection.
  */
 Plugin_Entity *QC_ActionGetEnt::getSelected(Doc_plugin_interface* d) {
-    Plugin_Entity *pe = new Plugin_Entity(en, d);
+    Plugin_Entity *pe = en ? new Plugin_Entity(en, d) : nullptr;
     return pe;
 }
 

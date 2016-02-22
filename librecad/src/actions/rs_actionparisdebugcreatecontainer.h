@@ -41,11 +41,8 @@ class RS_ActionPARISDebugCreateContainer : public RS_ActionInterface {
 public:
     RS_ActionPARISDebugCreateContainer(RS_EntityContainer& container,
                          RS_GraphicView& graphicView);
-    virtual ~RS_ActionPARISDebugCreateContainer();
+	virtual ~RS_ActionPARISDebugCreateContainer() = default;
 	
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionPARISDebugCreateContainer;
-	}
 };
 
 #endif

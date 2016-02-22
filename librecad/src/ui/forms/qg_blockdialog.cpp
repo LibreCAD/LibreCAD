@@ -23,9 +23,11 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#include "qg_blockdialog.h"
-
 #include <QMessageBox>
+#include "qg_blockdialog.h"
+#include "rs_blocklist.h"
+#include "rs_block.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_BlockDialog as a child of 'parent', with the
@@ -39,15 +41,6 @@ QG_BlockDialog::QG_BlockDialog(QWidget* parent, bool modal, Qt::WindowFlags fl)
 {
     setModal(modal);
     setupUi(this);
-
-}
-
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_BlockDialog::~QG_BlockDialog()
-{
-    // no need to delete child widgets, Qt does it all for us
 }
 
 /*
@@ -63,28 +56,15 @@ void QG_BlockDialog::setBlockList(RS_BlockList* l) {
         RS_DEBUG->print("QG_BlockDialog::setBlockList");
 
     blockList = l;
-    if (blockList!=NULL) {
+	if (blockList) {
         RS_Block* block = blockList->getActive();
-        if (block!=NULL) {
+		if (block) {
             leName->setText(block->getName());
-        }
-//        else {
-//            RS_DEBUG->print(RS_Debug::D_ERROR,
-//                                "QG_BlockDialog::setBlockList: No block active.");
-//        }
+		}
     }
 }
 
 RS_BlockData QG_BlockDialog::getBlockData() {
-    /*if (blockList!=NULL) {
-      RS_Block* block = blockList->getActive();
-        if (block!=NULL) {
-           return blockList->rename(block, leName->text().latin1());
-        }
-}
-
-    return false;*/
-
     return RS_BlockData(leName->text(), RS_Vector(0.0,0.0), false);
 }
 
@@ -92,7 +72,7 @@ void QG_BlockDialog::validate() {
     QString name = leName->text();
 
     if (!name.isEmpty()) {
-        if (blockList!=NULL && blockList->find(name)==NULL) {
+		if (blockList && !blockList->find(name)) {
             accept();
         } else {
             QMessageBox::warning( this, tr("Renaming Block"),
@@ -101,10 +81,7 @@ void QG_BlockDialog::validate() {
                                   QMessageBox::Ok,
                                   Qt::NoButton);
         }
-    }
-    //else {
-    //reject();
-    //}
+	}
 }
 
 void QG_BlockDialog::cancel() {

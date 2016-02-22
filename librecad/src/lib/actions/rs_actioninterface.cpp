@@ -24,12 +24,13 @@
 **
 **********************************************************************/
 
-
+#include <QKeyEvent>
 #include "rs_actioninterface.h"
-
 #include "rs_graphicview.h"
 #include "rs_commands.h"
 #include "rs_dialogfactory.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 /**
  * Constructor.
@@ -72,14 +73,7 @@ RS_Snapper(container, graphicView) {
     actionType=RS2::ActionNone;
 
     RS_DEBUG->print("RS_ActionInterface::RS_ActionInterface: Setting up action: \"%s\": OK", name);
-}
 
-/**
- * Destructor.
- */
-RS_ActionInterface::~RS_ActionInterface() {
-    // would be pure virtual now:
-    // hideOptions();
 }
 
 /**
@@ -87,8 +81,8 @@ RS_ActionInterface::~RS_ActionInterface() {
 *
 * @todo no default implementation
  */
-RS2::ActionType RS_ActionInterface::rtti()  {
-    return RS2::ActionNone;
+RS2::ActionType RS_ActionInterface::rtti() const{
+	return actionType;
 }
 
 /**
@@ -109,18 +103,17 @@ void RS_ActionInterface::setName(const char* _name) {
  * @param status The status on which to initiate this action.
  * default is 0 to begin the action.
  */
-void RS_ActionInterface::init(int status) {
-    RS_Snapper::init();
-
+void RS_ActionInterface::init(int status)
+{
     setStatus(status);
     if (status>=0) {
-        //graphicView->setMouseCursor(cursor);
-                updateMouseButtonHints();
+        RS_Snapper::init();
+        updateMouseButtonHints();
         updateMouseCursor();
-        updateToolBar();
     }else{
         //delete snapper when finished, bug#3416878
         deleteSnapper();
+
     }
 }
 
@@ -188,8 +181,7 @@ void RS_ActionInterface::commandEvent(RS_CommandEvent*) {
  *  for the command line.
  */
 QStringList RS_ActionInterface::getAvailableCommands() {
-    QStringList l;
-    return l;
+	return QStringList{};
 }
 
 /**
@@ -207,7 +199,6 @@ QStringList RS_ActionInterface::getAvailableCommands() {
 void RS_ActionInterface::setStatus(int status) {
     this->status = status;
     updateMouseButtonHints();
-    updateToolBar();
     updateMouseCursor();
     if(status<0) finish();
 }
@@ -238,19 +229,6 @@ void RS_ActionInterface::updateMouseButtonHints() {}
 void RS_ActionInterface::updateMouseCursor() {}
 
 /**
- * Should be overwritten to set the toolbar for this action.
- */
-void RS_ActionInterface::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
-        }else{
-            RS_DIALOGFACTORY->showCadToolBar(rtti());
-        }
-    }
-}
-
-/**
  * @return true, if the action is finished and can be deleted.
  */
 bool RS_ActionInterface::isFinished() {
@@ -269,21 +247,17 @@ void RS_ActionInterface::setFinished() {
 /**
  * Finishes this action.
  */
-void RS_ActionInterface::finish(bool updateTB) {
-    RS_DEBUG->print("RS_ActionInterface::finish");
-    //    if(rtti() != RS2::ActionDefault) {//refuse to quit the default action
-    if(!(rtti() == RS2::ActionDefault || rtti()==RS2::ActionFilePrintPreview) ) {//refuse to quit the default action
-        status = -1;
-        finished = true;
-        hideOptions();
-        if(updateTB) {
-            updateToolBar();
-        }
-        RS_Snapper::finish();
-    }
-    graphicView->setMouseCursor(RS2::ArrowCursor);
-
-    RS_DEBUG->print("RS_ActionInterface::finish: OK");
+void RS_ActionInterface::finish(bool /*updateTB*/)
+{
+	RS_DEBUG->print("RS_ActionInterface::finish");
+	//refuse to quit the default action
+	if(!(rtti() == RS2::ActionDefault || rtti()==RS2::ActionFilePrintPreview) ) {
+		status = -1;
+		finished = true;
+		hideOptions();
+		RS_Snapper::finish();
+	}
+	RS_DEBUG->print("RS_ActionInterface::finish: OK");
 }
 
 /**
@@ -298,7 +272,6 @@ void RS_ActionInterface::setPredecessor(RS_ActionInterface* pre) {
  * Suspends this action while another action takes place.
  */
 void RS_ActionInterface::suspend() {
-    graphicView->setMouseCursor(RS2::ArrowCursor);
     RS_Snapper::suspend();
 }
 
@@ -307,7 +280,6 @@ void RS_ActionInterface::suspend() {
  */
 void RS_ActionInterface::resume() {
     updateMouseCursor();
-    updateToolBar();
     updateMouseButtonHints();
     RS_Snapper::resume();
 }
@@ -324,6 +296,10 @@ void RS_ActionInterface::hideOptions() {
  */
 void RS_ActionInterface::showOptions() {
     RS_Snapper::showOptions();
+}
+
+void RS_ActionInterface::setActionType(RS2::ActionType actionType){
+	this->actionType=actionType;
 }
 
 /**

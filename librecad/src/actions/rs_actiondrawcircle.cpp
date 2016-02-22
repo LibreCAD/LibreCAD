@@ -24,40 +24,35 @@
 **
 **********************************************************************/
 
+#include <QAction>
+#include <QMouseEvent>
 #include "rs_actiondrawcircle.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
-
-
+#include "rs_circle.h"
+#include "rs_coordinateevent.h"
+#include "rs_math.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
 RS_ActionDrawCircle::RS_ActionDrawCircle(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw circles",
-                           container, graphicView) {
+						   container, graphicView)
+		,data(new RS_CircleData())
+{
+	actionType=RS2::ActionDrawCircle;
     reset();
 }
 
 
 
-RS_ActionDrawCircle::~RS_ActionDrawCircle() {}
-
-
-QAction* RS_ActionDrawCircle::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/*RVT_PORT    QAction* action = new QAction(tr("Circle: Center, Point"),
-                                  tr("Center, &Point"),
-                                  QKeySequence(), NULL); */
-        // "Circle: Center, Point"
-    QAction* action = new QAction(tr("Center, &Point"), NULL);
-        action->setIcon(QIcon(":/extui/circles.png"));
-    //action->zetStatusTip(tr("Draw circles with center and point"));
-    return action;
-}
+RS_ActionDrawCircle::~RS_ActionDrawCircle() = default;
 
 void RS_ActionDrawCircle::reset() {
-    data = RS_CircleData(RS_Vector(false), 0.0);
+	data.reset(new RS_CircleData{});
 }
 
 
@@ -74,13 +69,13 @@ void RS_ActionDrawCircle::trigger() {
     RS_PreviewActionInterface::trigger();
 
     RS_Circle* circle = new RS_Circle(container,
-                                      data);
+									  *data);
     circle->setLayerToActive();
     circle->setPenToActive();
     container->addEntity(circle);
 
     // upd. undo list:
-    if (document!=NULL) {
+    if (document) {
         document->startUndoCycle();
         document->addUndoable(circle);
         document->endUndoCycle();
@@ -103,15 +98,15 @@ void RS_ActionDrawCircle::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
     case SetCenter:
-        data.center = mouse;
+		data->center = mouse;
         break;
 
     case SetRadius:
-        if (data.center.valid) {
-            data.radius = data.center.distanceTo(mouse);
+		if (data->center.valid) {
+			data->radius = data->center.distanceTo(mouse);
             deletePreview();
-            preview->addEntity(new RS_Circle(preview,
-                                             data));
+			preview->addEntity(new RS_Circle(preview.get(),
+											 *data));
             drawPreview();
         }
         break;
@@ -135,7 +130,7 @@ void RS_ActionDrawCircle::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawCircle::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (!e){
         return;
     }
 
@@ -143,15 +138,15 @@ void RS_ActionDrawCircle::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetCenter:
-        data.center = mouse;
+		data->center = mouse;
         graphicView->moveRelativeZero(mouse);
         setStatus(SetRadius);
         break;
 
     case SetRadius:
-        if (data.center.valid) {
+		if (data->center.valid) {
             graphicView->moveRelativeZero(mouse);
-            data.radius = data.center.distanceTo(mouse);
+			data->radius = data->center.distanceTo(mouse);
             trigger();
         }
         //setStatus(SetCenter);
@@ -168,7 +163,7 @@ void RS_ActionDrawCircle::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -181,11 +176,11 @@ void RS_ActionDrawCircle::commandEvent(RS_CommandEvent* e) {
             bool ok;
             double r = RS_Math::eval(c, &ok);
             if (ok) {
-                data.radius = r;
+				data->radius = r;
                 e->accept();
                 trigger();
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(
                         tr("Not a valid expression"));
                 }
@@ -209,19 +204,19 @@ QStringList RS_ActionDrawCircle::getAvailableCommands() {
 void RS_ActionDrawCircle::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetCenter:
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->updateMouseWidget(
                 tr("Specify center"), tr("Cancel"));
         }
         break;
     case SetRadius:
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify radius"), tr("Back"));
         }
         break;
     default:
-        if (RS_DIALOGFACTORY!=NULL) {
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+        if (RS_DIALOGFACTORY) {
+			RS_DIALOGFACTORY->updateMouseWidget();
         }
         break;
     }
@@ -244,17 +239,6 @@ void RS_ActionDrawCircle::hideOptions() {
 void RS_ActionDrawCircle::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-//void RS_ActionDrawCircle::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
 
 // EOF
 

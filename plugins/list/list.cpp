@@ -12,10 +12,10 @@
 
 
 #include <QTextEdit>
-#include <QColor>
+//#include <QColor>
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
-#include <math.h>
+#include <cmath>
 #include "list.h"
 
 QString LC_List::name() const
@@ -27,7 +27,7 @@ PluginCapabilities LC_List::getCapabilities() const
 {
     PluginCapabilities pluginCapabilities;
     pluginCapabilities.menuEntryPoints
-            << PluginMenuLocation("Info", tr("List entities"));
+            << PluginMenuLocation("plugins_menu", tr("List entities"));
     return pluginCapabilities;
 }
 
@@ -71,8 +71,8 @@ QString LC_List::getStrData(Plug_Entity *ent) {
     //common entity data
     ent->getData(&data);
     strData  = strCommon.arg(tr("Layer")).arg(data.value(DPI::LAYER).toString());
-    QColor color = data.value(DPI::COLOR).value<QColor>();
-    strData.append( strCommon.arg(tr("Color")).arg(color.name()));
+    int col = data.value(DPI::COLOR).toInt();
+    strData.append( strCommon.arg(tr("Color")).arg( ent->intColor2str(col) ));
     strData.append( strCommon.arg(tr("Line type")).arg(data.value(DPI::LTYPE).toString()));
     strData.append( strCommon.arg(tr("Line thickness")).arg(data.value(DPI::LWIDTH).toString()));
     strData.append( strCommon.arg(tr("ID")).arg(data.value(DPI::EID).toLongLong()));
@@ -206,6 +206,9 @@ QString LC_List::getStrData(Plug_Entity *ent) {
     case DPI::SPLINE:
         strData.prepend( strEntity.arg(tr("SPLINE")));
         break;
+	case DPI::SPLINEPOINTS:
+		strData.prepend( strEntity.arg(tr("SPLINEPOINTS")));
+		break;
     case DPI::HATCH:
         strData.prepend( strEntity.arg(tr("HATCH")));
         break;

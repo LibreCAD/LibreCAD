@@ -27,20 +27,14 @@
 #ifndef QC_APPLICATIONWINDOW_H
 #define QC_APPLICATIONWINDOW_H
 
-#include <QMdiSubWindow>
-#include "qc_mdiwindow.h"
-#include "qg_mainwindowinterface.h"
+#include "mainwindowx.h"
 
-#ifdef RS_SCRIPTING
-#include "qs_scripter.h"
-#include <qsproject.h>
-#endif
-
-#if QT_VERSION < 0x040400
-class QAssistantClient;
-#endif
+#include "rs_pen.h"
+#include "rs_snapper.h"
+#include <QMap>
 
 class QMdiArea;
+class QMdiSubWindow;
 class QC_MDIWindow;
 class QG_LibraryWidget;
 class QG_CadToolBar;
@@ -57,54 +51,56 @@ class QG_PenToolBar;
 class QHelpEngine;
 class QC_PluginInterface;
 class QG_ActiveLayerName;
+class LC_SimpleTests;
+class LC_CustomToolbar;
+class QG_ActionHandler;
+class RS_GraphicView;
+class RS_Document;
+class TwoStackedLabels;
+
+struct DockAreas
+{
+    QAction* left;
+    QAction* right;
+    QAction* top;
+    QAction* bottom;
+    QAction* floating;
+};
 
 /**
  * Main application window. Hold together document, view and controls.
  *
  * @author Andrew Mustun
  */
-class QC_ApplicationWindow: public QMainWindow,
-    public QG_MainWindowInterface
-        {
+class QC_ApplicationWindow: public MainWindowX
+{
     Q_OBJECT
 
 public:
     QC_ApplicationWindow();
     ~QC_ApplicationWindow();
 
-    void initActions();
-    void initMenuBar();
-    void initToolBar();
-    void initStatusBar();
-
     void initSettings();
-        void restoreDocks();
     void storeSettings();
-
-    void updateRecentFilesMenu();
-
-    void initMDI();
-    void initView();
 
     bool queryExit(bool force);
 
-        /** Catch hotkey for giving focus to command line. */
+    /** Catch hotkey for giving focus to command line. */
     virtual void keyPressEvent(QKeyEvent* e);
-    virtual void keyReleaseEvent(QKeyEvent* e);
     void setRedoEnable(bool enable);
     void setUndoEnable(bool enable);
-    void setPreviousZoomEnable(bool enable);
+    bool loadStyleSheet(QString path);
+
+    QMap<QString, QAction*> a_map;
 
 public slots:
-    virtual void show();
-    void finishSplashScreen();
-        void slotFocus();
+    void relayAction(QAction* q_action);
+    void slotFocus();
     void slotBack();
     void slotKillAllActions();
-    //void slotNext();
     void slotEnter();
     void slotFocusCommandLine();
-        void slotError(const QString& msg);
+    void slotError(const QString& msg);
 
     void slotWindowActivated(int);
     void slotWindowActivated(QMdiSubWindow* w);
@@ -122,7 +118,7 @@ public slots:
     void slotEnableActions(bool enable);
 
     /** generates a new document for a graphic. */
-    QC_MDIWindow* slotFileNew(RS_Document* doc=NULL);
+	QC_MDIWindow* slotFileNew(RS_Document* doc=nullptr);
     /** generates a new document based in predefined template */
     void slotFileNewNew();
     /** generates a new document based in selected template */
@@ -131,14 +127,10 @@ public slots:
     void slotFileOpen();
 
     /**
-    * opens a recent file document
-    * @param id File Menu id of the file
-    */
-    void slotFileOpenRecent();
-    /**
      * opens the given file.
      */
     void slotFileOpen(const QString& fileName, RS2::FormatType type);
+    void slotFileOpenRecent(QAction* action);
     /** saves a document */
     void slotFileSave();
     /** saves a document under a different filename*/
@@ -149,10 +141,8 @@ public slots:
     void slotFileExport();
     bool slotFileExport(const QString& name, const QString& format,
                 QSize size, QSize borders, bool black, bool bw=true);
-    /** closes the current file */
-    void slotFileClose();
     /** closing the current file */
-    void slotFileClosing();
+    void slotFileClosing(QC_MDIWindow*);
     /** prints the current file */
     void slotFilePrint(bool printPDF=false);
     void slotFilePrintPDF();
@@ -168,57 +158,37 @@ public slots:
     /** toggle the statusbar */
     void slotViewStatusBar(bool toggle);
 
-    // void slotBlocksEdit();
     void slotOptionsGeneral();
 
     void slotImportBlock();
-    void slotScriptOpenIDE();
-    void slotScriptRun();
-
-        void slotRunStartScript();
-        void slotRunScript();
-        void slotRunScript(const QString& name);
-
-        void slotInsertBlock();
-        void slotInsertBlock(const QString& name);
 
     /** shows an about dlg*/
     void slotHelpAbout();
     void slotHelpManual();
 
-    /** dumps entities to file */
-    void slotTestDumpEntities(RS_EntityContainer* d=NULL);
-    /** dumps undo info to stdout */
-    void slotTestDumpUndo();
-    /** updates all inserts */
-    void slotTestUpdateInserts();
-    /** draws some random lines */
-    void slotTestDrawFreehand();
-    /** inserts a test block */
-    void slotTestInsertBlock();
-    /** inserts a test ellipse */
-    void slotTestInsertEllipse();
-    /** inserts a test mtext */
-    void slotTestInsertMText();
-    /** inserts a test text */
-    void slotTestInsertText();
-    /** inserts a test image */
-    void slotTestInsertImage();
-    /** unicode table */
-    void slotTestUnicode();
-    /** math experimental */
-    void slotTestMath01();
-    /** resizes window to 640x480 for screen shots */
-    void slotTestResize640();
-    /** resizes window to 640x480 for screen shots */
-    void slotTestResize800();
-    /** resizes window to 640x480 for screen shots */
-    void slotTestResize1024();
     /**
      * @brief slotUpdateActiveLayer
      * update layer name when active layer changed
      */
     void slotUpdateActiveLayer();
+	void execPlug();
+
+    void gotoWiki();
+
+    void toggleFullscreen(bool checked);
+
+    void setPreviousZoomEnable(bool enable);
+
+    void hideOptions(QC_MDIWindow*);
+
+    void widgetOptionsDialog();
+
+    void modifyCommandTitleBar(Qt::DockWidgetArea area);
+    void reloadStyleSheet();
+
+    void updateGridStatus(const QString&);
+
+    void showDeviceOptions();
 
 signals:
     void gridChanged(bool on);
@@ -237,115 +207,71 @@ public:
     /**
      * @return Pointer to MdiArea.
      */
-    QMdiArea* getMdiArea() {
-        return mdiAreaCAD;
-    }
+	QMdiArea const* getMdiArea() const;
+	QMdiArea* getMdiArea();
 
     /**
-     * @return Pointer to the currently active MDI Window or NULL if no
+	 * @return Pointer to the currently active MDI Window or nullptr if no
      * MDI Window is active.
      */
-    QC_MDIWindow* getMDIWindow();
+	const QC_MDIWindow* getMDIWindow() const;
+	QC_MDIWindow* getMDIWindow();
 
     /**
      * Implementation from RS_MainWindowInterface (and QS_ScripterHostInterface).
      *
      * @return Pointer to the graphic view of the currently active document
-     * window or NULL if no window is available.
+	 * window or nullptr if no window is available.
      */
-    virtual RS_GraphicView* getGraphicView() {
-        QC_MDIWindow* m = getMDIWindow();
-        if (m!=NULL) {
-            return m->getGraphicView();
-        }
-        return NULL;
-    }
+	const RS_GraphicView* getGraphicView() const;
+	RS_GraphicView* getGraphicView();
 
     /**
      * Implementation from RS_MainWindowInterface (and QS_ScripterHostInterface).
      *
      * @return Pointer to the graphic document of the currently active document
-     * window or NULL if no window is available.
+	 * window or nullptr if no window is available.
      */
-    virtual RS_Document* getDocument() {
-        QC_MDIWindow* m = getMDIWindow();
-        if (m!=NULL) {
-            return m->getDocument();
-        }
-        return NULL;
-    }
-
-        /**
-         * Creates a new document. Implementation from RS_MainWindowInterface.
-         */
-    virtual void createNewDocument(
-                const QString& fileName = QString::null, RS_Document* doc=NULL) {
-
-                slotFileNew(doc);
-                if (fileName!=QString::null && getDocument()!=NULL) {
-                        getDocument()->setFilename(fileName);
-                }
-        }
+	const RS_Document* getDocument() const;
+	RS_Document* getDocument();
 
     /**
-     * Implementation from QG_MainWindowInterface.
-     *
-     * @return Pointer to this.
+     * Creates a new document. Implementation from RS_MainWindowInterface.
      */
-    virtual QMainWindow* getMainWindow() {
-        return this;
+	void createNewDocument(const QString& fileName = QString::null, RS_Document* doc=nullptr);
+
+    void redrawAll();
+    void updateGrids();
+
+    QG_BlockWidget* getBlockWidget(void)
+    {
+        return blockWidget;
     }
 
-    /**
-     * @return Pointer to action handler. Implementation from QG_MainWindowInterface.
-     */
-    virtual QG_ActionHandler* getActionHandler() {
-        return actionHandler;
+    QG_SnapToolBar* getSnapToolBar(void)
+    {
+        return snapToolBar;
     }
 
-
-
-        //virtual QToolBar* createToolBar(const QString& name);
-        //virtual void addToolBarButton(QToolBar* tb);
-
-    /**
-     * @return Pointer to the qsa object.
-     */
-#ifdef RS_SCRIPTING
-    QSProject* getQSAProject() {
-                if (scripter!=NULL) {
-                return scripter->getQSAProject();
-                }
-                else {
-                        return NULL;
-                }
+    QG_SnapToolBar const* getSnapToolBar(void) const
+    {
+        return snapToolBar;
     }
-#endif
-
-        void redrawAll();
-        void updateGrids();
-
-        /**
-         * Implementation from QG_MainWindowInterface.
-         */
-        virtual void setFocus2() {
-                setFocus();
-        }
-        QG_BlockWidget* getBlockWidget(void)
-        {
-            return blockWidget;
-        }
 
 protected:
     void closeEvent(QCloseEvent*);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-
+    //! \{ accept drop files to open
+    virtual void dropEvent(QDropEvent* e);
+    virtual void dragEnterEvent(QDragEnterEvent * event);
+    //! \}
 
 private:
 
+    QMenu* createPopupMenu();
+
     QString format_filename_caption(const QString &qstring_in);
     /** Helper function for Menu file -> New & New.... */
-    bool slotFileNewHelper(QString fileName, QC_MDIWindow* w = NULL);
+	bool slotFileNewHelper(QString fileName, QC_MDIWindow* w = nullptr);
 
     /**
      * @brief updateWindowTitle, for draft mode, add "Draft Mode" to window title
@@ -353,17 +279,33 @@ private:
      */
     void updateWindowTitle(QWidget* w);
 
+    //Plugin support
+    void loadPlugins();
+    QMenu *findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry);
+
+    #ifdef LC_DEBUGGING
+        LC_SimpleTests* m_pSimpleTest;
+    #endif
+
     /** Pointer to the application window (this). */
     static QC_ApplicationWindow* appWindow;
     QTimer *autosaveTimer;
 
-    /** MdiArea for MDI */
-    QMdiArea* mdiAreaCAD;
-    QMdiSubWindow* activedMdiSubWindow;
-    bool mdiAreaTab;
+    QG_ActionHandler* actionHandler;
 
-        /** Dialog factory */
-        QC_DialogFactory* dialogFactory;
+    /** MdiArea for MDI */
+    QMdiArea* mdiAreaCAD{nullptr};
+    QMdiSubWindow* activedMdiSubWindow;
+
+    /** Dialog factory */
+    QC_DialogFactory* dialogFactory;
+
+    /** Recent files list */
+	QG_RecentFiles* recentFiles;
+
+    // --- Dockwidgets ---
+    //! toggle actions for the dock areas
+    DockAreas dock_areas;
 
     /** Layer list widget */
     QG_LayerWidget* layerWidget;
@@ -371,19 +313,13 @@ private:
     QG_BlockWidget* blockWidget;
     /** Library browser widget */
     QG_LibraryWidget* libraryWidget;
+    /** Command line */
+    QG_CommandWidget* commandWidget;
 
-    /** Layer list dock widget */
-    QDockWidget* layerDockWindow;
-    /** Block list dock widget */
-    QDockWidget* blockDockWindow;
-    /** Library list dock widget */
-    QDockWidget* libraryDockWindow;
+    QHelpEngine* helpEngine{nullptr};
+    QDockWidget* helpWindow{nullptr};
 
-
-        /** Command line */
-        QG_CommandWidget* commandWidget;
-        QDockWidget* commandDockWindow;
-
+    // --- Statusbar ---
     /** Coordinate widget */
     QG_CoordinateWidget* coordinateWidget;
     /** Mouse widget */
@@ -391,88 +327,46 @@ private:
     /** Selection Status */
     QG_SelectionWidget* selectionWidget;
     QG_ActiveLayerName* m_pActiveLayerName;
+    TwoStackedLabels* grid_status;
 
-    /** Option widget for individual tool options */
-    QToolBar* optionWidget;
-
-    /** Recent files list */
-    QG_RecentFiles* recentFiles;
-    QStringList openedFiles;
-
-    /** Action handler. */
-        QG_ActionHandler* actionHandler;
-
-#ifdef RS_SCRIPTING
-        /** Scripting interface. */
-        QS_Scripter* scripter;
-#endif
-
-    QMenu* fileMenu;
+    // --- Menus ---
     QMenu* windowsMenu;
     QMenu* scriptMenu;
     QMenu* helpMenu;
     QMenu* testMenu;
+    QMenu* file_menu;
 
-    QList <QAction*> recentFilesAction;
-    /** the main toolbars */
-    QToolBar* fileToolBar;
-    QToolBar* editToolBar;
-    QToolBar* zoomToolBar;
-    static QAction* previousZoom;
-    static QAction* undoButton;
-    static QAction* redoButton;
-    bool previousZoomEnable;
-    bool undoEnable;
-    bool redoEnable;
-
+    // --- Toolbars ---
     QG_SnapToolBar* snapToolBar;
+    QG_PenToolBar* penToolBar; //!< for selecting the current pen
+    QToolBar* optionWidget; //!< for individual tool options
 
-    // Toolbar for selecting the current pen
-    QG_PenToolBar* penToolBar;
-    // Toolbar for CAD tools
-    QG_CadToolBar* cadToolBar;
-
-#if QT_VERSION < 0x040400
-    QAssistantClient *assistant;
-#else
-    QHelpEngine* helpEngine;
-    QDockWidget *helpWindow;
-#endif // QT_VERSION 0x040400
+    // --- Actions ---
+    QAction* previousZoom;
+    QAction* undoButton;
+    QAction* redoButton;
 
     QAction* scriptOpenIDE;
     QAction* scriptRun;
-
     QAction* helpAboutApp;
     QAction* helpManual;
 
-    QAction *testDumpEntities;
-    QAction *testDumpUndo;
-    QAction *testUpdateInserts;
-    QAction *testDrawFreehand;
-    QAction *testInsertBlock;
-    QAction *testInsertMText;
-    QAction *testInsertText;
-    QAction *testInsertImage;
-    QAction *testUnicode;
-    QAction *testInsertEllipse;
+    // --- Flags ---
+    bool previousZoomEnable{false};
+    bool undoEnable{false};
+    bool redoEnable{false};
 
-    QAction *testMath01;
-
-    QAction *testResize640;
-    QAction *testResize800;
-    QAction *testResize1024;
-
-    //display "Draft Mode" in window title for draft mode
-    const QString m_qDraftModeTitle;
-
-//Plugin support
-private:
-    void loadPlugins();
-    QMenu *findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry);
+    // --- Lists ---
     QList<QC_PluginInterface*> loadedPlugins;
-public slots:
-    void execPlug();
+    QList<QAction*> toolbar_view_actions;
+    QList<QAction*> dockwidget_view_actions;
+    QList<QC_MDIWindow*> window_list;
+    QList<QAction*> recentFilesAction;
 
+    QStringList openedFiles;
+
+    // --- Strings ---
+    QString style_sheet_path;
 };
 
 

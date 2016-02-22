@@ -33,33 +33,24 @@
 /**
  * Holds the data that defines a block.
  */
-class RS_BlockData {
-public:
-    RS_BlockData() {}
+struct RS_BlockData {
+	RS_BlockData() = default;
 
-    RS_BlockData(const QString& name,
+	RS_BlockData(const QString& name,
 	           const RS_Vector& basePoint,
-			   bool frozen) {
+			   bool frozen);
 
-		this->name = name;
-		this->basePoint = basePoint;
-		this->frozen = frozen;
-    }
+	bool isValid() const;
 
-	bool isValid() {
-		return (!name.isEmpty() && basePoint.valid);
-	}
-
-public:
-    /**
-     * Block name. Acts as an id.
-     */
-        QString name;
-	/*
-     * Base point of the Block. Usually 0/0 since blocks can be moved around 
-     * using the insertion point of Insert entities.
+	/**
+	 * Block name. Acts as an id.
 	 */
-    RS_Vector basePoint;
+	QString name;
+	/**
+	 * Base point of the Block. Usually 0/0 since blocks can be moved around
+	 * using the insertion point of Insert entities.
+	 */
+	RS_Vector basePoint;
 
 	//! Frozen flag
 	bool frozen;
@@ -91,9 +82,9 @@ public:
      */
     RS_Block(RS_EntityContainer* parent, const RS_BlockData& d);
 
-    virtual ~RS_Block();
+	virtual ~RS_Block() = default;
 	
-    virtual RS_Entity* clone();
+	virtual RS_Entity* clone() const;
 
     /** @return RS2::EntityBlock */
     virtual RS2::EntityType rtti() const {
@@ -104,7 +95,7 @@ public:
      * @return Name of this block (the name is an Id for this block).
      */
     QString getName() const {
-        return data.name;
+		return data.name;
     }
 
     /**
@@ -146,18 +137,14 @@ public:
         return false;
     }
 
-    friend std::ostream& operator << (std::ostream& os, const RS_Block& b) {
-        os << " name: " << b.getName().toLatin1().data() << "\n";
-        os << " entities: " << (RS_EntityContainer&)b << "\n";
-        return os;
-    }
+    friend std::ostream& operator << (std::ostream& os, const RS_Block& b);
 
     /** 
 	 * sets a new name for the block. Only called by blocklist to
 	 * assure that block names stay unique.
 	 */
     void setName(const QString& n) {
-        data.name = n;
+		data.name = n;
     }
     
 	/**
@@ -189,15 +176,6 @@ public:
 
 
 protected:
-    /**
-     * Base point of the Block. Usually 0/0 since blocks can be moved around 
-     * using the insertion point of Insert entities.
-     */
-    //RS_Vector basePoint;
-    /**
-     * Block name. Acts as an id.
-     */
-    //QString name;
 	//! Block data
 	RS_BlockData data;
 };

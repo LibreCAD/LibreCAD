@@ -27,6 +27,9 @@
 
 #include "rs_actionmodifyround.h"
 #include "rs_settings.h"
+#include "rs_math.h"
+#include "ui_qg_roundoptions.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_RoundOptions as a child of 'parent', with the
@@ -34,9 +37,9 @@
  */
 QG_RoundOptions::QG_RoundOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, ui(new Ui::Ui_RoundOptions{})
 {
-    setupUi(this);
-
+	ui->setupUi(this);
 }
 
 /*
@@ -44,8 +47,7 @@ QG_RoundOptions::QG_RoundOptions(QWidget* parent, Qt::WindowFlags fl)
  */
 QG_RoundOptions::~QG_RoundOptions()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+	saveSettings();
 }
 
 /*
@@ -54,19 +56,19 @@ QG_RoundOptions::~QG_RoundOptions()
  */
 void QG_RoundOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
-void QG_RoundOptions::destroy() {
+void QG_RoundOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Modify");
-    RS_SETTINGS->writeEntry("/RoundRadius", leRadius->text());
-    RS_SETTINGS->writeEntry("/RoundTrim", (int)cbTrim->isChecked());
+	RS_SETTINGS->writeEntry("/RoundRadius", ui->leRadius->text());
+	RS_SETTINGS->writeEntry("/RoundTrim", (int)ui->cbTrim->isChecked());
     RS_SETTINGS->endGroup();
 }
 
 void QG_RoundOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionModifyRound) {
-        action = (RS_ActionModifyRound*)a;
+    if (a && a->rtti()==RS2::ActionModifyRound) {
+		action = static_cast<RS_ActionModifyRound*>(a);
 
         QString sr;
 	QString st;
@@ -79,19 +81,19 @@ void QG_RoundOptions::setAction(RS_ActionInterface* a, bool update) {
             st = RS_SETTINGS->readEntry("/RoundTrim", "1");
             RS_SETTINGS->endGroup();
         }
-	leRadius->setText(sr);
-    	cbTrim->setChecked(st=="1");
+	ui->leRadius->setText(sr);
+		ui->cbTrim->setChecked(st=="1");
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR, 
 			"QG_LineParallelOptions::setAction: wrong action type");
-        action = NULL;
+		action = nullptr;
     }
 }
 
 
 void QG_RoundOptions::updateData() {
-    if (action!=NULL) {
-        action->setTrim(cbTrim->isChecked());
-        action->setRadius(RS_Math::eval(leRadius->text()));
+    if (action) {
+		action->setTrim(ui->cbTrim->isChecked());
+		action->setRadius(RS_Math::eval(ui->leRadius->text()));
     }
 }

@@ -40,9 +40,7 @@ class RS_ActionFileOpen : public RS_ActionInterface {
 public:
     RS_ActionFileOpen(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
-    ~RS_ActionFileOpen() {}
-
-	static QAction* createGUIAction(RS2::ActionType type, QObject* parent);
+    ~RS_ActionFileOpen() = default;
 
     virtual void init(int status=0);
     virtual void trigger();

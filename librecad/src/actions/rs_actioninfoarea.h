@@ -28,8 +28,8 @@
 #define RS_ACTIONINFOAREA_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_infoarea.h"
 
+class RS_InfoArea;
 
 /**
  * This action class can handle user events to measure distances between
@@ -51,12 +51,7 @@ public:
 public:
     RS_ActionInfoArea(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
-    ~RS_ActionInfoArea() {}
-
-    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-    virtual RS2::ActionType rtti(){
-        return RS2::ActionInfoArea;
-    }
+	~RS_ActionInfoArea();
 
     virtual void init(int status=0);
     virtual void trigger();
@@ -71,7 +66,7 @@ public:
     virtual void updateMouseCursor();
 
 private:
-    RS_InfoArea ia;
+	std::unique_ptr<RS_InfoArea> ia;
 };
 
 #endif

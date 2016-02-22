@@ -24,7 +24,7 @@
         <location filename="../align/align.cpp" line="20"/>
         <location filename="../align/align.cpp" line="27"/>
         <source>Align</source>
-        <translation>Aliñar</translation>
+        <translation>Ali&amp;ñar</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="40"/>
@@ -53,7 +53,7 @@
         <location filename="../list/list.cpp" line="23"/>
         <location filename="../list/list.cpp" line="30"/>
         <source>List entities</source>
-        <translation>Listado de entidades</translation>
+        <translation>Li&amp;stado de entidades</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="46"/>
@@ -199,12 +199,12 @@
     <message>
         <location filename="../list/list.cpp" line="162"/>
         <source>CONSTRUCTIONLINE</source>
-        <translation>LIÑA DE CONSTRUCCIÓN</translation>
+        <translation>LIÑA DE CONSTRUCIÓN</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="165"/>
         <source>OVERLAYBOX</source>
-        <translation type="unfinished">CAIXA DE CUBRICIÓN</translation>
+        <translation>CAIXA DE CUBRICIÓN</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="168"/>
@@ -273,41 +273,46 @@
     </message>
     <message>
         <location filename="../list/list.cpp" line="210"/>
+        <source>SPLINEPOINTS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="213"/>
         <source>HATCH</source>
         <translation>RAIADO</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="213"/>
+        <location filename="../list/list.cpp" line="216"/>
         <source>DIMLEADER</source>
         <translation>DIRECTRIZ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="216"/>
+        <location filename="../list/list.cpp" line="219"/>
         <source>DIMALIGNED</source>
         <translation>ACOUTAMENTO ALIÑADO</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="219"/>
+        <location filename="../list/list.cpp" line="222"/>
         <source>DIMLINEAR</source>
         <translation>ACOUTAMENTO LINEAR</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="222"/>
+        <location filename="../list/list.cpp" line="225"/>
         <source>DIMRADIAL</source>
         <translation>ACOUTAMENTO RADIAL</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="225"/>
+        <location filename="../list/list.cpp" line="228"/>
         <source>DIMDIAMETRIC</source>
-        <translation>ACOUTAMENTO DIÁMETRAL</translation>
+        <translation>ACOUTAMENTO DIAMETRAL</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="228"/>
+        <location filename="../list/list.cpp" line="231"/>
         <source>DIMANGULAR</source>
         <translation>ACOUTAMENTO ANGULAR</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="231"/>
+        <location filename="../list/list.cpp" line="234"/>
         <source>UNKNOWN</source>
         <translation>DESCOÑECIDO</translation>
     </message>
@@ -318,7 +323,7 @@
         <location filename="../sameprop/sameprop.cpp" line="21"/>
         <location filename="../sameprop/sameprop.cpp" line="28"/>
         <source>Same properties</source>
-        <translation>Igualar atributos</translation>
+        <translation>Igualar &amp;atributos</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
@@ -338,6 +343,19 @@
         <location filename="../sample/sample.cpp" line="33"/>
         <source>Sample plugin</source>
         <translation>Plugin de mostra</translation>
+    </message>
+</context>
+<context>
+    <name>PicFile</name>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="38"/>
+        <source>Read PIC file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="44"/>
+        <source>import PIC file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -682,7 +700,7 @@
 <context>
     <name>lc_Listdlg</name>
     <message>
-        <location filename="../list/list.cpp" line="248"/>
+        <location filename="../list/list.cpp" line="251"/>
         <source>List entities</source>
         <translation>Listado de entidades</translation>
     </message>
@@ -751,15 +769,79 @@
     </message>
 </context>
 <context>
+    <name>picPunto</name>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="67"/>
+        <source>File...</source>
+        <translation type="unfinished">Ficheiro...</translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="77"/>
+        <source>Scale:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="81"/>
+        <source>Accept</source>
+        <translation type="unfinished">Aceptar</translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="85"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="113"/>
+        <source>Select file</source>
+        <translation type="unfinished">Seleccionar ficheiro</translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="121"/>
+        <source>Scale Factor is empty or invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="134"/>
+        <source>The file %1 not exist</source>
+        <translation type="unfinished">O ficheiro %1 non existe</translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="139"/>
+        <source>Can&apos;t open the file %1</source>
+        <translation type="unfinished">Non se pode abrir o ficheiro %1</translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="146"/>
+        <source>%1 objects imported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="168"/>
+        <source>picPunto drawLine: first point is empty %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="181"/>
+        <source>picPunto drawLine: next point is empty %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="260"/>
+        <location filename="../picfile/picfile.cpp" line="269"/>
+        <source>format error in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>plot</name>
     <message>
-        <location filename="../plotequation/plot.cpp" line="20"/>
-        <location filename="../plotequation/plot.cpp" line="27"/>
+        <location filename="../plotequation/plot.cpp" line="21"/>
+        <location filename="../plotequation/plot.cpp" line="28"/>
         <source>Plot plugin</source>
         <translation>Plugin de trazado</translation>
     </message>
     <message>
-        <location filename="../plotequation/plot.cpp" line="27"/>
+        <location filename="../plotequation/plot.cpp" line="28"/>
         <source>Draw</source>
         <translation>Debuxar</translation>
     </message>
@@ -767,12 +849,12 @@
 <context>
     <name>plotDialog</name>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="6"/>
+        <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
         <translation>Trazar ecuación</translation>
     </message>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="9"/>
+        <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>This plugin allows you to plot mathematical equations.
 If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
 You can use pi when you need the value of pi (i.e. (3*pi)).
@@ -785,39 +867,57 @@ Use t ou x na súa ecuación como unha variable/parámetro.
 </translation>
     </message>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="13"/>
+        <location filename="../plotequation/plotdialog.cpp" line="22"/>
         <source>Equation 1:</source>
         <translation>Ecuación 1:</translation>
     </message>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="14"/>
+        <location filename="../plotequation/plotdialog.cpp" line="23"/>
         <source>Equation 2:</source>
         <translation>Ecuación 2:</translation>
     </message>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="17"/>
+        <location filename="../plotequation/plotdialog.cpp" line="26"/>
         <source>start value:</source>
         <translation>Valor inicial:</translation>
     </message>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="18"/>
+        <location filename="../plotequation/plotdialog.cpp" line="27"/>
         <source>end value:</source>
         <translation>Valor final:</translation>
     </message>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="19"/>
+        <location filename="../plotequation/plotdialog.cpp" line="28"/>
         <source>step size:</source>
         <translation>Distancia de paso:</translation>
     </message>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="23"/>
+        <location filename="../plotequation/plotdialog.cpp" line="32"/>
         <source>Draw</source>
         <translation>Debuxar</translation>
     </message>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="24"/>
+        <location filename="../plotequation/plotdialog.cpp" line="33"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="59"/>
+        <source>Line Segments</source>
+        <comment>Plot Equation to generate RS_Line segments</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="60"/>
+        <source>Polyline</source>
+        <comment>Plot Equation to generate RS_Polyline</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="61"/>
+        <source>SplinePoints</source>
+        <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

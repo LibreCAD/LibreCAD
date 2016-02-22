@@ -24,35 +24,33 @@
 **
 **********************************************************************/
 
+#include<cmath>
 #include "rs_actionmodifytrimamount.h"
-
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_modification.h"
-
+#include "rs_math.h"
+#include "rs_preview.h"
+#include "rs_atomicentity.h"
+#include "rs_debug.h"
 
 RS_ActionModifyTrimAmount::RS_ActionModifyTrimAmount(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_ActionInterface("Trim Entity by a given amount",
-                    container, graphicView) {
-
-    trimEntity = NULL;
-    trimCoord = RS_Vector(false);
-    distance = 0.0;
-    byTotal = false;
+		RS_EntityContainer& container,
+		RS_GraphicView& graphicView)
+	:RS_ActionInterface("Trim Entity by a given amount",
+						container, graphicView)
+	,trimEntity(nullptr)
+	,trimCoord(new RS_Vector{})
+	,distance(0.0)
+	,byTotal(false)
+{
+	actionType=RS2::ActionModifyTrimAmount;
 }
 
-QAction* RS_ActionModifyTrimAmount::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Lengthen")
-        QAction* action = new QAction(tr("&Lengthen"), NULL);
-        action->setIcon(QIcon(":/extui/modifytrimamount.png"));
-        //action->zetStatusTip(tr("Lengthen by a given amount"));
-        return action;
-}
-
+RS_ActionModifyTrimAmount::~RS_ActionModifyTrimAmount() = default;
 
 void RS_ActionModifyTrimAmount::init(int status) {
     RS_ActionInterface::init(status);
@@ -67,7 +65,7 @@ void RS_ActionModifyTrimAmount::trigger() {
 
     RS_DEBUG->print("RS_ActionModifyTrimAmount::trigger()");
 
-    if (trimEntity!=NULL && trimEntity->isAtomic()) {
+    if (trimEntity && trimEntity->isAtomic()) {
 
         RS_Modification m(*container, graphicView);
         double d;
@@ -78,29 +76,27 @@ void RS_ActionModifyTrimAmount::trigger() {
             d = distance;
         }
 
-        m.trimAmount(trimCoord, (RS_AtomicEntity*)trimEntity, d);
+		m.trimAmount(*trimCoord, static_cast<RS_AtomicEntity*>(trimEntity), d);
 
-        trimEntity = NULL;
+		trimEntity = nullptr;
         setStatus(ChooseTrimEntity);
 
         RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
     }
 }
 
-
-
 void RS_ActionModifyTrimAmount::mouseReleaseEvent(QMouseEvent* e) {
 
-    trimCoord = graphicView->toGraph(e->x(), e->y());
+	*trimCoord = graphicView->toGraph(e->x(), e->y());
     trimEntity = catchEntity(e);
 
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case ChooseTrimEntity:
-            if (trimEntity!=NULL && trimEntity->isAtomic()) {
+            if (trimEntity && trimEntity->isAtomic()) {
                 trigger();
             } else {
-                if (trimEntity==NULL) {
+				if (trimEntity == nullptr) {
                     RS_DIALOGFACTORY->commandMessage(
                         tr("No entity found. "));
                 } else if (trimEntity->rtti()==RS2::EntityInsert) {
@@ -122,8 +118,6 @@ void RS_ActionModifyTrimAmount::mouseReleaseEvent(QMouseEvent* e) {
         init(getStatus()-1);
     }
 }
-
-
 
 void RS_ActionModifyTrimAmount::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
@@ -193,7 +187,7 @@ void RS_ActionModifyTrimAmount::updateMouseButtonHints() {
             tr("Back"));
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+		RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }
@@ -201,16 +195,7 @@ void RS_ActionModifyTrimAmount::updateMouseButtonHints() {
 
 
 void RS_ActionModifyTrimAmount::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
-
-
-
-//void RS_ActionModifyTrimAmount::updateToolBar() {
-//    //not needed any more with new snap
-//    return;
-//    RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-//}
-
 
 // EOF

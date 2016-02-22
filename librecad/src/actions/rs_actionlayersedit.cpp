@@ -32,41 +32,28 @@
 #include "rs_graphic.h"
 #include "rs_layer.h"
 #include "qg_layerwidget.h"
-
-
+#include "rs_debug.h"
 
 RS_ActionLayersEdit::RS_ActionLayersEdit(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Edit Layer", container, graphicView) {}
 
-
-QAction* RS_ActionLayersEdit::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Edit Layer")
-    QAction* action = new QAction(tr("&Edit Layer"), NULL);
-    //action->zetStatusTip(tr("Edit Layer"));
-	action->setIcon(QIcon(":/ui/layeredit.png"));
-    return action;
-}
-
 void RS_ActionLayersEdit::trigger() {
     RS_DEBUG->print("RS_ActionLayersEdit::trigger");
 
-    RS_Layer* layer = NULL;
-
-    if (graphic!=NULL) {
-        layer =
+    if (graphic) {
+	RS_Layer* layer =
             RS_DIALOGFACTORY->requestEditLayerDialog(graphic->getLayerList());
 
-        if (layer!=NULL) {
+        if (layer) {
             graphic->editLayer(graphic->getActiveLayer(), *layer);
 
             // update updateable entities on the layer that has changed
-            for (RS_Entity* e=graphic->firstEntity(RS2::ResolveNone);
-                    e!=NULL;
-                    e=graphic->nextEntity(RS2::ResolveNone)) {
+
+			for(auto e: *graphic){
 
                 RS_Layer* l = e->getLayer();
-                if (l!=NULL && l->getName()==layer->getName()) {
+                if (l && l->getName()==layer->getName()) {
                     e->update();
                 }
             }
@@ -79,8 +66,6 @@ void RS_ActionLayersEdit::trigger() {
 	graphicView->redraw(RS2::RedrawDrawing); 
 
 }
-
-
 
 void RS_ActionLayersEdit::init(int status) {
     RS_ActionInterface::init(status);

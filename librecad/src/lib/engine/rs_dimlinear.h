@@ -33,17 +33,11 @@
 /**
  * Holds the data that defines a linear dimension entity.
  */
-class RS_DimLinearData {
-public:
+struct RS_DimLinearData {
     /**
 	 * Default constructor
      */
-	RS_DimLinearData():
-		extensionPoint1(false),
-		extensionPoint2(false),
-		angle(0.0),
-		oblique(0.0)
-	{}
+	RS_DimLinearData();
 
     /**
      * Constructor with initialisation.
@@ -55,23 +49,8 @@ public:
      */
     RS_DimLinearData(const RS_Vector& extensionPoint1,
                      const RS_Vector& extensionPoint2,
-                     double angle, double oblique) {
-        this->extensionPoint1 = extensionPoint1;
-        this->extensionPoint2 = extensionPoint2;
-        this->angle = angle;
-        this->oblique = oblique;
-    }
+					 double angle, double oblique);
 
-    friend class RS_DimLinear;
-    friend class RS_ActionDimLinear;
-
-    friend std::ostream& operator << (std::ostream& os,
-                                      const RS_DimLinearData& dd) {
-        os << "(" << dd.extensionPoint1 << "/" << dd.extensionPoint1 << ")";
-        return os;
-    }
-
-public:
     /** Definition point. Startpoint of the first definition line. */
     RS_Vector extensionPoint1;
     /** Definition point. Startpoint of the second definition line. */
@@ -82,7 +61,8 @@ public:
     double oblique;
 };
 
-
+std::ostream& operator << (std::ostream& os,
+									  const RS_DimLinearData& dd);
 
 /**
  * Class for aligned dimension entities.
@@ -94,15 +74,9 @@ public:
     RS_DimLinear(RS_EntityContainer* parent,
                  const RS_DimensionData& d,
                  const RS_DimLinearData& ed);
-    virtual ~RS_DimLinear() {}
+	virtual ~RS_DimLinear() = default;
 
-    virtual RS_Entity* clone() {
-        RS_DimLinear* d = new RS_DimLinear(*this);
-        d->setOwner(isOwner());
-        d->initId();
-        d->detach();
-        return d;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityDimLinear */
     virtual RS2::EntityType rtti() const {
@@ -117,29 +91,27 @@ public:
         return edata;
     }
 
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
 
     virtual QString getMeasuredLabel();
 
     virtual void updateDim(bool autoText=false);
 
-    RS_Vector getExtensionPoint1() {
+	RS_Vector getExtensionPoint1() const{
         return edata.extensionPoint1;
     }
 
-    RS_Vector getExtensionPoint2() {
+	RS_Vector getExtensionPoint2() const{
         return edata.extensionPoint2;
     }
 
-    double getAngle() {
+	double getAngle() const{
         return edata.angle;
     }
 
-        void setAngle(double a) {
-                edata.angle = RS_Math::correctAngle(a);
-        }
+	void setAngle(double a);
 
-    double getOblique() {
+	double getOblique() const{
         return edata.oblique;
     }
 

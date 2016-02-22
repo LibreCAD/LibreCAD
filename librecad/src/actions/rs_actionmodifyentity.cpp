@@ -27,29 +27,23 @@
 #include "rs_actionmodifyentity.h"
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_debug.h"
 
 
 
 RS_ActionModifyEntity::RS_ActionModifyEntity(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-        :RS_ActionInterface("Modify Entity", container, graphicView) {
-
-    en = NULL;
-}
-
-
-QAction* RS_ActionModifyEntity::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Properties")
-    QAction* action = new QAction(tr("&Properties"), NULL);
-        action->setIcon(QIcon(":/extui/modifyentity.png"));
-    //action->zetStatusTip(tr("Modify Entity Properties"));
-    return action;
+		:RS_ActionInterface("Modify Entity", container, graphicView)
+		,en(nullptr)
+{
+	actionType=RS2::ActionModifyEntity;
 }
 
 void RS_ActionModifyEntity::trigger() {
-    if (en!=NULL) {
+    if (en) {
         RS_Entity* clone = en->clone();
         if (RS_DIALOGFACTORY->requestModifyEntityDialog(clone)) {
             container->addEntity(clone);
@@ -60,7 +54,7 @@ void RS_ActionModifyEntity::trigger() {
                         clone->setSelected(false);
             graphicView->drawEntity(clone);
 
-            if (document!=NULL) {
+            if (document) {
                 document->startUndoCycle();
 
                 document->addUndoable(clone);

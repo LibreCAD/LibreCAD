@@ -20,6 +20,7 @@
         <file>color11.png</file>
         <file>color14.png</file>
         <file>colorxx.png</file>
+        <file>constructionlayer.png</file>
         <file>cur_cad_bmp.png</file>
         <file>cur_del_bmp.png</file>
         <file>cur_glass_bmp.png</file>
@@ -43,6 +44,7 @@
         <file>linetype06.png</file>
         <file>linetype07.png</file>
         <file>mouse.png</file>
+        <file>mousebuttons24.png</file>
         <file>viewgrid.png</file>
         <file>visibleblock.png</file>
         <file>visiblelayer.png</file>

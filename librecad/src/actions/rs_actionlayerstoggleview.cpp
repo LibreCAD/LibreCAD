@@ -28,6 +28,7 @@
 
 #include <QAction>
 #include "rs_graphic.h"
+#include "rs_debug.h"
 
 
 
@@ -38,17 +39,9 @@ RS_ActionLayersToggleView::RS_ActionLayersToggleView(
                     container, graphicView) {}
 
 
-QAction* RS_ActionLayersToggleView::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Toggle Layer Visibility")
-    QAction* action = new QAction(tr("&Toggle Layer Visibility"), NULL);
-    //action->zetStatusTip(tr("Toggle Layer"));
-	action->setIcon(QIcon(":/ui/layertoggle.png"));
-    return action;
-}
-
 void RS_ActionLayersToggleView::trigger() {
     RS_DEBUG->print("toggle layer");
-    if (graphic!=NULL) {
+    if (graphic) {
         RS_Layer* layer = graphic->getActiveLayer();
         graphic->toggleLayer(layer);
     }

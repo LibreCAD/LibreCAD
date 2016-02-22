@@ -40,28 +40,15 @@ public:
     /**
 	 * Default constructor
      */
-	RS_ConstructionLineData():
-		point1(false),
-		point2(false)
-	{}
+	RS_ConstructionLineData();
 
     RS_ConstructionLineData(const RS_Vector& point1,
-                            const RS_Vector& point2) {
-
-        this->point1 = point1;
-        this->point2 = point2;
-    }
+							const RS_Vector& point2);
 
     friend class RS_ConstructionLine;
 
     friend std::ostream& operator << (std::ostream& os,
-                                      const RS_ConstructionLineData& ld) {
-
-        os << "(" << ld.point1 <<
-        "/" << ld.point2 <<
-        ")";
-        return os;
-    }
+									  const RS_ConstructionLineData& ld);
 
 private:
     RS_Vector point1;
@@ -76,46 +63,26 @@ private:
  */
 class RS_ConstructionLine : public RS_AtomicEntity {
 public:
+	RS_ConstructionLine()=default;
     RS_ConstructionLine(RS_EntityContainer* parent,
                         const RS_ConstructionLineData& d);
 
-    virtual RS_Entity* clone();
+	virtual RS_Entity* clone() const;
 
-    virtual ~RS_ConstructionLine();
+	virtual ~RS_ConstructionLine()=default;
 
     /**	@return RS2::EntityConstructionLine */
     virtual RS2::EntityType rtti() const {
         return RS2::EntityConstructionLine;
     }
 
-        /**
-         * @todo
-         * @return Start point of the entity.
-         */
-    virtual RS_Vector getStartpoint() const {
-        return RS_Vector(false);
-    }
-    /**
-         * @todo
-         * @return End point of the entity.
-         */
-    virtual RS_Vector getEndpoint() const {
-        return RS_Vector(false);
-    }
-
     /** @return Copy of data that defines the line. */
-    RS_ConstructionLineData getData() const {
-        return data;
-    }
+	RS_ConstructionLineData const& getData() const;
 
     /** @return First definition point. */
-    RS_Vector getPoint1() const {
-        return data.point1;
-    }
+	RS_Vector const& getPoint1() const;
     /** @return Second definition point. */
-    RS_Vector getPoint2() const {
-        return data.point2;
-    }
+	RS_Vector const& getPoint2() const;
     /** return the equation of the entity
 for quadratic,
 
@@ -132,13 +99,13 @@ m0 x + m1 y + m2 =0
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
             bool onEntity = true, double* dist = NULL, RS_Entity** entity=NULL)const;
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-                                       double* dist = NULL);
+									   double* dist = NULL)const;
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
                                        double* dist = NULL,
                                        int middlePoints = 1)const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = NULL)const;
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity=NULL,
                                       RS2::ResolveLevel level=RS2::ResolveNone,

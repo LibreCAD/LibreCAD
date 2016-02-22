@@ -29,6 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 
+class RS_Vector;
 
 /**
  * This action class can handle user events to draw parallel 
@@ -49,14 +50,8 @@ private:
 public:
     RS_ActionDrawLineParallel(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDrawLineParallel() {}
-
-	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
+	virtual ~RS_ActionDrawLineParallel() override;
 	
-	virtual RS2::ActionType rtti() {
-        return actionType;
-	}
-
     virtual void trigger();
 	
     virtual void mouseMoveEvent(QMouseEvent* e);
@@ -72,33 +67,23 @@ public:
     virtual void updateMouseCursor();
 //    virtual void updateToolBar();
 
-	double getDistance() {
-		return distance;
-	}
+	double getDistance() const;
 
-	void setDistance(double d) {
-		distance = d;
-	}
+	void setDistance(double d);
 
-	int getNumber() {
-		return number;
-	}
+	int getNumber() const;
 
-	void setNumber(int n) {
-		number = n;
-	}
+	void setNumber(int n);
 
 private:
     /** Closest parallel. */
     RS_Entity* parallel;
-    /** Data of new line */
-    RS_LineData data;
     /** Distance of the parallel. */
     double distance;
 	/** Number of parallels. */
 	int number;
 	/** Coordinate of the mouse. */
-	RS_Vector coord;
+	std::unique_ptr<RS_Vector> coord;
 	/** Original entity. */
     RS_Entity* entity;
 	/**

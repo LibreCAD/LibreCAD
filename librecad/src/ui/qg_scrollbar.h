@@ -27,7 +27,7 @@
 #ifndef QG_SCROLLBAR_H
 #define QG_SCROLLBAR_H
 
-#include <qscrollbar.h>
+#include <QScrollBar>
 #include <QWheelEvent>
 
 /**

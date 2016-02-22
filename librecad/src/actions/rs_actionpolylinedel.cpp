@@ -27,31 +27,29 @@
 #include "rs_actionpolylinedel.h"
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 #include "rs_polyline.h"
-
-
+#include "rs_preview.h"
+#include "rs_debug.h"
 
 RS_ActionPolylineDel::RS_ActionPolylineDel(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Delete node",
-                           container, graphicView) {}
-
-
-QAction* RS_ActionPolylineDel::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action = new QAction(tr("&Delete node"), NULL);
-    action->setShortcut(QKeySequence());
-    action->setIcon(QIcon(":/extui/polylinedel.png"));
-    action->setStatusTip(tr("Delete polyline's node"));
-    return action;
+						   container, graphicView)
+		, delPoint(new RS_Vector{})
+{
+	actionType=RS2::ActionPolylineDel;
 }
+
+RS_ActionPolylineDel::~RS_ActionPolylineDel() = default;
 
 void RS_ActionPolylineDel::init(int status) {
     RS_ActionInterface::init(status);
-    delEntity = NULL;
-    delPoint = RS_Vector(false);
+	delEntity = nullptr;
+	*delPoint = {};
 }
 
 
@@ -60,16 +58,16 @@ void RS_ActionPolylineDel::trigger() {
 
     RS_DEBUG->print("RS_ActionPolylineDel::trigger()");
 
-        if (delEntity!=NULL && delPoint.valid &&
-            delEntity->isPointOnEntity(delPoint)) {
+		if (delEntity && delPoint->valid &&
+			delEntity->isPointOnEntity(*delPoint)) {
 
                 delEntity->setHighlighted(false);
                 graphicView->drawEntity(delEntity);
 
                 RS_Modification m(*container, graphicView);
-                delEntity = m.deletePolylineNode((RS_Polyline&)*delEntity, delPoint );
+				delEntity = m.deletePolylineNode((RS_Polyline&)*delEntity, *delPoint );
 
-                delPoint = RS_Vector(false);
+				*delPoint = RS_Vector(false);
 
             RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
     }
@@ -106,14 +104,14 @@ void RS_ActionPolylineDel::mouseReleaseEvent(QMouseEvent* e) {
                 switch (getStatus()) {
                 case ChooseEntity:
                     delEntity = catchEntity(e);
-                    if (delEntity==NULL) {
+					if (delEntity==nullptr) {
                         RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
                     } else if (delEntity->rtti()!=RS2::EntityPolyline) {
 
                         RS_DIALOGFACTORY->commandMessage(
                             tr("Entity must be a polyline."));
                     } else {
-                            RS_Vector clickCoord = snapPoint(e);
+							snapPoint(e);
                                 delEntity->setHighlighted(true);
                                 graphicView->drawEntity(delEntity);
                                 setStatus(SetDelPoint);
@@ -124,12 +122,12 @@ void RS_ActionPolylineDel::mouseReleaseEvent(QMouseEvent* e) {
                     break;
 
                 case SetDelPoint:
-                    delPoint = snapPoint(e);
-                    if (delEntity==NULL) {
+					*delPoint = snapPoint(e);
+					if (delEntity==nullptr) {
                                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
-                    } else if (!delPoint.valid) {
+					} else if (!delPoint->valid) {
                                 RS_DIALOGFACTORY->commandMessage(tr("Deleting point is invalid."));
-                    } else if (!delEntity->isPointOnEntity(delPoint)) {
+					} else if (!delEntity->isPointOnEntity(*delPoint)) {
                                 RS_DIALOGFACTORY->commandMessage(
                                     tr("Deleting point is not on entity."));
                     } else {
@@ -143,7 +141,7 @@ void RS_ActionPolylineDel::mouseReleaseEvent(QMouseEvent* e) {
                 }
     } else if (e->button()==Qt::RightButton) {
                 deleteSnapper();
-                if (delEntity!=NULL) {
+                if (delEntity) {
                 delEntity->setHighlighted(false);
                 graphicView->drawEntity(delEntity);
 ////////////////////////////////////////2006/06/15
@@ -165,7 +163,7 @@ void RS_ActionPolylineDel::updateMouseButtonHints() {
                                             tr("Back"));
                 break;
     default:
-                RS_DIALOGFACTORY->updateMouseWidget("", "");
+                RS_DIALOGFACTORY->updateMouseWidget();
                 break;
     }
 }
@@ -173,18 +171,7 @@ void RS_ActionPolylineDel::updateMouseButtonHints() {
 
 
 void RS_ActionPolylineDel::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
-
-
-
-//void RS_ActionPolylineDel::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
 
 // EOF

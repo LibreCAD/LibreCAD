@@ -28,6 +28,7 @@
 
 #include <QGridLayout>
 #include <QLabel>
+#include <QMenu>
 #include <QDebug>
 #if QT_VERSION >= 0x050200
 #include <QNativeGestureEvent>
@@ -41,98 +42,55 @@
 #include "rs_actionselectsingle.h"
 #include "rs_settings.h"
 #include "rs_painterqt.h"
-#include "qg_cadtoolbar.h"
 #include "rs_dialogfactory.h"
 #include "qg_dialogfactory.h"
+#include "rs_eventhandler.h"
+#include "rs_actiondefault.h"
 
 
 #include "qg_scrollbar.h"
+#include "rs_modification.h"
+#include "rs_debug.h"
 
 #define QG_SCROLLMARGIN 400
 
+#ifdef Q_OS_WIN32
+#define CURSOR_SIZE 16
+#else
+#define CURSOR_SIZE 15
+#endif
 
 /**
  * Constructor.
  */
-QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlags f)
-        : QWidget(parent, f), RS_GraphicView() {
+QG_GraphicView::QG_GraphicView(QWidget* parent, Qt::WindowFlags f, RS_Document* doc)
+    :RS_GraphicView(parent, f)
+    ,curCad(new QCursor(QPixmap(":ui/cur_cad_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
+    ,curDel(new QCursor(QPixmap(":ui/cur_del_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
+    ,curSelect(new QCursor(QPixmap(":ui/cur_select_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
+    ,curMagnifier(new QCursor(QPixmap(":ui/cur_glass_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
+    ,curHand(new QCursor(QPixmap(":ui/cur_hand_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
+    ,redrawMethod(RS2::RedrawAll)
+    ,isSmoothScrolling(false)
+{
+    RS_DEBUG->print("QG_GraphicView::QG_GraphicView()..");
 
-    setObjectName(name);
-    setBackground(background);
+    if (doc)
+    {
+        setContainer(doc);
+        doc->setGraphicView(this);
+        setDefaultAction(new RS_ActionDefault(*doc, *this));
+    }
 
-    redrawMethod=RS2::RedrawAll;
-    isSmoothScrolling = false;
-
-    PixmapLayer1=PixmapLayer2=PixmapLayer3=NULL;
-
-    layout = new QGridLayout(this);
-    layout->setMargin(0);
-    layout->setSpacing(0);
-    layout->setColumnStretch(0, 1);
-    layout->setColumnStretch(1, 0);
-    layout->setColumnStretch(2, 0);
-    layout->setRowStretch(0, 1);
-    layout->setRowStretch(1, 0);
-
-    hScrollBar = new QG_ScrollBar(Qt::Horizontal, this);
-    hScrollBar->setSingleStep(50);
-    hScrollBar->setCursor(Qt::ArrowCursor);
-    layout->addWidget(hScrollBar, 1, 0);
-    layout->addItem(new QSpacerItem(0, hScrollBar->sizeHint().height()), 1, 0);
-    connect(hScrollBar, SIGNAL(valueChanged(int)),
-            this, SLOT(slotHScrolled(int)));
-
-    vScrollBar = new QG_ScrollBar(Qt::Vertical, this);
-    vScrollBar->setSingleStep(50);
-    vScrollBar->setCursor(Qt::ArrowCursor);
-    layout->addWidget(vScrollBar, 0, 2);
-    layout->addItem(new QSpacerItem(vScrollBar->sizeHint().width(), 0), 0, 2);
-    connect(vScrollBar, SIGNAL(valueChanged(int)),
-            this, SLOT(slotVScrolled(int)));
-
-    // Mouse Cursors:
-    QPixmap cur1(":ui/cur_cad_bmp.png");
-    QPixmap cur2(":ui/cur_glass_bmp.png");
-    QPixmap cur3(":ui/cur_del_bmp.png");
-    QPixmap cur4(":ui/cur_select_bmp.png");
-    QPixmap cur5(":ui/cur_hand_bmp.png");
-#ifdef Q_OS_WIN32
-    curCad = new QCursor(cur1, 16, 16);
-    curMagnifier = new QCursor(cur2, 12, 12);
-    curDel = new QCursor(cur3, 16, 16);
-    curSelect = new QCursor(cur4, 16, 16);
-    curHand = new QCursor(cur5, 15, 15);
-#else
-    curCad = new QCursor(cur1, 15, 15);
-    curMagnifier = new QCursor(cur2, 12, 12);
-    curDel = new QCursor(cur3, 15, 15);
-    curSelect = new QCursor(cur4, 15, 15);
-    curHand = new QCursor(cur5, 15, 15);
-#endif
-
-    // Dummy widgets for scrollbar corners:
-    //layout->addWidget(new QWidget(this), 1, 1);
-    //QWidget* w = new QWidget(this);
-    //w->setEraseColor(QColor(255,0,0));
-    gridStatus = new QLabel("-", this);
-    gridStatus->setAlignment(Qt::AlignRight);
-    layout->addWidget(gridStatus, 1, 1, 1, 2);
-    layout->addItem(new QSpacerItem(50, 0), 0, 1);
+    setFactorX(4.0);
+    setFactorY(4.0);
+    setBorders(10, 10, 10, 10);
 
     setMouseTracking(true);
-        // flickering under win:
-    //setFocusPolicy(WheelFocus);
-
     setFocusPolicy(Qt::NoFocus);
 
-    // See https://sourceforge.net/tracker/?func=detail&aid=3289298&group_id=342582&atid=1433844 (Left-mouse drag shrinks window)
+    // SourceForge issue 45 (Left-mouse drag shrinks window)
     setAttribute(Qt::WA_NoMousePropagation);
-
-    //update entities to selected entities to the current active layer
-    RS_SETTINGS->beginGroup("/Modify");
-    m_bUpdateLayer=(RS_SETTINGS->readEntry("/ModifyEntitiesToActiveLayer", "0")=="1");
-    RS_SETTINGS->writeEntry("/ModifyEntitiesToActiveLayer", m_bUpdateLayer?1:0);
-    RS_SETTINGS->endGroup();
 }
 
 
@@ -141,10 +99,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlag
  * Destructor
  */
 QG_GraphicView::~QG_GraphicView() {
-    cleanUp();
-        delete PixmapLayer1;
-        delete PixmapLayer2;
-        delete PixmapLayer3;
+	cleanUp();
 }
 
 
@@ -152,8 +107,12 @@ QG_GraphicView::~QG_GraphicView() {
 /**
  * @return width of widget.
  */
-int QG_GraphicView::getWidth() {
-    return width() - vScrollBar->sizeHint().width();
+int QG_GraphicView::getWidth() const
+{
+    if (scrollbars)
+        return width() - vScrollBar->sizeHint().width();
+    else
+        return width();
 }
 
 
@@ -161,8 +120,12 @@ int QG_GraphicView::getWidth() {
 /**
  * @return height of widget.
  */
-int QG_GraphicView::getHeight() {
-    return height() - hScrollBar->sizeHint().height();
+int QG_GraphicView::getHeight() const
+{
+    if (scrollbars)
+        return height() - hScrollBar->sizeHint().height();
+    else
+        return height();
 }
 
 
@@ -176,7 +139,6 @@ void QG_GraphicView::setBackground(const RS_Color& bg) {
     palette.setColor(backgroundRole(), bg);
     setPalette(palette);
 }
-
 
 
 /**
@@ -241,7 +203,9 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType c) {
         setCursor(Qt::ClosedHandCursor);
         break;
     case RS2::CadCursor:
-        setCursor(*curCad);
+        cursor_hiding
+            ? setCursor(Qt::BlankCursor)
+            : setCursor(*curCad);
         break;
     case RS2::DelCursor:
         setCursor(*curDel);
@@ -257,18 +221,16 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType c) {
         break;
 
     }
-
 }
-
 
 
 /**
  * Sets the text for the grid status widget in the left bottom corner.
  */
-void QG_GraphicView::updateGridStatusWidget(const QString& text) {
-    gridStatus->setText(text);
+void QG_GraphicView::updateGridStatusWidget(const QString& text)
+{
+   emit gridStatusChanged(text);
 }
-
 
 
 /**
@@ -279,7 +241,6 @@ void QG_GraphicView::redraw(RS2::RedrawMethod method) {
         update(); // Paint when reeady to pain
 //	repaint(); //Paint immediate
 }
-
 
 
 void QG_GraphicView::resizeEvent(QResizeEvent* /*e*/) {
@@ -293,28 +254,14 @@ void QG_GraphicView::resizeEvent(QResizeEvent* /*e*/) {
     RS_DEBUG->print("QG_GraphicView::resizeEvent end");
 }
 
-
-
-void QG_GraphicView::emulateMouseMoveEvent() {
-    QMouseEvent e(QEvent::MouseMove, QPoint(mx, my),
-                    Qt::NoButton, Qt::NoButton, Qt::NoModifier);//RLZ
-    //mouseMoveEvent(&e);
-}
-
-
-
-void QG_GraphicView::mousePressEvent(QMouseEvent* e) {
+void QG_GraphicView::mousePressEvent(QMouseEvent* event)
+{
     // pan zoom with middle mouse button
-#if QT_VERSION < 0x040700
-    if (e->button()==Qt::MidButton /*|| (e->state()==Qt::LeftButton|Qt::AltButton)*/) {
-#else
-    if (e->button()==Qt::MiddleButton /*|| (e->state()==Qt::LeftButton|Qt::AltButton)*/) {
-#endif
+    if (event->button()==Qt::MiddleButton)
+    {
         setCurrentAction(new RS_ActionZoomPan(*container, *this));
     }
-
-    RS_GraphicView::mousePressEvent(e);
-    QWidget::mousePressEvent(e);
+    eventHandler->mousePressEvent(event);
 }
 
 void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e) {
@@ -330,40 +277,47 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e) {
 }
 
 
-void QG_GraphicView::mouseReleaseEvent(QMouseEvent* e) {
-        RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent");
-    RS_GraphicView::mouseReleaseEvent(e);
-    //QWidget::mouseReleaseEvent(e);
+void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
+{
+    RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent");
 
-    if (!e->isAccepted()) {
-        if (QG_DIALOGFACTORY!=NULL && QG_DIALOGFACTORY->getCadToolBar()!=NULL) {
-                        RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: "
-                                "fwd to cadtoolbar");
-            QG_DIALOGFACTORY->getCadToolBar()->mouseReleaseEvent(e);
+    event->accept();
+
+    switch (event->button())
+    {
+    case Qt::RightButton:
+        if (!eventHandler->hasAction()
+         && !recent_actions.isEmpty())
+        {
+            QMenu* context_menu = new QMenu(this);
+            context_menu->setAttribute(Qt::WA_DeleteOnClose);
+            context_menu->addActions(recent_actions);
+            context_menu->exec(mapToGlobal(event->pos()));
         }
+        else back();
+        break;
+
+    case Qt::XButton1:
+        enter();
+        emit xbutton1_released();
+        break;
+
+    default:
+        eventHandler->mouseReleaseEvent(event);
+        break;
     }
-        RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: OK");
+    RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: OK");
 }
 
 
-void QG_GraphicView::mouseMoveEvent(QMouseEvent* e) {
-    //RS_DEBUG->print("QG_GraphicView::mouseMoveEvent begin");
-    //QMouseEvent rsm = QG_Qt2Rs::mouseEvent(e);
-
-    RS_GraphicView::mouseMoveEvent(e);
-    QWidget::mouseMoveEvent(e);
-
-#ifdef Q_OS_WIN32
-        // make sure that we can still use hotkeys and the mouse wheel
-        if (parent()!=NULL) {
-                ((QWidget*)parent())->setFocus();
-        }
-#endif
-
-    //RS_DEBUG->print("QG_GraphicView::mouseMoveEvent end");
+void QG_GraphicView::mouseMoveEvent(QMouseEvent* event)
+{
+    event->accept();
+    eventHandler->mouseMoveEvent(event);
 }
 
-bool QG_GraphicView::event(QEvent *event) {
+bool QG_GraphicView::event(QEvent *event)
+{
 #if QT_VERSION >= 0x050200
     if (event->type() == QEvent::NativeGesture) {
         QNativeGestureEvent *nge = static_cast<QNativeGestureEvent *>(event);
@@ -383,9 +337,9 @@ bool QG_GraphicView::event(QEvent *event) {
 
             // It seems the NativeGestureEvent::pos() incorrectly reports global coordinates
             QPoint g = mapFromGlobal(nge->globalPos());
-            RS_Vector mouse = toGraph(RS_Vector(g.x(), g.y()));
+            RS_Vector mouse = toGraph(g.x(), g.y());
             setCurrentAction(new RS_ActionZoomIn(*container, *this, direction,
-                                                 RS2::Both, mouse, factor));
+												 RS2::Both, &mouse, factor));
         }
 
         return true;
@@ -402,7 +356,7 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
         switch (e->device()) {
         case QTabletEvent::Eraser:
             if (e->type()==QEvent::TabletRelease) {
-                if (container!=NULL) {
+                if (container) {
 
                     RS_ActionSelectSingle* a =
                         new RS_ActionSelectSingle(*container, *this);
@@ -464,13 +418,13 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
 }
 
 void QG_GraphicView::leaveEvent(QEvent* e) {
-    RS_GraphicView::mouseLeaveEvent();
+    eventHandler->mouseLeaveEvent();
     QWidget::leaveEvent(e);
 }
 
 
 void QG_GraphicView::enterEvent(QEvent* e) {
-    RS_GraphicView::mouseEnterEvent();
+    eventHandler->mouseEnterEvent();
     QWidget::enterEvent(e);
 }
 
@@ -481,7 +435,7 @@ void QG_GraphicView::focusOutEvent(QFocusEvent* e) {
 
 
 void QG_GraphicView::focusInEvent(QFocusEvent* e) {
-    RS_GraphicView::mouseEnterEvent();
+    eventHandler->mouseEnterEvent();
     QWidget::focusInEvent(e);
 }
 
@@ -500,43 +454,53 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         return;
     }
 
-    RS_Vector mouse = toGraph(RS_Vector(e->x(), e->y()));
+    RS_Vector mouse = toGraph(e->x(), e->y());
 
-#if QT_VERSION >= 0x050200
-    QPoint numPixels = e->pixelDelta();
+    #if QT_VERSION >= 0x050200
 
-    // high-resolution scrolling triggers Pan instead of Zoom logic
-    isSmoothScrolling |= !numPixels.isNull();
+        if (device == "Trackpad")
+        {
+            QPoint numPixels = e->pixelDelta();
 
-    if (isSmoothScrolling) {
-        if (e->phase() == Qt::ScrollEnd) isSmoothScrolling = false;
+            // high-resolution scrolling triggers Pan instead of Zoom logic
+            isSmoothScrolling |= !numPixels.isNull();
 
-        if (!numPixels.isNull()) {
-            if (e->modifiers()==Qt::ControlModifier) {
-                // Hold ctrl to zoom. 1 % per pixel
-                double v = -numPixels.y() / 100.;
-                RS2::ZoomDirection direction;
-                double factor;
+            if (isSmoothScrolling)
+            {
+                if (e->phase() == Qt::ScrollEnd) isSmoothScrolling = false;
 
-                if (v < 0) {
-                    direction = RS2::Out; factor = 1-v;
-                } else {
-                    direction = RS2::In;  factor = 1+v;
+                if (!numPixels.isNull())
+                {
+                    if (e->modifiers()==Qt::ControlModifier)
+                    {
+                        // Hold ctrl to zoom. 1 % per pixel
+                        double v = -numPixels.y() / 100.;
+                        RS2::ZoomDirection direction;
+                        double factor;
+
+                        if (v < 0) {
+                            direction = RS2::Out; factor = 1-v;
+                        } else {
+                            direction = RS2::In;  factor = 1+v;
+                        }
+
+                        setCurrentAction(new RS_ActionZoomIn(*container, *this, direction,
+                                                             RS2::Both, &mouse, factor));
+                    }
+                    else if (scrollbars)
+                    {
+                        // otherwise, scroll
+                        //scroll by scrollbars: issue #479
+                        hScrollBar->setValue(hScrollBar->value() - numPixels.x());
+                        vScrollBar->setValue(vScrollBar->value() - numPixels.y());
+                    }
+                    redraw();
                 }
-
-                setCurrentAction(new RS_ActionZoomIn(*container, *this, direction,
-                                                     RS2::Both, mouse, factor));
-            } else {
-                // otherwise, scroll
-                setCurrentAction(new RS_ActionZoomScroll(numPixels.x(), numPixels.y(),
-                                                         *container, *this));
+                e->accept();
+                return;
             }
-            redraw();
         }
-        e->accept();
-        return;
-    }
-#endif
+    #endif
 
     if (e->delta() == 0) {
         // A zero delta event occurs when smooth scrolling is ended. Ignore this
@@ -573,36 +537,87 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         }
     }
 
-    if (scroll) {
-        setCurrentAction(new RS_ActionZoomScroll(direction,
-                         *container, *this));
+    if (scroll && scrollbars) {
+		//scroll by scrollbars: issue #479
+		switch(direction){
+		case RS2::Left:
+		case RS2::Right:
+			hScrollBar->setValue(hScrollBar->value()+e->delta());
+			break;
+		default:
+			vScrollBar->setValue(vScrollBar->value()+e->delta());
+		}
+
+//        setCurrentAction(new RS_ActionZoomScroll(direction,
+//                         *container, *this));
     }
 
     // zoom in / out:
     else if (e->modifiers()==0) {
-        if (e->delta()>0) {
-            setCurrentAction(new RS_ActionZoomIn(*container, *this,
-                                                 RS2::In, RS2::Both,
-                                                                                                 mouse));
-        } else {
-            setCurrentAction(new RS_ActionZoomIn(*container, *this,
-                                                 RS2::Out, RS2::Both,
-                                                                                                 mouse));
-        }
-    }
 
-        redraw();
+		/**
+		 * The zoomFactor effects how quickly the scroll wheel will zoom in & out.
+		 * 
+		 * Benchmarks:
+		 * 1.250 - the original; fast & usable, but seems a choppy & a bit 'jarring'
+		 * 1.175 - still a bit choppy
+		 * 1.150 - smoother than the original, but still 'quick' enough for good navigation.
+		 * 1.137 - seems to work well for me
+		 * 1.125 - about the lowest that would be acceptable and useful, a tad on the slow side for me
+		 * 1.100 - a very slow & deliberate zooming, but feels very "cautious", "controlled", "safe", and "precise".
+		 * 1.000 - goes nowhere. :)
+		 */
+		const double zoomFactor=1.137;
+
+		RS_Vector mainViewCenter = toGraph(getWidth()/2, getHeight()/2);
+
+		if (e->delta()>0) {
+			const double zoomInOvershoot=1.20;
+
+			RS_Vector effect{mouse};
+			{
+				effect-=mainViewCenter;
+				effect.scale(zoomInOvershoot);
+				effect+=mainViewCenter;
+			}
+
+			setCurrentAction(new RS_ActionZoomIn(*container, *this,
+												 RS2::In, RS2::Both,
+												 &effect,
+												 zoomFactor
+												));
+		} else {
+			const double zoomOutUndershoot=0.30;
+
+			RS_Vector effect{mouse};
+			{
+				effect-=mainViewCenter;
+				effect.scale(zoomOutUndershoot);
+				effect+=mainViewCenter;
+			}
+
+			setCurrentAction(new RS_ActionZoomIn(*container, *this,
+												 RS2::Out, RS2::Both,
+												 &effect,
+												 zoomFactor
+												));
+		}
+    }
+    redraw();
+
+    QMouseEvent* event = new QMouseEvent(QEvent::MouseMove,
+                                         QPoint(e->x(), e->y()),
+                                         Qt::NoButton, Qt::NoButton,
+                                         Qt::NoModifier);
+    eventHandler->mouseMoveEvent(event);
+    delete event;
 
     e->accept();
 }
 
 
-void QG_GraphicView::keyPressEvent(QKeyEvent* e) {
-    //if (e->key()==Qt::Key_Control) {
-    //	setCtrlPressed(true);
-    //}
-
-
+void QG_GraphicView::keyPressEvent(QKeyEvent* e)
+{
     if (container==NULL) {
         return;
     }
@@ -636,16 +651,13 @@ void QG_GraphicView::keyPressEvent(QKeyEvent* e) {
         setCurrentAction(new RS_ActionZoomScroll(direction,
                          *container, *this));
     }
-
-    RS_GraphicView::keyPressEvent(e);
+    eventHandler->keyPressEvent(e);
 }
 
 
-void QG_GraphicView::keyReleaseEvent(QKeyEvent* e) {
-    //if (e->key()==Qt::Key_Control) {
-    //	setCtrlPressed(false);
-    //}
-    RS_GraphicView::keyReleaseEvent(e);
+void QG_GraphicView::keyReleaseEvent(QKeyEvent* e)
+{
+    eventHandler->keyReleaseEvent(e);
 }
 
 
@@ -653,7 +665,10 @@ void QG_GraphicView::keyReleaseEvent(QKeyEvent* e) {
  * Called whenever the graphic view has changed.
  * Adjusts the scrollbar ranges / steps.
  */
-void QG_GraphicView::adjustOffsetControls() {
+void QG_GraphicView::adjustOffsetControls()
+{
+    if (scrollbars)
+    {
         static bool running = false;
 
         if (running) {
@@ -662,85 +677,75 @@ void QG_GraphicView::adjustOffsetControls() {
 
         running = true;
 
-    RS_DEBUG->print("QG_GraphicView::adjustOffsetControls() begin");
+        RS_DEBUG->print("QG_GraphicView::adjustOffsetControls() begin");
 
-    if (container==NULL || hScrollBar==NULL || vScrollBar==NULL) {
-        return;
-    }
-
-    int ox = getOffsetX();
-    int oy = getOffsetY();
-
-    RS_Vector min = container->getMin();
-    RS_Vector max = container->getMax();
-
-    // no drawing yet - still allow to scroll
-    if (max.x < min.x+1.0e-6 ||
-            max.y < min.y+1.0e-6 ||
-                max.x > RS_MAXDOUBLE ||
-                max.x < RS_MINDOUBLE ||
-                min.x > RS_MAXDOUBLE ||
-                min.x < RS_MINDOUBLE ||
-                max.y > RS_MAXDOUBLE ||
-                max.y < RS_MINDOUBLE ||
-                min.y > RS_MAXDOUBLE ||
-                min.y < RS_MINDOUBLE ) {
-        min = RS_Vector(-10,-10);
-        max = RS_Vector(100,100);
-    }
-
-        int minVal = (int)(-ox-toGuiDX(getWidth())*0.5
-                        - QG_SCROLLMARGIN - getBorderLeft());
-        int maxVal = (int)(-ox+toGuiDX(getWidth())*0.5
-                        + QG_SCROLLMARGIN + getBorderRight());
-
-        hScrollBar->setValue(0);
-        if (minVal<=maxVal) {
-                hScrollBar->setRange(minVal, maxVal);
+        if (container==NULL || hScrollBar==NULL || vScrollBar==NULL) {
+            return;
         }
-    //hScrollBar->setMinValue(minVal);
 
-        //hScrollBar->setMaxValue(maxVal);
+        int ox = getOffsetX();
+        int oy = getOffsetY();
 
-        minVal = (int)(oy-toGuiDY(getHeight())*0.5
-                        - QG_SCROLLMARGIN - getBorderTop());
-        maxVal = (int)(oy+toGuiDY(getHeight())*0.5
+        RS_Vector min = container->getMin();
+        RS_Vector max = container->getMax();
+
+        // no drawing yet - still allow to scroll
+        if (max.x < min.x+1.0e-6 ||
+                max.y < min.y+1.0e-6 ||
+                    max.x > RS_MAXDOUBLE ||
+                    max.x < RS_MINDOUBLE ||
+                    min.x > RS_MAXDOUBLE ||
+                    min.x < RS_MINDOUBLE ||
+                    max.y > RS_MAXDOUBLE ||
+                    max.y < RS_MINDOUBLE ||
+                    min.y > RS_MAXDOUBLE ||
+                    min.y < RS_MINDOUBLE ) {
+            min = RS_Vector(-10,-10);
+            max = RS_Vector(100,100);
+        }
+
+
+        int minVal = (int)(-ox-getWidth()*0.5
+                           - QG_SCROLLMARGIN - getBorderLeft());
+        int maxVal = (int)(-ox+getWidth()*0.5
+                           + QG_SCROLLMARGIN + getBorderRight());
+
+        if (minVal<=maxVal) {
+            hScrollBar->setRange(minVal, maxVal);
+        }
+
+        minVal = (int)(oy-getHeight()*0.5
+                       - QG_SCROLLMARGIN - getBorderTop());
+        maxVal = (int)(oy+getHeight()*0.5
                        +QG_SCROLLMARGIN + getBorderBottom());
 
         if (minVal<=maxVal) {
-                vScrollBar->setRange(minVal, maxVal);
+            vScrollBar->setRange(minVal, maxVal);
         }
-    //vScrollBar->setMaxValue((int)(QG_SCROLLMARGIN + getBorderBottom()
-     //                             - (min.y * getFactor().y)));
+
+        hScrollBar->setPageStep(getWidth());
+        vScrollBar->setPageStep(getHeight());
+
+        hScrollBar->setValue(-ox);
+        vScrollBar->setValue(oy);
 
 
-    //vScrollBar->setMinValue((int)(getHeight() -
-     //                             max.y * getFactor().y
-     //                             - QG_SCROLLMARGIN - getBorderTop()));
+        slotHScrolled(-ox);
+        slotVScrolled(oy);
 
 
-    hScrollBar->setPageStep((int)(getWidth()));
-    vScrollBar->setPageStep((int)(getHeight()));
+        RS_DEBUG->print("H min: %d / max: %d / step: %d / value: %d\n",
+                        hScrollBar->minimum(), hScrollBar->maximum(),
+                        hScrollBar->pageStep(), ox);
+    //    DEBUG_HEADER
+        RS_DEBUG->print(/*RS_Debug::D_WARNING, */"V min: %d / max: %d / step: %d / value: %d\n",
+                        vScrollBar->minimum(), vScrollBar->maximum(),
+                        vScrollBar->pageStep(), oy);
 
-    hScrollBar->setValue(-ox);
-    vScrollBar->setValue(oy);
-
-
-    slotHScrolled(-ox);
-    slotVScrolled(oy);
-
-
-    RS_DEBUG->print("H min: %d / max: %d / step: %d / value: %d\n",
-                    hScrollBar->minimum(), hScrollBar->maximum(),
-                    hScrollBar->pageStep(), ox);
-//    DEBUG_HEADER();
-    RS_DEBUG->print(/*RS_Debug::D_WARNING, */"V min: %d / max: %d / step: %d / value: %d\n",
-                    vScrollBar->minimum(), vScrollBar->maximum(),
-                    vScrollBar->pageStep(), oy);
-
-    RS_DEBUG->print("QG_GraphicView::adjustOffsetControls() end");
+        RS_DEBUG->print("QG_GraphicView::adjustOffsetControls() end");
 
         running = false;
+    }
 }
 
 
@@ -783,8 +788,8 @@ void QG_GraphicView::slotVScrolled(int value) {
     //static int running = false;
     //if (!running) {
     //running = true;
-//    DEBUG_HEADER();
-    RS_DEBUG->print(/*RS_Debug::D_WARNING,*/ "%s %s(): set vertical offset from %d to %d\n", __FILE__, __FUNCTION__, getOffsetY(), value);
+//    DEBUG_HEADER
+	RS_DEBUG->print(/*RS_Debug::D_WARNING,*/ "%s %s(): set vertical offset from %d to %d\n", __FILE__, __func__, getOffsetY(), value);
     if (vScrollBar->maximum()==vScrollBar->minimum()) {
         centerOffsetY();
     } else {
@@ -800,38 +805,49 @@ void QG_GraphicView::slotVScrolled(int value) {
  * @param oy, offset Y
  */
 void QG_GraphicView::setOffset(int ox, int oy) {
-//    DEBUG_HEADER();
+//    DEBUG_HEADER
 //    qDebug()<<"adjusting offset from ("<<getOffsetX()<<","<<getOffsetY()<<") to ("<<ox<<" , "<<oy<<")";
     RS_GraphicView::setOffset(ox, oy);
     // need to adjust offset control for scrollbars when setting graphicview offset
     adjustOffsetControls();
 }
 
-QPixmap* QG_GraphicView::getPixmapForView(QPixmap *pm)
+RS_Vector QG_GraphicView::getMousePosition() const
 {
+    //find mouse position
+    QPoint vp=mapFromGlobal(QCursor::pos());
+    //if cursor is not on widget, return the widget center position
+    if(!rect().contains(vp))
+        vp=QPoint(width()/2, height()/2);
+    return toGraph(vp.x(), vp.y());
+}
 
-        if (pm==NULL) {
-                return new QPixmap(getWidth(), getHeight());
-        } else if (pm->width()!=getWidth() || pm->height()!=getHeight()) {
-                delete pm;
-                return new QPixmap(getWidth(), getHeight());
-        } else {
-                return pm;
-        }
+void QG_GraphicView::getPixmapForView(std::unique_ptr<QPixmap>& pm)
+{
+	QSize const s0(getWidth(), getHeight());
+	if(pm && pm->size()==s0)
+		return;
+	pm.reset(new QPixmap(getWidth(), getHeight()));
 }
 
 void QG_GraphicView::layerActivated(RS_Layer *layer) {
-    if(m_bUpdateLayer==false) return;
+	RS_SETTINGS->beginGroup("/Modify");
+	bool toActivated= (RS_SETTINGS->readNumEntry("/ModifyEntitiesToActiveLayer", 0)==1);
+	RS_SETTINGS->endGroup();
+
+	if(!toActivated) return;
     RS_EntityContainer *container = this->getContainer();
-    RS_Entity *entity = container->firstEntity();
 
-    while (entity != NULL) {
-        if (entity->isSelected()) {
-            entity->setLayer(layer);
-        }
-
-        entity = container->nextEntity();
-    }
+	//allow undo cycle for layer change of selected
+	RS_AttributesData data;
+	data.pen = RS_Pen();
+	data.layer = layer->getName();
+	data.changeColor = false;
+	data.changeLineType = false;
+	data.changeWidth = false;
+	data.changeLayer = true;
+	RS_Modification m(*container, this);
+	m.changeAttributes(data);
 
     container->setSelected(false);
     redraw(RS2::RedrawDrawing);
@@ -843,62 +859,106 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
  * usually that's very fast since we only paint the buffer we
  * have from the last call..
  */
-void QG_GraphicView::paintEvent(QPaintEvent *) {
+void QG_GraphicView::paintEvent(QPaintEvent *)
+{
     RS_DEBUG->print("QG_GraphicView::paintEvent begin");
 
-        RS_SETTINGS->beginGroup("/Appearance");
-    bool draftMode = (bool)RS_SETTINGS->readNumEntry("/DraftMode", 0);
-    RS_SETTINGS->endGroup();
-
-
-        // Re-Create or get the layering pixmaps
-        PixmapLayer1=getPixmapForView(PixmapLayer1);
-        PixmapLayer2=getPixmapForView(PixmapLayer2);
-        PixmapLayer3=getPixmapForView(PixmapLayer3);
+    // Re-Create or get the layering pixmaps
+    getPixmapForView(PixmapLayer1);
+    getPixmapForView(PixmapLayer2);
+    getPixmapForView(PixmapLayer3);
 
     // Draw Layer 1
-        if (redrawMethod & RS2::RedrawGrid) {
-                PixmapLayer1->fill(background);
-                RS_PainterQt painter1(PixmapLayer1);
-                //painter1->setBackgroundMode(Qt::OpaqueMode);
-                //painter1->setBackgroundColor(background);
-                //painter1->eraseRect(0,0,getWidth(), getHeight());
-                drawLayer1((RS_Painter*)&painter1);
-                painter1.end();
+    if (redrawMethod & RS2::RedrawGrid)
+    {
+        PixmapLayer1->fill(background);
+        RS_PainterQt painter1(PixmapLayer1.get());
+        drawLayer1((RS_Painter*)&painter1);
+        painter1.end();
+    }
+
+    if (redrawMethod & RS2::RedrawDrawing)
+    {
+        // DRaw layer 2
+        PixmapLayer2->fill(Qt::transparent);
+        RS_PainterQt painter2(PixmapLayer2.get());
+        if (antialiasing)
+        {
+            painter2.setRenderHint(QPainter::Antialiasing);
         }
-
-
-        if (redrawMethod & RS2::RedrawDrawing) {
-                // DRaw layer 2
-                PixmapLayer2->fill(Qt::transparent);
-                RS_PainterQt painter2(PixmapLayer2);
-                painter2.setDrawingMode(drawingMode);
-                setDraftMode(draftMode);
+        painter2.setDrawingMode(drawingMode);
         painter2.setDrawSelectedOnly(false);
         drawLayer2((RS_Painter*)&painter2);
         painter2.setDrawSelectedOnly(true);
         drawLayer2((RS_Painter*)&painter2);
-        //removed to solve bug #3470573
-//        setDraftMode(false);
-                painter2.end();
-        }
+        painter2.end();
+    }
 
-    if (redrawMethod & RS2::RedrawOverlay) {
+    if (redrawMethod & RS2::RedrawOverlay)
+    {
         PixmapLayer3->fill(Qt::transparent);
-        RS_PainterQt painter3(PixmapLayer3);
+        RS_PainterQt painter3(PixmapLayer3.get());
+        if (antialiasing)
+        {
+            painter3.setRenderHint(QPainter::Antialiasing);
+        }
         drawLayer3((RS_Painter*)&painter3);
         painter3.end();
     }
 
-        // Finally paint the layers back on the screen, bitblk to the rescue!
-        RS_PainterQt wPainter(this);
-        //wPainter.setCompositionMode(QPainter::CompositionMode_Screen);
-        wPainter.drawPixmap(0,0,*PixmapLayer1);
-        wPainter.drawPixmap(0,0,*PixmapLayer2);
-        wPainter.drawPixmap(0,0,*PixmapLayer3);
-        wPainter.end();
+    // Finally paint the layers back on the screen, bitblk to the rescue!
+    RS_PainterQt wPainter(this);
+    wPainter.drawPixmap(0,0,*PixmapLayer1);
+    wPainter.drawPixmap(0,0,*PixmapLayer2);
+    wPainter.drawPixmap(0,0,*PixmapLayer3);
+    wPainter.end();
 
-        redrawMethod=RS2::RedrawNone;
+    redrawMethod=RS2::RedrawNone;
     RS_DEBUG->print("QG_GraphicView::paintEvent end");
 }
 
+void QG_GraphicView::setAntialiasing(bool state)
+{
+	antialiasing = state;
+}
+
+void QG_GraphicView::addScrollbars()
+{
+    scrollbars = true;
+
+    hScrollBar = new QG_ScrollBar(Qt::Horizontal, this);
+    vScrollBar = new QG_ScrollBar(Qt::Vertical, this);
+    layout = new QGridLayout(this);
+
+    setOffset(50, 50);
+
+    layout->setMargin(0);
+    layout->setSpacing(0);
+    layout->setColumnStretch(0, 1);
+    layout->setColumnStretch(1, 0);
+    layout->setColumnStretch(2, 0);
+    layout->setRowStretch(0, 1);
+    layout->setRowStretch(1, 0);
+
+    hScrollBar->setSingleStep(50);
+    hScrollBar->setCursor(Qt::ArrowCursor);
+    layout->addWidget(hScrollBar, 1, 0);
+    connect(hScrollBar, SIGNAL(valueChanged(int)),
+            this, SLOT(slotHScrolled(int)));
+
+    vScrollBar->setSingleStep(50);
+    vScrollBar->setCursor(Qt::ArrowCursor);
+    layout->addWidget(vScrollBar, 0, 1);
+    connect(vScrollBar, SIGNAL(valueChanged(int)),
+            this, SLOT(slotVScrolled(int)));
+}
+
+bool QG_GraphicView::hasScrollbars()
+{
+    return scrollbars;
+}
+
+void QG_GraphicView::setCursorHiding(bool state)
+{
+    cursor_hiding = state;
+}

@@ -24,12 +24,58 @@
 **
 **********************************************************************/
 
-
+#include<iostream>
+#include<cmath>
 #include "rs_font.h"
 #include "rs_text.h"
 
 #include "rs_fontlist.h"
 #include "rs_insert.h"
+#include "rs_math.h"
+#include "rs_debug.h"
+
+RS_TextData::RS_TextData(const RS_Vector& _insertionPoint,
+						 const RS_Vector& _secondPoint,
+						 double _height,
+						 double _widthRel,
+						 VAlign _valign,
+						 HAlign _halign,
+						 TextGeneration _textGeneration,
+						 const QString& _text,
+						 const QString& _style,
+						 double _angle,
+						 RS2::UpdateMode _updateMode):
+	insertionPoint(_insertionPoint)
+  ,secondPoint(_secondPoint)
+  ,height(_height)
+  ,widthRel(_widthRel)
+  ,valign(_valign)
+  ,halign(_halign)
+  ,textGeneration(_textGeneration)
+  ,text(_text)
+  ,style(_style)
+  ,angle(_angle)
+  ,updateMode(_updateMode)
+{
+}
+
+
+std::ostream& operator << (std::ostream& os, const RS_TextData& td) {
+	os << "("
+	   <<td.insertionPoint<<','
+	  <<td.secondPoint<<','
+	 <<td.height<<','
+	<<td.widthRel<<','
+	<<td.valign<<','
+	<<td.halign<<','
+	<<td.textGeneration<<','
+	<<td.text.toLatin1().data() <<','
+	<<td.style.toLatin1().data()<<','
+	<<td.angle<<','
+	<<td.updateMode<<','
+	<<")";
+	return os;
+}
 
 /**
  * Constructor.
@@ -43,7 +89,13 @@ RS_Text::RS_Text(RS_EntityContainer* parent,
     setText(data.text);
 }
 
-
+RS_Entity* RS_Text::clone() const{
+	RS_Text* t = new RS_Text(*this);
+	t->setOwner(isOwner());
+	t->initId();
+	t->detach();
+	return t;
+}
 
 /**
  * Sets a new text. The entities representing the
@@ -369,26 +421,16 @@ void RS_Text::update() {
 
 
 RS_Vector RS_Text::getNearestEndpoint(const RS_Vector& coord, double* dist)const {
-    if (dist!=NULL) {
+	if (dist) {
         *dist = data.insertionPoint.distanceTo(coord);
     }
     return data.insertionPoint;
 }
 
-
-RS_VectorSolutions RS_Text::getRefPoints() {
-        RS_VectorSolutions ret(data.insertionPoint, data.secondPoint);
-        return ret;
+RS_VectorSolutions RS_Text::getRefPoints() const{
+	RS_VectorSolutions ret({data.insertionPoint, data.secondPoint});
+	return ret;
 }
-
-
-RS_Vector RS_Text::getNearestRef(const RS_Vector& coord,
-                                     double* dist) {
-
-        //return getRefPoints().getClosest(coord, dist);
-        return RS_Entity::getNearestRef(coord, dist);
-}
-
 
 void RS_Text::move(const RS_Vector& offset) {
     RS_EntityContainer::move(offset);
@@ -429,8 +471,7 @@ void RS_Text::scale(const RS_Vector& center, const RS_Vector& factor) {
 void RS_Text::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     bool readable = RS_Math::isAngleReadable(data.angle);
 
-    RS_Vector vec;
-    vec.setPolar(1.0, data.angle);
+	RS_Vector vec = RS_Vector::polar(1.0, data.angle);
     vec.mirror(RS_Vector(0.0,0.0), axisPoint2-axisPoint1);
     data.angle = vec.angle();
 

@@ -28,6 +28,9 @@
 #include "rs_actioninterface.h"
 #include "rs_actiondrawimage.h"
 #include "rs_settings.h"
+#include "rs_math.h"
+#include "rs_debug.h"
+#include "ui_qg_imageoptions.h"
 
 /*
  *  Constructs a QG_ImageOptions as a child of 'parent', with the
@@ -35,9 +38,9 @@
  */
 QG_ImageOptions::QG_ImageOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, ui(new Ui::Ui_ImageOptions)
 {
-    setupUi(this);
-
+	ui->setupUi(this);
 }
 
 /*
@@ -45,8 +48,7 @@ QG_ImageOptions::QG_ImageOptions(QWidget* parent, Qt::WindowFlags fl)
  */
 QG_ImageOptions::~QG_ImageOptions()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+	saveSettings();
 }
 
 /*
@@ -55,19 +57,19 @@ QG_ImageOptions::~QG_ImageOptions()
  */
 void QG_ImageOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
-void QG_ImageOptions::destroy() {
+void QG_ImageOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Image");
-    RS_SETTINGS->writeEntry("/ImageAngle", leAngle->text());
-    RS_SETTINGS->writeEntry("/ImageFactor", leFactor->text());
+	RS_SETTINGS->writeEntry("/ImageAngle", ui->leAngle->text());
+	RS_SETTINGS->writeEntry("/ImageFactor", ui->leFactor->text());
     RS_SETTINGS->endGroup();
 }
 
 void QG_ImageOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDrawImage) {
-        action = (RS_ActionDrawImage*)a;
+    if (a && a->rtti()==RS2::ActionDrawImage) {
+		action = static_cast<RS_ActionDrawImage*>(a);
 
         QString sAngle;
         QString sFactor;
@@ -80,41 +82,41 @@ void QG_ImageOptions::setAction(RS_ActionInterface* a, bool update) {
             sFactor = RS_SETTINGS->readEntry("/ImageFactor", "1.0");
             RS_SETTINGS->endGroup();
         }
-    leAngle->setText(sAngle);
-    leFactor->setText(sFactor);
+	ui->leAngle->setText(sAngle);
+	ui->leFactor->setText(sFactor);
         updateData();
         updateFactor();
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR, 
 			"QG_ImageOptions::setAction: wrong action type");
-        action = NULL;
+		action = nullptr;
     }
 }
 
 void QG_ImageOptions::updateData() {
-    if (action!=NULL) {
-        action->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
+    if (action) {
+		action->setAngle(RS_Math::deg2rad(RS_Math::eval(ui->leAngle->text())));
     }
 }
 
 void QG_ImageOptions::updateDPI() {
-    if (action!=NULL) {
+    if (action) {
 
-        double f = action->dpiToScale(RS_Math::eval(leDPI->text()));
-        leFactor->blockSignals(true);
-        leFactor->setText(QString::number(f));
-        leFactor->blockSignals(false);
+		double f = action->dpiToScale(RS_Math::eval(ui->leDPI->text()));
+		ui->leFactor->blockSignals(true);
+		ui->leFactor->setText(QString::number(f));
+		ui->leFactor->blockSignals(false);
         action->setFactor(f);
     }
 }
 
 void QG_ImageOptions::updateFactor() {
-    if (action!=NULL) {
-        double f = RS_Math::eval(leFactor->text());
+    if (action) {
+		double f = RS_Math::eval(ui->leFactor->text());
         double dpi = action->scaleToDpi(f);
-        leDPI->blockSignals(true);
-        leDPI->setText(QString::number(dpi));
-        leDPI->blockSignals(false);
+		ui->leDPI->blockSignals(true);
+		ui->leDPI->setText(QString::number(dpi));
+		ui->leDPI->blockSignals(false);
         action->setFactor(f);
     }
 }

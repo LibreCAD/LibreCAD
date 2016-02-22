@@ -26,10 +26,16 @@
 #ifndef QG_BEVELOPTIONS_H
 #define QG_BEVELOPTIONS_H
 
-#include "rs_actionmodifybevel.h"
-#include "ui_qg_beveloptions.h"
+#include<memory>
+#include<QWidget>
 
-class QG_BevelOptions : public QWidget, public Ui::QG_BevelOptions
+class RS_ActionModifyBevel;
+class RS_ActionInterface;
+namespace Ui {
+class Ui_BevelOptions;
+}
+
+class QG_BevelOptions : public QWidget
 {
     Q_OBJECT
 
@@ -43,12 +49,11 @@ public slots:
 
 protected:
     RS_ActionModifyBevel* action;
+	std::unique_ptr<Ui::Ui_BevelOptions> ui;
 
 protected slots:
     virtual void languageChange();
-
-private:
-    void destroy();
+	void saveSettings();
 
 };
 

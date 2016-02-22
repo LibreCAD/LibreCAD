@@ -30,9 +30,16 @@
 #include "qc_dialogfactory.h"
 #include "qc_applicationwindow.h"
 #include "qg_blockwidget.h"
+#include "qc_mdiwindow.h"
+#include "qg_graphicview.h"
 
 #include "rs_blocklist.h"
+#include "rs_debug.h"
 
+
+QC_DialogFactory::QC_DialogFactory(QWidget* parent, QToolBar* ow) :
+  QG_DialogFactory(parent, ow)
+{}
 
 /**
  * Provides a new window for editing the active block.
@@ -42,13 +49,13 @@ void QC_DialogFactory::requestEditBlockWindow(RS_BlockList* /*blockList*/) {
 
     QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
     QC_MDIWindow* parent = appWindow->getMDIWindow();
-    if (parent!=NULL) {
+    if (parent) {
         //get blocklist from block widget, bug#3497154
         RS_BlockList* blist = appWindow->getBlockWidget() -> getBlockList();
-        if (blist !=NULL) {
+        if (blist ) {
             RS_Block* blk = blist->getActive();
 //            std::cout<<"QC_DialogFactory::requestEditBlockWindow(): size()="<<((blk==NULL)?0:blk->count() )<<std::endl;
-            if (blk!=NULL) {
+            if (blk) {
                 QC_MDIWindow* w = appWindow->slotFileNew(blk);
                 // the parent needs a pointer to the block window and
                 //   vice versa
@@ -78,7 +85,7 @@ void QC_DialogFactory::closeEditBlockWindow(RS_Block* block) {
     for (int i = 0; i <mdiAreaCAD->subWindowList().size(); ) {
         RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: window: %d",
                         i);
-        QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(mdiAreaCAD->subWindowList().at(i)->widget());
+        QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(mdiAreaCAD->subWindowList().at(i));
         if(m==NULL) {
             mdiAreaCAD->removeSubWindow(mdiAreaCAD->subWindowList().at(i));
             continue;
@@ -88,6 +95,7 @@ void QC_DialogFactory::closeEditBlockWindow(RS_Block* block) {
         if (m->getDocument()==block) {
             RS_DEBUG->print(
                         "QC_DialogFactory::closeEditBlockWindow: closing mdi");
+            appWindow->slotFilePrintPreview(false);
             m->closeMDI(true, false);
 
             mdiAreaCAD->removeSubWindow(mdiAreaCAD->subWindowList().at(i));

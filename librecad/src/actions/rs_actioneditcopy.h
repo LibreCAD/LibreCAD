@@ -37,7 +37,6 @@
  */
 class RS_ActionEditCopy : public RS_ActionInterface {
 	Q_OBJECT
-public:
     /**
      * Action States.
      */
@@ -49,28 +48,25 @@ public:
     RS_ActionEditCopy(bool copy,
                       RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
-    ~RS_ActionEditCopy();
+	~RS_ActionEditCopy() override;
 
-	static QAction* createGUIAction(RS2::ActionType type, QObject* parent);
+	void init(int status) override;
 
-    virtual void init(int status=0);
-
-    virtual void trigger();
+	void trigger() override;
 	
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 	
-	virtual void coordinateEvent(RS_CoordinateEvent* e);
+	void coordinateEvent(RS_CoordinateEvent* e) override;
 	
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
-    virtual void updateToolBar();
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 
 protected:
     /** Copy (true) or cut (false) */
     bool copy;
 
-	RS_Vector referencePoint;
+	std::unique_ptr<RS_Vector> referencePoint;
 };
 
 #endif

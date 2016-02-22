@@ -118,7 +118,7 @@ void rsPyAddLine(double x1, double y1, double x2, double y2) {
     //printf("c: parameter from python: %f\n", x1);
 
     RS_Graphic* graphic = RS_SIMPLEPYTHON->getGraphic();
-    if (graphic!=NULL) {
+    if (graphic) {
         graphic->addEntity(new RS_Line(graphic,
                                        RS_LineData(RS_Vector(x1, y1),
                                                    RS_Vector(x2, y2))));

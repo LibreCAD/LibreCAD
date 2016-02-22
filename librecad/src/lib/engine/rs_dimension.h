@@ -34,22 +34,11 @@
 /**
  * Holds the data that is common to all dimension entities.
  */
-class RS_DimensionData : public RS_Flags {
-public:
+struct RS_DimensionData : public RS_Flags {
     /**
 	 * Default constructor
      */
-	RS_DimensionData():
-		definitionPoint(false),
-		middleOfText(false),
-		valign(RS_MTextData::VABottom),
-		halign(RS_MTextData::HALeft),
-		lineSpacingStyle(RS_MTextData::Exact),
-		lineSpacingFactor(0.0),
-		text(""),
-		style(""),
-		angle(0.0)
-	{}
+	RS_DimensionData();
 
     /**
      * Constructor with initialisation.
@@ -67,7 +56,7 @@ public:
      * @param angle Rotation angle of dimension text away from
      *         default orientation.
      */
-    RS_DimensionData(const RS_Vector& definitionPoint,
+	RS_DimensionData(const RS_Vector& definitionPoint,
                      const RS_Vector& middleOfText,
                      RS_MTextData::VAlign valign,
                      RS_MTextData::HAlign halign,
@@ -75,34 +64,10 @@ public:
                      double lineSpacingFactor,
                      QString text,
                      QString style,
-                     double angle) {
-        this->definitionPoint = definitionPoint;
-        this->middleOfText = middleOfText;
-        this->valign = valign;
-        this->halign = halign;
-        this->lineSpacingStyle = lineSpacingStyle;
-        this->lineSpacingFactor = lineSpacingFactor;
-        this->text = text;
-        this->style = style;
-        this->angle = angle;
-    }
+					 double angle);
 
-    friend class RS_Dimension;
-    friend class RS_DimAligned;
-    friend class RS_DimLinear;
-    friend class RS_ActionDimAligned;
-    friend class RS_ActionDimLinear;
-
-    friend std::ostream& operator << (std::ostream& os,
-                                      const RS_DimensionData& dd) {
-        os << "(" << dd.definitionPoint << ")";
-        return os;
-    }
-
-
-public:
     /** Definition point */
-    RS_Vector definitionPoint;
+	RS_Vector definitionPoint;
     /** Middle point of dimension text */
     RS_Vector middleOfText;
     /** Vertical alignment */
@@ -125,7 +90,8 @@ public:
     double angle;
 };
 
-
+std::ostream& operator << (std::ostream& os,
+								  const RS_DimensionData& dd);
 
 /**
  * Abstract base class for dimension entity classes.
@@ -136,15 +102,15 @@ class RS_Dimension : public RS_EntityContainer {
 public:
     RS_Dimension(RS_EntityContainer* parent,
                  const RS_DimensionData& d);
-    virtual ~RS_Dimension() {}
+	virtual ~RS_Dimension() = default;
+
+    RS_Vector getNearestRef( const RS_Vector& coord, double* dist = nullptr) const;
+    RS_Vector getNearestSelectedRef( const RS_Vector& coord, double* dist = nullptr) const;
 
     /** @return Copy of data that defines the dimension. */
     RS_DimensionData getData() const {
         return data;
     }
-
-        RS_Vector getNearestRef(const RS_Vector& coord, double* dist);
-        RS_Vector getNearestSelectedRef(const RS_Vector& coord, double* dist);
 
     QString getLabel(bool resolve=true);
         void setLabel(const QString& l);
@@ -169,7 +135,7 @@ public:
                   bool arrow1=true, bool arrow2=true, bool autoText=false);
 
     RS_Vector getDefinitionPoint() {
-        return data.definitionPoint;
+		return data.definitionPoint;
     }
 
     RS_Vector getMiddleOfText() {
@@ -213,8 +179,18 @@ public:
     double getDimensionLineGap();
     double getTextHeight();
     bool getAlignText();
+    bool getFixedLengthOn();
+    double getFixedLength();
+    RS2::LineWidth getExtensionLineWidth();
+    RS2::LineWidth getDimensionLineWidth();
+    RS_Color getDimensionLineColor();
+    RS_Color getExtensionLineColor();
+    RS_Color getTextColor();
+    QString getTextStyle();
 
         double getGraphicVariable(const QString& key, double defMM, int code);
+        static QString stripZerosAngle(QString angle, int zeros=0);
+        static QString stripZerosLinear(QString linear, int zeros=1);
 
         //	virtual double getLength() {
         //		return -1.0;

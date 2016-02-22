@@ -23,13 +23,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef QG_SNAPMIDDLEOPTIONS_H
 #define QG_SNAPMIDDLEOPTIONS_H
 
-#include "ui_qg_snapmiddleoptions.h"
+#include<memory>
+#include<QWidget>
+
+namespace Ui {
+class Ui_SnapMiddleOptions;
+}
 
 /**
   * snap to equidistant points on entities
   *@Author: Dongxu Li
   */
-class QG_SnapMiddleOptions : public QWidget, public Ui::QG_SnapMiddleOptions
+class QG_SnapMiddleOptions : public QWidget
 {
     Q_OBJECT
 
@@ -51,8 +56,8 @@ private slots:
     void on_sbMiddlePoints_valueChanged(int arg1);
 
 private:
-    void destroy();
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_SnapMiddleOptions> ui;
 };
 
 #endif // QG_SNAPMIDDLEOPTIONS_H

@@ -27,7 +27,7 @@
 #define QG_DLGDIMLINEAR_H
 
 #include "ui_qg_dlgdimlinear.h"
-#include "rs_dimlinear.h"
+class RS_DimLinear;
 
 class QG_DlgDimLinear : public QDialog, public Ui::QG_DlgDimLinear
 {

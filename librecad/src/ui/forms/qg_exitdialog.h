@@ -26,15 +26,22 @@
 #ifndef QG_EXITDIALOG_H
 #define QG_EXITDIALOG_H
 
-#include "ui_qg_exitdialog.h"
+#include <memory>
+#include <QDialog>
 
-class QG_ExitDialog : public QDialog, public Ui::QG_ExitDialog
+class QAbstractButton;
+
+namespace Ui {
+class QG_ExitDialog;
+}
+
+class QG_ExitDialog : public QDialog
 {
     Q_OBJECT
 
 public:
     QG_ExitDialog(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
-    ~QG_ExitDialog();
+	~QG_ExitDialog();
 
 public slots:
     virtual void setText( const QString & text );
@@ -49,7 +56,7 @@ protected slots:
 
 private:
     void init();
-
+	std::unique_ptr<Ui::QG_ExitDialog> ui;
 };
 
 #endif // QG_EXITDIALOG_H

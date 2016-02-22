@@ -20,12 +20,31 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#include<vector>
+#include<QAction>
+#include <QMouseEvent>
 #include "rs_actiondrawcircletan2.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
+#include "rs_circle.h"
+#include "rs_point.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
+
+namespace {
+auto enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
+}
+
+struct RS_ActionDrawCircleTan2::Points {
+	RS_CircleData cData;
+	RS_Vector coord;
+	double radius{0.};
+	bool valid{false};
+	RS_VectorSolutions centers;
+	std::vector<RS_AtomicEntity*> circles;
+};
 
 /**
  * Constructor.
@@ -35,28 +54,13 @@ RS_ActionDrawCircleTan2::RS_ActionDrawCircleTan2(
         RS_EntityContainer& container,
         RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw circle inscribed",
-                               container, graphicView),
-      cData(RS_Vector(0.,0.),1.),
-      enTypeList()
+							   container, graphicView)
+	, pPoints(new Points{})
 {
-    //    supported types
-    enTypeList<<RS2::EntityLine<<RS2::EntityArc<<RS2::EntityCircle;
+	actionType=RS2::ActionDrawCircleTan2;
 }
 
-
-
-RS_ActionDrawCircleTan2::~RS_ActionDrawCircleTan2() {
-}
-
-
-
-QAction* RS_ActionDrawCircleTan2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action;
-
-    action = new QAction(tr("Tangential 2 Circles, Radius",  "circle tangential to two give circles and with radius"), NULL);
-    action->setIcon(QIcon(":/extui/circletan2.png"));
-    return action;
-}
+RS_ActionDrawCircleTan2::~RS_ActionDrawCircleTan2() = default;
 
 void RS_ActionDrawCircleTan2::init(int status) {
     RS_PreviewActionInterface::init(status);
@@ -65,53 +69,45 @@ void RS_ActionDrawCircleTan2::init(int status) {
     }
 
     if (status==SetCircle1) {
-        circles.clear();
+        pPoints->circles.clear();
     }
 }
 
 
 void RS_ActionDrawCircleTan2::finish(bool updateTB){
-    if(circles.size()>0){
-        for(int i=0;i<circles.size();i++) {
-            if(circles.at(i) != NULL) circles.at(i)->setHighlighted(false);
+    if(pPoints->circles.size()>0){
+		for(auto p: pPoints->circles){
+			if(p) p->setHighlighted(false);
         }
         graphicView->redraw(RS2::RedrawDrawing);
-        circles.clear();
+        pPoints->circles.clear();
     }
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-//void RS_ActionDrawCircleTan2::finish(bool updateTB){
-////    for(int i=0;i<circles.size();i++) circles[i]->setHighlighted(false);
-////    graphicView->redraw(RS2::RedrawDrawing);
-////    circles.clear();
-//    RS_PreviewActionInterface::finish(updateTB);
-//}
-
 
 void RS_ActionDrawCircleTan2::trigger() {
-    //    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
-    //    std::cout<<"begin"<<std::endl;
 
     RS_PreviewActionInterface::trigger();
 
 
-    RS_Circle* circle=new RS_Circle(container, cData);
+	RS_Circle* circle=new RS_Circle(container, pPoints->cData);
 
     container->addEntity(circle);
 
     // upd. undo list:
-    if (document!=NULL) {
+    if (document) {
         document->startUndoCycle();
         document->addUndoable(circle);
         document->endUndoCycle();
     }
 
-    for(int i=0;i<circles.size();i++) circles[i]->setHighlighted(false);
+	for(auto p: pPoints->circles)
+		p->setHighlighted(false);
     graphicView->redraw(RS2::RedrawDrawing);
     //    drawSnapper();
 
-    circles.clear();
+    pPoints->circles.clear();
     setStatus(SetCircle1);
 
     RS_DEBUG->print("RS_ActionDrawCircleTan2::trigger():"
@@ -126,12 +122,15 @@ void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent* e) {
     switch(getStatus() ){
     case SetCenter: {
         //        RS_Entity*  en = catchEntity(e, enTypeList, RS2::ResolveAll);
-        coord= graphicView->toGraph(e->x(), e->y());
+		pPoints->coord= graphicView->toGraph(e->x(), e->y());
         //        circles[getStatus()]=static_cast<RS_Line*>(en);
         if(preparePreview()) {
             deletePreview();
-            RS_Circle* e=new RS_Circle(preview, cData);
+			RS_Circle* e=new RS_Circle(preview.get(), pPoints->cData);
             preview->addEntity(e);
+			for(size_t i=0; i< pPoints->centers.size(); ++i){
+				preview->addEntity(new RS_Point(preview.get(), RS_PointData(pPoints->centers.at(i))));
+			}
             drawPreview();
         }
     }
@@ -144,38 +143,38 @@ void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionDrawCircleTan2::setRadius(const double& r)
 {
-    cData.radius=r;
+	pPoints->cData.radius=r;
     if(getStatus() == SetCenter){
-        RS_Circle c(NULL,cData);
-        centers=c.createTan2(circles,cData.radius);
+		pPoints->centers=RS_Circle::createTan2(pPoints->circles,
+			pPoints->cData.radius);
     }
 }
 
 bool RS_ActionDrawCircleTan2::getCenters(){
     if(getStatus() != SetCircle2) return false;
-    RS_Circle c(NULL,cData);
-    centers=c.createTan2(circles,cData.radius);
-    valid= (centers.size()>0);
-    return valid;
+	pPoints->centers=RS_Circle::createTan2(pPoints->circles,
+				pPoints->cData.radius);
+	pPoints->valid= (pPoints->centers.size()>0);
+	return pPoints->valid;
 }
 
 bool RS_ActionDrawCircleTan2::preparePreview(){
-    if(valid) {
-        cData.center=centers.getClosest(coord);
+	if (pPoints->valid) {
+		pPoints->cData.center=pPoints->centers.getClosest(pPoints->coord);
     }
-    return valid;
+	return pPoints->valid;
 }
 
 RS_Entity* RS_ActionDrawCircleTan2::catchCircle(QMouseEvent* e) {
     RS_Entity*  en = catchEntity(e,enTypeList, RS2::ResolveAll);
-    if(en == NULL) return NULL;
-    if(en->isVisible()==false) return NULL;
-    for(int i=0;i<getStatus();i++) {
-        if(en->getId() == circles[i]->getId()) return NULL; //do not pull in the same line again
+	if (!en) return nullptr;
+	if (!en->isVisible()) return nullptr;
+	for (int i=0;i<getStatus();i++) {
+		if(en->getId() == pPoints->circles[i]->getId()) return nullptr; //do not pull in the same line again
     }
-    if(en->getParent() != NULL) {
+	if(en->getParent()) {
         if ( en->getParent()->ignoredOnModification()){
-            return NULL;
+			return nullptr;
         }
     }
     return en;
@@ -189,18 +188,18 @@ void RS_ActionDrawCircleTan2::mouseReleaseEvent(QMouseEvent* e) {
         case SetCircle1:
         case SetCircle2: {
             RS_Entity*  en = catchCircle(e);
-            if (en==NULL) return;
-            circles.resize(getStatus());
-            circles.push_back(static_cast<RS_AtomicEntity*>(en));
+			if (!en) return;
+            pPoints->circles.resize(getStatus());
+            pPoints->circles.push_back(static_cast<RS_AtomicEntity*>(en));
             if(getStatus()==SetCircle1 || getCenters()){
-                circles.at(circles.size()-1)->setHighlighted(true);
+                pPoints->circles.at(pPoints->circles.size()-1)->setHighlighted(true);
                 graphicView->redraw(RS2::RedrawDrawing);
                 setStatus(getStatus()+1);
             }
         }
             break;
         case SetCenter:
-            coord= graphicView->toGraph(e->x(), e->y());
+			pPoints->coord= graphicView->toGraph(e->x(), e->y());
             if( preparePreview()) trigger();
             break;
 
@@ -210,8 +209,8 @@ void RS_ActionDrawCircleTan2::mouseReleaseEvent(QMouseEvent* e) {
     } else if (e->button()==Qt::RightButton) {
         // Return to last status:
         if(getStatus()>0){
-            circles[getStatus()-1]->setHighlighted(false);
-            circles.pop_back();
+            pPoints->circles[getStatus()-1]->setHighlighted(false);
+            pPoints->circles.pop_back();
             graphicView->redraw(RS2::RedrawDrawing);
             deletePreview();
         }
@@ -231,7 +230,7 @@ void RS_ActionDrawCircleTan2::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -242,7 +241,7 @@ void RS_ActionDrawCircleTan2::commandEvent(RS_CommandEvent* e) {
     case SetFocus1: {
             bool ok;
             double m = RS_Math::eval(c, &ok);
-            if (ok==true) {
+			if (ok) {
                 ratio = m / major.magnitude();
                 if (!isArc) {
                     trigger();
@@ -250,7 +249,7 @@ void RS_ActionDrawCircleTan2::commandEvent(RS_CommandEvent* e) {
                     setStatus(SetAngle1);
                 }
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -260,11 +259,11 @@ void RS_ActionDrawCircleTan2::commandEvent(RS_CommandEvent* e) {
     case SetAngle1: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
+			if (ok) {
                 angle1 = RS_Math::deg2rad(a);
                 setStatus(SetAngle2);
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -274,11 +273,11 @@ void RS_ActionDrawCircleTan2::commandEvent(RS_CommandEvent* e) {
     case SetAngle2: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
+			if (ok) {
                 angle2 = RS_Math::deg2rad(a);
                 trigger();
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -294,7 +293,7 @@ void RS_ActionDrawCircleTan2::commandEvent(RS_CommandEvent* e) {
 
 void RS_ActionDrawCircleTan2::showOptions() {
     RS_DEBUG->print("RS_ActionDrawCircleTan2::showOptions");
-    if(RS_DIALOGFACTORY != NULL){
+	if(RS_DIALOGFACTORY){
         RS_ActionInterface::showOptions();
 
         RS_DIALOGFACTORY->requestOptions(this, true);
@@ -305,7 +304,7 @@ void RS_ActionDrawCircleTan2::showOptions() {
 
 
 void RS_ActionDrawCircleTan2::hideOptions() {
-    if(RS_DIALOGFACTORY != NULL){
+	if(RS_DIALOGFACTORY){
         RS_ActionInterface::hideOptions();
 
         RS_DIALOGFACTORY->requestOptions(this, false);
@@ -314,14 +313,13 @@ void RS_ActionDrawCircleTan2::hideOptions() {
 
 
 QStringList RS_ActionDrawCircleTan2::getAvailableCommands() {
-    QStringList cmd;
-    return cmd;
+	return {};
 }
 
 
 
 void RS_ActionDrawCircleTan2::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetCircle1:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first line/arc/circle"),
@@ -338,7 +336,7 @@ void RS_ActionDrawCircleTan2::updateMouseButtonHints() {
                                                 tr("Back"));
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+            RS_DIALOGFACTORY->updateMouseWidget();
             break;
         }
     }
@@ -347,17 +345,11 @@ void RS_ActionDrawCircleTan2::updateMouseButtonHints() {
 
 
 void RS_ActionDrawCircleTan2::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
-
-
-//void RS_ActionDrawCircleTan2::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
+double RS_ActionDrawCircleTan2::getRadius() const{
+	return pPoints->cData.radius;
+}
 
 // EOF

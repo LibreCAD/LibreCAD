@@ -32,12 +32,12 @@
  * to use this constructor.
  */
 QG_WidthBox::QG_WidthBox(QWidget* parent, const char* name)
-        : QComboBox(parent) {
-
-    setObjectName(name);
-    showByLayer = false;
-    showUnchanged = false;
-    unchanged = false;
+	: QComboBox(parent)
+	,showByLayer(false)
+	,showUnchanged(false)
+	,unchanged(false)
+{
+	setObjectName(name);
 }
 
 /**
@@ -53,12 +53,13 @@ QG_WidthBox::QG_WidthBox(bool showByLayer, bool showUnchanged,
     init(showByLayer, showUnchanged);
 }
 
+RS2::LineWidth QG_WidthBox::getWidth() const{
+    return currentWidth;
+}
 
-/**
- * Destructor
- */
-QG_WidthBox::~QG_WidthBox() {}
-
+bool QG_WidthBox::isUnchanged() const{
+    return unchanged;
+}
 
 /**
  * Initialisation (called from constructor or manually but only
@@ -122,7 +123,7 @@ void QG_WidthBox::setWidth(RS2::LineWidth w) {
     switch (w) {
     case RS2::WidthByLayer:
         if (showByLayer) {
-            setCurrentIndex(0 + (int)showUnchanged);
+			setCurrentIndex((int)showUnchanged);
         } else {
         	RS_DEBUG->print(RS_Debug::D_WARNING,
             	"QG_WidthBox::setWidth: Unsupported width.");
@@ -301,7 +302,7 @@ void QG_WidthBox::slotWidthChanged(int index) {
 
     bool done = false;
 
-    if (showUnchanged && index==0) {
+	if (showUnchanged && !index) {
         unchanged = true;
         done = true;
     } else {

@@ -24,19 +24,16 @@
 **
 **********************************************************************/
 
-#include "rs_script.h"
-
 #include <iostream>
-//#include <values.h>
-
-
+#include <QString>
+#include "rs_script.h"
 
 /**
  * Constructor.
  */
-RS_Script::RS_Script(const QString& name, const QString& /*path*/) {
-    this->name = name;
+RS_Script::RS_Script(const QString& name, const QString& /*path*/):
+name{name}
+{
 }
-
 
 // EOF

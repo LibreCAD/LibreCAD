@@ -24,17 +24,20 @@ QMAKE_CXXFLAGS += -std=c++11
 QT -= svg
 
 HEADERS += \
-    src/muParserTokenReader.h \
-    src/muParserToken.h \
-    src/muParserStack.h \
-    src/muParserFixes.h \
-    src/muParserError.h \
-    src/muParserDef.h \
-    src/muParserCallback.h \
-    src/muParserBytecode.h \
-    src/muParserBase.h \
-    src/muParser.h \
-    src/muParserTemplateMagic.h
+    include/muParserTokenReader.h \
+    include/muParserToken.h \
+    include/muParserStack.h \
+    include/muParserFixes.h \
+    include/muParserError.h \
+    include/muParserDef.h \
+    include/muParserCallback.h \
+    include/muParserBytecode.h \
+    include/muParserBase.h \
+    include/muParser.h \
+    include/muParserTemplateMagic.h
+
+DEPENDPATH += include
+INCLUDEPATH += $$DEPENDPATH
 
 SOURCES += \
     src/muParserTokenReader.cpp \

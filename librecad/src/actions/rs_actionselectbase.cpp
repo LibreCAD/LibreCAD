@@ -26,6 +26,7 @@
 
 #include "rs_actionselectbase.h"
 
+#include <QMouseEvent>
 #include "rs_graphicview.h"
 
 
@@ -42,7 +43,7 @@ RS_ActionSelectBase::RS_ActionSelectBase(const char* name,
  * action and finishing this one when the enter key is pressed.
  */
 void RS_ActionSelectBase::keyReleaseEvent(QKeyEvent* e) {
-    if (e->key()==Qt::Key_Return && predecessor!=NULL) {
+    if (e->key()==Qt::Key_Return && predecessor) {
         finish(false);
     }
 }

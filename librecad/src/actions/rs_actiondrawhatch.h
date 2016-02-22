@@ -49,9 +49,7 @@ public:
 public:
     RS_ActionDrawHatch(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
-    ~RS_ActionDrawHatch() {}
-	
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+    ~RS_ActionDrawHatch() = default;
 
     virtual void init(int status=0);
     virtual void trigger();
@@ -59,15 +57,12 @@ public:
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
-    void setShowArea(bool s){
-        m_bShowArea=s;
-    }
+	void setShowArea(bool s);
 
 private:
     RS_HatchData data;
-	RS_Hatch* hatch;
-    bool m_bShowArea;
+    RS_Hatch* hatch{nullptr};
+    bool m_bShowArea{true};
 };
 
 #endif

@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-
+#include<iostream>
 #include "rs_leader.h"
 
 #include "rs_debug.h"
@@ -36,9 +36,9 @@
  * Constructor.
  */
 RS_Leader::RS_Leader(RS_EntityContainer* parent)
-        :RS_EntityContainer(parent) {
-
-    empty = true;
+		:RS_EntityContainer(parent)
+		,empty(true)
+{
 }
 
 
@@ -52,14 +52,13 @@ RS_Leader::RS_Leader(RS_EntityContainer* parent,
     empty = true;
 }
 
-
-
-/**
- * Destructor
- */
-RS_Leader::~RS_Leader() {}
-
-
+RS_Entity* RS_Leader::clone() const{
+	RS_Leader* p = new RS_Leader(*this);
+	p->setOwner(isOwner());
+	p->initId();
+	p->detach();
+	return p;
+}
 
 /**
  * Implementation of update. Updates the arrow.
@@ -67,7 +66,7 @@ RS_Leader::~RS_Leader() {}
 void RS_Leader::update() {
 
     // find and delete arrow:
-    for (RS_Entity* e=firstEntity(); e!=NULL; e=nextEntity()) {
+	for(auto e: entities){
         if (e->rtti()==RS2::EntitySolid) {
             removeEntity(e);
             break;
@@ -79,7 +78,7 @@ void RS_Leader::update() {
         }
 
     RS_Entity* fe = firstEntity();
-    if (fe!=NULL && fe->isAtomic()) {
+    if (fe && fe->isAtomic()) {
         RS_Vector p1 = ((RS_AtomicEntity*)fe)->getStartpoint();
         RS_Vector p2 = ((RS_AtomicEntity*)fe)->getEndpoint();
 
@@ -90,7 +89,7 @@ void RS_Leader::update() {
                           p2.angleTo(p1),
                           getGraphicVariableDouble("$DIMASZ", 2.5)* getGraphicVariableDouble("$DIMSCALE", 1.0));
             s->setPen(RS_Pen(RS2::FlagInvalid));
-            s->setLayer(NULL);
+			s->setLayer(nullptr);
             RS_EntityContainer::addEntity(s);
         }
     }
@@ -107,22 +106,22 @@ void RS_Leader::update() {
  *
  * @param v vertex coordinate
  *
- * @return Pointer to the entity that was addded or NULL if this
+ * @return Pointer to the entity that was addded or nullptr if this
  *         was the first vertex added.
  */
 RS_Entity* RS_Leader::addVertex(const RS_Vector& v) {
 
-    RS_Entity* entity=NULL;
-    static RS_Vector last = RS_Vector(false);
+	RS_Entity* entity{nullptr};
+	static RS_Vector last = RS_Vector{false};
 
     if (empty) {
         last = v;
         empty = false;
     } else {
         // add line to the leader:
-        entity = new RS_Line(this, RS_LineData(last, v));
+		entity = new RS_Line{this, {last, v}};
         entity->setPen(RS_Pen(RS2::FlagInvalid));
-        entity->setLayer(NULL);
+		entity->setLayer(nullptr);
         RS_EntityContainer::addEntity(entity);
 
                 if (count()==1 && hasArrowHead()) {
@@ -147,10 +146,9 @@ void RS_Leader::addEntity(RS_Entity* entity) {
     RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Leader::addEntity:"
                     " should never be called");
 
-    if (entity==NULL) {
-        return;
-    }
-    delete entity;
+	if (!entity) return;
+
+	delete entity;
 }
 
 
@@ -206,5 +204,11 @@ std::ostream& operator << (std::ostream& os, const RS_Leader& l) {
     os << "\n}\n";
 
     return os;
+}
+
+std::ostream& operator << (std::ostream& os,
+                                      const RS_LeaderData& /*ld*/) {
+        os << "(Leader)";
+        return os;
 }
 

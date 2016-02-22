@@ -27,46 +27,41 @@
 #include "rs_actionmodifyrotate2.h"
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-
-
+#include "rs_coordinateevent.h"
+#include "rs_modification.h"
+#include "rs_debug.h"
 
 RS_ActionModifyRotate2::RS_ActionModifyRotate2(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Rotate Entities around two centers",
-                           container, graphicView) {}
-
-
-QAction* RS_ActionModifyRotate2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Rotate Two")
-        QAction* action = new QAction(tr("Rotate T&wo"), NULL);
-        //action->zetStatusTip(tr("Rotate Entities around two centers"));
-        action->setIcon(QIcon(":/extui/modifyrotate2.png"));
-        return action;
+						   container, graphicView)
+		,data(new RS_Rotate2Data())
+{
+	actionType=RS2::ActionModifyRotate2;
 }
+
+RS_ActionModifyRotate2::~RS_ActionModifyRotate2() = default;
+
 
 void RS_ActionModifyRotate2::init(int status) {
-    RS_ActionInterface::init(status);
-
+	RS_ActionInterface::init(status);
 }
-
-
 
 void RS_ActionModifyRotate2::trigger() {
 
     RS_DEBUG->print("RS_ActionModifyRotate2::trigger()");
 
     RS_Modification m(*container, graphicView);
-    m.rotate2(data);
+	m.rotate2(*data);
 
     finish(false);
 
         RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
 }
-
-
 
 void RS_ActionModifyRotate2::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyRotate2::mouseMoveEvent begin");
@@ -77,18 +72,18 @@ void RS_ActionModifyRotate2::mouseMoveEvent(QMouseEvent* e) {
         RS_Vector mouse = snapPoint(e);
         switch (getStatus()) {
         case SetReferencePoint1:
-            data.center1 = mouse;
+			data->center1 = mouse;
             break;
 
         case SetReferencePoint2:
-            if (data.center1.valid) {
-                data.center2 = mouse;
-                //data.offset = data.center2-data.center1;
+			if (data->center1.valid) {
+				data->center2 = mouse;
+				//data->offset = data->center2-data->center1;
 
                 /*deletePreview();
                 preview->addSelectionFrom(*container);
-                preview->rotate(data.center1, data.angle);
-                preview->move(data.offset);
+				preview->rotate(data->center1, data->angle);
+				preview->move(data->offset);
                 drawPreview();
                 */
             }
@@ -102,8 +97,6 @@ void RS_ActionModifyRotate2::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyRotate2::mouseMoveEvent end");
 }
 
-
-
 void RS_ActionModifyRotate2::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
@@ -114,8 +107,6 @@ void RS_ActionModifyRotate2::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-
 void RS_ActionModifyRotate2::coordinateEvent(RS_CoordinateEvent* e) {
     if (e==NULL) {
         return;
@@ -125,14 +116,14 @@ void RS_ActionModifyRotate2::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetReferencePoint1:
-        data.center1 = pos;
+		data->center1 = pos;
         setStatus(SetReferencePoint2);
         break;
 
     case SetReferencePoint2:
-        data.center2 = pos;
+		data->center2 = pos;
         setStatus(ShowDialog);
-        if (RS_DIALOGFACTORY->requestRotate2Dialog(data)) {
+		if (RS_DIALOGFACTORY->requestRotate2Dialog(*data)) {
             trigger();
             //finish();
         }
@@ -143,19 +134,13 @@ void RS_ActionModifyRotate2::coordinateEvent(RS_CoordinateEvent* e) {
     }
 }
 
-
 void RS_ActionModifyRotate2::commandEvent(RS_CommandEvent* /*e*/) {
 }
-
-
 
 QStringList RS_ActionModifyRotate2::getAvailableCommands() {
     QStringList cmd;
     return cmd;
 }
-
-
-
 
 void RS_ActionModifyRotate2::updateMouseButtonHints() {
     switch (getStatus()) {
@@ -168,32 +153,13 @@ void RS_ActionModifyRotate2::updateMouseButtonHints() {
                                             tr("Back"));
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }
 
-
-
 void RS_ActionModifyRotate2::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-//void RS_ActionModifyRotate2::updateToolBar() {
-//    //not needed any more with new snap
-//    return;
-//    switch (getStatus()) {
-//    case SetReferencePoint1:
-//    case SetReferencePoint2:
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-//        break;
-//    default:
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-//        break;
-//    }
-//}
-
 
 // EOF

@@ -25,16 +25,20 @@
 **********************************************************************/
 
 
+#include <QStringList>
 #include "rs_filtercxf.h"
 
 #include <iostream>
 #include <fstream>
 
+#include "rs_arc.h"
+#include "rs_line.h"
 #include "rs_font.h"
 #include "rs_utility.h"
 #include "rs_system.h"
 #include "rs_block.h"
-#include <QStringList>
+#include "rs_math.h"
+#include "rs_debug.h"
 
 
 /**
@@ -198,7 +202,7 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
             RS_DEBUG->print("block: %d", i);
             RS_DEBUG->print("001");
 
-            if (blk!=NULL && !blk->isUndone()) {
+            if (blk && !blk->isUndone()) {
                 RS_DEBUG->print("002");
                 RS_DEBUG->print("002a: %s",
                                 (blk->getName().toLocal8Bit().data()));
@@ -209,7 +213,7 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
 
                 // iterate through entities of this letter:
                 for (RS_Entity* e=blk->firstEntity(RS2::ResolveAll);
-                        e!=NULL;
+                        e;
                         e=blk->nextEntity(RS2::ResolveAll)) {
 
                     if (!e->isUndone()) {
@@ -241,8 +245,9 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
                                     a->getCenter().x,
                                     a->getCenter().y,
                                     a->getRadius(),
-                                    a->getAngle1()*ARAD,
-                                    a->getAngle2()*ARAD);
+									RS_Math::rad2deg(a->getAngle1()),
+									RS_Math::rad2deg(a->getAngle2())
+													 );
                         }
                         // Ignore entities other than arcs / lines
                         else {}

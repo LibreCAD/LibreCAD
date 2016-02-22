@@ -27,27 +27,14 @@
 #ifndef QG_DIALOGFACTORY_H
 #define QG_DIALOGFACTORY_H
 
-#include <qwidget.h>
-#include <QToolBar>
-
 #include "rs_dialogfactoryinterface.h"
-#include "rs_vector.h"
-#include "rs_debug.h"
 
-/*
-#include "qg_cadtoolbar.h"
-#include "qg_coordinatewidget.h"
-#include "qg_arctangentialoptions.h"
-#include "qg_selectionwidget.h"
-#include "qg_mousewidget.h"
-#include "qg_printpreviewoptions.h"
-*/
-#include "qg_polylineequidistantoptions.h"
-#include "qg_snapmiddleoptions.h"
-#include "qg_snapdistoptions.h"
-#include "qg_modifyoffsetoptions.h"
+class QG_PolylineEquidistantOptions;
+class QG_SnapMiddleOptions;
+class QG_SnapDistOptions;
+class QG_ModifyOffsetOptions;
+class QWidget;
 
-class QG_CadToolBar;
 class QToolBar;
 class QG_CoordinateWidget;
 class QG_SelectionWidget;
@@ -56,11 +43,11 @@ class QG_ArcTangentialOptions;
 class QG_PrintPreviewOptions;
 //class PrintPreviewOptions;
 class QG_CommandWidget;
-class QG_MainWindowInterface;
 class RS_Document;
 class QG_LineAngleOptions;
+class RS_Vector;
 
-#define QG_DIALOGFACTORY (RS_DialogFactory::instance()->getFactoryObject()->isAdapter()==false ? ((QG_DialogFactory*)RS_DialogFactory::instance()->getFactoryObject()) : NULL)
+#define QG_DIALOGFACTORY (RS_DialogFactory::instance()->getFactoryObject()->isAdapter()==false ? ((QG_DialogFactory*)RS_DialogFactory::instance()->getFactoryObject()) : nullptr)
 
 /**
  * This is the Qt implementation of a widget which can create and
@@ -75,11 +62,7 @@ protected:
     /**
      * Links factory to a widget that can host tool options.
      */
-    virtual void setOptionWidget(QToolBar* ow) {
-        RS_DEBUG->print("QG_DialogFactory::setOptionWidget");
-        optionWidget = ow;
-        RS_DEBUG->print("QG_DialogFactory::setOptionWidget: OK");
-    }
+	virtual void setOptionWidget(QToolBar* ow);
 public:
     /**
      * Links this dialog factory to a coordinate widget.
@@ -103,22 +86,6 @@ public:
     }
 
     /**
-     * Links this dialog factory to the cad tool bar.
-     */
-    virtual void setCadToolBar(QG_CadToolBar* ctb) {
-        cadToolBar = ctb;
-    }
-
-    /**
-     * @return cad tool bar or NULL.
-     */
-    QG_CadToolBar* getCadToolBar() {
-        return cadToolBar;
-    }
-
-    virtual void showCadToolBar(RS2::ActionType actionType) ;
-
-    /**
      * Links this dialog factory to a command widget.
      */
     virtual void setCommandWidget(QG_CommandWidget* cw) {
@@ -126,31 +93,24 @@ public:
     }
 
     /**
-     * @return command widget or NULL.
+	 * @return command widget or nullptr.
      */
-    QG_CommandWidget* getCommandWidget() {
+	QG_CommandWidget* getCommandWidget() const {
         return commandWidget;
     }
 
     /**
      * Links the dialog factory to a main app window.
      */
-    virtual void setMainWindow(QG_MainWindowInterface* mw) {
-        mainWindow = mw;
-    }
-
 
     virtual void requestWarningDialog(const QString& warning);
 
-    virtual RS_GraphicView* requestNewDocument(const QString& fileName = QString::null,
-                        RS_Document* doc=NULL);
-
     virtual RS_Layer* requestNewLayerDialog(
-        RS_LayerList* layerList = NULL);
+		RS_LayerList* layerList = nullptr);
     virtual RS_Layer* requestLayerRemovalDialog(
-        RS_LayerList* layerList = NULL);
+		RS_LayerList* layerList = nullptr);
     virtual RS_Layer* requestEditLayerDialog(
-        RS_LayerList* layerList = NULL);
+		RS_LayerList* layerList = nullptr);
 
     virtual RS_BlockData requestNewBlockDialog(RS_BlockList* blockList);
     virtual RS_Block* requestBlockRemovalDialog(
@@ -240,11 +200,6 @@ public:
     virtual void requestSnapMiddleOptions(int& middlePoints, bool on);
 
 public:
-    virtual void requestToolBar(RS2::ToolBarId id);
-    virtual void requestPreviousToolBar();
-    virtual void resetToolBar();
-    virtual void requestToolBarSelect(RS_ActionInterface* selectAction,
-                                      RS2::ActionType nextAction);
 
     virtual bool requestAttributesDialog(RS_AttributesData& data,
                                 RS_LayerList& layerList);
@@ -262,16 +217,24 @@ public:
     virtual bool requestHatchDialog(RS_Hatch* hatch);
     virtual void requestOptionsGeneralDialog();
     virtual void requestOptionsDrawingDialog(RS_Graphic& graphic);
+    virtual bool requestOptionsMakerCamDialog();
 
-    virtual void requestPreviousMenu();
+    virtual QString requestFileSaveAsDialog(const QString& caption = QString(),
+                                            const QString& dir = QString(),
+                                            const QString& filter = QString(),
+                                            QString* selectedFilter = 0);
+
     virtual void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false);
-    virtual void updateMouseWidget(const QString& left,
-                                   const QString& right,
-                                   bool keeping=true);
-    virtual void restoreMouseWidget(void);
+	/**
+	 * \brief updateMouseWidget Called when an action has a mouse hint.
+	 * \param left mouse hint for left button
+	 * \param right mouse hint for right button
+	 */
+	virtual void updateMouseWidget(const QString& left=QString::null,
+								   const QString& right=QString::null);
     virtual void updateSelectionWidget(int num, double length);//updated for total number of selected, and total length of selected
     virtual void commandMessage(const QString& message);
-        virtual bool isAdapter() { return false; }
+		virtual bool isAdapter() const { return false; }
 
         static QString extToFormat(const QString& ext);
         virtual void updateArcTangentialOptions(const double& d, bool byRadius);
@@ -289,19 +252,12 @@ protected:
     QG_MouseWidget* mouseWidget;
     //! Pointer to the selection widget.
     QG_SelectionWidget* selectionWidget;
-    //! Pointer to the CAD tool bar
-    QG_CadToolBar* cadToolBar;
     //! Pointer to the command line widget
     QG_CommandWidget* commandWidget;
     //! Pointer to arcTangential Option widge
     QG_ArcTangentialOptions* arcTangentialOptions;
     QG_PolylineEquidistantOptions* polylineEquidistantOptions;
-    //! Pointer to the main app window
-    QG_MainWindowInterface* mainWindow;
 private:
-    QString *leftHintCurrent, *rightHintCurrent;
-    QString *leftHintSaved, *rightHintSaved;
-    bool *hintKeeping;
     // pointers to snap option widgets
     QG_SnapMiddleOptions* snapMiddleOptions;
     QG_SnapDistOptions* snapDistOptions;

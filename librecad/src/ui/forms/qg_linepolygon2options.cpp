@@ -27,6 +27,8 @@
 
 #include "rs_actiondrawlinepolygon2.h"
 #include "rs_settings.h"
+#include "ui_qg_linepolygon2options.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_LinePolygon2Options as a child of 'parent', with the
@@ -34,9 +36,9 @@
  */
 QG_LinePolygon2Options::QG_LinePolygon2Options(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, ui(new Ui::Ui_LinePolygon2Options{})
 {
-    setupUi(this);
-
+	ui->setupUi(this);
 }
 
 /*
@@ -44,8 +46,7 @@ QG_LinePolygon2Options::QG_LinePolygon2Options(QWidget* parent, Qt::WindowFlags 
  */
 QG_LinePolygon2Options::~QG_LinePolygon2Options()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+	saveSettings();
 }
 
 /*
@@ -54,18 +55,18 @@ QG_LinePolygon2Options::~QG_LinePolygon2Options()
  */
 void QG_LinePolygon2Options::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
-void QG_LinePolygon2Options::destroy() {
+void QG_LinePolygon2Options::saveSettings() {
     RS_SETTINGS->beginGroup("/Draw");
-    RS_SETTINGS->writeEntry("/LinePolygon2Number", sbNumber->text());
+	RS_SETTINGS->writeEntry("/LinePolygon2Number", ui->sbNumber->text());
     RS_SETTINGS->endGroup();
 }
 
 void QG_LinePolygon2Options::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDrawLinePolygonCorCor) {
-        action = (RS_ActionDrawLinePolygonCorCor*)a;
+    if (a && a->rtti()==RS2::ActionDrawLinePolygonCorCor) {
+		action = static_cast<RS_ActionDrawLinePolygonCorCor*>(a);
 
         QString sn;
         if (update) {
@@ -75,17 +76,17 @@ void QG_LinePolygon2Options::setAction(RS_ActionInterface* a, bool update) {
             sn = RS_SETTINGS->readEntry("/LinePolygon2Number", "3");
             RS_SETTINGS->endGroup();
         }
-        sbNumber->setValue(sn.toInt());
+		ui->sbNumber->setValue(sn.toInt());
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR, 
 			"QG_LinePolygon2Options::setAction: wrong action type");
-        action = NULL;
+		action = nullptr;
     }
 
 }
 
 void QG_LinePolygon2Options::updateNumber(int n) {
-    if (action!=NULL) {
+    if (action) {
         action->setNumber(n);
     }
 }

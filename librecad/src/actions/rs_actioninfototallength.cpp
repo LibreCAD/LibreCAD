@@ -24,24 +24,20 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actioninfototallength.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
+#include "rs_graphic.h"
+#include "rs_debug.h"
 
 
 RS_ActionInfoTotalLength::RS_ActionInfoTotalLength(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Info Total Length",
-                    container, graphicView) {}
-
-
-QAction* RS_ActionInfoTotalLength::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Total length of selected entities")
-    QAction* action = new QAction(tr("&Total length of selected entities"), NULL);
-    //action->zetStatusTip(tr("Measures the total length of all selected entities"));
-        action->setIcon(QIcon(":/extui/infototallength.png"));
-    return action;
+					container, graphicView)
+{
+	actionType=RS2::ActionInfoTotalLength;
 }
 
 void RS_ActionInfoTotalLength::init(int status) {
@@ -49,14 +45,15 @@ void RS_ActionInfoTotalLength::init(int status) {
     trigger();
 }
 
-
 void RS_ActionInfoTotalLength::trigger() {
 
     RS_DEBUG->print("RS_ActionInfoTotalLength::trigger()");
+	double l=container->totalSelectedLength();
 
-    double len (container->totalSelectedLength());
-
-    if (len>0.0) {
+	if (l>0.0) {
+		QString len= RS_Units::formatLinear(l,
+											graphic->getUnit(),
+											graphic->getLinearFormat(), graphic->getLinearPrecision());
         RS_DIALOGFACTORY->commandMessage(
             tr("Total Length of selected entities: %1").arg(len));
     } else {
@@ -67,13 +64,4 @@ void RS_ActionInfoTotalLength::trigger() {
     finish(false);
 }
 
-
-
-//void RS_ActionInfoTotalLength::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
 // EOF

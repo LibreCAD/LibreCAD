@@ -23,6 +23,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs_actioninterface.h"
 
+class RS_Insert;
+
 /**
  * This action class can handle user events to save the active block to a file.
  *
@@ -34,8 +36,6 @@ public:
     RS_ActionBlocksSave(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
     ~RS_ActionBlocksSave() = default;
-
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
     virtual void init(int status=0);
     virtual void trigger();

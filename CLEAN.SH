@@ -6,3 +6,4 @@ rm -rf `find . -type d -name generated`
 rm -rf LibreCAD.app
 rm -rf unix
 rm -f core *.core vgcore.* core.*
+rm -f *.dmg

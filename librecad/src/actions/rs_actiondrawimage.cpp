@@ -23,15 +23,27 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-#include "rs_actiondrawimage.h"
-
+#include<cmath>
 #include <QAction>
-// #include <QDebug>
+#include <QImage>
+#include <QMouseEvent>
+#include "rs_image.h"
+#include "rs_line.h"
+#include "rs_units.h"
+
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_creation.h"
+#include "rs_actiondrawimage.h"
+#include "rs_coordinateevent.h"
+#include "rs_math.h"
+#include "rs_preview.h"
+
+struct RS_ActionDrawImage::ImageData {
+	RS_ImageData data;
+	QImage img;
+};
 
 /**
  * Constructor.
@@ -39,35 +51,29 @@
 RS_ActionDrawImage::RS_ActionDrawImage(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Image",
-                               container, graphicView) {
+							   container, graphicView)
+	, pImg(new ImageData{})
+	, lastStatus(ShowDialog)
+{
+	actionType=RS2::ActionDrawImage;
 }
 
+RS_ActionDrawImage::~RS_ActionDrawImage() = default;
 
-
-RS_ActionDrawImage::~RS_ActionDrawImage() {}
-
-
-QAction* RS_ActionDrawImage::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    // tr("Image")
-    QAction* action = new QAction(tr("Insert &Image"),  NULL);
-    action->setIcon(QIcon(":/extui/menuimage.png"));
-    //action->zetStatusTip(tr("Insert Image (Bitmap)"));
-    return action;
-}
 
 void RS_ActionDrawImage::init(int status) {
     RS_PreviewActionInterface::init(status);
 
     reset();
 
-    data.file = RS_DIALOGFACTORY->requestImageOpenDialog();
+	pImg->data.file = RS_DIALOGFACTORY->requestImageOpenDialog();
     // RVT_PORT should we really redarw here?? graphicView->redraw();
 
-    if (!data.file.isEmpty()) {
-        //std::cout << "file: " << data.file << "\n";
-        //qDebug() << "file: " << data.file;
+	if (!pImg->data.file.isEmpty()) {
+		//std::cout << "file: " << pImg->data.file << "\n";
+		//qDebug() << "file: " << pImg->data.file;
 
-        img = QImage(data.file);
+		pImg->img = QImage(pImg->data.file);
 
         setStatus(SetTargetPoint);
     } else {
@@ -79,13 +85,15 @@ void RS_ActionDrawImage::init(int status) {
 
 
 void RS_ActionDrawImage::reset() {
-    data = RS_ImageData(0,
-                        RS_Vector(0.0,0.0),
-                        RS_Vector(1.0,0.0),
-                        RS_Vector(0.0,1.0),
-                        RS_Vector(1.0,1.0),
-                        "",
-                        50, 50, 0);
+	pImg->data = {
+				   0,
+				   {0.0,0.0},
+				   {1.0,0.0},
+				   {0.0,1.0},
+				   {1.0,1.0},
+				   "",
+				   50, 50, 0
+			   };
 }
 
 
@@ -93,54 +101,38 @@ void RS_ActionDrawImage::reset() {
 void RS_ActionDrawImage::trigger() {
     deletePreview();
 
-    if (!data.file.isEmpty()) {
+	if (!pImg->data.file.isEmpty()) {
         RS_Creation creation(container, graphicView);
-        creation.createImage(data);
+		creation.createImage(& pImg->data);
     }
 
     graphicView->redraw(RS2::RedrawDrawing);
-
-    //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
     finish(false);
-    updateToolBar();
 }
 
 
 void RS_ActionDrawImage::mouseMoveEvent(QMouseEvent* e) {
-    switch (getStatus()) {
-    case SetTargetPoint:
-        data.insertionPoint = snapPoint(e);
+	if (getStatus() == SetTargetPoint) {
+		pImg->data.insertionPoint = snapPoint(e);
 
         deletePreview();
-        //RS_Creation creation(preview, NULL, false);
+		//RS_Creation creation(preview, nullptr, false);
         //creation.createInsert(data);
-        RS_Line* line;
-        line = new RS_Line(preview,
-                           RS_LineData(RS_Vector(0, 0),
-                                       RS_Vector(img.width(), 0)));
+		double const w=pImg->img.width();
+		double const h=pImg->img.height();
+		RS_Line* line = new RS_Line{preview.get(), {0., 0.}, {w, 0.}};
         preview->addEntity(line);
-        line = new RS_Line(preview,
-                           RS_LineData(RS_Vector(img.width(), 0),
-                                       RS_Vector(img.width(), img.height())));
+		line = new RS_Line{preview.get(), {w, 0.}, {w, h}};
         preview->addEntity(line);
-        line = new RS_Line(preview,
-                           RS_LineData(RS_Vector(img.width(),
-                                                 img.height()), RS_Vector(0, img.height())));
+		line = new RS_Line{preview.get(), {w, h}, {0., h}};
         preview->addEntity(line);
-        line = new RS_Line(preview,
-                           RS_LineData(RS_Vector(0, img.height()),
-                                       RS_Vector(0, 0)));
+		line = new RS_Line{preview.get(), {0., h}, {0., 0.}};
         preview->addEntity(line);
-        preview->scale(RS_Vector(0,0),
-                       RS_Vector(data.uVector.magnitude(), data.uVector.magnitude()));
-        preview->rotate(RS_Vector(0,0), data.uVector.angle());
-        preview->move(data.insertionPoint);
-
-        drawPreview();
-        break;
-
-    default:
-        break;
+		preview->scale({0., 0.},
+			{pImg->data.uVector.magnitude(), pImg->data.uVector.magnitude()});
+		preview->rotate({0.,0.}, pImg->data.uVector.angle());
+		preview->move(pImg->data.insertionPoint);
+		drawPreview();
     }
 }
 
@@ -159,11 +151,11 @@ void RS_ActionDrawImage::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawImage::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+	if (e==nullptr) {
         return;
     }
 
-    data.insertionPoint = e->getCoordinate();
+	pImg->data.insertionPoint = e->getCoordinate();
     trigger();
 }
 
@@ -198,7 +190,7 @@ void RS_ActionDrawImage::commandEvent(RS_CommandEvent* e) {
     case SetAngle: {
         bool ok;
         double a = RS_Math::eval(c, &ok);
-        if (ok==true) {
+		if (ok) {
             setAngle(RS_Math::deg2rad(a));
         } else {
             RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
@@ -211,7 +203,7 @@ void RS_ActionDrawImage::commandEvent(RS_CommandEvent* e) {
     case SetFactor: {
         bool ok;
         double f = RS_Math::eval(c, &ok);
-        if (ok==true) {
+		if (ok) {
             setFactor(f);
         } else {
             RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
@@ -225,7 +217,7 @@ void RS_ActionDrawImage::commandEvent(RS_CommandEvent* e) {
         bool ok;
         double dpi = RS_Math::eval(c, &ok);
 
-        if(ok==true) {
+		if(ok) {
             setFactor(RS_Units::dpiToScale(dpi, document->getGraphicUnit()));
         } else {
             RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
@@ -241,6 +233,41 @@ void RS_ActionDrawImage::commandEvent(RS_CommandEvent* e) {
 }
 
 
+double RS_ActionDrawImage::getAngle() const {
+	return pImg->data.uVector.angle();
+}
+
+void RS_ActionDrawImage::setAngle(double a) const{
+	double l = pImg->data.uVector.magnitude();
+	pImg->data.uVector.setPolar(l, a);
+	pImg->data.vVector.setPolar(l, a+M_PI_2);
+}
+
+double RS_ActionDrawImage::getFactor() const {
+	return pImg->data.uVector.magnitude();
+}
+
+void RS_ActionDrawImage::setFactor(double f) const {
+	double a = pImg->data.uVector.angle();
+	pImg->data.uVector.setPolar(f, a);
+	pImg->data.vVector.setPolar(f, a+M_PI_2);
+}
+
+double RS_ActionDrawImage::dpiToScale(double dpi) const {
+	return RS_Units::dpiToScale(dpi, document->getGraphicUnit());
+}
+
+
+
+double RS_ActionDrawImage::scaleToDpi(double scale) const {
+	return RS_Units::scaleToDpi(scale, document->getGraphicUnit());
+}
+
+
+
+void RS_ActionDrawImage::updateMouseCursor() {
+	graphicView->setMouseCursor(RS2::CadCursor);
+}
 
 QStringList RS_ActionDrawImage::getAvailableCommands() {
     QStringList cmd;
@@ -263,7 +290,7 @@ QStringList RS_ActionDrawImage::getAvailableCommands() {
 void RS_ActionDrawImage::showOptions() {
     RS_ActionInterface::showOptions();
 
-    if(RS_DIALOGFACTORY!=NULL){
+    if(RS_DIALOGFACTORY){
         RS_DIALOGFACTORY->requestOptions(this, true);
     }
 }
@@ -272,14 +299,14 @@ void RS_ActionDrawImage::showOptions() {
 
 void RS_ActionDrawImage::hideOptions() {
     RS_ActionInterface::hideOptions();
-    if(RS_DIALOGFACTORY!=NULL){
+    if(RS_DIALOGFACTORY){
         RS_DIALOGFACTORY->requestOptions(this, false);
     }
 }
 
 
 void RS_ActionDrawImage::updateMouseButtonHints() {
-    if(RS_DIALOGFACTORY==NULL) return;
+	if(RS_DIALOGFACTORY==nullptr) return;
     switch (getStatus()) {
     case SetTargetPoint:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
@@ -298,45 +325,12 @@ void RS_ActionDrawImage::updateMouseButtonHints() {
                                             "");
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+		RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }
 
 
-
-double RS_ActionDrawImage::dpiToScale(double dpi) {
-    return RS_Units::dpiToScale(dpi, document->getGraphicUnit());
-}
-
-
-
-double RS_ActionDrawImage::scaleToDpi(double scale) {
-    return RS_Units::scaleToDpi(scale, document->getGraphicUnit());
-}
-
-
-
-void RS_ActionDrawImage::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
-}
-
-
-//void RS_ActionDrawImage::updateToolBar() {
-//    if(RS_DIALOGFACTORY==NULL) return;
-//    if (isFinished()) {
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-//    }
-//    /*
-//    //not needed any more with new snap
-//    return;
-//    if (!isFinished()) {
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-//    } else {
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-//    }
-//    */
-//}
 
 
 // EOF

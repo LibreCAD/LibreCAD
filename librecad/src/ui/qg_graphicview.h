@@ -44,26 +44,26 @@ class QG_ScrollBar;
  * Instances of this class can be linked to layer lists using
  * addLayerListListener().
  */
-class QG_GraphicView: public QWidget,
-            public RS_GraphicView,
-            public RS_LayerListListener,
-    public RS_BlockListListener {
+class QG_GraphicView:   public RS_GraphicView,
+                        public RS_LayerListListener,
+                        public RS_BlockListListener
+{
     Q_OBJECT
 
 public:
-    QG_GraphicView(QWidget* parent=0, const char* name=0, Qt::WindowFlags f=0);
+    QG_GraphicView(QWidget* parent = 0, Qt::WindowFlags f = 0, RS_Document* doc = 0);
     virtual ~QG_GraphicView();
 
-    virtual int getWidth();
-    virtual int getHeight();
+	virtual int getWidth() const;
+	virtual int getHeight() const;
 	virtual void redraw(RS2::RedrawMethod method=RS2::RedrawAll);
     virtual void adjustOffsetControls();
     virtual void adjustZoomControls();
     virtual void setBackground(const RS_Color& bg);
     virtual void setMouseCursor(RS2::CursorType c);
-        virtual void updateGridStatusWidget(const QString& text);
+    virtual void updateGridStatusWidget(const QString& text);
 
-		virtual	QPixmap* getPixmapForView(QPixmap *pm);
+	virtual	void getPixmapForView(std::unique_ptr<QPixmap>& pm);
 		
     // Methods from RS_LayerListListener Interface:
     virtual void layerEdited(RS_Layer*) {
@@ -82,9 +82,21 @@ public:
      * @param oy, offset Y
      */
     virtual void setOffset(int ox, int oy);
+    /**
+     * @brief getMousePosition() mouse position in widget coordinates
+     * @return the cursor position in widget coordinates
+     * returns the widget center, if cursor is not on the widget
+     */
+    virtual RS_Vector getMousePosition() const;
+
+    void setAntialiasing(bool state);
+    void setCursorHiding(bool state);
+    void addScrollbars();
+    bool hasScrollbars();
+
+    QString device;
 
 protected:
-    virtual void emulateMouseMoveEvent();
     virtual void mousePressEvent(QMouseEvent* e);
     virtual void mouseDoubleClickEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
@@ -114,33 +126,35 @@ protected:
     QG_ScrollBar* vScrollBar;
     //! Layout used to fit in the view and the scrollbars.
     QGridLayout* layout;
-	//! Label for grid spacing.
-    QLabel* gridStatus;
     //! CAD mouse cursor
-    QCursor* curCad;
+    std::unique_ptr<QCursor> curCad;
     //! Delete mouse cursor
-    QCursor* curDel;
+    std::unique_ptr<QCursor> curDel;
     //! Select mouse cursor
-    QCursor* curSelect;
+    std::unique_ptr<QCursor> curSelect;
     //! Magnifying glass mouse cursor
-    QCursor* curMagnifier;
+    std::unique_ptr<QCursor> curMagnifier;
     //! Hand mouse cursor
-    QCursor* curHand;
+    std::unique_ptr<QCursor> curHand;
 		
 	// Used for buffering different paint layers
-	QPixmap *PixmapLayer1;  // Used for grids and absolute 0
-	QPixmap *PixmapLayer2;  // Used for teh actual CAD drawing
-	QPixmap *PixmapLayer3;  // USed for crosshair and actionitems
+	std::unique_ptr<QPixmap> PixmapLayer1;  // Used for grids and absolute 0
+	std::unique_ptr<QPixmap> PixmapLayer2;  // Used for teh actual CAD drawing
+	std::unique_ptr<QPixmap> PixmapLayer3;  // USed for crosshair and actionitems
 	
 	RS2::RedrawMethod redrawMethod;
-    /**
-     * @brief m_bUpdateLayer
-     * if true, update selected entities, when a layer is selected in the layerwidget
-     */
-    bool m_bUpdateLayer;
 		
     //! Keep tracks of if we are currently doing a high-resolution scrolling
     bool isSmoothScrolling;
+
+private:
+    bool antialiasing{false};
+    bool scrollbars{false};
+    bool cursor_hiding{false};
+
+signals:
+    void xbutton1_released();
+    void gridStatusChanged(const QString&);
 };
 
 #endif

@@ -24,13 +24,30 @@
 **
 **********************************************************************/
 
-
+#include<iostream>
+#include<cmath>
 #include "rs_spline.h"
 
+
+#include "rs_line.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"
 #include "rs_painter.h"
 #include "rs_graphic.h"
+
+
+RS_SplineData::RS_SplineData(int _degree, bool _closed):
+	degree(_degree)
+  ,closed(_closed)
+{
+}
+
+std::ostream& operator << (std::ostream& os, const RS_SplineData& ld) {
+	os << "( degree: " << ld.degree <<
+		  " closed: " << ld.closed <<
+		  ")";
+	return os;
+}
 
 /**
  * Constructor.
@@ -41,17 +58,7 @@ RS_Spline::RS_Spline(RS_EntityContainer* parent,
     calculateBorders();
 }
 
-
-
-/**
- * Destructor.
- */
-RS_Spline::~RS_Spline() {}
-
-
-
-
-RS_Entity* RS_Spline::clone() {
+RS_Entity* RS_Spline::clone() const{
     RS_Spline* l = new RS_Spline(*this);
     l->setOwner(isOwner());
     l->initId();
@@ -76,32 +83,57 @@ void RS_Spline::calculateBorders() {
 }
 
 
-
-RS_VectorSolutions RS_Spline::getRefPoints() {
-
-    RS_VectorSolutions ret(data.controlPoints.size());
-
-    for (int i = 0; i < data.controlPoints.size(); ++i) {
-        ret.set(i, data.controlPoints.at(i));
-    }
-
-    return ret;
+void RS_Spline::setDegree(size_t deg) {
+	if (deg>=1 && deg<=3) {
+		data.degree = deg;
+	}
 }
 
-RS_Vector RS_Spline::getNearestRef(const RS_Vector& coord,
-                                   double* dist) {
+/** @return Degree of this spline curve (1-3).*/
+size_t RS_Spline::getDegree() const{
+	return data.degree;
+}
 
-    //return getRefPoints().getClosest(coord, dist);
+size_t RS_Spline::getNumberOfControlPoints() const {
+	return data.controlPoints.size();
+}
+
+/**
+ * @retval true if the spline is closed.
+ * @retval false otherwise.
+ */
+bool RS_Spline::isClosed() const {
+		return data.closed;
+}
+
+/**
+ * Sets the closed falg of this spline.
+ */
+void RS_Spline::setClosed(bool c) {
+		data.closed = c;
+		update();
+}
+
+RS_VectorSolutions RS_Spline::getRefPoints() const
+{
+	return RS_VectorSolutions(data.controlPoints);
+}
+
+RS_Vector RS_Spline::getNearestRef( const RS_Vector& coord,
+                                    double* dist /*= nullptr*/) const
+{
+    // override the RS_EntityContainer methode
+    // use RS_Entity instead for spline point dragging
     return RS_Entity::getNearestRef(coord, dist);
 }
 
-RS_Vector RS_Spline::getNearestSelectedRef(const RS_Vector& coord,
-        double* dist) {
-
-    //return getRefPoints().getClosest(coord, dist);
+RS_Vector RS_Spline::getNearestSelectedRef( const RS_Vector& coord,
+                                            double* dist /*= nullptr*/) const
+{
+    // override the RS_EntityContainer methode
+    // use RS_Entity instead for spline point dragging
     return RS_Entity::getNearestSelectedRef(coord, dist);
 }
-
 
 /**
  * Updates the internal polygon of this spline. Called when the
@@ -129,42 +161,32 @@ void RS_Spline::update() {
 
     resetBorders();
 
-    QList<RS_Vector> tControlPoints = data.controlPoints;
+	std::vector<RS_Vector> tControlPoints = data.controlPoints;
 
     if (data.closed) {
-        for (int i=0; i<data.degree; ++i) {
-            tControlPoints.append(data.controlPoints.at(i));
+		for (size_t i=0; i<data.degree; ++i) {
+			tControlPoints.push_back(data.controlPoints.at(i));
         }
     }
 
-    int i;
-    int npts = tControlPoints.count();
+	size_t i;
+	const size_t npts = tControlPoints.size();
     // order:
-    int k = data.degree+1;
+	const size_t  k = data.degree+1;
     // resolution:
-    int p1 = getGraphicVariableInt("$SPLINESEGS", 8) * npts;
+	const size_t  p1 = getGraphicVariableInt("$SPLINESEGS", 8) * npts;
 
-    double* b = new double[npts*3+1];
-    double* h = new double[npts+1];
-    double* p = new double[p1*3+1];
+	std::vector<double> b(npts*3+2, 0.);
+	std::vector<double> h(npts+2, 1.);
+	std::vector<double> p(3*p1+2, 0.);
 
     i = 1;
-    for (int it = 0; it < tControlPoints.size(); ++it) {
-        b[i] = tControlPoints.at(it).x;
-        b[i+1] = tControlPoints.at(it).y;
-        b[i+2] = 0.0;
+	for(auto const& vp: tControlPoints){
+		b[i] = vp.x;
+		b[i+1] = vp.y;
 
         RS_DEBUG->print("RS_Spline::update: b[%d]: %f/%f", i, b[i], b[i+1]);
         i+=3;
-    }
-
-    // set all homogeneous weighting factors to 1.0
-    for (i=1; i <= npts; i++) {
-        h[i] = 1.0;
-    }
-
-    for (i = 1; i <= 3*p1; i++) {
-        p[i] = 0.0;
     }
 
     if (data.closed) {
@@ -174,29 +196,25 @@ void RS_Spline::update() {
     }
 
     RS_Vector prev(false);
-    for (i = 1; i <= 3*p1; i=i+3) {
+	for (i = 1; i <= 3*p1; i += 3) {
         if (prev.valid) {
-            RS_Line* line = new RS_Line(this,
-                                        RS_LineData(prev, RS_Vector(p[i], p[i+1])));
-            line->setLayer(NULL);
-            line->setPen(RS_Pen(RS2::FlagInvalid));
+			RS_Line* line = new RS_Line{this, prev, {p[i], p[i+1]}};
+			line->setLayer(nullptr);
+			line->setPen(RS2::FlagInvalid);
             addEntity(line);
         }
         prev = RS_Vector(p[i], p[i+1]);
 
         minV = RS_Vector::minimum(prev, minV);
         maxV = RS_Vector::maximum(prev, maxV);
-    }
-
-    delete[] b;
-    delete[] h;
-    delete[] p;
+	}
 }
 
 RS_Vector RS_Spline::getStartpoint() const {
    if (data.closed) return RS_Vector(false);
    return static_cast<RS_Line*>(const_cast<RS_Spline*>(this)->firstEntity())->getStartpoint();
 }
+
 RS_Vector RS_Spline::getEndpoint() const {
    if (data.closed) return RS_Vector(false);
    return static_cast<RS_Line*>(const_cast<RS_Spline*>(this)->lastEntity())->getEndpoint();
@@ -228,7 +246,7 @@ RS_Vector RS_Spline::getNearestEndpoint(const RS_Vector& coord,
 //            }
 //        }
     }
-    if (dist!=NULL) {
+	if (dist) {
         *dist = minDist;
     }
     return ret;
@@ -247,9 +265,9 @@ RS_Vector RS_Spline::getNearestPointOnEntity(const RS_Vector& coord,
 
 
 RS_Vector RS_Spline::getNearestCenter(const RS_Vector& /*coord*/,
-                                      double* dist) {
+									  double* dist) const{
 
-    if (dist!=NULL) {
+	if (dist) {
         *dist = RS_MAXDOUBLE;
     }
 
@@ -261,7 +279,7 @@ RS_Vector RS_Spline::getNearestCenter(const RS_Vector& /*coord*/,
 RS_Vector RS_Spline::getNearestMiddle(const RS_Vector& /*coord*/,
                                       double* dist,
                                       int /*middlePoints*/)const {
-    if (dist!=NULL) {
+	if (dist) {
         *dist = RS_MAXDOUBLE;
     }
 
@@ -272,8 +290,8 @@ RS_Vector RS_Spline::getNearestMiddle(const RS_Vector& /*coord*/,
 
 RS_Vector RS_Spline::getNearestDist(double /*distance*/,
                                     const RS_Vector& /*coord*/,
-                                    double* dist) {
-    if (dist!=NULL) {
+									double* dist) const{
+	if (dist) {
         *dist = RS_MAXDOUBLE;
     }
 
@@ -284,8 +302,8 @@ RS_Vector RS_Spline::getNearestDist(double /*distance*/,
 
 void RS_Spline::move(const RS_Vector& offset) {
     RS_EntityContainer::move(offset);
-    for (int i = 0; i < data.controlPoints.size(); ++i) {
-        data.controlPoints[i].move(offset);
+	for (RS_Vector& vp: data.controlPoints) {
+		vp.move(offset);
     }
 //    update();
 }
@@ -299,17 +317,17 @@ void RS_Spline::rotate(const RS_Vector& center, const double& angle) {
 
 
 void RS_Spline::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
-    RS_EntityContainer::rotate(center, angleVector);
-    for (int i = 0; i < data.controlPoints.size(); ++i) {
-        (data.controlPoints[i] ).rotate(center, angleVector);
-    }
+	RS_EntityContainer::rotate(center, angleVector);
+	for (RS_Vector& vp: data.controlPoints) {
+		vp.rotate(center, angleVector);
+	}
 //    update();
 }
 
 void RS_Spline::scale(const RS_Vector& center, const RS_Vector& factor) {
-    for (int i = 0; i < data.controlPoints.size(); ++i) {
-        (data.controlPoints[i] ).scale(center, factor);
-    }
+	for (RS_Vector& vp: data.controlPoints) {
+		vp.scale(center, factor);
+	}
 
     update();
 }
@@ -317,31 +335,27 @@ void RS_Spline::scale(const RS_Vector& center, const RS_Vector& factor) {
 
 
 void RS_Spline::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
-    RS_EntityContainer::mirror(axisPoint1, axisPoint2);
-    for (int i = 0; i < data.controlPoints.size(); ++i) {
-        (data.controlPoints[i] ).mirror(axisPoint1, axisPoint2);
-    }
+	for (RS_Vector& vp: data.controlPoints) {
+		vp.mirror(axisPoint1, axisPoint2);
+	}
 
-//    update();
+	update();
 }
 
 
 
 void RS_Spline::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
-    for (int i = 0; i < data.controlPoints.size(); ++i) {
-
-        if (ref.distanceTo(data.controlPoints.at(i))<1.0e-4) {
-            data.controlPoints[i].move(offset);
-        }
-    }
+	for (RS_Vector& vp: data.controlPoints) {
+		if (ref.distanceTo(vp)<1.0e-4) {
+			vp.move(offset);
+		}
+	}
 
     update();
 }
 
 void RS_Spline::revertDirection() {
-	for(int k = 0; k < data.controlPoints.size() / 2; k++) {
-		data.controlPoints.swap(k, data.controlPoints.size() - 1 - k);
-	}
+	std::reverse(data.controlPoints.begin(), data.controlPoints.end());
 }
 
 
@@ -349,13 +363,13 @@ void RS_Spline::revertDirection() {
 
 void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
 
-    if (painter==NULL || view==NULL) {
+	if (!(painter && view)) {
         return;
     }
 
 
     RS_Entity* e=firstEntity(RS2::ResolveNone);
-    if (e!=NULL) {
+	if (e) {
         RS_Pen p=this->getPen(true);
         e->setPen(p);
         double patternOffset(0.0);
@@ -363,7 +377,7 @@ void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patter
         //RS_DEBUG->print("offset: %f\nlength was: %f", offset, e->getLength());
 
         e = nextEntity(RS2::ResolveNone);
-        while(e!=NULL) {
+		while(e) {
             view->drawEntityPlain(painter, e, patternOffset);
             e = nextEntity(RS2::ResolveNone);
             //RS_DEBUG->print("offset: %f\nlength was: %f", offset, e->getLength());
@@ -378,7 +392,7 @@ void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patter
  */
 /*
 void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view) {
-   if (painter==NULL || view==NULL) {
+   if (!(painter && view)) {
        return;
    }
 
@@ -446,7 +460,7 @@ void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view) {
 /**
  * @return The reference points of the spline.
  */
-QList<RS_Vector> RS_Spline::getControlPoints() {
+const std::vector<RS_Vector>& RS_Spline::getControlPoints() const{
     return data.controlPoints;
 }
 
@@ -456,7 +470,7 @@ QList<RS_Vector> RS_Spline::getControlPoints() {
  * Appends the given point to the control points.
  */
 void RS_Spline::addControlPoint(const RS_Vector& v) {
-    data.controlPoints.append(v);
+	data.controlPoints.push_back(v);
 }
 
 
@@ -473,7 +487,7 @@ void RS_Spline::removeLastControlPoint() {
  * Generates B-Spline open knot vector with multiplicity
  * equal to the order at the ends.
  */
-void RS_Spline::knot(int num, int order, int knotVector[]) {
+void RS_Spline::knot(int num, int order, std::vector<int>& knotVector) {
     knotVector[1] = 0;
     for (int i = 2; i <= num + order; i++) {
         if ( (i > order) && (i < num + 2) ) {
@@ -490,7 +504,7 @@ void RS_Spline::knot(int num, int order, int knotVector[]) {
  * Generates rational B-spline basis functions for an open knot vector.
  */
 void RS_Spline::rbasis(int c, double t, int npts,
-                       int x[], double h[], double r[]) {
+					   const std::vector<int>& x, const std::vector<double>& h, std::vector<double>& r) {
 
     int nplusc;
     int i,k;
@@ -500,7 +514,7 @@ void RS_Spline::rbasis(int c, double t, int npts,
 
     nplusc = npts + c;
 
-    double* temp = new double[nplusc+1];
+	std::vector<double> temp(nplusc+1,0.);
 
     // calculate the first order nonrational basis functions n[i]
     for (i = 1; i<= nplusc-1; i++) {
@@ -548,18 +562,17 @@ void RS_Spline::rbasis(int c, double t, int npts,
             r[i] = 0;
     }
 
-    delete[] temp;
 }
 
 
 /**
  * Generates a rational B-spline curve using a uniform open knot vector.
  */
-void RS_Spline::rbspline(int npts, int k, int p1,
-                         double b[], double h[], double p[]) {
+void RS_Spline::rbspline(size_t npts, size_t k, size_t p1,
+						 const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p) {
 
-    int i,j,icount,jcount;
-    int i1;
+	size_t i,j,icount,jcount;
+	size_t i1;
     //int x[30]; /* allows for 20 data points with basis function of order 5 */
     int nplusc;
 
@@ -570,18 +583,9 @@ void RS_Spline::rbspline(int npts, int k, int p1,
 
     nplusc = npts + k;
 
-    int* x = new int[nplusc+1];
-    double* nbasis = new double[npts+1];
+	std::vector<int> x(nplusc+1, 0);
+	std::vector<double> nbasis(npts+1, 0.);
 
-    // zero and redimension the knot vector and the basis array
-
-    for(i = 0; i <= npts; i++) {
-        nbasis[i] = 0.0;
-    }
-
-    for(i = 0; i <= nplusc; i++) {
-        x[i] = 0;
-    }
 
     // generate the uniform open knot vector
     knot(npts,k,x);
@@ -618,12 +622,10 @@ void RS_Spline::rbspline(int npts, int k, int p1,
         t = t + step;
     }
 
-    delete[] x;
-    delete[] nbasis;
 }
 
 
-void RS_Spline::knotu(int num, int order, int knotVector[]) {
+void RS_Spline::knotu(int num, int order, std::vector<int>& knotVector) {
     int nplusc,/*nplus2,*/i;
 
     nplusc = num + order;
@@ -638,7 +640,7 @@ void RS_Spline::knotu(int num, int order, int knotVector[]) {
 
 
 void RS_Spline::rbsplinu(int npts, int k, int p1,
-                         double b[], double h[], double p[]) {
+						 const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p) {
 
     int i,j,icount,jcount;
     int i1;
@@ -653,18 +655,8 @@ void RS_Spline::rbsplinu(int npts, int k, int p1,
 
     nplusc = npts + k;
 
-    int* x = new int[nplusc+1];
-    double* nbasis = new double[npts+1];
-
-    /*  zero and redimension the knot vector and the basis array */
-
-    for(i = 0; i <= npts; i++) {
-        nbasis[i] = 0.0;
-    }
-
-    for(i = 0; i <= nplusc; i++) {
-        x[i] = 0;
-    }
+	std::vector<int> x(nplusc+1, 0);
+	std::vector<double> nbasis(npts+1, 0.);
 
     /* generate the uniform periodic knot vector */
 
@@ -727,8 +719,6 @@ void RS_Spline::rbsplinu(int npts, int k, int p1,
         t = t + step;
     }
 
-    delete[] x;
-    delete[] nbasis;
 }
 
 

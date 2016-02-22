@@ -29,6 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 
+class RS_Line;
 
 /**
  * This action class can handle user events to draw bisectors.
@@ -48,13 +49,9 @@ private:
 public:
     RS_ActionDrawLineBisector(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDrawLineBisector() {}
-
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+	~RS_ActionDrawLineBisector();
 	
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionDrawLineBisector;
-	}
+	virtual void init(int status=0);
 
     virtual void trigger();
     virtual void mouseMoveEvent(QMouseEvent* e);
@@ -67,24 +64,15 @@ public:
     virtual void showOptions();
 
     virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
-//    virtual void updateToolBar();
+	virtual void updateMouseCursor();
 	
-	void setLength(double l) {
-		length = l;
-	}
+	void setLength(double l);
 
-	double getLength() {
-		return length;
-	}
+	double getLength() const;
 	
-	void setNumber(int n) {
-		number = n;
-	}
+	void setNumber(int n);
 
-	int getNumber() {
-		return number;
-	}
+	int getNumber() const;
 
 private:
     /** Closest bisector. */
@@ -93,16 +81,12 @@ private:
     RS_Line* line1;
     /** Second chosen entity */
     RS_Line* line2;
-    /** Data of new bisector */
-    RS_LineData data;
     /** Length of the bisector. */
     double length;
 	/** Number of bisectors to create. */
 	int number;
-	/** Mouse pos when choosing the 1st line */
-	RS_Vector coord1;
-	/** Mouse pos when choosing the 2nd line */
-	RS_Vector coord2;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 	/** Last status before entering length or number. */
 	Status lastStatus;
 };

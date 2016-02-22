@@ -24,13 +24,42 @@
 **
 **********************************************************************/
 
-
+#include <iostream>
+#include <cmath>
 #include "rs_dimaligned.h"
+#include "rs_line.h"
 
 #include "rs_graphic.h"
 #include "rs_units.h"
 #include "rs_constructionline.h"
+#include "rs_math.h"
+#include "rs_debug.h"
 
+RS_DimAlignedData::RS_DimAlignedData():
+	extensionPoint1(false),
+	extensionPoint2(false)
+{}
+
+/**
+ * Constructor with initialisation.
+ *
+	* @para extensionPoint1 Definition point. Startpoint of the
+ *         first extension line.
+	* @para extensionPoint2 Definition point. Startpoint of the
+ *         second extension line.
+ */
+RS_DimAlignedData::RS_DimAlignedData(const RS_Vector& _extensionPoint1,
+				  const RS_Vector& _extensionPoint2):
+	extensionPoint1(_extensionPoint1)
+	,extensionPoint2(_extensionPoint2)
+{
+}
+
+std::ostream& operator << (std::ostream& os,
+								  const RS_DimAlignedData& dd) {
+	os << "(" << dd.extensionPoint1 << "/" << dd.extensionPoint1 << ")";
+	return os;
+}
 
 /**
  * Constructor.
@@ -58,36 +87,62 @@ RS_DimAligned::RS_DimAligned(RS_EntityContainer* parent,
 //    update();
 //}
 
-
-RS_VectorSolutions RS_DimAligned::getRefPoints() {
-        RS_VectorSolutions ret(edata.extensionPoint1, edata.extensionPoint2,
-                                                data.definitionPoint, data.middleOfText);
-        return ret;
+RS_Entity* RS_DimAligned::clone() const{
+	RS_DimAligned* d = new RS_DimAligned(*this);
+	d->setOwner(isOwner());
+	d->initId();
+	d->detach();
+	return d;
 }
 
-
+RS_VectorSolutions RS_DimAligned::getRefPoints() const
+{
+		return RS_VectorSolutions({edata.extensionPoint1, edata.extensionPoint2,
+												data.definitionPoint, data.middleOfText});
+}
 
 /**
  * @return Automatically creted label for the default
  * measurement of this dimension.
  */
 QString RS_DimAligned::getMeasuredLabel() {
-    double dist = edata.extensionPoint1.distanceTo(edata.extensionPoint2) * getGeneralFactor();
+	double dist = edata.extensionPoint1.distanceTo(edata.extensionPoint2) * getGeneralFactor();
 
-        RS_Graphic* graphic = getGraphic();
-
+    RS_Graphic* graphic = getGraphic();
     QString ret;
-        if (graphic!=NULL) {
-                ret = RS_Units::formatLinear(dist, graphic->getUnit(),
-                        graphic->getLinearFormat(), graphic->getLinearPrecision());
+    if (graphic) {
+        int dimlunit = getGraphicVariableInt("$DIMLUNIT", 2);
+        int dimdec = getGraphicVariableInt("$DIMDEC", 4);
+        int dimzin = getGraphicVariableInt("$DIMZIN", 1);
+        RS2::LinearFormat format = graphic->getLinearFormat(dimlunit);
+
+        ret = RS_Units::formatLinear(dist, RS2::None, format, dimdec);
+        if (format == RS2::Decimal)
+            ret = stripZerosLinear(ret, dimzin);
+        //verify if units are decimal and comma separator
+        if (dimlunit==2){
+            if (getGraphicVariableInt("$DIMDSEP", 0) == 44)
+                ret.replace(QChar('.'), QChar(','));
         }
-        else {
+    }
+    else {
         ret = QString("%1").arg(dist);
-        }
+    }
     return ret;
 }
 
 
+RS_DimAlignedData const& RS_DimAligned::getEData() const {
+	return edata;
+}
+
+RS_Vector const& RS_DimAligned::getExtensionPoint1() const {
+	return edata.extensionPoint1;
+}
+
+RS_Vector const& RS_DimAligned::getExtensionPoint2() const {
+	return edata.extensionPoint2;
+}
 
 /**
  * Updates the sub entities of this dimension. Called when the
@@ -117,36 +172,44 @@ void RS_DimAligned::updateDim(bool autoText) {
     //double dimgap = getDimensionLineGap();
 
     // Angle from extension endpoints towards dimension line
-    double extAngle = edata.extensionPoint2.angleTo(data.definitionPoint);
+	double extAngle = edata.extensionPoint2.angleTo(data.definitionPoint);
     // extension lines length
-    double extLength = edata.extensionPoint2.distanceTo(data.definitionPoint);
+	double extLength = edata.extensionPoint2.distanceTo(data.definitionPoint);
 
-    RS_Vector v1, v2, e1;
-    RS_LineData ld;
-    RS_Line* line;
+    if (getFixedLengthOn()){
+        double dimfxl = getFixedLength();
+        if (extLength-dimexo > dimfxl)
+            dimexo =  extLength - dimfxl;
+    }
 
-    v1.setPolar(dimexo, extAngle);
-    v2.setPolar(dimexe, extAngle);
-    e1.setPolar(1.0, extAngle);
+	RS_Vector v1 = RS_Vector::polar(dimexo, extAngle);
+	RS_Vector v2 = RS_Vector::polar(dimexe, extAngle);
+	RS_Vector e1 = RS_Vector::polar(1.0, extAngle);
+
+    RS_Pen pen(getExtensionLineColor(),
+           getExtensionLineWidth(),
+           RS2::LineByBlock);
 
     // Extension line 1:
-    ld = RS_LineData(edata.extensionPoint1 + v1,
-                     edata.extensionPoint1 + e1*extLength + v2);
-    line = new RS_Line(this, ld);
+	RS_Line* line = new RS_Line{this,
+			edata.extensionPoint1 + v1,
+			edata.extensionPoint1 + e1*extLength + v2};
     //line->setLayerToActive();
     //line->setPenToActive();
-    line->setPen(RS_Pen(RS2::FlagInvalid));
-    line->setLayer(NULL);
+//    line->setPen(RS_Pen(RS2::FlagInvalid));
+    line->setPen(pen);
+	line->setLayer(nullptr);
     addEntity(line);
 
     // Extension line 2:
-    ld = RS_LineData(edata.extensionPoint2 + v1,
-                     edata.extensionPoint2 + e1*extLength + v2);
-    line = new RS_Line(this, ld);
+	line = new RS_Line{this,
+			edata.extensionPoint2 + v1,
+			edata.extensionPoint2 + e1*extLength + v2};
     //line->setLayerToActive();
     //line->setPenToActive();
-    line->setPen(RS_Pen(RS2::FlagInvalid));
-    line->setLayer(NULL);
+//    line->setPen(RS_Pen(RS2::FlagInvalid));
+    line->setPen(pen);
+	line->setLayer(nullptr);
     addEntity(line);
 
     // Dimension line:
@@ -160,11 +223,11 @@ void RS_DimAligned::updateDim(bool autoText) {
 
 void RS_DimAligned::updateDimPoint(){
     // temporary construction line
-    RS_ConstructionLine tmpLine( NULL,
+	RS_ConstructionLine tmpLine( nullptr,
         RS_ConstructionLineData(edata.extensionPoint1, edata.extensionPoint2));
 
-    RS_Vector tmpP1 = tmpLine.getNearestPointOnEntity(data.definitionPoint);
-    data.definitionPoint += edata.extensionPoint2 - tmpP1;
+	RS_Vector tmpP1 = tmpLine.getNearestPointOnEntity(data.definitionPoint);
+	data.definitionPoint += edata.extensionPoint2 - tmpP1;
 }
 
 
@@ -226,9 +289,9 @@ void RS_DimAligned::stretch(const RS_Vector& firstCorner,
     }
         else {
                 //RS_Vector v = data.definitionPoint - edata.extensionPoint2;
-                double len = edata.extensionPoint2.distanceTo(data.definitionPoint);
+				double len = edata.extensionPoint2.distanceTo(data.definitionPoint);
                 double ang1 = edata.extensionPoint1.angleTo(edata.extensionPoint2)
-                             + M_PI/2;
+							 + M_PI_2;
 
         if (edata.extensionPoint1.isInWindow(firstCorner,
                                       secondCorner)) {
@@ -240,20 +303,19 @@ void RS_DimAligned::stretch(const RS_Vector& firstCorner,
         }
 
                 double ang2 = edata.extensionPoint1.angleTo(edata.extensionPoint2)
-                             + M_PI/2;
+							 + M_PI_2;
 
                 double diff = RS_Math::getAngleDifference(ang1, ang2);
                 if (diff>M_PI) {
                         diff-=2*M_PI;
                 }
 
-                if (fabs(diff)>M_PI/2) {
+				if (fabs(diff)>M_PI_2) {
                         ang2 = RS_Math::correctAngle(ang2+M_PI);
                 }
 
-                RS_Vector v;
-                v.setPolar(len, ang2);
-                data.definitionPoint = edata.extensionPoint2 + v;
+				RS_Vector v = RS_Vector::polar(len, ang2);
+				data.definitionPoint = edata.extensionPoint2 + v;
         }
         updateDim(true);
 }
@@ -262,22 +324,21 @@ void RS_DimAligned::stretch(const RS_Vector& firstCorner,
 
 void RS_DimAligned::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 
-    if (ref.distanceTo(data.definitionPoint)<1.0e-4) {
-                RS_ConstructionLine l(NULL,
+	if (ref.distanceTo(data.definitionPoint)<1.0e-4) {
+				RS_ConstructionLine l(nullptr,
                         RS_ConstructionLineData(edata.extensionPoint1,
                                 edata.extensionPoint2));
-                double d = l.getDistanceToPoint(data.definitionPoint+offset);
-                double a = edata.extensionPoint2.angleTo(data.definitionPoint);
+				double d = l.getDistanceToPoint(data.definitionPoint+offset);
+				double a = edata.extensionPoint2.angleTo(data.definitionPoint);
                 double ad = RS_Math::getAngleDifference(a,
-                        edata.extensionPoint2.angleTo(data.definitionPoint+offset));
+						edata.extensionPoint2.angleTo(data.definitionPoint+offset));
 
-                if (fabs(ad)>M_PI/2.0 && fabs(ad)<3.0/2.0*M_PI) {
+				if (fabs(ad)>M_PI_2 && fabs(ad)<3.0/2.0*M_PI) {
                         a = RS_Math::correctAngle(a+M_PI);
                 }
 
-                RS_Vector v;
-                v.setPolar(d, a);
-        data.definitionPoint = edata.extensionPoint2 + v;
+				RS_Vector v = RS_Vector::polar(d, a);
+		data.definitionPoint = edata.extensionPoint2 + v;
                 updateDim(true);
     }
         else if (ref.distanceTo(data.middleOfText)<1.0e-4) {

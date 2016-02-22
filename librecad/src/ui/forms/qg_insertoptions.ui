@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QG_InsertOptions</class>
- <widget class="QWidget" name="QG_InsertOptions">
+ <class>Ui_InsertOptions</class>
+ <widget class="QWidget" name="Ui_InsertOptions">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -35,7 +35,16 @@
    <string/>
   </property>
   <layout class="QHBoxLayout">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>1</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>1</number>
+   </property>
+   <property name="bottomMargin">
     <number>1</number>
    </property>
    <item>
@@ -292,7 +301,7 @@
   <connection>
    <sender>leAngle</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>QG_InsertOptions</receiver>
+   <receiver>Ui_InsertOptions</receiver>
    <slot>updateData()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -308,7 +317,7 @@
   <connection>
    <sender>leFactor</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>QG_InsertOptions</receiver>
+   <receiver>Ui_InsertOptions</receiver>
    <slot>updateData()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -324,7 +333,7 @@
   <connection>
    <sender>sbColumns</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>QG_InsertOptions</receiver>
+   <receiver>Ui_InsertOptions</receiver>
    <slot>updateData()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -340,7 +349,7 @@
   <connection>
    <sender>sbRows</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>QG_InsertOptions</receiver>
+   <receiver>Ui_InsertOptions</receiver>
    <slot>updateData()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -356,7 +365,7 @@
   <connection>
    <sender>leColumnSpacing</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>QG_InsertOptions</receiver>
+   <receiver>Ui_InsertOptions</receiver>
    <slot>updateData()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -372,7 +381,7 @@
   <connection>
    <sender>leRowSpacing</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>QG_InsertOptions</receiver>
+   <receiver>Ui_InsertOptions</receiver>
    <slot>updateData()</slot>
    <hints>
     <hint type="sourcelabel">

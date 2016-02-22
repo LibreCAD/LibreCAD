@@ -28,14 +28,25 @@
 #ifndef RS_CREATION_H
 #define RS_CREATION_H
 
-#include "rs_entitycontainer.h"
-#include "rs_line.h"
-#include "rs_polyline.h"
-#include "rs_insert.h"
-#include "rs_image.h"
-#include "rs_block.h"
-#include "lc_splinepoints.h"
+#include "rs_vector.h"
 
+class RS_Document;
+class RS_EntityContainer;
+class RS_GraphicView;
+class RS_Graphic;
+class RS_Entity;
+class RS_Arc;
+class RS_Circle;
+class RS_Ellipse;
+class RS_Line;
+class LC_SplinePoints;
+struct RS_BlockData;
+struct RS_ImageData;
+class RS_Image;
+struct RS_InsertData;
+class RS_Insert;
+class RS_Block;
+class QString;
 
 /**
  * Data needed to insert library items.
@@ -58,8 +69,9 @@ struct RS_LibraryInsertData {
 class RS_Creation {
 public:
     RS_Creation(RS_EntityContainer* container,
-                RS_GraphicView* graphicView=NULL,
+				RS_GraphicView* graphicView=nullptr,
                 bool handleUndo=true);
+	~RS_Creation()=default;
 
     RS_Entity* createParallelThrough(const RS_Vector& coord,
                               int number,
@@ -107,7 +119,7 @@ public:
                             RS_Entity* circle2);
     /**
       * create the path of centers of common tangent circles of the two given circles
-      *@ return NULL, if failed
+	  *@ return nullptr, if failed
       *@ at success return either an ellipse or hyperbola
       */
     std::vector<RS_Entity*> createCircleTangent2( RS_Entity* circle1,RS_Entity* circle2);
@@ -125,27 +137,24 @@ public:
                             const RS_Vector& corner2,
                             int number);
 
-    RS_Insert* createInsert(RS_InsertData& data);
+	RS_Insert* createInsert(const RS_InsertData* pdata);
 	
-    RS_Image* createImage(RS_ImageData& data);
+	RS_Image* createImage(const RS_ImageData* pdata);
 
-    RS_Block* createBlock(const RS_BlockData& data,
+	RS_Block* createBlock(const RS_BlockData* data,
                           const RS_Vector& referencePoint,
                           const bool remove);
 						  
-    RS_Insert* createLibraryInsert(RS_LibraryInsertData& data);
-
-    //void createPoint(const RS_Vector& p);
-    //void createLine2P(const RS_Vector& p1, const RS_Vector& p2);
-    //void createRectangle(const RS_Vector& e1, const RS_Vector& e2);
-    //RS_Polyline* createPolyline(const RS_Vector& p);
+	RS_Insert* createLibraryInsert(RS_LibraryInsertData& data);
 
 protected:
     RS_EntityContainer* container;
-    RS_Graphic* graphic;
-    RS_Document* document;
+	RS_Graphic* graphic;
+	RS_Document* document;
     RS_GraphicView* graphicView;
     bool handleUndo;
+private:
+	void setEntity(RS_Entity* en) const;
 };
 
 #endif

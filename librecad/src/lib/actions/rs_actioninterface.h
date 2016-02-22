@@ -28,17 +28,16 @@
 #ifndef RS_ACTIONINTERFACE_H
 #define RS_ACTIONINTERFACE_H
 
-#include <QKeyEvent>
+#include <QObject>
 
 #include "rs_snapper.h"
 
+class QKeyEvent;
 class RS_CommandEvent;
-
-//template<class T> T* instantiate(RS_EntityContainer& container, RS_GraphicView& graphicView) {
-//	return new T(container, graphicView);
-        //void (*function)() = T::instantiate;
-        //return (*function)();
-//}
+class RS_CoordinateEvent;
+class RS_Graphic;
+class RS_Document;
+class QAction;
 
 /**
  * This is the interface that must be implemented for all
@@ -55,9 +54,9 @@ public:
     RS_ActionInterface(const char* name,
                        RS_EntityContainer& container,
                        RS_GraphicView& graphicView);
-    virtual ~RS_ActionInterface();
+	virtual ~RS_ActionInterface() = default;
 
-    virtual RS2::ActionType rtti();
+    virtual RS2::ActionType rtti() const;
 
     void setName(const char* _name);
     QString getName();
@@ -77,7 +76,6 @@ public:
     virtual void trigger();
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
     virtual bool isFinished();
     virtual void setFinished();
     virtual void finish(bool updateTB = true );
@@ -86,9 +84,7 @@ public:
     virtual void resume();
     virtual void hideOptions();
     virtual void showOptions();
-    virtual void setActionType(RS2::ActionType actionType){
-        this->actionType=actionType;
-    }
+	virtual void setActionType(RS2::ActionType actionType);
     bool checkCommand(const QString& cmd, const QString& str,
                              RS2::ActionType action=RS2::ActionNone);
         QString command(const QString& cmd);

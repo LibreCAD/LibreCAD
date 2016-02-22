@@ -37,7 +37,6 @@
  */
 class RS_ActionDrawLinePolygonCorCor : public RS_PreviewActionInterface {
 	Q_OBJECT
-private:
     enum Status {
         SetCorner1,    /**< Setting center 1. */
 		SetCorner2,    /**< Setting corner 2. */
@@ -47,14 +46,8 @@ private:
 public:
     RS_ActionDrawLinePolygonCorCor(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDrawLinePolygonCorCor() {}
-
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+	virtual ~RS_ActionDrawLinePolygonCorCor() override;
 	
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionDrawLinePolygonCorCor;
-	}
-
     virtual void trigger();
 	
     virtual void mouseMoveEvent(QMouseEvent* e);
@@ -69,7 +62,6 @@ public:
     virtual void showOptions();
 
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 	int getNumber() {
 		return number;
@@ -80,10 +72,8 @@ public:
 	}
 
 private:
-	/** 1st corner */
-	RS_Vector corner1;
-	/** 2nd corner */
-	RS_Vector corner2;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 	/** Number of edges. */
 	int number;
 	/** Last status before entering text. */

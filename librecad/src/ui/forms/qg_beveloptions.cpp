@@ -24,8 +24,12 @@
 **
 **********************************************************************/
 #include "qg_beveloptions.h"
+#include "rs_actionmodifybevel.h"
 
+#include "ui_qg_beveloptions.h"
 #include "rs_settings.h"
+#include "rs_math.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_BevelOptions as a child of 'parent', with the
@@ -33,18 +37,16 @@
  */
 QG_BevelOptions::QG_BevelOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, ui(new Ui::Ui_BevelOptions{})
 {
-    setupUi(this);
-
+	ui->setupUi(this);
 }
 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_BevelOptions::~QG_BevelOptions()
-{
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+QG_BevelOptions::~QG_BevelOptions() {
+	saveSettings();
 }
 
 /*
@@ -53,20 +55,20 @@ QG_BevelOptions::~QG_BevelOptions()
  */
 void QG_BevelOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
-void QG_BevelOptions::destroy() {
+void QG_BevelOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Modify");
-    RS_SETTINGS->writeEntry("/BevelLength1", leLength1->text());
-    RS_SETTINGS->writeEntry("/BevelLength2", leLength2->text());
-    RS_SETTINGS->writeEntry("/BevelTrim", (int)cbTrim->isChecked());
+	RS_SETTINGS->writeEntry("/BevelLength1", ui->leLength1->text());
+	RS_SETTINGS->writeEntry("/BevelLength2", ui->leLength2->text());
+	RS_SETTINGS->writeEntry("/BevelTrim", (int)ui->cbTrim->isChecked());
     RS_SETTINGS->endGroup();
 }
 
 void QG_BevelOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionModifyBevel) {
-        action = (RS_ActionModifyBevel*)a;
+    if (a && a->rtti()==RS2::ActionModifyBevel) {
+		action = static_cast<RS_ActionModifyBevel*>(a);
 
         QString sd1;
         QString sd2;
@@ -82,20 +84,20 @@ void QG_BevelOptions::setAction(RS_ActionInterface* a, bool update) {
             st = RS_SETTINGS->readEntry("/BevelTrim", "1");
             RS_SETTINGS->endGroup();
         }
-                leLength1->setText(sd1);
-                leLength2->setText(sd2);
-        cbTrim->setChecked(st=="1");
+				ui->leLength1->setText(sd1);
+				ui->leLength2->setText(sd2);
+		ui->cbTrim->setChecked(st=="1");
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
                         "QG_BevelOptions::setAction: wrong action type");
-        action = NULL;
+		action = nullptr;
     }
 }
 
 void QG_BevelOptions::updateData() {
-    if (action!=NULL) {
-        action->setTrim(cbTrim->isChecked());
-        action->setLength1(RS_Math::eval(leLength1->text()));
-        action->setLength2(RS_Math::eval(leLength2->text()));
+    if (action) {
+		action->setTrim(ui->cbTrim->isChecked());
+		action->setLength1(RS_Math::eval(ui->leLength1->text()));
+		action->setLength2(RS_Math::eval(ui->leLength2->text()));
     }
 }

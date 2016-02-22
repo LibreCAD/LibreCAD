@@ -24,40 +24,39 @@
 **
 **********************************************************************/
 
+#include <QAction>
+#include <QMouseEvent>
 #include "rs_actionmodifystretch.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
+#include "rs_line.h"
+#include "rs_coordinateevent.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
-
+struct RS_ActionModifyStretch::Points {
+	RS_Vector firstCorner;
+	RS_Vector secondCorner;
+	RS_Vector referencePoint;
+	RS_Vector targetPoint;
+};
 
 RS_ActionModifyStretch::RS_ActionModifyStretch(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Stretch Entities",
-                           container, graphicView) {
-
-    firstCorner = RS_Vector(false);
-    secondCorner = RS_Vector(false);
-    referencePoint = RS_Vector(false);
-    targetPoint = RS_Vector(false);
+											   RS_GraphicView& graphicView)
+	:RS_PreviewActionInterface("Stretch Entities",
+							   container, graphicView)
+	, pPoints(new Points{})
+{
+	actionType=RS2::ActionModifyStretch;
 }
-
-QAction* RS_ActionModifyStretch::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Stretch")
-    QAction* action = new QAction(tr("&Stretch"), NULL);
-        action->setIcon(QIcon(":/extui/modifystretch.png"));
-    //action->zetStatusTip(tr("Stretch Entities"));
-    return action;
-}
-
 
 void RS_ActionModifyStretch::init(int status) {
     RS_ActionInterface::init(status);
-
 }
 
+RS_ActionModifyStretch::~RS_ActionModifyStretch() = default;
 
 
 void RS_ActionModifyStretch::trigger() {
@@ -67,7 +66,9 @@ void RS_ActionModifyStretch::trigger() {
     deletePreview();
 
     RS_Modification m(*container, graphicView);
-    m.stretch(firstCorner, secondCorner, targetPoint-referencePoint);
+	m.stretch(pPoints->firstCorner,
+			  pPoints->secondCorner,
+			  pPoints->targetPoint - pPoints->referencePoint);
 
     setStatus(SetFirstCorner);
 
@@ -85,33 +86,10 @@ void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case SetSecondCorner:
-        if (firstCorner.valid) {
-            secondCorner = snapPoint(e);
-            deletePreview();
-            preview->addEntity(
-                new RS_Line(preview,
-                            RS_LineData(RS_Vector(firstCorner.x,
-                                                  firstCorner.y),
-                                        RS_Vector(secondCorner.x,
-                                                  firstCorner.y))));
-            preview->addEntity(
-                new RS_Line(preview,
-                            RS_LineData(RS_Vector(secondCorner.x,
-                                                  firstCorner.y),
-                                        RS_Vector(secondCorner.x,
-                                                  secondCorner.y))));
-            preview->addEntity(
-                new RS_Line(preview,
-                            RS_LineData(RS_Vector(secondCorner.x,
-                                                  secondCorner.y),
-                                        RS_Vector(firstCorner.x,
-                                                  secondCorner.y))));
-            preview->addEntity(
-                new RS_Line(preview,
-                            RS_LineData(RS_Vector(firstCorner.x,
-                                                  secondCorner.y),
-                                        RS_Vector(firstCorner.x,
-                                                  firstCorner.y))));
+		if (pPoints->firstCorner.valid) {
+			pPoints->secondCorner = snapPoint(e);
+			deletePreview();
+			preview->addRectangle(pPoints->firstCorner, pPoints->secondCorner);
             drawPreview();
         }
         break;
@@ -120,14 +98,14 @@ void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case SetTargetPoint:
-        if (referencePoint.valid) {
-            targetPoint = mouse;
+		if (pPoints->referencePoint.valid) {
+			pPoints->targetPoint = mouse;
 
             deletePreview();
-            preview->addStretchablesFrom(*container, firstCorner, secondCorner);
+			preview->addStretchablesFrom(*container, pPoints->firstCorner, pPoints->secondCorner);
             //preview->move(targetPoint-referencePoint);
-            preview->stretch(firstCorner, secondCorner,
-                             targetPoint-referencePoint);
+			preview->stretch(pPoints->firstCorner, pPoints->secondCorner,
+							 pPoints->targetPoint-pPoints->referencePoint);
             drawPreview();
         }
         break;
@@ -162,25 +140,25 @@ void RS_ActionModifyStretch::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetFirstCorner:
-        firstCorner = mouse;
+		pPoints->firstCorner = mouse;
         setStatus(SetSecondCorner);
         break;
 
     case SetSecondCorner:
-        secondCorner = mouse;
+		pPoints->secondCorner = mouse;
         deletePreview();
         setStatus(SetReferencePoint);
         break;
 
     case SetReferencePoint:
-        referencePoint = mouse;
-        graphicView->moveRelativeZero(referencePoint);
+		pPoints->referencePoint = mouse;
+		graphicView->moveRelativeZero(pPoints->referencePoint);
         setStatus(SetTargetPoint);
         break;
 
     case SetTargetPoint:
-        targetPoint = mouse;
-        graphicView->moveRelativeZero(targetPoint);
+		pPoints->targetPoint = mouse;
+		graphicView->moveRelativeZero(pPoints->targetPoint);
         trigger();
         //finish();
         break;
@@ -211,7 +189,7 @@ void RS_ActionModifyStretch::updateMouseButtonHints() {
                                             tr("Back"));
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }
@@ -221,18 +199,5 @@ void RS_ActionModifyStretch::updateMouseButtonHints() {
 void RS_ActionModifyStretch::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-//void RS_ActionModifyStretch::updateToolBar() {
-//    //not needed any more with new snap
-//    return;
-//    if (!isFinished()) {
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-//    } else {
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-//    }
-//}
-
 
 // EOF

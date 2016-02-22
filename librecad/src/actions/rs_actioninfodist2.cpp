@@ -24,33 +24,30 @@
 **
 **********************************************************************/
 
+#include <QAction>
+#include <QMouseEvent>
 #include "rs_actioninfodist2.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_graphic.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 
 RS_ActionInfoDist2::RS_ActionInfoDist2(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Info Dist2",
                            container, graphicView)
-        ,entity(NULL)
-        ,point(false)
-{}
-
-
-QAction* RS_ActionInfoDist2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // (tr("Distance Entity to Point")
-    QAction* action = new QAction(tr("&Distance Entity to Point"), NULL);
-    //action->zetStatusTip(tr("Measures the distance between an entity and a point"));
-        action->setIcon(QIcon(":/extui/infodist2.png"));
-    return action;
+		,entity(nullptr)
+		,point(new RS_Vector{})
+{
+	actionType=RS2::ActionInfoDist2;
 }
 
 RS_ActionInfoDist2::~RS_ActionInfoDist2() {
     if(graphicView != NULL && graphicView->isCleanUp()==false){
-        if( entity!=NULL && entity->isHighlighted()){
+        if( entity && entity->isHighlighted()){
             entity->setHighlighted(false);
             graphicView->redraw(RS2::RedrawDrawing);
         }
@@ -67,10 +64,10 @@ void RS_ActionInfoDist2::trigger() {
 
     RS_DEBUG->print("RS_ActionInfoDist2::trigger()");
 
-    if (point.valid && entity!=NULL) {
-        double dist = entity->getDistanceToPoint(point);
-        QString str;
-        str.sprintf("%.6f", dist);
+	if (point->valid && entity) {
+		double dist = entity->getDistanceToPoint(*point);
+		QString str = RS_Units::formatLinear(dist, graphic->getUnit(),
+											 graphic->getLinearFormat(), graphic->getLinearPrecision());
         RS_DIALOGFACTORY->commandMessage(tr("Distance: %1").arg(str));
         entity->setHighlighted(false);
         graphicView->redraw(RS2::RedrawDrawing);
@@ -90,9 +87,9 @@ void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case SetPoint:
-        if (entity!=NULL) {
+        if (entity) {
              RS_Vector&& mouse=snapPoint(e);
-            point = mouse;
+			*point = mouse;
         }
         break;
 
@@ -111,7 +108,7 @@ void RS_ActionInfoDist2::mouseReleaseEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case SetEntity:
             entity = catchEntity(e);
-            if (entity!=NULL) {
+            if (entity) {
                 entity->setHighlighted(true);
                 graphicView->redraw(RS2::RedrawDrawing);
                 setStatus(SetPoint);
@@ -139,9 +136,9 @@ void RS_ActionInfoDist2::coordinateEvent(RS_CoordinateEvent* e) {
         return;
     }
 
-    if (getStatus()==SetPoint && entity!=NULL) {
-        point = e->getCoordinate();
-        graphicView->moveRelativeZero(point);
+    if (getStatus()==SetPoint && entity) {
+		*point = e->getCoordinate();
+		graphicView->moveRelativeZero(*point);
         trigger();
         setStatus(SetEntity);
     }
@@ -162,7 +159,7 @@ void RS_ActionInfoDist2::updateMouseButtonHints() {
             tr("Back"));
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }
@@ -172,16 +169,5 @@ void RS_ActionInfoDist2::updateMouseButtonHints() {
 void RS_ActionInfoDist2::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-//void RS_ActionInfoDist2::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
 
 // EOF

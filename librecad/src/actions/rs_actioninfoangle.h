@@ -29,7 +29,6 @@
 
 #include "rs_previewactioninterface.h"
 
-
 /**
  * This action class can handle user events to measure angles.
  *
@@ -49,29 +48,21 @@ public:
 public:
     RS_ActionInfoAngle(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionInfoAngle() {}
+	~RS_ActionInfoAngle();
 
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-    virtual RS2::ActionType rtti(){
-        return RS2::ActionInfoAngle;
-    }
-
-    virtual void init(int status=0);
+	virtual void init(int status);
     virtual void trigger();
-    virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 private:
 	RS_Entity* entity1;
-	RS_Vector point1;
 
     RS_Entity* entity2;
-	RS_Vector point2;
 
-	RS_Vector intersection;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

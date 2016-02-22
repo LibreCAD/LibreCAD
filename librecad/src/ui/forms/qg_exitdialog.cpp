@@ -28,6 +28,8 @@
 #include <QMessageBox>
 #include <QPushButton>
 
+#include "ui_qg_exitdialog.h"
+
 /*
  *  Constructs a QG_ExitDialog as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -37,20 +39,14 @@
  */
 QG_ExitDialog::QG_ExitDialog(QWidget* parent, bool modal, Qt::WindowFlags fl)
     : QDialog(parent, fl)
+	, ui(new Ui::QG_ExitDialog{})
 {
     setModal(modal);
-    setupUi(this);
-
+	ui->setupUi(this);
     init();
 }
 
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_ExitDialog::~QG_ExitDialog()
-{
-    // no need to delete child widgets, Qt does it all for us
-}
+QG_ExitDialog::~QG_ExitDialog() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -58,7 +54,7 @@ QG_ExitDialog::~QG_ExitDialog()
  */
 void QG_ExitDialog::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 //sets aditional accel, eg. Key_A for ALT+Key_A
 
@@ -74,13 +70,13 @@ static void makeLetterAccell(QButton *btn)
 
 void QG_ExitDialog::init()
 {
-    QPushButton * bSave = buttonBox->button ( QDialogButtonBox::Save );
-    QPushButton * bSaveAs = buttonBox->button ( QDialogButtonBox::SaveAll );
+	QPushButton * bSave = ui->buttonBox->button(QDialogButtonBox::Save);
+	QPushButton * bSaveAs = ui->buttonBox->button(QDialogButtonBox::SaveAll);
     bSaveAs->setText(tr("Save As..."));
     bSaveAs->setIcon(bSave->icon());
     //set dlg icon
     QMessageBox mb("","",QMessageBox::Question, QMessageBox::Ok, Qt::NoButton, Qt::NoButton);
-    l_icon->setPixmap( mb.iconPixmap());
+	ui->l_icon->setPixmap( mb.iconPixmap());
 //    bLeave->setIcon(QIcon(":/actions/fileclose.png"));
     // RVT_PORT makeLetterAccell( bLeave );
 //    bSave->setIcon(QIcon(":/actions/filesave2.png"));
@@ -91,7 +87,7 @@ void QG_ExitDialog::init()
 }
 
 void QG_ExitDialog::clicked(QAbstractButton * button){
-    QDialogButtonBox::StandardButton bt = buttonBox->standardButton ( button );
+	QDialogButtonBox::StandardButton bt = ui->buttonBox->standardButton ( button );
     switch (bt){
     case QDialogButtonBox::Close:
         emit accept();
@@ -108,7 +104,7 @@ void QG_ExitDialog::clicked(QAbstractButton * button){
 }
 
 void QG_ExitDialog::setText(const QString& text) {
-    lQuestion->setText(text);
+	ui->lQuestion->setText(text);
 /* RVT_PORT
     resize(lQuestion->sizeHint().width()+32,
            lQuestion->sizeHint().height() + layButtons->sizeHint().height()+32);
@@ -120,7 +116,7 @@ void QG_ExitDialog::setTitle(const QString& text) {
 }
 
 void QG_ExitDialog::setForce(bool force) {
-     QPushButton * bCancel = buttonBox->button ( QDialogButtonBox::Cancel );
+	 QPushButton * bCancel = ui->buttonBox->button ( QDialogButtonBox::Cancel );
      bCancel->setDisabled(force);
 }
 
@@ -132,4 +128,3 @@ void QG_ExitDialog::slotSave() {
     done(2);
 }
 
- 

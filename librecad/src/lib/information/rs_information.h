@@ -27,11 +27,16 @@
 #ifndef RS_INFORMATION_H
 #define RS_INFORMATION_H
 
-#include "rs_entitycontainer.h"
-#include "rs_line.h"
-#include "rs_arc.h"
+#include "rs.h"
 
-
+class RS_Ellipse;
+class RS_Entity;
+class RS_EntityContainer;
+class RS_Vector;
+class RS_VectorSolutions;
+class RS_Arc;
+class RS_Circle;
+class RS_Line;
 
 /**
  * Class for getting information about entities. This includes
@@ -51,17 +56,18 @@ public:
 	static bool isTrimmable(RS_Entity* e1, RS_Entity* e2);
 
     RS_Vector getNearestEndpoint(const RS_Vector& point,
-                                 double* dist = NULL) const;
+								 double* dist = nullptr) const;
     RS_Vector getNearestPointOnEntity(const RS_Vector& point,
 	                                  bool onEntity=true, 
-                                      double* dist = NULL,
-                                      RS_Entity** entity=NULL) const;
+									  double* dist = nullptr,
+									  RS_Entity** entity=nullptr) const;
     RS_Entity* getNearestEntity(const RS_Vector& point,
-                                double* dist = NULL,
+								double* dist = nullptr,
                                 RS2::ResolveLevel level=RS2::ResolveAll) const;
 
-    static RS_VectorSolutions getIntersection(RS_Entity* e1,
-            RS_Entity* e2,
+
+	static RS_VectorSolutions getIntersection(RS_Entity const* e1,
+			RS_Entity const* e2,
             bool onEntities = false);
 
     static RS_VectorSolutions getIntersectionLineLine(RS_Line* e1,
@@ -70,11 +76,12 @@ public:
     static RS_VectorSolutions getIntersectionLineArc(RS_Line* line,
             RS_Arc* arc);
 
-    static RS_VectorSolutions getIntersectionArcArc(RS_Arc* e1,
-            RS_Arc* e2);
+	static RS_VectorSolutions getIntersectionArcArc(RS_Entity const* e1,
+			RS_Entity const* e2);
 
-    static RS_VectorSolutions getIntersectionEllipseEllipse(RS_Ellipse* e1,
-            RS_Ellipse* e2);
+	static RS_VectorSolutions getIntersectionEllipseEllipse(
+			RS_Ellipse const* e1,
+			RS_Ellipse const* e2);
     static RS_VectorSolutions getIntersectionArcEllipse(RS_Arc* e1,
             RS_Ellipse* e2);
     static RS_VectorSolutions getIntersectionCircleEllipse(RS_Circle* e1,
@@ -82,12 +89,18 @@ public:
     
 	static RS_VectorSolutions getIntersectionEllipseLine(RS_Line* line,
             RS_Ellipse* ellipse);
+	/**
+	 * @brief createQuadrilateral form quadrilateral from 4 straight lines
+	 * @param container contains 4 straight lines
+	 * @return ordered vertices of quadrilateral formed by the 4 lines
+	 */
+	static RS_VectorSolutions createQuadrilateral(const RS_EntityContainer& container);
 
     static bool isPointInsideContour(const RS_Vector& point,
                                      RS_EntityContainer* contour,
-									 bool* onContour=NULL);
+									 bool* onContour=nullptr);
 	
-protected:
+private:
     RS_EntityContainer* container;
 };
 

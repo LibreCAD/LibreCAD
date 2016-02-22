@@ -29,17 +29,11 @@
 #include <QAction>
 #include "rs_graphic.h"
 #include "rs_modification.h"
+#include "rs_debug.h"
 
 RS_ActionModifyRevertDirection::RS_ActionModifyRevertDirection(RS_EntityContainer& container, RS_GraphicView& graphicView)
 	:RS_ActionInterface("Revert direction", container, graphicView)
 {
-}
-
-QAction* RS_ActionModifyRevertDirection::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	QAction* action = new QAction(tr("Re&vert direction"), NULL);
-	action->setIcon(QIcon(":/extui/reverse.png"));
-	action->setShortcut(QKeySequence(tr("Ctrl+R")));
-	return action;
 }
 
 void RS_ActionModifyRevertDirection::trigger() {

@@ -28,62 +28,67 @@
 
 #include <QAction>
 #include <cmath>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
+#include "rs_graphic.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
 #endif
 
+struct RS_ActionInfoAngle::Points {
+	RS_Vector point1;
+	RS_Vector point2;
+
+	RS_Vector intersection;
+};
+
 RS_ActionInfoAngle::RS_ActionInfoAngle(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Info Angle",
-                           container, graphicView) {}
-
-
-QAction* RS_ActionInfoAngle::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Angle between two lines"),
-                                  tr("&Angle between two lines"),
-                                  QKeySequence(), NULL); */
-
-    QAction* action = new QAction(tr("An&gle between two lines"), NULL);
-    //action->zetStatusTip(tr("Measures the angle between two lines"));
-        action->setIcon(QIcon(":/extui/infoangle.png"));
-    return action;
+						   container, graphicView)
+		,entity1(nullptr)
+		,entity2(nullptr)
+		, pPoints(new Points{})
+{
+	actionType=RS2::ActionInfoAngle;
 }
 
+RS_ActionInfoAngle::~RS_ActionInfoAngle() = default;
 
 void RS_ActionInfoAngle::init(int status) {
     RS_ActionInterface::init(status);
-
 }
-
-
 
 void RS_ActionInfoAngle::trigger() {
 
     RS_DEBUG->print("RS_ActionInfoAngle::trigger()");
 
-    if (entity1!=NULL && entity2!=NULL) {
-        RS_VectorSolutions sol =
+    if (entity1 && entity2) {
+		RS_VectorSolutions const& sol =
             RS_Information::getIntersection(entity1, entity2, false);
 
         if (sol.hasValid()) {
-            intersection = sol.get(0);
+			pPoints->intersection = sol.get(0);
 
-            if (intersection.valid && point1.valid && point2.valid) {
-                double angle1 = intersection.angleTo(point1);
-                double angle2 = intersection.angleTo(point2);
-                double angle = RS_Math::rad2deg(remainder(angle2-angle1,2.*M_PI));
+			if (pPoints->intersection.valid &&
+					pPoints->point1.valid &&
+					pPoints->point2.valid) {
+				double angle1 = pPoints->intersection.angleTo(pPoints->point1);
+				double angle2 = pPoints->intersection.angleTo(pPoints->point2);
+				double angle = remainder(angle2 - angle1, 2.*M_PI);
 
-                QString str;
-                str.setNum(angle);
-                str += QChar(0xB0);
+				QString str = RS_Units::formatAngle(angle,
+													graphic->getAngleFormat(), graphic->getAnglePrecision());
+
                 if(angle<0.){
-                    QString str2;
-                    str2.setNum(angle+360.); //positive value
-                    str += QString(tr(" or %1%2")).arg(str2).arg(QChar(0xB0));
+					str += " or ";
+					str += RS_Units::formatAngle(angle + 2.*M_PI,
+												 graphic->getAngleFormat(), graphic->getAnglePrecision());
                 }
                 RS_DIALOGFACTORY->commandMessage(tr("Angle: %1").arg(str));
             }
@@ -93,46 +98,25 @@ void RS_ActionInfoAngle::trigger() {
     }
 }
 
-
-
-void RS_ActionInfoAngle::mouseMoveEvent(QMouseEvent* /*e*/) {
-    RS_DEBUG->print("RS_ActionInfoAngle::mouseMoveEvent begin");
-
-    switch (getStatus()) {
-    case SetEntity1:
-        break;
-
-    case SetEntity2:
-        break;
-
-    default:
-        break;
-    }
-
-    RS_DEBUG->print("RS_ActionInfoAngle::mouseMoveEvent end");
-}
-
-
-
 void RS_ActionInfoAngle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
 
-        RS_Vector mouse(graphicView->toGraphX(e->x()),
-                        graphicView->toGraphY(e->y()));
+		RS_Vector mouse{graphicView->toGraphX(e->x()),
+						graphicView->toGraphY(e->y())};
 
         switch (getStatus()) {
         case SetEntity1:
             entity1 = catchEntity(e, RS2::ResolveAll);
-            if (entity1!=NULL && entity1->rtti()==RS2::EntityLine) {
-                point1 = entity1->getNearestPointOnEntity(mouse);
+            if (entity1 && entity1->rtti()==RS2::EntityLine) {
+				pPoints->point1 = entity1->getNearestPointOnEntity(mouse);
                 setStatus(SetEntity2);
             }
             break;
 
         case SetEntity2:
             entity2 = catchEntity(e, RS2::ResolveAll);
-            if (entity2!=NULL && entity2->rtti()==RS2::EntityLine) {
-                point2 = entity2->getNearestPointOnEntity(mouse);
+            if (entity2 && entity2->rtti()==RS2::EntityLine) {
+				pPoints->point2 = entity2->getNearestPointOnEntity(mouse);
                 trigger();
                 setStatus(SetEntity1);
             }
@@ -147,8 +131,6 @@ void RS_ActionInfoAngle::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-
 void RS_ActionInfoAngle::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetEntity1:
@@ -162,26 +144,13 @@ void RS_ActionInfoAngle::updateMouseButtonHints() {
             tr("Back"));
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }
 
-
-
 void RS_ActionInfoAngle::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
-
-
-
-//void RS_ActionInfoAngle::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
 
 // EOF

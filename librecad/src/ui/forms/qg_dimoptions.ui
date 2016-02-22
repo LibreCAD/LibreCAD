@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QG_DimOptions</class>
- <widget class="QWidget" name="QG_DimOptions">
+ <class>Ui_DimOptions</class>
+ <widget class="QWidget" name="Ui_DimOptions">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -32,7 +32,16 @@
    <string>Dimension Options</string>
   </property>
   <layout class="QHBoxLayout">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>1</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>1</number>
+   </property>
+   <property name="bottomMargin">
     <number>1</number>
    </property>
    <item>
@@ -95,36 +104,36 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-              <item>
-           <property name="text">
-            <string>⌀</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>°</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>±</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>π</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>×</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>÷</string>
-           </property>
-          </item>
+     <item>
+      <property name="text">
+       <string>⌀</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>°</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>±</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>π</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>×</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>÷</string>
+      </property>
+     </item>
     </widget>
    </item>
    <item>
@@ -195,7 +204,7 @@
   <connection>
    <sender>leLabel</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>QG_DimOptions</receiver>
+   <receiver>Ui_DimOptions</receiver>
    <slot>updateLabel()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -211,7 +220,7 @@
   <connection>
    <sender>bDiameter</sender>
    <signal>toggled(bool)</signal>
-   <receiver>QG_DimOptions</receiver>
+   <receiver>Ui_DimOptions</receiver>
    <slot>updateLabel()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -227,7 +236,7 @@
   <connection>
    <sender>leTol1</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>QG_DimOptions</receiver>
+   <receiver>Ui_DimOptions</receiver>
    <slot>updateLabel()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -243,7 +252,7 @@
   <connection>
    <sender>leTol2</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>QG_DimOptions</receiver>
+   <receiver>Ui_DimOptions</receiver>
    <slot>updateLabel()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -259,7 +268,7 @@
   <connection>
    <sender>cbSymbol</sender>
    <signal>activated(QString)</signal>
-   <receiver>QG_DimOptions</receiver>
+   <receiver>Ui_DimOptions</receiver>
    <slot>insertSign(QString)</slot>
    <hints>
     <hint type="sourcelabel">

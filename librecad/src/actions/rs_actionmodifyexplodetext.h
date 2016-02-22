@@ -41,13 +41,7 @@ public:
     RS_ActionModifyExplodeText(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
     ~RS_ActionModifyExplodeText();
-
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionModifyExplodeText;
-	}
-
     virtual void init(int status=0);
 
     virtual void trigger();

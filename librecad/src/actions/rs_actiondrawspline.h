@@ -28,8 +28,9 @@
 #define RS_ACTIONDRAWSPLINE_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_spline.h"
 
+struct RS_SplineData;
+class RS_Spline;
 
 /**
  * This action class can handle user events to draw splines.
@@ -38,25 +39,18 @@
  */
 class RS_ActionDrawSpline : public RS_PreviewActionInterface {
 	Q_OBJECT
-public:
     /**
      * Action States.
      */
     enum Status {
         SetStartpoint,   /**< Setting the startpoint.  */
         SetNextPoint      /**< Setting the next point. */
-    };
+	};
 
 public:
     RS_ActionDrawSpline(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
     virtual ~RS_ActionDrawSpline();
-
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionDrawSpline;
-	}
-
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
     void reset();
 
@@ -85,35 +79,9 @@ public:
     virtual bool isClosed();
 
 protected:
-    /**
-     * Spline data defined so far.
-     */
-    RS_SplineData data;
-	
-    /**
-     * Polyline entity we're working on.
-     */
-    RS_Spline* spline;
-	
-    /**
-     * last point.
-     */
-    //RS_Vector point;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 
-	/**
-	 * Start point of the series of nodes. Used for close function.
-	 */
-	//RS_Vector start;
-
-	/**
-	 * Point history (for undo)
-	 */
-        QList<RS_Vector> history;
-	
-	/**
-	 * Bulge history (for undo)
-	 */
-        //QList<double> bHistory;
 };
 
 #endif

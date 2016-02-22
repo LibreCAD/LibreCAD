@@ -29,42 +29,31 @@
 class QG_CadToolBar;
 
 #include "qg_actionhandler.h"
-#include "ui_qg_cadtoolbararcs.h"
+#include "lc_cadtoolbarinterface.h"
 
-class QG_CadToolBarArcs : public QWidget, public Ui::QG_CadToolBarArcs
+class QG_CadToolBarArcs : public LC_CadToolBarInterface
 {
     Q_OBJECT
 
 public:
-    QG_CadToolBarArcs(QWidget* parent = 0, Qt::WindowFlags fl = 0);
-    ~QG_CadToolBarArcs();
+	QG_CadToolBarArcs(QG_CadToolBar* parent = 0, Qt::WindowFlags fl = 0);
+	~QG_CadToolBarArcs() = default;
     void restoreAction(); //restore action from checked button
+	virtual void resetToolBar();
+	RS2::ToolBarId rtti() const
+	{
+		return RS2::ToolBarArcs;
+	}
+	virtual void addSubActions(const std::vector<QAction*>& actions, bool addGroup=true);
+
 
 public slots:
-    virtual void contextMenuEvent( QContextMenuEvent * e );
-    virtual void setCadToolBar( QG_CadToolBar * tb );
-    virtual void drawArc();
-    virtual void drawArc3P();
-    virtual void drawArcParallel();
-    virtual void drawArcTangential();
-    virtual void back();
-    virtual void resetToolBar();
-    virtual void showCadToolBar(RS2::ActionType actionType);
-
-protected:
-    QG_CadToolBar* cadToolBar;
-    QG_ActionHandler* actionHandler;
-
-protected slots:
-    virtual void languageChange();
+	virtual void showCadToolBar(RS2::ActionType actionType);
 
 private slots:
     void on_bBack_clicked();
-
 private:
-    void init();
-    QG_CadToolBar* parentTB;
-
+	QAction* bArc=nullptr, *bArc3P=nullptr, *bArcParallel=nullptr, *bArcTangential=nullptr;
 };
 
 #endif // QG_CADTOOLBARARCS_H

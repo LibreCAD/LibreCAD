@@ -36,21 +36,8 @@ RS_ActionBlocksExplode::RS_ActionBlocksExplode(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Blocks Explode",
                            container, graphicView) {
+	actionType=RS2::ActionBlocksExplode;
 }
-
-
-
-RS_ActionBlocksExplode::~RS_ActionBlocksExplode() {}
-
-
-QAction* RS_ActionBlocksExplode::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Explode"),
-    QAction* action = new QAction(tr("Ex&plode"), NULL);
-        action->setIcon(QIcon(":/extui/modifyexplode.png"));
-    //action->zetStatusTip(tr("Explode Blocks and other Entity Groups"));
-    return action;
-}
-
 
 void RS_ActionBlocksExplode::init(int status) {
     RS_PreviewActionInterface::init(status);

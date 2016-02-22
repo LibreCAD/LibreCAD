@@ -49,12 +49,7 @@ public:
 public:
     RS_ActionModifyCut(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionModifyCut() {}
-	
-    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-    RS2::ActionType rtti(){
-        return RS2::ActionModifyCut;
-    }
+	~RS_ActionModifyCut() override;
 
     virtual void init(int status=0);
     virtual void trigger();
@@ -62,11 +57,10 @@ public:
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 private:
     RS_Entity* cutEntity;
-	RS_Vector cutCoord;
+	std::unique_ptr<RS_Vector> cutCoord;
 };
 
 #endif

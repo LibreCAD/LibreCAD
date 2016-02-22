@@ -19,87 +19,37 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
+#include<cassert>
+#include<QAction>
 #include "qg_cadtoolbarsplines.h"
-
 #include "qg_cadtoolbar.h"
+#include "qg_actionhandler.h"
 
 /*
  *  Constructs a QG_CadToolBarSplines as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_CadToolBarSplines::QG_CadToolBarSplines(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
+QG_CadToolBarSplines::QG_CadToolBarSplines(QG_CadToolBar* parent, Qt::WindowFlags fl)
+	:LC_CadToolBarInterface(parent, fl)
 {
-    setupUi(this);
-
-    init();
+	initToolBars();
 }
 
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_CadToolBarSplines::~QG_CadToolBarSplines()
+void QG_CadToolBarSplines::addSubActions(const std::vector<QAction*>& actions, bool addGroup)
 {
-    // no need to delete child widgets, Qt does it all for us
-}
+	LC_CadToolBarInterface::addSubActions(actions, addGroup);
+	std::vector<QAction**> const buttons={&bSpline, &bSplineInt};
+	assert(buttons.size()==actions.size());
 
-/*
- *  Sets the strings of the subwidgets using the current
- *  language.
- */
-void QG_CadToolBarSplines::languageChange()
-{
-    retranslateUi(this);
-}
+	for(size_t i=0; i<buttons.size(); ++i)
+		*buttons[i]=actions[i];
 
-void QG_CadToolBarSplines::init() {
-    actionHandler = NULL;
-    cadToolBar = NULL;
-}
-
-//void QG_CadToolBarSplines::mousePressEvent(QMouseEvent* e) {
-//    if (e->button()==Qt::RightButton && cadToolBar!=NULL) {
-//        cadToolBar->back();
-//        e->accept();
-//    }
-//}
-
-void QG_CadToolBarSplines::contextMenuEvent(QContextMenuEvent *e) {
-    e->accept();
-}
-
-void QG_CadToolBarSplines::setCadToolBar(QG_CadToolBar* tb) {
-    cadToolBar = tb;
-    if (tb!=NULL) {
-        actionHandler = tb->getActionHandler();
-    } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR,
-                        "QG_CadToolBarSplines::setCadToolBar(): No valid toolbar set.");
-    }
-}
-
-void QG_CadToolBarSplines::drawSpline() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDrawSpline();
-    }
-}
-
-void QG_CadToolBarSplines::drawSplineInt() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDrawSplinePoints();
-    }
-}
-
-void QG_CadToolBarSplines::back() {
-    if (cadToolBar!=NULL) {
-        cadToolBar->showPreviousToolBar();
-    }
 }
 
 //restore action from checked button
 void QG_CadToolBarSplines::restoreAction()
 {
-    if(actionHandler==NULL) return;
+	if(!(actionHandler&&bSpline)) return;
     if ( bSpline ->isChecked() ) {
         actionHandler->slotDrawSpline();
         return;
@@ -108,19 +58,21 @@ void QG_CadToolBarSplines::restoreAction()
         actionHandler->slotDrawSplinePoints();
         return;
     }
-    bHidden->setChecked(true);
+	m_pHidden->setChecked(true);
     RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
-    if(currentAction != NULL) {
+	if(currentAction ) {
         currentAction->finish(false); //finish the action, but do not update toolBar
     }
 }
 
-void QG_CadToolBarSplines::resetToolBar() {
-    bHidden->setChecked(true);
+void QG_CadToolBarSplines::resetToolBar()
+{
+	m_pHidden->setChecked(true);
 }
 
 
 void QG_CadToolBarSplines::showCadToolBar(RS2::ActionType actionType) {
+	if(!bSpline) return;
     switch(actionType){
     case RS2::ActionDrawSpline:
         bSpline->setChecked(true);
@@ -129,7 +81,13 @@ void QG_CadToolBarSplines::showCadToolBar(RS2::ActionType actionType) {
         bSplineInt->setChecked(true);
         return;
     default:
-        bHidden->setChecked(true);
+		m_pHidden->setChecked(true);
         return;
     }
+}
+
+void QG_CadToolBarSplines::on_bBack_clicked()
+{
+	finishCurrentAction(true);
+   LC_CadToolBarInterface::back();
 }

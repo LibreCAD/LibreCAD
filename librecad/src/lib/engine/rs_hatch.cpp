@@ -23,14 +23,18 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-
+#include <iostream>
+#include <cmath>
 #include <memory>
 #include <QPainterPath>
 #include <QBrush>
 #include <QString>
 #include "rs_hatch.h"
 
+#include "rs_arc.h"
+#include "rs_circle.h"
+#include "rs_ellipse.h"
+#include "rs_line.h"
 #include "rs_graphicview.h"
 #include "rs_dialogfactory.h"
 #include "rs_infoarea.h"
@@ -39,11 +43,30 @@
 #include "rs_painter.h"
 #include "rs_pattern.h"
 #include "rs_patternlist.h"
+#include "rs_math.h"
+#include "rs_debug.h"
 
 
 #if QT_VERSION < 0x040400
 #include "emu_qt44.h"
 #endif
+
+RS_HatchData::RS_HatchData(bool _solid,
+						   double _scale,
+						   double _angle,
+						   const QString& _pattern):
+	solid(_solid)
+  ,scale(_scale)
+  ,angle(_angle)
+  ,pattern(_pattern)
+{
+	//std::cout << "RS_HatchData: " << pattern.latin1() << "\n";
+}
+
+std::ostream& operator << (std::ostream& os, const RS_HatchData& td) {
+	os << "(" << td.pattern.toLatin1().data() << ")";
+	return os;
+}
 
 /**
  * Constructor.
@@ -53,7 +76,7 @@ RS_Hatch::RS_Hatch(RS_EntityContainer* parent,
         : RS_EntityContainer(parent), data(d)
 {
 
-    hatch = NULL;
+	hatch = nullptr;
     updateRunning = false;
     needOptimization = true;
     updateError = HATCH_UNDEFINED;
@@ -68,9 +91,7 @@ bool RS_Hatch::validate() {
         bool ret = true;
 
     // loops:
-    for (RS_Entity* l=firstEntity(RS2::ResolveNone);
-            l!=NULL;
-            l=nextEntity(RS2::ResolveNone)) {
+		for(auto l: entities){
 
         if (l->rtti()==RS2::EntityContainer) {
             RS_EntityContainer* loop = (RS_EntityContainer*)l;
@@ -84,12 +105,12 @@ bool RS_Hatch::validate() {
 
 
 
-RS_Entity* RS_Hatch::clone() {
+RS_Entity* RS_Hatch::clone() const{
     RS_Hatch* t = new RS_Hatch(*this);
     t->setOwner(isOwner());
     t->initId();
     t->detach();
-        t->hatch = NULL;
+		t->hatch = nullptr;
     return t;
 }
 
@@ -97,7 +118,7 @@ RS_Entity* RS_Hatch::clone() {
 /**
  * @return Number of loops.
  */
-int RS_Hatch::countLoops() {
+int RS_Hatch::countLoops() const{
     if (data.solid) {
         return count();
     } else {
@@ -105,7 +126,9 @@ int RS_Hatch::countLoops() {
     }
 }
 
-
+bool RS_Hatch::isContainer() const {
+	return !isSolid();
+}
 
 /**
  * Recalculates the borders of this hatch.
@@ -151,9 +174,9 @@ void RS_Hatch::update() {
     updateRunning = true;
 
     // delete old hatch:
-    if (hatch!=NULL) {
+    if (hatch) {
         removeEntity(hatch);
-        hatch = NULL;
+		hatch = nullptr;
     }
 
     if (isUndone()) {
@@ -172,7 +195,7 @@ void RS_Hatch::update() {
     // search pattern:
     RS_DEBUG->print("RS_Hatch::update: requesting pattern");
     RS_Pattern* pat = RS_PATTERNLIST->requestPattern(data.pattern);
-    if (pat==NULL) {
+	if (!pat) {
         updateRunning = false;
         RS_DEBUG->print("RS_Hatch::update: requesting pattern: not found");
         updateError = HATCH_PATTERN_NOT_FOUND;
@@ -223,6 +246,8 @@ void RS_Hatch::update() {
     // avoid huge memory consumption:
     else if ( cSize.x* cSize.y/(pSize.x*pSize.y)>1e4) {
         RS_DEBUG->print("RS_Hatch::update: contour size too large or pattern size too small");
+        delete pat;
+        delete copy;
         updateError = HATCH_AREA_TOO_BIG;
         return;
     }
@@ -247,9 +272,8 @@ void RS_Hatch::update() {
     RS_DEBUG->print("RS_Hatch::update: creating pattern carpet");
 
     for (int px=px1; px<px2; px++) {
-        for (int py=py1; py<py2; py++) {
-            for (RS_Entity* e=pat->firstEntity(); e!=NULL;
-                    e=pat->nextEntity()) {
+		for (int py=py1; py<py2; py++) {
+			for(auto e: *pat){
                 RS_Entity* te=e->clone();
                 te->move(dvx*px + dvy*py);
                 tmp.addEntity(te);
@@ -258,24 +282,25 @@ void RS_Hatch::update() {
     }
 
     delete pat;
-    pat = NULL;
+    pat = nullptr;
+    delete copy;
+    copy = nullptr;
     RS_DEBUG->print("RS_Hatch::update: creating pattern carpet: OK");
 
 
     RS_DEBUG->print("RS_Hatch::update: cutting pattern carpet");
     // cut pattern to contour shape:
     RS_EntityContainer tmp2;   // container for small cut lines
-    RS_Line* line = NULL;
-    RS_Arc* arc = NULL;
-    RS_Circle* circle = NULL;
-    RS_Ellipse* ellipse = NULL;
-    for (RS_Entity* e=tmp.firstEntity(); e!=NULL;
-            e=tmp.nextEntity()) {
+	RS_Line* line = nullptr;
+	RS_Arc* arc = nullptr;
+	RS_Circle* circle = nullptr;
+	RS_Ellipse* ellipse = nullptr;
+	for(auto e: tmp){
 
-        line = NULL;
-        arc = NULL;
-        circle = NULL;
-        ellipse = NULL;
+		line = nullptr;
+		arc = nullptr;
+		circle = nullptr;
+		ellipse = nullptr;
 
         RS_Vector startPoint;
         RS_Vector endPoint;
@@ -316,29 +341,26 @@ void RS_Hatch::update() {
         // getting all intersections of this pattern line with the contour:
         QList<std::shared_ptr<RS_Vector> > is;
 
-        for (RS_Entity* loop=firstEntity(); loop!=NULL;
-                loop=nextEntity()) {
+		for(auto loop: entities){
 
             if (loop->isContainer()) {
-                for (RS_Entity* p=((RS_EntityContainer*)loop)->firstEntity();
-                        p!=NULL;
-                        p=((RS_EntityContainer*)loop)->nextEntity()) {
+				for(auto p: * static_cast<RS_EntityContainer*>(loop)){
 
                     RS_VectorSolutions sol =
                         RS_Information::getIntersection(e, p, true);
 
-                    for (int i=0; i<=1; ++i) {
-                        if (sol.get(i).valid) {
-                            is.append(std::shared_ptr<RS_Vector>(
-                                          new RS_Vector(sol.get(i))
-                                                        ));
-                            RS_DEBUG->print("  pattern line intersection: %f/%f",
-                                            sol.get(i).x, sol.get(i).y);
-                        }
-                    }
-                }
-            }
-        }
+					for (const RS_Vector& vp: sol){
+						if (vp.valid) {
+							is.append(std::shared_ptr<RS_Vector>(
+										  new RS_Vector(vp)
+										  ));
+							RS_DEBUG->print("  pattern line intersection: %f/%f",
+											vp.x, vp.y);
+						}
+					}
+				}
+			}
+		}
 
 
         QList<std::shared_ptr<RS_Vector> > is2;//to be filled with sorted intersections
@@ -353,7 +375,7 @@ void RS_Hatch::update() {
         {
             RS_Vector sp = startPoint;
             double sa = center.angleTo(sp);
-            if(ellipse != NULL) sa=ellipse->getEllipseAngle(sp);
+			if(ellipse ) sa=ellipse->getEllipseAngle(sp);
             bool done;
             double minDist;
             double dist = 0.0;
@@ -397,7 +419,7 @@ void RS_Hatch::update() {
                 }
 
                 // copy to sorted list, removing double points
-                if (!done && av.get()!=NULL) {
+                if (!done && av.get()) {
                     if (last.valid==false || last.distanceTo(*av)>RS_TOLERANCE) {
                         is2.append(std::shared_ptr<RS_Vector>(new RS_Vector(*av)));
                         last = *av;
@@ -421,11 +443,10 @@ is2.append(std::shared_ptr<RS_Vector>(new RS_Vector(endPoint)));
                 auto v2 = is2.at(i);
 
 
-                if (line!=NULL) {
+                if (line) {
 
-                    tmp2.addEntity(new RS_Line(&tmp2,
-                                               RS_LineData(*v1, *v2)));
-                } else if (arc!=NULL || circle!=NULL) {
+					tmp2.addEntity(new RS_Line{&tmp2, *v1, *v2});
+                } else if (arc || circle) {
                     if(fabs(center.angleTo(*v2)-center.angleTo(*v1)) > RS_TOLERANCE_ANGLE)
                     {//don't create an arc with a too small angle
                         tmp2.addEntity(new RS_Arc(&tmp2,
@@ -449,29 +470,28 @@ is2.append(std::shared_ptr<RS_Vector>(new RS_Vector(endPoint)));
     // the hatch pattern entities:
     hatch = new RS_EntityContainer(this);
     hatch->setPen(RS_Pen(RS2::FlagInvalid));
-    hatch->setLayer(NULL);
+	hatch->setLayer(nullptr);
     hatch->setFlag(RS2::FlagTemp);
 
     //calculateBorders();
 
-    for (RS_Entity* e=tmp2.firstEntity(); e!=NULL;
-            e=tmp2.nextEntity()) {
+	for(auto e: tmp2){
 
         RS_Vector middlePoint;
         RS_Vector middlePoint2;
         if (e->rtti()==RS2::EntityLine) {
-            RS_Line* line = (RS_Line*)e;
+			RS_Line* line = static_cast<RS_Line*>(e);
             middlePoint = line->getMiddlePoint();
             middlePoint2 = line->getNearestDist(line->getLength()/2.1,
                                                 line->getStartpoint());
         } else if (e->rtti()==RS2::EntityArc) {
-            RS_Arc* arc = (RS_Arc*)e;
+			RS_Arc* arc = static_cast<RS_Arc*>(e);
             middlePoint = arc->getMiddlePoint();
             middlePoint2 = arc->getNearestDist(arc->getLength()/2.1,
                                                arc->getStartpoint());
         } else {
-            middlePoint = RS_Vector(false);
-            middlePoint2 = RS_Vector(false);
+			middlePoint = RS_Vector{false};
+			middlePoint2 = RS_Vector{false};
         }
 
         if (middlePoint.valid) {
@@ -483,8 +503,8 @@ is2.append(std::shared_ptr<RS_Vector>(new RS_Vector(endPoint)));
                     RS_Information::isPointInsideContour(middlePoint2, this)) {
 
                 RS_Entity* te = e->clone();
-                te->setPen(RS_Pen(RS2::FlagInvalid));
-                te->setLayer(NULL);
+				te->setPen(RS2::FlagInvalid);
+				te->setLayer(nullptr);
                 te->reparent(hatch);
                 hatch->addEntity(te);
             }
@@ -511,8 +531,7 @@ is2.append(std::shared_ptr<RS_Vector>(new RS_Vector(endPoint)));
  */
 void RS_Hatch::activateContour(bool on) {
         RS_DEBUG->print("RS_Hatch::activateContour: %d", (int)on);
-    for (RS_Entity* e=firstEntity(); e!=NULL;
-            e=nextEntity()) {
+		for(auto e: entities){
         if (!e->isUndone()) {
             if (!e->getFlag(RS2::FlagTemp)) {
                                 RS_DEBUG->print("RS_Hatch::activateContour: set visible");
@@ -536,9 +555,7 @@ void RS_Hatch::activateContour(bool on) {
 void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
 
     if (!data.solid) {
-        for (RS_Entity* se=firstEntity();
-                se!=NULL;
-                se = nextEntity()) {
+		for(auto se: entities){
 
             view->drawEntity(painter,se);
         }
@@ -553,9 +570,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 
     // loops:
     if (needOptimization==true) {
-        for (RS_Entity* l=firstEntity(RS2::ResolveNone);
-                l!=NULL;
-                l=nextEntity(RS2::ResolveNone)) {
+		for(auto l: entities){
 
             if (l->rtti()==RS2::EntityContainer) {
                 RS_EntityContainer* loop = (RS_EntityContainer*)l;
@@ -567,18 +582,14 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
     }
 
     // loops:
-    for (RS_Entity* l=firstEntity(RS2::ResolveNone);
-         l!=NULL;
-         l=nextEntity(RS2::ResolveNone)) {
+	for(auto l: entities){
         l->setLayer(getLayer());
 
         if (l->rtti()==RS2::EntityContainer) {
             RS_EntityContainer* loop = (RS_EntityContainer*)l;
 
             // edges:
-            for (RS_Entity* e=loop->firstEntity(RS2::ResolveNone);
-                 e!=NULL;
-                 e=loop->nextEntity(RS2::ResolveNone)) {
+			for(auto e: *loop){
 
                 e->setLayer(getLayer());
                 switch (e->rtti()) {
@@ -713,9 +724,7 @@ double RS_Hatch::getTotalArea() {
     double totalArea=0.;
 
     // loops:
-    for (RS_Entity* l=firstEntity(RS2::ResolveNone);
-         l!=NULL;
-         l=nextEntity(RS2::ResolveNone)) {
+	for(auto l: entities){
 
         if (l!=hatch && l->rtti()==RS2::EntityContainer) {
             totalArea += l->areaLineIntegral();
@@ -731,7 +740,7 @@ double RS_Hatch::getDistanceToPoint(
     double solidDist) const {
 
     if (data.solid==true) {
-        if (entity!=NULL) {
+        if (entity) {
             *entity = const_cast<RS_Hatch*>(this);
         }
 

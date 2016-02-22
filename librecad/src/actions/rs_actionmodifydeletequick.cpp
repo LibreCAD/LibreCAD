@@ -27,8 +27,10 @@
 #include "rs_actionmodifydeletequick.h"
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_debug.h"
 
 
 
@@ -36,21 +38,11 @@ RS_ActionModifyDeleteQuick::RS_ActionModifyDeleteQuick(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_ActionInterface("Quick Delete Entities",
-                    container, graphicView) {
-
-    en = NULL;
+					container, graphicView)
+		,en(nullptr)
+{
+	actionType=RS2::ActionModifyDeleteQuick;
 }
-
-
-QAction* RS_ActionModifyDeleteQuick::createGUIAction(RS2::ActionType /*type*/, QObject* parent) {
-        // (tr("Delete selected"
-        QAction* action = new QAction(tr("&Delete selected"), parent);
-        action->setIcon(QIcon(":/extui/modifydelete.png"));
-        //action->zetStatusTip(tr("Delete selected entities"));
-        action->setShortcut(QKeySequence::Delete);
-        return action;
-}
-
 
 /**
  * Deletes all entities that were selected.
@@ -59,10 +51,10 @@ void RS_ActionModifyDeleteQuick::trigger() {
 
     RS_DEBUG->print("RS_ActionModifyDeleteQuick::trigger()");
 
-    if (en!=NULL) {
+    if (en) {
         RS_DEBUG->print("Entity found");
         RS_EntityContainer* parent = en->getParent();
-        if (parent!=NULL) {
+        if (parent) {
             en->setSelected(false);
             graphicView->deleteEntity(en);
             en->changeUndoState();
@@ -101,7 +93,7 @@ void RS_ActionModifyDeleteQuick::updateMouseButtonHints() {
                                        tr("Cancel"));
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }

@@ -45,6 +45,7 @@
 HelpBrowser::HelpBrowser(QHelpEngine *helpEngine, QWidget *parent)
     : QTextBrowser(parent), helpEngine(helpEngine)
 {
+    setOpenExternalLinks(true);
 }
 
 QVariant HelpBrowser::loadResource(int type, const QUrl &url)

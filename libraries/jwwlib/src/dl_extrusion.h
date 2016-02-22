@@ -27,8 +27,7 @@
 #ifndef DL_EXTRUSION_H
 #define DL_EXTRUSION_H
 
-#include <math.h>
-
+#include <cmath>
 
 /**
  * Storing and passing around attributes. Attributes

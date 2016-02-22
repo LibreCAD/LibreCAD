@@ -27,6 +27,9 @@
 
 #include "rs_actiondrawlineparallel.h"
 #include "rs_settings.h"
+#include "rs_math.h"
+#include "ui_qg_lineparalleloptions.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_LineParallelOptions as a child of 'parent', with the
@@ -34,9 +37,9 @@
  */
 QG_LineParallelOptions::QG_LineParallelOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, ui(new Ui::Ui_LineParallelOptions{})
 {
-    setupUi(this);
-
+	ui->setupUi(this);
 }
 
 /*
@@ -44,8 +47,7 @@ QG_LineParallelOptions::QG_LineParallelOptions(QWidget* parent, Qt::WindowFlags 
  */
 QG_LineParallelOptions::~QG_LineParallelOptions()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+	saveSettings();
 }
 
 /*
@@ -54,18 +56,18 @@ QG_LineParallelOptions::~QG_LineParallelOptions()
  */
 void QG_LineParallelOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
-void QG_LineParallelOptions::destroy() {
+void QG_LineParallelOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Draw");
-    RS_SETTINGS->writeEntry("/LineParallelDistance", leDist->text());
-    RS_SETTINGS->writeEntry("/LineParallelNumber", sbNumber->text());
+	RS_SETTINGS->writeEntry("/LineParallelDistance", ui->leDist->text());
+	RS_SETTINGS->writeEntry("/LineParallelNumber", ui->sbNumber->text());
     RS_SETTINGS->endGroup();
 }
 
 void QG_LineParallelOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDrawLineParallel) {
+    if (a && a->rtti()==RS2::ActionDrawLineParallel) {
         action = (RS_ActionDrawLineParallel*)a;
 
         QString sd;
@@ -79,24 +81,24 @@ void QG_LineParallelOptions::setAction(RS_ActionInterface* a, bool update) {
             sn = RS_SETTINGS->readEntry("/LineParallelNumber", "1");
             RS_SETTINGS->endGroup();
         }
-        leDist->setText(sd);
-        sbNumber->setValue(sn.toInt());
+		ui->leDist->setText(sd);
+		ui->sbNumber->setValue(sn.toInt());
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR, 
 			"QG_LineParallelOptions::setAction: wrong action type");
-        action = NULL;
+		action = nullptr;
     }
 
 }
 
 void QG_LineParallelOptions::updateDist(const QString& d) {
-    if (action!=NULL) {
+    if (action) {
         action->setDistance(RS_Math::eval(d));
     }
 }
 
 void QG_LineParallelOptions::updateNumber(int n) {
-    if (action!=NULL) {
+    if (action) {
         action->setNumber(n);
     }
 }

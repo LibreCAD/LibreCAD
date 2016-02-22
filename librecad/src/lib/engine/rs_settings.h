@@ -28,8 +28,30 @@
 #ifndef RS_SETTINGS_H
 #define RS_SETTINGS_H
 
-#include <QHash>
-#include <QSettings>
+#include <QString>
+#include <map>
+
+class QVariant;
+
+// ---------------------------------------------------------------------------
+// Default Settings
+// ---------------------------------------------------------------------------
+
+namespace Colors
+{
+    const QString snap_indicator   = "#FFC200";
+    const QString background       = "Black";
+    const QString grid             = "Gray";
+    const QString meta_grid        = "#404040";
+    const QString select           = "#A54747";
+    const QString highlight        = "#739373";
+    const QString start_handle     = "Cyan";
+    const QString handle           = "Blue";
+    const QString end_handle       = "Blue";
+    const QString layer_selection  = "#CCFFCC";
+}
+
+// ---------------------------------------------------------------------------
 
 #define RS_SETTINGS RS_Settings::instance()
 
@@ -44,15 +66,11 @@
 class RS_Settings {
 
 public:
-    /**
+	~RS_Settings();
+	/**
      * @return Instance to the unique settings object.
      */
-    static RS_Settings* instance() {
-        if (uniqueInstance==NULL) {
-            uniqueInstance = new RS_Settings();
-        }
-        return uniqueInstance;
-    }
+	static RS_Settings* instance();
 
     /**
      * Initialize the system.
@@ -75,23 +93,22 @@ public:
     QByteArray readByteArrayEntry(const QString& key,
                         const QString& def = QString::null,
                         bool* ok = 0);
-    int readNumEntry(const QString& key, int def=0, bool* ok=0);
-	
-
-public:
-    ~RS_Settings();
+	int readNumEntry(const QString& key, int def=0);
+    void clear_all();
+    void clear_geometry();
+    static bool save_is_allowed;
 
 private:
-
     RS_Settings();
-    RS_Settings(RS_Settings&) = delete;
-        QVariant readEntryCache(const QString& key);
-        void addToCache(const QString& key, const QVariant& value);
+	RS_Settings(RS_Settings const&) = delete;
+	RS_Settings& operator = (RS_Settings const&) = delete;
+	QVariant readEntryCache(const QString& key);
+	void addToCache(const QString& key, const QVariant& value);
 
 protected:
     static RS_Settings* uniqueInstance;
 
-    QHash<QString, QVariant*> cache;
+	std::map<QString, QVariant> cache;
     QString companyKey;
     QString appKey;
     QString group;

@@ -24,12 +24,14 @@
 **
 **********************************************************************/
 
-
+#include<cstdlib>
 #include "rs_filterdxfrw.h"
 #include "rs_filterdxf1.h"
 
-#include <iostream>
-
+#include "rs_arc.h"
+#include "rs_circle.h"
+#include "rs_ellipse.h"
+#include "rs_line.h"
 #include "rs_font.h"
 #include "rs_information.h"
 #include "rs_utility.h"
@@ -41,17 +43,19 @@
 #include "rs_dimradial.h"
 #include "rs_layer.h"
 #include "rs_leader.h"
+#include "rs_point.h"
+#include "rs_math.h"
+#include "rs_debug.h"
 
 
 /**
  * Default constructor.
  */
 RS_FilterDXF1::RS_FilterDXF1()
-        :RS_FilterInterface() {
-
-    RS_DEBUG->print("Setting up DXF 1 filter...");
-
-	graphic = NULL;
+		:RS_FilterInterface()
+		, graphic(nullptr)
+{
+	RS_DEBUG->print("Setting up DXF 1 filter...");
 }
 
 /**
@@ -82,7 +86,12 @@ bool RS_FilterDXF1::fileImport(RS_Graphic& g, const QString& file, RS2::FormatTy
     return false;
 }
 
-
+bool RS_FilterDXF1::fileExport(RS_Graphic& /*g*/, const QString& /*file*/,
+	RS2::FormatType /*type*/) {
+	RS_DEBUG->print(RS_Debug::D_WARNING,
+					"Exporting of QCad 1.x file not implemented");
+	return false;
+}
 
 /**
  * Reads a dxf1 file from buffer.
@@ -691,8 +700,8 @@ bool RS_FilterDXF1::readFromBuffer() {
                     //if(!mtCompFloat(vx1, vx2) || !mtCompFloat(vy1, vy2)) {
                     //graphic->addLine(vx1, vy1, vx2, vy2, currentLayerNum, add);
                     graphic->setActivePen(pen);
-                    graphic->addEntity(new RS_Line(graphic,
-                                                   RS_LineData(RS_Vector(vx1, vy1), RS_Vector(vx2, vy2))));
+					graphic->addEntity(new RS_Line{graphic,
+												   {vx1, vy1}, {vx2, vy2}});
                     //}
                 }
 
@@ -815,8 +824,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                 }*/
                     graphic->setActivePen(pen);
                     graphic->addEntity(new RS_Circle(graphic,
-                                                     RS_CircleData(RS_Vector(vcx, vcy),
-                                                                   vcr)));
+					{{vcx, vcy}, vcr}));
                 }
 
 
@@ -1041,7 +1049,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                         }
                     } while(dxfCode.size() && code!=0);
                     char* i=strchr(vtextStyle, '#');
-                    if (i!=NULL) {
+                    if (i) {
                         i[0] = '\0';
                     }
                     graphic->addEntity(
@@ -1218,8 +1226,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                             double dist =
                                 RS_Vector(v13, v23).distanceTo(RS_Vector(v10,v20));
 
-                            RS_Vector defP;
-                            defP.setPolar(dist, angle);
+							RS_Vector defP = RS_Vector::polar(dist, angle);
                             defP+=RS_Vector(v14, v24);
 
                             RS_DimAligned* d =
@@ -1248,18 +1255,13 @@ bool RS_FilterDXF1::readFromBuffer() {
 
                         // Angle:
                     case 2: {
-                            RS_Line tl1(NULL,
-                                        RS_LineData(RS_Vector(v13, v23),
-                                                    RS_Vector(v14, v24)));
-                            RS_Line tl2(NULL,
-                                        RS_LineData(RS_Vector(v10, v20),
-                                                    RS_Vector(v15, v25)));
+							RS_Line tl1{{v13, v23}, {v14, v24}};
+							RS_Line tl2{{v10, v20}, {v15, v25}};
 
-                            RS_VectorSolutions s;
                             //bool inters=false;
                             //tmpEl1.getIntersection(&tmpEl2,
                             //                       &inters, &vcx, &vcy, 0,0,0,0, false);
-                            s = RS_Information::getIntersection(
+							RS_VectorSolutions const& s = RS_Information::getIntersection(
                                     &tl1, &tl2, false);
 
                             if (s.get(0).valid) {
@@ -1331,8 +1333,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                             double ang =
                                 RS_Vector(v10, v20)
                                 .angleTo(RS_Vector(v15, v25));
-                            RS_Vector v2;
-                            v2.setPolar(v40, ang);
+							RS_Vector v2 = RS_Vector::polar(v40, ang);
                             RS_DimRadial* d =
                                 new RS_DimRadial(
                                     graphic,
@@ -1830,7 +1831,7 @@ bool RS_FilterDXF1::readFileInBuffer(char* _name, int _bNum) {
 //
 bool RS_FilterDXF1::readFileInBuffer(int _bNum) {
     fPointer = fopen(name.toLatin1().data(), "rb");//RLZ verify with locales
-    if(fPointer!=NULL) {
+    if(fPointer) {
         if(file.open(fPointer, QIODevice::ReadOnly)) {
             fSize=file.size();
             if(_bNum==-1)
@@ -1846,7 +1847,7 @@ bool RS_FilterDXF1::readFileInBuffer(int _bNum) {
 
         // Convert 13/10 to 10
         dos2unix();
-        fPointer=NULL;
+		fPointer=nullptr;
 
         return true;
     }

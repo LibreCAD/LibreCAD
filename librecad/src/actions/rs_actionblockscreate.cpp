@@ -24,13 +24,17 @@
 **
 **********************************************************************/
 
+#include <QAction>
+#include <QMouseEvent>
 #include "rs_actionblockscreate.h"
 
-#include <QAction>
 #include "rs_creation.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
+#include "rs_insert.h"
+#include "rs_modification.h"
+#include "rs_coordinateevent.h"
 
 /**
  * Constructor.
@@ -38,59 +42,40 @@
 RS_ActionBlocksCreate::RS_ActionBlocksCreate(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Blocks Create",
-                           container, graphicView) {
-
-    referencePoint = RS_Vector(false);
+						   container, graphicView)
+		,referencePoint(new RS_Vector{})
+{
+	actionType=RS2::ActionBlocksCreate;
 }
 
-
-
-RS_ActionBlocksCreate::~RS_ActionBlocksCreate() {}
-
-
-
-QAction* RS_ActionBlocksCreate::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // (tr("Create Block"),
-    QAction* action = new QAction(tr("&Create Block"), NULL);
-    //action->zetStatusTip(tr("Create Block"));
-        action->setIcon(QIcon(":/extui/menublock.png"));
-    return action;
-}
-
+RS_ActionBlocksCreate::~RS_ActionBlocksCreate() = default;
 
 
 void RS_ActionBlocksCreate::init(int status) {
     RS_PreviewActionInterface::init(status);
-
 }
 
 
 
 void RS_ActionBlocksCreate::trigger() {
-    //deletePreview();
-
-    //RS_Modification m(*container, graphicView);
-    //m.paste(data.insertionPoint);
-    //std::cout << *RS_Clipboard::instance();
-
-    if (graphic!=NULL) {
+	if (graphic) {
         RS_BlockList* blockList = graphic->getBlockList();
-        if (blockList!=NULL) {
+		if (blockList) {
             RS_BlockData d =
                 RS_DIALOGFACTORY->requestNewBlockDialog(blockList);
 
             if (!d.name.isEmpty()) {
                 RS_Creation creation(container, graphicView);
-                creation.createBlock(d, referencePoint, true);
+				creation.createBlock(&d, *referencePoint, true);
 
                 RS_InsertData id(
                     d.name,
-                    referencePoint,
+					*referencePoint,
                     RS_Vector(1.0,1.0),
                     0.0,
                     1, 1, RS_Vector(0.0,0.0)
                 );
-                creation.createInsert(id);
+				creation.createInsert(&id);
             }
         }
     }
@@ -99,7 +84,7 @@ void RS_ActionBlocksCreate::trigger() {
 
     setStatus(getStatus()+1); // clear mouse button hints
     updateMouseButtonHints();
-//    if(RS_DIALOGFACTORY!=NULL){
+//    if(RS_DIALOGFACTORY){
 //        RS_DIALOGFACTORY->requestPreviousToolBar();
 //    }
     graphicView->killSelectActions();
@@ -114,11 +99,11 @@ void RS_ActionBlocksCreate::mouseMoveEvent(QMouseEvent* e) {
     case SetReferencePoint:
         //data.insertionPoint = snapPoint(e);
 
-        /*if (block!=NULL) {
+		/*if (block) {
             deletePreview();
             //preview->addAllFrom(*block);
             //preview->move(data.insertionPoint);
-                RS_Creation creation(preview, NULL, false);
+				RS_Creation creation(preview, nullptr, false);
                 creation.createInsert(data);
             drawPreview();
     }*/
@@ -143,13 +128,13 @@ void RS_ActionBlocksCreate::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionBlocksCreate::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+	if (!e) {
         return;
     }
 
     switch (getStatus()) {
     case SetReferencePoint:
-        referencePoint = e->getCoordinate();
+		*referencePoint = e->getCoordinate();
         trigger();
         break;
 
@@ -168,25 +153,14 @@ void RS_ActionBlocksCreate::updateMouseButtonHints() {
                                             tr("Cancel"));
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+		RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }
 
 
-
 void RS_ActionBlocksCreate::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-//void RS_ActionBlocksCreate::updateToolBar() {
-//    if (isFinished()) {
-//        RS_DIALOGFACTORY->requestPreviousToolBar();
-//        RS_DIALOGFACTORY->requestPreviousToolBar();
-//    }
-//}
-
 
 // EOF

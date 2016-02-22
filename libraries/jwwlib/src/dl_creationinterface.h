@@ -27,7 +27,7 @@
 #ifndef DL_CREATIONINTERFACE_H
 #define DL_CREATIONINTERFACE_H
 
-#include <string.h>
+#include <cstring>
 
 #include "dl_attributes.h"
 #include "dl_codes.h"

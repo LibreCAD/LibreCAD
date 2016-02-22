@@ -28,7 +28,8 @@
 #define RS_ACTIONDRAWCIRCLE3P_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_circle.h"
+
+struct RS_CircleData;
 
 /**
  * This action class can handle user events to draw 
@@ -52,13 +53,6 @@ public:
     RS_ActionDrawCircle3P(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
     ~RS_ActionDrawCircle3P();
-	
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
-    virtual RS2::ActionType rtti() {
-        return RS2::ActionDrawCircle3P;
-    }
-    void reset();
 
     virtual void init(int status=0);
 	
@@ -74,25 +68,14 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 protected:
     /**
      * Circle data defined so far.
      */
-    RS_CircleData data;
-    /**
-     * 1st point.
-     */
-    RS_Vector point1;
-    /**
-     * 2nd point.
-     */
-    RS_Vector point2;
-    /**
-     * 3nd point.
-     */
-    RS_Vector point3;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
+
 };
 
 #endif

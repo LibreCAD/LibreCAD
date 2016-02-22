@@ -25,9 +25,9 @@
 **********************************************************************/
 #include "qg_dlgline.h"
 
-//#include <qvariant.h>
 #include "rs_line.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgLine as a child of 'parent', with the
@@ -66,11 +66,11 @@ void QG_DlgLine::setLine(RS_Line& l) {
     //pen = line->getPen();
     wPen->setPen(line->getPen(false), true, false, "Pen");
     RS_Graphic* graphic = line->getGraphic();
-    if (graphic!=NULL) {
+    if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
     RS_Layer* lay = line->getLayer(false);
-    if (lay!=NULL) {
+    if (lay) {
         cbLayer->setLayer(*lay);
     }
     QString s;

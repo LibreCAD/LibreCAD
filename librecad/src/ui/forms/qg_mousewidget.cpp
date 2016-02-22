@@ -25,7 +25,7 @@
 **********************************************************************/
 #include "qg_mousewidget.h"
 
-#include <qvariant.h>
+#include <QVariant>
 #include "rs_settings.h"
 
 /*
@@ -38,7 +38,9 @@ QG_MouseWidget::QG_MouseWidget(QWidget* parent, const char* name, Qt::WindowFlag
     setObjectName(name);
     setupUi(this);
 
-    init();
+    lLeftButton->setText("");
+    lRightButton->setText("");
+    lMousePixmap->setPixmap( QPixmap(":/ui/mousebuttons24.png"));
 }
 
 /*
@@ -56,25 +58,6 @@ QG_MouseWidget::~QG_MouseWidget()
 void QG_MouseWidget::languageChange()
 {
     retranslateUi(this);
-}
-
-void QG_MouseWidget::init() {
-    lLeftButton->setText("");
-    lRightButton->setText("");
-    
-    int fsize;
-#ifdef __APPLE__
-    fsize = 9;
-#else
-    fsize = 7;
-#endif
-    
-    RS_SETTINGS->beginGroup("/Appearance");
-    fsize = RS_SETTINGS->readNumEntry("/StatusBarFontSize", fsize);
-    RS_SETTINGS->endGroup();
-    
-    lLeftButton->setFont(QFont("Helvetica", fsize));
-    lRightButton->setFont(QFont("Helvetica", fsize));
 }
 
 void QG_MouseWidget::setHelp(const QString& left, const QString& right) {

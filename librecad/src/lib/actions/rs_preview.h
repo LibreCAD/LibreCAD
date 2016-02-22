@@ -30,10 +30,6 @@
 
 #include "rs_entitycontainer.h"
 
-class RS_Entity;
-class RS_Vector;
-
-
 /**
  * This class supports previewing. The RS_Snapper class uses
  * an instance of RS_Preview to preview entities, ranges, 
@@ -43,13 +39,13 @@ class RS_Vector;
  */
 class RS_Preview : public RS_EntityContainer {
 public:
-    RS_Preview(RS_EntityContainer* parent=NULL);
-    ~RS_Preview();
+    RS_Preview(RS_EntityContainer* parent=nullptr);
+	~RS_Preview() = default;
     virtual RS2::EntityType rtti() const {
         return RS2::EntityPreview;
     }
     virtual void addEntity(RS_Entity* entity);
-	void addCloneOf(RS_Entity* entity);
+    void addCloneOf(RS_Entity* entity);
     virtual void addSelectionFrom(RS_EntityContainer& container);
     virtual void addAllFrom(RS_EntityContainer& container);
     virtual void addStretchablesFrom(RS_EntityContainer& container,

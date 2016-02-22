@@ -1,7 +1,7 @@
 /******************************************************************************
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
-**  Copyright (C) 2011 Rallaz, rallazz@gmail.com                             **
+**  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
 **  General Public License as published by the Free Software Foundation,     **
@@ -17,22 +17,23 @@
 
 class dxfReader {
 public:
+    enum TYPE {
+        STRING,
+        INT32,
+        INT64,
+        DOUBLE,
+        BOOL,
+        INVALID
+    };
+    enum TYPE type;
+public:
     dxfReader(std::ifstream *stream){
         filestr = stream;
-#ifdef DRW_DBG
-        count =0;
-#endif
+        type = INVALID;
     }
     virtual ~dxfReader(){}
-    virtual bool readCode(int *code) = 0; //return true if sucesful (not EOF)
-    virtual bool readString(std::string *text) = 0;
-    virtual bool readString() = 0;
-    bool readRec(int *code, bool skip);
-    virtual bool readInt() = 0;
-    virtual bool readInt32() = 0;
-    virtual bool readInt64() = 0;
-    virtual bool readDouble() = 0;
-    virtual bool readBool() = 0;
+    bool readRec(int *code);
+
     std::string getString() {return strData;}
     int getHandleString();//Convert hex string to int
     std::string toUtf8String(std::string t) {return decoder.toUtf8(t);}
@@ -42,30 +43,39 @@ public:
     unsigned long long int getInt64() {return int64;}
     bool getBool() { return (intData==0) ? false : true;}
     int getVersion(){return decoder.getVersion();}
-    void setVersion(std::string *v){decoder.setVersion(v);}
-    void setCodePage(std::string *c){decoder.setCodePage(c);}
+    void setVersion(std::string *v, bool dxfFormat){decoder.setVersion(v, dxfFormat);}
+    void setCodePage(std::string *c){decoder.setCodePage(c, true);}
     std::string getCodePage(){ return decoder.getCodePage();}
-#ifdef DRW_DBG
-    int count;//DBG
-#endif
+
+protected:
+    virtual bool readCode(int *code) = 0; //return true if sucesful (not EOF)
+    virtual bool readString(std::string *text) = 0;
+    virtual bool readString() = 0;
+    virtual bool readInt16() = 0;
+    virtual bool readInt32() = 0;
+    virtual bool readInt64() = 0;
+    virtual bool readDouble() = 0;
+    virtual bool readBool() = 0;
+
 protected:
     std::ifstream *filestr;
     std::string strData;
     double doubleData;
     signed int intData; //32 bits integer
     unsigned long long int int64; //64 bits integer
+    bool skip; //set to true for ascii dxf, false for binary
 private:
     DRW_TextCodec decoder;
 };
 
 class dxfReaderBinary : public dxfReader {
 public:
-    dxfReaderBinary(std::ifstream *stream):dxfReader(stream){ }
+    dxfReaderBinary(std::ifstream *stream):dxfReader(stream){skip = false; }
     virtual ~dxfReaderBinary() {}
     virtual bool readCode(int *code);
     virtual bool readString(std::string *text);
     virtual bool readString();
-    virtual bool readInt();
+    virtual bool readInt16();
     virtual bool readInt32();
     virtual bool readInt64();
     virtual bool readDouble();
@@ -74,12 +84,12 @@ public:
 
 class dxfReaderAscii : public dxfReader {
 public:
-    dxfReaderAscii(std::ifstream *stream):dxfReader(stream){ }
+    dxfReaderAscii(std::ifstream *stream):dxfReader(stream){skip = true; }
     virtual ~dxfReaderAscii(){}
     virtual bool readCode(int *code);
     virtual bool readString(std::string *text);
     virtual bool readString();
-    virtual bool readInt();
+    virtual bool readInt16();
     virtual bool readDouble();
     virtual bool readInt32();
     virtual bool readInt64();

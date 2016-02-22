@@ -29,17 +29,18 @@
 #define RS_DIALOGFACTORYINTERFACE_H
 
 #include "rs.h"
+#include <QString>
 
 class RS_ActionInterface;
-class RS_ArcData;
+struct RS_ArcData;
 class RS_AttributesData;
 class RS_BevelData;
 class RS_Block;
-class RS_BlockData;
+struct RS_BlockData;
 class RS_BlockList;
-class RS_CircleData;
-class RS_DimLinearData;
-class RS_DimensionData;
+struct RS_CircleData;
+struct RS_DimLinearData;
+struct RS_DimensionData;
 class RS_Document;
 class RS_Entity;
 class RS_EventHandler;
@@ -62,7 +63,6 @@ class RS_ScaleData;
 class RS_Solid;
 class RS_Text;
 class RS_Vector;
-class QG_CadToolBar;
 
 /**
  * Interface for objects that can create and show dialogs.
@@ -71,12 +71,6 @@ class RS_DialogFactoryInterface {
 public:
     RS_DialogFactoryInterface() {}
     virtual ~RS_DialogFactoryInterface() {}
-
-    /**
-     * This virtual method must be overwritten and must show the previously
-     * shown menu in the cad toolbar.
-     */
-    virtual void requestPreviousMenu() = 0;
 
     /**
      * This virtual method must be overwritten and must provide
@@ -89,8 +83,8 @@ public:
          * window for the given document or for a new document isf no document
          * is given.
          */
-    virtual RS_GraphicView* requestNewDocument(const QString& fileName = QString::null,
-                        RS_Document* doc=NULL) = 0;
+//    virtual RS_GraphicView* requestNewDocument(const QString& fileName = QString::null,
+//                        RS_Document* doc=NULL) = 0;
 
     /**
      * This virtual method must be overwritten and must provide
@@ -308,27 +302,6 @@ public:
     virtual bool requestRotate2Dialog(RS_Rotate2Data& data) = 0;
 
     /**
-     * This virtual method must be overwritten and must show
-     * the given toolbar.
-     *
-     * @param id Tool bar ID.
-     */
-    virtual void requestToolBar(RS2::ToolBarId id) = 0;
-    virtual void requestPreviousToolBar() = 0;
-    virtual void resetToolBar() = 0;
-    virtual void showCadToolBar(RS2::ActionType actionType) = 0;
-
-    /**
-     * This virtual method must be overwritten and must show
-     * the tag toolbar with a button for launching the given
-     * action.
-     *
-     * @param nextAction ID of next action to create after selecting was done.
-     */
-    virtual void requestToolBarSelect(RS_ActionInterface* selectAction,
-                                      RS2::ActionType nextAction) = 0;
-
-    /**
      * This virtual method must be overwritten and must present
      * a dialog to edit the given entity.
      *
@@ -375,6 +348,21 @@ public:
     virtual void requestOptionsDrawingDialog(RS_Graphic& graphic) = 0;
 
     /**
+     * This virtual method must be overwritten and must present
+     * a dialog for options how to export as MakeCAM SVG.
+     */
+    virtual bool requestOptionsMakerCamDialog() = 0;
+
+    /**
+     * This virtual method must be overwritten and must present
+     * a dialog for saving a file.
+     */
+    virtual QString requestFileSaveAsDialog(const QString& caption = QString(),
+                                            const QString& dir = QString(),
+                                            const QString& filter = QString(), 
+                                            QString* selectedFilter = 0) = 0;
+
+    /**
      * This virtual method must be overwritten if the graphic view has
      * a component that is interested in the current mouse position.
      * The implementation will be called every time the mouse position
@@ -394,11 +382,9 @@ public:
      *
      * @param left Help text for the left mouse button.
      * @param right Help text for the right mouse button.
-     */
-    virtual void updateMouseWidget(const QString& left,
-                                   const QString& right,
-                                   bool keeping=true) = 0;
-    virtual void restoreMouseWidget(void)=0;
+	 */
+	virtual void updateMouseWidget(const QString& = QString::null,
+								   const QString& = QString::null)=0;
     virtual void updateArcTangentialOptions(const double& d, bool byRadius)=0;
 
     /**
@@ -424,7 +410,7 @@ public:
     virtual void commandMessage(const QString& message) = 0;
 
 
-        virtual bool isAdapter() = 0;
+		virtual bool isAdapter() const= 0;
 
 };
 

@@ -24,30 +24,29 @@
 **
 **********************************************************************/
 
+#include <QAction>
+#include <QMouseEvent>
 #include "rs_actioninfoarea.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_debug.h"
-
-
+#include "rs_line.h"
+#include "rs_infoarea.h"
+#include "rs_graphic.h"
+#include "rs_coordinateevent.h"
+#include "rs_preview.h"
 
 RS_ActionInfoArea::RS_ActionInfoArea(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Info Area",
-                               container, graphicView) {}
-
-
-QAction* RS_ActionInfoArea::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    /*    QAction* action = new QAction(tr("Polygonal Area"),
-                                  tr("&Polygonal Area"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Polygonal &Area"), NULL);
-    //action->zetStatusTip(tr("Measures the area of a polygon"));
-    action->setIcon(QIcon(":/extui/infoarea.png"));
-    return action;
+							   container, graphicView)
+	,ia(new RS_InfoArea())
+{
+	actionType=RS2::ActionInfoArea;
 }
+
+RS_ActionInfoArea::~RS_ActionInfoArea() = default;
 
 
 void RS_ActionInfoArea::init(int status) {
@@ -55,7 +54,7 @@ void RS_ActionInfoArea::init(int status) {
 
     if(status==SetFirstPoint){
         deletePreview();
-        ia.reset();
+		ia->reset();
     }
 
     //RS_DEBUG->print( "RS_ActionInfoArea::init: %d" ,status );
@@ -75,22 +74,25 @@ void RS_ActionInfoArea::trigger() {
 /** display area circumference and preview of polygon **/
 void RS_ActionInfoArea::display() {
     deletePreview();
-    if(ia.size() < 1) {
+	if(ia->size() < 1) {
         return;
     }
-    switch(ia.size()){
+	switch(ia->size()){
     case 2:
-        preview->addEntity(new RS_Line(preview,ia.at(0),ia.at(1)));
+		preview->addEntity(new RS_Line(preview.get(),ia->at(0),ia->at(1)));
         break;
     default:
-        for(int i=0;i<ia.size();i++){
-            preview->addEntity(new RS_Line(preview,ia.at(i),ia.at((i+1) % ia.size())));
+		for(int i=0;i<ia->size();i++){
+			preview->addEntity(new RS_Line(preview.get(),ia->at(i),ia->at((i+1) % ia->size())));
         }
-        double area = ia.getArea();
-        double circ = ia.getCircumference();
+		QStringList dists;
+		for(double a: {ia->getCircumference(), ia->getArea()}){
+			dists<<RS_Units::formatLinear(a, graphic->getUnit(),
+										  graphic->getLinearFormat(), graphic->getLinearPrecision());
+		}
 
-        RS_DIALOGFACTORY->commandMessage(tr("Circumference: %1").arg(circ));
-        RS_DIALOGFACTORY->commandMessage(tr("Area: %1").arg(area));
+		RS_DIALOGFACTORY->commandMessage(tr("Circumference: %1").arg(dists[0]));
+		RS_DIALOGFACTORY->commandMessage(tr("Area: %1").arg(dists[1]));
         break;
     }
     drawPreview();
@@ -103,9 +105,9 @@ void RS_ActionInfoArea::mouseMoveEvent(QMouseEvent* e) {
 
     RS_Vector mouse = snapPoint(e);
     if ( getStatus()==SetNextPoint) {
-        ia.push_back(mouse);
+		ia->push_back(mouse);
         display();
-        ia.pop_back();
+		ia->pop_back();
     }
 
     //RS_DEBUG->print("RS_ActionInfoArea::mouseMoveEvent end");
@@ -131,8 +133,8 @@ void RS_ActionInfoArea::coordinateEvent(RS_CoordinateEvent* e) {
     }
 
     RS_Vector mouse = e->getCoordinate();
-    if(ia.duplicated(mouse)) {
-        ia.push_back(mouse);
+	if(ia->duplicated(mouse)) {
+		ia->push_back(mouse);
         RS_DIALOGFACTORY->commandMessage(tr("Closing Point: %1/%2")
                                          .arg(mouse.x).arg(mouse.y));
         trigger();
@@ -140,7 +142,7 @@ void RS_ActionInfoArea::coordinateEvent(RS_CoordinateEvent* e) {
     }
     graphicView->moveRelativeZero(mouse);
 
-    ia.push_back(mouse);
+	ia->push_back(mouse);
     RS_DIALOGFACTORY->commandMessage(tr("Point: %1/%2")
                                      .arg(mouse.x).arg(mouse.y));
     switch (getStatus()) {
@@ -167,10 +169,10 @@ void RS_ActionInfoArea::updateMouseButtonHints() {
     case SetNextPoint:
         RS_DIALOGFACTORY->updateMouseWidget(
                     tr("Specify next point of polygon"),
-                    tr("Cancel"));
+					tr("Cancel"));
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }

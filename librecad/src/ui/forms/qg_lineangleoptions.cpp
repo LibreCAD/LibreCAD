@@ -28,6 +28,9 @@
 #include "rs_actioninterface.h"
 #include "rs_actiondrawlineangle.h"
 #include "rs_settings.h"
+#include "rs_math.h"
+#include "rs_debug.h"
+#include "ui_qg_lineangleoptions.h"
 
 /*
  *  Constructs a QG_LineAngleOptions as a child of 'parent', with the
@@ -35,9 +38,9 @@
  */
 QG_LineAngleOptions::QG_LineAngleOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, ui(new Ui::Ui_LineAngleOptions{})
 {
-    setupUi(this);
-
+	ui->setupUi(this);
 }
 
 /*
@@ -45,8 +48,7 @@ QG_LineAngleOptions::QG_LineAngleOptions(QWidget* parent, Qt::WindowFlags fl)
  */
 QG_LineAngleOptions::~QG_LineAngleOptions()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+	saveSettings();
 }
 
 /*
@@ -55,22 +57,22 @@ QG_LineAngleOptions::~QG_LineAngleOptions()
  */
 void QG_LineAngleOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
 void QG_LineAngleOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && (
+    if (a && (
                 a->rtti()==RS2::ActionDrawLineAngle
                 ||a->rtti()==RS2::ActionDrawLineHorizontal
                 ||a->rtti()==RS2::ActionDrawLineVertical
                 )
     ){
-        action = (RS_ActionDrawLineAngle*)a;
+		action = static_cast<RS_ActionDrawLineAngle*>(a);
         m_bFixedAngle=action->hasFixedAngle();
-        leLength->show();
-        lLength->show();
-        leAngle->setVisible(!action->hasFixedAngle());
-        lAngle->setVisible(!action->hasFixedAngle());
+		ui->leLength->show();
+		ui->lLength->show();
+		ui->leAngle->setVisible(!action->hasFixedAngle());
+		ui->lAngle->setVisible(!action->hasFixedAngle());
 
         QString sa;
         QString sl;
@@ -78,14 +80,14 @@ void QG_LineAngleOptions::setAction(RS_ActionInterface* a, bool update) {
 
         // settings from action:
         if (update) {
-            if (action->hasFixedAngle()==false)
+			if (!action->hasFixedAngle())
                 sa = QString("%1").arg(RS_Math::rad2deg(action->getAngle()));
             sl = QString("%1").arg(action->getLength());
 			sp = action->getSnapPoint();
         } else {
         // settings from config file:
             RS_SETTINGS->beginGroup("/Draw");
-            if (action->hasFixedAngle()==false) {
+			if (!action->hasFixedAngle()) {
                 sa = RS_SETTINGS->readEntry("/LineAngleAngle", "30.0");
             } else {
                 sa = QString("%1").arg(action->getAngle());
@@ -96,21 +98,21 @@ void QG_LineAngleOptions::setAction(RS_ActionInterface* a, bool update) {
 			action->setSnapPoint(sp);
         }
 
-        leAngle->setText(sa);
-        leLength->setText(sl);
-                cbSnapPoint->setCurrentIndex(sp);
+		ui->leAngle->setText(sa);
+		ui->leLength->setText(sl);
+				ui->cbSnapPoint->setCurrentIndex(sp);
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR, 
 			"QG_LineAngleOptions::setAction: wrong action type");
-        this->action = NULL;
+		this->action = nullptr;
     }
 }
 
 /** fixme, action could be deleted already, moved the saving into the action
   class
   need to implement in shared_ptr*/
-void QG_LineAngleOptions::destroy() {
-//    if (action!=NULL) {
+void QG_LineAngleOptions::saveSettings() {
+//    if (action) {
 //        RS_SETTINGS->beginGroup("/Draw");
 //        if (!action->hasFixedAngle()) {
 //            RS_SETTINGS->writeEntry("/LineAngleAngle", RS_Math::rad2deg(action->getAngle()));
@@ -122,13 +124,13 @@ void QG_LineAngleOptions::destroy() {
 }
 
 void QG_LineAngleOptions::updateAngle(const QString& a) {
-    if (action!=NULL && !action->hasFixedAngle()) {
+    if (action && !action->hasFixedAngle()) {
         action->setAngle(RS_Math::deg2rad(RS_Math::eval(a)));
     }
 }
 
 void QG_LineAngleOptions::updateLength(const QString& l) {
-    if (action!=NULL) {
+    if (action) {
         bool ok(false);
         double length=RS_Math::eval(l,&ok);
         if(ok) action->setLength(length);
@@ -136,7 +138,7 @@ void QG_LineAngleOptions::updateLength(const QString& l) {
 }
 
 void QG_LineAngleOptions::updateSnapPoint(int sp) {
-    if (action!=NULL) {
+    if (action) {
         action->setSnapPoint(sp);
     }
 }

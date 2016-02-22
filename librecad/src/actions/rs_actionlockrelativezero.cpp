@@ -29,24 +29,18 @@
 #include <QAction>
 #include "rs_graphicview.h"
 
-
-
 RS_ActionLockRelativeZero::RS_ActionLockRelativeZero(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView,
     bool on)
         :RS_ActionInterface("(Un-)lock the relative Zero",
-                    container, graphicView) {
-
-    this->on = on;
+                    container, graphicView)
+        ,on(on)
+{
 }
 
-
 QAction* RS_ActionLockRelativeZero::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("(Un-)Lock Relative Zero"
-    QAction* action = new QAction(tr("(Un-)&Lock Relative Zero"),  NULL);
-    //action->zetStatusTip(tr("(Un-)Lock relative Zero"));
-	action->setIcon(QIcon(":/extui/relzerolock.png"));
+	QAction* action = new QAction(QIcon(":/extui/relzerolock.png"), tr("(Un-)&Lock Relative Zero"),  nullptr);
 	action->setCheckable(true);
     return action;
 }

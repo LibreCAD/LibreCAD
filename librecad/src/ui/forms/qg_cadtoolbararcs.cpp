@@ -23,97 +23,45 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include<cassert>
+#include<QVBoxLayout>
+#include<QToolButton>
+#include<QToolBar>
+#include<QAction>
 #include "qg_cadtoolbararcs.h"
-
-
 #include "qg_cadtoolbar.h"
+#include "qg_actionhandler.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_CadToolBarArcs as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_CadToolBarArcs::QG_CadToolBarArcs(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
+QG_CadToolBarArcs::QG_CadToolBarArcs(QG_CadToolBar* parent, Qt::WindowFlags fl):
+	LC_CadToolBarInterface(parent, fl)
 {
-    setupUi(this);
-    parentTB=static_cast<QG_CadToolBar*>(parent);
-
-    init();
+	initToolBars();
 }
 
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_CadToolBarArcs::~QG_CadToolBarArcs()
+void QG_CadToolBarArcs::addSubActions(const std::vector<QAction*>& actions, bool addGroup)
 {
-    // no need to delete child widgets, Qt does it all for us
-}
+	RS_DEBUG->print("QG_CadToolBarArcs::addSubActions(): begin\n");
+	LC_CadToolBarInterface::addSubActions(actions, addGroup);
+	std::vector<QAction**> const buttons={
+		 &bArc, &bArc3P, &bArcParallel, &bArcTangential
+	};
+	assert(buttons.size()==actions.size());
 
-/*
- *  Sets the strings of the subwidgets using the current
- *  language.
- */
-void QG_CadToolBarArcs::languageChange()
-{
-    retranslateUi(this);
-}
+	for(size_t i=0; i<buttons.size(); ++i)
+		*buttons[i]=actions[i];
+	RS_DEBUG->print("QG_CadToolBarArcs::addSubActions(): end\n");
 
-#include <QContextMenuEvent>
-
-void QG_CadToolBarArcs::init() {
-    actionHandler = NULL;
-    cadToolBar = NULL;
-}
-
-/*void QG_CadToolBarArcs::mousePressEvent(QMouseEvent* e) {
-    if (e->button()==RightButton && cadToolBar!=NULL) {
-        cadToolBar->back();
-        e->accept();
-    }
-}*/
-
-void QG_CadToolBarArcs::contextMenuEvent(QContextMenuEvent *e) {
-    e->accept();
-}
-
-void QG_CadToolBarArcs::setCadToolBar(QG_CadToolBar* tb) {
-    cadToolBar = tb;
-    if (tb!=NULL) {
-        actionHandler = tb->getActionHandler();
-    } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR,
-                        "QG_CadToolBarArcs::setCadToolBar(): No valid toolbar set.");
-    }
-}
-
-void QG_CadToolBarArcs::drawArc() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDrawArc();
-    }
-}
-
-void QG_CadToolBarArcs::drawArc3P() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDrawArc3P();
-    }
-}
-
-void QG_CadToolBarArcs::drawArcParallel() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDrawArcParallel();
-    }
-}
-
-void QG_CadToolBarArcs::drawArcTangential() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDrawArcTangential();
-    }
 }
 
 //restore action from checked button
 void QG_CadToolBarArcs::restoreAction()
 {
-    if(actionHandler==NULL) return;
+	if(!(actionHandler&&bArc)) return;
     if ( bArc ->isChecked() ) {
         actionHandler->slotDrawArc();
         return;
@@ -131,43 +79,42 @@ void QG_CadToolBarArcs::restoreAction()
         return;
     }
     //clear all action
-    bHidden->setChecked(true);
+	m_pHidden->setChecked(true);
     RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
-    if(currentAction != NULL) {
+	if(currentAction ) {
         currentAction->finish(false); //finish the action, but do not update toolBar
     }
 }
 
-void QG_CadToolBarArcs::resetToolBar() {
-    bHidden->setChecked(true);
+void QG_CadToolBarArcs::resetToolBar()
+{
+	m_pHidden->setChecked(true);
 }
+
 void QG_CadToolBarArcs::on_bBack_clicked()
 {
-   parentTB->showPreviousToolBar();
-}
-void QG_CadToolBarArcs::back() {
-    if (cadToolBar!=NULL) {
-        cadToolBar->showPreviousToolBar();
-    }
+	finishCurrentAction(true);
+	cadToolBar->showPreviousToolBar();
 }
 
 void QG_CadToolBarArcs::showCadToolBar(RS2::ActionType actionType) {
-    switch(actionType){
-    case RS2::ActionDrawArc:
-        bArc->setChecked(true);
-        return;
-    case RS2::ActionDrawArc3P:
-        bArc3P->setChecked(true);
-        return;
-    case RS2::ActionDrawArcParallel:
-        bArcParallel->setChecked(true);
-        return;
-    case RS2::ActionDrawArcTangential:
-        bArcTangential->setChecked(true);
-        return;
-        default:
-        bHidden->setChecked(true);
-        return;
-    }
+	if(!bArc) return;
+	switch(actionType){
+	case RS2::ActionDrawArc:
+		bArc->setChecked(true);
+		return;
+	case RS2::ActionDrawArc3P:
+		bArc3P->setChecked(true);
+		return;
+	case RS2::ActionDrawArcParallel:
+		bArcParallel->setChecked(true);
+		return;
+	case RS2::ActionDrawArcTangential:
+		bArcTangential->setChecked(true);
+		return;
+	default:
+		m_pHidden->setChecked(true);
+		return;
+	}
 }
 //EOF

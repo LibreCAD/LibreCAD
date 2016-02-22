@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 Dongxu Li (dongxuli2011 at gmail.com)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -30,52 +31,32 @@ class QG_CadToolBar;
 class QG_ActionHandler;
 class RS_ActionInterface;
 
-#include "ui_qg_cadtoolbarselect.h"
+#include "lc_cadtoolbarinterface.h"
 
-class QG_CadToolBarSelect : public QWidget, public Ui::QG_CadToolBarSelect
+class QG_CadToolBarSelect : public LC_CadToolBarInterface
 {
     Q_OBJECT
 
 public:
-    QG_CadToolBarSelect(QWidget* parent = 0, Qt::WindowFlags fl = 0);
-    ~QG_CadToolBarSelect();
+	QG_CadToolBarSelect(QG_CadToolBar* parent = 0, Qt::WindowFlags fl = 0);
+	~QG_CadToolBarSelect() = default;
+	RS2::ToolBarId rtti() const
+	{
+		return RS2::ToolBarSelect;
+	}
 
 public slots:
-    virtual void mousePressEvent( QMouseEvent * e );
-    virtual void contextMenuEvent( QContextMenuEvent * e );
-    virtual void setCadToolBar( QG_CadToolBar * tb );
-    virtual void selectSingle();
-    virtual void selectContour();
-    virtual void deselectAll();
-    virtual void selectAll();
-    virtual void selectWindow();
-    virtual void deselectWindow();
-    virtual void selectIntersected();
-    virtual void deselectIntersected();
-    virtual void selectInvert();
-    virtual void selectLayer();
     virtual void setSelectAction( RS_ActionInterface * selectAction );
     virtual void setNextAction( int nextAction );
-    virtual void runNextAction();
-    virtual void back();
-
-protected:
-    QG_CadToolBar* cadToolBar;
-    QG_ActionHandler* actionHandler;
-
-protected slots:
-    virtual void languageChange();
+	virtual void runNextAction();
+	virtual void mousePressEvent( QMouseEvent * e );
 
 private slots:
     void on_bBack_clicked();
 
 private:
     int nextAction;
-    RS_ActionInterface* selectAction;
-    QG_CadToolBar* parentTB;
-
-    void init();
-
+	RS_ActionInterface* selectAction;
 };
 
 #endif // QG_CADTOOLBARSELECT_H

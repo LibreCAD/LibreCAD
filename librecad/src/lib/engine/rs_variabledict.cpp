@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -23,22 +24,16 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-
-
+#include<iostream>
+#include <QString>
 #include "rs_variabledict.h"
 #include "rs_debug.h"
 
 /**
- * Constructor.
- */
-RS_VariableDict::RS_VariableDict() {
-}
-
-
-/**
  * Removes all variables in the blocklist.
  */
-void RS_VariableDict::clear() {
+void RS_VariableDict::clear()
+{
     variables.clear();
 }
 
@@ -55,7 +50,8 @@ void RS_VariableDict::clear() {
  * Activates the given block.
  * Listeners are notified.
  */
-/*void RS_VariableDict::activateBlock(RS_Block* block) {
+/*void RS_VariableDict::activateBlock(RS_Block* block)
+{
 	activeBlock = block;
 	
     for (unsigned i=0; i<blockListListeners.count(); ++i) {
@@ -66,6 +62,59 @@ void RS_VariableDict::clear() {
 }*/
 
 
+/**
+ * Adds a variable to the variable dictionary. If a variable with the 
+ * same name already exists, is will be overwritten.
+ */
+void RS_VariableDict::add(const QString& key,
+                          const QString& value, int code)
+{
+    RS_DEBUG->print("RS_VariableDict::addVariable()");
+
+    if (key.isEmpty()) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_VariableDict::addVariable(): No empty keys allowed.");
+        return;
+    }
+
+    variables.insert(key, RS_Variable(value, code));
+}
+
+
+/**
+ * Adds a variable to the variable dictionary. If a variable with the 
+ * same name already exists, is will be overwritten.
+ */
+void RS_VariableDict::add(const QString& key, int value, int code)
+{
+    RS_DEBUG->print("RS_VariableDict::addVariable()");
+
+    if (key.isEmpty()) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_VariableDict::addVariable(): No empty keys allowed.");
+        return;
+    }
+
+    variables.insert(key, RS_Variable(value, code));
+}
+
+
+/**
+ * Adds a variable to the variable dictionary. If a variable with the 
+ * same name already exists, is will be overwritten.
+ */
+void RS_VariableDict::add(const QString& key, double value, int code)
+{
+    RS_DEBUG->print("RS_VariableDict::addVariable()");
+
+    if (key.isEmpty()) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_VariableDict::addVariable(): No empty keys allowed.");
+        return;
+    }
+
+    variables.insert(key, RS_Variable(value, code));
+}
 
 
 /**
@@ -73,7 +122,8 @@ void RS_VariableDict::clear() {
  * same name already exists, is will be overwritten.
  */
 void RS_VariableDict::add(const QString& key,
-                                  const QString& value, int code) {
+                          const RS_Vector& value, int code)
+{
     RS_DEBUG->print("RS_VariableDict::addVariable()");
 
     if (key.isEmpty()) {
@@ -84,62 +134,6 @@ void RS_VariableDict::add(const QString& key,
 
     variables.insert(key, RS_Variable(value, code));
 }
-
-
-
-/**
- * Adds a variable to the variable dictionary. If a variable with the 
- * same name already exists, is will be overwritten.
- */
-void RS_VariableDict::add(const QString& key, int value, int code) {
-    RS_DEBUG->print("RS_VariableDict::addVariable()");
-
-    if (key.isEmpty()) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_VariableDict::addVariable(): No empty keys allowed.");
-        return;
-    }
-
-    variables.insert(key, RS_Variable(value, code));
-}
-
-
-
-/**
- * Adds a variable to the variable dictionary. If a variable with the 
- * same name already exists, is will be overwritten.
- */
-void RS_VariableDict::add(const QString& key, double value, int code) {
-    RS_DEBUG->print("RS_VariableDict::addVariable()");
-
-    if (key.isEmpty()) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_VariableDict::addVariable(): No empty keys allowed.");
-        return;
-    }
-
-    variables.insert(key, RS_Variable(value, code));
-}
-
-
-
-/**
- * Adds a variable to the variable dictionary. If a variable with the 
- * same name already exists, is will be overwritten.
- */
-void RS_VariableDict::add(const QString& key,
-                                  const RS_Vector& value, int code) {
-    RS_DEBUG->print("RS_VariableDict::addVariable()");
-
-    if (key.isEmpty()) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_VariableDict::addVariable(): No empty keys allowed.");
-        return;
-    }
-
-    variables.insert(key, RS_Variable(value, code));
-}
-
 
 
 /**
@@ -151,19 +145,19 @@ void RS_VariableDict::add(const QString& key,
  * @return The value for the given variable or the given default value
  * if the variable couldn't be found.
  */
-RS_Vector RS_VariableDict::getVector(const QString& key,
-        const RS_Vector& def) {
-
+RS_Vector RS_VariableDict::getVector(const QString& key, const RS_Vector& def) const
+{
     RS_Vector ret;
-    QHash<QString, RS_Variable>::iterator i = variables.find(key);
-     if (i != variables.end() || i.value().getType()==RS2::VariableVector) {
+
+	auto i = variables.find(key);
+    if (variables.end() != i && RS2::VariableVector == i.value().getType()) {
         ret = i.value().getVector();
     } else {
         ret = def;
     }
+
     return ret;
 }
-
 
 
 /**
@@ -175,32 +169,22 @@ RS_Vector RS_VariableDict::getVector(const QString& key,
  * @return The value for the given variable or the given default value
  * if the variable couldn't be found.
  */
-QString RS_VariableDict::getString(const QString& key,
-        const QString& def) {
-
+QString RS_VariableDict::getString(const QString& key, const QString& def) const
+{
     QString ret;
 
-	RS_DEBUG->print("RS_VariableDict::getString: 001");
-        RS_DEBUG->print("RS_VariableDict::getString: key: '%s'", key.toLatin1().data());
-	
-    QHash<QString, RS_Variable>::iterator i = variables.find(key);
-        RS_DEBUG->print("RS_VariableDict::getString: 002");
+    RS_DEBUG->print("RS_VariableDict::getString: key: '%s'", key.toLatin1().data());
 
-    if (i == variables.end()) {
-		RS_DEBUG->print("RS_VariableDict::getString: 003");
-        ret = def;
-        } else if (i.value().getType() != RS2::VariableString) {
-		RS_DEBUG->print("RS_VariableDict::getString: 004");
-		ret = def;
-    } else {
-		RS_DEBUG->print("RS_VariableDict::getString: 005");
+	auto i = variables.find(key);
+    if (variables.end() != i && RS2::VariableString == i.value().getType()) {
         ret = i.value().getString();
     }
-	RS_DEBUG->print("RS_VariableDict::getString: 006");
+    else {
+        ret = def;
+    }
 
     return ret;
 }
-
 
 
 /**
@@ -212,19 +196,19 @@ QString RS_VariableDict::getString(const QString& key,
  * @return The value for the given variable or the given default value
  * if the variable couldn't be found.
  */
-int RS_VariableDict::getInt(const QString& key,
-                                    int def) {
+int RS_VariableDict::getInt(const QString& key, int def) const
+{
+    int ret = 0;
 
-    int ret;
-    QHash<QString, RS_Variable>::iterator i = variables.find(key);
-     if (i != variables.end() || i.value().getType()==RS2::VariableInt) {
+	auto i = variables.find(key);
+    if (variables.end() != i && RS2::VariableInt == i.value().getType()) {
         ret = i.value().getInt();
     } else {
         ret = def;
     }
+
     return ret;
 }
-
 
 
 /**
@@ -236,25 +220,28 @@ int RS_VariableDict::getInt(const QString& key,
  * @return The value for the given variable or the given default value
  * if the variable couldn't be found.
  */
-double RS_VariableDict::getDouble(const QString& key,
-        double def) {
+double RS_VariableDict::getDouble(const QString& key, double def) const
+{
+    double ret = 0.0;
 
-    double ret;
-    QHash<QString, RS_Variable>::iterator i = variables.find(key);
-     if (i != variables.end() || i.value().getType()==RS2::VariableDouble) {
+	auto i = variables.find(key);
+     if (variables.end() != i && RS2::VariableDouble == i.value().getType()) {
         ret = i.value().getDouble();
     } else {
         ret = def;
     }
+
     return ret;
 }
+
 
 /**
  * Notifies the listeners about layers that were added. This can be
  * used after adding a lot of variables without auto-update.
  */
 /*
-void RS_VariableDict::addBlockNotification() {
+void RS_VariableDict::addBlockNotification()
+{
     for (unsigned i=0; i<blockListListeners.count(); ++i) {
         RS_VariableDictListener* l = blockListListeners.at(i);
         l->blockAdded(NULL);
@@ -262,28 +249,28 @@ void RS_VariableDict::addBlockNotification() {
 }
 */
 
+
 /**
  * Removes a variable from the list.
  * TODO: Listeners are notified after the block was removed from 
  * the list but before it gets deleted.
  */
-void RS_VariableDict::remove(const QString& key) {
+void RS_VariableDict::remove(const QString& key)
+{
     RS_DEBUG->print("RS_VariableDict::removeVariable()");
 
     // here the block is removed from the list but not deleted
     variables.remove(key);
-
 }
-
 
 
 /**
  * Dumps the variables to stdout.
  */
-std::ostream& operator << (std::ostream& os, RS_VariableDict& d) {
-
+std::ostream& operator << (std::ostream& os, RS_VariableDict& d)
+{
     os << "Variables: \n";
-    QHash<QString, RS_Variable>::iterator it = d.variables.begin();
+	auto it = d.variables.begin();
     while (it != d.variables.end()) {
         os << it.key().toLatin1().data() << ": ";
         switch (it.value().getType()) {

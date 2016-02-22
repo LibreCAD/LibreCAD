@@ -26,10 +26,16 @@
 #ifndef QG_DIMOPTIONS_H
 #define QG_DIMOPTIONS_H
 
-#include "ui_qg_dimoptions.h"
-#include "rs_actiondimension.h"
+#include<memory>
+#include<QWidget>
 
-class QG_DimOptions : public QWidget, public Ui::QG_DimOptions
+class RS_ActionInterface;
+class RS_ActionDimension;
+namespace Ui {
+class Ui_DimOptions;
+}
+
+class QG_DimOptions : public QWidget
 {
     Q_OBJECT
 
@@ -49,8 +55,8 @@ protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_DimOptions> ui;
 };
 
 #endif // QG_DIMOPTIONS_H

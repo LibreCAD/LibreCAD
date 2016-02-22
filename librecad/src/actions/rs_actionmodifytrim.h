@@ -52,24 +52,20 @@ public:
                         bool both=false);
     ~RS_ActionModifyTrim();
 
-    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
     virtual void init(int status=0);
     virtual void trigger();
     virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
-//    virtual void finish(bool updateTB = true );
 
 
 private:
-    RS_Entity* limitEntity;
-        RS_Vector limitCoord;
     RS_Entity* trimEntity;
-        RS_Vector trimCoord;
-        bool both;
+	RS_Entity* limitEntity;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
+	bool both;
 };
 
 #endif

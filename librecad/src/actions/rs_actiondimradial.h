@@ -28,8 +28,8 @@
 #define RS_ACTIONDIMRADIAL_H
 
 #include "rs_actiondimension.h"
-#include "rs_dimradial.h"
 
+struct RS_DimRadialData;
 
 /**
  * This action class can handle user events to draw radial dimensions.
@@ -48,13 +48,8 @@ private:
 public:
     RS_ActionDimRadial(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDimRadial() {}
+~RS_ActionDimRadial();
 
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-	
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionDimRadial;
-	}
 
 	virtual void reset();
 	
@@ -78,9 +73,9 @@ private:
     /** Chosen entity (arc / circle) */
     RS_Entity* entity;
 	/** Chosen position */
-	RS_Vector pos;
+	std::unique_ptr<RS_Vector> pos;
     /** Data of new dimension */
-    RS_DimRadialData edata;
+	std::unique_ptr<RS_DimRadialData> edata;
 	/** Last status before entering text. */
 	Status lastStatus;
 };

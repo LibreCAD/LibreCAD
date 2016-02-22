@@ -2,7 +2,7 @@
 **
  * Draw ellipse by foci and a point on ellipse
 
-Copyright (C) 2011 Dongxu Li (dongxuli2011@gmail.com)
+Copyright (C) 2011-2015 Dongxu Li (dongxuli2011@gmail.com)
 Copyright (C) 2011 R. van Twisk (librecad@rvt.dds.nl)
 
 This program is free software; you can redistribute it and/or
@@ -24,7 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define RS_ACTIONDRAWELLIPSECENTER3POINTS_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_ellipse.h"
 
 /**
  * Draw ellipse by center and 3 points on ellipse
@@ -47,12 +46,8 @@ public:
 public:
     RS_ActionDrawEllipseCenter3Points(RS_EntityContainer& container,
                                       RS_GraphicView& graphicView);
-    ~RS_ActionDrawEllipseCenter3Points();
+	~RS_ActionDrawEllipseCenter3Points();
 
-    static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
-    RS2::ActionType rtti(){
-        return RS2::ActionDrawEllipseCenter3Points;
-    }
     virtual void init(int status=0);
 
     virtual void trigger();
@@ -67,15 +62,10 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
-protected:
-    // 4 points on ellipse
-    RS_VectorSolutions points;
-    private:
-    RS_CircleData cData;
-    RS_EllipseData eData;
-    bool valid;
+private:
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

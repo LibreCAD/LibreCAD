@@ -24,31 +24,37 @@
 **
 **********************************************************************/
 
+#include <QAction>
+#include <QMouseEvent>
 #include "rs_actioninfodist.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_line.h"
+#include "rs_graphic.h"
+#include "rs_coordinateevent.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
+
+struct RS_ActionInfoDist::Points {
+	RS_Vector point1;
+	RS_Vector point2;
+};
 
 
 RS_ActionInfoDist::RS_ActionInfoDist(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Info Dist",
-                           container, graphicView) {}
-
-
-QAction* RS_ActionInfoDist::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Distance Point to Point")
-        QAction* action = new QAction(tr("&Distance Point to Point"), NULL);
-        //action->zetStatusTip(tr("Measures the distance between two points"));
-        action->setIcon(QIcon(":/extui/restricthorizontal.png"));
-        return action;
+						   container, graphicView)
+		, pPoints(new Points{})
+{
+	actionType=RS2::ActionInfoDist;
 }
 
+RS_ActionInfoDist::~RS_ActionInfoDist()=default;
 
 void RS_ActionInfoDist::init(int status) {
     RS_ActionInterface::init(status);
-
 }
 
 
@@ -57,16 +63,24 @@ void RS_ActionInfoDist::trigger() {
 
     RS_DEBUG->print("RS_ActionInfoDist::trigger()");
 
-    if (point1.valid && point2.valid) {
-        auto&& dV = point2 - point1;
-        RS_DIALOGFACTORY->commandMessage(
-                    tr("Distance: %1 Cartesian: (%2 , %3), Polar: (%4<%5 ").arg(dV.magnitude())
-                                         .arg(dV.x).arg(dV.y)
-                                         .arg(dV.magnitude())
-                                         .arg(RS_Math::rad2deg(dV.angle()))
-                    + QString::fromUtf8("°)")
-                                              );
-    }
+	if (pPoints->point1.valid && pPoints->point2.valid) {
+		auto dV = pPoints->point2 - pPoints->point1;
+		QStringList dists;
+		for(double a: {dV.magnitude(), dV.x, dV.y}){
+			dists<<RS_Units::formatLinear(a, graphic->getUnit(),
+										  graphic->getLinearFormat(), graphic->getLinearPrecision());
+		}
+
+		QString&& angle = RS_Units::formatAngle(dV.angle(),
+												graphic->getAngleFormat(), graphic->getAnglePrecision());
+
+		RS_DIALOGFACTORY->commandMessage(
+                    tr("Distance: %1 Cartesian: (%2 , %3), Polar: (%4<%5)").arg(dists[0])
+				.arg(dists[1]).arg(dists[2])
+				.arg(dists[0])
+				.arg(angle)
+				);
+	}
 }
 
 
@@ -83,14 +97,12 @@ void RS_ActionInfoDist::mouseMoveEvent(QMouseEvent* e) {
             break;
 
         case SetPoint2:
-            if (point1.valid) {
-                point2 = mouse;
+			if (pPoints->point1.valid) {
+				pPoints->point2 = mouse;
 
                 deletePreview();
 
-                preview->addEntity(new RS_Line(preview,
-                                               RS_LineData(point1,
-                                                           point2)));
+				preview->addEntity(new RS_Line{preview.get(), pPoints->point1, pPoints->point2});
 
                 drawPreview();
             }
@@ -127,16 +139,16 @@ void RS_ActionInfoDist::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetPoint1:
-        point1 = mouse;
-        graphicView->moveRelativeZero(point1);
+		pPoints->point1 = mouse;
+		graphicView->moveRelativeZero(pPoints->point1);
         setStatus(SetPoint2);
         break;
 
     case SetPoint2:
-        if (point1.valid) {
-            point2 = mouse;
+		if (pPoints->point1.valid) {
+			pPoints->point2 = mouse;
             deletePreview();
-                graphicView->moveRelativeZero(point2);
+				graphicView->moveRelativeZero(pPoints->point2);
             trigger();
             setStatus(SetPoint1);
         }
@@ -161,7 +173,7 @@ void RS_ActionInfoDist::updateMouseButtonHints() {
             tr("Back"));
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }
@@ -171,16 +183,5 @@ void RS_ActionInfoDist::updateMouseButtonHints() {
 void RS_ActionInfoDist::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-//void RS_ActionInfoDist::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
 
 // EOF

@@ -1,7 +1,7 @@
 /******************************************************************************
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
-**  Copyright (C) 2011 Rallaz, rallazz@gmail.com                             **
+**  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
 **  General Public License as published by the Free Software Foundation,     **
@@ -28,8 +28,8 @@ public:
     virtual bool writeInt64(int code, unsigned long long int data) = 0;
     virtual bool writeDouble(int code, double data) = 0;
     virtual bool writeBool(int code, bool data) = 0;
-    void setVersion(std::string *v){encoder.setVersion(v);}
-    void setCodePage(std::string *c){encoder.setCodePage(c);}
+    void setVersion(std::string *v, bool dxfFormat){encoder.setVersion(v, dxfFormat);}
+    void setCodePage(std::string *c){encoder.setCodePage(c, true);}
     std::string getCodePage(){return encoder.getCodePage();}
 protected:
     std::ofstream *filestr;
@@ -39,7 +39,7 @@ private:
 
 class dxfWriterBinary : public dxfWriter {
 public:
-    dxfWriterBinary(std::ofstream *stream):dxfWriter(stream){ }
+    dxfWriterBinary(std::ofstream *stream):dxfWriter(stream){}
     virtual ~dxfWriterBinary() {}
     virtual bool writeString(int code, std::string text);
     virtual bool writeInt16(int code, int data);
@@ -51,7 +51,7 @@ public:
 
 class dxfWriterAscii : public dxfWriter {
 public:
-    dxfWriterAscii(std::ofstream *stream):dxfWriter(stream){ }
+    dxfWriterAscii(std::ofstream *stream);
     virtual ~dxfWriterAscii(){}
     virtual bool writeString(int code, std::string text);
     virtual bool writeInt16(int code, int data);

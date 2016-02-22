@@ -23,67 +23,38 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-
-
 #ifndef RS_FLAGS_H
 #define RS_FLAGS_H
-
-#include "rs.h"
-#include "rs_debug.h"
 
 /**
  * Base class for objects which have flags.
  *
  * @author Andrew Mustun
  */
-class RS_Flags {
-public:
-    /** Default constructor. Resets all flags to 0. */
-    RS_Flags() {
-        flags = 0;
-    }
+struct RS_Flags {
+	//! \{Constructor with initialisation to the given flags.
+	//! Default sets all flags to 0
+	RS_Flags(unsigned f = 0);
+	//! \}
 
-    /** Constructor with initialisation to the given flags. */
-    RS_Flags(unsigned int f) {
-        flags = f;
-    }
+	virtual ~RS_Flags() = default;
 
-    virtual ~RS_Flags() {}
+	unsigned getFlags() const;
 
-    unsigned int getFlags() const {
-        return flags;
-    }
+	void resetFlags();
 
-    void resetFlags() {
-        flags=0;
-    }
+	void setFlags(unsigned f);
 
-    void setFlags(unsigned int f) {
-        flags=f;
-    }
+	void setFlag(unsigned f);
 
-    void setFlag(unsigned int f) {
-        flags=flags|f;
-    }
+	void delFlag(unsigned f);
 
-    void delFlag(unsigned int f) {
-        flags=flags&(~f);
-    }
+	void toggleFlag(unsigned f);
 
-    void toggleFlag(unsigned int f) {
-        flags=flags^f;
-    }
-
-    bool getFlag(unsigned int f) const {
-        if(flags&f) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+	bool getFlag(unsigned f) const;
 
 private:
-    unsigned int flags;
+	unsigned flags = 0;
 };
 
 #endif

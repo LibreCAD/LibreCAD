@@ -46,14 +46,6 @@ QG_DlgInitial::QG_DlgInitial(QWidget* parent, bool modal, Qt::WindowFlags fl)
 }
 
 /*
- *  Destroys the object and frees any allocated resources
- */
-QG_DlgInitial::~QG_DlgInitial()
-{
-    // no need to delete child widgets, Qt does it all for us
-}
-
-/*
  *  Sets the strings of the subwidgets using the current
  *  language.
  */

@@ -36,7 +36,6 @@
  */
 class RS_ActionPolylineAdd : public RS_PreviewActionInterface {
 	Q_OBJECT
-public:
     /**
      * Action States.
      */
@@ -48,12 +47,7 @@ public:
 public:
     RS_ActionPolylineAdd(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionPolylineAdd() {}
-
-    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-    virtual RS2::ActionType rtti(){
-        return RS2::ActionPolylineAdd;
-    }
+	~RS_ActionPolylineAdd() override;
 
     virtual void init(int status=0);
 	
@@ -64,12 +58,11 @@ public:
 	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 private:
     RS_Entity* addEntity;
     RS_Entity* addSegment;
-	RS_Vector addCoord;
+	std::unique_ptr<RS_Vector> addCoord;
 };
 
 #endif

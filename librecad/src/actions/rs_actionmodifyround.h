@@ -28,8 +28,8 @@
 #define RS_ACTIONMODIFYROUND_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_modification.h"
 
+class RS_RoundData;
 
 /**
  * This action class can handle user events to round corners.
@@ -38,70 +38,52 @@
  */
 class RS_ActionModifyRound : public RS_PreviewActionInterface {
 	Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetEntity1,         /**< Choosing the 1st entity. */
-        SetEntity2,         /**< Choosing the 2nd entity. */
-		SetRadius,          /**< Setting radius in command line. */
-		SetTrim             /**< Setting trim flag in command line. */
-    };
+	/**
+  * Action States.
+  */
+	enum Status {
+		SetEntity1,   /**< Choosing the 1st entity. */
+		SetEntity2,   /**< Choosing the 2nd entity. */
+		SetRadius,   /**< Setting radius in command line. */
+		SetTrim    /**< Setting trim flag in command line. */
+	};
 
 public:
-    RS_ActionModifyRound(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-    ~RS_ActionModifyRound() {}
-
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+	RS_ActionModifyRound(RS_EntityContainer& container,
+						 RS_GraphicView& graphicView);
+	~RS_ActionModifyRound();
 	
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionModifyRound;
-	}
+	virtual void init(int status=0);
+	virtual void trigger();
 
-    virtual void init(int status=0);
-    virtual void trigger();
-
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	virtual void mouseMoveEvent(QMouseEvent* e);
+	virtual void mouseReleaseEvent(QMouseEvent* e);
 	
-    virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+	virtual void commandEvent(RS_CommandEvent* e);
+	virtual QStringList getAvailableCommands();
 	
-    virtual void hideOptions();
-    virtual void showOptions();
+	virtual void hideOptions();
+	virtual void showOptions();
 	
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
-//    virtual void updateToolBar();
+	virtual void updateMouseButtonHints();
+	virtual void updateMouseCursor();
 	
-	void setRadius(double r) {
-		data.radius = r;
-	}
+	void setRadius(double r);
 
-	double getRadius() {
-		return data.radius;
-	}
+	double getRadius() const;
 
-	void setTrim(bool t) {
-		data.trim = t;
-	}
+	void setTrim(bool t);
 
-	bool isTrimOn() {
-		return data.trim;
-	}
+	bool isTrimOn() const;
 
 private:
 	//RS_Vector coord;
-	RS_Vector coord1;
-    RS_Entity* entity1;
-	RS_Vector coord2;
-    RS_Entity* entity2;
-	RS_RoundData data;
+	RS_Entity* entity1;
+	RS_Entity* entity2;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 	/** Last status before entering angle. */
 	Status lastStatus;
-    QVector<RS2::EntityType> eType;
 };
 
 #endif

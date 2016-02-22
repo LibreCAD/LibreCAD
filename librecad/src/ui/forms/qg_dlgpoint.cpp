@@ -27,6 +27,7 @@
 
 #include "rs_point.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgPoint as a child of 'parent', with the
@@ -65,11 +66,11 @@ void QG_DlgPoint::setPoint(RS_Point& p) {
 
     wPen->setPen(point->getPen(false), true, false, "Pen");
     RS_Graphic* graphic = point->getGraphic();
-    if (graphic!=NULL) {
+    if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
     RS_Layer* lay = point->getLayer(false);
-    if (lay!=NULL) {
+    if (lay) {
         cbLayer->setLayer(*lay);
     }
 

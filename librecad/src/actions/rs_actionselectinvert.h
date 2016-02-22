@@ -40,13 +40,7 @@ class RS_ActionSelectInvert : public RS_ActionInterface {
 public:
     RS_ActionSelectInvert(RS_EntityContainer& container,
                        RS_GraphicView& graphicView);
-    ~RS_ActionSelectInvert() {}
-
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionSelectInvert;
-	}
+	~RS_ActionSelectInvert()=default;
 
     void init(int status);
     virtual void trigger();

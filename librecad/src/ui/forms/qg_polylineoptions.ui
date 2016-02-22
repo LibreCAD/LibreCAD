@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QG_PolylineOptions</class>
- <widget class="QWidget" name="QG_PolylineOptions">
+ <class>Ui_PolylineOptions</class>
+ <widget class="QWidget" name="Ui_PolylineOptions">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -222,7 +222,7 @@
   <connection>
    <sender>bClose</sender>
    <signal>clicked()</signal>
-   <receiver>QG_PolylineOptions</receiver>
+   <receiver>Ui_PolylineOptions</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -238,7 +238,7 @@
   <connection>
    <sender>bUndo</sender>
    <signal>clicked()</signal>
-   <receiver>QG_PolylineOptions</receiver>
+   <receiver>Ui_PolylineOptions</receiver>
    <slot>undo()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -254,7 +254,7 @@
   <connection>
    <sender>leRadius</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>QG_PolylineOptions</receiver>
+   <receiver>Ui_PolylineOptions</receiver>
    <slot>updateRadius(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -270,7 +270,7 @@
   <connection>
    <sender>leAngle</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>QG_PolylineOptions</receiver>
+   <receiver>Ui_PolylineOptions</receiver>
    <slot>updateAngle(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -286,7 +286,7 @@
   <connection>
    <sender>cbMode</sender>
    <signal>activated(int)</signal>
-   <receiver>QG_PolylineOptions</receiver>
+   <receiver>Ui_PolylineOptions</receiver>
    <slot>updateMode(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -302,7 +302,7 @@
   <connection>
    <sender>rbNeg</sender>
    <signal>toggled(bool)</signal>
-   <receiver>QG_PolylineOptions</receiver>
+   <receiver>Ui_PolylineOptions</receiver>
    <slot>updateDirection(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -318,7 +318,7 @@
   <connection>
    <sender>rbPos</sender>
    <signal>toggled(bool)</signal>
-   <receiver>QG_PolylineOptions</receiver>
+   <receiver>Ui_PolylineOptions</receiver>
    <slot>updateDirection(bool)</slot>
    <hints>
     <hint type="sourcelabel">

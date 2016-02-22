@@ -24,30 +24,39 @@
 **
 **********************************************************************/
 
-#include "doc_plugin_interface.h"
+#include <QMouseEvent>
+#include <QKeyEvent>
 #include "qc_actiongetselect.h"
+#include "doc_plugin_interface.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_actionselectsingle.h"
+// #include <QDebug>
 
 #include "rs_snapper.h"
 
 
 QC_ActionGetSelect::QC_ActionGetSelect(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView)
-        :RS_ActionInterface("Get Select", container, graphicView) {
-    completed = false;
-    mesage = tr("Select objects:");
+		:RS_ActionInterface("Get Select", container, graphicView)
+		,completed(false)
+		,message(tr("Select objects:"))
+{
+    actionType = RS2::ActionGetSelect;
 }
 
+QC_ActionGetSelect::~QC_ActionGetSelect()
+{
+    // qDebug() << "~QC_ActionGetSelect";
+}
 
 void QC_ActionGetSelect::updateMouseButtonHints() {
     switch (getStatus()) {
     case Select:
-        RS_DIALOGFACTORY->updateMouseWidget(mesage, tr("Cancel"));
+		RS_DIALOGFACTORY->updateMouseWidget(message, tr("Cancel"));
             break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+		RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }
@@ -58,9 +67,8 @@ void QC_ActionGetSelect::updateMouseCursor() {
 }
 
 void QC_ActionGetSelect::setMesage(QString msg){
-    mesage = msg;
+	message = msg;
 }
-
 
 void QC_ActionGetSelect::init(int status) {
         RS_ActionInterface::init(status);
@@ -68,35 +76,30 @@ void QC_ActionGetSelect::init(int status) {
                 new RS_ActionSelectSingle(*container, *graphicView, this));
 }
 
-
-
 void QC_ActionGetSelect::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
         completed = true;
+		RS_DIALOGFACTORY->updateMouseWidget();
+        finish();
     }
 }
 
-
-
-void QC_ActionGetSelect::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (!isFinished()) {
-            RS_DIALOGFACTORY->requestToolBarSelect(this, RS2::ActionDefault);
-        } else {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
-            completed = true;
-        }
+void QC_ActionGetSelect::keyPressEvent(QKeyEvent* e)
+{
+    if (e->key()==Qt::Key_Escape || e->key()==Qt::Key_Enter)
+    {
+		RS_DIALOGFACTORY->updateMouseWidget();
+        finish();
+        completed = true;
     }
 }
 
 /**
  * Adds all selected entities from 'container' to the selection.
  */
-void QC_ActionGetSelect::getSelected(QList<Plug_Entity *> *se, Doc_plugin_interface* d) {
-    for (RS_Entity* e= container->firstEntity();
-            e!=NULL; e= container->nextEntity()) {
+void QC_ActionGetSelect::getSelected(QList<Plug_Entity *> *se, Doc_plugin_interface* d) const
+{
+	for(auto e: *container){
 
         if (e->isSelected()) {
             Plugin_Entity *pe = new Plugin_Entity(e, d);

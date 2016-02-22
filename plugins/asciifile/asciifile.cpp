@@ -34,7 +34,7 @@ PluginCapabilities AsciiFile::getCapabilities() const
 {
     PluginCapabilities pluginCapabilities;
     pluginCapabilities.menuEntryPoints
-            << PluginMenuLocation("File/Import", tr("Read ascii points"));
+            << PluginMenuLocation("plugins_menu", tr("Read ascii points"));
     return pluginCapabilities;
 }
 
@@ -606,6 +606,7 @@ void dibPunto::procesfileNormal(QFile* file, QString sep, QString::SplitBehavior
     pointData *pd;
     while (!file->atEnd()) {
         QString line = file->readLine();
+		if(line.isEmpty()) continue;
         line.remove ( line.size()-1, 1);
         data = line.split(sep, skip);
         pd = new pointData;

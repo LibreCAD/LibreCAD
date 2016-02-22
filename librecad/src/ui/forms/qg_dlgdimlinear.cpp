@@ -25,7 +25,9 @@
 **********************************************************************/
 #include "qg_dlgdimlinear.h"
 
+#include "rs_dimlinear.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgDimLinear as a child of 'parent', with the
@@ -63,11 +65,11 @@ void QG_DlgDimLinear::setDim(RS_DimLinear& d) {
     dim = &d;
     wPen->setPen(dim->getPen(false), true, false, "Pen");
     RS_Graphic* graphic = dim->getGraphic();
-    if (graphic!=NULL) {
+    if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
     RS_Layer* lay = dim->getLayer(false);
-    if (lay!=NULL) {
+    if (lay) {
         cbLayer->setLayer(*lay);
     }
 

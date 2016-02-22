@@ -29,6 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
+#include "rs_debug.h"
 
 /**
  * whether a layer should appear on print (a construction layer doesn't appear on
@@ -42,34 +43,22 @@ RS_ActionLayersTogglePrint::RS_ActionLayersTogglePrint(
         :RS_ActionInterface("Toggle Layer Printing",
                     container, graphicView) {}
 
-
-QAction* RS_ActionLayersTogglePrint::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Toggle Layer Print"),
-                                  tr("&Toggle Print"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Toggle Layer &Print"), NULL);
-     action->setIcon(QIcon(":/ui/fileprint.png"));
-    //action->zetStatusTip(tr("Toggle Print"));
-    return action;
-}
-
 void RS_ActionLayersTogglePrint::trigger() {
     RS_DEBUG->print("toggle layer printing");
-    if (graphic!=NULL) {
+    if (graphic) {
         RS_Layer* layer = graphic->getActiveLayer();
-        if (layer!=NULL) {
+        if (layer) {
             graphic->toggleLayerPrint( layer);
 
-            // deselect entities on locked layer:
-            for (RS_Entity* e=container->firstEntity(); e!=NULL;
-                 e=container->nextEntity()) {
-                if (e!=NULL && e->isVisible() && e->getLayer()==layer) {
+			// deselect entities on locked layer:
+			for(auto e: *container){
+                if (e && e->isVisible() && e->getLayer()==layer) {
 
-                    if (graphicView!=NULL) {
+                    if (graphicView) {
                         graphicView->deleteEntity(e);
                     }
 
-                    if (graphicView!=NULL) {
+                    if (graphicView) {
                         graphicView->drawEntity(e);
                     }
                 }

@@ -25,12 +25,12 @@
 **********************************************************************/
 #include "qg_dlgspline.h"
 
-#include <qvariant.h>
 #include "rs_spline.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
 #include "qg_widgetpen.h"
 #include "qg_layerbox.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgSpline as a child of 'parent', with the
@@ -69,11 +69,11 @@ void QG_DlgSpline::setSpline(RS_Spline& e) {
     //pen = spline->getPen();
     wPen->setPen(spline->getPen(false), true, false, "Pen");
     RS_Graphic* graphic = spline->getGraphic();
-    if (graphic!=NULL) {
+    if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
     RS_Layer* lay = spline->getLayer(false);
-    if (lay!=NULL) {
+    if (lay) {
         cbLayer->setLayer(*lay);
     }
 	

@@ -33,47 +33,29 @@
 /**
  * Holds the data that defines an aligned dimension entity.
  */
-class RS_DimAlignedData {
-public:
-    /**
+struct RS_DimAlignedData {
+	/**
 	 * Default constructor
-     */
-	RS_DimAlignedData():
-		extensionPoint1(false),
-		extensionPoint2(false)
-	{}
+	 */
+	RS_DimAlignedData();
+	/**
+	 * Constructor with initialisation.
+	 *
+		* @para extensionPoint1 Definition point. Startpoint of the
+	 *         first extension line.
+		* @para extensionPoint2 Definition point. Startpoint of the
+	 *         second extension line.
+	 */
+	RS_DimAlignedData(const RS_Vector& extensionPoint1,
+					  const RS_Vector& extensionPoint2);
 
-    /**
-     * Constructor with initialisation.
-     *
-        * @para extensionPoint1 Definition point. Startpoint of the
-     *         first extension line.
-        * @para extensionPoint2 Definition point. Startpoint of the
-     *         second extension line.
-     */
-    RS_DimAlignedData(const RS_Vector& extensionPoint1,
-                      const RS_Vector& extensionPoint2) {
-        this->extensionPoint1 = extensionPoint1;
-        this->extensionPoint2 = extensionPoint2;
-    }
-
-    friend class RS_DimAligned;
-    friend class RS_ActionDimAligned;
-
-    friend std::ostream& operator << (std::ostream& os,
-                                      const RS_DimAlignedData& dd) {
-        os << "(" << dd.extensionPoint1 << "/" << dd.extensionPoint1 << ")";
-        return os;
-    }
-
-private:
-    /** Definition point. Startpoint of the first extension line. */
-    RS_Vector extensionPoint1;
-    /** Definition point. Startpoint of the second extension line. */
-    RS_Vector extensionPoint2;
+	/** Definition point. Startpoint of the first extension line. */
+	RS_Vector extensionPoint1;
+	/** Definition point. Startpoint of the second extension line. */
+	RS_Vector extensionPoint2;
 };
 
-
+std::ostream& operator << (std::ostream& os, const RS_DimAlignedData& dd);
 
 /**
  * Class for aligned dimension entities.
@@ -85,15 +67,9 @@ public:
     RS_DimAligned(RS_EntityContainer* parent,
                   const RS_DimensionData& d,
                   const RS_DimAlignedData& ed);
-    virtual ~RS_DimAligned() {}
+	virtual ~RS_DimAligned() = default;
 
-    virtual RS_Entity* clone() {
-        RS_DimAligned* d = new RS_DimAligned(*this);
-        d->setOwner(isOwner());
-        d->initId();
-        d->detach();
-        return d;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityDimAligned */
     virtual RS2::EntityType rtti() const {
@@ -104,23 +80,17 @@ public:
      * @return Copy of data that defines the aligned dimension.
      * @see getData()
      */
-    RS_DimAlignedData getEData() const {
-        return edata;
-    }
+	RS_DimAlignedData const& getEData() const;
 
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
 
     virtual QString getMeasuredLabel();
 
     virtual void updateDim(bool autoText=false);
 
-    RS_Vector getExtensionPoint1() {
-        return edata.extensionPoint1;
-    }
+	RS_Vector const& getExtensionPoint1() const;
 
-    RS_Vector getExtensionPoint2() {
-        return edata.extensionPoint2;
-    }
+	RS_Vector const& getExtensionPoint2() const;
 
     /**
      * Recalculate the original Dimension Point to remove Dim oblique angle.

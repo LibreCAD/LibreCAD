@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 Dongxu Li (dongxuli2011 at gmail.com)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -23,131 +24,34 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include<QAction>
+#include<QToolButton>
+#include<QLayout>
+#include<QMouseEvent>
 #include "qg_cadtoolbarselect.h"
-
 #include "qg_cadtoolbar.h"
 #include "rs_actionselect.h"
+#include "qg_actionhandler.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_CadToolBarSelect as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_CadToolBarSelect::QG_CadToolBarSelect(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
+QG_CadToolBarSelect::QG_CadToolBarSelect(QG_CadToolBar* parent, Qt::WindowFlags fl)
+	:LC_CadToolBarInterface(parent, fl)
+	,nextAction(-1)
+	,selectAction(nullptr)
 {
-    setupUi(this);
-    parentTB=static_cast<QG_CadToolBar*>(parent);
-
-    init();
-}
-
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_CadToolBarSelect::~QG_CadToolBarSelect()
-{
-    // no need to delete child widgets, Qt does it all for us
-}
-
-/*
- *  Sets the strings of the subwidgets using the current
- *  language.
- */
-void QG_CadToolBarSelect::languageChange()
-{
-    retranslateUi(this);
-}
-
-void QG_CadToolBarSelect::init() {
-    cadToolBar = NULL;
-    actionHandler = NULL;
-    selectAction = NULL;
-    nextAction = -1;
-}
-
-void QG_CadToolBarSelect::mousePressEvent(QMouseEvent* e) {
-    if (e->button()==Qt::RightButton && cadToolBar!=NULL) {
-        cadToolBar->back();
-        e->accept();
-    }
-}
-
-void QG_CadToolBarSelect::contextMenuEvent(QContextMenuEvent *e) {
-    e->accept();
-}
-
-void QG_CadToolBarSelect::setCadToolBar(QG_CadToolBar* tb) {
-    cadToolBar = tb;
-    if (tb!=NULL) {
-        actionHandler = tb->getActionHandler();
-        //actionHandler->setCadToolBarSelect(this);
-    }
-    else {
-        RS_DEBUG->print(RS_Debug::D_ERROR,
-                        "QG_CadToolBarSelect::setCadToolBar(): No valid toolbar set.");
-    }
-}
-
-void QG_CadToolBarSelect::selectSingle() {
-    if (actionHandler!=NULL) {
-       if(actionHandler->getCurrentAction()->rtti() != RS2::ActionSelect){
-        actionHandler->slotSelectSingle();
-       }
-    }
-}
-
-void QG_CadToolBarSelect::selectContour() {
-    if (actionHandler!=NULL) {
-        actionHandler->slotSelectContour();
-    }
-}
-
-void QG_CadToolBarSelect::deselectAll() {
-    if (actionHandler!=NULL) {
-        actionHandler->slotDeselectAll();
-    }
-}
-
-void QG_CadToolBarSelect::selectAll() {
-    if (actionHandler!=NULL) {
-        actionHandler->slotSelectAll();
-    }
-}
-
-void QG_CadToolBarSelect::selectWindow() {
-    if (actionHandler!=NULL) {
-        actionHandler->slotSelectWindow();
-    }
-}
-
-void QG_CadToolBarSelect::deselectWindow() {
-    if (actionHandler!=NULL) {
-        actionHandler->slotDeselectWindow();
-    }
-}
-
-void QG_CadToolBarSelect::selectIntersected() {
-    if (actionHandler!=NULL) {
-        actionHandler->slotSelectIntersected();
-    }
-}
-
-void QG_CadToolBarSelect::deselectIntersected() {
-    if (actionHandler!=NULL) {
-        actionHandler->slotDeselectIntersected();
-    }
-}
-
-void QG_CadToolBarSelect::selectInvert() {
-    if (actionHandler!=NULL) {
-        actionHandler->slotSelectInvert();
-    }
-}
-
-void QG_CadToolBarSelect::selectLayer() {
-    if (actionHandler!=NULL) {
-        actionHandler->slotSelectLayer();
-    }
+	initToolBars();
+	if(layout()){
+		QToolButton* button=new QToolButton;
+		button->setDefaultAction(m_pButtonForward);
+        button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+		layout()->addWidget(button);
+        static_cast<QVBoxLayout*>(layout())->addStretch(1);
+	}
+	connect(m_pButtonForward, SIGNAL(triggered()), this, SLOT(runNextAction()));
 }
 
 void QG_CadToolBarSelect::setSelectAction(RS_ActionInterface* selectAction) {
@@ -157,21 +61,23 @@ void QG_CadToolBarSelect::setSelectAction(RS_ActionInterface* selectAction) {
 void QG_CadToolBarSelect::setNextAction(int nextAction) {
     this->nextAction = nextAction;
     if (nextAction==-1) {
-        bDoit->hide();
+//		DEBUG_HEADER
+		m_pButtonForward->setVisible(false);
     } else {
-        bDoit->show();
+//		DEBUG_HEADER
+		m_pButtonForward->setVisible(true);
     }
 }
 
 void QG_CadToolBarSelect::runNextAction() {
-    if (selectAction!=NULL) {
+	if (selectAction) {
         if(selectAction->rtti() == RS2::ActionSelect){
             //refuse to run next action if no entity is selected, to avoid segfault by action upon empty selection
             //issue#235
             if( static_cast<RS_ActionSelect*>(selectAction)->countSelected()==0) return;
         }
         selectAction->finish();
-        selectAction = NULL;
+		selectAction = nullptr;
     }
     if (nextAction!=-1) {
         actionHandler->killSelectActions();
@@ -179,15 +85,18 @@ void QG_CadToolBarSelect::runNextAction() {
     }
 }
 
-void QG_CadToolBarSelect::back() {
-    if(parentTB != NULL){
-        parentTB->showPreviousToolBar();
-    }
+void QG_CadToolBarSelect::mousePressEvent(QMouseEvent* e) {
+	if (e->button()==Qt::RightButton && cadToolBar) {
+		on_bBack_clicked();
+		e->accept();
+	}
 }
 
 void QG_CadToolBarSelect::on_bBack_clicked()
 {
-    if(parentTB != NULL){
-        parentTB->showPreviousToolBar();
-    }
+	killSelectActions();
+	if(cadToolBar){
+		cadToolBar->showPreviousToolBar(true);
+		cadToolBar->resetToolBar();
+	}
 }

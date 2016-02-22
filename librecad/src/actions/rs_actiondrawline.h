@@ -29,7 +29,6 @@
 
 #include "rs_previewactioninterface.h"
 
-
 /**
  * This action class can handle user events to draw
  * simple lines with the start- and endpoint given.
@@ -37,68 +36,48 @@
  * @author Andrew Mustun
  */
 class RS_ActionDrawLine : public RS_PreviewActionInterface {
-        Q_OBJECT
+	Q_OBJECT
 public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetStartpoint,   /**< Setting the startpoint.  */
-        SetEndpoint      /**< Setting the endpoint. */
-    };
+	/**
+	 * Action States.
+	 */
+	enum Status {
+		SetStartpoint,   /**< Setting the startpoint.  */
+		SetEndpoint      /**< Setting the endpoint. */
+	};
 
 public:
-    RS_ActionDrawLine(RS_EntityContainer& container,
-                      RS_GraphicView& graphicView);
-    virtual ~RS_ActionDrawLine();
+	RS_ActionDrawLine(RS_EntityContainer& container,
+					  RS_GraphicView& graphicView);
+	virtual ~RS_ActionDrawLine();
 
-        virtual RS2::ActionType rtti() {
-                return RS2::ActionDrawLine;
-        }
+	void reset();
 
-        static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+	virtual void init(int status=0);
+	virtual void trigger();
 
-    void reset();
+	virtual void mouseMoveEvent(QMouseEvent* e);
+	virtual void mouseReleaseEvent(QMouseEvent* e);
 
-    virtual void init(int status=0);
-    virtual void trigger();
+	virtual void coordinateEvent(RS_CoordinateEvent* e);
+	virtual void commandEvent(RS_CommandEvent* e);
+	virtual QStringList getAvailableCommands();
 
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	virtual void showOptions();
+	virtual void hideOptions();
 
-        virtual void coordinateEvent(RS_CoordinateEvent* e);
-    virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+	virtual void updateMouseButtonHints();
+	virtual void updateMouseCursor();
+	void addHistory(const RS_Vector& v);//add history after the current point
 
-        virtual void showOptions();
-        virtual void hideOptions();
-
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
-//    virtual void updateToolBar();
-    void addHistory(const RS_Vector& v);//add history after the current point
-
-        void close();
-        void undo();
-        void redo();
+	void close();
+	void undo();
+	void redo();
 
 protected:
-    RS_Vector snapToAngle(const RS_Vector& currentCoord);
-     /**
-    * Line data defined so far.
-    */
-    RS_LineData data;
-        /**
-         * Start point of the series of lines. Used for close function.
-         */
-        RS_Vector start;
-
-        /**
-         * Point history (for undo)
-         */
-        int historyIndex;
-        QVector<RS_Vector> history;
-
+	RS_Vector snapToAngle(const RS_Vector& currentCoord);
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

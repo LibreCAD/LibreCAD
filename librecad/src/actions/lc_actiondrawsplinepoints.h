@@ -26,7 +26,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs_previewactioninterface.h"
 #include "rs_actiondrawspline.h"
-#include "lc_splinepoints.h"
 
 /**
  * This action class can handle user events to draw splines through points.
@@ -50,13 +49,6 @@ public:
 		RS_GraphicView& graphicView);
     ~LC_ActionDrawSplinePoints();
 
-	virtual RS2::ActionType rtti()
-	{
-		return RS2::ActionDrawSplinePoints;
-	}
-
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
 	void reset();
 
 	virtual void init(int status = 0);
@@ -74,7 +66,6 @@ public:
 
 	virtual void updateMouseButtonHints();
 	virtual void updateMouseCursor();
-	//virtual void updateToolBar();
 
     virtual void setClosed(bool c);
     virtual bool isClosed();
@@ -82,23 +73,12 @@ public:
     //using degree=2 only
     virtual void setDegree(int /*deg*/){}
 
-protected:
-	/**
-	* Spline data defined so far.
-	*/
-    LC_SplinePointsData data;
-
-	/**
-	* Spline used.
-	*/
-    LC_SplinePoints *spline;
-
-	/**
-	* Point history (for undo)
-	*/
-	QList<RS_Vector> undoBuffer;
-
+private:
 	void redo();
+
+	struct Points;
+	std::unique_ptr<Points> pPoints;
+
 };
 
 #endif

@@ -41,12 +41,7 @@ class RS_ActionModifyDeleteQuick : public RS_ActionInterface {
 public:
     RS_ActionModifyDeleteQuick(RS_EntityContainer& container,
                                RS_GraphicView& graphicView);
-    ~RS_ActionModifyDeleteQuick() {}
-
-    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* parent);
-    RS2::ActionType rtti(){
-        return RS2::ActionModifyDeleteQuick;
-    }
+    ~RS_ActionModifyDeleteQuick() = default;
 
     virtual void trigger();
     virtual void mouseReleaseEvent(QMouseEvent* e);

@@ -27,13 +27,19 @@
 
 #include "rs_debug.h"
 
-#include <stdio.h>
-#include <stdarg.h>
+#include <iostream>
+#include <cstdio>
+#include <cstdarg>
+#include <QString>
 
 #include <QDateTime>
+#include <QDebug>
 
-RS_Debug* RS_Debug::uniqueInstance = NULL;
-
+RS_Debug* RS_Debug::uniqueInstance = nullptr;
+void debugHeader(char const* file, char const* func, int line)
+{
+	std::cout<<file<<" : "<<func<<" : line "<<line<<std::endl;
+}
 
 /**
  *  Gets the one and only RS_Debug instance
@@ -43,7 +49,7 @@ RS_Debug* RS_Debug::uniqueInstance = NULL;
  * singleton class
  */
 RS_Debug* RS_Debug::instance() {
-    if(uniqueInstance==NULL) {
+	if(!uniqueInstance) {
         QDateTime now = QDateTime::currentDateTime();
         QString nowStr;
 		nowStr = now.toString("yyyyMMdd_hhmmss");
@@ -67,12 +73,11 @@ RS_Debug* RS_Debug::instance() {
  */
 void
 RS_Debug::deleteInstance() {
-    if (uniqueInstance!=NULL) {
+    if (uniqueInstance) {
         fclose(uniqueInstance->stream);
         delete uniqueInstance;
     }
 }
-
 
 /**
  * Constructor setting the default debug level.
@@ -147,7 +152,7 @@ void RS_Debug::timestamp() {
     QDateTime now = QDateTime::currentDateTime();
     QString nowStr;
 
-		nowStr = now.toString("yyyyMMdd_hh:mm:ss:zzz ");
+	nowStr = now.toString("yyyyMMdd_hh:mm:ss:zzz ");
     fprintf(stream, "%s", nowStr.toLatin1().data());
     fprintf(stream, "\n");
     fflush(stream);
@@ -158,8 +163,8 @@ void RS_Debug::timestamp() {
  * Prints the unicode for every character in the given string.
  */
 void RS_Debug::printUnicode(const QString& text) {
-    for (int i=0; i<(int)text.length(); i++) {
-        print("[%X] %c", text.at(i).unicode(), text.at(i).toLatin1());
+	for(auto const& v: text){
+		print("[%X] %c", v.unicode(), v.toLatin1());
     }
 }
 

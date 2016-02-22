@@ -24,47 +24,50 @@
 **
 **********************************************************************/
 
+#include <QAction>
+#include <QMouseEvent>
 #include "rs_actiondrawlineparallelthrough.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_creation.h"
 #include "rs_commandevent.h"
-
-
+#include "rs_coordinateevent.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
 RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw Parallels", container, graphicView) {
-
-    parallel = NULL;
-    entity = NULL;
-    distance = 1.0;
-    number = 1;
-    coord = RS_Vector(false);
+		:RS_PreviewActionInterface("Draw Parallels", container, graphicView)
+		,coord(new RS_Vector{})
+		,lastStatus(SetEntity)
+{
+	actionType=RS2::ActionDrawLineParallelThrough;
+	m_SnapDistance=1.;
 }
 
+RS_ActionDrawLineParallelThrough::~RS_ActionDrawLineParallelThrough() = default;
 
-QAction* RS_ActionDrawLineParallelThrough::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Par&allel through point"),
-    QAction* action = new QAction(tr("Parallel through point"), NULL);
-        action->setIcon(QIcon(":/extui/linesparathrough.png"));
-    //action->zetStatusTip(tr("Draw parallel through a given point"));
-    return action;
+void RS_ActionDrawLineParallelThrough::finish(bool updateTB){
+	if(entity){
+		entity->setHighlighted(false);
+		graphicView->drawEntity(entity);
+		entity=nullptr;
+	}
+	RS_PreviewActionInterface::finish(updateTB);
 }
 
 void RS_ActionDrawLineParallelThrough::trigger() {
     RS_PreviewActionInterface::trigger();
 
-    if (entity!=NULL) {
+    if (entity) {
         RS_Creation creation(container, graphicView);
-        RS_Entity* e = creation.createParallelThrough(coord,
+		RS_Entity* e = creation.createParallelThrough(*coord,
                        number,
                        entity);
 
-        if (e==NULL) {
+		if (!e) {
             RS_DEBUG->print("RS_ActionDrawLineParallelThrough::trigger:"
                             " No parallels added\n");
         }
@@ -82,8 +85,8 @@ void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent* e) {
             entity = catchEntity(e, RS2::ResolveAll);
             /*deletePreview();
 
-            RS_Creation creation(preview, NULL, false);
-            creation.createParallelThrough(coord,
+			RS_Creation creation(preview, nullptr, false);
+			creation.createParallelThrough(*coord,
                                            number,
                                            entity);
 
@@ -92,13 +95,13 @@ void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case SetPos: {
-            coord = snapPoint(e);
+			*coord = snapPoint(e);
             //RS_Vector(graphicView->toGraphX(e->x()),
             //                  graphicView->toGraphY(e->y()));
             deletePreview();
 
-            RS_Creation creation(preview, NULL, false);
-            creation.createParallelThrough(coord,
+			RS_Creation creation(preview.get(), nullptr, false);
+			creation.createParallelThrough(*coord,
                                            number,
                                            entity);
 
@@ -120,7 +123,7 @@ void RS_ActionDrawLineParallelThrough::mouseReleaseEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case SetEntity:
             entity = catchEntity(e, RS2::ResolveAll);
-            if (entity!=NULL) {
+            if (entity) {
                 entity->setHighlighted(true);
                 graphicView->drawEntity(entity);
                 setStatus(SetPos);
@@ -136,10 +139,10 @@ void RS_ActionDrawLineParallelThrough::mouseReleaseEvent(QMouseEvent* e) {
         }
     } else if (e->button()==Qt::RightButton) {
         deletePreview();
-        if (entity!=NULL) {
+        if (entity) {
             entity->setHighlighted(false);
             graphicView->drawEntity(entity);
-            entity=NULL;
+			entity=nullptr;
         }
         init(getStatus()-1);
     }
@@ -148,7 +151,7 @@ void RS_ActionDrawLineParallelThrough::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawLineParallelThrough::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+	if (!e) {
         return;
     }
 
@@ -156,7 +159,7 @@ void RS_ActionDrawLineParallelThrough::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetPos:
-        coord = mouse;
+		*coord = mouse;
         trigger();
         break;
 
@@ -183,7 +186,7 @@ void RS_ActionDrawLineParallelThrough::updateMouseButtonHints() {
         break;
 
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }
@@ -269,19 +272,27 @@ QStringList RS_ActionDrawLineParallelThrough::getAvailableCommands() {
 
 
 
-void RS_ActionDrawLineParallelThrough::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+void RS_ActionDrawLineParallelThrough::updateMouseCursor()
+{
+    switch (getStatus())
+    {
+        case SetEntity:
+            graphicView->setMouseCursor(RS2::SelectCursor);
+            break;
+        case SetNumber:
+        case SetPos:
+            graphicView->setMouseCursor(RS2::CadCursor);
+            break;
+    }
 }
 
 
+int RS_ActionDrawLineParallelThrough::getNumber() const{
+	return number;
+}
 
-//void RS_ActionDrawLineParallelThrough::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
+void RS_ActionDrawLineParallelThrough::setNumber(int n) {
+	number = n;
+}
 
 // EOF

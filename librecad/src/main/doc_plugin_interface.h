@@ -39,6 +39,7 @@ public:
     convLTW();
     QString lt2str(enum RS2::LineType lt);
     QString lw2str(enum RS2::LineWidth lw);
+    QString intColor2str(int col);
     enum RS2::LineType str2lt(QString s);
     enum RS2::LineWidth str2lw(QString w);
 private:
@@ -59,9 +60,11 @@ public:
     virtual void getPolylineData(QList<Plug_VertexData> *data);
     virtual void updatePolylineData(QList<Plug_VertexData> *data);
 
-    virtual void move(QPointF offset);
-    virtual void rotate(QPointF center, double angle);
+	virtual void move(QPointF offset);
+	virtual void moveRotate(QPointF const& offset, QPointF const& center, double angle);
+	virtual void rotate(QPointF center, double angle);
     virtual void scale(QPointF center, QPointF factor);
+    virtual QString intColor2str(int color);
 private:
     RS_Entity* entity;
     bool hasContainer;
@@ -84,6 +87,9 @@ public:
     void addCircle(QPointF *start, qreal radius);
     void addArc(QPointF *start, qreal radius, qreal a1, qreal a2);
     void addEllipse(QPointF *start, QPointF *end, qreal ratio, qreal a1, qreal a2);
+    virtual void addLines(std::vector<QPointF> const& points, bool closed=false);
+    virtual void addPolyline(std::vector<Plug_VertexData> const& points, bool closed=false);
+    virtual void addSplinePoints(std::vector<QPointF> const& points, bool closed=false);
     void addImage(int handle, QPointF *start, QPointF *uvr, QPointF *vvr,
                   int w, int h, QString name, int br, int con, int fade);
     void addInsert(QString name, QPointF ins, QPointF scale, qreal rot);
@@ -99,10 +105,10 @@ public:
     QStringList getAllBlocks();
     bool deleteLayer(QString name);
 
-    void getCurrentLayerProperties(QColor *c, DPI::LineWidth *w, DPI::LineType *t);
-    void getCurrentLayerProperties(QColor *c, QString *w, QString *t);
-    void setCurrentLayerProperties(QColor c, DPI::LineWidth w, DPI::LineType t);
-    void setCurrentLayerProperties(QColor c, QString w, QString t);
+    void getCurrentLayerProperties(int *c, DPI::LineWidth *w, DPI::LineType *t);
+    void getCurrentLayerProperties(int *c, QString *w, QString *t);
+    void setCurrentLayerProperties(int c, DPI::LineWidth w, DPI::LineType t);
+	void setCurrentLayerProperties(int c, QString const& w, QString const& t);
 
     bool getPoint(QPointF *point, const QString& mesage, QPointF *base);
     Plug_Entity *getEnt(const QString& mesage);
@@ -125,7 +131,7 @@ private:
     RS_Document *doc;
     RS_Graphic *docGr;
     RS_GraphicView *gView;
-    QWidget* main;
+    QWidget* main_window;
     bool haveUndo;
 };
 

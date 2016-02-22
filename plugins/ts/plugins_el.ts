@@ -142,7 +142,7 @@
         <location filename="../list/list.cpp" line="109"/>
         <source>Inc.</source>
         <translatorcomment>TODO CHECKME είναι inclination το αγγλικό;</translatorcomment>
-        <translation>Κλίση</translation>
+        <translation>Κλίση.</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="114"/>
@@ -281,42 +281,47 @@
     </message>
     <message>
         <location filename="../list/list.cpp" line="210"/>
+        <source>SPLINEPOINTS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="213"/>
         <source>HATCH</source>
         <translation>ΔΙΑΓΡΑΜΜΙΣΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="213"/>
+        <location filename="../list/list.cpp" line="216"/>
         <source>DIMLEADER</source>
         <translation>ΔΙΑΣΤΑΣΗΟΔΗΓΟΣ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="216"/>
+        <location filename="../list/list.cpp" line="219"/>
         <source>DIMALIGNED</source>
         <translatorcomment>CHECKME ΣΤΟΙΧΙΣΜΕΝΗ &apos;Η ΕΥΘΥΓΡΑΜΜΙΣΜΕΝΗ ΚΑΙ ΓΙΑΤΙ ΚΑΙ ΠΡΟΣΟΧΗ ΣΤΑ ΑΛΛΑ</translatorcomment>
         <translation>ΔΙΑΣΤΑΣΗΣΤΟΙΧΙΣΜΕΝΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="219"/>
+        <location filename="../list/list.cpp" line="222"/>
         <source>DIMLINEAR</source>
         <translation>ΔΙΑΣΤΑΣΗΓΡΑΜΜΙΚΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="222"/>
+        <location filename="../list/list.cpp" line="225"/>
         <source>DIMRADIAL</source>
         <translation>ΔΙΑΣΤΑΣΗΑΚΤΙΝΙΚΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="225"/>
+        <location filename="../list/list.cpp" line="228"/>
         <source>DIMDIAMETRIC</source>
         <translation>ΔΙΑΣΤΑΣΗΔΙΑΜΕΤΡΙΚΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="228"/>
+        <location filename="../list/list.cpp" line="231"/>
         <source>DIMANGULAR</source>
         <translation>ΔΙΑΣΤΑΣΗΓΩΝΙΑΚΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="231"/>
+        <location filename="../list/list.cpp" line="234"/>
         <source>UNKNOWN</source>
         <translation>ΑΓΝΩΣΤΟ</translation>
     </message>
@@ -347,6 +352,19 @@
         <location filename="../sample/sample.cpp" line="33"/>
         <source>Sample plugin</source>
         <translation>Δείγμα προσθέτου</translation>
+    </message>
+</context>
+<context>
+    <name>PicFile</name>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="38"/>
+        <source>Read PIC file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="44"/>
+        <source>import PIC file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -596,12 +614,12 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="128"/>
         <source>as Point</source>
-        <translation>ως σημείο</translation>
+        <translation>ως Σημείο</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="129"/>
         <source>as Label:</source>
-        <translation>ως ετικέτα:</translation>
+        <translation>ως Ετικέτα:</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="141"/>
@@ -706,7 +724,7 @@
 <context>
     <name>lc_Listdlg</name>
     <message>
-        <location filename="../list/list.cpp" line="248"/>
+        <location filename="../list/list.cpp" line="251"/>
         <source>List entities</source>
         <translation>Απαρίθμηση οντοτήτων</translation>
     </message>
@@ -775,69 +793,154 @@
     </message>
 </context>
 <context>
-    <name>plot</name>
+    <name>picPunto</name>
     <message>
-        <location filename="../plotequation/plot.cpp" line="20"/>
-        <location filename="../plotequation/plot.cpp" line="27"/>
-        <source>Plot plugin</source>
+        <location filename="../picfile/picfile.cpp" line="67"/>
+        <source>File...</source>
+        <translation type="unfinished">Αρχείο...</translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="77"/>
+        <source>Scale:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plotequation/plot.cpp" line="27"/>
-        <source>Draw</source>
+        <location filename="../picfile/picfile.cpp" line="81"/>
+        <source>Accept</source>
+        <translation type="unfinished">Αποδοχή</translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="85"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="113"/>
+        <source>Select file</source>
+        <translation type="unfinished">Επιλογή αρχείου</translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="121"/>
+        <source>Scale Factor is empty or invalid</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="134"/>
+        <source>The file %1 not exist</source>
+        <translation type="unfinished">Το αρχείο %1 δεν υπάρχει</translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="139"/>
+        <source>Can&apos;t open the file %1</source>
+        <translation type="unfinished">Δεν είναι δυνατό το άνοιγμα του αρχείου %1</translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="146"/>
+        <source>%1 objects imported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="168"/>
+        <source>picPunto drawLine: first point is empty %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="181"/>
+        <source>picPunto drawLine: next point is empty %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../picfile/picfile.cpp" line="260"/>
+        <location filename="../picfile/picfile.cpp" line="269"/>
+        <source>format error in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>plot</name>
+    <message>
+        <location filename="../plotequation/plot.cpp" line="21"/>
+        <location filename="../plotequation/plot.cpp" line="28"/>
+        <source>Plot plugin</source>
+        <translation>Πρόσθετο σχεδιογράφησης</translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plot.cpp" line="28"/>
+        <source>Draw</source>
+        <translation>Σχεδίαση</translation>
     </message>
 </context>
 <context>
     <name>plotDialog</name>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="6"/>
+        <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Σχεδιογράφηση εξίσωσης</translation>
     </message>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="9"/>
+        <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>This plugin allows you to plot mathematical equations.
 If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Το συγκεκριμένο πρόσθετο επιτρέπει τη σχεδιογράφηση μαθηματικών εξισώσεων.
+Σε περίπτωση που δεν επιθυμείτε τη χρήση της παραμετρικής μορφής, απλά αγνοήστε το &quot;Εξίσωση 2&quot;.
+Μπορείτε να χρησιμοποιήσετε το pi σε περίπτωση που χρειάζεστε την τιμή του π (π.χ. (3*pi)).
+Χρησιμοποιήστε το t ή το x στην εξίσωσή σας ως μεταβλητή/παράμετρο.</translation>
     </message>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="13"/>
+        <location filename="../plotequation/plotdialog.cpp" line="22"/>
         <source>Equation 1:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plotequation/plotdialog.cpp" line="14"/>
-        <source>Equation 2:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plotequation/plotdialog.cpp" line="17"/>
-        <source>start value:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plotequation/plotdialog.cpp" line="18"/>
-        <source>end value:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../plotequation/plotdialog.cpp" line="19"/>
-        <source>step size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εξίσωση 1:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="23"/>
+        <source>Equation 2:</source>
+        <translation>Εξίσωση 2:</translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="26"/>
+        <source>start value:</source>
+        <translation>αρχική τιμή:</translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="27"/>
+        <source>end value:</source>
+        <translation>τελική τιμή:</translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="28"/>
+        <source>step size:</source>
+        <translation>μέγεθος βήματος:</translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="32"/>
         <source>Draw</source>
+        <translation>Σχεδίαση</translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="33"/>
+        <source>Cancel</source>
+        <translation>Ακύρωση</translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="59"/>
+        <source>Line Segments</source>
+        <comment>Plot Equation to generate RS_Line segments</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plotequation/plotdialog.cpp" line="24"/>
-        <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <location filename="../plotequation/plotdialog.cpp" line="60"/>
+        <source>Polyline</source>
+        <comment>Plot Equation to generate RS_Polyline</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="61"/>
+        <source>SplinePoints</source>
+        <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

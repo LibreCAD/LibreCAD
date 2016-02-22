@@ -30,6 +30,7 @@
 #include "rs_previewactioninterface.h"
 #include "rs_modification.h"
 
+class QPointF;
 
 /**
  * This action class can handle user events to get a point from plugin.
@@ -42,7 +43,7 @@ class QC_ActionGetPoint : public RS_PreviewActionInterface {
 public:
     QC_ActionGetPoint(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~QC_ActionGetPoint() {}
+	~QC_ActionGetPoint();
 
     virtual void trigger();
 	
@@ -60,12 +61,10 @@ public:
     bool isCompleted(){return completed;}
 
 private:
-    RS_MoveData data;
-    RS_Vector referencePoint;
-    RS_Vector targetPoint;
-    bool completed;
-    bool setTargetPoint;
-    QString mesage;
+	bool completed;
+	bool setTargetPoint;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

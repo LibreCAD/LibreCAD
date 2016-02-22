@@ -27,6 +27,7 @@
 
 #include "rs_arc.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgArc as a child of 'parent', with the
@@ -65,11 +66,11 @@ void QG_DlgArc::setArc(RS_Arc& a) {
     //pen = arc->getPen();
     wPen->setPen(arc->getPen(false), true, false, "Pen");
     RS_Graphic* graphic = arc->getGraphic();
-    if (graphic!=NULL) {
+    if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
     RS_Layer* lay = arc->getLayer(false);
-    if (lay!=NULL) {
+    if (lay) {
         cbLayer->setLayer(*lay);
     }
     QString s;
@@ -94,8 +95,7 @@ void QG_DlgArc::updateArc() {
     arc->setAngle2(RS_Math::deg2rad(RS_Math::eval(leAngle2->text())));
     arc->setReversed(cbReversed->isChecked());
     arc->setPen(wPen->getPen());
-    arc->setLayer(cbLayer->currentText());
-    arc->calculateEndpoints();
+	arc->setLayer(cbLayer->currentText());
     arc->calculateBorders();
 }
 

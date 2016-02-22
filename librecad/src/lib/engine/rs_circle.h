@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -28,8 +29,7 @@
 #ifndef RS_CIRCLE_H
 #define RS_CIRCLE_H
 
-#include <QList>
-#include <QVector>
+#include <vector>
 #include "rs_atomicentity.h"
 
 class LC_Quadratic;
@@ -37,42 +37,16 @@ class LC_Quadratic;
 /**
  * Holds the data that defines a circle.
  */
-class RS_CircleData {
-public:
-    RS_CircleData() {}
-
-    RS_CircleData(const RS_Vector& center,
-                  double radius) {
-
-        this->center = center;
-        this->radius = radius;
-    }
-
-    void reset() {
-        center = RS_Vector(false);
-        radius = 0.0;
-    }
-
-    bool isValid() {
-        return (center.valid && radius>RS_TOLERANCE);
-    }
-
-    friend class RS_Circle;
-
-    friend std::ostream& operator << (std::ostream& os,
-                                      const RS_CircleData& ad) {
-        os << "(" << ad.center <<
-              "/" << ad.radius <<
-              ")";
-        return os;
-    }
-
-public:
-    RS_Vector center;
-    double radius;
+struct RS_CircleData {
+	RS_CircleData() = default;
+	RS_CircleData(RS_Vector const& center, double radius);
+	bool isValid() const;
+	bool operator == (RS_CircleData const&) const;
+	RS_Vector center;
+	double radius;
 };
 
-
+std::ostream& operator << (std::ostream& os, const RS_CircleData& ad);
 
 /**
  * Class for a circle entity.
@@ -81,15 +55,12 @@ public:
  */
 class RS_Circle : public RS_AtomicEntity {
 public:
+	RS_Circle()=default;
     RS_Circle (RS_EntityContainer* parent,
                const RS_CircleData& d);
-    virtual ~RS_Circle() {}
+	~RS_Circle() = default;
 
-    virtual RS_Entity* clone() {
-        RS_Circle* c = new RS_Circle(*this);
-        c->initId();
-        return c;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityCircle */
     virtual RS2::EntityType rtti() const {
@@ -101,11 +72,11 @@ public:
     }
 
     /** @return Copy of data that defines the circle. **/
-    RS_CircleData getData() const {
+	const RS_CircleData& getData() const {
         return data;
     }
 
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
 
     //no start/end point for whole circle
     //        virtual RS_Vector getStartpoint() const {
@@ -118,73 +89,60 @@ public:
          * @return Direction 1. The angle at which the arc starts at
          * the startpoint.
          */
-    double getDirection1() const {
-        return M_PI/2.0;
-    }
+    double getDirection1() const; 
     /**
          * @return Direction 2. The angle at which the arc starts at
          * the endpoint.
          */
-    double getDirection2() const {
-        return M_PI/2.0*3.0;
-    }
+    double getDirection2() const;
 
     /** @return The center point (x) of this arc */
-    virtual RS_Vector getCenter() const {
-        return data.center;
-    }
+	virtual RS_Vector getCenter() const;
     /** Sets new center. */
-    void setCenter(const RS_Vector& c) {
-        data.center = c;
-    }
+	void setCenter(const RS_Vector& c);
     /** @return The radius of this arc */
-    virtual double getRadius() const {
-        return data.radius;
-    }
+	virtual double getRadius() const;
     /** Sets new radius. */
-    void setRadius(double r) {
-        data.radius = r;
-    }
+	void setRadius(double r);
     double getAngleLength() const;
     virtual double getLength() const;
-    virtual bool isTangent(const RS_CircleData&  circleData);
+	virtual bool isTangent(const RS_CircleData&  circleData) const;
 
     bool createFromCR(const RS_Vector& c, double r);
     bool createFrom2P(const RS_Vector& p1, const RS_Vector& p2);
     bool createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
                       const RS_Vector& p3);
     bool createFrom3P(const RS_VectorSolutions& sol);
-    bool createInscribe(const RS_Vector& coord, const QVector<RS_Line*>& lines);
-    virtual QVector<RS_Entity* > offsetTwoSides(const double& distance) const;
-    RS_VectorSolutions createTan1_2P(const RS_AtomicEntity* circle, const QVector<RS_Vector> points);
-    RS_VectorSolutions createTan2(const QVector<RS_AtomicEntity*>& circles, const double& r);
+	bool createInscribe(const RS_Vector& coord, const std::vector<RS_Line*>& lines);
+	virtual std::vector<RS_Entity* > offsetTwoSides(const double& distance) const;
+	RS_VectorSolutions createTan1_2P(const RS_AtomicEntity* circle, const std::vector<RS_Vector>& points);
+	static RS_VectorSolutions createTan2(const std::vector<RS_AtomicEntity*>& circles, const double& r);
     /** solve one of the eight Appollonius Equations
 | Cx - Ci|^2=(Rx+Ri)^2
 with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are the Center and radius of the i-th existing circle
 **/
-    static QList<RS_Circle> solveAppolloniusSingle(const QList<RS_Circle>& circles);
+	static std::vector<RS_Circle> solveAppolloniusSingle(const std::vector<RS_Circle>& circles);
 
-    QList<RS_Circle> createTan3(const QVector<RS_AtomicEntity*>& circles);
-    bool testTan3(const QVector<RS_AtomicEntity*>& circles);
+	std::vector<RS_Circle> createTan3(const std::vector<RS_AtomicEntity*>& circles);
+	bool testTan3(const std::vector<RS_AtomicEntity*>& circles);
     virtual RS_Vector getMiddlePoint(void)const;
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                         double* dist = NULL)const;
+                                         double* dist = nullptr) const;
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
                                               bool onEntity = true, double* dist = NULL, RS_Entity** entity=NULL)const;
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-                                       double* dist = NULL);
+									   double* dist = NULL)const;
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
-                                       double* dist = NULL,
-                                       int middlePoints = 1
-            )const;
+                                       double* dist = nullptr,
+                                       int middlePoints = 1 ) const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = NULL)const;
     virtual RS_Vector getNearestDist(double distance,
-                                     bool startp);
+									 bool startp)const;
     virtual RS_Vector getNearestOrthTan(const RS_Vector& coord,
                                         const RS_Line& normal,
-                                        bool onEntity = false);
+										bool onEntity = false) const;
 
     virtual bool offset(const RS_Vector& coord, const double& distance);
     virtual RS_VectorSolutions getTangentPoint(const RS_Vector& point) const;//find the tangential points seeing from given point
@@ -208,6 +166,14 @@ for linear:
 m0 x + m1 y + m2 =0
 **/
     virtual LC_Quadratic getQuadratic() const;
+    
+/**
+* @brief Returns area of full circle
+* Note: Circular arcs are handled separately by RS_Arc (areaLIneIntegral) 
+* However, full ellipses and ellipse arcs are handled by RS_Ellipse
+* @return \pi r^2
+*/
+    virtual double areaLineIntegral() const override;
 
     friend std::ostream& operator << (std::ostream& os, const RS_Circle& a);
 

@@ -13,7 +13,7 @@
 
 #include "document_interface.h"
 #include "align.h"
-#include <math.h>
+#include <cmath>
 
 QString LC_Align::name() const
  {
@@ -24,7 +24,7 @@ PluginCapabilities LC_Align::getCapabilities() const
 {
     PluginCapabilities pluginCapabilities;
     pluginCapabilities.menuEntryPoints
-            << PluginMenuLocation("Modify", tr("Align"));
+            << PluginMenuLocation("plugins_menu", tr("Align"));
     return pluginCapabilities;
 }
 
@@ -51,9 +51,7 @@ void LC_Align::execComm(Document_Interface *doc,
     if (yes) {
         //first, move selection
         QPointF movev = target1 - base1;
-        for (int i = 0; i < obj.size(); ++i) {
-            obj.at(i)->move(movev);
-        }
+
         //calculate angle
         double abase, atarget, angle;
         abase = atan2( base2.y() - base1.y(),
@@ -63,7 +61,7 @@ void LC_Align::execComm(Document_Interface *doc,
         angle = atarget - abase;
         //end, rotate selection
         for (int i = 0; i < obj.size(); ++i) {
-            obj.at(i)->rotate(target1, angle);
+			obj.at(i)->moveRotate(movev, target1, angle);
         }
 
     }

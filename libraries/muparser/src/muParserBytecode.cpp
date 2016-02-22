@@ -25,6 +25,7 @@
 
 #include "muParserBytecode.h"
 
+#include <algorithm>
 #include <cassert>
 #include <string>
 #include <stack>
@@ -91,6 +92,7 @@ namespace mu
     m_iStackPos = a_ByteCode.m_iStackPos;
     m_vRPN = a_ByteCode.m_vRPN;
     m_iMaxStackSize = a_ByteCode.m_iMaxStackSize;
+	m_bEnableOptimizer = a_ByteCode.m_bEnableOptimizer;
   }
 
   //---------------------------------------------------------------------------
@@ -241,8 +243,8 @@ namespace mu
                    (m_vRPN[sz-1].Cmd == cmVARMUL && m_vRPN[sz-2].Cmd == cmVAR    && m_vRPN[sz-2].Val.ptr == m_vRPN[sz-1].Val.ptr) ||
                    (m_vRPN[sz-1].Cmd == cmVARMUL && m_vRPN[sz-2].Cmd == cmVARMUL && m_vRPN[sz-2].Val.ptr == m_vRPN[sz-1].Val.ptr) )
               {
-                assert( (m_vRPN[sz-2].Val.ptr==NULL && m_vRPN[sz-1].Val.ptr!=NULL) ||
-                        (m_vRPN[sz-2].Val.ptr!=NULL && m_vRPN[sz-1].Val.ptr==NULL) || 
+                assert( (m_vRPN[sz-2].Val.ptr==NULL && m_vRPN[sz-1].Val.ptr) ||
+                        (m_vRPN[sz-2].Val.ptr && m_vRPN[sz-1].Val.ptr==NULL) || 
                         (m_vRPN[sz-2].Val.ptr == m_vRPN[sz-1].Val.ptr) );
 
                 m_vRPN[sz-2].Cmd = cmVARMUL;
@@ -346,7 +348,7 @@ namespace mu
 
     SToken tok;
     tok.Cmd = cmASSIGN;
-    tok.Val.ptr = a_pVar;
+    tok.Oprt.ptr = a_pVar;
     m_vRPN.push_back(tok);
   }
 

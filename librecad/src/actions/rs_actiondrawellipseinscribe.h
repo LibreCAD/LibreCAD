@@ -23,10 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWELLIPSEINSCRIBE_H
 #define RS_ACTIONDRAWELLIPSEINSCRIBE_H
 
-#include <QVector>
 #include "rs_previewactioninterface.h"
-#include "rs_ellipse.h"
-
 /**
  * Draw ellipse by foci and a point on ellipse
  *
@@ -50,10 +47,6 @@ public:
                                  RS_GraphicView& graphicView);
     ~RS_ActionDrawEllipseInscribe();
 
-    static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
-    RS2::ActionType rtti(){
-        return RS2::ActionDrawEllipseInscribe;
-    }
     virtual void init(int status=0);
 
     virtual void trigger();
@@ -68,14 +61,14 @@ public:
     virtual void finish(bool updateTB=true);
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 protected:
     // 4 points on ellipse
-    QVector<RS_Line*> lines;
-    private:
-    RS_EllipseData eData;
-    bool valid;
+private:
+	void clearLines(bool checkStatus=false);
+
+	struct Points;
+	std::unique_ptr<Points> pPoints;;
 };
 
 #endif

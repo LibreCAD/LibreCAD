@@ -40,9 +40,7 @@ class RS_ActionModifyRevertDirection : public RS_ActionInterface {
 public:
 	RS_ActionModifyRevertDirection(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-	~RS_ActionModifyRevertDirection() {}
-	
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+	~RS_ActionModifyRevertDirection() = default;
 
     virtual void init(int status=0);
     virtual void trigger();

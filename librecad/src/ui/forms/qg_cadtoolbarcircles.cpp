@@ -23,136 +23,47 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include<cassert>
+#include<QAction>
 #include "qg_cadtoolbarcircles.h"
-
 #include "qg_cadtoolbar.h"
+#include "qg_actionhandler.h"
 
 /*
  *  Constructs a QG_CadToolBarCircles as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_CadToolBarCircles::QG_CadToolBarCircles(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
+QG_CadToolBarCircles::QG_CadToolBarCircles(QG_CadToolBar* parent, Qt::WindowFlags fl)
+	:LC_CadToolBarInterface(parent, fl)
 {
-    setupUi(this);
-    parentTB=static_cast<QG_CadToolBar*>(parent);
-
-    init();
+	initToolBars();
 }
 
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_CadToolBarCircles::~QG_CadToolBarCircles()
+
+void QG_CadToolBarCircles::addSubActions(const std::vector<QAction*>& actions, bool addGroup)
 {
-    // no need to delete child widgets, Qt does it all for us
+	LC_CadToolBarInterface::addSubActions(actions, addGroup);
+	std::vector<QAction**> const buttons=	{
+		&bCircle, &bCircleCR, &bCircle2P, &bCircle2PR, &bCircle3P,
+		&bCircleParallel, &bCircleInscribe, &bCircleTan1_2P, &bCircleTan2,
+		&bCircleTan2_1P, &bCircleTan3
+	};
+
+	assert(buttons.size()==actions.size());
+
+	for(size_t i=0; i<buttons.size(); ++i)
+		*buttons[i]=actions[i];
 }
 
-/*
- *  Sets the strings of the subwidgets using the current
- *  language.
- */
-void QG_CadToolBarCircles::languageChange()
-{
-    retranslateUi(this);
-}
-
-void QG_CadToolBarCircles::init() {
-    actionHandler = NULL;
-    cadToolBar = NULL;
-}
-
-void QG_CadToolBarCircles::mousePressEvent(QMouseEvent* e) {
-    if (e->button()==Qt::RightButton && cadToolBar!=NULL) {
-        cadToolBar->back();
-        e->accept();
-    }
-}
-
-void QG_CadToolBarCircles::contextMenuEvent(QContextMenuEvent *e) {
-    e->accept();
-}
-
-void QG_CadToolBarCircles::setCadToolBar(QG_CadToolBar* tb) {
-    cadToolBar = tb;
-    if (tb!=NULL) {
-        actionHandler = tb->getActionHandler();
-    } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR,
-                        "QG_CadToolBarCircles::setCadToolBar(): No valid toolbar set.");
-    }
-}
-
-void QG_CadToolBarCircles::drawCircle() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDrawCircle();
-    }
-}
-
-void QG_CadToolBarCircles::drawCircleCR() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDrawCircleCR();
-    }
-}
-
-void QG_CadToolBarCircles::drawCircle2P() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDrawCircle2P();
-    }
-}
-
-void QG_CadToolBarCircles::drawCircle2PR() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDrawCircle2PR();
-    }
-}
-
-void QG_CadToolBarCircles::drawCircle3P() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDrawCircle3P();
-    }
-}
-
-void QG_CadToolBarCircles::drawCircle1_2P() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDrawCircleTan1_2P();
-    }
-}
-
-void QG_CadToolBarCircles::drawCircle2_1P() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDrawCircleTan2_1P();
-    }
-}
-void QG_CadToolBarCircles::drawCircleParallel() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDrawCircleParallel();
-    }
-}
-void QG_CadToolBarCircles::drawCircleInscribe() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDrawCircleInscribe();
-    }
-}
-void QG_CadToolBarCircles::drawCircleTan2() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDrawCircleTan2();
-    }
-}
-void QG_CadToolBarCircles::drawCircleTan3() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDrawCircleTan3();
-    }
-}
 void QG_CadToolBarCircles::back() {
-    if (cadToolBar!=NULL) {
+	if (cadToolBar) {
         cadToolBar->back();
     }
 }
 //restore action from checked button
 void QG_CadToolBarCircles::restoreAction()
 {
-    if(actionHandler==NULL) return;
+	if(!(actionHandler && bCircle)) return;
     if ( bCircle ->isChecked() ) {
         actionHandler->slotDrawCircle();
         return;
@@ -198,22 +109,26 @@ void QG_CadToolBarCircles::restoreAction()
         return;
     }
     //clear all action
-    bHidden->setChecked(true);
+	m_pHidden->setChecked(true);
     RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
-    if(currentAction != NULL) {
+	if(currentAction ) {
         currentAction->finish(false); //finish the action, but do not update toolBar
     }
 }
 
-void QG_CadToolBarCircles::resetToolBar() {
-    bHidden->setChecked(true);
+void QG_CadToolBarCircles::resetToolBar()
+{
+	m_pHidden->setChecked(true);
 }
+
 void QG_CadToolBarCircles::on_bBack_clicked()
 {
-   parentTB->showPreviousToolBar();
+	finishCurrentAction(true);
+	cadToolBar->showPreviousToolBar();
 }
 
 void QG_CadToolBarCircles::showCadToolBar(RS2::ActionType actionType){
+	if(!bCircle) return;
     switch(actionType){
     case RS2::ActionDrawCircle:
         bCircle->setChecked(true);
@@ -249,7 +164,7 @@ void QG_CadToolBarCircles::showCadToolBar(RS2::ActionType actionType){
         bCircleTan2_1P->setChecked(true);
         return;
     default:
-        bHidden->setChecked(true);
+		m_pHidden->setChecked(true);
         return;
     }
 }

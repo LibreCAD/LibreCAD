@@ -35,6 +35,8 @@ class QG_DlgOptionsGeneral : public QDialog, public Ui::QG_DlgOptionsGeneral
 public:
     QG_DlgOptionsGeneral(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~QG_DlgOptionsGeneral();
+    static int current_tab;
+    void set_color(QComboBox* combo, QColor custom);
 
 public slots:
     virtual void setRestartNeeded();
@@ -44,12 +46,40 @@ protected slots:
     virtual void languageChange();
     virtual void setTemplateFile();
 
+private slots:
+    void on_tabWidget_currentChanged(int index);
+
+    void on_pb_background_clicked();
+
+    void on_pb_grid_clicked();
+
+    void on_pb_meta_clicked();
+
+    void on_pb_selected_clicked();
+
+    void on_pb_highlighted_clicked();
+
+    void on_pb_start_clicked();
+
+    void on_pb_handle_clicked();
+
+    void on_pb_end_clicked();
+
+    void on_pb_layerselection_clicked();
+
+    void set_toolbar_file();
+
+    void on_pb_clear_all_clicked();
+
+    void on_pb_clear_geometry_clicked();
+
+    void on_pb_snap_color_clicked();
+
 private:
     bool restartNeeded;
 
     void init();
 	void initComboBox(QComboBox* cb, QString text);
-
     void destroy();
 
 };

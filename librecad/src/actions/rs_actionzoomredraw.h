@@ -40,9 +40,7 @@ class RS_ActionZoomRedraw : public RS_ActionInterface {
 public:
     RS_ActionZoomRedraw(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
-    ~RS_ActionZoomRedraw() {}
-
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+    ~RS_ActionZoomRedraw() = default;
 
     virtual void init(int status=0);
     virtual void trigger();

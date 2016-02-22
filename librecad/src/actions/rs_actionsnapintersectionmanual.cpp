@@ -24,28 +24,33 @@
 **
 **********************************************************************/
 
+#include <QAction>
+#include <QMouseEvent>
 #include "rs_actionsnapintersectionmanual.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
-
+#include "rs_circle.h"
+#include "rs_coordinateevent.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
 /**
  * @param both Trim both entities.
  */
 RS_ActionSnapIntersectionManual::RS_ActionSnapIntersectionManual(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Trim Entity",
-                           container, graphicView) {
-
-    entity2 = NULL;
-    entity1 = NULL;
-    coord = RS_Vector(false);
+		RS_EntityContainer& container,
+		RS_GraphicView& graphicView)
+	:RS_PreviewActionInterface("Trim Entity",
+							   container, graphicView)
+	,entity1(nullptr)
+	,entity2(nullptr)
+	,coord(new RS_Vector{})
+{
 }
 
+RS_ActionSnapIntersectionManual::~RS_ActionSnapIntersectionManual()=default;
 
 QAction* RS_ActionSnapIntersectionManual::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	//tr("Intersection Manually")
@@ -58,9 +63,7 @@ QAction* RS_ActionSnapIntersectionManual::createGUIAction(RS2::ActionType /*type
 
 void RS_ActionSnapIntersectionManual::init(int status) {
     RS_ActionInterface::init(status);
-
-    snapMode.clear();
-    snapMode.restriction = RS2::RestrictNothing;
+	snapMode.clear();
 }
 
 
@@ -69,16 +72,16 @@ void RS_ActionSnapIntersectionManual::trigger() {
 
     RS_DEBUG->print("RS_ActionSnapIntersectionManual::trigger()");
 
-    if (entity2!=NULL && entity2->isAtomic() &&
-            entity1!=NULL && entity1->isAtomic()) {
+    if (entity2 && entity2->isAtomic() &&
+            entity1 && entity1->isAtomic()) {
 
         RS_VectorSolutions sol =
             RS_Information::getIntersection(entity1, entity2, false);
 
         entity2 = NULL;
         entity1 = NULL;
-        if (predecessor!=NULL) {
-            RS_Vector ip = sol.getClosest(coord);
+        if (predecessor) {
+			RS_Vector ip = sol.getClosest(*coord);
 
             if (ip.valid) {
                 RS_CoordinateEvent e(ip);
@@ -104,7 +107,7 @@ void RS_ActionSnapIntersectionManual::mouseMoveEvent(QMouseEvent* e) {
 
     case ChooseEntity2: {
             entity2 = se;
-            coord = mouse;
+			*coord = mouse;
 
             RS_VectorSolutions sol =
                 RS_Information::getIntersection(entity1, entity2, false);
@@ -114,15 +117,13 @@ void RS_ActionSnapIntersectionManual::mouseMoveEvent(QMouseEvent* e) {
             //    break;
             //}
 
-            RS_Vector ip = sol.getClosest(coord);
+			RS_Vector ip = sol.getClosest(*coord);
 
             if (ip.valid) {
                 deletePreview();
                 preview->addEntity(
-                    new RS_Circle(preview,
-                                  RS_CircleData(
-                                      ip,
-                                      graphicView->toGraphDX(4))));
+					new RS_Circle(preview.get(),
+				{ip, graphicView->toGraphDX(4)}));
                 drawPreview();
 
                 RS_DIALOGFACTORY->updateCoordinateWidget(ip,
@@ -150,15 +151,15 @@ void RS_ActionSnapIntersectionManual::mouseReleaseEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case ChooseEntity1:
             entity1 = se;
-            if (entity1!=NULL && entity1->isAtomic()) {
+            if (entity1 && entity1->isAtomic()) {
                 setStatus(ChooseEntity2);
             }
             break;
 
         case ChooseEntity2:
             entity2 = se;
-            coord = mouse;
-            if (entity2!=NULL && entity2->isAtomic() && coord.valid) {
+			*coord = mouse;
+			if (entity2 && entity2->isAtomic() && coord->valid) {
                 trigger();
             }
             break;
@@ -185,7 +186,7 @@ void RS_ActionSnapIntersectionManual::updateMouseButtonHints() {
                                             tr("Back"));
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }
@@ -195,14 +196,5 @@ void RS_ActionSnapIntersectionManual::updateMouseButtonHints() {
 void RS_ActionSnapIntersectionManual::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-void RS_ActionSnapIntersectionManual::updateToolBar() {
-    //not needed any more
-    return;
-    //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-}
-
 
 // EOF

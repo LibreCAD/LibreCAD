@@ -2,6 +2,14 @@
 Version=1.0
 Type=Application
 Name=LibreCAD
+GenericName=CAD system
+GenericName[da]=Computerhjulpet design (CAD)
+GenericName[de]=System für computerunterstützte Konstruktion
+GenericName[it]=Sistema CAD
+GenericName[ja]=コンピュータ支援設計 (CAD) システム
+GenericName[ru]=Система автоматизированного проектирования
+GenericName[sk]=CAD systém
+GenericName[uk]=Система автоматизованого проектування
 Comment=A professional CAD System
 Comment[es]=Un sistema CAD profesional
 Comment[ru]=Профессиональная CAD система

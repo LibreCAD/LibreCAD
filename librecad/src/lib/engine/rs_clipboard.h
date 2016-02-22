@@ -28,7 +28,7 @@
 #ifndef RS_CLIPBOARD_H
 #define RS_CLIPBOARD_H
 
-#include <iostream>
+#include <iosfwd>
 #include "rs_graphic.h"
 
 #define RS_CLIPBOARD RS_Clipboard::instance()

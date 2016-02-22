@@ -30,21 +30,15 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
+#include "rs_debug.h"
 
 
 
 RS_ActionModifyDelete::RS_ActionModifyDelete(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Delete Entities",
-                    container, graphicView) {}
-
-QAction* RS_ActionModifyDelete::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Delete")
-    QAction* action = new QAction(tr("&Delete"),  NULL);
-        action->setIcon(QIcon(":/extui/modifydelete.png"));
-    //action->zetStatusTip(tr("Delete Entities"));
-        //action->setShortcut(QKeySequence::Delete);
-    return action;
+					container, graphicView) {
+	actionType=RS2::ActionModifyDelete;
 }
 
 
@@ -65,7 +59,7 @@ void RS_ActionModifyDelete::trigger() {
 
     finish(false);
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
     }
 }
@@ -73,14 +67,14 @@ void RS_ActionModifyDelete::trigger() {
 
 
 void RS_ActionModifyDelete::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
             //case Acknowledge:
             //    RS_DIALOGFACTORY->updateMouseWidget(tr("Acknowledge"),
             //	tr("Cancel"));
             //    break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+            RS_DIALOGFACTORY->updateMouseWidget();
             break;
         }
     }
@@ -91,12 +85,5 @@ void RS_ActionModifyDelete::updateMouseButtonHints() {
 void RS_ActionModifyDelete::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::DelCursor);
 }
-
-
-
-//void RS_ActionModifyDelete::updateToolBar() {
-//    //not needed any more with new snap
-//}
-
 
 // EOF

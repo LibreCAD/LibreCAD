@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-
+#include<iostream>
 #include "rs_overlaybox.h"
 
 #include "rs_debug.h"
@@ -41,15 +41,7 @@ RS_OverlayBox::RS_OverlayBox(RS_EntityContainer* parent,
     :RS_AtomicEntity(parent), data(d) {
 }
 
-/**
- * Destructor.
- */
-RS_OverlayBox::~RS_OverlayBox() {}
-
-
-
-
-RS_Entity* RS_OverlayBox::clone() {
+RS_Entity* RS_OverlayBox::clone() const{
     RS_OverlayBox* l = new RS_OverlayBox(*this);
     l->initId();
     return l;
@@ -89,6 +81,13 @@ void RS_OverlayBox::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pa
 std::ostream& operator << (std::ostream& os, const RS_OverlayBox& l) {
     os << " Line: " << l.getData() << "\n";
     return os;
+}
+
+std::ostream& operator << (std::ostream& os, const RS_OverlayBoxData& ld) {
+        os << "(" << ld.corner1 <<
+              "/" << ld.corner2 <<
+              ")";
+        return os;
 }
 
 

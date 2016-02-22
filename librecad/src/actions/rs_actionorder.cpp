@@ -27,51 +27,27 @@
 #include "rs_actionorder.h"
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_polyline.h"
+#include "rs_debug.h"
 
 
 
 RS_ActionOrder::RS_ActionOrder(RS_EntityContainer& container,
         RS_GraphicView& graphicView, RS2::ActionType type)
         :RS_PreviewActionInterface("Sort Entities",
-                           container, graphicView) {
-    orderType = type;
-}
-
-
-QAction* RS_ActionOrder::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
-    QAction* action;
-    switch (type) {
-    case RS2::ActionOrderBottom:
-        action = new QAction(tr("move to bottom"), NULL);
-        action->setIcon(QIcon(":/extui/order_bottom.png"));
-        action->setStatusTip(tr("set to bottom"));
-        break;
-    case RS2::ActionOrderLower:
-        action = new QAction(tr("lower after entity"), NULL);
-        action->setIcon(QIcon(":/extui/order_lower.png"));
-        action->setStatusTip(tr("lower over entity"));
-        break;
-    case RS2::ActionOrderRaise:
-        action = new QAction(tr("raise over entity"), NULL);
-        action->setIcon(QIcon(":/extui/order_raise.png"));
-        action->setStatusTip(tr("raise over entity"));
-        break;
-//    case RS2::ActionOrderTop:
-    default:
-        action = new QAction(tr("move to top"), NULL);
-        action->setIcon(QIcon(":/extui/order_top.png"));
-        action->setStatusTip(tr("set to top"));
-        break;
-    }
-    return action;
+						   container, graphicView)
+		,targetEntity(nullptr)
+		,orderType(type)
+{
+	actionType=RS2::ActionOrderBottom;
 }
 
 void RS_ActionOrder::init(int status) {
     RS_ActionInterface::init(status);
-    targetEntity = NULL;
+	targetEntity = nullptr;
     if (orderType == RS2::ActionOrderBottom ||
             orderType == RS2::ActionOrderTop) {
         trigger();
@@ -83,15 +59,14 @@ void RS_ActionOrder::trigger() {
     RS_DEBUG->print("RS_ActionOrder::trigger()");
 
     QList<RS_Entity *> entList;
-    int index = -1;
-    for (RS_Entity* e=container->firstEntity();
-            e!=NULL; e=container->nextEntity()) {
+	for(auto e: *container){
         if (e->isSelected())
             entList.append(e);
     }
 
-    if (targetEntity!=NULL) {
-        targetEntity->setHighlighted(false);
+    if (targetEntity) {
+		int index = -1;
+		targetEntity->setHighlighted(false);
         graphicView->drawEntity(targetEntity);
 
         switch (orderType) {
@@ -106,7 +81,7 @@ void RS_ActionOrder::trigger() {
         default:
             break;
         }
-        targetEntity = NULL;
+		targetEntity = nullptr;
     } else {
         switch (orderType) {
         case RS2::ActionOrderBottom:
@@ -145,7 +120,7 @@ void RS_ActionOrder::mouseReleaseEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case ChooseEntity:
             targetEntity = catchEntity(e);
-            if (targetEntity==NULL) {
+			if (!targetEntity) {
                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
             } else {
                 targetEntity->setHighlighted(true);
@@ -159,7 +134,7 @@ void RS_ActionOrder::mouseReleaseEvent(QMouseEvent* e) {
         }
     } else if (e->button()==Qt::RightButton) {
         deleteSnapper();
-        if (targetEntity!=NULL) {
+        if (targetEntity) {
             targetEntity->setHighlighted(false);
             graphicView->drawEntity(targetEntity);
                 graphicView->redraw();
@@ -176,7 +151,7 @@ void RS_ActionOrder::updateMouseButtonHints() {
                                             tr("Cancel"));
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+		RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }

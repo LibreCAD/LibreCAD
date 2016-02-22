@@ -36,20 +36,12 @@ RS_ActionModifyExplodeText::RS_ActionModifyExplodeText(RS_EntityContainer& conta
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Blocks Explode",
                            container, graphicView) {
+	actionType=RS2::ActionModifyExplodeText;
 }
 
 
 
-RS_ActionModifyExplodeText::~RS_ActionModifyExplodeText() {}
-
-
-QAction* RS_ActionModifyExplodeText::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Explode Text")
-    QAction* action = new QAction(tr("&Explode Text into Letters"), NULL);
-	action->setIcon(QIcon(":/extui/modifyexplodetext.png"));
-    //action->zetStatusTip(tr("Explodes Text Entities into single Letters"));
-    return action;
-}
+RS_ActionModifyExplodeText::~RS_ActionModifyExplodeText() = default;
 
 
 void RS_ActionModifyExplodeText::init(int status) {

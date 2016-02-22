@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include <QDebug>
 #include "qg_fontbox.h"
 
 #include "rs_font.h"
@@ -39,14 +40,6 @@
 QG_FontBox::QG_FontBox(QWidget* parent)
         : QComboBox(parent) {}
 
-
-
-/**
- * Destructor
- */
-QG_FontBox::~QG_FontBox() {}
-
-
 /**
  * Initialisation (called from constructor or manually but only
  * once).
@@ -54,12 +47,15 @@ QG_FontBox::~QG_FontBox() {}
 void QG_FontBox::init() {
     QStringList fonts;
 
-    QListIterator<RS_Font *> i = RS_FONTLIST->getIteretor();
-    while (i.hasNext()) {
-        fonts.append( i.next()->getFileName() );
-    }
+	for(auto const& f: * RS_FONTLIST){
+		if(fonts.contains(f->getFileName())){
+			DEBUG_HEADER
+			qDebug()<<__func__<<": WARNING: duplicated font: "<<f->getFileName();
+			continue;
+		}
 
-    fonts.sort();
+		fonts.append(f->getFileName());
+	}
     addItems(fonts);
 
     connect(this, SIGNAL(activated(int)),
@@ -84,6 +80,9 @@ void QG_FontBox::setFont(const QString& fName) {
 }
 
 
+RS_Font* QG_FontBox::getFont() const{
+	return currentFont;
+}
 
 /**
  * Called when the font has changed. This method 
@@ -95,7 +94,7 @@ void QG_FontBox::slotFontChanged(int index) {
 
     currentFont = RS_FONTLIST->requestFont(currentText());
 
-    if (currentFont!=NULL) {
+	if (currentFont) {
         RS_DEBUG->print("Current font is (%d): %s\n",
                         index, currentFont->getFileName().toLatin1().data());
     }

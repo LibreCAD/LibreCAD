@@ -31,7 +31,7 @@ PluginCapabilities ImportShp::getCapabilities() const
 {
     PluginCapabilities pluginCapabilities;
     pluginCapabilities.menuEntryPoints
-            << PluginMenuLocation("File/Import", "ESRI Shapefile");
+            << PluginMenuLocation("plugins_menu", "ESRI Shapefile");
     return pluginCapabilities;
 }
 

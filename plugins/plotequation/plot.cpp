@@ -9,6 +9,7 @@
 #include "plot.h"
 #include "plotdialog.h"
 #include <muParser.h>
+#include <QDebug>
 
 plot::plot(QObject *parent) :
     QObject(parent)
@@ -24,7 +25,7 @@ PluginCapabilities plot::getCapabilities() const
 {
     PluginCapabilities pluginCapabilities;
     pluginCapabilities.menuEntryPoints
-            << PluginMenuLocation(tr("Draw"), tr("Plot plugin"));
+            << PluginMenuLocation(tr("plugins_menu"), tr("Plot plugin"));
     return pluginCapabilities;
 }
 
@@ -42,10 +43,7 @@ void plot::execComm(Document_Interface *doc, QWidget *parent, QString cmd)
     QList<double> xValues;
     QList<double> yValues1;
     QList<double> yValues2;
-    QList<QPointF> points;
-    QPointF startPoint;
-    QPointF endPoint;
-    unsigned int pointAmount;
+    plotDialog::EntityType lineType=plotDialog::Polyline;
 
     plotDialog plotDlg(parent);
     int result =  plotDlg.exec();
@@ -55,6 +53,7 @@ void plot::execComm(Document_Interface *doc, QWidget *parent, QString cmd)
         double startVal = 0.0;
         double endVal = 0.0;
         plotDlg.getValues(equation1, equation2, startValue, endValue, stepSize);
+        lineType=plotDlg.getEntityType();
 
         try{
             mu::Parser p;
@@ -91,33 +90,28 @@ void plot::execComm(Document_Interface *doc, QWidget *parent, QString cmd)
             std::cout << e.GetMsg() << std::endl;
         }
 
-        pointAmount = xValues.size();
+        QList<double> const& xpoints=(equation2.isEmpty())?xValues:yValues1;
+        QList<double> const& ypoints=(equation2.isEmpty())?yValues1:yValues2;
 
-        if(equation2.isEmpty())
-        {//use first equation for drawing (explicit)
-            for(size_t i = 0; i < pointAmount -1; ++i)
-            {
-                startPoint.setX(xValues.at(i));
-                startPoint.setY(yValues1.at(i));
-
-                endPoint.setX(xValues.at(i+1));
-                endPoint.setY(yValues1.at(i+1));
-                doc->addLine(&startPoint, &endPoint);
+        if (lineType == plotDialog::LineSegments || lineType == plotDialog::SplinePoints){
+            std::vector<QPointF> points;
+            for(int i=0; i< xpoints.size(); ++i){
+                points.emplace_back(QPointF(xpoints[i], ypoints[i]));
             }
-
-        }
-        else
-        {//use first and second equation for drawing (parametric)
-            for(size_t i = 0; i < pointAmount -1; ++i)
-            {
-                startPoint.setX(yValues1.at(i));
-                startPoint.setY(yValues2.at(i));
-
-                endPoint.setX(yValues1.at(i+1));
-                endPoint.setY(yValues2.at(i+1));
-                doc->addLine(&startPoint, &endPoint);
+            if (lineType == plotDialog::SplinePoints){
+                //TODO add option for splinepoints: closed
+                //hardcoded to false now
+                doc->addSplinePoints(points, false);
+            } else
+                doc->addLines(points, false);
+        } else { //default plotDialog::Polyline
+            std::vector<Plug_VertexData> points;
+            for(int i=0; i< xpoints.size(); ++i){
+                points.emplace_back(Plug_VertexData(QPointF(xpoints[i], ypoints[i]), 0.0));
             }
+            doc->addPolyline(points, false);
         }
+
     }
 
 }

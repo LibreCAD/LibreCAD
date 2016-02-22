@@ -20,64 +20,61 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#include <QAction>
+#include <QMouseEvent>
 #include "rs_actiondrawellipse4points.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
+#include "rs_circle.h"
+#include "rs_ellipse.h"
+#include "rs_coordinateevent.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
+
+struct RS_ActionDrawEllipse4Points::Points {
+	RS_VectorSolutions points;
+	RS_CircleData cData;
+	RS_EllipseData eData;
+	bool valid,evalid;
+	bool m_bUniqueEllipse{false}; //a message of non-unique ellipse is shown
+};
 
 /**
  * Constructor.
  *
  */
 RS_ActionDrawEllipse4Points::RS_ActionDrawEllipse4Points(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw ellipse from 4 points",
-                           container, graphicView),
-          cData(RS_Vector(0.,0.),1.),
-          eData(RS_Vector(0.,0.),RS_Vector(1.,0),1.,0.,0.,false)
-        ,m_bUniqueEllipse(false)
+		RS_EntityContainer& container,
+		RS_GraphicView& graphicView)
+	:RS_PreviewActionInterface("Draw ellipse from 4 points", container,
+							   graphicView)
+	, pPoints(new Points{})
 {
-          points.clean();
+	actionType=RS2::ActionDrawEllipse4Points;
 }
 
-
-
-RS_ActionDrawEllipse4Points::~RS_ActionDrawEllipse4Points() {
-    points.clean();
-}
-
-
-QAction* RS_ActionDrawEllipse4Points::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action;
-
-    action = new QAction(tr("Ellipse &4 Point"), NULL);
-    action->setIcon(QIcon(":/extui/ellipse4points.png"));
-    return action;
-}
+RS_ActionDrawEllipse4Points::~RS_ActionDrawEllipse4Points() = default;
 
 void RS_ActionDrawEllipse4Points::init(int status) {
     RS_PreviewActionInterface::init(status);
-    if(getStatus() == SetPoint1) points.clean();
+	if(getStatus() == SetPoint1) pPoints->points.clear();
 }
-
-
 
 void RS_ActionDrawEllipse4Points::trigger() {
     RS_PreviewActionInterface::trigger();
     RS_Entity* en;
-    if(getStatus()==SetPoint4&&evalid){
-        en=new RS_Ellipse(container, eData);
+	if(getStatus()==SetPoint4 && pPoints->evalid){
+		en=new RS_Ellipse(container, pPoints->eData);
     }else{
-        en=new RS_Circle(container, cData);
+		en=new RS_Circle(container, pPoints->cData);
     }
 
     // update undo list:
     deletePreview();
     container->addEntity(en);
-    if (document!=NULL) {
+    if (document) {
         document->startUndoCycle();
         document->addUndoable(en);
         document->endUndoCycle();
@@ -98,22 +95,22 @@ void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent* e) {
 //    RS_DEBUG->print("RS_ActionDrawEllipse4Point::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
-    points.set(getStatus(),mouse);
+	pPoints->points.set(getStatus(),mouse);
     if(preparePreview()) {
         switch(getStatus()) {
         case SetPoint2:
         case SetPoint3:
-            if(valid){
-                RS_Circle* circle=new RS_Circle(preview, cData);
+			if(pPoints->valid){
+				RS_Circle* circle=new RS_Circle(preview.get(), pPoints->cData);
                 deletePreview();
                 preview->addEntity(circle);
                 drawPreview();
             }
             break;
         case SetPoint4:
-            if(evalid){
+			if(pPoints->evalid){
                 deletePreview();
-                RS_Ellipse* e=new RS_Ellipse(preview, eData);
+				RS_Ellipse* e=new RS_Ellipse(preview.get(), pPoints->eData);
                 preview->addEntity(e);
                 drawPreview();
             }
@@ -127,15 +124,15 @@ void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent* e) {
 
 
 bool RS_ActionDrawEllipse4Points::preparePreview(){
-    valid=false;
+	pPoints->valid=false;
     switch(getStatus()) {
     case SetPoint2:
     case SetPoint3:
     {
-        RS_Circle c(preview,cData);
-        valid= c.createFrom3P(points);
-        if(valid){
-            cData=c.getData();
+		RS_Circle c(preview.get(), pPoints->cData);
+		pPoints->valid= c.createFrom3P(pPoints->points);
+		if(pPoints->valid){
+			pPoints->cData = c.getData();
         }
 
     }
@@ -143,25 +140,25 @@ bool RS_ActionDrawEllipse4Points::preparePreview(){
     case SetPoint4:
     {
         int j=SetPoint4;
-        evalid=false;
-		if( (points.get(j) - points.get(j-1)).squared() <RS_TOLERANCE15){
-            RS_Circle c(preview,cData);
-            valid= c.createFrom3P(points);
-            if(valid){
-                cData=c.getData();
-            }
-        }else{
-            RS_Ellipse e(preview,eData);
-            valid= e.createFrom4P(points);
-            if(valid){
-                evalid=valid;
-                eData=e.getData();
-                m_bUniqueEllipse=false;
-            }else{
-                evalid=false;
-                if (RS_DIALOGFACTORY!=NULL && m_bUniqueEllipse==false) {
+		pPoints->evalid=false;
+		if ((pPoints->points.get(j) - pPoints->points.get(j-1)).squared() <RS_TOLERANCE15){
+			RS_Circle c(preview.get(), pPoints->cData);
+			pPoints->valid= c.createFrom3P(pPoints->points);
+			if (pPoints->valid) {
+				pPoints->cData = c.getData();
+			}
+		} else {
+			RS_Ellipse e{preview.get(), pPoints->eData};
+			pPoints->valid= e.createFrom4P(pPoints->points);
+			if (pPoints->valid) {
+				pPoints->evalid=pPoints->valid;
+				pPoints->eData = e.getData();
+				pPoints->m_bUniqueEllipse=false;
+			} else {
+				pPoints->evalid=false;
+				if (RS_DIALOGFACTORY && pPoints->m_bUniqueEllipse==false) {
                     RS_DIALOGFACTORY->commandMessage(tr("Can not determine uniquely an ellipse"));
-                    m_bUniqueEllipse=true;
+					pPoints->m_bUniqueEllipse=true;
                 }
             }
         }
@@ -170,7 +167,7 @@ bool RS_ActionDrawEllipse4Points::preparePreview(){
     default:
         break;
     }
-    return valid;
+	return pPoints->valid;
 }
 
 void RS_ActionDrawEllipse4Points::mouseReleaseEvent(QMouseEvent* e) {
@@ -189,12 +186,12 @@ void RS_ActionDrawEllipse4Points::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawEllipse4Points::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+	if (!e) {
         return;
     }
     RS_Vector mouse = e->getCoordinate();
-    points.alloc(getStatus()+1);
-    points.set(getStatus(),mouse);
+	pPoints->points.alloc(getStatus()+1);
+	pPoints->points.set(getStatus(),mouse);
 
     switch (getStatus()) {
     case SetPoint1:
@@ -208,7 +205,7 @@ void RS_ActionDrawEllipse4Points::coordinateEvent(RS_CoordinateEvent* e) {
         if( preparePreview()) {
             graphicView->moveRelativeZero(mouse);
             if(getStatus() == SetPoint4 ||
-					(points.get(getStatus()) - points.get(getStatus()-1)).squared() <RS_TOLERANCE15) {
+					(pPoints->points.get(getStatus()) - pPoints->points.get(getStatus()-1)).squared() <RS_TOLERANCE15) {
                 //also draw the entity, if clicked on the same point twice
                 trigger();
             }else{
@@ -228,7 +225,7 @@ void RS_ActionDrawEllipse4Point::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -239,7 +236,7 @@ void RS_ActionDrawEllipse4Point::commandEvent(RS_CommandEvent* e) {
     case SetFocus1: {
             bool ok;
             double m = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 ratio = m / major.magnitude();
                 if (!isArc) {
                     trigger();
@@ -247,7 +244,7 @@ void RS_ActionDrawEllipse4Point::commandEvent(RS_CommandEvent* e) {
                     setStatus(SetAngle1);
                 }
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -257,11 +254,11 @@ void RS_ActionDrawEllipse4Point::commandEvent(RS_CommandEvent* e) {
     case SetAngle1: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 angle1 = RS_Math::deg2rad(a);
                 setStatus(SetAngle2);
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -271,11 +268,11 @@ void RS_ActionDrawEllipse4Point::commandEvent(RS_CommandEvent* e) {
     case SetAngle2: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 angle2 = RS_Math::deg2rad(a);
                 trigger();
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -290,14 +287,13 @@ void RS_ActionDrawEllipse4Point::commandEvent(RS_CommandEvent* e) {
 
 
 QStringList RS_ActionDrawEllipse4Points::getAvailableCommands() {
-    QStringList cmd;
-    return cmd;
+	return {};
 }
 
 
 
 void RS_ActionDrawEllipse4Points::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetPoint1:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first point on ellipse"),
@@ -320,7 +316,7 @@ void RS_ActionDrawEllipse4Points::updateMouseButtonHints() {
             break;
 
         default:
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+            RS_DIALOGFACTORY->updateMouseWidget();
             break;
         }
     }
@@ -331,15 +327,5 @@ void RS_ActionDrawEllipse4Points::updateMouseButtonHints() {
 void RS_ActionDrawEllipse4Points::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-//void RS_ActionDrawEllipse4Points::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
 
 // EOF

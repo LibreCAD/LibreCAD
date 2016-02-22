@@ -24,8 +24,60 @@
 **
 **********************************************************************/
 
-
+#include<cmath>
 #include "rs_painterqt.h"
+#include "rs_math.h"
+#include "rs_debug.h"
+
+namespace {
+/**
+ * Wrapper for Qt
+ * convert RS2::LineType to Qt::PenStyle
+ */
+Qt::PenStyle rsToQtLineType(RS2::LineType t) {
+	switch (t) {
+	case RS2::NoPen:
+		return Qt::NoPen;
+	case RS2::SolidLine:
+		return Qt::SolidLine;
+	case RS2::DotLine:
+	case RS2::DotLineTiny:
+	case RS2::DotLine2:
+	case RS2::DotLineX2:
+		return Qt::DotLine;
+	case RS2::DashLine:
+	case RS2::DashLineTiny:
+	case RS2::DashLine2:
+	case RS2::DashLineX2:
+		return Qt::DashLine;
+	case RS2::DashDotLine:
+	case RS2::DashDotLineTiny:
+	case RS2::DashDotLine2:
+	case RS2::DashDotLineX2:
+		return Qt::DashDotLine;
+	case RS2::DivideLine:
+	case RS2::DivideLineTiny:
+	case RS2::DivideLine2:
+	case RS2::DivideLineX2:
+		return Qt::DashDotDotLine;
+	case RS2::CenterLine:
+	case RS2::CenterLineTiny:
+	case RS2::CenterLine2:
+	case RS2::CenterLineX2:
+		return Qt::DashDotLine;
+	case RS2::BorderLine:
+	case RS2::BorderLineTiny:
+	case RS2::BorderLine2:
+	case RS2::BorderLineX2:
+		return Qt::DashDotLine;
+	case RS2::LineByLayer:
+	case RS2::LineByBlock:
+	default:
+		return Qt::SolidLine;
+	}
+	return Qt::SolidLine;
+}
+}
 
 /**
  * Constructor.
@@ -33,14 +85,6 @@
 // RVT_PORT changed from RS_PainterQt::RS_PainterQt( const QPaintDevice* pd)
 RS_PainterQt::RS_PainterQt( QPaintDevice* pd)
         : QPainter(pd), RS_Painter() {}
-
-
-/**
- * Destructor
- */
-RS_PainterQt::~RS_PainterQt() {}
-
-
 
 void RS_PainterQt::moveTo(int x, int y) {
         //RVT_PORT changed from QPainter::moveTo(x,y);
@@ -83,15 +127,10 @@ void RS_PainterQt::drawPoint(const RS_Vector& p) {
 /**
  * Draws a line from (x1, y1) to (x2, y2).
  */
-void RS_PainterQt::drawLine(const RS_Vector& p1, const RS_Vector& p2) {
-#ifdef __APPLE1__
-        int w2 = (int)getPen().getScreenWidth()/2;
-    QPainter::drawLine(toScreenX(p1.x-w2), toScreenY(p1.y-w2),
-                       toScreenX(p2.x-w2), toScreenY(p2.y-w2));
-#else
+void RS_PainterQt::drawLine(const RS_Vector& p1, const RS_Vector& p2)
+{
     QPainter::drawLine(toScreenX(p1.x), toScreenY(p1.y),
                        toScreenX(p2.x), toScreenY(p2.y));
-#endif
 }
 
 
@@ -144,9 +183,6 @@ void RS_PainterQt::drawArc(const RS_Vector& cp, double radius,
     if(radius<=0.5) {
         drawGridPoint(cp);
     } else {
-#ifdef __APPLE1__
-                drawArcMac(cp, radius, a1, a2, reversed);
-#else
         int   cix;            // Next point on circle
         int   ciy;            //
         double aStep;         // Angle Step (rad)
@@ -212,7 +248,6 @@ void RS_PainterQt::drawArc(const RS_Vector& cp, double radius,
             pa.setPoint(i++, toScreenX(p2.x), toScreenY(p2.y));
             drawPolyline(pa);
         }
-#endif
     }
 }
 
@@ -353,19 +388,12 @@ void RS_PainterQt::drawCircle(const RS_Vector& cp, double radius) {
                               RS_Math::round(2.0*radius),
                               RS_Math::round(2.0*radius));
     } else {
-#ifdef __APPLE1__
-        drawArcMac(cp,
-                radius,
-                0.0, 2*M_PI,
-                false);
-#else
         drawArc(cp,
                 radius,
                 0.0, 2*M_PI,
                 cp + RS_Vector(radius, 0.0),
                 cp + RS_Vector(radius, 0.0),
                 false);
-#endif
         }
 }
 
@@ -468,21 +496,21 @@ void RS_PainterQt::erase() {
 }
 
 
-int RS_PainterQt::getWidth() {
+int RS_PainterQt::getWidth() const{
     return device()->width();
 }
 
 /** get Density per millimeter on screen/print device
   *@return density per millimeter in pixel/mm
   */
-double RS_PainterQt::getDpmm() {
+double RS_PainterQt::getDpmm() const{
     int mm(device()->widthMM());
     if(mm==0) mm=400;
     return double(device()->width())/mm;
 }
 
 
-int RS_PainterQt::getHeight() {
+int RS_PainterQt::getHeight() const{
     return device()->height();
 }
 
@@ -506,7 +534,7 @@ void RS_PainterQt::setPen(const RS_Pen& pen) {
         lpen.setColor(RS_Color(0,0,0));
     }
     QPen p(lpen.getColor(), RS_Math::round(lpen.getScreenWidth()),
-           RS2::rsToQtLineType(lpen.getLineType()));
+		   rsToQtLineType(lpen.getLineType()));
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
     QPainter::setPen(p);

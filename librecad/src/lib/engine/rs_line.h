@@ -35,35 +35,12 @@ class LC_Quadratic;
 /**
  * Holds the data that defines a line.
  */
-class RS_LineData {
-public:
-    /**
-     * Default constructor. Leaves the data object uninitialized.
-     */
-    RS_LineData() {}
-
-    RS_LineData(const RS_Vector& startpoint,
-                const RS_Vector& endpoint) {
-
-        this->startpoint = startpoint;
-        this->endpoint = endpoint;
-    }
-
-    friend class RS_Line;
-    friend class RS_ActionDrawLine;
-
-    friend std::ostream& operator << (std::ostream& os, const RS_LineData& ld) {
-        os << "(" << ld.startpoint <<
-           "/" << ld.endpoint <<
-           ")";
-        return os;
-    }
-
-public:
+struct RS_LineData {
     RS_Vector startpoint;
     RS_Vector endpoint;
 };
 
+std::ostream& operator << (std::ostream& os, const RS_LineData& ld);
 
 /**
  * Class for a line entity.
@@ -72,26 +49,15 @@ public:
  */
 class RS_Line : public RS_AtomicEntity {
 public:
-    //RS_Line(RS_EntityContainer* parent);
-    //RS_Line(const RS_Line& l);
-    RS_Line(){}
+	RS_Line() = default;
     RS_Line(RS_EntityContainer* parent,
             const RS_LineData& d);
     RS_Line(RS_EntityContainer* parent, const RS_Vector& pStart, const RS_Vector& pEnd);
     RS_Line(const RS_Vector& pStart, const RS_Vector& pEnd);
 
-    virtual RS_Entity* clone();
-    /*{
-        cout << "cloning line\n";
-        return new RS_Line(*this);
-        //RS_Entity::copy(src);
-           //if (src!=NULL && src->rtti()==RS2::EntityLine) {
-           //    startpoint = src->getStartpoint();
-           //    endpoint = src->getEndpoint();
-           //}
-       }*/
+	virtual RS_Entity* clone() const;
 
-    virtual ~RS_Line();
+	virtual ~RS_Line() = default;
 
     /**	@return RS2::EntityLine */
     virtual RS2::EntityType rtti() const {
@@ -107,7 +73,7 @@ public:
         return data;
     }
 
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
 
     /** @return Start point of the entity */
     virtual RS_Vector getStartpoint() const {
@@ -182,7 +148,7 @@ public:
     virtual double getAngle2() const {
         return data.endpoint.angleTo(data.startpoint);
     }
-    virtual bool isTangent(const RS_CircleData&  circleData);
+	virtual bool isTangent(const RS_CircleData&  circleData) const;
 
 /**
   * @return a perpendicular vector
@@ -190,28 +156,26 @@ public:
     RS_Vector getNormalVector() const;
     virtual RS_Vector getMiddlePoint()const;
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                         double* dist = NULL)const;
+										 double* dist = nullptr)const;
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-            bool onEntity=true, double* dist = NULL, RS_Entity** entity=NULL)const;
+			bool onEntity=true, double* dist = nullptr, RS_Entity** entity=nullptr)const;
 //    virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-//                                       double* dist = NULL);
+//                                       double* dist = nullptr);
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
-                                       double* dist = NULL,
+									   double* dist = nullptr,
                                        int middlePoints = 1
                                        )const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = nullptr)const;
     virtual RS_Vector getNearestDist(double distance,
-                                     bool startp);
-    //virtual RS_Vector getNearestRef(const RS_Vector& coord,
-    //                                 double* dist = NULL);
+									 bool startp)const;
 
     /**
           * implementations must revert the direction of an atomic entity
           */
     virtual void revertDirection();
-     virtual QVector<RS_Entity* > offsetTwoSides(const double& distance) const;
+	 virtual std::vector<RS_Entity* > offsetTwoSides(const double& distance) const;
     /**
       * the modify offset action
       */
@@ -229,13 +193,12 @@ public:
     virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
 
     /** whether the entity's bounding box intersects with visible portion of graphic view */
-//    virtual bool isVisibleInWindow(RS_GraphicView* view) const;
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
 
     friend std::ostream& operator << (std::ostream& os, const RS_Line& l);
 
     virtual void calculateBorders();
-    /** return the equation of the entity
+	/** \brief getQuadratic() returns the equation of the entity
 for quadratic,
 
 return a vector contains:
@@ -246,18 +209,15 @@ m0 x + m1 y + m2 =0
 **/
     virtual LC_Quadratic getQuadratic() const;
     /**
-     * @brief areaLineIntegral, line integral for contour area calculation by Green's Theorem
+	 * @brief areaLineIntegral line integral for contour area calculation by Green's Theorem
      * Contour Area =\oint x dy
      * @return line integral \oint x dy along the entity
      * \oint x dy = 0.5*(x0+x1)*(y1-y0)
      */
-    virtual double areaLineIntegral() const;
+    virtual double areaLineIntegral() const override;
 
 protected:
-    RS_LineData data;
-    //RS_Vector startpoint;
-    //RS_Vector endpoint;
-}
-;
+	RS_LineData data;
+};
 
 #endif

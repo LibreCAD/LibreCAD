@@ -27,32 +27,26 @@
 #include "rs_actionselectlayer.h"
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_selection.h"
+#include "rs_debug.h"
 
 
 
 RS_ActionSelectLayer::RS_ActionSelectLayer(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-        :RS_ActionInterface("Select Layers", container, graphicView) {
-
-    en = NULL;
+		:RS_ActionInterface("Select Layers", container, graphicView)
+		,en(nullptr)
+{
+	actionType=RS2::ActionSelectLayer;
 }
-
-
-QAction* RS_ActionSelectLayer::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action = new QAction(tr("(De-)Select Layer"), NULL);
-        action->setIcon(QIcon(":/extui/selectlayer.png"));
-    //action->zetStatusTip(tr("(De-)Selects layers"));
-    return action;
-}
-
 
 void RS_ActionSelectLayer::trigger() {
-    if (en!=NULL) {
+    if (en) {
         RS_Selection s(*container, graphicView);
         s.selectLayer(en);
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
         }
     } else {

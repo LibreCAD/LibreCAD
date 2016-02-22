@@ -31,6 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_dimension.h"
+#include "rs_debug.h"
 
 
 
@@ -40,16 +41,6 @@ RS_ActionToolRegenerateDimensions::RS_ActionToolRegenerateDimensions(RS_EntityCo
                     container, graphicView) {}
 
 
-QAction* RS_ActionToolRegenerateDimensions::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Regenerate Dimension Entities"),
-                                  tr("&Regenerate Dimension Entities"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Regenerate Dimension Entities"), NULL);
-    //action->zetStatusTip(tr("Regenerates all Dimension Entities"));
-
-    return action;
-}
-
 void RS_ActionToolRegenerateDimensions::init(int status) {
     RS_ActionInterface::init(status);
 
@@ -57,15 +48,12 @@ void RS_ActionToolRegenerateDimensions::init(int status) {
 }
 
 
-
 void RS_ActionToolRegenerateDimensions::trigger() {
 
     RS_DEBUG->print("RS_ActionToolRegenerateDimensions::trigger()");
 
-    int num = 0;
-    for (RS_Entity* e = container->firstEntity(RS2::ResolveNone);
-            e != NULL;
-            e = container->nextEntity(RS2::ResolveNone)) {
+	int num = 0;
+	for(auto e: *container){
 
         if (RS_Information::isDimension(e->rtti()) && e->isVisible()) {
 			num++;

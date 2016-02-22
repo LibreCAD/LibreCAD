@@ -76,7 +76,7 @@ void RS_DialogFactory::setFactoryObject(RS_DialogFactoryInterface* fo) {
  */
 RS_DialogFactoryInterface* RS_DialogFactory::getFactoryObject() {
 	RS_DEBUG->print("RS_DialogFactory::getFactoryObject");
-    if (factoryObject!=NULL) {
+    if (factoryObject) {
 		RS_DEBUG->print("RS_DialogFactory::getFactoryObject: "
 			"returning factory object");
         return factoryObject;
@@ -92,7 +92,7 @@ RS_DialogFactoryInterface* RS_DialogFactory::getFactoryObject() {
 void RS_DialogFactory::commandMessage(const QString& m) {
 	RS_DEBUG->print("RS_DialogFactory::commandMessage");
 
-    if (factoryObject!=NULL) {
+    if (factoryObject) {
 		factoryObject->commandMessage(m);
 	}
 }

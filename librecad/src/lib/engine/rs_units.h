@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 Dongxu Li (dongxuli2011@gmail.com)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -29,7 +30,9 @@
 #define RS_UNITS_H
 
 #include "rs.h"
-#include "rs_vector.h"
+
+class RS_Vector;
+class QString;
 
 /**
  * Conversion methods for units
@@ -52,7 +55,7 @@ public:
 	static bool isMetric(RS2::Unit u);
 	static double getFactorToMM(RS2::Unit u);
 	static double convert(double val, RS2::Unit src, RS2::Unit dest);
-	static RS_Vector convert(const RS_Vector val, RS2::Unit src, RS2::Unit dest);
+	static RS_Vector convert(const RS_Vector& val, RS2::Unit src, RS2::Unit dest);
 	
     static QString unitToSign(RS2::Unit u);
 
@@ -75,10 +78,10 @@ public:
     static RS2::AngleFormat numberToAngleFormat(int num);
 
 	static RS_Vector paperFormatToSize(RS2::PaperFormat p);
-	static RS2::PaperFormat paperSizeToFormat(const RS_Vector s);
-	
-        static QString paperFormatToString(RS2::PaperFormat p);
-        static RS2::PaperFormat stringToPaperFormat(const QString& p);
+	static RS2::PaperFormat paperSizeToFormat(const RS_Vector& s);
+
+	static QString paperFormatToString(RS2::PaperFormat p);
+	static RS2::PaperFormat stringToPaperFormat(const QString& p);
 
 	static void test();
     static double dpiToScale(double dpi, RS2::Unit unit);

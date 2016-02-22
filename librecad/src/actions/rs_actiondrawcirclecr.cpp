@@ -24,12 +24,18 @@
 **
 **********************************************************************/
 
+#include <QAction>
+#include <QMouseEvent>
 #include "rs_actiondrawcirclecr.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
+#include "rs_circle.h"
+#include "rs_coordinateevent.h"
+#include "rs_math.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
 /**
  * Constructor.
@@ -37,27 +43,21 @@
 RS_ActionDrawCircleCR::RS_ActionDrawCircleCR(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw circles CR",
-                           container, graphicView) {
+						   container, graphicView)
+		,data(new RS_CircleData())
+{
+	actionType=RS2::ActionDrawCircleCR;
 
     reset();
 }
 
 
 
-RS_ActionDrawCircleCR::~RS_ActionDrawCircleCR() {}
-
-
-QAction* RS_ActionDrawCircleCR::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // "Circle: Center, Radius"
-    QAction* action = new QAction(tr("Center, &Radius"), NULL);
-                action->setIcon(QIcon(":/extui/circlescr.png"));
-    //action->zetStatusTip(tr("Draw circles with center and radius"));
-    return action;
-}
+RS_ActionDrawCircleCR::~RS_ActionDrawCircleCR() = default;
 
 
 void RS_ActionDrawCircleCR::reset() {
-    data = RS_CircleData(RS_Vector(false), 0.0);
+	data.reset(new RS_CircleData{RS_Vector{false}, 0.0});
 }
 
 
@@ -72,19 +72,26 @@ void RS_ActionDrawCircleCR::trigger() {
     RS_PreviewActionInterface::trigger();
 
     RS_Circle* circle = new RS_Circle(container,
-                                      data);
+									  *data);
     circle->setLayerToActive();
     circle->setPenToActive();
-    container->addEntity(circle);
+
+    switch(getStatus()) {
+    	case SetCenter:
+    		container->addEntity(circle);
+		graphicView->moveRelativeZero(circle->getCenter());
+		break;
+	case SetRadius:
+		break;
+    }
 
     // upd. undo list:
-    if (document!=NULL) {
+    if (document) {
         document->startUndoCycle();
         document->addUndoable(circle);
         document->endUndoCycle();
     }
         graphicView->redraw(RS2::RedrawDrawing);
-    graphicView->moveRelativeZero(circle->getCenter());
 
     setStatus(SetCenter);
 
@@ -95,7 +102,7 @@ void RS_ActionDrawCircleCR::trigger() {
 void RS_ActionDrawCircleCR::setRadius(double r)
 {
     if(r>RS_TOLERANCE){
-        data.radius=r;
+		data->radius=r;
     }else{
         RS_DIALOGFACTORY->commandMessage(tr("radius=%1 is invalid").arg(r));
     }
@@ -108,10 +115,10 @@ void RS_ActionDrawCircleCR::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
     case SetCenter:
-        data.center = mouse;
+		data->center = mouse;
         deletePreview();
-        preview->addEntity(new RS_Circle(preview,
-                                         data));
+		preview->addEntity(new RS_Circle(preview.get(),
+										 *data));
         drawPreview();
         break;
     }
@@ -142,7 +149,7 @@ void RS_ActionDrawCircleCR::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetCenter:
-        data.center = mouse;
+		data->center = mouse;
         trigger();
         break;
 
@@ -173,8 +180,8 @@ void RS_ActionDrawCircleCR::commandEvent(RS_CommandEvent* e) {
     case SetRadius: {
             bool ok;
             double r = RS_Math::eval(c, &ok);
-            if (ok==true) {
-                data.radius = r;
+			if (ok) {
+				data->radius = r;
                 e->accept();
                 trigger();
             } else {
@@ -216,7 +223,7 @@ void RS_ActionDrawCircleCR::updateMouseButtonHints() {
                                             tr("Back"));
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+		RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }
@@ -244,15 +251,8 @@ void RS_ActionDrawCircleCR::updateMouseCursor() {
 }
 
 
-
-//void RS_ActionDrawCircleCR::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
-
+double RS_ActionDrawCircleCR::getRadius() const{
+	return data->radius;
+}
 // EOF
 

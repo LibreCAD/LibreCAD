@@ -25,7 +25,10 @@
 **********************************************************************/
 #include "qg_arcoptions.h"
 
+#include "rs_actiondrawarc.h"
 #include "rs_settings.h"
+#include "rs_debug.h"
+#include "ui_qg_arcoptions.h"
 
 /*
  *  Constructs a QG_ArcOptions as a child of 'parent', with the
@@ -33,18 +36,16 @@
  */
 QG_ArcOptions::QG_ArcOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, ui(new Ui::Ui_ArcOptions{})
 {
-    setupUi(this);
-
+	ui->setupUi(this);
 }
 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_ArcOptions::~QG_ArcOptions()
-{
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+QG_ArcOptions::~QG_ArcOptions() {
+	saveSettings();
 }
 
 /*
@@ -53,18 +54,18 @@ QG_ArcOptions::~QG_ArcOptions()
  */
 void QG_ArcOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
-void QG_ArcOptions::destroy() {
+void QG_ArcOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Draw");
-    RS_SETTINGS->writeEntry("/ArcReversed", (int)rbNeg->isChecked());
+	RS_SETTINGS->writeEntry("/ArcReversed", (int)ui->rbNeg->isChecked());
     RS_SETTINGS->endGroup();
 }
 
 void QG_ArcOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDrawArc) {
-        action = (RS_ActionDrawArc*)a;
+    if (a && a->rtti()==RS2::ActionDrawArc) {
+		action = static_cast<RS_ActionDrawArc*>(a);
 
         bool reversed;
         if (update) {
@@ -75,17 +76,17 @@ void QG_ArcOptions::setAction(RS_ActionInterface* a, bool update) {
             RS_SETTINGS->endGroup();
             action->setReversed(reversed);
         }
-        rbNeg->setChecked(reversed);
+		ui->rbNeg->setChecked(reversed);
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_ArcOptions::setAction: wrong action type");
-        action = NULL;
+		action = nullptr;
     }
 
 }
 
 
 /*void QG_ArcOptions::init() {
-    data = NULL;
+	data = nullptr;
     RS_SETTINGS->beginGroup("/Draw");
     bool reversed = RS_SETTINGS->readNumEntry("/ArcReversed", 0);
     RS_SETTINGS->endGroup();
@@ -101,7 +102,7 @@ void QG_ArcOptions::setAction(RS_ActionInterface* a, bool update) {
 }*/
 
 void QG_ArcOptions::updateDirection(bool /*pos*/) {
-    if (action!=NULL) {
-        action->setReversed(!(rbPos->isChecked()));
+    if (action) {
+		action->setReversed(!(ui->rbPos->isChecked()));
     }
 }

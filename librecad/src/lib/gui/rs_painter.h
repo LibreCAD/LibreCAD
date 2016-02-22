@@ -28,12 +28,16 @@
 #ifndef RS_PAINTER_H
 #define RS_PAINTER_H
 
-#include "rs_color.h"
-#include "rs_math.h"
-#include "rs_pen.h"
 #include "rs_vector.h"
-#include <QPainterPath>
 
+class RS_Color;
+class RS_Pen;
+class QPainterPath;
+class QRectF;
+class QPolygon;
+class QPolygonF;
+class QImage;
+class QBrush;
 
 /**
  * This class is a common interface for a painter class. Such
@@ -46,12 +50,11 @@
  */
 class RS_Painter {
 public:
-    RS_Painter() {
+    RS_Painter(): offset{0.0,0.0} {
         drawingMode = RS2::ModeFull;
-        offset = RS_Vector(0.0,0.0);
         drawSelectedEntities=false;
     }
-    virtual ~RS_Painter() {}
+	virtual ~RS_Painter() = default;
 
     /**
      * Sets the drawing mode.
@@ -136,8 +139,9 @@ public:
     virtual void setBrush(const QBrush& color) = 0;
     virtual void drawPolygon(const QPolygon& a, Qt::FillRule rule=Qt::WindingFill) = 0;
     virtual void erase() = 0;
-    virtual int getWidth() = 0;
-    virtual int getHeight() = 0;
+    virtual int getWidth() const= 0;
+    virtual int getHeight() const= 0;
+    virtual double getDpmm() const= 0;
 
     virtual void setOffset(const RS_Vector& o) {
         offset = o;
@@ -145,12 +149,8 @@ public:
 
     virtual void setClipRect(int x, int y, int w, int h) = 0;
     virtual void resetClipping() = 0;
-    int toScreenX(double x) {
-        return RS_Math::round(offset.x + x);
-    }
-    int toScreenY(double y) {
-        return RS_Math::round(offset.y + y);
-    }
+	int toScreenX(double x) const;
+	int toScreenY(double y) const;
 
 protected:
     /**

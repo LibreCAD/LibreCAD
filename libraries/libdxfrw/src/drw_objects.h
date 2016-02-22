@@ -1,7 +1,7 @@
 /******************************************************************************
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
-**  Copyright (C) 2011 Rallaz, rallazz@gmail.com                             **
+**  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
 **  General Public License as published by the Free Software Foundation,     **
@@ -21,6 +21,7 @@
 
 class dxfReader;
 class dxfWriter;
+class dwgBuffer;
 
 namespace DRW {
 
@@ -32,11 +33,20 @@ namespace DRW {
          STYLE,
          DIMSTYLE,
          VPORT,
-         BLOCK_RECORD
+         BLOCK_RECORD,
+         APPID,
+         IMAGEDEF
      };
 
-
+//pending VIEW, UCS, APPID, VP_ENT_HDR, GROUP, MLINESTYLE, LONG_TRANSACTION, XRECORD,
+//ACDBPLACEHOLDER, VBA_PROJECT, ACAD_TABLE, CELLSTYLEMAP, DBCOLOR, DICTIONARYVAR,
+//DICTIONARYWDFLT, FIELD, IDBUFFER, IMAGEDEF, IMAGEDEFREACTOR, LAYER_INDEX, LAYOUT
+//MATERIAL, PLACEHOLDER, PLOTSETTINGS, RASTERVARIABLES, SCALE, SORTENTSTABLE,
+//SPATIAL_INDEX, SPATIAL_FILTER, TABLEGEOMETRY, TABLESTYLES,VISUALSTYLE,
 }
+
+#define SETOBJFRIENDS  friend class dxfRW; \
+                       friend class dwgReader;
 
 //! Base class for tables entries
 /*!
@@ -49,18 +59,60 @@ public:
     DRW_TableEntry() {
         tType = DRW::UNKNOWNT;
         flags = 0;
+        numReactors = xDictFlag = 0;
+        parentHandle = 0;
+        curr = NULL;
     }
-    virtual~DRW_TableEntry() {}
+
+    virtual~DRW_TableEntry() {
+        for (std::vector<DRW_Variant*>::iterator it=extData.begin(); it!=extData.end(); ++it)
+            delete *it;
+
+        extData.clear();
+    }
+
+    DRW_TableEntry(const DRW_TableEntry& e) {
+        tType = e.tType;
+        handle = e.handle;
+        parentHandle = e.parentHandle;
+        name = e.name;
+        flags = e.flags;
+        numReactors = e.numReactors;
+        xDictFlag = e.xDictFlag;
+        curr = e.curr;
+        for (std::vector<DRW_Variant*>::const_iterator it=e.extData.begin(); it!=e.extData.end(); ++it){
+            extData.push_back(new DRW_Variant(*(*it)));
+        }
+    }
 
 protected:
     void parseCode(int code, dxfReader *reader);
+    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) = 0;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBuf, duint32 bs=0);
+    void reset(){
+        flags =0;
+        for (std::vector<DRW_Variant*>::iterator it=extData.begin(); it!=extData.end(); ++it)
+            delete *it;
+        extData.clear();
+    }
 
 public:
     enum DRW::TTYPE tType;     /*!< enum: entity type, code 0 */
-    int handle;                /*!< entity identifier, code 5 */
-    int handleBlock;           /*!< Soft-pointer ID/handle to owner BLOCK_RECORD object, code 330 */
+    duint32 handle;            /*!< entity identifier, code 5 */
+    int parentHandle;          /*!< Soft-pointer ID/handle to owner object, code 330 */
     UTF8STRING name;           /*!< entry name, code 2 */
     int flags;                 /*!< Flags relevant to entry, code 70 */
+    std::vector<DRW_Variant*> extData; /*!< FIFO list of extended data, codes 1000 to 1071*/
+
+private:
+    DRW_Variant* curr;
+
+    //***** dwg parse ********/
+protected:
+    dint16 oType;
+    duint8 xDictFlag;
+    dint32 numReactors; //
+    duint32 objSize;  //RL 32bits object data size in bits
 };
 
 
@@ -70,6 +122,7 @@ public:
 *  @author Rallaz
 */
 class DRW_Dimstyle : public DRW_TableEntry {
+    SETOBJFRIENDS
 public:
     DRW_Dimstyle() { reset();}
 
@@ -79,13 +132,13 @@ public:
         dimexo = 0.0625;
         dimgap = dimcen = 0.09;
         dimtxsty = "Standard";
-        dimscale = dimlfac = dimtfac = 1.0;
+        dimscale = dimlfac = dimtfac = dimfxl = 1.0;
         dimdli = 0.38;
         dimrnd = dimdle = dimtp = dimtm = dimtsz = dimtvp = 0.0;
         dimaltf = 25.4;
         dimtol = dimlim = dimse1 = dimse2 = dimtad = dimzin = 0;
         dimtoh = dimtolj = 1;
-        dimalt = dimtofl = dimsah = dimtix = dimsoxd =0;
+        dimalt = dimtofl = dimsah = dimtix = dimsoxd = dimfxlon = 0;
         dimaltd = dimunit = dimaltu = dimalttd = dimlunit = 2;
         dimclrd = dimclre = dimclrt = dimjust = dimupt = 0;
         dimazin = dimaltz = dimaltttz = dimtzin = dimfrac = 0;
@@ -95,9 +148,12 @@ public:
         dimfit = dimatfit = 3;
         dimdsep = '.';
         dimlwd = dimlwe = -2;
+        DRW_TableEntry::reset();
     }
 
+protected:
     void parseCode(int code, dxfReader *reader);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
     //V12
@@ -116,6 +172,7 @@ public:
     double dimdle;            /*!< code 46 */
     double dimtp;             /*!< code 47 */
     double dimtm;             /*!< code 48 */
+    double dimfxl;            /*!< code 49 V2007+ */
     double dimtxt;            /*!< code 140 */
     double dimcen;            /*!< code 141 */
     double dimtsz;            /*!< code 142 */
@@ -164,6 +221,7 @@ public:
     int dimfit;               /*!< code 287 R13+  (obsolete 2000+, use dimatfit & dimtmove)*/
     int dimupt;               /*!< code 288 R13+ */
     int dimatfit;             /*!< code 289 V2000+ */
+    int dimfxlon;             /*!< code 290 V2007+ */
     UTF8STRING dimtxsty;      /*!< code 340 R13+ */
     UTF8STRING dimldrblk;     /*!< code 341 V2000+ */
     int dimlwd;               /*!< code 371 V2000+ */
@@ -178,6 +236,7 @@ public:
 */
 /*TODO: handle complex lineType*/
 class DRW_LType : public DRW_TableEntry {
+    SETOBJFRIENDS
 public:
     DRW_LType() { reset();}
 
@@ -187,9 +246,12 @@ public:
         size = 0;
         length = 0.0;
         pathIdx = 0;
+        DRW_TableEntry::reset();
     }
 
+protected:
     void parseCode(int code, dxfReader *reader);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
     void update();
 
 public:
@@ -210,6 +272,7 @@ private:
 *  @author Rallaz
 */
 class DRW_Layer : public DRW_TableEntry {
+    SETOBJFRIENDS
 public:
     DRW_Layer() { reset();}
 
@@ -220,9 +283,12 @@ public:
         plotF = true; // default TRUE (plot yes)
         lWeight = DRW_LW_Conv::widthDefault; // default BYDEFAULT (dxf -3, dwg 31)
         color24 = -1; //default -1 not set
+        DRW_TableEntry::reset();
     }
 
+protected:
     void parseCode(int code, dxfReader *reader);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
     UTF8STRING lineType;            /*!< line type, code 6 */
@@ -231,7 +297,43 @@ public:
     bool plotF;                     /*!< Plot flag, code 290 */
     enum DRW_LW_Conv::lineWidth lWeight; /*!< layer lineweight, code 370 */
     std::string handlePlotS;        /*!< Hard-pointer ID/handle of plotstyle, code 390 */
-    std::string handlePlotM;        /*!< Hard-pointer ID/handle of materialstyle, code 347 */
+    std::string handleMaterialS;        /*!< Hard-pointer ID/handle of materialstyle, code 347 */
+/*only used for read dwg*/
+    dwgHandle lTypeH;
+};
+
+//! Class to handle block record entries
+/*!
+*  Class to handle block record table entries
+*  @author Rallaz
+*/
+class DRW_Block_Record : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_Block_Record() { reset();}
+    void reset() {
+        tType = DRW::BLOCK_RECORD;
+        flags = 0;
+        firstEH = lastEH = DRW::NoHandle;
+        DRW_TableEntry::reset();
+    }
+
+protected:
+//    void parseCode(int code, dxfReader *reader);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
+
+public:
+//Note:    int DRW_TableEntry::flags; contains code 70 of block
+    int insUnits;             /*!< block insertion units, code 70 of block_record*/
+    DRW_Coord basePoint;      /*!<  block insertion base point dwg only */
+protected:
+    //dwg parser
+private:
+    duint32 block;   //handle for block entity
+    duint32 endBlock;//handle for end block entity
+    duint32 firstEH; //handle of first entity, only in pre-2004
+    duint32 lastEH;  //handle of last entity, only in pre-2004
+    std::vector<duint32>entMap;
 };
 
 //! Class to handle text style entries
@@ -240,6 +342,7 @@ public:
 *  @author Rallaz
 */
 class DRW_Textstyle : public DRW_TableEntry {
+    SETOBJFRIENDS
 public:
     DRW_Textstyle() { reset();}
 
@@ -250,9 +353,12 @@ public:
         font="txt";
         genFlag = 0; //2= X mirror, 4= Y mirror
         fontFamily = 0;
+        DRW_TableEntry::reset();
     }
 
+protected:
     void parseCode(int code, dxfReader *reader);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
     double height;          /*!< Fixed text height (0 not set), code 40 */
@@ -271,10 +377,12 @@ public:
 *  @author Rallaz
 */
 class DRW_Vport : public DRW_TableEntry {
+    SETOBJFRIENDS
 public:
     DRW_Vport() { reset();}
 
     void reset(){
+        tType = DRW::VPORT;
         UpperRight.x = UpperRight.y = 1.0;
         snapSpacing.x = snapSpacing.y = 10.0;
         gridSpacing = snapSpacing;
@@ -290,9 +398,12 @@ public:
         circleZoom = 100;
         ucsIcon = 3;
         gridBehavior = 7;
+        DRW_TableEntry::reset();
     }
 
+protected:
     void parseCode(int code, dxfReader *reader);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
     DRW_Coord lowerLeft;     /*!< Lower left corner, code 10 & 20 */
@@ -333,18 +444,27 @@ public:
 *  Class to handle image definitions object entries
 *  @author Rallaz
 */
-class DRW_ImageDef {
+class DRW_ImageDef : public DRW_TableEntry {//
+    SETOBJFRIENDS
 public:
     DRW_ImageDef() {
-        version = 0;
+        reset();
     }
 
+    void reset(){
+        tType = DRW::IMAGEDEF;
+        imgVersion = 0;
+        DRW_TableEntry::reset();
+    }
+
+protected:
     void parseCode(int code, dxfReader *reader);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
-    std::string handle;       /*!< entity identifier, code 5 */
+//    std::string handle;       /*!< entity identifier, code 5 */
     UTF8STRING name;          /*!< File name of image, code 1 */
-    int version;              /*!< class version, code 90, 0=R14 version */
+    int imgVersion;              /*!< class version, code 90, 0=R14 version */
     double u;                 /*!< image size in pixels U value, code 10 */
     double v;                 /*!< image size in pixels V value, code 20 */
     double up;                /*!< default size of one pixel U value, code 11 */
@@ -355,47 +475,25 @@ public:
     std::map<std::string,std::string> reactors;
 };
 
-
-//! Class to handle header entries
+//! Class to handle AppId entries
 /*!
-*  Class to handle header vars, to read iterate over "std::map vars"
-*  to write add a DRW_Variant* into "std::map vars" (do not delete it, are cleared in dtor)
-*  or use add* helper functions.
+*  Class to handle AppId symbol table entries
 *  @author Rallaz
 */
-class DRW_Header {
+class DRW_AppId : public DRW_TableEntry {
+    SETOBJFRIENDS
 public:
-    DRW_Header() {
+    DRW_AppId() { reset();}
+
+    void reset(){
+        tType = DRW::APPID;
+        flags = 0;
+        name = "";
     }
-    ~DRW_Header() {
-        for (std::map<std::string,DRW_Variant*>::iterator it=vars.begin(); it!=vars.end(); ++it)
-            delete it->second;
 
-        vars.clear();
-    }
-
-    void addDouble(std::string key, double value, int code);
-    void addInt(std::string key, int value, int code);
-    void addStr(std::string key, std::string value, int code);
-    void addCoord(std::string key, DRW_Coord value, int code);
-    std::string getComments() const {return comments;}
-
-    void parseCode(int code, dxfReader *reader);
-    void write(dxfWriter *writer, DRW::Version ver);
-    void addComment(std::string c);
-private:
-    bool getDouble(std::string key, double *varDouble);
-    bool getInt(std::string key, int *varInt);
-    bool getStr(std::string key, std::string *varStr);
-    bool getCoord(std::string key, DRW_Coord *varStr);
-
-public:
-    std::map<std::string,DRW_Variant*> vars;
-private:
-    std::string comments;
-    std::string name;
-    DRW_Variant* curr;
-    int version; //to use on read
+protected:
+    void parseCode(int code, dxfReader *reader){DRW_TableEntry::parseCode(code, reader);}
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 };
 
 namespace DRW {

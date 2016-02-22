@@ -28,12 +28,8 @@
 #ifndef RS_ENTITYCONTAINER_H
 #define RS_ENTITYCONTAINER_H
 
-#include "rs_arc.h"
-#include "rs_circle.h"
-#include "rs_ellipse.h"
+#include <vector>
 #include "rs_entity.h"
-#include "rs_line.h"
-#include "rs_point.h"
 
 /**
  * Class representing a tree of entities.
@@ -42,14 +38,15 @@
  * @author Andrew Mustun
  */
 class RS_EntityContainer : public RS_Entity {
+	typedef RS_Entity * value_type;
 
 public:
 
-    RS_EntityContainer(RS_EntityContainer* parent=NULL, bool owner=true);
+	RS_EntityContainer(RS_EntityContainer* parent=nullptr, bool owner=true);
     //RS_EntityContainer(const RS_EntityContainer& ec);
     virtual ~RS_EntityContainer();
 
-    virtual RS_Entity* clone();
+	virtual RS_Entity* clone() const;
     virtual void detach();
 
     /** @return RS2::EntityContainer */
@@ -61,9 +58,9 @@ public:
 
     /**
      * @return true: because entities made from this class
-     *         and subclasses are containers for other entities.
+	 *         and subclasses are containers for other entities.
      */
-    virtual bool isContainer() const {
+	virtual bool isContainer() const {
         return true;
     }
 
@@ -75,9 +72,9 @@ public:
                 return false;
         }
 
-        virtual double getLength() const;
+	virtual double getLength() const;
 
-    virtual void undoStateChanged(bool undone);
+//	void undoStateChanged(bool undone) override;
     virtual void setVisible(bool v);
 
     virtual bool setSelected(bool select=true);
@@ -89,38 +86,41 @@ public:
     virtual void addEntity(RS_Entity* entity);
     virtual void appendEntity(RS_Entity* entity);
     virtual void prependEntity(RS_Entity* entity);
-    virtual void moveEntity(int index, QList<RS_Entity *> entList);
+	virtual void moveEntity(int index, QList<RS_Entity *>& entList);
     virtual void insertEntity(int index, RS_Entity* entity);
-//RLZ unused    virtual void replaceEntity(int index, RS_Entity* entity);
     virtual bool removeEntity(RS_Entity* entity);
+
+	//!
+	//! \brief addRectangle add four lines to form a rectangle by
+	//! the diagonal vertices v0,v1
+	//! \param v0,v1 diagonal vertices of the rectangle
+	//!
+	void addRectangle(RS_Vector const& v0, RS_Vector const& v1);
+
     virtual RS_Entity* firstEntity(RS2::ResolveLevel level=RS2::ResolveNone);
     virtual RS_Entity* lastEntity(RS2::ResolveLevel level=RS2::ResolveNone);
     virtual RS_Entity* nextEntity(RS2::ResolveLevel level=RS2::ResolveNone);
     virtual RS_Entity* prevEntity(RS2::ResolveLevel level=RS2::ResolveNone);
     virtual RS_Entity* entityAt(int index);
-    virtual void setEntityAt(int index,RS_Entity* en){
-        if(autoDelete && entities.at(index) != NULL) {
-            delete entities.at(index);
-        }
-        entities[index] = en;
-    }
+	virtual void setEntityAt(int index,RS_Entity* en);
 //RLZ unused	virtual int entityAt();
-        virtual int findEntity(RS_Entity* entity);
+		virtual int findEntity(RS_Entity const* const entity);
     virtual void clear();
-
-    QListIterator<RS_Entity*> createIterator();
 
     //virtual unsigned long int count() {
         //	return count(false);
         //}
-    virtual bool isEmpty() {
+	virtual bool isEmpty() const{
         return count()==0;
-    }
-    virtual unsigned int count();
-    virtual unsigned int count() const;
-    virtual unsigned int countDeep();
-    //virtual unsigned long int countLayerEntities(RS_Layer* layer);
-    virtual unsigned int countSelected();
+	}
+	virtual unsigned count() const;
+	virtual unsigned countDeep() const;
+	//virtual unsigned long int countLayerEntities(RS_Layer* layer);
+	/** \brief countSelected number of selected
+	* @param deep count sub-containers, if true
+	* @param types if is not empty, only counts by types listed
+	*/
+	virtual unsigned countSelected(bool deep=true, std::initializer_list<RS2::EntityType> const& types = {});
     virtual double totalSelectedLength();
 
     /**
@@ -138,8 +138,7 @@ public:
     virtual void updateSplines();
     virtual void update();
         virtual void renameInserts(const QString& oldName,
-                const QString& newName);
-
+				const QString& newName);
 
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                          double* dist = NULL)const;
@@ -148,7 +147,7 @@ public:
 
     RS_Entity* getNearestEntity(const RS_Vector& point,
                                 double* dist = NULL,
-                                RS2::ResolveLevel level=RS2::ResolveAll);
+								RS2::ResolveLevel level=RS2::ResolveAll) const;
 
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
             bool onEntity = true,
@@ -156,20 +155,20 @@ public:
             RS_Entity** entity=NULL)const;
 
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-                                       double* dist = NULL);
+									   double* dist = NULL)const;
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
                                        double* dist = NULL,
                                        int middlePoints = 1
                                        )const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = NULL) const;
     virtual RS_Vector getNearestIntersection(const RS_Vector& coord,
             double* dist = NULL);
     virtual RS_Vector getNearestRef(const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = NULL) const;
     virtual RS_Vector getNearestSelectedRef(const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = NULL) const;
 
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity,
@@ -184,7 +183,7 @@ public:
     virtual void rotate(const RS_Vector& center, const double& angle);
     virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
     virtual void scale(const RS_Vector& center, const RS_Vector& factor);
-    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+	virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2a) override;
 
     virtual void stretch(const RS_Vector& firstCorner,
                          const RS_Vector& secondCorner,
@@ -198,7 +197,7 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, RS_EntityContainer& ec);
 
-    bool isOwner() {return autoDelete;}
+	bool isOwner() const {return autoDelete;}
     void setOwner(bool owner) {autoDelete=owner;}
     /**
      * @brief areaLineIntegral, line integral for contour area calculation by Green's Theorem
@@ -206,13 +205,27 @@ public:
      * @return line integral \oint x dy along the entity
      * returns absolute value
      */
-    virtual double areaLineIntegral() const;
+    virtual double areaLineIntegral() const override;
     /**
      * @brief ignoreForModification, ignore this entity for entity catch for certain actions
      * like catching circles to create tangent circles
      * @return, true, indicate this entity container should be ignored
      */
     bool ignoredOnModification() const;
+	/**
+	 * @brief begin/end to support range based loop
+	 * @return iterator
+	 */
+	QList<RS_Entity *>::const_iterator begin() const;
+	QList<RS_Entity *>::const_iterator end() const;
+	QList<RS_Entity *>::iterator begin() ;
+	QList<RS_Entity *>::iterator end() ;
+	//! \{
+	//! first and last without resolving into children, assume the container is
+	//! not empty
+	RS_Entity* last() const;
+	RS_Entity* first() const;
+	//! \}
 
 protected:
 

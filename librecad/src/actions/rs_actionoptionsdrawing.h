@@ -41,13 +41,7 @@ class RS_ActionOptionsDrawing : public RS_ActionInterface {
 public:
     RS_ActionOptionsDrawing(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
-    ~RS_ActionOptionsDrawing() {}
-
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionOptionsDrawing;
-	}
+    ~RS_ActionOptionsDrawing() = default;
 
     virtual void init(int status=0);
 

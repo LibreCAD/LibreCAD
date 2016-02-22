@@ -35,6 +35,7 @@
 #include <QApplication>
 #include <QDateTime>
 #include <QImageWriter>
+#include <QMouseEvent>
 
 #include "rs_system.h"
 #include "rs_settings.h"
@@ -42,6 +43,7 @@
 #include "rs_staticgraphicview.h"
 #include "rs_actionlibraryinsert.h"
 #include "qg_actionhandler.h"
+#include "rs_debug.h"
 
 #if QT_VERSION < 0x040400
 #include "emu_qt44.h"
@@ -57,7 +59,7 @@ QG_LibraryWidget::QG_LibraryWidget(QWidget* parent, const char* name, Qt::Window
     : QWidget(parent, fl)
 {
     setObjectName(name);
-    actionHandler = NULL;
+	actionHandler = nullptr;
 
     QVBoxLayout *vboxLayout = new QVBoxLayout(this);
     vboxLayout->setSpacing(2);
@@ -76,7 +78,7 @@ QG_LibraryWidget::QG_LibraryWidget(QWidget* parent, const char* name, Qt::Window
     iconModel = new QStandardItemModel;
     QStringList directoryList = RS_SYSTEM->getDirectoryList("library");
     for (int i = 0; i < directoryList.size(); ++i) {
-        appendTree(NULL, directoryList.at(i));
+		appendTree(nullptr, directoryList.at(i));
      }
 
     RS_SETTINGS->beginGroup("/Paths");
@@ -84,7 +86,7 @@ QG_LibraryWidget::QG_LibraryWidget(QWidget* parent, const char* name, Qt::Window
     RS_SETTINGS->endGroup();
     if(customPath.size()>0){
             //todo: make the custom path more flexible
-            appendTree(NULL,customPath);
+			appendTree(nullptr,customPath);
     }
     dirView->setModel(dirModel);
     ivPreview->setModel(iconModel);
@@ -154,10 +156,10 @@ void QG_LibraryWidget::insert() {
     QString dxfPath = getItemPath(item);
 
     if (QFileInfo(dxfPath).isReadable()) {
-        if (actionHandler!=NULL) {
+        if (actionHandler) {
             RS_ActionInterface* a =
                 actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
-            if (a!=NULL) {
+            if (a) {
                 RS_ActionLibraryInsert* action = (RS_ActionLibraryInsert*)a;
                 action->setFile(dxfPath);
             } else {
@@ -184,25 +186,21 @@ void QG_LibraryWidget::appendTree(QStandardItem* item, QString directory) {
 //    QStringList::Iterator it;
     QDir dir(directory);
 
-    if (!dir.exists())
-        return;
+	if (!dir.exists()) return;
 
     // read subdirectories of this directory:
     QStringList lDirectoryList = dir.entryList(QDir::Dirs|QDir::NoDotAndDotDot, QDir::Name);
 
-    QStandardItem* newItem;
-    QStandardItem* searchItem;
 
-    if (item == NULL)
-        item = dirModel->invisibleRootItem();
+	if (!item) item = dirModel->invisibleRootItem();
 
     for (int i = 0; i < lDirectoryList.size(); ++i) {
-        newItem=NULL;
+		QStandardItem* newItem=nullptr;
 
         // Look for an item already existing and take this
         //   instead of making a new one:
         for (int j = 0; j < item->rowCount(); ++j) {
-            searchItem = item->child (j);
+			QStandardItem* const searchItem = item->child (j);
             if (searchItem->text() == lDirectoryList.at(i)) {
                 newItem=searchItem;
                 break;
@@ -210,7 +208,7 @@ void QG_LibraryWidget::appendTree(QStandardItem* item, QString directory) {
         }
 
         // Create new item if no existing was found:
-        if (newItem==NULL) {
+		if (!newItem) {
                 newItem = new QStandardItem(QIcon(":/ui/folderclosed.png"), lDirectoryList.at(i));
                 item->setChild(item->rowCount(), newItem);
         }
@@ -281,7 +279,7 @@ void QG_LibraryWidget::updatePreview(QModelIndex idx) {
     // Fill items into icon view:
     QStandardItem* newItem;
     for (int i = 0; i < itemPathList.size(); ++i) {
-        QString label = QFileInfo(itemPathList.at(i)).baseName();
+		QString label = QFileInfo(itemPathList.at(i)).completeBaseName();
         QIcon icon = getIcon(directory, QFileInfo(itemPathList.at(i)).fileName(), itemPathList.at(i));
         newItem = new QStandardItem(icon, label);
         iconModel->setItem(i, newItem);
@@ -294,11 +292,8 @@ void QG_LibraryWidget::updatePreview(QModelIndex idx) {
  * @return Directory (in terms of the List view) to the given item (e.g. /mechanical/screws)
  */
 QString QG_LibraryWidget::getItemDir(QStandardItem* item) {
-    QString ret = "";
 
-    if (item==NULL) {
-        return ret;
-    }
+	if (!item) return QString();
 
     QStandardItem* parent = item->parent();
     return getItemDir(parent) + QDir::separator() + QString("%1").arg(item->text());
@@ -315,7 +310,7 @@ QString QG_LibraryWidget::getItemPath(QStandardItem* item) {
     QStandardItem * dirItem = dirModel->itemFromIndex ( idx );
     QString dir = getItemDir(dirItem);
 
-    if (item!=NULL) {
+    if (item) {
         // List of all directories that contain part libraries:
         QStringList directoryList = RS_SYSTEM->getDirectoryList("library");
         QStringList::Iterator it;
@@ -423,7 +418,7 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     // create all directories needed:
     RS_SYSTEM->createPaths(iconCacheLocation + dir);
 
-    QString foo=iconCacheLocation + dir + QDir::separator() + fiDxf.baseName() + ".png";
+//    QString foo=iconCacheLocation + dir + QDir::separator() + fiDxf.baseName() + ".png";
     pngPath = iconCacheLocation + dir + QDir::separator() + fiDxf.baseName() + ".png";
 
     QPixmap* buffer = new QPixmap(128,128);
@@ -439,7 +434,7 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
         // gv.drawEntity(&graphic, true);
 
         for (RS_Entity* e=graphic.firstEntity(RS2::ResolveAll);
-                e!=NULL; e=graphic.nextEntity(RS2::ResolveAll)) {
+                e; e=graphic.nextEntity(RS2::ResolveAll)) {
             if (e->rtti() != RS2::EntityHatch){
                 RS_Pen pen = e->getPen();
                 pen.setColor(Qt::black);

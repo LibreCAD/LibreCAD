@@ -28,16 +28,19 @@
 #ifndef RS_DEBUG_H
 #define RS_DEBUG_H
 
+#include <iosfwd>
 #ifdef __hpux
 #include <sys/_size_t.h>
 #endif
 
-#include <QString>
-#include <QDebug>
+class QString;
 
 /** print out a debug header*/
-#define DEBUG_HEADER()  std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl
+#define DEBUG_HEADER debugHeader(__FILE__, __func__, __LINE__);
+void debugHeader(char const* file, char const* func, int line);
 #define RS_DEBUG RS_Debug::instance()
+#define RS_DEBUG_VERBOSE DEBUG_HEADER \
+	RS_Debug::instance()
 
 /**
  * Debugging facilities.
@@ -70,6 +73,10 @@ public:
 
 private:
     RS_Debug();
+	RS_Debug(const RS_Debug&)=delete;
+	RS_Debug& operator = (const RS_Debug&)=delete;
+	RS_Debug(RS_Debug&&)=delete;
+	RS_Debug& operator = (RS_Debug&&)=delete;
 
 public:
     static RS_Debug* instance();
@@ -93,5 +100,4 @@ private:
 };
 
 #endif
-
 // EOF

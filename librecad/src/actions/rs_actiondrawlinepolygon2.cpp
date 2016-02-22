@@ -27,32 +27,34 @@
 #include "rs_actiondrawlinepolygon2.h"
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_creation.h"
+#include "rs_coordinateevent.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
-
+struct RS_ActionDrawLinePolygonCorCor::Points {
+	/** 1st corner */
+	RS_Vector corner1;
+	/** 2nd corner */
+	RS_Vector corner2;
+};
 
 RS_ActionDrawLinePolygonCorCor::RS_ActionDrawLinePolygonCorCor(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw Polygons (Corner,Corner)", container, graphicView) {
-
-    corner1 = RS_Vector(false);
-    corner2 = RS_Vector(false);
-
-    number = 3;
+		:RS_PreviewActionInterface("Draw Polygons (Corner,Corner)", container, graphicView)
+		, pPoints(new Points{})
+		,number(3)
+		,lastStatus(SetCorner1)
+{
+	actionType=RS2::ActionDrawLinePolygonCorCor;
 }
 
-QAction* RS_ActionDrawLinePolygonCorCor::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Polygon")
-    QAction* action = new QAction(tr("Polygo&n (Cor,Cor)"), NULL);
-        action->setIcon(QIcon(":/extui/linespolygon2.png"));
-    //action->zetStatusTip(tr("Draw polygon with two corners"));
-    return action;
-}
-
+RS_ActionDrawLinePolygonCorCor::~RS_ActionDrawLinePolygonCorCor() = default;
 
 void RS_ActionDrawLinePolygonCorCor::trigger() {
     RS_PreviewActionInterface::trigger();
@@ -60,7 +62,7 @@ void RS_ActionDrawLinePolygonCorCor::trigger() {
     deletePreview();
 
     RS_Creation creation(container, graphicView);
-    bool ok = creation.createPolygon2(corner1, corner2, number);
+	bool ok = creation.createPolygon2(pPoints->corner1, pPoints->corner2, number);
 
     if (!ok) {
         RS_DEBUG->print("RS_ActionDrawLinePolygon2::trigger:"
@@ -80,12 +82,12 @@ void RS_ActionDrawLinePolygonCorCor::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case SetCorner2:
-        if (corner1.valid) {
-            corner2 = mouse;
+		if (pPoints->corner1.valid) {
+			pPoints->corner2 = mouse;
             deletePreview();
 
-            RS_Creation creation(preview, NULL, false);
-            creation.createPolygon2(corner1, corner2, number);
+			RS_Creation creation(preview.get(), NULL, false);
+			creation.createPolygon2(pPoints->corner1, pPoints->corner2, number);
 
             drawPreview();
         }
@@ -119,13 +121,13 @@ void RS_ActionDrawLinePolygonCorCor::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetCorner1:
-        corner1 = mouse;
+		pPoints->corner1 = mouse;
         setStatus(SetCorner2);
         graphicView->moveRelativeZero(mouse);
         break;
 
     case SetCorner2:
-        corner2 = mouse;
+		pPoints->corner2 = mouse;
         trigger();
         break;
 
@@ -137,7 +139,7 @@ void RS_ActionDrawLinePolygonCorCor::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDrawLinePolygonCorCor::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetCorner1:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first corner"),
@@ -154,7 +156,7 @@ void RS_ActionDrawLinePolygonCorCor::updateMouseButtonHints() {
             break;
 
         default:
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+            RS_DIALOGFACTORY->updateMouseWidget();
             break;
         }
     }
@@ -165,7 +167,7 @@ void RS_ActionDrawLinePolygonCorCor::updateMouseButtonHints() {
 void RS_ActionDrawLinePolygonCorCor::showOptions() {
     RS_ActionInterface::showOptions();
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestOptions(this, true);
     }
 }
@@ -175,7 +177,7 @@ void RS_ActionDrawLinePolygonCorCor::showOptions() {
 void RS_ActionDrawLinePolygonCorCor::hideOptions() {
     RS_ActionInterface::hideOptions();
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestOptions(this, false);
     }
 }
@@ -186,7 +188,7 @@ void RS_ActionDrawLinePolygonCorCor::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -211,17 +213,17 @@ void RS_ActionDrawLinePolygonCorCor::commandEvent(RS_CommandEvent* e) {
                 if (n>0 && n<10000) {
                     number = n;
                 } else {
-                    if (RS_DIALOGFACTORY!=NULL) {
+                    if (RS_DIALOGFACTORY) {
                         RS_DIALOGFACTORY->commandMessage(tr("Not a valid number. "
                                                             "Try 1..9999"));
                     }
                 }
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression."));
                 }
             }
-            if (RS_DIALOGFACTORY!=NULL) {
+            if (RS_DIALOGFACTORY) {
                 RS_DIALOGFACTORY->requestOptions(this, true, true);
             }
             setStatus(lastStatus);
@@ -255,16 +257,5 @@ QStringList RS_ActionDrawLinePolygonCorCor::getAvailableCommands() {
 void RS_ActionDrawLinePolygonCorCor::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-//void RS_ActionDrawLinePolygonCorCor::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
 
 // EOF

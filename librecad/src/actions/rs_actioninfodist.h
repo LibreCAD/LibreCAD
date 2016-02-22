@@ -50,12 +50,7 @@ public:
 public:
     RS_ActionInfoDist(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionInfoDist() {}
-
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-    virtual RS2::ActionType rtti(){
-        return RS2::ActionInfoDist;
-    }
+	~RS_ActionInfoDist() override;
 
     virtual void init(int status=0);
     virtual void trigger();
@@ -67,11 +62,10 @@ public:
 	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 private:
-    RS_Vector point1;
-    RS_Vector point2;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

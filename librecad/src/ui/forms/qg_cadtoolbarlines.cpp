@@ -23,179 +23,143 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include<cassert>
+#include<QAction>
 #include "qg_cadtoolbarlines.h"
-
 #include "qg_cadtoolbar.h"
+#include "qg_actionhandler.h"
 
 /*
  *  Constructs a QG_CadToolBarLines as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_CadToolBarLines::QG_CadToolBarLines(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
+QG_CadToolBarLines::QG_CadToolBarLines(QG_CadToolBar* parent, Qt::WindowFlags fl)
+	:LC_CadToolBarInterface(parent, fl)
 {
-    setupUi(this);
-    parentTB=static_cast<QG_CadToolBar*>(parent);
-
-    init();
+	initToolBars();
 }
 
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_CadToolBarLines::~QG_CadToolBarLines()
+void QG_CadToolBarLines::addSubActions(const std::vector<QAction*>& actions, bool addGroup)
 {
-    // no need to delete child widgets, Qt does it all for us
-}
+	LC_CadToolBarInterface::addSubActions(actions, addGroup);
+	std::vector<QAction**> const &buttons=	{
+		&bNormal, &bAngle, &bHorizontal, &bVertical, &bRectangle,
+		&bParallel, &bParallelThrough, &bBisector, &bTangent1, &bTangent2, &bOrthTan,
+		&bOrthogonal, &bRelAngle, &bPolygon, &bPolygon2, &bFree
+	};
 
-/*
- *  Sets the strings of the subwidgets using the current
- *  language.
- */
-void QG_CadToolBarLines::languageChange()
-{
-    retranslateUi(this);
-}
+	assert(buttons.size()==actions.size());
 
-void QG_CadToolBarLines::init() {
-    actionHandler = NULL;
-    cadToolBar = NULL;
-}
-
-/*void QG_CadToolBarLines::mousePressEvent(QMouseEvent* e) {
-    if (e->button()==RightButton && cadToolBar!=NULL) {
-        cadToolBar->back();
-        e->accept();
-    }
-}*/
-
-
-
-void QG_CadToolBarLines::contextMenuEvent(QContextMenuEvent *e) {
-    e->accept();
-}
-
-void QG_CadToolBarLines::setCadToolBar(QG_CadToolBar* tb) {
-    cadToolBar = tb;
-    if (tb!=NULL) {
-        actionHandler = tb->getActionHandler();
-    } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR,
-                        "QG_CadToolBarLines::setCadToolBar(): No valid toolbar set.");
-    }
+	for(size_t i=0; i<buttons.size(); ++i)
+		*buttons[i]=actions[i];
 }
 
 void QG_CadToolBarLines::drawLine() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
+	if (actionHandler) {
         actionHandler->slotDrawLine();
     }
 }
 
 void QG_CadToolBarLines::drawLineAngle() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
+	if (actionHandler) {
         actionHandler->slotDrawLineAngle();
     }
 }
 
 void QG_CadToolBarLines::drawLineHorizontal() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
+	if (actionHandler) {
         actionHandler->slotDrawLineHorizontal();
     }
 }
 
 void QG_CadToolBarLines::drawLineHorVert() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
+	if (actionHandler) {
         actionHandler->slotDrawLineHorVert();
     }
 }
 
 void QG_CadToolBarLines::drawLineVertical() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
+	if (actionHandler) {
         actionHandler->slotDrawLineVertical();
     }
 }
 
 void QG_CadToolBarLines::drawLineParallel() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
+	if (actionHandler) {
         actionHandler->slotDrawLineParallel();
     }
 }
 
 void QG_CadToolBarLines::drawLineParallelThrough() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
+	if (actionHandler) {
         actionHandler->slotDrawLineParallelThrough();
     }
 }
 
 void QG_CadToolBarLines::drawLineRectangle() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
+	if (actionHandler) {
         actionHandler->slotDrawLineRectangle();
     }
 }
 
 void QG_CadToolBarLines::drawLineBisector() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
+	if (actionHandler) {
         actionHandler->slotDrawLineBisector();
     }
 }
 
 void QG_CadToolBarLines::drawLineTangent1() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
+	if (actionHandler) {
         actionHandler->slotDrawLineTangent1();
     }
 }
 
 void QG_CadToolBarLines::drawLineTangent2() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
+	if (actionHandler) {
         actionHandler->slotDrawLineTangent2();
     }
 }
 
 void QG_CadToolBarLines::drawLineOrthogonal() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
+	if (actionHandler) {
         actionHandler->slotDrawLineOrthogonal();
     }
 }
 
 void QG_CadToolBarLines::drawLineOrthTan() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
+	if (actionHandler) {
         actionHandler->slotDrawLineOrthTan();
     }
 }
 
 void QG_CadToolBarLines::drawLineRelAngle() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
+	if (actionHandler) {
         actionHandler->slotDrawLineRelAngle();
     }
 }
 
 void QG_CadToolBarLines::drawLineFree() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
+	if (actionHandler) {
         actionHandler->slotDrawLineFree();
     }
 }
 
 void QG_CadToolBarLines::drawLinePolygon() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
+	if (actionHandler) {
         actionHandler->slotDrawLinePolygon();
     }
 }
 
 void QG_CadToolBarLines::drawLinePolygon2() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
+	if (actionHandler) {
         actionHandler->slotDrawLinePolygon2();
-    }
-}
-
-void QG_CadToolBarLines::back() {
-    if (cadToolBar!=NULL) {
-        cadToolBar->showPreviousToolBar();
     }
 }
 
 //restore action from checked
 void QG_CadToolBarLines::restoreAction() {
-    if(actionHandler==NULL) return;
+	if(!actionHandler) return;
+	if(!bNormal) return;
     if(bNormal->isChecked()) {
         actionHandler->slotDrawLine();
         return;
@@ -261,21 +225,26 @@ void QG_CadToolBarLines::restoreAction() {
         return;
     }
     //clear all action
-    bHidden->setChecked(true);
+	m_pHidden->setChecked(true);
     RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
-    if(currentAction != NULL) {
+	if(currentAction ) {
         currentAction->finish(false); //finish the action, but do not update toolBar
     }
 }
 
-void QG_CadToolBarLines::resetToolBar() {
-    bHidden->setChecked(true);
+void QG_CadToolBarLines::resetToolBar()
+{
+	m_pHidden->setChecked(true);
 }
+
 void QG_CadToolBarLines::on_bBack_clicked()
 {
-   parentTB->showPreviousToolBar();
+	finishCurrentAction(true);
+   LC_CadToolBarInterface::back();
 }
+
 void QG_CadToolBarLines::showCadToolBar(RS2::ActionType actionType) {
+	if(!bNormal) return;
     switch(actionType){
     case RS2::ActionDrawLine:
         bNormal->setChecked(true);
@@ -326,7 +295,7 @@ void QG_CadToolBarLines::showCadToolBar(RS2::ActionType actionType) {
         bTangent2->setChecked(true);
         return;
         default:
-        bHidden->setChecked(true);
+		m_pHidden->setChecked(true);
         return;
     }
 }

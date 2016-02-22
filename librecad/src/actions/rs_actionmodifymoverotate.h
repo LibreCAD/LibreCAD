@@ -28,8 +28,8 @@
 #define RS_ACTIONMODIFYMOVEROTATE_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_modification.h"
 
+class RS_MoveRotateData;
 
 /**
  * This action class can handle user events to move and at the same
@@ -53,14 +53,8 @@ public:
 public:
     RS_ActionModifyMoveRotate(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionModifyMoveRotate() {}
+	~RS_ActionModifyMoveRotate();
 	
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-	
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionModifyMoveRotate;
-	}
-
     virtual void init(int status=0);
 	
     virtual void trigger();
@@ -77,19 +71,13 @@ public:
 	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
-	void setAngle(double a) {
-		data.angle = a;
-	}
-	double getAngle() {
-		return data.angle;
-	}
+	void setAngle(double a);
+	double getAngle() const;
 
 private:
-    RS_MoveRotateData data;
-    RS_Vector targetPoint;
-
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 	/** Last status before entering angle. */
 	Status lastStatus;
 	/**

@@ -23,34 +23,27 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-
+#include <iostream>
 #include "rs_actiondrawhatch.h"
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
+#include "rs_debug.h"
 
 
 
-RS_ActionDrawHatch::RS_ActionDrawHatch(RS_EntityContainer& container,
-                                       RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw Hatch",
-                           container, graphicView)
-        ,m_bShowArea(false)
+RS_ActionDrawHatch::RS_ActionDrawHatch(RS_EntityContainer& container, RS_GraphicView& graphicView)
+                                :RS_PreviewActionInterface("Draw Hatch", container, graphicView)
 {
-    hatch = NULL;
+    actionType = RS2::ActionDrawHatch;
 }
 
-
-QAction* RS_ActionDrawHatch::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Hatch")
-    QAction* action = new QAction(tr("&Hatch"),  NULL);
-	action->setIcon(QIcon(":/extui/menuhatch.png"));
-    //action->zetStatusTip(tr("Draw Hatches and Solid Fills"));
-    return action;
+void RS_ActionDrawHatch::setShowArea(bool s){
+	m_bShowArea=s;
 }
-
 
 void RS_ActionDrawHatch::init(int status) {
     RS_ActionInterface::init(status);
@@ -80,8 +73,7 @@ void RS_ActionDrawHatch::trigger() {
 	RS_Entity* e;
 
 	// deselect unhatchable entities:
-    for (e=container->firstEntity(RS2::ResolveNone); e!=NULL;
-            e=container->nextEntity(RS2::ResolveNone)) {
+	for(auto e: *container){
         if (e->isSelected() && 
             (e->rtti()==RS2::EntityHatch ||
             /* e->rtti()==RS2::EntityEllipse ||*/ e->rtti()==RS2::EntityPoint ||
@@ -90,7 +82,7 @@ void RS_ActionDrawHatch::trigger() {
 			e->setSelected(false);
         }
     }
-    for (e=container->firstEntity(RS2::ResolveAll); e!=NULL;
+	for (e=container->firstEntity(RS2::ResolveAll); e;
             e=container->nextEntity(RS2::ResolveAll)) {
         if (e->isSelected() && 
             (e->rtti()==RS2::EntityHatch ||
@@ -103,7 +95,7 @@ void RS_ActionDrawHatch::trigger() {
 
 	// look for selected contours:
     bool haveContour = false;
-    for (e=container->firstEntity(RS2::ResolveAll); e!=NULL;
+	for (e=container->firstEntity(RS2::ResolveAll); e;
             e=container->nextEntity(RS2::ResolveAll)) {
         if (e->isSelected()) {
             haveContour = true;
@@ -122,13 +114,13 @@ void RS_ActionDrawHatch::trigger() {
     loop->setPen(RS_Pen(RS2::FlagInvalid));
 
     // add selected contour:
-    for (RS_Entity* e=container->firstEntity(RS2::ResolveAll); e!=NULL;
+	for (RS_Entity* e=container->firstEntity(RS2::ResolveAll); e;
             e=container->nextEntity(RS2::ResolveAll)) {
 
         if (e->isSelected()) {
             e->setSelected(false);
 			// entity is part of a complex entity (spline, polyline, ..):
-            if (e->getParent()!=NULL &&
+			if (e->getParent() &&
 // RVT - Don't de-delect the parent EntityPolyline, this is messing up the getFirst and getNext iterators
 //			    (e->getParent()->rtti()==RS2::EntitySpline ||
 //				 e->getParent()->rtti()==RS2::EntityPolyline)) {
@@ -186,7 +178,7 @@ void RS_ActionDrawHatch::trigger() {
 	}
 	else {
 		delete hatch;
-		hatch = NULL;
+		hatch = nullptr;
 		RS_DIALOGFACTORY->commandMessage(tr("Invalid hatch area. Please check that "
 		"the entities chosen form one or more closed contours."));
 	}
@@ -204,7 +196,7 @@ void RS_ActionDrawHatch::mouseMoveEvent(QMouseEvent*) {
 
 
         deletePreview();
-        if (hatch!=NULL && !hatch->isVisible()) {
+		if (hatch && !hatch->isVisible()) {
             hatch->setVisible(true);
         }
         offset = RS_Vector(graphicView->toGuiDX(pos.x),
@@ -219,7 +211,7 @@ void RS_ActionDrawHatch::mouseMoveEvent(QMouseEvent*) {
 
 void RS_ActionDrawHatch::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_Vector mouse = snapPoint(e);
+		snapPoint(e);
 
         switch (getStatus()) {
         case ShowDialog:
@@ -237,22 +229,11 @@ void RS_ActionDrawHatch::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawHatch::updateMouseButtonHints() {
-    RS_DIALOGFACTORY->updateMouseWidget("", "");
+	RS_DIALOGFACTORY->updateMouseWidget();
 }
-
-
 
 void RS_ActionDrawHatch::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
-
-
-
-void RS_ActionDrawHatch::updateToolBar() {
-    //not needed any more with new snap
-    return;
-    RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-}
-
 
 // EOF

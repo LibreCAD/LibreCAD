@@ -50,13 +50,7 @@ public:
     RS_ActionSelectWindow(RS_EntityContainer& container,
                          RS_GraphicView& graphicView,
                          bool select);
-    ~RS_ActionSelectWindow() {}
-
-	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
-
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionSelectWindow;
-	}
+	~RS_ActionSelectWindow();
 
     virtual void init(int status=0);
 	
@@ -68,13 +62,11 @@ public:
 	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
 
-protected:
-    RS_Vector v1;
-    RS_Vector v2;
-
-    bool select;
+private:
+	bool select;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

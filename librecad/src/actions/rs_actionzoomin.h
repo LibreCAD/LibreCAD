@@ -29,7 +29,6 @@
 
 #include "rs_actioninterface.h"
 
-
 /**
  * This action triggers zoom increase.
  *
@@ -39,14 +38,12 @@ class RS_ActionZoomIn : public RS_ActionInterface {
 	Q_OBJECT
 public:
     RS_ActionZoomIn(RS_EntityContainer& container,
-                    RS_GraphicView& graphicView,
+					RS_GraphicView& graphicView,
                     RS2::ZoomDirection direction = RS2::In,
-                    RS2::Axis axis = RS2::Both,
-                    const RS_Vector& center = RS_Vector(false),
-                    double factor = 1.25);
-    ~RS_ActionZoomIn() {}
-
-	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
+					RS2::Axis axis = RS2::Both,
+					RS_Vector const* pCenter = nullptr,
+					double factor = 1.25);
+	~RS_ActionZoomIn();
 
     virtual void init(int status=0);
     virtual void trigger();
@@ -55,7 +52,7 @@ protected:
     double zoom_factor;
     RS2::ZoomDirection direction;
     RS2::Axis axis;
-	RS_Vector center;
+	std::unique_ptr<RS_Vector> center;
 };
 
 #endif

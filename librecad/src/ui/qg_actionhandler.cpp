@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -24,6 +25,7 @@
 **
 **********************************************************************/
 
+#include<cmath>
 #include "qg_actionhandler.h"
 
 #include "rs_dialogfactory.h"
@@ -88,6 +90,7 @@
 #include "rs_actioneditcopy.h"
 #include "rs_actioneditpaste.h"
 #include "rs_actioneditundo.h"
+#include "lc_actionfileexportmakercam.h"
 #include "rs_actionfilenewtemplate.h"
 #include "rs_actionfileopen.h"
 #include "rs_actionfilesaveas.h"
@@ -104,6 +107,7 @@
 #include "rs_actionlayerstogglelock.h"
 #include "rs_actionlayerstoggleview.h"
 #include "rs_actionlayerstoggleprint.h"
+#include "lc_actionlayerstoggleconstruction.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_actionlockrelativezero.h"
 #include "rs_actionmodifyattributes.h"
@@ -158,83 +162,48 @@
 #include "rs_selection.h"
 #include "rs_actionorder.h"
 
-#include "qg_mainwindowinterface.h"
 #include "qg_snaptoolbar.h"
-#include "qc_applicationwindow.h"
-
-//a list of EntityTypes which support actionOffset
-QVector<RS2::EntityType> QG_ActionHandler::offsetEntities(0);
+#include "rs_debug.h"
 
 /**
  * Constructor
  */
-QG_ActionHandler::QG_ActionHandler(QG_MainWindowInterface* mw) {
-    RS_DEBUG->print("QG_ActionHandler::QG_ActionHandler");
-    mainWindow = mw;
-
-//    snapFree               = NULL;
-//    snapGrid               = NULL;
-//    snapEndpoint           = NULL;
-//    snapOnEntity           = NULL;
-//    snapCenter             = NULL;
-//    snapMiddle             = NULL;
-//    snapDistance               = NULL;
-//    snapIntersection       = NULL;
-//    snapIntersectionManual = NULL;
-
-    snapToolBar= NULL;
-
-//    restrictNothing = NULL;
-//    restrictOrthogonal = NULL;
-//    restrictHorizontal = NULL;
-//    restrictVertical = NULL;
-
-//    lockRelativeZero = NULL;
-//    lockedRelZero=false;
-    orderType = RS2::ActionOrderTop;
+QG_ActionHandler::QG_ActionHandler(QObject* parent)
+    :QObject(parent)
+{
+	RS_DEBUG->print("QG_ActionHandler::QG_ActionHandler");
     RS_DEBUG->print("QG_ActionHandler::QG_ActionHandler: OK");
 }
-
-
-
-/**
- * Destructor
- */
-QG_ActionHandler::~QG_ActionHandler() {
-    RS_DEBUG->print("QG_ActionHandler::~QG_ActionHandler");
-    RS_DEBUG->print("QG_ActionHandler::~QG_ActionHandler: OK");
-}
-
-
 
 /**
  * Kills all running selection actions. Called when a selection action
   * is launched to reduce confusion.
    */
 void QG_ActionHandler::killSelectActions() {
-    RS_GraphicView* gv = mainWindow->getGraphicView();
 
-    if (gv!=NULL) {
-        gv->killSelectActions();
+	if (view) {
+        view->killSelectActions();
     }
 }
 
+void QG_ActionHandler::killAllActions() {
 
+	if (view) {
+		view->killAllActions();
+	}
+}
 
 /**
  * @return Current action or NULL.
  */
 RS_ActionInterface* QG_ActionHandler::getCurrentAction() {
-    RS_GraphicView* gv = mainWindow->getGraphicView();
 
-    if (gv!=NULL) {
-        return gv->getCurrentAction();
+	if (view) {
+        return view->getCurrentAction();
     } else {
         return NULL;
     }
 }
-
-
 
 /**
  * Sets current action.
@@ -243,12 +212,11 @@ RS_ActionInterface* QG_ActionHandler::getCurrentAction() {
  */
 RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     RS_DEBUG->print("QG_ActionHandler::setCurrentAction()");
-        RS_GraphicView* gv = mainWindow->getGraphicView();
-    RS_Document* doc = mainWindow->getDocument();
     RS_ActionInterface* a = NULL;
+//    view->killAllActions();
 
     // only global options are allowed without a document:
-    if (gv==NULL || doc==NULL) {
+    if (view==NULL || document==NULL) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QG_ActionHandler::setCurrentAction: graphic view or "
                 "document is NULL");
@@ -257,643 +225,674 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 
     switch (id) {
         //case RS2::ActionFileNew:
-        //    a = new RS_ActionFileNew(*doc, *gv);
+        //    a = new RS_ActionFileNew(*document, *view);
         //	break;
     case RS2::ActionFileNewTemplate:
-        a = new RS_ActionFileNewTemplate(*doc, *gv);
+        a = new RS_ActionFileNewTemplate(*document, *view);
         break;
         //case RS2::ActionFileSave:
-        //    a = new RS_ActionFileSave(*doc, *gv);
+        //    a = new RS_ActionFileSave(*document, *view);
         //	break;
         //case RS2::ActionFileClose:
-        //    //a = new RS_ActionFileClose(*doc, *gv);
+        //    //a = new RS_ActionFileClose(*document, *view);
         //	break;
         //case RS2::ActionFileQuit:
-        //    //a = new RS_ActionFileQuit(*doc, *gv);
+        //    //a = new RS_ActionFileQuit(*document, *view);
         //	break;
     case RS2::ActionFileOpen:
-        a = new RS_ActionFileOpen(*doc, *gv);
+        a = new RS_ActionFileOpen(*document, *view);
         break;
     case RS2::ActionFileSaveAs:
-        a = new RS_ActionFileSaveAs(*doc, *gv);
+        a = new RS_ActionFileSaveAs(*document, *view);
+        break;
+    case RS2::ActionFileExportMakerCam:
+		a = new LC_ActionFileExportMakerCam(*document, *view);
         break;
 
         // Editing actions:
         //
     case RS2::ActionEditKillAllActions:
-        if (gv!=NULL) {
+		if (view) {
             // DO we need to call some form of a 'clean' function?
-            gv->killAllActions();
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
+            view->killAllActions();
 
-            RS_Selection s((RS_EntityContainer&)*doc, gv);
+            RS_Selection s((RS_EntityContainer&)*document, view);
             s.selectAll(false);
-            RS_DIALOGFACTORY->updateSelectionWidget(doc->countSelected(),doc->totalSelectedLength());
+            RS_DIALOGFACTORY->updateSelectionWidget(document->countSelected(),document->totalSelectedLength());
         }
         break;
     case RS2::ActionEditUndo:
-        a = new RS_ActionEditUndo(true, *doc, *gv);
+        a = new RS_ActionEditUndo(true, *document, *view);
         break;
     case RS2::ActionEditRedo:
-        a = new RS_ActionEditUndo(false, *doc, *gv);
+        a = new RS_ActionEditUndo(false, *document, *view);
         break;
     case RS2::ActionEditCut:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionEditCutNoSelect);
-        break;
+		if(!document->countSelected()){
+			a = new RS_ActionSelect(this, *document, *view, RS2::ActionEditCutNoSelect);
+			break;
+		}
     case RS2::ActionEditCutNoSelect:
-        a = new RS_ActionEditCopy(false, *doc, *gv);
+        a = new RS_ActionEditCopy(false, *document, *view);
         break;
-    case RS2::ActionEditCopy:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionEditCopyNoSelect);
-        break;
+	case RS2::ActionEditCopy:
+		if(!document->countSelected()){
+			a = new RS_ActionSelect(this, *document, *view, RS2::ActionEditCopyNoSelect);
+			break;
+		}
     case RS2::ActionEditCopyNoSelect:
-        a = new RS_ActionEditCopy(true, *doc, *gv);
+        a = new RS_ActionEditCopy(true, *document, *view);
         break;
     case RS2::ActionEditPaste:
-        a = new RS_ActionEditPaste(*doc, *gv);
+        a = new RS_ActionEditPaste(*document, *view);
         break;
     case RS2::ActionOrderBottom:
         orderType = RS2::ActionOrderBottom;
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionOrderNoSelect);
+        a = new RS_ActionSelect(this, *document, *view, RS2::ActionOrderNoSelect);
         break;
     case RS2::ActionOrderLower:
         orderType = RS2::ActionOrderLower;
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionOrderNoSelect);
+        a = new RS_ActionSelect(this, *document, *view, RS2::ActionOrderNoSelect);
         break;
     case RS2::ActionOrderRaise:
         orderType = RS2::ActionOrderRaise;
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionOrderNoSelect);
+        a = new RS_ActionSelect(this, *document, *view, RS2::ActionOrderNoSelect);
         break;
     case RS2::ActionOrderTop:
-        orderType = RS2::ActionOrderTop;
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionOrderNoSelect);
-        break;
+		if(!document->countSelected()){
+			orderType = RS2::ActionOrderTop;
+			a = new RS_ActionSelect(this, *document, *view, RS2::ActionOrderNoSelect);
+			break;
+		}
     case RS2::ActionOrderNoSelect:
-        a = new RS_ActionOrder(*doc, *gv, orderType);
+        a = new RS_ActionOrder(*document, *view, orderType);
         break;
 
         // Selecting actions:
         //
     case RS2::ActionSelectSingle:
-//        gv->killSelectActions();
+//        view->killSelectActions();
         if(getCurrentAction()->rtti() != RS2::ActionSelectSingle) {
-            a = new RS_ActionSelectSingle(*doc, *gv,getCurrentAction());
+            a = new RS_ActionSelectSingle(*document, *view,getCurrentAction());
         }else{
             a=NULL;
         }
         break;
     case RS2::ActionSelectContour:
-        gv->killSelectActions();
-        a = new RS_ActionSelectContour(*doc, *gv);
+        view->killSelectActions();
+        a = new RS_ActionSelectContour(*document, *view);
         break;
     case RS2::ActionSelectAll:
-        a = new RS_ActionSelectAll(*doc, *gv, true);
+        a = new RS_ActionSelectAll(*document, *view, true);
         break;
     case RS2::ActionDeselectAll:
-        a = new RS_ActionSelectAll(*doc, *gv, false);
+        a = new RS_ActionSelectAll(*document, *view, false);
         break;
     case RS2::ActionSelectWindow:
-        gv->killSelectActions();
-        a = new RS_ActionSelectWindow(*doc, *gv, true);
+        view->killSelectActions();
+        a = new RS_ActionSelectWindow(*document, *view, true);
         break;
     case RS2::ActionDeselectWindow:
-        gv->killSelectActions();
-        a = new RS_ActionSelectWindow(*doc, *gv, false);
+        view->killSelectActions();
+        a = new RS_ActionSelectWindow(*document, *view, false);
         break;
     case RS2::ActionSelectInvert:
-        a = new RS_ActionSelectInvert(*doc, *gv);
+        a = new RS_ActionSelectInvert(*document, *view);
         break;
     case RS2::ActionSelectIntersected:
-        gv->killSelectActions();
-        a = new RS_ActionSelectIntersected(*doc, *gv, true);
+        view->killSelectActions();
+        a = new RS_ActionSelectIntersected(*document, *view, true);
         break;
     case RS2::ActionDeselectIntersected:
-        gv->killSelectActions();
-        a = new RS_ActionSelectIntersected(*doc, *gv, false);
+        view->killSelectActions();
+        a = new RS_ActionSelectIntersected(*document, *view, false);
         break;
     case RS2::ActionSelectLayer:
-        gv->killSelectActions();
-        a = new RS_ActionSelectLayer(*doc, *gv);
+        view->killSelectActions();
+        a = new RS_ActionSelectLayer(*document, *view);
         break;
 
         // Tool actions:
         //
     case RS2::ActionToolRegenerateDimensions:
-        a = new RS_ActionToolRegenerateDimensions(*doc, *gv);
+        a = new RS_ActionToolRegenerateDimensions(*document, *view);
         break;
 
         // Zooming actions:
         //
     case RS2::ActionZoomIn:
-        a = new RS_ActionZoomIn(*doc, *gv, RS2::In, RS2::Both);
+        a = new RS_ActionZoomIn(*document, *view, RS2::In, RS2::Both);
         break;
     case RS2::ActionZoomOut:
-        a = new RS_ActionZoomIn(*doc, *gv, RS2::Out, RS2::Both);
+        a = new RS_ActionZoomIn(*document, *view, RS2::Out, RS2::Both);
         break;
     case RS2::ActionZoomAuto:
-        a = new RS_ActionZoomAuto(*doc, *gv);
+        a = new RS_ActionZoomAuto(*document, *view);
         break;
     case RS2::ActionZoomWindow:
-        a = new RS_ActionZoomWindow(*doc, *gv);
+        a = new RS_ActionZoomWindow(*document, *view);
         break;
     case RS2::ActionZoomPan:
-        a = new RS_ActionZoomPan(*doc, *gv);
+        a = new RS_ActionZoomPan(*document, *view);
         break;
     case RS2::ActionZoomPrevious:
-        a = new RS_ActionZoomPrevious(*doc, *gv);
+        a = new RS_ActionZoomPrevious(*document, *view);
         break;
     case RS2::ActionZoomRedraw:
-        a = new RS_ActionZoomRedraw(*doc, *gv);
+        a = new RS_ActionZoomRedraw(*document, *view);
         break;
 
         // Drawing actions:
         //
     case RS2::ActionDrawPoint:
-        a = new RS_ActionDrawPoint(*doc, *gv);
+        a = new RS_ActionDrawPoint(*document, *view);
         break;
     case RS2::ActionDrawLine:
-        a = new RS_ActionDrawLine(*doc, *gv);
+        a = new RS_ActionDrawLine(*document, *view);
         break;
     case RS2::ActionDrawLineAngle:
-        a = new RS_ActionDrawLineAngle(*doc, *gv, 0.0, false);
+        a = new RS_ActionDrawLineAngle(*document, *view, 0.0, false);
         break;
     case RS2::ActionDrawLineHorizontal:
-        a = new RS_ActionDrawLineAngle(*doc, *gv, 0.0, true,
+        a = new RS_ActionDrawLineAngle(*document, *view, 0.0, true,
                                        RS2::ActionDrawLineHorizontal);
         break;
     case RS2::ActionDrawLineHorVert:
-        a = new RS_ActionDrawLineHorVert(*doc, *gv);
+        a = new RS_ActionDrawLineHorVert(*document, *view);
         break;
     case RS2::ActionDrawLineVertical:
-        a = new RS_ActionDrawLineAngle(*doc, *gv, M_PI/2.0, true,
+        a = new RS_ActionDrawLineAngle(*document, *view, M_PI_2, true,
                                        RS2::ActionDrawLineVertical);
         break;
     case RS2::ActionDrawLineFree:
-        a = new RS_ActionDrawLineFree(*doc, *gv);
+        a = new RS_ActionDrawLineFree(*document, *view);
         break;
     case RS2::ActionDrawLineParallel:
-        a= new RS_ActionDrawLineParallel(*doc, *gv);
+        a= new RS_ActionDrawLineParallel(*document, *view);
         a->setActionType(id);
         break;
     case RS2::ActionDrawLineParallelThrough:
-        a = new RS_ActionDrawLineParallelThrough(*doc, *gv);
+        a = new RS_ActionDrawLineParallelThrough(*document, *view);
         break;
     case RS2::ActionDrawLineRectangle:
-        a = new RS_ActionDrawLineRectangle(*doc, *gv);
+        a = new RS_ActionDrawLineRectangle(*document, *view);
         break;
     case RS2::ActionDrawLineBisector:
-        a = new RS_ActionDrawLineBisector(*doc, *gv);
+        a = new RS_ActionDrawLineBisector(*document, *view);
         break;
     case RS2::ActionDrawLineOrthTan:
-        a = new RS_ActionDrawLineOrthTan(*doc, *gv);
+        a = new RS_ActionDrawLineOrthTan(*document, *view);
         break;
     case RS2::ActionDrawLineTangent1:
-        a = new RS_ActionDrawLineTangent1(*doc, *gv);
+        a = new RS_ActionDrawLineTangent1(*document, *view);
         break;
     case RS2::ActionDrawLineTangent2:
-        a = new RS_ActionDrawLineTangent2(*doc, *gv);
+        a = new RS_ActionDrawLineTangent2(*document, *view);
         break;
     case RS2::ActionDrawLineOrthogonal:
-        a = new RS_ActionDrawLineRelAngle(*doc, *gv, M_PI/2.0, true);
+        a = new RS_ActionDrawLineRelAngle(*document, *view, M_PI_2, true);
         break;
     case RS2::ActionDrawLineRelAngle:
-        a = new RS_ActionDrawLineRelAngle(*doc, *gv, M_PI/2.0, false);
+        a = new RS_ActionDrawLineRelAngle(*document, *view, M_PI_2, false);
         break;
     case RS2::ActionDrawPolyline:
-        a = new RS_ActionDrawPolyline(*doc, *gv);
+        a = new RS_ActionDrawPolyline(*document, *view);
         break;
     case RS2::ActionPolylineAdd:
-        a = new RS_ActionPolylineAdd(*doc, *gv);
+        a = new RS_ActionPolylineAdd(*document, *view);
         break;
     case RS2::ActionPolylineAppend:
-        a = new RS_ActionPolylineAppend(*doc, *gv);
+        a = new RS_ActionPolylineAppend(*document, *view);
         break;
     case RS2::ActionPolylineDel:
-        a = new RS_ActionPolylineDel(*doc, *gv);
+        a = new RS_ActionPolylineDel(*document, *view);
         break;
     case RS2::ActionPolylineDelBetween:
-        a = new RS_ActionPolylineDelBetween(*doc, *gv);
+        a = new RS_ActionPolylineDelBetween(*document, *view);
         break;
     case RS2::ActionPolylineTrim:
-        a = new RS_ActionPolylineTrim(*doc, *gv);
+        a = new RS_ActionPolylineTrim(*document, *view);
         break;
     case RS2::ActionPolylineEquidistant:
-        a = new RS_ActionPolylineEquidistant(*doc, *gv);
+        a = new RS_ActionPolylineEquidistant(*document, *view);
         break;
     case RS2::ActionPolylineSegment:
-        a = new RS_ActionPolylineSegment(*doc, *gv);
+        a = new RS_ActionPolylineSegment(*document, *view);
         break;
     case RS2::ActionDrawLinePolygonCenCor:
-        a = new RS_ActionDrawLinePolygonCenCor(*doc, *gv);
+        a = new RS_ActionDrawLinePolygonCenCor(*document, *view);
         break;
     case RS2::ActionDrawLinePolygonCorCor:
-        a = new RS_ActionDrawLinePolygonCorCor(*doc, *gv);
+        a = new RS_ActionDrawLinePolygonCorCor(*document, *view);
         break;
     case RS2::ActionDrawCircle:
-        a = new RS_ActionDrawCircle(*doc, *gv);
+        a = new RS_ActionDrawCircle(*document, *view);
         break;
     case RS2::ActionDrawCircleCR:
-        a = new RS_ActionDrawCircleCR(*doc, *gv);
+        a = new RS_ActionDrawCircleCR(*document, *view);
         break;
     case RS2::ActionDrawCircle2P:
-        a = new RS_ActionDrawCircle2P(*doc, *gv);
+        a = new RS_ActionDrawCircle2P(*document, *view);
         break;
     case RS2::ActionDrawCircle2PR:
-        a = new LC_ActionDrawCircle2PR(*doc, *gv);
+        a = new LC_ActionDrawCircle2PR(*document, *view);
         break;
     case RS2::ActionDrawCircle3P:
-        a = new RS_ActionDrawCircle3P(*doc, *gv);
+        a = new RS_ActionDrawCircle3P(*document, *view);
         break;
     case RS2::ActionDrawCircleTan1_2P:
-        a = new RS_ActionDrawCircleTan1_2P(*doc, *gv);
+        a = new RS_ActionDrawCircleTan1_2P(*document, *view);
         break;
     case RS2::ActionDrawCircleTan2_1P:
-        a = new RS_ActionDrawCircleTan2_1P(*doc, *gv);
+        a = new RS_ActionDrawCircleTan2_1P(*document, *view);
         break;
     case RS2::ActionDrawCircleParallel:
-        a= new RS_ActionDrawLineParallel(*doc, *gv);
+        a= new RS_ActionDrawLineParallel(*document, *view);
         a->setActionType(id);
         break;
     case RS2::ActionDrawCircleInscribe:
-        a = new RS_ActionDrawCircleInscribe(*doc, *gv);
+        a = new RS_ActionDrawCircleInscribe(*document, *view);
         break;
     case RS2::ActionDrawCircleTan2:
-        a = new RS_ActionDrawCircleTan2(*doc, *gv);
+        a = new RS_ActionDrawCircleTan2(*document, *view);
         break;
     case RS2::ActionDrawCircleTan3:
-        a = new RS_ActionDrawCircleTan3(*doc, *gv);
+        a = new RS_ActionDrawCircleTan3(*document, *view);
         break;
     case RS2::ActionDrawArc:
-        a = new RS_ActionDrawArc(*doc, *gv);
+        a = new RS_ActionDrawArc(*document, *view);
         break;
     case RS2::ActionDrawArc3P:
-        a = new RS_ActionDrawArc3P(*doc, *gv);
+        a = new RS_ActionDrawArc3P(*document, *view);
         break;
     case RS2::ActionDrawArcParallel:
-        a= new RS_ActionDrawLineParallel(*doc, *gv);
+        a= new RS_ActionDrawLineParallel(*document, *view);
         a->setActionType(id);
         break;
     case RS2::ActionDrawArcTangential:
-        a = new RS_ActionDrawArcTangential(*doc, *gv);
+        a = new RS_ActionDrawArcTangential(*document, *view);
         break;
     case RS2::ActionDrawEllipseAxis:
-        a = new RS_ActionDrawEllipseAxis(*doc, *gv, false);
+        a = new RS_ActionDrawEllipseAxis(*document, *view, false);
         a->setActionType(id);
         break;
     case RS2::ActionDrawEllipseArcAxis:
-        a = new RS_ActionDrawEllipseAxis(*doc, *gv, true);
+        a = new RS_ActionDrawEllipseAxis(*document, *view, true);
         a->setActionType(id);
         break;
     case RS2::ActionDrawEllipseFociPoint:
-        a = new RS_ActionDrawEllipseFociPoint(*doc, *gv);
+        a = new RS_ActionDrawEllipseFociPoint(*document, *view);
         break;
     case RS2::ActionDrawEllipse4Points:
-        a = new RS_ActionDrawEllipse4Points(*doc, *gv);
+        a = new RS_ActionDrawEllipse4Points(*document, *view);
         break;
     case RS2::ActionDrawEllipseCenter3Points:
-        a = new RS_ActionDrawEllipseCenter3Points(*doc, *gv);
+        a = new RS_ActionDrawEllipseCenter3Points(*document, *view);
         break;
     case RS2::ActionDrawEllipseInscribe:
-        a = new RS_ActionDrawEllipseInscribe(*doc, *gv);
+        a = new RS_ActionDrawEllipseInscribe(*document, *view);
         break;
     case RS2::ActionDrawSpline:
-        a = new RS_ActionDrawSpline(*doc, *gv);
+        a = new RS_ActionDrawSpline(*document, *view);
         break;
     case RS2::ActionDrawSplinePoints:
-        a = new LC_ActionDrawSplinePoints(*doc, *gv);
+        a = new LC_ActionDrawSplinePoints(*document, *view);
         break;
     case RS2::ActionDrawMText:
-        a = new RS_ActionDrawMText(*doc, *gv);
+        a = new RS_ActionDrawMText(*document, *view);
         break;
     case RS2::ActionDrawText:
-        a = new RS_ActionDrawText(*doc, *gv);
+        a = new RS_ActionDrawText(*document, *view);
         break;
     case RS2::ActionDrawHatch:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionDrawHatchNoSelect);
-        break;
-    case RS2::ActionDrawHatchNoSelect:
-    {
-        auto p = new RS_ActionDrawHatch(*doc, *gv);
-        p->setShowArea(true);
-        a=p;
-    }
-        break;
+        if(!document->countSelected())
+        {
+            a = new RS_ActionSelect(this, *document, *view, RS2::ActionDrawHatchNoSelect);
+            break;
+        }
+	case RS2::ActionDrawHatchNoSelect:
+		a = new RS_ActionDrawHatch(*document, *view);
+        break;   
     case RS2::ActionDrawImage:
-        a = new RS_ActionDrawImage(*doc, *gv);
+        a = new RS_ActionDrawImage(*document, *view);
         break;
 
         // Dimensioning actions:
         //
     case RS2::ActionDimAligned:
-        a = new RS_ActionDimAligned(*doc, *gv);
+        a = new RS_ActionDimAligned(*document, *view);
         break;
     case RS2::ActionDimLinear:
-        a = new RS_ActionDimLinear(*doc, *gv);
+        a = new RS_ActionDimLinear(*document, *view);
         break;
     case RS2::ActionDimLinearHor:
-        a = new RS_ActionDimLinear(*doc, *gv, 0.0, true, RS2::ActionDimLinearHor);
+        a = new RS_ActionDimLinear(*document, *view, 0.0, true, RS2::ActionDimLinearHor);
         break;
     case RS2::ActionDimLinearVer:
-        a = new RS_ActionDimLinear(*doc, *gv, M_PI/2.0, true, RS2::ActionDimLinearVer);
+        a = new RS_ActionDimLinear(*document, *view, M_PI_2, true, RS2::ActionDimLinearVer);
         break;
     case RS2::ActionDimRadial:
-        a = new RS_ActionDimRadial(*doc, *gv);
+        a = new RS_ActionDimRadial(*document, *view);
         break;
     case RS2::ActionDimDiametric:
-        a = new RS_ActionDimDiametric(*doc, *gv);
+        a = new RS_ActionDimDiametric(*document, *view);
         break;
     case RS2::ActionDimAngular:
-        a = new RS_ActionDimAngular(*doc, *gv);
+        a = new RS_ActionDimAngular(*document, *view);
         break;
     case RS2::ActionDimLeader:
-        a = new RS_ActionDimLeader(*doc, *gv);
+        a = new RS_ActionDimLeader(*document, *view);
         break;
 
         // Modifying actions:
         //
     case RS2::ActionModifyAttributes:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyAttributesNoSelect);
-        break;
+		if(!document->countSelected()){
+			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyAttributesNoSelect);
+			break;
+		}
     case RS2::ActionModifyAttributesNoSelect:
-        a = new RS_ActionModifyAttributes(*doc, *gv);
+        a = new RS_ActionModifyAttributes(*document, *view);
         break;
     case RS2::ActionModifyDelete:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyDeleteNoSelect);
+        a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyDeleteNoSelect);
         break;
     case RS2::ActionModifyDeleteNoSelect:
-        a = new RS_ActionModifyDelete(*doc, *gv);
+        a = new RS_ActionModifyDelete(*document, *view);
         break;
     case RS2::ActionModifyDeleteQuick:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyDeleteQuick);
+        a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyDeleteQuick);
         break;
     case RS2::ActionModifyDeleteFree:
-        a = new RS_ActionModifyDeleteFree(*doc, *gv);
+        a = new RS_ActionModifyDeleteFree(*document, *view);
         break;
     case RS2::ActionModifyMove:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyMoveNoSelect);
-        break;
+		if(!document->countSelected()){
+			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyMoveNoSelect);
+			break;
+		}
     case RS2::ActionModifyMoveNoSelect:
-        a = new RS_ActionModifyMove(*doc, *gv);
+        a = new RS_ActionModifyMove(*document, *view);
         break;
 	case RS2::ActionModifyRevertDirection:
-		a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyRevertDirectionNoSelect);
-		break;
+		if(!document->countSelected()){
+			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyRevertDirectionNoSelect);
+			break;
+		}
 	case RS2::ActionModifyRevertDirectionNoSelect:
-		a = new RS_ActionModifyRevertDirection(*doc, *gv);
+		a = new RS_ActionModifyRevertDirection(*document, *view);
 		break;
 	case RS2::ActionModifyRotate:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyRotateNoSelect);
-        break;
+		if(!document->countSelected()){
+			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyRotateNoSelect);
+			break;
+		}
     case RS2::ActionModifyRotateNoSelect:
-        a = new RS_ActionModifyRotate(*doc, *gv);
+        a = new RS_ActionModifyRotate(*document, *view);
         break;
     case RS2::ActionModifyScale:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyScaleNoSelect);
-        break;
+		if(!document->countSelected()){
+			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyScaleNoSelect);
+			break;
+		}
     case RS2::ActionModifyScaleNoSelect:
-        a = new RS_ActionModifyScale(*doc, *gv);
-        break;
+		a = new RS_ActionModifyScale(*document, *view);
+		break;
     case RS2::ActionModifyMirror:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyMirrorNoSelect);
-        break;
+		if(!document->countSelected()){
+			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyMirrorNoSelect);
+			break;
+		}
     case RS2::ActionModifyMirrorNoSelect:
-        a = new RS_ActionModifyMirror(*doc, *gv);
+        a = new RS_ActionModifyMirror(*document, *view);
         break;
-    case RS2::ActionModifyMoveRotate:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyMoveRotateNoSelect);
-        break;
+	case RS2::ActionModifyMoveRotate:
+		if(!document->countSelected()){
+			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyMoveRotateNoSelect);
+			break;
+		}
     case RS2::ActionModifyMoveRotateNoSelect:
-        a = new RS_ActionModifyMoveRotate(*doc, *gv);
+        a = new RS_ActionModifyMoveRotate(*document, *view);
         break;
-    case RS2::ActionModifyRotate2:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyRotate2NoSelect);
-        break;
+	case RS2::ActionModifyRotate2:
+		if(!document->countSelected()){
+			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyRotate2NoSelect);
+			break;
+		}
     case RS2::ActionModifyRotate2NoSelect:
-        a = new RS_ActionModifyRotate2(*doc, *gv);
-        break;
-    case RS2::ActionModifyEntity:
-        a = new RS_ActionModifyEntity(*doc, *gv);
-        break;
-    case RS2::ActionModifyTrim:
-        a = new RS_ActionModifyTrim(*doc, *gv, false);
+        a = new RS_ActionModifyRotate2(*document, *view);
+		break;
+	case RS2::ActionModifyEntity:
+		a = new RS_ActionModifyEntity(*document, *view);
+		break;
+	case RS2::ActionModifyTrim:
+        a = new RS_ActionModifyTrim(*document, *view, false);
         a->setActionType(id);
         break;
     case RS2::ActionModifyTrim2:
-        a = new RS_ActionModifyTrim(*doc, *gv, true);
+        a = new RS_ActionModifyTrim(*document, *view, true);
         a->setActionType(id);
         break;
     case RS2::ActionModifyTrimAmount:
-        a = new RS_ActionModifyTrimAmount(*doc, *gv);
+        a = new RS_ActionModifyTrimAmount(*document, *view);
         break;
     case RS2::ActionModifyCut:
-        a = new RS_ActionModifyCut(*doc, *gv);
+        a = new RS_ActionModifyCut(*document, *view);
         break;
     case RS2::ActionModifyStretch:
-        a = new RS_ActionModifyStretch(*doc, *gv);
+        a = new RS_ActionModifyStretch(*document, *view);
         break;
     case RS2::ActionModifyBevel:
-        a = new RS_ActionModifyBevel(*doc, *gv);
+        a = new RS_ActionModifyBevel(*document, *view);
         break;
     case RS2::ActionModifyRound:
-        a = new RS_ActionModifyRound(*doc, *gv);
+        a = new RS_ActionModifyRound(*document, *view);
         break;
     case RS2::ActionModifyOffset:
-    if (offsetEntities.size() == 0){
-        //list all supported Entity types here
-        //fixme, handle this initialization better
-        offsetEntities.push_back(RS2::EntityArc);
-        offsetEntities.push_back(RS2::EntityCircle);
-        offsetEntities.push_back(RS2::EntityLine);
-        offsetEntities.push_back(RS2::EntityPolyline);
-    }
-        a = new RS_ActionSelect(*doc, *gv,RS2::ActionModifyOffsetNoSelect,&offsetEntities);
-        break;
+    {
+		auto allowedOffsetTypes={RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline};
+        if(!document->countSelected(true, allowedOffsetTypes)){
+            a = new RS_ActionSelect(this, *document, *view,RS2::ActionModifyOffsetNoSelect, allowedOffsetTypes);
+			break;
+		}
+	}
     case RS2::ActionModifyOffsetNoSelect:
-        a = new RS_ActionModifyOffset(*doc, *gv);
-        break;
-    case RS2::ActionModifyExplodeText:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyExplodeTextNoSelect);
-        break;
+        a = new RS_ActionModifyOffset(*document, *view);
+		break;
+	case RS2::ActionModifyExplodeText:
+		if(!document->countSelected(false, {RS2::EntityText, RS2::EntityMText})){
+			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyExplodeTextNoSelect);
+			break;
+		}
     case RS2::ActionModifyExplodeTextNoSelect:
-        a = new RS_ActionModifyExplodeText(*doc, *gv);
+        a = new RS_ActionModifyExplodeText(*document, *view);
         break;
 
         // Snapping actions:
         //
     case RS2::ActionSnapFree:
-//        a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapFree);
+//        a = new RS_ActionSetSnapMode(*document, *view, RS2::SnapFree);
         slotSnapFree();
         break;
     case RS2::ActionSnapCenter:
-//        a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapCenter);
+//        a = new RS_ActionSetSnapMode(*document, *view, RS2::SnapCenter);
         slotSnapCenter();
         break;
     case RS2::ActionSnapDist:
         slotSnapDist();
-//        a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapDist);
+//        a = new RS_ActionSetSnapMode(*document, *view, RS2::SnapDist);
         break;
     case RS2::ActionSnapEndpoint:
         slotSnapEndpoint();
-//        a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapEndpoint);
+//        a = new RS_ActionSetSnapMode(*document, *view, RS2::SnapEndpoint);
         break;
     case RS2::ActionSnapGrid:
         slotSnapGrid();
-//        a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapGrid);
+//        a = new RS_ActionSetSnapMode(*document, *view, RS2::SnapGrid);
         break;
     case RS2::ActionSnapIntersection:
         slotSnapIntersection();
-//        a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapIntersection);
+//        a = new RS_ActionSetSnapMode(*document, *view, RS2::SnapIntersection);
         break;
     case RS2::ActionSnapMiddle:
         slotSnapMiddle();
-//        a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapMiddle);
+//        a = new RS_ActionSetSnapMode(*document, *view, RS2::SnapMiddle);
         break;
     case RS2::ActionSnapOnEntity:
         slotSnapOnEntity();
-//        a = new RS_ActionSetSnapMode(*doc, *gv, RS2::SnapOnEntity);
+//        a = new RS_ActionSetSnapMode(*document, *view, RS2::SnapOnEntity);
         break;
 //    case RS2::ActionSnapIntersectionManual:
-//        a = new RS_ActionSnapIntersectionManual(*doc, *gv);
+//        a = new RS_ActionSnapIntersectionManual(*document, *view);
 //        break;
 
         // Snap restriction actions:
         //
     case RS2::ActionRestrictNothing:
         slotRestrictNothing();
-//        a = new RS_ActionSetSnapRestriction(*doc, *gv, RS2::RestrictNothing);
+//        a = new RS_ActionSetSnapRestriction(*document, *view, RS2::RestrictNothing);
         break;
     case RS2::ActionRestrictOrthogonal:
         slotRestrictOrthogonal();
-//        a = new RS_ActionSetSnapRestriction(*doc, *gv, RS2::RestrictOrthogonal);
+//        a = new RS_ActionSetSnapRestriction(*document, *view, RS2::RestrictOrthogonal);
         break;
     case RS2::ActionRestrictHorizontal:
         slotRestrictHorizontal();
-//        a = new RS_ActionSetSnapRestriction(*doc, *gv, RS2::RestrictHorizontal);
+//        a = new RS_ActionSetSnapRestriction(*document, *view, RS2::RestrictHorizontal);
         break;
     case RS2::ActionRestrictVertical:
         slotRestrictVertical();
-//        a = new RS_ActionSetSnapRestriction(*doc, *gv, RS2::RestrictVertical);
+//        a = new RS_ActionSetSnapRestriction(*document, *view, RS2::RestrictVertical);
         break;
 
         // Relative zero:
         //
     case RS2::ActionSetRelativeZero:
-        a = new RS_ActionSetRelativeZero(*doc, *gv);
+        a = new RS_ActionSetRelativeZero(*document, *view);
         break;
     case RS2::ActionLockRelativeZero:
-        a = new RS_ActionLockRelativeZero(*doc, *gv, true);
+        a = new RS_ActionLockRelativeZero(*document, *view, true);
         break;
     case RS2::ActionUnlockRelativeZero:
-        a = new RS_ActionLockRelativeZero(*doc, *gv, false);
+        a = new RS_ActionLockRelativeZero(*document, *view, false);
         break;
 
         // Info actions:
         //
     case RS2::ActionInfoInside:
-        a = new RS_ActionInfoInside(*doc, *gv);
+        a = new RS_ActionInfoInside(*document, *view);
         break;
     case RS2::ActionInfoDist:
-        a = new RS_ActionInfoDist(*doc, *gv);
+        a = new RS_ActionInfoDist(*document, *view);
         break;
     case RS2::ActionInfoDist2:
-        a = new RS_ActionInfoDist2(*doc, *gv);
+        a = new RS_ActionInfoDist2(*document, *view);
         break;
     case RS2::ActionInfoAngle:
-        a = new RS_ActionInfoAngle(*doc, *gv);
+        a = new RS_ActionInfoAngle(*document, *view);
         break;
-    case RS2::ActionInfoTotalLength:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionInfoTotalLengthNoSelect);
-        break;
+	case RS2::ActionInfoTotalLength:
+		if(!document->countSelected()){
+			a = new RS_ActionSelect(this, *document, *view, RS2::ActionInfoTotalLengthNoSelect);
+			break;
+		}
     case RS2::ActionInfoTotalLengthNoSelect:
-        a = new RS_ActionInfoTotalLength(*doc, *gv);
+        a = new RS_ActionInfoTotalLength(*document, *view);
         break;
     case RS2::ActionInfoArea:
-        a = new RS_ActionInfoArea(*doc, *gv);
+        a = new RS_ActionInfoArea(*document, *view);
         break;
 
         // Layer actions:
         //
     case RS2::ActionLayersDefreezeAll:
-        a = new RS_ActionLayersFreezeAll(false, *doc, *gv);
+        a = new RS_ActionLayersFreezeAll(false, *document, *view);
         break;
     case RS2::ActionLayersFreezeAll:
-        a = new RS_ActionLayersFreezeAll(true, *doc, *gv);
+        a = new RS_ActionLayersFreezeAll(true, *document, *view);
         break;
     case RS2::ActionLayersAdd:
-        a = new RS_ActionLayersAdd(*doc, *gv);
+        a = new RS_ActionLayersAdd(*document, *view);
         break;
     case RS2::ActionLayersRemove:
-        a = new RS_ActionLayersRemove(*doc, *gv);
+        a = new RS_ActionLayersRemove(*document, *view);
         break;
     case RS2::ActionLayersEdit:
-        a = new RS_ActionLayersEdit(*doc, *gv);
+        a = new RS_ActionLayersEdit(*document, *view);
         break;
     case RS2::ActionLayersToggleView:
-        a = new RS_ActionLayersToggleView(*doc, *gv);
+        a = new RS_ActionLayersToggleView(*document, *view);
         break;
     case RS2::ActionLayersToggleLock:
-        a = new RS_ActionLayersToggleLock(*doc, *gv);
+        a = new RS_ActionLayersToggleLock(*document, *view);
         break;
     case RS2::ActionLayersTogglePrint:
-        a = new RS_ActionLayersTogglePrint(*doc, *gv);
+        a = new RS_ActionLayersTogglePrint(*document, *view);
+        break;
+    case RS2::ActionLayersToggleConstruction:
+        a = new LC_ActionLayersToggleConstruction(*document, *view);
         break;
         // Block actions:
         //
     case RS2::ActionBlocksDefreezeAll:
-        a = new RS_ActionBlocksFreezeAll(false, *doc, *gv);
+        a = new RS_ActionBlocksFreezeAll(false, *document, *view);
         break;
     case RS2::ActionBlocksFreezeAll:
-        a = new RS_ActionBlocksFreezeAll(true, *doc, *gv);
+        a = new RS_ActionBlocksFreezeAll(true, *document, *view);
         break;
     case RS2::ActionBlocksAdd:
-        a = new RS_ActionBlocksAdd(*doc, *gv);
+        a = new RS_ActionBlocksAdd(*document, *view);
         break;
     case RS2::ActionBlocksRemove:
-        a = new RS_ActionBlocksRemove(*doc, *gv);
+        a = new RS_ActionBlocksRemove(*document, *view);
         break;
     case RS2::ActionBlocksAttributes:
-        a = new RS_ActionBlocksAttributes(*doc, *gv);
+        a = new RS_ActionBlocksAttributes(*document, *view);
         break;
     case RS2::ActionBlocksEdit:
-        a = new RS_ActionBlocksEdit(*doc, *gv);
+        a = new RS_ActionBlocksEdit(*document, *view);
         break;
     case RS2::ActionBlocksSave:
-        a = new RS_ActionBlocksSave(*doc, *gv);
+        a = new RS_ActionBlocksSave(*document, *view);
         break;
     case RS2::ActionBlocksInsert:
-        a = new RS_ActionBlocksInsert(*doc, *gv);
+        a = new RS_ActionBlocksInsert(*document, *view);
         break;
     case RS2::ActionBlocksToggleView:
-        a = new RS_ActionBlocksToggleView(*doc, *gv);
+        a = new RS_ActionBlocksToggleView(*document, *view);
         break;
     case RS2::ActionBlocksCreate:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionBlocksCreateNoSelect);
-        break;
+		if(!document->countSelected()){
+			a = new RS_ActionSelect(this, *document, *view, RS2::ActionBlocksCreateNoSelect);
+			break;
+		}
     case RS2::ActionBlocksCreateNoSelect:
-        a = new RS_ActionBlocksCreate(*doc, *gv);
+        a = new RS_ActionBlocksCreate(*document, *view);
         break;
-    case RS2::ActionBlocksExplode:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionBlocksExplodeNoSelect);
-        break;
+	case RS2::ActionBlocksExplode:
+		if(!document->countSelected(true, {RS2::EntityBlock})){
+			a = new RS_ActionSelect(this, *document, *view, RS2::ActionBlocksExplodeNoSelect);
+			break;
+		}
     case RS2::ActionBlocksExplodeNoSelect:
-        a = new RS_ActionBlocksExplode(*doc, *gv);
+        a = new RS_ActionBlocksExplode(*document, *view);
         break;
 
 
         // library browser:
         //
     case RS2::ActionLibraryInsert:
-        a = new RS_ActionLibraryInsert(*doc, *gv);
+        a = new RS_ActionLibraryInsert(*document, *view);
         break;
 
         // options:
         //
         //case RS2::ActionOptionsGeneral:
-        //    a = new RS_ActionOptionsGeneral(*doc, *gv);
+        //    a = new RS_ActionOptionsGeneral(*document, *view);
         //	break;
 
     case RS2::ActionOptionsDrawing:
-        a = new RS_ActionOptionsDrawing(*doc, *gv);
+        a = new RS_ActionOptionsDrawing(*document, *view);
         break;
     default:
         RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -902,8 +901,8 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     }
 
-    if (a!=NULL) {
-        gv->setCurrentAction(a);
+	if (a) {
+        view->setCurrentAction(a);
     }
 
     RS_DEBUG->print("QG_ActionHandler::setCurrentAction(): OK");
@@ -918,7 +917,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 QStringList QG_ActionHandler::getAvailableCommands() {
     RS_ActionInterface* currentAction = getCurrentAction();
 
-    if (currentAction!=NULL) {
+	if (currentAction) {
         return currentAction->getAvailableCommands();
     } else {
         QStringList cmd;
@@ -931,8 +930,9 @@ QStringList QG_ActionHandler::getAvailableCommands() {
 //get snap mode from snap toolbar
 RS_SnapMode QG_ActionHandler::getSnaps()
 {
-    if (snapToolBar != NULL) {
-        return snapToolBar->getSnaps();
+
+	if (snap_toolbar) {
+        return snap_toolbar->getSnaps();
     }
     //return a free snap mode
     return RS_SnapMode();
@@ -953,9 +953,8 @@ bool QG_ActionHandler::keycode(const QString& code) {
     // pass keycode on to running action:
     //RS_keycodeEvent e(cmd);
 
-    //RS_GraphicView* gv = mainWindow->getGraphicView();
-    //if (gv!=NULL) {
-    //    gv->keycodeEvent(&e);
+	//if (view) {
+    //    view->keycodeEvent(&e);
     //}
 
     // if the current action can't deal with the keycode,
@@ -1080,13 +1079,12 @@ bool QG_ActionHandler::command(const QString& cmd) {
     QString c = cmd.toLower();
 
     if (c=="\n" || c==tr("escape", "escape, go back from action steps")) {
-        RS_GraphicView* gv = mainWindow->getGraphicView();
-        if (gv!=NULL) {
+		if (view) {
             if(c=="\n" ){
-                gv->enter();
+                view->enter();
                 RS_DEBUG->print("QG_ActionHandler::command: enter");
             }else{
-                gv->back();
+                view->back();
                 RS_DEBUG->print("QG_ActionHandler::command: back");
             }
         }
@@ -1096,24 +1094,24 @@ bool QG_ActionHandler::command(const QString& cmd) {
     // pass command on to running action:
     RS_CommandEvent e(cmd);
 
-    RS_GraphicView* gv = mainWindow->getGraphicView();
-    if (gv!=NULL) {
+	if (view) {
         RS_DEBUG->print("QG_ActionHandler::command: trigger command event in "
                         " graphic view");
-        gv->commandEvent(&e);
+        view->commandEvent(&e);
     }
 
     // if the current action can't deal with the command,
     //   it might be intended to launch a new command
     //    std::cout<<"QG_ActionHandler::command(): e.isAccepted()="<<e.isAccepted()<<std::endl;
     if (!e.isAccepted()) {
+
         RS_DEBUG->print("QG_ActionHandler::command: convert cmd to action type");
         // command for new action:
         RS2::ActionType type = RS_COMMANDS->cmdToAction(cmd);
         if (type!=RS2::ActionNone) {
             RS_DEBUG->print("QG_ActionHandler::command: setting current action");
              //special handling, currently needed for snap actions
-            if( commandLineActions(type)==false){
+			if (!commandLineActions(type)){
                 //not handled yet
                 setCurrentAction(type);
             }
@@ -1162,6 +1160,10 @@ void QG_ActionHandler::slotFilePrint() {
 }
 */
 
+void QG_ActionHandler::slotFileExportMakerCam() {
+    setCurrentAction(RS2::ActionFileExportMakerCam);
+}
+
 void QG_ActionHandler::slotZoomIn() {
     setCurrentAction(RS2::ActionZoomIn);
 }
@@ -1198,6 +1200,9 @@ void QG_ActionHandler::slotEditKillAllActions() {
     setCurrentAction(RS2::ActionEditKillAllActions);
 }
 void QG_ActionHandler::slotEditUndo() {
+	//to avoid operation on deleted entities, Undo action invalid all suspended
+	//actions
+	killAllActions();
     setCurrentAction(RS2::ActionEditUndo);
 }
 
@@ -1596,17 +1601,16 @@ void QG_ActionHandler::slotModifyExplodeText() {
     setCurrentAction(RS2::ActionModifyExplodeText);
 }
 
-void QG_ActionHandler::slotSetSnaps(RS_SnapMode s) {
+void QG_ActionHandler::slotSetSnaps(RS_SnapMode const& s) {
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps()");
-    updateSnapMode(s);
-    if(snapToolBar != NULL) {
+
+	if(snap_toolbar) {
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): set snapToolBar");
-        snapToolBar->setSnaps(s);
+        snap_toolbar->setSnaps(s);
     }else{
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): snapToolBar is NULL");
     }
-    RS_GraphicView* view=mainWindow->getGraphicView();
-    if(view != NULL) {
+	if(view) {
         view->setDefaultSnapMode(s);
     }
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): ok");
@@ -1674,10 +1678,10 @@ void QG_ActionHandler::slotSnapIntersection() {
 
 void QG_ActionHandler::slotSnapIntersectionManual() {
     //disableSnaps();
-    /*if (snapIntersectionManual!=NULL) {
+	/*if (snapIntersectionManual) {
         snapIntersectionManual->setChecked(true);
 }*/
-    /*if (snapToolBar!=NULL) {
+	/*if (snapToolBar) {
         snapToolBar->setSnapMode(RS2::SnapIntersectionManual);
 }*/
     //setCurrentAction(RS2::ActionSnapIntersectionManual);
@@ -1723,21 +1727,14 @@ void QG_ActionHandler::disableRestrictions() {
     slotSetSnaps(s);
 }
 
-
-/**
- * Updates the snap mode for the current document from the selected menu.
- * Used after the active window changed.
- */
-void QG_ActionHandler::updateSnapMode(RS_SnapMode& /*s*/) {
-}
-
 void QG_ActionHandler::slotSetRelativeZero() {
     setCurrentAction(RS2::ActionSetRelativeZero);
 }
 
-void QG_ActionHandler::slotLockRelativeZero(bool on) {
-    if (snapToolBar != NULL) {
-        snapToolBar->setLockedRelativeZero(on);
+void QG_ActionHandler::slotLockRelativeZero(bool on)
+{
+	if (snap_toolbar) {
+        snap_toolbar->setLockedRelativeZero(on);
     }
     if (on) {
         setCurrentAction(RS2::ActionLockRelativeZero);
@@ -1802,6 +1799,10 @@ void QG_ActionHandler::slotLayersTogglePrint() {
     setCurrentAction(RS2::ActionLayersTogglePrint);
 }
 
+void QG_ActionHandler::slotLayersToggleConstruction() {
+    setCurrentAction(RS2::ActionLayersToggleConstruction);
+}
+
 
 void QG_ActionHandler::slotBlocksDefreezeAll() {
     setCurrentAction(RS2::ActionBlocksDefreezeAll);
@@ -1852,20 +1853,18 @@ void QG_ActionHandler::slotOptionsDrawing() {
     setCurrentAction(RS2::ActionOptionsDrawing);
 }
 
-void QG_ActionHandler::slotFocusNormal() {
-    //QG_GraphicView* gv = mainWindow->getGraphicView();
-    //if (gv!=NULL) {
-        //gv->setFocus();
-        mainWindow->setFocus2();
-    //}
+void QG_ActionHandler::set_view(RS_GraphicView* gview)
+{
+    view = gview;
+}
+void QG_ActionHandler::set_document(RS_Document* doc)
+{
+    document = doc;
 }
 
-/**
-    * Creates link to snap tool bar so we can update the button
-    * state if the snapping action changes.
-    */
-void QG_ActionHandler::setSnapToolBar(QG_SnapToolBar* tb) {
-    snapToolBar = tb;
+void QG_ActionHandler::set_snap_toolbar(QG_SnapToolBar* snap_tb)
+{
+    snap_toolbar = snap_tb;
 }
 
 // EOF

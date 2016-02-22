@@ -45,8 +45,8 @@ class RS_BlockList;
 class RS_Document : public RS_EntityContainer,
     public RS_Undo {
 public:
-    RS_Document(RS_EntityContainer* parent=NULL);
-    virtual ~RS_Document(){}
+	RS_Document(RS_EntityContainer* parent=nullptr);
+	virtual ~RS_Document() = default;
 
     virtual RS_LayerList* getLayerList() = 0;
     virtual RS_BlockList* getBlockList() = 0;
@@ -70,8 +70,8 @@ public:
      * from RS_Undo.
      */
     virtual void removeUndoable(RS_Undoable* u) {
-        if (u!=NULL && u->undoRtti()==RS2::UndoableEntity) {
-            removeEntity((RS_Entity*)u);
+        if (u && u->undoRtti()==RS2::UndoableEntity) {
+			removeEntity(static_cast<RS_Entity*>(u));
         }
     }
 

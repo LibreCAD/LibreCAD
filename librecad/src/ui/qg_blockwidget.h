@@ -48,7 +48,7 @@ public:
         LAST
     };
     QG_BlockModel(QObject * parent = 0);
-    ~QG_BlockModel();
+	~QG_BlockModel() = default;
     Qt::ItemFlags flags ( const QModelIndex & /*index*/ ) const {
             return Qt::ItemIsSelectable|Qt::ItemIsEnabled;}
     int columnCount(const QModelIndex &/*parent*/) const {return LAST;}

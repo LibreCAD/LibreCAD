@@ -27,6 +27,8 @@
 
 #include "rs_actiondrawlinepolygon.h"
 #include "rs_settings.h"
+#include "ui_qg_linepolygonoptions.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_LinePolygonOptions as a child of 'parent', with the
@@ -34,9 +36,9 @@
  */
 QG_LinePolygonOptions::QG_LinePolygonOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, ui(new Ui::Ui_LinePolygonOptions{})
 {
-    setupUi(this);
-
+	ui->setupUi(this);
 }
 
 /*
@@ -44,8 +46,7 @@ QG_LinePolygonOptions::QG_LinePolygonOptions(QWidget* parent, Qt::WindowFlags fl
  */
 QG_LinePolygonOptions::~QG_LinePolygonOptions()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+	saveSettings();
 }
 
 /*
@@ -54,18 +55,18 @@ QG_LinePolygonOptions::~QG_LinePolygonOptions()
  */
 void QG_LinePolygonOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
-void QG_LinePolygonOptions::destroy() {
+void QG_LinePolygonOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Draw");
-    RS_SETTINGS->writeEntry("/LinePolygonNumber", sbNumber->text());
+	RS_SETTINGS->writeEntry("/LinePolygonNumber", ui->sbNumber->text());
     RS_SETTINGS->endGroup();
 }
 
 void QG_LinePolygonOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDrawLinePolygonCenCor) {
-        action = (RS_ActionDrawLinePolygonCenCor*)a;
+    if (a && a->rtti()==RS2::ActionDrawLinePolygonCenCor) {
+		action = static_cast<RS_ActionDrawLinePolygonCenCor*>(a);
 
         QString sn;
         if (update) {
@@ -75,17 +76,17 @@ void QG_LinePolygonOptions::setAction(RS_ActionInterface* a, bool update) {
             sn = RS_SETTINGS->readEntry("/LinePolygonNumber", "3");
             RS_SETTINGS->endGroup();
         }
-        sbNumber->setValue(sn.toInt());
+		ui->sbNumber->setValue(sn.toInt());
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR, 
 			"QG_LinePolygonOptions::setAction: wrong action type");
-        action = NULL;
+		action = nullptr;
     }
 
 }
 
 void QG_LinePolygonOptions::updateNumber(int n) {
-    if (action!=NULL) {
+    if (action) {
         action->setNumber(n);
     }
 }

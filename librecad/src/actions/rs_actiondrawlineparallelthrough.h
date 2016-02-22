@@ -29,6 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 
+class RS_Vector;
 
 /**
  * This action class can handle user events to draw parallel 
@@ -38,7 +39,6 @@
  */
 class RS_ActionDrawLineParallelThrough : public RS_PreviewActionInterface {
 	Q_OBJECT
-private:
     enum Status {
         SetEntity,    /**< Choose original entity. */
 		SetPos,       /**< Setting point for this parallel to go through. */
@@ -48,14 +48,8 @@ private:
 public:
     RS_ActionDrawLineParallelThrough(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDrawLineParallelThrough() {}
-
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+	~RS_ActionDrawLineParallelThrough();
 	
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionDrawLineParallelThrough;
-	}
-
     virtual void trigger();
 	
     virtual void mouseMoveEvent(QMouseEvent* e);
@@ -68,43 +62,25 @@ public:
 	
     virtual void hideOptions();
     virtual void showOptions();
+	virtual void finish(bool updateTB=true);
 
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
-	int getNumber() {
-		return number;
-	}
+	int getNumber() const;
 
-	void setNumber(int n) {
-		number = n;
-	}
+	void setNumber(int n);
 
 private:
     /** Closest parallel. */
-    RS_Entity* parallel;
-    /** Data of new line */
-    RS_LineData data;
+	RS_Entity* parallel=nullptr;
 	/** Number of parallels. */
-	int number;
+	int number=1;
 	/** Coordinate of the mouse. */
-	RS_Vector coord;
+	std::unique_ptr<RS_Vector> coord;
 	/** Original entity. */
-	RS_Entity* entity;
+	RS_Entity* entity=nullptr;
 	/** Last status before entering length or number. */
 	Status lastStatus;
-	/**
-	 * Commands
-	 */
-	/*
-        QString cmdDistance;
-        QString cmdDistance2;
-        QString cmdDistance3;
-	
-        QString cmdNumber;
-        QString cmdNumber2;
-        QString cmdNumber3;
-	*/
 };
 
 #endif

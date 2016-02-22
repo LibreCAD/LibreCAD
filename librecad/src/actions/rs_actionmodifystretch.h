@@ -51,12 +51,8 @@ public:
 public:
     RS_ActionModifyStretch(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionModifyStretch() {}
+	~RS_ActionModifyStretch();
 	
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-    RS2::ActionType rtti(){
-        return RS2::ActionModifyStretch;
-    }
     virtual void init(int status=0);
     virtual void trigger();
 	
@@ -66,13 +62,10 @@ public:
 	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 private:
-	RS_Vector firstCorner;
-	RS_Vector secondCorner;
-    RS_Vector referencePoint;
-    RS_Vector targetPoint;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

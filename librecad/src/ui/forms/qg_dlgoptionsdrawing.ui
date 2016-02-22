@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>505</width>
-    <height>405</height>
+    <width>653</width>
+    <height>485</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,17 @@
    <bool>true</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
+   <item row="1" column="0">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab1">
       <attribute name="title">
@@ -702,17 +709,110 @@
        <string>&amp;Dimensions</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="lDimFactor">
+       <item row="14" column="5">
+        <spacer name="spacer11_2_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>30</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="3" column="2">
+        <widget class="QG_FontBox" name="cbDimTxSty" native="true"/>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_5">
          <property name="text">
-          <string>General Factor:</string>
+          <string>Text style:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="7">
+        <widget class="QComboBox" name="cbDimDSep">
+         <item>
+          <property name="text">
+           <string>'.' (Period)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>',' (Comma)</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="10" column="6">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Decimal separator:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="8">
+        <widget class="QLabel" name="lDimUnit6">
+         <property name="text">
+          <string>units</string>
          </property>
          <property name="wordWrap">
           <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="2" column="8">
+        <widget class="QLabel" name="lDimUnit5">
+         <property name="text">
+          <string>units</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="6">
+        <widget class="QLabel" name="lDimLUnit">
+         <property name="text">
+          <string>Linear units:</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::PlainText</enum>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+         <property name="buddy">
+          <cstring>cbLengthFormat</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLabel" name="lDimClrT">
+         <property name="text">
+          <string>Color:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="7">
+        <widget class="LG_DimzerosBox" name="cbDimAZin"/>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="lDimFactor">
+         <property name="text">
+          <string>Length Factor:</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
         <widget class="QComboBox" name="cbDimFactor">
          <property name="toolTip">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -790,17 +890,138 @@
          </item>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="lDimScale">
+       <item row="3" column="6">
+        <widget class="QLabel" name="lDimTsz">
          <property name="text">
-          <string>General Scale:</string>
+          <string>Tick size:</string>
          </property>
          <property name="wordWrap">
           <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item row="4" column="3">
+        <widget class="QLabel" name="lDimUnit1">
+         <property name="text">
+          <string>units</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="0">
+        <spacer name="spacer11">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>30</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="5" column="7">
+        <widget class="QG_WidthBox" name="cbDimLwD"/>
+       </item>
+       <item row="11" column="6">
+        <widget class="QLabel" name="lDimAUnit">
+         <property name="text">
+          <string>Angular units:</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+         <property name="buddy">
+          <cstring>cbAngleFormat</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLabel" name="lDimTextHeight">
+         <property name="text">
+          <string>Text Height:</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="6">
+        <widget class="QLabel" name="lDimZin">
+         <property name="text">
+          <string>Linear zeros:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="7">
+        <widget class="QComboBox" name="cbDimTsz">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string notr="true">0</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">2</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">5</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="6" column="5" colspan="3">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Format units</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <widget class="QComboBox" name="cbDimGap">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">2</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">5</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="0" column="2">
         <widget class="QComboBox" name="cbDimScale">
          <property name="toolTip">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -848,17 +1069,24 @@
          </item>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="lDimTextHeight">
+       <item row="1" column="0" colspan="3">
+        <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Text Height:</string>
+          <string>Text size &amp; position</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="lDimScale">
+         <property name="text">
+          <string>General Scale:</string>
          </property>
          <property name="wordWrap">
           <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item row="4" column="2">
         <widget class="QComboBox" name="cbDimTextHeight">
          <property name="editable">
           <bool>true</bool>
@@ -880,28 +1108,17 @@
          </item>
         </widget>
        </item>
-       <item row="2" column="2">
-        <widget class="QLabel" name="lDimUnit1">
-         <property name="text">
-          <string>units</string>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-        </widget>
+       <item row="8" column="7">
+        <widget class="QComboBox" name="cbDimDec"/>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="lDimExe">
-         <property name="text">
-          <string>Extension line extension:</string>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-        </widget>
+       <item row="4" column="7">
+        <widget class="QG_ColorBox" name="cbDimClrD"/>
        </item>
-       <item row="3" column="1">
+       <item row="10" column="2">
         <widget class="QComboBox" name="cbDimExe">
+         <property name="toolTip">
+          <string>Length to enlarge over dimension line</string>
+         </property>
          <property name="editable">
           <bool>true</bool>
          </property>
@@ -922,112 +1139,11 @@
          </item>
         </widget>
        </item>
-       <item row="3" column="2">
-        <widget class="QLabel" name="lDimUnit2">
-         <property name="text">
-          <string>units</string>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="lDimExo">
-         <property name="text">
-          <string>Extension line offset:</string>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QComboBox" name="cbDimExo">
-         <property name="editable">
-          <bool>true</bool>
-         </property>
-         <item>
-          <property name="text">
-           <string notr="true">1</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">2</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">5</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="4" column="2">
-        <widget class="QLabel" name="lDimUnit3">
-         <property name="text">
-          <string>units</string>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="lDimGap">
-         <property name="text">
-          <string>Dimension line gap:</string>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QComboBox" name="cbDimGap">
-         <property name="editable">
-          <bool>true</bool>
-         </property>
-         <item>
-          <property name="text">
-           <string notr="true">1</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">2</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">5</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="5" column="2">
-        <widget class="QLabel" name="lDimUnit4">
-         <property name="text">
-          <string>units</string>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="lDimAsz">
-         <property name="text">
-          <string>Arrow size:</string>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
+       <item row="2" column="7">
         <widget class="QComboBox" name="cbDimAsz">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
          <property name="editable">
           <bool>true</bool>
          </property>
@@ -1048,113 +1164,7 @@
          </item>
         </widget>
        </item>
-       <item row="6" column="2">
-        <widget class="QLabel" name="lDimUnit5">
-         <property name="text">
-          <string>units</string>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="lDimTsz">
-         <property name="text">
-          <string>Tick size:</string>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QComboBox" name="cbDimTsz">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="editable">
-          <bool>true</bool>
-         </property>
-         <item>
-          <property name="text">
-           <string notr="true">0</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">1</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">2</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">5</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="7" column="2">
-        <widget class="QLabel" name="lDimUnit6">
-         <property name="text">
-          <string>units</string>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="lDimTih">
-         <property name="text">
-          <string>Alignment:</string>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QComboBox" name="cbDimTih">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="editable">
-          <bool>false</bool>
-         </property>
-         <item>
-          <property name="text">
-           <string>Dimension Aligned</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Horizontal</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="9" column="0">
-        <spacer name="spacer11">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Expanding</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>30</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="9" column="1">
+       <item row="15" column="1">
         <spacer name="spacer11_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -1170,21 +1180,273 @@
          </property>
         </spacer>
        </item>
+       <item row="2" column="6">
+        <widget class="QLabel" name="lDimAsz">
+         <property name="text">
+          <string>Arrow size:</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="7">
+        <widget class="QComboBox" name="cbDimADec"/>
+       </item>
+       <item row="5" column="6">
+        <widget class="QLabel" name="lDimLwD">
+         <property name="text">
+          <string>Width:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="7">
+        <widget class="QComboBox" name="cbDimAUnit"/>
+       </item>
+       <item row="6" column="3">
+        <widget class="QLabel" name="lDimUnit4">
+         <property name="text">
+          <string>units</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="5" colspan="3">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Dimension lines, arrows &amp; ticks</string>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="6">
+        <widget class="QLabel" name="lDimAZin">
+         <property name="text">
+          <string>Angular zeros:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="6">
+        <widget class="QLabel" name="lDimClrD">
+         <property name="text">
+          <string>Color:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="6">
+        <widget class="QLabel" name="lDimADec">
+         <property name="text">
+          <string>Angular precision:</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+         <property name="buddy">
+          <cstring>cbAnglePrecision</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <widget class="QLabel" name="lDimExe">
+         <property name="text">
+          <string>Enlarge:</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QLabel" name="lDimExo">
+         <property name="text">
+          <string>Offset:</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="7">
+        <widget class="QComboBox" name="cbDimLUnit"/>
+       </item>
+       <item row="8" column="6">
+        <widget class="QLabel" name="lDimDec">
+         <property name="text">
+          <string>Linear precision:</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::PlainText</enum>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+         <property name="buddy">
+          <cstring>cbLengthPrecision</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <widget class="QG_ColorBox" name="cbDimClrT"/>
+       </item>
+       <item row="5" column="2">
+        <widget class="QComboBox" name="cbDimTih">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="editable">
+          <bool>false</bool>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <item>
+          <property name="text">
+           <string>Aligned</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Horizontal</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="10" column="3">
+        <widget class="QLabel" name="lDimUnit2">
+         <property name="text">
+          <string>units</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
        <item row="9" column="3">
-        <spacer name="spacer11_2_2">
+        <widget class="QLabel" name="lDimUnit3">
+         <property name="text">
+          <string>units</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="7">
+        <widget class="LG_DimzerosBox" name="cbDimZin"/>
+       </item>
+       <item row="1" column="4" rowspan="13">
+        <widget class="Line" name="line">
+         <property name="lineWidth">
+          <number>1</number>
+         </property>
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Expanding</enum>
+        </widget>
+       </item>
+       <item row="9" column="2">
+        <widget class="QComboBox" name="cbDimExo">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>30</height>
-          </size>
+         <property name="editable">
+          <bool>true</bool>
          </property>
-        </spacer>
+         <item>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">2</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">5</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="11" column="3">
+        <widget class="QLabel" name="lDimUnit7">
+         <property name="text">
+          <string>units</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLabel" name="lDimTih">
+         <property name="text">
+          <string>Text alignment:</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLabel" name="lDimGap">
+         <property name="text">
+          <string>Dimension line gap:</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0" colspan="3">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Extension lines</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="0" colspan="2">
+        <widget class="QCheckBox" name="cbDimFxLon">
+         <property name="text">
+          <string>Fixed length:</string>
+         </property>
+         <property name="tristate">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="1">
+        <widget class="QLabel" name="lDimClrE">
+         <property name="text">
+          <string>Color:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="1">
+        <widget class="QLabel" name="lDimLwE">
+         <property name="text">
+          <string>Width:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="2">
+        <widget class="QG_WidthBox" name="cbDimLwE"/>
+       </item>
+       <item row="12" column="2">
+        <widget class="QG_ColorBox" name="cbDimClrE">
+         <property name="toolTip">
+          <string/>
+         </property>
+         <property name="editable">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="2">
+        <widget class="QDoubleSpinBox" name="cbDimFxL">
+         <property name="toolTip">
+          <string>fixed extension line legth</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -1264,16 +1526,31 @@
      </widget>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QG_ColorBox</class>
+   <extends>QComboBox</extends>
+   <header>../qg_colorbox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QG_WidthBox</class>
+   <extends>QComboBox</extends>
+   <header>../qg_widthbox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QG_FontBox</class>
+   <extends>QWidget</extends>
+   <header>qg_fontbox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>LG_DimzerosBox</class>
+   <extends>QComboBox</extends>
+   <header>../lg_dimzerosbox.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>tabWidget</tabstop>
   <tabstop>cbPaperFormat</tabstop>
@@ -1290,12 +1567,8 @@
   <tabstop>cbYSpacing</tabstop>
   <tabstop>cbDimScale</tabstop>
   <tabstop>cbDimTextHeight</tabstop>
-  <tabstop>cbDimExe</tabstop>
-  <tabstop>cbDimExo</tabstop>
-  <tabstop>cbDimGap</tabstop>
   <tabstop>cbDimAsz</tabstop>
   <tabstop>cbDimTsz</tabstop>
-  <tabstop>cbDimTih</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -1348,10 +1621,42 @@
    </hints>
   </connection>
   <connection>
+   <sender>cbDimLUnit</sender>
+   <signal>activated(int)</signal>
+   <receiver>QG_DlgOptionsDrawing</receiver>
+   <slot>updateDimLengthPrecision()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>cbAngleFormat</sender>
    <signal>activated(int)</signal>
    <receiver>QG_DlgOptionsDrawing</receiver>
    <slot>updateAnglePrecision()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbDimAUnit</sender>
+   <signal>activated(int)</signal>
+   <receiver>QG_DlgOptionsDrawing</receiver>
+   <slot>updateDimAnglePrecision()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>20</x>

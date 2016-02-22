@@ -26,13 +26,14 @@
 
 #include <iostream>
 #include <QMap>
-#include <qapplication.h>
+#include <QApplication>
 #include <QTextCodec>
 #include <QTranslator>
 #include <QFileInfo>
 #include "rs_settings.h"
 #include "rs_system.h"
 #include "rs.h"
+#include "rs_debug.h"
 
 #if QT_VERSION < 0x040400
 #include "emu_qt44.h"
@@ -707,7 +708,7 @@ QString RS_System::symbolToLanguage(const QString& symb) {
     }
 #endif
 
-//    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" :  line "<<__LINE__<<" :  symb="<<qPrintable(symb)<<" name="<<qPrintable(ret)<<std::endl;
+//    std::cout<<__FILE__<<" : "<<__func__<<" :  line "<<__LINE__<<" :  symb="<<qPrintable(symb)<<" name="<<qPrintable(ret)<<std::endl;
 
         return ret;
 
@@ -735,7 +736,7 @@ QString RS_System::getEncoding(const QString& str) {
         return "eucJP";
     } else if (l=="euckr") {
         return "eucKR";
-    } else if (l=="gb2312" || l=="gb2312" || l=="chinese" || l=="cn-gb" ||
+    } else if (l=="gb2312" || l=="chinese" || l=="cn-gb" ||
                l=="csgb2312" || l=="csgb231280" || l=="csiso58gb231280" ||
                l=="gb_2312-80" || l=="gb231280" || l=="gb2312-80" || l=="gbk" ||
                l=="iso-ir-58") {

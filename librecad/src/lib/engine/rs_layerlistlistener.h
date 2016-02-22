@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -73,6 +74,11 @@ public:
      * Called when a layer's printing attribute is toggled.
      */
     virtual void layerToggledPrint(RS_Layer*) {}
+
+    /**
+     * Called when a layer's construction attribute is toggled.
+     */
+    virtual void layerToggledConstruction(RS_Layer*) {}
 }
 ;
 

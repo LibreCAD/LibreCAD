@@ -28,7 +28,6 @@
 #define RS_ACTIONDRAWLINEANGLE_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_line.h"
 
 /**
  * This action class can handle user events to draw 
@@ -53,13 +52,7 @@ public:
                            double angle=0.0,
                            bool fixedAngle=false,
                            RS2::ActionType actionType=RS2::ActionDrawLineAngle);
-    ~RS_ActionDrawLineAngle();
-
-	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
-	
-    virtual RS2::ActionType rtti() {
-        return actionType;
-    }
+	~RS_ActionDrawLineAngle();
 
     void reset();
 
@@ -80,68 +73,24 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
-	void setSnapPoint(int sp) {
-		snpPoint = sp;
-	}
+	void setSnapPoint(int sp);
 
-	int getSnapPoint() {
-		return snpPoint;
-	}
+	int getSnapPoint() const;
 
-	void setAngle(double a) {
-		angle = a;
-	}
+	void setAngle(double a);
 
-	double getAngle() {
-		return angle;
-	}
+	double getAngle() const;
 
-	void setLength(double l) {
-		length = l;
-	}
+	void setLength(double l);
 
-	double getLength() {
-		return length;
-	}
+	double getLength() const;
 
-    bool hasFixedAngle() {
-        switch(rtti()){
-        case RS2::ActionDrawLineHorizontal:
-        case RS2::ActionDrawLineVertical:
-            return true;
-        default:
-            return false;
-        }
-    }
+	bool hasFixedAngle() const;
 
 protected:
-    /**
-     * Line data defined so far.
-     */
-    RS_LineData data;
-	/**
-	 * Position.
-	 */
-	RS_Vector pos;
-    /**
-     * Line angle.
-     */
-    double angle;
-	/**
-	 * Line length.
-	 */
-	double length;
-    /**
-     * Is the angle fixed?
-     */
-    bool fixedAngle;
-    /**
-     * Snap point (start, middle, end).
-     */
-    int snpPoint;
-    RS2::ActionType actionType;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

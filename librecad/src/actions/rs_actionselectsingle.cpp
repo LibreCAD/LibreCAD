@@ -27,41 +27,32 @@
 #include "rs_actionselectsingle.h"
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_selection.h"
+#include "rs_debug.h"
 
 
 
 RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
-                                             RS_GraphicView& graphicView,RS_ActionInterface* actionSelect,  QVector<RS2::EntityType>* entityTypeList)
-    :RS_ActionInterface("Select Entities", container, graphicView) {
-    this->entityTypeList=entityTypeList;
-    if(actionSelect != NULL){
-        if(actionSelect->rtti() == RS2::ActionSelect) {
-            this->actionSelect=static_cast<RS_ActionSelect*>(actionSelect);
-                this->actionSelect->requestFinish(true);
-        }else{
-            this->actionSelect=NULL;
-        }
-    }
-
-    en = NULL;
-}
-
-
-QAction* RS_ActionSelectSingle::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action = new QAction(tr("Select Entity"),  NULL);
-    action->setIcon(QIcon(":/extui/selectsingle.png"));
-    //action->zetStatusTip(tr("Selects single Entities"));
-    return action;
+											 RS_GraphicView& graphicView,
+											 RS_ActionInterface* action_select,
+											 std::initializer_list<RS2::EntityType> const& entityTypeList)
+    :RS_ActionInterface("Select Entities", container, graphicView)
+    ,entityTypeList(entityTypeList)
+    ,en(nullptr)
+    ,actionSelect(action_select)
+{
+    actionType = RS2::ActionSelectSingle;
 }
 
 
 void RS_ActionSelectSingle::trigger() {
-//        if(entityTypeList != NULL){
-//                std::cout<<"RS_ActionSelectSingle::trigger(): entityTypeList->contains(en->rtti())="<<entityTypeList->contains(en->rtti())<<std::endl;
-//        }
-    if (en!=NULL && (entityTypeList== NULL || entityTypeList->contains(en->rtti()))) {
+	bool typeMatch{true};
+	if (en && entityTypeList.size())
+		typeMatch = std::find(entityTypeList.begin(), entityTypeList.end(), en->rtti())
+				!= entityTypeList.end();
+	if (en && typeMatch) {
         RS_Selection s(*container, graphicView);
         s.selectSingle(en);
 
@@ -72,25 +63,36 @@ void RS_ActionSelectSingle::trigger() {
 }
 
 
-void RS_ActionSelectSingle::keyPressEvent(QKeyEvent* e) {
-    if (e->key()==Qt::Key_Enter) {
+void RS_ActionSelectSingle::keyPressEvent(QKeyEvent* e)
+{
+    if (e->key()==Qt::Key_Escape)
+    {
         finish(false);
+        actionSelect->keyPressEvent(e);
+    }
+
+    if (container->countSelected() > 0 && e->key()==Qt::Key_Enter)
+    {
+        finish(false);
+        actionSelect->keyPressEvent(e);
     }
 }
 
 
-void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::RightButton) {
-        //need to finish the parent RS_ActionSelect as well, bug#3437138
-            //need to check actionSelect is set, bug#3437138
-        if(actionSelect != NULL) {
-            actionSelect->requestFinish(false);
-        }
-        init(getStatus()-1);
-    } else {
-        if(entityTypeList!=NULL && entityTypeList->size()>0) {
-//            std::cout<<"RS_ActionSelectSingle::mouseReleaseEvent(): entityTypeList->size()="<< entityTypeList->size()<<std::endl;
-            en = catchEntity(e,*entityTypeList);
+void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent* e)
+{
+    if (e->button()==Qt::RightButton)
+    {
+        finish();
+        if (actionSelect->rtti() == RS2::ActionSelect)
+            actionSelect->finish();
+        else
+            actionSelect->mouseReleaseEvent(e);
+    }
+    else
+    {
+        if (entityTypeList.size()) {
+            en = catchEntity(e, entityTypeList);
         }else{
             en = catchEntity(e);
         }

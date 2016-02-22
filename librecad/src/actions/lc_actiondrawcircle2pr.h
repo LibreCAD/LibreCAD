@@ -2,7 +2,7 @@
 **
  * Draw circle, given its radius and two points on circle
 
-Copyright (C) 2014 Dongxu Li (dongxuli2011 at gmail.com)
+Copyright (C) 2014-2015 Dongxu Li (dongxuli2011 at gmail.com)
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -45,13 +45,8 @@ public:
 public:
     LC_ActionDrawCircle2PR(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-    ~LC_ActionDrawCircle2PR();
-	
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+	~LC_ActionDrawCircle2PR();
 
-    virtual RS2::ActionType rtti() {
-        return RS2::ActionDrawCircle2PR;
-    }
     void reset();
 
     virtual void init(int status=0);
@@ -68,21 +63,10 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 protected:
-    /**
-     * Circle data defined so far.
-     */
-//    RS_CircleData data;
-    /**
-     * 1st point.
-     */
-    RS_Vector point1;
-    /**
-     * 2nd point.
-     */
-    RS_Vector point2;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

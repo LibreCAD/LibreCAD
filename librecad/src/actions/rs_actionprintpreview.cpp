@@ -23,15 +23,23 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<cmath>
 #include "rs_actionprintpreview.h"
 
 #include <QAction>
-#include <QDebug>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
 #include "rs_commandevent.h"
+#include "rs_coordinateevent.h"
+#include "rs_math.h"
+#include "rs_preview.h"
+
+struct RS_ActionPrintPreview::Points {
+	RS_Vector v1;
+	RS_Vector v2;
+};
 
 /**
  * Constructor.
@@ -39,55 +47,35 @@
 RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
                                              RS_GraphicView& graphicView)
     :RS_ActionInterface("Print Preview",
-                        container, graphicView), hasOptions(false),scaleFixed(false)
-    ,m_bPaperOffset(false)
+						container, graphicView)
+	, hasOptions(false)
+	, scaleFixed(false)
+	, m_bPaperOffset(false)
+	, pPoints(new Points{})
 {
     showOptions();
+	actionType=RS2::ActionFilePrintPreview;
 }
 
-
-
-RS_ActionPrintPreview::~RS_ActionPrintPreview() {
-}
-
-
-QAction* RS_ActionPrintPreview::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    // tr("Print Preview")
-    QAction* action = new QAction(tr("Print Pre&view"), NULL);
-#if QT_VERSION >= 0x040600
-    action->setIcon(QIcon::fromTheme("document-print-preview", QIcon(":/actions/fileprintpreview.png")));
-#else
-    action->setIcon(QIcon(":/actions/fileprintpreview.png"));
-#endif
-    //action->zetStatusTip(tr("Shows a preview of a print"));
-    return action;
-}
-
+RS_ActionPrintPreview::~RS_ActionPrintPreview()=default;
 
 void RS_ActionPrintPreview::init(int status) {
     RS_ActionInterface::init(status);
     showOptions();
 }
 
-
-
-
-void RS_ActionPrintPreview::trigger() {}
-
-
-
 void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
     case Moving:
-        v2 = graphicView->toGraph(e->x(), e->y());
-        if (graphic!=NULL) {
+		pPoints->v2 = graphicView->toGraph(e->x(), e->y());
+        if (graphic) {
             RS_Vector pinsbase = graphic->getPaperInsertionBase();
 
             double scale = graphic->getPaperScale();
 
-            graphic->setPaperInsertionBase(pinsbase-v2*scale+v1*scale);
+			graphic->setPaperInsertionBase(pinsbase-pPoints->v2*scale+pPoints->v1*scale);
         }
-        v1 = v2;
+		pPoints->v1 = pPoints->v2;
         graphicView->redraw(RS2::RedrawGrid); // DRAW Grid also draws paper, background items
         break;
 
@@ -102,7 +90,7 @@ void RS_ActionPrintPreview::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case Neutral:
-            v1 = graphicView->toGraph(e->x(), e->y());
+			pPoints->v1 = graphicView->toGraph(e->x(), e->y());
             setStatus(Moving);
             break;
 
@@ -120,7 +108,6 @@ void RS_ActionPrintPreview::mouseReleaseEvent(QMouseEvent* e) {
         break;
 
     default:
-        RS_DIALOGFACTORY->requestPreviousMenu();
         e->accept();
         break;
     }
@@ -134,10 +121,13 @@ void RS_ActionPrintPreview::coordinateEvent(RS_CoordinateEvent* e) {
 //    qDebug()<<"coordinateEvent= ("<<mouse.x<<", "<<mouse.y<<")";
 
     if(m_bPaperOffset) {
-        RS_DIALOGFACTORY->commandMessage(tr("Printout offset in paper coordinates by (%1, %2)").arg(mouse.x,mouse.y));
+        RS_DIALOGFACTORY->commandMessage(tr("Printout offset in paper coordinates by (%1, %2)").arg(mouse.x).arg(mouse.y));
         mouse *= graphic->getPaperScale();
     }else
-        RS_DIALOGFACTORY->commandMessage(tr("Printout offset in graph coordinates by (%1, %2)").arg(mouse.x,mouse.y));
+        RS_DIALOGFACTORY->commandMessage(tr("Printout offset in graph coordinates by (%1, %2)").arg(mouse.x).arg(mouse.y));
+
+//    RS_DIALOGFACTORY->commandMessage(tr("old insertion base (%1, %2)").arg(pinsbase.x).arg(pinsbase.y));
+//    RS_DIALOGFACTORY->commandMessage(tr("new insertion base (%1, %2)").arg((pinsbase-mouse).x).arg((pinsbase-mouse).y));
 
     graphic->setPaperInsertionBase(pinsbase-mouse);
     graphicView->redraw(RS2::RedrawGrid); // DRAW Grid also draws paper, background items
@@ -149,7 +139,17 @@ void RS_ActionPrintPreview::coordinateEvent(RS_CoordinateEvent* e) {
 void RS_ActionPrintPreview::commandEvent(RS_CommandEvent*  e) {
     QString c = e->getCommand().trimmed().toLower();
 //    qDebug()<<"cmd="<<c;
-    if (checkCommand("graphoffset", c)) {
+	if (checkCommand("blackwhite", c)) {
+		setBlackWhite(true);
+		RS_DIALOGFACTORY->commandMessage(tr("Printout in Black/White"));
+		e->accept();
+		return;
+	} else if (checkCommand("color", c)) {
+		setBlackWhite(false);
+		RS_DIALOGFACTORY->commandMessage(tr("Printout in color"));
+		e->accept();
+		return;
+	} else if (checkCommand("graphoffset", c)) {
         m_bPaperOffset=false;
         RS_DIALOGFACTORY->commandMessage(tr("Printout offset in graph coordinates"));
         e->accept();
@@ -191,7 +191,9 @@ void RS_ActionPrintPreview::commandEvent(RS_CommandEvent*  e) {
 
 QStringList RS_ActionPrintPreview::getAvailableCommands() {
     QStringList cmd;
-    cmd +=command("graphoffset");
+	cmd +=command("blackwhite");
+	cmd +=command("color");
+	cmd +=command("graphoffset");
     cmd +=command("paperoffset");
     cmd +=command("help");
     return cmd;
@@ -204,14 +206,14 @@ void RS_ActionPrintPreview::resume() {
 
 //printout warning in command widget
 void RS_ActionPrintPreview::printWarning(const QString& s) {
-    if(RS_DIALOGFACTORY != NULL ){
+	if(RS_DIALOGFACTORY){
         RS_DIALOGFACTORY->commandMessage(s);
     }
 }
 
 void RS_ActionPrintPreview::showOptions() {
     RS_ActionInterface::showOptions();
-    if(RS_DIALOGFACTORY != NULL && ! isFinished() ) {
+	if(RS_DIALOGFACTORY && ! isFinished() ) {
         RS_DIALOGFACTORY->requestOptions(this, true,hasOptions);
         hasOptions=true;
     }
@@ -225,11 +227,6 @@ void RS_ActionPrintPreview::hideOptions() {
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
-
-void RS_ActionPrintPreview::updateMouseButtonHints() {}
-
-
-
 void RS_ActionPrintPreview::updateMouseCursor() {
     switch (getStatus()){
     case Moving:
@@ -240,13 +237,8 @@ void RS_ActionPrintPreview::updateMouseCursor() {
     }
 }
 
-
-
-void RS_ActionPrintPreview::updateToolBar() {}
-
-
 void RS_ActionPrintPreview::center() {
-    if (graphic!=NULL) {
+    if (graphic) {
         graphic->centerToPage();
         graphicView->zoomPage();
         graphicView->redraw();
@@ -255,7 +247,7 @@ void RS_ActionPrintPreview::center() {
 
 
 void RS_ActionPrintPreview::fit() {
-    if (graphic!=NULL) {
+    if (graphic) {
         RS_Vector&& paperSize=RS_Units::convert(graphic->getPaperSize(),
                                                 RS2::Millimeter, getUnit());
 
@@ -264,7 +256,7 @@ void RS_ActionPrintPreview::fit() {
                          " Paper is too small for fitting to page\n"
                          "Please set paper size by Menu: Edit->Current Drawing Preferences->Paper");
         //        double f0=graphic->getPaperScale();
-        if( graphic->fitToPage()==false && RS_DIALOGFACTORY!=NULL){
+        if( graphic->fitToPage()==false && RS_DIALOGFACTORY){
             RS_DIALOGFACTORY->commandMessage(
                         tr("RS_ActionPrintPreview::fit(): Invalid paper size")
                         );
@@ -279,7 +271,7 @@ void RS_ActionPrintPreview::fit() {
 }
 
 bool RS_ActionPrintPreview::setScale(double f, bool autoZoom) {
-    if (graphic!=NULL) {
+    if (graphic) {
         if( fabs(f - graphic->getPaperScale()) < RS_TOLERANCE ) return false;
         graphic->setPaperScale(f);
 //        graphic->centerToPage();
@@ -292,9 +284,9 @@ bool RS_ActionPrintPreview::setScale(double f, bool autoZoom) {
 
 
 
-double RS_ActionPrintPreview::getScale() {
+double RS_ActionPrintPreview::getScale() const{
     double ret = 1.0;
-    if (graphic!=NULL) {
+    if (graphic) {
         ret = graphic->getPaperScale();
     }
     return ret;
@@ -314,7 +306,7 @@ void RS_ActionPrintPreview::setBlackWhite(bool bw) {
 
 
 RS2::Unit RS_ActionPrintPreview::getUnit() {
-    if (graphic!=NULL) {
+    if (graphic) {
         return graphic->getUnit();
     }
     else {

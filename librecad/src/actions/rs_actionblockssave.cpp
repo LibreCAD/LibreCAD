@@ -27,6 +27,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_graphic.h"
 #include "rs_dialogfactory.h"
 #include "rs_insert.h"
+#include "rs_coordinateevent.h"
+#include "qc_mdiwindow.h"
+#include "rs_debug.h"
 
 
 
@@ -34,26 +37,15 @@ RS_ActionBlocksSave::RS_ActionBlocksSave(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Edit Block", container, graphicView) {}
 
-
-QAction* RS_ActionBlocksSave::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	//  tr("&Edit Block")
-    QAction* action = new QAction( tr("&Save Block"), NULL);
-    //action->zetStatusTip(tr("Edit Block"));
-    action->setIcon(QIcon(":/main/filesave.png"));
-	return action;
-}
-
 /*recursive add blocks in graphic*/
 void RS_ActionBlocksSave::addBlock(RS_Insert* in, RS_Graphic* g) {
 
-    for (RS_Entity* e=in->firstEntity(RS2::ResolveNone);
-         e!=NULL;
-         e = in->nextEntity(RS2::ResolveNone)) {
+	for(auto e: *in){
 
         if (e->rtti() == RS2::EntityInsert) {
-            addBlock((RS_Insert *)e,g);
-            RS_Insert *in = (RS_Insert *)e;
-            g->addBlock(in->getBlockForInsert());
+			RS_Insert * in=static_cast<RS_Insert *>(e);
+			addBlock(in,g);
+			g->addBlock(in->getBlockForInsert());
         }
     }
 }
@@ -61,45 +53,45 @@ void RS_ActionBlocksSave::addBlock(RS_Insert* in, RS_Graphic* g) {
 void RS_ActionBlocksSave::trigger() {
     RS_DEBUG->print("save block to file");
     QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
-    if(appWindow==NULL) {
+	if(!appWindow) {
         finish(false);
         return;
     }
     RS_BlockList* bList = appWindow->getBlockWidget() -> getBlockList();
-    if (bList!=NULL) {
+    if (bList) {
         auto b=bList->getActive();
-        if(b!=NULL) {
-            RS_Graphic g(NULL);
+        if(b) {
+			RS_Graphic g(nullptr);
             g.setOwner(false);
 
            g.clearLayers();
 //           g.addLayer(b->getLayer());
             for (RS_Entity* e=b->firstEntity(RS2::ResolveNone);
-                 e!=NULL;
+                 e;
                  e = b->nextEntity(RS2::ResolveNone)) {
                 g.addEntity(e);
                 if (e->rtti() == RS2::EntityInsert) {
-                    RS_Insert *in = (RS_Insert *)e;
+					RS_Insert *in = static_cast<RS_Insert *>(e);
                     g.addBlock(in->getBlockForInsert());
-                    addBlock((RS_Insert *)e,&g);
+					addBlock(in,&g);
                 }
-//           std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line: "<<__LINE__<<" : "<<e->rtti()<<std::endl;
+//           std::cout<<__FILE__<<" : "<<__func__<<" : line: "<<__LINE__<<" : "<<e->rtti()<<std::endl;
 //                g.addLayer(e->getLayer());
-//           std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line: "<<__LINE__<<" : "<<e->rtti()<<std::endl;
+//           std::cout<<__FILE__<<" : "<<__func__<<" : line: "<<__LINE__<<" : "<<e->rtti()<<std::endl;
             }
-//           std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line: "<<__LINE__<<std::endl;
+//           std::cout<<__FILE__<<" : "<<__func__<<" : line: "<<__LINE__<<std::endl;
 //           std::cout<<"add layer name="<<qPrintable(b->getLayer()->getName())<<std::endl;
 
             RS2::FormatType t = RS2::FormatDXFRW;
 
             QG_FileDialog dlg(appWindow->getMDIWindow(),0, QG_FileDialog::BlockFile);
-            QString&& fn = dlg.getSaveFile(&t);
+			QString const& fn = dlg.getSaveFile(&t);
             QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 //            g.setModified(true);
             g.saveAs(fn, t);
             QApplication::restoreOverrideCursor();
         }else{
-            if (RS_DIALOGFACTORY!=NULL) {
+            if (RS_DIALOGFACTORY) {
                 RS_DIALOGFACTORY->commandMessage(tr("No block activated to save"));
             }
         }

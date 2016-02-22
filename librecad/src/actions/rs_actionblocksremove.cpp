@@ -31,51 +31,38 @@
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
+#include "rs_debug.h"
 
 
 RS_ActionBlocksRemove::RS_ActionBlocksRemove(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Remove Block", container, graphicView) {}
 
-
-QAction* RS_ActionBlocksRemove::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Remove Block")
-        QAction* action = new QAction(tr("&Remove Block"), NULL);
-    //action->zetStatusTip(tr("Remove Block"));
-        action->setIcon(QIcon(":/ui/blockremove.png"));
-        return action;
-}
-
 void RS_ActionBlocksRemove::trigger() {
     RS_DEBUG->print("RS_ActionBlocksRemove::trigger");
 
-    if (graphic!=NULL) {
+    if (graphic) {
         RS_Block* block =
             RS_DIALOGFACTORY->requestBlockRemovalDialog(graphic->getBlockList());
 
         // list of containers that might refer to the block via inserts:
-        QList<RS_EntityContainer*> containerList;
-        containerList.append(graphic);
+		std::vector<RS_EntityContainer*> containerList;
+		containerList.push_back(graphic);
         RS_BlockList* blkLst = graphic->getBlockList();
         for (int bi=0; bi<blkLst->count(); bi++) {
-            containerList.append(blkLst->at(bi));
+			containerList.push_back(blkLst->at(bi));
         }
 
-        if (block!=NULL) {
-            if (document!=NULL) {
+        if (block) {
+            if (document) {
                 document->startUndoCycle();
             }
-
-            for (int i = 0; i < containerList.size(); ++i) {
-
-                RS_EntityContainer* cont = containerList.at(i);
+			for(auto cont: containerList){
                 // remove all inserts from the graphic:
                 bool done;
                 do {
-                    done = true;
-                    for (RS_Entity* e=cont->firstEntity(RS2::ResolveNone);
-                            e!=NULL;
-                            e=cont->nextEntity(RS2::ResolveNone)) {
+					done = true;
+					for(auto e: *cont){
 
                         if (e->rtti()==RS2::EntityInsert) {
                             RS_Insert* ins = (RS_Insert*)e;
@@ -91,7 +78,7 @@ void RS_ActionBlocksRemove::trigger() {
             }
 
                         // close all windows that are editing this block:
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->closeEditBlockWindow(block);
             }
 

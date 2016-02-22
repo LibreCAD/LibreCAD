@@ -25,14 +25,14 @@
 **********************************************************************/
 #include "qg_dlgmtext.h"
 
-//#include "qg_fontbox.h"
-#include <qtextcodec.h>
+#include <QTextCodec>
 #include <QTextStream>
 #include <QFileDialog>
 #include "rs_system.h"
 #include "rs_settings.h"
 #include "rs_font.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgMText as a child of 'parent', with the
@@ -172,7 +172,7 @@ void QG_DlgMText::setText(RS_MText& t, bool isNew) {
         fon = text->getStyle();
         setFont(fon);
         height = QString("%1").arg(text->getHeight());
-        if (font!=NULL) {
+        if (font) {
             if (font->getLineSpacingFactor()==text->getLineSpacingFactor()) {
                 def = "1";
             } else {
@@ -188,7 +188,7 @@ void QG_DlgMText::setText(RS_MText& t, bool isNew) {
 #if defined(OOPL_VERSION) && defined(Q_WS_WIN)
         QCString iso = RS_System::localeToISO( QTextCodec::locale() );
         QTextCodec *codec = QTextCodec::codecForName(iso);
-        if (codec!=NULL) {
+        if (codec) {
             str = codec->toUnicode(RS_FilterDXF::toNativeString(text->getText().local8Bit()));
         } else {
             str = RS_FilterDXF::toNativeString(text->getText().local8Bit());
@@ -200,11 +200,11 @@ void QG_DlgMText::setText(RS_MText& t, bool isNew) {
         angle = QString("%1").arg(RS_Math::rad2deg(text->getAngle()));
         wPen->setPen(text->getPen(false), true, false, "Pen");
         RS_Graphic* graphic = text->getGraphic();
-        if (graphic!=NULL) {
+        if (graphic) {
             cbLayer->init(*(graphic->getLayerList()), false, false);
         }
         RS_Layer* lay = text->getLayer(false);
-        if (lay!=NULL) {
+        if (lay) {
             cbLayer->setLayer(*lay);
         }
     }
@@ -236,7 +236,7 @@ void QG_DlgMText::setText(RS_MText& t, bool isNew) {
  * Updates the text entity represented by the dialog to fit the choices of the user.
  */
 void QG_DlgMText::updateText() {
-    if (text!=NULL) {
+    if (text) {
         text->setStyle(cbFont->currentText());
         text->setHeight(leHeight->text().toDouble());
 
@@ -256,7 +256,7 @@ void QG_DlgMText::updateText() {
         text->setAlignment(getAlignment());
         text->setAngle(RS_Math::deg2rad(leAngle->text().toDouble()));
     }
-    if (text!=NULL && !isNew) {
+    if (text && !isNew) {
         text->setPen(wPen->getPen());
         text->setLayer(cbLayer->currentText());
         text->update();
@@ -404,7 +404,7 @@ int QG_DlgText::getShape() {
 */
 
 void QG_DlgMText::defaultChanged(bool) {
-    if (cbDefault->isChecked() && font!=NULL) {
+    if (cbDefault->isChecked() && font) {
         leLineSpacingFactor->setText(
                         QString("%1").arg(font->getLineSpacingFactor()));
     }

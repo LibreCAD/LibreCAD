@@ -24,37 +24,42 @@
 **
 **********************************************************************/
 
+#include<QAction>
+#include <QMouseEvent>
 #include "rs_actionmodifyround.h"
-
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_information.h"
+#include "rs_math.h"
+#include "rs_modification.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
+namespace{
+auto eType={ RS2::EntityLine , RS2::EntityPolyline , RS2::EntityArc ,
+                                           RS2::EntityCircle , RS2::EntityEllipse , RS2::EntitySpline};
+}
+
+struct RS_ActionModifyRound::Points {
+	RS_Vector coord1;
+	RS_Vector coord2;
+	RS_RoundData data;
+};
 
 RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Round Entities",
-                           container, graphicView) {
-
-    entity1 = NULL;
-    entity2 = NULL;
-    coord1 = RS_Vector(false);
-    coord2 = RS_Vector(false);
-    eType.reserve(6);
-    eType << RS2::EntityLine << RS2::EntityPolyline << RS2::EntityArc <<
-             RS2::EntityCircle << RS2::EntityEllipse << RS2::EntitySpline;
+						   container, graphicView)
+		,entity1(nullptr)
+		,entity2(nullptr)
+		, pPoints(new Points{})
+		,lastStatus(SetEntity1)
+{
+	actionType=RS2::ActionModifyRound;
 }
 
-QAction* RS_ActionModifyRound::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // (tr("Round")
-        QAction* action = new QAction(tr("&Fillet"), NULL);
-        action->setIcon(QIcon(":/extui/modifyround.png"));
-    //action->zetStatusTip(tr("Round Entities"));
-        return action;
-}
-
+RS_ActionModifyRound::~RS_ActionModifyRound() = default;
 
 void RS_ActionModifyRound::init(int status) {
     RS_ActionInterface::init(status);
@@ -69,27 +74,27 @@ void RS_ActionModifyRound::trigger() {
 
     RS_DEBUG->print("RS_ActionModifyRound::trigger()");
 
-    if (entity1!=NULL && entity1->isAtomic() &&
-            entity2!=NULL && entity2->isAtomic()) {
+    if (entity1 && entity1->isAtomic() &&
+            entity2 && entity2->isAtomic()) {
 
         deletePreview();
 
         RS_Modification m(*container, graphicView);
-        m.round(coord2,
-                coord1,
+		m.round(pPoints->coord2,
+				pPoints->coord1,
                 (RS_AtomicEntity*)entity1,
-                coord2,
+				pPoints->coord2,
                 (RS_AtomicEntity*)entity2,
-                data);
+				pPoints->data);
 
         //coord = RS_Vector(false);
-        coord1 = RS_Vector(false);
-        entity1 = NULL;
-        coord2 = RS_Vector(false);
-        entity2 = NULL;
+		pPoints->coord1 = RS_Vector(false);
+		entity1 = nullptr;
+		pPoints->coord2 = RS_Vector(false);
+		entity2 = nullptr;
         setStatus(SetEntity1);
 
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
         }
     }
@@ -101,19 +106,19 @@ void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyRound::mouseMoveEvent begin");
 
     RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
-    RS_Entity* se = catchEntity(e, eType, RS2::ResolveAll);
+    RS_Entity* se = catchEntity(e, eType, RS2::ResolveAllButTextImage);
 
     switch (getStatus()) {
     case SetEntity1:
         entity1 = se;
-        coord1 = mouse;
+		pPoints->coord1 = mouse;
         break;
 
     case SetEntity2:
         entity2 = se;
-        coord2 = mouse;
+		pPoints->coord2 = mouse;
 
-        if (entity1!=NULL && entity2!=NULL && entity2->isAtomic() &&
+        if (entity1 && entity2 && entity2->isAtomic() &&
                         RS_Information::isTrimmable(entity1, entity2)) {
 
             deletePreview();
@@ -121,21 +126,21 @@ void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent* e) {
             //preview->move(targetPoint-referencePoint);
             RS_Entity* tmp1 = entity1->clone();
             RS_Entity* tmp2 = entity2->clone();
-            tmp1->reparent(preview);
-            tmp2->reparent(preview);
+			tmp1->reparent(preview.get());
+			tmp2->reparent(preview.get());
             preview->addEntity(tmp1);
             preview->addEntity(tmp2);
 
-            bool trim = data.trim;
-            data.trim = false;
-            RS_Modification m(*preview, NULL, false);
-            m.round(coord2,
-                    coord1,
+			bool trim = pPoints->data.trim;
+			pPoints->data.trim = false;
+			RS_Modification m(*preview, nullptr, false);
+			m.round(pPoints->coord2,
+					pPoints->coord1,
                     (RS_AtomicEntity*)tmp1,
-                    coord2,
+					pPoints->coord2,
                     (RS_AtomicEntity*)tmp2,
-                    data);
-            data.trim = trim;
+					pPoints->data);
+			pPoints->data.trim = trim;
 
             preview->removeEntity(tmp1);
             preview->removeEntity(tmp2);
@@ -160,8 +165,8 @@ void RS_ActionModifyRound::mouseReleaseEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case SetEntity1:
             entity1 = se;
-            coord1 = mouse;
-            if (entity1!=NULL && entity1->isAtomic() &&
+			pPoints->coord1 = mouse;
+            if (entity1 && entity1->isAtomic() &&
                                 RS_Information::isTrimmable(entity1)) {
                 setStatus(SetEntity2);
             }
@@ -169,8 +174,8 @@ void RS_ActionModifyRound::mouseReleaseEvent(QMouseEvent* e) {
 
         case SetEntity2:
             entity2 = se;
-            coord2 = mouse;
-            if (entity2!=NULL && entity2->isAtomic() &&
+			pPoints->coord2 = mouse;
+            if (entity2 && entity2->isAtomic() &&
                             RS_Information::isTrimmable(entity1, entity2)) {
                 //setStatus(ChooseRounding);
                 trigger();
@@ -192,7 +197,7 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -203,15 +208,17 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
     case SetEntity1:
     case SetEntity2:
         if (checkCommand("radius", c)) {
+            e->accept();
             deletePreview();
             lastStatus = (Status)getStatus();
             setStatus(SetRadius);
         } else if (checkCommand("trim", c)) {
+            e->accept();
             deletePreview();
             lastStatus = (Status)getStatus();
             setStatus(SetTrim);
-            data.trim = !data.trim;
-            if (RS_DIALOGFACTORY!=NULL) {
+			pPoints->data.trim = !pPoints->data.trim;
+            if (RS_DIALOGFACTORY) {
                 RS_DIALOGFACTORY->requestOptions(this, true, true);
             }
         }
@@ -222,13 +229,13 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
             double r = RS_Math::eval(c, &ok);
             if (ok) {
                 e->accept();
-                data.radius = r;
+				pPoints->data.radius = r;
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
-            if (RS_DIALOGFACTORY!=NULL) {
+            if (RS_DIALOGFACTORY) {
                 RS_DIALOGFACTORY->requestOptions(this, true, true);
             }
             setStatus(lastStatus);
@@ -237,9 +244,9 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
 
         /*case SetTrim: {
         if (c==cmdYes.lower() || c==cmdYes2) {
-        data.trim = true;
+		data->trim = true;
     } else if (c==cmdNo.lower() || c==cmdNo2) {
-        data.trim = false;
+		data->trim = false;
                 } else {
                     RS_DIALOGFACTORY->commandMessage(tr("Please enter 'Yes' "
                "or 'No'"));
@@ -271,11 +278,26 @@ QStringList RS_ActionModifyRound::getAvailableCommands() {
 }
 
 
+void RS_ActionModifyRound::setRadius(double r) {
+	pPoints->data.radius = r;
+}
+
+double RS_ActionModifyRound::getRadius() const{
+	return pPoints->data.radius;
+}
+
+void RS_ActionModifyRound::setTrim(bool t) {
+	pPoints->data.trim = t;
+}
+
+bool RS_ActionModifyRound::isTrimOn() const{
+	return pPoints->data.trim;
+}
 
 void RS_ActionModifyRound::showOptions() {
     RS_ActionInterface::showOptions();
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestOptions(this, true);
     }
 }
@@ -285,7 +307,7 @@ void RS_ActionModifyRound::showOptions() {
 void RS_ActionModifyRound::hideOptions() {
     RS_ActionInterface::hideOptions();
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestOptions(this, false);
     }
 }
@@ -293,7 +315,7 @@ void RS_ActionModifyRound::hideOptions() {
 
 
 void RS_ActionModifyRound::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetEntity1:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first entity"),
@@ -312,7 +334,7 @@ void RS_ActionModifyRound::updateMouseButtonHints() {
                                                     "");
                 break;*/
         default:
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+			RS_DIALOGFACTORY->updateMouseWidget();
             break;
         }
     }
@@ -321,18 +343,7 @@ void RS_ActionModifyRound::updateMouseButtonHints() {
 
 
 void RS_ActionModifyRound::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
-
-
-
-//void RS_ActionModifyRound::updateToolBar() {
-//    //not needed any more with new snap
-//    return;
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-//    }
-//}
-
 
 // EOF

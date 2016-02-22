@@ -30,7 +30,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define RS_ACTIONMODIFYOFFSET_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_modification.h"
+
+class RS_OffsetData;
 
 /**
  * This action class create entity by offset
@@ -52,12 +53,6 @@ public:
                      RS_GraphicView& graphicView);
     ~RS_ActionModifyOffset();
 
-        static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
-        virtual RS2::ActionType rtti() {
-                return RS2::ActionModifyOffset;
-        }
-
 //    void reset();
 
     virtual void init(int status=0);
@@ -74,13 +69,10 @@ public:
     virtual void showOptions();
 
     virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
-//    virtual void updateToolBar();
-//    virtual double getDistance();
-//    virtual void setDistance(const double& d);
+	virtual void updateMouseCursor();
 
 protected:
 
-    RS_OffsetData data;
+	std::unique_ptr<RS_OffsetData> data;
 };
 #endif

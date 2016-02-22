@@ -27,10 +27,13 @@
 #include "rs_actioneditpaste.h"
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_clipboard.h"
 #include "rs_modification.h"
+#include "rs_coordinateevent.h"
+#include "rs_preview.h"
 
 /**
  * Constructor.
@@ -40,27 +43,14 @@
 RS_ActionEditPaste::RS_ActionEditPaste( RS_EntityContainer& container,
                                         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Edit Paste",
-                           container, graphicView) {}
+						   container, graphicView)
+		, targetPoint(new RS_Vector{})
+{}
 
 
 
-RS_ActionEditPaste::~RS_ActionEditPaste() {}
+RS_ActionEditPaste::~RS_ActionEditPaste() = default;
 
-
-QAction* RS_ActionEditPaste::createGUIAction(RS2::ActionType /*type*/, QObject* parent) {
-	// tr("Paste")
-	QAction* action = new QAction(tr("&Paste"), parent);
-#if QT_VERSION >= 0x040600
-        action->setIcon(QIcon::fromTheme("edit-paste", QIcon(":/actions/editpaste2.png")));
-#else
-        action->setIcon(QIcon(":/actions/editpaste2.png"));
-#endif
-        action->setShortcut(QKeySequence::Paste);
-        //action->zetStatusTip(tr("Pastes the clipboard contents"));
-	
-	
-    return action;
-}
 
 void RS_ActionEditPaste::init(int status) {
     RS_PreviewActionInterface::init(status);
@@ -73,7 +63,7 @@ void RS_ActionEditPaste::trigger() {
     deletePreview();
 
     RS_Modification m(*container, graphicView);
-    m.paste(RS_PasteData(targetPoint, 1.0, 0.0, false, ""));
+	m.paste(RS_PasteData(*targetPoint, 1.0, 0.0, false, ""));
     //std::cout << *RS_Clipboard::instance();
 
 	graphicView->redraw(RS2::RedrawDrawing); 
@@ -85,17 +75,17 @@ void RS_ActionEditPaste::trigger() {
 void RS_ActionEditPaste::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
     case SetTargetPoint:
-        targetPoint = snapPoint(e);
+		*targetPoint = snapPoint(e);
 
         deletePreview();
         preview->addAllFrom(*RS_CLIPBOARD->getGraphic());
-        preview->move(targetPoint);
+		preview->move(*targetPoint);
 
-		if (graphic!=NULL) {
+		if (graphic) {
 			RS2::Unit sourceUnit = RS_CLIPBOARD->getGraphic()->getUnit();
 			RS2::Unit targetUnit = graphic->getUnit();
-			double f = RS_Units::convert(1.0, sourceUnit, targetUnit);
-        	preview->scale(targetPoint, RS_Vector(f,f));
+			double const f = RS_Units::convert(1.0, sourceUnit, targetUnit);
+			preview->scale(*targetPoint, {f, f});
 		}
         drawPreview();
         break;
@@ -119,11 +109,9 @@ void RS_ActionEditPaste::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionEditPaste::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
-        return;
-    }
+	if (e==nullptr) return;
 
-    targetPoint = e->getCoordinate();
+	*targetPoint = e->getCoordinate();
     trigger();
 }
 
@@ -136,7 +124,7 @@ void RS_ActionEditPaste::updateMouseButtonHints() {
                                             tr("Cancel"));
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }
@@ -146,18 +134,5 @@ void RS_ActionEditPaste::updateMouseButtonHints() {
 void RS_ActionEditPaste::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-void RS_ActionEditPaste::updateToolBar() {
-    //not needed any more with new snap
-    return;
-    if (!isFinished()) {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-    } else {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-    }
-}
-
 
 // EOF

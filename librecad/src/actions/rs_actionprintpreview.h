@@ -48,18 +48,10 @@ public:
 public:
     RS_ActionPrintPreview(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-    ~RS_ActionPrintPreview();
-
-    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
-    virtual RS2::ActionType rtti() {
-        return RS2::ActionPrintPreview;
-    }
+	~RS_ActionPrintPreview();
 
     virtual void init(int status=0);
-    virtual void resume();
-
-    virtual void trigger();
+	virtual void resume();
 
     virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mousePressEvent(QMouseEvent* e);
@@ -72,33 +64,28 @@ public:
     virtual void showOptions();
     virtual void hideOptions();
 
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
-    virtual void updateToolBar();
+	virtual void finish(bool /*updateTB*/ = true ){}
+	virtual void updateMouseCursor();
 
     void center();
     void fit();
     bool setScale(double f, bool autoZoom = true);
-    double getScale();
-    //print warning message to command widget
-    //should we add this as virtual function to rs_actioninterface?
+	double getScale() const;
     void printWarning(const QString& s);
 
-    void setBlackWhite(bool bw);
-    //bool isBlackWhite() {
-    //	return blackWhite;
-    //}
+	void setBlackWhite(bool bw);
     RS2::Unit getUnit();
     void setPaperScaleFixed(bool fixed);
     bool getPaperScaleFixed();
 
-protected:
-    //bool blackWhite;
-    bool hasOptions;
-    RS_Vector v1;
-    RS_Vector v2;
-    bool scaleFixed;
-    bool m_bPaperOffset;
+
+private:
+
+	bool hasOptions;
+	bool scaleFixed;
+	bool m_bPaperOffset;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

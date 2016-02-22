@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -25,7 +26,6 @@
 **********************************************************************/
 
 
-#include <QtGui>
 #include "rs_line.h"
 
 #include "rs_debug.h"
@@ -36,11 +36,19 @@
 #include "rs_information.h"
 #include "lc_quadratic.h"
 #include "rs_painterqt.h"
-
+#include "rs_circle.h"
+#include "lc_rect.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
 #endif
+
+std::ostream& operator << (std::ostream& os, const RS_LineData& ld) {
+	os << "RS_LINE: ((" << ld.startpoint <<
+		  ")(" << ld.endpoint <<
+		  "))";
+	return os;
+}
 
 /**
  * Constructor.
@@ -53,29 +61,21 @@ RS_Line::RS_Line(RS_EntityContainer* parent,
 
 ////construct a line from two endpoints
 RS_Line::RS_Line(RS_EntityContainer* parent, const RS_Vector& pStart, const RS_Vector& pEnd)
-    :RS_AtomicEntity(parent), data(pStart,pEnd) {
+	:RS_AtomicEntity(parent), data({pStart,pEnd}) {
     calculateBorders();
 }
 
 ////construct a line from two endpoints, to be used for construction
 RS_Line::RS_Line(const RS_Vector& pStart, const RS_Vector& pEnd)
-    :RS_AtomicEntity(NULL), data(pStart,pEnd) {
+	:RS_AtomicEntity(nullptr), data({pStart,pEnd}) {
     calculateBorders();
 }
 
 
-/**
- * Destructor.
- */
-RS_Line::~RS_Line() {}
-
-
-
-
-RS_Entity* RS_Line::clone() {
-    RS_Line* l = new RS_Line(*this);
-    l->initId();
-    return l;
+RS_Entity* RS_Line::clone() const {
+	RS_Line* l = new RS_Line(*this);
+	l->initId();
+	return l;
 }
 
 
@@ -87,9 +87,9 @@ void RS_Line::calculateBorders() {
 
 
 
-RS_VectorSolutions RS_Line::getRefPoints() {
-    RS_VectorSolutions ret(data.startpoint, data.endpoint);
-    return ret;
+RS_VectorSolutions RS_Line::getRefPoints() const
+{
+	return RS_VectorSolutions({data.startpoint, data.endpoint});
 }
 
 
@@ -99,12 +99,12 @@ RS_Vector RS_Line::getNearestEndpoint(const RS_Vector& coord,
     double dist2((data.endpoint-coord).squared());
 
     if (dist2<dist1) {
-        if (dist!=NULL) {
+		if (dist) {
             *dist = sqrt(dist2);
         }
         return data.endpoint;
     } else {
-        if (dist!=NULL) {
+		if (dist) {
             *dist = sqrt(dist1);
         }
         return data.startpoint;
@@ -117,7 +117,7 @@ RS_Vector RS_Line::getNearestEndpoint(const RS_Vector& coord,
 RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
                                            bool onEntity, double* dist, RS_Entity** entity)const {
 
-    if (entity!=NULL) {
+	if (entity) {
         *entity = const_cast<RS_Line*>(this);
     }
     RS_Vector direction = data.endpoint-data.startpoint;
@@ -129,7 +129,7 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
     }else{
         //find projection on line
         const double t=RS_Vector::dotP(vpc,direction)/a;
-        if( !isConstructionLayer() && onEntity &&
+        if( !isConstruction() && onEntity &&
                 ( t<=-RS_TOLERANCE || t>=1.+RS_TOLERANCE )
                 ){
             //                !( vpc.x>= minV.x && vpc.x <= maxV.x && vpc.y>= minV.y && vpc.y<=maxV.y) ) {
@@ -140,7 +140,7 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
         vpc = data.startpoint + direction*t;
     }
 
-    if (dist!=NULL) {
+	if (dist) {
         *dist = vpc.distanceTo(coord);
     }
     return vpc;
@@ -169,7 +169,7 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
         if(i==counts) i--;
         vp0=getStartpoint() + dvp*(double(i)/double(counts));
 
-        if(dist != NULL) {
+		if (dist) {
             *dist=vp0.distanceTo(coord);
         }
 //        RS_DEBUG->print("RS_Line::getNearestMiddle(): end\n");
@@ -182,7 +182,7 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
 
 //    RS_Vector p = (data.startpoint + data.endpoint)*0.5;
 
-//    if (dist!=NULL) {
+//    if (dist) {
 //        *dist = p.distanceTo(coord);
 //    }
 
@@ -192,10 +192,9 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
 
 RS_Vector RS_Line::getNearestDist(double distance,
                                   const RS_Vector& coord,
-                                  double* dist) {
+								  double* dist) const{
 
-    RS_Vector dv;
-    dv.setPolar(distance, getAngle1());
+	RS_Vector dv = RS_Vector::polar(distance, getAngle1());
 
     RS_Vector ret;
     //if(coord.distanceTo(getStartpoint()) < coord.distanceTo(getEndpoint())) {
@@ -204,9 +203,8 @@ RS_Vector RS_Line::getNearestDist(double distance,
     }else{
         ret = getEndpoint() - dv;
     }
-    if(dist != NULL) {
+	if (dist)
         *dist=coord.distanceTo(ret);
-    }
 
     return ret;
 }
@@ -214,12 +212,11 @@ RS_Vector RS_Line::getNearestDist(double distance,
 
 
 RS_Vector RS_Line::getNearestDist(double distance,
-                                  bool startp) {
+								  bool startp) const{
 
     double a1 = getAngle1();
 
-    RS_Vector dv;
-    dv.setPolar(distance, a1);
+	RS_Vector dv = RS_Vector::polar(distance, a1);
     RS_Vector ret;
 
     if (startp) {
@@ -249,7 +246,7 @@ RS_Vector RS_Line::getNearestDist(double distance,
         p = p2;
     }
 
-    if (dist!=NULL) {
+	if (dist) {
         *dist = d;
     }
 
@@ -270,7 +267,7 @@ m0 x + m1 y + m2 =0
 LC_Quadratic RS_Line::getQuadratic() const
 {
     std::vector<double> ce(3,0.);
-    auto&& dvp=data.endpoint - data.startpoint;
+	auto dvp=data.endpoint - data.startpoint;
     RS_Vector normal(-dvp.y,dvp.x);
     ce[0]=normal.x;
     ce[1]=normal.y;
@@ -307,7 +304,7 @@ RS_Vector RS_Line::prepareTrim(const RS_Vector& trimCoord,
 //prepare trimming for multiple intersections
     if ( ! trimSol.hasValid()) return(RS_Vector(false));
     if ( trimSol.getNumber() == 1 ) return(trimSol.get(0));
-    auto&& vp0=trimSol.getClosest(trimCoord,NULL,0);
+	auto vp0=trimSol.getClosest(trimCoord, nullptr, 0);
 
     double dr2=trimCoord.squaredTo(vp0);
     //the trim point found is closer to mouse location (trimCoord) than both end points, return this trim point
@@ -316,14 +313,16 @@ RS_Vector RS_Line::prepareTrim(const RS_Vector& trimCoord,
     RS_Vector vp1=(trimCoord.squaredTo(getStartpoint()) <= trimCoord.squaredTo(getEndpoint()))?getStartpoint():getEndpoint();
 
     //searching for intersection in the direction of the closer end point
-    auto&& dvp1=vp1 - trimCoord;
+	auto dvp1=vp1 - trimCoord;
     RS_VectorSolutions sol1;
     for(size_t i=0; i<trimSol.size(); i++){
-        auto&& dvp2=trimSol.at(i) - trimCoord;
-        if( RS_Vector::dotP(dvp1, dvp2) > RS_TOLERANCE) sol1.push_back(trimSol.at(i));
+		auto dvp2=trimSol.at(i) - trimCoord;
+		if( RS_Vector::dotP(dvp1, dvp2) > RS_TOLERANCE)
+			sol1.push_back(trimSol.at(i));
     }
     //if found intersection in direction, return the closest to trimCoord from it
-    if(sol1.size()) return sol1.getClosest(trimCoord,NULL,0);
+	if(sol1.size())
+		return sol1.getClosest(trimCoord, nullptr, 0);
 
     //no intersection by direction, return previously found closest intersection
     return vp0;
@@ -365,12 +364,12 @@ bool RS_Line::hasEndpointsWithinWindow(const RS_Vector& firstCorner, const RS_Ve
   *Author: Dongxu Li
   */
 bool RS_Line::offset(const RS_Vector& coord, const double& distance) {
-    RS_Vector direction(getEndpoint()-getStartpoint());
+	RS_Vector direction{getEndpoint()-getStartpoint()};
     double ds(direction.magnitude());
     if(ds< RS_TOLERANCE) return false;
     direction /= ds;
     RS_Vector vp(coord-getStartpoint());
-    RS_Vector vp1(getStartpoint() + direction*(RS_Vector::dotP(direction,vp))); //projection
+//    RS_Vector vp1(getStartpoint() + direction*(RS_Vector::dotP(direction,vp))); //projection
     direction.set(-direction.y,direction.x); //rotate pi/2
     if(RS_Vector::dotP(direction,vp)<0.) {
         direction *= -1.;
@@ -380,29 +379,30 @@ bool RS_Line::offset(const RS_Vector& coord, const double& distance) {
     return true;
 }
 
-bool RS_Line::isTangent(const RS_CircleData&  circleData){
+bool RS_Line::isTangent(const RS_CircleData&  circleData) const{
     double d;
-    getNearestPointOnEntity(circleData.center,false,&d);
-    if(fabs(d-circleData.radius)<RS_TOLERANCE) return true;
+	getNearestPointOnEntity(circleData.center,false,&d);
+	if(fabs(d-circleData.radius)<20.*RS_TOLERANCE) return true;
     return false;
 }
 
 RS_Vector RS_Line::getNormalVector() const
 {
     RS_Vector vp=data.endpoint  - data.startpoint; //direction vector
-    double&& r=vp.magnitude();
-    if(r< RS_TOLERANCE) return RS_Vector(false);
-    return RS_Vector(-vp.y,vp.x)/r;
+	double r=vp.magnitude();
+	if (r< RS_TOLERANCE) return RS_Vector{false};
+	return RS_Vector{-vp.y,vp.x}/r;
 }
 
-  QVector<RS_Entity* > RS_Line::offsetTwoSides(const double& distance) const
+std::vector<RS_Entity* > RS_Line::offsetTwoSides(const double& distance) const
 {
-      QVector<RS_Entity*> ret(0,NULL);
-      RS_Vector&& vp=getNormalVector()*distance;
-      ret<< new RS_Line(NULL,RS_LineData(data.startpoint+vp,data.endpoint+vp));
-      ret<< new RS_Line(NULL,RS_LineData(data.startpoint-vp,data.endpoint-vp));
-      return ret;
+	std::vector<RS_Entity*> ret(0);
+	RS_Vector const& vp=getNormalVector()*distance;
+	ret.push_back(new RS_Line{data.startpoint+vp,data.endpoint+vp});
+	ret.push_back(new RS_Line{data.startpoint-vp,data.endpoint-vp});
+	return ret;
 }
+
 /**
   * revert the direction of line
   */
@@ -507,8 +507,12 @@ void RS_Line::stretch(const RS_Vector& firstCorner,
                       const RS_Vector& secondCorner,
                       const RS_Vector& offset) {
 
-    RS_Vector vLow( std::min(firstCorner.x, secondCorner.x), std::min(firstCorner.y, secondCorner.y));
-    RS_Vector vHigh( std::max(firstCorner.x, secondCorner.x), std::max(firstCorner.y, secondCorner.y));
+	RS_Vector const vLow{std::min(firstCorner.x, secondCorner.x),
+				std::min(firstCorner.y, secondCorner.y)
+				  };
+	RS_Vector const vHigh{std::max(firstCorner.x, secondCorner.x),
+				std::max(firstCorner.y, secondCorner.y)
+				   };
 
     if (getStartpoint().isInWindowOrdered(vLow, vHigh)) {
         moveStartpoint(getStartpoint() + offset);
@@ -533,70 +537,84 @@ void RS_Line::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 
 
 void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
-    if (painter==NULL || view==NULL) {
+	if (! (painter && view)) {
         return;
     }
 
     //only draw the visible portion of line
-    QVector<RS_Vector> endPoints(0);
-        RS_Vector vpMin(view->toGraph(0,view->getHeight()));
-        RS_Vector vpMax(view->toGraph(view->getWidth(),0));
-         QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
-    if( getStartpoint().isInWindowOrdered(vpMin, vpMax) ) endPoints<<getStartpoint();
-    if( getEndpoint().isInWindowOrdered(vpMin, vpMax) ) endPoints<<getEndpoint();
-    if(endPoints.size()<2){
+	LC_Rect const viewportRect{view->toGraph(0, 0),
+				view->toGraph(view->getWidth(), view->getHeight())};
+	RS_VectorSolutions endPoints(0);
+	if (viewportRect.inArea(getStartpoint(), RS_TOLERANCE))
+		 endPoints.push_back(getStartpoint());
+	if (viewportRect.inArea(getEndpoint(), RS_TOLERANCE))
+		 endPoints.push_back(getEndpoint());
 
-         QVector<RS_Vector> vertex;
-         for(unsigned short i=0;i<4;i++){
-             const QPointF& vp(visualBox.at(i));
-             vertex<<RS_Vector(vp.x(),vp.y());
-         }
-         for(unsigned short i=0;i<4;i++){
-             RS_Line line(NULL,RS_LineData(vertex.at(i),vertex.at((i+1)%4)));
-             auto&& vpIts=RS_Information::getIntersection(static_cast<RS_Entity*>(this), &line, true);
-             if( vpIts.size()==0) continue;
-             endPoints<<vpIts.get(0);
-         }
-    }
-    if(endPoints.size()<2) return;
-    if( (endPoints[0] - getStartpoint()).squared() >
-            (endPoints[1] - getStartpoint()).squared() ) std::swap(endPoints[0],endPoints[1]);
+	RS_EntityContainer ec(nullptr);
+	ec.addRectangle(viewportRect.minP(), viewportRect.maxP());
 
-    RS_Vector pStart(view->toGui(endPoints.at(0)));
-    RS_Vector pEnd(view->toGui(endPoints.at(1)));
+	if (endPoints.size()<2){
+		RS_VectorSolutions vpIts;
+		for(auto p: ec) {
+			auto const sol=RS_Information::getIntersection(this, p, true);
+			for (auto const& vp: sol) {
+				if (vpIts.getClosestDistance(vp) <= RS_TOLERANCE * 10.)
+					continue;
+				vpIts.push_back(vp);
+			}
+		}
+		for (auto const& vp: vpIts) {
+			if (endPoints.getClosestDistance(vp) <= RS_TOLERANCE * 10.)
+				continue;
+			endPoints.push_back(vp);
+		}
+	}
+
+	if (endPoints.size()<2) return;
+
+	if ((endPoints[0] - getStartpoint()).squared() >
+			(endPoints[1] - getStartpoint()).squared() )
+		std::swap(endPoints[0],endPoints[1]);
+
+	RS_Vector pStart{view->toGui(endPoints.at(0))};
+	RS_Vector pEnd{view->toGui(endPoints.at(1))};
     //    std::cout<<"draw line: "<<pStart<<" to "<<pEnd<<std::endl;
-    RS_Vector direction=pEnd-pStart;
-    if(isConstructionLayer(true) && direction.squared() > RS_TOLERANCE){
+	RS_Vector direction = pEnd-pStart;
+
+	if (isConstruction(true) && direction.squared() > RS_TOLERANCE){
         //extend line on a construction layer to fill the whole view
-        RS_Vector lb(0,0);
-        RS_Vector rt(view->getWidth(),view->getHeight());
-        QList<RS_Vector> rect;
-        rect<<lb<<RS_Vector(rt.x,lb.y);
-        rect<<rt<<RS_Vector(lb.x,rt.y);
-        rect<<lb;
-        RS_VectorSolutions sol;
-        RS_Line dLine(pStart,pEnd);
-        for(int i=0;i<4;i++){
-            RS_Line bLine(rect.at(i),rect.at(i+1));
-            RS_VectorSolutions sol2=RS_Information::getIntersection(&bLine, &dLine);
-            if( sol2.getNumber()>0 && bLine.isPointOnEntity(sol2.get(0),RS_TOLERANCE)) {
-                sol.push_back(sol2.get(0));
-            }
-        }
-        switch(sol.getNumber()){
-        case 2:
-            pStart=sol.get(0);
-            pEnd=sol.get(1);
-            break;
-        case 3:
-        case 4:
-            pStart=sol.get(0);
-            pEnd=sol.get(2);
-            break;
-        default:
-            return;
-        }
-        direction=pEnd-pStart;
+		RS_VectorSolutions vpIts;
+		for(auto p: ec) {
+			auto const sol=RS_Information::getIntersection(this, p, false);
+			for (auto const& vp: sol) {
+				if (vpIts.getClosestDistance(vp) <= RS_TOLERANCE * 10.)
+					continue;
+				vpIts.push_back(vp);
+			}
+		}
+
+		//draw construction lines up to viewport border
+		switch (vpIts.size()) {
+		case 2:
+			// no need to sort intersections
+			break;
+		case 3:
+		case 4: {
+			// will use the inner two points
+			size_t i{0};
+			for (size_t j = 0; j < vpIts.size(); ++j)
+				if (viewportRect.inArea(vpIts.at(j), RS_TOLERANCE * 10.))
+					std::swap(vpIts[j], vpIts[i++]);
+
+		}
+			break;
+		default:
+			//should not happen
+			return;
+		}
+		pStart=view->toGui(vpIts.get(0));
+		pEnd=view->toGui(vpIts.get(1));
+		direction=pEnd-pStart;
     }
     double  length=direction.magnitude();
     patternOffset -= length;
@@ -618,7 +636,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     } else {
         pat = view->getPattern(getPen().getLineType());
     }
-    if (pat==NULL) {
+	if (!pat) {
 //        patternOffset -= length;
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Line::draw: Invalid line pattern");
@@ -638,14 +656,15 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     painter->setPen(pen);
 
     // index counter
-    int i;
+	size_t i;
 
     // pattern segment length:
     double patternSegmentLength = pat->totalLength;
 
     // create pattern:
-    RS_Vector* dp=new RS_Vector[pat->num > 0?pat->num:0];
-    double* ds=new double[pat->num > 0?pat->num:0];
+	size_t const patnum=pat->num > 0?pat->num:0;
+	std::vector<RS_Vector> dp(patnum);
+	std::vector<double> ds(patnum, 0.);
     if (pat->num >0 ){
         double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
         for (i=0; i<pat->num; ++i) {
@@ -653,12 +672,10 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
             //fixme, styleFactor support needed
 
             ds[i]=dpmm*pat->pattern[i];
-            if( fabs(ds[i]) < 1. ) ds[i] = (ds[i]>=0.)?1.:-1.;
+			if (fabs(ds[i]) < 1. ) ds[i] = (ds[i]>=0.)?1.:-1.;
             dp[i] = direction*fabs(ds[i]);
         }
-    }else {
-        delete[] dp;
-        delete[] ds;
+	} else {
         RS_DEBUG->print(RS_Debug::D_WARNING,"invalid line pattern for line, draw solid line instread");
         painter->drawLine(view->toGui(getStartpoint()),
                           view->toGui(getEndpoint()));
@@ -667,26 +684,22 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     double total= remainder(patternOffset-0.5*patternSegmentLength,patternSegmentLength) -0.5*patternSegmentLength;
     //    double total= patternOffset-patternSegmentLength;
 
-    RS_Vector p1,p2,p3;
-    RS_Vector curP(pStart+direction*total);
-    double t2;
-    for(int j=0;total<length;j=(j+1)%i) {
+	RS_Vector curP{pStart+direction*total};
+	for (int j=0; total<length; j=(j+1)%i) {
 
         // line segment (otherwise space segment)
-        t2=total+fabs(ds[j]);
-        p3=curP+dp[j];
+		double const t2=total+fabs(ds[j]);
+		RS_Vector const& p3=curP+dp[j];
         if (ds[j]>0.0 && t2 > 0.0) {
             // drop the whole pattern segment line, for ds[i]<0:
             // trim end points of pattern segment line to line
-            p1 =(total > -0.5)? curP:pStart;
-            p2 =(t2<length+0.5)?p3:pEnd;
+			RS_Vector const& p1 =(total > -0.5)?curP:pStart;
+			RS_Vector const& p2 =(t2<length+0.5)?p3:pEnd;
             painter->drawLine(p1,p2);
         }
         total=t2;
         curP=p3;
-    }
-    delete[] dp;
-    delete[] ds;
+	}
 
 }
 

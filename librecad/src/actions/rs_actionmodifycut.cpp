@@ -27,50 +27,44 @@
 #include "rs_actionmodifycut.h"
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
+#include "rs_debug.h"
 
 
 RS_ActionModifyCut::RS_ActionModifyCut(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
         :RS_ActionInterface("Cut Entity",
-                    container, graphicView) {
-
-    cutEntity = NULL;
-    cutCoord = RS_Vector(false);
+					container, graphicView)
+,cutEntity(nullptr)
+,cutCoord(new RS_Vector{})
+{
+	actionType=RS2::ActionModifyCut;
 }
 
-QAction* RS_ActionModifyCut::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Divide")
-        QAction *action = new QAction(tr("&Divide"), NULL);
-        action->setIcon(QIcon(":/extui/modifycut.png"));
-        //action->zetStatusTip(tr("Cut Entities"));
-    return action;
-}
-
+RS_ActionModifyCut::~RS_ActionModifyCut() = default;
 
 void RS_ActionModifyCut::init(int status) {
     RS_ActionInterface::init(status);
 }
 
-
-
 void RS_ActionModifyCut::trigger() {
 
     RS_DEBUG->print("RS_ActionModifyCut::trigger()");
 
-    if (cutEntity!=NULL && cutEntity->isAtomic() && cutCoord.valid &&
-            cutEntity->isPointOnEntity(cutCoord)) {
+	if (cutEntity && cutEntity->isAtomic() && cutCoord->valid &&
+			cutEntity->isPointOnEntity(*cutCoord)) {
 
         cutEntity->setHighlighted(false);
         graphicView->drawEntity(cutEntity);
 
         RS_Modification m(*container, graphicView);
-        m.cut(cutCoord, (RS_AtomicEntity*)cutEntity);
+		m.cut(*cutCoord, (RS_AtomicEntity*)cutEntity);
 
-        cutEntity = NULL;
-        cutCoord = RS_Vector(false);
+		cutEntity = nullptr;
+		*cutCoord = RS_Vector(false);
         setStatus(ChooseCutEntity);
 
         RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
@@ -104,7 +98,7 @@ void RS_ActionModifyCut::mouseReleaseEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case ChooseCutEntity:
             cutEntity = catchEntity(e);
-            if (cutEntity==NULL) {
+			if (cutEntity==nullptr) {
                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
             } else if(cutEntity->trimmable()){
                 cutEntity->setHighlighted(true);
@@ -116,12 +110,12 @@ void RS_ActionModifyCut::mouseReleaseEvent(QMouseEvent* e) {
             break;
 
         case SetCutCoord:
-            cutCoord = snapPoint(e);
-            if (cutEntity==NULL) {
+			*cutCoord = snapPoint(e);
+			if (cutEntity==nullptr) {
                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
-            } else if (!cutCoord.valid) {
+			} else if (!cutCoord->valid) {
                 RS_DIALOGFACTORY->commandMessage(tr("Cutting point is invalid."));
-            } else if (!cutEntity->isPointOnEntity(cutCoord)) {
+			} else if (!cutEntity->isPointOnEntity(*cutCoord)) {
                 RS_DIALOGFACTORY->commandMessage(
                     tr("Cutting point is not on entity."));
             } else {
@@ -134,7 +128,7 @@ void RS_ActionModifyCut::mouseReleaseEvent(QMouseEvent* e) {
             break;
         }
     } else if (e->button()==Qt::RightButton) {
-        if (cutEntity!=NULL) {
+        if (cutEntity) {
             cutEntity->setHighlighted(false);
             graphicView->drawEntity(cutEntity);
         }
@@ -155,32 +149,25 @@ void RS_ActionModifyCut::updateMouseButtonHints() {
                                             tr("Back"));
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }
 
 
 
-void RS_ActionModifyCut::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+void RS_ActionModifyCut::updateMouseCursor()
+{
+    switch (getStatus()) {
+    case ChooseCutEntity:
+        graphicView->setMouseCursor(RS2::SelectCursor);
+        break;
+    case SetCutCoord:
+        graphicView->setMouseCursor(RS2::CadCursor);
+        break;
+    default:
+        break;
+    }
 }
-
-
-
-//void RS_ActionModifyCut::updateToolBar() {
-//    //not needed any more with new snap
-//    return;
-//    switch (getStatus()) {
-//    case SetCutCoord:
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-//        break;
-//    case ChooseCutEntity:
-//    default:
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-//        break;
-//    }
-//}
-
 
 // EOF

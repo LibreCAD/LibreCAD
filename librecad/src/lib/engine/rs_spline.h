@@ -28,40 +28,30 @@
 #ifndef RS_SPLINE_H
 #define RS_SPLINE_H
 
-#include <QList>
+#include <vector>
 #include "rs_entitycontainer.h"
 
 /**
  * Holds the data that defines a line.
  */
-class RS_SplineData {
-public:
-    /**
-     * Default constructor. Leaves the data object uninitialized.
-     */
-    RS_SplineData() {}
+struct RS_SplineData {
+	/**
+	 * Default constructor. Leaves the data object uninitialized.
+	 */
+	RS_SplineData() = default;
 
-        RS_SplineData(int degree, bool closed) {
-                this->degree = degree;
-                this->closed = closed;
-        }
+	RS_SplineData(int degree, bool closed);
 
-    friend std::ostream& operator << (std::ostream& os, const RS_SplineData& ld) {
-        os << "( degree: " << ld.degree <<
-        " closed: " << ld.closed <<
-        ")";
-        return os;
-    }
 
-public:
-        /** Degree of the spline (1, 2, 3) */
-        int degree;
-        /** Closed flag. */
-        bool closed;
-        /** Control points of the spline. */
-    QList<RS_Vector> controlPoints;
+	/** Degree of the spline (1, 2, 3) */
+	size_t degree;
+	/** Closed flag. */
+	bool closed;
+	/** Control points of the spline. */
+	std::vector<RS_Vector> controlPoints;
 };
 
+std::ostream& operator << (std::ostream& os, const RS_SplineData& ld);
 
 /**
  * Class for a spline entity.
@@ -72,10 +62,10 @@ class RS_Spline : public RS_EntityContainer {
 public:
     RS_Spline(RS_EntityContainer* parent,
             const RS_SplineData& d);
+	virtual ~RS_Spline() = default;
 
-    virtual RS_Entity* clone();
+	virtual RS_Entity* clone() const;
 
-    virtual ~RS_Spline();
 
     /**	@return RS2::EntitySpline */
     virtual RS2::EntityType rtti() const {
@@ -86,54 +76,39 @@ public:
         return false;
     }
 
-    /** @return Copy of data that defines the spline. */
-    RS_SplineData getData() const {
-        return data;
-    }
+	/** @return Copy of data that defines the spline. */
+	const RS_SplineData& getData() const {
+		return data;
+	}
 
-        /** Sets the splines degree (1-3). */
-        void setDegree(int deg) {
-                if (deg>=1 && deg<=3) {
-                        data.degree = deg;
-                }
-        }
+	/** Sets the splines degree (1-3). */
+	void setDegree(size_t deg);
 
-        /** @return Degree of this spline curve (1-3).*/
-        int getDegree() {
-                return data.degree;
-        }
+	/** @return Degree of this spline curve (1-3).*/
+	size_t getDegree() const;
 
-        /** @return 0. */
-    int getNumberOfKnots() {
-                return 0;
-        }
+	/** @return 0. */
+	int getNumberOfKnots() {
+		return 0;
+	}
 
-        /** @return Number of control points. */
-        int getNumberOfControlPoints() {
-                return data.controlPoints.count();
-        }
+	/** @return Number of control points. */
+	size_t getNumberOfControlPoints() const;
 
-        /**
-         * @retval true if the spline is closed.
-         * @retval false otherwise.
-         */
-        bool isClosed() {
-                return data.closed;
-        }
+	/**
+		 * @retval true if the spline is closed.
+		 * @retval false otherwise.
+		 */
+	bool isClosed() const;
 
-        /**
-         * Sets the closed falg of this spline.
-         */
-        void setClosed(bool c) {
-                data.closed = c;
-                update();
-        }
+	/**
+		 * Sets the closed falg of this spline.
+		 */
+	void setClosed(bool c);
 
-    virtual RS_VectorSolutions getRefPoints();
-    virtual RS_Vector getNearestRef(const RS_Vector& coord,
-                                     double* dist = NULL);
-    virtual RS_Vector getNearestSelectedRef(const RS_Vector& coord,
-                                     double* dist = NULL);
+	virtual RS_VectorSolutions getRefPoints() const;
+    virtual RS_Vector getNearestRef( const RS_Vector& coord, double* dist = nullptr) const;
+    virtual RS_Vector getNearestSelectedRef( const RS_Vector& coord, double* dist = nullptr) const;
 
     /** @return Start point of the entity */
     virtual RS_Vector getStartpoint() const ;
@@ -189,21 +164,21 @@ public:
     //}
 
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                         double* dist = NULL)const;
+										 double* dist = nullptr)const;
     //virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-    //        bool onEntity=true, double* dist = NULL, RS_Entity** entity=NULL);
+	//        bool onEntity=true, double* dist = nullptr, RS_Entity** entity=nullptr);
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-                                       double* dist = NULL);
+									   double* dist = nullptr)const;
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
-                                       double* dist = NULL,
+									   double* dist = nullptr,
                                        int middlePoints = 1)const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = nullptr)const;
         //virtual RS_Vector getNearestRef(const RS_Vector& coord,
-        //                                 double* dist = NULL);
+		//                                 double* dist = nullptr);
         /*virtual double getDistanceToPoint(const RS_Vector& coord,
-                                      RS_Entity** entity=NULL,
+									  RS_Entity** entity=nullptr,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
                                                                           double solidDist = RS_MAXDOUBLE);*/
 
@@ -214,30 +189,31 @@ public:
         virtual void rotate(const RS_Vector& center, const double& angle);
         virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
         virtual void scale(const RS_Vector& center, const RS_Vector& factor);
-        virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+		virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
 
         virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
 		virtual void revertDirection();
 
         virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
-        QList<RS_Vector> getControlPoints();
+		const std::vector<RS_Vector>& getControlPoints() const;
 
         friend std::ostream& operator << (std::ostream& os, const RS_Spline& l);
 
         virtual void calculateBorders();
 
-        static void rbasis(int c, double t, int npts, int x[], double h[], double r[]);
+private:
+		static void rbasis(int c, double t, int npts, const std::vector<int>& x, const std::vector<double>& h, std::vector<double>& r);
 
-        static void knot(int num, int order, int knotVector[]);
-        static void rbspline(int npts, int k, int p1,
-                             double b[], double h[], double p[]);
+		static void knot(int num, int order, std::vector<int>& knotVector);
+		static void rbspline(size_t npts, size_t k, size_t p1,
+							 const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p);
 
-        static void knotu(int num, int order, int knotVector[]);
+		static void knotu(int num, int order, std::vector<int>& knotVector);
         static void rbsplinu(int npts, int k, int p1,
-                             double b[], double h[], double p[]);
+							 const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p);
 
 protected:
-        RS_SplineData data;
+		RS_SplineData data;
 }
 ;
 

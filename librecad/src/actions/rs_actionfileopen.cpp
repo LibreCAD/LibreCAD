@@ -27,6 +27,7 @@
 #include "rs_actionfileopen.h"
 
 #include <QAction>
+#include "rs_debug.h"
 
 
 
@@ -35,27 +36,13 @@ RS_ActionFileOpen::RS_ActionFileOpen(RS_EntityContainer& container,
         :RS_ActionInterface("File Open", container, graphicView) {}
 
 
-QAction* RS_ActionFileOpen::createGUIAction(RS2::ActionType /*type*/, QObject* parent) {
-	// tr("Open Drawing")
-	QAction* action = new QAction(tr("&Open..."), parent);
-#if QT_VERSION >= 0x040600
-        action->setIcon(QIcon::fromTheme("document-open", QIcon(":/actions/fileopen2.png")));
-#else
-        action->setIcon(QIcon(":/actions/fileopen2.png"));
-#endif
-        action->setShortcut(QKeySequence::Open);
-    //action->zetStatusTip(tr("Opens an existing drawing"));
-    return action;
-}
-
-
 void RS_ActionFileOpen::trigger() {
     /*
     // Not supported currently
     RS_DEBUG->print("RS_ActionFileOpen::trigger");
 
     QString fileName; //= RS_DIALOGFACTORY->requestFileOpenDialog();
-    if (graphic!=NULL && !fileName.isEmpty()) {
+    if (graphic && !fileName.isEmpty()) {
         graphic->open(fileName, );
 }
     */

@@ -36,18 +36,18 @@
  */
 class RS_StaticGraphicView: public RS_GraphicView {
 public:
-    RS_StaticGraphicView(int w, int h, RS_Painter* p, QSize b = QSize(5,5));
-    virtual ~RS_StaticGraphicView();
+	RS_StaticGraphicView(int w, int h, RS_Painter* p, QSize const* pb = nullptr);
+	virtual ~RS_StaticGraphicView()=default;
 
-    virtual int getWidth();
-    virtual int getHeight();
+	virtual int getWidth() const;
+	virtual int getHeight() const;
     virtual void redraw(RS2::RedrawMethod) {}
     virtual void adjustOffsetControls() {}
     virtual void adjustZoomControls() {}
     virtual void setMouseCursor(RS2::CursorType ) {}
 
-    virtual void emulateMouseMoveEvent() {}
-        virtual void updateGridStatusWidget(const QString& ) {}
+    virtual void updateGridStatusWidget(const QString& ) {}
+    virtual RS_Vector getMousePosition() const;
 
     void paint();
 

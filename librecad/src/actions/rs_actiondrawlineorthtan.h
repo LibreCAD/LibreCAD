@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs_previewactioninterface.h"
 
+class RS_Line;
 
 /**
  * This action class can handle user events to draw tangents normal to lines
@@ -37,19 +38,13 @@ class RS_ActionDrawLineOrthTan : public RS_PreviewActionInterface {
 private:
     enum Status {
         SetLine,     /**< Choose the line orthogonal to the tangent line */
-        SetCircle    /**< Choose the arc/circle/ellipse to create its tangent line*/
+		SetCircle    /**< Choose the arc/circle/ellipse to create its tangent line*/
     };
 
 public:
     RS_ActionDrawLineOrthTan(RS_EntityContainer& container,
                              RS_GraphicView& graphicView);
-    ~RS_ActionDrawLineOrthTan() {}
-
-    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
-    RS2::ActionType rtti(){
-        return RS2::ActionDrawLineOrthTan;
-    }
+	~RS_ActionDrawLineOrthTan() = default;
 
     virtual void trigger();
     virtual void finish(bool updateTB = true);
@@ -58,18 +53,16 @@ public:
     virtual void mouseReleaseEvent(QMouseEvent* e);
 
     virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
-//    virtual void updateToolBar();
+	virtual void updateMouseCursor();
 
 private:
+	void clearLines();
     /** normal to tangent. */
     RS_Line* normal; // the select normal line
     /** tangent. */
     RS_Line* tangent; //holds the tangent line for preview
     /** arc/circle/ellipse to generate tangent */
     RS_Entity* circle;
-    QVector<RS2::EntityType> circleList; //this holds a list of entity types which supports tangent
-
 };
 
 #endif

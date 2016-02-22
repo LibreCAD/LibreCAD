@@ -9,6 +9,8 @@ TARGET = plugins
 
 QT += gui
 
+include(../librecad/src/muparser.pri)
+
 SUBDIRS     = \
         asciifile \
         align \
@@ -16,9 +18,11 @@ SUBDIRS     = \
         sameprop \
         importshp \
         sample \
+        picfile \
         plotequation
 
-TRANSLATIONS = ./ts/plugins_ca.ts \
+TRANSLATIONS = ./ts/plugins_ar.ts \
+    ./ts/plugins_ca.ts \
     ./ts/plugins_cs.ts \
     ./ts/plugins_et.ts \
     ./ts/plugins_en.ts \

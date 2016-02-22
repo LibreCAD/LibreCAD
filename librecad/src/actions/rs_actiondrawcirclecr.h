@@ -28,7 +28,8 @@
 #define RS_ACTIONDRAWCIRCLECR_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_circle.h"
+
+struct RS_CircleData;
 
 /**
  * This action class can handle user events to draw 
@@ -52,12 +53,6 @@ public:
                           RS_GraphicView& graphicView);
     ~RS_ActionDrawCircleCR();
 	
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-	
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionDrawCircleCR;
-	}
-
     void reset();
 
     virtual void init(int status=0);
@@ -76,11 +71,8 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
-	double getRadius() {
-		return data.radius;
-	}
+	double getRadius() const;
 
     void setRadius(double r);
 
@@ -88,7 +80,7 @@ protected:
     /**
      * Circle data defined so far.
      */
-    RS_CircleData data;
+	std::unique_ptr<RS_CircleData> data;
 	
 };
 

@@ -28,8 +28,8 @@
 #define RS_ACTIONDRAWTEXT_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_text.h"
 
+struct RS_TextData;
 
 /**
  * This action class can handle user events to draw texts.
@@ -37,62 +37,55 @@
  * @author Andrew Mustun
  */
 class RS_ActionDrawText : public RS_PreviewActionInterface {
-        Q_OBJECT
+	Q_OBJECT
 public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        ShowDialog,           /**< Showing the text dialog. */
-        SetPos,               /**< Setting the position. */
-        SetSecPos,            /**< Setting the second point for aligned of fit text. */
-        SetText               /**< Settting the text in the command line. */
-    };
+	/**
+	 * Action States.
+	 */
+	enum Status {
+		ShowDialog,           /**< Showing the text dialog. */
+		SetPos,               /**< Setting the position. */
+		SetSecPos,            /**< Setting the second point for aligned of fit text. */
+		SetText               /**< Settting the text in the command line. */
+	};
 
 public:
-    RS_ActionDrawText(RS_EntityContainer& container,
-                      RS_GraphicView& graphicView);
-    ~RS_ActionDrawText() {}
+	RS_ActionDrawText(RS_EntityContainer& container,
+					  RS_GraphicView& graphicView);
+	~RS_ActionDrawText();
 
-        static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+	virtual void init(int status=0);
 
-        virtual RS2::ActionType rtti() {
-                return RS2::ActionDrawText;
-        }
+	void reset();
 
-    virtual void init(int status=0);
+	virtual void trigger();
+	void preparePreview();
 
-        void reset();
+	virtual void mouseMoveEvent(QMouseEvent* e);
+	virtual void mouseReleaseEvent(QMouseEvent* e);
 
-    virtual void trigger();
-        void preparePreview();
+	virtual void coordinateEvent(RS_CoordinateEvent* e);
+	virtual void commandEvent(RS_CommandEvent* e);
+	virtual QStringList getAvailableCommands();
 
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	virtual void hideOptions();
+	virtual void showOptions();
 
-        virtual void coordinateEvent(RS_CoordinateEvent* e);
-    virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+	virtual void updateMouseButtonHints();
+	virtual void updateMouseCursor();
 
-    virtual void hideOptions();
-    virtual void showOptions();
+	void setText(const QString& t);
+	const QString& getText() const;
 
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
-//    virtual void updateToolBar();
-
-        void setText(const QString& t);
-        QString getText();
-
-        void setAngle(double a);
-        double getAngle();
+	void setAngle(double a);
+	double getAngle() const;
 
 private:
-    RS_TextData data;
-        //RS_Text* text;
-    RS_Vector pos;
-    RS_Vector secPos;
-    bool textChanged;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
+	std::unique_ptr<RS_TextData> data;
+	//RS_Text* text;
+	bool textChanged;
 };
 
 #endif

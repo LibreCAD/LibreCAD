@@ -24,52 +24,56 @@
 **
 **********************************************************************/
 
+#include<cmath>
+#include <QAction>
+#include <QMouseEvent>
 #include "rs_actiondrawline.h"
 
-#include <QAction>
 #include "rs_actioneditundo.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commands.h"
 #include "rs_commandevent.h"
+#include "rs_line.h"
+#include "rs_coordinateevent.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
-
+struct RS_ActionDrawLine::Points {
+	/**
+	* Line data defined so far.
+	*/
+	RS_LineData data;
+	/**
+		 * Start point of the series of lines. Used for close function.
+		 */
+	RS_Vector start;
+	/**
+		 * Point history (for undo)
+		 */
+	int historyIndex{-1};
+	std::vector<RS_Vector> history;
+};
 
 RS_ActionDrawLine::RS_ActionDrawLine(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw lines",
-                               container, graphicView) {
-
+							   container, graphicView)
+	, pPoints(new Points{})
+{
     RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine");
+	actionType=RS2::ActionDrawLine;
     reset();
     RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine: OK");
 }
 
-
-
-RS_ActionDrawLine::~RS_ActionDrawLine() {}
-
-
-QAction* RS_ActionDrawLine::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    //tr("Line: 2 Points")
-    QAction* action = new QAction(tr("&2 Points"), NULL);
-    action->setIcon(QIcon(":/extui/linesnormal.png"));
-    //action->zetStatusTip(tr("Draw lines"));
-    return action;
-}
-
-
+RS_ActionDrawLine::~RS_ActionDrawLine() = default;
 
 void RS_ActionDrawLine::reset() {
-    RS_DEBUG->print("RS_ActionDrawLine::reset");
-    data = RS_LineData(RS_Vector(false), RS_Vector(false));
-    start = RS_Vector(false);
-    history.clear();
-    historyIndex=-1;
+	RS_DEBUG->print("RS_ActionDrawLine::reset");
+	pPoints.reset(new Points{});
     RS_DEBUG->print("RS_ActionDrawLine::reset: OK");
 }
-
-
 
 void RS_ActionDrawLine::init(int status) {
     RS_DEBUG->print("RS_ActionDrawLine::init");
@@ -80,25 +84,23 @@ void RS_ActionDrawLine::init(int status) {
     RS_DEBUG->print("RS_ActionDrawLine::init: OK");
 }
 
-
-
 void RS_ActionDrawLine::trigger() {
     RS_PreviewActionInterface::trigger();
 
-    RS_Line* line = new RS_Line(container, data);
+	RS_Line* line = new RS_Line(container, pPoints->data);
     line->setLayerToActive();
     line->setPenToActive();
     container->addEntity(line);
 
     // upd. undo list:
-    if (document!=NULL) {
+    if (document) {
         document->startUndoCycle();
         document->addUndoable(line);
         document->endUndoCycle();
     }
 
     graphicView->redraw(RS2::RedrawDrawing);
-    graphicView->moveRelativeZero(history.at(historyIndex));
+	graphicView->moveRelativeZero(pPoints->history.at(pPoints->historyIndex));
     //    graphicView->moveRelativeZero(line->getEndpoint());
     RS_DEBUG->print("RS_ActionDrawLine::trigger(): line added: %d",
                     line->getId());
@@ -115,15 +117,14 @@ RS_Vector RS_ActionDrawLine::snapToAngle(const RS_Vector &currentCoord)
             snapMode.snapGrid) {
         return currentCoord;
     }
-    double angle = data.startpoint.angleTo(currentCoord)*180.0/M_PI;
+	double angle = pPoints->data.startpoint.angleTo(currentCoord)*180.0/M_PI;
     /*Snapping to angle(15*) if shift key is pressed*/
     const double angularResolution=15.;
     angle -= remainder(angle,angularResolution);
     angle *= M_PI/180.;
-    RS_Vector res = currentCoord;
-    res.setPolar(data.startpoint.distanceTo(currentCoord),
+	RS_Vector res = RS_Vector::polar(pPoints->data.startpoint.distanceTo(currentCoord),
                  angle);
-    res += data.startpoint;
+	res += pPoints->data.startpoint;
     snapPoint(res, true);
     return res;
 }
@@ -136,7 +137,7 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e) {
     //    RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: snap point");
     RS_Vector mouse = snapPoint(e);
     //    RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: snap point: OK");
-    if (getStatus()==SetEndpoint && data.startpoint.valid) {
+	if (getStatus()==SetEndpoint && pPoints->data.startpoint.valid) {
         RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: update preview");
 
         /*Snapping to angle(15*) if shift key is pressed*/
@@ -144,16 +145,13 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e) {
             mouse = snapToAngle(mouse);
 
         deletePreview();
-        preview->addEntity(new RS_Line(preview,
-                                       RS_LineData(data.startpoint, mouse)));
+		preview->addEntity(new RS_Line{pPoints->data.startpoint, mouse});
         RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: draw preview");
         drawPreview();
     }
 
     //    RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent end");
 }
-
-
 
 void RS_ActionDrawLine::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
@@ -170,8 +168,6 @@ void RS_ActionDrawLine::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-
 void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLine::coordinateEvent");
     if (e==NULL) {
@@ -180,26 +176,26 @@ void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e) {
     }
 
     RS_Vector mouse = e->getCoordinate();
-    if(data.startpoint.valid == false && getStatus()==SetEndpoint) setStatus(SetStartpoint);
+	if(pPoints->data.startpoint.valid == false && getStatus()==SetEndpoint) setStatus(SetStartpoint);
     switch (getStatus()) {
     case SetStartpoint:
-        data.startpoint = mouse;
+		pPoints->data.startpoint = mouse;
         addHistory(mouse);
 
-        start = data.startpoint;
+		pPoints->start = pPoints->data.startpoint;
         setStatus(SetEndpoint);
         graphicView->moveRelativeZero(mouse);
         updateMouseButtonHints();
         break;
 
     case SetEndpoint:
-        if((mouse-data.startpoint).squared() > RS_TOLERANCE2) {
+		if((mouse-pPoints->data.startpoint).squared() > RS_TOLERANCE2) {
             //refuse zero length lines
-            data.endpoint = mouse;
+			pPoints->data.endpoint = mouse;
             addHistory(mouse);
             trigger();
-            data.startpoint = data.endpoint;
-            if(history.size()>=2) updateMouseButtonHints();
+			pPoints->data.startpoint = pPoints->data.endpoint;
+			if(pPoints->history.size()>=2) updateMouseButtonHints();
         }
         //graphicView->moveRelativeZero(mouse);
         break;
@@ -210,8 +206,6 @@ void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLine::coordinateEvent: OK");
 }
 
-
-
 void RS_ActionDrawLine::commandEvent(RS_CommandEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLine::commandEvent");
     QString c = e->getCommand().toLower();
@@ -221,44 +215,41 @@ void RS_ActionDrawLine::commandEvent(RS_CommandEvent* e) {
         if (checkCommand("help", c)) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
-        e->accept();
-            return;
-        }
-        break;
+			e->accept();
+			return;
+		}
+		break;
 
     case SetEndpoint:
         if (checkCommand("close", c)) {
             close();
-        e->accept();
-            updateMouseButtonHints();
-            return;
+			e->accept();
+			updateMouseButtonHints();
+			return;
         }
 
         if (checkCommand("undo", c)) {
             undo();
-        e->accept();
-            updateMouseButtonHints();
-            return;
+			e->accept();
+			updateMouseButtonHints();
+			return;
         }
-        break;
+		break;
 
     default:
-        break;
+		return;
     }
     if (checkCommand("redo", c)) {
         redo();
-        e->accept();
-        updateMouseButtonHints();
-        return;
-    }
-    //    RS_DEBUG->print("RS_ActionDrawLine::commandEvent: OK");
+		e->accept();
+		updateMouseButtonHints();
+	}
+	//    RS_DEBUG->print("RS_ActionDrawLine::commandEvent: OK");
 }
-
-
 
 QStringList RS_ActionDrawLine::getAvailableCommands() {
     QStringList cmd;
-    if(historyIndex+1<history.size()) {
+	if(pPoints->historyIndex+1<(int) pPoints->history.size()) {
         cmd += command("redo");
     }
 
@@ -266,10 +257,10 @@ QStringList RS_ActionDrawLine::getAvailableCommands() {
     case SetStartpoint:
         break;
     case SetEndpoint:
-        if (historyIndex>=1) {
+		if (pPoints->historyIndex>=1) {
             cmd += command("undo");
         }
-        if (historyIndex>=2) {
+		if (pPoints->historyIndex>=2) {
             cmd += command("close");
         }
         break;
@@ -279,8 +270,6 @@ QStringList RS_ActionDrawLine::getAvailableCommands() {
 
     return cmd;
 }
-
-
 
 void RS_ActionDrawLine::updateMouseButtonHints() {
     if(RS_DIALOGFACTORY != NULL){
@@ -292,19 +281,19 @@ void RS_ActionDrawLine::updateMouseButtonHints() {
         case SetEndpoint: {
             QString msg = "";
 
-            if (historyIndex>=2) {
+			if (pPoints->historyIndex>=2) {
                 msg += RS_COMMANDS->command("close");
             }
-            if(historyIndex+1<history.size()) {
+			if(pPoints->historyIndex+1<(int) pPoints->history.size()) {
                 if(msg.size()>0)  msg += "/";
                 msg += RS_COMMANDS->command("redo");
             }
-            if (historyIndex>=1) {
+			if (pPoints->historyIndex>=1) {
                 if(msg.size()>0)  msg += "/";
                 msg += RS_COMMANDS->command("undo");
             }
 
-            if (historyIndex>=1) {
+			if (pPoints->historyIndex>=1) {
                 RS_DIALOGFACTORY->updateMouseWidget(
                             tr("Specify next point or [%1]").arg(msg),
                             tr("Back"));
@@ -316,12 +305,11 @@ void RS_ActionDrawLine::updateMouseButtonHints() {
         }
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+            RS_DIALOGFACTORY->updateMouseWidget();
             break;
         }
     }
 }
-
 
 void RS_ActionDrawLine::showOptions() {
     RS_DEBUG->print("RS_ActionDrawLine::showOptions");
@@ -332,8 +320,6 @@ void RS_ActionDrawLine::showOptions() {
     }
     RS_DEBUG->print("RS_ActionDrawLine::showOptions: OK");
 }
-
-
 
 void RS_ActionDrawLine::hideOptions() {
     if(RS_DIALOGFACTORY != NULL){
@@ -348,24 +334,15 @@ void RS_ActionDrawLine::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-//void RS_ActionDrawLine::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
 void RS_ActionDrawLine::close() {
-    if (historyIndex>2 && start.valid && (data.startpoint - start).squared() > RS_TOLERANCE2 ) {
-        data.endpoint = start;
-        addHistory(data.endpoint);
+	if (pPoints->historyIndex>2 && pPoints->start.valid && (pPoints->data.startpoint - pPoints->start).squared() > RS_TOLERANCE2 ) {
+		pPoints->data.endpoint = pPoints->start;
+		addHistory(pPoints->data.endpoint);
         trigger();
         setStatus(SetStartpoint);
         //        graphicView->moveRelativeZero(start);
     } else {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(
                         tr("Cannot close sequence of lines: "
                            "Not enough entities defined yet, or already closed."));
@@ -374,40 +351,41 @@ void RS_ActionDrawLine::close() {
 }
 
 void RS_ActionDrawLine::addHistory(const RS_Vector& v){
-    if(historyIndex<-1) historyIndex=-1;
-    history.erase(history.begin()+historyIndex+1,history.end());
-    history.append(v);
-    historyIndex=history.size() - 1;
+	if(pPoints->historyIndex<-1) pPoints->historyIndex=-1;
+	pPoints->history.erase(pPoints->history.begin()+pPoints->historyIndex+1,pPoints->history.end());
+	pPoints->history.push_back(v);
+	pPoints->historyIndex=pPoints->history.size() - 1;
 }
 void RS_ActionDrawLine::undo() {
-    if (historyIndex>0) {
-        historyIndex--;
+	if (pPoints->historyIndex>0) {
+		pPoints->historyIndex--;
         //        history.removeLast();
         deletePreview();
         graphicView->setCurrentAction(
                     new RS_ActionEditUndo(true, *container, *graphicView));
-        data.startpoint = history.at(historyIndex);
-        graphicView->moveRelativeZero(data.startpoint);
+		pPoints->data.startpoint = pPoints->history.at(pPoints->historyIndex);
+		graphicView->moveRelativeZero(pPoints->data.startpoint);
     } else {
         RS_DIALOGFACTORY->commandMessage(
                     tr("Cannot undo: "
                        "Not enough entities defined yet."));
     }
-    if(historyIndex>=1) {
+	if(pPoints->historyIndex>=1) {
         setStatus(SetEndpoint);
     }else{
         setStatus(SetStartpoint);
     }
 }
+
 void RS_ActionDrawLine::redo() {
-    if (history.size()>historyIndex+1) {
-        historyIndex++;
+	if ((int) pPoints->history.size()>pPoints->historyIndex+1) {
+		pPoints->historyIndex++;
         //        history.removeLast();
         deletePreview();
         graphicView->setCurrentAction(
                     new RS_ActionEditUndo(false, *container, *graphicView));
-        data.startpoint = history.at(historyIndex);
-        graphicView->moveRelativeZero(data.startpoint);
+		pPoints->data.startpoint = pPoints->history.at(pPoints->historyIndex);
+		graphicView->moveRelativeZero(pPoints->data.startpoint);
     } else {
         RS_DIALOGFACTORY->commandMessage(
                     tr("Cannot redo: "

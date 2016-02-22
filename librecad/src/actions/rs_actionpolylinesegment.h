@@ -28,41 +28,37 @@
 
 #include "rs_previewactioninterface.h"
 
+class RS_Polyline;
+
 /**
- * This action class can handle user events to move entities.
+ * This action class can handle Create Polyline Existing from Segments
  *
  * @author Andrew Mustun
  */
 class RS_ActionPolylineSegment : public RS_PreviewActionInterface {
 	Q_OBJECT
-public:
     /**
      * Action States.
      */
     enum Status {
-    	ChooseEntity	/**< Choosing one of the polyline segments. */
+		ChooseEntity = 0	/**< Choosing one of the polyline segments. */
     };
 
 public:
     RS_ActionPolylineSegment(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionPolylineSegment() {}
 
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-    virtual RS2::ActionType rtti(){
-        return RS2::ActionPolylineSegment;
-    }
     virtual void init(int status=0);
 	
     virtual void trigger();
 	
-    virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
 	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
-	virtual bool convertPolyline(RS_Entity* selectedEntity);
+	//! create polyline from segments
+	//! @param useSelected only create from selected entities
+	virtual bool convertPolyline(RS_Entity* selectedEntity, bool useSelected = false);
 
 private:
     RS_Vector appendPol(RS_Polyline *current, RS_Polyline *toAdd, bool reversed);

@@ -40,13 +40,7 @@ class RS_ActionSelectContour : public RS_ActionInterface {
 public:
     RS_ActionSelectContour(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-    ~RS_ActionSelectContour() {}
-
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionSelectContour;
-	}
+	~RS_ActionSelectContour()=default;
 
     virtual void trigger();
     virtual void mouseReleaseEvent(QMouseEvent* e);

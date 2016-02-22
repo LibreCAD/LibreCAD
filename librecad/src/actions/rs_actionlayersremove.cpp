@@ -30,60 +30,28 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphic.h"
 #include "qg_layerwidget.h"
-
-
+#include "rs_debug.h"
 
 RS_ActionLayersRemove::RS_ActionLayersRemove(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Remove Layer", container, graphicView) {}
 
 
-QAction* RS_ActionLayersRemove::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("&Remove Layer")
-    QAction* action = new QAction(tr("&Remove Layer"), NULL);
-    //action->zetStatusTip(tr("Remove Layer"));
-        action->setIcon(QIcon(":/ui/layerremove.png"));
-    return action;
-}
-
-
 void RS_ActionLayersRemove::trigger() {
     RS_DEBUG->print("RS_ActionLayersRemove::trigger");
 
-    if (graphic!=NULL) {
+    if (graphic) {
         RS_Layer* layer =
             RS_DIALOGFACTORY->requestLayerRemovalDialog(graphic->getLayerList());
 
-        /*
-              if (layer!=NULL && layer->getName()!="0") {
-
-                  graphic->startUndoCycle();
-                  for (RS_Entity* e=graphic->firstEntity(RS2::ResolveNone);
-                          e!=NULL;
-                          e=graphic->nextEntity(RS2::ResolveNone)) {
-
-                      if (e->getLayer()!=NULL &&
-                              e->getLayer()->getName()==layer->getName()) {
-
-                          e->setUndoState(true);
-                          e->setLayer("0");
-                          graphic->addUndoable(e);
-                      }
-                  }
-
-
-                  graphic->endUndoCycle();
-        */
-
         // Now remove the layer from the layer list:
-        graphic->removeLayer(layer);
-        graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
+		graphic->removeLayer(layer);
+
+		graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
     }
     finish(false);
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
 }
-
-
 
 void RS_ActionLayersRemove::init(int status) {
     RS_ActionInterface::init(status);

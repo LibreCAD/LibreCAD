@@ -24,45 +24,46 @@
 **
 **********************************************************************/
 
-#include "rs_actiondimangular.h"
-
-
 #include <QAction>
+#include <QMouseEvent>
+#include "rs_actiondimangular.h"
+#include "rs_dimangular.h"
+
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_information.h"
-
-
+#include "rs_line.h"
+#include "rs_coordinateevent.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
 RS_ActionDimAngular::RS_ActionDimAngular(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_ActionDimension("Draw Angular Dimensions",
-                    container, graphicView) {
+					container, graphicView)
+		, center(new RS_Vector{})
+{
+	actionType= RS2::ActionDimAngular;
     reset();
 }
 
-QAction* RS_ActionDimAngular::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Angular"),
-    QAction* action = new QAction(tr("&Angular"), NULL);
-	action->setIcon(QIcon(":/extui/dimangular.png"));
-    //action->zetStatusTip(tr("Angular Dimension"));
-    return action;
-}
 
+RS_ActionDimAngular::~RS_ActionDimAngular() = default;
 
 void RS_ActionDimAngular::reset() {
     RS_ActionDimension::reset();
 
-    edata = RS_DimAngularData(RS_Vector(false),
-                              RS_Vector(false),
-                              RS_Vector(false),
-                              RS_Vector(false));
-    line1 = NULL;
-    line2 = NULL;
-    center = RS_Vector(false);
-    RS_DIALOGFACTORY->requestOptions(this, true, true);
+	edata.reset(new RS_DimAngularData(RS_Vector{false},
+									  RS_Vector{false},
+									  RS_Vector{false},
+									  RS_Vector{false})
+				);
+	line1 = nullptr;
+	line2 = nullptr;
+	*center = {}; //default to invalid vector
+	RS_DIALOGFACTORY->requestOptions(this, true, true);
 }
 
 
@@ -70,12 +71,10 @@ void RS_ActionDimAngular::reset() {
 void RS_ActionDimAngular::trigger() {
     RS_PreviewActionInterface::trigger();
 
-    if (line1!=NULL && line2!=NULL) {
-        RS_DimAngular* newEntity = NULL;
-
-        newEntity = new RS_DimAngular(container,
-                                      data,
-                                      edata);
+    if (line1 && line2) {
+		RS_DimAngular* newEntity = new RS_DimAngular(container,
+									  *data,
+									  *edata);
 
         newEntity->setLayerToActive();
         newEntity->setPenToActive();
@@ -83,18 +82,20 @@ void RS_ActionDimAngular::trigger() {
         container->addEntity(newEntity);
 
         // upd. undo list:
-        if (document!=NULL) {
+        if (document) {
             document->startUndoCycle();
             document->addUndoable(newEntity);
             document->endUndoCycle();
         }
         RS_Vector rz = graphicView->getRelativeZero();
+		setStatus(SetLine1);
 		graphicView->redraw(RS2::RedrawDrawing);
         graphicView->moveRelativeZero(rz);
+		RS_Snapper::finish();
 
     } else {
         RS_DEBUG->print("RS_ActionDimAngular::trigger:"
-                        " Entity is NULL\n");
+						" Entity is nullptr\n");
     }
 }
 
@@ -103,24 +104,13 @@ void RS_ActionDimAngular::trigger() {
 void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDimAngular::mouseMoveEvent begin");
 
-    RS_Vector mouse(graphicView->toGraphX(e->x()),
-                    graphicView->toGraphY(e->y()));
-
-    switch (getStatus()) {
-    case SetLine1:
-        drawSnapper();
-        break;
-
-    case SetLine2:
-        drawSnapper();
-        break;
+	switch (getStatus()) {
 
     case SetPos:
-        if (line1!=NULL && line2!=NULL && center.valid) {
-            RS_Vector mouse = snapPoint(e);
-            edata.definitionPoint4 = mouse;
+		if (line1 && line2 && center->valid) {
+			edata->definitionPoint4 = snapPoint(e);
 
-            RS_DimAngular* d = new RS_DimAngular(preview, data, edata);
+			RS_DimAngular* d = new RS_DimAngular(preview.get(), *data, *edata);
 
             deletePreview();
             preview->addEntity(d);
@@ -142,7 +132,7 @@ void RS_ActionDimAngular::mouseReleaseEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case SetLine1: {
                 RS_Entity* en = catchEntity(e, RS2::ResolveAll);
-                if (en!=NULL &&
+                if (en &&
                         en->rtti()==RS2::EntityLine) {
                     line1 = (RS_Line*)en;
                     setStatus(SetLine2);
@@ -152,7 +142,7 @@ void RS_ActionDimAngular::mouseReleaseEvent(QMouseEvent* e) {
 
         case SetLine2: {
                 RS_Entity* en = catchEntity(e, RS2::ResolveAll);
-                if (en!=NULL &&
+                if (en &&
                         en->rtti()==RS2::EntityLine) {
                     line2 = (RS_Line*)en;
 
@@ -160,26 +150,26 @@ void RS_ActionDimAngular::mouseReleaseEvent(QMouseEvent* e) {
                         RS_Information::getIntersectionLineLine(line1, line2);
 
                     if (sol.get(0).valid) {
-                        center = sol.get(0);
+						*center = sol.get(0);
 
-                        if (center.distanceTo(line1->getStartpoint()) <
-                                center.distanceTo(line1->getEndpoint())) {
-                            edata.definitionPoint1 = line1->getStartpoint();
-                            edata.definitionPoint2 = line1->getEndpoint();
+						if (center->distanceTo(line1->getStartpoint()) <
+								center->distanceTo(line1->getEndpoint())) {
+							edata->definitionPoint1 = line1->getStartpoint();
+							edata->definitionPoint2 = line1->getEndpoint();
                         } else {
-                            edata.definitionPoint1 = line1->getEndpoint();
-                            edata.definitionPoint2 = line1->getStartpoint();
+							edata->definitionPoint1 = line1->getEndpoint();
+							edata->definitionPoint2 = line1->getStartpoint();
                         }
 
-                        if (center.distanceTo(line2->getStartpoint()) <
-                                center.distanceTo(line2->getEndpoint())) {
-                            edata.definitionPoint3 = line2->getStartpoint();
-                            data.definitionPoint = line2->getEndpoint();
+						if (center->distanceTo(line2->getStartpoint()) <
+								center->distanceTo(line2->getEndpoint())) {
+							edata->definitionPoint3 = line2->getStartpoint();
+							data->definitionPoint = line2->getEndpoint();
                         } else {
-                            edata.definitionPoint3 = line2->getEndpoint();
-                            data.definitionPoint = line2->getStartpoint();
+							edata->definitionPoint3 = line2->getEndpoint();
+							data->definitionPoint = line2->getStartpoint();
                         }
-                        graphicView->moveRelativeZero(center);
+						graphicView->moveRelativeZero(*center);
                         setStatus(SetPos);
                     }
                 }
@@ -202,13 +192,13 @@ void RS_ActionDimAngular::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDimAngular::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+	if (!e) {
         return;
     }
 
     switch (getStatus()) {
     case SetPos:
-        edata.definitionPoint4 = e->getCoordinate();
+		edata->definitionPoint4 = e->getCoordinate();
         trigger();
         reset();
         setStatus(SetLine1);
@@ -301,11 +291,9 @@ void RS_ActionDimAngular::updateMouseButtonHints() {
         RS_DIALOGFACTORY->updateMouseWidget(tr("Enter dimension text:"), "");
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }
-
-
 
 // EOF

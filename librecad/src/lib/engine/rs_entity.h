@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -28,13 +29,10 @@
 #ifndef RS_ENTITY_H
 #define RS_ENTITY_H
 
-#include <memory>
-#include <QMultiHash>
-
-#include "rs_math.h"
+#include <map>
+#include "rs_vector.h"
 #include "rs_pen.h"
 #include "rs_undoable.h"
-#include "rs_vector.h"
 
 class RS_Arc;
 class RS_Block;
@@ -51,8 +49,9 @@ class RS_Polyline;
 class RS_Text;
 class RS_Layer;
 class LC_Quadratic;
-class RS_GraphicView;
-
+class RS_Vector;
+class RS_VectorSolutions;
+class QString;
 
 /**
  * Base class for an entity (line, arc, circle, ...)
@@ -62,41 +61,35 @@ class RS_GraphicView;
 class RS_Entity : public RS_Undoable {
 public:
 
-
-    RS_Entity(RS_EntityContainer* parent=NULL);
-    virtual ~RS_Entity();
+	RS_Entity()=default;
+	RS_Entity(RS_EntityContainer* parent=nullptr);
+	virtual ~RS_Entity() = default;
 
     void init();
     virtual void initId();
 
-    virtual RS_Entity* clone() = 0;
+	virtual RS_Entity* clone() const = 0;
 
-    virtual void reparent(RS_EntityContainer* parent) {
-        this->parent = parent;
-    }
+	virtual void reparent(RS_EntityContainer* parent) {
+		this->parent = parent;
+	}
 
     void resetBorders();
-    void moveBorders(const RS_Vector& offset){
-        minV.move(offset);
-        maxV.move(offset);
-    }
-    void scaleBorders(const RS_Vector& center, const RS_Vector& factor){
-        minV.scale(center,factor);
-        maxV.scale(center,factor);
-    }
+	void moveBorders(const RS_Vector& offset);
+	void scaleBorders(const RS_Vector& center, const RS_Vector& factor);
     /**
      * Must be overwritten to return the rtti of this entity
      * (e.g. RS2::EntityArc).
      */
-    virtual RS2::EntityType rtti() const {
-        return RS2::EntityUnknown;
-    }
+	virtual RS2::EntityType rtti() const{
+		return RS2::EntityUnknown;
+	}
 
     /**
      * Identify all entities as undoable entities.
      * @return RS2::UndoableEntity
      */
-    virtual RS2::UndoableType undoRtti() {
+	virtual RS2::UndoableType undoRtti() const override {
         return RS2::UndoableEntity;
     }
 
@@ -111,13 +104,13 @@ public:
      * This method must be overwritten in subclasses and return the
      * number of <b>atomic</b> entities in this entity.
      */
-    virtual unsigned int count() = 0;
+	virtual unsigned int count() const= 0;
 
     /**
      * This method must be overwritten in subclasses and return the
      * number of <b>atomic</b> entities in this entity including sub containers.
      */
-    virtual unsigned int countDeep() = 0;
+	virtual unsigned int countDeep() const= 0;
 
 
     /**
@@ -129,7 +122,7 @@ public:
     }
 
     /**
-     * @return Parent of this entity or NULL if this is a root entity.
+	 * @return Parent of this entity or nullptr if this is a root entity.
      */
     RS_EntityContainer* getParent() const {
         return parent;
@@ -143,17 +136,13 @@ public:
     }
     /** @return The center point (x) of this arc */
     //get center for entities: arc, circle and ellipse
-    virtual RS_Vector getCenter() const {
-        return RS_Vector(false);
-    }
-    virtual double getRadius() const {
-        return RS_MAXDOUBLE;
-    }
-    RS_Graphic* getGraphic();
-    RS_Block* getBlock();
-    RS_Insert* getInsert();
-    RS_Entity* getBlockOrInsert();
-    RS_Document* getDocument();
+	virtual RS_Vector getCenter() const;
+	virtual double getRadius() const;
+	RS_Graphic* getGraphic() const;
+	RS_Block* getBlock() const;
+	RS_Insert* getInsert() const;
+	RS_Entity* getBlockOrInsert() const;
+	RS_Document* getDocument() const;
 
     void setLayer(const QString& name);
     void setLayer(RS_Layer* l);
@@ -204,27 +193,21 @@ public:
     virtual bool setSelected(bool select);
     virtual bool toggleSelected();
     virtual bool isSelected() const;
-    virtual bool isParentSelected();
+	bool isParentSelected() const;
     virtual bool isProcessed() const;
     virtual void setProcessed(bool on);
-    virtual bool isInWindow(RS_Vector v1, RS_Vector v2);
+	bool isInWindow(RS_Vector v1, RS_Vector v2) const;
     virtual bool hasEndpointsWithinWindow(const RS_Vector& /*v1*/, const RS_Vector& /*v2*/) {
         return false;
     }
-    virtual bool isVisible();
-    virtual void setVisible(bool v) {
-        if (v) {
-            setFlag(RS2::FlagVisible);
-        } else {
-            delFlag(RS2::FlagVisible);
-        }
-    }
+	virtual bool isVisible() const;
+	virtual void setVisible(bool v);
     virtual void setHighlighted(bool on);
-    virtual bool isHighlighted();
+	virtual bool isHighlighted() const;
 
-    virtual bool isLocked();
+	bool isLocked() const;
 
-    virtual void undoStateChanged(bool undone);
+	void undoStateChanged(bool undone);
     virtual bool isUndone() const;
 
     /**
@@ -264,24 +247,18 @@ public:
      * @see getMin()
      * @see getMax()
      */
-    RS_Vector getSize() const {
-        return maxV-minV;
-    }
+	RS_Vector getSize() const;
 
     void addGraphicVariable(const QString& key, double val, int code);
     void addGraphicVariable(const QString& key, int val, int code);
     void addGraphicVariable(const QString& key, const QString& val, int code);
 
     double getGraphicVariableDouble(const QString& key, double def);
-    int getGraphicVariableInt(const QString& key, int def);
+	int getGraphicVariableInt(const QString& key, int def) const;
     QString getGraphicVariableString(const QString& key,
-                                     const QString& def);
-    virtual RS_Vector getStartpoint() const {
-        return RS_Vector(false);
-    }
-    virtual RS_Vector getEndpoint() const {
-        return RS_Vector(false);
-    }
+									 const QString& def) const;
+	virtual RS_Vector getStartpoint() const;
+	virtual RS_Vector getEndpoint() const;
     //find the local direction at end points, derived entities
     // must implement this if direction is supported by the entity type
     virtual double getDirection1() const {
@@ -292,22 +269,14 @@ public:
     }
 
     //find the tangential points seeing from given point
-    virtual RS_VectorSolutions getTangentPoint(const RS_Vector& /*point*/) const {
-        return RS_VectorSolutions();
-    }
-    virtual RS_Vector getTangentDirection(const RS_Vector& /*point*/)const{
-        return RS_Vector(false);
-    }
-    RS2::Unit getGraphicUnit();
+	virtual RS_VectorSolutions getTangentPoint(const RS_Vector& /*point*/) const;
+	virtual RS_Vector getTangentDirection(const RS_Vector& /*point*/)const;
+	RS2::Unit getGraphicUnit() const;
 
     /**
      * Must be overwritten to get all reference points of the entity.
      */
-    virtual RS_VectorSolutions getRefPoints() {
-        RS_VectorSolutions ret;
-        return ret;
-    }
-
+	virtual RS_VectorSolutions getRefPoints() const;
 
     /**
      * Must be overwritten to get the closest endpoint to the
@@ -316,13 +285,13 @@ public:
      * @param coord Coordinate (typically a mouse coordinate)
      * @param dist Pointer to a value which will contain the measured
      * distance between 'coord' and the closest endpoint. The passed
-     * pointer can also be NULL in which case the distance will be
+	 * pointer can also be nullptr in which case the distance will be
      * lost.
      *
      * @return The closest endpoint.
      */
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                         double* dist = NULL)const = 0;
+										 double* dist = nullptr)const = 0;
 
     /**
      * Must be overwritten to get the closest coordinate to the
@@ -331,13 +300,13 @@ public:
      * @param coord Coordinate (typically a mouse coordinate)
      * @param dist Pointer to a value which will contain the measured
      * distance between \p coord and the point. The passed pointer can
-     * also be \p NULL in which case the distance will be lost.
+	 * also be \p nullptr in which case the distance will be lost.
      *
      * @return The closest coordinate.
      */
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& /*coord*/,
-                                              bool onEntity = true, double* dist = NULL,
-                                              RS_Entity** entity = NULL) const = 0;
+											  bool onEntity = true, double* dist = nullptr,
+											  RS_Entity** entity = nullptr) const = 0;
 
     /**
      * Must be overwritten to get the (nearest) center point to the
@@ -346,13 +315,13 @@ public:
      * @param coord Coordinate (typically a mouse coordinate)
      * @param dist Pointer to a value which will contain the measured
      * distance between 'coord' and the closest center point. The passed
-     * pointer can also be NULL in which case the distance will be
+	 * pointer can also be nullptr in which case the distance will be
      * lost.
      *
      * @return The closest center point.
      */
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-                                       double* dist = NULL) = 0;
+									   double* dist = nullptr) const= 0;
 
     /**
      * Must be overwritten to get the (nearest) middle point to the
@@ -361,7 +330,7 @@ public:
      * @param coord Coordinate (typically a mouse coordinate)
      * @param dist Pointer to a value which will contain the measured
      * distance between 'coord' and the closest middle point. The passed
-     * pointer can also be NULL in which case the distance will be
+	 * pointer can also be nullptr in which case the distance will be
      * lost.
      *
      * @return The closest middle point.
@@ -370,7 +339,7 @@ public:
         return RS_Vector(false);
     }
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
-                                       double* dist = NULL,
+									   double* dist = nullptr,
                                        int middlePoints = 1
             ) const= 0;
 
@@ -382,14 +351,14 @@ public:
      * @param coord Coordinate (typically a mouse coordinate)
      * @param dist Pointer to a value which will contain the measured
      * distance between 'coord' and the closest point. The passed
-     * pointer can also be NULL in which case the distance will be
+	 * pointer can also be nullptr in which case the distance will be
      * lost.
      *
      * @return The closest point with the given distance to the endpoint.
      */
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-                                     double* dist = NULL) = 0;
+									 double* dist = nullptr) const= 0;
 
     /**
      * Must be overwritten to get the point with a given
@@ -401,7 +370,7 @@ public:
      * @return The point with the given distance to the start- or endpoint.
      */
     virtual RS_Vector getNearestDist(double /*distance*/,
-                                     bool /*startp*/) {
+									 bool /*startp*/) const{
         return RS_Vector(false);
     }
 
@@ -411,17 +380,13 @@ public:
      * @param coord Coordinate (typically a mouse coordinate)
      * @param dist Pointer to a value which will contain the measured
      * distance between 'coord' and the closest point. The passed
-     * pointer can also be NULL in which case the distance will be
+	 * pointer can also be nullptr in which case the distance will be
      * lost.
      *
      * @return The closest point with the given distance to the endpoint.
      */
     virtual RS_Vector getNearestRef(const RS_Vector& coord,
-                                    double* dist = NULL) {
-        RS_VectorSolutions s = getRefPoints();
-
-        return s.getClosest(coord, dist);
-    }
+									double* dist = nullptr) const;
 
     /**
      * Gets the nearest reference point of this entity if it is selected.
@@ -431,20 +396,13 @@ public:
      * @param coord Coordinate (typically a mouse coordinate)
      * @param dist Pointer to a value which will contain the measured
      * distance between 'coord' and the closest point. The passed
-     * pointer can also be NULL in which case the distance will be
+	 * pointer can also be nullptr in which case the distance will be
      * lost.
      *
      * @return The closest point with the given distance to the endpoint.
      */
     virtual RS_Vector getNearestSelectedRef(const RS_Vector& coord,
-                                            double* dist = NULL) {
-        if (isSelected()) {
-            return getNearestRef(coord, dist);
-        }
-        else {
-            return RS_Vector(false);
-        }
-    }
+											double* dist = nullptr) const;
 
     /**
      * Must be overwritten to get the shortest distance between this
@@ -452,7 +410,7 @@ public:
      *
      * @param coord Coordinate (typically a mouse coordinate)
      * @param entity Pointer which will contain the (sub-)entity which is
-     *               closest to the given point or NULL if the caller is not
+	 *               closest to the given point or nullptr if the caller is not
      *               interested in this information.
      * @param level The resolve level.
      *
@@ -462,9 +420,9 @@ public:
      */
     virtual RS_Vector getNearestOrthTan(const RS_Vector& /*coord*/,
                                         const RS_Line& /*normal*/,
-                                        bool onEntity = false);
+										bool onEntity = false) const;
     virtual double getDistanceToPoint(const RS_Vector& coord,
-                                      RS_Entity** entity = NULL,
+									  RS_Entity** entity = nullptr,
                                       RS2::ResolveLevel level = RS2::ResolveNone,
                                       double solidDist = RS_MAXDOUBLE) const;
 
@@ -480,9 +438,9 @@ public:
      * Implementations must offset the entity by the distance at both directions
      * used to generate tangential circles
      */
-    virtual QVector<RS_Entity* > offsetTwoSides(const double& /*distance*/) const
+	virtual std::vector<RS_Entity* > offsetTwoSides(const double& /*distance*/) const
     {
-        return QVector<RS_Entity* >();
+		return std::vector<RS_Entity* >();
     }
     /**
           * implementations must revert the direction of an atomic entity
@@ -554,7 +512,7 @@ public:
     double getStyleFactor(RS_GraphicView* view);
 
     QString getUserDefVar(const QString& key) const;
-    QList<QString> getAllKeys();
+	std::vector<QString> getAllKeys() const;
     void setUserDefVar(QString key, QString val);
     void delUserDefVar(QString key);
 
@@ -564,7 +522,9 @@ public:
     virtual void calculateBorders() = 0;
     /** whether the entity is on a constructionLayer */
     //! constructionLayer contains entities of infinite length, constructionLayer doesn't show up in print
-    bool isConstructionLayer(bool typeCheck = false) const; // ignore certain entity types for constructionLayer check
+    bool isConstruction(bool typeCheck = false) const; // ignore certain entity types for constructionLayer check
+    //! whether printing is enabled or disabled for the entity's layer
+    bool isPrint(void) const;
     /** return the equation of the entity
 for quadratic,
 
@@ -580,9 +540,7 @@ m0 x + m1 y + m2 =0
      * Contour Area =\oint x dy
      * @return line integral \oint x dy along the entity
      */
-    virtual double areaLineIntegral() const{
-        return 0.;
-    }
+	virtual double areaLineIntegral() const;
 
     /**
      * @brief trimmable, whether the entity type can be trimmed
@@ -591,10 +549,20 @@ m0 x + m1 y + m2 =0
      */
     bool trimmable() const;
 
+	/**
+	 * @brief isArc is the entity of type Arc, Circle, or Ellipse
+	 * @return true for Arc, Circle, or Ellipse
+	 */
+	virtual bool isArc() const;
+	/**
+	 * @brief isArcLine determine the entitiy is either Arc, Circle, or Line
+	 * @return true if entity is Arc, Circle, or Line
+	 */
+	virtual bool isArcCircleLine() const;
 
 protected:
-    //! Entity's parent entity or NULL is this entity has no parent.
-    RS_EntityContainer* parent;
+	//! Entity's parent entity or nullptr is this entity has no parent.
+	RS_EntityContainer* parent = nullptr;
     //! minimum coordinates
     RS_Vector minV;
     //! maximum coordinates
@@ -613,7 +581,7 @@ protected:
     bool updateEnabled;
 
 private:
-    QMultiHash<QString, QString> varList;
+	std::map<QString, QString> varList;
 };
 
 #endif

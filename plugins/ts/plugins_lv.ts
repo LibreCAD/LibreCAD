@@ -249,6 +249,10 @@
         <source>UNKNOWN</source>
         <translation>NEZINĀMS</translation>
     </message>
+    <message>
+        <source>SPLINEPOINTS</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_SameProp</name>
@@ -270,6 +274,17 @@
     <message>
         <source>Sample plugin</source>
         <translation>Parauga spraudnis</translation>
+    </message>
+</context>
+<context>
+    <name>PicFile</name>
+    <message>
+        <source>Read PIC file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>import PIC file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -609,21 +624,72 @@
     </message>
 </context>
 <context>
-    <name>plot</name>
+    <name>picPunto</name>
     <message>
-        <source>Plot plugin</source>
+        <source>File...</source>
+        <translation type="unfinished">Datne...</translation>
+    </message>
+    <message>
+        <source>Scale:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Draw</source>
+        <source>Accept</source>
+        <translation type="unfinished">Pieņemt</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Atcelt</translation>
+    </message>
+    <message>
+        <source>Select file</source>
+        <translation type="unfinished">Izvēlieties datni</translation>
+    </message>
+    <message>
+        <source>Scale Factor is empty or invalid</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file %1 not exist</source>
+        <translation type="unfinished">Datne %1 neeksistē</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open the file %1</source>
+        <translation type="unfinished">Nevar atvērt datni %1</translation>
+    </message>
+    <message>
+        <source>%1 objects imported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>picPunto drawLine: first point is empty %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>picPunto drawLine: next point is empty %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>format error in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>plot</name>
+    <message>
+        <source>Plot plugin</source>
+        <translation>Grafiku spraudnis</translation>
+    </message>
+    <message>
+        <source>Draw</source>
+        <translation>Zīmēt</translation>
     </message>
 </context>
 <context>
     <name>plotDialog</name>
     <message>
         <source>Plot equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafika vienādojums</translation>
     </message>
     <message>
         <source>This plugin allows you to plot mathematical equations.
@@ -631,35 +697,54 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Šis spraudnis ļauj attēlot matemātiskos vienādojumus.
+Ja nevēlaties izmantot parametrisko formu, vienkārši izlaidiet “Vienādojums 2”.
+Varat izmanto “pi”, ja ir vajadzīga π vērtība (piemēram, 3*pi).
+Izmantojiet savos vienādojums t vai x kā mainīgos/parametrus.
+</translation>
     </message>
     <message>
         <source>Equation 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vienādojums 1:</translation>
     </message>
     <message>
         <source>Equation 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vienādojums 2:</translation>
     </message>
     <message>
         <source>start value:</source>
-        <translation type="unfinished"></translation>
+        <translation>sākuma vērtība:</translation>
     </message>
     <message>
         <source>end value:</source>
-        <translation type="unfinished"></translation>
+        <translation>beigu vērtība:</translation>
     </message>
     <message>
         <source>step size:</source>
-        <translation type="unfinished"></translation>
+        <translation>soļa vērtība:</translation>
     </message>
     <message>
         <source>Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>Zīmēt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Atcelt</translation>
+        <translation>Atcelt</translation>
+    </message>
+    <message>
+        <source>Line Segments</source>
+        <comment>Plot Equation to generate RS_Line segments</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polyline</source>
+        <comment>Plot Equation to generate RS_Polyline</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SplinePoints</source>
+        <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

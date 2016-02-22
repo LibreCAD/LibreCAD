@@ -28,7 +28,6 @@
 #define RS_ACTIONDRAWLINEHORVERT_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_line.h"
 
 /**
  * This action class can handle user events to draw 
@@ -53,8 +52,6 @@ public:
     RS_ActionDrawLineHorVert(RS_EntityContainer& container,
                              RS_GraphicView& graphicView);
     ~RS_ActionDrawLineHorVert();
-	
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
     void reset();
 
@@ -64,18 +61,10 @@ public:
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
 
 protected:
-    /**
-     * Line data.
-     */
-    RS_LineData data;
-    /**
-     * 2 points
-     */
-    RS_Vector p1;
-    RS_Vector p2;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

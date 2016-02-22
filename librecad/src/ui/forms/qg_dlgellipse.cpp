@@ -27,6 +27,7 @@
 
 #include "rs_ellipse.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgEllipse as a child of 'parent', with the
@@ -65,11 +66,11 @@ void QG_DlgEllipse::setEllipse(RS_Ellipse& e) {
     //pen = ellipse->getPen();
     wPen->setPen(ellipse->getPen(false), true, false, "Pen");
     RS_Graphic* graphic = ellipse->getGraphic();
-    if (graphic!=NULL) {
+    if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
     RS_Layer* lay = ellipse->getLayer(false);
-    if (lay!=NULL) {
+    if (lay) {
         cbLayer->setLayer(*lay);
     }
     QString s;
@@ -93,8 +94,7 @@ void QG_DlgEllipse::setEllipse(RS_Ellipse& e) {
 void QG_DlgEllipse::updateEllipse() {
     ellipse->setCenter(RS_Vector(RS_Math::eval(leCenterX->text()),
                                   RS_Math::eval(leCenterY->text())));
-    RS_Vector v;
-    v.setPolar(RS_Math::eval(leMajor->text()),
+	RS_Vector v = RS_Vector::polar(RS_Math::eval(leMajor->text()),
                RS_Math::deg2rad(RS_Math::eval(leRotation->text())));
     ellipse->setMajorP(v);
     if (RS_Math::eval(leMajor->text())>1.0e-6) {

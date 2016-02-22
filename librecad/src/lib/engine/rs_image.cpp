@@ -23,16 +23,43 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-
+#include<iostream>
+#include <QImage>
 #include "rs_image.h"
+#include "rs_line.h"
+#include "rs_settings.h"
 
 #include "rs_constructionline.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"
-#include "rs_painter.h"
 #include "rs_painterqt.h"
+#include "rs_math.h"
 
+RS_ImageData::RS_ImageData(int _handle,
+						   const RS_Vector& _insertionPoint,
+						   const RS_Vector& _uVector,
+						   const RS_Vector& _vVector,
+						   const RS_Vector& _size,
+						   const QString& _file,
+						   int _brightness,
+						   int _contrast,
+						   int _fade):
+	handle(_handle)
+  , insertionPoint(_insertionPoint)
+  , uVector(_uVector)
+  , vVector(_vVector)
+  , size(_size)
+  , file(_file)
+  , brightness(_brightness)
+  , contrast(_contrast)
+  , fade(_fade)
+{
+}
+
+std::ostream& operator << (std::ostream& os, const RS_ImageData& ld) {
+	os << "(" << ld.insertionPoint << ")";
+	return os;
+}
 
 /**
  * Constructor.
@@ -45,21 +72,25 @@ RS_Image::RS_Image(RS_EntityContainer* parent,
     calculateBorders();
 }
 
-
-
-/**
- * Destructor.
- */
-RS_Image::~RS_Image() {
-    /*if (img!=NULL) {
-        delete[] img;
-    }*/
+RS_Image::RS_Image(const RS_Image& _image):
+	RS_AtomicEntity(_image.getParent())
+  ,data(_image.data)
+  ,img(_image.img.get()?new QImage(*_image.img):nullptr)
+{
 }
 
+RS_Image RS_Image::operator = (const RS_Image& _image)
+{
+	data=_image.data;
+	if(_image.img.get()){
+		img.reset(new QImage(*_image.img));
+	}else{
+		img.reset();
+	}
+	return *this;
+}
 
-
-
-RS_Entity* RS_Image::clone() {
+RS_Entity* RS_Image::clone() const {
     RS_Image* i = new RS_Image(*this);
         i->setHandle(getHandle());
     i->initId();
@@ -83,9 +114,9 @@ void RS_Image::update() {
 
     // the whole image:
     //QImage image = QImage(data.file);
-    img = QImage(data.file);
-    if (!img.isNull()) {
-        data.size = RS_Vector(img.width(), img.height());
+	img.reset(new QImage(data.file));
+	if (!img->isNull()) {
+		data.size = RS_Vector(img->width(), img->height());
     }
 
     RS_DEBUG->print("RS_Image::update: OK");
@@ -161,8 +192,8 @@ RS_VectorSolutions RS_Image::getCorners() const {
 bool RS_Image::containsPoint(const RS_Vector& coord) const{
     QPolygonF paf;
     RS_VectorSolutions corners =getCorners();
-    for(int i=0;i<corners.getNumber();i++){
-        paf.push_back(QPointF(corners.get(i).x,corners.get(i).y));
+	for(const RS_Vector& vp: corners){
+		paf.push_back(QPointF(vp.x, vp.y));
     }
     paf.push_back(paf.at(0));
     return paf.containsPoint(QPointF(coord.x,coord.y),Qt::OddEvenFill);
@@ -179,53 +210,47 @@ RS_Vector RS_Image::getNearestEndpoint(const RS_Vector& coord,
 RS_Vector RS_Image::getNearestPointOnEntity(const RS_Vector& coord,
         bool onEntity, double* dist, RS_Entity** entity) const{
 
-    if (entity!=NULL) {
+    if (entity) {
         *entity = const_cast<RS_Image*>(this);
     }
 
-    RS_VectorSolutions corners =getCorners();
+	RS_VectorSolutions const& corners =getCorners();
     //allow selecting image by clicking within images, bug#3464626
     if(containsPoint(coord)){
         //if coord is within image
-        if(dist!=NULL) *dist=0.;
+        if(dist) *dist=0.;
         return coord;
     }
-    RS_VectorSolutions points(4);
+	RS_VectorSolutions points;
+	for (size_t i=0; i < corners.size(); ++i){
+		size_t const j = (i+1)%corners.size();
+		RS_Line const l{corners.at(i), corners.at(j)};
+		RS_Vector const vp = l.getNearestPointOnEntity(coord, onEntity);
+		points.push_back(vp);
+	}
 
-    RS_Line l[] =
-        {
-            RS_Line(NULL, RS_LineData(corners.get(0), corners.get(1))),
-            RS_Line(NULL, RS_LineData(corners.get(1), corners.get(2))),
-            RS_Line(NULL, RS_LineData(corners.get(2), corners.get(3))),
-            RS_Line(NULL, RS_LineData(corners.get(3), corners.get(0)))
-        };
-
-    for (int i=0; i<4; ++i) {
-        points.set(i, l[i].getNearestPointOnEntity(coord, onEntity));
-    }
-
-    return points.getClosest(coord, dist);
+	return points.getClosest(coord, dist);
 }
 
 
 
 RS_Vector RS_Image::getNearestCenter(const RS_Vector& coord,
-                                     double* dist) {
+									 double* dist) const{
 
-    RS_VectorSolutions points;
-    RS_VectorSolutions corners = getCorners();
+	RS_VectorSolutions const& corners{getCorners()};
     //bug#485, there's no clear reason to ignore snapping to center within an image
 //    if(containsPoint(coord)){
 //        //if coord is within image
-//        if(dist!=NULL) *dist=0.;
+//        if(dist) *dist=0.;
 //        return coord;
 //    }
 
-    points.push_back((corners.get(0) + corners.get(1))/2.0);
-    points.push_back((corners.get(1) + corners.get(2))/2.0);
-    points.push_back((corners.get(2) + corners.get(3))/2.0);
-    points.push_back((corners.get(3) + corners.get(0))/2.0);
-    points.push_back((corners.get(0) + corners.get(2))/2.0);
+	RS_VectorSolutions points;
+	for (size_t i=0; i < corners.size(); ++i) {
+		size_t const j = (i+1)%corners.size();
+		points.push_back((corners.get(i) + corners.get(j))*0.5);
+	}
+	points.push_back((corners.get(0) + corners.get(2))*0.5);
 
     return points.getClosest(coord, dist);
 }
@@ -237,29 +262,24 @@ RS_Vector RS_Image::getNearestCenter(const RS_Vector& coord,
 RS_Vector RS_Image::getNearestMiddle(const RS_Vector& coord,
                                      double* dist,
                                      const int /*middlePoints*/) const{
-    return const_cast<RS_Image*>(this)->getNearestCenter(coord, dist);
+	return getNearestCenter(coord, dist);
 }
 
 
 
 RS_Vector RS_Image::getNearestDist(double distance,
                                    const RS_Vector& coord,
-                                   double* dist) {
+								   double* dist) const{
 
-    RS_VectorSolutions corners = getCorners();
-    RS_VectorSolutions points(4);
+	RS_VectorSolutions const& corners = getCorners();
+	RS_VectorSolutions points;
 
-    RS_Line l[] =
-        {
-            RS_Line(NULL, RS_LineData(corners.get(0), corners.get(1))),
-            RS_Line(NULL, RS_LineData(corners.get(1), corners.get(2))),
-            RS_Line(NULL, RS_LineData(corners.get(2), corners.get(3))),
-            RS_Line(NULL, RS_LineData(corners.get(3), corners.get(0)))
-        };
-
-    for (int i=0; i<4; ++i) {
-        points.set(i, l[i].getNearestDist(distance, coord, dist));
-    }
+	for (size_t i = 0; i < corners.size(); ++i){
+		size_t const j = (i+1)%corners.size();
+		RS_Line const l{corners.get(i), corners.get(j)};
+		RS_Vector const& vp = l.getNearestDist(distance, coord, dist);
+		points.push_back(vp);
+	}
 
     return points.getClosest(coord, dist);
 }
@@ -270,35 +290,30 @@ double RS_Image::getDistanceToPoint(const RS_Vector& coord,
                                     RS_Entity** entity,
                                     RS2::ResolveLevel /*level*/,
                                                                         double /*solidDist*/) const{
-    if (entity!=NULL) {
+    if (entity) {
         *entity = const_cast<RS_Image*>(this);
     }
 
     RS_VectorSolutions corners = getCorners();
 
     //allow selecting image by clicking within images, bug#3464626
-    if(containsPoint(coord)){
-        //if coord is on image
-        return double(0.);
-    }
+	if(containsPoint(coord)){
+		//if coord is on image
+
+		RS_SETTINGS->beginGroup("/Appearance");
+		bool draftMode = (bool)RS_SETTINGS->readNumEntry("/DraftMode", 0);
+		RS_SETTINGS->endGroup();
+		if(!draftMode) return double(0.);
+	}
     //continue to allow selecting by image edges
-    double dist;
     double minDist = RS_MAXDOUBLE;
 
-    RS_Line l[] =
-        {
-            RS_Line(NULL, RS_LineData(corners.get(0), corners.get(1))),
-            RS_Line(NULL, RS_LineData(corners.get(1), corners.get(2))),
-            RS_Line(NULL, RS_LineData(corners.get(2), corners.get(3))),
-            RS_Line(NULL, RS_LineData(corners.get(3), corners.get(0)))
-        };
-
-    for (int i=0; i<4; ++i) {
-        dist = l[i].getDistanceToPoint(coord, NULL);
-        if (dist<minDist) {
-            minDist = dist;
-        }
-    }
+	for (size_t i = 0; i < corners.size(); ++i){
+		size_t const j = (i+1)%corners.size();
+		RS_Line const l{corners.get(i), corners.get(j)};
+		double const dist = l.getDistanceToPoint(coord, nullptr);
+		minDist = std::min(minDist, dist);
+	}
 
     return minDist;
 }
@@ -349,9 +364,8 @@ void RS_Image::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
 
 
 void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
-    if (painter==NULL || view==NULL || img.isNull()) {
-        return;
-    }
+	if (!(painter && view) || !img.get() || img->isNull())
+		return;
 
     // erase image:
     //if (painter->getPen().getColor()==view->getBackground()) {
@@ -359,21 +373,20 @@ void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
     //
     //}
 
-    RS_Vector scale = RS_Vector(view->toGuiDX(data.uVector.magnitude()),
-                                view->toGuiDY(data.vVector.magnitude()));
+	RS_Vector scale{view->toGuiDX(data.uVector.magnitude()),
+								view->toGuiDY(data.vVector.magnitude())};
     double angle = data.uVector.angle();
 
-    painter->drawImg(img,
+	painter->drawImg(*img,
                      view->toGui(data.insertionPoint),
                      angle, scale);
 
     if (isSelected()) {
         RS_VectorSolutions sol = getCorners();
-
-        painter->drawLine(view->toGui(sol.get(0)), view->toGui(sol.get(1)));
-        painter->drawLine(view->toGui(sol.get(1)), view->toGui(sol.get(2)));
-        painter->drawLine(view->toGui(sol.get(2)), view->toGui(sol.get(3)));
-        painter->drawLine(view->toGui(sol.get(3)), view->toGui(sol.get(0)));
+		for (size_t i = 0; i < sol.size(); ++i){
+			size_t const j = (i+1)%sol.size();
+			painter->drawLine(view->toGui(sol.get(i)), view->toGui(sol.get(j)));
+		}
     }
 }
 

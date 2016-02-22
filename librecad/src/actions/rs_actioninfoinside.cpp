@@ -27,46 +27,31 @@
 #include "rs_actioninfoinside.h"
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
 
-
-
 RS_ActionInfoInside::RS_ActionInfoInside(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Info Inside",
-                    container, graphicView) {
-
-    contour = new RS_EntityContainer(NULL, false);
-
-    for (RS_Entity* e=container.firstEntity(); e!=NULL;
-            e=container.nextEntity()) {
-        if (e->isSelected()) {
-            contour->addEntity(e);
-        }
-    }
+										 RS_GraphicView& graphicView)
+	:RS_ActionInterface("Info Inside",
+						container, graphicView)
+	, pt(new RS_Vector{})
+	,contour(new RS_EntityContainer(nullptr, false))
+{
+	actionType=RS2::ActionInfoInside;
+	for(auto e: container){
+		if (e->isSelected()) {
+			contour->addEntity(e);
+		}
+	}
 }
 
-
-RS_ActionInfoInside::~RS_ActionInfoInside() {
-    delete contour;
-}
-
-
-QAction* RS_ActionInfoInside::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Point inside contour"),
-                                  tr("&Point inside contour"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Point inside contour"), NULL);
-    //action->zetStatusTip(tr("Checks if a given point is inside the selected contour"));
-
-    return action;
-}
+RS_ActionInfoInside::~RS_ActionInfoInside() = default;
 
 void RS_ActionInfoInside::trigger() {
     bool onContour = false;
-    if (RS_Information::isPointInsideContour(pt, contour, &onContour)) {
+	if (RS_Information::isPointInsideContour(*pt, contour.get(), &onContour)) {
         RS_DIALOGFACTORY->commandMessage(tr("Point is inside selected contour."));
     } else {
         RS_DIALOGFACTORY->commandMessage(tr("Point is outside selected contour."));
@@ -74,9 +59,8 @@ void RS_ActionInfoInside::trigger() {
     finish(false);
 }
 
-
-
-void RS_ActionInfoInside::mouseMoveEvent(QMouseEvent* /*e*/) {
+void RS_ActionInfoInside::mouseMoveEvent(QMouseEvent* e) {
+    e->accept();
     //RS_Vector mouse = snapPoint(e);
     //bool onContour = false;
     /*if (RS_Information::isPointInsideContour(mouse, contour, &onContour)) {
@@ -84,18 +68,14 @@ void RS_ActionInfoInside::mouseMoveEvent(QMouseEvent* /*e*/) {
     }*/
 }
 
-
-
 void RS_ActionInfoInside::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {
-        pt = snapPoint(e);
+		*pt = snapPoint(e);
         trigger();
     }
 }
-
-
 
 void RS_ActionInfoInside::updateMouseButtonHints() {
     switch (getStatus()) {
@@ -104,24 +84,13 @@ void RS_ActionInfoInside::updateMouseButtonHints() {
                                             tr("Cancel"));
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+		RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }
-
-
 
 void RS_ActionInfoInside::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-
-//void RS_ActionInfoInside::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-        // EOF
+// EOF

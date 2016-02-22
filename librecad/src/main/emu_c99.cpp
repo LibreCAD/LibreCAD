@@ -1,7 +1,7 @@
 #include "emu_c99.h"
 
-#include <math.h>
-#include <float.h>
+#include <cmath>
+#include <cfloat>
 
 #ifdef EMU_C99
 

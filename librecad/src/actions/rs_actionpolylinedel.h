@@ -47,12 +47,8 @@ public:
 public:
     RS_ActionPolylineDel(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionPolylineDel() {}
+	~RS_ActionPolylineDel() override;
 
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-    virtual RS2::ActionType rtti(){
-        return RS2::ActionPolylineDel;
-    }
     virtual void init(int status=0);
 	
     virtual void trigger();
@@ -62,11 +58,10 @@ public:
 	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 private:
     RS_Entity* delEntity;
-    RS_Vector delPoint;
+	std::unique_ptr<RS_Vector> delPoint;
 };
 
 #endif

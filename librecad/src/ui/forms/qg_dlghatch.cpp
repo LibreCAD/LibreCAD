@@ -26,6 +26,10 @@
 #include "qg_dlghatch.h"
 
 #include "rs_settings.h"
+#include "rs_line.h"
+#include "rs_hatch.h"
+#include "rs_patternlist.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgHatch as a child of 'parent', with the
@@ -43,14 +47,6 @@ QG_DlgHatch::QG_DlgHatch(QWidget* parent, bool modal, Qt::WindowFlags fl)
     init();
 }
 
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_DlgHatch::~QG_DlgHatch()
-{
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
-}
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -69,6 +65,7 @@ void QG_DlgHatch::init() {
     preview = new RS_EntityContainer();
     gvPreview->setContainer(preview);
     gvPreview->setBorders(15,15,15,15);
+    gvPreview->addScrollbars();
 
     cbPattern->init();
 
@@ -84,20 +81,10 @@ void QG_DlgHatch::showEvent ( QShowEvent * e) {
     gvPreview->zoomAuto();
 }
 
-void QG_DlgHatch::destroy() {
-    if (isNew) {
-        RS_SETTINGS->beginGroup("/Draw");
-        RS_SETTINGS->writeEntry("/HatchSolid", (int)cbSolid->isChecked());
-        RS_SETTINGS->writeEntry("/HatchPattern", cbPattern->currentText());
-        RS_SETTINGS->writeEntry("/HatchScale", leScale->text());
-        RS_SETTINGS->writeEntry("/HatchAngle", leAngle->text());
-        RS_SETTINGS->writeEntry("/HatchPreview",
-                                (int)cbEnablePreview->isChecked());
-        RS_SETTINGS->endGroup();
-    }
-        delete preview;
+QG_DlgHatch::~QG_DlgHatch()
+{
+    delete preview;
 }
-
 
 void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
     hatch = &h;
@@ -136,7 +123,7 @@ void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
 }
 
 void QG_DlgHatch::updateHatch() {
-    if (hatch!=NULL) {
+    if (hatch) {
         hatch->setSolid(cbSolid->isChecked());
         hatch->setPattern(cbPattern->currentText());
         hatch->setScale(RS_Math::eval(leScale->text()));
@@ -175,7 +162,7 @@ void QG_DlgHatch::updatePreview(RS_Pattern* ) {
     double scale = RS_Math::eval(leScale->text(), 1.0);
     double angle = RS_Math::deg2rad(RS_Math::eval(leAngle->text(), 0.0));
     double prevSize = 1.0;
-    if (pattern!=NULL) {
+    if (pattern) {
         pattern->calculateBorders();
         prevSize = pattern->getSize().x;
     }
@@ -188,18 +175,7 @@ void QG_DlgHatch::updatePreview(RS_Pattern* ) {
 
     RS_EntityContainer* loop = new RS_EntityContainer(prevHatch);
     loop->setPen(RS_Pen(RS2::FlagInvalid));
-    loop->addEntity(new RS_Line(loop,
-                                RS_LineData(RS_Vector(0.0,0.0),
-                                            RS_Vector(prevSize,0.0))));
-    loop->addEntity(new RS_Line(loop,
-                                RS_LineData(RS_Vector(prevSize,0.0),
-                                            RS_Vector(prevSize,prevSize))));
-    loop->addEntity(new RS_Line(loop,
-                                RS_LineData(RS_Vector(prevSize,prevSize),
-                                            RS_Vector(0.0,prevSize))));
-    loop->addEntity(new RS_Line(loop,
-                                RS_LineData(RS_Vector(0.0,prevSize),
-                                            RS_Vector(0.0,0.0))));
+	loop->addRectangle({0., 0.}, {prevSize,prevSize});
     prevHatch->addEntity(loop);
     preview->addEntity(prevHatch);
     if (!isSolid) {
@@ -207,4 +183,18 @@ void QG_DlgHatch::updatePreview(RS_Pattern* ) {
     }
 
     gvPreview->zoomAuto();
+}
+
+void QG_DlgHatch::saveSettings()
+{
+    if (isNew)
+    {
+        RS_SETTINGS->beginGroup("/Draw");
+        RS_SETTINGS->writeEntry("/HatchSolid", cbSolid->isChecked());
+        RS_SETTINGS->writeEntry("/HatchPattern", cbPattern->currentText());
+        RS_SETTINGS->writeEntry("/HatchScale", leScale->text());
+        RS_SETTINGS->writeEntry("/HatchAngle", leAngle->text());
+        RS_SETTINGS->writeEntry("/HatchPreview", cbEnablePreview->isChecked());
+        RS_SETTINGS->endGroup();
+    }
 }

@@ -29,30 +29,22 @@
 #include <QAction>
 #include "rs_graphic.h"
 #include "rs_dialogfactory.h"
+#include "rs_debug.h"
 
 
 RS_ActionBlocksAdd::RS_ActionBlocksAdd(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Add Block", container, graphicView) {}
-
-
-
-QAction* RS_ActionBlocksAdd::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Add Block")
-    QAction* action = new QAction(tr("&Add Block"), NULL);	
-    //action->zetStatusTip(tr("Add Block"));
-	action->setIcon(QIcon(":/ui/blockadd.png"));
-    return action;
+		:RS_ActionInterface("Add Block", container, graphicView) {
+	actionType = RS2::ActionBlocksAdd;
 }
 
 
 
 void RS_ActionBlocksAdd::trigger() {
     RS_DEBUG->print("adding block");
-    //RS_Block* block = new RS_Block(container, "", RS_Vector(0.0,0.0));
-    if (graphic!=NULL) {
+    if (graphic) {
 		RS_BlockList* blockList = graphic->getBlockList();
-		if (blockList!=NULL) {
+		if (blockList) {
 			RS_BlockData d = 
 				RS_DIALOGFACTORY->requestNewBlockDialog(blockList);
 			if (d.isValid()) {

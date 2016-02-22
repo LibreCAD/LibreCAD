@@ -28,6 +28,8 @@
 
 #include "rs_previewactioninterface.h"
 
+class RS_AtomicEntity;
+
 /**
  * This action class can handle user events to move entities.
  *
@@ -48,12 +50,8 @@ public:
 public:
     RS_ActionPolylineDelBetween(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionPolylineDelBetween() {}
+	~RS_ActionPolylineDelBetween();
 
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-    virtual RS2::ActionType rtti(){
-        return RS2::ActionPolylineDelBetween;
-    }
     virtual void init(int status=0);
 	
     virtual void trigger();
@@ -63,13 +61,12 @@ public:
 	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 private:
     RS_Entity* delEntity;
 	RS_AtomicEntity* delSegment;
-    RS_Vector nodePoint1;
-    RS_Vector nodePoint2;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

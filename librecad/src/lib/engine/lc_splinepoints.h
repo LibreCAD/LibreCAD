@@ -25,10 +25,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_SPLINEPOINTS_H
 #define LC_SPLINEPOINTS_H
 
-#include <QList>
+#include <vector>
 #include "rs_atomicentity.h"
-#include "rs_linetypepattern.h"
 
+class QPolygonF;
+struct RS_LineTypePattern;
 
 /**
  * Holds the data that defines a line.
@@ -43,33 +44,24 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * of that shape. It will be further possible to modify the spline,
  * but the control points will serve as handles then. 
  */
-class LC_SplinePointsData
+struct LC_SplinePointsData
 {
-public:
 	/**
 	* Default constructor. Leaves the data object uninitialized.
 	*/
     LC_SplinePointsData() = default;
+	~LC_SplinePointsData() = default;
 
-    LC_SplinePointsData(bool closed, bool cut)
-	{
-		this->closed = closed;
-		this->cut = cut;
-	}
+	LC_SplinePointsData(bool closed, bool cut);
 
-    friend std::ostream& operator << (std::ostream& os, const LC_SplinePointsData& ld)
-	{
-		os << "( closed: " << ld.closed << ")";
-		return os;
-	}
-public:
 	bool closed;
 	bool cut;
 	/** points on the spline. */
-	QList<RS_Vector> splinePoints;
-	QList<RS_Vector> controlPoints;
+	std::vector<RS_Vector> splinePoints;
+	std::vector<RS_Vector> controlPoints;
 };
 
+std::ostream& operator << (std::ostream& os, const LC_SplinePointsData& ld);
 
 /**
  * Class for a spline entity.
@@ -92,64 +84,42 @@ private:
 
     bool offsetCut(const RS_Vector& coord, const double& distance);
     bool offsetSpline(const RS_Vector& coord, const double& distance);
-    QVector<RS_Entity*> offsetTwoSidesSpline(const double& distance) const;
-    QVector<RS_Entity*> offsetTwoSidesCut(const double& distance) const;
-public:
+	std::vector<RS_Entity*> offsetTwoSidesSpline(const double& distance) const;
+	std::vector<RS_Entity*> offsetTwoSidesCut(const double& distance) const;
     LC_SplinePointsData data;
+
 public:
     LC_SplinePoints(RS_EntityContainer* parent, const LC_SplinePointsData& d);
-    virtual ~LC_SplinePoints();
-	virtual RS_Entity* clone();
+	virtual ~LC_SplinePoints() = default;
+	virtual RS_Entity* clone() const;
 
 	/**	@return RS2::EntitySpline */
-	virtual RS2::EntityType rtti() const
-	{
-		return RS2::EntitySplinePoints;
-	}
+	virtual RS2::EntityType rtti() const;
 
 	/** @return false */
-	virtual bool isEdge() const
-	{
-		return true;
-	}
+	virtual bool isEdge() const;
 
 	/** @return Copy of data that defines the spline. */
-    LC_SplinePointsData getData() const
-	{
-		return data;
-	}
+	LC_SplinePointsData const& getData() const;
+	LC_SplinePointsData& getData();
 
 	/** @return Number of control points. */
-	int getNumberOfControlPoints()
-	{
-		return data.controlPoints.count();
-	}
+	size_t getNumberOfControlPoints() const;
 
 	/**
 	* @retval true if the spline is closed.
 	* @retval false otherwise.
 	*/
-	bool isClosed()
-	{
-		return data.closed;
-	}
+	bool isClosed() const;
 
 	/**
     * Sets the closed flag of this spline.
 	*/
-	void setClosed(bool c)
-	{
-		data.closed = c;
-		update();
-	}
+	void setClosed(bool c);
 	
     virtual void update();
 
-	virtual RS_VectorSolutions getRefPoints();
-	virtual RS_Vector getNearestRef(const RS_Vector& coord,
-		double* dist = NULL);
-	virtual RS_Vector getNearestSelectedRef(const RS_Vector& coord,
-		double* dist = NULL);
+	virtual RS_VectorSolutions getRefPoints() const;
 
 	/** @return Start point of the entity */
 	virtual RS_Vector getStartPoint() const;
@@ -205,7 +175,7 @@ public:
 	virtual RS_Vector getTangentDirection(const RS_Vector& point) const;
 
 	virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-		double* dist = NULL) const;
+		double* dist = nullptr) const;
     /**
      * @brief getNearestPointOnEntity
      * @param coord
@@ -215,17 +185,17 @@ public:
      * @return
      */
 	virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-		bool onEntity = true, double* dist = NULL, RS_Entity** entity = NULL) const;
-	virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-		double* dist = NULL);
+		bool onEntity = true, double* dist = nullptr, RS_Entity** entity = nullptr) const;
+//	virtual RS_Vector getNearestCenter(const RS_Vector& coord,
+//		double* dist = nullptr) const;
 	virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
-		double* dist = NULL, int middlePoints = 1) const;
+		double* dist = nullptr, int middlePoints = 1) const;
 	virtual RS_Vector getNearestDist(double distance,
-		const RS_Vector& coord, double* dist = NULL);
+		const RS_Vector& coord, double* dist = nullptr) const;
 	//virtual RS_Vector getNearestRef(const RS_Vector& coord,
-	//                                 double* dist = NULL);
+	//                                 double* dist = nullptr);
 	virtual double getDistanceToPoint(const RS_Vector& coord,
-		RS_Entity** entity = NULL, RS2::ResolveLevel level = RS2::ResolveNone,
+		RS_Entity** entity = nullptr, RS2::ResolveLevel level = RS2::ResolveNone,
 		double solidDist = RS_MAXDOUBLE) const;
 
 	bool addPoint(const RS_Vector& v);
@@ -242,29 +212,34 @@ public:
 	virtual void revertDirection();
 
 	virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
-	QList<RS_Vector> getPoints();
-	QList<RS_Vector> getControlPoints();
-	QList<RS_Vector> getStrokePoints();
+    std::vector<RS_Vector> const& getPoints() const;
+    std::vector<RS_Vector> const& getControlPoints() const;
+    std::vector<RS_Vector> getStrokePoints() const;
 
     friend std::ostream& operator << (std::ostream& os, const LC_SplinePoints& l);
 
 	virtual void calculateBorders();
 
     virtual bool offset(const RS_Vector& coord, const double& distance);
-    virtual QVector<RS_Entity*> offsetTwoSides(const double& distance) const;
+	virtual std::vector<RS_Entity*> offsetTwoSides(const double& distance) const;
 
-	static RS_VectorSolutions getIntersection(RS_Entity* e1, RS_Entity* e2);
+	static RS_VectorSolutions getIntersection(RS_Entity const* e1, RS_Entity const* e2);
 	RS_VectorSolutions getLineIntersect(const RS_Vector& x1, const RS_Vector& x2);
 	void addQuadIntersect(RS_VectorSolutions *pVS, const RS_Vector& x1,
 		const RS_Vector& c1, const RS_Vector& x2);
 	RS_VectorSolutions getSplinePointsIntersect(LC_SplinePoints* l1);
-	RS_VectorSolutions getQuadraticIntersect(RS_Entity* e1);
+	RS_VectorSolutions getQuadraticIntersect(RS_Entity const* e1);
 
 	// we will not enable trimming, maybe in the future
 	//virtual void trimStartpoint(const RS_Vector& pos);
 	//virtual void trimEndpoint(const RS_Vector& pos);
 
-	LC_SplinePoints* cut(const RS_Vector& pos);
+    LC_SplinePoints* cut(const RS_Vector& pos);
+    //! \{ getBoundingRect find bounding rectangle for the bezier segment
+    //! \param x1,c1,x2 first/center/last control points
+    //! \return rectangle as a polygon
+    static QPolygonF getBoundingRect(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2);
+    //! \}
 };
 
 #endif

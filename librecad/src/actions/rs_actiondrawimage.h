@@ -26,10 +26,11 @@
 
 #ifndef RS_ACTIONDRAWIMAGE_H
 #define RS_ACTIONDRAWIMAGE_H
-
+#include<memory>
 #include "rs_previewactioninterface.h"
-#include "rs_image.h"
-#include "rs_units.h"
+
+struct RS_ImageData;
+class QImage;
 
 /**
  * This action class can handle user events for inserting bitmaps into the
@@ -39,7 +40,6 @@
  */
 class RS_ActionDrawImage : public RS_PreviewActionInterface {
 	Q_OBJECT
-public:
     /**
      * Action States.
      */
@@ -59,13 +59,7 @@ public:
     RS_ActionDrawImage(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
     ~RS_ActionDrawImage();
-
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionDrawImage;
-	}
-
     virtual void init(int status=0);
 
 	void reset();
@@ -86,34 +80,22 @@ public:
     virtual void updateMouseCursor();
 //    virtual void updateToolBar();
 
-	double getAngle() {
-		return data.uVector.angle();
-	}
+	double getAngle() const;
 
-	void setAngle(double a) {
-		double l = data.uVector.magnitude();
-		data.uVector.setPolar(l, a);
-		data.vVector.setPolar(l, a+M_PI/2);
-	}
+	void setAngle(double a) const;
 
-	double getFactor() {
-		return data.uVector.magnitude();
-	}
+	double getFactor() const;
 
-	void setFactor(double f) {
-		double a = data.uVector.angle();
-		data.uVector.setPolar(f, a);
-		data.vVector.setPolar(f, a+M_PI/2);
-	}
+	void setFactor(double f) const;
 
-    double dpiToScale(double dpi);
+	double dpiToScale(double dpi) const;
 
-    double scaleToDpi(double scale);
+	double scaleToDpi(double scale) const;
 
 
 protected:
-	RS_ImageData data;
-        QImage img;
+	struct ImageData;
+	std::unique_ptr<ImageData> pImg;
 	
 	/** Last status before entering option. */
 	Status lastStatus;

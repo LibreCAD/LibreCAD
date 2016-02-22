@@ -26,24 +26,27 @@
 
 #include "qg_colorbox.h"
 
-#include <qcolordialog.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <iostream>
+#include <QColorDialog>
+#include <QPainter>
+#include <QPixmap>
+#include "rs_color.h"
 
 /**
  * Default Constructor. You must call init manually if you choose
  * to use this constructor.
  */
 QG_ColorBox::QG_ColorBox(QWidget* parent, const char* name)
-    : QComboBox(parent) {
-
+    :QComboBox(parent)
+    ,currentColor(new RS_Color())
+,showByLayer(false)
+,showUnchanged(false)
+,unchanged(false)
+{
     setObjectName(name);
     setEditable ( false );
-    showByLayer = false;
-    showUnchanged = false;
-    unchanged = false;
 }
+
+QG_ColorBox::~QG_ColorBox(){}
 
 /**
  * Constructor that calls init and provides a fully functional
@@ -53,20 +56,15 @@ QG_ColorBox::QG_ColorBox(QWidget* parent, const char* name)
  */
 QG_ColorBox::QG_ColorBox(bool showByLayer, bool showUnchanged,
                          QWidget* parent, const char* name)
-    : QComboBox(parent) {
+    : QComboBox(parent)
+    ,currentColor(new RS_Color())
+    ,unchanged(false)
+{
 
     setObjectName(name);
     setEditable ( false );
-    unchanged = false;
     init(showByLayer, showUnchanged);
 }
-
-
-/**
- * Destructor
- */
-QG_ColorBox::~QG_ColorBox() {}
-
 
 /**
  * Initialisation (called from constructor or manually but only
@@ -85,6 +83,9 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
         addItem(QIcon(":/ui/color00.png"), tr("By Layer"));
         addItem(QIcon(":/ui/color00.png"), tr("By Block"));
     }
+
+    addItem(QIcon(":/ui/colorxx.png"), tr("Custom"));
+
 //static colors starts here
     //addColor(QIcon(":/ui/color01.png"), red,Qt::red);
     QString red(tr("Red"));
@@ -108,9 +109,6 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
     addColor(Qt::darkGray,tr("Dark Gray"));
     addColor(Qt::lightGray,tr("Light Gray"));
 //static colors ends here
-    // last item is reserved for "Others.." to trigger color picker
-    QString others(tr("Others.."));
-    addItem(QIcon(":/ui/colorxx.png"), others);
 
     connect(this, SIGNAL(activated(int)),
             this, SLOT(slotColorChanged(int)));
@@ -128,7 +126,7 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
  * Sets the color shown in the combobox to the given color.
  */
 void QG_ColorBox::setColor(const RS_Color& color) {
-    currentColor = color;
+    *currentColor = color;
 //std::cout<<"initial color: "<<color<<std::endl;
     int cIndex;
 
@@ -205,7 +203,7 @@ void QG_ColorBox::setLayerColor(const RS_Color& color) {
  * choose an individual color.
  */
 void QG_ColorBox::slotColorChanged(int index) {
-    currentColor.resetFlags();
+    currentColor->resetFlags();
     if (showUnchanged) {
         if (index==0) {
             unchanged = true;
@@ -218,35 +216,47 @@ void QG_ColorBox::slotColorChanged(int index) {
     if (showByLayer) {
         switch (index-(int)showUnchanged) {
         case 0:
-            currentColor = RS_Color(RS2::FlagByLayer);
+            *currentColor = RS_Color(RS2::FlagByLayer);
             break;
         case 1:
-            currentColor = RS_Color(RS2::FlagByBlock);
+            *currentColor = RS_Color(RS2::FlagByBlock);
             break;
         default:
             break;
         }
     }
-    if ( index >= colorIndexStart ) {
-        if(index < count() -1 ) {
-                QVariant q0=itemData(index);
-                if(q0 != QVariant::Invalid ) {
-            currentColor=itemData(index).value<QColor>();
-                } else {
-            currentColor=Qt::black; //default to black color
-                }
-        } else { // color picker for "Others.."
-            RS_Color selectedColor = QColorDialog::getColor(currentColor, this);
-            //verify if user as clicked Ok or Cancel
-            if (selectedColor.isValid())
-            currentColor = selectedColor;
+
+    if (itemText(index) == "Custom")
+    {
+       RS_Color selectedColor = QColorDialog::getColor(*currentColor, this);
+       if (selectedColor.isValid())
+            *currentColor = selectedColor;
+    }
+    else if (index >= colorIndexStart)
+    {
+        if(index < count() -1 )
+        {
+            QVariant q0=itemData(index);
+            if(q0 != QVariant::Invalid )
+            {
+                *currentColor=itemData(index).value<QColor>();
+            }
+            else
+            {
+                *currentColor=Qt::black; //default to black color
+            }
         }
     }
 
-    //printf("Current color is (%d): %s\n",
-    //       index, currentColor.name().latin1());
+    emit colorChanged(*currentColor);
+}
 
-    emit colorChanged(currentColor);
+RS_Color QG_ColorBox::getColor() const{
+    return *currentColor;
+}
+
+bool QG_ColorBox::isUnchanged() const{
+    return unchanged;
 }
 
 

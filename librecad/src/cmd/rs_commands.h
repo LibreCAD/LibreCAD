@@ -29,9 +29,7 @@
 #ifndef RS_COMMANDS_H
 #define RS_COMMANDS_H
 
-#include <QHash>
-#include <QObject>
-
+#include <map>
 #include "rs.h"
 
 #define RS_COMMANDS RS_Commands::instance()
@@ -44,19 +42,13 @@
  *
  * @author Andrew Mustun
  */
-class RS_Commands : public QObject {
-    Q_OBJECT
+class RS_Commands {
 
 public:
     /**
      * @return Instance to the unique commands object.
      */
-    static RS_Commands* instance() {
-        if (uniqueInstance==NULL) {
-            uniqueInstance = new RS_Commands();
-        }
-        return uniqueInstance;
-    }
+    static RS_Commands* instance();
 
     QStringList complete(const QString& cmd);
     RS2::ActionType cmdToAction(const QString& cmd, bool verbose = true);
@@ -86,13 +78,14 @@ protected:
 
 private:
     RS_Commands() ;
+    ~RS_Commands()=delete;
     RS_Commands(RS_Commands& ) = delete;
     RS_Commands& operator = ( RS_Commands& ) = delete;
 
-    QHash<QString, RS2::ActionType> mainCommands;
-    QHash<QString, RS2::ActionType> shortCommands;
+    std::map<QString, RS2::ActionType> mainCommands;
+    std::map<QString, RS2::ActionType> shortCommands;
     // key=english command , value = translated
-    QHash<QString, QString> cmdTranslation;
+    std::map<QString, QString> cmdTranslation;
 };
 
 #endif

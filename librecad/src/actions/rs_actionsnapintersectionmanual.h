@@ -49,7 +49,7 @@ public:
 public:
     RS_ActionSnapIntersectionManual(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionSnapIntersectionManual() {}
+	~RS_ActionSnapIntersectionManual() override;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
@@ -59,12 +59,11 @@ public:
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
 
 private:
     RS_Entity* entity1;
     RS_Entity* entity2;
-	RS_Vector coord;
+	std::unique_ptr<RS_Vector> coord;
 };
 
 #endif

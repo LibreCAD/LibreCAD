@@ -27,34 +27,36 @@
 #include "rs_actionmodifydeletefree.h"
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_polyline.h"
 #include "rs_modification.h"
+#include "rs_preview.h"
 
-
+struct RS_ActionModifyDeleteFree::Points {
+	RS_Vector v1;
+	RS_Vector v2;
+};
 
 RS_ActionModifyDeleteFree::RS_ActionModifyDeleteFree(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_ActionInterface("Delete Entities Freehand",
-                    container, graphicView) {}
-
-QAction* RS_ActionModifyDeleteFree::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Delete Freehand"), tr("&Delete Freehand"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Delete Freehand"), NULL);
-    //action->zetStatusTip(tr("Delete Freehand"));
-    return action;
+					container, graphicView)
+		, pPoints(new Points{})
+{
+	init();
 }
+
+RS_ActionModifyDeleteFree::~RS_ActionModifyDeleteFree() = default;
 
 
 void RS_ActionModifyDeleteFree::init(int status) {
     RS_ActionInterface::init(status);
-    polyline = NULL;
-    e1 = e2 = NULL;
-    v1 = v2 = RS_Vector(false);
-
+	polyline = nullptr;
+	e1 = e2 = nullptr;
+	pPoints.reset(new Points{});
     RS_SnapMode *s = getSnapMode();
     s->snapOnEntity = true;
 }
@@ -62,9 +64,9 @@ void RS_ActionModifyDeleteFree::init(int status) {
 
 
 void RS_ActionModifyDeleteFree::trigger() {
-    if (e1!=NULL && e2!=NULL) {
+    if (e1 && e2) {
         RS_EntityContainer* parent = e2->getParent();
-        if (parent!=NULL) {
+        if (parent) {
             if (parent->rtti()==RS2::EntityPolyline) {
                 if(parent->getId() == polyline->getId()) {
 
@@ -76,8 +78,8 @@ void RS_ActionModifyDeleteFree::trigger() {
                     RS_Polyline* pl2;
                     RS_Modification m(*container);
                     m.splitPolyline(*polyline,
-                                    *e1, v1,
-                                    *e2, v2,
+									*e1, pPoints->v1,
+									*e2, pPoints->v2,
                                     &pl1, &pl2);
 
                     if (document) {
@@ -102,10 +104,10 @@ void RS_ActionModifyDeleteFree::trigger() {
                         RS_DIALOGFACTORY->commandMessage(tr("Parent of second entity is not a polyline"));
             }
         } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Parent of second entity is NULL"));
+				RS_DIALOGFACTORY->commandMessage(tr("Parent of second entity is nullptr"));
         }
     } else {
-        RS_DIALOGFACTORY->commandMessage(tr("One of the chosen entities is NULL"));
+		RS_DIALOGFACTORY->commandMessage(tr("One of the chosen entities is nullptr"));
     }
 }
 
@@ -118,11 +120,11 @@ void RS_ActionModifyDeleteFree::mouseReleaseEvent(QMouseEvent* e) {
 
         switch (getStatus()) {
         case 0: {
-                v1 = snapPoint(e);
+				pPoints->v1 = snapPoint(e);
                 e1 = getKeyEntity();
-                if (e1!=NULL) {
+                if (e1) {
                     RS_EntityContainer* parent = e1->getParent();
-                    if (parent!=NULL) {
+                    if (parent) {
                         if (parent->rtti()==RS2::EntityPolyline) {
                             polyline = (RS_Polyline*)parent;
                             setStatus(1);
@@ -132,23 +134,23 @@ void RS_ActionModifyDeleteFree::mouseReleaseEvent(QMouseEvent* e) {
                         }
                     } else {
                                         RS_DIALOGFACTORY->commandMessage(
-                                                        tr("Parent of first entity is NULL"));
+														tr("Parent of first entity is nullptr"));
                     }
                 } else {
                                 RS_DIALOGFACTORY->commandMessage(
-                                                tr("First entity is NULL"));
+												tr("First entity is nullptr"));
                 }
             }
             break;
 
         case 1: {
-                v2 = snapPoint(e);
+				pPoints->v2 = snapPoint(e);
                 e2 = getKeyEntity();
 
-                if (e2!=NULL) {
+                if (e2) {
                     trigger();
                 } else {
-                                RS_DIALOGFACTORY->commandMessage(tr("Second entity is NULL"));
+								RS_DIALOGFACTORY->commandMessage(tr("Second entity is nullptr"));
                 }
             }
             break;
@@ -170,7 +172,7 @@ void RS_ActionModifyDeleteFree::updateMouseButtonHints() {
                                             tr("Back"));
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }

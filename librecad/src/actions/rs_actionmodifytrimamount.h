@@ -49,13 +49,7 @@ public:
 public:
     RS_ActionModifyTrimAmount(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionModifyTrimAmount() {}
-
-        static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
-        virtual RS2::ActionType rtti() {
-                return RS2::ActionModifyTrimAmount;
-        }
+	~RS_ActionModifyTrimAmount() override;
 
     virtual void init(int status=0);
 
@@ -72,26 +66,25 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
-        double getDistance() {
-                return distance;
-        }
-        bool getByTotal() {
-                return byTotal ;
-        }
+	double getDistance() const {
+		return distance;
+	}
+	bool getByTotal() const {
+		return byTotal ;
+	}
 
-        void setDistance(double d) {
-                distance = d;
-        }
-        void setByTotal(bool on) {
-                byTotal = on;
-        }
+	void setDistance(double d) {
+		distance = d;
+	}
+	void setByTotal(bool on) {
+		byTotal = on;
+	}
 
 private:
     RS_Entity* trimEntity;
-        RS_Vector trimCoord;
-        double distance;
+	std::unique_ptr<RS_Vector> trimCoord;
+	double distance;
     bool byTotal;
         /**
          * Commands

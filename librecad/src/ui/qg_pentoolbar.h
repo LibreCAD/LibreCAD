@@ -27,14 +27,14 @@
 #ifndef QG_PENTOOLBAR_H
 #define QG_PENTOOLBAR_H
 
-#include <qtoolbar.h>
+#include <memory>
+#include <QToolBar>
 
 #include "rs_layerlistlistener.h"
-#include "rs_pen.h"
 
-#include "qg_colorbox.h"
-#include "qg_widthbox.h"
-#include "qg_linetypebox.h"
+class QG_ColorBox;
+class QG_WidthBox;
+class QG_LineTypeBox;
 
 /**
  * A toolbar that offers all widgets for choosing a pen.
@@ -47,9 +47,7 @@ public:
 	QG_PenToolBar( const QString & title, QWidget * parent = 0 );
     virtual ~QG_PenToolBar();
 
-    RS_Pen getPen() {
-        return currentPen;
-    }
+	RS_Pen getPen() const;
 
     // Methods from RS_LayerListListener Interface:
     virtual void layerActivated(RS_Layer*);
@@ -64,10 +62,10 @@ signals:
     void penChanged(RS_Pen);
 
 private:
-    RS_Pen currentPen;
-    QG_ColorBox* colorBox;
-    QG_WidthBox* widthBox;
-    QG_LineTypeBox* lineTypeBox;
+	std::unique_ptr<RS_Pen> currentPen;
+	std::unique_ptr<QG_ColorBox> colorBox;
+	std::unique_ptr<QG_WidthBox> widthBox;
+	std::unique_ptr<QG_LineTypeBox> lineTypeBox;
 };
 
 #endif

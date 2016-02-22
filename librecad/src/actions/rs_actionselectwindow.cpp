@@ -27,10 +27,18 @@
 #include "rs_actionselectwindow.h"
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_selection.h"
 #include "rs_overlaybox.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
+
+struct RS_ActionSelectWindow::Points {
+	RS_Vector v1;
+	RS_Vector v2;
+};
 
 
 /**
@@ -42,31 +50,19 @@ RS_ActionSelectWindow::RS_ActionSelectWindow(RS_EntityContainer& container,
         RS_GraphicView& graphicView,
         bool select)
         : RS_PreviewActionInterface("Select Window",
-                            container, graphicView) {
-
-    this->select = select;
+							container, graphicView)
+		, select(select)
+		, pPoints(new Points{})
+{
+	actionType=RS2::ActionSelectWindow;
 }
 
-
-QAction* RS_ActionSelectWindow::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
-    QAction* action;
-
-    if (type==RS2::ActionSelectWindow) {
-        action = new QAction(tr("Select Window"),  NULL);
-                action->setIcon(QIcon(":/extui/selectwindow.png"));
-        //action->zetStatusTip(tr("Selects all Entities in a given Window"));
-    } else {
-        action = new QAction(tr("Deselect Window"), NULL);
-                action->setIcon(QIcon(":/extui/deselectwindow.png"));
-        //action->zetStatusTip(tr("Deselects all Entities in a given Window"));
-        }
-    return action;
-}
+RS_ActionSelectWindow::~RS_ActionSelectWindow() = default;
 
 
 void RS_ActionSelectWindow::init(int status) {
     RS_PreviewActionInterface::init(status);
-    v1 = v2 = RS_Vector(false);
+	pPoints.reset(new Points{});
     //snapMode.clear();
     //snapMode.restriction = RS2::RestrictNothing;
 }
@@ -76,13 +72,13 @@ void RS_ActionSelectWindow::init(int status) {
 void RS_ActionSelectWindow::trigger() {
     RS_PreviewActionInterface::trigger();
 
-    if (v1.valid && v2.valid) {
-        if (graphicView->toGuiDX(v1.distanceTo(v2))>10) {
+	if (pPoints->v1.valid && pPoints->v2.valid) {
+		if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2))>10) {
 
-            bool cross = (v1.x>v2.x);
+			bool cross = (pPoints->v1.x>pPoints->v2.x);
 
             RS_Selection s(*container, graphicView);
-            s.selectWindow(v1, v2, select, cross);
+			s.selectWindow(pPoints->v1, pPoints->v2, select, cross);
 
             RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
 
@@ -96,29 +92,29 @@ void RS_ActionSelectWindow::trigger() {
 void RS_ActionSelectWindow::mouseMoveEvent(QMouseEvent* e) {
     snapFree(e);
     drawSnapper();
-    if (getStatus()==SetCorner2 && v1.valid) {
-        v2 = snapFree(e);
+	if (getStatus()==SetCorner2 && pPoints->v1.valid) {
+		pPoints->v2 = snapFree(e);
         deletePreview();
-        RS_OverlayBox* ob=new RS_OverlayBox(preview, RS_OverlayBoxData(v1, v2));
+		RS_OverlayBox* ob=new RS_OverlayBox(preview.get(), RS_OverlayBoxData(pPoints->v1, pPoints->v2));
         preview->addEntity(ob);
 
         //RLZ: not needed overlay have contour
         /*                RS_Pen pen(RS_Color(218,105,24), RS2::Width00, RS2::SolidLine);
 
                 // TODO change to a rs_box sort of entity
-                RS_Line* e=new RS_Line(preview, RS_LineData(RS_Vector(v1.x, v1.y),  RS_Vector(v2.x, v1.y)));
+				RS_Line* e=new RS_Line(preview, RS_LineData(RS_Vector(v1->x, v1->y),  RS_Vector(v2->x, v1->y)));
                 e->setPen(pen);
         preview->addEntity(e);
 
-                e=new RS_Line(preview, RS_LineData(RS_Vector(v2.x, v1.y),  RS_Vector(v2.x, v2.y)));
+				e=new RS_Line(preview, RS_LineData(RS_Vector(v2->x, v1->y),  RS_Vector(v2->x, v2->y)));
                 e->setPen(pen);
         preview->addEntity(e);
 
-                e=new RS_Line(preview, RS_LineData(RS_Vector(v2.x, v2.y),  RS_Vector(v1.x, v2.y)));
+				e=new RS_Line(preview, RS_LineData(RS_Vector(v2->x, v2->y),  RS_Vector(v1->x, v2->y)));
                 e->setPen(pen);
         preview->addEntity(e);
 
-                e=new RS_Line(preview, RS_LineData(RS_Vector(v1.x, v2.y),  RS_Vector(v1.x, v1.y)));
+				e=new RS_Line(preview, RS_LineData(RS_Vector(v1->x, v2->y),  RS_Vector(v1->x, v1->y)));
                 e->setPen(pen);
         preview->addEntity(e);*/
 
@@ -132,7 +128,7 @@ void RS_ActionSelectWindow::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case SetCorner1:
-            v1 = snapFree(e);
+			pPoints->v1 = snapFree(e);
             setStatus(SetCorner2);
             break;
 
@@ -142,7 +138,7 @@ void RS_ActionSelectWindow::mousePressEvent(QMouseEvent* e) {
     }
 
     RS_DEBUG->print("RS_ActionSelectWindow::mousePressEvent(): %f %f",
-                    v1.x, v1.y);
+					pPoints->v1.x, pPoints->v1.y);
 }
 
 
@@ -152,7 +148,7 @@ void RS_ActionSelectWindow::mouseReleaseEvent(QMouseEvent* e) {
 
     if (e->button()==Qt::LeftButton) {
         if (getStatus()==SetCorner2) {
-            v2 = snapFree(e);
+			pPoints->v2 = snapFree(e);
             trigger();
         }
     } else if (e->button()==Qt::RightButton) {
@@ -174,7 +170,7 @@ void RS_ActionSelectWindow::updateMouseButtonHints() {
         RS_DIALOGFACTORY->updateMouseWidget(tr("Choose second edge"), tr("Back"));
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }
@@ -183,19 +179,6 @@ void RS_ActionSelectWindow::updateMouseButtonHints() {
 
 void RS_ActionSelectWindow::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::SelectCursor);
-}
-
-
-
-void RS_ActionSelectWindow::updateToolBar() {
-    //not needed any more
-    return;
-    if (!isFinished()) {
-        //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSelect);
-    } else {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSelect);
-    }
 }
 
 // EOF

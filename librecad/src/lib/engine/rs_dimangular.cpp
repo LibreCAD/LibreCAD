@@ -24,16 +24,50 @@
 **
 **********************************************************************/
 
-
+#include<iostream>
+#include<cmath>
 #include "rs_dimangular.h"
+#include "rs_math.h"
 
 #include "rs_constructionline.h"
+#include "rs_arc.h"
+#include "rs_line.h"
 #include "rs_graphic.h"
 #include "rs_information.h"
 #include "rs_solid.h"
 #include "rs_mtext.h"
+#include "rs_debug.h"
 
+RS_DimAngularData::RS_DimAngularData():
+	definitionPoint1(false),
+	definitionPoint2(false),
+	definitionPoint3(false),
+	definitionPoint4(false)
+{}
 
+/**
+ * Constructor with initialisation.
+ *
+ * @param definitionPoint Definition point of the angular dimension.
+ * @param leader Leader length.
+ */
+RS_DimAngularData::RS_DimAngularData(const RS_Vector& _definitionPoint1,
+				  const RS_Vector& _definitionPoint2,
+									  const RS_Vector& _definitionPoint3,
+									  const RS_Vector& _definitionPoint4):
+	definitionPoint1(_definitionPoint1)
+	,definitionPoint2(_definitionPoint2)
+	,definitionPoint3(_definitionPoint3)
+	,definitionPoint4(_definitionPoint4)
+{
+}
+
+std::ostream& operator << (std::ostream& os,
+								  const RS_DimAngularData& dd) {
+	os << "(" << dd.definitionPoint1 << "," << dd.definitionPoint2 << ","
+					  << dd.definitionPoint3 << "," << dd.definitionPoint3 << ")";
+	return os;
+}
 /**
  * Constructor.
  *
@@ -49,7 +83,13 @@ RS_DimAngular::RS_DimAngular(RS_EntityContainer* parent,
     calculateBorders();
 }
 
-
+RS_Entity* RS_DimAngular::clone() const{
+		RS_DimAngular* d = new RS_DimAngular(*this);
+		d->setOwner(isOwner());
+		d->initId();
+		d->detach();
+		return d;
+	}
 
 /**
  * @return Automatically created label for the default
@@ -60,10 +100,18 @@ QString RS_DimAngular::getMeasuredLabel() {
 
         int dimaunit = getGraphicVariableInt("$DIMAUNIT", 0);
         int dimadec = getGraphicVariableInt("$DIMADEC", 0);
+        int dimazin = getGraphicVariableInt("$DIMAZIN", 0);
 
-        ret = RS_Units::formatAngle(getAngle(),
-                RS_Units::numberToAngleFormat(dimaunit),
-                dimadec);
+        RS2::AngleFormat format = RS_Units::numberToAngleFormat(dimaunit);
+        ret = RS_Units::formatAngle(getAngle(), format, dimadec);
+        if (format != RS2::DegreesMinutesSeconds && format != RS2::Surveyors)
+            ret = stripZerosAngle(ret, dimazin);
+
+        //verify if units are decimal and comma separator
+        if (dimaunit !=1){
+            if (getGraphicVariableInt("$DIMDSEP", 0) == 44)
+                ret.replace(QChar('.'), QChar(','));
+        }
 
     /*
         ret = QString("%1%2")
@@ -107,10 +155,10 @@ double RS_DimAngular::getAngle() {
  * @return Center of the measured dimension.
  */
 RS_Vector RS_DimAngular::getCenter() const {
-    RS_ConstructionLine l1(NULL, RS_ConstructionLineData(edata.definitionPoint1,
+	RS_ConstructionLine l1(nullptr, RS_ConstructionLineData(edata.definitionPoint1,
                            edata.definitionPoint2));
-    RS_ConstructionLine l2(NULL, RS_ConstructionLineData(edata.definitionPoint3,
-                           data.definitionPoint));
+	RS_ConstructionLine l2(nullptr, RS_ConstructionLineData(edata.definitionPoint3,
+						   data.definitionPoint));
     RS_VectorSolutions vs = RS_Information::getIntersection(&l1, &l2, false);
 
     return vs.get(0);
@@ -155,7 +203,7 @@ if ( a1 >= 0. ) {
 }
 a1 = d*(rp1*p0p2-p1p2*p0p1);
 if ( a1 >= 0. ) {
-            p2 = data.definitionPoint;
+			p2 = data.definitionPoint;
 } else {
             vp2 *= -1;
             p2 = edata.definitionPoint3;
@@ -272,39 +320,46 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
 
     double rad = edata.definitionPoint4.distanceTo(center);
 
-    RS_Line* line;
-    RS_Vector dir;
     double len;
     double dist;
+
+    RS_Pen pen(getExtensionLineColor(),
+           getExtensionLineWidth(),
+           RS2::LineByBlock);
 
     // 1st extension line:
     dist = center.distanceTo(p1);
     len = rad - dist + dimexe;
-    dir.setPolar(1.0, ang1);
-    line = new RS_Line(this,
-                       RS_LineData(center + dir*dist + dir*dimexo,
-                                   center + dir*dist + dir*len));
-    line->setPen(RS_Pen(RS2::FlagInvalid));
-    line->setLayer(NULL);
+	RS_Vector dir = RS_Vector::polar(1.0, ang1);
+	RS_Line* line = new RS_Line{this,
+			center + dir*dist + dir*dimexo,
+			center + dir*dist + dir*len};
+    line->setPen(pen);
+//    line->setPen(RS_Pen(RS2::FlagInvalid));
+	line->setLayer(nullptr);
     addEntity(line);
 
     // 2nd extension line:
     dist = center.distanceTo(p2);
     len = rad - dist + dimexe;
     dir.setPolar(1.0, ang2);
-    line = new RS_Line(this,
-                       RS_LineData(center + dir*dist + dir*dimexo,
-                                   center + dir*dist + dir*len));
-    line->setPen(RS_Pen(RS2::FlagInvalid));
-    line->setLayer(NULL);
+	line = new RS_Line{this,
+			center + dir*dist + dir*dimexo,
+			center + dir*dist + dir*len};
+    line->setPen(pen);
+//    line->setPen(RS_Pen(RS2::FlagInvalid));
+	line->setLayer(nullptr);
     addEntity(line);
 
     // Create dimension line (arc):
     RS_Arc* arc = new RS_Arc(this,
                              RS_ArcData(center,
                                         rad, ang1, ang2, reversed));
-    arc->setPen(RS_Pen(RS2::FlagInvalid));
-    arc->setLayer(NULL);
+    pen.setWidth(getDimensionLineWidth());
+    pen.setColor(getDimensionLineColor());
+    arc->setPen(pen);
+//    arc->setPen(RS_Pen(RS2::FlagInvalid));
+	arc->setLayer(nullptr);
     addEntity(arc);
 
     // length of dimension arc:
@@ -316,7 +371,7 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     // arrow angles:
     double arrowAngle1, arrowAngle2;
     double arrowAng;
-        if (rad>1.0e-6) {
+		if (rad>RS_TOLERANCE_ANGLE) {
                 arrowAng = arrowSize / rad;
         }
         else {
@@ -354,8 +409,9 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     arrow->shapeArrow(arc->getStartpoint(),
                       arrowAngle1,
                       arrowSize);
-    arrow->setPen(RS_Pen(RS2::FlagInvalid));
-    arrow->setLayer(NULL);
+    arrow->setPen(pen);
+//    arrow->setPen(RS_Pen(RS2::FlagInvalid));
+	arrow->setLayer(nullptr);
     addEntity(arrow);
 
     // arrow 2:
@@ -363,8 +419,9 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     arrow->shapeArrow(arc->getEndpoint(),
                       arrowAngle2,
                       arrowSize);
-    arrow->setPen(RS_Pen(RS2::FlagInvalid));
-    arrow->setLayer(NULL);
+    arrow->setPen(pen);
+//    arrow->setPen(RS_Pen(RS2::FlagInvalid));
+	arrow->setLayer(nullptr);
     addEntity(arrow);
 
 
@@ -374,19 +431,19 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
 
     RS_Vector distV;
     double textAngle;
-    double dimAngle1 = textPos.angleTo(arc->getCenter())-M_PI/2.0;
+	double dimAngle1 = textPos.angleTo(arc->getCenter())-M_PI_2;
 
     // rotate text so it's readable from the bottom or right (ISO)
     // quadrant 1 & 4
-    if (dimAngle1>M_PI/2.0*3.0+0.001 ||
-            dimAngle1<M_PI/2.0+0.001) {
+	if (dimAngle1>M_PI_2*3.0+0.001 ||
+			dimAngle1<M_PI_2+0.001) {
 
-        distV.setPolar(dimgap, dimAngle1+M_PI/2.0);
+		distV.setPolar(dimgap, dimAngle1+M_PI_2);
         textAngle = dimAngle1;
     }
     // quadrant 2 & 3
     else {
-        distV.setPolar(dimgap, dimAngle1-M_PI/2.0);
+		distV.setPolar(dimgap, dimAngle1-M_PI_2);
         textAngle = dimAngle1+M_PI;
     }
 
@@ -401,14 +458,16 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
                            RS_MTextData::Exact,
                            1.0,
                            getLabel(),
-                           "standard",
+                           getTextStyle(),
+//                           "standard",
                            textAngle);
 
     RS_MText* text = new RS_MText(this, textData);
 
     // move text to the side:
-    text->setPen(RS_Pen(RS2::FlagInvalid));
-    text->setLayer(NULL);
+    text->setPen(RS_Pen(getTextColor(), RS2::WidthByBlock, RS2::SolidLine));
+//    text->setPen(RS_Pen(RS2::FlagInvalid));
+	text->setLayer(nullptr);
     addEntity(text);
 
     calculateBorders();

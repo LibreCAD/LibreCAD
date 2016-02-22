@@ -23,26 +23,51 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-
+#include<iostream>
+#include<cmath>
+#include<cassert>
 #include "rs_polyline.h"
 
 #include "rs_debug.h"
 #include "rs_line.h"
 #include "rs_arc.h"
 #include "rs_graphicview.h"
-//#include "rs_modification.h"
+#include "rs_math.h"
 #include "rs_information.h"
 
+RS_PolylineData::RS_PolylineData():
+	startpoint(false)
+	,endpoint(false)
+{
+}
 
+RS_PolylineData::RS_PolylineData(const RS_Vector& _startpoint,
+				const RS_Vector& _endpoint,
+				bool _closed):
+	startpoint(_startpoint)
+	,endpoint(_endpoint)
+{
+
+	if (_closed) {
+		setFlag(RS2::FlagClosed);
+	}
+}
+
+std::ostream& operator << (std::ostream& os,
+								  const RS_PolylineData& pd) {
+	os << "(" << pd.startpoint <<
+	"/" << pd.endpoint <<
+	")";
+	return os;
+}
 /**
  * Constructor.
  */
 RS_Polyline::RS_Polyline(RS_EntityContainer* parent)
-        :RS_EntityContainer(parent) {
-
-    closingEntity = NULL;
-    nextBulge = 0.0;
+	:RS_EntityContainer(parent, true)
+	,closingEntity(nullptr)
+	,nextBulge(0.)
+{
 }
 
 
@@ -52,31 +77,33 @@ RS_Polyline::RS_Polyline(RS_EntityContainer* parent)
  */
 RS_Polyline::RS_Polyline(RS_EntityContainer* parent,
                          const RS_PolylineData& d)
-        :RS_EntityContainer(parent), data(d) {
-
-    closingEntity = NULL;
-    nextBulge = 0.0;
-    calculateBorders();
+		:RS_EntityContainer(parent, true)
+		,data(d)
+		,closingEntity(nullptr)
+		,nextBulge(0.)
+{
+	calculateBorders();
 }
 
-
-/**
- * Destructor
- */
-RS_Polyline::~RS_Polyline() {}
-
+RS_Entity* RS_Polyline::clone() const {
+	RS_Polyline* p = new RS_Polyline(*this);
+	p->setOwner(isOwner());
+	p->initId();
+	p->detach();
+	return p;
+}
 
 /**
  * Removes the last vertex of this polyline.
  */
 void RS_Polyline::removeLastVertex() {
-        RS_Entity* last = lastEntity();
-        if (last!=NULL) {
-                removeEntity(last);
-                last = lastEntity();
-                if (last!=NULL) {
-                        if (last->isAtomic()) {
-                                data.endpoint = ((RS_AtomicEntity*)last)->getEndpoint();
+		RS_Entity* l = last();
+		if (l) {
+				removeEntity(l);
+				l = last();
+				if (l) {
+						if (l->isAtomic()) {
+								data.endpoint = l->getEndpoint();
                         }
                         else {
                                 RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -99,12 +126,12 @@ void RS_Polyline::removeLastVertex() {
  * @param bulge The bulge of the arc or 0 for a line segment (see DXF documentation)
  * @param prepend true: prepend at start instead of append at end
  *
- * @return Pointer to the entity that was addded or NULL if this
+ * @return Pointer to the entity that was addded or nullptr if this
  *         was the first vertex added.
  */
 RS_Entity* RS_Polyline::addVertex(const RS_Vector& v, double bulge, bool prepend) {
 
-    RS_Entity* entity=NULL;
+	RS_Entity* entity=nullptr;
     //static double nextBulge = 0.0;
 
     // very first vertex:
@@ -117,8 +144,8 @@ RS_Entity* RS_Polyline::addVertex(const RS_Vector& v, double bulge, bool prepend
     else {
         // add entity to the polyline:
         entity = createVertex(v, nextBulge, prepend);
-        if (entity!=NULL) {
-                        if (prepend==false) {
+		if (entity) {
+						if (!prepend) {
                 RS_EntityContainer::addEntity(entity);
                                 data.endpoint = v;
                         }
@@ -147,20 +174,20 @@ RS_Entity* RS_Polyline::addVertex(const RS_Vector& v, double bulge, bool prepend
  *
  * @return None
  */
-void RS_Polyline::appendVertexs(const QList< QPair<RS_Vector*, double> > vl) {
-    RS_Entity* entity=NULL;
+void RS_Polyline::appendVertexs(const std::vector< std::pair<RS_Vector, double> >& vl) {
+	RS_Entity* entity=nullptr;
     //static double nextBulge = 0.0;
-    if (vl.isEmpty()) return;
-    int idx = 0;
+	if (!vl.size()) return;
+	size_t idx = 0;
     // very first vertex:
     if (!data.startpoint.valid) {
-        data.startpoint = data.endpoint = *(vl.at(idx).first);
+		data.startpoint = data.endpoint = vl.at(idx).first;
         nextBulge = vl.at(idx++).second;
     }
 
     // consequent vertices:
     for (; idx< vl.size();idx++){
-        entity = createVertex(*(vl.at(idx).first), nextBulge, false);
+		entity = createVertex(vl.at(idx).first, nextBulge, false);
         data.endpoint = entity->getEndpoint();
         RS_EntityContainer::addEntity(entity);
         nextBulge = vl.at(idx).second;
@@ -180,27 +207,26 @@ void RS_Polyline::appendVertexs(const QList< QPair<RS_Vector*, double> > vl) {
  * @param bulge The bulge of the arc (see DXF documentation)
  * @param prepend true: Prepend instead of append at end
  *
- * @return Pointer to the entity that was created or NULL if this
+ * @return Pointer to the entity that was created or nullptr if this
  *         was the first vertex added.
  */
 RS_Entity* RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prepend) {
 
-    RS_Entity* entity=NULL;
+	RS_Entity* entity=nullptr;
 
     RS_DEBUG->print("RS_Polyline::createVertex: %f/%f to %f/%f bulge: %f",
                     data.endpoint.x, data.endpoint.y, v.x, v.y, bulge);
 
     // create line for the polyline:
     if (fabs(bulge)<RS_TOLERANCE) {
-                if (prepend==false) {
-                entity = new RS_Line(this, RS_LineData(data.endpoint, v));
-                }
-                else {
-                entity = new RS_Line(this, RS_LineData(v, data.startpoint));
-                }
+		if (prepend) {
+			entity = new RS_Line{this, v, data.startpoint};
+		} else {
+			entity = new RS_Line{this, data.endpoint, v};
+		}
         entity->setSelected(isSelected());
         entity->setPen(RS_Pen(RS2::FlagInvalid));
-        entity->setLayer(NULL);
+		entity->setLayer(nullptr);
         //RS_EntityContainer::addEntity(entity);
         //data.endpoint = v;
     }
@@ -210,13 +236,11 @@ RS_Entity* RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prep
         bool reversed = (bulge<0.0);
         double alpha = atan(bulge)*4.0;
 
-        double radius;
-        RS_Vector center;
         RS_Vector middle;
         double dist;
         double angle;
 
-                if (prepend==false) {
+				if (!prepend) {
                 middle = (data.endpoint+v)/2.0;
             dist = data.endpoint.distanceTo(v)/2.0;
                 angle = data.endpoint.angleTo(v);
@@ -228,28 +252,28 @@ RS_Entity* RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prep
                 }
 
         // alpha can't be 0.0 at this point
-        radius = fabs(dist / sin(alpha/2.0));
+		double const radius = fabs(dist / sin(alpha/2.0));
 
-        double wu = fabs(RS_Math::pow(radius, 2.0) - RS_Math::pow(dist, 2.0));
+		double const wu = fabs(radius*radius - dist*dist);
         double h = sqrt(wu);
 
         if (bulge>0.0) {
-            angle+=M_PI/2.0;
+			angle+=M_PI_2;
         } else {
-            angle-=M_PI/2.0;
+			angle-=M_PI_2;
         }
 
         if (fabs(alpha)>M_PI) {
             h*=-1.0;
         }
 
-        center.setPolar(h, angle);
+		RS_Vector center = RS_Vector::polar(h, angle);
         center+=middle;
 
                 double a1;
                 double a2;
 
-                if (prepend==false) {
+				if (!prepend) {
                         a1 = center.angleTo(data.endpoint);
                         a2 = center.angleTo(v);
                 }
@@ -258,14 +282,14 @@ RS_Entity* RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prep
                         a2 = center.angleTo(data.startpoint);
                 }
 
-        RS_ArcData d(center, radius,
+		RS_ArcData const d(center, radius,
                      a1, a2,
                      reversed);
 
         entity = new RS_Arc(this, d);
         entity->setSelected(isSelected());
         entity->setPen(RS_Pen(RS2::FlagInvalid));
-        entity->setLayer(NULL);
+		entity->setLayer(nullptr);
     }
 
     return entity;
@@ -282,13 +306,13 @@ void RS_Polyline::endPolyline() {
                 RS_DEBUG->print("RS_Polyline::endPolyline: adding closing entity");
 
         // remove old closing entity:
-        if (closingEntity!=NULL) {
+		if (closingEntity) {
             removeEntity(closingEntity);
         }
 
         // add closing entity to the polyline:
         closingEntity = createVertex(data.startpoint, nextBulge);
-        if (closingEntity!=NULL) {
+		if (closingEntity) {
             RS_EntityContainer::addEntity(closingEntity);
             //data.endpoint = data.startpoint;
         }
@@ -308,38 +332,72 @@ void RS_Polyline::setClosed(bool cl, double bulge) {
     }
 }
 
+/** sets a new start point of the polyline */
+void RS_Polyline::setStartpoint(RS_Vector const& v) {
+	data.startpoint = v;
+	if (!data.endpoint.valid) {
+		data.endpoint = v;
+	}
+}
+
+/** @return Start point of the entity */
+RS_Vector RS_Polyline::getStartpoint() const {
+	return data.startpoint;
+}
+
+/** sets a new end point of the polyline */
+void RS_Polyline::setEndpoint(RS_Vector const& v) {
+	data.endpoint = v;
+}
+
+/** @return End point of the entity */
+RS_Vector RS_Polyline::getEndpoint() const {
+	return data.endpoint;
+}
 
 /**
  * @return The bulge of the closing entity.
  */
-double RS_Polyline::getClosingBulge() {
-    if (isClosed()) {
-                RS_Entity* e = lastEntity();
-                if (e!=NULL && e->rtti()==RS2::EntityArc) {
-                        return ((RS_Arc*)e)->getBulge();
-                }
-        }
+double RS_Polyline::getClosingBulge() const{
+	if (isClosed()) {
+		RS_Entity const* e = last();
+		if (e && e->rtti()==RS2::EntityArc) {
+			return static_cast<RS_Arc const*>(e)->getBulge();
+		}
+	}
 
-        return 0.0;
+	return 0.0;
 }
 
+bool RS_Polyline::isClosed() const {
+	return data.getFlag(RS2::FlagClosed);
+}
+
+void RS_Polyline::setClosed(bool cl) {
+	if (cl) {
+		data.setFlag(RS2::FlagClosed);
+	}
+	else {
+		data.delFlag(RS2::FlagClosed);
+	}
+}
 
 /**
  * Sets the polylines start and endpoint to match the first and last vertex.
  */
 void RS_Polyline::updateEndpoints() {
         RS_Entity* e1 = firstEntity();
-        if (e1!=NULL && e1->isAtomic()) {
-                RS_Vector v = ((RS_AtomicEntity*)e1)->getStartpoint();
+		if (e1 && e1->isAtomic()) {
+				RS_Vector const& v = e1->getStartpoint();
                 setStartpoint(v);
         }
 
-        RS_Entity* e2 = lastEntity();
+		RS_Entity const* e2 = last();
         if (isClosed()) {
                 e2 = prevEntity();
         }
-        if (e2!=NULL && e2->isAtomic()) {
-                RS_Vector v = ((RS_AtomicEntity*)e2)->getEndpoint();
+		if (e2 && e2->isAtomic()) {
+				RS_Vector const& v = e2->getEndpoint();
                 setEndpoint(v);
     }
 }
@@ -352,14 +410,12 @@ void RS_Polyline::updateEndpoints() {
  *
  * To add entities use addVertex() or addSegment() instead.
  */
-void RS_Polyline::addEntity(RS_Entity* entity) {
+void RS_Polyline::addEntity(RS_Entity* /*entity*/) {
     RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Polyline::addEntity:"
-                    " should never be called");
-
-    if (entity==NULL) {
-        return;
-    }
-    delete entity;
+					" should never be called\n"
+					"use addVertex() or addSegment() instead"
+					);
+	assert(false);
 }
 
 
@@ -373,37 +429,34 @@ void RS_Polyline::addEntity(RS_Entity* entity) {
 
 
 
-RS_VectorSolutions RS_Polyline::getRefPoints() {
-    RS_VectorSolutions ret;
-
-    ret.push_back(data.startpoint);
-
-    for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-         e!=NULL;
-         e = nextEntity(RS2::ResolveNone)) {
-        if (e->isAtomic()) {
-            ret.push_back(((RS_AtomicEntity*)e)->getEndpoint());
-        }
-    }
+RS_VectorSolutions RS_Polyline::getRefPoints() const{
+	RS_VectorSolutions ret{{data.startpoint}};
+	for(auto e: *this){
+		if (e->isAtomic()) {
+			ret.push_back(e->getEndpoint());
+		}
+	}
 
     ret.push_back( data.endpoint);
 
     return ret;
 }
 
-RS_Vector RS_Polyline::getNearestRef(const RS_Vector& coord,
-                                   double* dist) {
-
-    return RS_Entity::getNearestRef(coord, dist);
+RS_Vector RS_Polyline::getNearestRef( const RS_Vector& coord,
+                                      double* dist /*= nullptr*/) const
+{
+    // override the RS_EntityContainer methode
+    // use RS_Entity instead for vertex dragging
+    return RS_Entity::getNearestRef( coord, dist);
 }
 
-RS_Vector RS_Polyline::getNearestSelectedRef(const RS_Vector& coord,
-        double* dist) {
-
-    return RS_Entity::getNearestSelectedRef(coord, dist);
+RS_Vector RS_Polyline::getNearestSelectedRef( const RS_Vector& coord,
+                                              double* dist /*= nullptr*/) const
+{
+    // override the RS_EntityContainer methode
+    // use RS_Entity instead for vertex dragging
+    return RS_Entity::getNearestSelectedRef( coord, dist);
 }
-
-
 
 /*
 void RS_Polyline::reorder() {
@@ -429,7 +482,7 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
     double dist;
     //find the nearest one
     int length=count();
-        QVector<RS_Vector> intersections(length);
+		std::vector<RS_Vector> intersections(length);
     if(length>1){//sort the polyline entity start/end point order
         int i(0);
         double d0,d1;
@@ -455,7 +508,7 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
 
     }
     RS_Entity* en(getNearestEntity(coord, &dist, RS2::ResolveNone));
-    if(en==NULL) return false;
+	if(!en) return false;
     int indexNearest=findEntity(en);
     //        RS_Vector vp(en->getNearestPointOnEntity(coord,false));
     //        RS_Vector direction(en->getTangentDirection(vp));
@@ -479,12 +532,12 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
 //        RS_VectorSolutions sol1;
         double dmax(RS_TOLERANCE15);
         RS_Vector trimP(false);
-        for(int j=0;j<sol0.getNumber();j++){
+		for(const RS_Vector& vp: sol0){
 
-            double d0( (sol0.get(j) - pnew->entityAt(previousIndex)->getStartpoint()).squared());//potential bug, need to trim better
+			double d0( (vp - pnew->entityAt(previousIndex)->getStartpoint()).squared());//potential bug, need to trim better
             if(d0>dmax) {
                 dmax=d0;
-                trimP=sol0.get(j);
+				trimP=vp;
             }
         }
         if(trimP.valid){
@@ -505,11 +558,11 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
 //        RS_VectorSolutions sol1;
         double dmax(RS_TOLERANCE15);
         RS_Vector trimP(false);
-        for(int j=0;j<sol0.getNumber();j++){
-            double d0( (sol0.get(j) - pnew->entityAt(previousIndex)->getEndpoint()).squared());//potential bug, need to trim better
+		for(const RS_Vector& vp: sol0){
+			double d0( (vp - pnew->entityAt(previousIndex)->getEndpoint()).squared());//potential bug, need to trim better
             if(d0>dmax) {
                 dmax=d0;
-                trimP=sol0.get(j);
+				trimP=vp;
             }
         }
         if(trimP.valid){
@@ -534,12 +587,12 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
 //            double a0(intersections.at(i).angleTo(vp0));
 //            double a1(intersections.at(i).angleTo(vp1));
             RS_VectorSolutions sol1;
-            for(int j=0;j<sol0.getNumber();j++){
-                if(RS_Math::isAngleBetween(intersections.at(i).angleTo(sol0.get(j)),
+			for(const RS_Vector& vp: sol0){
+				if(!RS_Math::isAngleBetween(intersections.at(i).angleTo(vp),
                                            pnew->entityAt(i)->getDirection2(),
                                            pnew->entityAt(i+1)->getDirection1(),
-                                           false)==false){
-                    sol1.push_back(sol0.get(j));
+										   false)){
+					sol1.push_back(vp);
                 }
             }
             if(sol1.getNumber()==0) continue;
@@ -564,6 +617,7 @@ void RS_Polyline::move(const RS_Vector& offset) {
     RS_EntityContainer::move(offset);
     data.startpoint.move(offset);
     data.endpoint.move(offset);
+    calculateBorders();
 }
 
 
@@ -577,6 +631,7 @@ void RS_Polyline::rotate(const RS_Vector& center, const RS_Vector& angleVector) 
     RS_EntityContainer::rotate(center, angleVector);
     data.startpoint.rotate(center, angleVector);
     data.endpoint.rotate(center, angleVector);
+    calculateBorders();
 }
 
 
@@ -585,6 +640,7 @@ void RS_Polyline::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_EntityContainer::scale(center, factor);
     data.startpoint.scale(center, factor);
     data.endpoint.scale(center, factor);
+    calculateBorders();
 }
 
 
@@ -593,6 +649,7 @@ void RS_Polyline::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint
     RS_EntityContainer::mirror(axisPoint1, axisPoint2);
     data.startpoint.mirror(axisPoint1, axisPoint2);
     data.endpoint.mirror(axisPoint1, axisPoint2);
+    calculateBorders();
 }
 
 
@@ -605,6 +662,7 @@ void RS_Polyline::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     if (ref.distanceTo(data.endpoint)<1.0e-4) {
        data.endpoint.move(offset);
     }
+    calculateBorders();
     //update();
 }
 
@@ -627,6 +685,7 @@ void RS_Polyline::stretch(const RS_Vector& firstCorner,
     }
 
         RS_EntityContainer::stretch(firstCorner, secondCorner, offset);
+    calculateBorders();
 }
 
 
@@ -635,26 +694,23 @@ void RS_Polyline::stretch(const RS_Vector& firstCorner,
  */
 void RS_Polyline::draw(RS_Painter* painter,RS_GraphicView* view, double& /*patternOffset*/) {
 
-    if (view==NULL) {
-        return;
-    }
+	if (!view) return;
 
     // draw first entity and set correct pen:
     RS_Entity* e = firstEntity(RS2::ResolveNone);
     // We get the pen from the entitycontainer and apply it to the
     // first line so that subsequent line are draw in the right color
     //prevent segfault if polyline is empty
-    if (e != NULL) {
+	if (e) {
         RS_Pen p=this->getPen(true);
         e->setPen(p);
         double patternOffset=0.;
         view->drawEntity(painter, e, patternOffset);
 
         e = nextEntity(RS2::ResolveNone);
-        while(e!=NULL) {
+		while(e) {
             view->drawEntityPlain(painter, e, patternOffset);
             e = nextEntity(RS2::ResolveNone);
-            //RS_DEBUG->print("offset: %f\nlength was: %f", offset, e->getLength());
         }
     }
 }

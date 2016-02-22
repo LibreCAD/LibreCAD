@@ -24,7 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define RS_ACTIONDRAWELLIPSEFOCIPOINT_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_ellipse.h"
 
 /**
  * Draw ellipse by foci and a point on ellipse
@@ -46,12 +45,8 @@ public:
 public:
     RS_ActionDrawEllipseFociPoint(RS_EntityContainer& container,
                                   RS_GraphicView& graphicView);
-    ~RS_ActionDrawEllipseFociPoint();
+	virtual ~RS_ActionDrawEllipseFociPoint() override;
 
-    static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
-    RS2::ActionType rtti(){
-        return RS2::ActionDrawEllipseFociPoint;
-    }
     virtual void init(int status=0);
 
     virtual void trigger();
@@ -65,17 +60,12 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 protected:
-    // Foci of ellipse
-    RS_Vector focus1,focus2;
-    // A point on ellipse
-    RS_Vector point;
-    private:
-    RS_Vector center,major;
-    double c; //hold half of distance between foci
-    double d; //hold half of distance
+	struct Points;
+	std::unique_ptr<Points> pPoints;
+private:
+	double findRatio() const;
 };
 
 #endif

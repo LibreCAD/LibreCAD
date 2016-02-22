@@ -1,5 +1,14 @@
 #include "plotdialog.h"
 
+#include <QGridLayout>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QComboBox>
+#include <QDebug>
+
+Q_DECLARE_METATYPE(plotDialog::EntityType)
+
 plotDialog::plotDialog(QWidget *parent) :
     QDialog(parent)
 {
@@ -12,14 +21,14 @@ plotDialog::plotDialog(QWidget *parent) :
                                 "Use t or x in your equation as a variable/parameter.\n"));
     lblEquasion1 = new QLabel(tr("Equation 1:"));
     lblEquasion2 = new QLabel(tr("Equation 2:"));
-    lnedEquasion1 = new QLineEdit;
-    lnedEquasion2 = new QLineEdit;
+    lnedEquasion1 = new QLineEdit(this);
+    lnedEquasion2 = new QLineEdit(this);
     lblStartValue = new QLabel(tr("start value:"));
     lblEndValue = new QLabel(tr("end value:"));
     lblStepSize = new QLabel(tr("step size:"));
-    lnedStartValue = new QLineEdit;
-    lnedEndValue = new QLineEdit;
-    lnedStepSize = new QLineEdit;
+    lnedStartValue = new QLineEdit(this);
+    lnedEndValue = new QLineEdit(this);
+    lnedStepSize = new QLineEdit(this);
     btnAccept = new QPushButton(tr("Draw"));
     btnCancel = new QPushButton(tr("Cancel"));
     space = new QSpacerItem(0, 20);
@@ -46,11 +55,18 @@ plotDialog::plotDialog(QWidget *parent) :
     mainLayout->addWidget(lnedStartValue, 4, 1);
     mainLayout->addWidget(lnedEndValue, 5, 1);
     mainLayout->addWidget(lnedStepSize, 6, 1);
+    m_pTypeSelection = new QComboBox(this);
+    m_pTypeSelection->addItem(tr("Line Segments", "Plot Equation to generate RS_Line segments"), QVariant::fromValue(LineSegments));
+    m_pTypeSelection->addItem(tr("Polyline", "Plot Equation to generate RS_Polyline"), QVariant::fromValue(Polyline));
+    m_pTypeSelection->addItem(tr("SplinePoints", "Plot Equation to generate 2nd spline by LC_SplinePoints"), QVariant::fromValue(SplinePoints));
+    m_pTypeSelection->setCurrentIndex(1);
+
+    mainLayout->addWidget(m_pTypeSelection, 7, 0);
 
     buttonLayout->addWidget(btnAccept);
     buttonLayout->addWidget(btnCancel);
 
-    mainLayout->addLayout(buttonLayout, 7, 1);
+    mainLayout->addLayout(buttonLayout, 8, 1);
 
     setLayout(mainLayout);
 
@@ -58,6 +74,11 @@ plotDialog::plotDialog(QWidget *parent) :
     connect(btnCancel, SIGNAL(clicked()), this, SLOT(reject()));
 
 
+}
+
+plotDialog::EntityType plotDialog::getEntityType() const
+{
+    return m_pTypeSelection->itemData(m_pTypeSelection->currentIndex()).value<plotDialog::EntityType>();
 }
 
 //get the valuew that the user entered

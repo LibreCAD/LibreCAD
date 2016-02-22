@@ -24,7 +24,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define RS_ACTIONDRAWELLIPSE4POINTS_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_ellipse.h"
+
+struct RS_CircleData;
+struct RS_EllipseData;
 
 /**
  * Draw ellipse in XY direction by 4 points on ellipse
@@ -47,12 +49,8 @@ public:
 public:
     RS_ActionDrawEllipse4Points(RS_EntityContainer& container,
                                 RS_GraphicView& graphicView);
-    ~RS_ActionDrawEllipse4Points();
+	~RS_ActionDrawEllipse4Points();
 
-    static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
-    RS2::ActionType rtti(){
-        return RS2::ActionDrawEllipse4Points;
-    }
     virtual void init(int status=0);
 
     virtual void trigger();
@@ -66,17 +64,12 @@ public:
         virtual QStringList getAvailableCommands();
 
     virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
-//    virtual void updateToolBar();
+	virtual void updateMouseCursor();
 
 protected:
-    // 4 points on ellipse
-    RS_VectorSolutions points;
-    private:
-    RS_CircleData cData;
-    RS_EllipseData eData;
-    bool valid,evalid;
-    bool m_bUniqueEllipse; //a message of non-unique ellipse is shown
+	// 4 points on ellipse
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

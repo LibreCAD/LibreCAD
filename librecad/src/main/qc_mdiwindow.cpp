@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<iostream>
 #include "qc_mdiwindow.h"
 
 #if QT_VERSION >= 0x050000
@@ -32,24 +32,25 @@
 #else
 # include <QPrinter>
 # include <QPrintDialog>
-#endif 
-//Added by qt3to4:
-#include <QCloseEvent>
+#endif
 
-#include <QMainWindow>
+#include <QApplication>
+#include <QCloseEvent>
 #include <QCursor>
 #include <QMessageBox>
 #include <QFileInfo>
 #include <QMdiArea>
 #include <QPainter>
 
-#include "qc_applicationwindow.h"
 #include "rs_graphic.h"
 #include "rs_settings.h"
 #include "qg_exitdialog.h"
 #include "qg_filedialog.h"
 #include "rs_insert.h"
 #include "rs_mtext.h"
+#include "rs_pen.h"
+#include "qg_graphicview.h"
+#include "rs_debug.h"
 
 int QC_MDIWindow::idCounter = 0;
 
@@ -58,79 +59,105 @@ int QC_MDIWindow::idCounter = 0;
  *
  * @param doc Pointer to an existing document of NULL if a new
  *   document shall be created for this window.
- * @param parent Parent widget. Usually a workspace.
+ * @param parent An instance of QMdiArea.
  */
-QC_MDIWindow::QC_MDIWindow(RS_Document* doc,
-                           QWidget* parent, Qt::WindowFlags wflags)
-        : QMainWindow(parent, wflags) {
-
+QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, Qt::WindowFlags wflags)
+                            : QMdiSubWindow(parent, wflags)
+{
     setAttribute(Qt::WA_DeleteOnClose);
-    owner = false;
     cadMdiArea=qobject_cast<QMdiArea*>(parent);
-    forceClosing = false;
-    initDoc(doc);
-    initView();
+
+    if (doc==nullptr) {
+        document = new RS_Graphic();
+        document->newDoc();
+        owner = true;
+    } else {
+        document = doc;
+        owner = false;
+    }
+
+    graphicView = new QG_GraphicView(this, 0, document);
+    graphicView->setObjectName("graphicview");
+
+    connect(graphicView, SIGNAL(previous_zoom_state(bool)),
+            parent->window(), SLOT(setPreviousZoomEnable(bool)));
+
+    setWidget(graphicView);
+
     id = idCounter++;
-    //childWindows.setAutoDelete(false);
-    parentWindow = NULL;
     setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
-    if (document!=NULL) {
-        if (document->getLayerList()!=NULL) {
+	if (document) {
+		if (document->getLayerList()) {
             // Link the graphic view to the layer widget
             document->getLayerList()->addListener(graphicView);
         }
-        if (document->getBlockList()!=NULL) {
+		if (document->getBlockList()) {
             // Link the graphic view to the block widget
             document->getBlockList()->addListener(graphicView);
         }
     }
-//    setFocusPolicy(Qt::ClickFocus);
-    //showMaximized();
 }
-
-
 
 /**
  * Destructor.
  *
  * Deletes the document associated with this window.
  */
-QC_MDIWindow::~QC_MDIWindow() {
+QC_MDIWindow::~QC_MDIWindow()
+{
+    RS_DEBUG->print("~QC_MDIWindow");
+	if(!(graphicView && graphicView->isCleanUp())){
+		//do not clear layer/block lists, if application is being closed
 
-    //avoid switching to invalid subwindow, bug#3509368
-    auto&& windows = cadMdiArea->subWindowList();
-    for (int i = 0; i <windows.size(); ++i) {
-//        RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: window: %d", i);
+		if (document->getLayerList()) {
+			document->getLayerList()->removeListener(graphicView);
+		}
 
-        QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i)->widget());
-        if(m==NULL)
-            cadMdiArea->removeSubWindow(windows.at(i));
-        else{
-            windows.at(i)->showMaximized();
-            windows.at(i)->raise();
-            cadMdiArea->setActiveSubWindow(windows.at(i));
-            break;
-        }
-    }
+		if (document->getBlockList()) {
+			document->getBlockList()->removeListener(graphicView);
+		}
 
-    if (document->getLayerList()!=NULL) {
-        document->getLayerList()->removeListener(graphicView);
-    }
-
-    if (document->getBlockList()!=NULL) {
-        document->getBlockList()->removeListener(graphicView);
-    }
-
-    if (owner==true && document!=NULL) {
-        delete document;
-    }
-    document = NULL;
-    cadMdiArea->activateNextSubWindow();
-    QMdiSubWindow* subWindow=cadMdiArea->currentSubWindow();
-    QC_ApplicationWindow::getAppWindow()->slotWindowActivated(subWindow);
+		if (owner==true && document) {
+			delete document;
+		}
+		document = nullptr;
+	}
 }
 
+QG_GraphicView* QC_MDIWindow::getGraphicView() const{
+	return graphicView;
+}
 
+/** @return Pointer to document */
+RS_Document* QC_MDIWindow::getDocument() const{
+	return document;
+}
+
+int QC_MDIWindow::getId() const{
+	return id;
+}
+
+void QC_MDIWindow::setForceClosing(bool on) {
+	forceClosing = on;
+}
+
+RS_EventHandler* QC_MDIWindow::getEventHandler() const{
+	if (graphicView) {
+		return graphicView->getEventHandler();
+	}
+	else {
+		return nullptr;
+	}
+}
+
+void QC_MDIWindow::setParentWindow(QC_MDIWindow* p) {
+	RS_DEBUG->print("setParentWindow");
+	parentWindow = p;
+}
+
+RS_Graphic* QC_MDIWindow::getGraphic() const {
+	return document->getGraphic();
+}
 
 /**
  * Adds another MDI window to the list of known windows that
@@ -154,7 +181,7 @@ void QC_MDIWindow::addChildWindow(QC_MDIWindow* w) {
  * @see addChildWindow
  */
 void QC_MDIWindow::removeChildWindow(QC_MDIWindow* w) {
-//    RS_DEBUG->print("RS_MDIWindoqapplication.h>w::removeChildWindow()");
+//    RS_DEBUG->print("%s %s()", __FILE__, __func__);
     if(childWindows.size()>0 ){
         if(childWindows.contains(w)){
             childWindows.removeAll(w);
@@ -175,12 +202,12 @@ void QC_MDIWindow::removeChildWindow(QC_MDIWindow* w) {
  * @return pointer to the print preview of this drawing or NULL.
  */
 QC_MDIWindow* QC_MDIWindow::getPrintPreview() {
-    for(int i=0;i<childWindows.size();i++){
-        if(childWindows.at(i)->getGraphicView()->isPrintPreview()){
-            return childWindows.at(i);
-        }
-    }
-    return NULL;
+	for(auto w: childWindows){
+		if(w->getGraphicView()->isPrintPreview()){
+			return w;
+		}
+	}
+	return nullptr;
 }
 
 
@@ -191,7 +218,9 @@ QC_MDIWindow* QC_MDIWindow::getPrintPreview() {
  * @param force Disable cancel button (demo versions)
  * @param ask Ask user before closing.
  */
-bool QC_MDIWindow::closeMDI(bool force, bool ask) {
+bool QC_MDIWindow::closeMDI(bool force, bool ask)
+{
+    RS_DEBUG->print("QC_MDIWindow::closeMDI begin");
     // should never happen:
     if (document==NULL) {
         return true;
@@ -199,33 +228,32 @@ bool QC_MDIWindow::closeMDI(bool force, bool ask) {
 
     bool ret = false;
 
-    bool isBlock = (parentWindow!=NULL);
-
     // This is a block and we don't need to ask the user for closing
     //   since it's still available in the parent drawing after closing.
-    if (isBlock) {
+    if (parentWindow)
+    {
         RS_DEBUG->print("  closing block");
-        // tell parent window we're not here anymore.
-        if (parentWindow!=NULL) {
-            RS_DEBUG->print("    notifying parent about closing this window");
-            parentWindow->removeChildWindow(this);
-        }
-        emit(signalClosing());
+        RS_DEBUG->print("  notifying parent about closing this window");
+        parentWindow->removeChildWindow(this);
+        emit(signalClosing(this));
         ret = true;
     }
 
     // This is a graphic document. ask user for closing.
     else if (!ask || slotFileClose(force)) {
         RS_DEBUG->print("  closing graphic");
-        // close all child windows:
 
-                while (!childWindows.isEmpty()) {
-                        QC_MDIWindow *tmp=childWindows.takeFirst();
-                        cadMdiArea->removeSubWindow(tmp);
-                        tmp->close();
-                }
+        emit(signalClosing(this));
 
-        emit(signalClosing());
+        if (childWindows.length() > 0)
+        {
+            for(auto p: childWindows)
+            {
+                cadMdiArea->removeSubWindow(p);
+                p->close();
+            }
+		childWindows.clear();
+        }
 
         ret = true;
     }
@@ -261,57 +289,17 @@ void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
     RS_DEBUG->print("QC_MDIWindow::closeEvent end");
 }
 
-
-
-/**
- * Init the document.
- *
- * @param type Document type. RS:EntityGraphic or RS2::EntityBlock
- * @param container Entity container to be used as document or NULL
- * if a new document should be created.
- */
-void QC_MDIWindow::initDoc(RS_Document* doc) {
-
-    RS_DEBUG->print("QC_MDIWindow::initDoc()");
-
-    if (doc==NULL) {
-        document = new RS_Graphic();
-        document->newDoc();
-        owner = true;
-    } else {
-        document = doc;
-        owner = false;
-    }
-
-}
-
-
-
-/**
- * Init the view.
- */
-void QC_MDIWindow::initView() {
-    RS_DEBUG->print("QC_MDIWindow::initView()");
-
-    graphicView = new QC_GraphicView(document, this);
-    setCentralWidget(graphicView);
-//    graphicView->setFocus();
-}
-
-
-
 /**
  * Called when the current pen (color, style, width) has changed.
  * Sets the active pen for the document in this MDI window.
  */
-void QC_MDIWindow::slotPenChanged(RS_Pen pen) {
+void QC_MDIWindow::slotPenChanged(const RS_Pen& pen) {
     RS_DEBUG->print("QC_MDIWindow::slotPenChanged() begin");
-    if (document!=NULL) {
+	if (document) {
         document->setActivePen(pen);
     }
     RS_DEBUG->print("QC_MDIWindow::slotPenChanged() end");
 }
-
 
 
 /**
@@ -319,7 +307,7 @@ void QC_MDIWindow::slotPenChanged(RS_Pen pen) {
  */
 void QC_MDIWindow::slotFileNew() {
     RS_DEBUG->print("QC_MDIWindow::slotFileNew begin");
-    if (document!=NULL && graphicView!=NULL) {
+	if (document && graphicView) {
         document->newDoc();
         graphicView->redraw();
     }
@@ -350,8 +338,6 @@ bool QC_MDIWindow::slotFileNewTemplate(const QString& fileName, RS2::FormatType 
     return ret;
 }
 
-
-
 /**
  * Opens the given file in this MDI window.
  */
@@ -360,7 +346,7 @@ bool QC_MDIWindow::slotFileOpen(const QString& fileName, RS2::FormatType type) {
     RS_DEBUG->print("QC_MDIWindow::slotFileOpen");
     bool ret = false;
 
-    if (document!=NULL && !fileName.isEmpty()) {
+	if (document && !fileName.isEmpty()) {
         document->newDoc();
 
                 // cosmetics..
@@ -393,8 +379,9 @@ bool QC_MDIWindow::slotFileOpen(const QString& fileName, RS2::FormatType type) {
 
     return ret;
 }
+
 void QC_MDIWindow::slotZoomAuto() {
-    if(graphicView!=NULL){
+	if(graphicView){
         if(graphicView->isPrintPreview()){
             graphicView->zoomPage();
         }else{
@@ -402,6 +389,7 @@ void QC_MDIWindow::slotZoomAuto() {
         }
     }
 }
+
 void QC_MDIWindow::drawChars() {
 
     RS_BlockList* bl = document->getBlockList();
@@ -443,7 +431,7 @@ bool QC_MDIWindow::slotFileSave(bool &cancelled, bool isAutoSave) {
     bool ret = false;
     cancelled = false;
 
-    if (document!=NULL) {
+	if (document) {
         document->setGraphicView(graphicView);
         if (isAutoSave) {
             // Autosave filename is always supposed to be present.
@@ -481,7 +469,7 @@ bool QC_MDIWindow::slotFileSaveAs(bool &cancelled) {
 
     QG_FileDialog dlg(this);
     QString fn = dlg.getSaveFile(&t);
-    if (document!=NULL && !fn.isEmpty()) {
+	if (document && !fn.isEmpty()) {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
         document->setGraphicView(graphicView);
         ret = document->saveAs(fn, t, true);
@@ -510,7 +498,7 @@ bool QC_MDIWindow::slotFileClose(bool force) {
     bool succ = true;
     int exit = 0;
 
-    if(document!=NULL && document->isModified()) {
+	if(document && document->isModified()) {
         QG_ExitDialog dlg(this);
 
         dlg.setForce(force);
@@ -589,18 +577,24 @@ void QC_MDIWindow::slotFilePrint() {
  */
 std::ostream& operator << (std::ostream& os, QC_MDIWindow& w) {
     os << "QC_MDIWindow[" << w.getId() << "]:\n";
-    if (w.parentWindow!=NULL) {
+	if (w.parentWindow) {
         os << "  parentWindow: " << w.parentWindow->getId() << "\n";
     } else {
         os << "  parentWindow: NULL\n";
     }
-    for(int i=0;i<w.childWindows.size();i++){
-        QC_MDIWindow *tmp=w.childWindows.at(i);
-        os << "  childWindow[" << i << "]: "
-           << tmp->getId() << "\n";
-    }
-
+	int i=0;
+	for(auto p: w.childWindows){
+		os << "  childWindow[" << i++ << "]: "
+		   << p->getId() << "\n";
+	}
 
     return os;
 }
 
+/**
+ * Return true if this window has children (QC_MDIWindow).
+ */
+bool QC_MDIWindow::has_children()
+{
+    return !childWindows.isEmpty();
+}

@@ -23,9 +23,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWCIRCLEINSCRIBE_H
 #define RS_ACTIONDRAWCIRCLEINSCRIBE_H
 
-#include <QVector>
 #include "rs_previewactioninterface.h"
-#include "rs_ellipse.h"
+
+class RS_Line;
+struct RS_CircleData;
 
 /**
  * Draw ellipse by foci and a point on ellipse
@@ -39,7 +40,7 @@ public:
      * Action States.
      */
     enum Status {
-        SetLine1,   //  Setting the First Line.  */
+		SetLine1,   //  Setting the First Line.  */
         SetLine2,   //  Setting the Second Line.  */
         SetLine3   //  Setting the Third Line.  */
     };
@@ -47,13 +48,8 @@ public:
 public:
     RS_ActionDrawCircleInscribe(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView);
-    ~RS_ActionDrawCircleInscribe();
+	~RS_ActionDrawCircleInscribe();
 
-    static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
-
-    virtual RS2::ActionType rtti() {
-        return RS2::ActionDrawCircleInscribe;
-    }
     virtual void init(int status=0);
 
     virtual void trigger();
@@ -68,13 +64,15 @@ public:
     virtual void finish(bool updateTB=true);
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
-protected:
-    QVector<RS_Line*> lines;
-    private:
-    RS_CircleData cData;
-    RS_Vector coord;
+private:
+	/**
+	 * @brief clearLines unset highlighten lines, and clear the vector "lines"
+	 * @param checkStatus keep lines members according to getStatus()
+	 */
+	void clearLines(bool checkStatus=false);
+	struct Points;
+	std::unique_ptr<Points> pPoints;
     bool valid;
 };
 

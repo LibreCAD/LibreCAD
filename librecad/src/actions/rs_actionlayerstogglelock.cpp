@@ -31,45 +31,34 @@
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
+#include "rs_debug.h"
 
 
 RS_ActionLayersToggleLock::RS_ActionLayersToggleLock(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_ActionInterface("Toggle Layer Visibility",
-                    container, graphicView) {}
-
-
-QAction* RS_ActionLayersToggleLock::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Toggle Layer Lock"),
-                                  tr("&Toggle Lock"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Toggle Layer Loc&k"), NULL);
-     action->setIcon(QIcon(":/ui/lockedlayer.png"));
-    //action->zetStatusTip(tr("Toggle Lock"));
-    return action;
-}
+        RS_EntityContainer& container,
+        RS_GraphicView& graphicView)
+    :RS_ActionInterface("Toggle Layer Visibility" ,container, graphicView)
+{}
 
 void RS_ActionLayersToggleLock::trigger() {
     RS_DEBUG->print("toggle layer");
-    if (graphic!=NULL) {
+    if (graphic) {
         RS_Layer* layer = graphic->getActiveLayer();
-        if (layer!=NULL) {
+        if (layer) {
             graphic->toggleLayerLock(layer);
 
             // deselect entities on locked layer:
             if (layer->isLocked()) {
-                for (RS_Entity* e=container->firstEntity(); e!=NULL;
-                        e=container->nextEntity()) {
-                    if (e!=NULL && e->isVisible() && e->getLayer()==layer) {
+				for(auto e: *container){
+                    if (e && e->isVisible() && e->getLayer()==layer) {
 
-                        if (graphicView!=NULL) {
+                        if (graphicView) {
                             graphicView->deleteEntity(e);
                         }
 
                         e->setSelected(false);
 
-                        if (graphicView!=NULL) {
+                        if (graphicView) {
                             graphicView->drawEntity(e);
                         }
                     }
@@ -80,8 +69,6 @@ void RS_ActionLayersToggleLock::trigger() {
     }
     finish(false);
 }
-
-
 
 void RS_ActionLayersToggleLock::init(int status) {
     RS_ActionInterface::init(status);

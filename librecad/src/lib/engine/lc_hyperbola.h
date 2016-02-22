@@ -37,55 +37,34 @@ class LC_Quadratic;
  * ratio is the ratio between semi-major and semi-minor axis
 
  */
-class LC_HyperbolaData {
-public:
-    LC_HyperbolaData(const RS_Vector& center,
-                   const RS_Vector& majorP,
-                   double ratio,
-                   double angle1, double angle2,
-                   bool reversed) {
+struct LC_HyperbolaData {
+	LC_HyperbolaData() = default;
+	LC_HyperbolaData(const RS_Vector& center,
+					 const RS_Vector& majorP,
+					 double ratio,
+					 double angle1, double angle2,
+					 bool reversed);
+	~LC_HyperbolaData() = default;
+	/** create data based on foci and a point on hyperbola */
+	LC_HyperbolaData(const RS_Vector& focus0,
+					 const RS_Vector& focus1,
+					 const RS_Vector& point);
 
-        this->center = center;
-        this->majorP = majorP;
-        this->ratio = ratio;
-        this->angle1 = angle1;
-        this->angle2 = angle2;
-        this->reversed = reversed;
-    }
-    /** create data based on foci and a point on hyperbola */
-    LC_HyperbolaData(const RS_Vector& focus0,
-                     const RS_Vector& focus1,
-                     const RS_Vector& point);
-//    LC_HyperbolaData(const RS_Vector& focus0, const RS_Circle* circle);
-
-    friend class LC_Hyperbola;
-
-    friend std::ostream& operator << (std::ostream& os, const LC_HyperbolaData& ed) {
-        os << "(" << ed.center <<
-           "/" << ed.majorP <<
-           " " << ed.ratio <<
-           " " << ed.angle1 <<
-           "," << ed.angle2 <<
-           ")";
-        return os;
-    }
-
-private:
-    //! Hyperbola center
-    RS_Vector center;
-    //! Endpoint of major axis relative to center.
-    RS_Vector majorP;
-    //! Ratio of minor axis to major axis.
-    double ratio;
-    //! Start angle
-    double angle1;
-    //! End angle
-    double angle2;
-    //! Reversed (cw) flag
-    bool reversed;
+	//! Hyperbola center
+	RS_Vector center;
+	//! Endpoint of major axis relative to center.
+	RS_Vector majorP;
+	//! Ratio of minor axis to major axis.
+	double ratio;
+	//! Start angle
+	double angle1;
+	//! End angle
+	double angle2;
+	//! Reversed (cw) flag
+	bool reversed;
 };
 
-
+std::ostream& operator << (std::ostream& os, const LC_HyperbolaData& ed);
 
 
 /**
@@ -95,6 +74,7 @@ private:
  */
 class LC_Hyperbola : public RS_AtomicEntity {
 public:
+	LC_Hyperbola() = default;
     LC_Hyperbola(RS_EntityContainer* parent,
                const LC_HyperbolaData& d);
 
@@ -102,13 +82,9 @@ public:
     LC_Hyperbola(const RS_Vector& focus0,
                      const RS_Vector& focus1,
                      const RS_Vector& point);
-    virtual ~LC_Hyperbola() {}
+	virtual ~LC_Hyperbola() = default;
 
-    virtual RS_Entity* clone() {
-        LC_Hyperbola* e = new LC_Hyperbola(*this);
-        e->initId();
-        return e;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityHyperbola */
     virtual RS2::EntityType rtti() const {
@@ -137,7 +113,7 @@ public:
         return data;
     }
     RS_VectorSolutions getFoci() const ;
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
 
     /**
      * @retval true if the arc is reversed (clockwise),
@@ -222,7 +198,7 @@ public:
             bool /*onEntity = true*/, double*/* dist = NULL*/, RS_Entity**/* entity=NULL*/) const
     {return RS_Vector(false);}
     virtual RS_Vector getNearestCenter(const RS_Vector& /*coord*/,
-                                       double*/* dist = NULL*/)
+									   double*/* dist = NULL*/) const
    {return RS_Vector(false);}
     virtual RS_Vector getNearestMiddle(const RS_Vector& /*coord*/,
                                        double*/* dist = NULL*/,
@@ -231,11 +207,11 @@ public:
    {return RS_Vector(false);}
     virtual RS_Vector getNearestDist(double /*distance*/,
                                      const RS_Vector&/* coord*/,
-                                     double*/* dist = NULL*/)
+									 double*/* dist = NULL*/) const
     {return RS_Vector(false);}
     virtual RS_Vector getNearestOrthTan(const RS_Vector& /*coord*/,
                                     const RS_Line& /*normal*/,
-                                     bool /*onEntity = false*/)
+									 bool /*onEntity = false*/) const
     {return RS_Vector(false);}
     virtual double getDistanceToPoint(const RS_Vector& /*coord*/,
                                       RS_Entity** /*entity=NULL*/,

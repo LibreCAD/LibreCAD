@@ -27,26 +27,12 @@
 #include "rs_actionfilenew.h"
 
 #include <QAction>
+#include "rs_debug.h"
 
 
 RS_ActionFileNew::RS_ActionFileNew(RS_EntityContainer& container,
                                    RS_GraphicView& graphicView)
         :RS_ActionInterface("File New", container, graphicView) {}
-
-
-QAction* RS_ActionFileNew::createGUIAction(RS2::ActionType /*type*/, QObject* parent) {
-        // tr("New Drawing")
-    QAction* action = new QAction(tr("&New"), parent);
-#if QT_VERSION >= 0x040600
-        action->setIcon(QIcon::fromTheme("document-new", QIcon(":/actions/filenew.png")));
-#else
-        action->setIcon(QIcon(":/actions/filenew.png"));
-#endif
-	action->setShortcut(QKeySequence::New);
-    //action->zetStatusTip(tr("Creates a new drawing"));
-	
-    return action;
-}
 
 
 void RS_ActionFileNew::trigger() {
@@ -55,7 +41,7 @@ void RS_ActionFileNew::trigger() {
     RS_DEBUG->print("RS_ActionFileNew::trigger");
 
     QString fileName; //= RS_DIALOGFACTORY->requestFileNewDialog();
-    if (graphic!=NULL && !fileName.isEmpty()) {
+    if (graphic && !fileName.isEmpty()) {
         graphic->open(fileName, );
 }
     */

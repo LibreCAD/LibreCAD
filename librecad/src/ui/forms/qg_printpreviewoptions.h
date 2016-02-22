@@ -26,12 +26,16 @@
 #ifndef QG_PRINTPREVIEWOPTIONS_H
 #define QG_PRINTPREVIEWOPTIONS_H
 
-#include "ui_qg_printpreviewoptions.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionPrintPreview;
+namespace Ui {
+class Ui_PrintPreviewOptions;
+}
 
-class QG_PrintPreviewOptions : public QWidget, public Ui::QG_PrintPreviewOptions
+class QG_PrintPreviewOptions : public QWidget
 {
     Q_OBJECT
 
@@ -60,16 +64,14 @@ protected slots:
     virtual void languageChange();
 
 private:
-    QStringList imperialScales;
+	void init();
+	void saveSettings();
+	QStringList imperialScales;
     QStringList metricScales;
-    bool updateDisabled;
+    bool updateDisabled{false};
     bool blackWhiteDisabled;
     int defaultScales;
-
-
-    void init();
-    void destroy();
-
+	std::unique_ptr<Ui::Ui_PrintPreviewOptions> ui;
 };
 
 #endif // QG_PRINTPREVIEWOPTIONS_H

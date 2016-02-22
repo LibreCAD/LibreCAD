@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QG_ImageOptions</class>
- <widget class="QWidget" name="QG_ImageOptions">
+ <class>Ui_ImageOptions</class>
+ <widget class="QWidget" name="Ui_ImageOptions">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -35,7 +35,16 @@
    <string/>
   </property>
   <layout class="QHBoxLayout">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>1</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>1</number>
+   </property>
+   <property name="bottomMargin">
     <number>1</number>
    </property>
    <item>
@@ -116,7 +125,7 @@
   <connection>
    <sender>leAngle</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>QG_ImageOptions</receiver>
+   <receiver>Ui_ImageOptions</receiver>
    <slot>updateData()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -132,7 +141,7 @@
   <connection>
    <sender>leDPI</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>QG_ImageOptions</receiver>
+   <receiver>Ui_ImageOptions</receiver>
    <slot>updateDPI()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -148,7 +157,7 @@
   <connection>
    <sender>leFactor</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>QG_ImageOptions</receiver>
+   <receiver>Ui_ImageOptions</receiver>
    <slot>updateFactor()</slot>
    <hints>
     <hint type="sourcelabel">

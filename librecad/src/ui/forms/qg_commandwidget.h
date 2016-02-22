@@ -37,7 +37,6 @@ public:
     QG_CommandWidget(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
     ~QG_CommandWidget();
 
-    virtual bool checkFocus();
     virtual bool eventFilter(QObject *obj, QEvent *event);
 
 public slots:
@@ -50,17 +49,13 @@ public slots:
     virtual void setActionHandler( QG_ActionHandler * ah );
     virtual void setCommandMode();
     virtual void setNormalMode();
-    virtual void redirectStderr();
-    virtual void processStderr();
+	static QString getRootCommand( const QStringList & cmdList, const QString & typed );
 
 protected slots:
     virtual void languageChange();
 
 private:
     QG_ActionHandler* actionHandler;
-
-    void init();
-
 };
 
 #endif // QG_COMMANDWIDGET_H

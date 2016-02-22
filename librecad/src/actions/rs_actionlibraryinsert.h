@@ -40,7 +40,6 @@
  */
 class RS_ActionLibraryInsert : public RS_PreviewActionInterface {
 	Q_OBJECT
-public:
     /**
      * Action States.
      */
@@ -57,15 +56,11 @@ public:
 public:
     RS_ActionLibraryInsert(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    virtual ~RS_ActionLibraryInsert();
+	virtual ~RS_ActionLibraryInsert() override;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionLibraryInsert;
-	}
-
-    virtual void init(int status=0);
+	virtual void init(int status=0);
 
 	void reset();
 
@@ -83,25 +78,16 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
 
-        void setFile(const QString& file);
+	void setFile(const QString& file);
 
-	double getAngle() {
-		return data.angle;
-	}
+	double getAngle() const;
 
-	void setAngle(double a) {
-		data.angle = a;
-	}
+	void setAngle(double a);
 
-	double getFactor() {
-		return data.factor;
-	}
+	double getFactor() const;
 
-	void setFactor(double f) {
-		data.factor = f;
-	}
+	void setFactor(double f);
 
 	/*int getColumns() {
 		return data.cols;
@@ -138,8 +124,8 @@ public:
 protected:
 	//RS_Block* block;
 	//RS_InsertData data;
-	RS_Graphic prev;
-	RS_LibraryInsertData data;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 	
 	/** Last status before entering option. */
 	Status lastStatus;

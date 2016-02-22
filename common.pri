@@ -1,6 +1,7 @@
 
 # include user-defined things in every qmake project
 exists( custom.pro ):include( custom.pro )
+exists( custom.pri ):include( custom.pri )
 
 include( settings.pri )
 
@@ -57,23 +58,21 @@ win32 {
 }
 
 
-# c++11 is now obligatory for LibreCAD
-message(We will be using CPP11 features)
-isEmpty( CXX_CPP11_FLAG) {
-    QMAKE_CXXFLAGS_DEBUG += -std=c++11 -g
-    QMAKE_CXXFLAGS += -std=c++11 -g
-} else {
-    # in custom.pro file
-    QMAKE_CXXFLAGS_DEBUG += $$CXX_CPP11_FLAG -g
-    QMAKE_CXXFLAGS += $$CXX_CPP11_FLAG -g
-}
+QMAKE_CXXFLAGS_DEBUG += -g
+QMAKE_CXXFLAGS += -g
 
 # svg support
 QT += svg
-greaterThan( QT_MAJOR_VERSION, 4 ) {
+
+greaterThan( QT_MAJOR_VERSION, 4) {
 	CONFIG += c++11
+}else{
+	QMAKE_CXXFLAGS += -std=c++11
+	QMAKE_CXXFLAGS_DEBUG += -std=c++11
 }
-macx{
-    QMAKE_CXXFLAGS_DEBUG += -mmacosx-version-min=10.8
-    QMAKE_CXXFLAGS += -mmacosx-version-min=10.8
-}
+
+# RVT July 12 2015, I believe we need these here
+#macx{
+#    QMAKE_CXXFLAGS_DEBUG += -mmacosx-version-min=10.8
+#    QMAKE_CXXFLAGS += -mmacosx-version-min=10.8
+#}

@@ -49,13 +49,7 @@ public:
 public:
     RS_ActionBlocksCreate(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionBlocksCreate();
-
-        static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
-        virtual RS2::ActionType rtti() {
-                return RS2::ActionBlocksCreate;
-        }
+	~RS_ActionBlocksCreate();
 
     virtual void init(int status=0);
 
@@ -73,10 +67,9 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 protected:
-        RS_Vector referencePoint;
+	std::unique_ptr<RS_Vector> referencePoint;
 };
 
 #endif

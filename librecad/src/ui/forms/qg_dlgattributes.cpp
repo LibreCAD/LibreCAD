@@ -25,12 +25,6 @@
 **********************************************************************/
 #include "qg_dlgattributes.h"
 
-/*#include <qvariant.h>
-#include "rs_graphic.h"
-#include "rs_layer.h"
-#include "qg_widgetpen.h"
-#include "qg_layerbox.h"*/
-
 /*
  *  Constructs a QG_DlgAttributes as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -70,12 +64,12 @@ void QG_DlgAttributes::setData(RS_AttributesData* data, RS_LayerList& layerList)
     wPen->setPen(data->pen, true, true, "Pen");
 
     //RS_Graphic* graphic = line->getGraphic();
-    //if (graphic!=NULL) {
+    //if (graphic) {
         cbLayer->init(layerList, false, true);
     //}
     //cbLayer->setLayer(data->layer);
     //RS_Layer* lay = line->getLayer(false);
-    //if (lay!=NULL) {
+    //if (lay) {
     //    cbLayer->setLayer(*lay);
     //}
 }

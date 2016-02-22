@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -30,7 +31,9 @@
 
 #include <QHash>
 #include "rs_variable.h"
+
 class RS_Vector;
+class QString;
 
 /**
  * Dictionary of variables. The variables are stored as key / value
@@ -40,14 +43,13 @@ class RS_Vector;
  */
 class RS_VariableDict {
 public:
-    RS_VariableDict();
-    virtual ~RS_VariableDict() {}
+	RS_VariableDict() = default;
 
     void clear();
     /**
      * @return Number of variables available.
      */
-    int count() {
+	int count() const {
         return variables.count();
     }
 
@@ -56,14 +58,17 @@ public:
     void add(const QString& key, int value, int code);
     void add(const QString& key, double value, int code);
 
-    RS_Vector getVector(const QString& key, const RS_Vector& def);
-    QString getString(const QString& key, const QString& def);
-    int getInt(const QString& key, int def);
-    double getDouble(const QString& key, double def);
+	RS_Vector getVector(const QString& key, const RS_Vector& def) const;
+	QString getString(const QString& key, const QString& def) const;
+	int getInt(const QString& key, int def) const;
+	double getDouble(const QString& key, double def) const;
 
-    virtual void remove(const QString& key);
+	void remove(const QString& key);
 
-        QHash<QString, RS_Variable>& getVariableDict() {
+	QHash<QString, RS_Variable> const& getVariableDict() const {
+        return variables;
+    }
+	QHash<QString, RS_Variable>& getVariableDict() {
 		return variables;
 	}
 
@@ -74,7 +79,6 @@ public:
 private:
     //! Variables for the graphic
     QHash<QString, RS_Variable> variables;
-}
-;
+};
 
 #endif

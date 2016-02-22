@@ -27,11 +27,10 @@
 #ifndef QC_GRAPHICVIEW_H
 #define QC_GRAPHICVIEW_H
 
-#include <qwidget.h>
+#include <QWidget>
 
 #include "rs_document.h"
 #include "rs_eventhandler.h"
-//#include "rs_painterqt.h"
 
 #include "qg_graphicview.h"
 
@@ -48,7 +47,7 @@ class QC_GraphicView : public QG_GraphicView {
 
 public:
     QC_GraphicView(RS_Document* doc, QWidget* parent=0);
-    virtual ~QC_GraphicView();
+	virtual ~QC_GraphicView()=default;
 
 private:
     //RS_Document* document;

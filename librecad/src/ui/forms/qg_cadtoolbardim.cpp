@@ -23,123 +23,41 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include<cassert>
+#include<QAction>
 #include "qg_cadtoolbardim.h"
-
 #include "qg_cadtoolbar.h"
+#include "qg_actionhandler.h"
 
 /*
  *  Constructs a QG_CadToolBarDim as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_CadToolBarDim::QG_CadToolBarDim(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
+QG_CadToolBarDim::QG_CadToolBarDim(QG_CadToolBar* parent, Qt::WindowFlags fl)
+	:LC_CadToolBarInterface(parent, fl)
 {
-    setupUi(this);
-    parentTB=static_cast<QG_CadToolBar*>(parent);
-    init();
+	initToolBars();
 }
 
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_CadToolBarDim::~QG_CadToolBarDim()
+void QG_CadToolBarDim::addSubActions(const std::vector<QAction*>& actions, bool addGroup)
 {
-    // no need to delete child widgets, Qt does it all for us
+	LC_CadToolBarInterface::addSubActions(actions, addGroup);
+	std::vector<QAction**> const buttons={
+		 &bAligned, &bLinear, &bLinearHor, &bLinearVer, &bRadial,
+		 &bDiametric, &bAngular, &bLeader
+	};
+
+	assert(buttons.size()==actions.size());
+
+	for(size_t i=0; i<buttons.size(); ++i)
+		*buttons[i]=actions[i];
 }
 
-/*
- *  Sets the strings of the subwidgets using the current
- *  language.
- */
-void QG_CadToolBarDim::languageChange()
-{
-    retranslateUi(this);
-}
-
-void QG_CadToolBarDim::init() {
-    actionHandler = NULL;
-    cadToolBar = NULL;
-}
-
-void QG_CadToolBarDim::mousePressEvent(QMouseEvent* e) {
-    if (e->button()==Qt::RightButton && cadToolBar!=NULL) {
-        cadToolBar->back();
-        e->accept();
-    }
-}
-
-void QG_CadToolBarDim::contextMenuEvent(QContextMenuEvent *e) {
-    e->accept();
-}
-
-void QG_CadToolBarDim::setCadToolBar(QG_CadToolBar* tb) {
-    cadToolBar = tb;
-    if (tb!=NULL) {
-        actionHandler = tb->getActionHandler();
-    } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR,
-                        "QG_CadToolBarDim::setCadToolBar(): No valid toolbar set.");
-    }
-}
-
-void QG_CadToolBarDim::drawDimAligned() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDimAligned();
-    }
-}
-
-void QG_CadToolBarDim::drawDimLinear() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDimLinear();
-    }
-}
-
-void QG_CadToolBarDim::drawDimLinearHor() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDimLinearHor();
-    }
-}
-
-void QG_CadToolBarDim::drawDimLinearVer() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDimLinearVer();
-    }
-}
-
-void QG_CadToolBarDim::drawDimRadial() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDimRadial();
-    }
-}
-
-void QG_CadToolBarDim::drawDimDiametric() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDimDiametric();
-    }
-}
-
-void QG_CadToolBarDim::drawDimAngular() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDimAngular();
-    }
-}
-
-void QG_CadToolBarDim::drawDimLeader() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotDimLeader();
-    }
-}
-
-//void QG_CadToolBarDim::back() {
-//    if (cadToolBar!=NULL) {
-//        cadToolBar->back();
-//    }
-//}
 //restore action from checked button
 void QG_CadToolBarDim::restoreAction()
 {
-    if(actionHandler==NULL) return;
-    if ( bAligned ->isChecked() ) {
+	if(!(actionHandler && bAligned)) return;
+	if ( bAligned ->isChecked() ) {
         actionHandler->slotDimAligned();
         return;
     }
@@ -172,22 +90,25 @@ void QG_CadToolBarDim::restoreAction()
         return;
     }
     //clear all action
-    bHidden->setChecked(true);
+	m_pHidden->setChecked(true);
     RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
-    if(currentAction != NULL) {
+	if(currentAction ) {
         currentAction->finish(false); //finish the action, but do not update toolBar
     }
 }
-void QG_CadToolBarDim::resetToolBar() {
-    bHidden->setChecked(true);
+void QG_CadToolBarDim::resetToolBar()
+{
+	m_pHidden->setChecked(true);
 }
 
 void QG_CadToolBarDim::on_bBack_clicked()
 {
-    parentTB->showPreviousToolBar();
+	finishCurrentAction(true);
+	cadToolBar->showPreviousToolBar();
 }
 
 void  QG_CadToolBarDim::showCadToolBar(RS2::ActionType actionType){
+	if(!bAligned) return;
     switch(actionType){
     case RS2::ActionDimAligned:
         bAligned->setChecked(true);
@@ -214,7 +135,7 @@ void  QG_CadToolBarDim::showCadToolBar(RS2::ActionType actionType){
         bLeader->setChecked(true);
         return;
     default:
-        bHidden->setChecked(true);
+		m_pHidden->setChecked(true);
         return;
     }
 }

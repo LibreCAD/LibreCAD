@@ -27,7 +27,7 @@
 #ifndef QG_MAINWINDOWINTERFACE_H
 #define QG_MAINWINDOWINTERFACE_H
 
-#include <qmainwindow.h>
+#include <QMainWindow>
 
 #include "rs_document.h"
 #include "rs_mainwindowinterface.h"
@@ -43,11 +43,13 @@
 class QG_MainWindowInterface : public RS_MainWindowInterface {
 
 public:
-    QG_MainWindowInterface() {}
-    virtual ~QG_MainWindowInterface() {}
+	QG_MainWindowInterface() = default;
+	virtual ~QG_MainWindowInterface() = default;
 
-    virtual QMainWindow* getMainWindow() = 0;
-    virtual QG_ActionHandler* getActionHandler() = 0;
+	virtual QMainWindow* getMainWindow() = 0;
+	virtual QMainWindow const* getMainWindow() const= 0;
+	virtual QG_ActionHandler const* getActionHandler() const= 0;
+	virtual QG_ActionHandler* getActionHandler()= 0;
 	virtual void setFocus2() = 0;
 
         //virtual QToolBar* createToolBar(const QString& name) = 0;

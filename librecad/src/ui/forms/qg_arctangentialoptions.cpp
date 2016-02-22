@@ -23,11 +23,17 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include<cmath>
+#include <QAction>
 #include "qg_arctangentialoptions.h"
 
-#include "rs_settings.h"
+#include "rs_actiondrawarctangential.h"
 
-#include <QDoubleValidator>
+#include "rs_settings.h"
+#include "rs_math.h"
+#include "rs_debug.h"
+
+#include "ui_qg_arctangentialoptions.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -39,19 +45,14 @@
  */
 QG_ArcTangentialOptions::QG_ArcTangentialOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, ui(new Ui::Ui_ArcTangentialOptions{})
 {
-    setupUi(this);
-    leRadius->setValidator(new QDoubleValidator(RS_TOLERANCE,1.e+10,4,leRadius));
-    leAngle->setValidator(new QDoubleValidator(RS_TOLERANCE_ANGLE,360,4,leAngle));
+	ui->setupUi(this);
 }
 
-/*
- *  Destroys the object and frees any allocated resources
- */
 QG_ArcTangentialOptions::~QG_ArcTangentialOptions()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+	saveSettings();
 }
 
 /*
@@ -60,26 +61,26 @@ QG_ArcTangentialOptions::~QG_ArcTangentialOptions()
  */
 void QG_ArcTangentialOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
-void QG_ArcTangentialOptions::destroy() {
+void QG_ArcTangentialOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Draw");
-    RS_SETTINGS->writeEntry("/ArcTangentialRadius", leRadius->text());
-    RS_SETTINGS->writeEntry("/ArcTangentialAngle", leAngle->text());
-    if(rbRadius->isChecked()) {
-        RS_SETTINGS->writeEntry("/ArcTangentialByRadius", QString("1"));
+	RS_SETTINGS->writeEntry("/ArcTangentialRadius", ui->leRadius->text());
+	RS_SETTINGS->writeEntry("/ArcTangentialAngle", ui->leAngle->text());
+	if(ui->rbRadius->isChecked()) {
+		RS_SETTINGS->writeEntry("/ArcTangentialByRadius", QString{"1"});
     }else {
-        RS_SETTINGS->writeEntry("/ArcTangentialByRadius", QString("0"));
+		RS_SETTINGS->writeEntry("/ArcTangentialByRadius", QString{"0"});
     }
     RS_SETTINGS->endGroup();
-    delete leRadius->validator();
-    delete leAngle->validator();
+//    delete leRadius->validator();
+//    delete leAngle->validator();
 }
 
 void QG_ArcTangentialOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDrawArcTangential) {
-        action = (RS_ActionDrawArcTangential*)a;
+    if (a && a->rtti()==RS2::ActionDrawArcTangential) {
+		action = static_cast<RS_ActionDrawArcTangential*>(a);
 
         QString sr,sa;
         bool bbr;
@@ -98,20 +99,19 @@ void QG_ArcTangentialOptions::setAction(RS_ActionInterface* a, bool update) {
             action->setAngle(sa.toDouble()*M_PI/180.);
             action->setByRadius(bbr);
         }
-        leRadius->setText(sr);
-        leAngle->setText(sa);
+		ui->leRadius->setText(sr);
+		ui->leAngle->setText(sa);
         updateByRadius(bbr);
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
                         "QG_ArcTangentialOptions::setAction: wrong action type");
-        action = NULL;
+		action = nullptr;
     }
-
 }
 
 
 /*void QG_ArcTangentialOptions::init() {
-    data = NULL;
+	data = nullptr;
     RS_SETTINGS->beginGroup("/Draw");
     bool reversed = RS_SETTINGS->readNumEntry("/ArcReversed", 0);
     RS_SETTINGS->endGroup();
@@ -127,51 +127,57 @@ void QG_ArcTangentialOptions::setAction(RS_ActionInterface* a, bool update) {
 }*/
 
 void QG_ArcTangentialOptions::updateRadius(const QString& s) {
-    leRadius->setText(s);
+	ui->leRadius->setText(s);
 }
 
 void QG_ArcTangentialOptions::updateAngle(const QString& s) {
-    leAngle->setText(s);
+	ui->leAngle->setText(s);
 }
 void QG_ArcTangentialOptions::updateByRadius(const bool br) {
-        rbRadius->setChecked(br);
-        rbAngle->setChecked(!br);
-        leRadius->setDisabled(!br);
-        leAngle->setDisabled(br);
+		ui->rbRadius->setChecked(br);
+		ui->rbAngle->setChecked(!br);
+		ui->leRadius->setDisabled(!br);
+		ui->leAngle->setDisabled(br);
 }
 
-void QG_ArcTangentialOptions::on_leRadius_textEdited(const QString &arg1)
+void QG_ArcTangentialOptions::on_leRadius_editingFinished()
 {
-        if(rbRadius->isChecked()) {
-    double d=fabs(arg1.toDouble());
-    if (d<RS_TOLERANCE) d=1.0;
-    //updateRadius(QString::number(d,'g',5));
-    action->setRadius(d);
-    action->setByRadius(true);
-        }
+	if(ui->rbRadius->isChecked()) {
+        bool ok;
+		double d=fabs(RS_Math::eval(ui->leRadius->text(), &ok));
+        if(!ok) return;
+        if (d<RS_TOLERANCE) d=1.0;
+        //updateRadius(QString::number(d,'g',5));
+        action->setRadius(d);
+        action->setByRadius(true);
+		ui->leRadius->setText(QString::number(d,'g', 5));
+    }
 }
 
-void QG_ArcTangentialOptions::on_leAngle_textEdited(const QString &arg1)
+void QG_ArcTangentialOptions::on_leAngle_editingFinished()
 {
-        if(rbAngle->isChecked()) {
-    double d=RS_Math::correctAngle(arg1.toDouble()*M_PI/180.);
-    if(remainder(d,2.*M_PI)<RS_TOLERANCE_ANGLE) d=M_PI; // can not do full circle
-    action->setAngle(d);
-    //updateAngle(QString::number(d*180./M_PI,'g',5));
-    action->setByRadius(false);
-        }
+	if(ui->rbAngle->isChecked()) {
+        bool ok;
+		double d=RS_Math::correctAngle(RS_Math::eval(ui->leAngle->text(), &ok)*M_PI/180.);
+        if(!ok) return;
+        if(remainder(d,2.*M_PI)<RS_TOLERANCE_ANGLE) d=M_PI; // can not do full circle
+        action->setAngle(d);
+        //updateAngle(QString::number(d*180./M_PI,'g',5));
+        action->setByRadius(false);
+		ui->leAngle->setText(QString::number(RS_Math::rad2deg( d),'g',5));
+    }
 }
 
 void QG_ArcTangentialOptions::on_rbRadius_clicked(bool /*checked*/)
 {
     action->setByRadius(true);
-    action->setRadius(leRadius->text().toDouble());
+	action->setRadius(ui->leRadius->text().toDouble());
     updateByRadius(true);
 }
 
 void QG_ArcTangentialOptions::on_rbAngle_clicked(bool /*checked*/)
 {
     action->setByRadius(false);
-    action->setAngle(leAngle->text().toDouble()*M_PI/180.);
+	action->setAngle(ui->leAngle->text().toDouble()*M_PI/180.);
     updateByRadius(false);
 }

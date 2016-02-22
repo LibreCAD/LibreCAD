@@ -28,7 +28,6 @@
 #define RS_ACTIONDRAWELLIPSEAXIS_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_ellipse.h"
 
 /**
  * This action class can handle user events to draw ellipses
@@ -43,7 +42,7 @@ public:
      * Action States.
      */
     enum Status {
-        SetCenter,   /**< Settinge the center.  */
+        SetCenter,   /**< Setting the center.  */
         SetMajor,    /**< Setting endpoint of major axis. */
         SetMinor,    /**< Setting minor/major ratio. */
         SetAngle1,   /**< Setting start angle. */
@@ -54,12 +53,7 @@ public:
     RS_ActionDrawEllipseAxis(RS_EntityContainer& container,
                              RS_GraphicView& graphicView,
                              bool isArc);
-    ~RS_ActionDrawEllipseAxis();
-	
-    static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
-    RS2::ActionType rtti(){
-        return actionType;
-    }
+	~RS_ActionDrawEllipseAxis();
 
     virtual void init(int status=0);
 	
@@ -74,21 +68,10 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 protected:
-    /** Center of ellipse */
-    RS_Vector center;
-    /** Endpoint of major axis */
-    RS_Vector major;
-    /** Ratio major / minor */
-    double ratio;
-    /** Start angle */
-    double angle1;
-    /** End angle */
-    double angle2;
-    /** Do we produce an arc (true) or full ellipse (false) */
-    bool isArc;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

@@ -47,24 +47,19 @@ public:
                                              first part of a selection window) */
         SetCorner2,     /**< Setting the 2nd corner of a selection window. */
         Moving,         /**< Moving entities (drag'n'drop) */
-        MovingRef       /**< Moving a reference point of one or more selected
+        MovingRef,       /**< Moving a reference point of one or more selected
                                              entities */
+        Panning /**< view panning triggered by Ctl- mouse dragging */
     };
 
 public:
     RS_ActionDefault(RS_EntityContainer& container,
                      RS_GraphicView& graphicView);
-    virtual ~RS_ActionDefault();
+	virtual ~RS_ActionDefault();
 
-    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
-    virtual RS2::ActionType rtti() {
-        return RS2::ActionDefault;
-    }
+	virtual void finish(bool /*updateTB*/ = true ){}
 
     virtual void init(int status=0);
-
-    virtual void trigger();
 
     virtual void keyPressEvent(QKeyEvent* e);
     virtual void keyReleaseEvent(QKeyEvent* e);
@@ -78,12 +73,11 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    //    virtual void updateToolBar();
 //    virtual void resume();
 
 protected:
-    RS_Vector v1;
-    RS_Vector v2;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
     RS2::SnapRestriction restrBak;
 
 };

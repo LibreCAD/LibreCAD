@@ -28,6 +28,8 @@
 #include "rs_actiondrawspline.h"
 #include "lc_actiondrawsplinepoints.h"
 #include "rs_settings.h"
+#include "ui_qg_splineoptions.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_SplineOptions as a child of 'parent', with the
@@ -35,9 +37,10 @@
  */
 QG_SplineOptions::QG_SplineOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, action(nullptr)
+	, ui(new Ui::Ui_SplineOptions{})
 {
-    action = NULL;
-    setupUi(this);
+	ui->setupUi(this);
 }
 
 /*
@@ -45,8 +48,7 @@ QG_SplineOptions::QG_SplineOptions(QWidget* parent, Qt::WindowFlags fl)
  */
 QG_SplineOptions::~QG_SplineOptions()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+	saveSettings();
 }
 
 /*
@@ -55,52 +57,62 @@ QG_SplineOptions::~QG_SplineOptions()
  */
 void QG_SplineOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
-void QG_SplineOptions::destroy() {
+void QG_SplineOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Draw");
-    RS_SETTINGS->writeEntry("/SplineDegree", cbDegree->currentText().toInt());
-    RS_SETTINGS->writeEntry("/SplineClosed", (int)cbClosed->isChecked());
+	RS_SETTINGS->writeEntry("/SplineDegree", ui->cbDegree->currentText().toInt());
+	RS_SETTINGS->writeEntry("/SplineClosed", (int)ui->cbClosed->isChecked());
     RS_SETTINGS->endGroup();
 }
 
-void QG_SplineOptions::setAction(RS_ActionInterface* a, bool update) {
-    int degree;
-    bool closed;
-    if (a!=NULL && (
-                a->rtti()==RS2::ActionDrawSpline||a->rtti()==RS2::ActionDrawSplinePoints
-                )) {
-        action = (RS_ActionDrawSpline*)a;
-        
-        if (update) {
-            if(a->rtti()==RS2::ActionDrawSpline)
-                degree = action->getDegree();
-            closed = action->isClosed();
-        } else {
-            RS_SETTINGS->beginGroup("/Draw");
-            if(a->rtti()==RS2::ActionDrawSpline){
-                degree = RS_SETTINGS->readNumEntry("/SplineDegree", 3);
-                action->setDegree(degree);
-            }
-            closed = RS_SETTINGS->readNumEntry("/SplineClosed", 0);
-            RS_SETTINGS->endGroup();
-            action->setClosed(closed);
-        }
-        if(a->rtti()==RS2::ActionDrawSpline){
-            cbDegree->setCurrentIndex( cbDegree->findText(QString("%1").arg(degree)) );
-            lDegree->show();
-            cbDegree->show();
-        } else{
-            lDegree->hide();
-            cbDegree->hide();
-        }
-        cbClosed->setChecked(closed);
-    } else {
+void QG_SplineOptions::setAction(RS_ActionInterface* a, bool update)
+{
+    if (a->rtti()!=RS2::ActionDrawSpline && a->rtti()!=RS2::ActionDrawSplinePoints)
+    {
         RS_DEBUG->print(RS_Debug::D_ERROR,
                         "QG_SplineOptions::setAction: wrong action type");
-        action = NULL;
+		action = nullptr;
+        return;
     }
+
+    action = static_cast<RS_ActionDrawSpline*>(a);
+    int degree = 3;
+    bool closed;
+
+    if (update)
+    {
+        if(a->rtti()==RS2::ActionDrawSpline)
+        {
+            degree = action->getDegree();
+        }
+        closed = action->isClosed();
+    }
+    else
+    {
+        RS_SETTINGS->beginGroup("/Draw");
+        if(a->rtti()==RS2::ActionDrawSpline)
+        {
+            degree = RS_SETTINGS->readNumEntry("/SplineDegree", 3);
+            action->setDegree(degree);
+        }
+        closed = RS_SETTINGS->readNumEntry("/SplineClosed", 0);
+        RS_SETTINGS->endGroup();
+        action->setClosed(closed);
+    }
+    if(a->rtti()==RS2::ActionDrawSpline)
+    {
+		ui->cbDegree->setCurrentIndex(ui->cbDegree->findText(QString::number(degree)));
+		ui->lDegree->show();
+		ui->cbDegree->show();
+    }
+    else
+    {
+		ui->lDegree->hide();
+		ui->cbDegree->hide();
+    }
+	ui->cbClosed->setChecked(closed);
 }
 
 void QG_SplineOptions::setClosed(bool c) {

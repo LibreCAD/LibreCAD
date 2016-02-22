@@ -28,7 +28,9 @@
 #define RS_ACTIONDRAWARCTANGENTIAL_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_arc.h"
+
+class RS_AtomicEntity;
+struct RS_ArcData;
 
 /**
  * This action class can handle user events to draw 
@@ -52,12 +54,6 @@ public:
                                RS_GraphicView& graphicView);
     ~RS_ActionDrawArcTangential();
 
-    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
-    virtual RS2::ActionType rtti() {
-        return RS2::ActionDrawArcTangential;
-    }
-
     void reset();
 
     virtual void init(int status=0);
@@ -77,15 +73,10 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
-    void setRadius(double r) {
-        data.radius = r;
-    }
+	void setRadius(double r);
 
-    double getRadius() const {
-        return data.radius;
-    }
+	double getRadius() const;
     void setAngle(double r) {
         angleLength= r;
     }
@@ -110,11 +101,11 @@ protected:
     /**
      * Point that determines end angle.
      */
-    RS_Vector point;
+	std::unique_ptr<RS_Vector> point;
     /**
   * Arc data calculated.
   */
-    RS_ArcData data;
+	std::unique_ptr<RS_ArcData> data;
 private:
     double angleLength;
     bool byRadius;

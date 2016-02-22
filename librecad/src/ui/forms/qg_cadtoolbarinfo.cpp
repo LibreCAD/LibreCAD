@@ -23,105 +23,41 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include "qg_cadtoolbarinfo.h"
 
+#include<cassert>
+#include<QAction>
+#include "qg_cadtoolbarinfo.h"
 #include "qg_cadtoolbar.h"
+#include "qg_actionhandler.h"
 
 /*
  *  Constructs a QG_CadToolBarInfo as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_CadToolBarInfo::QG_CadToolBarInfo(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
+QG_CadToolBarInfo::QG_CadToolBarInfo(QG_CadToolBar* parent, Qt::WindowFlags fl)
+	:LC_CadToolBarInterface(parent, fl)
 {
-    setupUi(this);
-    parentTB=static_cast<QG_CadToolBar*>(parent);
-    init();
+	initToolBars();
 }
 
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_CadToolBarInfo::~QG_CadToolBarInfo()
+void QG_CadToolBarInfo::addSubActions(const std::vector<QAction*>& actions, bool addGroup)
 {
-    // no need to delete child widgets, Qt does it all for us
+	LC_CadToolBarInterface::addSubActions(actions, addGroup);
+	std::vector<QAction**> const buttons={
+		 &bDist, &bDist2, &bAngle, &bTotalLength, &bArea
+	};
+
+	assert(buttons.size()==actions.size());
+
+	for(size_t i=0; i<buttons.size(); ++i)
+		*buttons[i]=actions[i];
 }
 
-/*
- *  Sets the strings of the subwidgets using the current
- *  language.
- */
-void QG_CadToolBarInfo::languageChange()
-{
-    retranslateUi(this);
-}
-
-void QG_CadToolBarInfo::init() {
-    actionHandler = NULL;
-    cadToolBar = NULL;
-}
-
-void QG_CadToolBarInfo::mousePressEvent(QMouseEvent* e) {
-    if (e->button()==Qt::RightButton && cadToolBar!=NULL) {
-        cadToolBar->back();
-        e->accept();
-    }
-}
-
-void QG_CadToolBarInfo::contextMenuEvent(QContextMenuEvent *e) {
-    e->accept();
-}
-
-void QG_CadToolBarInfo::setCadToolBar(QG_CadToolBar* tb) {
-    cadToolBar = tb;
-    if (tb!=NULL) {
-        actionHandler = tb->getActionHandler();
-    } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR,
-                        "QG_CadToolBarInfo::setCadToolBar(): No valid toolbar set.");
-    }
-}
-
-void QG_CadToolBarInfo::infoDist() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotInfoDist();
-    }
-}
-
-void QG_CadToolBarInfo::infoDist2() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotInfoDist2();
-    }
-}
-
-void QG_CadToolBarInfo::infoAngle() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotInfoAngle();
-    }
-}
-
-void QG_CadToolBarInfo::infoTotalLength() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotInfoTotalLength();
-    }
-}
-
-void QG_CadToolBarInfo::infoArea() {
-    if (cadToolBar!=NULL && actionHandler!=NULL) {
-        actionHandler->slotInfoArea();
-    }
-}
-
-//void QG_CadToolBarInfo::back() {
-//    if (cadToolBar!=NULL) {
-//        cadToolBar->back();
-//    }
-//}
 //restore action from checked button
 void QG_CadToolBarInfo::restoreAction()
 {
-    if(actionHandler==NULL) return;
-    //clear all action
+	if(!(actionHandler && bDist)) return;
+	//clear all action
     if ( bDist ->isChecked() ) {
         actionHandler->slotInfoDist();
         return;
@@ -145,24 +81,26 @@ void QG_CadToolBarInfo::restoreAction()
     //default to measure point to point distance
     //bDist->setChecked(true);
     //actionHandler->slotInfoDist();
-    bHidden->setChecked(true);
+	m_pHidden->setChecked(true);
     RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
-    if(currentAction != NULL) {
+	if(currentAction ) {
         currentAction->finish(false); //finish the action, but do not update toolBar
     }
 }
-void QG_CadToolBarInfo::resetToolBar() {
-    bHidden->setChecked(true);
+void QG_CadToolBarInfo::resetToolBar()
+{
+	m_pHidden->setChecked(true);
 }
 
 void QG_CadToolBarInfo::on_bBack_clicked()
 {
-    parentTB->showPreviousToolBar();
+	finishCurrentAction(true);
+	cadToolBar->showPreviousToolBar();
 }
 
 void QG_CadToolBarInfo:: showCadToolBar(RS2::ActionType actionType){
+	if(!bDist) return;
     switch(actionType){
-
 //    case RS2::ActionInfoInside:
     case RS2::ActionInfoDist:
         bDist->setChecked(true);
@@ -181,7 +119,7 @@ void QG_CadToolBarInfo:: showCadToolBar(RS2::ActionType actionType){
         bArea->setChecked(true);
         return;
     default:
-        bHidden->setChecked(true);
+		m_pHidden->setChecked(true);
     }
 }
 

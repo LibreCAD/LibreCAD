@@ -29,6 +29,7 @@
 #include <QAction>
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
+#include "rs_debug.h"
 
 
 
@@ -39,22 +40,9 @@ RS_ActionBlocksToggleView::RS_ActionBlocksToggleView(
                     container, graphicView) {}
 
 
-QAction* RS_ActionBlocksToggleView::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-// RVT_PORT	QAction* action = new QAction(tr("Toggle Block Visibility"),
-//								  tr("&Toggle Block"),
-//								  QKeySequence(), NULL);
-
-        QAction* action = new QAction(tr("Toggle Block &Visibility"),  NULL);
-    action->setIcon(QIcon(":/ui/layertoggle.png"));
-        //action->zetStatusTip(tr("Toggle Block"));
-
-                return action;
-}
-
-
 void RS_ActionBlocksToggleView::trigger() {
     RS_DEBUG->print("toggle block");
-    if (graphic!=NULL) {
+	if (graphic) {
         RS_Block* block = graphic->getActiveBlock();
         graphic->toggleBlock(block);
     }

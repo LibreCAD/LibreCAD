@@ -23,99 +23,131 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include<QCoreApplication>
+#include<QMouseEvent>
+#include<QAction>
+#include<tuple>
+#include<utility>
 #include "qg_cadtoolbarmain.h"
-
 #include "qg_cadtoolbar.h"
-#include "qg_cadtoolbarmain.h"
+#include "qg_actionhandler.h"
 
 /*
  *  Constructs a QG_CadToolBarMain as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_CadToolBarMain::QG_CadToolBarMain(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
+QG_CadToolBarMain::QG_CadToolBarMain(QG_CadToolBar* parent, Qt::WindowFlags fl)
+	:LC_CadToolBarInterface(parent, fl)
 {
-    setupUi(this);
-
-    init();
+	initToolBars();
 }
 
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_CadToolBarMain::~QG_CadToolBarMain()
+void QG_CadToolBarMain::addSubActions(const std::vector<QAction*>& actions, bool /*addGroup*/)
 {
-    // no need to delete child widgets, Qt does it all for us
+	const std::initializer_list<std::pair<QAction**, RS2::ActionType>> actionTypes=
+	{
+		std::make_pair(&bMenuText, RS2::ActionDrawMText),
+		std::make_pair(&bMenuImage, RS2::ActionDrawImage),
+		std::make_pair(&bMenuPoint, RS2::ActionDrawPoint),
+		std::make_pair(&bMenuBlock, RS2::ActionBlocksCreate),
+		std::make_pair(&bMenuHatch, RS2::ActionDrawHatch)
+	};
+	for(auto a: actions){
+		auto it0=std::find_if(actionTypes.begin(), actionTypes.end(),
+							  [&a](const std::pair<QAction**, RS2::ActionType>& a0)->bool{
+			return a->data() == a0.second;
+		});
+		if(it0==actionTypes.end()) return;
+		* it0->first = a;
+	}
+	if(std::any_of(actionTypes.begin(), actionTypes.end(),
+				   [](const std::pair<QAction**, RS2::ActionType>& a)->bool{
+				   return !*(a.first);
+})) return;
+	const std::initializer_list<std::tuple<QAction**, QString, const char*>> buttons={
+		std::make_tuple(&bMenuLine, "menuline", R"(Show toolbar "Lines")"),
+		std::make_tuple(&bMenuArc, "menuarc", R"(Show toolbar "Arcs")"),
+		std::make_tuple(&bMenuCircle, "menucircle", R"(Show toolbar "Circles")"),
+		std::make_tuple(&bMenuEllipse, "menuellipse", R"(Show toolbar "Ellipses")"),
+		std::make_tuple(&bMenuPolyline, "menupolyline", R"(Show toolbar "Polylines")"),
+		std::make_tuple(&bMenuSpline, "menuspline", R"(Show toolbar "Splines")"),
+		std::make_tuple(&bMenuDim, "dimhor", R"(Show toolbar "Dimensions")"),
+//		std::make_tuple(&bMenuHatch, "menuhatch", R"(Create Hatch)"),
+		std::make_tuple(&bMenuModify, "menuedit", R"(Show toolbar "Modify")"),
+		std::make_tuple(&bMenuInfo, "menumeasure", R"(Show toolbar "Info")"),
+		std::make_tuple(&bMenuSelect, "menuselect", R"(Show toolbar "Select")")
+	};
+	std::vector<QAction*> listAction;
+	for(const auto& a: buttons){
+		QAction* p=new QAction(QIcon(":/extui/"+std::get<1>(a)+".png"),
+					  QCoreApplication::translate("main", std::get<2>(a)), this);
+		*std::get<0>(a)=p;
+		listAction.push_back(p);
+	}
+	auto it = std::find(listAction.begin(), listAction.end(),bMenuDim);
+
+	//add draw actions
+	listAction.insert(it, bMenuText);
+
+	QAction* nullAction=new QAction(this);
+	nullAction->setEnabled(false);
+	listAction.insert(it, nullAction);
+
+	listAction.insert(it, bMenuPoint);
+
+	it = std::find(listAction.begin(), listAction.end(),bMenuModify);
+	listAction.insert(it, bMenuImage);
+	it = std::find(listAction.begin(), listAction.end(),bMenuSelect);
+	listAction.insert(it, bMenuBlock);
+	it = std::find(listAction.begin(), listAction.end(),bMenuImage);
+	listAction.insert(it, bMenuHatch);
+	LC_CadToolBarInterface::addSubActions(listAction, false);
+	for(auto a: actionTypes){
+		(*a.first)->setCheckable(true);
+		m_pActionGroup->addAction(*a.first);
+	}
+	if(actionHandler)
+		setActionHandler(actionHandler);
 }
 
-/*
- *  Sets the strings of the subwidgets using the current
- *  language.
- */
-void QG_CadToolBarMain::languageChange()
+void QG_CadToolBarMain::setActionHandler(QG_ActionHandler* ah)
 {
-    retranslateUi(this);
-}
+	actionHandler=ah;
+	if(!bMenuLine) return;
+	connect(bMenuLine, SIGNAL(triggered()),
+			cadToolBar, SLOT(showToolBarLines()));
+	connect(bMenuArc, SIGNAL(triggered()),
+			cadToolBar, SLOT(showToolBarArcs()));
+	connect(bMenuCircle, SIGNAL(triggered()),
+			cadToolBar, SLOT(showToolBarCircles()));
+	connect(bMenuEllipse, SIGNAL(triggered()),
+			cadToolBar, SLOT(showToolBarEllipses()));
+	connect(bMenuSpline, SIGNAL(triggered()),
+			cadToolBar, SLOT(showToolBarSplines()));
+	connect(bMenuPolyline, SIGNAL(triggered()),
+			cadToolBar, SLOT(showToolBarPolylines()));
 
-void QG_CadToolBarMain::init() {
-        actionHandler= NULL;
-}
+	connect(bMenuDim, SIGNAL(triggered()),
+			cadToolBar, SLOT(showToolBarDim()));
 
-void QG_CadToolBarMain::setCadToolBar(QG_CadToolBar* tb) {
-    if (tb!=NULL) {
-        actionHandler= tb->getActionHandler();
-    } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR,
-                        "QG_CadToolBarMain::setCadToolBar(): No valid toolbar set.");
-    }
-    if (actionHandler!=NULL) {
-        connect(bMenuLine, SIGNAL(clicked()),
-                tb, SLOT(showToolBarLines()));
-        connect(bMenuArc, SIGNAL(clicked()),
-                tb, SLOT(showToolBarArcs()));
-        connect(bMenuCircle, SIGNAL(clicked()),
-                tb, SLOT(showToolBarCircles()));
-        connect(bMenuEllipse, SIGNAL(clicked()),
-                tb, SLOT(showToolBarEllipses()));
-        connect(bMenuSpline, SIGNAL(clicked()),
-                tb, SLOT(showToolBarSplines()));
-        connect(bMenuPolyline, SIGNAL(clicked()),
-                tb, SLOT(showToolBarPolylines()));
-        connect(bMenuPoint, SIGNAL(clicked()),
-                actionHandler, SLOT(slotDrawPoint()));
+	connect(bMenuModify, SIGNAL(triggered()),
+			cadToolBar, SLOT(showToolBarModify()));
+	connect(bMenuInfo, SIGNAL(triggered()),
+			cadToolBar, SLOT(showToolBarInfo()));
 
-        connect(bMenuText, SIGNAL(clicked()),
-                //actionHandler, SLOT(slotDrawMText()));
-                this, SLOT(slotDrawMText()));
-        connect(bMenuDim, SIGNAL(clicked()),
-                tb, SLOT(showToolBarDim()));
-        connect(bMenuHatch, SIGNAL(clicked()),
-                actionHandler, SLOT(slotDrawHatch()));
-        connect(bMenuImage, SIGNAL(clicked()),
-                this, SLOT(slotDrawImage()));
-                //actionHandler, SLOT(slotDrawImage()));
+	connect(bMenuBlock, SIGNAL(triggered()),
+			actionHandler, SLOT(slotBlocksCreate()));
+	connect(bMenuSelect, SIGNAL(triggered()),
+			cadToolBar, SLOT(showToolBarSelect()));
 
-        connect(bMenuModify, SIGNAL(clicked()),
-                tb, SLOT(showToolBarModify()));
-        connect(bMenuInfo, SIGNAL(clicked()),
-                tb, SLOT(showToolBarInfo()));
-
-        connect(bMenuBlock, SIGNAL(clicked()),
-                actionHandler, SLOT(slotBlocksCreate()));
-        connect(bMenuSelect, SIGNAL(clicked()),
-                tb, SLOT(showToolBarSelect()));
-    } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR,
-                        "QG_CadToolBarMain::setCadToolBar(): No valid action handler set.");
-    }
 }
 
 //clear current action
 void QG_CadToolBarMain::finishCurrentAction(bool resetToolBar)
 {
-    if(actionHandler==NULL) return;
+	if(!actionHandler) return;
     RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
-    if(currentAction != NULL) {
+	if(currentAction ) {
         currentAction->finish(resetToolBar); //finish the action, but do not update toolBar
     }
 }
@@ -135,27 +167,31 @@ void QG_CadToolBarMain::slotDrawImage()
 //restore action from checked button
 void QG_CadToolBarMain::restoreAction()
 {
-    if(actionHandler==NULL) return;
-    if ( bMenuPoint ->isChecked() ) {
+	if(!(actionHandler&&bMenuPoint)) return;
+	if ( bMenuPoint ->isChecked() ) {
         actionHandler->slotDrawPoint();
         return;
     }
-    bHidden->setChecked(true);
+	m_pHidden->setChecked(true);
     finishCurrentAction();
 }
 
 void QG_CadToolBarMain::resetToolBar()
 {
-    bHidden->setChecked(true);
+	killAllActions();
+	m_pHidden->setChecked(true);
 }
 
-void QG_CadToolBarMain::mouseReleaseEvent(QMouseEvent* e) {
- if (e->button()==Qt::RightButton) {
-    finishCurrentAction(true);
- }
+void QG_CadToolBarMain::mousePressEvent(QMouseEvent* e)
+{
+	if (e->button()==Qt::RightButton && cadToolBar) {
+		resetToolBar();
+	}
 }
+
 
 void QG_CadToolBarMain::showCadToolBar(RS2::ActionType actionType) {
+	if(!bMenuImage) return;
     switch(actionType){
     case RS2::ActionDrawImage:
         bMenuImage->setChecked(true);
@@ -167,7 +203,7 @@ void QG_CadToolBarMain::showCadToolBar(RS2::ActionType actionType) {
         bMenuText->setChecked(true);
         break;
     default:
-        bHidden->setChecked(true);
+		m_pHidden->setChecked(true);
         break;
     }
 }

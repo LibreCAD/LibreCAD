@@ -30,8 +30,8 @@
 
 
 #include <QList>
-#include <QString>
 
+class QString;
 class RS_Block;
 class RS_BlockListListener;
 
@@ -44,30 +44,32 @@ class RS_BlockListListener;
  */
 class RS_BlockList {
 public:
+	RS_BlockList()=default;
     RS_BlockList(bool owner=false);
-    virtual ~RS_BlockList() {}
+	virtual ~RS_BlockList() = default;
 
     void clear();
     /**
      * @return Number of blocks available.
      */
-    int count() {
-        return blocks.count();
-    }
+	int count() const;
 
     /**
      * @return Block at given position or NULL if i is out of range.
      */
-    RS_Block* at(int i) {
-        return blocks.at(i);
-    }
+	RS_Block* at(int i);
+	RS_Block* at(int i) const;
+	//! \{ \brief range based loop
+	QList<RS_Block*>::iterator begin();
+	QList<RS_Block*>::iterator end();
+	QList<RS_Block*>::const_iterator begin()const;
+	QList<RS_Block*>::const_iterator end()const;
+	//! \}
 
     void activate(const QString& name);
     void activate(RS_Block* block);
     //! @return The active block of NULL if no block is activated.
-    RS_Block* getActive() {
-        return activeBlock;
-    }
+	RS_Block* getActive();
 
     virtual bool add(RS_Block* block, bool notify=true);
     virtual void addNotification();
@@ -80,38 +82,19 @@ public:
     void toggle(RS_Block* block);
     void freezeAll(bool freeze);
 
-    /**
-     * @return First block of the list.
-     */
-    //RS_Block* firstBlock() {
-    //    return blocks.first();
-    //}
-
-    /**
-     * @return Next block from the list after 
-     * calling firstBlock() or nextBlock().
-     */
-    //RS_Block* nextBlock() {
-    //    return blocks.next();
-    //}
-
     void addListener(RS_BlockListListener* listener);
     void removeListener(RS_BlockListListener* listener);
 
     /**
      * Sets the layer lists modified status to 'm'.
      */
-    void setModified(bool m) {
-        modified = m;
-    }
+	void setModified(bool m);
 
     /**
      * @retval true The layer list has been modified.
      * @retval false The layer list has not been modified.
      */
-    virtual bool isModified() const {
-        return modified;
-    }
+	bool isModified() const;
 
     friend std::ostream& operator << (std::ostream& os, RS_BlockList& b);
 

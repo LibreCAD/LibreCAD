@@ -28,19 +28,32 @@
 #ifndef RS_EVENTHANDLER_H
 #define RS_EVENTHANDLER_H
 
-#include "rs_graphicview.h"
+#include <QObject>
 
-#define RS_MAXACTIONS 16
+#include "rs_vector.h"
+
+class RS_ActionInterface;
+class QAction;
+class QMouseEvent;
+class QKeyEvent;
+class RS_CommandEvent;
+class RS_SnapMode;
+class RS_Vector;
 
 /**
  * The event handler owns and manages all actions that are currently
  * active. All events going from the view to the actions come over
  * this class.
  */
-class RS_EventHandler {
+class RS_EventHandler : public QObject
+{
+    Q_OBJECT
+
 public:
-    RS_EventHandler(RS_GraphicView* graphicView);
+    RS_EventHandler(QObject* parent = 0);
     ~RS_EventHandler();
+
+    void setQAction(QAction* action);
 
     void back();
     void enter();
@@ -59,35 +72,41 @@ public:
     void disableCoordinateInput();
 
     void setDefaultAction(RS_ActionInterface* action);
-    RS_ActionInterface* getDefaultAction();
+	RS_ActionInterface* getDefaultAction() const;
 
     void setCurrentAction(RS_ActionInterface* action);
-    RS_ActionInterface* getCurrentAction();
-    bool isValid(RS_ActionInterface* action);
+	RS_ActionInterface* getCurrentAction();
+	bool isValid(RS_ActionInterface* action) const;
 
     void killSelectActions();
     void killAllActions();
 
     bool hasAction();
     void cleanUp();
-    void debugActions();
+	void debugActions() const;
     void setSnapMode(RS_SnapMode sm);
     void setSnapRestriction(RS2::SnapRestriction sr);
 
-protected:
-    RS_GraphicView* graphicView;
-    RS_ActionInterface* defaultAction;
-    //    RS_ActionInterface* currentActions[RS_MAXACTIONS];
-    QList<RS_ActionInterface*> currentActions;
-    int actionIndex;
-    bool coordinateInputEnabled;
+    //! return true if the current action is for selecting
+    bool inSelectionMode();
+
 private:
     /**
-         * @brief cliCalEvent, process cli "cal" calculator command
-         * @param cmd, cli line to check for "cal" command
-         * @return true, if cli starts with "cal"
-         */
+     * @brief cliCalEvent, process cli "cal" calculator command
+     * @param cmd, cli line to check for "cal" command
+     * @return true, if cli starts with "cal"
+     */
     bool cliCalculator(const QString& cmd) const;
+
+	QAction* q_action{nullptr};
+	bool right_click_quits{false};
+	RS_ActionInterface* defaultAction{nullptr};
+	QList<RS_ActionInterface*> currentActions;
+	bool coordinateInputEnabled{true};
+    RS_Vector relative_zero;
+
+public slots:
+    void setRelativeZero(const RS_Vector&);
 };
 
 #endif

@@ -24,28 +24,24 @@
 **
 **********************************************************************/
 
+#include <QAction>
+#include <QMouseEvent>
 #include "rs_actionpolylinetrim.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 #include "rs_polyline.h"
+#include "rs_atomicentity.h"
+#include "rs_debug.h"
 
 
 
 RS_ActionPolylineTrim::RS_ActionPolylineTrim(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Trim segments",
-                           container, graphicView) {}
-
-
-QAction* RS_ActionPolylineTrim::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        QAction* action = new QAction(tr("&Trim segments"), NULL);
-        action->setShortcut(QKeySequence());
-        action->setIcon(QIcon(":/extui/polylinetrim.png"));
-        action->setStatusTip(tr("Trim polyline's segments"));
-        return action;
+						   container, graphicView) {
+	actionType=RS2::ActionPolylineTrim;
 }
 
 void RS_ActionPolylineTrim::init(int status) {
@@ -59,7 +55,7 @@ void RS_ActionPolylineTrim::trigger() {
 
         RS_DEBUG->print("RS_ActionPolylineTrim::trigger()");
 
-        if (delEntity!=NULL && Segment1->isAtomic() && Segment2->isAtomic()) {
+        if (delEntity && Segment1->isAtomic() && Segment2->isAtomic()) {
 
                 delEntity->setHighlighted(false);
                 graphicView->drawEntity(delEntity);
@@ -167,7 +163,7 @@ void RS_ActionPolylineTrim::mouseReleaseEvent(QMouseEvent* e) {
                 }
         } else if (e->button()==Qt::RightButton) {
                 deleteSnapper();
-                if (delEntity!=NULL) {
+                if (delEntity) {
                         delEntity->setHighlighted(false);
                         graphicView->drawEntity(delEntity);
 ////////////////////////////////////////2006/06/15
@@ -194,7 +190,7 @@ void RS_ActionPolylineTrim::updateMouseButtonHints() {
                                                         tr("Back"));
                 break;
         default:
-                RS_DIALOGFACTORY->updateMouseWidget("", "");
+                RS_DIALOGFACTORY->updateMouseWidget();
                 break;
         }
 }
@@ -202,18 +198,7 @@ void RS_ActionPolylineTrim::updateMouseButtonHints() {
 
 
 void RS_ActionPolylineTrim::updateMouseCursor() {
-        graphicView->setMouseCursor(RS2::CadCursor);
+        graphicView->setMouseCursor(RS2::SelectCursor);
 }
-
-
-
-//void RS_ActionPolylineTrim::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
 
 // EOF

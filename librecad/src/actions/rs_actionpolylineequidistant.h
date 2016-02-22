@@ -46,12 +46,7 @@ public:
 public:
 	RS_ActionPolylineEquidistant(RS_EntityContainer& container,
 						RS_GraphicView& graphicView);
-	~RS_ActionPolylineEquidistant() {}
-	virtual RS2::ActionType rtti() {
-		return RS2::ActionPolylineEquidistant;
-	}
-
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+	~RS_ActionPolylineEquidistant();
 
 	virtual void init(int status=0);
 	
@@ -70,7 +65,7 @@ public:
 		dist = d;
 	}
 
-	double getDist() {
+	double getDist() const{
 		return dist;
 	}
 
@@ -78,7 +73,7 @@ public:
 		number = n;
 	}
 
-	int getNumber() {
+	int getNumber() const{
 		return number;
 	}
 
@@ -90,7 +85,7 @@ private:
 
 private:
 	RS_Entity* originalEntity;
-	RS_Vector targetPoint;
+	std::unique_ptr<RS_Vector> targetPoint;
 	double dist;
 	int number;
 	bool bRightSide;

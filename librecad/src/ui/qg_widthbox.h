@@ -27,7 +27,7 @@
 #ifndef QG_WIDTHBOX_H
 #define QG_WIDTHBOX_H
 
-#include <qcombobox.h>
+#include <QComboBox>
 
 #include "rs.h"
 
@@ -38,22 +38,18 @@ class QG_WidthBox: public QComboBox {
     Q_OBJECT
 
 public:
-    QG_WidthBox(QWidget* parent=0, const char* name=0);
+	QG_WidthBox(QWidget* parent=nullptr, const char* name=0);
     QG_WidthBox(bool showByLayer, bool showUnchanged,
-                QWidget* parent=0, const char* name=0);
-    virtual ~QG_WidthBox();
+				QWidget* parent=nullptr, const char* name=0);
+    virtual ~QG_WidthBox()=default;
 
-    RS2::LineWidth getWidth() {
-        return currentWidth;
-    }
+    RS2::LineWidth getWidth() const;
     void setWidth(RS2::LineWidth w);
     void setLayerWidth(RS2::LineWidth w);
 
     void init(bool showByLayer, bool showUnchanged);
 
-    bool isUnchanged() {
-        return unchanged;
-    }
+    bool isUnchanged() const;
 
 private slots:
     void slotWidthChanged(int index);

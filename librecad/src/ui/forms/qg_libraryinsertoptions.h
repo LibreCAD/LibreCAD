@@ -26,12 +26,16 @@
 #ifndef QG_LIBRARYINSERTOPTIONS_H
 #define QG_LIBRARYINSERTOPTIONS_H
 
-#include "ui_qg_libraryinsertoptions.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionLibraryInsert;
+namespace Ui {
+class Ui_LibraryInsertOptions;
+}
 
-class QG_LibraryInsertOptions : public QWidget, public Ui::QG_LibraryInsertOptions
+class QG_LibraryInsertOptions : public QWidget
 {
     Q_OBJECT
 
@@ -50,8 +54,8 @@ protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_LibraryInsertOptions> ui;
 };
 
 #endif // QG_LIBRARYINSERTOPTIONS_H

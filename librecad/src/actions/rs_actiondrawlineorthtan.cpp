@@ -20,14 +20,21 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#include<QAction>
+#include <QMouseEvent>
 #include "rs_actiondrawlineorthtan.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_creation.h"
 #include "rs_selection.h"
+#include "rs_line.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
+namespace{
+auto circleList={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse}; //this holds a list of entity types which supports tangent
+}
 
 /**
  * This action class can handle user events to draw tangents normal to lines
@@ -38,116 +45,101 @@ RS_ActionDrawLineOrthTan::RS_ActionDrawLineOrthTan(
         RS_EntityContainer& container,
         RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw Tangent Orthogonal", container, graphicView)
-    ,normal(NULL)
-    ,tangent(NULL)
-    ,circle(NULL)
+	,normal(nullptr)
+	,tangent(nullptr)
+	,circle(nullptr)
 {
-    //    circleList.clear();
-    circleList.push_back(RS2::EntityArc);
-    circleList.push_back(RS2::EntityCircle);
-    circleList.push_back(RS2::EntityEllipse);
+	actionType=RS2::ActionDrawLineOrthTan;
 }
 
 
 void RS_ActionDrawLineOrthTan::finish(bool updateTB){
-    if(normal!=NULL){
-        normal->setHighlighted(false);
-        if(graphicView==NULL){
-            graphicView->drawEntity(normal);
-        }
-    }
+	clearLines();
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-QAction* RS_ActionDrawLineOrthTan::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action = new QAction(tr("Tangent &Orthogonal"), NULL);
-    action->setIcon(QIcon(":/extui/linesorthtan.png"));
-    return action;
-}
-
 void RS_ActionDrawLineOrthTan::trigger() {
+	if(!tangent) return;
     RS_PreviewActionInterface::trigger();
 
-    if (tangent!=NULL) {
-        RS_Entity* newEntity = NULL;
-        newEntity = new RS_Line(container,
-                                tangent->getData());
-        if (newEntity!=NULL) {
-            newEntity->setLayerToActive();
-            newEntity->setPenToActive();
-            container->addEntity(newEntity);
+	deletePreview();
+	if(circle)
+		circle->setHighlighted(false);
+	circle=nullptr;
+	graphicView->redraw(RS2::RedrawDrawing);
+	RS_Entity* newEntity = new RS_Line(container,
+									   tangent->getData());
+	newEntity->setLayerToActive();
+	newEntity->setPenToActive();
+	container->addEntity(newEntity);
 
-            // upd. undo list:
-            if (document!=NULL) {
-                document->startUndoCycle();
-                document->addUndoable(newEntity);
-                document->endUndoCycle();
-            }
+	// upd. undo list:
+	if (document) {
+		document->startUndoCycle();
+		document->addUndoable(newEntity);
+		document->endUndoCycle();
+	}
 
-            graphicView->redraw(RS2::RedrawDrawing);
+	graphicView->redraw(RS2::RedrawDrawing);
 
-            setStatus(SetCircle);
-        }
-        delete tangent;
-        tangent = NULL;
-    } else {
-        RS_DEBUG->print("RS_ActionDrawLineOrthTan::trigger:"
-                        " Entity is NULL\n");
-    }
+	setStatus(SetCircle);
+
 }
 
 
 
 void RS_ActionDrawLineOrthTan::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineOrthTan::mouseMoveEvent begin");
-    if( getStatus() != SetCircle ) return;
+	e->accept();
+	RS_Vector mouse(graphicView->toGraphX(e->x()),
+					graphicView->toGraphY(e->y()));
 
-    RS_Vector mouse(graphicView->toGraphX(e->x()),
-                    graphicView->toGraphY(e->y()));
+	switch(getStatus()){
+	case SetLine:
+		return;
+	case SetCircle:{
 
-    RS_Entity* en ;
-    en = catchEntity(e, circleList, RS2::ResolveAll);
-    if (en!=NULL && (en->rtti()==RS2::EntityCircle ||
-                     en->rtti()==RS2::EntityArc ||
-                     en->rtti()==RS2::EntityEllipse)) {
-        circle = en;
+		RS_Entity* en = catchEntity(e, circleList, RS2::ResolveAll);
+		if(!en) return;
+		deletePreview();
+		if(circle)
+			circle->setHighlighted(false);
+		circle = en;
+		circle->setHighlighted(true);
+		graphicView->redraw(RS2::RedrawDrawing);
+		deletePreview();
+		RS_Creation creation(preview.get(), graphicView, false);
+		tangent = creation.createLineOrthTan(mouse,
+											 normal,
+											 circle);
+		preview->addEntity(tangent);
+		drawPreview();
 
-        RS_Creation creation(NULL, NULL);
-        RS_Line* t = creation.createLineOrthTan(mouse,
-                                                normal,
-                                                circle);
-
-        if (t!=NULL) {
-            if (tangent!=NULL) {
-                delete tangent;
-                    tangent=NULL;
-            }
-            tangent = (RS_Line*)t->clone();
-
-            deletePreview();
-            preview->addEntity(t);
-            drawPreview();
-        }
-    }
-    RS_DEBUG->print("RS_ActionDrawLineOrthTan::mouseMoveEvent end");
+	}
+	default:
+		break;
+	}
+	RS_DEBUG->print("RS_ActionDrawLineOrthTan::mouseMoveEvent end");
 }
 
 
+void RS_ActionDrawLineOrthTan::clearLines()
+{
+	for(RS_Entity* p: {(RS_Entity*) normal, circle}){
+		if(p){
+			p->setHighlighted(false);
+			graphicView->drawEntity(p);
+		}
+	}
+	if(circle) circle=nullptr;
+	deletePreview();
+}
 
 void RS_ActionDrawLineOrthTan::mouseReleaseEvent(QMouseEvent* e) {
-
     if (e->button()==Qt::RightButton) {
-        if( normal != NULL) {
-            normal->setHighlighted(false);
-            graphicView->drawEntity(normal);
-        }
-            if (tangent != NULL) {
-                    delete tangent;
-                    tangent=NULL;
-            }
-        deletePreview();
+		clearLines();
         if (getStatus() == SetLine) {
-                finish(false);
+				finish(true);
         }else{
                 init(getStatus()-1);
         }
@@ -155,12 +147,12 @@ void RS_ActionDrawLineOrthTan::mouseReleaseEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case SetLine: {
             RS_Entity* en=catchEntity(e,RS2::EntityLine);
-            if(en != NULL){
+			if(en){
                 if (en->getLength() < RS_TOLERANCE) {
                     //ignore lines not long enough
                     break;
                 }
-                if(normal != NULL) {
+				if(normal) {
                     normal->setHighlighted(false);
                     graphicView->drawEntity(normal);
                 }
@@ -173,10 +165,11 @@ void RS_ActionDrawLineOrthTan::mouseReleaseEvent(QMouseEvent* e) {
             break;
 
         case SetCircle:
-            if(tangent!=NULL){
-                trigger();
-            }
-            break;
+			if(tangent){
+				trigger();
+			}
+			break;
+
         default:
             break;
         }
@@ -187,7 +180,7 @@ void RS_ActionDrawLineOrthTan::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawLineOrthTan::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+	if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetLine:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Select a line"),
@@ -198,7 +191,7 @@ void RS_ActionDrawLineOrthTan::updateMouseButtonHints() {
                                                 tr("Back"));
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+            RS_DIALOGFACTORY->updateMouseWidget();
             break;
         }
     }
@@ -210,20 +203,8 @@ void RS_ActionDrawLineOrthTan::updateMouseCursor() {
         if(isFinished()) {
     graphicView->setMouseCursor(RS2::ArrowCursor);
         }else{
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
         }
 }
-
-
-
-//void RS_ActionDrawLineOrthTan::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
-
 
 // EOF

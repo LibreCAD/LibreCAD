@@ -24,52 +24,41 @@
 **
 **********************************************************************/
 
-
+#include <QRegExp>
+#include <QAction>
+#include <QMouseEvent>
 #include "rs_eventhandler.h"
-
 #include "rs_actioninterface.h"
 #include "rs_dialogfactory.h"
 #include "rs_commandevent.h"
+#include "rs_coordinateevent.h"
 #include "rs_commands.h"
+#include "rs_math.h"
+#include "rs_snapper.h"
+#include "rs_debug.h"
 
 /**
  * Constructor.
  */
-RS_EventHandler::RS_EventHandler(RS_GraphicView* graphicView) {
-    this->graphicView = graphicView;
-//    actionIndex=-1;
-    currentActions.clear();
-    //    for (int i=0; i<RS_MAXACTIONS; ++i) {
-    //        currentActions[i] = NULL;
-    //    }
-    coordinateInputEnabled = true;
-    defaultAction = NULL;
+RS_EventHandler::RS_EventHandler(QObject* parent) : QObject(parent)
+{
+    connect(parent, SIGNAL(relative_zero_changed(const RS_Vector&)),
+            this, SLOT(setRelativeZero(const RS_Vector&)));
 }
-
-
 
 /**
  * Destructor.
  */
 RS_EventHandler::~RS_EventHandler() {
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler");
-    if (defaultAction!=NULL) {
-        defaultAction->finish();
-        delete defaultAction;
-        defaultAction = NULL;
-    }
+	delete defaultAction;
+	defaultAction = nullptr;
 
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler: Deleting all actions..");
-    for(int i=0; i< currentActions.size();i++){
-        //        currentActions[i]->finish(false);
-        delete currentActions[i];
+    for(auto a: currentActions){
+        delete a;
     }
-    //    for (int i=0; i<RS_MAXACTIONS; ++i) {
-    //        if (currentActions[i]!=NULL) {
-    //            currentActions[i]->setFinished();
-    //        }
-    //    }
-    //cleanUp();
+    currentActions.clear();
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler: Deleting all actions..: OK");
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler: OK");
 }
@@ -96,14 +85,14 @@ void RS_EventHandler::enter() {
 
 
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
 void RS_EventHandler::mousePressEvent(QMouseEvent* e) {
     if(hasAction()){
         currentActions.last()->mousePressEvent(e);
         e->accept();
     } else {
-        if (defaultAction!=NULL) {
+        if (defaultAction) {
             defaultAction->mousePressEvent(e);
             e->accept();
         } else {
@@ -116,11 +105,11 @@ void RS_EventHandler::mousePressEvent(QMouseEvent* e) {
 
 
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
 void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
     if(hasAction()){
-        //    if (actionIndex>=0 && currentActions[actionIndex]!=NULL &&
+        //    if (actionIndex>=0 && currentActions[actionIndex] &&
         //            !currentActions[actionIndex]->isFinished()) {
         RS_DEBUG->print("call action %s",
                         currentActions.last()->getName().toLatin1().data());
@@ -131,7 +120,7 @@ void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
         cleanUp();
         e->accept();
     } else {
-        if (defaultAction!=NULL) {
+        if (defaultAction) {
             defaultAction->mouseReleaseEvent(e);
         } else {
             e->ignore();
@@ -142,34 +131,26 @@ void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
 
 
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
-void RS_EventHandler::mouseMoveEvent(QMouseEvent* e) {
-    if(hasAction()){
+void RS_EventHandler::mouseMoveEvent(QMouseEvent* e)
+{
+    if(hasAction())
         currentActions.last()->mouseMoveEvent(e);
-        e->accept();
-    } else {
-        if (defaultAction!=NULL) {
-            defaultAction->mouseMoveEvent(e);
-            e->accept();
-        } else {
-            e->ignore();
-        }
-        //RS_DEBUG->print("currently no action defined");
-    }
+
+    else if (defaultAction)
+        defaultAction->mouseMoveEvent(e);
 }
 
-
-
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
 void RS_EventHandler::mouseLeaveEvent() {
 
     if(hasAction()){
         currentActions.last()->suspend();
     } else {
-        if (defaultAction!=NULL) {
+        if (defaultAction) {
             defaultAction->suspend();
         }
         //RS_DEBUG->print("currently no action defined");
@@ -179,14 +160,14 @@ void RS_EventHandler::mouseLeaveEvent() {
 
 
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
 void RS_EventHandler::mouseEnterEvent() {
 
     if(hasAction()){
         currentActions.last()->resume();
     } else {
-        if (defaultAction!=NULL) {
+        if (defaultAction) {
             defaultAction->resume();
         }
     }
@@ -195,14 +176,14 @@ void RS_EventHandler::mouseEnterEvent() {
 
 
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
 void RS_EventHandler::keyPressEvent(QKeyEvent* e) {
 
     if(hasAction()){
         currentActions.last()->keyPressEvent(e);
     } else {
-        if (defaultAction!=NULL) {
+        if (defaultAction) {
             defaultAction->keyPressEvent(e);
         }
         else {
@@ -216,14 +197,14 @@ void RS_EventHandler::keyPressEvent(QKeyEvent* e) {
 
 
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
 void RS_EventHandler::keyReleaseEvent(QKeyEvent* e) {
 
     if(hasAction()){
         currentActions.last()->keyReleaseEvent(e);
     } else {
-        if (defaultAction!=NULL) {
+        if (defaultAction) {
             defaultAction->keyReleaseEvent(e);
         }
         else {
@@ -242,12 +223,16 @@ bool RS_EventHandler::cliCalculator(const QString& cmd) const
 //        RS_DIALOGFACTORY->commandMessage("No math expression");
         return false;
     }
+    // convert sin(45d) to sin(45*pi/180)
+	// TODO,
+    QRegExp regex(R"~(([\d\.]+)deg|d)~");
+    str.replace(regex, R"~(\1*pi/180)~");
     bool ok=true;
     double result=RS_Math::eval(str,&ok);
     if(ok)
-        RS_DIALOGFACTORY->commandMessage(str + " = "+QString::number(result));
+		RS_DIALOGFACTORY->commandMessage(str + " = "+QString::number(result, 'g', 12));
     else
-        RS_DIALOGFACTORY->commandMessage("Calculator error for input: "+ str);
+        RS_DIALOGFACTORY->commandMessage(QObject::tr("Calculator error for input: ")+ str);
     return true;
 }
 
@@ -288,7 +273,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                         RS_DEBUG->print("RS_EventHandler::commandEvent: 006");
                         currentActions.last()->coordinateEvent(&ce);
                     } else {
-                        if (RS_DIALOGFACTORY!=NULL) {
+                        if (RS_DIALOGFACTORY) {
                             RS_DIALOGFACTORY->commandMessage(
                                         "Expression Syntax Error");
                         }
@@ -305,13 +290,12 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                         double y = RS_Math::eval(cmd.mid(commaPos+1), &ok2);
 
                         if (ok1 && ok2) {
-                            RS_CoordinateEvent ce(RS_Vector(x,y) +
-                                                  graphicView->getRelativeZero());
+                            RS_CoordinateEvent ce(RS_Vector(x,y) + relative_zero);
 
                             currentActions.last()->coordinateEvent(&ce);
                             //                            currentActions[actionIndex]->coordinateEvent(&ce);
                         } else {
-                            if (RS_DIALOGFACTORY!=NULL) {
+                            if (RS_DIALOGFACTORY) {
                                 RS_DIALOGFACTORY->commandMessage(
                                             "Expression Syntax Error");
                             }
@@ -329,12 +313,12 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                         double a = RS_Math::eval(cmd.mid(commaPos+1), &ok2);
 
                         if (ok1 && ok2) {
-                            RS_Vector pos;
-                            pos.setPolar(r,RS_Math::deg2rad(a));
+							RS_Vector pos{
+								RS_Vector::polar(r,RS_Math::deg2rad(a))};
                             RS_CoordinateEvent ce(pos);
                             currentActions.last()->coordinateEvent(&ce);
                         } else {
-                            if (RS_DIALOGFACTORY!=NULL) {
+                            if (RS_DIALOGFACTORY) {
                                 RS_DIALOGFACTORY->commandMessage(
                                             "Expression Syntax Error");
                             }
@@ -352,13 +336,11 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                         double a = RS_Math::eval(cmd.mid(commaPos+1), &ok2);
 
                         if (ok1 && ok2) {
-                            RS_Vector pos;
-                            pos.setPolar(r,RS_Math::deg2rad(a));
-                            RS_CoordinateEvent ce(pos +
-                                                  graphicView->getRelativeZero());
+							RS_Vector pos = RS_Vector::polar(r,RS_Math::deg2rad(a));
+                            RS_CoordinateEvent ce(pos + relative_zero);
                             currentActions.last()->coordinateEvent(&ce);
                         } else {
-                            if (RS_DIALOGFACTORY!=NULL) {
+                            if (RS_DIALOGFACTORY) {
                                 RS_DIALOGFACTORY->commandMessage(
                                             "Expression Syntax Error");
                             }
@@ -374,7 +356,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                 }
             }else{
             //send the command to default action
-                if (defaultAction!=NULL) {
+                if (defaultAction) {
                     defaultAction->commandEvent(e);
                 }
             }
@@ -409,7 +391,7 @@ void RS_EventHandler::disableCoordinateInput() {
 /**
  * @return Current action.
  */
-RS_ActionInterface* RS_EventHandler::getCurrentAction() {
+RS_ActionInterface* RS_EventHandler::getCurrentAction(){
     if(hasAction()){
         return currentActions.last();
     } else {
@@ -422,7 +404,7 @@ RS_ActionInterface* RS_EventHandler::getCurrentAction() {
 /**
  * @return The current default action.
  */
-RS_ActionInterface* RS_EventHandler::getDefaultAction() {
+RS_ActionInterface* RS_EventHandler::getDefaultAction() const{
     return defaultAction;
 }
 
@@ -432,7 +414,7 @@ RS_ActionInterface* RS_EventHandler::getDefaultAction() {
  * Sets the default action.
  */
 void RS_EventHandler::setDefaultAction(RS_ActionInterface* action) {
-    if (defaultAction!=NULL) {
+    if (defaultAction) {
         defaultAction->finish();
         delete defaultAction;
         //        defaultAction = NULL;
@@ -462,7 +444,7 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
         predecessor->hideOptions();
     }
     else {
-        if (defaultAction!=NULL) {
+        if (defaultAction) {
             predecessor = defaultAction;
             predecessor->suspend();
             predecessor->hideOptions();
@@ -472,7 +454,7 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     //    // Forget about the oldest action and make space for the new action:
     //    if (actionIndex==RS_MAXACTIONS-1) {
     //        // delete oldest action if necessary (usually never happens):
-    //        if (currentActions[0]!=NULL) {
+    //        if (currentActions[0]) {
     //            currentActions[0]->finish();
     //            delete currentActions[0];
     //            currentActions[0] = NULL;
@@ -539,21 +521,25 @@ void RS_EventHandler::killSelectActions() {
 /**
  * Kills all running actions. Called when a window is closed.
  */
-void RS_EventHandler::killAllActions() {
+void RS_EventHandler::killAllActions()
+{
+	RS_DEBUG->print(__FILE__ ": %s: line %d: begin\n", __func__, __LINE__);
 
-    while(currentActions.size()>0){
-        if ( ! currentActions.first()->isFinished() ){
-            currentActions.first()->finish();
-        }
-        //need to check the size again after finish(), bug#3451525, 3451415
-        if(currentActions.size()==0) return;
-        delete currentActions.takeFirst();
-    }
-//    if(defaultAction->rtti() == RS2::ActionDefault){
+	for(auto p: currentActions)
+    {
+		if (!p->isFinished())
+        {
+            if (right_click_quits)
+            {
+                q_action->setChecked(false);
+                right_click_quits = false;
+            }
+			p->finish();
+		}
+	}
 
-//    }
-    //cleanup default action, issue#285
-    defaultAction->init(0);
+	RS_DEBUG->print(__FILE__ ": %s: line %d: begin\n", __func__, __LINE__);
+	defaultAction->init(0);
 }
 
 
@@ -561,21 +547,19 @@ void RS_EventHandler::killAllActions() {
 /**
  * @return true if the action is within currentActions
  */
-bool RS_EventHandler::isValid(RS_ActionInterface* action){
+bool RS_EventHandler::isValid(RS_ActionInterface* action) const{
     return currentActions.indexOf(action) >= 0;
 }
 
 /**
  * @return true if there is at least one action in the action stack.
  */
-bool RS_EventHandler::hasAction() {
-
-    while(currentActions.size()>0 ) {
-        if(! currentActions.last()->isFinished()){
+bool RS_EventHandler::hasAction()
+{
+    foreach (RS_ActionInterface* a, currentActions)
+    {
+        if(!a->isFinished())
             return true;
-        }
-        delete currentActions.last();
-        currentActions.pop_back();
     }
     return false;
 }
@@ -588,21 +572,26 @@ bool RS_EventHandler::hasAction() {
 void RS_EventHandler::cleanUp() {
     RS_DEBUG->print("RS_EventHandler::cleanUp");
 
-    for (auto it=currentActions.begin();it != currentActions.end();){
-
-        if( (*it)->isFinished()){
-//            (*it)->finish();
+    for (auto it=currentActions.begin(); it != currentActions.end();)
+    {
+        if( (*it)->isFinished())
+        {
+            if (right_click_quits)
+            {
+                q_action->setChecked(false);
+                right_click_quits = false;
+            }
             delete *it;
             it= currentActions.erase(it);
         }else{
-            it++;
+            ++it;
         }
     }
     if(hasAction()){
         currentActions.last()->resume();
         currentActions.last()->showOptions();
     } else {
-        if (defaultAction!=NULL) {
+		if (defaultAction) {
             defaultAction->resume();
             defaultAction->showOptions();
         }
@@ -616,13 +605,13 @@ void RS_EventHandler::cleanUp() {
  * Sets the snap mode for all currently active actions.
  */
 void RS_EventHandler::setSnapMode(RS_SnapMode sm) {
-    for (auto it=currentActions.begin();it != currentActions.end();it++){
-        if(! (*it)->isFinished()){
-            (*it)->setSnapMode(sm);
+    for(auto a: currentActions){
+        if( ! a->isFinished()){
+            a->setSnapMode(sm);
         }
     }
 
-    if (defaultAction!=NULL) {
+	if (defaultAction) {
         defaultAction->setSnapMode(sm);
     }
 }
@@ -632,22 +621,23 @@ void RS_EventHandler::setSnapMode(RS_SnapMode sm) {
  * Sets the snap restriction for all currently active actions.
  */
 void RS_EventHandler::setSnapRestriction(RS2::SnapRestriction sr) {
-    for (auto it=currentActions.begin();it != currentActions.end();it++){
-        if(! (*it)->isFinished()){
-            (*it)->setSnapRestriction(sr);
+
+    for(auto a: currentActions){
+        if( ! a->isFinished()){
+            a->setSnapRestriction(sr);
         }
     }
 
-    if (defaultAction!=NULL) {
+    if (defaultAction) {
         defaultAction->setSnapRestriction(sr);
     }
 }
 
 
-void RS_EventHandler::debugActions() {
+void RS_EventHandler::debugActions() const{
     //        std::cout<<"action queue size=:"<<currentActions.size()<<std::endl;
     RS_DEBUG->print("---");
-    for(int i=0;i<currentActions.size();i++){
+    for(int i=0;i<currentActions.size();++i){
 
         if (i == currentActions.size() - 1 ) {
             RS_DEBUG->print("Current");
@@ -655,6 +645,36 @@ void RS_EventHandler::debugActions() {
         RS_DEBUG->print("Action %03d: %s [%s]",
                         i, currentActions.at(i)->getName().toLatin1().data(),
                         currentActions.at(i)->isFinished() ? "finished" : "active");
+    }
+}
+
+void RS_EventHandler::setQAction(QAction* action)
+{
+    q_action = action;
+    right_click_quits = true;
+    killAllActions();
+}
+
+void RS_EventHandler::setRelativeZero(const RS_Vector& point)
+{
+    relative_zero = point;
+}
+
+bool RS_EventHandler::inSelectionMode()
+{
+    switch (getCurrentAction()->rtti())
+    {
+        case RS2::ActionDefault:
+        case RS2::ActionSelectSingle:
+        case RS2::ActionSelectWindow:
+        case RS2::ActionDeselectWindow:
+        case RS2::ActionSelectContour:
+        case RS2::ActionSelectIntersected:
+        case RS2::ActionDeselectIntersected:
+        case RS2::ActionSelectLayer:
+            return true;
+        default:
+            return false;
     }
 }
 
