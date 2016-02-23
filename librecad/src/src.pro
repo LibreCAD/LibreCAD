@@ -110,11 +110,12 @@ DEPENDPATH += \
     lib/scripting \
     actions \
     main \
-	test \
-	plugins \
-	ui \
+    test \
+    plugins \
+    ui \
     ui/forms \
-	../res
+    ui/generic \
+    ../res
 
 RESOURCES += ../res/extui/extui.qrc
 
@@ -224,7 +225,8 @@ HEADERS += \
     lib/generators/lc_xmlwriterinterface.h \
     lib/generators/lc_xmlwriterqxmlstreamwriter.h \
     actions/lc_actionfileexportmakercam.h \
-    lib/engine/lc_rect.h
+    lib/engine/lc_rect.h \
+    main/lc_options.h
 
 SOURCES += \
     lib/actions/rs_actioninterface.cpp \
@@ -695,7 +697,8 @@ HEADERS += ui/lc_actionfactory.h \
     ui/forms/lc_widgetoptionsdialog.h \
     ui/forms/qg_snaptoolbar.h \
     ui/forms/qg_activelayername.h \
-    ui/lc_deviceoptions.h
+    ui/lc_deviceoptions.h \
+    ui/generic/comboboxoption.h
 
 SOURCES += ui/lc_actionfactory.cpp \
     ui/qg_actionhandler.cpp \
@@ -790,7 +793,8 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/forms/lc_widgetoptionsdialog.cpp \
     ui/forms/qg_snaptoolbar.cpp \
     ui/forms/qg_activelayername.cpp \
-    ui/lc_deviceoptions.cpp
+    ui/lc_deviceoptions.cpp \
+    ui/generic/comboboxoption.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_arcoptions.ui \
@@ -861,7 +865,8 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_activelayername.ui \
     ui/forms/lc_dlgsplinepoints.ui \
     ui/forms/lc_widgetoptionsdialog.ui \
-    ui/lc_deviceoptions.ui
+    ui/lc_deviceoptions.ui \
+    ui/generic/comboboxoption.ui
 
 RESOURCES += ../res/ui/ui.qrc
 
