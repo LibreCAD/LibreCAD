@@ -28,9 +28,11 @@ include(./muparser.pri)
 #DEFINES += RS_VECTOR2D=1
 
 CONFIG += qt \
-     warn_on \
-     link_prl \
-     verbose
+    warn_on \
+    link_prl \
+    verbose \
+    depend_includepath
+
 
 greaterThan( QT_MAJOR_VERSION, 4 ) {
     # in Qt5 help is deprecated in CONFIG
@@ -92,7 +94,7 @@ LIBS += -L../../generated/lib  \
     -ldxfrw \
     -ljwwlib
 
-DEPENDPATH += \
+INCLUDEPATH += \
     ../../libraries/libdxfrw/src \
     ../../libraries/jwwlib/src \
     cmd \
@@ -118,9 +120,6 @@ DEPENDPATH += \
     ../res
 
 RESOURCES += ../res/extui/extui.qrc
-
-#depends check, bug#3411161
-INCLUDEPATH += $$DEPENDPATH
 
 # ################################################################################
 # Library
