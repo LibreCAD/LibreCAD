@@ -57,6 +57,7 @@ class QG_ActionHandler;
 class RS_GraphicView;
 class RS_Document;
 class TwoStackedLabels;
+class LC_Options;
 
 struct DockAreas
 {
@@ -92,6 +93,8 @@ public:
     bool loadStyleSheet(QString path);
 
     QMap<QString, QAction*> a_map;
+
+    std::shared_ptr<LC_Options> options;
 
 public slots:
     void relayAction(QAction* q_action);
@@ -189,6 +192,8 @@ public slots:
     void updateGridStatus(const QString&);
 
     void showDeviceOptions();
+
+    void updateDevice(QString);
 
 signals:
     void gridChanged(bool on);

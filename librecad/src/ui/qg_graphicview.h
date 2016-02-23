@@ -36,6 +36,7 @@
 class QGridLayout;
 class QLabel;
 class QG_ScrollBar;
+class LC_Options;
 
 /**
  * This is the Qt implementation of a widget which can view a 
@@ -94,7 +95,7 @@ public:
     void addScrollbars();
     bool hasScrollbars();
 
-    QString device;
+    std::shared_ptr<LC_Options> options;
 
 protected:
     virtual void mousePressEvent(QMouseEvent* e);

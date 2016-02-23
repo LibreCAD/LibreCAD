@@ -46,6 +46,7 @@
 #include "qg_dialogfactory.h"
 #include "rs_eventhandler.h"
 #include "rs_actiondefault.h"
+#include "lc_options.h"
 
 
 #include "qg_scrollbar.h"
@@ -458,7 +459,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
     #if QT_VERSION >= 0x050200
 
-        if (device == "Trackpad")
+        if (options->device == "Trackpad")
         {
             QPoint numPixels = e->pixelDelta();
 

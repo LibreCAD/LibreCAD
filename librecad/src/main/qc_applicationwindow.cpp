@@ -98,7 +98,8 @@
 #include "rs_debug.h"
 
 #include "lc_widgetoptionsdialog.h"
-#include "lc_deviceoptions.h"
+#include "comboboxoption.h"
+#include "lc_options.h"
 
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
 
@@ -212,10 +213,15 @@ QPrinter::PageSize rsToQtPaperFormat(RS2::PaperFormat f) {
  * Constructor. Initializes the app.
  */
 QC_ApplicationWindow::QC_ApplicationWindow()
+    : options(std::make_shared<LC_Options>())
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
     appWindow = this;
+
+    QSettings settings;
+
+    options->device = settings.value("Hardware/Device", "Mouse").toString();
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: setting icon");
     setWindowIcon(QIcon(QC_APP_ICON));
@@ -235,7 +241,6 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     grid_status->setTopLabel(tr("Grid Status"));
     status_bar->addWidget(grid_status);
 
-    QSettings settings;
     settings.beginGroup("Widgets");
     int allow_statusbar_fontsize = settings.value("AllowStatusbarFontSize", 0).toInt();
 
@@ -673,6 +678,9 @@ void QC_ApplicationWindow::storeSettings() {
         RS_SETTINGS->endGroup();
         //save snapMode
         snapToolBar->saveSnapMode();
+
+        QSettings settings;
+        settings.setValue("Hardware/Device", options->device);
     }
 
     RS_DEBUG->print("QC_ApplicationWindow::storeSettings(): OK");
@@ -1171,13 +1179,11 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     int cursor_hiding = RS_SETTINGS->readNumEntry("/cursor_hiding", 0);
     RS_SETTINGS->endGroup();
 
-    QSettings settings;
-
     QG_GraphicView* view = w->getGraphicView();
 
     view->setAntialiasing(aa);
     view->setCursorHiding(cursor_hiding);
-    view->device = settings.value("Hardware/Device", 0).toString();
+    view->options = options;
     if (scrollbars) view->addScrollbars();
 
     connect(view, SIGNAL(gridStatusChanged(const QString&)),
@@ -2967,8 +2973,18 @@ void QC_ApplicationWindow::showDeviceOptions()
 {
     QDialog dlg;
     dlg.setWindowTitle(tr("Device Options"));
-    QVBoxLayout* layout = new QVBoxLayout;
-    layout->addWidget(new LC_DeviceOptions(&dlg));
+    auto layout = new QVBoxLayout;
+    auto device_combo = new ComboBoxOption(&dlg);
+    device_combo->setTitle(tr("Device"));
+    device_combo->setOptionsList(QStringList({"Mouse", "Tablet", "Trackpad", "Touchscreen"}));
+    device_combo->setCurrentOption(options->device);
+    layout->addWidget(device_combo);
     dlg.setLayout(layout);
+    connect(device_combo, SIGNAL(optionToSave(QString)), this, SLOT(updateDevice(QString)));
     dlg.exec();
+}
+
+void QC_ApplicationWindow::updateDevice(QString device)
+{
+    options->device = device;
 }
