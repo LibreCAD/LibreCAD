@@ -1800,10 +1800,6 @@ double RS_EntityContainer::areaLineIntegral() const
 
 bool RS_EntityContainer::ignoredOnModification() const
 {
-	// disable snapping on hatch, #652
-	if (getParent() && getParent()->rtti() == RS2::EntityHatch)
-		return true;
-
     switch(rtti()){
     // commented out Insert to allow snapping on block, bug#523
     // case RS2::EntityInsert:         /**Insert*/
