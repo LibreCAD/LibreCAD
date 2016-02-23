@@ -762,6 +762,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     windows_menu = new QMenu(QC_ApplicationWindow::tr("&Window"), menu_bar);
     windows_menu->setObjectName("windows_menu");
     windows_menu->setTearOffEnabled(true);
+    windows_menu->addAction(a_map["Fullscreen"]); // temp way to show this menu on OS X
 
     connect(windows_menu, SIGNAL(aboutToShow()),
             main_window, SLOT(slotWindowsMenuAboutToShow()));
