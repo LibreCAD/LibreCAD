@@ -39,14 +39,6 @@
 /**
  * Constructor for a point with given coordinates.
  */
-#ifdef  RS_VECTOR2D
-RS_Vector::RS_Vector(double vx, double vy):
-	x(vx)
-  ,y(vy)
-  ,valid(true)
-{
-}
-#else
 RS_Vector::RS_Vector(double vx, double vy, double vz):
 	x(vx)
   ,y(vy)
@@ -54,7 +46,6 @@ RS_Vector::RS_Vector(double vx, double vy, double vz):
   ,valid(true)
 {
 }
-#endif
 
 /**
  * Constructor for a unit vector with given angle
@@ -88,25 +79,17 @@ RS_Vector::operator bool() const
 void RS_Vector::set(double angle) {
     x = cos(angle);
     y = sin(angle);
-#ifndef RS_VECTOR2D
     z = 0.;
-#endif
     valid = true;
 }
 
 /**
  * Sets a new position for the vector.
  */
-#ifdef  RS_VECTOR2D
-void RS_Vector::set(double vx, double vy) {
-#else
 void RS_Vector::set(double vx, double vy, double vz) {
-#endif
     x = vx;
     y = vy;
-#ifndef RS_VECTOR2D
     z = vz;
-#endif
     valid = true;
 }
 
@@ -116,18 +99,12 @@ void RS_Vector::set(double vx, double vy, double vz) {
 void RS_Vector::setPolar(double radius, double angle) {
     x = radius * cos(angle);
     y = radius * sin(angle);
-#ifndef RS_VECTOR2D
     z = 0.0;
-#endif
     valid = true;
 }
 
 RS_Vector RS_Vector::polar(double rho, double theta){
-	return {rho*cos(theta), rho*sin(theta)
-				 #ifndef RS_VECTOR2D
-					 , 0.
-				 #endif
-					 };
+	return {rho*cos(theta), rho*sin(theta), 0.};
 }
 
 /**
@@ -163,13 +140,8 @@ double RS_Vector::magnitude() const {
     double ret(0.0);
     // Note that the z coordinate is also needed for 2d
     //   (due to definition of crossP())
-    if (valid) {
-#ifdef  RS_VECTOR2D
-        ret = sqrt(x*x + y*y);
-#else
-        ret = sqrt(x*x + y*y + z*z);
-#endif
-    }
+	if (valid)
+		ret = hypot(hypot(x, y), z);
 
     return ret;
 }
@@ -180,13 +152,8 @@ double RS_Vector::magnitude() const {
 double RS_Vector::squared() const {
     // Note that the z coordinate is also needed for 2d
     //   (due to definition of crossP())
-    if (valid) {
-#ifdef  RS_VECTOR2D
-        return x*x + y*y;
-#else
+	if (valid)
         return x*x + y*y + z*z;
-#endif
-    }
     return RS_MAXDOUBLE;
 }
 
@@ -343,11 +310,7 @@ RS_Vector RS_Vector::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPo
  */
 std::ostream& operator << (std::ostream& os, const RS_Vector& v) {
     if(v.valid) {
-#ifdef  RS_VECTOR2D
-        os << v.x << "/" << v.y ;
-#else
         os << v.x << "/" << v.y << "/" << v.z;
-#endif
     } else {
         os << "invalid vector";
     }
@@ -360,11 +323,7 @@ std::ostream& operator << (std::ostream& os, const RS_Vector& v) {
  * binary + operator.
  */
 RS_Vector RS_Vector::operator + (const RS_Vector& v) const {
-#ifdef  RS_VECTOR2D
-	return {x + v.x, y + v.y};
-#else
 	return {x + v.x, y + v.y, z + v.z};
-#endif
 }
 
 
@@ -373,49 +332,25 @@ RS_Vector RS_Vector::operator + (const RS_Vector& v) const {
  * binary - operator.
  */
 RS_Vector RS_Vector::operator - (const RS_Vector& v) const {
-#ifdef  RS_VECTOR2D
-	return {x - v.x, y - v.y};
-#else
 	return {x - v.x, y - v.y, z - v.z};
-#endif
 }
 
 RS_Vector RS_Vector::operator + (double d) const {
-#ifdef  RS_VECTOR2D
-	return {x + d, y + d};
-#else
 	return {x + d, y + d, z + d};
-#endif
 }
 
 RS_Vector RS_Vector::operator - (double d) const {
-#ifdef  RS_VECTOR2D
-	return {x - d, y - d};
-#else
 	return {x - d, y - d, z - d};
-#endif
 }
 
 RS_Vector RS_Vector::operator * (const RS_Vector& v) const {
-#ifdef  RS_VECTOR2D
-	return {x * v.x, y * v.y};
-#else
 	return {x * v.x, y * v.y, z * v.z};
-#endif
 }
 
 RS_Vector RS_Vector::operator / (const RS_Vector& v) const {
-	if(fabs(v.x)> RS_TOLERANCE && fabs(v.y)>RS_TOLERANCE
-#ifndef  RS_VECTOR2D
-			&& fabs(v.z)
-#endif
-			){
-#ifdef  RS_VECTOR2D
-	return {x / v.x, y / v.y};
-#else
-	return {x / v.x, y / v.y, z / v.z};
-#endif
-	}
+	if(fabs(v.x)> RS_TOLERANCE && fabs(v.y)>RS_TOLERANCE)
+		return {x / v.x, y / v.y, std::isnormal(v.z)?z / v.z:z};
+
 	return *this;
 }
 
@@ -423,24 +358,16 @@ RS_Vector RS_Vector::operator / (const RS_Vector& v) const {
  * binary * operator.
  */
 RS_Vector RS_Vector::operator * (double s) const {
-#ifdef  RS_VECTOR2D
-	return {x * s, y * s};
-#else
 	return {x * s, y * s, z * s};
-#endif
 }
 
 /**
  * binary / operator.
  */
 RS_Vector RS_Vector::operator / (double s) const {
-	if(fabs(s)> RS_TOLERANCE){
-#ifdef  RS_VECTOR2D
-		return {x / s, y / s};
-#else
+	if(fabs(s)> RS_TOLERANCE)
 		return {x / s, y / s, z / s};
-#endif
-	}
+
 	return *this;
 }
 
@@ -448,11 +375,7 @@ RS_Vector RS_Vector::operator / (double s) const {
  * unary - operator.
  */
 RS_Vector RS_Vector::operator - () const {
-#ifdef  RS_VECTOR2D
-	return {-x, -y};
-#else
 	return {-x, -y, -z};
-#endif
 }
 
 /**
@@ -464,11 +387,7 @@ double RS_Vector::dotP(const RS_Vector& v1) const
 }
 
 double RS_Vector::dotP(const RS_Vector& v1, const RS_Vector& v2) {
-#ifdef  RS_VECTOR2D
-    return v1.x * v2.x + v1.y * v2.y;
-#else
-    return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
-#endif
+	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
 }
 
 /** switch x,y for all vectors */
@@ -482,9 +401,7 @@ RS_Vector RS_Vector::flipXY(void) const{
 RS_Vector RS_Vector::operator += (const RS_Vector& v) {
     x += v.x;
     y += v.y;
-#ifndef RS_VECTOR2D
     z += v.z;
-#endif
 	return *this;
 }
 
@@ -494,32 +411,23 @@ RS_Vector RS_Vector::operator += (const RS_Vector& v) {
 RS_Vector RS_Vector::operator -= (const RS_Vector& v) {
     x -= v.x;
     y -= v.y;
-#ifndef RS_VECTOR2D
     z -= v.z;
-#endif
 	return *this;
 }
 
 RS_Vector RS_Vector::operator *= (const RS_Vector& v) {
 	x *= v.x;
 	y *= v.y;
-#ifndef RS_VECTOR2D
 	z *= v.z;
-#endif
 	return *this;
 }
 
 RS_Vector RS_Vector::operator /= (const RS_Vector& v) {
-	if(fabs(v.x)> RS_TOLERANCE && fabs(v.y)>RS_TOLERANCE
-#ifndef  RS_VECTOR2D
-			&& fabs(v.z)
-#endif
-			){
+	if (fabs(v.x)> RS_TOLERANCE && fabs(v.y)>RS_TOLERANCE){
 		x /= v.x;
 		y /= v.y;
-#ifndef RS_VECTOR2D
-		z /= v.z;
-#endif
+		if (std::isnormal(v.z))
+			z /= v.z;
 	}
 	return *this;
 }
@@ -530,22 +438,18 @@ RS_Vector RS_Vector::operator /= (const RS_Vector& v) {
 RS_Vector RS_Vector::operator *= (double s) {
     x *= s;
     y *= s;
-#ifndef RS_VECTOR2D
     z *= s;
-#endif
 	return *this;
 }
 /**
  * /= operator
  */
 RS_Vector RS_Vector::operator /= (double s) {
-    if(fabs(s)>RS_TOLERANCE) {
-    x /= s;
-    y /= s;
-#ifndef RS_VECTOR2D
-    z /= s;
-#endif
-    }
+	if(fabs(s)>RS_TOLERANCE) {
+		x /= s;
+		y /= s;
+		z /= s;
+	}
 	return *this;
 }
 
@@ -553,11 +457,7 @@ RS_Vector RS_Vector::operator /= (double s) {
  * == operator
  */
 bool RS_Vector::operator == (const RS_Vector& v) const {
-#ifdef  RS_VECTOR2D
-    return (x==v.x && y==v.y && valid==v.valid);
-#else
-    return (x==v.x && y==v.y && z==v.z && valid==v.valid);
-#endif
+	return (x==v.x && y==v.y && z==v.z && valid && v.valid);
 }
 
 bool RS_Vector::operator == (bool valid) const
@@ -576,11 +476,9 @@ bool RS_Vector::operator != (bool valid) const
  */
 RS_Vector RS_Vector::minimum (const RS_Vector& v1, const RS_Vector& v2) {
 	return {std::min(v1.x, v2.x),
-                      std::min(v1.y, v2.y)
-#ifndef RS_VECTOR2D
-                      , std::min(v1.z, v2.z)
-#endif
-					  };
+				std::min(v1.y, v2.y),
+				std::min(v1.z, v2.z)
+	};
 }
 
 /**
@@ -588,24 +486,20 @@ RS_Vector RS_Vector::minimum (const RS_Vector& v1, const RS_Vector& v2) {
  */
 RS_Vector RS_Vector::maximum (const RS_Vector& v1, const RS_Vector& v2) {
 	return {std::max(v1.x, v2.x),
-                      std::max(v1.y, v2.y)
-#ifndef RS_VECTOR2D
-                      , std::max(v1.z, v2.z)
-#endif
-					  };
+				std::max(v1.y, v2.y),
+				std::max(v1.z, v2.z)
+	};
 }
 
 /**
  * @return Cross product of two vectors.
  *  we don't need cross product for 2D vectors
  */
-#ifndef RS_VECTOR2D
 RS_Vector RS_Vector::crossP(const RS_Vector& v1, const RS_Vector& v2) {
 	return {v1.y*v2.z - v1.z*v2.y,
-                     v1.z*v2.x - v1.x*v2.z,
-					 v1.x*v2.y - v1.y*v2.x};
+				v1.z*v2.x - v1.x*v2.z,
+				v1.x*v2.y - v1.y*v2.x};
 }
-#endif
 
 /**
  * Constructor for no solution.

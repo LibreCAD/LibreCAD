@@ -654,11 +654,7 @@ void RS_FilterJWW::addText(const DL_TextData& data) {
         addMText(DL_MTextData(
                                  refPoint.x,
                                  refPoint.y,
-#ifdef  RS_VECTOR2D
-                                 0.,
-#else
                                  refPoint.z,
-#endif
                                  data.height, width,
                                  attachmentPoint,
                                  drawingDirection,
@@ -1133,11 +1129,7 @@ void RS_FilterJWW::setVariableVector(const char* key,
         // update document's variable list:
         if (currentContainer->rtti()==RS2::EntityGraphic) {
                 ((RS_Graphic*)currentContainer)->addVariable(QString(key),
-#ifdef  RS_VECTOR2D
-                                RS_Vector(v1, v2), code);
-#else
                                 RS_Vector(v1, v2, v3), code);
-#endif
         }
 }
 
@@ -1468,11 +1460,7 @@ void RS_FilterJWW::writeVariables(DL_WriterA& dw) {
                                                    it.value().getVector().y);
                                 if (isVariableTwoDimensional(it.key()/*valueKey()*/)==false) {
                                         dw.dxfReal(it.value().getCode()+20,
-#ifdef  RS_VECTOR2D
-                                                           0.);
-#else
                                                            it.value().getVector().z);
-#endif
                                 }
                                 break;
                         }
@@ -1564,11 +1552,7 @@ void RS_FilterJWW::writeBlock(DL_WriterA& dw, RS_Block* blk) {
                                    DL_BlockData((const char*)blk->getName().toLocal8Bit().data(), 0,
                                                                 blk->getBasePoint().x,
                                                                 blk->getBasePoint().y,
-#ifdef  RS_VECTOR2D
-                                                                0.));
-#else
                                                                 blk->getBasePoint().z));
-#endif
         for (RS_Entity* e=blk->firstEntity(RS2::ResolveNone);
                         e;
                         e=blk->nextEntity(RS2::ResolveNone)) {

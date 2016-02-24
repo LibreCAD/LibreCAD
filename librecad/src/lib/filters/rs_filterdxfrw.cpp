@@ -724,11 +724,7 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
             QStringList tl = mtext.split('\n', QString::SkipEmptyParts);
             if (!tl.isEmpty()) {
                 QString txt = tl.at(tl.size()-1);
-#ifdef  RS_VECTOR2D
-                RS_TextData d(RS_Vector(0.,0.), RS_Vector(0.,0.),
-#else
                 RS_TextData d(RS_Vector(0.,0.,0.), RS_Vector(0.,0.,0.),
-#endif
 
                               data.height, 1, RS_TextData::VABaseline, RS_TextData::HALeft,
                               RS_TextData::None, txt, sty, 0,
@@ -1284,11 +1280,7 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
         switch (var->type()) {
         case DRW_Variant::COORD:
             container->addVariable(key,
-#ifdef  RS_VECTOR2D
-            RS_Vector(var->content.v->x, var->content.v->y), var->code());
-#else
             RS_Vector(var->content.v->x, var->content.v->y, var->content.v->z), var->code());
-#endif
             break;
         case DRW_Variant::STRING:
             container->addVariable(key, QString::fromUtf8(var->content.s->c_str()), var->code());
@@ -1509,9 +1501,7 @@ void RS_FilterDXFRW::writeBlocks() {
         block.name = it.value().toStdString();
         block.basePoint.x = 0.0;
         block.basePoint.y = 0.0;
-#ifndef  RS_VECTOR2D
         block.basePoint.z = 0.0;
-#endif
         block.flags = 1;//flag for unnamed block
         dxfW->writeBlock(&block);
         RS_EntityContainer *ct = (RS_EntityContainer *)it.key();
@@ -1534,9 +1524,7 @@ void RS_FilterDXFRW::writeBlocks() {
             block.name = blk->getName().toUtf8().data();
             block.basePoint.x = blk->getBasePoint().x;
             block.basePoint.y = blk->getBasePoint().y;
-#ifndef  RS_VECTOR2D
             block.basePoint.z = blk->getBasePoint().z;
-#endif
             dxfW->writeBlock(&block);
             for (RS_Entity* e=blk->firstEntity(RS2::ResolveNone);
                  e; e=blk->nextEntity(RS2::ResolveNone)) {
@@ -1575,11 +1563,7 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
                 break;
             case RS2::VariableVector:
                 v = it.value().getVector();
-#ifndef  RS_VECTOR2D
                 data.addCoord(it.key().toStdString(), DRW_Coord(v.x, v.y, v.z), it.value().getCode());
-#else
-                data.addCoord(it.key().toStdString(), DRW_Coord(v.x, v.y, 0.0), it.value().getCode());
-#endif
                 break;
             default:
                 break;
@@ -2426,15 +2410,11 @@ void RS_FilterDXFRW::writeInsert(RS_Insert* i) {
     getEntityAttributes(&in, i);
     in.basePoint.x = i->getInsertionPoint().x;
     in.basePoint.y = i->getInsertionPoint().y;
-#ifndef  RS_VECTOR2D
     in.basePoint.z = i->getInsertionPoint().z;
-#endif
     in.name = i->getName().toUtf8().data();
     in.xscale = i->getScale().x;
     in.yscale = i->getScale().y;
-#ifndef  RS_VECTOR2D
     in.zscale = i->getScale().z;
-#endif
     in.angle = i->getAngle();
     in.colcount = i->getCols();
     in.rowcount = i->getRows();
@@ -2587,14 +2567,10 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
             DRW_Insert in;
             getEntityAttributes(&in, d);
             in.basePoint.x = in.basePoint.y = 0.0;
-#ifndef  RS_VECTOR2D
             in.basePoint.z = 0.0;
-#endif
             in.name = blkName.toStdString();
             in.xscale = in.yscale = 1.0;
-#ifndef  RS_VECTOR2D
             in.zscale = 1.0;
-#endif
             in.angle = 0.0;
             in.colcount = in.rowcount = 1;
             in.colspace = in.rowspace = 0.0;
@@ -2736,14 +2712,10 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
             DRW_Insert in;
             getEntityAttributes(&in, h);
             in.basePoint.x = in.basePoint.y = 0.0;
-#ifndef  RS_VECTOR2D
             in.basePoint.z = 0.0;
-#endif
             in.name = noNameBlock.value(h).toUtf8().data();
             in.xscale = in.yscale = 1.0;
-#ifndef  RS_VECTOR2D
             in.zscale = 1.0;
-#endif
             in.angle = 0.0;
             in.colcount = in.rowcount = 1;
             in.colspace = in.rowspace = 0.0;
