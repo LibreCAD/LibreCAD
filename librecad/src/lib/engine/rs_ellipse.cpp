@@ -921,13 +921,11 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 		mtRow.push_back(vp.x*vp.x);
 		mtRow.push_back(vp.x*vp.y);
 		mtRow.push_back(vp.y*vp.y);
-		const double l=sqrt(mtRow[0]*mtRow[0]+mtRow[1]*mtRow[1]+mtRow[2]*mtRow[2]);
+		const double l= hypot(hypot(mtRow[0], mtRow[1]), mtRow[2]);
 		bool addRow(true);
 		for(const auto& v: mt){
-			const double dx=v[0] - mtRow[0];
-			const double dy=v[1] - mtRow[1];
-			const double dz=v[2] - mtRow[2];
-			if( sqrt(dx*dx + dy*dy + dz*dz) < symTolerance*l){
+			RS_Vector const dv{v[0] - mtRow[0], v[1] - mtRow[1], v[2] - mtRow[2]};
+			if( dv.magnitude() < symTolerance*l){
 				//symmetric
 				addRow=false;
 				break;

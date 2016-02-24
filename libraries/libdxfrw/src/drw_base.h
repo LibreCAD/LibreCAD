@@ -159,7 +159,7 @@ public:
 /*!< convert to unitary vector */
     void unitize(){
         double dist;
-        dist = sqrt(x*x + y*y + z*z);
+		dist = hypot(hypot(x, y), z);
         if (dist > 0.0) {
             x= x/dist;
             y= y/dist;

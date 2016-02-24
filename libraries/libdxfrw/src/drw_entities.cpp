@@ -780,7 +780,7 @@ bool DRW_Ellipse::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 void DRW_Ellipse::toPolyline(DRW_Polyline *pol, int parts){
     double radMajor, radMinor, cosRot, sinRot, incAngle, curAngle;
     double cosCurr, sinCurr;
-    radMajor = sqrt(secPoint.x*secPoint.x + secPoint.y*secPoint.y);
+	radMajor = hypot(secPoint.x, secPoint.y);
     radMinor = radMajor*ratio;
     //calculate sin & cos of included angle
     incAngle = atan2(secPoint.y, secPoint.x);
