@@ -161,11 +161,11 @@ void QG_DlgHatch::updatePreview(RS_Pattern* ) {
     bool isSolid = cbSolid->isChecked();
     double scale = RS_Math::eval(leScale->text(), 1.0);
     double angle = RS_Math::deg2rad(RS_Math::eval(leAngle->text(), 0.0));
-    double prevSize = 1.0;
+	double prevSize = 100.0;
     if (pattern) {
         pattern->calculateBorders();
-        prevSize = pattern->getSize().x;
-    }
+		prevSize = std::max(prevSize, pattern->getSize().magnitude());
+	}
 
     preview->clear();
 
