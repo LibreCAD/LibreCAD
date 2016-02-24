@@ -207,11 +207,12 @@ public:
      */
     virtual double areaLineIntegral() const override;
     /**
-     * @brief ignoreForModification, ignore this entity for entity catch for certain actions
+	 * @brief ignoreForModification ignore this entity for entity catch for certain actions
      * like catching circles to create tangent circles
      * @return, true, indicate this entity container should be ignored
      */
     bool ignoredOnModification() const;
+
 	/**
 	 * @brief begin/end to support range based loop
 	 * @return iterator
@@ -242,6 +243,11 @@ protected:
     static bool autoUpdateBorders;
 
 private:
+	/**
+	 * @brief ignoredSnap whether snapping is ignored
+	 * @return true when entity of this container won't be considered for snapping points
+	 */
+	bool ignoredSnap() const;
     int entIdx;
     bool autoDelete;
 };
