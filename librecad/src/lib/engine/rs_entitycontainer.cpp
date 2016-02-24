@@ -1144,7 +1144,7 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
 	for (RS_Entity* en: entities){
 
 		if (en->isVisible()
-				&& !en->getParent()->ignoredSnap()
+                && !en->getParent()->ignoredOnModification()
 				){//no end point for Insert, text, Dim
             point = en->getNearestEndpoint(coord, &curDist);
             if (point.valid && curDist<minDist) {
@@ -1181,7 +1181,7 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
 
     unsigned i0=0;
 	for(auto en: entities){
-		if (!en->getParent()->ignoredSnap() ){//no end point for Insert, text, Dim
+        if (!en->getParent()->ignoredOnModification() ){//no end point for Insert, text, Dim
 //            std::cout<<"find nearest for entity "<<i0<<std::endl;
             point = en->getNearestEndpoint(coord, &curDist);
             if (point.valid && curDist<minDist) {
@@ -1812,6 +1812,7 @@ bool RS_EntityContainer::ignoredOnModification() const
     case RS2::EntityDimDiametric: /**< Diametric Dimension */
     case RS2::EntityDimAngular:   /**< Angular Dimension */
     case RS2::EntityDimLeader:    /**< Leader Dimension */
+    case RS2::EntityHatch:
         return true;
     default:
         return false;
