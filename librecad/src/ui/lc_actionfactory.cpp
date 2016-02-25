@@ -492,7 +492,8 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     action->setObjectName("DrawHatch");
     a_map["DrawHatch"] = action;
 
-    action = new QAction(QIcon(":/extui/menuimage.png"), tr("Insert &Image"), tool_group);
+    action = new QAction(tr("Insert &Image"), tool_group);
+    action->setIcon(QIcon(":/icons/camera.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawImage()));
     action->setObjectName("DrawImage");
@@ -591,7 +592,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     action->setData("revert, rev");
     a_map["ModifyRevertDirection"] = action;
 
-    action = new QAction(QIcon(":/extui/modifyrotate.png"), tr("&Rotate"), tool_group);
+    action = new QAction(QIcon(":/icons/rotate_b.svg"), tr("&Rotate"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyRotate()));
     action->setObjectName("ModifyRotate");
@@ -679,7 +680,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["ModifyStretch"] = action;
 
     action = new QAction(tr("&Bevel"), tool_group);
-    action->setIcon(QIcon(":/tools/bevel.svg"));
+    action->setIcon(QIcon(":/icons/bevel_b.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyBevel()));
     action->setObjectName("ModifyBevel");
@@ -760,7 +761,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
 
     action = new QAction(tr("&Selection pointer"), disable_group);
     #if QT_VERSION >= 0x040600
-    action->setIcon(QIcon::fromTheme("go-previous-view", QIcon(":/actions/back.png")));
+    action->setIcon(QIcon::fromTheme("go-previous-view", QIcon(":/icons/cursor.svg")));
     #else
     action->setIcon(QIcon(":/actions/back.png"));
     #endif
@@ -1313,6 +1314,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["FocusCommand"] = action;
 
     action = new QAction(tr("Left"), main_window);
+    action->setIcon(QIcon(":/icons/dockwidgets_left"));
     connect(action, SIGNAL(toggled(bool)),
             main_window, SLOT(toggleLeftDockArea(bool)));
     action->setCheckable(true);
@@ -1321,6 +1323,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["LeftDockAreaToggle"] = action;
 
     action = new QAction(tr("Right"), main_window);
+    action->setIcon(QIcon(":/icons/dockwidgets_right"));
     connect(action, SIGNAL(toggled(bool)),
             main_window, SLOT(toggleRightDockArea(bool)));
     action->setCheckable(true);
@@ -1329,6 +1332,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["RightDockAreaToggle"] = action;
 
     action = new QAction(tr("Top"), main_window);
+    action->setIcon(QIcon(":/icons/dockwidgets_top"));
     connect(action, SIGNAL(toggled(bool)),
             main_window, SLOT(toggleTopDockArea(bool)));
     action->setCheckable(true);
@@ -1337,6 +1341,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["TopDockAreaToggle"] = action;
 
     action = new QAction(tr("Bottom"), main_window);
+    action->setIcon(QIcon(":/icons/dockwidgets_bottom"));
     connect(action, SIGNAL(toggled(bool)),
             main_window, SLOT(toggleBottomDockArea(bool)));
     action->setCheckable(true);
@@ -1345,6 +1350,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["BottomDockAreaToggle"] = action;
 
     action = new QAction(tr("Floating"), main_window);
+    action->setIcon(QIcon(":/icons/dockwidgets_floating"));
     connect(action, SIGNAL(toggled(bool)),
             main_window, SLOT(toggleFloatingDockwidgets(bool)));
     action->setCheckable(true);

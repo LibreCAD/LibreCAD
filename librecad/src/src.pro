@@ -598,6 +598,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
 
 RESOURCES += ../res/actions/actions.qrc
 RESOURCES += ../res/tools/tools.qrc
+RESOURCES += ../res/icons/icons.qrc
 
 # ################################################################################
 # UI
