@@ -109,6 +109,7 @@ INCLUDEPATH += \
     lib/information \
     lib/math \
     lib/modification \
+    lib/printing \
     lib/scripting \
     actions \
     main \
@@ -225,7 +226,8 @@ HEADERS += \
     lib/generators/lc_xmlwriterqxmlstreamwriter.h \
     actions/lc_actionfileexportmakercam.h \
     lib/engine/lc_rect.h \
-    main/lc_options.h
+    main/lc_options.h \
+    lib/printing/lc_printing.h
 
 SOURCES += \
     lib/actions/rs_actioninterface.cpp \
@@ -317,7 +319,8 @@ SOURCES += \
     lib/engine/rs_undocycle.cpp \
     lib/engine/rs_flags.cpp \
     lib/engine/lc_rect.cpp \
-    lib/engine/rs.cpp
+    lib/engine/rs.cpp \
+    lib/printing/lc_printing.cpp
 
 # ################################################################################
 # Command
