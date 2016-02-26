@@ -2180,9 +2180,11 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                 w->setWindowTitle(tr("Print preview for %1").arg(parent->windowTitle()));
                 w->setWindowIcon(QIcon(":/main/document.png"));
                 w->slotZoomAuto();
-                w->getGraphicView()->setPrintPreview(true);
-                w->getGraphicView()->setBackground(RS_Color(255,255,255));
-                w->getGraphicView()->setDefaultAction(new RS_ActionPrintPreview(*w->getDocument(), *w->getGraphicView()));
+                QG_GraphicView* gv = w->getGraphicView();
+                gv->options = options;
+                gv->setPrintPreview(true);
+                gv->setBackground(RS_Color(255,255,255));
+                gv->setDefaultAction(new RS_ActionPrintPreview(*w->getDocument(), *w->getGraphicView()));
 
                 // only graphics offer block lists, blocks don't
                 RS_DEBUG->print("  adding listeners");
