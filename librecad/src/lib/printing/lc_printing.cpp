@@ -1,5 +1,7 @@
 #include "lc_printing.h"
 
+#include <QtGlobal>
+
 QPrinter::PageSize LC_Printing::rsToQtPaperFormat(RS2::PaperFormat f)
 {
     switch (f)
@@ -67,7 +69,7 @@ QPrinter::PageSize LC_Printing::rsToQtPaperFormat(RS2::PaperFormat f)
             return QPrinter::Ledger;
         case RS2::Tabloid:
             return QPrinter::Tabloid;
-    #if QT_MAJOR_VERSION >= 5
+    #if QT_VERSION >= 0x050000
         case RS2::Arch_A:
             return QPrinter::ArchA;
         case RS2::Arch_B:
