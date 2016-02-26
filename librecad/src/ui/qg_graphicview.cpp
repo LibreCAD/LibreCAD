@@ -459,7 +459,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
     #if QT_VERSION >= 0x050200
 
-        if (options->device == "Trackpad")
+        if (options && options->device == "Trackpad")
         {
             QPoint numPixels = e->pixelDelta();
 
