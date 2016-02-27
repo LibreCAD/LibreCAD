@@ -32,11 +32,15 @@ CONFIG += qt \
      link_prl \
      verbose
 
-greaterThan( QT_MAJOR_VERSION, 4 ) {
+greaterThan( QT_MAJOR_VERSION, 4 )  {
     # in Qt5 help is deprecated in CONFIG
-	QT += widgets printsupport help
-	CONFIG += c++11
-} else {
+    QT += widgets printsupport help
+    CONFIG += c++11
+    *-g++ {
+        QMAKE_CXXFLAGS += -fext-numeric-literals
+    }
+}
+else {
     CONFIG += help
 }
 
