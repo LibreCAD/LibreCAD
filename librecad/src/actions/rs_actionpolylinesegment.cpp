@@ -52,7 +52,6 @@ QAction* RS_ActionPolylineSegment::createGUIAction(RS2::ActionType /*type*/, QOb
 	QAction* action = new QAction(tr("Create Polyline from Existing &Segments"), nullptr);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/extui/polylinesegment.png"));
-    action->setStatusTip(tr("Create Polyline from Existing Segments"));
     return action;
 }
 

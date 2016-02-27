@@ -50,7 +50,6 @@ QAction* RS_ActionPolylineAdd::createGUIAction(RS2::ActionType /*type*/, QObject
         QAction* action = new QAction(tr("&Add node"), NULL);
         action->setShortcut(QKeySequence());
         action->setIcon(QIcon(":/extui/polylineadd.png"));
-        action->setStatusTip(tr("Add polyline's node"));
         return action;
 }
 

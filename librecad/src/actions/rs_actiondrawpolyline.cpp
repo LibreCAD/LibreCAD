@@ -61,7 +61,6 @@ RS_ActionDrawPolyline::~RS_ActionDrawPolyline() = default;
 QAction* RS_ActionDrawPolyline::createGUIAction(RS2::ActionType /*type*/,
                                 QObject* /*parent*/) {
 	QAction* action = new QAction(QIcon(":/extui/polyline.png"), tr("&Polyline"),  NULL);
-    action->setStatusTip(tr("Draw polylines"));
     return action;
 }
 

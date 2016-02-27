@@ -62,7 +62,6 @@ QAction* RS_ActionZoomIn::createGUIAction(RS2::ActionType type, QObject* /*paren
         action->setIcon(QIcon(":/actions/zoomin.png"));
 #endif
         action->setShortcut(QKeySequence::ZoomIn);
-        action->setStatusTip(tr("Zooms in"));
     } else {
         // tr("Zoom Out")
         action = new QAction(tr("Zoom &Out"), nullptr);
@@ -72,7 +71,6 @@ QAction* RS_ActionZoomIn::createGUIAction(RS2::ActionType type, QObject* /*paren
         action->setIcon(QIcon(":/actions/zoomout.png"));
 #endif
         action->setShortcut(QKeySequence::ZoomOut);
-        action->setStatusTip(tr("Zooms out"));
     }
     return action;
 }
