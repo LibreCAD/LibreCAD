@@ -280,12 +280,19 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     initMDI();
 
     // Activate autosave timer
-    autosaveTimer = new QTimer(this);
-    autosaveTimer->setObjectName("autosave");
-    connect(autosaveTimer, SIGNAL(timeout()), this, SLOT(slotFileAutoSave()));
     RS_SETTINGS->beginGroup("/Defaults");
-    autosaveTimer->start(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5)*60*1000);
+    bool auto_save = RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1);
+    int ms = RS_SETTINGS->readNumEntry("/AutoSaveTime", 5)*60*1000;
     RS_SETTINGS->endGroup();
+
+    if (auto_save)
+    {
+        autosaveTimer = new QTimer(this);
+        autosaveTimer->setObjectName("autosave");
+        connect(autosaveTimer, SIGNAL(timeout()), this, SLOT(slotFileAutoSave()));
+        autosaveTimer->start(ms);
+    }
+
 
     // Disable menu and toolbar items
     emit windowsChanged(false);
@@ -2507,7 +2514,7 @@ void QC_ApplicationWindow::slotFileSaveAs() {
                 if(w->getGraphicView()->isDraftMode())
                     w->setWindowTitle(w->windowTitle()+m_qDraftModeTitle);
 
-                if (!autosaveTimer->isActive()) {
+                if (autosaveTimer && !autosaveTimer->isActive()) {
                     RS_SETTINGS->beginGroup("/Defaults");
                     autosaveTimer->start(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5)*60*1000);
                     RS_SETTINGS->endGroup();
