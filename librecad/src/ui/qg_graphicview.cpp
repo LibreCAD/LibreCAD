@@ -484,13 +484,13 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
     RS_Vector mouse = toGraph(RS_Vector(e->x(), e->y()));
 
-#if QT_VERSION >= 0x050200
+#if QT_VERSION >= 0x050500
     QPoint numPixels = e->pixelDelta();
 
     // high-resolution scrolling triggers Pan instead of Zoom logic
     isSmoothScrolling |= !numPixels.isNull();
 
-    if (isSmoothScrolling) {
+    if (isSmoothScrolling && e->source() == Qt::MouseEventSynthesizedBySystem) {
         if (e->phase() == Qt::ScrollEnd) isSmoothScrolling = false;
 
         if (!numPixels.isNull()) {
