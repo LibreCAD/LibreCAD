@@ -293,11 +293,6 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     RS_COMMANDS->updateAlias();
     //plugin load
     loadPlugins();
-    QMenu *importMenu = findMenu("/File/Import", menuBar()->children(), "");
-    if (importMenu && importMenu->isEmpty())
-        importMenu->setDisabled(true);
-
-    statusBar()->showMessage(XSTR(QC_APPNAME) " Ready", 2000);
 
     //accept drop events to open files
     setAcceptDrops(true);
@@ -306,6 +301,8 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
     setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
     setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
+
+    statusBar()->showMessage(XSTR(QC_APPNAME) " Ready", 2000);
 }
 
 /**
