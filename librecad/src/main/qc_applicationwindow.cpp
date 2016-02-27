@@ -1234,6 +1234,7 @@ void QC_ApplicationWindow::initMenuBar() {
 
     // menuBar entry windowsMenu
     windowsMenu = menuBar()->addMenu(tr("&Window"));
+    windowsMenu->addAction(new QAction("temp", this));
     windowsMenu->setObjectName("Window");
     connect(windowsMenu, SIGNAL(aboutToShow()),
             this, SLOT(slotWindowsMenuAboutToShow()));
