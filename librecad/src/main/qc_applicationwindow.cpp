@@ -1315,18 +1315,6 @@ void QC_ApplicationWindow::initToolBar()
 
     //QG_CadToolBarMain* cadToolBarMain =
     //new QG_CadToolBarMain(cadToolBar);
-
-#if QT_VERSION >= 0x050500
-    auto const dPxlRatio=devicePixelRatio();
-    QSize const sIcon=cadToolBar->iconSize()*dPxlRatio;
-    cadToolBar->setIconSize(sIcon);
-    optionWidget->setIconSize(sIcon);
-    snapToolBar->setIconSize(sIcon);
-    penToolBar->setIconSize(sIcon);
-    zoomToolBar->setIconSize(sIcon);
-    editToolBar->setIconSize(sIcon);
-    fileToolBar->setIconSize(sIcon);
-#endif
 }
 
 /**
