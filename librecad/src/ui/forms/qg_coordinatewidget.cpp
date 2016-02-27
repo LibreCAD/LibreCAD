@@ -65,22 +65,6 @@ void QG_CoordinateWidget::init() {
     lCoord1b->setText("");
     lCoord2b->setText("");
 
-    int fsize;
-#ifdef __APPLE__
-    fsize = 9;
-#else
-    fsize = 7;
-#endif
-
-    RS_SETTINGS->beginGroup("/Appearance");
-    fsize = RS_SETTINGS->readNumEntry("/StatusBarFontSize", fsize);
-    RS_SETTINGS->endGroup();
-
-    lCoord1->setFont(QFont("Helvetica", fsize));
-    lCoord1b->setFont(QFont("Helvetica", fsize));
-    lCoord2->setFont(QFont("Helvetica", fsize));
-    lCoord2b->setFont(QFont("Helvetica", fsize));
-
     graphic = NULL;
     prec = 4;
     format = RS2::Decimal;

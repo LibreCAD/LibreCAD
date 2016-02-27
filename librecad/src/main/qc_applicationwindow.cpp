@@ -1323,7 +1323,6 @@ void QC_ApplicationWindow::initToolBar()
 void QC_ApplicationWindow::initStatusBar() {
     RS_DEBUG->print("QC_ApplicationWindow::initStatusBar()");
 
-    statusBar()->setMinimumHeight(32);
     coordinateWidget = new QG_CoordinateWidget(statusBar(), "coordinates");
     statusBar()->addWidget(coordinateWidget);
     mouseWidget = new QG_MouseWidget(statusBar(), "mouse info");
