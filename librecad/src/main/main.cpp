@@ -60,24 +60,6 @@ int main(int argc, char** argv)
     QCoreApplication::setApplicationName("/LibreCAD");
     QCoreApplication::setApplicationVersion("master");
 
-    QSplashScreen* splash = new QSplashScreen;
-
-    RS_SETTINGS->beginGroup("Appearance");
-    bool show_splash = RS_SETTINGS->readNumEntry("/ShowSplash", 1);
-    RS_SETTINGS->endGroup();
-
-    if (show_splash)
-    {
-        QPixmap pixmap(":/main/splash_librecad.png");
-        splash->setPixmap(pixmap);
-        splash->setAttribute(Qt::WA_DeleteOnClose);
-        splash->show();
-        splash->showMessage(QObject::tr("Loading.."),
-                            Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
-        app.processEvents();
-        RS_DEBUG->print("main: splashscreen: OK");
-    }
-
     const QString lpDebugSwitch0("-d"),lpDebugSwitch1("--debug") ;
     const QString help0("-h"), help1("--help");
     bool allowOptions=true;
@@ -229,6 +211,24 @@ int main(int argc, char** argv)
             RS_SETTINGS->endGroup();
         }
         RS_DEBUG->print("main: show initial config dialog: OK");
+    }
+
+    auto splash = new QSplashScreen;
+
+    RS_SETTINGS->beginGroup("Appearance");
+    bool show_splash = RS_SETTINGS->readNumEntry("/ShowSplash", 1);
+    RS_SETTINGS->endGroup();
+
+    if (show_splash)
+    {
+        QPixmap pixmap(":/main/splash_librecad.png");
+        splash->setPixmap(pixmap);
+        splash->setAttribute(Qt::WA_DeleteOnClose);
+        splash->show();
+        splash->showMessage(QObject::tr("Loading.."),
+                            Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
+        app.processEvents();
+        RS_DEBUG->print("main: splashscreen: OK");
     }
 
     RS_DEBUG->print("main: init fontlist..");
