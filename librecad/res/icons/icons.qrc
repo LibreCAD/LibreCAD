@@ -12,5 +12,9 @@
         <file>restrortho.svg</file>
         <file>restrver.svg</file>
         <file>rotate_b.svg</file>
+        <file>up_b.svg</file>
+        <file>down_b.svg</file>
+        <file>downmost_b.svg</file>
+        <file>upmost_b.svg</file>
     </qresource>
 </RCC>
