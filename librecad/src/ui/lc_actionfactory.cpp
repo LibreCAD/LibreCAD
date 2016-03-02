@@ -57,11 +57,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     // <[~ Zoom ~]>
 
     action = new QAction(tr("&Window Zoom"), tool_group);
-    #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("zoom-select", QIcon(":/actions/zoomwindow.png")));
-    #else
-    action->setIcon(QIcon(":/actions/zoomwindow.png"));
-    #endif
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomWindow()));
     action->setObjectName("ZoomWindow");
     a_map["ZoomWindow"] = action;
@@ -760,22 +756,14 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     // <[~ Edit ~]>
 
     action = new QAction(tr("&Selection pointer"), disable_group);
-    #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("go-previous-view", QIcon(":/icons/cursor.svg")));
-    #else
-    action->setIcon(QIcon(":/actions/back.png"));
-    #endif
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotEditKillAllActions()));
     action->setObjectName("EditKillAllActions");
     a_map["EditKillAllActions"] = action;
 
     action = new QAction(tr("&Undo"), disable_group);
-    #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/actions/undo2.png")));
-    #else
-    action->setIcon(QIcon(":/actions/undo2.png"));
-    #endif
     action->setShortcut(QKeySequence::Undo);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotEditUndo()));
@@ -783,11 +771,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["EditUndo"] = action;
 
     action = new QAction(tr("&Redo"), disable_group);
-    #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/actions/redo2.png")));
-    #else
-    action->setIcon(QIcon(":/actions/redo2.png"));
-    #endif
     action->setShortcut(QKeySequence::Redo);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotEditRedo()));
@@ -795,11 +779,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["EditRedo"] = action;
 
     action = new QAction(tr("Cu&t"), disable_group);
-    #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("edit-cut", QIcon(":/actions/editcut2.png")));
-    #else
-    action->setIcon(QIcon(":/actions/editcut2.png"));
-    #endif
     action->setShortcut(QKeySequence::Cut);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotEditCut()));
@@ -807,11 +787,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["EditCut"] = action;
 
     action = new QAction(tr("&Copy"), disable_group);
-    #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("edit-copy", QIcon(":/actions/editcopy2.png")));
-    #else
-    action->setIcon(QIcon(":/actions/editcopy2.png"));
-    #endif
     action->setShortcut(QKeySequence::Copy);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotEditCopy()));
@@ -819,11 +795,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["EditCopy"] = action;
 
     action = new QAction(tr("&Paste"), disable_group);
-    #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("edit-paste", QIcon(":/actions/editpaste2.png")));
-    #else
-    action->setIcon(QIcon(":/actions/editpaste2.png"));
-    #endif
     action->setShortcut(QKeySequence::Paste);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotEditPaste()));
@@ -1013,10 +985,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
 
     action = new QAction(tr("Current &Drawing Preferences"), disable_group);
     action->setIcon(QIcon(":/actions/drawingprefs.png"));
-    // Preferences shortcut was itroduced on 4.6
-    #if QT_VERSION >= 0x040600
     action->setShortcut(QKeySequence::Preferences);
-    #endif
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotOptionsDrawing()));
     action->setObjectName("OptionsDrawing");
@@ -1085,43 +1054,27 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     // <[~ Zoom ~]>
 
     action = new QAction(tr("Zoom &In"), disable_group);
-    #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("zoom-in", QIcon(":/actions/zoomin.png")));
-    #else
-    action->setIcon(QIcon(":/actions/zoomin.png"));
-    #endif
     action->setShortcut(QKeySequence::ZoomIn);
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomIn()));
     action->setObjectName("ZoomIn");
     a_map["ZoomIn"] = action;
 
     action = new QAction(tr("Zoom &Out"), disable_group);
-    #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("zoom-out", QIcon(":/actions/zoomout.png")));
-    #else
-    action->setIcon(QIcon(":/actions/zoomout.png"));
-    #endif
     action->setShortcut(QKeySequence::ZoomOut);
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomOut()));
     action->setObjectName("ZoomOut");
     a_map["ZoomOut"] = action;
 
     action = new QAction(tr("&Auto Zoom"), disable_group);
-    #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("zoom-fit-best", QIcon(":/actions/zoomauto.png")));
-    #else
-    action->setIcon(QIcon(":/actions/zoomauto.png"));
-    #endif
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomAuto()));
     action->setObjectName("ZoomAuto");
     a_map["ZoomAuto"] = action;
 
     action = new QAction(tr("Previous &View"), disable_group);
-    #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("zoom-previous", QIcon(":/actions/zoomprevious.png")));
-    #else
-    action->setIcon(QIcon(":/actions/zoomprevious.png"));
-    #endif
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotZoomPrevious()));
     action->setEnabled(false);
@@ -1129,11 +1082,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["ZoomPrevious"] = action;
 
     action = new QAction(tr("&Redraw"), disable_group);
-    #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("view-refresh", QIcon(":/actions/zoomredraw.png")));
-    #else
-    action->setIcon(QIcon(":/actions/zoomredraw.png"));
-    #endif
     action->setShortcut(QKeySequence::Refresh);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotZoomRedraw()));
@@ -1145,58 +1094,35 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     // ===========================
 
     action = new QAction(tr("&New"), main_window);
-    #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("document-new", QIcon(":/actions/filenew.png")));
-    #else
-    action->setIcon(QIcon(":/actions/filenew.png"));
-    #endif
     action->setShortcut(QKeySequence::New);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileNewNew()));
     action->setObjectName("FileNew");
     a_map["FileNew"] = action;
 
     action = new QAction(tr("New From &Template"), main_window);
-    #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("document-new", QIcon(":/actions/filenew.png")));
-    #else
-    action->setIcon(QIcon(":/actions/filenew.png"));
-    #endif
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileNewTemplate()));
     action->setObjectName("FileNewTemplate");
     a_map["FileNewTemplate"] = action;
 
     action = new QAction(tr("&Open..."), main_window);
-    #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("document-open", QIcon(":/actions/fileopen2.png")));
-    #else
-    action->setIcon(QIcon(":/actions/fileopen2.png"));
-    #endif
     action->setShortcut(QKeySequence::Open);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileOpen()));
     action->setObjectName("FileOpen");
     a_map["FileOpen"] = action;
 
     action = new QAction(tr("&Save"), disable_group);
-    #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("document-save", QIcon(":/actions/filesave2.png")));
-    #else
-    action->setIcon(QIcon(":/actions/filesave2.png"));
-    #endif
     action->setShortcut(QKeySequence::Save);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileSave()));
     action->setObjectName("FileSave");
     a_map["FileSave"] = action;
 
     action = new QAction(tr("Save &as..."), disable_group);
-    #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("document-save-as", QIcon(":/actions/filesaveas.png")));
-    #else
-    action->setIcon(QIcon(":/actions/filesaveas.png"));
-    #endif
-    // SaveAs was itroduces at 4.5 and later
-    #if QT_VERSION >= 0x040500
     action->setShortcut(QKeySequence::SaveAs);
-    #endif
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileSaveAs()));
     action->setObjectName("FileSaveAs");
     a_map["FileSaveAs"] = action;
@@ -1214,11 +1140,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["FileClose"] = action;
 
     action = new QAction(tr("&Print..."), disable_group);
-    #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("document-print", QIcon(":/actions/fileprint.png")));
-    #else
-    action->setIcon(QIcon(":/actions/fileprint.png"));
-    #endif
     action->setShortcut(QKeySequence::Print);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFilePrint()));
     connect(main_window, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
@@ -1232,11 +1154,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["FilePrintPDF"] = action;
 
     action = new QAction(tr("Print Pre&view"), disable_group);
-    #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("document-print-preview", QIcon(":/actions/fileprintpreview.png")));
-    #else
-    action->setIcon(QIcon(":/actions/fileprintpreview.png"));
-    #endif
     action->setCheckable(true);
     connect(action, SIGNAL(triggered(bool)), main_window, SLOT(slotFilePrintPreview(bool)));
     connect(main_window, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
@@ -1244,12 +1162,8 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["FilePrintPreview"] = action;
 
     action = new QAction(tr("&Quit"), main_window);
-    #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("application-exit", QIcon(":/actions/exit.png")));
     action->setShortcut(QKeySequence::Quit);
-    #else
-    action->setIcon(QIcon(":/actions/exit.png"));
-    #endif
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileQuit()));
     action->setObjectName("FileQuit");
     a_map["FileQuit"] = action;
