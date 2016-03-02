@@ -534,32 +534,38 @@ void QC_ApplicationWindow::slotUpdateActiveLayer()
  * Initializes the global application settings from the
  * config file (unix, mac) or registry (windows).
  */
-void QC_ApplicationWindow::initSettings() {
+void QC_ApplicationWindow::initSettings()
+{
     RS_DEBUG->print("QC_ApplicationWindow::initSettings()");
+
+    QSettings settings;
+
     recentFiles->addFiles(file_menu);
 
-    RS_SETTINGS->beginGroup("/Geometry");
-    restoreState(RS_SETTINGS->readByteArrayEntry("/DockWindows", ""));
-    dock_areas.left->setChecked(RS_SETTINGS->readNumEntry("/LeftDockArea", 0));
-    dock_areas.right->setChecked(RS_SETTINGS->readNumEntry("/RightDockArea", 1));
-    dock_areas.top->setChecked(RS_SETTINGS->readNumEntry("/TopDockArea", 0));
-    dock_areas.bottom->setChecked(RS_SETTINGS->readNumEntry("/BottomDockArea", 0));
-    dock_areas.floating->setChecked(RS_SETTINGS->readNumEntry("/FloatingDockwidgets", 0));
-    RS_SETTINGS->endGroup();
+    settings.beginGroup("Geometry");
+    restoreState(settings.value("DockWindows", "").toByteArray());
+    dock_areas.left->setChecked(settings.value("LeftDockArea", 0).toBool());
+    dock_areas.right->setChecked(settings.value("RightDockArea", 1).toBool());
+    dock_areas.top->setChecked(settings.value("TopDockArea", 0).toBool());
+    dock_areas.bottom->setChecked(settings.value("BottomDockArea", 0).toBool());
+    dock_areas.floating->setChecked(settings.value("FloatingDockwidgets", 0).toBool());
+    settings.endGroup();
 
-    RS_SETTINGS->beginGroup("Widgets");
+    settings.beginGroup("Widgets");
 
-    int allow_style = RS_SETTINGS->readNumEntry("/AllowStyle", 0);
+    int allow_style = settings.value("AllowStyle", 0).toInt();
     if (allow_style)
     {
-        QString style = RS_SETTINGS->readEntry("/Style", "");
+        QString style = settings.value("Style", "").toString();
         QApplication::setStyle(QStyleFactory::create(style));
     }
 
-    QString sheet_path = RS_SETTINGS->readEntry("/StyleSheet", "");
+    QString sheet_path = settings.value("StyleSheet", "").toString();
     if (loadStyleSheet(sheet_path))
         style_sheet_path = sheet_path;
-    RS_SETTINGS->endGroup();
+    settings.endGroup();
+
+    a_map["ViewDraft"]->setChecked(settings.value("Appearance/DraftMode", 0).toBool());
 }
 
 
