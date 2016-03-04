@@ -75,3 +75,5 @@ core
 *.core
 vgcore.*
 core.*
+
+.qmake.stash
