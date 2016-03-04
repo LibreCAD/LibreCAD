@@ -302,7 +302,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
     setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
 
-    statusBar()->showMessage(XSTR(QC_APPNAME) " Ready", 2000);
+    statusBar()->showMessage(qApp->applicationName() + " Ready", 2000);
 }
 
 /**
@@ -543,7 +543,7 @@ void QC_ApplicationWindow::initSettings()
     recentFiles->addFiles(file_menu);
 
     settings.beginGroup("Geometry");
-    restoreState(settings.value("DockWindows", "").toByteArray());
+    restoreState(settings.value("StateOfWidgets", "").toByteArray());
     dock_areas.left->setChecked(settings.value("LeftDockArea", 0).toBool());
     dock_areas.right->setChecked(settings.value("RightDockArea", 1).toBool());
     dock_areas.top->setChecked(settings.value("TopDockArea", 0).toBool());
@@ -582,7 +582,7 @@ void QC_ApplicationWindow::storeSettings() {
         RS_SETTINGS->writeEntry("/WindowHeight", height());
         RS_SETTINGS->writeEntry("/WindowX", x());
         RS_SETTINGS->writeEntry("/WindowY", y());
-        RS_SETTINGS->writeEntry("/DockWindows", QVariant (saveState()));
+        RS_SETTINGS->writeEntry("/StateOfWidgets", QVariant (saveState()));
         RS_SETTINGS->writeEntry("/LeftDockArea", dock_areas.left->isChecked());
         RS_SETTINGS->writeEntry("/RightDockArea", dock_areas.right->isChecked());
         RS_SETTINGS->writeEntry("/TopDockArea", dock_areas.top->isChecked());
@@ -1347,7 +1347,7 @@ QString QC_ApplicationWindow::
 {
         /*	Calculate Window Title Bar Available Space.
          *	*/
-    int	wtb_as = WTB_MAX_SIZE - ((int) strlen(XSTR(QC_APPNAME)) + WTB_EXTRA_SIZE);
+    int	wtb_as = WTB_MAX_SIZE - ((int) strlen("LibreCAD") + WTB_EXTRA_SIZE);
 
 
         /*	- If string to display to window title bar is too long, truncate
@@ -2375,8 +2375,8 @@ void QC_ApplicationWindow::slotHelpAbout() {
      */
 
     box.setText(       QString("<p><font size=\"2\">") +
-                       "<h2>"+ XSTR(QC_APPNAME)+ "</h2>" +
-                       tr("Version: %1").arg(XSTR(QC_VERSION)) + "<br>" +
+                       "<h2>"+ qApp->applicationName() + "</h2>" +
+                       tr("Version: %1").arg(qApp->applicationVersion()) + "<br>" +
 #ifdef QC_SCMREVISION
                        tr("SCM Revision: %1").arg(XSTR(QC_SCMREVISION)) + "<br>" +
 #endif

@@ -2,9 +2,9 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015-2016 ravas (ravas@outlook.com)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
-**
 **
 ** This file may be distributed and/or modified under the terms of the
 ** GNU General Public License version 2 as published by the Free Software
@@ -29,6 +29,7 @@
 #include <QDebug>
 #include <QApplication>
 #include <QSplashScreen>
+#include <QSettings>
 
 #include "rs_fontlist.h"
 #include "rs_patternlist.h"
@@ -57,8 +58,12 @@ int main(int argc, char** argv)
 
     QApplication app(argc, argv);
     QCoreApplication::setOrganizationName("LibreCAD");
-    QCoreApplication::setApplicationName("/LibreCAD");
-    QCoreApplication::setApplicationVersion("master");
+    QCoreApplication::setApplicationName("LibreCAD");
+    QCoreApplication::setApplicationVersion("2.1.0-alpha");
+
+    QSettings settings;
+
+    bool first_load = settings.value("Startup/FirstLoad", 1).toBool();
 
     const QString lpDebugSwitch0("-d"),lpDebugSwitch1("--debug") ;
     const QString help0("-h"), help1("--help");
@@ -179,8 +184,8 @@ int main(int argc, char** argv)
 
     QFileInfo prgInfo( QFile::decodeName(argv[0]) );
     QString prgDir(prgInfo.absolutePath());
-    RS_SETTINGS->init(XSTR(QC_COMPANYKEY), XSTR(QC_APPKEY));
-    RS_SYSTEM->init(XSTR(QC_APPNAME), XSTR(QC_VERSION), XSTR(QC_APPDIR), prgDir);
+    RS_SETTINGS->init(app.organizationName(), app.applicationName());
+    RS_SYSTEM->init(app.applicationName(), app.applicationVersion(), XSTR(QC_APPDIR), prgDir);
 
     // parse command line arguments that might not need a launched program:
     QStringList fileList = handleArgs(argc, argv, argClean);
@@ -198,7 +203,7 @@ int main(int argc, char** argv)
     RS_SETTINGS->endGroup();
 
     // show initial config dialog:
-    if (unit=="Invalid")
+    if (first_load)
     {
         RS_DEBUG->print("main: show initial config dialog..");
         QG_DlgInitial di(nullptr);
@@ -270,7 +275,7 @@ int main(int argc, char** argv)
     RS_DEBUG->print("main: creating main window..");
     QC_ApplicationWindow appWin;
     RS_DEBUG->print("main: setting caption");
-    appWin.setWindowTitle(XSTR(QC_APPNAME));
+    appWin.setWindowTitle(app.applicationName());
 
     RS_DEBUG->print("main: show main window");
 
@@ -281,7 +286,7 @@ int main(int argc, char** argv)
     int windowY = RS_SETTINGS->readNumEntry("/WindowY", 30);
     RS_SETTINGS->endGroup();
 
-    if (windowWidth != 0)
+    if (!first_load)
         appWin.resize(windowWidth, windowHeight);
 
     appWin.move(windowX, windowY);
@@ -289,7 +294,7 @@ int main(int argc, char** argv)
     RS_SETTINGS->beginGroup("Defaults");
     bool maximize = RS_SETTINGS->readNumEntry("/Maximize", 0);
     RS_SETTINGS->endGroup();
-    if (maximize || windowWidth == 0)
+    if (maximize || first_load)
         appWin.showMaximized();
     else
         appWin.show();
@@ -328,8 +333,6 @@ int main(int argc, char** argv)
     }
     RS_DEBUG->print("main: loading files: OK");
 
-    RS_DEBUG->print("main: app.exec()");
-
     if (!files_loaded)
     {
         appWin.slotFileNewNew();
@@ -339,6 +342,11 @@ int main(int argc, char** argv)
         splash->finish(&appWin);
     else
         delete splash;
+
+    if (first_load)
+        settings.setValue("Startup/FirstLoad", 0);
+
+    RS_DEBUG->print("main: entering Qt event loop");
 
     int return_code = app.exec();
 

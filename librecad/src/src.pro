@@ -2,13 +2,6 @@
 # (c) Ries van Twisk (librecad@rvt.dds.nl)
 TEMPLATE = app
 
-DEFINES += QC_APPKEY="\"/LibreCAD\""
-DEFINES += QC_APPNAME="\"LibreCAD\""
-DEFINES += QC_COMPANYNAME="\"LibreCAD\""
-DEFINES += QC_COMPANYKEY="\"LibreCAD\""
-DEFINES += QC_VERSION="\"master\""
-DEFINES += QC_DELAYED_SPLASH_SCREEN=1
-
 #uncomment to enable a Debugging menu entry for basic unit testing
 #DEFINES += LC_DEBUGGING
 
@@ -23,9 +16,6 @@ GENERATED_DIR = ../../generated/librecad
 include(../../common.pri)
 include(./boost.pri)
 include(./muparser.pri)
-
-#uncomment to use 2D rs_vector instead of 3D
-#DEFINES += RS_VECTOR2D=1
 
 CONFIG += qt \
     warn_on \
