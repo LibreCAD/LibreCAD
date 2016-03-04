@@ -186,9 +186,6 @@ int main(int argc, char** argv)
     // parse command line arguments that might not need a launched program:
     QStringList fileList = handleArgs(argc, argv, argClean);
 
-    QString lang;
-    QString langCmd;
-
     QString unit = settings.value("Defaults/Unit", "Invalid").toString();
 
     // show initial config dialog:
@@ -236,25 +233,11 @@ int main(int argc, char** argv)
     RS_DEBUG->print("main: init scriptlist: OK");
 
     RS_DEBUG->print("main: loading translation..");
-    RS_SETTINGS->beginGroup("/Appearance");
-    #ifdef QC_PREDEFINED_LOCALE
-        lang = RS_SETTINGS->readEntry("/Language", "");
-        if (lang.isEmpty())
-        {
-            lang=QC_PREDEFINED_LOCALE;
-            RS_SETTINGS->writeEntry("/Language", lang);
-        }
-        langCmd = RS_SETTINGS->readEntry("/LanguageCmd", "");
-        if (langCmd.isEmpty())
-        {
-            langCmd=QC_PREDEFINED_LOCALE;
-            RS_SETTINGS->writeEntry("/LanguageCmd", langCmd);
-        }
-    #else
-        lang = RS_SETTINGS->readEntry("/Language", "en");
-        langCmd = RS_SETTINGS->readEntry("/LanguageCmd", "en");
-    #endif
-    RS_SETTINGS->endGroup();
+
+    settings.beginGroup("Appearance");
+    QString lang = settings.value("Language", "en").toString();
+    QString langCmd = settings.value("LanguageCmd", "en").toString();
+    settings.endGroup();
 
     RS_SYSTEM->loadTranslation(lang, langCmd);
     RS_DEBUG->print("main: loading translation: OK");

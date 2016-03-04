@@ -71,11 +71,8 @@ void QG_DlgOptionsGeneral::languageChange()
     retranslateUi(this);
 }
 
-void QG_DlgOptionsGeneral::init() {
-#ifdef QC_PREDEFINED_LOCALE
-    bgLanguage->hide();
-    Widget9Layout->addMultiCellWidget( bgGraphicView, 0, 2, 0, 0 ); //use empty space as well
-#endif
+void QG_DlgOptionsGeneral::init()
+{
     // Fill combobox with languages:
     QStringList languageList = RS_SYSTEM->getLanguageList();
     languageList.sort();
@@ -97,9 +94,7 @@ void QG_DlgOptionsGeneral::init() {
 
     // set current language:
     QString def_lang = "en";
-#ifdef QC_PREDEFINED_LOCALE
-    def_lang = QC_PREDEFINED_LOCALE;
-#endif
+
     QString lang = RS_SETTINGS->readEntry("/Language", def_lang);
     cbLanguage->setCurrentIndex( cbLanguage->findText(RS_SYSTEM->symbolToLanguage(lang)) );
 
