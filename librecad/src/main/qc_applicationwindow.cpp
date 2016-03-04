@@ -2558,7 +2558,9 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e)
              code += QChar(*i);
 
         // Check against double keycode handler
-        if (actionHandler->keycode(code) == true) {
+        if (actionHandler->keycode(code) == true)
+        {
+            slotFocusCommandLine();
             actionProcessed = true;
         }
 
