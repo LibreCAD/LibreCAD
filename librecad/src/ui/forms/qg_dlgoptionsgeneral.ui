@@ -1700,7 +1700,7 @@
        <item row="1" column="1">
         <widget class="QGroupBox" name="groupBox_2">
          <property name="title">
-          <string>Load</string>
+          <string>Startup</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>

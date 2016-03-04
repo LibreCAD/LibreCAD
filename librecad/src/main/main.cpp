@@ -42,10 +42,6 @@
 #include "qc_applicationwindow.h"
 #include "rs_debug.h"
 
-#ifndef QC_SPLASH_TXTCOL
-    #define QC_SPLASH_TXTCOL Qt::black
-#endif
-
 // for image mime resources from png files
 extern void QINITIMAGES_LIBRECAD();
 
@@ -192,15 +188,8 @@ int main(int argc, char** argv)
 
     QString lang;
     QString langCmd;
-    QString unit;
 
-    RS_SETTINGS->beginGroup("/Defaults");
-    #ifndef QC_PREDEFINED_UNIT
-        unit = RS_SETTINGS->readEntry("/Unit", "Invalid");
-    #else
-        unit = RS_SETTINGS->readEntry("/Unit", QC_PREDEFINED_UNIT);
-    #endif
-    RS_SETTINGS->endGroup();
+    QString unit = settings.value("Defaults/Unit", "Invalid").toString();
 
     // show initial config dialog:
     if (first_load)
@@ -220,9 +209,7 @@ int main(int argc, char** argv)
 
     auto splash = new QSplashScreen;
 
-    RS_SETTINGS->beginGroup("Appearance");
-    bool show_splash = RS_SETTINGS->readNumEntry("/ShowSplash", 1);
-    RS_SETTINGS->endGroup();
+    bool show_splash = settings.value("Startup/ShowSplash", 1).toBool();
 
     if (show_splash)
     {
@@ -231,7 +218,7 @@ int main(int argc, char** argv)
         splash->setAttribute(Qt::WA_DeleteOnClose);
         splash->show();
         splash->showMessage(QObject::tr("Loading.."),
-                            Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
+                            Qt::AlignRight|Qt::AlignBottom, Qt::black);
         app.processEvents();
         RS_DEBUG->print("main: splashscreen: OK");
     }
@@ -291,9 +278,8 @@ int main(int argc, char** argv)
 
     appWin.move(windowX, windowY);
 
-    RS_SETTINGS->beginGroup("Defaults");
-    bool maximize = RS_SETTINGS->readNumEntry("/Maximize", 0);
-    RS_SETTINGS->endGroup();
+    bool maximize = settings.value("Startup/Maximize", 0).toBool();
+
     if (maximize || first_load)
         appWin.showMaximized();
     else
@@ -308,7 +294,7 @@ int main(int argc, char** argv)
         RS_DEBUG->print("main: updating splash");
         splash->raise();
         splash->showMessage(QObject::tr("Loading..."),
-                Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
+                Qt::AlignRight|Qt::AlignBottom, Qt::black);
         RS_DEBUG->print("main: processing events");
         qApp->processEvents();
         RS_DEBUG->print("main: updating splash: OK");
@@ -325,7 +311,7 @@ int main(int argc, char** argv)
         {
             splash->showMessage(QObject::tr("Loading File %1..")
                     .arg(QDir::toNativeSeparators(*it)),
-            Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
+            Qt::AlignRight|Qt::AlignBottom, Qt::black);
             qApp->processEvents();
         }
         appWin.slotFileOpen(*it, RS2::FormatUnknown);

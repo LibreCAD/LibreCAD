@@ -163,27 +163,27 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating LC_CentralWidget");
 
-    LC_CentralWidget* central = new LC_CentralWidget(this);
+    auto central = new LC_CentralWidget(this);
 
     setCentralWidget(central);
 
     mdiAreaCAD = central->getMdiArea();
 
-    RS_SETTINGS->beginGroup("/Defaults");
-    if (RS_SETTINGS->readNumEntry("/TabMode", 0))
+    settings.beginGroup("Startup");
+    if (settings.value("TabMode", 0).toBool())
         mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
-    bool enable_left_sidebar = RS_SETTINGS->readNumEntry("/EnableLeftSidebar", 1);
-    bool enable_cad_toolbars = RS_SETTINGS->readNumEntry("/EnableCADToolbars", 1);
-    bool keycode_mode = RS_SETTINGS->readNumEntry("/KeycodeMode", 0);
-    RS_SETTINGS->endGroup();
+    bool enable_left_sidebar = settings.value("EnableLeftSidebar", 1).toBool();
+    bool enable_cad_toolbars = settings.value("EnableCADToolbars", 1).toBool();
+    bool keycode_mode = settings.value("KeycodeMode", 0).toBool();
+    settings.endGroup();
 
     connect(mdiAreaCAD, SIGNAL(subWindowActivated(QMdiSubWindow*)),
             this, SLOT(slotWindowActivated(QMdiSubWindow*)));
 
-    RS_SETTINGS->beginGroup("Widgets");
-    bool custom_size = RS_SETTINGS->readNumEntry("/AllowToolbarIconSize", 0);
-    int icon_size = custom_size ? RS_SETTINGS->readNumEntry("/ToolbarIconSize", 24) : 24;
-    RS_SETTINGS->endGroup();
+    settings.beginGroup("Widgets");
+    bool custom_size = settings.value("AllowToolbarIconSize", 0).toBool();
+    int icon_size = custom_size ? settings.value("ToolbarIconSize", 24).toInt() : 24;
+    settings.endGroup();
 
     if (custom_size)
         setIconSize(QSize(icon_size, icon_size));
