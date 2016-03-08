@@ -25,9 +25,11 @@
 **********************************************************************/
 
 #include<iostream>
+#include<QString>
 #include "rs_patternlist.h"
 
 #include "rs_system.h"
+#include "rs_pattern.h"
 #include "rs_debug.h"
 
 RS_PatternList* RS_PatternList::instance() {
@@ -35,14 +37,8 @@ RS_PatternList* RS_PatternList::instance() {
 	return &instance;
 }
 
-/**
- * Default constructor.
- */
-RS_PatternList::RS_PatternList() {
-    //patternListListeners.setAutoDelete(false);
-}
 
-
+RS_PatternList::~RS_PatternList() = default;
 
 /**
  * Initializes the pattern list by creating empty RS_Pattern 
@@ -65,28 +61,6 @@ void RS_PatternList::init() {
 		RS_DEBUG->print("base: %s", name.toLatin1().data());
     }
 }
-
-
-
-/**
- * Removes all patterns in the patternlist.
- */
-RS_PatternList::~RS_PatternList() = default;
-
-/**
- * Removes a pattern from the list.
- * Listeners are notified after the pattern was removed from 
- * the list but before it gets deleted.
- */
-void RS_PatternList::removePattern(RS_Pattern* pattern) {
-    RS_DEBUG->print("RS_PatternList::removePattern()");
-	for (auto& pa: patterns) {
-		if (pa.second.get() == pattern)
-			patterns[pa.first].reset();
-	}
-
-}
-
 
 
 /**

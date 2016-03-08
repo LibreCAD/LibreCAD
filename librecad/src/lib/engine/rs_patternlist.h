@@ -30,8 +30,9 @@
 
 #include<map>
 #include<memory>
-#include "rs_pattern.h"
-#include "rs_entity.h"
+
+class RS_Pattern;
+class QString;
 
 #define RS_PATTERNLIST RS_PatternList::instance()
 
@@ -42,8 +43,8 @@
  * @author Andrew Mustun
  */
 class RS_PatternList {
-    RS_PatternList();
 	using PTN_MAP = std::map<QString, std::unique_ptr<RS_Pattern>>;
+	RS_PatternList() = default;
 
 public:
     /**
@@ -57,10 +58,9 @@ public:
 	RS_PatternList(RS_PatternList &&) = delete;
 	RS_PatternList& operator = (RS_PatternList &&) = delete;
 
-    void init();
+	void init();
 
-    void clearPatterns();
-    int countPatterns() {
+	int countPatterns() const {
 		return patterns.size();
     }
 
@@ -79,24 +79,16 @@ public:
 	}
 	//! \}
 
-	void removePattern(RS_Pattern* pattern);
 	RS_Pattern* requestPattern(const QString& name);
 
 	bool contains(const QString& name) const;
 
-    //void addPatternListListener(RS_PatternListListener* listener);
-
     friend std::ostream& operator << (std::ostream& os, RS_PatternList& l);
-
-    //static bool test();
 
 
 private:
     //! patterns in the graphic
 	PTN_MAP patterns;
-    //! List of registered PatternListListeners
-    //QList<RS_PatternListListener> patternListListeners;
-}
-;
+};
 
 #endif

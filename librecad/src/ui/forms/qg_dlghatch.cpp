@@ -29,6 +29,8 @@
 #include "rs_line.h"
 #include "rs_hatch.h"
 #include "rs_patternlist.h"
+#include "rs_pattern.h"
+#include "rs_math.h"
 #include "rs_math.h"
 
 /*
@@ -58,8 +60,8 @@ void QG_DlgHatch::languageChange()
 }
 
 void QG_DlgHatch::init() {
-    pattern=NULL;
-    hatch = NULL;
+	pattern=nullptr;
+	hatch = nullptr;
     isNew = false;
 
     preview = new RS_EntityContainer();
@@ -144,10 +146,10 @@ void QG_DlgHatch::resizeEvent ( QResizeEvent * ) {
 }
 
 void QG_DlgHatch::updatePreview() {
-    if (preview==NULL) {
+	if (preview==nullptr) {
         return;
     }
-    if (hatch==NULL || !cbEnablePreview->isChecked()) {
+	if (hatch==nullptr || !cbEnablePreview->isChecked()) {
         preview->clear();
         gvPreview->zoomAuto();
         return;
