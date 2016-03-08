@@ -28,7 +28,8 @@
 #ifndef RS_PATTERNLIST_H
 #define RS_PATTERNLIST_H
 
-
+#include<map>
+#include<memory>
 #include "rs_pattern.h"
 #include "rs_entity.h"
 
@@ -41,36 +42,47 @@
  * @author Andrew Mustun
  */
 class RS_PatternList {
-protected:
     RS_PatternList();
+	using PTN_MAP = std::map<QString, std::unique_ptr<RS_Pattern>>;
 
 public:
     /**
      * @return Instance to the unique pattern list.
      */
-    static RS_PatternList* instance() {
-        if (uniqueInstance==NULL) {
-            uniqueInstance = new RS_PatternList();
-        }
-        return uniqueInstance;
-    }
+	static RS_PatternList* instance();
 
-    virtual ~RS_PatternList() {clearPatterns();}
+	~RS_PatternList();
+	RS_PatternList(RS_PatternList const&) = delete;
+	RS_PatternList& operator = (RS_PatternList const&) = delete;
+	RS_PatternList(RS_PatternList &&) = delete;
+	RS_PatternList& operator = (RS_PatternList &&) = delete;
 
     void init();
 
     void clearPatterns();
     int countPatterns() {
-        return patterns.count();
-    }
-    virtual void removePattern(RS_Pattern* pattern);
-    RS_Pattern* requestPattern(const QString& name);
-    //! @return a const iterator for the pattern list.
-    QListIterator<RS_Pattern *> getIteretor(){
-        return QListIterator<RS_Pattern *>(patterns);
+		return patterns.size();
     }
 
-        bool contains(const QString& name);
+	//! \{ range based loop support
+	PTN_MAP::iterator begin() {
+		return patterns.begin();
+	}
+	PTN_MAP::const_iterator begin() const{
+		return patterns.begin();
+	}
+	PTN_MAP::iterator end() {
+		return patterns.end();
+	}
+	PTN_MAP::const_iterator end() const{
+		return patterns.end();
+	}
+	//! \}
+
+	void removePattern(RS_Pattern* pattern);
+	RS_Pattern* requestPattern(const QString& name);
+
+	bool contains(const QString& name) const;
 
     //void addPatternListListener(RS_PatternListListener* listener);
 
@@ -78,12 +90,10 @@ public:
 
     //static bool test();
 
-protected:
-    static RS_PatternList* uniqueInstance;
 
 private:
     //! patterns in the graphic
-    QList<RS_Pattern*> patterns;
+	PTN_MAP patterns;
     //! List of registered PatternListListeners
     //QList<RS_PatternListListener> patternListListeners;
 }
