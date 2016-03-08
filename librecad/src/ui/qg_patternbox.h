@@ -41,9 +41,8 @@ public:
     QG_PatternBox(QWidget* parent=0);
     virtual ~QG_PatternBox();
 
-    RS_Pattern* getPattern() {
-        return currentPattern;
-    }
+	RS_Pattern* getPattern();
+
     void setPattern(const QString& pName);
 
     void init();
@@ -52,7 +51,7 @@ private slots:
     void slotPatternChanged(int index);
 
 signals:
-    void patternChanged(RS_Pattern* pattern);
+	void patternChanged();
 
 private:
     RS_Pattern* currentPattern;

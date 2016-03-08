@@ -149,14 +149,10 @@ void QG_DlgHatch::setPattern(const QString& p) {
 }
 
 void QG_DlgHatch::resizeEvent ( QResizeEvent * ) {
-    updatePreview(NULL);
+	updatePreview();
 }
 
 void QG_DlgHatch::updatePreview() {
-    updatePreview(NULL);
-}
-
-void QG_DlgHatch::updatePreview(RS_Pattern* ) {
     if (preview==NULL) {
         return;
     }
@@ -165,6 +161,9 @@ void QG_DlgHatch::updatePreview(RS_Pattern* ) {
         gvPreview->zoomAuto();
         return;
     }
+	pattern = cbPattern->getPattern();
+	if (pattern->countDeep()==0)
+		return;
 
     QString patName = cbPattern->currentText();
     bool isSolid = cbSolid->isChecked();
