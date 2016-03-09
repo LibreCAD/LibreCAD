@@ -413,37 +413,37 @@ void RS_Math::test() {
 // solvers assume arguments are valid, and there's no attempt to verify validity of the argument pointers
 //
 // @author Dongxu Li <dongxuli2011@gmail.com>
-
 std::vector<double> RS_Math::quadraticSolver(const std::vector<double>& ce)
 //quadratic solver for
 // x^2 + ce[0] x + ce[1] =0
 {
     std::vector<double> ans(0,0.);
 	if (ce.size() != 2) return ans;
-	long double const b = -0.5L * ce[0];
-	long double const c = ce[1];
+	using LDouble = long double;
+	LDouble const b = -0.5L * ce[0];
+	LDouble const c = ce[1];
 	// x^2 -2 b x + c=0
 	// (x - b)^2 = b^2 - c
 	// b^2 >= fabs(c)
 	// x = b \pm b sqrt(1. - c/(b^2))
-	auto const b2= b * b;
-	auto const discriminant= b2 - c;
-	long double const fc = fabs(c);
+	LDouble const b2= b * b;
+	LDouble const discriminant= b2 - c;
+	LDouble const fc = fabs(c);
 
 	//TODO, fine tune to tolerance level
-	static long double const TOL = 1e-24L;
+	LDouble const TOL = 1e-24L;
 
-	if (discriminant < -TOL*std::max(b2, fc))
+	if (discriminant < 0.L)
 		//negative discriminant, no real root
 		return ans;
 
 	//find the radical
-	long double r;
+	LDouble r;
 
 	// given |p| >= |q|
 	// sqrt(p^2 \pm q^2) = p sqrt(1 \pm q^2/p^2)
 	if (b2 >= fc)
-		r = b * sqrt(1.L - c/b2);
+		r = fabs(b) * sqrt(1.L - c/b2);
 	else
 		// c is negative, because b2 - c is non-negative
 		r = sqrt(fc) * sqrt(1.L + b2/fc);
@@ -464,6 +464,7 @@ std::vector<double> RS_Math::quadraticSolver(const std::vector<double>& ce)
 		ans.push_back(b);
 	return ans;
 }
+
 
 std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
 //cubic equation solver
