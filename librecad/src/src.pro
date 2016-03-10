@@ -936,7 +936,6 @@ RESOURCES += ../res/main/main.qrc
 TRANSLATIONS = ../ts/librecad_ar.ts \
     ../ts/librecad_ca.ts \
     ../ts/librecad_cs.ts \
-    ../ts/librecad_et.ts \
     ../ts/librecad_en.ts \
     ../ts/librecad_en_au.ts \
     ../ts/librecad_da.ts \
@@ -962,6 +961,8 @@ TRANSLATIONS = ../ts/librecad_ar.ts \
     ../ts/librecad_es_us.ts \
     ../ts/librecad_es_uy.ts \
     ../ts/librecad_es_ve.ts \
+    ../ts/librecad_et.ts \
+    ../ts/librecad_eu.ts \
     ../ts/librecad_fi.ts \
     ../ts/librecad_fr.ts \
     ../ts/librecad_gl.ts \
