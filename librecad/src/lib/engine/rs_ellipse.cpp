@@ -192,7 +192,7 @@ RS_VectorSolutions RS_Ellipse::getRefPoints() const
         ret.push_back(getEndpoint());
     }
     ret.push_back(data.center);
-    ret.appendTo(getFoci());
+    ret.push_back(getFoci());
     ret.push_back(getMajorPoint());
     ret.push_back(getMinorPoint());
     return ret;
@@ -249,6 +249,7 @@ RS_Vector RS_Ellipse::getTangentDirection(const RS_Vector& point) const {
     RS_Vector vp(point-getCenter());
     RS_Vector aV(-getAngle());
     vp.rotate(aV);
+	vp.y /= getRatio();
     double a=getMajorRadius();
     if(a<RS_TOLERANCE || getRatio()<RS_TOLERANCE) return RS_Vector(false);
 	RS_Circle c(nullptr, RS_CircleData(RS_Vector(0.,0.),a));
@@ -920,13 +921,11 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 		mtRow.push_back(vp.x*vp.x);
 		mtRow.push_back(vp.x*vp.y);
 		mtRow.push_back(vp.y*vp.y);
-		const double l=sqrt(mtRow[0]*mtRow[0]+mtRow[1]*mtRow[1]+mtRow[2]*mtRow[2]);
+		const double l= hypot(hypot(mtRow[0], mtRow[1]), mtRow[2]);
 		bool addRow(true);
 		for(const auto& v: mt){
-			const double dx=v[0] - mtRow[0];
-			const double dy=v[1] - mtRow[1];
-			const double dz=v[2] - mtRow[2];
-			if( sqrt(dx*dx + dy*dy + dz*dz) < symTolerance*l){
+			RS_Vector const dv{v[0] - mtRow[0], v[1] - mtRow[1], v[2] - mtRow[2]};
+			if( dv.magnitude() < symTolerance*l){
 				//symmetric
 				addRow=false;
 				break;

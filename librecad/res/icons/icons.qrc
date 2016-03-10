@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>bevel_b.svg</file>
+        <file>camera.svg</file>
+        <file>cursor.svg</file>
+        <file>dockwidgets_bottom.svg</file>
+        <file>dockwidgets_floating.svg</file>
+        <file>dockwidgets_left.svg</file>
+        <file>dockwidgets_right.svg</file>
+        <file>dockwidgets_top.svg</file>
+        <file>restrhor.svg</file>
+        <file>restrortho.svg</file>
+        <file>restrver.svg</file>
+        <file>rotate_b.svg</file>
+        <file>up_b.svg</file>
+        <file>down_b.svg</file>
+        <file>downmost_b.svg</file>
+        <file>upmost_b.svg</file>
+    </qresource>
+</RCC>

@@ -115,7 +115,7 @@ public:
     bool createFrom3P(const RS_VectorSolutions& sol);
 	bool createInscribe(const RS_Vector& coord, const std::vector<RS_Line*>& lines);
 	virtual std::vector<RS_Entity* > offsetTwoSides(const double& distance) const;
-	RS_VectorSolutions createTan1_2P(const RS_AtomicEntity* circle, const std::vector<RS_Vector> points);
+	RS_VectorSolutions createTan1_2P(const RS_AtomicEntity* circle, const std::vector<RS_Vector>& points);
 	static RS_VectorSolutions createTan2(const std::vector<RS_AtomicEntity*>& circles, const double& r);
     /** solve one of the eight Appollonius Equations
 | Cx - Ci|^2=(Rx+Ri)^2

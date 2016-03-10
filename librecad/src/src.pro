@@ -2,14 +2,6 @@
 # (c) Ries van Twisk (librecad@rvt.dds.nl)
 TEMPLATE = app
 
-DEFINES += QC_APPKEY="\"/LibreCAD\""
-DEFINES += QC_APPNAME="\"LibreCAD\""
-DEFINES += QC_COMPANYNAME="\"LibreCAD\""
-DEFINES += QC_COMPANYKEY="\"LibreCAD\""
-DEFINES += QC_VERSION="\"master\""
-DEFINES += QC_DELAYED_SPLASH_SCREEN=1
-DEFINES += HAS_BOOST=1
-
 #uncomment to enable a Debugging menu entry for basic unit testing
 #DEFINES += LC_DEBUGGING
 
@@ -25,18 +17,20 @@ include(../../common.pri)
 include(./boost.pri)
 include(./muparser.pri)
 
-#uncomment to use 2D rs_vector instead of 3D
-#DEFINES += RS_VECTOR2D=1
-
 CONFIG += qt \
-     warn_on \
-     link_prl \
-     verbose
+    warn_on \
+    link_prl \
+    verbose \
+    depend_includepath
+
 
 greaterThan( QT_MAJOR_VERSION, 4 ) {
     # in Qt5 help is deprecated in CONFIG
-	QT += widgets printsupport help
-	CONFIG += c++11
+    QT += widgets printsupport help
+    CONFIG += c++11
+    *-g++ {
+        QMAKE_CXXFLAGS += -fext-numeric-literals
+    }
 } else {
     CONFIG += help
 }
@@ -90,7 +84,7 @@ LIBS += -L../../generated/lib  \
     -ldxfrw \
     -ljwwlib
 
-DEPENDPATH += \
+INCLUDEPATH += \
     ../../libraries/libdxfrw/src \
     ../../libraries/jwwlib/src \
     cmd \
@@ -105,19 +99,18 @@ DEPENDPATH += \
     lib/information \
     lib/math \
     lib/modification \
+    lib/printing \
     lib/scripting \
     actions \
     main \
-	test \
-	plugins \
-	ui \
+    test \
+    plugins \
+    ui \
     ui/forms \
-	../res
+    ui/generic \
+    ../res
 
 RESOURCES += ../res/extui/extui.qrc
-
-#depends check, bug#3411161
-INCLUDEPATH += $$DEPENDPATH
 
 # ################################################################################
 # Library
@@ -216,20 +209,15 @@ HEADERS += \
     lib/scripting/rs_python_wrappers.h \
     lib/scripting/rs_script.h \
     lib/scripting/rs_scriptlist.h \
-    ui/forms/qg_snaptoolbar.h \
     actions/lc_actiondrawcircle2pr.h \
-    ui/forms/qg_activelayername.h \
     test/lc_simpletests.h \
     lib/generators/lc_makercamsvg.h \
     lib/generators/lc_xmlwriterinterface.h \
     lib/generators/lc_xmlwriterqxmlstreamwriter.h \
     actions/lc_actionfileexportmakercam.h \
-    ui/qg_commandhistory.h \
-    ui/lc_customtoolbar.h \
-    ui/lc_dockwidget.h \
     lib/engine/lc_rect.h \
-    ui/forms/lc_dlgsplinepoints.h \
-    ui/forms/lc_widgetoptionsdialog.h
+    main/lc_options.h \
+    lib/printing/lc_printing.h
 
 SOURCES += \
     lib/actions/rs_actioninterface.cpp \
@@ -310,25 +298,19 @@ SOURCES += \
     lib/scripting/rs_python_wrappers.cpp \
     lib/scripting/rs_script.cpp \
     lib/scripting/rs_scriptlist.cpp \
-    ui/forms/qg_snaptoolbar.cpp \
     lib/engine/rs_color.cpp \
     lib/engine/rs_pen.cpp \
     actions/lc_actiondrawcircle2pr.cpp \
-    ui/forms/qg_activelayername.cpp \
     test/lc_simpletests.cpp \
     lib/generators/lc_xmlwriterqxmlstreamwriter.cpp \
     lib/generators/lc_makercamsvg.cpp \
     actions/lc_actionfileexportmakercam.cpp \
     lib/engine/rs_atomicentity.cpp \
     lib/engine/rs_undocycle.cpp \
-    ui/qg_commandhistory.cpp \
-    ui/lc_customtoolbar.cpp \
-    ui/lc_dockwidget.cpp \
+    lib/engine/rs_flags.cpp \
     lib/engine/lc_rect.cpp \
     lib/engine/rs.cpp \
-    ui/forms/lc_dlgsplinepoints.cpp \
-    lib/engine/rs_flags.cpp \
-    ui/forms/lc_widgetoptionsdialog.cpp
+    lib/printing/lc_printing.cpp
 
 # ################################################################################
 # Command
@@ -609,6 +591,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
 
 RESOURCES += ../res/actions/actions.qrc
 RESOURCES += ../res/tools/tools.qrc
+RESOURCES += ../res/icons/icons.qrc
 
 # ################################################################################
 # UI
@@ -698,7 +681,17 @@ HEADERS += ui/lc_actionfactory.h \
     ui/forms/qg_trimamountoptions.h \
     ui/forms/qg_widgetpen.h \
     ui/lc_centralwidget.h \
-    ui/lc_widgetfactory.h
+    ui/lc_widgetfactory.h \
+    ui/twostackedlabels.h \
+    ui/qg_commandhistory.h \
+    ui/lc_customtoolbar.h \
+    ui/lc_dockwidget.h \
+    ui/forms/lc_dlgsplinepoints.h \
+    ui/forms/lc_widgetoptionsdialog.h \
+    ui/forms/qg_snaptoolbar.h \
+    ui/forms/qg_activelayername.h \
+    ui/lc_deviceoptions.h \
+    ui/generic/comboboxoption.h
 
 SOURCES += ui/lc_actionfactory.cpp \
     ui/qg_actionhandler.cpp \
@@ -784,7 +777,17 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/forms/qg_trimamountoptions.cpp \
     ui/forms/qg_widgetpen.cpp \
     ui/lc_centralwidget.cpp \
-    ui/lc_widgetfactory.cpp
+    ui/lc_widgetfactory.cpp \
+    ui/twostackedlabels.cpp \
+    ui/qg_commandhistory.cpp \
+    ui/lc_customtoolbar.cpp \
+    ui/lc_dockwidget.cpp \
+    ui/forms/lc_dlgsplinepoints.cpp \
+    ui/forms/lc_widgetoptionsdialog.cpp \
+    ui/forms/qg_snaptoolbar.cpp \
+    ui/forms/qg_activelayername.cpp \
+    ui/lc_deviceoptions.cpp \
+    ui/generic/comboboxoption.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_arcoptions.ui \
@@ -854,7 +857,9 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_snaptoolbar.ui \
     ui/forms/qg_activelayername.ui \
     ui/forms/lc_dlgsplinepoints.ui \
-    ui/forms/lc_widgetoptionsdialog.ui
+    ui/forms/lc_widgetoptionsdialog.ui \
+    ui/lc_deviceoptions.ui \
+    ui/generic/comboboxoption.ui
 
 RESOURCES += ../res/ui/ui.qrc
 
@@ -931,7 +936,6 @@ RESOURCES += ../res/main/main.qrc
 TRANSLATIONS = ../ts/librecad_ar.ts \
     ../ts/librecad_ca.ts \
     ../ts/librecad_cs.ts \
-    ../ts/librecad_et.ts \
     ../ts/librecad_en.ts \
     ../ts/librecad_en_au.ts \
     ../ts/librecad_da.ts \
@@ -957,6 +961,8 @@ TRANSLATIONS = ../ts/librecad_ar.ts \
     ../ts/librecad_es_us.ts \
     ../ts/librecad_es_uy.ts \
     ../ts/librecad_es_ve.ts \
+    ../ts/librecad_et.ts \
+    ../ts/librecad_eu.ts \
     ../ts/librecad_fi.ts \
     ../ts/librecad_fr.ts \
     ../ts/librecad_gl.ts \

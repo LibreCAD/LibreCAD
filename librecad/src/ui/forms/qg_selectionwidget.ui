@@ -64,12 +64,6 @@
        <height>16777215</height>
       </size>
      </property>
-     <property name="font">
-      <font>
-       <family>Helvetica</family>
-       <pointsize>7</pointsize>
-      </font>
-     </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
@@ -98,12 +92,6 @@
        <height>16777215</height>
       </size>
      </property>
-     <property name="font">
-      <font>
-       <family>Helvetica</family>
-       <pointsize>7</pointsize>
-      </font>
-     </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
@@ -125,12 +113,6 @@
        <width>120</width>
        <height>16777215</height>
       </size>
-     </property>
-     <property name="font">
-      <font>
-       <family>Helvetica</family>
-       <pointsize>7</pointsize>
-      </font>
      </property>
      <property name="focusPolicy">
       <enum>Qt::ClickFocus</enum>
@@ -163,12 +145,6 @@ p, li { white-space: pre-wrap; }
        <width>120</width>
        <height>16777215</height>
       </size>
-     </property>
-     <property name="font">
-      <font>
-       <family>Helvetica</family>
-       <pointsize>7</pointsize>
-      </font>
      </property>
      <property name="focusPolicy">
       <enum>Qt::ClickFocus</enum>

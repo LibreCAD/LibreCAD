@@ -73,6 +73,8 @@ public:
 
     friend class RS_Undo;
 
+	std::set<RS_Undoable*> const& getUndoables() const;
+
 private:
     //! Undo type:
     //RS2::UndoType type;

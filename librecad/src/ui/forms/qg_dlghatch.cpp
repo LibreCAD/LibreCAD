@@ -29,6 +29,8 @@
 #include "rs_line.h"
 #include "rs_hatch.h"
 #include "rs_patternlist.h"
+#include "rs_pattern.h"
+#include "rs_math.h"
 #include "rs_math.h"
 
 /*
@@ -58,8 +60,8 @@ void QG_DlgHatch::languageChange()
 }
 
 void QG_DlgHatch::init() {
-    pattern=NULL;
-    hatch = NULL;
+	pattern=nullptr;
+	hatch = nullptr;
     isNew = false;
 
     preview = new RS_EntityContainer();
@@ -140,32 +142,31 @@ void QG_DlgHatch::setPattern(const QString& p) {
 }
 
 void QG_DlgHatch::resizeEvent ( QResizeEvent * ) {
-    updatePreview(NULL);
+	updatePreview();
 }
 
 void QG_DlgHatch::updatePreview() {
-    updatePreview(NULL);
-}
-
-void QG_DlgHatch::updatePreview(RS_Pattern* ) {
-    if (preview==NULL) {
+	if (preview==nullptr) {
         return;
     }
-    if (hatch==NULL || !cbEnablePreview->isChecked()) {
+	if (hatch==nullptr || !cbEnablePreview->isChecked()) {
         preview->clear();
         gvPreview->zoomAuto();
         return;
     }
+	pattern = cbPattern->getPattern();
+	if (pattern->countDeep()==0)
+		return;
 
     QString patName = cbPattern->currentText();
     bool isSolid = cbSolid->isChecked();
     double scale = RS_Math::eval(leScale->text(), 1.0);
     double angle = RS_Math::deg2rad(RS_Math::eval(leAngle->text(), 0.0));
-    double prevSize = 1.0;
+	double prevSize = 100.0;
     if (pattern) {
         pattern->calculateBorders();
-        prevSize = pattern->getSize().x;
-    }
+		prevSize = std::max(prevSize, pattern->getSize().magnitude());
+	}
 
     preview->clear();
 

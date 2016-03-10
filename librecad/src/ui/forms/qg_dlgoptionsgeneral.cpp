@@ -71,11 +71,8 @@ void QG_DlgOptionsGeneral::languageChange()
     retranslateUi(this);
 }
 
-void QG_DlgOptionsGeneral::init() {
-#ifdef QC_PREDEFINED_LOCALE
-    bgLanguage->hide();
-    Widget9Layout->addMultiCellWidget( bgGraphicView, 0, 2, 0, 0 ); //use empty space as well
-#endif
+void QG_DlgOptionsGeneral::init()
+{
     // Fill combobox with languages:
     QStringList languageList = RS_SYSTEM->getLanguageList();
     languageList.sort();
@@ -97,9 +94,7 @@ void QG_DlgOptionsGeneral::init() {
 
     // set current language:
     QString def_lang = "en";
-#ifdef QC_PREDEFINED_LOCALE
-    def_lang = QC_PREDEFINED_LOCALE;
-#endif
+
     QString lang = RS_SETTINGS->readEntry("/Language", def_lang);
     cbLanguage->setCurrentIndex( cbLanguage->findText(RS_SYSTEM->symbolToLanguage(lang)) );
 
@@ -141,11 +136,6 @@ void QG_DlgOptionsGeneral::init() {
     // preview:
 	initComboBox(cbMaxPreview, RS_SETTINGS->readEntry("/MaxPreview", "100"));
 
-    // font size:
-    QString sizeStatus = RS_SETTINGS->readEntry("/StatusBarFontSize", "9");
-    cbSizeStatus->setCurrentIndex( cbSizeStatus->findText(sizeStatus) );
-    cbSplash->setChecked(RS_SETTINGS->readNumEntry("/ShowSplash",1)==1);
-
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("Colors");
@@ -181,16 +171,13 @@ void QG_DlgOptionsGeneral::init() {
     cbUnit->insertItem( 0, RS_Units::unitToString(RS2::None) );
 
     QString def_unit = "Millimeter";
-#ifdef QC_PREDEFINED_UNIT
-    def_unit = QC_PREDEFINED_UNIT;
-#endif
+
     RS_SETTINGS->beginGroup("/Defaults");
 //    cbUnit->setCurrentIndex( cbUnit->findText(QObject::tr( RS_SETTINGS->readEntry("/Unit", def_unit) )) );
     cbUnit->setCurrentIndex( cbUnit->findText(QObject::tr( RS_SETTINGS->readEntry("/Unit", def_unit).toUtf8().data() )) );
     // Auto save timer
     cbAutoSaveTime->setValue(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5));
-    cbAutoBackup->setChecked(RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1)?true:false);
-    tab_mode_check_box->setChecked(RS_SETTINGS->readNumEntry("/TabMode", 0)?true:false);
+    cbAutoBackup->setChecked(RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1));
     RS_SETTINGS->endGroup();
 
 	//update entities to selected entities to the current active layer
@@ -199,6 +186,15 @@ void QG_DlgOptionsGeneral::init() {
 	cbToActiveLayer->setChecked(toActive==1);
 	RS_SETTINGS->writeEntry("/ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked()?1:0);
 	RS_SETTINGS->endGroup();
+
+    RS_SETTINGS->beginGroup("Startup");
+    cbSplash->setChecked(RS_SETTINGS->readNumEntry("/ShowSplash",1)==1);
+    tab_mode_check_box->setChecked(RS_SETTINGS->readNumEntry("/TabMode", 0));
+    maximize_checkbox->setChecked(RS_SETTINGS->readNumEntry("/Maximize", 0));
+    left_sidebar_checkbox->setChecked(RS_SETTINGS->readNumEntry("/EnableLeftSidebar", 1));
+    cad_toolbars_checkbox->setChecked(RS_SETTINGS->readNumEntry("/EnableCADToolbars", 1));
+    keycode_checkbox->setChecked(RS_SETTINGS->readNumEntry("/KeycodeMode", 0));
+    RS_SETTINGS->endGroup();
 
     restartNeeded = false;
 }
@@ -242,8 +238,6 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/indicator_shape_state", indicator_shape_checkbox->isChecked());      
         RS_SETTINGS->writeEntry("/indicator_shape_type", indicator_shape_combobox->currentText());
         RS_SETTINGS->writeEntry("/cursor_hiding", cursor_hiding_checkbox->isChecked());
-        RS_SETTINGS->writeEntry("/StatusBarFontSize", cbSizeStatus->currentText());
-        RS_SETTINGS->writeEntry("/ShowSplash", cbSplash->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/Antialiasing", cb_antialiasing->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/ScrollBars", scrollbars_check_box->isChecked()?1:0);
         RS_SETTINGS->endGroup();
@@ -276,12 +270,20 @@ void QG_DlgOptionsGeneral::ok()
             RS_Units::unitToString( RS_Units::stringToUnit( cbUnit->currentText() ), false/*untr.*/) );
         RS_SETTINGS->writeEntry("/AutoSaveTime", cbAutoSaveTime->value() );
         RS_SETTINGS->writeEntry("/AutoBackupDocument", cbAutoBackup->isChecked()?1:0);
-        RS_SETTINGS->writeEntry("/TabMode", tab_mode_check_box->isChecked()?1:0);
         RS_SETTINGS->endGroup();
 
         //update entities to selected entities to the current active layer
         RS_SETTINGS->beginGroup("/Modify");
         RS_SETTINGS->writeEntry("/ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked()?1:0);
+        RS_SETTINGS->endGroup();
+
+        RS_SETTINGS->beginGroup("Startup");
+        RS_SETTINGS->writeEntry("/ShowSplash", cbSplash->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/TabMode", tab_mode_check_box->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/Maximize", maximize_checkbox->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/EnableLeftSidebar", left_sidebar_checkbox->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/EnableCADToolbars", cad_toolbars_checkbox->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/KeycodeMode", keycode_checkbox->isChecked()?1:0);
         RS_SETTINGS->endGroup();
     }
 

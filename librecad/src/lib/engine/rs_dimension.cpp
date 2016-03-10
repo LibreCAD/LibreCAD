@@ -335,7 +335,7 @@ if(dimtsz < 0.01) {
 		c.addRectangle(v1, v2);
 		RS_VectorSolutions sol1;
 		for(RS_Entity* e: c) {
-			sol1.appendTo(
+			sol1.push_back(
 						RS_Information::getIntersection(dimensionLine, e, true)
 						);
 		}
@@ -444,9 +444,9 @@ bool RS_Dimension::getAlignText() {
  * @return Dimension fixed length for extension lines true= fixed, false= not fixed.
  */
 bool RS_Dimension::getFixedLengthOn() {
-    int v = getGraphicVariableInt("$DIMFXLON", 2);
-    if (v>1) {
-        addGraphicVariable("$DIMFXLON", 0, 70);
+    int v = getGraphicVariableInt("$DIMFXLON", 0);
+    if (v == 1) {
+        addGraphicVariable("$DIMFXLON", 1, 70);
         getGraphicVariableInt("$DIMFXLON", 0);
 		return true;
     }

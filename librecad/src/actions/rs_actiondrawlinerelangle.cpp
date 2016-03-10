@@ -38,6 +38,11 @@
 #include "rs_preview.h"
 #include "rs_debug.h"
 
+namespace {
+auto enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle,
+				 RS2::EntityEllipse};
+}
+
 RS_ActionDrawLineRelAngle::RS_ActionDrawLineRelAngle(
 		RS_EntityContainer& container,
 		RS_GraphicView& graphicView,
@@ -116,7 +121,7 @@ void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent* e) {
 
     switch (getStatus()) {
     case SetEntity:
-        entity = catchEntity(e, RS2::ResolveAll);
+		entity = catchEntity(e, enTypeList, RS2::ResolveAll);
         break;
 
     case SetPos: {
@@ -167,11 +172,8 @@ void RS_ActionDrawLineRelAngle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case SetEntity: {
-                RS_Entity* en = catchEntity(e, RS2::ResolveAll);
-                if (en &&
-                        (en->rtti()==RS2::EntityLine ||
-                         en->rtti()==RS2::EntityArc ||
-                         en->rtti()==RS2::EntityCircle)) {
+				RS_Entity* en = catchEntity(e, enTypeList, RS2::ResolveAll);
+				if (en) {
                     entity = en;
 
                     entity->setHighlighted(true);

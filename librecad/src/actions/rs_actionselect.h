@@ -55,13 +55,11 @@ public:
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
     virtual int countSelected();
-    void requestFinish(bool keep=false);
     void keyPressEvent(QKeyEvent* e);
 
 private:
 	std::initializer_list<RS2::EntityType> const entityTypeList;
     RS2::ActionType nextAction;
-    bool selectSingle;
     QG_ActionHandler* action_handler;
 };
 

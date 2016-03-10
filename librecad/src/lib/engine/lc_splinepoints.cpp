@@ -709,10 +709,11 @@ RS_Vector LC_SplinePoints::getStartPoint() const
 {
 	if(data.closed) return RS_Vector(false);
 
-	size_t iCount = data.splinePoints.size();
+	std::vector<RS_Vector> const &pts = getPoints();
+    size_t iCount = pts.size();
 	if(iCount < 1) return RS_Vector(false);
 
-    return data.splinePoints.at(0);
+    return pts.at(0);
 }
 
 /** @return End point of the entity */
@@ -720,10 +721,11 @@ RS_Vector LC_SplinePoints::getEndPoint() const
 {
 	if(data.closed) return RS_Vector(false);
 
-	size_t iCount = data.splinePoints.size();
+	std::vector<RS_Vector> const &pts = getPoints();
+	size_t iCount = pts.size();
 	if(iCount < 1) return RS_Vector(false);
 
-    return data.splinePoints.at(iCount - 1);
+    return pts.at(iCount - 1);
 }
 
 RS_Vector LC_SplinePoints::getNearestEndpoint(const RS_Vector& coord,

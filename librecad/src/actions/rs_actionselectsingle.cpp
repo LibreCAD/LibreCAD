@@ -36,21 +36,14 @@
 
 RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
 											 RS_GraphicView& graphicView,
-											 RS_ActionInterface* actionSelect,
+											 RS_ActionInterface* action_select,
 											 std::initializer_list<RS2::EntityType> const& entityTypeList)
-	:RS_ActionInterface("Select Entities", container, graphicView)
-	,entityTypeList(entityTypeList)
-	,en(nullptr)
+    :RS_ActionInterface("Select Entities", container, graphicView)
+    ,entityTypeList(entityTypeList)
+    ,en(nullptr)
+    ,actionSelect(action_select)
 {
-	actionType=RS2::ActionSelectSingle;
-	if(actionSelect){
-        if(actionSelect->rtti() == RS2::ActionSelect) {
-            this->actionSelect=static_cast<RS_ActionSelect*>(actionSelect);
-                this->actionSelect->requestFinish(true);
-        }else{
-			this->actionSelect=nullptr;
-        }
-    }
+    actionType = RS2::ActionSelectSingle;
 }
 
 
@@ -72,6 +65,12 @@ void RS_ActionSelectSingle::trigger() {
 
 void RS_ActionSelectSingle::keyPressEvent(QKeyEvent* e)
 {
+    if (e->key()==Qt::Key_Escape)
+    {
+        finish(false);
+        actionSelect->keyPressEvent(e);
+    }
+
     if (container->countSelected() > 0 && e->key()==Qt::Key_Enter)
     {
         finish(false);
@@ -85,9 +84,10 @@ void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent* e)
     if (e->button()==Qt::RightButton)
     {
         finish();
-        if(actionSelect) {
+        if (actionSelect->rtti() == RS2::ActionSelect)
             actionSelect->finish();
-        }
+        else
+            actionSelect->mouseReleaseEvent(e);
     }
     else
     {

@@ -57,7 +57,7 @@ LC_CustomToolbar::~LC_CustomToolbar()
 }
 
 void LC_CustomToolbar::actions_from_file(const QString& path,
-                                         const QMap<QString, QAction*>& a_map)
+                                         QMap<QString, QAction*>& a_map)
 {
     QFile file(path);    
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))

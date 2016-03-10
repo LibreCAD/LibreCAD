@@ -145,7 +145,7 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e) {
             mouse = snapToAngle(mouse);
 
         deletePreview();
-		preview->addEntity(new RS_Line{preview.get(), pPoints->data.startpoint, mouse});
+		preview->addEntity(new RS_Line{pPoints->data.startpoint, mouse});
         RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: draw preview");
         drawPreview();
     }

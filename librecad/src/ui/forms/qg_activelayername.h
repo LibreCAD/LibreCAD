@@ -11,9 +11,6 @@ public:
     explicit QG_ActiveLayerName(QWidget *parent = 0);
     void activeLayerChanged(const QString& name);
 
-public slots:
-    virtual void init();
-
 };
 
 #endif // QG_ACTIVELAYERNAME_H

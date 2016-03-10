@@ -34,7 +34,7 @@ PluginCapabilities AsciiFile::getCapabilities() const
 {
     PluginCapabilities pluginCapabilities;
     pluginCapabilities.menuEntryPoints
-            << PluginMenuLocation("File/Import", tr("Read ascii points"));
+            << PluginMenuLocation("plugins_menu", tr("Read ascii points"));
     return pluginCapabilities;
 }
 

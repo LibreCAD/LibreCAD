@@ -39,7 +39,16 @@ QG_CoordinateWidget::QG_CoordinateWidget(QWidget* parent, const char* name, Qt::
     setObjectName(name);
     setupUi(this);
 
-    init();
+    lCoord1->setText("");
+    lCoord2->setText("");
+    lCoord1b->setText("");
+    lCoord2b->setText("");
+
+    graphic = NULL;
+    prec = 4;
+    format = RS2::Decimal;
+    aprec = 2;
+    aformat = RS2::DegreesDecimal;
 }
 
 /*
@@ -57,35 +66,6 @@ QG_CoordinateWidget::~QG_CoordinateWidget()
 void QG_CoordinateWidget::languageChange()
 {
     retranslateUi(this);
-}
-
-void QG_CoordinateWidget::init() {
-    lCoord1->setText("");
-    lCoord2->setText("");
-    lCoord1b->setText("");
-    lCoord2b->setText("");
-
-    int fsize;
-#ifdef __APPLE__
-    fsize = 9;
-#else
-    fsize = 7;
-#endif
-
-    RS_SETTINGS->beginGroup("/Appearance");
-    fsize = RS_SETTINGS->readNumEntry("/StatusBarFontSize", fsize);
-    RS_SETTINGS->endGroup();
-
-    lCoord1->setFont(QFont("Helvetica", fsize));
-    lCoord1b->setFont(QFont("Helvetica", fsize));
-    lCoord2->setFont(QFont("Helvetica", fsize));
-    lCoord2b->setFont(QFont("Helvetica", fsize));
-
-    graphic = NULL;
-    prec = 4;
-    format = RS2::Decimal;
-    aprec = 2;
-    aformat = RS2::DegreesDecimal;
 }
 
 void QG_CoordinateWidget::setGraphic(RS_Graphic* graphic) {

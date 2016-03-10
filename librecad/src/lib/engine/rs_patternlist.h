@@ -28,9 +28,11 @@
 #ifndef RS_PATTERNLIST_H
 #define RS_PATTERNLIST_H
 
+#include<map>
+#include<memory>
 
-#include "rs_pattern.h"
-#include "rs_entity.h"
+class RS_Pattern;
+class QString;
 
 #define RS_PATTERNLIST RS_PatternList::instance()
 
@@ -41,52 +43,52 @@
  * @author Andrew Mustun
  */
 class RS_PatternList {
-protected:
-    RS_PatternList();
+	using PTN_MAP = std::map<QString, std::unique_ptr<RS_Pattern>>;
+	RS_PatternList() = default;
 
 public:
     /**
      * @return Instance to the unique pattern list.
      */
-    static RS_PatternList* instance() {
-        if (uniqueInstance==NULL) {
-            uniqueInstance = new RS_PatternList();
-        }
-        return uniqueInstance;
+	static RS_PatternList* instance();
+
+	~RS_PatternList();
+	RS_PatternList(RS_PatternList const&) = delete;
+	RS_PatternList& operator = (RS_PatternList const&) = delete;
+	RS_PatternList(RS_PatternList &&) = delete;
+	RS_PatternList& operator = (RS_PatternList &&) = delete;
+
+	void init();
+
+	int countPatterns() const {
+		return patterns.size();
     }
 
-    virtual ~RS_PatternList() {clearPatterns();}
+	//! \{ range based loop support
+	PTN_MAP::iterator begin() {
+		return patterns.begin();
+	}
+	PTN_MAP::const_iterator begin() const{
+		return patterns.begin();
+	}
+	PTN_MAP::iterator end() {
+		return patterns.end();
+	}
+	PTN_MAP::const_iterator end() const{
+		return patterns.end();
+	}
+	//! \}
 
-    void init();
+	RS_Pattern* requestPattern(const QString& name);
 
-    void clearPatterns();
-    int countPatterns() {
-        return patterns.count();
-    }
-    virtual void removePattern(RS_Pattern* pattern);
-    RS_Pattern* requestPattern(const QString& name);
-    //! @return a const iterator for the pattern list.
-    QListIterator<RS_Pattern *> getIteretor(){
-        return QListIterator<RS_Pattern *>(patterns);
-    }
-
-        bool contains(const QString& name);
-
-    //void addPatternListListener(RS_PatternListListener* listener);
+	bool contains(const QString& name) const;
 
     friend std::ostream& operator << (std::ostream& os, RS_PatternList& l);
 
-    //static bool test();
-
-protected:
-    static RS_PatternList* uniqueInstance;
 
 private:
     //! patterns in the graphic
-    QList<RS_Pattern*> patterns;
-    //! List of registered PatternListListeners
-    //QList<RS_PatternListListener> patternListListeners;
-}
-;
+	PTN_MAP patterns;
+};
 
 #endif

@@ -45,7 +45,7 @@ QG_PatternBox::QG_PatternBox(QWidget* parent)
 /**
  * Destructor
  */
-QG_PatternBox::~QG_PatternBox() {}
+QG_PatternBox::~QG_PatternBox() = default;
 
 
 /**
@@ -54,10 +54,8 @@ QG_PatternBox::~QG_PatternBox() {}
 void QG_PatternBox::init() {
     QStringList patterns;
 
-    QListIterator<RS_Pattern *> f = RS_PATTERNLIST->getIteretor();
-    while (f.hasNext()) {
-        patterns.append( f.next()->getFileName() );
-    }
+	for (auto const& pa: *RS_PATTERNLIST)
+		patterns.append(pa.first);
 
     patterns.sort();
     insertItems(0, patterns);
@@ -83,7 +81,11 @@ void QG_PatternBox::setPattern(const QString& pName) {
     slotPatternChanged(currentIndex());
 }
 
-
+RS_Pattern* QG_PatternBox::getPattern() {
+	if (currentPattern == nullptr || currentPattern->countDeep()==0)
+		currentPattern = RS_PATTERNLIST->requestPattern(currentText());
+	return currentPattern;
+}
 
 /**
  * Called when the pattern has changed. This method 
@@ -100,7 +102,8 @@ void QG_PatternBox::slotPatternChanged(int index) {
                         index, currentPattern->getFileName().toLatin1().data());
     }
 
-    emit patternChanged(currentPattern);
+
+	emit patternChanged();
 }
 
 

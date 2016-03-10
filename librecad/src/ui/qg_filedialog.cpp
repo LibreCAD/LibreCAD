@@ -36,10 +36,6 @@
 #include "rs_system.h"
 #include "rs_debug.h"
 
-#if QT_VERSION < 0x040400
-#include "emu_qt44.h"
-#endif
-
 void QG_FileDialog::getType(const QString filter)
 {
     if (filter== fLff) {
@@ -136,6 +132,7 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type){
     RS_SETTINGS->beginGroup("/Paths");
     QString defDir = RS_SETTINGS->readEntry("/Open",
                                               RS_SYSTEM->getHomeDir());
+    QString open_filter = RS_SETTINGS->readEntry("/OpenFilter", fDxfrw);
     RS_SETTINGS->endGroup();
 
     RS_DEBUG->print("defDir: %s", defDir.toLatin1().data());
@@ -148,14 +145,10 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type){
 #endif
 
     setWindowTitle(tr("Open %1").arg(name));
-#if QT_VERSION >= 0x040400
     setNameFilters(filters);
-#endif
     setDirectory(defDir);
     setFileMode(QFileDialog::ExistingFile);
-#if QT_VERSION >= 0x040400
-    selectNameFilter(fDxfrw);
-#endif
+    selectNameFilter(open_filter);
     ftype= RS2::FormatDXFRW;
     RS_DEBUG->print("defFilter: %s", fDxfrw.toLatin1().data());
 
@@ -175,22 +168,14 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type){
         fn = QDir::toNativeSeparators( QFileInfo(fn).absoluteFilePath() );
 
         if (type) {
-#if QT_VERSION < 0x040400
-            getType( emu_qt44_QFileDialog_selectedNameFilter(this) );
-#else
             getType(selectedNameFilter());
-#endif
             *type = ftype;
         }
 
     // store new default settings:
         RS_SETTINGS->beginGroup("/Paths");
         RS_SETTINGS->writeEntry("/Open", QFileInfo(fn).absolutePath());
-#if QT_VERSION < 0x040400
-        RS_SETTINGS->writeEntry("/OpenFilter", emu_qt44_QFileDialog_selectedNameFilter(this) );
-#else
         RS_SETTINGS->writeEntry("/OpenFilter", selectedNameFilter());
-#endif
         RS_SETTINGS->endGroup();
     }
 
@@ -245,11 +230,7 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
     setWindowTitle(tr("Save %1 As").arg(name));
     setFileMode(QFileDialog::AnyFile);
     setDirectory(defDir);
-#if QT_VERSION < 0x040400
-    emu_qt44_QFileDialog_setNameFilters(this, filters);
-#else
     setNameFilters(filters);
-#endif
     selectNameFilter(fDxfrw2007);
     selectFile(fn);
 	auto ext=getExtension(ftype);
@@ -269,12 +250,7 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
 
     QFileInfo fi = QFileInfo( fl[0] );
     fn = QDir::toNativeSeparators( fi.absoluteFilePath() );
-
-#if QT_VERSION < 0x040400
-    getType( emu_qt44_QFileDialog_selectedNameFilter(this) );
-#else
     getType(selectedNameFilter());
-#endif
     if (type)
         *type = ftype;
 
@@ -328,20 +304,13 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
     filters.append("Font (*.cxf)");
     filters.append("JWW (*.jww)");
 
-#if QT_VERSION < 0x040400
-    emu_qt44_QFileDialog_setNameFilters(fileDlg, filters);
-#else
+
     fileDlg->setNameFilters(filters);
-#endif
     fileDlg->setFileMode(QFileDialog::AnyFile);
     fileDlg->setWindowTitle(QObject::tr("Save Drawing As"));
     fileDlg->setDirectory(defDir);
     fileDlg->setAcceptMode(QFileDialog::AcceptSave);
-#if QT_VERSION < 0x040400
-	emu_qt44_QFileDialog_selectNameFilter(fileDlg, defFilter);
-#else
 	fileDlg->selectNameFilter(defFilter);
-#endif
 
     // run dialog:
     do {
@@ -356,15 +325,10 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
             // append default extension:
             // TODO, since we are starting to suppor tmore extensions, we need to find a better way to add the default
             if (QFileInfo(fn).fileName().indexOf('.')==-1) {
-#if QT_VERSION < 0x040400
-                if (emu_qt44_QFileDialog_selectedNameFilter(fileDlg) == "LFF Font (*.lff)") {
-                    fn+=".lff";
-                } else if (emu_qt44_QFileDialog_selectedNameFilter(fileDlg)=="Font (*.cxf)") {
-#else
+
                 if (fileDlg->selectedNameFilter()=="LFF Font (*.lff)") {
                     fn+=".lff";
                 } else if (fileDlg->selectedNameFilter()=="Font (*.cxf)") {
-#endif
                         fn+=".cxf";
                 } else {
                     fn+=".dxf";
@@ -537,11 +501,7 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
     if (!cancel) {
         RS_SETTINGS->beginGroup("/Paths");
         RS_SETTINGS->writeEntry("/Open", QFileInfo(fn).absolutePath());
-#if QT_VERSION < 0x040400
-        RS_SETTINGS->writeEntry("/OpenFilter", emu_qt44_QFileDialog_selectedNameFilter(fileDlg));
-#else
         RS_SETTINGS->writeEntry("/OpenFilter", fileDlg->selectedNameFilter());
-#endif
         RS_SETTINGS->endGroup();
     }
 

@@ -157,10 +157,10 @@ void RS_EntityContainer::reparent(RS_EntityContainer* parent) {
  * @param undone true: entity has become invisible.
  *               false: entity has become visible.
  */
-void RS_EntityContainer::undoStateChanged(bool undone) {
+//void RS_EntityContainer::undoStateChanged(bool undone) {
 
-    RS_Entity::undoStateChanged(undone);
-}
+//    RS_Entity::undoStateChanged(undone);
+//}
 
 
 
@@ -1144,7 +1144,7 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
 	for (RS_Entity* en: entities){
 
 		if (en->isVisible()
-				&& !en->getParent()->ignoredOnModification()
+                && !en->getParent()->ignoredOnModification()
 				){//no end point for Insert, text, Dim
             point = en->getNearestEndpoint(coord, &curDist);
             if (point.valid && curDist<minDist) {
@@ -1181,7 +1181,7 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
 
     unsigned i0=0;
 	for(auto en: entities){
-		if (!en->getParent()->ignoredOnModification() ){//no end point for Insert, text, Dim
+        if (!en->getParent()->ignoredOnModification() ){//no end point for Insert, text, Dim
 //            std::cout<<"find nearest for entity "<<i0<<std::endl;
             point = en->getNearestEndpoint(coord, &curDist);
             if (point.valid && curDist<minDist) {
@@ -1215,7 +1215,7 @@ RS_Vector RS_EntityContainer::getNearestPointOnEntity(const RS_Vector& coord,
 	RS_Entity* en = getNearestEntity(coord, dist, RS2::ResolveNone);
 
 	if (en && en->isVisible()
-			&& !en->getParent()->ignoredOnModification()
+			&& !en->getParent()->ignoredSnap()
 			){
 		point = en->getNearestPointOnEntity(coord, onEntity, dist, entity);
 	}
@@ -1235,7 +1235,7 @@ RS_Vector RS_EntityContainer::getNearestCenter(const RS_Vector& coord,
 	for(auto en: entities){
 
         if (en->isVisible()
-				&& !en->getParent()->ignoredOnModification()
+				&& !en->getParent()->ignoredSnap()
 				){//no center point for spline, text, Dim
             point = en->getNearestCenter(coord, &curDist);
             if (point.valid && curDist<minDist) {
@@ -1265,7 +1265,7 @@ RS_Vector RS_EntityContainer::getNearestMiddle(const RS_Vector& coord,
 	for(auto en: entities){
 
         if (en->isVisible()
-				&& !en->getParent()->ignoredOnModification()
+				&& !en->getParent()->ignoredSnap()
 				){//no midle point for spline, text, Dim
             point = en->getNearestMiddle(coord, &curDist, middlePoints);
             if (point.valid && curDist<minDist) {
@@ -1322,7 +1322,7 @@ RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord,
              en = nextEntity(RS2::ResolveAllButTextImage)) {
             if (
                     !en->isVisible()
-					|| en->getParent()->ignoredOnModification()
+					|| en->getParent()->ignoredSnap()
                     ){
                 continue;
             }
@@ -1812,10 +1812,20 @@ bool RS_EntityContainer::ignoredOnModification() const
     case RS2::EntityDimDiametric: /**< Diametric Dimension */
     case RS2::EntityDimAngular:   /**< Angular Dimension */
     case RS2::EntityDimLeader:    /**< Leader Dimension */
+    case RS2::EntityHatch:
         return true;
     default:
         return false;
     }
+}
+
+bool RS_EntityContainer::ignoredSnap() const
+{
+	// issue #652 , disable snap for hatch
+	// TODO, should snapping on hatch be a feature enabled by settings?
+	if (getParent() && getParent()->rtti() == RS2::EntityHatch)
+			return true;
+	return ignoredOnModification();
 }
 
 QList<RS_Entity *>::const_iterator RS_EntityContainer::begin() const

@@ -103,11 +103,11 @@ void RS_ActionInterface::setName(const char* _name) {
  * @param status The status on which to initiate this action.
  * default is 0 to begin the action.
  */
-void RS_ActionInterface::init(int status) {
-    RS_Snapper::init();
-
+void RS_ActionInterface::init(int status)
+{
     setStatus(status);
     if (status>=0) {
+        RS_Snapper::init();
         updateMouseButtonHints();
         updateMouseCursor();
     }else{

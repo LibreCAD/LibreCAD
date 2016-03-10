@@ -64,7 +64,7 @@ public:
     virtual void updateToolBar();*/
 
     virtual void trigger();
-//    virtual void keyPressEvent(QKeyEvent* e);
+    virtual void keyPressEvent(QKeyEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseCursor();
 

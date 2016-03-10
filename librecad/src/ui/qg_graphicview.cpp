@@ -46,6 +46,7 @@
 #include "qg_dialogfactory.h"
 #include "rs_eventhandler.h"
 #include "rs_actiondefault.h"
+#include "lc_options.h"
 
 
 #include "qg_scrollbar.h"
@@ -229,7 +230,7 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType c) {
  */
 void QG_GraphicView::updateGridStatusWidget(const QString& text)
 {
-   if (scrollbars) gridStatus->setText(text);
+   emit gridStatusChanged(text);
 }
 
 
@@ -456,46 +457,51 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
     RS_Vector mouse = toGraph(e->x(), e->y());
 
-#if QT_VERSION >= 0x050200
-    QPoint numPixels = e->pixelDelta();
+    #if QT_VERSION >= 0x050200
 
-    // high-resolution scrolling triggers Pan instead of Zoom logic
-    isSmoothScrolling |= !numPixels.isNull();
-
-    if (isSmoothScrolling) {
-        if (e->phase() == Qt::ScrollEnd) isSmoothScrolling = false;
-
-        if (!numPixels.isNull())
+        if (options && options->device == "Trackpad")
         {
-            if (e->modifiers()==Qt::ControlModifier)
-            {
-                // Hold ctrl to zoom. 1 % per pixel
-                double v = -numPixels.y() / 100.;
-                RS2::ZoomDirection direction;
-                double factor;
+            QPoint numPixels = e->pixelDelta();
 
-                if (v < 0) {
-                    direction = RS2::Out; factor = 1-v;
-                } else {
-                    direction = RS2::In;  factor = 1+v;
+            // high-resolution scrolling triggers Pan instead of Zoom logic
+            isSmoothScrolling |= !numPixels.isNull();
+
+            if (isSmoothScrolling)
+            {
+                if (e->phase() == Qt::ScrollEnd) isSmoothScrolling = false;
+
+                if (!numPixels.isNull())
+                {
+                    if (e->modifiers()==Qt::ControlModifier)
+                    {
+                        // Hold ctrl to zoom. 1 % per pixel
+                        double v = -numPixels.y() / 100.;
+                        RS2::ZoomDirection direction;
+                        double factor;
+
+                        if (v < 0) {
+                            direction = RS2::Out; factor = 1-v;
+                        } else {
+                            direction = RS2::In;  factor = 1+v;
+                        }
+
+                        setCurrentAction(new RS_ActionZoomIn(*container, *this, direction,
+                                                             RS2::Both, &mouse, factor));
+                    }
+                    else if (scrollbars)
+                    {
+                        // otherwise, scroll
+                        //scroll by scrollbars: issue #479
+                        hScrollBar->setValue(hScrollBar->value() - numPixels.x());
+                        vScrollBar->setValue(vScrollBar->value() - numPixels.y());
+                    }
+                    redraw();
                 }
-
-                setCurrentAction(new RS_ActionZoomIn(*container, *this, direction,
-													 RS2::Both, &mouse, factor));
+                e->accept();
+                return;
             }
-            else if (scrollbars)
-            {
-                // otherwise, scroll
-				//scroll by scrollbars: issue #479
-				hScrollBar->setValue(hScrollBar->value() - numPixels.x());
-				vScrollBar->setValue(vScrollBar->value() - numPixels.y());
-            }
-            redraw();
         }
-        e->accept();
-        return;
-    }
-#endif
+    #endif
 
     if (e->delta() == 0) {
         // A zero delta event occurs when smooth scrolling is ended. Ignore this
@@ -923,7 +929,6 @@ void QG_GraphicView::addScrollbars()
 
     hScrollBar = new QG_ScrollBar(Qt::Horizontal, this);
     vScrollBar = new QG_ScrollBar(Qt::Vertical, this);
-    gridStatus = new QLabel("-", this);
     layout = new QGridLayout(this);
 
     setOffset(50, 50);
@@ -939,20 +944,14 @@ void QG_GraphicView::addScrollbars()
     hScrollBar->setSingleStep(50);
     hScrollBar->setCursor(Qt::ArrowCursor);
     layout->addWidget(hScrollBar, 1, 0);
-    layout->addItem(new QSpacerItem(0, hScrollBar->sizeHint().height()), 1, 0);
     connect(hScrollBar, SIGNAL(valueChanged(int)),
             this, SLOT(slotHScrolled(int)));
 
     vScrollBar->setSingleStep(50);
     vScrollBar->setCursor(Qt::ArrowCursor);
-    layout->addWidget(vScrollBar, 0, 2);
-    layout->addItem(new QSpacerItem(vScrollBar->sizeHint().width(), 0), 0, 2);
+    layout->addWidget(vScrollBar, 0, 1);
     connect(vScrollBar, SIGNAL(valueChanged(int)),
             this, SLOT(slotVScrolled(int)));
-
-    gridStatus->setAlignment(Qt::AlignRight);
-    layout->addWidget(gridStatus, 1, 1, 1, 2);
-    layout->addItem(new QSpacerItem(50, 0), 0, 1);
 }
 
 bool QG_GraphicView::hasScrollbars()

@@ -51,6 +51,7 @@ QC_ActionGetPoint::QC_ActionGetPoint(RS_EntityContainer& container,
 		, setTargetPoint{false}
 		, pPoints(new Points{})
 {
+    pPoints->targetPoint = RS_Vector(0,0);
 }
 
 QC_ActionGetPoint::~QC_ActionGetPoint() = default;
@@ -94,7 +95,8 @@ void QC_ActionGetPoint::mouseReleaseEvent(QMouseEvent* e) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
-        init(getStatus()-1);
+        completed = true;
+        finish();
     }
 }
 
@@ -135,14 +137,10 @@ void QC_ActionGetPoint::setMesage(QString msg){
 }
 
 
-void QC_ActionGetPoint::getPoint(QPointF *point) {
-	if (completed) {
-		point->setX(pPoints->targetPoint.x);
-		point->setY(pPoints->targetPoint.y);
-    } else {
-        point->setX(0.0);
-        point->setY(0.0);
-    }
+void QC_ActionGetPoint::getPoint(QPointF *point)
+{
+    point->setX(pPoints->targetPoint.x);
+    point->setY(pPoints->targetPoint.y);
 }
 
 // EOF

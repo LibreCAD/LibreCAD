@@ -24,16 +24,8 @@
 **
 **********************************************************************/
 
-
 #include "rs_undoable.h"
-
 #include "rs_undocycle.h"
-
-//undocycle must be explicitly set
-RS_Undoable::RS_Undoable(RS_Undoable const&) = default;
-RS_Undoable& RS_Undoable::operator = (RS_Undoable const&) = default;
-RS_Undoable::RS_Undoable(RS_Undoable &&) = default;
-RS_Undoable& RS_Undoable::operator = (RS_Undoable &&) = default;
 
 /**
  * Destructor. Makes sure that this undoable is removed from 
@@ -44,8 +36,6 @@ RS_Undoable::~RS_Undoable() {
         cycle->removeUndoable(this);
 }
 
-
-
 /**
  * Sets the undo cycle this entity is in. This is necessary to
  * make sure the entity can remove itself from the cycle before
@@ -55,8 +45,6 @@ void RS_Undoable::setUndoCycle(RS_UndoCycle* cycle) {
     this->cycle = cycle;
 }
 
-
-
 /**
  * The undoable thing gets activated if it was undone and 
  * deactivated otherwise.
@@ -65,8 +53,6 @@ void RS_Undoable::changeUndoState() {
     toggleFlag(RS2::FlagUndone);
 	undoStateChanged(isUndone());
 }
-
-
 
 /**
  * Undoes or redoes an undoable.
@@ -79,8 +65,6 @@ void RS_Undoable::setUndoState(bool undone) {
     }
 	undoStateChanged(isUndone());
 }
-
-
 
 /**
  * Is this entity in the Undo memory and not active?

@@ -46,9 +46,8 @@ public slots:
     virtual void setHatch( RS_Hatch & h, bool isNew );
     virtual void updateHatch();
     virtual void setPattern( const QString & p );
-    virtual void resizeEvent( QResizeEvent * );
-    virtual void updatePreview();
-    virtual void updatePreview( RS_Pattern * );
+	virtual void resizeEvent( QResizeEvent * );
+	virtual void updatePreview();
 
 protected slots:
     virtual void languageChange();

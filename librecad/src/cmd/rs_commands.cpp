@@ -393,7 +393,8 @@ RS_Commands::RS_Commands() {
         {
             {{"divide", QObject::tr("divide", "modify - divide (cut)")},
              {"cut", QObject::tr("cut", "modify - divide (cut)")}},
-            {{"div", QObject::tr("div", "modify - divide (cut)")}},
+            {{"div", QObject::tr("div", "modify - divide (cut)")},
+            {"di", QObject::tr("di", "modify - divide (cut)")}},
             RS2::ActionModifyCut
         },
         //mirror
@@ -429,7 +430,8 @@ RS_Commands::RS_Commands() {
         //trim2
         {
             {{"trim2", QObject::tr("trim2", "modify - multi trim (extend)")}},
-            {{"tm2", QObject::tr("tm2", "modify - multi trim (extend)")}},
+            {{"tm2", QObject::tr("tm2", "modify - multi trim (extend)")},
+             {"t2", QObject::tr("t2", "modify - multi trim (extend)")}},
             RS2::ActionModifyTrim2
         },
         //lengthen
@@ -535,7 +537,8 @@ RS_Commands::RS_Commands() {
         //Modify Properties
         {
             {{"properties", QObject::tr("properties", "modify properties")}},
-            {{"prop", QObject::tr("prop", "modify properties")}},
+            {{"prop", QObject::tr("prop", "modify properties")},
+             {"mp", QObject::tr("mp", "modify properties")}},
             RS2::ActionModifyEntity
         },
         //Distance Point to Point

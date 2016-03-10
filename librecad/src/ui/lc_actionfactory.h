@@ -36,11 +36,15 @@ class LC_ActionFactory : public QObject
     Q_OBJECT
 
 public:
-    LC_ActionFactory(QObject* parent);
-    QMap<QString, QAction*> action_map(QObject* action_handler);
+    LC_ActionFactory(QObject* parent, QObject* a_handler);
+    void fillActionContainer(QMap<QString, QAction*>& a_map);
 
     QActionGroup* tool_group;
     QActionGroup* disable_group;
+
+private:
+    QObject* main_window;
+    QObject* action_handler;
 };
 
 #endif

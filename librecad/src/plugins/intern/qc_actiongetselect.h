@@ -52,7 +52,7 @@ public:
 public:
     QC_ActionGetSelect(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-	~QC_ActionGetSelect() = default;
+	~QC_ActionGetSelect();
 
     virtual void init(int status=0);
 	

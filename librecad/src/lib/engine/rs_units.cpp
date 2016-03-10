@@ -377,10 +377,8 @@ double RS_Units::convert(double val, RS2::Unit src, RS2::Unit dest) {
  */
 RS_Vector RS_Units::convert(const RS_Vector& val, RS2::Unit src, RS2::Unit dest) {
     return RS_Vector(convert(val.x, src, dest),
-                     convert(val.y, src, dest)
-#ifndef RS_VECTOR2D
-                     , convert(val.z, src, dest)
-#endif
+					 convert(val.y, src, dest),
+					 convert(val.z, src, dest)
                      );
 }
 

@@ -31,6 +31,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_actionselectsingle.h"
+// #include <QDebug>
 
 #include "rs_snapper.h"
 
@@ -41,9 +42,13 @@ QC_ActionGetSelect::QC_ActionGetSelect(RS_EntityContainer& container,
 		,completed(false)
 		,message(tr("Select objects:"))
 {
-    actionType = RS2::ActionSelect;
+    actionType = RS2::ActionGetSelect;
 }
 
+QC_ActionGetSelect::~QC_ActionGetSelect()
+{
+    // qDebug() << "~QC_ActionGetSelect";
+}
 
 void QC_ActionGetSelect::updateMouseButtonHints() {
     switch (getStatus()) {
@@ -73,8 +78,9 @@ void QC_ActionGetSelect::init(int status) {
 
 void QC_ActionGetSelect::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
-		RS_DIALOGFACTORY->updateMouseWidget();
         completed = true;
+		RS_DIALOGFACTORY->updateMouseWidget();
+        finish();
     }
 }
 
@@ -83,6 +89,7 @@ void QC_ActionGetSelect::keyPressEvent(QKeyEvent* e)
     if (e->key()==Qt::Key_Escape || e->key()==Qt::Key_Enter)
     {
 		RS_DIALOGFACTORY->updateMouseWidget();
+        finish();
         completed = true;
     }
 }

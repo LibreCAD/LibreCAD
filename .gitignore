@@ -17,6 +17,7 @@ Makefile
 .libs
 generated/*
 clean
+custom.*
 custom*.*
 
 # Unix generated directories (except Apple)
@@ -74,3 +75,5 @@ core
 *.core
 vgcore.*
 core.*
+
+.qmake.stash

@@ -37,7 +37,7 @@ QG_SelectionWidget::QG_SelectionWidget(QWidget* parent, const char* name, Qt::Wi
     setObjectName(name);
     setupUi(this);
 
-    init();
+    lEntities->setText("0");
 }
 
 /*
@@ -55,26 +55,6 @@ QG_SelectionWidget::~QG_SelectionWidget()
 void QG_SelectionWidget::languageChange()
 {
     retranslateUi(this);
-}
-
-void QG_SelectionWidget::init() {
-    lEntities->setText("0");
-
-    int fsize;
-#ifdef __APPLE__
-    fsize = 9;
-#else
-    fsize = 7;
-#endif
-
-    RS_SETTINGS->beginGroup("/Appearance");
-    fsize = RS_SETTINGS->readNumEntry("/StatusBarFontSize", fsize);
-    RS_SETTINGS->endGroup();
-
-    lEntities->setFont(QFont("Helvetica", fsize));
-	lLabel->setFont(QFont("Helvetica", fsize));
-	lLabelLength->setFont(QFont("Helvetica", fsize));
-	lTotalLength->setFont(QFont("Helvetica", fsize));
 }
 
 void QG_SelectionWidget::setNumber(int n) {

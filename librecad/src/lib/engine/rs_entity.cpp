@@ -161,7 +161,8 @@ bool RS_Entity::toggleSelected() {
  * this function returns false.
  */
 bool RS_Entity::isSelected() const {
-    return getFlag(RS2::FlagSelected);
+	//bug 557, Selected entities in invisible layers are deleted
+	return isVisible() && getFlag(RS2::FlagSelected);
 }
 
 

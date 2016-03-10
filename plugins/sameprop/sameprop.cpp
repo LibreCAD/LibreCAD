@@ -25,7 +25,7 @@ PluginCapabilities LC_SameProp::getCapabilities() const
 {
     PluginCapabilities pluginCapabilities;
     pluginCapabilities.menuEntryPoints
-            << PluginMenuLocation("Modify", tr("Same properties"));
+            << PluginMenuLocation("plugins_menu", tr("Same properties"));
     return pluginCapabilities;
 }
 

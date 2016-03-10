@@ -412,11 +412,7 @@ void QG_DlgOptionsDrawing::validate() {
         // grid:
         //graphic->addVariable("$GRIDMODE", (int)cbGridOn->isChecked() , 70);
         graphic->setGridOn(cbGridOn->isChecked());
-#ifdef  RS_VECTOR2D
-		*spacing=RS_Vector{0.0,0.0};
-#else
 		*spacing=RS_Vector{0.0,0.0,0.0};
-#endif
         if (cbXSpacing->currentText()==tr("auto")) {
 			spacing->x = 0.0;
         } else {

@@ -31,6 +31,7 @@
 
 #include "rs_pen.h"
 #include "rs_snapper.h"
+#include <QMap>
 
 class QMdiArea;
 class QMdiSubWindow;
@@ -55,6 +56,8 @@ class LC_CustomToolbar;
 class QG_ActionHandler;
 class RS_GraphicView;
 class RS_Document;
+class TwoStackedLabels;
+class LC_Options;
 
 struct DockAreas
 {
@@ -89,10 +92,12 @@ public:
     void setUndoEnable(bool enable);
     bool loadStyleSheet(QString path);
 
+    QMap<QString, QAction*> a_map;
+
+    std::shared_ptr<LC_Options> options;
+
 public slots:
     void relayAction(QAction* q_action);
-    virtual void show();
-    void finishSplashScreen();
     void slotFocus();
     void slotBack();
     void slotKillAllActions();
@@ -183,6 +188,12 @@ public slots:
 
     void modifyCommandTitleBar(Qt::DockWidgetArea area);
     void reloadStyleSheet();
+
+    void updateGridStatus(const QString&);
+
+    void showDeviceOptions();
+
+    void updateDevice(QString);
 
 signals:
     void gridChanged(bool on);
@@ -321,6 +332,7 @@ private:
     /** Selection Status */
     QG_SelectionWidget* selectionWidget;
     QG_ActiveLayerName* m_pActiveLayerName;
+    TwoStackedLabels* grid_status;
 
     // --- Menus ---
     QMenu* windowsMenu;
@@ -343,8 +355,6 @@ private:
     QAction* scriptRun;
     QAction* helpAboutApp;
     QAction* helpManual;
-
-    QAction* statusbar_view_action;
 
     // --- Flags ---
     bool previousZoomEnable{false};

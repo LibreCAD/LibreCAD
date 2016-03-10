@@ -2,6 +2,7 @@
 #define LC_CUSTOMTOOLBAR_H
 
 #include <QToolBar>
+#include <QMap>
 
 class LC_CustomToolbar : public QToolBar
 {
@@ -13,7 +14,7 @@ public:
     ~LC_CustomToolbar();
 
     void actions_from_file(const QString& path,
-                           const QMap<QString, QAction*>& a_map);
+                           QMap<QString, QAction*>& a_map);
     void add_separator();
 
     QStringList state_list;

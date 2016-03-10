@@ -808,33 +808,24 @@ RS_Line* RS_Creation::createLineRelAngle(const RS_Vector& coord,
                                          double length) {
 
     // check given entity / coord:
-	if (!(entity && coord.valid) ||
-            (entity->rtti()!=RS2::EntityArc && entity->rtti()!=RS2::EntityCircle
-             && entity->rtti()!=RS2::EntityLine)) {
-
+	if (!(entity && coord))
 		return nullptr;
-    }
 
-    double a1=0.0;
+	switch(entity->rtti()){
+	default:
+		return nullptr;
+	case RS2::EntityArc:
+	case RS2::EntityCircle:
+	case RS2::EntityLine:
+	case RS2::EntityEllipse:
+		break;
+	}
 
-    switch (entity->rtti()) {
-    case RS2::EntityLine:
-        a1 = ((RS_Line*)entity)->getAngle1();
-        break;
-    case RS2::EntityArc:
-		a1 = ((RS_Arc*)entity)->getCenter().angleTo(coord) + M_PI_2;
-        break;
-    case RS2::EntityCircle:
-        a1 = ((RS_Circle*)entity)->getCenter().angleTo(coord);
-        break;
-    default:
-        // never reached
-        break;
-    }
+	auto const vp = entity->getNearestPointOnEntity(coord, false);
 
-    a1 += angle;
+	double const a1 = angle + entity->getTangentDirection(vp).angle();
 
-	RS_Vector v1 = RS_Vector::polar(length, a1);
+	RS_Vector const v1 = RS_Vector::polar(length, a1);
     //RS_ConstructionLineData(coord-v1, coord+v1);
 
 	if (document && handleUndo) {

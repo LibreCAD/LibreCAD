@@ -63,8 +63,7 @@ QMAKE_CXXFLAGS += -g
 
 # svg support
 QT += svg
-# c++11 is now obligatory for LibreCAD
-message(We will be using CPP11 features)
+
 greaterThan( QT_MAJOR_VERSION, 4) {
 	CONFIG += c++11
 }else{

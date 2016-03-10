@@ -208,10 +208,12 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
     case SetEntity1:
     case SetEntity2:
         if (checkCommand("radius", c)) {
+            e->accept();
             deletePreview();
             lastStatus = (Status)getStatus();
             setStatus(SetRadius);
         } else if (checkCommand("trim", c)) {
+            e->accept();
             deletePreview();
             lastStatus = (Status)getStatus();
             setStatus(SetTrim);
@@ -341,7 +343,7 @@ void RS_ActionModifyRound::updateMouseButtonHints() {
 
 
 void RS_ActionModifyRound::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

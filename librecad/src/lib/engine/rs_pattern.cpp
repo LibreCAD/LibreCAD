@@ -93,7 +93,10 @@ bool RS_Pattern::loadPattern() {
 	RS_Graphic gr;
 	RS_FileIO::instance()->fileImport(gr, path);
 	for(auto e: gr){
-        if (e->rtti()==RS2::EntityLine || e->rtti()==RS2::EntityArc) {
+		if (e->rtti()==RS2::EntityLine ||
+				e->rtti()==RS2::EntityArc||
+				e->rtti()==RS2::EntityEllipse
+				) {
             RS_Layer* l = e->getLayer();
             RS_Entity* cl = e->clone();
             cl->reparent(this);

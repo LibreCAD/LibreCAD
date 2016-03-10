@@ -40,7 +40,6 @@ RS_ActionSelect::RS_ActionSelect(QG_ActionHandler* a_handler,
 	:RS_ActionInterface("Select Entities", container, graphicView)
 	,entityTypeList(entityTypeList)
 	,nextAction(nextAction)
-	,selectSingle(false)
     ,action_handler(a_handler)
 {
 	actionType=RS2::ActionSelect;
@@ -60,17 +59,8 @@ void RS_ActionSelect::init(int status) {
 
 void RS_ActionSelect::resume(){
     RS_ActionInterface::resume();
-    if(selectSingle==false){
-        finish();
-    }else{
-        deleteSnapper();
-    }
+    deleteSnapper();
 }
-
-void RS_ActionSelect::requestFinish(bool keep){
-    selectSingle=keep;
-}
-
 
 void RS_ActionSelect::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {

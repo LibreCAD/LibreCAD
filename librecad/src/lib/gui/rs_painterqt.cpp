@@ -127,15 +127,10 @@ void RS_PainterQt::drawPoint(const RS_Vector& p) {
 /**
  * Draws a line from (x1, y1) to (x2, y2).
  */
-void RS_PainterQt::drawLine(const RS_Vector& p1, const RS_Vector& p2) {
-#ifdef __APPLE1__
-        int w2 = (int)getPen().getScreenWidth()/2;
-    QPainter::drawLine(toScreenX(p1.x-w2), toScreenY(p1.y-w2),
-                       toScreenX(p2.x-w2), toScreenY(p2.y-w2));
-#else
+void RS_PainterQt::drawLine(const RS_Vector& p1, const RS_Vector& p2)
+{
     QPainter::drawLine(toScreenX(p1.x), toScreenY(p1.y),
                        toScreenX(p2.x), toScreenY(p2.y));
-#endif
 }
 
 
@@ -188,9 +183,6 @@ void RS_PainterQt::drawArc(const RS_Vector& cp, double radius,
     if(radius<=0.5) {
         drawGridPoint(cp);
     } else {
-#ifdef __APPLE1__
-                drawArcMac(cp, radius, a1, a2, reversed);
-#else
         int   cix;            // Next point on circle
         int   ciy;            //
         double aStep;         // Angle Step (rad)
@@ -256,7 +248,6 @@ void RS_PainterQt::drawArc(const RS_Vector& cp, double radius,
             pa.setPoint(i++, toScreenX(p2.x), toScreenY(p2.y));
             drawPolyline(pa);
         }
-#endif
     }
 }
 
@@ -397,19 +388,12 @@ void RS_PainterQt::drawCircle(const RS_Vector& cp, double radius) {
                               RS_Math::round(2.0*radius),
                               RS_Math::round(2.0*radius));
     } else {
-#ifdef __APPLE1__
-        drawArcMac(cp,
-                radius,
-                0.0, 2*M_PI,
-                false);
-#else
         drawArc(cp,
                 radius,
                 0.0, 2*M_PI,
                 cp + RS_Vector(radius, 0.0),
                 cp + RS_Vector(radius, 0.0),
                 false);
-#endif
         }
 }
 

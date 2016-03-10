@@ -37,7 +37,6 @@ public:
     ~QG_MouseWidget();
 
 public slots:
-    virtual void init();
     virtual void setHelp( const QString & left, const QString & right );
 
 protected slots:

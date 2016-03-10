@@ -40,11 +40,7 @@
 class RS_Vector {
 public:
 	RS_Vector()=default;
-#ifdef  RS_VECTOR2D
-    RS_Vector(double vx, double vy);
-#else
-    RS_Vector(double vx, double vy, double vz=0.0);
-#endif
+	RS_Vector(double vx, double vy, double vz=0.0);
     explicit RS_Vector(double angle);
     //RS_Vector(double v[]);
     explicit RS_Vector(bool valid);
@@ -56,11 +52,7 @@ public:
 	explicit operator bool() const;
 
 	void set(double angle); // set to unit vector by the direction of angle
-#ifdef  RS_VECTOR2D
-    void set(double vx, double vy);
-#else
     void set(double vx, double vy, double vz=0.0);
-#endif
     void setPolar(double radius, double angle);
 	//! \{
 	//! construct by cartesian, or polar coordinates
@@ -124,10 +116,8 @@ public:
 
     static RS_Vector minimum(const RS_Vector& v1, const RS_Vector& v2);
     static RS_Vector maximum(const RS_Vector& v1, const RS_Vector& v2);
-#ifndef RS_VECTOR2D
 //    crossP only defined for 3D
     static RS_Vector crossP(const RS_Vector& v1, const RS_Vector& v2);
-#endif
     static double dotP(const RS_Vector& v1, const RS_Vector& v2);
 
     /** switch x,y for all vectors */
@@ -143,9 +133,7 @@ public:
 public:
 	double x=0.;
 	double y=0.;
-#ifndef RS_VECTOR2D
 	double z=0.;
-#endif
 	bool valid=false;
 };
 
@@ -182,11 +170,11 @@ public:
 void set(size_t i, const RS_Vector& v);
     void push_back(const RS_Vector& v);
 	void removeAt(const size_t i);
-    RS_VectorSolutions appendTo(const RS_VectorSolutions& v);
+	RS_VectorSolutions& push_back(const RS_VectorSolutions& v);
     void setTangent(bool t);
     bool isTangent() const;
     RS_Vector getClosest(const RS_Vector& coord,
-						 double* dist=NULL, size_t* index=NULL) const;
+						 double* dist=nullptr, size_t* index=nullptr) const;
     double getClosestDistance(const RS_Vector& coord,
                               int counts = -1); //default to search all
 	const std::vector<RS_Vector>& getVector() const;

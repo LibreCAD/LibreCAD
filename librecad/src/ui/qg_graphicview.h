@@ -36,6 +36,7 @@
 class QGridLayout;
 class QLabel;
 class QG_ScrollBar;
+class LC_Options;
 
 /**
  * This is the Qt implementation of a widget which can view a 
@@ -94,6 +95,8 @@ public:
     void addScrollbars();
     bool hasScrollbars();
 
+    std::shared_ptr<LC_Options> options;
+
 protected:
     virtual void mousePressEvent(QMouseEvent* e);
     virtual void mouseDoubleClickEvent(QMouseEvent* e);
@@ -124,8 +127,6 @@ protected:
     QG_ScrollBar* vScrollBar;
     //! Layout used to fit in the view and the scrollbars.
     QGridLayout* layout;
-	//! Label for grid spacing.
-    QLabel* gridStatus;
     //! CAD mouse cursor
     std::unique_ptr<QCursor> curCad;
     //! Delete mouse cursor
@@ -154,6 +155,7 @@ private:
 
 signals:
     void xbutton1_released();
+    void gridStatusChanged(const QString&);
 };
 
 #endif

@@ -244,7 +244,7 @@ bool RS_Solid::isInCrossWindow(const RS_Vector& v1,const RS_Vector& v2)const {
 *
 * @return true if positive o zero, false if negative.
 */
-bool RS_Solid::sign (const RS_Vector v1, const RS_Vector v2, const RS_Vector v3)const {
+bool RS_Solid::sign (const RS_Vector& v1, const RS_Vector& v2, const RS_Vector& v3)const {
     double res = (v1.x-v3.x)*(v2.y-v3.y)-(v2.x-v3.x)*(v1.y-v3.y);
     return (res>=0.0);
 }

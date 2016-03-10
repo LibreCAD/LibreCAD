@@ -67,11 +67,6 @@
        <height>28</height>
       </size>
      </property>
-     <property name="font">
-      <font>
-       <family>Helvetica</family>
-      </font>
-     </property>
      <property name="text">
       <string>Right</string>
      </property>
@@ -102,11 +97,6 @@
        <width>32767</width>
        <height>28</height>
       </size>
-     </property>
-     <property name="font">
-      <font>
-       <family>Helvetica</family>
-      </font>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>

@@ -22,6 +22,11 @@ void RS_UndoCycle::changeUndoState()
 		u->changeUndoState();
 }
 
+std::set<RS_Undoable*> const& RS_UndoCycle::getUndoables() const
+{
+    return undoables;
+}
+
 
 std::ostream& operator << (std::ostream& os,
 								  RS_UndoCycle& uc) {

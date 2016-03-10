@@ -28,7 +28,6 @@
 #define RS_ACTIONSELECTSINGLE_H
 
 #include "rs_actioninterface.h"
-#include "rs_actionselect.h"
 
 
 /**
@@ -54,7 +53,7 @@ private:
 	std::initializer_list<RS2::EntityType> const entityTypeList;
 
     RS_Entity* en;
-    RS_ActionSelect* actionSelect;
+    RS_ActionInterface* actionSelect;
 };
 
 #endif

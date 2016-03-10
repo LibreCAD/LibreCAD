@@ -38,9 +38,7 @@ public:
 	 * @param pos coordinate
 	 * @param abs true: absolute coordinate, false: relative coordinate
 	 */
-    RS_CoordinateEvent(const RS_Vector& pos) {
-		this->pos = pos;
-    }
+    RS_CoordinateEvent(const RS_Vector& pos): pos(pos) {}
  
     /**
 	 * @return the position of the event in real graphic measures.
