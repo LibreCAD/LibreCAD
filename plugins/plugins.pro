@@ -24,7 +24,6 @@ SUBDIRS     = \
 TRANSLATIONS = ./ts/plugins_ar.ts \
     ./ts/plugins_ca.ts \
     ./ts/plugins_cs.ts \
-    ./ts/plugins_et.ts \
     ./ts/plugins_en.ts \
     ./ts/plugins_en_au.ts \
     ./ts/plugins_da.ts \
@@ -50,6 +49,8 @@ TRANSLATIONS = ./ts/plugins_ar.ts \
     ./ts/plugins_es_us.ts \
     ./ts/plugins_es_uy.ts \
     ./ts/plugins_es_ve.ts \
+    ./ts/plugins_et.ts \
+    ./ts/plugins_eu.ts \
     ./ts/plugins_fi.ts \
     ./ts/plugins_fr.ts \
     ./ts/plugins_gl.ts \
