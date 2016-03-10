@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="fr">
 <context>
@@ -41,7 +42,7 @@
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
         <translation>le rayon=%1 est trop petit pour les points sélectionnés
-l'écartement des points=%2 est supérieur au diamètre=%3</translation>
+l&apos;écartement des points=%2 est supérieur au diamètre=%3</translation>
     </message>
     <message>
         <source>Select from two possible circle centers</source>
@@ -96,11 +97,11 @@ l'écartement des points=%2 est supérieur au diamètre=%3</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Impossible d'annuler : Pas assez d'objets définis.</translation>
+        <translation>Impossible d&apos;annuler : Pas assez d&apos;objets définis.</translation>
     </message>
     <message>
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation>Impossible d'annuler: rein ne peut être refait</translation>
+        <translation>Impossible d&apos;annuler: rein ne peut être refait</translation>
     </message>
 </context>
 <context>
@@ -147,12 +148,12 @@ l'écartement des points=%2 est supérieur au diamètre=%3</translation>
         <translation>retirer à droite</translation>
     </message>
     <message>
-        <source>remove 0'</source>
-        <translation>retirer 0'</translation>
+        <source>remove 0&apos;</source>
+        <translation>retirer 0&apos;</translation>
     </message>
     <message>
-        <source>remove 0"</source>
-        <translation>retirer 0''</translation>
+        <source>remove 0&quot;</source>
+        <translation>retirer 0&apos;&apos;</translation>
     </message>
 </context>
 <context>
@@ -167,7 +168,7 @@ l'écartement des points=%2 est supérieur au diamètre=%3</translation>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation>Distance de la polyligne d'origine</translation>
+        <translation>Distance de la polyligne d&apos;origine</translation>
     </message>
     <message>
         <source>Copies:</source>
@@ -315,7 +316,7 @@ l'écartement des points=%2 est supérieur au diamètre=%3</translation>
     </message>
     <message>
         <source>Creating new file...</source>
-        <translation>Création d'un nouveau fichier...</translation>
+        <translation>Création d&apos;un nouveau fichier...</translation>
     </message>
     <message>
         <source>unnamed document %1</source>
@@ -339,7 +340,7 @@ l'écartement des points=%2 est supérieur au diamètre=%3</translation>
     </message>
     <message>
         <source>Exiting application...</source>
-        <translation>Fermeture de l'application...</translation>
+        <translation>Fermeture de l&apos;application...</translation>
     </message>
     <message>
         <source>About...</source>
@@ -359,7 +360,7 @@ l'écartement des points=%2 est supérieur au diamètre=%3</translation>
     </message>
     <message>
         <source>Tool&amp;bars</source>
-        <translation type="obsolete">&amp;Barre d'Outils</translation>
+        <translation type="obsolete">&amp;Barre d&apos;Outils</translation>
     </message>
     <message>
         <source>View</source>
@@ -371,7 +372,7 @@ l'écartement des points=%2 est supérieur au diamètre=%3</translation>
     </message>
     <message>
         <source>Tool Options</source>
-        <translation type="unfinished">Options d'Outils</translation>
+        <translation type="unfinished">Options d&apos;Outils</translation>
     </message>
     <message>
         <source>Layer List</source>
@@ -387,7 +388,7 @@ l'écartement des points=%2 est supérieur au diamètre=%3</translation>
     </message>
     <message>
         <source>Print preview for %1</source>
-        <translation>Prévisualisation de l'Impression de %1</translation>
+        <translation>Prévisualisation de l&apos;Impression de %1</translation>
     </message>
     <message>
         <source>New Drawing created.</source>
@@ -423,7 +424,7 @@ l'écartement des points=%2 est supérieur au diamètre=%3</translation>
     </message>
     <message>
         <source>Export failed!</source>
-        <translation>Échec de l'exportation !</translation>
+        <translation>Échec de l&apos;exportation !</translation>
     </message>
     <message>
         <source>Printing complete</source>
@@ -434,14 +435,14 @@ l'écartement des points=%2 est supérieur au diamètre=%3</translation>
         <translation>Ligne de Commande</translation>
     </message>
     <message>
-        <source>Block '%1'</source>
-        <translation>Bloc '%1'</translation>
+        <source>Block &apos;%1&apos;</source>
+        <translation>Bloc &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
-        <translation>Impossible d'ouvrir le fichier 
+        <translation>Impossible d&apos;ouvrir le fichier 
 %1 
 Vérifiez les autorisations SVP.</translation>
     </message>
@@ -449,7 +450,7 @@ Vérifiez les autorisations SVP.</translation>
         <source>Cannot save the file
 %1
 Please check the permissions.</source>
-        <translation>Impossible d'enregistrer le fichier 
+        <translation>Impossible d&apos;enregistrer le fichier 
 %1 
 Vérifiez les autorisations SVP.</translation>
     </message>
@@ -496,9 +497,9 @@ not intended for production use. Please buy
 a full version of the application from
 %2.
 You can save your work now.</source>
-        <translation type="obsolete">Ceci est une version %1 qui s'arrête 
+        <translation type="obsolete">Ceci est une version %1 qui s&apos;arrête 
 automatiquement après 10min. Ce logiciel 
-n'est pas prévu pour être utilisé en production. Achetez 
+n&apos;est pas prévu pour être utilisé en production. Achetez 
 la version complète du logiciel sur 
 %2 
 Vous pouvez enregistrer votre travail maintenant.</translation>
@@ -512,12 +513,12 @@ Vous pouvez enregistrer votre travail maintenant.</translation>
         <translation>&amp;Spline</translation>
     </message>
     <message>
-        <source>Running script '%1'</source>
-        <translation>Exécution du script '%1'</translation>
+        <source>Running script &apos;%1&apos;</source>
+        <translation>Exécution du script &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Inserting block '%1'</source>
-        <translation>Insertion du bloc '%1'</translation>
+        <source>Inserting block &apos;%1&apos;</source>
+        <translation>Insertion du bloc &apos;%1&apos;</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -558,8 +559,8 @@ Sauvegarde automatique désactivée.</translation>
         <translation>Aide</translation>
     </message>
     <message>
-        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
-        <translation>Ouch, impossible de trouver les fichiers d'aide.</translation>
+        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
+        <translation>Ouch, impossible de trouver les fichiers d&apos;aide.</translation>
     </message>
     <message>
         <source>&amp;Plugins</source>
@@ -571,7 +572,7 @@ Sauvegarde automatique désactivée.</translation>
     </message>
     <message>
         <source>&amp;Toolbars</source>
-        <translation>&amp;Barre d'outils</translation>
+        <translation>&amp;Barre d&apos;outils</translation>
     </message>
     <message>
         <source>Compiled on: %1</source>
@@ -583,7 +584,7 @@ Sauvegarde automatique désactivée.</translation>
     </message>
     <message>
         <source>Splash and Logo supplied by</source>
-        <translation>Écran d'accueil et logo par</translation>
+        <translation>Écran d&apos;accueil et logo par</translation>
     </message>
     <message>
         <source>Main Website : </source>
@@ -598,7 +599,7 @@ Sauvegarde automatique désactivée.</translation>
         <translation>Révision SCM : %1</translation>
     </message>
     <message>
-        <source>Please donate to LibreCAD to help maintain the sourcecode and it's website.</source>
+        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
         <translation type="obsolete">Merci de faire un don à LibreCAD pour soutenir le développement et aider au maintient du site web.</translation>
     </message>
     <message>
@@ -619,7 +620,7 @@ Sauvegarde automatique désactivée.</translation>
     </message>
     <message>
         <source>Su&amp;b-Window mode</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Tile &amp;Vertically</source>
@@ -635,7 +636,7 @@ Sauvegarde automatique désactivée.</translation>
     </message>
     <message>
         <source>New document from template: </source>
-        <translation>Nouveau à partir d'un modèle:</translation>
+        <translation>Nouveau à partir d&apos;un modèle:</translation>
     </message>
     <message>
         <source>Select Template aborted</source>
@@ -643,7 +644,7 @@ Sauvegarde automatique désactivée.</translation>
     </message>
     <message>
         <source>Auto-saving failed</source>
-        <translation>Échec de l'Auto-enregistrement</translation>
+        <translation>Échec de l&apos;Auto-enregistrement</translation>
     </message>
     <message>
         <source>Pen Selection</source>
@@ -701,13 +702,13 @@ Sauvegarde automatique désactivée.</translation>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
-        <translation>Impossible d'ouvrir le fichier
+        <translation>Impossible d&apos;ouvrir le fichier
 %1
-Vérifier qu'il existe et les autorisations</translation>
+Vérifier qu&apos;il existe et les autorisations</translation>
     </message>
     <message>
-        <source>File '%1' does not exist. Opening aborted</source>
-        <translation>Fichier '%1' inexistant. Ouverture avortée</translation>
+        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
+        <translation>Fichier &apos;%1&apos; inexistant. Ouverture avortée</translation>
     </message>
     <message>
         <source>Online (Wiki)</source>
@@ -739,7 +740,7 @@ Vérifier qu'il existe et les autorisations</translation>
     </message>
     <message>
         <source>Quits the application</source>
-        <translation type="obsolete">Quitter l'application</translation>
+        <translation type="obsolete">Quitter l&apos;application</translation>
     </message>
     <message>
         <source>Free</source>
@@ -779,15 +780,15 @@ Vérifier qu'il existe et les autorisations</translation>
     </message>
     <message>
         <source>On Entity</source>
-        <translation type="obsolete">A l'Objet</translation>
+        <translation type="obsolete">A l&apos;Objet</translation>
     </message>
     <message>
         <source>&amp;On Entity</source>
-        <translation type="obsolete">&amp;A l'Objet</translation>
+        <translation type="obsolete">&amp;A l&apos;Objet</translation>
     </message>
     <message>
         <source>Snap to nearest point on entity</source>
-        <translation type="obsolete">Accrocher au point le plus près sur l'objet</translation>
+        <translation type="obsolete">Accrocher au point le plus près sur l&apos;objet</translation>
     </message>
     <message>
         <source>Center</source>
@@ -823,7 +824,7 @@ Vérifier qu'il existe et les autorisations</translation>
     </message>
     <message>
         <source>Snap to points with a given distance to an endpoint</source>
-        <translation type="obsolete">Accrocher à une distance donnée de l'extrémité</translation>
+        <translation type="obsolete">Accrocher à une distance donnée de l&apos;extrémité</translation>
     </message>
     <message>
         <source>Intersection</source>
@@ -835,7 +836,7 @@ Vérifier qu'il existe et les autorisations</translation>
     </message>
     <message>
         <source>Snap to intersection points</source>
-        <translation type="obsolete">Accrocher à l'intersection</translation>
+        <translation type="obsolete">Accrocher à l&apos;intersection</translation>
     </message>
     <message>
         <source>Restrict Nothing</source>
@@ -847,7 +848,7 @@ Vérifier qu'il existe et les autorisations</translation>
     </message>
     <message>
         <source>No snap restriction</source>
-        <translation type="obsolete">Pas de restriction d'accrochage</translation>
+        <translation type="obsolete">Pas de restriction d&apos;accrochage</translation>
     </message>
     <message>
         <source>Restrict Orthogonally</source>
@@ -859,7 +860,7 @@ Vérifier qu'il existe et les autorisations</translation>
     </message>
     <message>
         <source>Restrict snapping orthogonally</source>
-        <translation type="obsolete">Restriction d'accrochage orthogonale</translation>
+        <translation type="obsolete">Restriction d&apos;accrochage orthogonale</translation>
     </message>
     <message>
         <source>Restrict Horizontally</source>
@@ -871,7 +872,7 @@ Vérifier qu'il existe et les autorisations</translation>
     </message>
     <message>
         <source>Restrict snapping horizontally</source>
-        <translation type="obsolete">Restriction d'accrochage horizontale</translation>
+        <translation type="obsolete">Restriction d&apos;accrochage horizontale</translation>
     </message>
     <message>
         <source>Restrict Vertically</source>
@@ -883,7 +884,7 @@ Vérifier qu'il existe et les autorisations</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
-        <translation type="obsolete">Restriction d'accrochage verticale</translation>
+        <translation type="obsolete">Restriction d&apos;accrochage verticale</translation>
     </message>
     <message>
         <source>General Application Preferences</source>
@@ -927,7 +928,7 @@ Vérifier qu'il existe et les autorisations</translation>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation type="obsolete">Barre d'état</translation>
+        <translation type="obsolete">Barre d&apos;état</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
@@ -935,7 +936,7 @@ Vérifier qu'il existe et les autorisations</translation>
     </message>
     <message>
         <source>Enables/disables the statusbar</source>
-        <translation type="obsolete">Affiche/Cache la barre d'état</translation>
+        <translation type="obsolete">Affiche/Cache la barre d&apos;état</translation>
     </message>
     <message>
         <source>Draft</source>
@@ -959,7 +960,7 @@ Vérifier qu'il existe et les autorisations</translation>
     </message>
     <message>
         <source>Opens the integrated development environment for scripting</source>
-        <translation type="obsolete">Ouvre l'environnement de développement de scripts</translation>
+        <translation type="obsolete">Ouvre l&apos;environnement de développement de scripts</translation>
     </message>
     <message>
         <source>Run Script..</source>
@@ -1028,7 +1029,7 @@ Vérifier qu'il existe et les autorisations</translation>
     </message>
     <message>
         <source>CAD ToolBar</source>
-        <translation>Barre d'outils CAD</translation>
+        <translation>Barre d&apos;outils CAD</translation>
     </message>
 </context>
 <context>
@@ -1047,26 +1048,26 @@ Vérifier qu'il existe et les autorisations</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Current Layer</source>
         <translation>Calque actuel</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_ArcOptions</name>
     <message>
         <source>Arc Options</source>
-        <translation>Options d'Arc</translation>
+        <translation>Options d&apos;Arc</translation>
     </message>
     <message>
         <source>Clockwise</source>
@@ -1085,7 +1086,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_ArcTangentialOptions</name>
     <message>
         <source>Tangential Arc Options</source>
-        <translation>Options d'arc tangentiel</translation>
+        <translation>Options d&apos;arc tangentiel</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -1093,11 +1094,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Radius of the tangential arc</source>
-        <translation>Rayon de l'arc tangentiel</translation>
+        <translation>Rayon de l&apos;arc tangentiel</translation>
     </message>
     <message>
         <source>Total subtending angle of the tangential arc</source>
-        <translation>Total de l'angle sous-tendant l'arc tangentiel</translation>
+        <translation>Total de l&apos;angle sous-tendant l&apos;arc tangentiel</translation>
     </message>
     <message>
         <source>Radius</source>
@@ -1122,7 +1123,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Vérifier l'ajustement des deux objets avec le chanfrein</translation>
+        <translation>Vérifier l&apos;ajustement des deux objets avec le chanfrein</translation>
     </message>
     <message>
         <source>Length 1:</source>
@@ -1152,8 +1153,8 @@ p, li { white-space: pre-wrap; }
         <translation>Renommer Bloc</translation>
     </message>
     <message>
-        <source>Could not name block. A block named "%1" already exists.</source>
-        <translation>Impossible de nommer le bloc. Un bloc nommé "%1" existe déjà.</translation>
+        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
+        <translation>Impossible de nommer le bloc. Un bloc nommé &quot;%1&quot; existe déjà.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -1284,7 +1285,7 @@ dans une nouvelle fenêtre</translation>
     </message>
     <message>
         <source>Arc tangential to base entity with radius</source>
-        <translation type="obsolete">Arc tangentiel avec l'entité de base avec un rayon</translation>
+        <translation type="obsolete">Arc tangentiel avec l&apos;entité de base avec un rayon</translation>
     </message>
 </context>
 <context>
@@ -1373,7 +1374,7 @@ dans une nouvelle fenêtre</translation>
     </message>
     <message>
         <source>Ellipse arc with center, two points and angles</source>
-        <translation type="obsolete">Arc d'ellipse avec centre, deux points et angle</translation>
+        <translation type="obsolete">Arc d&apos;ellipse avec centre, deux points et angle</translation>
     </message>
     <message>
         <source>Ellipse with Center and two points</source>
@@ -1501,48 +1502,48 @@ dans une nouvelle fenêtre</translation>
         <translation type="obsolete">Général</translation>
     </message>
     <message>
-        <source>Show menu "Lines"</source>
-        <translation type="obsolete">Afficher le menu "Lignes"</translation>
+        <source>Show menu &quot;Lines&quot;</source>
+        <translation type="obsolete">Afficher le menu &quot;Lignes&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Arcs"</source>
-        <translation type="obsolete">Afficher le menu "Arcs"</translation>
+        <source>Show menu &quot;Arcs&quot;</source>
+        <translation type="obsolete">Afficher le menu &quot;Arcs&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Circles"</source>
-        <translation type="obsolete">Afficher le menu "Cercles"</translation>
+        <source>Show menu &quot;Circles&quot;</source>
+        <translation type="obsolete">Afficher le menu &quot;Cercles&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Points"</source>
-        <translation type="obsolete">Afficher le menu "Points"</translation>
+        <source>Show menu &quot;Points&quot;</source>
+        <translation type="obsolete">Afficher le menu &quot;Points&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Measure"</source>
-        <translation type="obsolete">Afficher le menu "Mesure"</translation>
+        <source>Show menu &quot;Measure&quot;</source>
+        <translation type="obsolete">Afficher le menu &quot;Mesure&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Ellipses"</source>
-        <translation type="obsolete">Afficher le menu "Ellipses"</translation>
+        <source>Show menu &quot;Ellipses&quot;</source>
+        <translation type="obsolete">Afficher le menu &quot;Ellipses&quot;</translation>
     </message>
     <message>
         <source>Hatches / Solid Fills</source>
         <translation type="obsolete">Hachures / Motif de Remplissage</translation>
     </message>
     <message>
-        <source>Show menu "Edit"</source>
-        <translation type="obsolete">Afficher le menu "Edition"</translation>
+        <source>Show menu &quot;Edit&quot;</source>
+        <translation type="obsolete">Afficher le menu &quot;Edition&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Dimensions"</source>
-        <translation type="obsolete">Afficher le menu "Cotation"</translation>
+        <source>Show menu &quot;Dimensions&quot;</source>
+        <translation type="obsolete">Afficher le menu &quot;Cotation&quot;</translation>
     </message>
     <message>
         <source>Texts</source>
         <translation type="obsolete">Textes</translation>
     </message>
     <message>
-        <source>Show menu "Select"</source>
-        <translation type="obsolete">Afficher le menu "Sélection"</translation>
+        <source>Show menu &quot;Select&quot;</source>
+        <translation type="obsolete">Afficher le menu &quot;Sélection&quot;</translation>
     </message>
     <message>
         <source>Create Block</source>
@@ -1553,8 +1554,8 @@ dans une nouvelle fenêtre</translation>
         <translation type="obsolete">Image</translation>
     </message>
     <message>
-        <source>Show menu "Splines"</source>
-        <translation type="obsolete">Afficher le menu "Courbes"</translation>
+        <source>Show menu &quot;Splines&quot;</source>
+        <translation type="obsolete">Afficher le menu &quot;Courbes&quot;</translation>
     </message>
     <message>
         <source>Points</source>
@@ -1641,11 +1642,11 @@ dans une nouvelle fenêtre</translation>
     </message>
     <message>
         <source>Edit Entity Attributes</source>
-        <translation type="obsolete">Editer Attributs de l'Objet</translation>
+        <translation type="obsolete">Editer Attributs de l&apos;Objet</translation>
     </message>
     <message>
         <source>Edit Entity Geometry</source>
-        <translation type="obsolete">Editer Géométrie de l'Objet</translation>
+        <translation type="obsolete">Editer Géométrie de l&apos;Objet</translation>
     </message>
     <message>
         <source>Mirror</source>
@@ -1813,7 +1814,7 @@ dans une nouvelle fenêtre</translation>
     </message>
     <message>
         <source>Snap to closest point on entity</source>
-        <translation type="obsolete">Accrocher au points le plus près sur l'objet</translation>
+        <translation type="obsolete">Accrocher au points le plus près sur l&apos;objet</translation>
     </message>
     <message>
         <source>Snap to center points</source>
@@ -1825,11 +1826,11 @@ dans une nouvelle fenêtre</translation>
     </message>
     <message>
         <source>Snap to point with given distance to endpoint</source>
-        <translation type="obsolete">Accrocher à un point situé à une distance donnée de l'extrémité</translation>
+        <translation type="obsolete">Accrocher à un point situé à une distance donnée de l&apos;extrémité</translation>
     </message>
     <message>
         <source>Snap to intersections automatically</source>
-        <translation type="obsolete">Accrocher à l'intersection manuellement</translation>
+        <translation type="obsolete">Accrocher à l&apos;intersection manuellement</translation>
     </message>
     <message>
         <source>No Restriction</source>
@@ -1857,7 +1858,7 @@ dans une nouvelle fenêtre</translation>
     </message>
     <message>
         <source>Snap to intersections manually</source>
-        <translation type="obsolete">Accrocher à l'intersection manuellement</translation>
+        <translation type="obsolete">Accrocher à l&apos;intersection manuellement</translation>
     </message>
 </context>
 <context>
@@ -2022,7 +2023,7 @@ dans une nouvelle fenêtre</translation>
     </message>
     <message>
         <source>Command history and output</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Clear</source>
@@ -2190,7 +2191,7 @@ dans une nouvelle fenêtre</translation>
     </message>
     <message>
         <source>End Angle:</source>
-        <translation>Angle d'Arrivée :</translation>
+        <translation>Angle d&apos;Arrivée :</translation>
     </message>
     <message>
         <source>Reversed</source>
@@ -2373,7 +2374,7 @@ dans une nouvelle fenêtre</translation>
     </message>
     <message>
         <source>End Angle:</source>
-        <translation>Angle d'Arrivée :</translation>
+        <translation>Angle d&apos;Arrivée :</translation>
     </message>
     <message>
         <source>Start Angle:</source>
@@ -2479,7 +2480,7 @@ dans une nouvelle fenêtre</translation>
     </message>
     <message>
         <source>insert (x):</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Scale:</source>
@@ -2529,15 +2530,15 @@ dans une nouvelle fenêtre</translation>
         <translation>Bienvenue</translation>
     </message>
     <message>
-        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size="+1"&gt;&lt;b&gt;Bienvenue sur QCad&lt;/b&gt;
+        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Bienvenue sur QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
-Choisissez l'unité que vous souhaitez utiliser pour les nouveaux dessins et votre langue préférée.&lt;br&gt;
+Choisissez l&apos;unité que vous souhaitez utiliser pour les nouveaux dessins et votre langue préférée.&lt;br&gt;
 Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</translation>
     </message>
     <message>
@@ -2546,7 +2547,7 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     </message>
     <message>
         <source>GUI Language:</source>
-        <translation>Langue de l'interface :</translation>
+        <translation>Langue de l&apos;interface :</translation>
     </message>
     <message>
         <source>Command Language:</source>
@@ -2577,11 +2578,11 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     </message>
     <message>
         <source>Insertion point (x):</source>
-        <translation>Point d'insertion (x) :</translation>
+        <translation>Point d&apos;insertion (x) :</translation>
     </message>
     <message>
         <source>Insertion point (y):</source>
-        <translation>Point d'insertion (y) :</translation>
+        <translation>Point d&apos;insertion (y) :</translation>
     </message>
     <message>
         <source>Scale:</source>
@@ -2644,11 +2645,11 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     </message>
     <message>
         <source>End point (x):</source>
-        <translation>Point d'Arrivée (x) :</translation>
+        <translation>Point d&apos;Arrivée (x) :</translation>
     </message>
     <message>
         <source>End point (y):</source>
-        <translation>Point d'Arrivée (y) :</translation>
+        <translation>Point d&apos;Arrivée (y) :</translation>
     </message>
     <message>
         <source>Start point (y):</source>
@@ -2867,7 +2868,7 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     </message>
     <message>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation type="unfinished">[02B0-02FF] Caractères sous forme d'Exposants</translation>
+        <translation type="unfinished">[02B0-02FF] Caractères sous forme d&apos;Exposants</translation>
     </message>
     <message>
         <source>[0300-036F] Combining Diacritical Marks</source>
@@ -3530,7 +3531,7 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
         <translation>Grades</translation>
     </message>
     <message>
-        <source>Surveyor's units</source>
+        <source>Surveyor&apos;s units</source>
         <translation>Unités de Géomètre</translation>
     </message>
     <message>
@@ -3538,12 +3539,12 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
         <translation>Options</translation>
     </message>
     <message>
-        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
-        <translation>En général, pour Génie Mécanique on utilise le millimètre et pour Architecture c'est le mètre.</translation>
+        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
+        <translation>En général, pour Génie Mécanique on utilise le millimètre et pour Architecture c&apos;est le mètre.</translation>
     </message>
     <message>
         <source>Extension line extension:</source>
-        <translation type="obsolete">Extension de la ligne d'attache :</translation>
+        <translation type="obsolete">Extension de la ligne d&apos;attache :</translation>
     </message>
     <message>
         <source>Arrow size:</source>
@@ -3551,7 +3552,7 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     </message>
     <message>
         <source>Extension line offset:</source>
-        <translation type="obsolete">Distance de la ligne d'attache / Objet :</translation>
+        <translation type="obsolete">Distance de la ligne d&apos;attache / Objet :</translation>
     </message>
     <message>
         <source>Dimension line gap:</source>
@@ -3731,11 +3732,11 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     </message>
     <message>
         <source>Tick size:</source>
-        <translation>Taille d'oblique:</translation>
+        <translation>Taille d&apos;oblique:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Taille d'oblique de cote. Régler à 0 déactive l'oblique de cote. La flèche de cote n'est pas dessinée quand l'oblique est activée.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Taille d&apos;oblique de cote. Régler à 0 déactive l&apos;oblique de cote. La flèche de cote n&apos;est pas dessinée quand l&apos;oblique est activée.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>0</source>
@@ -3806,12 +3807,12 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
         <translation>Style de texte:</translation>
     </message>
     <message>
-        <source>'.' (Period)</source>
-        <translation type="unfinished">'.' (Point)</translation>
+        <source>&apos;.&apos; (Period)</source>
+        <translation type="unfinished">&apos;.&apos; (Point)</translation>
     </message>
     <message>
-        <source>',' (Comma)</source>
-        <translation type="unfinished">',' (Virgule)</translation>
+        <source>&apos;,&apos; (Comma)</source>
+        <translation type="unfinished">&apos;,&apos; (Virgule)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
@@ -3854,8 +3855,8 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
         <translation>Longueur au delà de la ligne de cote</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Taille de flèche de cote. &lt;a name="result_box"/&gt;sans effet quand la taille d'oblique &lt;a name="result_box"/&gt;est différente de 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Taille de flèche de cote. &lt;a name=&quot;result_box&quot;/&gt;sans effet quand la taille d&apos;oblique &lt;a name=&quot;result_box&quot;/&gt;est différente de 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width:</source>
@@ -3886,8 +3887,8 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
         <translation>Précision linéaire:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Alignement du texte &lt;a name="result_box"/&gt;sur la ligne de cote.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Alignement du texte &lt;a name=&quot;result_box&quot;/&gt;sur la ligne de cote.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Aligned</source>
@@ -3895,7 +3896,7 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Séparation du point d'origine.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Séparation du point d&apos;origine.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Text alignment:</source>
@@ -3903,7 +3904,7 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     </message>
     <message>
         <source>Extension lines</source>
-        <translation>Lignes d'attache</translation>
+        <translation>Lignes d&apos;attache</translation>
     </message>
     <message>
         <source>Fixed length:</source>
@@ -3911,7 +3912,7 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     </message>
     <message>
         <source>fixed extension line legth</source>
-        <translation>Longueur fixée de ligne d'attache</translation>
+        <translation>Longueur fixée de ligne d&apos;attache</translation>
     </message>
 </context>
 <context>
@@ -3938,7 +3939,7 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     </message>
     <message>
         <source>Part Libraries:</source>
-        <translation>Librairies d'Eléments :</translation>
+        <translation>Librairies d&apos;Eléments :</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -3982,7 +3983,7 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     </message>
     <message>
         <source>&amp;GUI Language:</source>
-        <translation>&amp;Langue de l'interface :</translation>
+        <translation>&amp;Langue de l&apos;interface :</translation>
     </message>
     <message>
         <source>&amp;Command Language:</source>
@@ -3994,7 +3995,7 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     </message>
     <message>
         <source>Number of p&amp;review entities:</source>
-        <translation>Nombre de p&amp;révisualisations d'objets :</translation>
+        <translation>Nombre de p&amp;révisualisations d&apos;objets :</translation>
     </message>
     <message>
         <source>&amp;Paths</source>
@@ -4206,11 +4207,11 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     </message>
     <message>
         <source>Splash Window</source>
-        <translation>Fenêtre d'ouverture</translation>
+        <translation>Fenêtre d&apos;ouverture</translation>
     </message>
     <message>
         <source>Display Splash</source>
-        <translation>Afficher la fenêtre d'ouverture</translation>
+        <translation>Afficher la fenêtre d&apos;ouverture</translation>
     </message>
     <message>
         <source>Graphic Colors</source>
@@ -4282,7 +4283,7 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     </message>
     <message>
         <source>GUI Colors</source>
-        <translation>Couleurs d'interface graphique</translation>
+        <translation>Couleurs d&apos;interface graphique</translation>
     </message>
     <message>
         <source>Layer/ Block Selection:</source>
@@ -4290,11 +4291,11 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activation a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities are modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lorsqu'elle est activée, le choix d'un calque modifiera toutes les entités sélectionnées aux attributs de ce calque. Pour changer plusieurs entités de calque: d'abord sélectionner les entités concernées; activer un calque dans la fenêtre des calques. Toutes les entités sélectionnées seront modifiées pour faire partie du nouveau calque.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lorsqu&apos;elle est activée, le choix d&apos;un calque modifiera toutes les entités sélectionnées aux attributs de ce calque. Pour changer plusieurs entités de calque: d&apos;abord sélectionner les entités concernées; activer un calque dans la fenêtre des calques. Toutes les entités sélectionnées seront modifiées pour faire partie du nouveau calque.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Modify layer of selected entities, at  layer activation</source>
-        <translation>Modifier le calque de l'entité sélectionnée, à l'activation d'un calque</translation>
+        <translation>Modifier le calque de l&apos;entité sélectionnée, à l&apos;activation d&apos;un calque</translation>
     </message>
 </context>
 <context>
@@ -4308,8 +4309,8 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
         <translation>Calques</translation>
     </message>
     <message>
-        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe ("display: none;" or "visibility: hidden;").</source>
-        <translation>Depuis novembre 2014 MakerCAM ne cache pas les contenus SVG qui ont été réglés sur invisible ("afficher: rien", ou "visibilité: caché,")</translation>
+        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
+        <translation>Depuis novembre 2014 MakerCAM ne cache pas les contenus SVG qui ont été réglés sur invisible (&quot;afficher: rien&quot;, ou &quot;visibilité: caché,&quot;)</translation>
     </message>
     <message>
         <source>Export invisible layers</source>
@@ -4333,15 +4334,15 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     </message>
     <message>
         <source>Ellipses / Ellipse arcs</source>
-        <translation>Ellipses/Arcs d'ellipses</translation>
+        <translation>Ellipses/Arcs d&apos;ellipses</translation>
     </message>
     <message>
-        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the "transform" attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>Depuis mars 2015 MakerCAM ne peux afficher correctement les ellipses ou arcs d'ellipses, quand ils sont créés en utilisant l’icône &lt;ellipse&gt;    avec rotation dans les attributs de "transformation" ou comme &lt;path&gt; utilisant des segments d'arc d'ellipse.</translation>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation>Depuis mars 2015 MakerCAM ne peux afficher correctement les ellipses ou arcs d&apos;ellipses, quand ils sont créés en utilisant l’icône &lt;ellipse&gt;    avec rotation dans les attributs de &quot;transformation&quot; ou comme &lt;path&gt; utilisant des segments d&apos;arc d&apos;ellipse.</translation>
     </message>
     <message utf8="true">
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation>Ellipses et arcs d'ellipses approximatifs avec courbe de Bézier cubique </translation>
+        <translation>Ellipses et arcs d&apos;ellipses approximatifs avec courbe de Bézier cubique </translation>
     </message>
 </context>
 <context>
@@ -4603,11 +4604,11 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     </message>
     <message>
         <source>Scale by the same factor at both x- and y- directions</source>
-        <translation>Même facteur d'échelle pour les axes x- et y-</translation>
+        <translation>Même facteur d&apos;échelle pour les axes x- et y-</translation>
     </message>
     <message>
         <source>Isotropic Scaling</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>X</source>
@@ -5305,7 +5306,7 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     </message>
     <message>
         <source>Width factor:</source>
-        <translation>Facteur d'écartement:</translation>
+        <translation>Facteur d&apos;écartement:</translation>
     </message>
     <message>
         <source>Font:</source>
@@ -5460,7 +5461,7 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     <name>QG_ImageOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Options d'Insertion</translation>
+        <translation>Options d&apos;Insertion</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -5476,22 +5477,23 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Facteur d'Echelle</translation>
+        <translation>Facteur d&apos;Echelle</translation>
     </message>
     <message>
         <source>DPI</source>
+        <translatorcomment>Points Par Pouces</translatorcomment>
         <translation>PPP</translation>
-    <translatorcomment>Points Par Pouces</translatorcomment></message>
+    </message>
     <message>
         <source>DPI of Image</source>
-        <translation>PPP de l'image</translation>
+        <translation>PPP de l&apos;image</translation>
     </message>
 </context>
 <context>
     <name>QG_ImageOptionsDialog</name>
     <message>
         <source>Image Export Options</source>
-        <translation>Options d'Exportation d'Images</translation>
+        <translation>Options d&apos;Exportation d&apos;Images</translation>
     </message>
     <message>
         <source>Bitmap Size</source>
@@ -5646,7 +5648,7 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
     <name>QG_InsertOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Options d'Insertion</translation>
+        <translation>Options d&apos;Insertion</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -5730,7 +5732,7 @@ Vous pouvez changer plus tard ces paramètres dans le menu Options de QCad.</tra
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
         <translation>Un calque de construction est composé de lignes sans fin destinées à la construction géométrique.
-Le contenu du calque de construction ne devrait pas apparaitre à l'impression.</translation>
+Le contenu du calque de construction ne devrait pas apparaitre à l&apos;impression.</translation>
     </message>
     <message>
         <source>Construction Layer</source>
@@ -5801,7 +5803,7 @@ Le contenu du calque de construction ne devrait pas apparaitre à l'impression.<
     </message>
     <message>
         <source>Toggle Layer &amp;Printing</source>
-        <translation>Bascule l'impression du Calque</translation>
+        <translation>Bascule l&apos;impression du Calque</translation>
     </message>
     <message>
         <source>Toggle &amp;Construction Layer</source>
@@ -5812,7 +5814,7 @@ Le contenu du calque de construction ne devrait pas apparaitre à l'impression.<
     <name>QG_LibraryInsertOptions</name>
     <message>
         <source>Library Insert Options</source>
-        <translation>Options d'Insertion de Librairies</translation>
+        <translation>Options d&apos;Insertion de Librairies</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -5870,7 +5872,7 @@ Le contenu du calque de construction ne devrait pas apparaitre à l'impression.<
     </message>
     <message>
         <source>Snap Point:</source>
-        <translation>Point d'Accrochage :</translation>
+        <translation>Point d&apos;Accrochage :</translation>
     </message>
     <message>
         <source>Start</source>
@@ -5951,7 +5953,7 @@ Le contenu du calque de construction ne devrait pas apparaitre à l'impression.<
     </message>
     <message>
         <source>Distance to original entity</source>
-        <translation>Distance avec l'Objet d'origine</translation>
+        <translation>Distance avec l&apos;Objet d&apos;origine</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -6098,15 +6100,15 @@ Le contenu du calque de construction ne devrait pas apparaitre à l'impression.<
     </message>
     <message>
         <source>Center</source>
-        <translation>Trait d'Axes</translation>
+        <translation>Trait d&apos;Axes</translation>
     </message>
     <message>
         <source>Center (small)</source>
-        <translation>Trait d'Axes (petit)</translation>
+        <translation>Trait d&apos;Axes (petit)</translation>
     </message>
     <message>
         <source>Center (large)</source>
-        <translation>Trait d'Axes (grand)</translation>
+        <translation>Trait d&apos;Axes (grand)</translation>
     </message>
     <message>
         <source>Border</source>
@@ -6176,7 +6178,7 @@ Le contenu du calque de construction ne devrait pas apparaitre à l'impression.<
     </message>
     <message>
         <source>Offset from original entity</source>
-        <translation>Décalage de l'entité d'origine</translation>
+        <translation>Décalage de l&apos;entité d&apos;origine</translation>
     </message>
 </context>
 <context>
@@ -6198,12 +6200,12 @@ Le contenu du calque de construction ne devrait pas apparaitre à l'impression.<
         <translation type="obsolete">...</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6279,7 +6281,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_PrintPreviewOptions</name>
     <message>
         <source>Print Preview Options</source>
-        <translation>Options d'Aperçu Avant Impression</translation>
+        <translation>Options d&apos;Aperçu Avant Impression</translation>
     </message>
     <message>
         <source>Toggle Black / White mode</source>
@@ -6295,7 +6297,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Échelle d'impression verrouillée à la valeur actuelle&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Échelle d&apos;impression verrouillée à la valeur actuelle&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>fixed</source>
@@ -6317,7 +6319,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_RoundOptions</name>
     <message>
         <source>Round Options</source>
-        <translation>Options d'Arrondi</translation>
+        <translation>Options d&apos;Arrondi</translation>
     </message>
     <message>
         <source>Trim</source>
@@ -6325,7 +6327,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Ajuster les extrémités avec l'arrondi</translation>
+        <translation>Ajuster les extrémités avec l&apos;arrondi</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -6355,27 +6357,27 @@ p, li { white-space: pre-wrap; }
         <translation>Longueur Totale</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_SnapDistOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation>Options de Distance d'Accrochage</translation>
+        <translation>Options de Distance d&apos;Accrochage</translation>
     </message>
     <message>
         <source>Distance:</source>
@@ -6386,7 +6388,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapMiddleOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation type="unfinished">Options de Distance d'Accrochage</translation>
+        <translation type="unfinished">Options de Distance d&apos;Accrochage</translation>
     </message>
     <message>
         <source>Middle Points:</source>
@@ -6409,7 +6411,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Snap to equidistant points of entity</source>
-        <translation>Accrocher à des points équidistants de l'entité</translation>
+        <translation>Accrocher à des points équidistants de l&apos;entité</translation>
     </message>
     <message>
         <source>Snap to center points</source>
@@ -6417,19 +6419,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Snap to intersections automatically</source>
-        <translation>Accrocher à l'intersection automatiquement</translation>
+        <translation>Accrocher à l&apos;intersection automatiquement</translation>
     </message>
     <message>
         <source>Snap to closest point on entity</source>
-        <translation>Accrocher au points le plus près de l'objet</translation>
+        <translation>Accrocher au points le plus près de l&apos;objet</translation>
     </message>
     <message>
         <source>Snap to point with given distance to endpoint</source>
-        <translation type="unfinished">Accrocher à un point situé à une distance donnée de l'extrémité</translation>
+        <translation type="unfinished">Accrocher à un point situé à une distance donnée de l&apos;extrémité</translation>
     </message>
     <message>
         <source>Snap to intersections manually</source>
-        <translation type="unfinished">Accrocher à l'intersection manuellement</translation>
+        <translation type="unfinished">Accrocher à l&apos;intersection manuellement</translation>
     </message>
     <message>
         <source>Snap to grid</source>
@@ -6481,7 +6483,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Snap Intersection</source>
-        <translation>Accrochage à l'intersection</translation>
+        <translation>Accrochage à l&apos;intersection</translation>
     </message>
     <message>
         <source>Restrict Horizontal</source>
@@ -6501,11 +6503,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Set relative zero position</source>
-        <translation>Définir l'origine relative</translation>
+        <translation>Définir l&apos;origine relative</translation>
     </message>
     <message>
         <source>Lock relative zero position</source>
-        <translation>Verrouiller l'origine relative</translation>
+        <translation>Verrouiller l&apos;origine relative</translation>
     </message>
 </context>
 <context>
@@ -6558,7 +6560,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_TrimAmountOptions</name>
     <message>
         <source>Trim Amount Options</source>
-        <translation>Options d'Ajustement</translation>
+        <translation>Options d&apos;Ajustement</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
@@ -6578,7 +6580,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation>La longueur inscrite sert à ajuster toute la longueur, au lieu d'un allongement d'extrémité</translation>
+        <translation>La longueur inscrite sert à ajuster toute la longueur, au lieu d&apos;un allongement d&apos;extrémité</translation>
     </message>
 </context>
 <context>
@@ -6726,12 +6728,12 @@ p, li { white-space: pre-wrap; }
         <translation>Effacer Calque</translation>
     </message>
     <message>
-        <source>Layer "%1" and all entities on it will be removed.</source>
-        <translation type="obsolete">Le Calque "%1" et son contenu est effacé.</translation>
+        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
+        <translation type="obsolete">Le Calque &quot;%1&quot; et son contenu est effacé.</translation>
     </message>
     <message>
-        <source>Layer "%1" can never be removed.</source>
-        <translation>Le Calque "%1" ne peut plus être effacé.</translation>
+        <source>Layer &quot;%1&quot; can never be removed.</source>
+        <translation>Le Calque &quot;%1&quot; ne peut plus être effacé.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -6742,21 +6744,21 @@ p, li { white-space: pre-wrap; }
         <translation>Effacer Bloc</translation>
     </message>
     <message>
-        <source>Block "%1" and all its entities will be removed.</source>
-        <translation>Le Bloc "%1" et son contenu est effacé.</translation>
+        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
+        <translation>Le Bloc &quot;%1&quot; et son contenu est effacé.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Propriétés du Calque</translation>
     </message>
     <message>
-        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
-        <translation>Le Calque nommé "%1" existe déjà. Il faut lui donner un autre nom.</translation>
+        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
+        <translation>Le Calque nommé &quot;%1&quot; existe déjà. Il faut lui donner un autre nom.</translation>
     </message>
     <message>
-        <source>Layer "%1" and all entities on it will be removed.
+        <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation type="unfinished">Le calque "%1" et toutes ses entités seront effacés.
+        <translation type="unfinished">Le calque &quot;%1&quot; et toutes ses entités seront effacés.
 Retour arrière IMPOSSIBLE.</translation>
     </message>
 </context>
@@ -6938,7 +6940,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Export Image</source>
-        <translation type="obsolete">Exportation d'Image</translation>
+        <translation type="obsolete">Exportation d&apos;Image</translation>
     </message>
     <message>
         <source>Loading..</source>
@@ -6946,7 +6948,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Loading Library Paths..</source>
-        <translation type="obsolete">Chargement des Chemins d'Accès aux Librairies..</translation>
+        <translation type="obsolete">Chargement des Chemins d&apos;Accès aux Librairies..</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
@@ -6978,7 +6980,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Jww %1</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Scalable Vector Graphics</source>
@@ -6986,7 +6988,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>SGI Black &amp; White</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Encapsulated PostScript</source>
@@ -6998,7 +7000,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Encapsulated PostScript Interchange</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Windows Icon</source>
@@ -7010,15 +7012,15 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>ZSoft Paintbrush</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>PC Paint</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>SGI-Bilddatei</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Targa Image File</source>
@@ -7030,18 +7032,18 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Old Drawing Exchange %1</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Opened dwg file version %1.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>unknown error opening dwg file</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>can't open this dwg file</source>
+        <source>can&apos;t open this dwg file</source>
         <translation>ne peut ouvrir ce fichier dwg</translation>
     </message>
     <message>
@@ -7050,23 +7052,23 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>error reading file header in dwg file</source>
-        <translation>erreur de lecture d'entête du fichier dwg</translation>
+        <translation>erreur de lecture d&apos;entête du fichier dwg</translation>
     </message>
     <message>
         <source>error reading header vars in dwg file</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error reading classes in dwg file</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error reading offsets in dwg file</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error reading tables in dwg file</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error reading entities in dwg file</source>
@@ -7074,15 +7076,15 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>dwg Drawing %1</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Dessin dwg %1</translation>
     </message>
     <message>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Warning</source>
@@ -7091,19 +7093,19 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>experimental, save your work first.
 Continue?</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error reading blocks in dwg file</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error reading objects in dwg file</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>point</source>
@@ -7148,7 +7150,7 @@ Continue?</source>
     <message>
         <source>fhl</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>spline</source>
@@ -7168,7 +7170,7 @@ Continue?</source>
     <message>
         <source>stp</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>offset</source>
@@ -7193,12 +7195,12 @@ Continue?</source>
     <message>
         <source>ptp</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>pp</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>bisect</source>
@@ -7223,7 +7225,7 @@ Continue?</source>
     <message>
         <source>perp</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ortho</source>
@@ -7273,12 +7275,12 @@ Continue?</source>
     <message>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>arc</source>
@@ -7428,7 +7430,7 @@ Continue?</source>
     <message>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>zp</source>
@@ -7438,7 +7440,7 @@ Continue?</source>
     <message>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>zv</source>
@@ -7478,7 +7480,7 @@ Continue?</source>
     <message>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>da</source>
@@ -7488,7 +7490,7 @@ Continue?</source>
     <message>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dh</source>
@@ -7508,12 +7510,12 @@ Continue?</source>
     <message>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dr</source>
@@ -7523,42 +7525,42 @@ Continue?</source>
     <message>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dimradius</source>
         <comment>dimension - radius</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ld</source>
@@ -7573,47 +7575,47 @@ Continue?</source>
     <message>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>move</source>
         <comment>modify - move (copy)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>mv</source>
@@ -7623,12 +7625,12 @@ Continue?</source>
     <message>
         <source>bevel</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ch</source>
@@ -7638,22 +7640,22 @@ Continue?</source>
     <message>
         <source>fillet</source>
         <comment>modify - fillet</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>divide</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>div</source>
@@ -7673,7 +7675,7 @@ Continue?</source>
     <message>
         <source>revert</source>
         <comment>modify -  revert direction</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>rev</source>
@@ -7713,27 +7715,27 @@ Continue?</source>
     <message>
         <source>trim2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>lengthen</source>
         <comment>modify - lengthen</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>stretch</source>
         <comment>modify - stretch</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ss</source>
@@ -7743,7 +7745,7 @@ Continue?</source>
     <message>
         <source>delete</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>er</source>
@@ -7753,12 +7755,12 @@ Continue?</source>
     <message>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>explode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>xp</source>
@@ -7768,7 +7770,7 @@ Continue?</source>
     <message>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>os</source>
@@ -7778,32 +7780,32 @@ Continue?</source>
     <message>
         <source>sf</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>se</source>
@@ -7813,7 +7815,7 @@ Continue?</source>
     <message>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sg</source>
@@ -7823,7 +7825,7 @@ Continue?</source>
     <message>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>si</source>
@@ -7833,7 +7835,7 @@ Continue?</source>
     <message>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sm</source>
@@ -7843,7 +7845,7 @@ Continue?</source>
     <message>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sn</source>
@@ -7858,27 +7860,27 @@ Continue?</source>
     <message>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>rz</source>
         <comment>set relative zero position</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sa</source>
         <comment>Select all entities</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>tn</source>
@@ -7888,42 +7890,42 @@ Continue?</source>
     <message>
         <source>modifyattr</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ma</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>properties</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>distance</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dpp</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>angle</source>
@@ -7938,7 +7940,7 @@ Continue?</source>
     <message>
         <source>area</source>
         <comment>measure area</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ar</source>
@@ -7951,7 +7953,7 @@ Continue?</source>
     </message>
     <message>
         <source>dpi</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>close</source>
@@ -8019,7 +8021,7 @@ Continue?</source>
     <message>
         <source>an</source>
         <comment>angle</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>center</source>
@@ -8033,17 +8035,17 @@ Continue?</source>
     <message>
         <source>ce</source>
         <comment>center</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cl</source>
         <comment>chord length</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>c</source>
         <comment>close</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cols</source>
@@ -8053,7 +8055,7 @@ Continue?</source>
     <message>
         <source>co</source>
         <comment>columns</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>columnspacing</source>
@@ -8152,7 +8154,7 @@ Continue?</source>
     <message>
         <source>ra</source>
         <comment>radius</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>reversed</source>
@@ -8167,7 +8169,7 @@ Continue?</source>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>rowspacing</source>
@@ -8209,7 +8211,7 @@ Continue?</source>
     <message>
         <source>r</source>
         <comment>redo</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>back</source>
@@ -8222,27 +8224,27 @@ Continue?</source>
     </message>
     <message>
         <source>paperoffset</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>graphoffset</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Command: %1 (%2)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>RS_Commands:: command not found: %1</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Command not found: %1</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Accepted keycode: %1</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Available commands:</source>
@@ -8251,12 +8253,12 @@ Continue?</source>
     <message>
         <source>cal</source>
         <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>calculate</source>
         <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>None</source>
@@ -8265,23 +8267,23 @@ Continue?</source>
     </message>
     <message>
         <source>error reading file metadata in dwg file</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Calculator error for input: </source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>bw</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>blackwhite</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>color</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8356,7 +8358,7 @@ Continue?</source>
     </message>
     <message>
         <source>Ex&amp;plode</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8387,18 +8389,18 @@ Continue?</source>
     </message>
     <message>
         <source>&amp;Hide all</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Show all</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksInsert</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Ce n'est pas une expression valide</translation>
+        <translation>Ce n&apos;est pas une expression valide</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -8426,11 +8428,11 @@ Continue?</source>
     </message>
     <message>
         <source>Enter column spacing:</source>
-        <translation>Entrer l'espacement des colonnes :</translation>
+        <translation>Entrer l&apos;espacement des colonnes :</translation>
     </message>
     <message>
         <source>Enter row spacing:</source>
-        <translation>Entrer l'espacement des lignes :</translation>
+        <translation>Entrer l&apos;espacement des lignes :</translation>
     </message>
     <message>
         <source>Insert Block</source>
@@ -8441,8 +8443,8 @@ Continue?</source>
         <translation>&amp;Insère Bloc</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -8460,11 +8462,11 @@ Continue?</source>
     <name>RS_ActionBlocksSave</name>
     <message>
         <source>&amp;Save Block</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No block activated to save</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8483,7 +8485,7 @@ Continue?</source>
     </message>
     <message>
         <source>Toggle Block &amp;Visibility</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8501,7 +8503,7 @@ Continue?</source>
     <name>RS_ActionDimAligned</name>
     <message>
         <source>Specify first extension line origin</source>
-        <translation>Indiquer l'origine de la 1ère ligne d'attache</translation>
+        <translation>Indiquer l&apos;origine de la 1ère ligne d&apos;attache</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -8509,7 +8511,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation>Indiquer l'origine de la 2ème ligne d'attache</translation>
+        <translation>Indiquer l&apos;origine de la 2ème ligne d&apos;attache</translation>
     </message>
     <message>
         <source>Back</source>
@@ -8552,7 +8554,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify dimension arc line location</source>
-        <translation>Indiquer la position de la ligne de cote d'arc</translation>
+        <translation>Indiquer la position de la ligne de cote d&apos;arc</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
@@ -8575,11 +8577,11 @@ Continue?</source>
     <name>RS_ActionDimDiametric</name>
     <message>
         <source>Not a circle or arc entity</source>
-        <translation>Ce n'est pas un objet cercle ou arc</translation>
+        <translation>Ce n&apos;est pas un objet cercle ou arc</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Ce n'est pas une expression valide</translation>
+        <translation>Ce n&apos;est pas une expression valide</translation>
     </message>
     <message>
         <source>Select arc or circle entity</source>
@@ -8614,7 +8616,7 @@ Continue?</source>
     <name>RS_ActionDimLeader</name>
     <message>
         <source>Specify target point</source>
-        <translation>Spécifier le point d'arrivée</translation>
+        <translation>Spécifier le point d&apos;arrivée</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -8645,11 +8647,11 @@ Continue?</source>
     <name>RS_ActionDimLinear</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Ce n'est pas une expression valide</translation>
+        <translation>Ce n&apos;est pas une expression valide</translation>
     </message>
     <message>
         <source>Specify first extension line origin</source>
-        <translation>Indiquer l'origine de la 1ère ligne d'attache</translation>
+        <translation>Indiquer l&apos;origine de la 1ère ligne d&apos;attache</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -8657,7 +8659,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation>Indiquer l'origine de la 2ème ligne d'attache</translation>
+        <translation>Indiquer l&apos;origine de la 2ème ligne d&apos;attache</translation>
     </message>
     <message>
         <source>Back</source>
@@ -8673,7 +8675,7 @@ Continue?</source>
     </message>
     <message>
         <source>Enter dimension line angle:</source>
-        <translation>Indiquer l'angle de la ligne de cote :</translation>
+        <translation>Indiquer l&apos;angle de la ligne de cote :</translation>
     </message>
     <message>
         <source>Linear</source>
@@ -8716,11 +8718,11 @@ Continue?</source>
     <name>RS_ActionDimRadial</name>
     <message>
         <source>Not a circle or arc entity</source>
-        <translation>Ce n'est pas un objet cercle ou arc</translation>
+        <translation>Ce n&apos;est pas un objet cercle ou arc</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Ce n'est pas une expression valide</translation>
+        <translation>Ce n&apos;est pas une expression valide</translation>
     </message>
     <message>
         <source>Select arc or circle entity</source>
@@ -8732,7 +8734,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Indiquer la dimension de la ligne ou l'angle :</translation>
+        <translation>Indiquer la dimension de la ligne ou l&apos;angle :</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
@@ -8755,11 +8757,11 @@ Continue?</source>
     <name>RS_ActionDrawArc</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Ce n'est pas une expression valide</translation>
+        <translation>Ce n&apos;est pas une expression valide</translation>
     </message>
     <message>
         <source>Not a valid chord length</source>
-        <translation>Ce n'est pas une longueur valide</translation>
+        <translation>Ce n&apos;est pas une longueur valide</translation>
     </message>
     <message>
         <source>Specify center</source>
@@ -8779,15 +8781,15 @@ Continue?</source>
     </message>
     <message>
         <source>Specify start angle:</source>
-        <translation>Indiquer l'angle de départ :</translation>
+        <translation>Indiquer l&apos;angle de départ :</translation>
     </message>
     <message>
         <source>Specify end angle or [Angle/chord Length]</source>
-        <translation type="obsolete">Indiquer l'angle d'arrivée ou [Angle/chord Length]</translation>
+        <translation type="obsolete">Indiquer l&apos;angle d&apos;arrivée ou [Angle/chord Length]</translation>
     </message>
     <message>
         <source>Specify included angle:</source>
-        <translation>Indiquer l'angle inclus :</translation>
+        <translation>Indiquer l&apos;angle inclus :</translation>
     </message>
     <message>
         <source>Specify chord length:</source>
@@ -8807,14 +8809,14 @@ Continue?</source>
     </message>
     <message>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArc3P</name>
     <message>
         <source>Invalid arc data.</source>
-        <translation>Données d'arc invalides.</translation>
+        <translation>Données d&apos;arc invalides.</translation>
     </message>
     <message>
         <source>Specify startpoint or [Center]</source>
@@ -8834,7 +8836,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify endpoint</source>
-        <translation>Indiquer le point d'arrivée</translation>
+        <translation>Indiquer le point d&apos;arrivée</translation>
     </message>
     <message>
         <source>Arc: 3 Points</source>
@@ -8850,7 +8852,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify startpoint or [center]</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8861,7 +8863,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify base entity</source>
-        <translation>Indiquer l'entité de base</translation>
+        <translation>Indiquer l&apos;entité de base</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -8869,7 +8871,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation>Indiquer l'angle d'arrivée</translation>
+        <translation>Indiquer l&apos;angle d&apos;arrivée</translation>
     </message>
     <message>
         <source>Back</source>
@@ -8877,18 +8879,18 @@ Continue?</source>
     </message>
     <message>
         <source>Specify end point</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Arc &amp;Tangential</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Ce n'est pas une expression valide</translation>
+        <translation>Ce n&apos;est pas une expression valide</translation>
     </message>
     <message>
         <source>Specify center</source>
@@ -8916,7 +8918,7 @@ Continue?</source>
     </message>
     <message>
         <source>Draw circles with center and point</source>
-        <translation type="obsolete">Dessine Cercle à partir d'un centre et un point</translation>
+        <translation type="obsolete">Dessine Cercle à partir d&apos;un centre et un point</translation>
     </message>
 </context>
 <context>
@@ -8997,7 +8999,7 @@ Continue?</source>
     <name>RS_ActionDrawCircleCR</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Ce n'est pas une expression valide</translation>
+        <translation>Ce n&apos;est pas une expression valide</translation>
     </message>
     <message>
         <source>Specify circle center</source>
@@ -9025,22 +9027,22 @@ Continue?</source>
     </message>
     <message>
         <source>Draw circles with center and radius</source>
-        <translation type="obsolete">Dessine Cercle à partir d'un centre et un rayon</translation>
+        <translation type="obsolete">Dessine Cercle à partir d&apos;un centre et un rayon</translation>
     </message>
     <message>
         <source>radius=%1 is invalid</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleInscribe</name>
     <message>
         <source>Circle &amp;Inscribed</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify the first line</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9048,7 +9050,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify the second line</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -9056,7 +9058,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify the third line</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9067,7 +9069,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify the first point on the tangent circle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -9075,26 +9077,26 @@ Continue?</source>
     </message>
     <message>
         <source>Specify the second point on the tangent circle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan2</name>
     <message>
         <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9102,7 +9104,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -9110,19 +9112,19 @@ Continue?</source>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential to two give circles and with radius</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan2_1P</name>
     <message>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9130,7 +9132,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify the another arc/circle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -9138,15 +9140,15 @@ Continue?</source>
     </message>
     <message>
         <source>Specify a point on the tangent circle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9161,38 +9163,38 @@ Continue?</source>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify the third line/arc/circle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Tangential &amp;3 Circles</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Draw tangential circle of 3 given points, lines, arcs/circles</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <source>Ellipse &amp;4 Point</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify the first point on ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9200,7 +9202,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify the second point on ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -9208,26 +9210,26 @@ Continue?</source>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify the fourth point on ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Can not determine uniquely an ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseAxis</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Ce n'est pas une expression valide</translation>
+        <translation>Ce n&apos;est pas une expression valide</translation>
     </message>
     <message>
         <source>Specify ellipse center</source>
-        <translation>Indiquer le centre de l'ellipse</translation>
+        <translation>Indiquer le centre de l&apos;ellipse</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9235,7 +9237,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify endpoint of major axis</source>
-        <translation>Indiquer l'extrémité du grand axe</translation>
+        <translation>Indiquer l&apos;extrémité du grand axe</translation>
     </message>
     <message>
         <source>Back</source>
@@ -9243,31 +9245,31 @@ Continue?</source>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
-        <translation>Indiquer l'extrémité ou valeur du petit axe :</translation>
+        <translation>Indiquer l&apos;extrémité ou valeur du petit axe :</translation>
     </message>
     <message>
         <source>Specify start angle</source>
-        <translation>Indiquer l'angle de départ</translation>
+        <translation>Indiquer l&apos;angle de départ</translation>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation>Indiquer l'angle d'arrivée</translation>
+        <translation>Indiquer l&apos;angle d&apos;arrivée</translation>
     </message>
     <message>
         <source>Ellipse Arc with Axis</source>
-        <translation type="obsolete">Arc d'Ellipse à partir d'Axes</translation>
+        <translation type="obsolete">Arc d&apos;Ellipse à partir d&apos;Axes</translation>
     </message>
     <message>
         <source>&amp;Ellipse Arc (Axis)</source>
-        <translation type="obsolete">Arc d'&amp;Ellipse (Axes)</translation>
+        <translation type="obsolete">Arc d&apos;&amp;Ellipse (Axes)</translation>
     </message>
     <message>
         <source>Draw Ellipse Arcs</source>
-        <translation type="obsolete">Dessine Arc d'Ellipse</translation>
+        <translation type="obsolete">Dessine Arc d&apos;Ellipse</translation>
     </message>
     <message>
         <source>Ellipse with Axis</source>
-        <translation type="obsolete">Ellipse à partir d'Axes</translation>
+        <translation type="obsolete">Ellipse à partir d&apos;Axes</translation>
     </message>
     <message>
         <source>&amp;Ellipse (Axis)</source>
@@ -9279,18 +9281,18 @@ Continue?</source>
     </message>
     <message>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseCenter3Points</name>
     <message>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify the center of ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9298,11 +9300,11 @@ Continue?</source>
     </message>
     <message>
         <source>Specify the first point on ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify the second point on ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -9310,22 +9312,22 @@ Continue?</source>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseFociPoint</name>
     <message>
         <source>Ellipse &amp;Foci Point</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ce n'est pas une expression valide</translation>
+        <translation type="unfinished">Ce n&apos;est pas une expression valide</translation>
     </message>
     <message>
         <source>Specify first focus of ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9333,7 +9335,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify second focus of ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -9341,26 +9343,26 @@ Continue?</source>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseInscribe</name>
     <message>
         <source>Ellipse &amp;Inscribed</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify the first line</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9368,7 +9370,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify the second line</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -9376,15 +9378,15 @@ Continue?</source>
     </message>
     <message>
         <source>Specify the third line</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify the fourth line</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Can not determine uniquely an ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9411,34 +9413,34 @@ Continue?</source>
     </message>
     <message>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Hatch Error: Pattern not found!</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Hatch Error: Contour too big!</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Hatch Error: Undefined Error!</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Total hatch area = %1</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawImage</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Ce n'est pas une expression valide</translation>
+        <translation>Ce n&apos;est pas une expression valide</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -9469,16 +9471,16 @@ Continue?</source>
         <translation type="obsolete">Insère Images (Bitmaps)</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Insert &amp;Image</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Enter dpi:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9505,11 +9507,11 @@ Continue?</source>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="obsolete">Impossible de bloucler les lignes : Pas encore assez d'objets définis.</translation>
+        <translation type="obsolete">Impossible de bloucler les lignes : Pas encore assez d&apos;objets définis.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Impossible d'annuler : Pas encore assez d'objets définis.</translation>
+        <translation>Impossible d&apos;annuler : Pas encore assez d&apos;objets définis.</translation>
     </message>
     <message>
         <source>Line: 2 Points</source>
@@ -9525,18 +9527,18 @@ Continue?</source>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cannot redo: Not previous line segment defined.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineAngle</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Ce n'est pas une expression valide</translation>
+        <translation>Ce n&apos;est pas une expression valide</translation>
     </message>
     <message>
         <source>Specify position</source>
@@ -9603,7 +9605,7 @@ Continue?</source>
     <name>RS_ActionDrawLineBisector</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>Ce n'est pas une expression valide</translation>
+        <translation>Ce n&apos;est pas une expression valide</translation>
     </message>
     <message>
         <source>Select first line</source>
@@ -9644,7 +9646,7 @@ Continue?</source>
     <message>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9709,11 +9711,11 @@ Continue?</source>
     <name>RS_ActionDrawLineOrthTan</name>
     <message>
         <source>Tangent &amp;Orthogonal</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select a line</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9740,7 +9742,7 @@ Continue?</source>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Ce n'est pas une expression valide</translation>
+        <translation>Ce n&apos;est pas une expression valide</translation>
     </message>
     <message>
         <source>Parallel</source>
@@ -9772,7 +9774,7 @@ Continue?</source>
     </message>
     <message>
         <source>&amp;Parallel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9815,7 +9817,7 @@ Continue?</source>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Ce n'est pas une expression valide</translation>
+        <translation>Ce n&apos;est pas une expression valide</translation>
     </message>
 </context>
 <context>
@@ -9830,15 +9832,15 @@ Continue?</source>
     </message>
     <message>
         <source>Draw polygon with center and corner</source>
-        <translation type="obsolete">Dessine Polygone à partir d'un centre et un coin</translation>
+        <translation type="obsolete">Dessine Polygone à partir d&apos;un centre et un coin</translation>
     </message>
     <message>
         <source>Specify center</source>
         <translation type="obsolete">Indiquer le centre</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Specify a corner</source>
@@ -9854,7 +9856,7 @@ Continue?</source>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="obsolete">Ce n'est pas une expression valide</translation>
+        <translation type="obsolete">Ce n&apos;est pas une expression valide</translation>
     </message>
 </context>
 <context>
@@ -9897,7 +9899,7 @@ Continue?</source>
     </message>
     <message>
         <source>Not a valid expression.</source>
-        <translation type="obsolete">Ce n'est pas une expression valide.</translation>
+        <translation type="obsolete">Ce n&apos;est pas une expression valide.</translation>
     </message>
 </context>
 <context>
@@ -9924,7 +9926,7 @@ Continue?</source>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ce n'est pas une expression valide</translation>
+        <translation type="unfinished">Ce n&apos;est pas une expression valide</translation>
     </message>
 </context>
 <context>
@@ -9935,7 +9937,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify first corner</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9943,7 +9945,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -9951,7 +9953,7 @@ Continue?</source>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
@@ -9959,7 +9961,7 @@ Continue?</source>
     </message>
     <message>
         <source>Not a valid expression.</source>
-        <translation type="unfinished">Ce n'est pas une expression valide.</translation>
+        <translation type="unfinished">Ce n&apos;est pas une expression valide.</translation>
     </message>
 </context>
 <context>
@@ -9990,11 +9992,11 @@ Continue?</source>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="obsolete">Impossible de bloucler les lignes : Pas encore assez d'objets définis.</translation>
+        <translation type="obsolete">Impossible de bloucler les lignes : Pas encore assez d&apos;objets définis.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="obsolete">Impossible d'annuler : Pas encore assez d'objets définis.</translation>
+        <translation type="obsolete">Impossible d&apos;annuler : Pas encore assez d&apos;objets définis.</translation>
     </message>
 </context>
 <context>
@@ -10044,11 +10046,11 @@ Continue?</source>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Ce n'est pas une expression valide</translation>
+        <translation>Ce n&apos;est pas une expression valide</translation>
     </message>
     <message>
         <source>Select base entity</source>
-        <translation>Sélectionner base de l'objet</translation>
+        <translation>Sélectionner base de l&apos;objet</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10122,7 +10124,7 @@ Continue?</source>
     </message>
     <message>
         <source>Select first circle or arc</source>
-        <translation type="obsolete">Sélectionner en premier le cercle ou l'arc</translation>
+        <translation type="obsolete">Sélectionner en premier le cercle ou l&apos;arc</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10130,7 +10132,7 @@ Continue?</source>
     </message>
     <message>
         <source>Select second circle or arc</source>
-        <translation type="obsolete">Sélectionner en deuxième le cercle ou l'arc</translation>
+        <translation type="obsolete">Sélectionner en deuxième le cercle ou l&apos;arc</translation>
     </message>
     <message>
         <source>Back</source>
@@ -10138,22 +10140,22 @@ Continue?</source>
     </message>
     <message>
         <source>Select first circle or ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select second circle or ellipse</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawMText</name>
     <message>
         <source>&amp;MText</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify insertion point</source>
-        <translation type="unfinished">Indiquer point d'insertion</translation>
+        <translation type="unfinished">Indiquer point d&apos;insertion</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10199,7 +10201,7 @@ Continue?</source>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation>Dessiner polylignes</translation>
+        <translation type="obsolete">Dessiner polylignes</translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -10223,15 +10225,15 @@ Continue?</source>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>Impossible de bloucler les lignes : Pas encore assez d'objets définis.</translation>
+        <translation>Impossible de bloucler les lignes : Pas encore assez d&apos;objets définis.</translation>
     </message>
     <message>
         <source>Undo disallowed due a fatal bug somewhere. Sorry.</source>
-        <translation type="obsolete">Annulation interdite à cause d'une erreur fatale quelque part. Désolé.</translation>
+        <translation type="obsolete">Annulation interdite à cause d&apos;une erreur fatale quelque part. Désolé.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Impossible d'annuler : Pas encore assez d'objets définis.</translation>
+        <translation>Impossible d&apos;annuler : Pas encore assez d&apos;objets définis.</translation>
     </message>
 </context>
 <context>
@@ -10270,7 +10272,7 @@ Continue?</source>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Impossible d'annuler : Pas encore assez d'objets définis.</translation>
+        <translation>Impossible d&apos;annuler : Pas encore assez d&apos;objets définis.</translation>
     </message>
 </context>
 <context>
@@ -10289,7 +10291,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify insertion point</source>
-        <translation>Indiquer point d'insertion</translation>
+        <translation>Indiquer point d&apos;insertion</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10394,11 +10396,11 @@ Continue?</source>
     </message>
     <message>
         <source>Nothing to undo!</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Nothing to redo!</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10424,7 +10426,7 @@ Continue?</source>
     <name>RS_ActionFileNewTemplate</name>
     <message>
         <source>New From &amp;Template</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10484,7 +10486,7 @@ Continue?</source>
     </message>
     <message>
         <source>Measures the angle between two lines</source>
-        <translation type="obsolete">Mesurer l'angle formé entre deux lignes</translation>
+        <translation type="obsolete">Mesurer l&apos;angle formé entre deux lignes</translation>
     </message>
     <message>
         <source>Angle: %1%2</source>
@@ -10512,7 +10514,7 @@ Continue?</source>
     </message>
     <message>
         <source>An&amp;gle between two lines</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Angle: %1</source>
@@ -10531,7 +10533,7 @@ Continue?</source>
     </message>
     <message>
         <source>Measures the area of a polygon</source>
-        <translation type="obsolete">Mesure l'aire du polygone</translation>
+        <translation type="obsolete">Mesure l&apos;aire du polygone</translation>
     </message>
     <message>
         <source>Area: %1</source>
@@ -10563,11 +10565,11 @@ Continue?</source>
     </message>
     <message>
         <source>Polygonal &amp;Area</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Closing Point: %1/%2</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10606,18 +10608,18 @@ Continue?</source>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
     <message>
         <source>Distance Entity to Point</source>
-        <translation type="obsolete">Distance de l'Objet au Point</translation>
+        <translation type="obsolete">Distance de l&apos;Objet au Point</translation>
     </message>
     <message>
         <source>&amp;Distance Entity to Point</source>
-        <translation>&amp;Distance de l'Objet au Point</translation>
+        <translation>&amp;Distance de l&apos;Objet au Point</translation>
     </message>
     <message>
         <source>Measures the distance between an entity and a point</source>
@@ -10656,7 +10658,7 @@ Continue?</source>
     </message>
     <message>
         <source>Checks if a given point is inside the selected contour</source>
-        <translation type="obsolete">Vérifier si le point est à l'intérieur du contour sélectionné</translation>
+        <translation type="obsolete">Vérifier si le point est à l&apos;intérieur du contour sélectionné</translation>
     </message>
     <message>
         <source>Point is inside selected contour.</source>
@@ -10664,7 +10666,7 @@ Continue?</source>
     </message>
     <message>
         <source>Point is outside selected contour.</source>
-        <translation>Le point est à l'extérieur du contour sélectionné.</translation>
+        <translation>Le point est à l&apos;extérieur du contour sélectionné.</translation>
     </message>
     <message>
         <source>Specify point</source>
@@ -10748,11 +10750,11 @@ Continue?</source>
     </message>
     <message>
         <source>&amp;Hide all</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Show all</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10782,14 +10784,14 @@ Continue?</source>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersTogglePrint</name>
     <message>
         <source>Toggle Layer &amp;Print</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10808,7 +10810,7 @@ Continue?</source>
     </message>
     <message>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10823,11 +10825,11 @@ Continue?</source>
     </message>
     <message>
         <source>Inserts an Object from the part library.</source>
-        <translation type="obsolete">Insère un Objet depuis la Librairie d'éléments</translation>
+        <translation type="obsolete">Insère un Objet depuis la Librairie d&apos;éléments</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Ce n'est pas une expression valide</translation>
+        <translation>Ce n&apos;est pas une expression valide</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -10842,16 +10844,16 @@ Continue?</source>
         <translation>Indiquer angle :</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Enter factor:</source>
         <translation>Indiquer facteur :</translation>
     </message>
     <message>
-        <source>Cannot open file '%1'</source>
-        <translation>Impossible d'ouvrir le fichier '%1'</translation>
+        <source>Cannot open file &apos;%1&apos;</source>
+        <translation>Impossible d&apos;ouvrir le fichier &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -10881,7 +10883,7 @@ Continue?</source>
     </message>
     <message>
         <source>Modify Entity Attributes</source>
-        <translation type="obsolete">Modifier les Attributs de l'Objet</translation>
+        <translation type="obsolete">Modifier les Attributs de l&apos;Objet</translation>
     </message>
 </context>
 <context>
@@ -10900,7 +10902,7 @@ Continue?</source>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Ce n'est pas une expression valide</translation>
+        <translation>Ce n&apos;est pas une expression valide</translation>
     </message>
     <message>
         <source>Select first entity</source>
@@ -10947,19 +10949,19 @@ Continue?</source>
     </message>
     <message>
         <source>Entity must be a line, arc or circle.</source>
-        <translation type="obsolete">L'objet doit être une ligne, un arc ou un cercle.</translation>
+        <translation type="obsolete">L&apos;objet doit être une ligne, un arc ou un cercle.</translation>
     </message>
     <message>
         <source>Cutting point is invalid.</source>
-        <translation>Le point de coupure n'est pas valide.</translation>
+        <translation>Le point de coupure n&apos;est pas valide.</translation>
     </message>
     <message>
         <source>Cutting point is not on entity.</source>
-        <translation>Le point de coupure n'est pas sur l'objet.</translation>
+        <translation>Le point de coupure n&apos;est pas sur l&apos;objet.</translation>
     </message>
     <message>
         <source>Specify entity to cut</source>
-        <translation>Indiquer l'objet à couper</translation>
+        <translation>Indiquer l&apos;objet à couper</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10979,11 +10981,11 @@ Continue?</source>
     </message>
     <message>
         <source>Entity must be a line, arc, circle or ellipse.</source>
-        <translation type="obsolete">L'entité doit être une ligne, un arc, un cercle ou une ellipse.</translation>
+        <translation type="obsolete">L&apos;entité doit être une ligne, un arc, un cercle ou une ellipse.</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11033,7 +11035,7 @@ Continue?</source>
     </message>
     <message>
         <source>Parent of second entity is not a polyline</source>
-        <translation>Le père de la seconde entité n'est pas une polyligne</translation>
+        <translation>Le père de la seconde entité n&apos;est pas une polyligne</translation>
     </message>
     <message>
         <source>Parent of second entity is NULL</source>
@@ -11045,7 +11047,7 @@ Continue?</source>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
-        <translation>Le père de la première entité n'est pas une polyligne</translation>
+        <translation>Le père de la première entité n&apos;est pas une polyligne</translation>
     </message>
     <message>
         <source>Parent of first entity is NULL</source>
@@ -11061,23 +11063,23 @@ Continue?</source>
     </message>
     <message>
         <source>Parent of second entity is nullptr</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>One of the chosen entities is nullptr</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Parent of first entity is nullptr</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>First entity is nullptr</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Second entity is nullptr</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11096,7 +11098,7 @@ Continue?</source>
     </message>
     <message>
         <source>Pick entity to delete</source>
-        <translation>Choisir l'entité à effacer</translation>
+        <translation>Choisir l&apos;entité à effacer</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11145,11 +11147,11 @@ Continue?</source>
     </message>
     <message>
         <source>Mirror Entities</source>
-        <translation type="obsolete">Mirroir d'Objets</translation>
+        <translation type="obsolete">Mirroir d&apos;Objets</translation>
     </message>
     <message>
         <source>Specify first point of mirror line</source>
-        <translation>Indiquer le premier point de l'axe de symétrie</translation>
+        <translation>Indiquer le premier point de l&apos;axe de symétrie</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11157,7 +11159,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify second point of mirror line</source>
-        <translation>Indiquer le deuxième point de l'axe de symétrie</translation>
+        <translation>Indiquer le deuxième point de l&apos;axe de symétrie</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11188,7 +11190,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Spécifier le point d'arrivée</translation>
+        <translation>Spécifier le point d&apos;arrivée</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11196,7 +11198,7 @@ Continue?</source>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11215,7 +11217,7 @@ Continue?</source>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Ce n'est pas une expression valide</translation>
+        <translation>Ce n&apos;est pas une expression valide</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -11227,7 +11229,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Spécifier le point d'arrivée</translation>
+        <translation>Spécifier le point d&apos;arrivée</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11242,11 +11244,11 @@ Continue?</source>
     <name>RS_ActionModifyOffset</name>
     <message>
         <source>&amp;Offset</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify direction of offset</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Back</source>
@@ -11257,11 +11259,11 @@ Continue?</source>
     <name>RS_ActionModifyRevertDirection</name>
     <message>
         <source>Re&amp;vert direction</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ctrl+R</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11288,11 +11290,11 @@ Continue?</source>
     </message>
     <message>
         <source>Specify rotation center</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Specify target point to rotate to</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11342,7 +11344,7 @@ Continue?</source>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Ce n'est pas une expression valide</translation>
+        <translation>Ce n&apos;est pas une expression valide</translation>
     </message>
     <message>
         <source>Specify first entity</source>
@@ -11366,7 +11368,7 @@ Continue?</source>
     </message>
     <message>
         <source>&amp;Fillet</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11381,7 +11383,7 @@ Continue?</source>
     </message>
     <message>
         <source>Scale Entities</source>
-        <translation type="obsolete">Echelle d'Objets</translation>
+        <translation type="obsolete">Echelle d&apos;Objets</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -11428,7 +11430,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Spécifier le point d'arrivée</translation>
+        <translation>Spécifier le point d&apos;arrivée</translation>
     </message>
 </context>
 <context>
@@ -11467,7 +11469,7 @@ Continue?</source>
     </message>
     <message>
         <source>Select limiting entity</source>
-        <translation>Sélectionner l'objet de limitation</translation>
+        <translation>Sélectionner l&apos;objet de limitation</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11479,7 +11481,7 @@ Continue?</source>
     </message>
     <message>
         <source>Select entity to trim</source>
-        <translation>Sélectionner l'objet à ajuster</translation>
+        <translation>Sélectionner l&apos;objet à ajuster</translation>
     </message>
 </context>
 <context>
@@ -11498,23 +11500,23 @@ Continue?</source>
     </message>
     <message>
         <source>No entity found. </source>
-        <translation>Pas d'objet trouvé. </translation>
+        <translation>Pas d&apos;objet trouvé. </translation>
     </message>
     <message>
         <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation>L'objet choisi est dans un bloc. Editez le bloc SVP.</translation>
+        <translation>L&apos;objet choisi est dans un bloc. Editez le bloc SVP.</translation>
     </message>
     <message>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation>L'Objet choisi n'est pas un objet simple ou ne peut être ajusté.</translation>
+        <translation>L&apos;Objet choisi n&apos;est pas un objet simple ou ne peut être ajusté.</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Ce n'est pas une expression valide</translation>
+        <translation>Ce n&apos;est pas une expression valide</translation>
     </message>
     <message>
         <source>Select entity to trim or enter distance:</source>
-        <translation>Sélectionner l'objet à ajuster ou entrer la distance :</translation>
+        <translation>Sélectionner l&apos;objet à ajuster ou entrer la distance :</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11540,31 +11542,19 @@ Continue?</source>
     <name>RS_ActionOrder</name>
     <message>
         <source>move to bottom</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>set to bottom</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>lower after entity</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>lower over entity</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>raise over entity</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>move to top</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>set to top</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -11572,7 +11562,7 @@ Continue?</source>
     </message>
     <message>
         <source>Choose entity for order</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11586,8 +11576,8 @@ Continue?</source>
         <translation>&amp;Ajouter un nœud</translation>
     </message>
     <message>
-        <source>Add polyline's node</source>
-        <translation>Ajouter un nœud à la polyligne</translation>
+        <source>Add polyline&apos;s node</source>
+        <translation type="obsolete">Ajouter un nœud à la polyligne</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -11595,7 +11585,7 @@ Continue?</source>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>L'entité doit être une polyligne.</translation>
+        <translation>L&apos;entité doit être une polyligne.</translation>
     </message>
     <message>
         <source>Adding point is invalid.</source>
@@ -11603,7 +11593,7 @@ Continue?</source>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
-        <translation>Le point n'est pas sur une entité.</translation>
+        <translation>Le point n&apos;est pas sur une entité.</translation>
     </message>
     <message>
         <source>Specify polyline to add nodes</source>
@@ -11614,7 +11604,7 @@ Continue?</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <source>Specify adding node's point</source>
+        <source>Specify adding node&apos;s point</source>
         <translation>Indiquez le point où ajouter un nœud</translation>
     </message>
     <message>
@@ -11629,8 +11619,8 @@ Continue?</source>
         <translation>A&amp;pposer un nœud</translation>
     </message>
     <message>
-        <source>Append polyline's node</source>
-        <translation>Apposer un nœud à la polyligne</translation>
+        <source>Append polyline&apos;s node</source>
+        <translation type="obsolete">Apposer un nœud à la polyligne</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -11638,11 +11628,11 @@ Continue?</source>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>L'entité doit être une polyligne.</translation>
+        <translation>L&apos;entité doit être une polyligne.</translation>
     </message>
     <message>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation>Cliquez quelque part vers le début ou la fin d'une polyligne existante.</translation>
+        <translation>Cliquez quelque part vers le début ou la fin d&apos;une polyligne existante.</translation>
     </message>
     <message>
         <source>Specify the polyline somewhere near the beginning or end point</source>
@@ -11666,11 +11656,11 @@ Continue?</source>
     </message>
     <message>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">Impossible d'annuler : Pas encore assez d'objets définis.</translation>
+        <translation type="unfinished">Impossible d&apos;annuler : Pas encore assez d&apos;objets définis.</translation>
     </message>
 </context>
 <context>
@@ -11680,8 +11670,8 @@ Continue?</source>
         <translation>&amp;Supprimer le nœud</translation>
     </message>
     <message>
-        <source>Delete polyline's node</source>
-        <translation>Supprimer le nœud de la polyligne</translation>
+        <source>Delete polyline&apos;s node</source>
+        <translation type="obsolete">Supprimer le nœud de la polyligne</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -11689,7 +11679,7 @@ Continue?</source>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>L'entité doit être une polyligne.</translation>
+        <translation>L&apos;entité doit être une polyligne.</translation>
     </message>
     <message>
         <source>Adding point is invalid.</source>
@@ -11697,7 +11687,7 @@ Continue?</source>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
-        <translation type="obsolete">Le point n'est pas sur une entité.</translation>
+        <translation type="obsolete">Le point n&apos;est pas sur une entité.</translation>
     </message>
     <message>
         <source>Specify polyline to delete node</source>
@@ -11708,7 +11698,7 @@ Continue?</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <source>Specify deleting node's point</source>
+        <source>Specify deleting node&apos;s point</source>
         <translation>Indiquez le point à supprimer du nœud</translation>
     </message>
     <message>
@@ -11717,11 +11707,11 @@ Continue?</source>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished">Le point de suppression n'est pas sur l'objet.</translation>
+        <translation type="unfinished">Le point de suppression n&apos;est pas sur l&apos;objet.</translation>
     </message>
 </context>
 <context>
@@ -11732,7 +11722,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation>Supprimer entre deux nœuds</translation>
+        <translation type="obsolete">Supprimer entre deux nœuds</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -11740,19 +11730,19 @@ Continue?</source>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>L'entité doit être une polyligne.</translation>
+        <translation>L&apos;entité doit être une polyligne.</translation>
     </message>
     <message>
         <source>Deletinging point is invalid.</source>
-        <translation>Le point de suppression n'est pas valide.</translation>
+        <translation>Le point de suppression n&apos;est pas valide.</translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
-        <translation>Le point de suppression n'est pas sur l'objet.</translation>
+        <translation>Le point de suppression n&apos;est pas sur l&apos;objet.</translation>
     </message>
     <message>
         <source>Deleteinging point is not on entity.</source>
-        <translation>Le point de suppression n'est pas sur l'objet.</translation>
+        <translation>Le point de suppression n&apos;est pas sur l&apos;objet.</translation>
     </message>
     <message>
         <source>Specify polyline to delete between two nodes</source>
@@ -11776,7 +11766,7 @@ Continue?</source>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11787,7 +11777,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation>Créer des polylignes équidistantes</translation>
+        <translation type="obsolete">Créer des polylignes équidistantes</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -11795,11 +11785,11 @@ Continue?</source>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>L'entité doit être une polyligne.</translation>
+        <translation>L&apos;entité doit être une polyligne.</translation>
     </message>
     <message>
         <source>Choose the original polyline</source>
-        <translation>Choisissez la polyligne d'origine</translation>
+        <translation>Choisissez la polyligne d&apos;origine</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11814,7 +11804,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation>Créer une polyligne à partir de segments existant</translation>
+        <translation type="obsolete">Créer une polyligne à partir de segments existant</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -11822,11 +11812,11 @@ Continue?</source>
     </message>
     <message>
         <source>Entity must be a line or arc.</source>
-        <translation type="obsolete">L'objet doit être une ligne ou un arc.</translation>
+        <translation type="obsolete">L&apos;objet doit être une ligne ou un arc.</translation>
     </message>
     <message>
         <source>Choose one of the segments on the original polyline</source>
-        <translation>Choisissez l'un des segments sur la polyligne d'origine</translation>
+        <translation>Choisissez l&apos;un des segments sur la polyligne d&apos;origine</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11834,11 +11824,11 @@ Continue?</source>
     </message>
     <message>
         <source>Entity can not be a closed polyline.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Polyline created</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11848,8 +11838,8 @@ Continue?</source>
         <translation>&amp;Épurer les segments</translation>
     </message>
     <message>
-        <source>Trim polyline's segments</source>
-        <translation>Épurer les segments de la polyligne</translation>
+        <source>Trim polyline&apos;s segments</source>
+        <translation type="obsolete">Épurer les segments de la polyligne</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -11857,15 +11847,15 @@ Continue?</source>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>L'entité doit être une polyligne.</translation>
+        <translation>L&apos;entité doit être une polyligne.</translation>
     </message>
     <message>
         <source>Specifying point is invalid.</source>
-        <translation>Le point indiqué n'est pas valide.</translation>
+        <translation>Le point indiqué n&apos;est pas valide.</translation>
     </message>
     <message>
         <source>No Segment found on entity.</source>
-        <translation>Pas de segment trouvé sur l'entité.</translation>
+        <translation>Pas de segment trouvé sur l&apos;entité.</translation>
     </message>
     <message>
         <source>Specify polyline to trim</source>
@@ -11900,54 +11890,54 @@ Continue?</source>
     </message>
     <message>
         <source>Shows a preview of a print</source>
-        <translation type="obsolete">Afficher l'aperçu avant impression</translation>
+        <translation type="obsolete">Afficher l&apos;aperçu avant impression</translation>
     </message>
     <message>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Printout offset in graph coordinates</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Printout offset in paper coordinates</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>: select printout offset coordinates</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>type in offset from command line to offset printout</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring '@'</source>
-        <translation type="unfinished"/>
+        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Printout in Black/White</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Printout in color</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelect</name>
     <message>
         <source>Select to modify attributes</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11955,71 +11945,71 @@ Continue?</source>
     </message>
     <message>
         <source>Select to delete</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to delete immediately</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to move</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to rotate</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to scale</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to mirror</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to move and rotate</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select for two axis rotation</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to explode text</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to create block</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to copy</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to cut</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No entity selected!</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to create offset</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select entities to order</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to explode block</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select to revert direction</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12069,7 +12059,7 @@ Continue?</source>
     </message>
     <message>
         <source>Entity must be an Atomic Entity.</source>
-        <translation>L'Objet doit être un objet simple.</translation>
+        <translation>L&apos;Objet doit être un objet simple.</translation>
     </message>
 </context>
 <context>
@@ -12100,7 +12090,7 @@ Continue?</source>
     </message>
     <message>
         <source>Choose first point of intersection line</source>
-        <translation>Indiquer le premier point de la ligne d'intersection</translation>
+        <translation>Indiquer le premier point de la ligne d&apos;intersection</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12108,7 +12098,7 @@ Continue?</source>
     </message>
     <message>
         <source>Choose second point of intersection line</source>
-        <translation>Indiquer le deuxième point de la ligne d'intersection</translation>
+        <translation>Indiquer le deuxième point de la ligne d&apos;intersection</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12200,7 +12190,7 @@ Continue?</source>
     </message>
     <message>
         <source>Click and drag for the selection window</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12227,7 +12217,7 @@ Continue?</source>
     </message>
     <message>
         <source>Set &amp;Relative Zero</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12242,7 +12232,7 @@ Continue?</source>
     </message>
     <message>
         <source>Snap to intersection points manually</source>
-        <translation type="obsolete">Accrocher à l'intersection manuellement</translation>
+        <translation type="obsolete">Accrocher à l&apos;intersection manuellement</translation>
     </message>
     <message>
         <source>Select first entity</source>
@@ -12273,11 +12263,11 @@ Continue?</source>
     </message>
     <message>
         <source>Regenerated %1 dimension entities</source>
-        <translation>Regénéré %1 cotations d'objets</translation>
+        <translation>Regénéré %1 cotations d&apos;objets</translation>
     </message>
     <message>
         <source>No dimension entities found</source>
-        <translation>Pas trouvé de cotation d'objets</translation>
+        <translation>Pas trouvé de cotation d&apos;objets</translation>
     </message>
 </context>
 <context>
@@ -12307,7 +12297,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms in</source>
-        <translation type="unfinished">Agrandir</translation>
+        <translation type="obsolete">Agrandir</translation>
     </message>
     <message>
         <source>Zoom out</source>
@@ -12319,7 +12309,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms out</source>
-        <translation type="unfinished">Réduire</translation>
+        <translation type="obsolete">Réduire</translation>
     </message>
 </context>
 <context>
@@ -12338,11 +12328,11 @@ Continue?</source>
     </message>
     <message>
         <source>Zoom &amp;Panning</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Click and drag to pan zoom</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12350,7 +12340,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zoom panning</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12369,7 +12359,7 @@ Continue?</source>
     </message>
     <message>
         <source>Previous &amp;View</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

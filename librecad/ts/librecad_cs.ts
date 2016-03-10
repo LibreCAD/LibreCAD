@@ -11758,7 +11758,7 @@ Continue?</source>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation>Kreslit křivky</translation>
+        <translation type="obsolete">Kreslit křivky</translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -13099,7 +13099,7 @@ Continue?</source>
     </message>
     <message>
         <source>set to bottom</source>
-        <translation>nastavit dolů</translation>
+        <translation type="obsolete">nastavit dolů</translation>
     </message>
     <message>
         <source>lower after entity</source>
@@ -13107,7 +13107,7 @@ Continue?</source>
     </message>
     <message>
         <source>lower over entity</source>
-        <translation>oddálit před prvek</translation>
+        <translation type="obsolete">oddálit před prvek</translation>
     </message>
     <message>
         <source>raise over entity</source>
@@ -13119,7 +13119,7 @@ Continue?</source>
     </message>
     <message>
         <source>set to top</source>
-        <translation>nastavit nahoru</translation>
+        <translation type="obsolete">nastavit nahoru</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13150,7 +13150,7 @@ Continue?</source>
     </message>
     <message>
         <source>Add polyline&apos;s node</source>
-        <translation>Vložit uzel křivky</translation>
+        <translation type="obsolete">Vložit uzel křivky</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13189,7 +13189,7 @@ Continue?</source>
     </message>
     <message>
         <source>Append polyline&apos;s node</source>
-        <translation>Přidat uzel křivky</translation>
+        <translation type="obsolete">Přidat uzel křivky</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13244,7 +13244,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete polyline&apos;s node</source>
-        <translation>Smazat uzel křivky</translation>
+        <translation type="obsolete">Smazat uzel křivky</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13287,7 +13287,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation>Smazat mezi dvěma uzly</translation>
+        <translation type="obsolete">Smazat mezi dvěma uzly</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13334,7 +13334,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation>Vytvořit ekvidistantu křivky</translation>
+        <translation type="obsolete">Vytvořit ekvidistantu křivky</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13361,7 +13361,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation>Vytvořit křivku ze stávajících segmentů</translation>
+        <translation type="obsolete">Vytvořit křivku ze stávajících segmentů</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13404,7 +13404,7 @@ Continue?</source>
     </message>
     <message>
         <source>Trim polyline&apos;s segments</source>
-        <translation>Zkrátit segmenty křivky</translation>
+        <translation type="obsolete">Zkrátit segmenty křivky</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13862,7 +13862,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms in</source>
-        <translation type="unfinished">Přiblíží</translation>
+        <translation type="obsolete">Přiblíží</translation>
     </message>
     <message>
         <source>Zoom out</source>
@@ -13874,7 +13874,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms out</source>
-        <translation type="unfinished">Oddálí</translation>
+        <translation type="obsolete">Oddálí</translation>
     </message>
 </context>
 <context>

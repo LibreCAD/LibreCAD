@@ -12459,7 +12459,7 @@ Continue?</source>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation>Desenhar polilinhas</translation>
+        <translation type="obsolete">Desenhar polilinhas</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -13990,7 +13990,7 @@ Continue?</source>
     </message>
     <message>
         <source>set to bottom</source>
-        <translation>Fixar abaixo</translation>
+        <translation type="obsolete">Fixar abaixo</translation>
     </message>
     <message>
         <source>lower after entity</source>
@@ -13998,7 +13998,7 @@ Continue?</source>
     </message>
     <message>
         <source>lower over entity</source>
-        <translation>diminuir sobre a entidade</translation>
+        <translation type="obsolete">diminuir sobre a entidade</translation>
     </message>
     <message>
         <source>raise over entity</source>
@@ -14010,7 +14010,7 @@ Continue?</source>
     </message>
     <message>
         <source>set to top</source>
-        <translation>Fixar acima</translation>
+        <translation type="obsolete">Fixar acima</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -14061,7 +14061,7 @@ Continue?</source>
     </message>
     <message>
         <source>Add polyline&apos;s node</source>
-        <translation>Adicionar nós de polilinha</translation>
+        <translation type="obsolete">Adicionar nós de polilinha</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -14120,7 +14120,7 @@ Continue?</source>
     </message>
     <message>
         <source>Append polyline&apos;s node</source>
-        <translation>Adicionar nós de polilinha</translation>
+        <translation type="obsolete">Adicionar nós de polilinha</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -14195,7 +14195,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete polyline&apos;s node</source>
-        <translation>Apagar nós da polilinha</translation>
+        <translation type="obsolete">Apagar nós da polilinha</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -14262,7 +14262,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation>Apagar entre dois nós</translation>
+        <translation type="obsolete">Apagar entre dois nós</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -14329,7 +14329,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation>Criar polilinhas equidistantes</translation>
+        <translation type="obsolete">Criar polilinhas equidistantes</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -14371,7 +14371,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation>Criar polilinha de segmentos existentes</translation>
+        <translation type="obsolete">Criar polilinha de segmentos existentes</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -14434,7 +14434,7 @@ Continue?</source>
     </message>
     <message>
         <source>Trim polyline&apos;s segments</source>
-        <translation>Aparar segmentos da polilinha</translation>
+        <translation type="obsolete">Aparar segmentos da polilinha</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -15063,7 +15063,7 @@ não são exibidas para melhorar a performance de exibição.</translation>
     </message>
     <message>
         <source>Zooms in</source>
-        <translation type="unfinished">Aproxima Desenho</translation>
+        <translation type="obsolete">Aproxima Desenho</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
@@ -15071,7 +15071,7 @@ não são exibidas para melhorar a performance de exibição.</translation>
     </message>
     <message>
         <source>Zooms out</source>
-        <translation type="unfinished">Afasta Desenho</translation>
+        <translation type="obsolete">Afasta Desenho</translation>
     </message>
 </context>
 <context>

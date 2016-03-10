@@ -11647,7 +11647,7 @@ Continue?</source>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation>Rysuj linie łamane</translation>
+        <translation type="obsolete">Rysuj linie łamane</translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -12999,15 +12999,7 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>set to bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>lower after entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>lower over entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13016,10 +13008,6 @@ Continue?</source>
     </message>
     <message>
         <source>move to top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>set to top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13051,7 +13039,7 @@ Continue?</source>
     </message>
     <message>
         <source>Add polyline&apos;s node</source>
-        <translation>Dołącz wierzchołek</translation>
+        <translation type="obsolete">Dołącz wierzchołek</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13090,7 +13078,7 @@ Continue?</source>
     </message>
     <message>
         <source>Append polyline&apos;s node</source>
-        <translation>Dołącz wierzchołek</translation>
+        <translation type="obsolete">Dołącz wierzchołek</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13145,7 +13133,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete polyline&apos;s node</source>
-        <translation>Usuń wierzchołek</translation>
+        <translation type="obsolete">Usuń wierzchołek</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13196,7 +13184,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation>Usuń pomiędzy dwoma wierzchołkami</translation>
+        <translation type="obsolete">Usuń pomiędzy dwoma wierzchołkami</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13243,7 +13231,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation>Twórz równoodległe łamane</translation>
+        <translation type="obsolete">Twórz równoodległe łamane</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13270,7 +13258,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation>Utwórz linię łamaną z istniejących obiektów</translation>
+        <translation type="obsolete">Utwórz linię łamaną z istniejących obiektów</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13313,7 +13301,7 @@ Continue?</source>
     </message>
     <message>
         <source>Trim polyline&apos;s segments</source>
-        <translation>Przytnij odcinek łamanej</translation>
+        <translation type="obsolete">Przytnij odcinek łamanej</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13771,7 +13759,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms in</source>
-        <translation type="unfinished">Powiększa</translation>
+        <translation type="obsolete">Powiększa</translation>
     </message>
     <message>
         <source>Zoom out</source>
@@ -13783,7 +13771,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms out</source>
-        <translation type="unfinished">Pomniejsza</translation>
+        <translation type="obsolete">Pomniejsza</translation>
     </message>
 </context>
 <context>

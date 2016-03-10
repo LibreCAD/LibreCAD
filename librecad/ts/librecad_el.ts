@@ -11826,7 +11826,7 @@ Continue?</source>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation>Σχεδίαση πολυγραμμών</translation>
+        <translation type="obsolete">Σχεδίαση πολυγραμμών</translation>
     </message>
 </context>
 <context>
@@ -13143,7 +13143,7 @@ Continue?</source>
     </message>
     <message>
         <source>set to bottom</source>
-        <translation>τοποθέτηση στον πυθμένα</translation>
+        <translation type="obsolete">τοποθέτηση στον πυθμένα</translation>
     </message>
     <message>
         <source>lower after entity</source>
@@ -13151,7 +13151,7 @@ Continue?</source>
     </message>
     <message>
         <source>lower over entity</source>
-        <translation>κατέβασμα πάνω από οντότητα</translation>
+        <translation type="obsolete">κατέβασμα πάνω από οντότητα</translation>
     </message>
     <message>
         <source>raise over entity</source>
@@ -13163,7 +13163,7 @@ Continue?</source>
     </message>
     <message>
         <source>set to top</source>
-        <translation>τοποθέτηση στην κορυφή</translation>
+        <translation type="obsolete">τοποθέτηση στην κορυφή</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13194,7 +13194,7 @@ Continue?</source>
     </message>
     <message>
         <source>Add polyline&apos;s node</source>
-        <translation>Προσθήκη κόμβου πολυγραμμής</translation>
+        <translation type="obsolete">Προσθήκη κόμβου πολυγραμμής</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13233,7 +13233,7 @@ Continue?</source>
     </message>
     <message>
         <source>Append polyline&apos;s node</source>
-        <translation>Προσάρτηση κόμβου πολυγραμμής</translation>
+        <translation type="obsolete">Προσάρτηση κόμβου πολυγραμμής</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13288,7 +13288,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete polyline&apos;s node</source>
-        <translation>Διαγραφή κόμβου πολυγραμμής</translation>
+        <translation type="obsolete">Διαγραφή κόμβου πολυγραμμής</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13339,7 +13339,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation>Διαγραφή μεταξύ δύο κόμβων</translation>
+        <translation type="obsolete">Διαγραφή μεταξύ δύο κόμβων</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13386,7 +13386,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation>Δημιουργία ισαπεχουσών πολυγραμμών</translation>
+        <translation type="obsolete">Δημιουργία ισαπεχουσών πολυγραμμών</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13413,7 +13413,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation>Δημιουργία πολυγραμμής από υπάρχοντα τμήματα</translation>
+        <translation type="obsolete">Δημιουργία πολυγραμμής από υπάρχοντα τμήματα</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13456,7 +13456,7 @@ Continue?</source>
     </message>
     <message>
         <source>Trim polyline&apos;s segments</source>
-        <translation>Διευθέτηση τμημάτων πολυγραμμής</translation>
+        <translation type="obsolete">Διευθέτηση τμημάτων πολυγραμμής</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13906,7 +13906,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms in</source>
-        <translation>Μεγέθυνση</translation>
+        <translation type="obsolete">Μεγέθυνση</translation>
     </message>
     <message>
         <source>Zoom out</source>
@@ -13918,7 +13918,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms out</source>
-        <translation>Σμίκρυνση</translation>
+        <translation type="obsolete">Σμίκρυνση</translation>
     </message>
 </context>
 <context>

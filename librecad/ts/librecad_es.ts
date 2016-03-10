@@ -11814,7 +11814,7 @@ Continue?</source>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation>Dibujar polilíneas</translation>
+        <translation type="obsolete">Dibujar polilíneas</translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -13179,7 +13179,7 @@ Continue?</source>
     </message>
     <message>
         <source>set to bottom</source>
-        <translation>Poner al fondo</translation>
+        <translation type="obsolete">Poner al fondo</translation>
     </message>
     <message>
         <source>lower after entity</source>
@@ -13187,7 +13187,7 @@ Continue?</source>
     </message>
     <message>
         <source>lower over entity</source>
-        <translation>Poner encima de otra entidad</translation>
+        <translation type="obsolete">Poner encima de otra entidad</translation>
     </message>
     <message>
         <source>raise over entity</source>
@@ -13199,7 +13199,7 @@ Continue?</source>
     </message>
     <message>
         <source>set to top</source>
-        <translation>Poner arriba</translation>
+        <translation type="obsolete">Poner arriba</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13226,7 +13226,7 @@ Continue?</source>
     </message>
     <message>
         <source>Add polyline&apos;s node</source>
-        <translation>Añadir nodo en Polilínea</translation>
+        <translation type="obsolete">Añadir nodo en Polilínea</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13269,7 +13269,7 @@ Continue?</source>
     </message>
     <message>
         <source>Append polyline&apos;s node</source>
-        <translation>Añadir punto a polilínea</translation>
+        <translation type="obsolete">Añadir punto a polilínea</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13320,7 +13320,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete polyline&apos;s node</source>
-        <translation>Borrar punto en polilínea</translation>
+        <translation type="obsolete">Borrar punto en polilínea</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13371,7 +13371,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation>Borrar entre dos puntos</translation>
+        <translation type="obsolete">Borrar entre dos puntos</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13422,7 +13422,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation>Crear Polilínea equidistante</translation>
+        <translation type="obsolete">Crear Polilínea equidistante</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13449,7 +13449,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation>Crear Polilínea desde segmentos existentes</translation>
+        <translation type="obsolete">Crear Polilínea desde segmentos existentes</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13492,7 +13492,7 @@ Continue?</source>
     </message>
     <message>
         <source>Trim polyline&apos;s segments</source>
-        <translation>Recortar segmentos de polilínea</translation>
+        <translation type="obsolete">Recortar segmentos de polilínea</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13946,7 +13946,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms in</source>
-        <translation type="unfinished">Acercar</translation>
+        <translation type="obsolete">Acercar</translation>
     </message>
     <message>
         <source>Zoom out</source>
@@ -13958,7 +13958,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms out</source>
-        <translation type="unfinished">Salir de Acercar</translation>
+        <translation type="obsolete">Salir de Acercar</translation>
     </message>
 </context>
 <context>

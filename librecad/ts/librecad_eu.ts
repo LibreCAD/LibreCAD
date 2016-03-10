@@ -7852,10 +7852,6 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Draw polylines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Specify first point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8765,15 +8761,7 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>set to bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>lower after entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>lower over entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8782,10 +8770,6 @@ Continue?</source>
     </message>
     <message>
         <source>move to top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>set to top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8805,10 +8789,6 @@ Continue?</source>
     <name>RS_ActionPolylineAdd</name>
     <message>
         <source>&amp;Add node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add polyline&apos;s node</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8848,10 +8828,6 @@ Continue?</source>
     <name>RS_ActionPolylineAppend</name>
     <message>
         <source>A&amp;ppend node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Append polyline&apos;s node</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8902,10 +8878,6 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Delete polyline&apos;s node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No Entity found.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8942,10 +8914,6 @@ Continue?</source>
     <name>RS_ActionPolylineDelBetween</name>
     <message>
         <source>Delete &amp;between two nodes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete between two nodes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9000,10 +8968,6 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Create Equidistant Polylines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No Entity found.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9024,10 +8988,6 @@ Continue?</source>
     <name>RS_ActionPolylineSegment</name>
     <message>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create Polyline from Existing Segments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9055,10 +9015,6 @@ Continue?</source>
     <name>RS_ActionPolylineTrim</name>
     <message>
         <source>&amp;Trim segments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Trim polyline&apos;s segments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9389,14 +9345,6 @@ Continue?</source>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Zooms in</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Zooms out</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

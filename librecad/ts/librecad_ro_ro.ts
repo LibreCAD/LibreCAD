@@ -10370,7 +10370,7 @@ Continue?</source>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation>Desenare polilinii</translation>
+        <translation type="obsolete">Desenare polilinii</translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -11714,15 +11714,7 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>set to bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>lower after entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>lower over entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11731,10 +11723,6 @@ Continue?</source>
     </message>
     <message>
         <source>move to top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>set to top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11758,7 +11746,7 @@ Continue?</source>
     </message>
     <message>
         <source>Add polyline&apos;s node</source>
-        <translation>Adaugare nod pe polilinie</translation>
+        <translation type="obsolete">Adaugare nod pe polilinie</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -11801,7 +11789,7 @@ Continue?</source>
     </message>
     <message>
         <source>Append polyline&apos;s node</source>
-        <translation>Adauga un nod la polilinie</translation>
+        <translation type="obsolete">Adauga un nod la polilinie</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -11852,7 +11840,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete polyline&apos;s node</source>
-        <translation>Stergerea nodului poliliniei</translation>
+        <translation type="obsolete">Stergerea nodului poliliniei</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -11903,7 +11891,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation>Stergere intre doua noduri</translation>
+        <translation type="obsolete">Stergere intre doua noduri</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -11958,7 +11946,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation>Creare Polilinii Echidistante</translation>
+        <translation type="obsolete">Creare Polilinii Echidistante</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -11985,7 +11973,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation>Creare polilinie din segmentele existente</translation>
+        <translation type="obsolete">Creare polilinie din segmentele existente</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -12024,7 +12012,7 @@ Continue?</source>
     </message>
     <message>
         <source>Trim polyline&apos;s segments</source>
-        <translation>Taierea segmentelor poliliniei</translation>
+        <translation type="obsolete">Taierea segmentelor poliliniei</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -12486,7 +12474,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms in</source>
-        <translation type="unfinished">Mareste</translation>
+        <translation type="obsolete">Mareste</translation>
     </message>
     <message>
         <source>Zoom out</source>
@@ -12498,7 +12486,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms out</source>
-        <translation type="unfinished">Micsoreaza</translation>
+        <translation type="obsolete">Micsoreaza</translation>
     </message>
 </context>
 <context>

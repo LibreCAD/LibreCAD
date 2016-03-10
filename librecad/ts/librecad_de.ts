@@ -12338,7 +12338,7 @@ Continue?</source>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation>Polylinien zeichnen</translation>
+        <translation type="obsolete">Polylinien zeichnen</translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -13736,7 +13736,7 @@ Continue?</source>
     </message>
     <message>
         <source>set to bottom</source>
-        <translation>ganz nach unten</translation>
+        <translation type="obsolete">ganz nach unten</translation>
     </message>
     <message>
         <source>lower after entity</source>
@@ -13744,7 +13744,7 @@ Continue?</source>
     </message>
     <message>
         <source>lower over entity</source>
-        <translation>nach unten, über Objekt</translation>
+        <translation type="obsolete">nach unten, über Objekt</translation>
     </message>
     <message>
         <source>raise over entity</source>
@@ -13756,7 +13756,7 @@ Continue?</source>
     </message>
     <message>
         <source>set to top</source>
-        <translation>ganz nach oben</translation>
+        <translation type="obsolete">ganz nach oben</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13819,7 +13819,7 @@ Continue?</source>
     </message>
     <message>
         <source>Add polyline&apos;s node</source>
-        <translation>Knoten zur Polylinie hinzufügen</translation>
+        <translation type="obsolete">Knoten zur Polylinie hinzufügen</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13890,7 +13890,7 @@ Continue?</source>
     </message>
     <message>
         <source>Append polyline&apos;s node</source>
-        <translation>Knoten der Polylinie hinzufügen</translation>
+        <translation type="obsolete">Knoten der Polylinie hinzufügen</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13973,7 +13973,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete polyline&apos;s node</source>
-        <translation>Knoten der Polylinie löschen</translation>
+        <translation type="obsolete">Knoten der Polylinie löschen</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -14064,7 +14064,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation>Löschen zwischen zwei Knoten</translation>
+        <translation type="obsolete">Löschen zwischen zwei Knoten</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -14111,7 +14111,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation>Abstandsgleiche Polylinien erstellen</translation>
+        <translation type="obsolete">Abstandsgleiche Polylinien erstellen</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -14138,7 +14138,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation>Polylinie aus vorhandenen Objekten erstellen</translation>
+        <translation type="obsolete">Polylinie aus vorhandenen Objekten erstellen</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -14209,7 +14209,7 @@ Continue?</source>
     </message>
     <message>
         <source>Trim polyline&apos;s segments</source>
-        <translation>Segmente der Polylinie trimmen</translation>
+        <translation type="obsolete">Segmente der Polylinie trimmen</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -14659,7 +14659,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms in</source>
-        <translation type="unfinished">Vergrössert die Ansicht</translation>
+        <translation type="obsolete">Vergrössert die Ansicht</translation>
     </message>
     <message>
         <source>Zoom out</source>
@@ -14671,7 +14671,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms out</source>
-        <translation type="unfinished">Verkleinert die Ansicht</translation>
+        <translation type="obsolete">Verkleinert die Ansicht</translation>
     </message>
 </context>
 <context>

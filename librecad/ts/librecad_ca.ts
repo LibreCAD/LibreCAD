@@ -9509,7 +9509,7 @@ Continue?</source>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation>Dibuixa polilínies</translation>
+        <translation type="obsolete">Dibuixa polilínies</translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -10462,7 +10462,7 @@ Continue?</source>
     </message>
     <message>
         <source>set to bottom</source>
-        <translation>Mou al capdavall</translation>
+        <translation type="obsolete">Mou al capdavall</translation>
     </message>
     <message>
         <source>lower after entity</source>
@@ -10470,7 +10470,7 @@ Continue?</source>
     </message>
     <message>
         <source>lower over entity</source>
-        <translation>Abaixa sota l&apos;entitat</translation>
+        <translation type="obsolete">Abaixa sota l&apos;entitat</translation>
     </message>
     <message>
         <source>raise over entity</source>
@@ -10482,7 +10482,7 @@ Continue?</source>
     </message>
     <message>
         <source>set to top</source>
-        <translation>Mou al capdamunt</translation>
+        <translation type="obsolete">Mou al capdamunt</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10505,7 +10505,7 @@ Continue?</source>
     </message>
     <message>
         <source>Add polyline&apos;s node</source>
-        <translation>Afegeix un node de polilínia</translation>
+        <translation type="obsolete">Afegeix un node de polilínia</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10548,7 +10548,7 @@ Continue?</source>
     </message>
     <message>
         <source>Append polyline&apos;s node</source>
-        <translation>Afegeix un node de polilínea</translation>
+        <translation type="obsolete">Afegeix un node de polilínea</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10599,7 +10599,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete polyline&apos;s node</source>
-        <translation>Suprimeix un node de polilínea</translation>
+        <translation type="obsolete">Suprimeix un node de polilínea</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10650,7 +10650,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation>Suprimeix entre dos nodes</translation>
+        <translation type="obsolete">Suprimeix entre dos nodes</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10705,7 +10705,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation>Crea polilínies equidistants</translation>
+        <translation type="obsolete">Crea polilínies equidistants</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10732,7 +10732,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation>Crea una polilínia a partir de segment existents</translation>
+        <translation type="obsolete">Crea una polilínia a partir de segment existents</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10767,7 +10767,7 @@ Continue?</source>
     </message>
     <message>
         <source>Trim polyline&apos;s segments</source>
-        <translation>Redueix segments de polilínia</translation>
+        <translation type="obsolete">Redueix segments de polilínia</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -11098,14 +11098,6 @@ Continue?</source>
     <message>
         <source>Zoom &amp;Out</source>
         <translation>&amp;Disminueix el zoom</translation>
-    </message>
-    <message>
-        <source>Zooms in</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Zooms out</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

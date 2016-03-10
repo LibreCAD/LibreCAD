@@ -9013,7 +9013,7 @@ Continue?</source>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation>Zīmēt lauztas līnijas</translation>
+        <translation type="obsolete">Zīmēt lauztas līnijas</translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -9958,7 +9958,7 @@ Continue?</source>
     </message>
     <message>
         <source>set to bottom</source>
-        <translation>iestatīt uz apakšu</translation>
+        <translation type="obsolete">iestatīt uz apakšu</translation>
     </message>
     <message>
         <source>lower after entity</source>
@@ -9966,7 +9966,7 @@ Continue?</source>
     </message>
     <message>
         <source>lower over entity</source>
-        <translation>pazemināt virs objekta</translation>
+        <translation type="obsolete">pazemināt virs objekta</translation>
     </message>
     <message>
         <source>raise over entity</source>
@@ -9978,7 +9978,7 @@ Continue?</source>
     </message>
     <message>
         <source>set to top</source>
-        <translation>iestatīt uz virspusi</translation>
+        <translation type="obsolete">iestatīt uz virspusi</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10001,7 +10001,7 @@ Continue?</source>
     </message>
     <message>
         <source>Add polyline&apos;s node</source>
-        <translation>Pievienot lauztas līnijas mezglu</translation>
+        <translation type="obsolete">Pievienot lauztas līnijas mezglu</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10044,7 +10044,7 @@ Continue?</source>
     </message>
     <message>
         <source>Append polyline&apos;s node</source>
-        <translation>Pielikt lauztas līnijas mezglu</translation>
+        <translation type="obsolete">Pielikt lauztas līnijas mezglu</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10095,7 +10095,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete polyline&apos;s node</source>
-        <translation>Dzēst lauztas līnijas mezglu</translation>
+        <translation type="obsolete">Dzēst lauztas līnijas mezglu</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10138,7 +10138,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation>Dzēst starp diviem mezgliem</translation>
+        <translation type="obsolete">Dzēst starp diviem mezgliem</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10193,7 +10193,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation>Izveidot vienāda garuma lauztas līnijas</translation>
+        <translation type="obsolete">Izveidot vienāda garuma lauztas līnijas</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10220,7 +10220,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation>Izveidot lauztu līniju no esošiem segmentiem</translation>
+        <translation type="obsolete">Izveidot lauztu līniju no esošiem segmentiem</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10255,7 +10255,7 @@ Continue?</source>
     </message>
     <message>
         <source>Trim polyline&apos;s segments</source>
-        <translation>Īsināt lauztas līnijas segmentus</translation>
+        <translation type="obsolete">Īsināt lauztas līnijas segmentus</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10586,14 +10586,6 @@ Continue?</source>
     <message>
         <source>Zoom &amp;Out</source>
         <translation>Tā&amp;lināt</translation>
-    </message>
-    <message>
-        <source>Zooms in</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Zooms out</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

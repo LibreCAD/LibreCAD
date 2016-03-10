@@ -11998,7 +11998,7 @@ Continue?</source>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation>Törött vonal rajzolása</translation>
+        <translation type="obsolete">Törött vonal rajzolása</translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -13362,15 +13362,7 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>set to bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>lower after entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>lower over entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13379,10 +13371,6 @@ Continue?</source>
     </message>
     <message>
         <source>move to top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>set to top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13406,7 +13394,7 @@ Continue?</source>
     </message>
     <message>
         <source>Add polyline&apos;s node</source>
-        <translation>Törött vonal csomópontjának hozzáadása</translation>
+        <translation type="obsolete">Törött vonal csomópontjának hozzáadása</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13445,10 +13433,6 @@ Continue?</source>
     <name>RS_ActionPolylineAppend</name>
     <message>
         <source>A&amp;ppend node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Append polyline&apos;s node</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13499,10 +13483,6 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Delete polyline&apos;s node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No Entity found.</source>
         <translation type="unfinished">Nincs elem.</translation>
     </message>
@@ -13543,7 +13523,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation type="unfinished">Törlés két csomópont között</translation>
+        <translation type="obsolete">Törlés két csomópont között</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13597,10 +13577,6 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Create Equidistant Polylines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No Entity found.</source>
         <translation type="unfinished">Nincs elem.</translation>
     </message>
@@ -13625,7 +13601,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation type="unfinished">Töröttvonal készítése meglévő részekből</translation>
+        <translation type="obsolete">Töröttvonal készítése meglévő részekből</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13652,10 +13628,6 @@ Continue?</source>
     <name>RS_ActionPolylineTrim</name>
     <message>
         <source>&amp;Trim segments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Trim polyline&apos;s segments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14122,7 +14094,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms in</source>
-        <translation type="unfinished">Nagyít</translation>
+        <translation type="obsolete">Nagyít</translation>
     </message>
     <message>
         <source>Zoom out</source>
@@ -14134,7 +14106,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms out</source>
-        <translation type="unfinished">Kicsinyít</translation>
+        <translation type="obsolete">Kicsinyít</translation>
     </message>
 </context>
 <context>

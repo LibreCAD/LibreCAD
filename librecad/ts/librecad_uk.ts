@@ -11314,7 +11314,7 @@ Continue?</source>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation>Накреслити ламану лінію</translation>
+        <translation type="obsolete">Накреслити ламану лінію</translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -12312,16 +12312,8 @@ Continue?</source>
         <translation type="unfinished">на задній план</translation>
     </message>
     <message>
-        <source>set to bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>lower after entity</source>
         <translation type="unfinished">за об&apos;єктом</translation>
-    </message>
-    <message>
-        <source>lower over entity</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>raise over entity</source>
@@ -12330,10 +12322,6 @@ Continue?</source>
     <message>
         <source>move to top</source>
         <translation type="unfinished">на передній план</translation>
-    </message>
-    <message>
-        <source>set to top</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -12356,7 +12344,7 @@ Continue?</source>
     </message>
     <message>
         <source>Add polyline&apos;s node</source>
-        <translation>Додати вузол ламаної</translation>
+        <translation type="obsolete">Додати вузол ламаної</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -12399,7 +12387,7 @@ Continue?</source>
     </message>
     <message>
         <source>Append polyline&apos;s node</source>
-        <translation>Доповнити вузол ламаної</translation>
+        <translation type="obsolete">Доповнити вузол ламаної</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -12450,7 +12438,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete polyline&apos;s node</source>
-        <translation>Вилучити вузол ламаної</translation>
+        <translation type="obsolete">Вилучити вузол ламаної</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -12501,7 +12489,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation>Вилучити між двома вузлами</translation>
+        <translation type="obsolete">Вилучити між двома вузлами</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -12556,7 +12544,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation>Створити рівновіддалені ламані</translation>
+        <translation type="obsolete">Створити рівновіддалені ламані</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -12583,7 +12571,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation>Створити ламану лінію з існуючих відрізків</translation>
+        <translation type="obsolete">Створити ламану лінію з існуючих відрізків</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -12624,7 +12612,7 @@ Continue?</source>
     <message>
         <source>Trim polyline&apos;s segments</source>
         <translatorcomment>відсікти, вирівняти</translatorcomment>
-        <translation>Усікти відрізки ламаної</translation>
+        <translation type="obsolete">Усікти відрізки ламаної</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -12969,11 +12957,11 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms in</source>
-        <translation type="unfinished">Збільшує масштаб документа</translation>
+        <translation type="obsolete">Збільшує масштаб документа</translation>
     </message>
     <message>
         <source>Zooms out</source>
-        <translation type="unfinished">Зменшує масштаб документа</translation>
+        <translation type="obsolete">Зменшує масштаб документа</translation>
     </message>
 </context>
 <context>

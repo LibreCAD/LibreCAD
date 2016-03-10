@@ -11520,7 +11520,7 @@ Continue?</source>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation>Teken vrije vormen</translation>
+        <translation type="obsolete">Teken vrije vormen</translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -12884,15 +12884,7 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>set to bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>lower after entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>lower over entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12901,10 +12893,6 @@ Continue?</source>
     </message>
     <message>
         <source>move to top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>set to top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12936,7 +12924,7 @@ Continue?</source>
     </message>
     <message>
         <source>Add polyline&apos;s node</source>
-        <translation>Voeg knooppunt toe aan vrije vorm</translation>
+        <translation type="obsolete">Voeg knooppunt toe aan vrije vorm</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -12975,7 +12963,7 @@ Continue?</source>
     </message>
     <message>
         <source>Append polyline&apos;s node</source>
-        <translation>Voeg vrije vorm knooppunt</translation>
+        <translation type="obsolete">Voeg vrije vorm knooppunt</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13030,7 +13018,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete polyline&apos;s node</source>
-        <translation>Verwijderen knooppunt uit vrije vorm</translation>
+        <translation type="obsolete">Verwijderen knooppunt uit vrije vorm</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13081,7 +13069,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation>Verwijderen tussen twee knooppunten</translation>
+        <translation type="obsolete">Verwijderen tussen twee knooppunten</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13128,7 +13116,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation>Maak Equidistant vrije vormen</translation>
+        <translation type="obsolete">Maak Equidistant vrije vormen</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13155,7 +13143,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation>Maak vrije vorm van bestaande &amp;Segmenten</translation>
+        <translation type="obsolete">Maak vrije vorm van bestaande &amp;Segmenten</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13198,7 +13186,7 @@ Continue?</source>
     </message>
     <message>
         <source>Trim polyline&apos;s segments</source>
-        <translation>Knip uit vrije vorm segmenten</translation>
+        <translation type="obsolete">Knip uit vrije vorm segmenten</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -13656,7 +13644,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms in</source>
-        <translation type="unfinished">Zoomt in</translation>
+        <translation type="obsolete">Zoomt in</translation>
     </message>
     <message>
         <source>Zoom out</source>
@@ -13668,7 +13656,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms out</source>
-        <translation type="unfinished">Zoomt uit</translation>
+        <translation type="obsolete">Zoomt uit</translation>
     </message>
 </context>
 <context>
