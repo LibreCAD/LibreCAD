@@ -429,7 +429,7 @@ std::vector<double> RS_Math::quadraticSolver(const std::vector<double>& ce)
 	// x = b \pm b sqrt(1. - c/(b^2))
 	LDouble const b2= b * b;
 	LDouble const discriminant= b2 - c;
-	LDouble const fc = fabs(c);
+	LDouble const fc = std::abs(c);
 
 	//TODO, fine tune to tolerance level
 	LDouble const TOL = 1e-24L;
@@ -444,12 +444,12 @@ std::vector<double> RS_Math::quadraticSolver(const std::vector<double>& ce)
 	// given |p| >= |q|
 	// sqrt(p^2 \pm q^2) = p sqrt(1 \pm q^2/p^2)
 	if (b2 >= fc)
-		r = fabs(b) * sqrt(1.L - c/b2);
+		r = std::abs(b) * std::sqrt(1.L - c/b2);
 	else
 		// c is negative, because b2 - c is non-negative
-		r = sqrt(fc) * sqrt(1.L + b2/fc);
+		r = std::sqrt(fc) * std::sqrt(1.L + b2/fc);
 
-    if (r >= TOL*std::abs(b)) {
+	if (r >= TOL*std::abs(b)) {
 		//two roots
 		if (b >= 0.L)
 			//since both (b,r)>=0, avoid (b - r) loss of significance
