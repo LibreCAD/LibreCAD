@@ -682,7 +682,11 @@
     </message>
     <message>
         <source>Draw</source>
-        <translation>Zīmēt</translation>
+        <translation type="obsolete">Zīmēt</translation>
+    </message>
+    <message>
+        <source>plugins_menu</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

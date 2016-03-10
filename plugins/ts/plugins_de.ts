@@ -950,8 +950,12 @@
     </message>
     <message>
         <location filename="../plotequation/plot.cpp" line="28"/>
+        <source>plugins_menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Draw</source>
-        <translation>Zeichnen</translation>
+        <translation type="obsolete">Zeichnen</translation>
     </message>
 </context>
 <context>

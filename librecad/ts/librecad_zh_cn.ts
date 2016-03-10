@@ -1,11 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="zh_CN">
+<context>
+    <name>ComboBoxOption</name>
+    <message>
+        <location filename="../src/ui/generic/comboboxoption.ui" line="14"/>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/comboboxoption.ui" line="26"/>
+        <source>GroupBox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/comboboxoption.ui" line="41"/>
+        <source>Set</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 <context>
     <name>DlgSplinePoints</name>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="26"/>
         <source>SplinePoints</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="62"/>
@@ -25,18 +44,18 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="110"/>
         <source>Spline Points</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="120"/>
         <source>Control Points</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="135"/>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="138"/>
         <source>Points on Spline</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -45,17 +64,17 @@
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="189"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="199"/>
         <source>Select from two possible circle centers</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="232"/>
         <source>Specify first point</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="233"/>
@@ -76,7 +95,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="240"/>
         <source>Select circle center</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -116,7 +135,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="380"/>
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -127,456 +146,448 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished">窗口缩放(&amp;W)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="69"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="65"/>
         <source>Zoom &amp;Panning</source>
         <translation type="unfinished">缩放和平移(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="78"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="74"/>
         <source>Select Entity</source>
         <translation type="unfinished">选择实体</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="85"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="81"/>
         <source>Select Window</source>
         <translation type="unfinished">选择窗口</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="92"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="88"/>
         <source>Deselect Window</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="99"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="95"/>
         <source>(De-)Select &amp;Contour</source>
         <translation type="unfinished">(放弃)选择轮廓(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="106"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="102"/>
         <source>Select Intersected Entities</source>
         <translation type="unfinished">选择相交实体</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="113"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="109"/>
         <source>Deselect Intersected Entities</source>
         <translation type="unfinished">放弃选择相交实体</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="120"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="116"/>
         <source>(De-)Select Layer</source>
         <translation type="unfinished">(放弃)选择图层</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="129"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="125"/>
         <source>&amp;Points</source>
         <translation type="unfinished">点(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="139"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="135"/>
         <source>&amp;2 Points</source>
         <translation type="unfinished">两点(&amp;2)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="146"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="142"/>
         <source>&amp;Angle</source>
         <translation type="unfinished">角度(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="152"/>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="525"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="148"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="514"/>
         <source>&amp;Horizontal</source>
         <translation type="unfinished">水平(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="158"/>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="164"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="154"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="160"/>
         <source>Vertical</source>
         <translation type="unfinished">垂直</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="170"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="166"/>
         <source>&amp;Freehand Line</source>
         <translation type="unfinished">徒手绘线(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="177"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="173"/>
         <source>&amp;Parallel</source>
         <translation type="unfinished">平行线（&amp;P）</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="184"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="180"/>
         <source>Parallel through point</source>
         <translation type="unfinished">过指定点平行线</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="191"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="187"/>
         <source>Rectangle</source>
         <translation type="unfinished">矩形</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="198"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="194"/>
         <source>Bisector</source>
         <translation type="unfinished">角均分线</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="204"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="200"/>
         <source>Tangent (P,C)</source>
         <translation type="unfinished">切线(点,圆)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="210"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="206"/>
         <source>Tangent (C,C)</source>
         <translation type="unfinished">切线(圆,圆)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="216"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="212"/>
         <source>Tangent &amp;Orthogonal</source>
         <translation type="unfinished">正交切线 (&amp;O)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="223"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="219"/>
         <source>Orthogonal</source>
         <translation type="unfinished">正交</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="230"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="226"/>
         <source>Relative angle</source>
         <translation type="unfinished">相对角度</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="237"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="233"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
         <translation type="unfinished">多边形(中心,角点)(&amp;y)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="244"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="240"/>
         <source>Polygo&amp;n (Cor,Cor)</source>
         <translation type="unfinished">多边形(角点,角点)(&amp;n)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="253"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="249"/>
         <source>Center, &amp;Point</source>
         <translation type="unfinished">中心, 点(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="258"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="254"/>
         <source>Center, &amp;Radius</source>
         <translation type="unfinished">中心, 半径(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="265"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="261"/>
         <source>2 Points</source>
         <translation type="unfinished">两点</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="272"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="268"/>
         <source>2 Points, Radius</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="278"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="274"/>
         <source>3 Points</source>
         <translation type="unfinished">三点</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="284"/>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="344"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="280"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="340"/>
         <source>&amp;Concentric</source>
         <translation type="unfinished">同心(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="292"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="288"/>
         <source>Circle &amp;Inscribed</source>
         <translation type="unfinished">内切圆</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="298"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="294"/>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="305"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="301"/>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="312"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="308"/>
         <source>Tangential &amp;3 Circles</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="319"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="315"/>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="328"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="324"/>
         <source>&amp;Center, Point, Angles</source>
         <translation type="unfinished">中心, 起点, 角度(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="336"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="332"/>
         <source>&amp;3 Points</source>
         <translation type="unfinished">三点(&amp;3)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="352"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="348"/>
         <source>Arc &amp;Tangential</source>
         <translation type="unfinished">想切弧(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="361"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="357"/>
         <source>&amp;Ellipse (Axis)</source>
         <translation type="unfinished">椭圆(轴)(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="367"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="363"/>
         <source>Ellipse &amp;Arc (Axis)</source>
         <translation type="unfinished">椭圆弧(轴)(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="373"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="369"/>
         <source>Ellipse &amp;Foci Point</source>
         <translation type="unfinished">焦点绘制椭圆</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="379"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="375"/>
         <source>Ellipse &amp;4 Point</source>
         <translation type="unfinished">四点椭圆(&amp;4)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="386"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="382"/>
         <source>Ellipse Center and &amp;3 Points</source>
         <translation type="unfinished">中心及三点绘制椭圆</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="392"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="388"/>
         <source>Ellipse &amp;Inscribed</source>
         <translation type="unfinished">内切椭圆 (&amp;I)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="400"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="396"/>
         <source>&amp;Spline</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="406"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="402"/>
         <source>&amp;Spline through points</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="414"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="410"/>
         <source>&amp;Polyline</source>
         <translation type="unfinished">多段线(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="415"/>
         <source>Draw polylines</source>
-        <translation type="unfinished">绘制多段线</translation>
+        <translation type="obsolete">绘制多段线</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="421"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="416"/>
         <source>&amp;Add node</source>
         <translation type="unfinished">添加节点(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="424"/>
-        <source>Add polyline's node</source>
-        <translation type="unfinished">添加多段线节点</translation>
+        <source>Add polyline&apos;s node</source>
+        <translation type="obsolete">添加多段线节点</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="430"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="424"/>
         <source>A&amp;ppend node</source>
         <translation type="unfinished">追加节点(&amp;p)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="433"/>
-        <source>Append polyline's node</source>
-        <translation type="unfinished">追加多段线节点</translation>
+        <source>Append polyline&apos;s node</source>
+        <translation type="obsolete">追加多段线节点</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="439"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="432"/>
         <source>&amp;Delete node</source>
         <translation type="unfinished">删除节点(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="442"/>
-        <source>Delete polyline's node</source>
-        <translation type="unfinished">删除多段线节点</translation>
+        <source>Delete polyline&apos;s node</source>
+        <translation type="obsolete">删除多段线节点</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="448"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="440"/>
         <source>Delete &amp;between two nodes</source>
         <translation type="unfinished">删除两节点间(&amp;b)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="451"/>
         <source>Delete between two nodes</source>
-        <translation type="unfinished">删除两节点间</translation>
+        <translation type="obsolete">删除两节点间</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="457"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="448"/>
         <source>&amp;Trim segments</source>
         <translation type="unfinished">修剪分段(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="460"/>
-        <source>Trim polyline's segments</source>
-        <translation type="unfinished">修剪多段线分段</translation>
+        <source>Trim polyline&apos;s segments</source>
+        <translation type="obsolete">修剪多段线分段</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="466"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="456"/>
         <source>Create &amp;Equidistant Polylines</source>
         <translation type="unfinished">创建等距多段线(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="467"/>
         <source>Create Equidistant Polylines</source>
-        <translation type="unfinished">创建等距多段线</translation>
+        <translation type="obsolete">创建等距多段线</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="473"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="462"/>
         <source>Create Polyline from Existing &amp;Segments</source>
         <translation type="unfinished">从现有分段创建多段线(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="476"/>
         <source>Create Polyline from Existing Segments</source>
-        <translation type="unfinished">从现有分段创建多段线</translation>
+        <translation type="obsolete">从现有分段创建多段线</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="484"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="472"/>
         <source>&amp;MText</source>
         <translation type="unfinished">文字段(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="490"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="478"/>
         <source>&amp;Text</source>
         <translation type="unfinished">文本(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="497"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="485"/>
         <source>&amp;Hatch</source>
         <translation type="unfinished">填充(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="503"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="491"/>
         <source>Insert &amp;Image</source>
         <translation type="unfinished">插入图像(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="500"/>
         <source>&amp;Aligned</source>
         <translation type="unfinished">对齐(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="518"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="507"/>
         <source>&amp;Linear</source>
         <translation type="unfinished">线性(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="532"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="521"/>
         <source>&amp;Vertical</source>
         <translation type="unfinished">垂直(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="539"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="528"/>
         <source>&amp;Radial</source>
         <translation type="unfinished">半径(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="546"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="535"/>
         <source>&amp;Diametric</source>
         <translation type="unfinished">直径(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="553"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="542"/>
         <source>&amp;Angular</source>
         <translation type="unfinished">角度(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="559"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="548"/>
         <source>&amp;Leader</source>
         <translation type="unfinished">引线(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="567"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="556"/>
         <source>&amp;Attributes</source>
         <translation type="unfinished">属性(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="574"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="564"/>
         <source>&amp;Delete</source>
         <translation type="unfinished">删除(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="580"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="570"/>
         <source>Delete Freehand</source>
         <translation type="unfinished">删除手绘线</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="586"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="576"/>
         <source>&amp;Move / Copy</source>
         <translation type="unfinished">移动/复制(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="592"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="583"/>
         <source>Re&amp;vert direction</source>
         <translation type="unfinished">返转方向 (&amp;v)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="594"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="585"/>
         <source>Ctrl+R</source>
         <translation type="unfinished">Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="599"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="591"/>
         <source>&amp;Rotate</source>
         <translation type="unfinished">旋转(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="605"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="598"/>
         <source>&amp;Scale</source>
         <translation type="unfinished">缩放(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="611"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="605"/>
         <source>&amp;Mirror</source>
         <translation type="unfinished">镜像(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="617"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="612"/>
         <source>M&amp;ove and Rotate</source>
         <translation type="unfinished">移动及旋转(&amp;o)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="623"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="618"/>
         <source>Rotate T&amp;wo</source>
         <translation type="unfinished">两点旋转(&amp;w)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="629"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="624"/>
         <source>&amp;Properties</source>
         <translation type="unfinished">特性(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="636"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="632"/>
         <source>&amp;Trim</source>
         <translation type="unfinished">修剪(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="643"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="640"/>
         <source>&amp;Trim Two</source>
         <translation type="unfinished">修剪两实体(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="650"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="648"/>
         <source>&amp;Lengthen</source>
         <translation type="unfinished">延长(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="657"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="656"/>
         <source>&amp;Offset</source>
         <translation type="unfinished">偏移(&amp;O)</translation>
     </message>
@@ -586,57 +597,57 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished">打断(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="670"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="671"/>
         <source>&amp;Stretch</source>
         <translation type="unfinished">拉伸(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="676"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="678"/>
         <source>&amp;Bevel</source>
         <translation type="unfinished">倒角(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="683"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="686"/>
         <source>&amp;Fillet</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="689"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="693"/>
         <source>&amp;Explode Text into Letters</source>
         <translation type="unfinished">分解文本为字符(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="705"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="709"/>
         <source>Point inside contour</source>
         <translation type="unfinished">轮廓内点</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="711"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="715"/>
         <source>&amp;Distance Point to Point</source>
         <translation type="unfinished">点到点距离(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="718"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="722"/>
         <source>&amp;Distance Entity to Point</source>
         <translation type="unfinished">实体到点距离(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="724"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="728"/>
         <source>An&amp;gle between two lines</source>
         <translation type="unfinished">两线夹角 (&amp;g)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="730"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="734"/>
         <source>&amp;Total length of selected entities</source>
         <translation type="unfinished">选中实体总长(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="736"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="740"/>
         <source>Polygonal &amp;Area</source>
         <translation type="unfinished">多边形面积 （&amp;A）</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="754"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="758"/>
         <source>&amp;Selection pointer</source>
         <translation type="unfinished">选择鼠标</translation>
     </message>
@@ -646,71 +657,76 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished">撤消(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="777"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="773"/>
         <source>&amp;Redo</source>
         <translation type="unfinished">重做(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="789"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="781"/>
         <source>Cu&amp;t</source>
         <translation type="unfinished">剪切(&amp;t)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="801"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="789"/>
         <source>&amp;Copy</source>
         <translation type="unfinished">复制(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="813"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="797"/>
         <source>&amp;Paste</source>
         <translation type="unfinished">粘贴(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="825"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="805"/>
         <source>move to bottom</source>
         <translation type="unfinished">移到最底</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1021"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="994"/>
         <source>Widget Options</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1306"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1000"/>
+        <source>Device Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1230"/>
         <source>Left</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1314"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1239"/>
         <source>Right</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1322"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1248"/>
         <source>Top</source>
         <translation type="unfinished">正向</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1330"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1257"/>
         <source>Bottom</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1338"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1266"/>
         <source>Floating</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1346"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1275"/>
         <source>Reload Style Sheet</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>set to bottom</source>
         <translation type="obsolete">设为底</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="833"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="813"/>
         <source>lower after entity</source>
         <translation type="unfinished">比实体底</translation>
     </message>
@@ -719,12 +735,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">比实体底</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="841"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="821"/>
         <source>raise over entity</source>
         <translation type="unfinished">提高到实体上</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="849"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="829"/>
         <source>move to top</source>
         <translation type="unfinished">移到最顶</translation>
     </message>
@@ -733,109 +749,108 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">设为顶</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="860"/>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="925"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="840"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="905"/>
         <source>&amp;Show all</source>
         <translation type="unfinished">显示全部 (&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="867"/>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="932"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="847"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="912"/>
         <source>&amp;Hide all</source>
         <translation type="unfinished">隐藏全部 (&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="874"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="854"/>
         <source>&amp;Add Layer</source>
         <translation type="unfinished">添加图层(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="882"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="862"/>
         <source>&amp;Remove Layer</source>
         <translation type="unfinished">删除图层(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="889"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="869"/>
         <source>&amp;Edit Layer</source>
         <translation type="unfinished">编辑图层(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="896"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="876"/>
         <source>Toggle Layer Loc&amp;k</source>
         <translation type="unfinished">改变图层锁定 (&amp;k)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="902"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="882"/>
         <source>&amp;Toggle Layer Visibility</source>
         <translation type="unfinished">改变图层可见 (&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="909"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="889"/>
         <source>Toggle Layer &amp;Print</source>
         <translation type="unfinished">改变是否为辅助图层(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="916"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="896"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="940"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="920"/>
         <source>&amp;Add Block</source>
         <translation type="unfinished">添加图块(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="947"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="927"/>
         <source>&amp;Remove Block</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="954"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="934"/>
         <source>&amp;Rename Block</source>
         <translation type="unfinished">重命名图块(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="961"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="941"/>
         <source>&amp;Edit Block</source>
         <translation type="unfinished">编辑图块(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="968"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="948"/>
         <source>&amp;Save Block</source>
         <translation type="unfinished">保存图块(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="975"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="955"/>
         <source>&amp;Insert Block</source>
         <translation type="unfinished">插入图块(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="982"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="962"/>
         <source>Toggle Block &amp;Visibility</source>
         <translation type="unfinished">改变图块可见 (&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="989"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="969"/>
         <source>&amp;Create Block</source>
         <translation type="unfinished">创建图块(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="696"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="700"/>
         <source>Ex&amp;plode</source>
         <translation type="unfinished">拆分 (&amp;p)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1000"/>
         <source>&amp;Preferences</source>
-        <translation type="unfinished">选项(&amp;P)</translation>
+        <translation type="obsolete">选项(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1002"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="978"/>
         <source>&amp;Application Preferences</source>
         <translation type="unfinished">应用程序选项(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1011"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="986"/>
         <source>Current &amp;Drawing Preferences</source>
         <translation type="unfinished">当前图纸选项(&amp;D)</translation>
     </message>
@@ -848,174 +863,174 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">运行脚本..</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1029"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1008"/>
         <source>&amp;Delete selected</source>
         <translation type="unfinished">删除选中(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1037"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
         <source>Select &amp;All</source>
         <translation type="unfinished">选择所有(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1047"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1026"/>
         <source>Deselect &amp;all</source>
         <translation type="unfinished">放弃所有(&amp;a)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1049"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1028"/>
         <source>Ctrl+K</source>
         <translation type="unfinished">Ctrl+K</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1056"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1035"/>
         <source>Invert Selection</source>
         <translation type="unfinished">反向选择</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1065"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1044"/>
         <source>Export as &amp;MakerCAM SVG...</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1070"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1049"/>
         <source>Regenerate Dimension Entities</source>
         <translation type="unfinished">重生成标注实体</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1077"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1056"/>
         <source>Zoom &amp;In</source>
         <translation type="unfinished">放大(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1088"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1063"/>
         <source>Zoom &amp;Out</source>
         <translation type="unfinished">缩小(&amp;O)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1099"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1070"/>
         <source>&amp;Auto Zoom</source>
         <translation type="unfinished">自动缩放(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1109"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1076"/>
         <source>Previous &amp;View</source>
         <translation type="unfinished">前一视图(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1121"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1084"/>
         <source>&amp;Redraw</source>
         <translation type="unfinished">重画(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1137"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1096"/>
         <source>&amp;New</source>
         <translation type="unfinished">新建(&amp;N)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1148"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1103"/>
         <source>New From &amp;Template</source>
         <translation type="unfinished">从模板新建(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1158"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1109"/>
         <source>&amp;Open...</source>
         <translation type="unfinished">打开(&amp;O)...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1169"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1116"/>
         <source>&amp;Save</source>
         <translation type="unfinished">保存(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1180"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1123"/>
         <source>Save &amp;as...</source>
         <translation type="unfinished">另存为(&amp;a)...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1194"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1130"/>
         <source>&amp;Export as image</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1199"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1135"/>
         <source>&amp;Close</source>
         <translation type="unfinished">关闭(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1206"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1142"/>
         <source>&amp;Print...</source>
         <translation type="unfinished">打印(&amp;P)...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1218"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1150"/>
         <source>Export as PDF</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1224"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1156"/>
         <source>Print Pre&amp;view</source>
         <translation type="unfinished">打印预览(&amp;v)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1236"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1164"/>
         <source>&amp;Quit</source>
         <translation type="unfinished">退出(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1247"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1171"/>
         <source>&amp;Block</source>
         <translation type="unfinished">图块(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1254"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1178"/>
         <source>&amp;Fullscreen</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1259"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1183"/>
         <source>Ctrl+Meta+F</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1261"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1185"/>
         <source>F11</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1263"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1187"/>
         <source>Ctrl+F11</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1271"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1195"/>
         <source>&amp;Grid</source>
         <translation type="unfinished">网格(&amp;G)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1273"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1197"/>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1281"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1205"/>
         <source>&amp;Draft</source>
         <translation type="unfinished">草图(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1289"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1213"/>
         <source>&amp;Statusbar</source>
         <translation type="unfinished">状态栏(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1292"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1216"/>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1297"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1221"/>
         <source>Focus on &amp;Command Line</source>
         <translation type="unfinished">聚焦命令行(&amp;C)</translation>
     </message>
@@ -1033,7 +1048,45 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_customtoolbar.cpp" line="36"/>
         <source>Add or Remove Action</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_DeviceOptions</name>
+    <message>
+        <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_deviceoptions.ui" line="20"/>
+        <source>Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_deviceoptions.ui" line="27"/>
+        <source>Mouse</source>
+        <translation type="unfinished">鼠标</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_deviceoptions.ui" line="32"/>
+        <source>Tablet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_deviceoptions.ui" line="37"/>
+        <source>Trackpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_deviceoptions.ui" line="42"/>
+        <source>Touchscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_deviceoptions.ui" line="53"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1054,32 +1107,47 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="14"/>
         <source>Widget Options</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="38"/>
         <source>Toolbar</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="50"/>
         <source>Icon Size</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="79"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="85"/>
+        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="91"/>
         <source>Style</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="121"/>
+        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="117"/>
         <source>Style Sheet</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="143"/>
+        <source>Statusbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="149"/>
+        <source>Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="159"/>
+        <source>Font Size</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1087,27 +1155,27 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lg_dimzerosbox.cpp" line="9"/>
         <source>select:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/lg_dimzerosbox.cpp" line="12"/>
         <source>remove left</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/lg_dimzerosbox.cpp" line="16"/>
         <source>remove right</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/lg_dimzerosbox.cpp" line="34"/>
-        <source>remove 0'</source>
-        <translation type="unfinished"/>
+        <source>remove 0&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/lg_dimzerosbox.cpp" line="38"/>
-        <source>remove 0"</source>
-        <translation type="unfinished"/>
+        <source>remove 0&quot;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1137,12 +1205,12 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>QC_ActionGetEnt</name>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="40"/>
+        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="42"/>
         <source>Select object:</source>
         <translation>选择对象:</translation>
     </message>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="47"/>
+        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="50"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -1154,7 +1222,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">指定点</translation>
     </message>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetpoint.cpp" line="115"/>
+        <location filename="../src/plugins/intern/qc_actiongetpoint.cpp" line="117"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -1162,12 +1230,12 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>QC_ActionGetSelect</name>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="42"/>
+        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="43"/>
         <source>Select objects:</source>
         <translation>选择对象:</translation>
     </message>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="51"/>
+        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="56"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -1179,155 +1247,154 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">插件(&amp;P)</translation>
     </message>
     <message>
-        <source>Running script '%1'</source>
-        <translation type="obsolete">运行脚本 '%1'</translation>
+        <source>Running script &apos;%1&apos;</source>
+        <translation type="obsolete">运行脚本 &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Inserting block '%1'</source>
-        <translation type="obsolete">插入图块 '%1'</translation>
+        <source>Inserting block &apos;%1&apos;</source>
+        <translation type="obsolete">插入图块 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2578"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2457"/>
         <source>The help files were not found.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="488"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="490"/>
         <source>Categories</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="580"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="582"/>
         <source>&amp;File</source>
         <translation>文件(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="584"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="586"/>
         <source>Import</source>
         <translation>导入</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="333"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="603"/>
-        <source>Settings</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="613"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="616"/>
         <source>&amp;Edit</source>
         <translation>编辑(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="628"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="715"/>
         <source>&amp;Order</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="351"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="348"/>
         <source>Order</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="638"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="637"/>
         <source>&amp;View</source>
         <translation>视图(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="227"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="408"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="228"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="451"/>
         <source>Select</source>
         <translation type="unfinished">选择</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="202"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="373"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="203"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="421"/>
         <source>Line</source>
         <translation type="unfinished">直线</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="207"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="379"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="208"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="427"/>
         <source>Circle</source>
         <translation type="unfinished">圆</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="676"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="675"/>
         <source>&amp;Curve</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="212"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="385"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="213"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="433"/>
         <source>Curve</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="217"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="391"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="218"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="439"/>
         <source>Ellipse</source>
         <translation type="unfinished">椭圆</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="222"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="397"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="223"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="445"/>
         <source>Polyline</source>
         <translation type="unfinished">多段线</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="697"/>
-        <source>&amp;Misc</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="403"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="384"/>
         <source>Misc</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="232"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="414"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="233"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="457"/>
         <source>Dimension</source>
         <translation type="unfinished">标注</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="237"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="420"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="238"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="463"/>
         <source>Modify</source>
         <translation type="unfinished">修改</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="242"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="426"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="243"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="469"/>
         <source>Info</source>
         <translation type="unfinished">查询</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="438"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="376"/>
         <source>Pen</source>
         <translation type="unfinished">画笔</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="449"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="392"/>
         <source>Dock Areas</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="564"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="566"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="771"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="605"/>
+        <source>&amp;Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="631"/>
+        <source>Plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="780"/>
         <source>Online (Wiki)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="783"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Dockwidgets</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="815"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="824"/>
         <source>&amp;Toolbars</source>
         <translation>工具栏(&amp;T)</translation>
     </message>
@@ -1340,12 +1407,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">CTRL+M</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="704"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="701"/>
         <source>&amp;Select</source>
         <translation>选择(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="656"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="655"/>
         <source>&amp;Draw</source>
         <translation>绘图(&amp;D)</translation>
     </message>
@@ -1354,7 +1421,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">点(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="662"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="661"/>
         <source>&amp;Line</source>
         <translation>直线(&amp;L)</translation>
     </message>
@@ -1363,12 +1430,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">圆弧(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="669"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="668"/>
         <source>&amp;Circle</source>
         <translation>圆(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="683"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="682"/>
         <source>&amp;Ellipse</source>
         <translation>椭圆(&amp;E)</translation>
     </message>
@@ -1377,37 +1444,37 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">样条曲线(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="690"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="689"/>
         <source>&amp;Polyline</source>
         <translation>多段线(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="711"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="708"/>
         <source>&amp;Dimension</source>
         <translation>标注(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="718"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="725"/>
         <source>&amp;Modify</source>
         <translation>修改(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="725"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="733"/>
         <source>&amp;Snap</source>
         <translation>捕捉(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="733"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="741"/>
         <source>&amp;Info</source>
         <translation>查询(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="740"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="748"/>
         <source>&amp;Layer</source>
         <translation>图层(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="747"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="755"/>
         <source>&amp;Block</source>
         <translation>图块(&amp;B)</translation>
     </message>
@@ -1420,12 +1487,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">&amp;CAM</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="777"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="786"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="767"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="776"/>
         <source>&amp;Manual</source>
         <translation>手册(&amp;M)</translation>
     </message>
@@ -1434,12 +1501,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">插入图像</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="754"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="762"/>
         <source>&amp;Window</source>
         <translation>窗口(&amp;W)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="763"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="772"/>
         <source>&amp;Help</source>
         <translation>帮助(&amp;H)</translation>
     </message>
@@ -1452,12 +1519,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">选择画笔</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="433"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="371"/>
         <source>Snap Selection</source>
         <translation>选择捕捉点方式</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="442"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="380"/>
         <source>Tool Options</source>
         <translation>工具选项</translation>
     </message>
@@ -1467,23 +1534,23 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">CAD 工具</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="272"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="273"/>
         <source>Layer List</source>
         <translation>图层列表</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="282"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="283"/>
         <source>Block List</source>
         <translation>图块列表</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="292"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="293"/>
         <source>Library Browser</source>
         <translation>库浏览器</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2926"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="304"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2859"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="305"/>
         <source>Command line</source>
         <translation>命令行</translation>
     </message>
@@ -1492,87 +1559,97 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="912"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="799"/>
         <source>Su&amp;b-Window mode</source>
         <translation>子窗口模式</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="916"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="803"/>
         <source>&amp;Cascade</source>
         <translation>层叠(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="917"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="804"/>
         <source>&amp;Tile</source>
         <translation>平铺(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="918"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="805"/>
         <source>Tile &amp;Vertically</source>
         <translation>纵向平铺(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="919"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="806"/>
         <source>Tile &amp;Horizontally</source>
         <translation>水平平铺(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="914"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="801"/>
         <source>Ta&amp;b mode</source>
         <translation>标签模式(&amp;b)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1194"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1081"/>
         <source>Creating new file...</source>
         <translation>新建文件...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1223"/>
-        <source>Block '%1'</source>
-        <translation>图块 '%1'</translation>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1114"/>
+        <source>Block &apos;%1&apos;</source>
+        <translation>图块 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1225"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1116"/>
         <source>unnamed document %1</source>
         <translation>未命名文档 %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1271"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1162"/>
         <source>New Drawing created.</source>
         <translation>新图纸已创建.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1324"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1215"/>
         <source>New document from template: </source>
         <translation>从模板新建文档: </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1372"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1263"/>
         <source>Select Template aborted</source>
         <translation>退出选择模板</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2840"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2713"/>
+        <source>Toolbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2718"/>
+        <source>Dockwidgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2743"/>
         <source>Opening recent file...</source>
         <translation>最近打开文件...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1502"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1393"/>
         <source>Warning: File already opened : </source>
         <translation>警告: 文件已被打开.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2025"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1918"/>
         <source>Export as PDF</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2578"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2457"/>
         <source>Help files not found</source>
         <translation>找不到帮助文件</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1388"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1279"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -1581,38 +1658,43 @@ Please check the permissions.</source>
 请检查权限.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1597"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="149"/>
+        <source>Grid Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1489"/>
         <source>Loaded document: </source>
         <translation>已加载文档: </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1605"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1497"/>
         <source>Opening aborted</source>
         <translation>打开中止</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1619"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1511"/>
         <source>Saving drawing...</source>
         <translation>保存图纸...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1631"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1693"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1523"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1586"/>
         <source>Saved drawing: %1</source>
         <translation>已保存图纸: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1634"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1526"/>
         <source>Cannot save the file </source>
         <translation>无法保存文件 </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1636"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1528"/>
         <source> , please check the filename and permissions.</source>
         <translation> , 请检查文件名及操作权限.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1685"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1578"/>
         <source>Cannot save the file
 %1
 Please check the permissions.</source>
@@ -1621,54 +1703,54 @@ Please check the permissions.</source>
 请检查权限.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2505"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2384"/>
         <source>Compiler: Clang %1.%2.%3</source>
         <translation>编译器：Clang %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2507"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2386"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
         <translation>编译器： GNU GCC %1.%2.%d</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2509"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2388"/>
         <source>Compiler: Microsoft Visual C++&lt;br&gt;</source>
         <translation>编译器：微软 Visual C++&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2511"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2390"/>
         <source>Qt Version: %1</source>
         <translation>Qt版本：%1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2524"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2403"/>
         <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation>请资助LibreCAD项目以维护代码及网站</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1662"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1554"/>
         <source>Saving drawing under new filename...</source>
         <translation>使用新文件名保存图纸...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1674"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2320"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2785"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1566"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2202"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2678"/>
         <source>Draft Mode</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="326"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="327"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="588"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="590"/>
         <source>Export</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="339"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="336"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
@@ -1677,7 +1759,7 @@ Please check the permissions.</source>
         <translation type="obsolete">绘图&amp;图层顺序</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="359"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="356"/>
         <source>View</source>
         <translation>视图</translation>
     </message>
@@ -1686,29 +1768,29 @@ Please check the permissions.</source>
         <translation type="obsolete">文本(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1538"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1430"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1604"/>
-        <source>File '%1' does not exist. Opening aborted</source>
-        <translation type="unfinished"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1496"/>
+        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1706"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1599"/>
         <source>Auto-saving drawing...</source>
         <translation>自动保存图纸...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1714"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1607"/>
         <source>Auto-saved drawing</source>
         <translation>自动保存的图纸</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1719"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1612"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -1719,79 +1801,89 @@ Auto-save disabled.</source>
 自动保存已禁用.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1724"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1617"/>
         <source>Auto-saving failed</source>
         <translation>自动保存失败</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1737"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1630"/>
         <source>Exporting drawing...</source>
         <translation>导出图纸...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1774"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1667"/>
         <source>Export as</source>
         <translation>导出为</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1827"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1720"/>
         <source>Exported: %1</source>
         <translation>导出: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1867"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1760"/>
         <source>Exporting...</source>
         <translation>导出...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1943"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1836"/>
         <source>Export complete</source>
         <translation>导出所有</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1945"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1838"/>
         <source>Export failed!</source>
         <translation>导出失败!</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1994"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1887"/>
         <source>Printing...</source>
         <translation>打印...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2123"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2016"/>
         <source>Printing complete</source>
         <translation>打印所有</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2200"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2094"/>
         <source>Print preview for %1</source>
         <translation>%1 打印预览</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2262"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2158"/>
         <source>Exiting application...</source>
         <translation>退出程序...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2486"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2365"/>
         <source>None</source>
         <translation>无</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2492"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2371"/>
         <source>About...</source>
         <translation>关于...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2500"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2379"/>
         <source>Version: %1</source>
         <translation>版本: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2502"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2381"/>
         <source>SCM Revision: %1</source>
         <translation>SCM 版本: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2893"/>
+        <source>Device Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2896"/>
+        <source>Device</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Version: %1 %2</source>
@@ -1802,17 +1894,17 @@ Auto-save disabled.</source>
         <translation type="obsolete">SVN修订: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2512"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2391"/>
         <source>Compiled on: %1</source>
         <translation>编译时间: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2514"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2393"/>
         <source>Program Icons Supplied by</source>
         <translation>程序图标提供者</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2515"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2394"/>
         <source>Splash and Logo supplied by</source>
         <translation>启动界面及标识提供者</translation>
     </message>
@@ -1821,26 +1913,26 @@ Auto-save disabled.</source>
         <translation type="obsolete">日期: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2517"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2396"/>
         <source>Modules: %1</source>
         <translation>模块: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2519"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2398"/>
         <source>Main Website : </source>
         <translation>主页: </translation>
     </message>
     <message>
-        <source>Please donate to LibreCAD to help maintain the sourcecode and it's website.</source>
+        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
         <translation type="obsolete">请捐助LibreCAD项目以帮助维护源码和网站.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2569"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2448"/>
         <source>Help</source>
         <translation>帮助</translation>
     </message>
     <message>
-        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
+        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
         <translation type="obsolete">故障，文件系统中找不到帮助文件</translation>
     </message>
 </context>
@@ -1989,7 +2081,7 @@ Auto-save disabled.</source>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1081"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2000,23 +2092,23 @@ Auto-save disabled.</source>
         <translation type="unfinished">选择</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_activelayername.ui" line="62"/>
+        <location filename="../src/ui/forms/qg_activelayername.ui" line="65"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_activelayername.ui" line="71"/>
+        <location filename="../src/ui/forms/qg_activelayername.ui" line="74"/>
         <source>Current Layer</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_activelayername.ui" line="96"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <location filename="../src/ui/forms/qg_activelayername.ui" line="93"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2125,8 +2217,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_blockdialog.cpp" line="79"/>
-        <source>Could not name block. A block named "%1" already exists.</source>
-        <translation>无法命名图块. 图块名"%1"已存在.</translation>
+        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
+        <translation>无法命名图块. 图块名&quot;%1&quot;已存在.</translation>
     </message>
 </context>
 <context>
@@ -2290,63 +2382,63 @@ in a separate window</source>
         <translation type="obsolete">以三点作圆</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:8pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt; font-style:italic;"&gt;i.e.&lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="obsolete">三线公切圆。请使用新的“公切圆 3”功能来替代。</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Draw Circle inscribed in a triangle, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Circle inscribed in a triangle, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;绘制三角形的内切圆, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, 与三边相切&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;绘制三角形的内切圆, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, 与三边相切&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="obsolete">绘制通过一给定半径的，与两圆想切的圆</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="obsolete">绘制一与三线／弧／圆相切的圆</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of three circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of three circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="obsolete">绘制三个圆的公共想切圆</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="obsolete">绘制过两定点并与一已知圆想切的圆</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="obsolete">绘制通过一点并与两圆想切的圆</translation>
     </message>
     <message>
@@ -2432,16 +2524,16 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">指定中心及椭圆上三点绘制椭圆</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;绘制四边形内切椭圆, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, 与四边相切&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;绘制四边形内切椭圆, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, 与四边相切&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Concentric</source>
@@ -2573,24 +2665,24 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">主要</translation>
     </message>
     <message>
-        <source>Show toolbar "Lines"</source>
-        <translation type="obsolete">显示"直线"工具栏</translation>
+        <source>Show toolbar &quot;Lines&quot;</source>
+        <translation type="obsolete">显示&quot;直线&quot;工具栏</translation>
     </message>
     <message>
-        <source>Show toolbar "Arcs"</source>
-        <translation type="obsolete">显示"圆弧"工具栏</translation>
+        <source>Show toolbar &quot;Arcs&quot;</source>
+        <translation type="obsolete">显示&quot;圆弧&quot;工具栏</translation>
     </message>
     <message>
-        <source>Show toolbar "Circles"</source>
-        <translation type="obsolete">显示"圆"工具栏</translation>
+        <source>Show toolbar &quot;Circles&quot;</source>
+        <translation type="obsolete">显示&quot;圆&quot;工具栏</translation>
     </message>
     <message>
-        <source>Show toolbar "Ellipses"</source>
-        <translation type="obsolete">显示"椭圆"工具栏</translation>
+        <source>Show toolbar &quot;Ellipses&quot;</source>
+        <translation type="obsolete">显示&quot;椭圆&quot;工具栏</translation>
     </message>
     <message>
-        <source>Show toolbar "Polylines"</source>
-        <translation type="obsolete">显示"多段线"工具栏</translation>
+        <source>Show toolbar &quot;Polylines&quot;</source>
+        <translation type="obsolete">显示&quot;多段线&quot;工具栏</translation>
     </message>
     <message>
         <source>Draw Splines</source>
@@ -2609,8 +2701,8 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">插入文本</translation>
     </message>
     <message>
-        <source>Show toolbar "Dimensions"</source>
-        <translation type="obsolete">显示"尺寸标注"工具栏</translation>
+        <source>Show toolbar &quot;Dimensions&quot;</source>
+        <translation type="obsolete">显示&quot;尺寸标注&quot;工具栏</translation>
     </message>
     <message>
         <source>Create Hatch</source>
@@ -2621,24 +2713,24 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">插入图像</translation>
     </message>
     <message>
-        <source>Show toolbar "Modify"</source>
-        <translation type="obsolete">显示"修改"工具栏</translation>
+        <source>Show toolbar &quot;Modify&quot;</source>
+        <translation type="obsolete">显示&quot;修改&quot;工具栏</translation>
     </message>
     <message>
-        <source>Show toolbar "Info"</source>
-        <translation type="obsolete">显示"查询"工具栏</translation>
+        <source>Show toolbar &quot;Info&quot;</source>
+        <translation type="obsolete">显示&quot;查询&quot;工具栏</translation>
     </message>
     <message>
-        <source>Show toolbar "Select"</source>
-        <translation type="obsolete">显示"选择"工具栏</translation>
+        <source>Show toolbar &quot;Select&quot;</source>
+        <translation type="obsolete">显示&quot;选择&quot;工具栏</translation>
     </message>
     <message>
-        <source>Show menu "Lines"</source>
-        <translation type="obsolete">显示"直线"菜单</translation>
+        <source>Show menu &quot;Lines&quot;</source>
+        <translation type="obsolete">显示&quot;直线&quot;菜单</translation>
     </message>
     <message>
-        <source>Show menu "Arcs"</source>
-        <translation type="obsolete">显示"圆弧"菜单</translation>
+        <source>Show menu &quot;Arcs&quot;</source>
+        <translation type="obsolete">显示&quot;圆弧&quot;菜单</translation>
     </message>
     <message>
         <source>Points</source>
@@ -2649,20 +2741,20 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">样条曲线</translation>
     </message>
     <message>
-        <source>Show menu "Ellipses"</source>
-        <translation type="obsolete">显示"椭圆"菜单</translation>
+        <source>Show menu &quot;Ellipses&quot;</source>
+        <translation type="obsolete">显示&quot;椭圆&quot;菜单</translation>
     </message>
     <message>
-        <source>Show menu "Circles"</source>
-        <translation type="obsolete">显示"圆"菜单</translation>
+        <source>Show menu &quot;Circles&quot;</source>
+        <translation type="obsolete">显示&quot;圆&quot;菜单</translation>
     </message>
     <message>
         <source>Texts</source>
         <translation type="obsolete">文本</translation>
     </message>
     <message>
-        <source>Show menu "Dimensions"</source>
-        <translation type="obsolete">显示"标注"菜单</translation>
+        <source>Show menu &quot;Dimensions&quot;</source>
+        <translation type="obsolete">显示&quot;标注&quot;菜单</translation>
     </message>
     <message>
         <source>Hatches / Solid Fills</source>
@@ -2673,20 +2765,20 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">光栅图像</translation>
     </message>
     <message>
-        <source>Show menu "Edit"</source>
-        <translation type="obsolete">显示"编辑"菜单</translation>
+        <source>Show menu &quot;Edit&quot;</source>
+        <translation type="obsolete">显示&quot;编辑&quot;菜单</translation>
     </message>
     <message>
-        <source>Show menu "Measure"</source>
-        <translation type="obsolete">显示"测量"菜单</translation>
+        <source>Show menu &quot;Measure&quot;</source>
+        <translation type="obsolete">显示&quot;测量&quot;菜单</translation>
     </message>
     <message>
         <source>Create Block</source>
         <translation type="obsolete">创建图块</translation>
     </message>
     <message>
-        <source>Show menu "Select"</source>
-        <translation type="obsolete">显示"选择"菜单</translation>
+        <source>Show menu &quot;Select&quot;</source>
+        <translation type="obsolete">显示&quot;选择&quot;菜单</translation>
     </message>
     <message>
         <source>Polylines</source>
@@ -3050,7 +3142,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="87"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="91"/>
@@ -3203,17 +3295,17 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="171"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_CoordinateWidget</name>
     <message>
-        <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="37"/>
-        <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="69"/>
-        <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="91"/>
-        <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="127"/>
-        <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="143"/>
+        <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="32"/>
+        <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="76"/>
+        <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="92"/>
+        <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="131"/>
+        <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="141"/>
         <source>Coordinates</source>
         <translation>坐标</translation>
     </message>
@@ -3293,12 +3385,12 @@ p, li { white-space: pre-wrap; }
     <message utf8="true">
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="147"/>
         <source>⌀ (Diameter)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message utf8="true">
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="162"/>
         <source>π (Pi)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message utf8="true">
         <source>ø (Diameter)</source>
@@ -3750,30 +3842,38 @@ p, li { white-space: pre-wrap; }
         <translation>欢迎</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlginitial.ui" line="64"/>
-        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size="+1"&gt;&lt;b&gt;欢迎使用QCad&lt;/b&gt;
+        <translation type="obsolete">&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;欢迎使用QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 请选择新图纸的绘图单位及环境语言.&lt;br&gt;
 今后你仍可通过QCad的选项对话框更改设置.</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlginitial.ui" line="95"/>
+        <location filename="../src/ui/forms/qg_dlginitial.ui" line="64"/>
+        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+&lt;/font&gt;
+&lt;br&gt;
+Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
+(You can changes these settings later.)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlginitial.ui" line="104"/>
         <source>Default Unit:</source>
         <translation>默认单位:</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlginitial.ui" line="105"/>
+        <location filename="../src/ui/forms/qg_dlginitial.ui" line="114"/>
         <source>GUI Language:</source>
         <translation>界面语言:</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlginitial.ui" line="115"/>
+        <location filename="../src/ui/forms/qg_dlginitial.ui" line="124"/>
         <source>Command Language:</source>
         <translation>命令语言:</translation>
     </message>
@@ -4054,7 +4154,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message utf8="true">
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="673"/>
         <source>Diameter (⌀)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message utf8="true">
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="678"/>
@@ -4739,37 +4839,37 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>移动/复制选项</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="39"/>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="32"/>
         <source>Number of copies</source>
         <translation>复制数目</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="57"/>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="50"/>
         <source>&amp;Delete Original</source>
         <translation>删除原始(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="76"/>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="69"/>
         <source>&amp;Keep Original</source>
         <translation>保留原始(&amp;K)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="95"/>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="88"/>
         <source>&amp;Multiple Copies</source>
         <translation>多重复制(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="102"/>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="95"/>
         <source>Number of copies. Maximum 100</source>
         <translation>复制副本数量, 最多100个</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="128"/>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="121"/>
         <source>Use current &amp;attributes</source>
         <translation>使用当前属性(&amp;a)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="135"/>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="128"/>
         <source>Use current &amp;layer</source>
         <translation>使用当前图层(&amp;l)</translation>
     </message>
@@ -4790,7 +4890,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">Esc</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="142"/>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="135"/>
         <source>...</source>
         <translation>...</translation>
     </message>
@@ -4981,12 +5081,12 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1120"/>
         <source>Length to enlarge over dimension line</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1145"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -5052,8 +5152,8 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="652"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="234"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="237"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="420"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="425"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="416"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="421"/>
         <source>auto</source>
         <translation>自动</translation>
     </message>
@@ -5086,27 +5186,27 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="734"/>
         <source>Text style:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="742"/>
-        <source>'.' (Period)</source>
-        <translation type="unfinished"/>
+        <source>&apos;.&apos; (Period)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="747"/>
-        <source>',' (Comma)</source>
-        <translation type="unfinished"/>
+        <source>&apos;,&apos; (Comma)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="755"/>
         <source>Decimal separator:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="782"/>
         <source>Linear units:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="798"/>
@@ -5118,32 +5218,32 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="808"/>
         <source>Length Factor:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="935"/>
         <source>Angular units:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="958"/>
         <source>Linear zeros:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="995"/>
         <source>Format units</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1002"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1075"/>
         <source>Text size &amp; position</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1082"/>
@@ -5213,37 +5313,37 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1219"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1226"/>
         <source>Angular zeros:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1240"/>
         <source>Angular precision:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1253"/>
         <source>Enlarge:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1263"/>
         <source>Offset:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1276"/>
         <source>Linear precision:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1295"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1305"/>
@@ -5253,12 +5353,12 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1351"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1383"/>
         <source>Text alignment:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1393"/>
@@ -5313,7 +5413,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="965"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>打勾尺寸，设置为0将取消建筑标注，而使用箭头标注。此项设为大于零将会取消箭头标注。</translation>
     </message>
     <message>
@@ -5340,17 +5440,17 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1403"/>
         <source>Extension lines</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1410"/>
         <source>Fixed length:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1447"/>
         <source>fixed extension line legth</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1455"/>
@@ -5445,7 +5545,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="121"/>
-        <source>Surveyor's units</source>
+        <source>Surveyor&apos;s units</source>
         <translation>勘测单位</translation>
     </message>
     <message>
@@ -5455,8 +5555,8 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="377"/>
-        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
-        <translation>在'工程'和'建筑'长度格式下,单位需设为英寸.</translation>
+        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
+        <translation>在&apos;工程&apos;和&apos;建筑&apos;长度格式下,单位需设为英寸.</translation>
     </message>
 </context>
 <context>
@@ -5467,22 +5567,22 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>程序选项</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="39"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="46"/>
         <source>&amp;Appearance</source>
         <translation>外观(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="45"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1296"/>
         <source>Language</source>
         <translation>语言</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="51"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1302"/>
         <source>&amp;GUI Language:</source>
         <translation>界面语言(&amp;G):</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="67"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1318"/>
         <source>&amp;Command Language:</source>
         <translation>命令语言(&amp;C):</translation>
     </message>
@@ -5491,12 +5591,12 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">颜色</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="523"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="392"/>
         <source>Backgr&amp;ound:</source>
         <translation>背景颜色(&amp;o):</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="930"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="799"/>
         <source>G&amp;rid Color:</source>
         <translation>网格颜色(&amp;r):</translation>
     </message>
@@ -5517,7 +5617,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">#808080</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="303"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="172"/>
         <source>&amp;Meta Grid Color:</source>
         <translation>元网格颜色(&amp;M):</translation>
     </message>
@@ -5526,7 +5626,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">#404040</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="408"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="277"/>
         <source>S&amp;elected Color:</source>
         <translation>选中颜色(&amp;e):</translation>
     </message>
@@ -5551,19 +5651,17 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">#739373</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="198"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="67"/>
         <source>&amp;Highlighted Color:</source>
         <translation>高亮颜色(&amp;H)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="117"/>
         <source>Fontsize</source>
-        <translation>字体大小</translation>
+        <translation type="obsolete">字体大小</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="170"/>
         <source>Statusbar:</source>
-        <translation>状态栏:</translation>
+        <translation type="obsolete">状态栏:</translation>
     </message>
     <message>
         <source>5</source>
@@ -5602,7 +5700,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">14</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1293"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1343"/>
         <source>Graphic View</source>
         <translation>图形视图</translation>
     </message>
@@ -5611,22 +5709,22 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">显示大十字光标(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1450"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1352"/>
         <source>Alt+S</source>
         <translation>Alt+S</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1490"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1430"/>
         <source>A&amp;utomatically scale grid</source>
         <translation>自动缩放网格(&amp;u)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1493"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1433"/>
         <source>Alt+U</source>
         <translation>Alt+U</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1336"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1500"/>
         <source>Number of p&amp;review entities:</source>
         <translation>预览实体数目(&amp;r):</translation>
     </message>
@@ -5655,7 +5753,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">800</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1349"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1440"/>
         <source>Minimal Grid Spacing (px):</source>
         <translation>最小网格间距(像素):</translation>
     </message>
@@ -5688,460 +5786,480 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">#FF00FF</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="513"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="382"/>
         <source>St&amp;art Handle Color:</source>
         <translation>首点图示颜色（&amp;a)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="818"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="687"/>
         <source>&amp;Handle Color:</source>
         <translation>标识颜色（＆H）</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="920"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="789"/>
         <source>&amp;End Handle Color:</source>
         <translation>末点标识颜色 （＆E）</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="98"/>
-        <source>Splash Window</source>
-        <translation type="unfinished"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="58"/>
+        <source>Graphic Colors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="84"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="189"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="294"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="415"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="507"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="599"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="701"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="816"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="918"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1182"/>
+        <source>Aquamarine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="89"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="194"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="299"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="420"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="512"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="604"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="706"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="821"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="923"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1187"/>
+        <source>Azure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="99"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="204"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="309"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="430"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="522"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="614"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="716"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="831"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="933"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1197"/>
+        <source>DeepSkyBlue</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="104"/>
-        <source>Display Splash</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="189"/>
-        <source>Graphic Colors</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="215"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="320"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="425"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="546"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="638"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="730"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="832"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="947"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1049"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1523"/>
-        <source>Aquamarine</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="220"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="325"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="430"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="551"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="643"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="735"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="837"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="952"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1054"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1528"/>
-        <source>Azure</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="230"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="335"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="440"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="561"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="653"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="745"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="847"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="962"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1064"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1538"/>
-        <source>DeepSkyBlue</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="235"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="340"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="445"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="566"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="658"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="750"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="852"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="967"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1069"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1543"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="209"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="314"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="435"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="527"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="619"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="721"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="836"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="938"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1202"/>
         <source>DodgerBlue</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="240"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="345"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="450"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="571"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="663"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="755"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="857"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="972"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1074"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1548"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="109"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="214"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="319"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="440"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="532"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="624"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="726"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="943"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1207"/>
         <source>Gray</source>
         <translation type="unfinished">灰</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="245"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="350"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="455"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="576"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="668"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="760"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="862"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="977"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1079"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1553"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="114"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="219"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="324"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="445"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="537"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="629"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="731"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="846"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="948"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1212"/>
         <source>HoneyDew</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="250"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="355"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="460"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="581"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="673"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="765"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="867"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="982"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1084"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1558"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="119"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="224"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="329"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="450"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="542"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="634"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="736"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="851"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="953"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1217"/>
         <source>Lavender</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="255"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="360"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="465"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="586"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="678"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="770"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="872"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="987"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1089"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1563"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="124"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="229"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="334"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="455"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="547"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="639"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="741"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="856"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="958"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1222"/>
         <source>LightGrey</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="260"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="365"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="470"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="591"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="683"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="775"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="877"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="992"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1094"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1568"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="129"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="234"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="339"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="460"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="552"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="644"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="746"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="861"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="963"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1227"/>
         <source>Navy</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="265"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="370"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="475"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="596"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="688"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="780"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="882"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="997"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1099"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1573"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="134"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="239"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="344"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="465"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="557"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="649"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="751"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="866"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="968"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1232"/>
         <source>PaleGreen</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="270"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="375"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="480"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="601"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="693"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="785"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="887"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1002"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1104"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1578"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="139"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="244"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="349"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="470"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="562"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="654"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="756"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="871"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="973"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1237"/>
         <source>Pink</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="275"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="380"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="485"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="606"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="698"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="790"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="892"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1007"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1109"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1583"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="144"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="249"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="354"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="475"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="567"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="659"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="761"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="876"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="978"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1242"/>
         <source>Salmon</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="280"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="385"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="490"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="611"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="703"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="795"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="897"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1012"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1114"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1588"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="149"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="254"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="359"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="480"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="572"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="664"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="766"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="881"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="983"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1247"/>
         <source>Silver</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="285"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="390"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="495"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="616"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="708"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="800"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="902"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1017"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1119"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1593"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="154"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="259"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="364"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="485"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="577"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="669"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="771"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="886"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="988"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1252"/>
         <source>Violet</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="290"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="395"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="500"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="621"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="713"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="805"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="907"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1022"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1124"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1598"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="159"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="264"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="369"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="490"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="582"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="674"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="776"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="891"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="993"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1257"/>
         <source>Wheat</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="295"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="400"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="505"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="626"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="718"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="810"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="912"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1027"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1129"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1603"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="164"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="269"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="374"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="495"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="587"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="679"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="781"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="896"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="998"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1262"/>
         <source>White</source>
         <translation type="unfinished">白</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1035"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="904"/>
         <source>Snap indicator:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1409"/>
-        <source>Anti-aliasing</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1416"/>
-        <source>Scrollbars</source>
-        <translation type="unfinished"/>
+        <source>Anti-aliasing</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1424"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1423"/>
+        <source>Scrollbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1360"/>
         <source>Crosshair</source>
         <translation type="unfinished">光标</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1429"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1365"/>
         <source>Crosshair2</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1434"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1370"/>
         <source>Isometric</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1439"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1375"/>
         <source>Spiderweb</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1447"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1349"/>
         <source>Snap indicator lines</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1457"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1383"/>
         <source>Snap indicator shape</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1465"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1391"/>
         <source>Circle</source>
         <translation type="unfinished">圆</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1470"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1396"/>
         <source>Point</source>
         <translation type="unfinished">点</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1475"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1401"/>
         <source>Square</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1483"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1409"/>
         <source>Hide cursor when snapping</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1503"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1162"/>
         <source>GUI Colors</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1512"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1171"/>
         <source>Layer/ Block Selection:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1632"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1554"/>
         <source>&amp;Paths</source>
         <translation>路径(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1638"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1560"/>
         <source>Custom Toolbar:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1648"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1570"/>
         <source>Translations:</source>
         <translation>翻译:</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1658"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1580"/>
         <source>Hatch Patterns:</source>
         <translation>填充样式:</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1668"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1590"/>
         <source>Fonts:</source>
         <translation>字体:</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1678"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1600"/>
         <source>Scripts:</source>
         <translation>脚本:</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1688"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1610"/>
         <source>Part Libraries:</source>
         <translation>零件库:</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1698"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1620"/>
         <source>Template:</source>
         <translation>模板</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1775"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1697"/>
         <source>&amp;Defaults</source>
         <translation>默认(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1793"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1703"/>
+        <source>Startup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1709"/>
+        <source>Display loading screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1723"/>
+        <source>Start with main window maximized</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1730"/>
+        <source>Enable CAD dockwidgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1737"/>
+        <source>Enable CAD toolbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1744"/>
+        <source>Keycode mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1820"/>
         <source>Defaults for new drawings</source>
         <translation>新图纸默认设置</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1805"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1832"/>
         <source>&amp;Unit:</source>
         <translation>单位(&amp;U):</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1818"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1845"/>
         <source>Drawing unit.</source>
         <translation>绘图单位</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1840"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1867"/>
         <source>Program Defaults</source>
         <translation>程序默认</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1880"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1907"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activation a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities are modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1883"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1910"/>
         <source>Modify layer of selected entities, at  layer activation</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1890"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1716"/>
         <source>Start in tab mode</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1929"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1767"/>
         <source>Clear Settings</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1941"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1779"/>
         <source>restores program geometry/layout to original state</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1944"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1782"/>
         <source>Layout</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1957"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1795"/>
         <source>restores the program to its original state</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1960"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1798"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Time between automatc saving of thedocument in minutes.</source>
         <translation type="obsolete">文档自动保存时间间隔(分钟)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1848"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1885"/>
         <source>Auto save time:</source>
         <translation>自动保存时间:</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1855"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1892"/>
         <source>Time between automatic saving of the document in minutes.</source>
         <translation>自动保存时间间隔,以分钟为单位</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1870"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1873"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation>若设置, LibreCAD会自动生成当前图形的备份.</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1873"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1876"/>
         <source>Auto backup</source>
         <translation>自动备份</translation>
     </message>
@@ -6162,12 +6280,12 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">Esc</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="290"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="292"/>
         <source>Preferences</source>
         <translation>选项</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="291"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="293"/>
         <source>Please restart the application to apply all changes.</source>
         <translation>请重新启动程序应用所有更改.</translation>
     </message>
@@ -6177,57 +6295,57 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="40"/>
         <source>Export as MakerCAM SVG</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="49"/>
         <source>Layers</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="63"/>
-        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe ("display: none;" or "visibility: hidden;").</source>
-        <translation type="unfinished"/>
+        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="73"/>
         <source>Export invisible layers</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="80"/>
         <source>Export visible construction layers</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="92"/>
         <source>Blocks</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="106"/>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks, because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="116"/>
         <source>Convert blocks to safe inline SVG content</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="131"/>
         <source>Ellipses / Ellipse arcs</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="145"/>
-        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the "transform" attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation type="unfinished"/>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message utf8="true">
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="155"/>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6800,7 +6918,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message utf8="true">
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="803"/>
         <source>Diameter (⌀)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message utf8="true">
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="808"/>
@@ -7472,7 +7590,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
 <context>
     <name>QG_FileDialog</name>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="91"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="87"/>
         <source>Drawing Exchange DXF 2000 %1</source>
         <translation>DXF 2000格式文件 %1</translation>
     </message>
@@ -7481,79 +7599,79 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">新DXF文件 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="93"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="89"/>
         <source>Drawing Exchange DXF R12 %1</source>
         <translation>DXF R12文件 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="96"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="92"/>
         <source>LFF Font %1</source>
         <translation>LFF字体 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="100"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="96"/>
         <source>QCad Font %1</source>
         <translation>QCad字体%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="101"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="97"/>
         <source>Jww Drawing %1</source>
         <translation>Jww文件%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="94"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="90"/>
         <source>Drawing Exchange %1</source>
         <translation>DXF文件 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="89"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="85"/>
         <source>Drawing Exchange DXF 2007 %1</source>
         <translation>DXF2007文件%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="90"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="86"/>
         <source>Drawing Exchange DXF 2004 %1</source>
         <translation>DXF2004文件%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="92"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="88"/>
         <source>Drawing Exchange DXF R14 %1</source>
         <translation>DXF R14 文件%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="98"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="94"/>
         <source>dwg Drawing %1</source>
         <translation>dwg制图文件 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="102"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="98"/>
         <source>QCad 1.x file %1</source>
         <translation>QCad 1.x 文件 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="105"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="101"/>
         <source>Block</source>
         <comment>block file</comment>
         <translation>图块</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="108"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="104"/>
         <source>Drawing</source>
         <comment>drawing file</comment>
         <translation>制图</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="150"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="147"/>
         <source>Open %1</source>
         <translation>打开%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="234"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="219"/>
         <source>Untitled</source>
         <translation>未命名</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="245"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="230"/>
         <source>Save %1 As</source>
         <translation>保存%1为</translation>
     </message>
@@ -7834,12 +7952,12 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="33"/>
         <source>Construction Layer</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="46"/>
@@ -7937,22 +8055,22 @@ The contents of a Help Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="451"/>
         <source>Edit Layer &amp;Attributes</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="453"/>
         <source>Toggle Layer &amp;Visibility</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="455"/>
         <source>Toggle Layer &amp;Printing</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="457"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Edit Layer</source>
@@ -8223,7 +8341,7 @@ The contents of a Help Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="85"/>
         <source>Dot (tiny)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="86"/>
@@ -8243,7 +8361,7 @@ The contents of a Help Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="89"/>
         <source>Dash (tiny)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="90"/>
@@ -8263,7 +8381,7 @@ The contents of a Help Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="93"/>
         <source>Dash Dot (tiny)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="94"/>
@@ -8283,7 +8401,7 @@ The contents of a Help Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="97"/>
         <source>Divide (tiny)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="98"/>
@@ -8303,7 +8421,7 @@ The contents of a Help Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="101"/>
         <source>Center (tiny)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="102"/>
@@ -8323,7 +8441,7 @@ The contents of a Help Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="105"/>
         <source>Border (tiny)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="106"/>
@@ -8374,23 +8492,23 @@ The contents of a Help Layer should not appear in printout.</source>
         <translation>鼠标</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_mousewidget.ui" line="76"/>
+        <location filename="../src/ui/forms/qg_mousewidget.ui" line="71"/>
         <source>Right</source>
         <translation>右键</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_mousewidget.ui" line="118"/>
+        <location filename="../src/ui/forms/qg_mousewidget.ui" line="108"/>
         <source>Left</source>
         <translation>左键</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_mousewidget.ui" line="146"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <location filename="../src/ui/forms/qg_mousewidget.ui" line="136"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>...</source>
@@ -8491,7 +8609,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.cpp" line="103"/>
         <source>wrong action type</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8560,40 +8678,40 @@ p, li { white-space: pre-wrap; }
         <translation>选择</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_selectionwidget.ui" line="80"/>
+        <location filename="../src/ui/forms/qg_selectionwidget.ui" line="74"/>
         <source>Selected</source>
         <translation>选择</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_selectionwidget.ui" line="114"/>
+        <location filename="../src/ui/forms/qg_selectionwidget.ui" line="102"/>
         <source>Total Length</source>
         <translation>总长</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_selectionwidget.ui" line="139"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <location filename="../src/ui/forms/qg_selectionwidget.ui" line="121"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;选中实体数&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;选中实体数&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_selectionwidget.ui" line="177"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <location filename="../src/ui/forms/qg_selectionwidget.ui" line="153"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;选中实体总长&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;选中实体总长&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Selected Entities:</source>
@@ -9012,10 +9130,10 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1391"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1542"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1684"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1718"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1282"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1434"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1577"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1611"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="170"/>
         <source>Warning</source>
         <translation>警告</translation>
@@ -9027,8 +9145,8 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="86"/>
-        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
-        <translation>图层"%1"已存在. 请另选名称.</translation>
+        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
+        <translation>图层&quot;%1&quot;已存在. 请另选名称.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="249"/>
@@ -9037,19 +9155,19 @@ p, li { white-space: pre-wrap; }
         <translation>删除图层</translation>
     </message>
     <message>
-        <source>Layer "%1" and all entities on it will be removed.</source>
-        <translation type="obsolete">图层"%1"及其上所有实体将被删除.</translation>
+        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
+        <translation type="obsolete">图层&quot;%1&quot;及其上所有实体将被删除.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="250"/>
-        <source>Layer "%1" and all entities on it will be removed.
+        <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="262"/>
-        <source>Layer "%1" can never be removed.</source>
-        <translation>图层"%1"无法删除.</translation>
+        <source>Layer &quot;%1&quot; can never be removed.</source>
+        <translation>图层&quot;%1&quot;无法删除.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="307"/>
@@ -9063,8 +9181,8 @@ This action can NOT be undone.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="423"/>
-        <source>Block "%1" and all its entities will be removed.</source>
-        <translation>图块"%1"及其所有实体将被删除.</translation>
+        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
+        <translation>图块&quot;%1&quot;及其所有实体将被删除.</translation>
     </message>
 </context>
 <context>
@@ -9200,12 +9318,12 @@ This action can NOT be undone.</source>
         <translation>秒差距</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="301"/>
+        <location filename="../src/main/main.cpp" line="217"/>
         <source>Loading..</source>
         <translation>加载..</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="329"/>
+        <location filename="../src/main/main.cpp" line="279"/>
         <source>Loading...</source>
         <translation>加载...</translation>
     </message>
@@ -9214,7 +9332,7 @@ This action can NOT be undone.</source>
         <translation type="obsolete">库加载路径..</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="347"/>
+        <location filename="../src/main/main.cpp" line="295"/>
         <source>Loading File %1..</source>
         <translation>加载文件 %1..</translation>
     </message>
@@ -9348,25 +9466,25 @@ This action can NOT be undone.</source>
         <translation>TIFF格式</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="337"/>
-        <location filename="../src/ui/qg_filedialog.cpp" line="399"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="310"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="363"/>
         <source>Save Drawing As</source>
         <translation>图纸另存为</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="400"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="364"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1已存在.
 确定要覆盖吗?</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="465"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="429"/>
         <source>Old Drawing Exchange %1</source>
         <translation>旧DXF文件%1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="466"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="430"/>
         <source>Drawing Exchange %1</source>
         <translation>图形交换 %1</translation>
     </message>
@@ -9375,54 +9493,54 @@ Do you want to replace it?</source>
         <translation type="obsolete">新DXF文件 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="469"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="433"/>
         <source>dwg Drawing %1</source>
         <translation>DWG制图 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="471"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="435"/>
         <source>QCad 1.x file %1</source>
         <translation>QCad 1.x 文件 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="472"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="436"/>
         <source>LFF Font %1</source>
         <translation>LFF字体 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="473"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="437"/>
         <source>Font %1</source>
         <translation>字体 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="474"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="438"/>
         <source>Jww %1</source>
         <translation>Jww %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="498"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="462"/>
         <source>Open Drawing</source>
         <translation>打开图纸</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1347"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1357"/>
         <source>enter an integer number</source>
         <translation>输入整数</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1351"/>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1373"/>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1390"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1361"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1383"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1400"/>
         <source>LibreCAD query</source>
         <translation>LibreCAD查询</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1369"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1379"/>
         <source>enter a number</source>
         <translation>输入数值</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1386"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1396"/>
         <source>enter text</source>
         <translation>输入文字</translation>
     </message>
@@ -9436,74 +9554,74 @@ Do you want to replace it?</source>
         <translation>已打开DWG文件，版本 %1</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3982"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3954"/>
         <source>unknown error opening dwg file</source>
         <translation>打开DWG文件时出现未知错误</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3986"/>
-        <source>can't open this dwg file</source>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3958"/>
+        <source>can&apos;t open this dwg file</source>
         <translation>不能打开本DWG文件</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3990"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3962"/>
         <source>unsupported dwg version</source>
         <translation>未支持的DWG版本</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3994"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3966"/>
         <source>error reading file metadata in dwg file</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3998"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3970"/>
         <source>error reading file header in dwg file</source>
         <translation>读取DWG文件头是出错</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4002"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3974"/>
         <source>error reading header vars in dwg file</source>
         <translation>读取DWG头参数是出错</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4006"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3978"/>
         <source>error reading classes in dwg file</source>
         <translation>读取DWG文件类时出错</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4010"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3982"/>
         <source>error reading offsets in dwg file</source>
         <translation>读取DWG文件偏移量出错</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4014"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3986"/>
         <source>error reading tables in dwg file</source>
         <translation>读取DWG文件表格出错</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4018"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3990"/>
         <source>error reading blocks in dwg file</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4022"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3994"/>
         <source>error reading entities in dwg file</source>
         <translation>读取DWG文件实体出错</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4026"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3998"/>
         <source>error reading objects in dwg file</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_graphic.cpp" line="338"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1562"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="69"/>
@@ -9514,12 +9632,12 @@ Do you want to replace it?</source>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="70"/>
         <source>experimental, save your work first.
 Continue?</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="51"/>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="84"/>
@@ -9567,37 +9685,37 @@ Continue?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="107"/>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="108"/>
         <source>fhl</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="113"/>
         <source>spline</source>
         <comment>draw spline</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="114"/>
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="119"/>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="120"/>
         <source>stp</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="125"/>
@@ -9627,73 +9745,73 @@ Continue?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="133"/>
         <source>ptp</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="134"/>
         <source>pp</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="139"/>
         <source>bisect</source>
         <comment>angle bisector</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="140"/>
         <source>bi</source>
         <comment>angle bisector</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="145"/>
         <source>tangentpc</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="146"/>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="151"/>
         <source>perp</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="152"/>
         <source>ortho</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="157"/>
         <source>vertical</source>
         <comment>vertical line</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="158"/>
         <source>ver</source>
         <comment>vertical line</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="163"/>
         <source>horizontal</source>
         <comment>horizontal line</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="164"/>
         <source>hor</source>
         <comment>horizontal line</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="169"/>
@@ -9723,13 +9841,13 @@ Continue?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="177"/>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="178"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="183"/>
@@ -9759,7 +9877,7 @@ Continue?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="196"/>
         <source>circle2</source>
         <comment>circle 2 points</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="197"/>
@@ -9771,7 +9889,7 @@ Continue?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="202"/>
         <source>circle3</source>
         <comment>circle 3 points</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="203"/>
@@ -9783,55 +9901,55 @@ Continue?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="208"/>
         <source>circlecr</source>
         <comment>circle with center and radius</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="209"/>
         <source>cc</source>
         <comment>circle with center and radius</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="214"/>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="215"/>
         <source>ct3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="220"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="221"/>
         <source>ei</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="222"/>
         <source>ie</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="227"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="228"/>
         <source>ha</source>
         <comment>draw hatch</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="233"/>
@@ -9843,7 +9961,7 @@ Continue?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="234"/>
         <source>mtxt</source>
         <comment>draw mtext</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="239"/>
@@ -9855,7 +9973,7 @@ Continue?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="240"/>
         <source>txt</source>
         <comment>draw text</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="245"/>
@@ -9885,7 +10003,7 @@ Continue?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="253"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="254"/>
@@ -9897,7 +10015,7 @@ Continue?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="259"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="260"/>
@@ -9909,7 +10027,7 @@ Continue?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="265"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="266"/>
@@ -9921,7 +10039,7 @@ Continue?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="271"/>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="272"/>
@@ -9969,7 +10087,7 @@ Continue?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="295"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="296"/>
@@ -9981,7 +10099,7 @@ Continue?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="301"/>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="302"/>
@@ -9993,7 +10111,7 @@ Continue?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="307"/>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="308"/>
@@ -10005,13 +10123,13 @@ Continue?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="313"/>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="314"/>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="315"/>
@@ -10023,49 +10141,49 @@ Continue?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="320"/>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="321"/>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="326"/>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="327"/>
         <source>dimradius</source>
         <comment>dimension - radius</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="332"/>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="333"/>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="334"/>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="339"/>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="340"/>
@@ -10083,55 +10201,55 @@ Continue?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="351"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="352"/>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="357"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="358"/>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="363"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="364"/>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="369"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="370"/>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="375"/>
         <source>move</source>
         <comment>modify - move (copy)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="376"/>
@@ -10143,13 +10261,13 @@ Continue?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="381"/>
         <source>bevel</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="382"/>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="383"/>
@@ -10161,783 +10279,801 @@ Continue?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="388"/>
         <source>fillet</source>
         <comment>modify - fillet</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="389"/>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="394"/>
         <source>divide</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="395"/>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="396"/>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="401"/>
-        <source>mirror</source>
-        <comment>modify -  mirror</comment>
-        <translation type="unfinished"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="397"/>
+        <source>di</source>
+        <comment>modify - divide (cut)</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="402"/>
+        <source>mirror</source>
+        <comment>modify -  mirror</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/rs_commands.cpp" line="403"/>
         <source>mi</source>
         <comment>modify -  mirror</comment>
         <translation type="unfinished">mi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="407"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="408"/>
         <source>revert</source>
         <comment>modify -  revert direction</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="408"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="409"/>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
         <translation type="unfinished">rev</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="413"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="414"/>
         <source>rotate</source>
         <comment>modify - rotate</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="414"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="415"/>
         <source>ro</source>
         <comment>modify - rotate</comment>
         <translation type="unfinished">ro</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="419"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="420"/>
         <source>scale</source>
         <comment>modify - scale</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="420"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="421"/>
         <source>sz</source>
         <comment>modify - scale</comment>
         <translation type="unfinished">sz</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="425"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="426"/>
         <source>trim</source>
         <comment>modify - trim (extend)</comment>
         <translation type="unfinished">修剪</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="426"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="427"/>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
         <translation type="unfinished">tm</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="431"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="432"/>
         <source>trim2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="432"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="433"/>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="437"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="434"/>
+        <source>t2</source>
+        <comment>modify - multi trim (extend)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/rs_commands.cpp" line="439"/>
         <source>lengthen</source>
         <comment>modify - lengthen</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="438"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="440"/>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="443"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="445"/>
         <source>stretch</source>
         <comment>modify - stretch</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="444"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="446"/>
         <source>ss</source>
         <comment>modify - stretch</comment>
         <translation type="unfinished">ss</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="449"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="451"/>
         <source>delete</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="450"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="452"/>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
         <translation type="unfinished">er</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="451"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="453"/>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="456"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="458"/>
         <source>explode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="457"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="459"/>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
         <translation type="unfinished">xp</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="462"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="464"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="463"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="465"/>
         <source>os</source>
         <comment>snap - free</comment>
         <translation type="unfinished">os</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="464"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="466"/>
         <source>sf</source>
         <comment>snap - free</comment>
         <translation type="unfinished">sf</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="469"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="471"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="470"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="472"/>
         <source>sc</source>
         <comment>snap - center</comment>
         <translation type="unfinished">sc</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="475"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="477"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="476"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="478"/>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
         <translation type="unfinished">sd</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="481"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="483"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="482"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="484"/>
         <source>se</source>
         <comment>snap - end points</comment>
         <translation type="unfinished">se</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="487"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="489"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="488"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="490"/>
         <source>sg</source>
         <comment>snap - grid</comment>
         <translation type="unfinished">sg</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="493"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="495"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="494"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="496"/>
         <source>si</source>
         <comment>snap - intersection</comment>
         <translation type="unfinished">si</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="499"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="501"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="500"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="502"/>
         <source>sm</source>
         <comment>snap - middle points</comment>
         <translation type="unfinished">sm</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="505"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="507"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="506"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="508"/>
         <source>sn</source>
         <comment>snap - on entity</comment>
         <translation type="unfinished">sn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="507"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="509"/>
         <source>np</source>
         <comment>snap - on entity</comment>
         <translation type="unfinished">np</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="512"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="514"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="513"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="515"/>
         <source>rz</source>
         <comment>set relative zero position</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="518"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="520"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="519"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="521"/>
         <source>sa</source>
         <comment>Select all entities</comment>
         <translation type="unfinished">sa</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="524"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="526"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="525"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="527"/>
         <source>tn</source>
         <comment>deselect all entities</comment>
         <translation type="unfinished">tn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="530"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="532"/>
         <source>modifyattr</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="531"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="533"/>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="532"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="534"/>
         <source>ma</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="537"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="539"/>
         <source>properties</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="538"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="540"/>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="543"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="541"/>
+        <source>mp</source>
+        <comment>modify properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/rs_commands.cpp" line="546"/>
         <source>distance</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="544"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="547"/>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="545"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="548"/>
         <source>dpp</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="550"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="553"/>
         <source>angle</source>
         <comment>measure angle</comment>
         <translation type="unfinished">角度</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="551"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="554"/>
         <source>ang</source>
         <comment>measure angle</comment>
         <translation type="unfinished">ang</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="556"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="559"/>
         <source>area</source>
         <comment>measure area</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="557"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="560"/>
         <source>ar</source>
         <comment>measure area</comment>
         <translation type="unfinished">ar</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="582"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="602"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="585"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="605"/>
         <source>angle</source>
         <translation type="unfinished">角度</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="583"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="586"/>
         <source>dpi</source>
         <translation type="unfinished">dpi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="584"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="614"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="587"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="617"/>
         <source>close</source>
         <translation type="unfinished">闭合</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="585"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="610"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="588"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="613"/>
         <source>chord length</source>
         <translation type="unfinished">弦长</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="586"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="617"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="589"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="620"/>
         <source>columns</source>
         <translation type="unfinished">列数</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="587"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="590"/>
         <source>columnspacing</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="588"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="625"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="591"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="628"/>
         <source>factor</source>
         <translation type="unfinished">因子</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="589"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="592"/>
         <source>length</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="590"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="593"/>
         <source>length1</source>
         <comment>bevel/fillet lenght1</comment>
         <translation type="unfinished">length1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="591"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="594"/>
         <source>length2</source>
         <comment>bevel/fillet lenght2</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="592"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="595"/>
         <source>number</source>
         <translation type="unfinished">数值</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="593"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="648"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="596"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="651"/>
         <source>radius</source>
         <translation type="unfinished">半径</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="594"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="597"/>
         <source>rows</source>
         <translation type="unfinished">行数</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="595"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="598"/>
         <source>rowspacing</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="596"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="663"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="599"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="666"/>
         <source>through</source>
         <translation type="unfinished">通过</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="597"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="600"/>
         <source>trim</source>
         <translation type="unfinished">修剪</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="603"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="606"/>
         <source>ang</source>
         <comment>angle</comment>
         <translation type="unfinished">ang</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="604"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="607"/>
         <source>an</source>
         <comment>angle</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="606"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="609"/>
         <source>center</source>
         <translation type="unfinished">center</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="607"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="610"/>
         <source>cen</source>
         <comment>center</comment>
         <translation type="unfinished">cen</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="608"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="611"/>
         <source>ce</source>
         <comment>center</comment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="612"/>
-        <source>cl</source>
-        <comment>chord length</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="615"/>
+        <source>cl</source>
+        <comment>chord length</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/rs_commands.cpp" line="618"/>
         <source>c</source>
         <comment>close</comment>
         <translation type="unfinished">c</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="618"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="621"/>
         <source>cols</source>
         <comment>columns</comment>
         <translation type="unfinished">cols</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="619"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="622"/>
         <source>co</source>
         <comment>columns</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="621"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="624"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="622"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="625"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
         <translation type="unfinished">colspacing</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="623"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="626"/>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
         <translation type="unfinished">cs</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="626"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="629"/>
         <source>fact</source>
         <comment>factor</comment>
         <translation type="unfinished">fact</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="627"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="630"/>
         <source>f</source>
         <comment>factor</comment>
         <translation type="unfinished">f</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="629"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="632"/>
         <source>help</source>
         <translation type="unfinished">帮助</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="630"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="633"/>
         <source>?</source>
         <comment>help</comment>
         <translation type="unfinished">?</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="632"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="635"/>
         <source>length</source>
         <comment>length</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="633"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="636"/>
         <source>len</source>
         <comment>length</comment>
         <translation type="unfinished">len</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="634"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="637"/>
         <source>l</source>
         <comment>length</comment>
         <translation type="unfinished">l</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="636"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="639"/>
         <source>length1</source>
         <comment>length1</comment>
         <translation type="unfinished">length1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="637"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="640"/>
         <source>len1</source>
         <comment>length1</comment>
         <translation type="unfinished">len1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="638"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="641"/>
         <source>l1</source>
         <comment>length1</comment>
         <translation type="unfinished">l1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="640"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="643"/>
         <source>length2</source>
         <comment>length2</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="641"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="644"/>
         <source>len2</source>
         <comment>length2</comment>
         <translation type="unfinished">len2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="642"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="645"/>
         <source>l2</source>
         <comment>length2</comment>
         <translation type="unfinished">l2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="644"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="647"/>
         <source>number</source>
         <comment>number</comment>
         <translation type="unfinished">数值</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="645"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="648"/>
         <source>num</source>
         <comment>number</comment>
         <translation type="unfinished">num</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="646"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="649"/>
         <source>n</source>
         <comment>number</comment>
         <translation type="unfinished">n</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="649"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="652"/>
         <source>ra</source>
         <comment>radius</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="651"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="654"/>
         <source>reversed</source>
         <comment>reversed</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="652"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="653"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="655"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="656"/>
         <source>rev</source>
         <comment>reversed</comment>
         <translation type="unfinished">rev</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="655"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="658"/>
         <source>row</source>
         <comment>row</comment>
         <translation type="unfinished">row</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="657"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="660"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="658"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="661"/>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
         <translation type="unfinished">rs</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="660"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="663"/>
         <source>text</source>
         <translation type="unfinished">text</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="661"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="664"/>
         <source>t</source>
         <comment>text</comment>
         <translation type="unfinished">t</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="664"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="667"/>
         <source>t</source>
         <comment>through</comment>
         <translation type="unfinished">t</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="666"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="669"/>
         <source>undo</source>
         <translation type="unfinished">undo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="667"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="670"/>
         <source>u</source>
         <comment>undo</comment>
         <translation type="unfinished">u</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="669"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="672"/>
         <source>redo</source>
         <translation type="unfinished">redo</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="670"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="673"/>
         <source>r</source>
         <comment>redo</comment>
         <translation type="unfinished">r</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="672"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="675"/>
         <source>back</source>
         <translation type="unfinished">返回</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="673"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="676"/>
         <source>b</source>
         <comment>back</comment>
         <translation type="unfinished">b</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="675"/>
-        <source>bw</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="676"/>
-        <source>blackwhite</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="677"/>
-        <source>color</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="678"/>
-        <source>paperoffset</source>
-        <translation type="unfinished"/>
+        <source>bw</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="679"/>
+        <source>blackwhite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/rs_commands.cpp" line="680"/>
+        <source>color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/rs_commands.cpp" line="681"/>
+        <source>paperoffset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/rs_commands.cpp" line="682"/>
         <source>graphoffset</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="810"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="813"/>
         <source>Command: %1 (%2)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="818"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="821"/>
         <source>RS_Commands:: command not found: %1</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="854"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="877"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="857"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="880"/>
         <source>Command not found: %1</source>
         <translation type="unfinished">命令未找到：%1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="861"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="864"/>
         <source>Accepted keycode: %1</source>
         <translation type="unfinished">已接受命令：％1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="917"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="920"/>
         <source>Available commands:</source>
         <translation type="unfinished">可用命令:</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="931"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="934"/>
         <source>cal</source>
         <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="932"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="935"/>
         <source>calculate</source>
         <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/lib/gui/rs_eventhandler.cpp" line="235"/>
         <source>Calculator error for input: </source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11598,7 +11734,7 @@ Continue?</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="107"/>
         <source>radius=%1 is invalid</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="188"/>
@@ -11738,34 +11874,34 @@ Continue?</source>
         <translation type="obsolete">过一点的公切圆</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="336"/>
+        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="339"/>
         <source>Specify a line/arc/circle</source>
         <translation>指定一线/弧/圆</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="337"/>
+        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="340"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="341"/>
+        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="344"/>
         <source>Specify the another arc/circle</source>
         <translation>指定另一弧/圆</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="342"/>
-        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="347"/>
-        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="351"/>
+        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="345"/>
+        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="350"/>
+        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="354"/>
         <source>Back</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="346"/>
+        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="349"/>
         <source>Specify a point on the tangent circle</source>
         <translation>指定切圆上一点</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="350"/>
+        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="353"/>
         <source>Select the center of the tangent circle</source>
         <translation>选择切圆圆心</translation>
     </message>
@@ -11973,12 +12109,12 @@ Continue?</source>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="205"/>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="220"/>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="224"/>
@@ -12095,7 +12231,7 @@ Continue?</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="174"/>
         <source>Total hatch area = %1</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="182"/>
@@ -12261,7 +12397,7 @@ Continue?</source>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="251"/>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="288"/>
@@ -12630,28 +12766,28 @@ Continue?</source>
         <translation type="obsolete">正交</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="255"/>
-        <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="272"/>
+        <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="257"/>
+        <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="274"/>
         <source>Not a valid expression</source>
         <translation>无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="312"/>
+        <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="314"/>
         <source>Select base entity</source>
         <translation>选择基准实体</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="313"/>
+        <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="315"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="316"/>
+        <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="318"/>
         <source>Specify position</source>
         <translation>指定位置</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="317"/>
+        <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="319"/>
         <source>Back</source>
         <translation>返回</translation>
     </message>
@@ -12895,12 +13031,12 @@ Continue?</source>
         <translation type="obsolete">剪切(&amp;t)</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actioneditcopy.cpp" line="98"/>
+        <location filename="../src/actions/rs_actioneditcopy.cpp" line="104"/>
         <source>Specify reference point</source>
         <translation>指定参照点</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actioneditcopy.cpp" line="99"/>
+        <location filename="../src/actions/rs_actioneditcopy.cpp" line="105"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -13284,8 +13420,8 @@ Continue?</source>
     </message>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="77"/>
-        <source>Cannot open file '%1'</source>
-        <translation>无法打开文件 '%1'</translation>
+        <source>Cannot open file &apos;%1&apos;</source>
+        <translation>无法打开文件 &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="185"/>
@@ -13393,7 +13529,7 @@ Continue?</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="109"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="117"/>
@@ -13477,27 +13613,27 @@ Continue?</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="107"/>
         <source>Parent of second entity is nullptr</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="110"/>
         <source>One of the chosen entities is nullptr</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="137"/>
         <source>Parent of first entity is nullptr</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="141"/>
         <source>First entity is nullptr</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="153"/>
         <source>Second entity is nullptr</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="166"/>
@@ -13739,33 +13875,33 @@ Continue?</source>
         <translation type="obsolete">圆角(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="233"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="235"/>
         <source>Not a valid expression</source>
         <translation>无效表达式</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="319"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="321"/>
         <source>Specify first entity</source>
         <translation>指定第一实体</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="320"/>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="324"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="322"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="326"/>
         <source>Back</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="323"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="325"/>
         <source>Specify second entity</source>
         <translation>指定第二实体</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="327"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="329"/>
         <source>Enter radius:</source>
         <translation>输入半径:</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="328"/>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="330"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -13966,7 +14102,7 @@ Continue?</source>
         <translation type="obsolete">添加节点(&amp;A)</translation>
     </message>
     <message>
-        <source>Add polyline's node</source>
+        <source>Add polyline&apos;s node</source>
         <translation type="obsolete">添加多段线节点</translation>
     </message>
     <message>
@@ -14002,7 +14138,7 @@ Continue?</source>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="168"/>
-        <source>Specify adding node's point</source>
+        <source>Specify adding node&apos;s point</source>
         <translation>指定添加节点点位</translation>
     </message>
     <message>
@@ -14018,7 +14154,7 @@ Continue?</source>
         <translation type="obsolete">追加节点(&amp;p)</translation>
     </message>
     <message>
-        <source>Append polyline's node</source>
+        <source>Append polyline&apos;s node</source>
         <translation type="obsolete">追加多段线节点</translation>
     </message>
     <message>
@@ -14080,7 +14216,7 @@ Continue?</source>
         <translation type="obsolete">删除节点(&amp;D)</translation>
     </message>
     <message>
-        <source>Delete polyline's node</source>
+        <source>Delete polyline&apos;s node</source>
         <translation type="obsolete">删除多段线节点</translation>
     </message>
     <message>
@@ -14124,7 +14260,7 @@ Continue?</source>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="162"/>
-        <source>Specify deleting node's point</source>
+        <source>Specify deleting node&apos;s point</source>
         <translation>指定删除节点点位</translation>
     </message>
     <message>
@@ -14244,7 +14380,7 @@ Continue?</source>
         <translation type="obsolete">从现有分段创建多段线</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="289"/>
+        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="285"/>
         <source>No Entity found.</source>
         <translation>未发现实体.</translation>
     </message>
@@ -14253,7 +14389,7 @@ Continue?</source>
         <translation type="obsolete">实体必须为线，弧，或者多线段</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="292"/>
+        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="288"/>
         <source>Entity can not be a closed polyline.</source>
         <translation>实体不能是封闭多线段</translation>
     </message>
@@ -14262,17 +14398,17 @@ Continue?</source>
         <translation type="obsolete">实体类型必须为直线或圆弧.</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="68"/>
+        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="66"/>
         <source>Polyline created</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="333"/>
+        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="329"/>
         <source>Choose one of the segments on the original polyline</source>
         <translation>选择原始多段线上的某一分段</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="334"/>
+        <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="330"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -14284,7 +14420,7 @@ Continue?</source>
         <translation type="obsolete">修剪分段(&amp;T)</translation>
     </message>
     <message>
-        <source>Trim polyline's segments</source>
+        <source>Trim polyline&apos;s segments</source>
         <translation type="obsolete">修剪多段线分段</translation>
     </message>
     <message>
@@ -14347,47 +14483,47 @@ Continue?</source>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="124"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="127"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="144"/>
         <source>Printout in Black/White</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="149"/>
         <source>Printout in color</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="154"/>
         <source>Printout offset in graph coordinates</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="159"/>
         <source>Printout offset in paper coordinates</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="164"/>
         <source>: select printout offset coordinates</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="165"/>
         <source>type in offset from command line to offset printout</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="173"/>
-        <source>Printout offset ignores relative zero. Ignoring '@'</source>
-        <translation type="unfinished"/>
+        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="261"/>
@@ -14398,113 +14534,113 @@ Continue?</source>
 <context>
     <name>RS_ActionSelect</name>
     <message>
-        <location filename="../src/actions/rs_actionselect.cpp" line="85"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="75"/>
         <source>No entity selected!</source>
         <translation>未选任何实体！</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionselect.cpp" line="93"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="83"/>
         <source>Select to modify attributes</source>
         <translation>选择实体修改属性</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionselect.cpp" line="93"/>
-        <location filename="../src/actions/rs_actionselect.cpp" line="96"/>
-        <location filename="../src/actions/rs_actionselect.cpp" line="99"/>
-        <location filename="../src/actions/rs_actionselect.cpp" line="102"/>
-        <location filename="../src/actions/rs_actionselect.cpp" line="105"/>
-        <location filename="../src/actions/rs_actionselect.cpp" line="108"/>
-        <location filename="../src/actions/rs_actionselect.cpp" line="111"/>
-        <location filename="../src/actions/rs_actionselect.cpp" line="114"/>
-        <location filename="../src/actions/rs_actionselect.cpp" line="117"/>
-        <location filename="../src/actions/rs_actionselect.cpp" line="120"/>
-        <location filename="../src/actions/rs_actionselect.cpp" line="123"/>
-        <location filename="../src/actions/rs_actionselect.cpp" line="126"/>
-        <location filename="../src/actions/rs_actionselect.cpp" line="129"/>
-        <location filename="../src/actions/rs_actionselect.cpp" line="132"/>
-        <location filename="../src/actions/rs_actionselect.cpp" line="135"/>
-        <location filename="../src/actions/rs_actionselect.cpp" line="138"/>
-        <location filename="../src/actions/rs_actionselect.cpp" line="141"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="83"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="86"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="89"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="92"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="95"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="98"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="101"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="104"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="107"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="110"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="113"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="116"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="119"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="122"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="125"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="128"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="131"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionselect.cpp" line="96"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="86"/>
         <source>Select entities to order</source>
         <translation>选择要排序的实体</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionselect.cpp" line="99"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="89"/>
         <source>Select to delete</source>
         <translation>选择要删除的实体</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionselect.cpp" line="102"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="92"/>
         <source>Select to delete immediately</source>
         <translation>选择实体立即删除</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionselect.cpp" line="105"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="95"/>
         <source>Select to move</source>
         <translation>选择实体进行移动</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionselect.cpp" line="108"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="98"/>
         <source>Select to copy</source>
         <translation>选择复制</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionselect.cpp" line="111"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="101"/>
         <source>Select to cut</source>
         <translation>选择剪切</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionselect.cpp" line="114"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="104"/>
         <source>Select to revert direction</source>
         <translation>选择实体来返转方向</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionselect.cpp" line="117"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="107"/>
         <source>Select to rotate</source>
         <translation>选择实体进行旋转</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionselect.cpp" line="120"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="110"/>
         <source>Select to scale</source>
         <translation>选择实体进行缩放</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionselect.cpp" line="123"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="113"/>
         <source>Select to mirror</source>
         <translation>选择实体进行镜像</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionselect.cpp" line="126"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="116"/>
         <source>Select to move and rotate</source>
         <translation>选择实体进行移动和旋转</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionselect.cpp" line="129"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="119"/>
         <source>Select to create offset</source>
         <translation>选择偏移基于的实体</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionselect.cpp" line="132"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="122"/>
         <source>Select for two axis rotation</source>
         <translation>选择实体进行两中心旋转</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionselect.cpp" line="135"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="125"/>
         <source>Select to explode text</source>
         <translation>选择拆开文字</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionselect.cpp" line="138"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="128"/>
         <source>Select to explode block</source>
         <translation>选择需要拆开的图块</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionselect.cpp" line="141"/>
+        <location filename="../src/actions/rs_actionselect.cpp" line="131"/>
         <source>Select to create block</source>
         <translation>选择实体创建图块</translation>
     </message>
@@ -15808,7 +15944,7 @@ Continue?</source>
     <message utf8="true">
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="109"/>
         <source>⌀</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message utf8="true">
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="114"/>
@@ -15823,7 +15959,7 @@ Continue?</source>
     <message utf8="true">
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="124"/>
         <source>π</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message utf8="true">
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="129"/>
@@ -16034,7 +16170,7 @@ Continue?</source>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="73"/>
         <source>Number:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linebisectoroptions.ui" line="83"/>
@@ -16067,7 +16203,7 @@ Continue?</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="75"/>
         <source>Undo</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="82"/>
@@ -16100,7 +16236,7 @@ Continue?</source>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="85"/>
         <source>Number:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparalleloptions.ui" line="95"/>
@@ -16118,7 +16254,7 @@ Continue?</source>
     <message>
         <location filename="../src/ui/forms/qg_lineparallelthroughoptions.ui" line="56"/>
         <source>Number:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineparallelthroughoptions.ui" line="66"/>
@@ -16136,7 +16272,7 @@ Continue?</source>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="56"/>
         <source>Number:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygon2options.ui" line="66"/>
@@ -16154,7 +16290,7 @@ Continue?</source>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="56"/>
         <source>Number:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_linepolygonoptions.ui" line="66"/>
@@ -16254,7 +16390,7 @@ Continue?</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="60"/>
         <source>Undo</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80"/>
@@ -16404,7 +16540,7 @@ Continue?</source>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="104"/>
         <source>Undo</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

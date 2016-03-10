@@ -842,8 +842,12 @@
     </message>
     <message>
         <location filename="../plotequation/plot.cpp" line="28"/>
+        <source>plugins_menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Draw</source>
-        <translation>書く</translation>
+        <translation type="obsolete">書く</translation>
     </message>
 </context>
 <context>
