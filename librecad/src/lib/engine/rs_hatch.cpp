@@ -339,7 +339,7 @@ void RS_Hatch::update() {
         }
 
         // getting all intersections of this pattern line with the contour:
-        QList<std::shared_ptr<RS_Vector> > is;
+		QList<RS_Vector> is;
 
 		for(auto loop: entities){
 
@@ -351,9 +351,7 @@ void RS_Hatch::update() {
 
 					for (const RS_Vector& vp: sol){
 						if (vp.valid) {
-							is.append(std::shared_ptr<RS_Vector>(
-										  new RS_Vector(vp)
-										  ));
+							is.append(vp);
 							RS_DEBUG->print("  pattern line intersection: %f/%f",
 											vp.x, vp.y);
 						}
@@ -363,8 +361,8 @@ void RS_Hatch::update() {
 		}
 
 
-        QList<std::shared_ptr<RS_Vector> > is2;//to be filled with sorted intersections
-        is2.append(std::shared_ptr<RS_Vector>(new RS_Vector(startPoint)));
+		QList<RS_Vector> is2;//to be filled with sorted intersections
+		is2.append(startPoint);
 
         // sort the intersection points into is2 (only if there are intersections):
         if(is.size() == 1)
@@ -379,29 +377,29 @@ void RS_Hatch::update() {
             bool done;
             double minDist;
             double dist = 0.0;
-            std::shared_ptr<RS_Vector> av;
-            std::shared_ptr<RS_Vector> v;
-            RS_Vector last = RS_Vector(false);
+			RS_Vector av;
+			RS_Vector v;
+			RS_Vector last{};
             do {
                 done = true;
                 minDist = RS_MAXDOUBLE;
-                av.reset();
+				av.valid = false;
                 for (int i = 0; i < is.size(); ++i) {
                     v = is.at(i);
                     double a;
                     switch(e->rtti()){
                     case RS2::EntityLine:
-                        dist = sp.distanceTo(*v);
+						dist = sp.distanceTo(v);
                         break;
                     case RS2::EntityArc:
                     case RS2::EntityCircle:
-                        a = center.angleTo(*v);
+						a = center.angleTo(v);
                         dist = reversed?
                                     fmod(sa - a + 2.*M_PI,2.*M_PI):
                                     fmod(a - sa + 2.*M_PI,2.*M_PI);
                         break;
                     case RS2::EntityEllipse:
-                        a = ellipse->getEllipseAngle(*v);
+						a = ellipse->getEllipseAngle(v);
                         dist = reversed?
                                     fmod(sa - a + 2.*M_PI,2.*M_PI):
                                     fmod(a - sa + 2.*M_PI,2.*M_PI);
@@ -419,10 +417,10 @@ void RS_Hatch::update() {
                 }
 
                 // copy to sorted list, removing double points
-                if (!done && av.get()) {
-                    if (last.valid==false || last.distanceTo(*av)>RS_TOLERANCE) {
-                        is2.append(std::shared_ptr<RS_Vector>(new RS_Vector(*av)));
-                        last = *av;
+				if (!done && av) {
+					if (last.valid==false || last.distanceTo(av)>RS_TOLERANCE) {
+						is2.append(av);
+						last = av;
                     }
 #if QT_VERSION < 0x040400
                     emu_qt44_removeOne(is, av);
@@ -430,12 +428,12 @@ void RS_Hatch::update() {
                     is.removeOne(av);
 #endif
 
-                    av.reset();
+					av.valid = false;
                 }
             } while(!done);
         }
 
-is2.append(std::shared_ptr<RS_Vector>(new RS_Vector(endPoint)));
+		is2.append(endPoint);
 
         // add small cut lines / arcs to tmp2:
             for (int i = 1; i < is2.size(); ++i) {
@@ -445,15 +443,15 @@ is2.append(std::shared_ptr<RS_Vector>(new RS_Vector(endPoint)));
 
                 if (line) {
 
-					tmp2.addEntity(new RS_Line{&tmp2, *v1, *v2});
+					tmp2.addEntity(new RS_Line{&tmp2, v1, v2});
                 } else if (arc || circle) {
-                    if(fabs(center.angleTo(*v2)-center.angleTo(*v1)) > RS_TOLERANCE_ANGLE)
+					if(fabs(center.angleTo(v2)-center.angleTo(v1)) > RS_TOLERANCE_ANGLE)
                     {//don't create an arc with a too small angle
                         tmp2.addEntity(new RS_Arc(&tmp2,
                                                   RS_ArcData(center,
-                                                             center.distanceTo(*v1),
-                                                             center.angleTo(*v1),
-                                                             center.angleTo(*v2),
+															 center.distanceTo(v1),
+															 center.angleTo(v1),
+															 center.angleTo(v2),
                                                              reversed)));
                     }
 
