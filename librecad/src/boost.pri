@@ -1,3 +1,5 @@
+exists( custom.pro ):include( custom.pro )
+exists( custom.pri ):include( custom.pri )
 
 # Necessary Boost libraries, e. g. BOOST_LIBS = iostreams math_c99 regex
 # XXX: this will not play nice with the win case as-is

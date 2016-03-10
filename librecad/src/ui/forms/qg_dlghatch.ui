@@ -226,9 +226,9 @@
   </connection>
   <connection>
    <sender>cbPattern</sender>
-   <signal>patternChanged(RS_Pattern*)</signal>
+   <signal>patternChanged()</signal>
    <receiver>QG_DlgHatch</receiver>
-   <slot>updatePreview(RS_Pattern*)</slot>
+   <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>20</x>

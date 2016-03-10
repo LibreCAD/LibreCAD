@@ -31,14 +31,6 @@
 #include "rs_debug.h"
 
 /**
- * Default constructor.
- */
-RS_Undo::RS_Undo():
-	undoPointer(-1)
-{
-}
-
-/**
  * @return Number of Cycles that can be undone.
  */
 int RS_Undo::countUndoCycles() {
@@ -86,21 +78,23 @@ void RS_Undo::startUndoCycle() {
 	//   that cannot be redone now:
 	while (int(undoList.size()) > undoPointer+1) {
 		auto& l = undoList.back();
-		undoList.pop_back();
 		//remove the undoable in the current cyle
-		for(auto u: l->undoables){
+        for(auto u: l->getUndoables()){
 			// Remove the pointer from _all_ other cycles:
 			for(auto& cycle: undoList)
-				cycle->removeUndoable(u);
+				if (&cycle != &l)
+					cycle->removeUndoable(u);
 
 			// Delete the Undoable for good:
-			if (u->isUndone()) {
+			// TODO, why u could be nullptr, issue #
+			if (u && u->isUndone()) {
 				removeUndoable(u);
 			}
 		}
+		undoList.pop_back();
 	}
 
-	currentCycle = std::make_shared<RS_UndoCycle>();
+    currentCycle = std::make_shared<RS_UndoCycle>();
 }
 
 

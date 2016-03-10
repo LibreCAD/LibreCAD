@@ -50,14 +50,11 @@
  *              the letters will be deleted when the font is deleted.
  */
 RS_Font::RS_Font(const QString& fileName, bool owner)
-    :	letterList(owner) {
-    this->fileName = fileName;
-    encoding = "";
+    :	letterList(owner), fileName(fileName), fileLicense("unknown") {
     loaded = false;
     letterSpacing = 3.0;
     wordSpacing = 6.75;
     lineSpacingFactor = 1.0;
-    fileLicense = "unknown";
     rawLffFontList.clear();
 }
 

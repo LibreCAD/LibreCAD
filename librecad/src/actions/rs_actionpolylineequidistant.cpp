@@ -51,7 +51,6 @@ RS_ActionPolylineEquidistant::RS_ActionPolylineEquidistant(RS_EntityContainer& c
 QAction* RS_ActionPolylineEquidistant::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 		QAction* action = new QAction(QIcon(":/extui/polylineequidstant.png"), tr("Create &Equidistant Polylines"), nullptr);
 //		action->setShortcut(QKeySequence());
-        action->setStatusTip(tr("Create Equidistant Polylines"));
         return action;
 }
 

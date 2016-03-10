@@ -170,9 +170,9 @@ bool RS_ActionDrawCircleTan3::getData(){
 		{
 			for(unsigned k=0; k<4; ++k){
 				//loop through all mirroring cases
-				lc1=LC_Quadratic(circles[i],circles[i1], k & 1u);
-				LC_Quadratic lc2=LC_Quadratic(circles[i],circles[i2], k & 2u);
-				sol.appendTo(LC_Quadratic::getIntersection(lc1,lc2));
+				lc1=LC_Quadratic(circles[i], circles[i1], k & 1u);
+				LC_Quadratic lc2=LC_Quadratic(circles[i], circles[i2], k & 2u);
+				sol.push_back(LC_Quadratic::getIntersection(lc1,lc2));
 			}
 
 		}
@@ -187,9 +187,9 @@ bool RS_ActionDrawCircleTan3::getData(){
 
 			for(unsigned k=0; k<4; ++k){
 				//loop through all mirroring cases
-				lc1=LC_Quadratic(circles[i2],circles[i], k & 1u);
-				LC_Quadratic lc2=LC_Quadratic(circles[i2],circles[i1], k & 2u);
-				sol.appendTo(LC_Quadratic::getIntersection(lc1,lc2));
+				lc1=LC_Quadratic(circles[i2], circles[i], k & 1u);
+				LC_Quadratic lc2=LC_Quadratic(circles[i2], circles[i1], k & 2u);
+				sol.push_back(LC_Quadratic::getIntersection(lc1,lc2));
 			}
 		}
 			break;
@@ -238,7 +238,7 @@ bool RS_ActionDrawCircleTan3::getData(){
 				RS_Line l1{v1, v1+RS_Vector{angle1}};
 				for(unsigned j1=0; j1<2; ++j1){
 					RS_Line l2{v2, v2+RS_Vector{angle2}};
-					sol.appendTo(RS_Information::getIntersectionLineLine(&l1, &l2));
+					sol.push_back(RS_Information::getIntersectionLineLine(&l1, &l2));
 					angle2 += M_PI_2;
 				}
 				angle1 += M_PI_2;
@@ -254,8 +254,8 @@ bool RS_ActionDrawCircleTan3::getData(){
 				circles[i]->getNearestPointOnEntity(circles[(i+j)%3]->getCenter(),
 						false,&d);
 				if(d<RS_TOLERANCE) {
-					LC_Quadratic lc2(circles[i],circles[(i+j)%3], true);
-					sol.appendTo(LC_Quadratic::getIntersection(lc2,lc1));
+					LC_Quadratic lc2(circles[i], circles[(i+j)%3], true);
+					sol.push_back(LC_Quadratic::getIntersection(lc2,lc1));
 				}
 			}
 		}

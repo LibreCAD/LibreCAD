@@ -209,7 +209,7 @@ public:
 
 	bool isLocked() const;
 
-    virtual void undoStateChanged(bool undone);
+	void undoStateChanged(bool undone);
     virtual bool isUndone() const;
 
     /**

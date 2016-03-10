@@ -32,11 +32,10 @@
  * @author Andrew Mustun
  */
 struct RS_Flags {
-    /** Default constructor. Resets all flags to 0. */
-	RS_Flags() = default;
-
-    /** Constructor with initialisation to the given flags. */
-	RS_Flags(unsigned f);
+	//! \{Constructor with initialisation to the given flags.
+	//! Default sets all flags to 0
+	RS_Flags(unsigned f = 0);
+	//! \}
 
 	virtual ~RS_Flags() = default;
 

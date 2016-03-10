@@ -280,12 +280,19 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     initMDI();
 
     // Activate autosave timer
-    autosaveTimer = new QTimer(this);
-    autosaveTimer->setObjectName("autosave");
-    connect(autosaveTimer, SIGNAL(timeout()), this, SLOT(slotFileAutoSave()));
     RS_SETTINGS->beginGroup("/Defaults");
-    autosaveTimer->start(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5)*60*1000);
+    bool auto_save = RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1);
+    int ms = RS_SETTINGS->readNumEntry("/AutoSaveTime", 5)*60*1000;
     RS_SETTINGS->endGroup();
+
+    if (auto_save)
+    {
+        autosaveTimer = new QTimer(this);
+        autosaveTimer->setObjectName("autosave");
+        connect(autosaveTimer, SIGNAL(timeout()), this, SLOT(slotFileAutoSave()));
+        autosaveTimer->start(ms);
+    }
+
 
     // Disable menu and toolbar items
     emit windowsChanged(false);
@@ -354,6 +361,11 @@ void QC_ApplicationWindow::loadPlugins() {
 		for(const QString& fileName: pluginsDir.entryList(QDir::Files)) {
             // Skip loading a plugin if a plugin with the same
             // filename has already been loaded.
+            #ifdef Q_OS_MAC
+            if (!fileName.contains(".dylib"))
+                continue;
+            #endif
+
             if (loadedPluginFileNames.contains(fileName)) {
                 continue;
             }
@@ -1229,6 +1241,7 @@ void QC_ApplicationWindow::initMenuBar() {
 
     // menuBar entry windowsMenu
     windowsMenu = menuBar()->addMenu(tr("&Window"));
+    windowsMenu->addAction(new QAction("temp", this));
     windowsMenu->setObjectName("Window");
     connect(windowsMenu, SIGNAL(aboutToShow()),
             this, SLOT(slotWindowsMenuAboutToShow()));
@@ -1310,18 +1323,6 @@ void QC_ApplicationWindow::initToolBar()
 
     //QG_CadToolBarMain* cadToolBarMain =
     //new QG_CadToolBarMain(cadToolBar);
-
-#if QT_VERSION >= 0x050500
-    auto const dPxlRatio=devicePixelRatio();
-    QSize const sIcon=cadToolBar->iconSize()*dPxlRatio;
-    cadToolBar->setIconSize(sIcon);
-    optionWidget->setIconSize(sIcon);
-    snapToolBar->setIconSize(sIcon);
-    penToolBar->setIconSize(sIcon);
-    zoomToolBar->setIconSize(sIcon);
-    editToolBar->setIconSize(sIcon);
-    fileToolBar->setIconSize(sIcon);
-#endif
 }
 
 /**
@@ -1330,7 +1331,6 @@ void QC_ApplicationWindow::initToolBar()
 void QC_ApplicationWindow::initStatusBar() {
     RS_DEBUG->print("QC_ApplicationWindow::initStatusBar()");
 
-    statusBar()->setMinimumHeight(32);
     coordinateWidget = new QG_CoordinateWidget(statusBar(), "coordinates");
     statusBar()->addWidget(coordinateWidget);
     mouseWidget = new QG_MouseWidget(statusBar(), "mouse info");
@@ -2514,7 +2514,7 @@ void QC_ApplicationWindow::slotFileSaveAs() {
                 if(w->getGraphicView()->isDraftMode())
                     w->setWindowTitle(w->windowTitle()+m_qDraftModeTitle);
 
-                if (!autosaveTimer->isActive()) {
+                if (autosaveTimer && !autosaveTimer->isActive()) {
                     RS_SETTINGS->beginGroup("/Defaults");
                     autosaveTimer->start(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5)*60*1000);
                     RS_SETTINGS->endGroup();

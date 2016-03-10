@@ -50,26 +50,22 @@ QAction* RS_ActionOrder::createGUIAction(RS2::ActionType type, QObject* /*parent
     case RS2::ActionOrderBottom:
         action = new QAction(tr("move to bottom"), NULL);
         action->setIcon(QIcon(":/extui/order_bottom.png"));
-        action->setStatusTip(tr("set to bottom"));
         action->setShortcut(QKeySequence(Qt::Key_End));
         break;
     case RS2::ActionOrderLower:
         action = new QAction(tr("lower after entity"), NULL);
         action->setIcon(QIcon(":/extui/order_lower.png"));
-        action->setStatusTip(tr("lower over entity"));
         action->setShortcut(QKeySequence(Qt::Key_PageDown));
         break;
     case RS2::ActionOrderRaise:
         action = new QAction(tr("raise over entity"), NULL);
         action->setIcon(QIcon(":/extui/order_raise.png"));
-        action->setStatusTip(tr("raise over entity"));
         action->setShortcut(QKeySequence(Qt::Key_PageUp));
         break;
 //    case RS2::ActionOrderTop:
     default:
         action = new QAction(tr("move to top"), NULL);
         action->setIcon(QIcon(":/extui/order_top.png"));
-        action->setStatusTip(tr("set to top"));
         action->setShortcut(QKeySequence(Qt::Key_Home));
         break;
     }

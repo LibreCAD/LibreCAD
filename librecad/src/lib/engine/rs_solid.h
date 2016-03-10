@@ -135,11 +135,10 @@ public:
 
 protected:
     RS_SolidData data;
-    //RS_Vector point;
 
 private:
-    //helper metod for getNearestPointOnEntity
-    bool sign (const RS_Vector v1, const RS_Vector v2, const RS_Vector v3) const;
+    //helper method for getNearestPointOnEntity
+    bool sign (const RS_Vector& v1, const RS_Vector& v2, const RS_Vector& v3) const;
 
 }
 ;

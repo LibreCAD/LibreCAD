@@ -52,7 +52,6 @@ QAction* RS_ActionPolylineSegment::createGUIAction(RS2::ActionType /*type*/, QOb
 	QAction* action = new QAction(tr("Create Polyline from Existing &Segments"), nullptr);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/extui/polylinesegment.png"));
-    action->setStatusTip(tr("Create Polyline from Existing Segments"));
     return action;
 }
 
@@ -63,9 +62,7 @@ void RS_ActionPolylineSegment::init(int status) {
 	if (container->countSelected(true, entityType)) {
 		//find a selected entity
 		//TODO, find a better starting point
-		for (RS_Entity* e = container->firstEntity(RS2::ResolveAllButInserts);
-				e;
-				e = container->nextEntity(RS2::ResolveAllButInserts)) {
+		for (RS_Entity* e : *container) {
 			if (e->isSelected() &&
 					std::count(entityType.begin(), entityType.end(), e->rtti())) {
 				targetEntity = e;
@@ -159,9 +156,7 @@ bool RS_ActionPolylineSegment::convertPolyline(RS_Entity* selectedEntity, bool u
 		completed.append(selectedEntity);
 //get list with useful entities
 
-	for (RS_Entity* e1 = container->firstEntity(RS2::ResolveAllButInserts);
-			e1;
-			e1 = container->nextEntity(RS2::ResolveAllButInserts)) {
+	for (RS_Entity* e1 : *container) {
 		if (useSelected && !e1->isSelected()) continue;
         if (e1->isLocked() || !e1->isVisible() || e1 == selectedEntity) continue;
         if (e1->rtti()==RS2::EntityLine || e1->rtti()==RS2::EntityArc

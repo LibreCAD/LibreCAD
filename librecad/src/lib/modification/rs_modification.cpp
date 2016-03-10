@@ -446,8 +446,10 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
 		for(RS_Block* b: *blks){
 			if(!b) continue;
 			QString name = b->getName();
-			while (graphic->findBlock(name)) {
-				name=blks->newName(name);
+			while (true) {
+				RS_Block* pb = graphic->findBlock(name);
+				if (!pb) break;
+				name=pb->getBlockList()->newName(name);
 			}
 			blocksDict[b->getName()] = name;
 			b->setName(name);
@@ -2903,7 +2905,7 @@ bool RS_Modification::round(const RS_Vector& coord,
     }
 
     if (document && handleUndo) {
-		if (!isPolyline && !data.trim) {
+		if (!isPolyline && data.trim) {
             document->addUndoable(trimmed1);
             entity1->setUndoState(true);
             document->addUndoable(entity1);

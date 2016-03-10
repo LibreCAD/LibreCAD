@@ -752,7 +752,7 @@ void RS_VectorSolutions::removeAt(const size_t i){
 		vector.erase(vector.begin()+i);
 }
 
-RS_VectorSolutions RS_VectorSolutions::appendTo(const RS_VectorSolutions& v) {
+RS_VectorSolutions& RS_VectorSolutions::push_back(const RS_VectorSolutions& v) {
 	vector.insert(vector.end(), v.begin(), v.end());
     return *this;
 }

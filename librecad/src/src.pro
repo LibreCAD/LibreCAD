@@ -8,7 +8,6 @@ DEFINES += QC_COMPANYNAME="\"LibreCAD\""
 DEFINES += QC_COMPANYKEY="\"LibreCAD\""
 DEFINES += QC_VERSION="\"master\""
 DEFINES += QC_DELAYED_SPLASH_SCREEN=1
-DEFINES += HAS_BOOST=1
 
 #uncomment to enable a Debugging menu entry for basic unit testing
 #DEFINES += LC_DEBUGGING
@@ -16,7 +15,7 @@ DEFINES += HAS_BOOST=1
 DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
-SCMREVISION="2.0.9"
+SCMREVISION="2.0.10"
 
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/librecad
@@ -33,11 +32,15 @@ CONFIG += qt \
      link_prl \
      verbose
 
-greaterThan( QT_MAJOR_VERSION, 4 ) {
+greaterThan( QT_MAJOR_VERSION, 4 )  {
     # in Qt5 help is deprecated in CONFIG
-	QT += widgets printsupport help
-	CONFIG += c++11
-} else {
+    QT += widgets printsupport help
+    CONFIG += c++11
+    *-g++ {
+        QMAKE_CXXFLAGS += -fext-numeric-literals
+    }
+}
+else {
     CONFIG += help
 }
 
@@ -945,7 +948,6 @@ RESOURCES += ../res/main/main.qrc
 TRANSLATIONS = ../ts/librecad_ar.ts \
     ../ts/librecad_ca.ts \
     ../ts/librecad_cs.ts \
-    ../ts/librecad_et.ts \
     ../ts/librecad_en.ts \
     ../ts/librecad_en_au.ts \
     ../ts/librecad_da.ts \
@@ -971,6 +973,8 @@ TRANSLATIONS = ../ts/librecad_ar.ts \
     ../ts/librecad_es_us.ts \
     ../ts/librecad_es_uy.ts \
     ../ts/librecad_es_ve.ts \
+    ../ts/librecad_et.ts \
+    ../ts/librecad_eu.ts \
     ../ts/librecad_fi.ts \
     ../ts/librecad_fr.ts \
     ../ts/librecad_gl.ts \

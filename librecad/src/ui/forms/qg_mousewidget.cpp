@@ -62,20 +62,6 @@ void QG_MouseWidget::init() {
     lLeftButton->setText("");
     lRightButton->setText("");
     lMousePixmap->setPixmap( QPixmap(":/ui/mousebuttons24.png"));
-
-    int fsize;
-#ifdef __APPLE__
-    fsize = 9;
-#else
-    fsize = 7;
-#endif
-    
-    RS_SETTINGS->beginGroup("/Appearance");
-    fsize = RS_SETTINGS->readNumEntry("/StatusBarFontSize", fsize);
-    RS_SETTINGS->endGroup();
-    
-    lLeftButton->setFont(QFont("Helvetica", fsize));
-    lRightButton->setFont(QFont("Helvetica", fsize));
 }
 
 void QG_MouseWidget::setHelp(const QString& left, const QString& right) {
