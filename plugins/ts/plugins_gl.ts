@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="gl">
 <context>
@@ -24,7 +23,7 @@
         <location filename="../align/align.cpp" line="20"/>
         <location filename="../align/align.cpp" line="27"/>
         <source>Align</source>
-        <translation>Ali&amp;ñar</translation>
+        <translation>Aliñar</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="40"/>
@@ -53,7 +52,7 @@
         <location filename="../list/list.cpp" line="23"/>
         <location filename="../list/list.cpp" line="30"/>
         <source>List entities</source>
-        <translation>Li&amp;stado de entidades</translation>
+        <translation>Listado de entidades</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="46"/>
@@ -130,7 +129,7 @@
         <location filename="../list/list.cpp" line="103"/>
         <location filename="../list/list.cpp" line="127"/>
         <source>length</source>
-        <translation>largura</translation>
+        <translation>lonxitude</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="108"/>
@@ -274,7 +273,7 @@
     <message>
         <location filename="../list/list.cpp" line="210"/>
         <source>SPLINEPOINTS</source>
-        <translation type="unfinished"></translation>
+        <translation>SPLINENODOS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
@@ -323,7 +322,7 @@
         <location filename="../sameprop/sameprop.cpp" line="21"/>
         <location filename="../sameprop/sameprop.cpp" line="28"/>
         <source>Same properties</source>
-        <translation>Igualar &amp;atributos</translation>
+        <translation>Igualar atributos</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
@@ -350,12 +349,12 @@
     <message>
         <location filename="../picfile/picfile.cpp" line="38"/>
         <source>Read PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ler ficheiro PIC</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="44"/>
         <source>import PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation>Importar ficheiro PIC</translation>
     </message>
 </context>
 <context>
@@ -532,7 +531,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>Non se pode abrir o ficheiro %1</translation>
     </message>
 </context>
@@ -773,63 +772,63 @@
     <message>
         <location filename="../picfile/picfile.cpp" line="67"/>
         <source>File...</source>
-        <translation type="unfinished">Ficheiro...</translation>
+        <translation>Ficheiro...</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="77"/>
         <source>Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Escala:</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="81"/>
         <source>Accept</source>
-        <translation type="unfinished">Aceptar</translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="85"/>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="113"/>
         <source>Select file</source>
-        <translation type="unfinished">Seleccionar ficheiro</translation>
+        <translation>Seleccionar ficheiro</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="121"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor de Escala está baleiro ou non é válido</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="134"/>
         <source>The file %1 not exist</source>
-        <translation type="unfinished">O ficheiro %1 non existe</translation>
+        <translation>O ficheiro %1 non existe</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="139"/>
-        <source>Can&apos;t open the file %1</source>
-        <translation type="unfinished">Non se pode abrir o ficheiro %1</translation>
+        <source>Can't open the file %1</source>
+        <translation>Non se pode abrir o ficheiro %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="146"/>
         <source>%1 objects imported</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 obxectos importados</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="168"/>
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation>picPunto drawLine: o primeiro punto está baleiro %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="181"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation>picPunto drawLine: o segundo punto está baleiro %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="260"/>
         <location filename="../picfile/picfile.cpp" line="269"/>
         <source>format error in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>erro de formato en %1</translation>
     </message>
 </context>
 <context>
@@ -856,12 +855,12 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
+If you don't want to use the parametric form, just leave out "Equation2".
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
         <translation>Este plugin permítelle trazar ecuacións matemáticas.
-Se non quere empregar a forma paramétrica, deixe sen cubrir &quot;Ecuación2&quot;.
+Se non quere empregar a forma paramétrica, deixe sen cubrir "Ecuación2".
 Pode empregar pi cando precise o valor de pi (ex. (3 *pi)).
 Use t ou x na súa ecuación como unha variable/parámetro.
 </translation>
@@ -905,19 +904,19 @@ Use t ou x na súa ecuación como unha variable/parámetro.
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation type="unfinished"></translation>
+        <translation>Segmento de liña</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="unfinished"></translation>
+        <translation>Poliliña</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="unfinished"></translation>
+        <translation>Puntos de spline</translation>
     </message>
 </context>
 <context>

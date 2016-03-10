@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="pt_BR">
 <context>
@@ -103,7 +102,7 @@
     <message>
         <location filename="../list/list.cpp" line="84"/>
         <source>POINT</source>
-        <translation>POINT</translation>
+        <translation>PONTO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="85"/>
@@ -114,7 +113,7 @@
     <message>
         <location filename="../list/list.cpp" line="90"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>LINHA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="95"/>
@@ -145,7 +144,7 @@
     <message>
         <location filename="../list/list.cpp" line="114"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>ARCO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="115"/>
@@ -174,7 +173,7 @@
     <message>
         <location filename="../list/list.cpp" line="130"/>
         <source>CIRCLE</source>
-        <translation>CIRCLE</translation>
+        <translation>CÍRCULO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="136"/>
@@ -189,7 +188,7 @@
     <message>
         <location filename="../list/list.cpp" line="140"/>
         <source>ELLIPSE</source>
-        <translation>ELLIPSE</translation>
+        <translation>ELIPSE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144"/>
@@ -199,7 +198,7 @@
     <message>
         <location filename="../list/list.cpp" line="162"/>
         <source>CONSTRUCTIONLINE</source>
-        <translation>CONSTRUCTIONLINE</translation>
+        <translation>CONSTRUÇÃO DE LINHA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="165"/>
@@ -209,7 +208,7 @@
     <message>
         <location filename="../list/list.cpp" line="168"/>
         <source>SOLID</source>
-        <translation>SOLID</translation>
+        <translation>SÓLIDO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="172"/>
@@ -219,12 +218,12 @@
     <message>
         <location filename="../list/list.cpp" line="175"/>
         <source>TEXT</source>
-        <translation>TEXT</translation>
+        <translation>TEXTO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="178"/>
         <source>INSERT</source>
-        <translation>INSERT</translation>
+        <translation>INSERIR</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="181"/>
@@ -239,7 +238,7 @@
     <message>
         <location filename="../list/list.cpp" line="187"/>
         <source>POLYLINE</source>
-        <translation>POLYLINE</translation>
+        <translation>POLILINHA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="188"/>
@@ -268,22 +267,22 @@
     <message>
         <location filename="../list/list.cpp" line="204"/>
         <source>IMAGE</source>
-        <translation>IMAGE</translation>
+        <translation>IMAGEM</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="207"/>
         <source>SPLINE</source>
-        <translation>SPLINE</translation>
+        <translation>LINHA SUAVE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="210"/>
         <source>SPLINEPOINTS</source>
-        <translation type="unfinished"></translation>
+        <translation>PONTOS DA LINHA SUAVE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
         <source>HATCH</source>
-        <translation>HATCH</translation>
+        <translation>HACHURA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216"/>
@@ -318,7 +317,7 @@
     <message>
         <location filename="../list/list.cpp" line="234"/>
         <source>UNKNOWN</source>
-        <translation>UNKNOWN</translation>
+        <translation>DESCONHECIDO</translation>
     </message>
 </context>
 <context>
@@ -354,12 +353,12 @@
     <message>
         <location filename="../picfile/picfile.cpp" line="38"/>
         <source>Read PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ler arquivo PIC</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="44"/>
         <source>import PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation>importar arquivo PIC</translation>
     </message>
 </context>
 <context>
@@ -402,7 +401,7 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="250"/>
         <source>*.odb for Psion 2</source>
-        <translation>*. odb para Psion 2</translation>
+        <translation>*.odb para Psion 2</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="252"/>
@@ -536,7 +535,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>Não foi possível abrir o arquivo %1</translation>
     </message>
 </context>
@@ -794,7 +793,7 @@
     <message>
         <location filename="../picfile/picfile.cpp" line="77"/>
         <source>Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="81"/>
@@ -814,7 +813,7 @@
     <message>
         <location filename="../picfile/picfile.cpp" line="121"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="134"/>
@@ -823,29 +822,29 @@
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="139"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation type="unfinished">Não foi possível abrir o arquivo %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="146"/>
         <source>%1 objects imported</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="168"/>
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="181"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="260"/>
         <location filename="../picfile/picfile.cpp" line="269"/>
         <source>format error in %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -872,11 +871,11 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
+If you don't want to use the parametric form, just leave out "Equation2".
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation>Este plugin permite plotar equações matemáticas.Se não desejar usar o modo paramétrico, apenas não use &quot;Equação2&quot;.Você pode usar pi quando precisar do valor de pi (i.e.(3*pi)).Use t ou x na sua equação como uma variável/parâmetro.</translation>
+        <translation>Este plugin permite plotar equações matemáticas.Se não desejar usar o modo paramétrico, apenas não use "Equação2".Você pode usar pi quando precisar do valor de pi (i.e.(3*pi)).Use t ou x na sua equação como uma variável/parâmetro.</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>
@@ -917,19 +916,19 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
