@@ -393,7 +393,8 @@ RS_Commands::RS_Commands() {
         {
             {{"divide", QObject::tr("divide", "modify - divide (cut)")},
              {"cut", QObject::tr("cut", "modify - divide (cut)")}},
-            {{"div", QObject::tr("div", "modify - divide (cut)")}},
+            {{"div", QObject::tr("div", "modify - divide (cut)")},
+            {"di", QObject::tr("di", "modify - divide (cut)")}},
             RS2::ActionModifyCut
         },
         //mirror
