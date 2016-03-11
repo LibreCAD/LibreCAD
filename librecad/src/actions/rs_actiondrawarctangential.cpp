@@ -44,7 +44,7 @@ RS_ActionDrawArcTangential::RS_ActionDrawArcTangential(RS_EntityContainer& conta
     :RS_PreviewActionInterface("Draw arcs tangential",
 							   container, graphicView)
 	, point(new RS_Vector{})
-	, data(new RS_ArcData())
+	, data(new RS_ArcData{})
 {
 	actionType=RS2::ActionDrawArcTangential;
     reset();
@@ -55,7 +55,7 @@ RS_ActionDrawArcTangential::RS_ActionDrawArcTangential(RS_EntityContainer& conta
 RS_ActionDrawArcTangential::~RS_ActionDrawArcTangential() = default;
 
 void RS_ActionDrawArcTangential::reset() {
-    baseEntity = NULL;
+	baseEntity = nullptr;
     isStartPoint = false;
 	*point = {};
 }
@@ -117,7 +117,7 @@ void RS_ActionDrawArcTangential::preparePreview() {
             direction = RS_Math::correctAngle(baseEntity->getDirection2()+M_PI);
         }
 
-        RS_Arc arc(NULL, RS_ArcData());
+		RS_Arc arc(nullptr, RS_ArcData());
         bool suc;
         if (byRadius) {
 			suc = arc.createFrom2PDirectionRadius(startPoint, *point, direction, data->radius);
@@ -126,7 +126,7 @@ void RS_ActionDrawArcTangential::preparePreview() {
         }
         if (suc) {
 			data.reset(new RS_ArcData(arc.getData()));
-            if(RS_DIALOGFACTORY != NULL) {
+			if(RS_DIALOGFACTORY != nullptr) {
                 if(byRadius){
                     RS_DIALOGFACTORY->updateArcTangentialOptions(arc.getAngleLength()*180./M_PI,true);
                 }else{
@@ -172,12 +172,8 @@ void RS_ActionDrawArcTangential::mouseReleaseEvent(QMouseEvent* e) {
                     }
                     setStatus(SetEndAngle);
                     updateMouseButtonHints();
-                } else {
-                    // TODO: warning
-                }
-            }
-            else {
-            }
+				}
+			}
         }
             break;
 
@@ -197,7 +193,7 @@ void RS_ActionDrawArcTangential::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawArcTangential::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+	if (e==nullptr) {
         return;
     }
     RS_Vector mouse = e->getCoordinate();
