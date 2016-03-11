@@ -969,23 +969,25 @@ void QG_DialogFactory::requestArcOptions(RS_ActionInterface* action,
  * Shows a widget for tangential arc options.
  */
 void QG_DialogFactory::requestArcTangentialOptions(RS_ActionInterface* action,
-        bool on, bool update) {
+		bool on, bool /*update*/) {
 
 
 	if (optionWidget) {
 		static QG_ArcTangentialOptions* toolWidget = nullptr;
-		if (toolWidget) {
+		if (toolWidget && !on) {
             delete toolWidget;
 			toolWidget = nullptr;
         }
 		if (on) {
-			toolWidget = new QG_ArcTangentialOptions(optionWidget);
-            optionWidget->addWidget(toolWidget);
-            toolWidget->setAction(action, update);
-            //toolWidget->setData(&data);
-                        toolWidget->show();
+			bool useUpdate = toolWidget;
+			if (!toolWidget) {
+				toolWidget = new QG_ArcTangentialOptions(optionWidget);
+				optionWidget->addWidget(toolWidget);
+			}
+			toolWidget->setAction(action, useUpdate);
+			toolWidget->show();
         }
-            arcTangentialOptions=toolWidget;
+		arcTangentialOptions=toolWidget;
     }
 }
 
