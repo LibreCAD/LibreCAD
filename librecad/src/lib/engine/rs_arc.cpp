@@ -166,20 +166,33 @@ bool RS_Arc::createFrom2PDirectionRadius(const RS_Vector& startPoint,
  */
 bool RS_Arc::createFrom2PDirectionAngle(const RS_Vector& startPoint,
                                         const RS_Vector& endPoint,
-                                        double direction1, double angleLength) {
-    if( fabs(remainder( angleLength, M_PI))<RS_TOLERANCE_ANGLE ) return false;
-    data.radius=0.5*startPoint.distanceTo(endPoint)/sin(0.5*angleLength);
+										double direction1, double angleLength) {
+	if (angleLength <= RS_TOLERANCE_ANGLE || angleLength > 2. * M_PI - RS_TOLERANCE_ANGLE) return false;
+	RS_Line l0 {nullptr, startPoint, startPoint - RS_Vector{direction1}};
+	double const halfA = 0.5 * angleLength;
+	l0.rotate(startPoint, halfA);
 
-	RS_Vector ortho = RS_Vector::polar(data.radius, direction1 + M_PI_2);
-    RS_Vector center1 = startPoint + ortho;
-    RS_Vector center2 = startPoint - ortho;
+	double d0;
+	RS_Vector vEnd0 = l0.getNearestPointOnEntity(endPoint, false, &d0);
+	RS_Line l1 = l0;
+	l1.rotate(startPoint, -angleLength);
+	double d1;
+	RS_Vector vEnd1 = l1.getNearestPointOnEntity(endPoint, false, &d1);
+	if (d1 < d0) {
+		vEnd0 = vEnd1;
+		l0 = l1;
+	}
 
-    if (center1.distanceTo(endPoint) < center2.distanceTo(endPoint)) {
-        data.center = center1;
-    } else {
-        data.center = center2;
-    }
+	l0.rotate((startPoint + vEnd0) * 0.5, M_PI_2);
 
+	l1 = RS_Line{nullptr, startPoint, startPoint + RS_Vector{direction1 + M_PI_2}};
+
+	auto const sol = RS_Information::getIntersection(&l0, &l1, false);
+	if (sol.size()==0) return false;
+
+	data.center = sol.at(0);
+
+	data.radius = data.center.distanceTo(startPoint);
     data.angle1 = data.center.angleTo(startPoint);
     data.reversed = false;
 
