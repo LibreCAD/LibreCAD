@@ -152,7 +152,7 @@ void QG_ArcTangentialOptions::on_leAngle_textEdited()
         bool ok;
         double d=RS_Math::correctAngle(RS_Math::eval(leAngle->text(), &ok)*M_PI/180.);
         if(!ok) return;
-        if(remainder(d,2.*M_PI)<RS_TOLERANCE_ANGLE) d=M_PI; // can not do full circle
+		if(d<RS_TOLERANCE_ANGLE || d + RS_TOLERANCE_ANGLE > 2. * M_PI) d=M_PI; // can not do full circle
         action->setAngle(d);
         //updateAngle(QString::number(d*180./M_PI,'g',5));
         action->setByRadius(false);
