@@ -16,5 +16,21 @@
         <file>down_b.svg</file>
         <file>downmost_b.svg</file>
         <file>upmost_b.svg</file>
+        <file>bevel.svg</file>
+        <file>draft.svg</file>
+        <file>fillet.svg</file>
+        <file>restr_hor.svg</file>
+        <file>restr_ortho.svg</file>
+        <file>restr_ver.svg</file>
+        <file>grid.svg</file>
+        <file>rotate.svg</file>
+        <file>rotate2.svg</file>
+        <file>redraw.svg</file>
+        <file>zoom_auto.svg</file>
+        <file>zoom_in.svg</file>
+        <file>zoom_out.svg</file>
+        <file>zoom_pan_b.svg</file>
+        <file>zoom_previous.svg</file>
+        <file>zoom_window.svg</file>
     </qresource>
 </RCC>

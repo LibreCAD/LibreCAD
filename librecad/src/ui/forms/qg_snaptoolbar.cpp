@@ -78,18 +78,18 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah)
 
     this->addSeparator();
 
-    restrictHorizontal = new QAction(QIcon(":/icons/restrhor.svg"),
+    restrictHorizontal = new QAction(QIcon(":/icons/restr_hor.svg"),
                                      tr("Restrict Horizontal"), disable_group);
     restrictHorizontal->setCheckable(true);
     connect(restrictHorizontal, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     this->addAction(restrictHorizontal);
-    restrictVertical = new QAction(QIcon(":/icons/restrver.svg"),
+    restrictVertical = new QAction(QIcon(":/icons/restr_ver.svg"),
                                    tr("Restrict Vertical"), disable_group);
     restrictVertical->setCheckable(true);
     connect(restrictVertical, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     this->addAction(restrictVertical);
 
-    restrictOrthogonal = new QAction(QIcon(":/icons/restrortho.svg"),
+    restrictOrthogonal = new QAction(QIcon(":/icons/restr_ortho.svg"),
                                    tr("Restrict Orthogonal"), disable_group);
     restrictOrthogonal->setCheckable(true);
     connect(restrictOrthogonal, SIGNAL(triggered(bool)), this,

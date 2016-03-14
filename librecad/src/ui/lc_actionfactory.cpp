@@ -57,13 +57,13 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     // <[~ Zoom ~]>
 
     action = new QAction(tr("&Window Zoom"), tool_group);
-    action->setIcon(QIcon::fromTheme("zoom-select", QIcon(":/actions/zoomwindow.png")));
+    action->setIcon(QIcon::fromTheme("zoom-select", QIcon(":/icons/zoom_window.svg")));
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomWindow()));
     action->setObjectName("ZoomWindow");
     a_map["ZoomWindow"] = action;
 
     action = new QAction(tr("Zoom &Panning"), tool_group);
-    action->setIcon(QIcon(":/actions/zoompan.png"));
+    action->setIcon(QIcon(":/icons/zoom_pan_b.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotZoomPan()));
     action->setObjectName("ZoomPan");
@@ -588,7 +588,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     action->setData("revert, rev");
     a_map["ModifyRevertDirection"] = action;
 
-    action = new QAction(QIcon(":/icons/rotate_b.svg"), tr("&Rotate"), tool_group);
+    action = new QAction(QIcon(":/icons/rotate.svg"), tr("&Rotate"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyRotate()));
     action->setObjectName("ModifyRotate");
@@ -615,7 +615,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     action->setObjectName("ModifyMoveRotate");
     a_map["ModifyMoveRotate"] = action;
 
-    action = new QAction(QIcon(":/extui/modifyrotate2.png"), tr("Rotate T&wo"), tool_group);
+    action = new QAction(QIcon(":/icons/rotate2.svg"), tr("Rotate T&wo"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyRotate2()));
     action->setObjectName("ModifyRotate2");
@@ -676,14 +676,14 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["ModifyStretch"] = action;
 
     action = new QAction(tr("&Bevel"), tool_group);
-    action->setIcon(QIcon(":/icons/bevel_b.svg"));
+    action->setIcon(QIcon(":/icons/bevel.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyBevel()));
     action->setObjectName("ModifyBevel");
     action->setData("bevel, bev, ch");
     a_map["ModifyBevel"] = action;
 
-    action = new QAction(QIcon(":/extui/modifyround.png"), tr("&Fillet"), tool_group);
+    action = new QAction(QIcon(":/icons/fillet.svg"), tr("&Fillet"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyRound()));
     action->setObjectName("ModifyRound");
@@ -1054,27 +1054,27 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     // <[~ Zoom ~]>
 
     action = new QAction(tr("Zoom &In"), disable_group);
-    action->setIcon(QIcon::fromTheme("zoom-in", QIcon(":/actions/zoomin.png")));
+    action->setIcon(QIcon::fromTheme("zoom-in", QIcon(":/icons/zoom_in.svg")));
     action->setShortcut(QKeySequence::ZoomIn);
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomIn()));
     action->setObjectName("ZoomIn");
     a_map["ZoomIn"] = action;
 
     action = new QAction(tr("Zoom &Out"), disable_group);
-    action->setIcon(QIcon::fromTheme("zoom-out", QIcon(":/actions/zoomout.png")));
+    action->setIcon(QIcon::fromTheme("zoom-out", QIcon(":/icons/zoom_out.svg")));
     action->setShortcut(QKeySequence::ZoomOut);
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomOut()));
     action->setObjectName("ZoomOut");
     a_map["ZoomOut"] = action;
 
     action = new QAction(tr("&Auto Zoom"), disable_group);
-    action->setIcon(QIcon::fromTheme("zoom-fit-best", QIcon(":/actions/zoomauto.png")));
+    action->setIcon(QIcon::fromTheme("zoom-fit-best", QIcon(":/icons/zoom_auto.svg")));
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomAuto()));
     action->setObjectName("ZoomAuto");
     a_map["ZoomAuto"] = action;
 
     action = new QAction(tr("Previous &View"), disable_group);
-    action->setIcon(QIcon::fromTheme("zoom-previous", QIcon(":/actions/zoomprevious.png")));
+    action->setIcon(QIcon::fromTheme("zoom-previous", QIcon(":/icons/zoom_previous.svg")));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotZoomPrevious()));
     action->setEnabled(false);
@@ -1082,7 +1082,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["ZoomPrevious"] = action;
 
     action = new QAction(tr("&Redraw"), disable_group);
-    action->setIcon(QIcon::fromTheme("view-refresh", QIcon(":/actions/zoomredraw.png")));
+    action->setIcon(QIcon::fromTheme("view-refresh", QIcon(":/icons/redraw.svg")));
     action->setShortcut(QKeySequence::Refresh);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotZoomRedraw()));
@@ -1193,7 +1193,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["Fullscreen"] = action;
 
     action = new QAction(tr("&Grid"), disable_group);
-    action->setIcon(QIcon(":/actions/view_grid.svg"));
+    action->setIcon(QIcon(":/icons/grid.svg"));
     action->setShortcut(QKeySequence(tr("Ctrl+G", "Toggle Grid")));
     action->setCheckable(true);
     action->setChecked(true);
@@ -1203,7 +1203,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["ViewGrid"] = action;
 
     action = new QAction(tr("&Draft"), disable_group);
-    action->setIcon(QIcon(":/actions/viewdraft.png"));
+    action->setIcon(QIcon(":/icons/draft.svg"));
     action->setCheckable(true);
     connect(action, SIGNAL(toggled(bool)), main_window, SLOT(slotViewDraft(bool)));
     connect(main_window, SIGNAL(draftChanged(bool)), action, SLOT(setChecked(bool)));
