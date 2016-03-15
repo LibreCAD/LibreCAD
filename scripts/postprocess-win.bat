@@ -10,27 +10,18 @@ del PWD
 set LC_RESOURCEDIR=%LC_PWD%\windows\resources
 set LC_TSDIRLC=%LC_PWD%\librecad\ts
 set LC_TSDIRPI=%LC_PWD%\plugins\ts
-set LC_DOCDIR=%LC_PWD%\librecad\support\doc
 set LC_NSISDIR=%LC_PWD%\scripts\postprocess-windows
-
-REM Generate Help Files
-pushd "%LC_DOCDIR%"
-qcollectiongenerator LibreCADdoc.qhcp
-popd
 
 REM Postprocess for windows
 echo " Copying fonts and patterns"
 if not exist "%LC_RESOURCEDIR%\fonts\" (mkdir "%LC_RESOURCEDIR%\fonts")
 if not exist "%LC_RESOURCEDIR%\patterns\" (mkdir "%LC_RESOURCEDIR%\patterns")
 if not exist "%LC_RESOURCEDIR%\library\" (mkdir "%LC_RESOURCEDIR%\library")
-if not exist "%LC_RESOURCEDIR%\doc\" (mkdir "%LC_RESOURCEDIR%\doc")
 if not exist "%LC_RESOURCEDIR%\library\misc\" (mkdir "%LC_RESOURCEDIR%\library\misc")
 if not exist "%LC_RESOURCEDIR%\library\templates\" (mkdir "%LC_RESOURCEDIR%\library\templates")
 
 copy "librecad\support\patterns\*.dxf" "%LC_RESOURCEDIR%\patterns"
 copy "librecad\support\fonts\*.lff" "%LC_RESOURCEDIR%\fonts"
-copy "librecad\support\doc\*.qhc" "%LC_RESOURCEDIR%\doc"
-copy "librecad\support\doc\*.qch" "%LC_RESOURCEDIR%\doc"
 copy "librecad\support\library\misc\*.dxf" "%LC_RESOURCEDIR%\library\misc"
 copy "librecad\support\library\templates\*.dxf" "%LC_RESOURCEDIR%\library\templates"
 

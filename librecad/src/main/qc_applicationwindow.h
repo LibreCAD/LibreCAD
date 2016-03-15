@@ -167,7 +167,6 @@ public slots:
 
     /** shows an about dlg*/
     void slotHelpAbout();
-    void slotHelpManual();
 
     /**
      * @brief slotUpdateActiveLayer

@@ -38,14 +38,12 @@
 #include <QPluginLoader>
 #include <QDesktopServices>
 #include <QUrl>
-#include <QtHelp>
 #include <QImageWriter>
 #include <QtSvg>
 #include <QStyleFactory>
 #include <QPrintDialog>
 
 #include "main.h"
-#include "helpbrowser.h"
 
 #include "rs_actionprintpreview.h"
 #include "rs_settings.h"
@@ -2414,52 +2412,6 @@ void QC_ApplicationWindow::slotHelpAbout() {
     box.setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     box.exec();
     box.resize(500,400);
-}
-
-/**
- * Menu help -> help.
- */
-void QC_ApplicationWindow::slotHelpManual()
-{
-    RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual()");
-
-    if (helpEngine==nullptr)
-    {
-        RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
-                        RS_SYSTEM->getAppDir().toLatin1().data());
-        RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
-                        RS_SYSTEM->getAppDir().toLatin1().data());
-
-        if ((RS_SYSTEM->getDocPath().length()>0) && (QFile::exists(RS_SYSTEM->getDocPath()+ "/LibreCADdoc.qhc")==true))
-        {
-            helpEngine = new QHelpEngine(RS_SYSTEM->getDocPath() + "/LibreCADdoc.qhc", this);
-
-            helpEngine->setupData();
-
-            QHelpContentModel *contentModel = helpEngine->contentModel();
-            QHelpContentWidget *contentWidget = helpEngine->contentWidget();
-            HelpBrowser *helpBrowser = new HelpBrowser(helpEngine);
-
-            QSplitter* splitter = new QSplitter();
-            splitter->addWidget(contentWidget);
-            splitter->addWidget(helpBrowser);
-            contentWidget->setModel(contentModel);
-
-            helpWindow = new QDockWidget(tr("Help"), this);
-            helpWindow->setWidget(splitter);
-            helpWindow->setObjectName("HelpWindow");
-
-            // Enable single clicking of the index
-            connect(helpEngine->contentWidget(), SIGNAL(clicked(QModelIndex)), helpEngine->contentWidget(), SLOT(showLink(QModelIndex)));
-            connect(helpEngine->contentWidget(), SIGNAL(linkActivated(const QUrl &)), helpBrowser, SLOT(setSource(const QUrl &)));
-            addDockWidget(Qt::TopDockWidgetArea, helpWindow);
-        } else {
-            QMessageBox::information(this, tr("Help files not found"), tr("The help files were not found."));
-        }
-    }
-    if (helpWindow) {
-        helpWindow->show();
-    }
 }
 
 /**

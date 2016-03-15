@@ -773,10 +773,6 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     help_menu->setObjectName("Help");
     help_menu->setTearOffEnabled(true);
 
-    QAction* help_manual = new QAction(QIcon(":/main/manual.png"), QC_ApplicationWindow::tr("&Manual"), main_window);
-    connect(help_manual, SIGNAL(triggered()), main_window, SLOT(slotHelpManual()));
-    help_menu->addAction(help_manual);
-
     QAction* wiki_link = new QAction(QC_ApplicationWindow::tr("Online (Wiki)"), main_window);
     connect(wiki_link, SIGNAL(triggered()), main_window, SLOT(gotoWiki()));
     help_menu->addAction(wiki_link);

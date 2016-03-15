@@ -25,14 +25,11 @@ CONFIG += qt \
 
 
 greaterThan( QT_MAJOR_VERSION, 4 ) {
-    # in Qt5 help is deprecated in CONFIG
-    QT += widgets printsupport help
+    QT += widgets printsupport
     CONFIG += c++11
     *-g++ {
         QMAKE_CXXFLAGS += -fext-numeric-literals
     }
-} else {
-    CONFIG += help
 }
 
 GEN_LIB_DIR = ../../generated/lib
@@ -52,7 +49,6 @@ unix {
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
         RC_FILE = ../res/main/librecad.icns
         QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-osx.sh
-        QT += printsupport
     }
     else {
         TARGET = librecad
@@ -869,7 +865,6 @@ HEADERS += \
     main/qc_applicationwindow.h \
     main/qc_dialogfactory.h \
     main/qc_mdiwindow.h \
-    main/helpbrowser.h \
     main/doc_plugin_interface.h \
     plugins/document_interface.h \
     plugins/qc_plugininterface.h \
@@ -883,7 +878,6 @@ SOURCES += \
     main/qc_applicationwindow.cpp \
     main/qc_dialogfactory.cpp \
     main/qc_mdiwindow.cpp \
-    main/helpbrowser.cpp \
     main/doc_plugin_interface.cpp \
     plugins/intern/qc_actiongetpoint.cpp \
     plugins/intern/qc_actiongetselect.cpp \
