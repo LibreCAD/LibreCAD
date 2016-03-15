@@ -39,7 +39,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
@@ -81,87 +81,7 @@
             </property>
             <item>
              <property name="text">
-              <string>Aquamarine</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Azure</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Black</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DeepSkyBlue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DodgerBlue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Gray</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>HoneyDew</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Lavender</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>LightGrey</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Navy</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>PaleGreen</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Pink</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Salmon</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Silver</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Violet</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Wheat</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>White</string>
+              <string>#739373</string>
              </property>
             </item>
            </widget>
@@ -186,87 +106,7 @@
             </property>
             <item>
              <property name="text">
-              <string>Aquamarine</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Azure</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Black</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DeepSkyBlue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DodgerBlue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Gray</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>HoneyDew</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Lavender</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>LightGrey</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Navy</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>PaleGreen</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Pink</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Salmon</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Silver</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Violet</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Wheat</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>White</string>
+              <string>#A54747</string>
              </property>
             </item>
            </widget>
@@ -291,87 +131,7 @@
             </property>
             <item>
              <property name="text">
-              <string>Aquamarine</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Azure</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Black</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DeepSkyBlue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DodgerBlue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Gray</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>HoneyDew</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Lavender</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>LightGrey</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Navy</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>PaleGreen</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Pink</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Salmon</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Silver</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Violet</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Wheat</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>White</string>
+              <string>#736F6E</string>
              </property>
             </item>
            </widget>
@@ -412,87 +172,17 @@
             </property>
             <item>
              <property name="text">
-              <string>Aquamarine</string>
+              <string>#000000</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Azure</string>
+              <string>#FFFFFF</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string notr="true">Black</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DeepSkyBlue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DodgerBlue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Gray</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>HoneyDew</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Lavender</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>LightGrey</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Navy</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>PaleGreen</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Pink</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Salmon</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Silver</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Violet</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Wheat</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>White</string>
+              <string>#F0F8FF</string>
              </property>
             </item>
            </widget>
@@ -504,87 +194,7 @@
             </property>
             <item>
              <property name="text">
-              <string>Aquamarine</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Azure</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Black</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DeepSkyBlue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DodgerBlue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Gray</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>HoneyDew</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Lavender</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>LightGrey</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Navy</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>PaleGreen</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Pink</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Salmon</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Silver</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Violet</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Wheat</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>White</string>
+              <string>#404040</string>
              </property>
             </item>
            </widget>
@@ -596,87 +206,7 @@
             </property>
             <item>
              <property name="text">
-              <string>Aquamarine</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Azure</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Black</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DeepSkyBlue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DodgerBlue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Gray</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>HoneyDew</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Lavender</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>LightGrey</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Navy</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>PaleGreen</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Pink</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Salmon</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Silver</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Violet</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Wheat</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>White</string>
+              <string>#00FFFF</string>
              </property>
             </item>
            </widget>
@@ -698,87 +228,7 @@
             </property>
             <item>
              <property name="text">
-              <string>Aquamarine</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Azure</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Black</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DeepSkyBlue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DodgerBlue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Gray</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>HoneyDew</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Lavender</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>LightGrey</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Navy</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>PaleGreen</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Pink</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Salmon</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Silver</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Violet</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Wheat</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>White</string>
+              <string>#0000FF</string>
              </property>
             </item>
            </widget>
@@ -813,87 +263,7 @@
             </property>
             <item>
              <property name="text">
-              <string>Aquamarine</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Azure</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Black</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DeepSkyBlue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DodgerBlue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Gray</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>HoneyDew</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Lavender</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>LightGrey</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Navy</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>PaleGreen</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Pink</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Salmon</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Silver</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Violet</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Wheat</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>White</string>
+              <string>#0000FF</string>
              </property>
             </item>
            </widget>
@@ -915,87 +285,12 @@
             </property>
             <item>
              <property name="text">
-              <string>Aquamarine</string>
+              <string>#FFC200</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Azure</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Black</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DeepSkyBlue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DodgerBlue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Gray</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>HoneyDew</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Lavender</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>LightGrey</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Navy</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>PaleGreen</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Pink</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Salmon</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Silver</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Violet</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Wheat</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>White</string>
+              <string>#1E90FF</string>
              </property>
             </item>
            </widget>
