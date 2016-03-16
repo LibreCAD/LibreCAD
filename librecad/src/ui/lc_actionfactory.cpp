@@ -34,10 +34,10 @@
 
 LC_ActionFactory::LC_ActionFactory(QObject* parent, QObject* a_handler)
     : QObject(parent)
-	, tool_group(new QActionGroup(parent))
-	, disable_group(new QActionGroup(parent))
+    , tool_group(new QActionGroup(parent))
+    , disable_group(new QActionGroup(parent))
     , main_window(parent)
-	, action_handler(a_handler)
+    , action_handler(a_handler)
 {
     disable_group->setExclusive(false);
 

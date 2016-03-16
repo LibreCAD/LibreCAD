@@ -48,7 +48,6 @@ class QG_MouseWidget;
 class QG_SelectionWidget;
 class QG_RecentFiles;
 class QG_PenToolBar;
-class QHelpEngine;
 class QC_PluginInterface;
 class QG_ActiveLayerName;
 class LC_SimpleTests;
@@ -57,7 +56,8 @@ class QG_ActionHandler;
 class RS_GraphicView;
 class RS_Document;
 class TwoStackedLabels;
-class LC_Options;
+
+struct LC_Options;
 
 struct DockAreas
 {
@@ -320,9 +320,6 @@ private:
     /** Command line */
     QG_CommandWidget* commandWidget;
 
-    QHelpEngine* helpEngine{nullptr};
-    QDockWidget* helpWindow{nullptr};
-
     // --- Statusbar ---
     /** Coordinate widget */
     QG_CoordinateWidget* coordinateWidget;
@@ -353,7 +350,6 @@ private:
     QAction* scriptOpenIDE;
     QAction* scriptRun;
     QAction* helpAboutApp;
-    QAction* helpManual;
 
     // --- Flags ---
     bool previousZoomEnable{false};

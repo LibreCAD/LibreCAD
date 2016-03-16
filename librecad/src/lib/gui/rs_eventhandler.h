@@ -37,8 +37,9 @@ class QAction;
 class QMouseEvent;
 class QKeyEvent;
 class RS_CommandEvent;
-class RS_SnapMode;
 class RS_Vector;
+
+struct RS_SnapMode;
 
 /**
  * The event handler owns and manages all actions that are currently

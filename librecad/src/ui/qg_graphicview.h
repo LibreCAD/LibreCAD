@@ -36,7 +36,7 @@
 class QGridLayout;
 class QLabel;
 class QG_ScrollBar;
-class LC_Options;
+struct LC_Options;
 
 /**
  * This is the Qt implementation of a widget which can view a 
