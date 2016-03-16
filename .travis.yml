@@ -1,0 +1,19 @@
+sudo: false
+addons:
+  apt:
+    packages:
+    - debhelper (>= 9)
+    - qt5-default
+    - qtbase5-dev
+    - libqt5svg5-dev
+    - qttools5-dev
+    - qttools5-dev-tools
+    - libmuparser-dev
+    - libboost-dev
+    - libfreetype6-dev
+    - libicu-dev
+    - pkg-config
+
+script:
+  qmake -r librecad.pro
+  make
