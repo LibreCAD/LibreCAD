@@ -5,6 +5,7 @@ set -e # exit with nonzero exit code if anything fails
 
 # go to the out directory and create a *new* Git repo
 cd out
+find . -mindepth 2 -type f -print -exec mv {} . \;
 git init
 
 # inside this git repo we'll pretend to be a new user
