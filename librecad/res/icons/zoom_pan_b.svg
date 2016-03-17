@@ -10,7 +10,7 @@
    inkscape:export-ydpi="8.4375"
    inkscape:export-xdpi="8.4375"
    inkscape:export-filename="D:\LC_Recources\icons\zoompan24.png"
-   sodipodi:docname="zoom_pan_blackrim.svg"
+   sodipodi:docname="zoom_pan_b.svg"
    inkscape:version="0.91 r13725"
    version="1.1"
    id="svg4295"
@@ -63,17 +63,17 @@
      inkscape:object-nodes="true"
      inkscape:current-layer="svg4295"
      inkscape:window-maximized="1"
-     inkscape:window-y="-4"
-     inkscape:window-x="-4"
-     inkscape:cy="253.64467"
-     inkscape:cx="-73.031276"
+     inkscape:window-y="1"
+     inkscape:window-x="0"
+     inkscape:cy="87.705012"
+     inkscape:cx="85.238902"
      inkscape:zoom="1.4342563"
      inkscape:snap-grids="true"
      units="px"
      showgrid="true"
      id="namedview4321"
-     inkscape:window-height="1176"
-     inkscape:window-width="1920"
+     inkscape:window-height="1022"
+     inkscape:window-width="2048"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0"
      guidetolerance="10"
@@ -89,7 +89,8 @@
        id="grid4867" />
   </sodipodi:namedview>
   <g
-     id="g4337">
+     id="g4337"
+     transform="translate(-2.2577778,3.3866677)">
     <path
        sodipodi:nodetypes="cc"
        inkscape:connector-curvature="0"
@@ -125,33 +126,10 @@
        inkscape:connector-curvature="0"
        id="path4248"
        d="m 19.755557,27.093335 0,4.515556 9.595556,0 0,-9.595556 -4.515556,0 6.773331,-10.160003 6.773339,10.160007 -4.515558,0 0,9.595552 9.595556,0 0,-4.515556 10.160001,6.773334 -10.16001,6.773336 0,-4.515558 -9.595547,0 0,9.595556 4.515556,0 -6.773334,10.160001 -6.773341,-10.16001 4.515563,9e-6 0,-9.595556 -9.595556,0 0,4.515556 -10.1600045,-6.773337 z"
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.12888896;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" />
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.12888896;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <g
        transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,58.498806,-25.694562)"
-       id="g4220">
-      <path
-         sodipodi:nodetypes="cccccccccccc"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         d="m 21.44889,95.955562 0,-7.902223 -2.257778,-2.257778 0,-12.417779 2.257778,0 0,-13.546667 4.515556,0 0,13.546667 9.03111,0 0,11.884688 0,10.693088 z"
-         id="path4209"
-         inkscape:connector-curvature="0" />
-      <path
-         sodipodi:nodetypes="ccc"
-         style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         d="m 25.964446,68.862226 9.03111,0 0,4.515556"
-         id="path4214"
-         inkscape:connector-curvature="0" />
-      <path
-         inkscape:connector-curvature="0"
-         id="path4216"
-         d="m 27.116556,71.134616 0,-1.11125 3.369028,0 3.369028,0 0,1.11125 0,1.11125 -3.369028,0 -3.369028,0 0,-1.11125 z"
-         style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#00ff00;stroke-width:0;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      <path
-         inkscape:connector-curvature="0"
-         id="path4218"
-         d="m 27.116556,71.134616 0,-1.11125 3.369028,0 3.369028,0 0,1.11125 0,1.11125 -3.369028,0 -3.369028,0 0,-1.11125 z"
-         style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:0;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-    </g>
+       id="g4220" />
     <g
        transform="translate(4.5155555,-2.2577779)"
        id="g4168">
