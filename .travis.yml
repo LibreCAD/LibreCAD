@@ -11,7 +11,7 @@ matrix:
         -  ANALYZE="scan-build-3.7 -o out "
         -  GH_REF=github.com/LibreCAD/static-analyzer-reports.git
   allow_failures:
-    - compiler: ANALYZE="scan-build-3.7 -o out "
+    - env: ANALYZE="scan-build-3.7 -o out "
 
 install:
   - sudo apt-get -qq install qt5-default qtbase5-dev  libqt5svg5-dev qttools5-dev qttools5-dev-tools libmuparser-dev libboost-dev libfreetype6-dev libicu-dev pkg-config

@@ -1,4 +1,4 @@
-# LibreCAD
+# LibreCAD [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=master)](https://travis-ci.org/LibreCAD/LibreCAD)
 
 [LibreCAD](http://www.librecad.org) is a 2D CAD drawing tool
 based on the community edition of [QCAD](http://www.qcad.org).  
