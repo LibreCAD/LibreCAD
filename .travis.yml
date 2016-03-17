@@ -1,0 +1,32 @@
+language: cpp
+sudo: required
+dist: trusty
+compiler: gcc
+matrix:
+  fast_finish: true
+  include:
+    - compiler: gcc
+      secure: "TjkB5PJRwRdOAJhs1wp6kZrE6Pv5JrL8/lVWTlXqHtnruZZM8tE+sT79NnvgJSFmxLjBupbnddsNCAl43UCji5ZTRowhjrjrY1TLtbp5SO4YCmSDSF+14/vLBzqFxlDpKBrYrxhSG9wB4kDV5QKiZ/PcmYcsh+KtyNZsA/BOgMI="
+      env:
+        -  ANALYZE="scan-build-3.7 -o out "
+        -  GH_REF=github.com/LibreCAD/static-analyzer-reports.git
+  allow_failures:
+    - compiler: ANALYZE="scan-build-3.7 -o out "
+
+install:
+  - sudo apt-get -qq install qt5-default qtbase5-dev  libqt5svg5-dev qttools5-dev qttools5-dev-tools libmuparser-dev libboost-dev libfreetype6-dev libicu-dev pkg-config
+  - >
+    if [ "${ANALYZE}" ] && [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
+      wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|sudo apt-key add -;
+      echo "yes" | sudo apt-add-repository "deb http://llvm.org/apt/$(lsb_release -sc)/ llvm-toolchain-$(lsb_release -sc)-3.7 main";
+      sudo apt-get update;
+      sudo apt-get -qq install clang-3.7;
+    fi;
+
+script:
+  - >
+    if [ ! "${ANALYZE}" ] || [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
+      ${ANALYZE}qmake -r librecad.pro CONFIG+=debug_and_release;
+      ${ANALYZE}make debug -j3;
+    fi;
+  - if [ "${ANALYZE}" ] && [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then ./CI/static-analyzer-reports.sh; fi
