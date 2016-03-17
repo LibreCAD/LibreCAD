@@ -7,11 +7,9 @@ matrix:
   include:
     - compiler: gcc
       secure: "TjkB5PJRwRdOAJhs1wp6kZrE6Pv5JrL8/lVWTlXqHtnruZZM8tE+sT79NnvgJSFmxLjBupbnddsNCAl43UCji5ZTRowhjrjrY1TLtbp5SO4YCmSDSF+14/vLBzqFxlDpKBrYrxhSG9wB4kDV5QKiZ/PcmYcsh+KtyNZsA/BOgMI="
-      env:
-        -  ANALYZE="scan-build-3.7 -o out "
-        -  GH_REF=github.com/LibreCAD/static-analyzer-reports.git
+      env: ANALYZE="scan-build-3.7 -o out " GH_REF=github.com/LibreCAD/static-analyzer-reports.git
   allow_failures:
-    - env: ANALYZE="scan-build-3.7 -o out "
+    - env: ANALYZE="scan-build-3.7 -o out " GH_REF=github.com/LibreCAD/static-analyzer-reports.git
 
 install:
   - sudo apt-get -qq install qt5-default qtbase5-dev  libqt5svg5-dev qttools5-dev qttools5-dev-tools libmuparser-dev libboost-dev libfreetype6-dev libicu-dev pkg-config
