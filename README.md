@@ -1,5 +1,7 @@
 # LibreCAD [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=master)](https://travis-ci.org/LibreCAD/LibreCAD)
 
+[![Join the chat at https://gitter.im/LibreCAD/LibreCAD](https://badges.gitter.im/LibreCAD/LibreCAD.svg)](https://gitter.im/LibreCAD/LibreCAD?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [LibreCAD](http://www.librecad.org) is a 2D CAD drawing tool
 based on the community edition of [QCAD](http://www.qcad.org).  
 LibreCAD has been re-structured and ported to [Qt](http://www.qt.io/download-open-source/) 4.  
