@@ -10,8 +10,6 @@ TSDIRPI="${PIDIR}/ts"
 SPTDIR="${LCDIR}/support"
 LRELEASE="lrelease"
 
-[ "$( which lrelease-qt4 )" ] && LRELEASE="lrelease-qt4"
-
 cd "${THISDIR}"
 
 # Postprocess for unix
