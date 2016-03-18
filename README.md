@@ -1,9 +1,10 @@
-# LibreCAD [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=master)](https://travis-ci.org/LibreCAD/LibreCAD)
+# LibreCAD [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=master)](https://travis-ci.org/LibreCAD/LibreCAD) 
 
 [LibreCAD](http://www.librecad.org) is a 2D CAD drawing tool
 based on the community edition of [QCAD](http://www.qcad.org).  
-LibreCAD has been re-structured and ported to [Qt](http://www.qt.io/download-open-source/) 4.  
-It works on OS X, Windows and Linux.  
+LibreCAD uses the cross-platform framework [Qt](http://www.qt.io/download-open-source/),
+which means it works with most operating systems.  
+The user interface is translated in over 30 languages.  http://translate.librecad.org/
 
 Most of the project is released under the GPLv2 license,  
 but please read the [LICENSE](LICENSE) file for additional information.
@@ -25,6 +26,7 @@ The 2.0 branch represents the latest stable build (2.0.9) plus bug fixes.
 
 **Questions or Comments**
 
+- [![Join the chat at https://gitter.im/LibreCAD/LibreCAD](https://badges.gitter.im/LibreCAD/LibreCAD.svg)](https://gitter.im/LibreCAD/LibreCAD?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 - http://forum.librecad.org/
 - irc://chat.freenode.net/librecad
 
@@ -43,7 +45,7 @@ Linux packages:
 
 - [Fedora](https://apps.fedoraproject.org/packages/librecad/builds/)
 - [Gentoo](https://packages.gentoo.org/packages/media-gfx/librecad)
-- [Ubuntu (contains bugs, build from source instead)](https://launchpad.net/~librecad-dev)
+- [Ubuntu](https://launchpad.net/~librecad-dev)
 
 2.1.0 alpha versions: [Windows][3] - [OS X][4]
 
