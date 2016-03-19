@@ -9,8 +9,6 @@ TARGET = plugins
 
 QT += gui
 
-include(../librecad/src/muparser.pri)
-
 SUBDIRS     = \
         asciifile \
         align \
@@ -78,20 +76,4 @@ TRANSLATIONS = ./ts/plugins_ar.ts \
     ./ts/plugins_uk.ts \
     ./ts/plugins_zh_cn.ts \
     ./ts/plugins_zh_tw.ts
-
-
-# install
-INSTALLDIR = ../unix/resources/plugins
-win32 {
-    INSTALLDIR = ../windows/resources/plugins
-}
-unix {
-    macx { 
-    INSTALLDIR = ../LibreCAD.app/Contents/Resources/plugins
-    }
-    else { 
-    INSTALLDIR = ../unix/resources/plugins
-    }
-}
-
 
