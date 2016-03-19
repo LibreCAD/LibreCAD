@@ -68,7 +68,7 @@ private:
 	void clearLines(bool checkStatus=false);
 
 	struct Points;
-	std::unique_ptr<Points> pPoints;;
+    std::unique_ptr<Points> pPoints;
 };
 
 #endif
