@@ -261,7 +261,10 @@ bool dwgReader21::readFileHeader() {
     dwgPageInfo sectionMap = sectionPageMapTmp[SectionsMapId];
     ret = parseSysPage(SectionsMapSizeCompressed, SectionsMapSizeUncompressed, SectionsMapCorrectionFactor, sectionMap.address, SectionsMapData);
     if (!ret)
+    {
+        delete[]SectionsMapData;
         return false;
+    }
 
 //reads sections:
     //Note: compressed value are not stored in file then, commpresed field are use to store
