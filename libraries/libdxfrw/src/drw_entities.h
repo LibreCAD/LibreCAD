@@ -17,6 +17,7 @@
 #include <string>
 #include <vector>
 #include <list>
+#include <memory>
 #include "drw_base.h"
 
 class dxfReader;
@@ -1410,12 +1411,7 @@ public:
         extrusionPoint.x = extrusionPoint.y = 0.0;
         arrow = 1;
         extrusionPoint.z = 1.0;
-    }
-    ~DRW_Leader() {
-        while (!vertexlist.empty()) {
-           vertexlist.pop_back();
-        }
-    }
+	}
 
     virtual void applyExtrusion(){}
 
@@ -1440,10 +1436,10 @@ public:
     DRW_Coord offsetblock;     /*!< Offset of last leader vertex from block, code 212, 222 & 232 */
     DRW_Coord offsettext;      /*!< Offset of last leader vertex from annotation, code 213, 223 & 233 */
 
-    std::vector<DRW_Coord *> vertexlist;  /*!< vertex points list, code 10, 20 & 30 */
+	std::vector<std::shared_ptr<DRW_Coord>> vertexlist;  /*!< vertex points list, code 10, 20 & 30 */
 
 private:
-    DRW_Coord *vertexpoint;   /*!< current control point to add data */
+	std::shared_ptr<DRW_Coord> vertexpoint;   /*!< current control point to add data */
     dwgHandle dimStyleH;
     dwgHandle AnnotH;
 };

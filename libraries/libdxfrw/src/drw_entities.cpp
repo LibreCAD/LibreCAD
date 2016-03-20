@@ -2716,17 +2716,17 @@ void DRW_Leader::parseCode(int code, dxfReader *reader){
     case 41:
         textwidth = reader->getDouble();
         break;
-    case 10: {
-        vertexpoint = new DRW_Coord();
+	case 10:
+		vertexpoint= std::make_shared<DRW_Coord>();
         vertexlist.push_back(vertexpoint);
         vertexpoint->x = reader->getDouble();
-        break; }
+		break;
     case 20:
-        if(vertexpoint != NULL)
+		if(vertexpoint)
             vertexpoint->y = reader->getDouble();
         break;
     case 30:
-        if(vertexpoint != NULL)
+		if(vertexpoint)
             vertexpoint->z = reader->getDouble();
         break;
     case 340:
@@ -2792,9 +2792,9 @@ bool DRW_Leader::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 
     // add vertexs
     for (int i = 0; i< nPt; i++){
-        DRW_Coord* vertex = new DRW_Coord(buf->get3BitDouble());
-        vertexlist.push_back(vertex);
-        DRW_DBG("\nvertex "); DRW_DBGPT(vertex->x, vertex->y, vertex->z);
+		DRW_Coord vertex = buf->get3BitDouble();
+		vertexlist.push_back(std::make_shared<DRW_Coord>(vertex));
+		DRW_DBG("\nvertex "); DRW_DBGPT(vertex.x, vertex.y, vertex.z);
     }
     DRW_Coord Endptproj = buf->get3BitDouble();
     DRW_DBG("\nEndptproj "); DRW_DBGPT(Endptproj.x, Endptproj.y, Endptproj.z);
