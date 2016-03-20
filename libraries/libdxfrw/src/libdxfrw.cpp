@@ -2512,22 +2512,21 @@ bool dxfRW::processPolyline() {
 bool dxfRW::processVertex(DRW_Polyline *pl) {
     DRW_DBG("dxfRW::processVertex");
     int code;
-    DRW_Vertex *v = new DRW_Vertex();
+	DRW_Vertex v;
     while (reader->readRec(&code)) {
-        DRW_DBG(code); DRW_DBG("\n");
+		DRW_DBG(code); DRW_DBG("\n");
         switch (code) {
-        case 0: {
-            pl->appendVertex(v);
-            nextentity = reader->getString();
-            DRW_DBG(nextentity); DRW_DBG("\n");
-            if (nextentity == "SEQEND") {
-            return true;  //found SEQEND no more vertex, terminate
-            } else if (nextentity == "VERTEX"){
-                v = new DRW_Vertex(); //another vertex
-            }
-        }
+		case 0:
+			pl->appendVertex(new DRW_Vertex{v});
+			nextentity = reader->getString();
+			DRW_DBG(nextentity); DRW_DBG("\n");
+			if (nextentity == "SEQEND")
+				return true;  //found SEQEND no more vertex, terminate
+			else if (nextentity == "VERTEX")
+				v.reset(); //another vertex
+
         default:
-            v->parseCode(code, reader);
+			v.parseCode(code, reader);
             break;
         }
     }
