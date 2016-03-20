@@ -210,8 +210,8 @@ public:
     */
     bool isVisibleInWindow(RS_GraphicView* view) const;
 	//! \{ \brief find visible segments of entity and draw only those visible portion
-    virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
-    virtual void drawVisible(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
+	void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+	void drawVisible(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
 	//! \}
 
     friend std::ostream& operator << (std::ostream& os, const RS_Ellipse& a);
