@@ -100,69 +100,15 @@ class DRW_Entity {
     SETENTFRIENDS
 public:
     //initializes default values
-    DRW_Entity() {
-        eType = DRW::UNKNOWN;
-        handle = parentHandle = DRW::NoHandle; //no handle (0)
-        lineType = "BYLAYER";
-        color = DRW::ColorByLayer; // default BYLAYER (256)
-        ltypeScale = 1.0;
-        visible = true;
-        layer = "0";
-        lWeight = DRW_LW_Conv::widthByLayer; // default BYLAYER  (dxf -1, dwg 29)
-        space = DRW::ModelSpace; // default ModelSpace (0)
-        haveExtrusion = false;
-        color24 = -1; //default -1 not set
-        numProxyGraph = 0;
-        shadow = DRW::CastAndReceieveShadows;
-        material = DRW::MaterialByLayer;
-        plotStyle = DRW::DefaultPlotStyle;
-        transparency = DRW::Opaque;
-        nextEntLink = prevEntLink = 0;
-        numReactors = xDictFlag = 0;
-        curr = NULL;
-        ownerHandle= false;
-    }
+	DRW_Entity() = default;
+	~DRW_Entity() = default;
 
-    DRW_Entity(const DRW_Entity& e) {
-        eType = e.eType;
-        handle = e.handle;
-        parentHandle = e.parentHandle; //no handle (0)
-        lineType = e.lineType;
-        color = e.color; // default BYLAYER (256)
-        ltypeScale = e.ltypeScale;
-        visible = e.visible;
-        layer = e.layer;
-        lWeight = e.lWeight;
-        space = e.space;
-        haveExtrusion = e.haveExtrusion;
-        color24 = e.color24; //default -1 not set
-        numProxyGraph = e.numProxyGraph;
-        shadow = e.shadow;
-        material = e.material;
-        plotStyle = e.plotStyle;
-        transparency = e.transparency;
-        nextEntLink = e.nextEntLink;
-        prevEntLink = e.prevEntLink;
-        numReactors = e.numReactors;
-        xDictFlag = e.xDictFlag;
-        curr = NULL;
-        ownerHandle= false;
-//        curr = e.curr;
-        for (std::vector<DRW_Variant*>::const_iterator it=e.extData.begin(); it!=e.extData.end(); ++it){
-            extData.push_back(new DRW_Variant(*(*it)));
-        }
-    }
+	DRW_Entity(const DRW_Entity& e);
+	DRW_Entity& operator = (const DRW_Entity& e);
+	DRW_Entity(DRW_Entity&& e);
+	DRW_Entity& operator = (DRW_Entity&& e);
 
-    virtual ~DRW_Entity() {
-        for (std::vector<DRW_Variant*>::iterator it=extData.begin(); it!=extData.end(); ++it)
-            delete *it;
-
-        extData.clear();
-    }
-
-    void reset(){
-        for (std::vector<DRW_Variant*>::iterator it=extData.begin(); it!=extData.end(); ++it)
-            delete *it;
+	void reset() {
         extData.clear();
     }
 
@@ -185,27 +131,27 @@ protected:
     bool parseDxfGroups(int code, dxfReader *reader);
 
 public:
-    enum DRW::ETYPE eType;     /*!< enum: entity type, code 0 */
-    duint32 handle;            /*!< entity identifier, code 5 */
+	enum DRW::ETYPE eType = DRW::UNKNOWN;     /*!< enum: entity type, code 0 */
+	duint32 handle = DRW::NoHandle;            /*!< entity identifier, code 5 */
     std::list<std::list<DRW_Variant> > appData; /*!< list of application data, code 102 */
-    duint32 parentHandle;      /*!< Soft-pointer ID/handle to owner BLOCK_RECORD object, code 330 */
-    DRW::Space space;          /*!< space indicator, code 67*/
-    UTF8STRING layer;          /*!< layer name, code 8 */
-    UTF8STRING lineType;       /*!< line type, code 6 */
-    duint32 material;          /*!< hard pointer id to material object, code 347 */
-    int color;                 /*!< entity color, code 62 */
-    enum DRW_LW_Conv::lineWidth lWeight; /*!< entity lineweight, code 370 */
-    double ltypeScale;         /*!< linetype scale, code 48 */
-    bool visible;              /*!< entity visibility, code 60 */
-    int numProxyGraph;         /*!< Number of bytes in proxy graphics, code 92 */
+	duint32 parentHandle = DRW::NoHandle;      /*!< Soft-pointer ID/handle to owner BLOCK_RECORD object, code 330 */
+	DRW::Space space = DRW::ModelSpace;          /*!< space indicator, code 67*/
+	UTF8STRING layer = "0";          /*!< layer name, code 8 */
+	UTF8STRING lineType = "BYLAYER";       /*!< line type, code 6 */
+	duint32 material = DRW::MaterialByLayer;          /*!< hard pointer id to material object, code 347 */
+	int color = DRW::ColorByLayer;                 /*!< entity color, code 62 */
+	enum DRW_LW_Conv::lineWidth lWeight = DRW_LW_Conv::widthByLayer; /*!< entity lineweight, code 370 */
+	double ltypeScale = 1.0;         /*!< linetype scale, code 48 */
+	bool visible = true;              /*!< entity visibility, code 60 */
+	int numProxyGraph = 0;         /*!< Number of bytes in proxy graphics, code 92 */
     std::string proxyGraphics; /*!< proxy graphics bytes, code 310 */
-    int color24;               /*!< 24-bit color, code 420 */
+	int color24 = -1;               /*!< 24-bit color, code 420 */
     std::string colorName;     /*!< color name, code 430 */
-    int transparency;          /*!< transparency, code 440 */
-    int plotStyle;             /*!< hard pointer id to plot style object, code 390 */
-    DRW::ShadowMode shadow;    /*!< shadow mode, code 284 */
-    bool haveExtrusion;        /*!< set to true if the entity have extrusion*/
-    std::vector<DRW_Variant*> extData; /*!< FIFO list of extended data, codes 1000 to 1071*/
+	int transparency = DRW::Opaque;          /*!< transparency, code 440 */
+	int plotStyle = DRW::DefaultPlotStyle;             /*!< hard pointer id to plot style object, code 390 */
+	DRW::ShadowMode shadow = DRW::CastAndReceieveShadows;    /*!< shadow mode, code 284 */
+	bool haveExtrusion = false;        /*!< set to true if the entity have extrusion*/
+	std::vector<std::shared_ptr<DRW_Variant>> extData; /*!< FIFO list of extended data, codes 1000 to 1071*/
 
 protected: //only for read dwg
     duint8 haveNextLinks; //aka nolinks //B
@@ -215,19 +161,20 @@ protected: //only for read dwg
     duint8 shadowFlag; //presence of shadow handle ?? (in dwg may be plotflag)//RC
     dwgHandle lTypeH;
     dwgHandle layerH;
-    duint32 nextEntLink;
-    duint32 prevEntLink;
-    bool ownerHandle;
+	duint32 nextEntLink = 0;
+	duint32 prevEntLink = 0;
+	bool ownerHandle = false;
 
-    duint8 xDictFlag;
-    dint32 numReactors; //
+	duint8 xDictFlag = 0;
+	dint32 numReactors = 0; //
     duint32 objSize;  //RL 32bits object data size in bits
     dint16 oType;
 
 private:
-    DRW_Coord extAxisX;
+	void init(DRW_Entity const& rhs);
+	DRW_Coord extAxisX;
     DRW_Coord extAxisY;
-    DRW_Variant* curr;
+	std::shared_ptr<DRW_Variant> curr;
 };
 
 

@@ -11,11 +11,64 @@
 ******************************************************************************/
 
 #include <cstdlib>
+#include <algorithm>
+#include <iterator>
 #include "drw_entities.h"
 #include "intern/dxfreader.h"
 #include "intern/dwgbuffer.h"
 #include "intern/drw_dbg.h"
 
+DRW_Entity::DRW_Entity(const DRW_Entity& e):
+	extData(e.extData.begin(), e.extData.end())
+{
+	init(e);
+}
+
+DRW_Entity& DRW_Entity::operator = (const DRW_Entity& e)
+{
+	std::copy(e.extData.begin(), e.extData.end(), std::back_inserter(extData));
+	init(e);
+	return *this;
+}
+
+DRW_Entity::DRW_Entity(DRW_Entity&& e):
+	extData(std::move(e.extData))
+{
+	init(e);
+}
+
+DRW_Entity& DRW_Entity::operator = (DRW_Entity&& e)
+{
+	init(e);
+	extData = std::move(e.extData);
+	return *this;
+}
+
+void DRW_Entity::init(DRW_Entity const& rhs)
+{
+	eType = rhs.eType;
+	handle = rhs.handle;
+	parentHandle = rhs.parentHandle; //no handle (0)
+	lineType = rhs.lineType;
+	color = rhs.color; // default BYLAYER (256)
+	ltypeScale = rhs.ltypeScale;
+	visible = rhs.visible;
+	layer = rhs.layer;
+	lWeight = rhs.lWeight;
+	space = rhs.space;
+	haveExtrusion = rhs.haveExtrusion;
+	color24 = rhs.color24; //default -1 not set
+	numProxyGraph = rhs.numProxyGraph;
+	shadow = rhs.shadow;
+	material = rhs.material;
+	plotStyle = rhs.plotStyle;
+	transparency = rhs.transparency;
+	nextEntLink = rhs.nextEntLink;
+	prevEntLink = rhs.prevEntLink;
+	numReactors = rhs.numReactors;
+	xDictFlag = rhs.xDictFlag;
+	curr.reset();
+}
 
 //! Calculate arbitary axis
 /*!
@@ -110,13 +163,13 @@ bool DRW_Entity::parseCode(int code, dxfReader *reader){
     case 1003:
     case 1004:
     case 1005:
-        extData.push_back(new DRW_Variant(code, reader->getString()));
+		extData.push_back(std::make_shared<DRW_Variant>(code, reader->getString()));
         break;
     case 1010:
     case 1011:
     case 1012:
     case 1013:
-        curr = new DRW_Variant(code, DRW_Coord(reader->getDouble(), 0.0, 0.0));
+		curr =std::make_shared<DRW_Variant>(code, DRW_Coord(reader->getDouble(), 0.0, 0.0));
         extData.push_back(curr);
         break;
     case 1020:
@@ -132,16 +185,17 @@ bool DRW_Entity::parseCode(int code, dxfReader *reader){
     case 1033:
         if (curr)
             curr->setCoordZ(reader->getDouble());
-        curr=NULL;
+		//FIXME, why do we discard curr right after setting the its Z
+//        curr=NULL;
         break;
     case 1040:
     case 1041:
     case 1042:
-        extData.push_back(new DRW_Variant(code, reader->getDouble() ));
+		extData.push_back(std::make_shared<DRW_Variant>(code, reader->getDouble() ));
         break;
     case 1070:
     case 1071:
-        extData.push_back(new DRW_Variant(code, reader->getInt32() ));
+		extData.push_back(std::make_shared<DRW_Variant>(code, reader->getInt32() ));
         break;
     default:
         break;
