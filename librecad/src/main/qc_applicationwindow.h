@@ -92,6 +92,8 @@ public:
     void setUndoEnable(bool enable);
     bool loadStyleSheet(QString path);
 
+    void createDoubleClickMenu(const QStringList& s_list);
+
     QMap<QString, QAction*> a_map;
 
     std::shared_ptr<LC_Options> options;
@@ -193,6 +195,8 @@ public slots:
     void showDeviceOptions();
 
     void updateDevice(QString);
+
+    void invokeDoubleClickMenuCreator();
 
 signals:
     void gridChanged(bool on);

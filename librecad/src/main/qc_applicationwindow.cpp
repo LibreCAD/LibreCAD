@@ -93,6 +93,8 @@
 #include "lc_options.h"
 
 #include "lc_printing.h"
+#include "actionlist.h"
+#include "customwidgetcreator.h"
 
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
 
@@ -122,6 +124,15 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     : options(std::make_shared<LC_Options>())
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
+
+    //accept drop events to open files
+    setAcceptDrops(true);
+
+    // make the left and right dock areas dominant
+    setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
+    setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
 
     appWindow = this;
 
@@ -291,14 +302,6 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     RS_COMMANDS->updateAlias();
     //plugin load
     loadPlugins();
-
-    //accept drop events to open files
-    setAcceptDrops(true);
-
-    setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
-    setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
-    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
-    setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
 
     statusBar()->showMessage(qApp->applicationName() + " Ready", 2000);
 }
@@ -1073,6 +1076,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
 
     RS_DEBUG->print("QC_ApplicationWindow::slotFileNew() begin");
 
+    QSettings settings;
     static int id = 0;
     id++;
 
@@ -1096,6 +1100,9 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     view->setCursorHiding(cursor_hiding);
     view->options = options;
     if (scrollbars) view->addScrollbars();
+
+    auto s_list = settings.value("CustomWidgets/DoubleClickMenu").toStringList();
+    if (!s_list.isEmpty()) createDoubleClickMenu(s_list);
 
     connect(view, SIGNAL(gridStatusChanged(const QString&)),
             this, SLOT(updateGridStatus(const QString&)));
@@ -2857,4 +2864,47 @@ void QC_ApplicationWindow::showDeviceOptions()
 void QC_ApplicationWindow::updateDevice(QString device)
 {
     options->device = device;
+}
+
+
+void QC_ApplicationWindow::invokeDoubleClickMenuCreator()
+{
+    // author: ravas
+
+    QDialog dlg;
+    dlg.setWindowTitle(tr("Double-click Menu Creator"));
+    auto layout = new QVBoxLayout;
+    auto widget_creator = new CustomWidgetCreator(&dlg, a_map);
+    layout->addWidget(widget_creator);
+    dlg.setLayout(layout);
+    if (dlg.exec())
+    {
+        QSettings settings;
+        QStringList s_list = widget_creator->getChosenActions();
+        if (s_list.isEmpty())
+        {
+            settings.remove("CustomWidgets/DoubleClickMenu");
+            return;
+        }
+
+        createDoubleClickMenu(s_list);
+        settings.setValue("CustomWidgets/DoubleClickMenu", s_list);
+    }
+}
+
+
+void QC_ApplicationWindow::createDoubleClickMenu(const QStringList& s_list)
+{
+    // author: ravas
+
+    foreach (auto win, window_list)
+    {
+        auto graphic_view = win->getGraphicView();
+        auto menu = new QMenu(graphic_view);
+        foreach (auto key, s_list)
+        {
+            menu->addAction(a_map[key]);
+        }
+        graphic_view->setDoubleClickMenu(menu);
+    }
 }

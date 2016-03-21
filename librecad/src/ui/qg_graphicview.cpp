@@ -73,6 +73,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, Qt::WindowFlags f, RS_Document* 
     ,curHand(new QCursor(QPixmap(":ui/cur_hand_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
     ,redrawMethod(RS2::RedrawAll)
     ,isSmoothScrolling(false)
+    ,doubleclick_menu(nullptr)
 {
     RS_DEBUG->print("QG_GraphicView::QG_GraphicView()..");
 
@@ -265,16 +266,24 @@ void QG_GraphicView::mousePressEvent(QMouseEvent* event)
     eventHandler->mousePressEvent(event);
 }
 
-void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e) {
-    // zoom auto with double click middle mouse button
-#if QT_VERSION < 0x040700
-    if (e->button()==Qt::MidButton) {
-#else
-    if (e->button()==Qt::MiddleButton) {
-#endif
-        setCurrentAction(new RS_ActionZoomAuto(*container, *this));
-        e->accept();
+void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e)
+{
+    switch(e->button())
+    {
+        default:
+            break;
+        case Qt::MiddleButton:
+            setCurrentAction(new RS_ActionZoomAuto(*container, *this));
+            break;
+        case Qt::LeftButton:
+            if (doubleclick_menu)
+            {
+                killAllActions();
+                doubleclick_menu->popup(mapToGlobal(e->pos()));
+            }
+            break;
     }
+    e->accept();
 }
 
 
@@ -962,4 +971,9 @@ bool QG_GraphicView::hasScrollbars()
 void QG_GraphicView::setCursorHiding(bool state)
 {
     cursor_hiding = state;
+}
+
+void QG_GraphicView::setDoubleClickMenu(QMenu* menu)
+{
+    doubleclick_menu = menu;
 }
