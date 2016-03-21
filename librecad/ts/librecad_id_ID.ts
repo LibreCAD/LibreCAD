@@ -7346,112 +7346,112 @@ This action can NOT be undone.</source>
         <translation>Buka Gambar</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1903"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1905"/>
         <source>Windows Bitmap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1905"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1907"/>
         <source>Joint Photographic Experts Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1907"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1909"/>
         <source>Graphics Interchange Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1909"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1911"/>
         <source>Multiple-image Network Graphics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1911"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1913"/>
         <source>Portable Bit Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1913"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1915"/>
         <source>Portable Grey Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1915"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1917"/>
         <source>Portable Network Graphic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1917"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1919"/>
         <source>Portable Pixel Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1919"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1921"/>
         <source>X Bitmap Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1921"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1923"/>
         <source>X Pixel Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1923"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1925"/>
         <source>Scalable Vector Graphics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1925"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1927"/>
         <source>SGI Black &amp; White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1927"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1929"/>
         <source>Encapsulated PostScript</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1929"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1931"/>
         <source>Encapsulated PostScript Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1931"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1933"/>
         <source>Encapsulated PostScript Interchange</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1933"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1935"/>
         <source>Windows Icon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1935"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1937"/>
         <source>JPEG 2000</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1937"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1939"/>
         <source>ZSoft Paintbrush</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1939"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1941"/>
         <source>PC Paint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1941"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1943"/>
         <source>SGI-Bilddatei</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1943"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1945"/>
         <source>Targa Image File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1945"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1947"/>
         <source>Tagged Image File Format</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9549,33 +9549,33 @@ Continue?</source>
 <context>
     <name>RS_ActionDrawArcTangential</name>
     <message>
-        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="60"/>
+        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="61"/>
         <source>Arc &amp;Tangential</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="274"/>
+        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="271"/>
         <source>Specify base entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="275"/>
+        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="272"/>
         <source>Cancel</source>
         <translation>Batal</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="280"/>
+        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="277"/>
         <source>Specify end angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="277"/>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="280"/>
-        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="283"/>
         <source>Back</source>
         <translation>Mundur</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="283"/>
+        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="280"/>
         <source>Specify end point</source>
         <translation type="unfinished"></translation>
     </message>

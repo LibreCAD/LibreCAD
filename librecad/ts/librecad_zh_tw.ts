@@ -8243,112 +8243,112 @@ This action can NOT be undone.</source>
         <translation>開啟影像</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1903"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1905"/>
         <source>Windows Bitmap</source>
         <translation>Windows 點陣圖</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1905"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1907"/>
         <source>Joint Photographic Experts Group</source>
         <translation>聯合影像專業組織</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1907"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1909"/>
         <source>Graphics Interchange Format</source>
         <translation>圖形交換格式</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1909"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1911"/>
         <source>Multiple-image Network Graphics</source>
         <translation>多重影像網路圖形</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1911"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1913"/>
         <source>Portable Bit Map</source>
         <translation>可攜式點陣圖</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1913"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1915"/>
         <source>Portable Grey Map</source>
         <translation>可攜式灰階圖</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1915"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1917"/>
         <source>Portable Network Graphic</source>
         <translation>可攜式網路圖形</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1917"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1919"/>
         <source>Portable Pixel Map</source>
         <translation>可攜式像素圖</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1919"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1921"/>
         <source>X Bitmap Format</source>
         <translation>X 點陣圖格式</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1921"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1923"/>
         <source>X Pixel Map</source>
         <translation>X像素圖</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1923"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1925"/>
         <source>Scalable Vector Graphics</source>
         <translation>可縮放向量圖形</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1925"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1927"/>
         <source>SGI Black &amp; White</source>
         <translation>SGI黑白图像</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1927"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1929"/>
         <source>Encapsulated PostScript</source>
         <translation>EPS 封裝PostScript檔</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1929"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1931"/>
         <source>Encapsulated PostScript Format</source>
         <translation>EPS 封裝PostScript檔</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1931"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1933"/>
         <source>Encapsulated PostScript Interchange</source>
         <translation>EPSI 封裝PostScript檔</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1933"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1935"/>
         <source>Windows Icon</source>
         <translation>ICO，图标格式</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1935"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1937"/>
         <source>JPEG 2000</source>
         <translation>JPEG 2000</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1937"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1939"/>
         <source>ZSoft Paintbrush</source>
         <translation>PIC PCPaint格式</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1939"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1941"/>
         <source>PC Paint</source>
         <translation>PC Paint</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1941"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1943"/>
         <source>SGI-Bilddatei</source>
         <translation>RGB, SGI圖像格式</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1943"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1945"/>
         <source>Targa Image File</source>
         <translation>TGA Truevison圖像格式</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1945"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1947"/>
         <source>Tagged Image File Format</source>
         <translation>TIFF 圖像格式</translation>
     </message>
@@ -10483,33 +10483,33 @@ Continue?</source>
         <translation type="obsolete">弧: 正切</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="60"/>
+        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="61"/>
         <source>Arc &amp;Tangential</source>
         <translation>相切圓弧(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="274"/>
+        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="271"/>
         <source>Specify base entity</source>
         <translation>指定基準物件</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="275"/>
+        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="272"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="280"/>
+        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="277"/>
         <source>Specify end angle</source>
         <translation>指定結束角度</translation>
     </message>
     <message>
+        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="277"/>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="280"/>
-        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="283"/>
         <source>Back</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="283"/>
+        <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="280"/>
         <source>Specify end point</source>
         <translation>指定終點</translation>
     </message>
