@@ -544,8 +544,7 @@ public:
         elevation = thickness = width = 0.0;
         flags = 0;
         extPoint.x = extPoint.y = 0;
-        extPoint.z = 1;
-        vertex = NULL;
+		extPoint.z = 1;
     }
     
     DRW_LWPolyline(const DRW_LWPolyline& p):DRW_Entity(p){
@@ -554,31 +553,21 @@ public:
         this->thickness = p.thickness;
         this->width = p.width;
         this->flags = p.flags;
-        this->extPoint = p.extPoint;
-        this->vertex = NULL;
+		this->extPoint = p.extPoint;
         for (unsigned i=0; i<p.vertlist.size(); i++)// RLZ ok or new
-          this->vertlist.push_back( new DRW_Vertex2D( *(p.vertlist.at(i)) ) );
-
-        this->vertex = NULL;
+		  this->vertlist.push_back(
+					std::make_shared<DRW_Vertex2D>(*p.vertlist.at(i))
+					);
     }
+	// TODO rule of 5
 
-    ~DRW_LWPolyline() {
-        while (!vertlist.empty()) {
-            vertlist.pop_back();
-        }
-    }
     virtual void applyExtrusion();
     void addVertex (DRW_Vertex2D v) {
-        DRW_Vertex2D *vert = new DRW_Vertex2D();
-        vert->x = v.x;
-        vert->y = v.y;
-        vert->stawidth = v.stawidth;
-        vert->endwidth = v.endwidth;
-        vert->bulge = v.bulge;
+		std::shared_ptr<DRW_Vertex2D> vert = std::make_shared<DRW_Vertex2D>(v);
         vertlist.push_back(vert);
     }
-    DRW_Vertex2D *addVertex () {
-        DRW_Vertex2D *vert = new DRW_Vertex2D();
+	std::shared_ptr<DRW_Vertex2D> addVertex () {
+		std::shared_ptr<DRW_Vertex2D> vert = std::make_shared<DRW_Vertex2D>();
         vert->stawidth = 0;
         vert->endwidth = 0;
         vert->bulge = 0;
@@ -597,8 +586,8 @@ public:
     double elevation;         /*!< elevation, code 38 */
     double thickness;         /*!< thickness, code 39 */
     DRW_Coord extPoint;       /*!<  Dir extrusion normal vector, code 210, 220 & 230 */
-    DRW_Vertex2D *vertex;       /*!< current vertex to add data */
-    std::vector<DRW_Vertex2D *> vertlist;  /*!< vertex list */
+	std::shared_ptr<DRW_Vertex2D> vertex;       /*!< current vertex to add data */
+	std::vector<std::shared_ptr<DRW_Vertex2D>> vertlist;  /*!< vertex list */
 };
 
 //! Class to handle insert entries
@@ -755,14 +744,9 @@ public:
         basePoint.x = basePoint.y = 0.0;
         flags = vertexcount = facecount = 0;
         smoothM = smoothN = curvetype = 0;
-    }
-    ~DRW_Polyline() {
-        while (!vertlist.empty()) {
-           vertlist.pop_back();
-         }
-    }
+	}
     void addVertex (DRW_Vertex v) {
-        DRW_Vertex *vert = new DRW_Vertex();
+		std::shared_ptr<DRW_Vertex> vert = std::make_shared<DRW_Vertex>();
         vert->basePoint.x = v.basePoint.x;
         vert->basePoint.y = v.basePoint.y;
         vert->basePoint.z = v.basePoint.z;
@@ -771,7 +755,7 @@ public:
         vert->bulge = v.bulge;
         vertlist.push_back(vert);
     }
-    void appendVertex (DRW_Vertex *v) {
+	void appendVertex (std::shared_ptr<DRW_Vertex> const& v) {
         vertlist.push_back(v);
     }
 
@@ -789,7 +773,7 @@ public:
     int smoothN;             /*!< smooth surface M density, code 74, default 0 */
     int curvetype;           /*!< curves & smooth surface type, code 75, default 0 */
 
-    std::vector<DRW_Vertex *> vertlist;  /*!< vertex list */
+	std::vector<std::shared_ptr<DRW_Vertex>> vertlist;  /*!< vertex list */
 
 private:
     std::list<duint32>hadlesList; //list of handles, only in 2004+
@@ -812,15 +796,7 @@ public:
         flags = nknots = ncontrol = nfit = 0;
         tolknot = tolcontrol = tolfit = 0.0000001;
 
-    }
-    ~DRW_Spline() {
-        while (!controllist.empty()) {
-           controllist.pop_back();
-        }
-        while (!fitlist.empty()) {
-           fitlist.pop_back();
-        }
-    }
+	}
     virtual void applyExtrusion(){}
 
 protected:
@@ -850,12 +826,12 @@ public:
     double tolfit;            /*!< fit point tolerance, code 44, default 0.0000001 */
 
     std::vector<double> knotslist;           /*!< knots list, code 40 */
-    std::vector<DRW_Coord *> controllist;  /*!< control points list, code 10, 20 & 30 */
-    std::vector<DRW_Coord *> fitlist;      /*!< fit points list, code 11, 21 & 31 */
+	std::vector<std::shared_ptr<DRW_Coord>> controllist;  /*!< control points list, code 10, 20 & 30 */
+	std::vector<std::shared_ptr<DRW_Coord>> fitlist;      /*!< fit points list, code 11, 21 & 31 */
 
 private:
-    DRW_Coord *controlpoint;   /*!< current control point to add data */
-    DRW_Coord *fitpoint;       /*!< current fit point to add data */
+	std::shared_ptr<DRW_Coord> controlpoint;   /*!< current control point to add data */
+	std::shared_ptr<DRW_Coord> fitpoint;       /*!< current fit point to add data */
 };
 
 //! Class to handle hatch loop
@@ -870,15 +846,6 @@ public:
         numedges = 0;
     }
 
-    ~DRW_HatchLoop() {
-/*        while (!pollist.empty()) {
-           pollist.pop_back();
-         }*/
-        while (!objlist.empty()) {
-           objlist.pop_back();
-         }
-    }
-
     void update() {
         numedges = objlist.size();
     }
@@ -888,7 +855,7 @@ public:
     int numedges;           /*!< number of edges (if not a polyline), code 93 */
 //TODO: store lwpolylines as entities
 //    std::vector<DRW_LWPolyline *> pollist;  /*!< polyline list */
-    std::vector<DRW_Entity *> objlist;      /*!< entities list */
+	std::vector<std::shared_ptr<DRW_Entity>> objlist;      /*!< entities list */
 };
 
 //! Class to handle hatch entity
@@ -907,17 +874,10 @@ public:
         loopsnum = hstyle = associative = 0;
         solid = hpattern = 1;
         deflines = doubleflag = 0;
-        loop = NULL;
         clearEntities();
     }
 
-    ~DRW_Hatch() {
-        while (!looplist.empty()) {
-           looplist.pop_back();
-         }
-    }
-
-    void appendLoop (DRW_HatchLoop *v) {
+	void appendLoop (std::shared_ptr<DRW_HatchLoop> const& v) {
         looplist.push_back(v);
     }
 
@@ -939,22 +899,23 @@ public:
     double scale;              /*!< hatch pattern scale, code 41 */
     int deflines;              /*!< number of pattern definition lines, code 78 */
 
-    std::vector<DRW_HatchLoop *> looplist;  /*!< polyline list */
+	std::vector<std::shared_ptr<DRW_HatchLoop>> looplist;  /*!< polyline list */
 
 private:
     void clearEntities(){
-        pt = line = NULL;
-        pline = NULL;
-        arc = NULL;
-        ellipse = NULL;
-        spline = NULL;
-        plvert = NULL;
+		pt.reset();
+		line.reset();
+		pline.reset();
+		arc.reset();
+		ellipse.reset();
+		spline.reset();
+		plvert.reset();
     }
 
     void addLine() {
         clearEntities();
         if (loop) {
-            pt = line = new DRW_Line;
+			pt = line = std::make_shared<DRW_Line>();
             loop->objlist.push_back(line);
         }
     }
@@ -962,7 +923,7 @@ private:
     void addArc() {
         clearEntities();
         if (loop) {
-            pt = arc = new DRW_Arc;
+			pt = arc = std::make_shared<DRW_Arc>();
             loop->objlist.push_back(arc);
         }
     }
@@ -970,7 +931,7 @@ private:
     void addEllipse() {
         clearEntities();
         if (loop) {
-            pt = ellipse = new DRW_Ellipse;
+			pt = ellipse = std::make_shared<DRW_Ellipse>();
             loop->objlist.push_back(ellipse);
         }
     }
@@ -978,20 +939,20 @@ private:
     void addSpline() {
         clearEntities();
         if (loop) {
-            pt = NULL;
-            spline = new DRW_Spline;
+			pt.reset();
+			spline = std::make_shared<DRW_Spline>();
             loop->objlist.push_back(spline);
         }
     }
 
-    DRW_HatchLoop *loop;       /*!< current loop to add data */
-    DRW_Line *line;
-    DRW_Arc *arc;
-    DRW_Ellipse *ellipse;
-    DRW_Spline *spline;
-    DRW_LWPolyline *pline;
-    DRW_Point *pt;
-    DRW_Vertex2D *plvert;
+	std::shared_ptr<DRW_HatchLoop> loop;       /*!< current loop to add data */
+	std::shared_ptr<DRW_Line> line;
+	std::shared_ptr<DRW_Arc> arc;
+	std::shared_ptr<DRW_Ellipse> ellipse;
+	std::shared_ptr<DRW_Spline> spline;
+	std::shared_ptr<DRW_LWPolyline> pline;
+	std::shared_ptr<DRW_Point> pt;
+	std::shared_ptr<DRW_Vertex2D> plvert;
     bool ispol;
 };
 
