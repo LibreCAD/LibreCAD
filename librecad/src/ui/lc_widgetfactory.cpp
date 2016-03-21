@@ -783,17 +783,26 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     connect(help_about, SIGNAL(triggered()), main_window, SLOT(slotHelpAbout()));
     help_menu->addAction(help_about);
 
-    // <[~ DockWidgets Menu ~]>
 
-    QMenu* dockwidgets_menu = new QMenu(QC_ApplicationWindow::tr("&Dockwidgets"), menu_bar);
+    // <[~ Widgets Menu ~]>
+
+    QMenu* widgets_menu = new QMenu("Widgets", menu_bar);
+
+    // <[~ Dock Areas Menu ~]>
+
+    QMenu* dockareas_menu = new QMenu("Dock Areas", widgets_menu);
+
+    dockareas_menu->addAction(a_map["LeftDockAreaToggle"]);
+    dockareas_menu->addAction(a_map["RightDockAreaToggle"]);
+    dockareas_menu->addAction(a_map["TopDockAreaToggle"]);
+    dockareas_menu->addAction(a_map["BottomDockAreaToggle"]);
+    dockareas_menu->addAction(a_map["FloatingDockwidgetsToggle"]);
+
+    // <[~ Dock Widgets Menu ~]>
+
+    QMenu* dockwidgets_menu = new QMenu("Dock Widgets", widgets_menu);
     dockwidgets_menu->setObjectName("dockwidgets_menu");
     dockwidgets_menu->setTearOffEnabled(true);
-
-    dockwidgets_menu->addAction(a_map["LeftDockAreaToggle"]);
-    dockwidgets_menu->addAction(a_map["RightDockAreaToggle"]);
-    dockwidgets_menu->addAction(a_map["TopDockAreaToggle"]);
-    dockwidgets_menu->addAction(a_map["BottomDockAreaToggle"]);
-    dockwidgets_menu->addAction(a_map["FloatingDockwidgetsToggle"]);
 
     dockwidgets_menu->addSeparator();
 
@@ -817,7 +826,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
 
     // <[~ Toolbars Menu ~]>
 
-    QMenu* toolbars_menu = new QMenu(QC_ApplicationWindow::tr("&Toolbars"), menu_bar);
+    QMenu* toolbars_menu = new QMenu(QC_ApplicationWindow::tr("&Toolbars"), widgets_menu);
     toolbars_menu->setObjectName("toolbars_menu");
     toolbars_menu->setTearOffEnabled(true);
 
@@ -829,6 +838,11 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     {
         toolbars_menu->addAction(tb->toggleViewAction());
     }
+
+    widgets_menu->addMenu(dockareas_menu);
+    widgets_menu->addMenu(dockwidgets_menu);
+    widgets_menu->addMenu(toolbars_menu);
+    widgets_menu->addAction(a_map["CreateDoubleClickMenu"]);
 
     // <[~ MenuBar Layout~]>
 
@@ -845,8 +859,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     menu_bar->addMenu(info_menu);
     menu_bar->addMenu(layer_menu);
     menu_bar->addMenu(block_menu);
-    menu_bar->addMenu(toolbars_menu);
-    menu_bar->addMenu(dockwidgets_menu);
+    menu_bar->addMenu(widgets_menu);
     menu_bar->addMenu(windows_menu);
     menu_bar->addMenu(help_menu);
 }
