@@ -101,16 +101,15 @@ class DRW_Entity {
 public:
     //initializes default values
 	DRW_Entity() = default;
-	~DRW_Entity() = default;
 
-	DRW_Entity(const DRW_Entity& e);
-	DRW_Entity& operator = (const DRW_Entity& e);
-	DRW_Entity(DRW_Entity&& e);
-	DRW_Entity& operator = (DRW_Entity&& e);
+	//removed copy/move ctors
+	// looks like the potential issue is the "curr" pointer is reset in previous
+	// versions during copy ctor
 
 	void reset() {
-        extData.clear();
-    }
+		extData.clear();
+		curr.reset();
+	}
 
     virtual void applyExtrusion() = 0;
 

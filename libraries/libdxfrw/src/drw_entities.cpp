@@ -11,64 +11,10 @@
 ******************************************************************************/
 
 #include <cstdlib>
-#include <algorithm>
-#include <iterator>
 #include "drw_entities.h"
 #include "intern/dxfreader.h"
 #include "intern/dwgbuffer.h"
 #include "intern/drw_dbg.h"
-
-DRW_Entity::DRW_Entity(const DRW_Entity& e):
-	extData(e.extData.begin(), e.extData.end())
-{
-	init(e);
-}
-
-DRW_Entity& DRW_Entity::operator = (const DRW_Entity& e)
-{
-	std::copy(e.extData.begin(), e.extData.end(), std::back_inserter(extData));
-	init(e);
-	return *this;
-}
-
-DRW_Entity::DRW_Entity(DRW_Entity&& e):
-	extData(std::move(e.extData))
-{
-	init(e);
-}
-
-DRW_Entity& DRW_Entity::operator = (DRW_Entity&& e)
-{
-	init(e);
-	extData = std::move(e.extData);
-	return *this;
-}
-
-void DRW_Entity::init(DRW_Entity const& rhs)
-{
-	eType = rhs.eType;
-	handle = rhs.handle;
-	parentHandle = rhs.parentHandle; //no handle (0)
-	lineType = rhs.lineType;
-	color = rhs.color; // default BYLAYER (256)
-	ltypeScale = rhs.ltypeScale;
-	visible = rhs.visible;
-	layer = rhs.layer;
-	lWeight = rhs.lWeight;
-	space = rhs.space;
-	haveExtrusion = rhs.haveExtrusion;
-	color24 = rhs.color24; //default -1 not set
-	numProxyGraph = rhs.numProxyGraph;
-	shadow = rhs.shadow;
-	material = rhs.material;
-	plotStyle = rhs.plotStyle;
-	transparency = rhs.transparency;
-	nextEntLink = rhs.nextEntLink;
-	prevEntLink = rhs.prevEntLink;
-	numReactors = rhs.numReactors;
-	xDictFlag = rhs.xDictFlag;
-	curr.reset();
-}
 
 //! Calculate arbitary axis
 /*!
