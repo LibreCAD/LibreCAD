@@ -609,7 +609,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     action->setData("mirror, mi");
     a_map["ModifyMirror"] = action;
 
-    action = new QAction(QIcon(":/extui/modifymoverotate.png"), tr("M&ove and Rotate"), tool_group);
+    action = new QAction(QIcon(":/extui/modifymoverotate.png"), tr("Mo&ve and Rotate"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyMoveRotate()));
     action->setObjectName("ModifyMoveRotate");
@@ -637,7 +637,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     action->setData("trim, tm");
     a_map["ModifyTrim"] = action;
 
-    action = new QAction(tr("&Trim Two"), tool_group);
+    action = new QAction(tr("Tr&im Two"), tool_group);
     action->setIcon(QIcon(":/extui/modifytrim2.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyTrim2()));
@@ -653,7 +653,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     action->setData("lengthen, le");
     a_map["ModifyTrimAmount"] = action;
 
-    action = new QAction(QIcon(":/extui/arcspara.png"), tr("&Offset"),tool_group);
+    action = new QAction(QIcon(":/extui/arcspara.png"), tr("O&ffset"),tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyOffset()));
     action->setObjectName("ModifyOffset");

@@ -628,7 +628,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
 
     // <[~ Plugins ~]>
 
-    QMenu* plugins_menu = new QMenu(QC_ApplicationWindow::tr("Plugins"), menu_bar);
+    QMenu* plugins_menu = new QMenu(QC_ApplicationWindow::tr("Pl&ugins"), menu_bar);
     plugins_menu->setObjectName("plugins_menu");
     plugins_menu->setTearOffEnabled(true);
 
@@ -705,7 +705,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
 
     // <[~ Dimension ~]>
 
-    QMenu* dimension_menu = new QMenu(QC_ApplicationWindow::tr("&Dimension"), menu_bar);
+    QMenu* dimension_menu = new QMenu(QC_ApplicationWindow::tr("Dime&nsion"), menu_bar);
     dimension_menu->setObjectName("dimension_menu");
     dimension_menu->setTearOffEnabled(true);
     dimension_menu->addActions(dimension_actions);
@@ -730,7 +730,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
 
     // <[~ Snapping ~]>
 
-    QMenu* snap_menu = new QMenu(QC_ApplicationWindow::tr("&Snap"), menu_bar);
+    QMenu* snap_menu = new QMenu(QC_ApplicationWindow::tr("Sna&p"), menu_bar);
     snap_menu->setObjectName("snap_menu");
     snap_menu->setTearOffEnabled(true);
     // QToolBar* snap_tb = main_window->findChild<QToolBar*>("snap_toolbar");
@@ -800,7 +800,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
 
     // <[~ Dock Widgets Menu ~]>
 
-    QMenu* dockwidgets_menu = new QMenu("Dock Widgets", widgets_menu);
+    QMenu* dockwidgets_menu = new QMenu(QC_ApplicationWindow::tr("Dock Wid&gets"), widgets_menu);
     dockwidgets_menu->setObjectName("dockwidgets_menu");
     dockwidgets_menu->setTearOffEnabled(true);
 
