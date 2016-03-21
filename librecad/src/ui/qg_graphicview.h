@@ -35,6 +35,8 @@
 
 class QGridLayout;
 class QLabel;
+class QMenu;
+
 class QG_ScrollBar;
 struct LC_Options;
 
@@ -92,6 +94,7 @@ public:
 
     void setAntialiasing(bool state);
     void setCursorHiding(bool state);
+    void setDoubleClickMenu(QMenu* menu);
     void addScrollbars();
     bool hasScrollbars();
 
@@ -140,18 +143,21 @@ protected:
 		
 	// Used for buffering different paint layers
 	std::unique_ptr<QPixmap> PixmapLayer1;  // Used for grids and absolute 0
-	std::unique_ptr<QPixmap> PixmapLayer2;  // Used for teh actual CAD drawing
-	std::unique_ptr<QPixmap> PixmapLayer3;  // USed for crosshair and actionitems
+    std::unique_ptr<QPixmap> PixmapLayer2;  // Used for the actual CAD drawing
+    std::unique_ptr<QPixmap> PixmapLayer3;  // Used for crosshair and actionitems
 	
 	RS2::RedrawMethod redrawMethod;
 		
     //! Keep tracks of if we are currently doing a high-resolution scrolling
     bool isSmoothScrolling;
 
+    QMenu* doubleclick_menu;
+
 private:
     bool antialiasing{false};
     bool scrollbars{false};
     bool cursor_hiding{false};
+
 
 signals:
     void xbutton1_released();
