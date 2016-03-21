@@ -47,6 +47,25 @@
     </message>
 </context>
 <context>
+    <name>CustomWidgetCreator</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
@@ -465,10 +484,6 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
         <translation type="unfinished">&amp;Specchio</translation>
     </message>
     <message>
-        <source>M&amp;ove and Rotate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rotate T&amp;wo</source>
         <translation type="unfinished">&amp;Doppia Rotazione</translation>
     </message>
@@ -481,16 +496,8 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Trim Two</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Lengthen</source>
         <translation type="unfinished">&amp;Allunga</translation>
-    </message>
-    <message>
-        <source>&amp;Offset</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Divide</source>
@@ -838,6 +845,22 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
         <source>Device Options</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Mo&amp;ve and Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tr&amp;im Two</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>O&amp;ffset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Double-click Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -1061,7 +1084,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     </message>
     <message>
         <source>&amp;Dimension</source>
-        <translation>&amp;Quota</translation>
+        <translation type="obsolete">&amp;Quota</translation>
     </message>
     <message>
         <source>&amp;Modify</source>
@@ -1069,7 +1092,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     </message>
     <message>
         <source>&amp;Snap</source>
-        <translation>&amp;Snap</translation>
+        <translation type="obsolete">&amp;Snap</translation>
     </message>
     <message>
         <source>&amp;Info</source>
@@ -1287,7 +1310,7 @@ Verificare i permessi</translation>
     </message>
     <message>
         <source>&amp;Manual</source>
-        <translation type="unfinished">&amp;Manuale</translation>
+        <translation type="obsolete">&amp;Manuale</translation>
     </message>
     <message>
         <source>&amp;CAM</source>
@@ -1371,7 +1394,7 @@ Salvataggio automatico disabilitato.</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation>Aiuto</translation>
+        <translation type="obsolete">Aiuto</translation>
     </message>
     <message>
         <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
@@ -1491,7 +1514,7 @@ Salvataggio automatico disabilitato.</translation>
     </message>
     <message>
         <source>Help files not found</source>
-        <translation>File guida non trovati</translation>
+        <translation type="obsolete">File guida non trovati</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
@@ -1521,10 +1544,6 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The help files were not found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1592,10 +1611,6 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Dockwidgets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Dock Areas</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1624,7 +1639,23 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Plugins</source>
+        <source>Double-click Menu Creator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pl&amp;ugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dime&amp;nsion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sna&amp;p</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dock Wid&amp;gets</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6368,7 +6399,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>#404040</source>
-        <translation type="obsolete">#404040</translation>
+        <translation type="unfinished">#404040</translation>
     </message>
     <message>
         <source>Fontsize</source>
@@ -6416,7 +6447,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>#000000</source>
-        <translation type="obsolete">#000000</translation>
+        <translation type="unfinished">#000000</translation>
     </message>
     <message>
         <source>#ffffff</source>
@@ -6444,7 +6475,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>#739373</source>
-        <translation type="obsolete">#739373</translation>
+        <translation type="unfinished">#739373</translation>
     </message>
     <message>
         <source>&amp;Highlighted Color:</source>
@@ -6492,7 +6523,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>#FFFFFF</source>
-        <translation type="obsolete">#FFFFFF</translation>
+        <translation type="unfinished">#FFFFFF</translation>
     </message>
     <message>
         <source>#C0C0C0</source>
@@ -6500,7 +6531,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>#A54747</source>
-        <translation type="obsolete">#A54747</translation>
+        <translation type="unfinished">#A54747</translation>
     </message>
     <message>
         <source>400</source>
@@ -6720,6 +6751,30 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Keycode mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#736F6E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#F0F8FF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#00FFFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#0000FF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#FFC200</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#1E90FF</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

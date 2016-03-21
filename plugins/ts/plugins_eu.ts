@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="eu">
 <context>
@@ -531,7 +532,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation>Fitxategia ezin ireki daiteke %1</translation>
     </message>
 </context>
@@ -806,7 +807,7 @@
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="139"/>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation>%1 fitxategia ezin ireki daiteke</translation>
     </message>
     <message>
@@ -840,9 +841,8 @@
         <translation>Trazatu plugina</translation>
     </message>
     <message>
-        <location filename="../plotequation/plot.cpp" line="28"/>
         <source>plugins_menu</source>
-        <translation>plugins_menu</translation>
+        <translation type="obsolete">plugins_menu</translation>
     </message>
 </context>
 <context>
@@ -855,12 +855,12 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don't want to use the parametric form, just leave out "Equation2".
+If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
         <translation>Plugin honek matematikako ekuazioak egitea onartzen du.
-Parametriko formak erabili nahi ez badituzu, bertan behera utzi "Ekuazioa2".
+Parametriko formak erabili nahi ez badituzu, bertan behera utzi &quot;Ekuazioa2&quot;.
 Pi balioa erabili dezakezu honela (3*pi).
 Erabili t edo x zure ekuazioan aldagarri/parametro modura.
 </translation>

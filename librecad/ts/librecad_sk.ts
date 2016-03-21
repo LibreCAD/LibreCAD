@@ -47,6 +47,25 @@
     </message>
 </context>
 <context>
+    <name>CustomWidgetCreator</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
@@ -453,7 +472,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>M&amp;ove and Rotate</source>
-        <translation type="unfinished">P&amp;osuň a otoč</translation>
+        <translation type="obsolete">P&amp;osuň a otoč</translation>
     </message>
     <message>
         <source>Rotate T&amp;wo</source>
@@ -468,16 +487,8 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished">&amp;Orež</translation>
     </message>
     <message>
-        <source>&amp;Trim Two</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Lengthen</source>
         <translation type="unfinished">&amp;Predĺženie</translation>
-    </message>
-    <message>
-        <source>&amp;Offset</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Divide</source>
@@ -825,6 +836,22 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Device Options</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Mo&amp;ve and Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tr&amp;im Two</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>O&amp;ffset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Double-click Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -1044,7 +1071,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Dimension</source>
-        <translation>&amp;Kóty</translation>
+        <translation type="obsolete">&amp;Kóty</translation>
     </message>
     <message>
         <source>&amp;Modify</source>
@@ -1052,7 +1079,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Snap</source>
-        <translation>&amp;Prichytávanie</translation>
+        <translation type="obsolete">&amp;Prichytávanie</translation>
     </message>
     <message>
         <source>&amp;Info</source>
@@ -1266,7 +1293,7 @@ Prosím skontrolujte prístupové práva.</translation>
     </message>
     <message>
         <source>&amp;Manual</source>
-        <translation>&amp;Manuál</translation>
+        <translation type="obsolete">&amp;Manuál</translation>
     </message>
     <message>
         <source>&amp;CAM</source>
@@ -1331,10 +1358,6 @@ Teraz môžete uložiť svoju prácu.</translation>
 %1
 Please check the permissions.
 Auto-save disabled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1438,10 +1461,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Help files not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Draft Mode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1465,10 +1484,6 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The help files were not found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1536,10 +1551,6 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Dockwidgets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Dock Areas</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1568,7 +1579,23 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Plugins</source>
+        <source>Double-click Menu Creator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pl&amp;ugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dime&amp;nsion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sna&amp;p</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dock Wid&amp;gets</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5022,7 +5049,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>#404040</source>
-        <translation type="obsolete">#404040</translation>
+        <translation type="unfinished">#404040</translation>
     </message>
     <message>
         <source>Fontsize</source>
@@ -5070,7 +5097,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>#000000</source>
-        <translation type="obsolete">#000000</translation>
+        <translation type="unfinished">#000000</translation>
     </message>
     <message>
         <source>#ffffff</source>
@@ -5098,7 +5125,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>#739373</source>
-        <translation type="obsolete">#739373</translation>
+        <translation type="unfinished">#739373</translation>
     </message>
     <message>
         <source>&amp;Highlighted Color:</source>
@@ -5370,6 +5397,38 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Keycode mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#A54747</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#736F6E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#FFFFFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#F0F8FF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#00FFFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#0000FF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#FFC200</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#1E90FF</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

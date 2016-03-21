@@ -17,6 +17,25 @@
     </message>
 </context>
 <context>
+    <name>CustomWidgetCreator</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
@@ -460,7 +479,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>M&amp;ove and Rotate</source>
-        <translation>Mo&amp;ver e xirar</translation>
+        <translation type="obsolete">Mo&amp;ver e xirar</translation>
     </message>
     <message>
         <source>Rotate T&amp;wo</source>
@@ -476,7 +495,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Trim Two</source>
-        <translation>Tallar/Estender do&amp;us</translation>
+        <translation type="obsolete">Tallar/Estender do&amp;us</translation>
     </message>
     <message>
         <source>&amp;Lengthen</source>
@@ -484,7 +503,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Offset</source>
-        <translation>Despra&amp;zamento</translation>
+        <translation type="obsolete">Despra&amp;zamento</translation>
     </message>
     <message>
         <source>&amp;Divide</source>
@@ -844,6 +863,22 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
         <source>Device Options</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Mo&amp;ve and Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tr&amp;im Two</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>O&amp;ffset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Double-click Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -1059,7 +1094,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Dimension</source>
-        <translation>&amp;Acoutar</translation>
+        <translation type="obsolete">&amp;Acoutar</translation>
     </message>
     <message>
         <source>&amp;Modify</source>
@@ -1067,7 +1102,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Snap</source>
-        <translation>F&amp;orzar</translation>
+        <translation type="obsolete">F&amp;orzar</translation>
     </message>
     <message>
         <source>&amp;Info</source>
@@ -1223,7 +1258,7 @@ Debe de revisar os permisos.</translation>
     </message>
     <message>
         <source>&amp;Manual</source>
-        <translation>&amp;Manual</translation>
+        <translation type="obsolete">&amp;Manual</translation>
     </message>
     <message>
         <source>None</source>
@@ -1273,7 +1308,7 @@ Gardado automático desactivado.</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation>Axuda</translation>
+        <translation type="obsolete">Axuda</translation>
     </message>
     <message>
         <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
@@ -1409,7 +1444,7 @@ Gardado automático desactivado.</translation>
     </message>
     <message>
         <source>Help files not found</source>
-        <translation>Non se atopan os ficheiros de axuda</translation>
+        <translation type="obsolete">Non se atopan os ficheiros de axuda</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
@@ -1445,7 +1480,7 @@ Por favor comprobe se existe e mais se ten permiso.</translation>
     </message>
     <message>
         <source>The help files were not found.</source>
-        <translation>Os ficheiros de axuda non se atoparon.</translation>
+        <translation type="obsolete">Os ficheiros de axuda non se atoparon.</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -1525,7 +1560,7 @@ Por favor comprobe se existe e mais se ten permiso.</translation>
     </message>
     <message>
         <source>&amp;Dockwidgets</source>
-        <translation>&amp;Carga de widgets</translation>
+        <translation type="obsolete">&amp;Carga de widgets</translation>
     </message>
     <message>
         <source>Dock Areas</source>
@@ -1556,7 +1591,23 @@ Por favor comprobe se existe e mais se ten permiso.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Plugins</source>
+        <source>Double-click Menu Creator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pl&amp;ugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dime&amp;nsion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sna&amp;p</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dock Wid&amp;gets</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4308,7 +4359,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>#000000</source>
-        <translation type="obsolete">#000000</translation>
+        <translation type="unfinished">#000000</translation>
     </message>
     <message>
         <source>#808080</source>
@@ -4352,7 +4403,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>#FFFFFF</source>
-        <translation type="obsolete">#FFFFFF</translation>
+        <translation type="unfinished">#FFFFFF</translation>
     </message>
     <message>
         <source>#C0C0C0</source>
@@ -4380,11 +4431,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>#00FFFF</source>
-        <translation type="obsolete">#00FFFF</translation>
+        <translation type="unfinished">#00FFFF</translation>
     </message>
     <message>
         <source>#0000FF</source>
-        <translation type="obsolete">#0000FF</translation>
+        <translation type="unfinished">#0000FF</translation>
     </message>
     <message>
         <source>#FFFF00</source>
@@ -4600,6 +4651,34 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Keycode mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#739373</source>
+        <translation type="unfinished">#739373</translation>
+    </message>
+    <message>
+        <source>#A54747</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#736F6E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#F0F8FF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#404040</source>
+        <translation type="unfinished">#404040</translation>
+    </message>
+    <message>
+        <source>#FFC200</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#1E90FF</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

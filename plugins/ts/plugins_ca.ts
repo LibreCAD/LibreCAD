@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="ca">
 <context>
@@ -6,9 +7,10 @@
         <location filename="../asciifile/asciifile.cpp" line="37"/>
         <location filename="../asciifile/asciifile.cpp" line="43"/>
         <source>Read ascii points</source>
+        <translatorcomment>Nota pels traductors: Si un cop enregistrats encara no podeu traduïr i només podeu penjar suggeriments, si us plau demaneu en el forum que us activin els permisos per traduir.
+http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <translation>Llegeix els punts en ASCII</translation>
-    <translatorcomment>Nota pels traductors: Si un cop enregistrats encara no podeu traduïr i només podeu penjar suggeriments, si us plau demaneu en el forum que us activin els permisos per traduir.&#13;
-http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment></message>
+    </message>
 </context>
 <context>
     <name>ImportShp</name>
@@ -29,7 +31,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment></messag
     <message>
         <location filename="../align/align.cpp" line="40"/>
         <source>first base point:</source>
-        <translation>primer punt d'origen:</translation>
+        <translation>primer punt d&apos;origen:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="42"/>
@@ -39,7 +41,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment></messag
     <message>
         <location filename="../align/align.cpp" line="44"/>
         <source>second base point:</source>
-        <translation>segon punt d'origen:</translation>
+        <translation>segon punt d&apos;origen:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="46"/>
@@ -234,7 +236,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment></messag
     <message>
         <location filename="../list/list.cpp" line="182"/>
         <source>Insertion point</source>
-        <translation>Punt d'inserció</translation>
+        <translation>Punt d&apos;inserció</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="187"/>
@@ -332,7 +334,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment></messag
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
-        <translation>seleccioneu l'entitat original:</translation>
+        <translation>seleccioneu l&apos;entitat original:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="43"/>
@@ -447,7 +449,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment></messag
     <message>
         <location filename="../asciifile/asciifile.cpp" line="263"/>
         <source>Draw point elevation</source>
-        <translation>Traça l'alçada del punt</translation>
+        <translation>Traça l&apos;alçada del punt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="264"/>
@@ -487,17 +489,17 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment></messag
     <message>
         <location filename="../asciifile/asciifile.cpp" line="326"/>
         <source>Point elevation layer is empty</source>
-        <translation>La capa de l'alçada del punt és buida</translation>
+        <translation>La capa de l&apos;alçada del punt és buida</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="327"/>
         <source>Point elevation height is empty</source>
-        <translation>L'alçada del punt és buida</translation>
+        <translation>L&apos;alçada del punt és buida</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="328"/>
         <source>Point elevation separation is empty</source>
-        <translation>La separació de l'alçada del punt és buida</translation>
+        <translation>La separació de l&apos;alçada del punt és buida</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="331"/>
@@ -507,7 +509,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment></messag
     <message>
         <location filename="../asciifile/asciifile.cpp" line="332"/>
         <source>Point number height is empty</source>
-        <translation>L'alçada del número del punt és buida</translation>
+        <translation>L&apos;alçada del número del punt és buida</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="333"/>
@@ -522,7 +524,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment></messag
     <message>
         <location filename="../asciifile/asciifile.cpp" line="337"/>
         <source>Point code height is empty</source>
-        <translation>L'alçada del codi del punt és buida</translation>
+        <translation>L&apos;alçada del codi del punt és buida</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="338"/>
@@ -536,7 +538,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment></messag
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation>No es pot obrir el fitxer %1</translation>
     </message>
 </context>
@@ -802,7 +804,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment></messag
     <message>
         <location filename="../picfile/picfile.cpp" line="121"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation>El factor d'escala està buit o no és vàlid</translation>
+        <translation>El factor d&apos;escala està buit o no és vàlid</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="134"/>
@@ -811,7 +813,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment></messag
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="139"/>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation>No es pot obrir el fitxer %1</translation>
     </message>
     <message>
@@ -842,12 +844,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment></messag
         <location filename="../plotequation/plot.cpp" line="21"/>
         <location filename="../plotequation/plot.cpp" line="28"/>
         <source>Plot plugin</source>
-        <translation>Connector d'impressió</translation>
-    </message>
-    <message>
-        <location filename="../plotequation/plot.cpp" line="28"/>
-        <source>plugins_menu</source>
-        <translation type="unfinished"/>
+        <translation>Connector d&apos;impressió</translation>
     </message>
     <message>
         <source>Draw</source>
@@ -859,17 +856,17 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment></messag
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>Imprimeix l'equació</translation>
+        <translation>Imprimeix l&apos;equació</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don't want to use the parametric form, just leave out "Equation2".
+If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
         <translation>Aquest connector us permet traçar equacions matemàtiques.
-Si no voleu utilitzar la forma paramètrica, ometeu l'«Equació 2»
+Si no voleu utilitzar la forma paramètrica, ometeu l&apos;«Equació 2»
 Podeu utilitzar pi quan necessiteu el valor de pi (p.ex. (3*pi)).
 Utilitzeu t o x en la vostra equació com a variable o paràmetre.
 </translation>

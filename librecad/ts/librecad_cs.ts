@@ -47,6 +47,25 @@
     </message>
 </context>
 <context>
+    <name>CustomWidgetCreator</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
@@ -485,10 +504,6 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>M&amp;ove and Rotate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rotate T&amp;wo</source>
         <translation type="unfinished"></translation>
     </message>
@@ -501,16 +516,12 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Trim Two</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Lengthen</source>
         <translation type="unfinished">Prodlo&amp;užit</translation>
     </message>
     <message>
         <source>&amp;Offset</source>
-        <translation type="unfinished">&amp;Ekvidistanta</translation>
+        <translation type="obsolete">&amp;Ekvidistanta</translation>
     </message>
     <message>
         <source>&amp;Divide</source>
@@ -870,6 +881,22 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
         <source>Device Options</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Mo&amp;ve and Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tr&amp;im Two</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>O&amp;ffset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Double-click Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -1093,7 +1120,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>&amp;Dimension</source>
-        <translation>Kó&amp;ta</translation>
+        <translation type="obsolete">Kó&amp;ta</translation>
     </message>
     <message>
         <source>&amp;Modify</source>
@@ -1101,7 +1128,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>&amp;Snap</source>
-        <translation>&amp;Uchopení</translation>
+        <translation type="obsolete">&amp;Uchopení</translation>
     </message>
     <message>
         <source>&amp;Info</source>
@@ -1291,7 +1318,7 @@ Datum: %1</translation>
     </message>
     <message>
         <source>&amp;Manual</source>
-        <translation>&amp;Manuál</translation>
+        <translation type="obsolete">&amp;Manuál</translation>
     </message>
     <message>
         <source>Launch the online manual</source>
@@ -1399,7 +1426,7 @@ Automatické ukládání bylo vypnuto.</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation>Nápověda</translation>
+        <translation type="obsolete">Nápověda</translation>
     </message>
     <message>
         <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
@@ -1519,7 +1546,7 @@ Automatické ukládání bylo vypnuto.</translation>
     </message>
     <message>
         <source>Help files not found</source>
-        <translation>Soubory nápovědy nenalezeny</translation>
+        <translation type="obsolete">Soubory nápovědy nenalezeny</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
@@ -1549,10 +1576,6 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The help files were not found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1620,10 +1643,6 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Dockwidgets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Dock Areas</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1652,7 +1671,23 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Plugins</source>
+        <source>Double-click Menu Creator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pl&amp;ugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dime&amp;nsion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sna&amp;p</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dock Wid&amp;gets</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6411,7 +6446,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>#404040</source>
-        <translation type="obsolete">#404040</translation>
+        <translation type="unfinished">#404040</translation>
     </message>
     <message>
         <source>Fontsize</source>
@@ -6459,7 +6494,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>#000000</source>
-        <translation type="obsolete">#000000</translation>
+        <translation type="unfinished">#000000</translation>
     </message>
     <message>
         <source>#ffffff</source>
@@ -6483,7 +6518,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>#739373</source>
-        <translation type="obsolete">#739373</translation>
+        <translation type="unfinished">#739373</translation>
     </message>
     <message>
         <source>&amp;Highlighted Color:</source>
@@ -6535,7 +6570,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>#FFFFFF</source>
-        <translation type="obsolete">#FFFFFF</translation>
+        <translation type="unfinished">#FFFFFF</translation>
     </message>
     <message>
         <source>#C0C0C0</source>
@@ -6571,11 +6606,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>#00FFFF</source>
-        <translation type="obsolete">#00FFFF</translation>
+        <translation type="unfinished">#00FFFF</translation>
     </message>
     <message>
         <source>#0000FF</source>
-        <translation type="obsolete">#0000FF</translation>
+        <translation type="unfinished">#0000FF</translation>
     </message>
     <message>
         <source>#FFFF00</source>
@@ -6783,6 +6818,26 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Keycode mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#A54747</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#736F6E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#F0F8FF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#FFC200</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#1E90FF</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

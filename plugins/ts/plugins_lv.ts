@@ -684,10 +684,6 @@
         <source>Draw</source>
         <translation type="obsolete">Zīmēt</translation>
     </message>
-    <message>
-        <source>plugins_menu</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>plotDialog</name>

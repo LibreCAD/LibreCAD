@@ -17,6 +17,25 @@
     </message>
 </context>
 <context>
+    <name>CustomWidgetCreator</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
@@ -426,10 +445,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>M&amp;ove and Rotate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rotate T&amp;wo</source>
         <translation type="unfinished"></translation>
     </message>
@@ -442,15 +457,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Trim Two</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Lengthen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -799,6 +806,22 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Device Options</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Mo&amp;ve and Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tr&amp;im Two</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>O&amp;ffset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Double-click Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -1010,7 +1033,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Dimension</source>
-        <translation>치수(&amp;D)</translation>
+        <translation type="obsolete">치수(&amp;D)</translation>
     </message>
     <message>
         <source>&amp;Modify</source>
@@ -1018,7 +1041,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Snap</source>
-        <translation>스냅(&amp;S)</translation>
+        <translation type="obsolete">스냅(&amp;S)</translation>
     </message>
     <message>
         <source>&amp;Info</source>
@@ -1174,7 +1197,7 @@ Please check the permissions.</source>
     </message>
     <message>
         <source>&amp;Manual</source>
-        <translation>메뉴얼(&amp;M)</translation>
+        <translation type="obsolete">메뉴얼(&amp;M)</translation>
     </message>
     <message>
         <source>None</source>
@@ -1224,7 +1247,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Help</source>
-        <translation>도움말</translation>
+        <translation type="obsolete">도움말</translation>
     </message>
     <message>
         <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
@@ -1356,7 +1379,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Help files not found</source>
-        <translation>Help 파일을 찾지 못함</translation>
+        <translation type="obsolete">Help 파일을 찾지 못함</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
@@ -1383,10 +1406,6 @@ Please check its existence and permissions.</source>
     <message>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>파일 &apos;%1&apos;이 존재하지 않습니다. 파일열기가 취소되었습니다.</translation>
-    </message>
-    <message>
-        <source>The help files were not found.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Categories</source>
@@ -1457,10 +1476,6 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Dockwidgets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Dock Areas</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1489,7 +1504,23 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Plugins</source>
+        <source>Double-click Menu Creator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pl&amp;ugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dime&amp;nsion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sna&amp;p</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dock Wid&amp;gets</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4121,6 +4152,50 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Keycode mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#739373</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#A54747</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#736F6E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#000000</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#FFFFFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#F0F8FF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#404040</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#00FFFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#0000FF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#FFC200</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#1E90FF</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

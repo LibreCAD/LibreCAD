@@ -17,6 +17,25 @@
     </message>
 </context>
 <context>
+    <name>CustomWidgetCreator</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
@@ -453,7 +472,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>M&amp;ove and Rotate</source>
-        <translation>移動と回転(&amp;v)</translation>
+        <translation type="obsolete">移動と回転(&amp;v)</translation>
     </message>
     <message>
         <source>Rotate T&amp;wo</source>
@@ -469,7 +488,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Trim Two</source>
-        <translation>２つの要素でトリム(&amp;T)</translation>
+        <translation type="obsolete">２つの要素でトリム(&amp;T)</translation>
     </message>
     <message>
         <source>&amp;Lengthen</source>
@@ -477,7 +496,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Offset</source>
-        <translation>平行線/同心円(&amp;O)</translation>
+        <translation type="obsolete">平行線/同心円(&amp;O)</translation>
     </message>
     <message>
         <source>&amp;Divide</source>
@@ -854,6 +873,22 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Reload Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mo&amp;ve and Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tr&amp;im Two</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>O&amp;ffset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Double-click Menu</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1283,7 +1318,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Dimension</source>
-        <translation>寸法記入(&amp;D)</translation>
+        <translation type="obsolete">寸法記入(&amp;D)</translation>
     </message>
     <message>
         <source>&amp;Modify</source>
@@ -1291,7 +1326,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Snap</source>
-        <translation>スナップ(&amp;S)</translation>
+        <translation type="obsolete">スナップ(&amp;S)</translation>
     </message>
     <message>
         <source>&amp;Info</source>
@@ -1316,7 +1351,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Manual</source>
-        <translation>マニュアル(&amp;M)</translation>
+        <translation type="obsolete">マニュアル(&amp;M)</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -1469,7 +1504,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Help</source>
-        <translation>ヘルプ</translation>
+        <translation type="obsolete">ヘルプ</translation>
     </message>
     <message>
         <source>&amp;Toolbars</source>
@@ -1581,7 +1616,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Help files not found</source>
-        <translation>ヘルプファイルが見つかりません</translation>
+        <translation type="obsolete">ヘルプファイルが見つかりません</translation>
     </message>
     <message>
         <source>Draft Mode</source>
@@ -1612,7 +1647,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>The help files were not found.</source>
-        <translation>ヘルプファイルが見つかりません.</translation>
+        <translation type="obsolete">ヘルプファイルが見つかりません.</translation>
     </message>
     <message>
         <source>Categories</source>
@@ -1692,7 +1727,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>&amp;Dockwidgets</source>
-        <translation>ドック ウィジット(&amp;D)</translation>
+        <translation type="obsolete">ドック ウィジット(&amp;D)</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
@@ -1727,7 +1762,23 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Plugins</source>
+        <source>Double-click Menu Creator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pl&amp;ugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dime&amp;nsion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sna&amp;p</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dock Wid&amp;gets</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4042,6 +4093,50 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Keycode mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#739373</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#A54747</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#736F6E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#000000</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#FFFFFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#F0F8FF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#404040</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#00FFFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#0000FF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#FFC200</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#1E90FF</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

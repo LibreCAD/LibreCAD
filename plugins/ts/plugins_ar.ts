@@ -841,11 +841,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plotequation/plot.cpp" line="28"/>
-        <source>plugins_menu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Draw</source>
         <translation type="obsolete">رسم</translation>
     </message>
