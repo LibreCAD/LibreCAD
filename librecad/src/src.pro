@@ -687,7 +687,9 @@ HEADERS += ui/lc_actionfactory.h \
     ui/forms/qg_snaptoolbar.h \
     ui/forms/qg_activelayername.h \
     ui/lc_deviceoptions.h \
-    ui/generic/comboboxoption.h
+    ui/generic/comboboxoption.h \
+    ui/generic/actionlist.h \
+    ui/generic/customwidgetcreator.h
 
 SOURCES += ui/lc_actionfactory.cpp \
     ui/qg_actionhandler.cpp \
@@ -783,7 +785,9 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/forms/qg_snaptoolbar.cpp \
     ui/forms/qg_activelayername.cpp \
     ui/lc_deviceoptions.cpp \
-    ui/generic/comboboxoption.cpp
+    ui/generic/comboboxoption.cpp \
+    ui/generic/actionlist.cpp \
+    ui/generic/customwidgetcreator.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_arcoptions.ui \
@@ -855,7 +859,8 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/lc_dlgsplinepoints.ui \
     ui/forms/lc_widgetoptionsdialog.ui \
     ui/lc_deviceoptions.ui \
-    ui/generic/comboboxoption.ui
+    ui/generic/comboboxoption.ui \
+    ui/generic/customwidgetcreator.ui
 
 RESOURCES += ../res/ui/ui.qrc
 

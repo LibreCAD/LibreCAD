@@ -1278,4 +1278,10 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
             main_window, SLOT(reloadStyleSheet()));
     action->setObjectName("ReloadStyleSheet");
     a_map["ReloadStyleSheet"] = action;
+
+    action = new QAction(tr("Create Double-click Menu"), main_window);
+    connect(action, SIGNAL(triggered()),
+            main_window, SLOT(invokeDoubleClickMenuCreator()));
+    action->setObjectName("CreateDoubleClickMenu");
+    a_map["CreateDoubleClickMenu"] = action;
 }
