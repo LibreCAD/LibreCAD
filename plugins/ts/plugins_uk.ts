@@ -896,11 +896,6 @@
         <source>Plot plugin</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../plotequation/plot.cpp" line="28"/>
-        <source>plugins_menu</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>plotDialog</name>
