@@ -226,7 +226,7 @@ void QG_ColorBox::slotColorChanged(int index) {
         }
     }
 
-    if (itemText(index) == "Custom")
+    if (itemText(index) == tr("Custom"))
     {
        RS_Color selectedColor = QColorDialog::getColor(*currentColor, this);
        if (selectedColor.isValid())
