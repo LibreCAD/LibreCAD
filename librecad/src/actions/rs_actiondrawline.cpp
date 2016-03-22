@@ -131,14 +131,10 @@ RS_Vector RS_ActionDrawLine::snapToAngle(const RS_Vector &currentCoord)
 
 
 
-void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e) {
-    //    RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent begin");
-
-    //    RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: snap point");
+void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e)
+{
     RS_Vector mouse = snapPoint(e);
-    //    RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: snap point: OK");
 	if (getStatus()==SetEndpoint && pPoints->data.startpoint.valid) {
-        RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: update preview");
 
         /*Snapping to angle(15*) if shift key is pressed*/
         if(e->modifiers() & Qt::ShiftModifier)
@@ -146,11 +142,8 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e) {
 
         deletePreview();
 		preview->addEntity(new RS_Line{pPoints->data.startpoint, mouse});
-        RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: draw preview");
         drawPreview();
     }
-
-    //    RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent end");
 }
 
 void RS_ActionDrawLine::mouseReleaseEvent(QMouseEvent* e) {

@@ -687,8 +687,6 @@ void QG_GraphicView::adjustOffsetControls()
 
         running = true;
 
-        RS_DEBUG->print("QG_GraphicView::adjustOffsetControls() begin");
-
         if (container==NULL || hScrollBar==NULL || vScrollBar==NULL) {
             return;
         }
@@ -744,15 +742,14 @@ void QG_GraphicView::adjustOffsetControls()
         slotVScrolled(oy);
 
 
-        RS_DEBUG->print("H min: %d / max: %d / step: %d / value: %d\n",
-                        hScrollBar->minimum(), hScrollBar->maximum(),
-                        hScrollBar->pageStep(), ox);
-    //    DEBUG_HEADER
-        RS_DEBUG->print(/*RS_Debug::D_WARNING, */"V min: %d / max: %d / step: %d / value: %d\n",
-                        vScrollBar->minimum(), vScrollBar->maximum(),
-                        vScrollBar->pageStep(), oy);
+//        RS_DEBUG->print("H min: %d / max: %d / step: %d / value: %d\n",
+//                        hScrollBar->minimum(), hScrollBar->maximum(),
+//                        hScrollBar->pageStep(), ox);
 
-        RS_DEBUG->print("QG_GraphicView::adjustOffsetControls() end");
+//        RS_DEBUG->print(/*RS_Debug::D_WARNING, */"V min: %d / max: %d / step: %d / value: %d\n",
+//                        vScrollBar->minimum(), vScrollBar->maximum(),
+//                        vScrollBar->pageStep(), oy);
+
 
         running = false;
     }
@@ -799,7 +796,8 @@ void QG_GraphicView::slotVScrolled(int value) {
     //if (!running) {
     //running = true;
 //    DEBUG_HEADER
-	RS_DEBUG->print(/*RS_Debug::D_WARNING,*/ "%s %s(): set vertical offset from %d to %d\n", __FILE__, __func__, getOffsetY(), value);
+//	RS_DEBUG->print(/*RS_Debug::D_WARNING,*/ "%s %s(): set vertical offset from %d to %d\n",
+//                    __FILE__, __func__, getOffsetY(), value);
     if (vScrollBar->maximum()==vScrollBar->minimum()) {
         centerOffsetY();
     } else {
@@ -871,8 +869,6 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
  */
 void QG_GraphicView::paintEvent(QPaintEvent *)
 {
-    RS_DEBUG->print("QG_GraphicView::paintEvent begin");
-
     // Re-Create or get the layering pixmaps
     getPixmapForView(PixmapLayer1);
     getPixmapForView(PixmapLayer2);
@@ -924,7 +920,6 @@ void QG_GraphicView::paintEvent(QPaintEvent *)
     wPainter.end();
 
     redrawMethod=RS2::RedrawNone;
-    RS_DEBUG->print("QG_GraphicView::paintEvent end");
 }
 
 void QG_GraphicView::setAntialiasing(bool state)

@@ -46,13 +46,11 @@ RS_DialogFactory::RS_DialogFactory() {
 /**
  * @return Instance to the unique font list.
  */
-RS_DialogFactory* RS_DialogFactory::instance() {
-    RS_DEBUG->print("RS_DialogFactory::instance()");
+RS_DialogFactory* RS_DialogFactory::instance()
+{
     if (uniqueInstance==NULL) {
         uniqueInstance = new RS_DialogFactory();
     }
-
-    RS_DEBUG->print("RS_DialogFactory::instance(): OK");
 
     return uniqueInstance;
 }
@@ -74,15 +72,11 @@ void RS_DialogFactory::setFactoryObject(RS_DialogFactoryInterface* fo) {
  * @return Factory object. This is never NULL. If no factory
  * object was set, the default adapter will be returned.
  */
-RS_DialogFactoryInterface* RS_DialogFactory::getFactoryObject() {
-	RS_DEBUG->print("RS_DialogFactory::getFactoryObject");
+RS_DialogFactoryInterface* RS_DialogFactory::getFactoryObject()
+{
     if (factoryObject) {
-		RS_DEBUG->print("RS_DialogFactory::getFactoryObject: "
-			"returning factory object");
         return factoryObject;
     } else {
-		RS_DEBUG->print("RS_DialogFactory::getFactoryObject: "
-			"returning adapter");
         return &factoryAdapter;
     }
 }

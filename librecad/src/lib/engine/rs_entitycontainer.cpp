@@ -61,8 +61,8 @@ RS_EntityContainer::RS_EntityContainer(RS_EntityContainer* parent,
     : RS_Entity(parent) {
 
     autoDelete=owner;
-    RS_DEBUG->print("RS_EntityContainer::RS_EntityContainer: "
-                    "owner: %d", (int)owner);
+//    RS_DEBUG->print("RS_EntityContainer::RS_EntityContainer: "
+//                    "owner: %d", (int)owner);
 	subContainer = nullptr;
     //autoUpdateBorders = true;
     entIdx = -1;

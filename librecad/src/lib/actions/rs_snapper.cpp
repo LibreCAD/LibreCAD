@@ -179,9 +179,8 @@ RS_Vector RS_Snapper::snapFree(QMouseEvent* e) {
  * @param e A mouse event.
  * @return The coordinates of the point or an invalid vector.
  */
-RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
-        RS_DEBUG->print("RS_Snapper::snapPoint");
-
+RS_Vector RS_Snapper::snapPoint(QMouseEvent* e)
+{
 	pImpData->snapSpot = RS_Vector(false);
     RS_Vector t(false);
 
@@ -705,11 +704,10 @@ void RS_Snapper::showOptions() {
 /**
  * Deletes the snapper from the screen.
  */
-void RS_Snapper::deleteSnapper() {// RVT_PORT (can be deleted??)
-        RS_DEBUG->print("RS_Snapper::Delete Snapper");
-
-        graphicView->getOverlayContainer(RS2::Snapper)->clear();
-        graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
+void RS_Snapper::deleteSnapper()
+{
+    graphicView->getOverlayContainer(RS2::Snapper)->clear();
+    graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
 }
 
 
@@ -726,8 +724,6 @@ void RS_Snapper::drawSnapper()
 	if (!finished && pImpData->snapSpot.valid)
     {
         RS_EntityContainer *container=graphicView->getOverlayContainer(RS2::Snapper);
-
-        RS_DEBUG->print("RS_Snapper::Snapped draw start");
 
         if (snap_indicator->lines_state)
         {
@@ -909,7 +905,6 @@ void RS_Snapper::drawSnapper()
             }
         }
         graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
-        RS_DEBUG->print("RS_Snapper::Snapped draw end");
     }
 }
 
