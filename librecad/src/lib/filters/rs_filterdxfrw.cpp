@@ -534,11 +534,9 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline& data) {
     setEntityAttributes(polyline, &data);
 
 	std::vector< std::pair<RS_Vector, double> > verList;
-    for (unsigned int i=0; i<data.vertlist.size(); i++) {
-        DRW_Vertex2D *vert = data.vertlist.at(i);
-		RS_Vector v(vert->x, vert->y);
-		verList.emplace_back(std::make_pair(v, vert->bulge));
-    }
+	for (auto const& v: data.vertlist)
+		verList.emplace_back(std::make_pair(RS_Vector{v->x, v->y}, v->bulge));
+
 	polyline->appendVertexs(verList);
 
     currentContainer->addEntity(polyline);
@@ -563,11 +561,12 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
     setEntityAttributes(polyline, &data);
 
 	std::vector< std::pair<RS_Vector, double> > verList;
-    for (unsigned int i=0; i<data.vertlist.size(); i++) {
-        DRW_Vertex *vert = data.vertlist.at(i);
-		RS_Vector const v(vert->basePoint.x, vert->basePoint.y);
-		verList.push_back(std::make_pair(v, vert->bulge));
-    }
+
+	for (auto const& v: data.vertlist)
+		verList.emplace_back(
+					std::make_pair(RS_Vector{v->basePoint.x, v->basePoint.y},
+								   v->bulge));
+
 	polyline->appendVertexs(verList);
 
     currentContainer->addEntity(polyline);
@@ -588,9 +587,7 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
 		setEntityAttributes(splinePoints, data);
 		currentContainer->addEntity(splinePoints);
 
-		for(unsigned int i = 0; i < data->controllist.size(); i++)
-		{
-			DRW_Coord *vert = data->controllist.at(i);
+		for(auto const& vert: data->controllist) {
 			RS_Vector v(vert->x, vert->y);
 			splinePoints->addControlPoint(v);
 		}
@@ -610,18 +607,13 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
                         "RS_FilterDXF::addSpline: Invalid degree for spline: %d. "
                         "Accepted values are 1..3.", data->degree);
         return;
-    }
-    for (unsigned int i=0; i<data->controllist.size(); i++) {
-        DRW_Coord *vert = data->controllist.at(i);
-        RS_Vector v(vert->x, vert->y);
-        spline->addControlPoint(v);
-    }
+	}
+	for (auto const vert: data->controllist)
+		spline->addControlPoint({vert->x, vert->y});
+
     if (data->ncontrol== 0 && data->degree != 2){
-        for (unsigned int i=0; i<data->fitlist.size(); i++) {
-            DRW_Coord *vert = data->fitlist.at(i);
-            RS_Vector v(vert->x, vert->y);
-            spline->addControlPoint(v);
-        }
+		for (auto const& vert: data->fitlist)
+			spline->addControlPoint({vert->x, vert->y});
 
     }
     spline->update();
@@ -1060,7 +1052,7 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
     currentContainer->appendEntity(hatch);
 
     for (unsigned int i=0; i < data->looplist.size(); i++) {
-        DRW_HatchLoop *loop = data->looplist.at(i);
+		auto& loop = data->looplist.at(i);
         if ((loop->type & 32) == 32) continue;
         hatchLoop = new RS_EntityContainer(hatch);
 		hatchLoop->setLayer(nullptr);
@@ -1068,36 +1060,34 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
 
 		RS_Entity* e = nullptr;
         if ((loop->type & 2) == 2){   //polyline, convert to lines & arcs
-            DRW_LWPolyline *pline = (DRW_LWPolyline *)loop->objlist.at(0);
-			RS_Polyline *polyline = new RS_Polyline(nullptr,
-                    RS_PolylineData(RS_Vector(false), RS_Vector(false), pline->flags) );
-            for (unsigned int j=0; j < pline->vertlist.size(); j++) {
-                    DRW_Vertex2D *vert = pline->vertlist.at(j);
-                    polyline->addVertex(RS_Vector(vert->x, vert->y), vert->bulge);
-            }
-            for (RS_Entity* e=polyline->firstEntity(); e;
-                    e=polyline->nextEntity()) {
+			DRW_LWPolyline* pline = (DRW_LWPolyline *)loop->objlist.at(0).get();
+			RS_Polyline polyline{nullptr,
+					RS_PolylineData(RS_Vector(false), RS_Vector(false), pline->flags)};
+			for (auto const& vert: pline->vertlist)
+				polyline.addVertex(RS_Vector{vert->x, vert->y}, vert->bulge);
+
+			for (RS_Entity* e=polyline.firstEntity(); e;
+					e=polyline.nextEntity()) {
                 RS_Entity* tmp = e->clone();
                 tmp->reparent(hatchLoop);
 				tmp->setLayer(nullptr);
                 hatchLoop->addEntity(tmp);
-            }
-            delete polyline;
+			}
 
         } else {
             for (unsigned int j=0; j<loop->objlist.size(); j++) {
 				e = nullptr;
-                DRW_Entity *ent = loop->objlist.at(j);
+				auto& ent = loop->objlist.at(j);
                 switch (ent->eType) {
                 case DRW::LINE: {
-					DRW_Line *e2 = (DRW_Line *)ent;
+					DRW_Line *e2 = (DRW_Line *)ent.get();
 					e = new RS_Line{hatchLoop,
 					{{e2->basePoint.x, e2->basePoint.y},
 					{e2->secPoint.x, e2->secPoint.y}}};
 					break;
                 }
                 case DRW::ARC: {
-                    DRW_Arc *e2 = (DRW_Arc *)ent;
+					DRW_Arc *e2 = (DRW_Arc *)ent.get();
                     if (e2->isccw && e2->staangle<1.0e-6 && e2->endangle>RS_Math::deg2rad(360)-1.0e-6) {
                         e = new RS_Circle(hatchLoop,
 						{{e2->basePoint.x, e2->basePoint.y},
@@ -1121,7 +1111,7 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                     break;
                 }
                 case DRW::ELLIPSE: {
-                    DRW_Ellipse *e2 = (DRW_Ellipse *)ent;
+					DRW_Ellipse *e2 = (DRW_Ellipse *)ent.get();
                     double ang1 = e2->staparam;
                     double ang2 = e2->endparam;
 					if ( fabs(ang2 - 2.*M_PI) < 1.0e-10 && fabs(ang1) < 1.0e-10 )
@@ -2284,12 +2274,9 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
 
     // write spline control points:
 	auto cp = s->getControlPoints();
-	for (const RS_Vector& v: cp) {
-        DRW_Coord *controlpoint = new DRW_Coord();
-        sp.controllist.push_back(controlpoint);
-		controlpoint->x = v.x;
-		controlpoint->y = v.y;
-     }
+	for (const RS_Vector& v: cp)
+		sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y, 0.));
+
     getEntityAttributes(&sp, s);
     dxfW->writeSpline(&sp);
 
@@ -2364,13 +2351,9 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s)
 	}
 
 	// write spline control points:
-	for(size_t i = 0; i < cp.size(); ++i)
-	{
-		DRW_Coord *controlpoint = new DRW_Coord();
-		sp.controllist.push_back(controlpoint);
-		controlpoint->x = cp.at(i).x;
-		controlpoint->y = cp.at(i).y;
-	}
+	for (auto const& v: cp)
+		sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y, 0.));
+
 	getEntityAttributes(&sp, s);
 	dxfW->writeSpline(&sp);
 }
@@ -2762,7 +2745,7 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
         // Write hatch loops:
         if (l->isContainer() && !l->getFlag(RS2::FlagTemp)) {
             RS_EntityContainer* loop = (RS_EntityContainer*)l;
-            DRW_HatchLoop *lData = new DRW_HatchLoop(0);
+			std::shared_ptr<DRW_HatchLoop> lData = std::make_shared<DRW_HatchLoop>(0);
 
             for (RS_Entity* ed=loop->firstEntity(RS2::ResolveNone);
                  ed;
@@ -2771,7 +2754,7 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
                 // Write hatch loop edges:
                 if (ed->rtti()==RS2::EntityLine) {
                     RS_Line* ln = (RS_Line*)ed;
-                    DRW_Line *line = new DRW_Line();
+					std::shared_ptr<DRW_Line> line = std::make_shared<DRW_Line>();
                     line->basePoint.x = ln->getStartpoint().x;
                     line->basePoint.y = ln->getStartpoint().y;
                     line->secPoint.x = ln->getEndpoint().x;
@@ -2779,7 +2762,7 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
                     lData->objlist.push_back(line);
                 } else if (ed->rtti()==RS2::EntityArc) {
                     RS_Arc* ar = (RS_Arc*)ed;
-                    DRW_Arc *arc = new DRW_Arc();
+					std::shared_ptr<DRW_Arc> arc = std::make_shared<DRW_Arc>();
                     arc->basePoint.x = ar->getCenter().x;
                     arc->basePoint.y = ar->getCenter().y;
                     arc->radious = ar->getRadius();
@@ -2795,8 +2778,8 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
                     lData->objlist.push_back(arc);
                 } else if (ed->rtti()==RS2::EntityCircle) {
                     RS_Circle* ci = (RS_Circle*)ed;
-                    DRW_Arc *arc= new DRW_Arc();
-                    arc->basePoint.x = ci->getCenter().x;
+					std::shared_ptr<DRW_Arc> arc = std::make_shared<DRW_Arc>();
+					arc->basePoint.x = ci->getCenter().x;
                     arc->basePoint.y = ci->getCenter().y;
                     arc->radious = ci->getRadius();
                     arc->staangle = 0.0;
@@ -2805,7 +2788,7 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
                     lData->objlist.push_back(arc);
                 } else if (ed->rtti()==RS2::EntityEllipse) {
                     RS_Ellipse* el = (RS_Ellipse*)ed;
-                    DRW_Ellipse *ell= new DRW_Ellipse();
+					std::shared_ptr<DRW_Ellipse> ell = std::make_shared<DRW_Ellipse>();
                     ell->basePoint.x = el->getCenter().x;
                     ell->basePoint.y = el->getCenter().y;
                     ell->secPoint.x = el->getMajorP().x;
