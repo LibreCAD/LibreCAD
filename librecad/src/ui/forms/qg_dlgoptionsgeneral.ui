@@ -39,7 +39,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
@@ -76,6 +76,9 @@
           </item>
           <item row="4" column="2">
            <widget class="QComboBox" name="cbHighlightedColor">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
             <property name="editable">
              <bool>true</bool>
             </property>
@@ -101,6 +104,9 @@
           </item>
           <item row="3" column="2">
            <widget class="QComboBox" name="cbSelectedColor">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
             <property name="editable">
              <bool>true</bool>
             </property>
@@ -126,6 +132,9 @@
           </item>
           <item row="1" column="2">
            <widget class="QComboBox" name="cbGridColor">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
             <property name="editable">
              <bool>true</bool>
             </property>
@@ -167,6 +176,9 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
             <property name="editable">
              <bool>true</bool>
             </property>
@@ -189,6 +201,9 @@
           </item>
           <item row="2" column="2">
            <widget class="QComboBox" name="cbMetaGridColor">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
             <property name="editable">
              <bool>true</bool>
             </property>
@@ -201,6 +216,9 @@
           </item>
           <item row="5" column="2">
            <widget class="QComboBox" name="cbStartHandleColor">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
             <property name="editable">
              <bool>true</bool>
             </property>
@@ -223,6 +241,9 @@
           </item>
           <item row="6" column="2">
            <widget class="QComboBox" name="cbHandleColor">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
             <property name="editable">
              <bool>true</bool>
             </property>
@@ -258,6 +279,9 @@
           </item>
           <item row="7" column="2">
            <widget class="QComboBox" name="cbEndHandleColor">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
             <property name="editable">
              <bool>true</bool>
             </property>
@@ -280,6 +304,9 @@
           </item>
           <item row="8" column="2">
            <widget class="QComboBox" name="cb_snap_color">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
             <property name="editable">
              <bool>true</bool>
             </property>
@@ -469,92 +496,15 @@
           </item>
           <item row="0" column="2">
            <widget class="QComboBox" name="cb_layerselection">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
             <property name="editable">
              <bool>true</bool>
             </property>
             <item>
              <property name="text">
-              <string>Aquamarine</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Azure</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Black</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DeepSkyBlue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>DodgerBlue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Gray</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>HoneyDew</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Lavender</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>LightGrey</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Navy</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>PaleGreen</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Pink</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Salmon</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Silver</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Violet</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Wheat</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>White</string>
+              <string>#CCFFCC</string>
              </property>
             </item>
            </widget>
@@ -650,6 +600,9 @@
           </item>
           <item row="0" column="1">
            <widget class="QComboBox" name="indicator_lines_combobox">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
             <item>
              <property name="text">
               <string>Crosshair</string>
@@ -681,6 +634,9 @@
           </item>
           <item row="1" column="1">
            <widget class="QComboBox" name="indicator_shape_combobox">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
             <item>
              <property name="text">
               <string>Circle</string>
@@ -1242,8 +1198,8 @@
   <tabstop>lePathHatch</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../res/extui/extui.qrc"/>
   <include location="../../../res/ui/ui.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>
