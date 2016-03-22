@@ -972,3 +972,14 @@ void QG_GraphicView::setDoubleClickMenu(QMenu* menu)
 {
     doubleclick_menu = menu;
 }
+
+void QG_GraphicView::setCurrentQAction(QAction* q_action)
+{
+    eventHandler->setQAction(q_action);
+
+    if (recent_actions.contains(q_action))
+    {
+        recent_actions.removeOne(q_action);
+    }
+    recent_actions.prepend(q_action);
+}

@@ -98,6 +98,8 @@ public:
     void addScrollbars();
     bool hasScrollbars();
 
+    void setCurrentQAction(QAction* q_action);
+
     std::shared_ptr<LC_Options> options;
 
 protected:
@@ -118,6 +120,8 @@ protected:
 
     void paintEvent(QPaintEvent *);
     virtual void resizeEvent(QResizeEvent* e);
+
+    QList<QAction*> recent_actions;
 
 private slots:
     void slotHScrolled(int value);

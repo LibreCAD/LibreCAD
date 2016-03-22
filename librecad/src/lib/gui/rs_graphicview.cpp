@@ -27,10 +27,13 @@
 
 #include<climits>
 #include<cmath>
+
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QAction>
 #include <QMouseEvent>
+#include <QtAlgorithms>
+
 #include "rs_graphicview.h"
 
 #include "rs_line.h"
@@ -78,10 +81,7 @@ RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
 
 RS_GraphicView::~RS_GraphicView()
 {
-    foreach (RS_EntityContainer* x, overlayEntities)
-    {
-        delete x;
-    }
+    qDeleteAll(overlayEntities);
 }
 
 /**
@@ -1734,7 +1734,7 @@ RS_Grid* RS_GraphicView::getGrid() const{
 }
 
 RS_EventHandler* RS_GraphicView::getEventHandler() const{
-	return eventHandler.get();
+    return eventHandler;
 }
 
 void RS_GraphicView::setBackground(const RS_Color& bg) {
@@ -1845,15 +1845,4 @@ void RS_GraphicView::setDraftMode(bool dm) {
 bool RS_GraphicView::isCleanUp(void) const
 {
 	return m_bIsCleanUp;
-}
-
-void RS_GraphicView::set_action(QAction* q_action)
-{
-    eventHandler->setQAction(q_action);
-
-    if (recent_actions.contains(q_action))
-    {
-        recent_actions.removeOne(q_action);
-    }
-    recent_actions.prepend(q_action);
 }
