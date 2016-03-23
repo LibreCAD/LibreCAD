@@ -265,13 +265,11 @@ void RS_MText::update() {
             updateAddLine(oneLine, lineCounter++);
             oneLine = new RS_EntityContainer(this);
             letterPos = RS_Vector(0.0, -9.0);
-            handled = true;
             break;
 
         case 0x20:
             // Space:
             letterPos+=space;
-            handled = true;
             break;
 
         case 0x5C: {
