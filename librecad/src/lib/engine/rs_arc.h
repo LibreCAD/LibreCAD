@@ -67,17 +67,16 @@ public:
 	RS_Arc()=default;
     RS_Arc(RS_EntityContainer* parent,
            const RS_ArcData& d);
-	virtual ~RS_Arc() = default;
 
-	virtual RS_Entity* clone() const override;
+	RS_Entity* clone() const override;
 
     /**	@return RS2::EntityArc */
-	virtual RS2::EntityType rtti() const override
+	RS2::EntityType rtti() const override
 	{
         return RS2::EntityArc;
     }
     /** @return true */
-	virtual bool isEdge() const override {
+	bool isEdge() const override {
         return true;
     }
 
@@ -86,7 +85,7 @@ public:
         return data;
     }
 
-	virtual RS_VectorSolutions getRefPoints() const override;
+	RS_VectorSolutions getRefPoints() const override;
 
     /** Sets new arc parameters. **/
     void setData(RS_ArcData d) {
@@ -94,7 +93,7 @@ public:
     }
 
     /** @return The center point (x) of this arc */
-	virtual RS_Vector getCenter() const override {
+	RS_Vector getCenter() const override {
         return data.center;
     }
     /** Sets new center. */
@@ -103,7 +102,7 @@ public:
     }
 
     /** @return The radius of this arc */
-	virtual double getRadius() const override {
+	double getRadius() const override {
         return data.radius;
     }
     /** Sets new radius. */
@@ -155,33 +154,33 @@ public:
     }
 
     /** @return Start point of the entity. */
-	virtual RS_Vector getStartpoint() const override;
+	RS_Vector getStartpoint() const override;
     /** @return End point of the entity. */
-	virtual RS_Vector getEndpoint() const override;
-	virtual std::vector<RS_Entity* > offsetTwoSides(const double& distance) const override;
+	RS_Vector getEndpoint() const override;
+	std::vector<RS_Entity* > offsetTwoSides(const double& distance) const override;
     /**
           * implementations must revert the direction of an atomic entity
           */
-	virtual void revertDirection() override;
+	void revertDirection() override;
 	void correctAngles();//make sure angleLength() is not more than 2*M_PI
-	virtual void moveStartpoint(const RS_Vector& pos) override;
-	virtual void moveEndpoint(const RS_Vector& pos) override;
-	virtual bool offset(const RS_Vector& position, const double& distance) override;
+	void moveStartpoint(const RS_Vector& pos) override;
+	void moveEndpoint(const RS_Vector& pos) override;
+	bool offset(const RS_Vector& position, const double& distance) override;
 
-	virtual void trimStartpoint(const RS_Vector& pos) override;
-	virtual void trimEndpoint(const RS_Vector& pos) override;
+	void trimStartpoint(const RS_Vector& pos) override;
+	void trimEndpoint(const RS_Vector& pos) override;
 
-    virtual RS2::Ending getTrimPoint(const RS_Vector& coord,
+	RS2::Ending getTrimPoint(const RS_Vector& coord,
 									 const RS_Vector& trimPoint) override;
     /** choose an intersection to trim to based on mouse point */
-    virtual RS_Vector prepareTrim(const RS_Vector& mousePoint,
+	RS_Vector prepareTrim(const RS_Vector& mousePoint,
 								  const RS_VectorSolutions& trimSol)override;
 
-	virtual void reverse() override;
+	void reverse() override;
 
-	virtual RS_Vector getMiddlePoint() const override;
+	RS_Vector getMiddlePoint() const override;
     double getAngleLength() const;
-	virtual double getLength() const override;
+	double getLength() const override;
     double getBulge() const;
 
     bool createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
@@ -193,40 +192,40 @@ public:
     bool createFrom2PBulge(const RS_Vector& startPoint, const RS_Vector& endPoint,
                            double bulge);
 
-	virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
+	RS_Vector getNearestEndpoint(const RS_Vector& coord,
 										 double* dist = nullptr) const override;
-	virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
+	RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
 											  bool onEntity = true,
 											  double* dist = nullptr,
 											  RS_Entity** entity=nullptr) const override;
-    virtual RS_Vector getNearestCenter(const RS_Vector& coord,
+	RS_Vector getNearestCenter(const RS_Vector& coord,
 									   double* dist = nullptr) const override;
-    virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
+	RS_Vector getNearestMiddle(const RS_Vector& coord,
 									   double* dist = nullptr,
                                        int middlePoints = 1
 									   ) const override;
-    virtual RS_Vector getNearestDist(double distance,
+	RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
 									 double* dist = nullptr) const override;
-    virtual RS_Vector getNearestDist(double distance,
-									 bool startp) const;
-    virtual RS_Vector getNearestOrthTan(const RS_Vector& coord,
+	RS_Vector getNearestDist(double distance,
+									 bool startp) const override;
+	RS_Vector getNearestOrthTan(const RS_Vector& coord,
                     const RS_Line& normal,
 					bool onEntity = false) const override;
-	virtual RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;//find the tangential points seeing from given point
-	virtual RS_Vector getTangentDirection(const RS_Vector& point) const override;
-	virtual void move(const RS_Vector& offset) override;
-	virtual void rotate(const RS_Vector& center, const double& angle) override;
-	virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
-	virtual void scale(const RS_Vector& center, const RS_Vector& factor) override;
-	virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
-	virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
-    virtual void stretch(const RS_Vector& firstCorner,
+	RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;//find the tangential points seeing from given point
+	RS_Vector getTangentDirection(const RS_Vector& point) const override;
+	void move(const RS_Vector& offset) override;
+	void rotate(const RS_Vector& center, const double& angle) override;
+	void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+	void scale(const RS_Vector& center, const RS_Vector& factor) override;
+	void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+	void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
+	void stretch(const RS_Vector& firstCorner,
                          const RS_Vector& secondCorner,
 						 const RS_Vector& offset) override;
 
     /** find the visible part of the arc, and call drawVisible() to draw */
-	virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+	void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
     /** directly draw the arc, assuming the whole arc is within visible window */
 	void drawVisible(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
 
