@@ -408,7 +408,7 @@ double GetDistToQuadSquared(const RS_Vector& coord, const RS_Vector& x1,
 	else return -1.0;
 
 	bool bResSet = false;
-	double dDist, dNewDist;
+	double dDist = 0., dNewDist;
 	double dRes;
 	for(const double& dSolValue: dSol)
 	{
@@ -822,7 +822,7 @@ int LC_SplinePoints::GetNearestQuad(const RS_Vector& coord,
 
 	RS_Vector vStart(false), vControl(false), vEnd(false), vRes(false);
 
-	double dDist, dNewDist;
+	double dDist = 0., dNewDist;
 	double dRes, dNewRes;
 	int iRes = -1;
 
