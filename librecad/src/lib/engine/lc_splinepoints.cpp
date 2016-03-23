@@ -705,7 +705,7 @@ RS_VectorSolutions LC_SplinePoints::getRefPoints() const
 }
 
 /** @return Start point of the entity */
-RS_Vector LC_SplinePoints::getStartPoint() const
+RS_Vector LC_SplinePoints::getStartpoint() const
 {
 	if(data.closed) return RS_Vector(false);
 
@@ -717,7 +717,7 @@ RS_Vector LC_SplinePoints::getStartPoint() const
 }
 
 /** @return End point of the entity */
-RS_Vector LC_SplinePoints::getEndPoint() const
+RS_Vector LC_SplinePoints::getEndpoint() const
 {
 	if(data.closed) return RS_Vector(false);
 
@@ -735,8 +735,8 @@ RS_Vector LC_SplinePoints::getNearestEndpoint(const RS_Vector& coord,
 	RS_Vector ret(false);
 	if(!data.closed) // no endpoint for closed spline
 	{
-		RS_Vector vp1(getStartPoint());
-		RS_Vector vp2(getEndPoint());
+		RS_Vector vp1(getStartpoint());
+		RS_Vector vp2(getEndpoint());
 		double d1 = (coord-vp1).squared();
 		double d2 = (coord-vp2).squared();
 		if(d1 < d2)
