@@ -82,21 +82,20 @@ public:
     LC_Hyperbola(const RS_Vector& focus0,
                      const RS_Vector& focus1,
                      const RS_Vector& point);
-	virtual ~LC_Hyperbola() = default;
 
-	virtual RS_Entity* clone() const;
+	RS_Entity* clone() const override;
 
     /**	@return RS2::EntityHyperbola */
-    virtual RS2::EntityType rtti() const {
+	RS2::EntityType rtti() const  override{
         return RS2::EntityHyperbola;
     }
-    bool isValid(){
+	bool isValid() const{
         return m_bValid;
     }
 
 
 
-//    virtual double getLength() const;
+//    double getLength() const;
 
 //    /**
 //    //Hyperbola must have ratio<1, and not reversed
@@ -112,23 +111,23 @@ public:
     LC_HyperbolaData getData() const {
         return data;
     }
-    RS_VectorSolutions getFoci() const ;
-	virtual RS_VectorSolutions getRefPoints() const;
+	RS_VectorSolutions getFoci() const;
+	RS_VectorSolutions getRefPoints() const override;
 
     /**
      * @retval true if the arc is reversed (clockwise),
      * @retval false otherwise
      */
-    bool isReversed() const {
+	bool isReversed() const{
         return data.reversed;
     }
     /** sets the reversed status. */
-    void setReversed(bool r) {
+	void setReversed(bool r){
         data.reversed = r;
     }
 
     /** @return The rotation angle of this hyperbola */
-    double getAngle() const {
+	double getAngle() const {
         return data.majorP.angle();
     }
 
@@ -151,7 +150,7 @@ public:
 
 
     /** @return The center point (x) of this arc */
-    virtual RS_Vector getCenter() const {
+	RS_Vector getCenter() const override{
         return data.center;
     }
     /** Sets new center. */
@@ -188,58 +187,58 @@ public:
         return data.majorP.magnitude()*data.ratio;
     }
 
-    virtual void calculateBorders(){}
+	void calculateBorders() override{}
 
-    virtual RS_Vector getMiddlePoint(void)const {return RS_Vector(false);}
-    virtual RS_Vector getNearestEndpoint(const RS_Vector& /*coord*/,
-                                         double*/* dist = NULL*/) const
+	RS_Vector getMiddlePoint(void)const override{return RS_Vector(false);}
+	RS_Vector getNearestEndpoint(const RS_Vector& /*coord*/,
+										 double*/* dist = NULL*/) const override
     {return RS_Vector(false);}
-    virtual RS_Vector getNearestPointOnEntity(const RS_Vector& /*coord*/,
-            bool /*onEntity = true*/, double*/* dist = NULL*/, RS_Entity**/* entity=NULL*/) const
+	RS_Vector getNearestPointOnEntity(const RS_Vector& /*coord*/,
+			bool /*onEntity = true*/, double*/* dist = NULL*/, RS_Entity**/* entity=NULL*/) const override
     {return RS_Vector(false);}
-    virtual RS_Vector getNearestCenter(const RS_Vector& /*coord*/,
-									   double*/* dist = NULL*/) const
+	RS_Vector getNearestCenter(const RS_Vector& /*coord*/,
+									   double*/* dist = NULL*/) const override
    {return RS_Vector(false);}
-    virtual RS_Vector getNearestMiddle(const RS_Vector& /*coord*/,
+	RS_Vector getNearestMiddle(const RS_Vector& /*coord*/,
                                        double*/* dist = NULL*/,
                                        int/* middlePoints = 1*/
-                                       )const
+									   )const override
    {return RS_Vector(false);}
-    virtual RS_Vector getNearestDist(double /*distance*/,
+	RS_Vector getNearestDist(double /*distance*/,
                                      const RS_Vector&/* coord*/,
-									 double*/* dist = NULL*/) const
+									 double*/* dist = NULL*/) const override
     {return RS_Vector(false);}
-    virtual RS_Vector getNearestOrthTan(const RS_Vector& /*coord*/,
+	RS_Vector getNearestOrthTan(const RS_Vector& /*coord*/,
                                     const RS_Line& /*normal*/,
-									 bool /*onEntity = false*/) const
+									 bool /*onEntity = false*/) const override
     {return RS_Vector(false);}
-    virtual double getDistanceToPoint(const RS_Vector& /*coord*/,
+	double getDistanceToPoint(const RS_Vector& /*coord*/,
                                       RS_Entity** /*entity=NULL*/,
                                       RS2::ResolveLevel/* level=RS2::ResolveNone*/,
-                                      double /*solidDist = RS_MAXDOUBLE*/) const
+									  double /*solidDist = RS_MAXDOUBLE*/) const override
     {return RS_MAXDOUBLE;}
-    virtual bool isPointOnEntity(const RS_Vector& /*coord*/,
-                                 double /*tolerance=RS_TOLERANCE*/) const;
+	bool isPointOnEntity(const RS_Vector& /*coord*/,
+								 double /*tolerance=RS_TOLERANCE*/) const override;
 
-    virtual void move(const RS_Vector& /*offset*/){}
-    virtual void rotate(const double& /*angle*/){}
-    virtual void rotate(const RS_Vector& /*angleVector*/){}
-    virtual void rotate(const RS_Vector& /*center*/, const double& /*angle*/){}
-    virtual void rotate(const RS_Vector& /*center*/, const RS_Vector& /*angle*/){}
-    virtual void scale(const RS_Vector& /*center*/, const RS_Vector& /*factor*/){}
-    virtual void mirror(const RS_Vector& /*axisPoint1*/, const RS_Vector& /*axisPoint2*/){}
-    virtual void moveRef(const RS_Vector& /*ref*/, const RS_Vector& /*offset*/){}
+	void move(const RS_Vector& /*offset*/) override{}
+	void rotate(const double& /*angle*/) {}
+	void rotate(const RS_Vector& /*angleVector*/){}
+	void rotate(const RS_Vector& /*center*/, const double& /*angle*/) override{}
+	void rotate(const RS_Vector& /*center*/, const RS_Vector& /*angle*/)override{}
+	void scale(const RS_Vector& /*center*/, const RS_Vector& /*factor*/)override{}
+	void mirror(const RS_Vector& /*axisPoint1*/, const RS_Vector& /*axisPoint2*/)override{}
+	void moveRef(const RS_Vector& /*ref*/, const RS_Vector& /*offset*/)override{}
 
-    virtual void draw(RS_Painter* /*painter*/, RS_GraphicView* /*view*/, double& /*patternOffset*/){}
+	void draw(RS_Painter* /*painter*/, RS_GraphicView* /*view*/, double& /*patternOffset*/)override{}
 
     friend std::ostream& operator << (std::ostream& os, const LC_Hyperbola& a);
 
-    //virtual void calculateEndpoints();
-//    virtual void calculateBorders();
+	//void calculateEndpoints();
+//    void calculateBorders();
 
     //direction of tangent at endpoints
-    virtual double getDirection1() const{return 0.;}
-    virtual double getDirection2() const{return 0.;}
+	double getDirection1() const override{return 0.;}
+	double getDirection2() const override{return 0.;}
     /** return the equation of the entity
     for quadratic,
 
@@ -249,7 +248,7 @@ public:
     for linear:
     m0 x + m1 y + m2 =0
     **/
-    LC_Quadratic getQuadratic() const;
+	LC_Quadratic getQuadratic() const override;
 
 protected:
     LC_HyperbolaData data;

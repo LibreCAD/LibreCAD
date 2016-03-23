@@ -62,17 +62,16 @@ class RS_Spline : public RS_EntityContainer {
 public:
     RS_Spline(RS_EntityContainer* parent,
             const RS_SplineData& d);
-	virtual ~RS_Spline() = default;
 
-	virtual RS_Entity* clone() const;
+	RS_Entity* clone() const override;
 
 
     /**	@return RS2::EntitySpline */
-    virtual RS2::EntityType rtti() const {
+	RS2::EntityType rtti() const override{
         return RS2::EntitySpline;
     }
     /** @return false */
-    virtual bool isEdge() const {
+	bool isEdge() const override{
         return false;
     }
 
@@ -106,100 +105,49 @@ public:
 		 */
 	void setClosed(bool c);
 
-	virtual RS_VectorSolutions getRefPoints() const;
-    virtual RS_Vector getNearestRef( const RS_Vector& coord, double* dist = nullptr) const;
-    virtual RS_Vector getNearestSelectedRef( const RS_Vector& coord, double* dist = nullptr) const;
+	RS_VectorSolutions getRefPoints() const override;
+	RS_Vector getNearestRef( const RS_Vector& coord, double* dist = nullptr) const override;
+	RS_Vector getNearestSelectedRef( const RS_Vector& coord, double* dist = nullptr) const override;
 
     /** @return Start point of the entity */
-    virtual RS_Vector getStartpoint() const ;
-    //    return data.startpoint;
-    //}
+	RS_Vector getStartpoint() const override;
     /** @return End point of the entity */
-    virtual RS_Vector getEndpoint() const ;
-    //    return data.endpoint;
-    //}
+	RS_Vector getEndpoint() const override;
     /** Sets the startpoint */
-    //void setStartpoint(RS_Vector s) {
-    //    data.startpoint = s;
-    //    calculateBorders();
-    //}
     /** Sets the endpoint */
-    //void setEndpoint(RS_Vector e) {
-    //    data.endpoint = e;
-    //    calculateBorders();
-    //}
+	void update() override;
 
-        void update();
-
-        //virtual void moveStartpoint(const RS_Vector& pos);
-        //virtual void moveEndpoint(const RS_Vector& pos);
-        //virtual RS2::Ending getTrimPoint(const RS_Vector& coord,
-        //          const RS_Vector& trimPoint);
-        //virtual void reverse();
-    /** @return the center point of the line. */
-    //RS_Vector getMiddlePoint() {
-    //    return (data.startpoint + data.endpoint)/2.0;
-    //}
-        //virtual bool hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2);
-
-    /**
-     * @return The length of the line.
-     */
-    //virtual double getLength() const {
-    //    return data.startpoint.distanceTo(data.endpoint);
-    //}
-
-    /**
-     * @return The angle of the line (from start to endpoint).
-     */
-    //virtual double getAngle1() {
-    //    return data.startpoint.angleTo(data.endpoint);
-    //}
-
-    /**
-     * @return The angle of the line (from end to startpoint).
-     */
-    //virtual double getAngle2() {
-    //    return data.endpoint.angleTo(data.startpoint);
-    //}
-
-    virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-										 double* dist = nullptr)const;
-    //virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
+	RS_Vector getNearestEndpoint(const RS_Vector& coord,
+										 double* dist = nullptr)const override;
+	//RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
 	//        bool onEntity=true, double* dist = nullptr, RS_Entity** entity=nullptr);
-    virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-									   double* dist = nullptr)const;
-    virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
+	RS_Vector getNearestCenter(const RS_Vector& coord,
+									   double* dist = nullptr)const override;
+	RS_Vector getNearestMiddle(const RS_Vector& coord,
 									   double* dist = nullptr,
-                                       int middlePoints = 1)const;
-    virtual RS_Vector getNearestDist(double distance,
+									   int middlePoints = 1)const override;
+	RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-									 double* dist = nullptr)const;
-        //virtual RS_Vector getNearestRef(const RS_Vector& coord,
-		//                                 double* dist = nullptr);
-        /*virtual double getDistanceToPoint(const RS_Vector& coord,
-									  RS_Entity** entity=nullptr,
-                                      RS2::ResolveLevel level=RS2::ResolveNone,
-                                                                          double solidDist = RS_MAXDOUBLE);*/
+									 double* dist = nullptr)const override;
 
-        virtual void addControlPoint(const RS_Vector& v);
-        virtual void removeLastControlPoint();
+		void addControlPoint(const RS_Vector& v);
+		void removeLastControlPoint();
 
-        virtual void move(const RS_Vector& offset);
-        virtual void rotate(const RS_Vector& center, const double& angle);
-        virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
-        virtual void scale(const RS_Vector& center, const RS_Vector& factor);
-		virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+		void move(const RS_Vector& offset) override;
+		void rotate(const RS_Vector& center, const double& angle) override;
+		void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+		void scale(const RS_Vector& center, const RS_Vector& factor) override;
+		void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
 
-        virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
-		virtual void revertDirection();
+		void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
+		void revertDirection() override;
 
-        virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
+		void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
 		const std::vector<RS_Vector>& getControlPoints() const;
 
         friend std::ostream& operator << (std::ostream& os, const RS_Spline& l);
 
-        virtual void calculateBorders();
+		void calculateBorders() override;
 
 private:
 		static void rbasis(int c, double t, int npts, const std::vector<int>& x, const std::vector<double>& h, std::vector<double>& r);
