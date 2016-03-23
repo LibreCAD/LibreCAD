@@ -44,23 +44,23 @@ public:
 
 	RS_EntityContainer(RS_EntityContainer* parent=nullptr, bool owner=true);
     //RS_EntityContainer(const RS_EntityContainer& ec);
-    virtual ~RS_EntityContainer();
+	~RS_EntityContainer() override;
 
-	virtual RS_Entity* clone() const;
-    virtual void detach();
+	RS_Entity* clone() const override;
+	virtual void detach();
 
     /** @return RS2::EntityContainer */
-    virtual RS2::EntityType rtti() const {
+	RS2::EntityType rtti() const override{
         return RS2::EntityContainer;
     }
 
-    void reparent(RS_EntityContainer* parent);
+	void reparent(RS_EntityContainer* parent) override;
 
     /**
      * @return true: because entities made from this class
 	 *         and subclasses are containers for other entities.
      */
-	virtual bool isContainer() const {
+	bool isContainer() const override{
         return true;
     }
 
@@ -68,20 +68,20 @@ public:
      * @return false: because entities made from this class
      *         and subclasses are containers for other entities.
      */
-    virtual bool isAtomic() const {
+	bool isAtomic() const override{
                 return false;
         }
 
-	virtual double getLength() const;
+	double getLength() const override;
 
 //	void undoStateChanged(bool undone) override;
-    virtual void setVisible(bool v);
+	void setVisible(bool v) override;
 
-    virtual bool setSelected(bool select=true);
-    virtual bool toggleSelected();
+	bool setSelected(bool select=true) override;
+	bool toggleSelected() override;
 
-    virtual void selectWindow(RS_Vector v1, RS_Vector v2,
-                bool select=true, bool cross=false);
+	virtual void selectWindow(RS_Vector v1, RS_Vector v2,
+				bool select=true, bool cross=false);
 
     virtual void addEntity(RS_Entity* entity);
     virtual void appendEntity(RS_Entity* entity);
@@ -113,8 +113,8 @@ public:
 	virtual bool isEmpty() const{
         return count()==0;
 	}
-	virtual unsigned count() const;
-	virtual unsigned countDeep() const;
+	unsigned count() const override;
+	unsigned countDeep() const override;
 	//virtual unsigned long int countLayerEntities(RS_Layer* layer);
 	/** \brief countSelected number of selected
 	* @param deep count sub-containers, if true
@@ -131,69 +131,69 @@ public:
         autoUpdateBorders = enable;
     }
     virtual void adjustBorders(RS_Entity* entity);
-    virtual void calculateBorders();
-    virtual void forcedCalculateBorders();
-    virtual void updateDimensions( bool autoText=true);
+	void calculateBorders() override;
+	void forcedCalculateBorders();
+	void updateDimensions( bool autoText=true);
     virtual void updateInserts();
     virtual void updateSplines();
-    virtual void update();
-        virtual void renameInserts(const QString& oldName,
-				const QString& newName);
+	void update() override;
+	virtual void renameInserts(const QString& oldName,
+							   const QString& newName);
 
-    virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                         double* dist = NULL)const;
-    virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                         double* dist, RS_Entity** pEntity )const;
+	RS_Vector getNearestEndpoint(const RS_Vector& coord,
+										 double* dist = nullptr)const override;
+	RS_Vector getNearestEndpoint(const RS_Vector& coord,
+										 double* dist, RS_Entity** pEntity ) const;
 
     RS_Entity* getNearestEntity(const RS_Vector& point,
-                                double* dist = NULL,
+								double* dist = nullptr,
 								RS2::ResolveLevel level=RS2::ResolveAll) const;
 
-    virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
+	RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
             bool onEntity = true,
-                        double* dist = NULL,
-            RS_Entity** entity=NULL)const;
+						double* dist = nullptr,
+			RS_Entity** entity=nullptr)const override;
 
-    virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-									   double* dist = NULL)const;
-    virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
-                                       double* dist = NULL,
+	RS_Vector getNearestCenter(const RS_Vector& coord,
+									   double* dist = nullptr)const override;
+	RS_Vector getNearestMiddle(const RS_Vector& coord,
+									   double* dist = nullptr,
                                        int middlePoints = 1
-                                       )const;
-    virtual RS_Vector getNearestDist(double distance,
+									   )const override;
+	RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-									 double* dist = NULL) const;
-    virtual RS_Vector getNearestIntersection(const RS_Vector& coord,
-            double* dist = NULL);
-    virtual RS_Vector getNearestRef(const RS_Vector& coord,
-									 double* dist = NULL) const;
-    virtual RS_Vector getNearestSelectedRef(const RS_Vector& coord,
-									 double* dist = NULL) const;
+									 double* dist = nullptr) const override;
+	RS_Vector getNearestIntersection(const RS_Vector& coord,
+			double* dist = nullptr);
+	RS_Vector getNearestRef(const RS_Vector& coord,
+									 double* dist = nullptr) const override;
+	RS_Vector getNearestSelectedRef(const RS_Vector& coord,
+									 double* dist = nullptr) const override;
 
-    virtual double getDistanceToPoint(const RS_Vector& coord,
+	double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
-                                      double solidDist = RS_MAXDOUBLE) const;
+									  double solidDist = RS_MAXDOUBLE) const override;
 
     virtual bool optimizeContours();
 
-    virtual bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2);
+	bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) override;
 
-    virtual void move(const RS_Vector& offset);
-    virtual void rotate(const RS_Vector& center, const double& angle);
-    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
-    virtual void scale(const RS_Vector& center, const RS_Vector& factor);
-	virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2a) override;
+	void move(const RS_Vector& offset) override;
+	void rotate(const RS_Vector& center, const double& angle) override;
+	void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+	void scale(const RS_Vector& center, const RS_Vector& factor) override;
+	void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2a) override;
 
-    virtual void stretch(const RS_Vector& firstCorner,
+	void stretch(const RS_Vector& firstCorner,
                          const RS_Vector& secondCorner,
-                         const RS_Vector& offset);
-        virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
-        virtual void moveSelectedRef(const RS_Vector& ref, const RS_Vector& offset);
-	virtual void revertDirection();
+						 const RS_Vector& offset) override;
+	void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
+	void moveSelectedRef(const RS_Vector& ref, const RS_Vector& offset) override;
+	void revertDirection() override;
 
 
-    virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
+	void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
 
     friend std::ostream& operator << (std::ostream& os, RS_EntityContainer& ec);
 
