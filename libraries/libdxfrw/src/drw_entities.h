@@ -101,6 +101,7 @@ class DRW_Entity {
 public:
     //initializes default values
 	DRW_Entity() = default;
+	virtual ~DRW_Entity() = default;
 
 	//removed copy/move ctors
 	// looks like the potential issue is the "curr" pointer is reset in previous
@@ -192,7 +193,7 @@ public:
         thickness = 0;
     }
 
-    virtual void applyExtrusion(){}
+	virtual void applyExtrusion(){}
 
 protected:
     void parseCode(int code, dxfReader *reader);
@@ -218,8 +219,6 @@ public:
         eType = DRW::LINE;
         secPoint.z = 0;
     }
-
-    virtual void applyExtrusion(){}
 
 protected:
     void parseCode(int code, dxfReader *reader);

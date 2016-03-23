@@ -23,20 +23,20 @@ class dwgReader21 : public dwgReader {
 public:
     dwgReader21(std::ifstream *stream, dwgR *p):dwgReader(stream, p){
 	}
-    bool readMetaData();
-    bool readFileHeader();
-    bool readDwgHeader(DRW_Header& hdr);
-    bool readDwgClasses();
-    bool readDwgHandles();
-    bool readDwgTables(DRW_Header& hdr);
-    bool readDwgBlocks(DRW_Interface& intfa);
-    virtual bool readDwgEntities(DRW_Interface& intfa){
+	bool readMetaData() override;
+	bool readFileHeader() override;
+	bool readDwgHeader(DRW_Header& hdr) override;
+	bool readDwgClasses() override;
+	bool readDwgHandles() override;
+	bool readDwgTables(DRW_Header& hdr) override;
+	bool readDwgBlocks(DRW_Interface& intfa) override;
+	virtual bool readDwgEntities(DRW_Interface& intfa) override{
         bool ret = true;
 		dwgBuffer dataBuf(&objData.front(), dataSize, &decoder);
         ret = dwgReader::readDwgEntities(intfa, &dataBuf);
         return ret;
     }
-    virtual bool readDwgObjects(DRW_Interface& intfa){
+	virtual bool readDwgObjects(DRW_Interface& intfa) override{
         bool ret = true;
 		dwgBuffer dataBuf(&objData.front(), dataSize, &decoder);
         ret = dwgReader::readDwgObjects(intfa, &dataBuf);

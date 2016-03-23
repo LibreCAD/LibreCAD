@@ -19,18 +19,13 @@ namespace DRW {
 std::string toHexStr(int n);
 }
 
-class dwgRSCodec {
-public:
-    dwgRSCodec(){}
-    ~dwgRSCodec(){}
-    static void decode239I(duint8 *in, duint8 *out, duint32 blk);
-    static void decode251I(duint8 *in, duint8 *out, duint32 blk);
+namespace dwgRSCodec {
+void decode239I(duint8 *in, duint8 *out, duint32 blk);
+void decode251I(duint8 *in, duint8 *out, duint32 blk);
 };
 
 class dwgCompressor {
 public:
-    dwgCompressor(){}
-    ~dwgCompressor(){}
 
     void decompress18(duint8 *cbuf, duint8 *dbuf, duint32 csize, duint32 dsize);
     static void decrypt18Hdr(duint8 *buf, duint32 size, duint32 offset);
@@ -56,8 +51,7 @@ private:
 
 };
 
-class secEnum {
-public:
+namespace secEnum {
     enum DWGSection {
         UNKNOWNS,      /*!< UNKNOWN section. */
         FILEHEADER,    /*!< File Header (in R3-R15*/
@@ -82,10 +76,7 @@ public:
         PROXYGRAPHICS /*!< PROXY ENTITY GRAPHICS */
     };
 
-    secEnum(){}
-    ~secEnum(){}
-
-    static DWGSection getEnum(std::string nameSec);
+	DWGSection getEnum(std::string nameSec);
 };
 
 #endif // DWGUTIL_H
