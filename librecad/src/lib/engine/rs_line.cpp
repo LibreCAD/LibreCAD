@@ -655,37 +655,33 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     pen.setLineType(RS2::SolidLine);
     painter->setPen(pen);
 
-    // index counter
-	size_t i;
+	if (pat->num <= 0) {
+		RS_DEBUG->print(RS_Debug::D_WARNING,"invalid line pattern for line, draw solid line instread");
+		painter->drawLine(view->toGui(getStartpoint()),
+						  view->toGui(getEndpoint()));
+		return;
+	}
 
-    // pattern segment length:
-    double patternSegmentLength = pat->totalLength;
+	// pattern segment length:
+	double patternSegmentLength = pat->totalLength;
 
-    // create pattern:
-	size_t const patnum=pat->num > 0?pat->num:0;
-	std::vector<RS_Vector> dp(patnum);
-	std::vector<double> ds(patnum, 0.);
-    if (pat->num >0 ){
-        double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
-        for (i=0; i<pat->num; ++i) {
-            //        ds[j]=pat->pattern[i] * styleFactor;
-            //fixme, styleFactor support needed
+	// create pattern:
+	std::vector<RS_Vector> dp(pat->num);
+	std::vector<double> ds(pat->num);
+	double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
+	for (size_t i=0; i < pat->num; ++i) {
+		//        ds[j]=pat->pattern[i] * styleFactor;
+		//fixme, styleFactor support needed
 
-            ds[i]=dpmm*pat->pattern[i];
-			if (fabs(ds[i]) < 1. ) ds[i] = (ds[i]>=0.)?1.:-1.;
-            dp[i] = direction*fabs(ds[i]);
-        }
-	} else {
-        RS_DEBUG->print(RS_Debug::D_WARNING,"invalid line pattern for line, draw solid line instread");
-        painter->drawLine(view->toGui(getStartpoint()),
-                          view->toGui(getEndpoint()));
-        return;
-    }
-    double total= remainder(patternOffset-0.5*patternSegmentLength,patternSegmentLength) -0.5*patternSegmentLength;
+		ds[i]=dpmm*pat->pattern[i];
+		if (fabs(ds[i]) < 1. ) ds[i] = copysign(1., ds[i]);
+		dp[i] = direction*fabs(ds[i]);
+	}
+	double total= remainder(patternOffset-0.5*patternSegmentLength,patternSegmentLength) -0.5*patternSegmentLength;
     //    double total= patternOffset-patternSegmentLength;
 
 	RS_Vector curP{pStart+direction*total};
-	for (int j=0; total<length; j=(j+1)%i) {
+	for (int j=0; total<length; j=(j+1)%pat->num) {
 
         // line segment (otherwise space segment)
 		double const t2=total+fabs(ds[j]);
@@ -694,7 +690,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
             // drop the whole pattern segment line, for ds[i]<0:
             // trim end points of pattern segment line to line
 			RS_Vector const& p1 =(total > -0.5)?curP:pStart;
-			RS_Vector const& p2 =(t2<length+0.5)?p3:pEnd;
+			RS_Vector const& p2 =(t2 < length+0.5)?p3:pEnd;
             painter->drawLine(p1,p2);
         }
         total=t2;
