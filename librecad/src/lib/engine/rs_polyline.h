@@ -59,12 +59,11 @@ public:
 	RS_Polyline(RS_EntityContainer* parent=nullptr);
     RS_Polyline(RS_EntityContainer* parent,
                 const RS_PolylineData& d);
-	virtual ~RS_Polyline() = default;
 
-	virtual RS_Entity* clone() const;
+	RS_Entity* clone() const override;
 
     /**	@return RS2::EntityPolyline */
-    virtual RS2::EntityType rtti() const {
+	RS2::EntityType rtti() const  override{
         return RS2::EntityPolyline;
     }
 
@@ -77,13 +76,13 @@ public:
 	void setStartpoint(RS_Vector const& v);
 
     /** @return Start point of the entity */
-	virtual RS_Vector getStartpoint() const;
+	RS_Vector getStartpoint() const override;
 
     /** sets a new end point of the polyline */
 	void setEndpoint(RS_Vector const& v);
 
     /** @return End point of the entity */
-	virtual RS_Vector getEndpoint() const;
+	RS_Vector getEndpoint() const override;
 
 	double getClosingBulge() const;
 
@@ -96,50 +95,50 @@ public:
 
     void setClosed(bool cl, double bulge);//RLZ: rewrite this:
 
-	virtual RS_VectorSolutions getRefPoints() const;
-    virtual RS_Vector getMiddlePoint(void)const {
+	RS_VectorSolutions getRefPoints() const override;
+	RS_Vector getMiddlePoint(void)const override{
             return RS_Vector(false);
 	}
-    virtual RS_Vector getNearestRef( const RS_Vector& coord,
-                                     double* dist = nullptr) const;
-    virtual RS_Vector getNearestSelectedRef( const RS_Vector& coord,
-                                             double* dist = nullptr) const;
-    virtual RS_Entity* addVertex(const RS_Vector& v,
+	RS_Vector getNearestRef( const RS_Vector& coord,
+									 double* dist = nullptr) const override;
+	RS_Vector getNearestSelectedRef( const RS_Vector& coord,
+											 double* dist = nullptr) const override;
+	RS_Entity* addVertex(const RS_Vector& v,
                 double bulge=0.0, bool prepend=false);
 
 	void appendVertexs(const std::vector< std::pair<RS_Vector, double> >& vl);
 
-        virtual void setNextBulge(double bulge) {
+	void setNextBulge(double bulge) {
                 nextBulge = bulge;
         }
-    virtual void addEntity(RS_Entity* entity);
-    //virtual void addSegment(RS_Entity* entity);
-    virtual void removeLastVertex();
-    virtual void endPolyline();
+	void addEntity(RS_Entity* entity) override;
+	//void addSegment(RS_Entity* entity) override;
+	void removeLastVertex();
+	void endPolyline();
 
-    //virtual void reorder();
+	//void reorder() override;
 
-    virtual bool offset(const RS_Vector& coord, const double& distance);
-    virtual void move(const RS_Vector& offset);
-    virtual void rotate(const RS_Vector& center, const double& angle);
-    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
-    virtual void scale(const RS_Vector& center, const RS_Vector& factor);
-    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
-    virtual void stretch(const RS_Vector& firstCorner,
+	bool offset(const RS_Vector& coord, const double& distance) override;
+	void move(const RS_Vector& offset) override;
+	void rotate(const RS_Vector& center, const double& angle) override;
+	void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+	void scale(const RS_Vector& center, const RS_Vector& factor) override;
+	void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+	void stretch(const RS_Vector& firstCorner,
                          const RS_Vector& secondCorner,
-                         const RS_Vector& offset);
+						 const RS_Vector& offset) override;
 
-    virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
-	virtual void revertDirection();
+	void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
+	void revertDirection() override;
 
 
-    virtual void draw(RS_Painter* painter, RS_GraphicView* view,
-                      double& patternOffset);
+	void draw(RS_Painter* painter, RS_GraphicView* view,
+					  double& patternOffset) override;
 
     friend std::ostream& operator << (std::ostream& os, const RS_Polyline& l);
 
 protected:
-    virtual RS_Entity* createVertex(const RS_Vector& v,
+	RS_Entity* createVertex(const RS_Vector& v,
                 double bulge=0.0, bool prepend=false);
 
 protected:
