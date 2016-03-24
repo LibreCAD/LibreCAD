@@ -63,14 +63,17 @@ class RS_ScaleData;
 class RS_Solid;
 class RS_Text;
 class RS_Vector;
+class QG_MouseWidget;
+class QG_CoordinateWidget;
+class QG_SelectionWidget;
+class QG_CommandWidget;
 
 /**
  * Interface for objects that can create and show dialogs.
  */
 class RS_DialogFactoryInterface {
 public:
-    RS_DialogFactoryInterface() {}
-    virtual ~RS_DialogFactoryInterface() {}
+	virtual ~RS_DialogFactoryInterface() = default;
 
     /**
      * This virtual method must be overwritten and must provide
@@ -408,10 +411,10 @@ public:
      * @param message The message for the user.
      */
     virtual void commandMessage(const QString& message) = 0;
-
-
-		virtual bool isAdapter() const= 0;
-
+	virtual void setMouseWidget(QG_MouseWidget*) = 0;
+	virtual void setCoordinateWidget(QG_CoordinateWidget* ) = 0;
+	virtual void setSelectionWidget(QG_SelectionWidget* ) = 0;
+	virtual void setCommandWidget(QG_CommandWidget* ) = 0;
 };
 
 #endif

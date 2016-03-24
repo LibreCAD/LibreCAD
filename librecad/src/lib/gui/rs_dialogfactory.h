@@ -43,19 +43,18 @@ private:
     RS_DialogFactory();
 
 public:
-    virtual ~RS_DialogFactory() {}
+	virtual ~RS_DialogFactory() = default;
 
     static RS_DialogFactory* instance();
 
 	void setFactoryObject(RS_DialogFactoryInterface* fo);
 	RS_DialogFactoryInterface* getFactoryObject();
 
-        void commandMessage(const QString& m);
+	void commandMessage(const QString& m);
 
 private:
 	RS_DialogFactoryInterface* factoryObject;
 	RS_DialogFactoryAdapter factoryAdapter;
-	static RS_DialogFactory* uniqueInstance;
 };
 
 

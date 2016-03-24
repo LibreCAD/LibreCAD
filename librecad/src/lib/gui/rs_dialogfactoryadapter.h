@@ -39,58 +39,45 @@ class RS_BlockList;
  */
 class RS_DialogFactoryAdapter : public RS_DialogFactoryInterface {
 public:
-    RS_DialogFactoryAdapter() {}
-    virtual ~RS_DialogFactoryAdapter() {}
-    virtual void requestWarningDialog(const QString& ) {}
-    virtual RS_GraphicView* requestNewDocument(const QString& = QString::null,
-                        RS_Document* =NULL) { return NULL; }
-    virtual RS_Layer* requestNewLayerDialog(
-        RS_LayerList* = NULL) { return NULL; }
-    virtual RS_Layer* requestLayerRemovalDialog(
-        RS_LayerList* = NULL) { return NULL; }
-    virtual RS_Layer* requestEditLayerDialog(
-        RS_LayerList* = NULL) { return NULL; }
-    virtual RS_BlockData requestNewBlockDialog(RS_BlockList* )
-                { return RS_BlockData(); }
-    virtual RS_Block* requestBlockRemovalDialog(
-        RS_BlockList* ) { return NULL; }
-    virtual RS_BlockData requestBlockAttributesDialog(
-        RS_BlockList* ) { return RS_BlockData(); }
-    virtual void requestEditBlockWindow(
-        RS_BlockList* ) {}
-        virtual void closeEditBlockWindow(RS_Block* ) {}
-    virtual QString requestImageOpenDialog() { return ""; }
-    virtual void requestOptions(RS_ActionInterface* ,
-                bool , bool = false) {}
-    virtual void requestSnapDistOptions(double& , bool ) {}
-    virtual void requestSnapMiddleOptions(int& , bool ) {}
-    virtual void requestModifyOffsetOptions(double& , bool ) {}
-    virtual bool requestAttributesDialog(RS_AttributesData& ,
-                RS_LayerList& ) { return false; }
-    virtual bool requestMoveDialog(RS_MoveData& ) { return false; }
-    virtual bool requestRotateDialog(RS_RotateData& ) { return false; }
-    virtual bool requestScaleDialog(RS_ScaleData& ) { return false; }
-    virtual bool requestMirrorDialog(RS_MirrorData& ) { return false; }
-    virtual bool requestMoveRotateDialog(RS_MoveRotateData& ) { return false; }
-    virtual bool requestRotate2Dialog(RS_Rotate2Data& ) { return false; }
-    virtual bool requestModifyEntityDialog(RS_Entity* ) { return false; }
-    virtual bool requestMTextDialog(RS_MText* ) { return false; }
-    virtual bool requestTextDialog(RS_Text* ) { return false; }
-    virtual bool requestHatchDialog(RS_Hatch* ) { return false; }
-    virtual void requestOptionsGeneralDialog() {}
-    virtual void requestOptionsDrawingDialog(RS_Graphic& ) {}
-    virtual bool requestOptionsMakerCamDialog() { return false; }
-    virtual QString requestFileSaveAsDialog(const QString& = QString::null,
-                                            const QString& = QString::null,
-                                            const QString& = QString::null,
-                                            QString* = 0) { return ""; }
-    virtual void updateCoordinateWidget(const RS_Vector& , const RS_Vector& , bool =false) {}
-	virtual void updateMouseWidget(const QString& = QString::null,
-								   const QString& = QString::null){}
-    virtual void updateSelectionWidget(int /*c*/, double /*l*/ ) {}
-    virtual void updateArcTangentialOptions(const double& , bool ){}
-    virtual void commandMessage(const QString& ) {}
-		virtual bool isAdapter() const { return true; }
+	void requestWarningDialog(const QString&) override {}
+	RS_GraphicView* requestNewDocument(const QString&, RS_Document*) {return nullptr;}
+	RS_Layer* requestNewLayerDialog(RS_LayerList*) override{return nullptr;}
+	RS_Layer* requestLayerRemovalDialog(RS_LayerList*) override{return nullptr;}
+	RS_Layer* requestEditLayerDialog(RS_LayerList*) override{return nullptr;}
+	RS_BlockData requestNewBlockDialog(RS_BlockList*) override {return {};}
+	RS_Block* requestBlockRemovalDialog(RS_BlockList*) override {return nullptr;}
+	RS_BlockData requestBlockAttributesDialog(RS_BlockList*) override{return {};}
+	void requestEditBlockWindow(RS_BlockList*) override{}
+	void closeEditBlockWindow(RS_Block*) override {}
+	QString requestImageOpenDialog() override {return {};}
+	void requestOptions(RS_ActionInterface*, bool, bool) override{}
+	void requestSnapDistOptions(double& , bool) override {}
+	void requestSnapMiddleOptions(int& , bool) override {}
+	void requestModifyOffsetOptions(double& , bool) override {}
+	bool requestAttributesDialog(RS_AttributesData&, RS_LayerList&) override{return false;}
+	bool requestMoveDialog(RS_MoveData&) override {return false;}
+	bool requestRotateDialog(RS_RotateData&) override {return false;}
+	bool requestScaleDialog(RS_ScaleData&) override {return false;}
+	bool requestMirrorDialog(RS_MirrorData&) override {return false;}
+	bool requestMoveRotateDialog(RS_MoveRotateData&) override {return false;}
+	bool requestRotate2Dialog(RS_Rotate2Data&) override {return false;}
+	bool requestModifyEntityDialog(RS_Entity*) override {return false;}
+	bool requestMTextDialog(RS_MText*) override {return false;}
+	bool requestTextDialog(RS_Text*) override {return false;}
+	bool requestHatchDialog(RS_Hatch*) override {return false;}
+	void requestOptionsGeneralDialog() override {}
+	void requestOptionsDrawingDialog(RS_Graphic&) override {}
+	bool requestOptionsMakerCamDialog() override {return false;}
+	QString requestFileSaveAsDialog(const QString&, const QString&, const QString&, QString*) override {return {};}
+	void updateCoordinateWidget(const RS_Vector& , const RS_Vector& , bool =false) override {}
+	void updateMouseWidget(const QString&, const QString&) override{}
+	void updateSelectionWidget(int, double) override {}
+	void updateArcTangentialOptions(const double& , bool) override{}
+	void commandMessage(const QString&) override {}
+	void setMouseWidget(QG_MouseWidget*) override {}
+	void setCoordinateWidget(QG_CoordinateWidget* ) override {}
+	void setSelectionWidget(QG_SelectionWidget* ) override {}
+	void setCommandWidget(QG_CommandWidget* ) override {}
 };
 
 #endif

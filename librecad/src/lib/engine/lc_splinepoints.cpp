@@ -1036,7 +1036,7 @@ RS_Vector LC_SplinePoints::getNearestMiddle(const RS_Vector& coord,
 	}
 
 	int i;
-	double dCurDist, dt;
+	double dCurDist, dt{0.};
 	double dMinDist = RS_MAXDOUBLE;
 	double dDist = getLength()/(1.0 + middlePoints);
 

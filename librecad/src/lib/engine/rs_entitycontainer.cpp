@@ -1572,11 +1572,10 @@ bool RS_EntityContainer::optimizeContours() {
                 vpEnd=e2->getEndpoint();
                 removeEntity(e2);
                 continue;
-            }
-			if (QG_DIALOGFACTORY)
-				QG_DIALOGFACTORY->commandMessage(
-							errMsg.arg(dist).arg(vpTmp.x).arg(vpTmp.y).arg(vpEnd.x).arg(vpEnd.y)
-							);
+			}
+			QG_DIALOGFACTORY->commandMessage(
+						errMsg.arg(dist).arg(vpTmp.x).arg(vpTmp.y).arg(vpEnd.x).arg(vpEnd.y)
+						);
             closed=false;
         }
 		if(next && closed){ 			//workaround if next is nullptr
@@ -1596,8 +1595,9 @@ bool RS_EntityContainer::optimizeContours() {
     }
 //    DEBUG_HEADER
     if(vpEnd.valid && vpEnd.squaredTo(vpStart)>1e-8) {
-        if(closed) QG_DIALOGFACTORY->commandMessage(errMsg.arg(vpEnd.distanceTo(vpStart))
-                                         .arg(vpStart.x).arg(vpStart.y).arg(vpEnd.x).arg(vpEnd.y));
+		if(closed)
+			QG_DIALOGFACTORY->commandMessage(errMsg.arg(vpEnd.distanceTo(vpStart))
+											 .arg(vpStart.x).arg(vpStart.y).arg(vpEnd.x).arg(vpEnd.y));
         closed=false;
     }
 //    std::cout<<"RS_EntityContainer::optimizeContours: 5"<<std::endl;

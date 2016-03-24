@@ -1148,16 +1148,14 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
 	if( coordinateWidget){
 		coordinateWidget->setGraphic(graphic );
 	}
-	if (QG_DIALOGFACTORY) {
-		// Link the dialog factory to the mouse widget:
-		QG_DIALOGFACTORY->setMouseWidget(mouseWidget);
-		QG_DIALOGFACTORY->setCoordinateWidget(coordinateWidget);
-		QG_DIALOGFACTORY->setSelectionWidget(selectionWidget);
-		// Link the dialog factory to the option widget:
-		//QG_DIALOGFACTORY->setOptionWidget(optionWidget);
-		// Link the dialog factory to the command widget:
-		QG_DIALOGFACTORY->setCommandWidget(commandWidget);
-	}
+	// Link the dialog factory to the mouse widget:
+	QG_DIALOGFACTORY->setMouseWidget(mouseWidget);
+	QG_DIALOGFACTORY->setCoordinateWidget(coordinateWidget);
+	QG_DIALOGFACTORY->setSelectionWidget(selectionWidget);
+	// Link the dialog factory to the option widget:
+	//QG_DIALOGFACTORY->setOptionWidget(optionWidget);
+	// Link the dialog factory to the command widget:
+	QG_DIALOGFACTORY->setCommandWidget(commandWidget);
 
     QMdiSubWindow* subWindow=mdiAreaCAD->addSubWindow(w);
 
@@ -1498,8 +1496,7 @@ void QC_ApplicationWindow::
         statusBar()->showMessage(message, 2000);
 
 	} else {
-		if (QG_DIALOGFACTORY)
-			QG_DIALOGFACTORY->commandMessage(tr("File '%1' does not exist. Opening aborted").arg(fileName));
+		QG_DIALOGFACTORY->commandMessage(tr("File '%1' does not exist. Opening aborted").arg(fileName));
         statusBar()->showMessage(tr("Opening aborted"), 2000);
     }
 
@@ -1642,9 +1639,7 @@ void QC_ApplicationWindow::slotFileExport() {
         // read default settings:
         RS_SETTINGS->beginGroup("/Export");
         QString defDir = RS_SETTINGS->readEntry("/ExportImage", RS_SYSTEM->getHomeDir());
-		QString defFilter;
-		if (QG_DIALOGFACTORY)
-			defFilter = RS_SETTINGS->readEntry("/ExportImageFilter",
+		QString defFilter = RS_SETTINGS->readEntry("/ExportImageFilter",
 													   QString("%1 (%2)(*.%2)").arg(QG_DialogFactory::extToFormat("png")).arg("png"));
         RS_SETTINGS->endGroup();
 
@@ -1659,11 +1654,10 @@ void QC_ApplicationWindow::slotFileExport() {
             QString st;
             if (format=="jpeg" || format=="tiff") {
                 // Don't add the aliases
-            } else {
-				if (QG_DIALOGFACTORY)
-					st = QString("%1 (%2)(*.%2)")
-                     .arg(QG_DialogFactory::extToFormat(format))
-                     .arg(format);
+			} else {
+				st = QString("%1 (%2)(*.%2)")
+						.arg(QG_DialogFactory::extToFormat(format))
+						.arg(format);
             }
             if (st.length()>0)
                 filters.push_back(st);
@@ -2124,16 +2118,14 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                 }
 
 				// Link the graphic view to the mouse widget:
-				if (QG_DIALOGFACTORY) {
-					QG_DIALOGFACTORY->setMouseWidget(mouseWidget);
-					// Link the graphic view to the coordinate widget:
-					QG_DIALOGFACTORY->setCoordinateWidget(coordinateWidget);
-					QG_DIALOGFACTORY->setSelectionWidget(selectionWidget);
-					// Link the graphic view to the option widget:
-					//QG_DIALOGFACTORY->setOptionWidget(optionWidget);
-					// Link the graphic view to the command widget:
-					QG_DIALOGFACTORY->setCommandWidget(commandWidget);
-				}
+				QG_DIALOGFACTORY->setMouseWidget(mouseWidget);
+				// Link the graphic view to the coordinate widget:
+				QG_DIALOGFACTORY->setCoordinateWidget(coordinateWidget);
+				QG_DIALOGFACTORY->setSelectionWidget(selectionWidget);
+				// Link the graphic view to the option widget:
+				//QG_DIALOGFACTORY->setOptionWidget(optionWidget);
+				// Link the graphic view to the command widget:
+				QG_DIALOGFACTORY->setCommandWidget(commandWidget);
 
                 RS_DEBUG->print("  showing MDI window");
 
