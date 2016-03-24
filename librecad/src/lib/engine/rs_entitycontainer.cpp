@@ -1573,7 +1573,10 @@ bool RS_EntityContainer::optimizeContours() {
                 removeEntity(e2);
                 continue;
             }
-            QG_DIALOGFACTORY->commandMessage(errMsg.arg(dist).arg(vpTmp.x).arg(vpTmp.y).arg(vpEnd.x).arg(vpEnd.y));
+			if (QG_DIALOGFACTORY)
+				QG_DIALOGFACTORY->commandMessage(
+							errMsg.arg(dist).arg(vpTmp.x).arg(vpTmp.y).arg(vpEnd.x).arg(vpEnd.y)
+							);
             closed=false;
         }
 		if(next && closed){ 			//workaround if next is nullptr

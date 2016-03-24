@@ -56,7 +56,7 @@ class RS_Vector;
 class QG_DialogFactory: public RS_DialogFactoryInterface {
 public:
     QG_DialogFactory(QWidget* parent, QToolBar* ow);
-    virtual ~QG_DialogFactory();
+	~QG_DialogFactory() override;
 
 protected:
     /**

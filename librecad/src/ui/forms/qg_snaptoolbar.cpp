@@ -159,19 +159,21 @@ RS_SnapMode QG_SnapToolBar::getSnaps ( void ) const
     s.snapIntersection = snapIntersection->isChecked();
     // removed Restrict Othogonal button
     // todo simplify internal restrict rules
-    if (restrictHorizontal->isChecked()) {
-        if (restrictVertical->isChecked()) {
-            s.restriction = RS2::RestrictOrthogonal;
-        } else {
-            s.restriction = RS2::RestrictHorizontal;
-        }
-    } else {
-        if (restrictVertical->isChecked()) {
-            s.restriction = RS2::RestrictVertical;
-        } else {
-            s.restriction = RS2::RestrictNothing;
-        }
-    }
+	int const rH = (restrictHorizontal && restrictHorizontal->isChecked())? 1:0;
+	int const rV = (restrictVertical && restrictVertical->isChecked())? 2: 0;
+	switch (rH + rV) {
+	case 3:
+		s.restriction = RS2::RestrictOrthogonal;
+		break;
+	case 2:
+		s.restriction = RS2::RestrictVertical;
+		break;
+	case 1:
+		s.restriction = RS2::RestrictHorizontal;
+		break;
+	default:
+		s.restriction = RS2::RestrictNothing;
+	}
 
     return s;
 }

@@ -822,7 +822,7 @@ int LC_SplinePoints::GetNearestQuad(const RS_Vector& coord,
 
 	RS_Vector vStart(false), vControl(false), vEnd(false), vRes(false);
 
-	double dDist = 0., dNewDist;
+	double dDist = 0., dNewDist = 0.;
 	double dRes, dNewRes;
 	int iRes = -1;
 
@@ -1065,7 +1065,7 @@ RS_Vector LC_SplinePoints::getNearestMiddle(const RS_Vector& coord,
 		return vRes;
 	}
 
-	int iNext;
+	int iNext{0};
     vRes = GetSplinePointAtDist(dDist, 1, 0.0, &iNext, &dt);
 	if(vRes.valid) dMinDist = (vRes - coord).magnitude();
     i = 2;
