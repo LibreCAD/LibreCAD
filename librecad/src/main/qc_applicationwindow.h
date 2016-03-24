@@ -168,7 +168,7 @@ public slots:
     void slotImportBlock();
 
     /** shows an about dlg*/
-    void slotHelpAbout();
+    void showAboutWindow();
 
     /**
      * @brief slotUpdateActiveLayer

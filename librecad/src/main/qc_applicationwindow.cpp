@@ -2351,72 +2351,65 @@ void QC_ApplicationWindow::slotImportBlock() {
     }
 }
 
-/**
- * Menu help -> about.
- */
-void QC_ApplicationWindow::slotHelpAbout() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotHelpAbout()");
 
-    QStringList modules;
+void QC_ApplicationWindow::showAboutWindow()
+{
+    // contributors: ravas, ...
 
-    /**
-      * Show all plugin that has been loaded
-      */
-	for (QC_PluginInterface * const pluginInterface: loadedPlugins)
-        modules.append(pluginInterface->name());
+    QDialog dlg;
+    dlg.setWindowTitle(qApp->applicationName());
+    auto layout = new QVBoxLayout;
 
-    QString modulesString=tr("None");
-	if (!modules.empty()) {
-        modulesString = modules.join(", ");
+     // Compiler macro list in Qt source tree
+     // Src/qtbase/src/corelib/global/qcompilerdetection.h
+
+    QString info
+    (
+        tr("Version: %1").arg(qApp->applicationVersion()) + "\n" +
+        #ifdef QC_SCMREVISION
+            tr("Commit: %1").arg(QString(XSTR(QC_SCMREVISION)).right(7)) + "\n" +
+        #endif
+        #if defined(Q_CC_CLANG)
+            tr("Compiler: Clang %1.%2.%3").arg(__clang_major__).arg(__clang_minor__).arg(__clang_patchlevel__) + "\n" +
+        #elif defined(Q_CC_GNU)
+            tr("Compiler: GNU GCC %1.%2.%3").arg(__GNUC__).arg(__GNUC_MINOR__).arg(__GNUC_PATCHLEVEL__) + "\n" +
+        #elif defined(Q_CC_MSVC)
+            tr("Compiler: Microsoft Visual C++") + "\n" +
+        #endif
+        tr("Compiled on: %1").arg(__DATE__) + "\n" +
+        tr("Qt Version: %1").arg(qVersion())
+    );
+
+    auto app_info = new QLabel;
+    app_info->setTextInteractionFlags(Qt::TextSelectableByMouse);
+    app_info->setText(info);
+    layout->addWidget(app_info);
+
+    auto copy_button = new QPushButton(tr("Copy"));
+    // copy_button->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    layout->addWidget(copy_button);
+
+    connect(copy_button, SIGNAL(released()), &dlg, SLOT(accept()));
+
+    QString links
+    (
+        QString("<a href=\"https://github.com/LibreCAD/LibreCAD/graphs/contributors\">Contributors</a>")
+        + "<br/>" +
+        QString("<a href=\"https://github.com/LibreCAD/LibreCAD/blob/master/LICENSE\">License</a>")
+    );
+
+    auto links_label = new QLabel;
+    links_label->setOpenExternalLinks(true);
+    links_label->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
+    links_label->setText(links);
+    layout->addWidget(links_label);
+
+    dlg.setLayout(layout);
+    if (dlg.exec())
+    {
+        QClipboard* clipboard = QApplication::clipboard();
+        clipboard->setText(app_info->text());
     }
-
-    QMessageBox box(this);
-    box.setWindowTitle(tr("About..."));
-    /**
-     * Compiler macro list in Qt source tree
-     * Src/qtbase/src/corelib/global/qcompilerdetection.h
-     */
-
-    box.setText(       QString("<p><font size=\"2\">") +
-                       "<h2>"+ qApp->applicationName() + "</h2>" +
-                       tr("Version: %1").arg(qApp->applicationVersion()) + "<br>" +
-#ifdef QC_SCMREVISION
-                       tr("SCM Revision: %1").arg(XSTR(QC_SCMREVISION)) + "<br>" +
-#endif
-#if defined(Q_CC_CLANG)
-                       tr("Compiler: Clang %1.%2.%3").arg(__clang_major__).arg(__clang_minor__).arg(__clang_patchlevel__) + "<br>" +
-#elif defined(Q_CC_GNU)
-                       tr("Compiler: GNU GCC %1.%2.%3").arg(__GNUC__).arg(__GNUC_MINOR__).arg(__GNUC_PATCHLEVEL__) + "<br>" +
-#elif defined(Q_CC_MSVC)
-                       tr("Compiler: Microsoft Visual C++<br>") +
-#endif
-                       tr("Qt Version: %1").arg(qVersion()) + "<br>" +
-                       tr("Compiled on: %1").arg(__DATE__) + "<br>" +
-                       "Portions (c) 2011 by R. van Twisk" + "<br>" +
-                       tr("Program Icons Supplied by") +"<br>&nbsp;&nbsp;&nbsp;Pablo: LibreCAD Argentine<br/>" +
-                       tr("Splash and Logo supplied by") + "<br>&nbsp;&nbsp;&nbsp;Diego " + "<a href=\"http://daltom.2082studio.com/\">Daltom Designer</a>" + "<br/>" +
-                       "<br />" +
-                       tr("Modules: %1").arg(modulesString) + "<br>" +
-                       "<br />" +
-                       tr("Main Website : ") + "<a href=\"http://www.LibreCAD.org\">http://www.LibreCAD.org</a>"+"<br><br><br>"+
-                       "<font size=\"1\">Portions (c) by RibbonSoft, Andrew Mustun</font>" +
-                       "</font></p>" +
-                       "<br>" +
-                       "<center>" +
-                       tr("Please consider donating to LibreCAD to help maintain the source code and website.") +
-                       "<br>" +
-                       "<br>" +
-                       "<a href=\"http://librecad.org/donate.html\" alt=\"Donate to LibreCAD\">" +
-                       "<img src=':/main/donate.png' />" +
-                       "</a></center>"
-                       );
-
-    box.setIconPixmap( QPixmap(QC_ABOUT_ICON) );
-    box.setMinimumSize(500,400);
-    box.setBaseSize(500,400);
-    box.setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    box.exec();
-    box.resize(500,400);
 }
 
 /**

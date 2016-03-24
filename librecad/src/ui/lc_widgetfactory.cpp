@@ -780,9 +780,8 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     help_menu->addSeparator();
 
     QAction* help_about = new QAction(QIcon(":/main/librecad.png"), QC_ApplicationWindow::tr("About"), main_window);
-    connect(help_about, SIGNAL(triggered()), main_window, SLOT(slotHelpAbout()));
+    connect(help_about, SIGNAL(triggered()), main_window, SLOT(showAboutWindow()));
     help_menu->addAction(help_about);
-
 
     // <[~ Widgets Menu ~]>
 
