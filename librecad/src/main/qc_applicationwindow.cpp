@@ -96,6 +96,8 @@
 #include "actionlist.h"
 #include "customwidgetcreator.h"
 
+#include <boost/version.hpp>
+
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
 
 #ifndef QC_APP_ICON
@@ -2377,7 +2379,8 @@ void QC_ApplicationWindow::showAboutWindow()
             tr("Compiler: Microsoft Visual C++") + "\n" +
         #endif
         tr("Compiled on: %1").arg(__DATE__) + "\n" +
-        tr("Qt Version: %1").arg(qVersion())
+        tr("Qt Version: %1").arg(qVersion()) + "\n" +
+        QString("Boost Version: %1.%2.%3").arg(BOOST_VERSION / 100000).arg(BOOST_VERSION / 100 % 1000).arg(BOOST_VERSION % 100)
     );
 
     auto app_info = new QLabel;
