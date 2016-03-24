@@ -74,12 +74,11 @@ public:
     RS_DimAngular(RS_EntityContainer* parent,
                  const RS_DimensionData& d,
                  const RS_DimAngularData& ed);
-	virtual ~RS_DimAngular() = default;
 
-	virtual RS_Entity* clone() const;
+	RS_Entity* clone() const override;
 
     /**	@return RS2::EntityDimAngular */
-    virtual RS2::EntityType rtti() const {
+	RS2::EntityType rtti() const override{
         return RS2::EntityDimAngular;
     }
 
@@ -91,13 +90,13 @@ public:
         return edata;
     }
 
-    virtual QString getMeasuredLabel();
+	QString getMeasuredLabel() override;
     double getAngle();
-    RS_Vector getCenter() const;
+	RS_Vector getCenter() const override;
         bool getAngles(double& ang1, double& ang2, bool& reversed,
                 RS_Vector& p1, RS_Vector& p2);
 
-    virtual void updateDim(bool autoText=false);
+	void updateDim(bool autoText=false) override;
 
     RS_Vector getDefinitionPoint1() {
         return edata.definitionPoint1;
@@ -111,11 +110,11 @@ public:
     RS_Vector getDefinitionPoint4() {
         return edata.definitionPoint4;
     }
-    virtual void move(const RS_Vector& offset);
-       virtual void rotate(const RS_Vector& center, const double& angle);
-       virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
-       virtual void scale(const RS_Vector& center, const RS_Vector& factor);
-       virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+	void move(const RS_Vector& offset) override;
+	   void rotate(const RS_Vector& center, const double& angle) override;
+	   void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+	   void scale(const RS_Vector& center, const RS_Vector& factor) override;
+	   void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
 
     friend std::ostream& operator << (std::ostream& os,
                                       const RS_DimAngular& d);

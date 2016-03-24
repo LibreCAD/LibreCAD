@@ -67,12 +67,11 @@ public:
     RS_DimDiametric(RS_EntityContainer* parent,
                  const RS_DimensionData& d,
                  const RS_DimDiametricData& ed);
-	virtual ~RS_DimDiametric() = default;
 
-	virtual RS_Entity* clone() const;
+	RS_Entity* clone() const override;
 
     /**	@return RS2::EntityDimDiametric */
-    virtual RS2::EntityType rtti() const {
+	RS2::EntityType rtti() const override{
         return RS2::EntityDimDiametric;
     }
 
@@ -84,11 +83,11 @@ public:
         return edata;
     }
 
-	virtual RS_VectorSolutions getRefPoints() const;
+	RS_VectorSolutions getRefPoints() const override;
 
-    virtual QString getMeasuredLabel();
+	QString getMeasuredLabel() override;
 
-    virtual void updateDim(bool autoText=false);
+	void updateDim(bool autoText=false) override;
 
     RS_Vector getDefinitionPoint() {
         return edata.definitionPoint;
@@ -96,13 +95,13 @@ public:
     double getLeader() {
         return edata.leader;
     }
-    virtual void move(const RS_Vector& offset);
-    virtual void rotate(const RS_Vector& center, const double& angle);
-    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
-    virtual void scale(const RS_Vector& center, const RS_Vector& factor);
-    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+	void move(const RS_Vector& offset) override;
+	void rotate(const RS_Vector& center, const double& angle) override;
+	void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+	void scale(const RS_Vector& center, const RS_Vector& factor) override;
+	void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
 
-    virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
+	void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
 
     friend std::ostream& operator << (std::ostream& os,
                                       const RS_DimDiametric& d);
