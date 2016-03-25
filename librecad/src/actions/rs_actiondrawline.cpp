@@ -265,61 +265,55 @@ QStringList RS_ActionDrawLine::getAvailableCommands() {
 }
 
 void RS_ActionDrawLine::updateMouseButtonHints() {
-    if(RS_DIALOGFACTORY != NULL){
-        switch (getStatus()) {
-        case SetStartpoint:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first point"),
-                                                tr("Cancel"));
-            break;
-        case SetEndpoint: {
-            QString msg = "";
+	switch (getStatus()) {
+	case SetStartpoint:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first point"),
+											tr("Cancel"));
+		break;
+	case SetEndpoint: {
+		QString msg = "";
 
-			if (pPoints->historyIndex>=2) {
-                msg += RS_COMMANDS->command("close");
-            }
-			if(pPoints->historyIndex+1<(int) pPoints->history.size()) {
-                if(msg.size()>0)  msg += "/";
-                msg += RS_COMMANDS->command("redo");
-            }
-			if (pPoints->historyIndex>=1) {
-                if(msg.size()>0)  msg += "/";
-                msg += RS_COMMANDS->command("undo");
-            }
+		if (pPoints->historyIndex>=2) {
+			msg += RS_COMMANDS->command("close");
+		}
+		if(pPoints->historyIndex+1<(int) pPoints->history.size()) {
+			if(msg.size()>0)  msg += "/";
+			msg += RS_COMMANDS->command("redo");
+		}
+		if (pPoints->historyIndex>=1) {
+			if(msg.size()>0)  msg += "/";
+			msg += RS_COMMANDS->command("undo");
+		}
 
-			if (pPoints->historyIndex>=1) {
-                RS_DIALOGFACTORY->updateMouseWidget(
-                            tr("Specify next point or [%1]").arg(msg),
-                            tr("Back"));
-            } else {
-                RS_DIALOGFACTORY->updateMouseWidget(
-                            tr("Specify next point"),
-                            tr("Back"));
-            }
-        }
-            break;
-        default:
-            RS_DIALOGFACTORY->updateMouseWidget();
-            break;
-        }
+		if (pPoints->historyIndex>=1) {
+			RS_DIALOGFACTORY->updateMouseWidget(
+						tr("Specify next point or [%1]").arg(msg),
+						tr("Back"));
+		} else {
+			RS_DIALOGFACTORY->updateMouseWidget(
+						tr("Specify next point"),
+						tr("Back"));
+		}
+	}
+		break;
+	default:
+		RS_DIALOGFACTORY->updateMouseWidget();
+		break;
     }
 }
 
 void RS_ActionDrawLine::showOptions() {
-    RS_DEBUG->print("RS_ActionDrawLine::showOptions");
-    if(RS_DIALOGFACTORY != NULL){
-        RS_ActionInterface::showOptions();
+	RS_DEBUG->print("RS_ActionDrawLine::showOptions");
+	RS_ActionInterface::showOptions();
 
-        RS_DIALOGFACTORY->requestOptions(this, true);
-    }
-    RS_DEBUG->print("RS_ActionDrawLine::showOptions: OK");
+	RS_DIALOGFACTORY->requestOptions(this, true);
+	RS_DEBUG->print("RS_ActionDrawLine::showOptions: OK");
 }
 
 void RS_ActionDrawLine::hideOptions() {
-    if(RS_DIALOGFACTORY != NULL){
-        RS_ActionInterface::hideOptions();
+	RS_ActionInterface::hideOptions();
 
-        RS_DIALOGFACTORY->requestOptions(this, false);
-    }
+	RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
 
@@ -333,14 +327,12 @@ void RS_ActionDrawLine::close() {
 		addHistory(pPoints->data.endpoint);
         trigger();
         setStatus(SetStartpoint);
-        //        graphicView->moveRelativeZero(start);
-    } else {
-        if (RS_DIALOGFACTORY) {
-            RS_DIALOGFACTORY->commandMessage(
-                        tr("Cannot close sequence of lines: "
-                           "Not enough entities defined yet, or already closed."));
-        }
-    }
+		//        graphicView->moveRelativeZero(start);
+	} else {
+		RS_DIALOGFACTORY->commandMessage(
+					tr("Cannot close sequence of lines: "
+					   "Not enough entities defined yet, or already closed."));
+	}
 }
 
 void RS_ActionDrawLine::addHistory(const RS_Vector& v){

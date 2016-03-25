@@ -290,23 +290,18 @@ QStringList RS_ActionDrawImage::getAvailableCommands() {
 void RS_ActionDrawImage::showOptions() {
     RS_ActionInterface::showOptions();
 
-    if(RS_DIALOGFACTORY){
-        RS_DIALOGFACTORY->requestOptions(this, true);
-    }
+	RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
 
 
 void RS_ActionDrawImage::hideOptions() {
     RS_ActionInterface::hideOptions();
-    if(RS_DIALOGFACTORY){
-        RS_DIALOGFACTORY->requestOptions(this, false);
-    }
+	RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
 
 void RS_ActionDrawImage::updateMouseButtonHints() {
-	if(RS_DIALOGFACTORY==nullptr) return;
     switch (getStatus()) {
     case SetTargetPoint:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),

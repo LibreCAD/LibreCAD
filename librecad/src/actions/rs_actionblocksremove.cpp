@@ -39,62 +39,61 @@ RS_ActionBlocksRemove::RS_ActionBlocksRemove(RS_EntityContainer& container,
         :RS_ActionInterface("Remove Block", container, graphicView) {}
 
 void RS_ActionBlocksRemove::trigger() {
-    RS_DEBUG->print("RS_ActionBlocksRemove::trigger");
+	RS_DEBUG->print("RS_ActionBlocksRemove::trigger");
 
-    if (graphic) {
-        RS_Block* block =
-            RS_DIALOGFACTORY->requestBlockRemovalDialog(graphic->getBlockList());
+	if (!(graphic && document)) {
+		finish(false);
+		return;
+	}
+	RS_Block* block =
+			RS_DIALOGFACTORY->requestBlockRemovalDialog(graphic->getBlockList());
 
-        // list of containers that might refer to the block via inserts:
-		std::vector<RS_EntityContainer*> containerList;
-		containerList.push_back(graphic);
-        RS_BlockList* blkLst = graphic->getBlockList();
-        for (int bi=0; bi<blkLst->count(); bi++) {
-			containerList.push_back(blkLst->at(bi));
-        }
+	// list of containers that might refer to the block via inserts:
+	std::vector<RS_EntityContainer*> containerList;
+	containerList.push_back(graphic);
+	RS_BlockList* blkLst = graphic->getBlockList();
+	for (int bi=0; bi<blkLst->count(); bi++) {
+		containerList.push_back(blkLst->at(bi));
+	}
 
-        if (block) {
-            if (document) {
-                document->startUndoCycle();
-            }
-			for(auto cont: containerList){
-                // remove all inserts from the graphic:
-                bool done;
-                do {
-					done = true;
-					for(auto e: *cont){
+	if (!block) {
+		finish(false);
+		return;
+	}
+	document->startUndoCycle();
+	for(auto cont: containerList){
+		// remove all inserts from the graphic:
+		bool done;
+		do {
+			done = true;
+			for(auto e: *cont){
 
-                        if (e->rtti()==RS2::EntityInsert) {
-                            RS_Insert* ins = (RS_Insert*)e;
-                            if (ins->getName()==block->getName() && !ins->isUndone()) {
-                                document->addUndoable(ins);
-                                ins->setUndoState(true);
-                                done = false;
-                                break;
-                            }
-                        }
-                    }
-                } while (!done);
-            }
+				if (e->rtti()==RS2::EntityInsert) {
+					RS_Insert* ins = (RS_Insert*)e;
+					if (ins->getName()==block->getName() && !ins->isUndone()) {
+						document->addUndoable(ins);
+						ins->setUndoState(true);
+						done = false;
+						break;
+					}
+				}
+			}
+		} while (!done);
+	}
 
-                        // close all windows that are editing this block:
-                if (RS_DIALOGFACTORY) {
-                    RS_DIALOGFACTORY->closeEditBlockWindow(block);
-            }
+	// close all windows that are editing this block:
+	RS_DIALOGFACTORY->closeEditBlockWindow(block);
 
-            // Now remove the block from the block list, but do not delete:
-            block->setUndoState(true);
-            document->addUndoable(block);
-            document->endUndoCycle();
-            graphic->addBlockNotification();
-            graphic->updateInserts();
-            graphicView->redraw(RS2::RedrawDrawing);
+	// Now remove the block from the block list, but do not delete:
+	block->setUndoState(true);
+	document->addUndoable(block);
+	document->endUndoCycle();
+	graphic->addBlockNotification();
+	graphic->updateInserts();
+	graphicView->redraw(RS2::RedrawDrawing);
 
-        }
-    }
-
-    finish(false);
-    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+	finish(false);
+	RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
 }
 
 

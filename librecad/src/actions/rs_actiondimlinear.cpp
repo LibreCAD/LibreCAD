@@ -73,9 +73,7 @@ void RS_ActionDimLinear::reset() {
 							 (fixedAngle ? edata->angle : 0.0), 0.0)
 				);
 
-    if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->requestOptions(this, true, true);
-    }
+	RS_DIALOGFACTORY->requestOptions(this, true, true);
 }
 
 
@@ -219,20 +217,16 @@ bool RS_ActionDimLinear::hasFixedAngle() const{
 void RS_ActionDimLinear::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
-    if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY) {
-            RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                             + getAvailableCommands().join(", "));
-        }
-        return;
-    }
+	if (checkCommand("help", c)) {
+		RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+										 + getAvailableCommands().join(", "));
+		return;
+	}
 
     switch (getStatus()) {
     case SetText:
         setText(c);
-        if (RS_DIALOGFACTORY) {
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
-        }
+		RS_DIALOGFACTORY->requestOptions(this, true, true);
         graphicView->enableCoordinateInput();
         setStatus(lastStatus);
         break;
@@ -243,13 +237,9 @@ void RS_ActionDimLinear::commandEvent(RS_CommandEvent* e) {
 			if (ok) {
                 setAngle(RS_Math::deg2rad(a));
             } else {
-                if (RS_DIALOGFACTORY) {
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                }
+				RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
             }
-            if (RS_DIALOGFACTORY) {
-                RS_DIALOGFACTORY->requestOptions(this, true, true);
-            }
+			RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(lastStatus);
         }
         break;
@@ -292,35 +282,33 @@ QStringList RS_ActionDimLinear::getAvailableCommands() {
 
 
 void RS_ActionDimLinear::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY) {
-        switch (getStatus()) {
-        case SetExtPoint1:
-            RS_DIALOGFACTORY->updateMouseWidget(
-                tr("Specify first extension line origin"),
-                tr("Cancel"));
-            break;
-        case SetExtPoint2:
-            RS_DIALOGFACTORY->updateMouseWidget(
-                tr("Specify second extension line origin"),
-                tr("Back"));
-            break;
-        case SetDefPoint:
-            RS_DIALOGFACTORY->updateMouseWidget(
-                tr("Specify dimension line location"),
-                tr("Back"));
-            break;
-        case SetText:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter dimension text:"), "");
-            break;
-        case SetAngle:
-            RS_DIALOGFACTORY->updateMouseWidget(
-                tr("Enter dimension line angle:"), "");
-            break;
-        default:
-			RS_DIALOGFACTORY->updateMouseWidget();
-            break;
-        }
-    }
+	switch (getStatus()) {
+	case SetExtPoint1:
+		RS_DIALOGFACTORY->updateMouseWidget(
+					tr("Specify first extension line origin"),
+					tr("Cancel"));
+		break;
+	case SetExtPoint2:
+		RS_DIALOGFACTORY->updateMouseWidget(
+					tr("Specify second extension line origin"),
+					tr("Back"));
+		break;
+	case SetDefPoint:
+		RS_DIALOGFACTORY->updateMouseWidget(
+					tr("Specify dimension line location"),
+					tr("Back"));
+		break;
+	case SetText:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Enter dimension text:"), "");
+		break;
+	case SetAngle:
+		RS_DIALOGFACTORY->updateMouseWidget(
+					tr("Enter dimension line angle:"), "");
+		break;
+	default:
+		RS_DIALOGFACTORY->updateMouseWidget();
+		break;
+	}
 }
 
 
@@ -328,9 +316,7 @@ void RS_ActionDimLinear::updateMouseButtonHints() {
 void RS_ActionDimLinear::showOptions() {
     RS_ActionInterface::showOptions();
 
-    if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->requestOptions(this, true, true);
-    }
+	RS_DIALOGFACTORY->requestOptions(this, true, true);
 }
 
 
@@ -338,9 +324,7 @@ void RS_ActionDimLinear::showOptions() {
 void RS_ActionDimLinear::hideOptions() {
     RS_ActionInterface::hideOptions();
 
-    if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->requestOptions(this, false);
-    }
+	RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
 

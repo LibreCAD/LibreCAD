@@ -144,25 +144,23 @@ void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionModifyMove::updateMouseButtonHints() {
-    if(RS_DIALOGFACTORY != NULL) {
-        switch (getStatus()) {
-        /*case Select:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Pick entities to move"),
-                                           tr("Cancel"));
-            break;*/
-        case SetReferencePoint:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
-                                                tr("Cancel"));
-            break;
-        case SetTargetPoint:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point"),
-                                                tr("Back"));
-            break;
-        default:
-            RS_DIALOGFACTORY->updateMouseWidget();
-            break;
-        }
-    }
+	switch (getStatus()) {
+	/*case Select:
+			RS_DIALOGFACTORY->updateMouseWidget(tr("Pick entities to move"),
+										   tr("Cancel"));
+			break;*/
+	case SetReferencePoint:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
+											tr("Cancel"));
+		break;
+	case SetTargetPoint:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point"),
+											tr("Back"));
+		break;
+	default:
+		RS_DIALOGFACTORY->updateMouseWidget();
+		break;
+	}
 }
 
 

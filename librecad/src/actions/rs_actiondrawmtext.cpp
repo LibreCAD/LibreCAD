@@ -50,35 +50,33 @@ RS_ActionDrawMText::~RS_ActionDrawMText() = default;
 
 void RS_ActionDrawMText::init(int status) {
     RS_ActionInterface::init(status);
-    if (RS_DIALOGFACTORY) {
 
-        switch (status) {
-        case ShowDialog: {
-                reset();
+	switch (status) {
+	case ShowDialog: {
+		reset();
 
-				RS_MText tmp(NULL, *data);
-                if (RS_DIALOGFACTORY->requestMTextDialog(&tmp)) {
-					data.reset(new RS_MTextData(tmp.getData()));
-                    setStatus(SetPos);
-                    showOptions();
-                } else {
-                    hideOptions();
-					finish(true);
-                }
-            }
-            break;
+		RS_MText tmp(NULL, *data);
+		if (RS_DIALOGFACTORY->requestMTextDialog(&tmp)) {
+			data.reset(new RS_MTextData(tmp.getData()));
+			setStatus(SetPos);
+			showOptions();
+		} else {
+			hideOptions();
+			finish(true);
+		}
+	}
+		break;
 
-        case SetPos:
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
-            deletePreview();
-            preview->setVisible(true);
-            preparePreview();
-            break;
+	case SetPos:
+		RS_DIALOGFACTORY->requestOptions(this, true, true);
+		deletePreview();
+		preview->setVisible(true);
+		preparePreview();
+		break;
 
-        default:
-            break;
-        }
-    }
+	default:
+		break;
+	}
 }
 
 
@@ -197,10 +195,8 @@ void RS_ActionDrawMText::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
-        }
         return;
     }
 
@@ -215,9 +211,7 @@ void RS_ActionDrawMText::commandEvent(RS_CommandEvent* e) {
 
     case SetText: {
             setText(e->getCommand());
-            if (RS_DIALOGFACTORY) {
-                RS_DIALOGFACTORY->requestOptions(this, true, true);
-            }
+			RS_DIALOGFACTORY->requestOptions(this, true, true);
             graphicView->enableCoordinateInput();
             setStatus(SetPos);
         }
@@ -243,9 +237,7 @@ QStringList RS_ActionDrawMText::getAvailableCommands() {
 void RS_ActionDrawMText::showOptions() {
     RS_ActionInterface::showOptions();
 
-    if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->requestOptions(this, true, true);
-    }
+	RS_DIALOGFACTORY->requestOptions(this, true, true);
 }
 
 
@@ -253,30 +245,26 @@ void RS_ActionDrawMText::showOptions() {
 void RS_ActionDrawMText::hideOptions() {
     RS_ActionInterface::hideOptions();
 
-    if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->requestOptions(this, false);
-    }
+	RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
 
 
 void RS_ActionDrawMText::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY) {
-        switch (getStatus()) {
-        case SetPos:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify insertion point"),
-                                                tr("Cancel"));
-            break;
-        case ShowDialog:
-        case SetText:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter text:"),
-                                                tr("Back"));
-            break;
-        default:
-            RS_DIALOGFACTORY->updateMouseWidget();
-            break;
-        }
-    }
+	switch (getStatus()) {
+	case SetPos:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify insertion point"),
+											tr("Cancel"));
+		break;
+	case ShowDialog:
+	case SetText:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Enter text:"),
+											tr("Back"));
+		break;
+	default:
+		RS_DIALOGFACTORY->updateMouseWidget();
+		break;
+	}
 }
 
 

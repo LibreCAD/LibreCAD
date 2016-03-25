@@ -145,7 +145,6 @@ bool RS_SnapMode::operator ==(RS_SnapMode const& rhs) const{
 
 void RS_Snapper::setSnapMode(const RS_SnapMode& snapMode) {
     this->snapMode = snapMode;
-	if (!RS_DIALOGFACTORY) return;
 	RS_DIALOGFACTORY->requestSnapDistOptions(m_SnapDistance, snapMode.snapDistance);
     RS_DIALOGFACTORY->requestSnapMiddleOptions(middlePoints, snapMode.snapMiddle);
 //std::cout<<"RS_Snapper::setSnapMode(): middlePoints="<<middlePoints<<std::endl;
@@ -213,9 +212,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e)
     if (snapMode.snapMiddle) {
         //this is still brutal force
         //todo: accept value from widget QG_SnapMiddleOptions
-		if(RS_DIALOGFACTORY ) {
-            RS_DIALOGFACTORY->requestSnapMiddleOptions(middlePoints, snapMode.snapMiddle);
-        }
+		RS_DIALOGFACTORY->requestSnapMiddleOptions(middlePoints, snapMode.snapMiddle);
         t = snapMiddle(mouseCoord);
 		double ds2=mouseCoord.squaredTo(t);
         if (ds2 < ds2Min){
@@ -226,9 +223,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e)
     if (snapMode.snapDistance) {
         //this is still brutal force
         //todo: accept value from widget QG_SnapDistOptions
-		if(RS_DIALOGFACTORY ) {
-			RS_DIALOGFACTORY->requestSnapDistOptions(m_SnapDistance, snapMode.snapDistance);
-        }
+		RS_DIALOGFACTORY->requestSnapDistOptions(m_SnapDistance, snapMode.snapDistance);
         t = snapDist(mouseCoord);
 		double ds2=mouseCoord.squaredTo(t);
         if (ds2 < ds2Min){
@@ -319,11 +314,10 @@ RS_Vector RS_Snapper::snapPoint(const RS_Vector& coord, bool setSpot)
     if(coord.valid){
 		pImpData->snapSpot=coord;
 		if(setSpot) pImpData->snapCoord = coord;
-        drawSnapper();
-		if (RS_DIALOGFACTORY) {
-			RS_DIALOGFACTORY->updateCoordinateWidget(pImpData->snapCoord,
+		drawSnapper();
+		RS_DIALOGFACTORY->updateCoordinateWidget(
+					pImpData->snapCoord,
 					pImpData->snapCoord - graphicView->getRelativeZero());
-        }
     }
     return coord;
 }

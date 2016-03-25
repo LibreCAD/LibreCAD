@@ -271,14 +271,11 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                         RS_DEBUG->print("RS_EventHandler::commandEvent: 005");
                         RS_CoordinateEvent ce(RS_Vector(x,y));
                         RS_DEBUG->print("RS_EventHandler::commandEvent: 006");
-                        currentActions.last()->coordinateEvent(&ce);
-                    } else {
-                        if (RS_DIALOGFACTORY) {
-                            RS_DIALOGFACTORY->commandMessage(
-                                        "Expression Syntax Error");
-                        }
-                    }
-                    e->accept();
+						currentActions.last()->coordinateEvent(&ce);
+					} else
+						RS_DIALOGFACTORY->commandMessage(
+									"Expression Syntax Error");
+					e->accept();
                 }
 
                 // handle relative cartesian coordinate input:
@@ -294,13 +291,10 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
 
                             currentActions.last()->coordinateEvent(&ce);
                             //                            currentActions[actionIndex]->coordinateEvent(&ce);
-                        } else {
-                            if (RS_DIALOGFACTORY) {
-                                RS_DIALOGFACTORY->commandMessage(
-                                            "Expression Syntax Error");
-                            }
-                        }
-                        e->accept();
+						} else
+							RS_DIALOGFACTORY->commandMessage(
+										"Expression Syntax Error");
+						e->accept();
                     }
                 }
 
@@ -317,12 +311,9 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
 								RS_Vector::polar(r,RS_Math::deg2rad(a))};
                             RS_CoordinateEvent ce(pos);
                             currentActions.last()->coordinateEvent(&ce);
-                        } else {
-                            if (RS_DIALOGFACTORY) {
+						} else
                                 RS_DIALOGFACTORY->commandMessage(
                                             "Expression Syntax Error");
-                            }
-                        }
                         e->accept();
                     }
                 }
@@ -339,12 +330,9 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
 							RS_Vector pos = RS_Vector::polar(r,RS_Math::deg2rad(a));
                             RS_CoordinateEvent ce(pos + relative_zero);
                             currentActions.last()->coordinateEvent(&ce);
-                        } else {
-                            if (RS_DIALOGFACTORY) {
+						} else
                                 RS_DIALOGFACTORY->commandMessage(
                                             "Expression Syntax Error");
-                            }
-                        }
                         e->accept();
                     }
                 }

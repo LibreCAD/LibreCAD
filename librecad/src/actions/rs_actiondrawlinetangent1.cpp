@@ -182,20 +182,18 @@ void RS_ActionDrawLineTangent1::coordinateEvent(RS_CoordinateEvent* e) {
 }
 
 void RS_ActionDrawLineTangent1::updateMouseButtonHints() {
-	if (RS_DIALOGFACTORY) {
-		switch (getStatus()) {
-		case SetPoint:
-			RS_DIALOGFACTORY->updateMouseWidget(tr("Specify point"),
-												tr("Cancel"));
-			break;
-		case SetCircle:
-			RS_DIALOGFACTORY->updateMouseWidget(tr("Select circle, arc or ellipse"),
-												tr("Back"));
-			break;
-		default:
-			RS_DIALOGFACTORY->updateMouseWidget();
-			break;
-		}
+	switch (getStatus()) {
+	case SetPoint:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify point"),
+											tr("Cancel"));
+		break;
+	case SetCircle:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Select circle, arc or ellipse"),
+											tr("Back"));
+		break;
+	default:
+		RS_DIALOGFACTORY->updateMouseWidget();
+		break;
 	}
 }
 

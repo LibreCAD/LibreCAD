@@ -176,10 +176,9 @@ void RS_ActionDimDiametric::mouseReleaseEvent(QMouseEvent* e) {
 						}
                         graphicView->moveRelativeZero(center);
                         setStatus(SetPos);
-                    } else {
-                        RS_DIALOGFACTORY->commandMessage(tr("Not a circle "
-                                                            "or arc entity"));
-                    }
+					} else
+						RS_DIALOGFACTORY->commandMessage(tr("Not a circle "
+															"or arc entity"));
                 }
             }
             break;

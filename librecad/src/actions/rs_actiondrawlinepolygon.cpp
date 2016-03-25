@@ -133,26 +133,24 @@ void RS_ActionDrawLinePolygonCenCor::coordinateEvent(RS_CoordinateEvent* e) {
 }
 
 void RS_ActionDrawLinePolygonCenCor::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY) {
-        switch (getStatus()) {
-        case SetCenter:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify center"),
-                                                "");
-            break;
+	switch (getStatus()) {
+	case SetCenter:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify center"),
+											"");
+		break;
 
-        case SetCorner:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify a corner"), "");
-            break;
+	case SetCorner:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify a corner"), "");
+		break;
 
-        case SetNumber:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter number:"), "");
-            break;
+	case SetNumber:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Enter number:"), "");
+		break;
 
-        default:
-            RS_DIALOGFACTORY->updateMouseWidget();
-            break;
-        }
-    }
+	default:
+		RS_DIALOGFACTORY->updateMouseWidget();
+		break;
+	}
 }
 
 
@@ -160,27 +158,21 @@ void RS_ActionDrawLinePolygonCenCor::updateMouseButtonHints() {
 void RS_ActionDrawLinePolygonCenCor::showOptions() {
     RS_ActionInterface::showOptions();
 
-    if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->requestOptions(this, true);
-    }
+	RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
 void RS_ActionDrawLinePolygonCenCor::hideOptions() {
     RS_ActionInterface::hideOptions();
 
-    if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->requestOptions(this, false);
-    }
+	RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
 void RS_ActionDrawLinePolygonCenCor::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
-    if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY) {
-            RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                             + getAvailableCommands().join(", "));
-        }
+	if (checkCommand("help", c)) {
+		RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+										 + getAvailableCommands().join(", "));
         return;
     }
 
@@ -201,20 +193,12 @@ void RS_ActionDrawLinePolygonCenCor::commandEvent(RS_CommandEvent* e) {
                 e->accept();
                 if (n>0 && n<10000) {
                     number = n;
-                } else {
-                    if (RS_DIALOGFACTORY) {
-                        RS_DIALOGFACTORY->commandMessage(tr("Not a valid number. "
-                                                            "Try 1..9999"));
-                    }
-                }
-            } else {
-                if (RS_DIALOGFACTORY) {
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                }
-            }
-            if (RS_DIALOGFACTORY) {
-                RS_DIALOGFACTORY->requestOptions(this, true, true);
-            }
+				} else
+					RS_DIALOGFACTORY->commandMessage(tr("Not a valid number. "
+														"Try 1..9999"));
+			} else
+				RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+			RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(lastStatus);
         }
         break;

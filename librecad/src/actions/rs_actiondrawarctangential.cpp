@@ -124,16 +124,13 @@ void RS_ActionDrawArcTangential::preparePreview() {
         } else {
 			suc = arc.createFrom2PDirectionAngle(startPoint, *point, direction, angleLength);
         }
-        if (suc) {
+		if (suc) {
 			data.reset(new RS_ArcData(arc.getData()));
-			if(RS_DIALOGFACTORY != nullptr) {
-                if(byRadius){
-                    RS_DIALOGFACTORY->updateArcTangentialOptions(arc.getAngleLength()*180./M_PI,true);
-                }else{
-                    RS_DIALOGFACTORY->updateArcTangentialOptions(arc.getRadius(),false);
-                }
-            }
-        }
+			if (byRadius)
+				RS_DIALOGFACTORY->updateArcTangentialOptions(arc.getAngleLength()*180./M_PI,true);
+			else
+				RS_DIALOGFACTORY->updateArcTangentialOptions(arc.getRadius(),false);
+		}
     }
 }
 
@@ -235,9 +232,7 @@ QStringList RS_ActionDrawArcTangential::getAvailableCommands() {
 void RS_ActionDrawArcTangential::showOptions() {
     RS_ActionInterface::showOptions();
 
-    if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->requestOptions(this, true);
-    }
+	RS_DIALOGFACTORY->requestOptions(this, true);
     updateMouseButtonHints();
 }
 
@@ -246,9 +241,7 @@ void RS_ActionDrawArcTangential::showOptions() {
 void RS_ActionDrawArcTangential::hideOptions() {
     RS_ActionInterface::hideOptions();
 
-    if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->requestOptions(this, false);
-    }
+	RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
 
