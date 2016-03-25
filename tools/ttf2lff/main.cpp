@@ -238,6 +238,9 @@ FT_Error convertGlyph(FT_ULong charcode) {
     xMin = 1000.0;
     firstpass = true;
     error = FT_Outline_Decompose(&(og->outline), &funcs, fpLff);
+	if (error)
+		std::cerr << "FT_Outline_Decompose: first pass: " << FT_StrError(error) << std::endl;
+
     firstpass = false;
     startcontour = true;
     error = FT_Outline_Decompose(&(og->outline), &funcs, fpLff);
@@ -246,7 +249,7 @@ FT_Error convertGlyph(FT_ULong charcode) {
     }
 
 	if (error)
-        std::cerr << "FT_Outline_Decompose: " << FT_StrError(error) << std::endl;
+		std::cerr << "FT_Outline_Decompose: second pass: " << FT_StrError(error) << std::endl;
 
     return error;
 }

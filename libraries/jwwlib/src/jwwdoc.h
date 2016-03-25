@@ -874,7 +874,7 @@ protected:
 public:
 	JWWBlockList();
 	~JWWBlockList();
-	CDataList& GetBlockList(unsigned int i);
+	CDataList GetBlockList(unsigned int i);
 	int getBlockListCount();
     int GetDataListCount(unsigned int i);
     void* GetData(unsigned int i, int j );

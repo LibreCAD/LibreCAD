@@ -1105,9 +1105,9 @@ BOOL JWWDocument::Read()
     if( wd == 0xFFFF )
     {
         *ifs >> dw;
-        j = dw;
-    } else
-        j = wd;
+//        j = dw;
+	}
+//	else j = wd;
 
     i = 1;
 
@@ -1754,12 +1754,12 @@ JWWBlockList::~JWWBlockList()
 */
 }
 
-CDataList& JWWBlockList::GetBlockList(unsigned int i)
+CDataList JWWBlockList::GetBlockList(unsigned int i)
 {
     for(unsigned int k=0; k < FBlockList.size(); k++)
         if(i == FBlockList[k]->m_n_Number)
             return *(PCDataList)FBlockList[k];
-    return *PCDataList();
+	return {};
 }
 
 int JWWBlockList::getBlockListCount()

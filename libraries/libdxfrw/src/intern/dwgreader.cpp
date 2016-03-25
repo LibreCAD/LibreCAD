@@ -680,9 +680,8 @@ bool dwgReader::readDwgTables(DRW_Header& hdr, dwgBuffer* dbuf) {
                 dbuf->setPosition(oc.loc);
                 int size = dbuf->getModularShort();
                 if (version > DRW::AC1021) //2010+
-                    bs = dbuf->getUModularChar();
-                else
-                    bs = 0;
+					/*bs =*/ dbuf->getUModularChar();
+//                else bs = 0;
 				tmpByteStr.resize(size);
 				dbuf->getBytes(tmpByteStr.data(), size);
 				dwgBuffer buff(tmpByteStr.data(), size, &decoder);
