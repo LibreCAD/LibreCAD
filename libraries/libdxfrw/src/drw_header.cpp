@@ -2400,8 +2400,9 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     }
 
     //temporary code to show header end sentinel
-    duint64 sz= buf->size()-1;
-    if (version < DRW::AC1018) {//pre 2004
+//    duint64 sz= buf->size()-1;
+	duint64 sz;
+	if (version < DRW::AC1018) {//pre 2004
         sz= buf->size()-16;
         buf->setPosition(sz);
         DRW_DBG("\nseting position to: "); DRW_DBG(buf->getPosition());
