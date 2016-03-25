@@ -149,38 +149,36 @@ int lineTo(FT_Vector* to, void* fp) {
 
 
 int conicTo(FT_Vector* control, FT_Vector* to, void* fp) {
-    if (firstpass) {
-        if (to->x < xMin)
-            xMin = to->x;
-    } else {
-        double px, py;
-        double ox = prevx;
-        double oy = prevy;
-        if (fp) {
-            if (startcontour) {
-                fprintf((FILE*)fp, "%s,%s",clearZeros((ox-xMin)*factor).c_str(), clearZeros(oy*factor).c_str());
-                startcontour = false;
-            } else {
-                fprintf((FILE*)fp, ";%s,%s",clearZeros((ox-xMin)*factor).c_str(), clearZeros(oy*factor).c_str());
-            }
-            for (double t = 0.0; t<=1.0; t+=1.0/nodes) {
-                px = pow(1.0-t, 2)*prevx + 2*t*(1.0-t)*control->x + t*t*to->x;
-                py = pow(1.0-t, 2)*prevy + 2*t*(1.0-t)*control->y + t*t*to->y;
-                fprintf((FILE*)fp, ";%s,%s",clearZeros((double)(px-xMin)*factor).c_str(), clearZeros((double)py*factor).c_str());
+	if (firstpass) {
+		if (to->x < xMin)
+			xMin = to->x;
+		return 0;
+	}
+	double px, py;
+	double ox = prevx;
+	double oy = prevy;
+	if (fp) {
+		if (startcontour) {
+			fprintf((FILE*)fp, "%s,%s",clearZeros((ox-xMin)*factor).c_str(), clearZeros(oy*factor).c_str());
+			startcontour = false;
+		} else {
+			fprintf((FILE*)fp, ";%s,%s",clearZeros((ox-xMin)*factor).c_str(), clearZeros(oy*factor).c_str());
+		}
+		for (double t = 0.0; t<=1.0; t+=1.0/nodes) {
+			px = pow(1.0-t, 2)*prevx + 2*t*(1.0-t)*control->x + t*t*to->x;
+			py = pow(1.0-t, 2)*prevy + 2*t*(1.0-t)*control->y + t*t*to->y;
+			fprintf((FILE*)fp, ";%s,%s",clearZeros((double)(px-xMin)*factor).c_str(), clearZeros((double)py*factor).c_str());
 
-                ox = px;
-                oy = py;
-            }
-        }
+//			ox = px;
+//			oy = py;
+		}
+	}
 
-        prevx = to->x;
-        prevy = to->y;
+	prevx = to->x;
+	prevy = to->y;
 
-        if (to->y>yMax) {
-            yMax = to->y;
-        }
-    }
-    return 0;
+	if (to->y>yMax) yMax = to->y;
+	return 0;
 }
 
 
@@ -247,9 +245,8 @@ FT_Error convertGlyph(FT_ULong charcode) {
         fprintf(fpLff, "\n");
     }
 
-    if (error) {
+	if (error)
         std::cerr << "FT_Outline_Decompose: " << FT_StrError(error) << std::endl;
-    }
 
     return error;
 }

@@ -372,7 +372,7 @@ void RS_FilterDXFRW::addLine(const DRW_Line& data) {
 
     RS_DEBUG->print("RS_FilterDXF::addLine: add entity");
 
-    currentContainer->addEntity(entity);
+	if (currentContainer) currentContainer->addEntity(entity);
 
     RS_DEBUG->print("RS_FilterDXF::addLine: OK");
 }
@@ -400,7 +400,7 @@ void RS_FilterDXFRW::addRay(const DRW_Ray& data) {
 
     RS_DEBUG->print("RS_FilterDXF::addRay: add entity");
 
-    currentContainer->addEntity(entity);
+	if (currentContainer) currentContainer->addEntity(entity);
 
     RS_DEBUG->print("RS_FilterDXF::addRay: OK");
 }
@@ -427,7 +427,7 @@ void RS_FilterDXFRW::addXline(const DRW_Xline& data) {
 
     RS_DEBUG->print("RS_FilterDXF::addXline: add entity");
 
-    currentContainer->addEntity(entity);
+	if (currentContainer) currentContainer->addEntity(entity);
 
     RS_DEBUG->print("RS_FilterDXF::addXline: OK");
 }

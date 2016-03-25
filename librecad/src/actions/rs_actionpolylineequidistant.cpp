@@ -249,7 +249,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
         //properly terminated, check closed
         if (prevEntity) {
             if (closed){
-				if (currEntity && currEntity->rtti()==RS2::EntityArc) {
+				if (currEntity->rtti()==RS2::EntityArc) {
                     arc1.setAngle2(arc1.getCenter().angleTo(newPolyline->getStartpoint()));
 					arc1.calculateBorders();
                     newPolyline->setNextBulge(arc1.getBulge());
