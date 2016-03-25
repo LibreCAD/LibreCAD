@@ -204,8 +204,6 @@ public:
 	DWORD m_nMojiKijunZureOn;	//文字基準点のずれ位置使用のフラグ
 	DOUBLE m_adMojiKijunZureX[3];	//文字基準点の横方向のずれ位置左、中、右
 	DOUBLE m_adMojiKijunZureY[3];	//文字基準点の縦方向のずれ位置下、中、上
-	JWWHead(){;}
-	~JWWHead(){;}
 	
 };
 
@@ -216,21 +214,19 @@ protected:
 	DWORD nOldVersionSave;	//バージョンNo.
 public:
 	DWORD m_lGroup;//曲線属性番号
-	BYTE m_nPenStyle;//線種番号
+	mutable BYTE m_nPenStyle;//線種番号
 	WORD m_nPenColor;//線色番号
 /////////////////////////////////////////////////
-	WORD m_nPenWidth;//線色幅 Ver.3.51以降
+	mutable WORD m_nPenWidth;//線色幅 Ver.3.51以降
 /////////////////////////////////////////////////
 	WORD m_nLayer;//レイヤ番号
 	WORD m_nGLayer;//レイヤグループ番号
 	WORD m_sFlg;//属性フラグ
-	CData(){;}
-	~CData(){;}
 	const char* className(){return "CData";}
 	friend inline std::ostream& operator<<(std::ostream&, const CData&); 
 	friend inline std::istream& operator>>(std::istream&, CData&); 
 	void SetVersion(DWORD ver){ nOldVersionSave = ver; }
-	void Serialize(std::ofstream& ofstr){
+	void Serialize(std::ofstream& ofstr) const{
        ofstr << (DWORD)m_lGroup;      //曲線属性番号
        ofstr << (BYTE)m_nPenStyle;   //線種番号
        ofstr << (WORD)m_nPenColor;   //線色番号
@@ -241,7 +237,7 @@ public:
         ofstr << (WORD)m_nGLayer;     //レイヤグループ番号
         ofstr << (WORD)m_sFlg;        //属性フラグ
 	}
-	void Serialize(std::ifstream& ifstr){
+	void Serialize(std::ifstream& ifstr) {
        ifstr >> /*(DWORD)*/m_lGroup;      //曲線属性番号
        ifstr >> /*(BYTE)*/m_nPenStyle;   //線種番号
        ifstr >> /*(WORD)*/m_nPenColor;   //線色番号
@@ -307,12 +303,10 @@ class	CDataSen	:	public	CData
 public:
 	DPoint m_start;//始点X座標、Y座標
 	DPoint m_end;//終点X座標、Y座標
-	CDataSen(){;}
-	~CDataSen(){;}
 	const char* className(){return "CDataSen";}
 	friend inline std::ostream& operator<<(std::ostream&, const CDataSen&); 
 	friend inline std::istream& operator>>(std::istream&, CDataSen&); 
-	void Serialize(std::ofstream& ofstr)
+	void Serialize(std::ofstream& ofstr) const
 #ifdef _MSC_VER // TODO VC 7.1 gives overload error.
         ;
 #else
@@ -354,12 +348,10 @@ public:
 	DOUBLE m_radKatamukiKaku;//傾き角
 	DOUBLE m_dHenpeiRitsu;//扁平率
 	DWORD m_bZenEnFlg;//全円フラグ
-	CDataEnko(){;}
-	~CDataEnko(){;}
 	const char* className(){return "CDataEnko";}
 	friend inline std::ostream& operator<<(std::ostream&, const CDataEnko&); 
 	friend inline std::istream& operator>>(std::istream&, CDataEnko&); 
-	void Serialize(std::ofstream& ofstr)
+	void Serialize(std::ofstream& ofstr) const
 #ifdef _MSC_VER
         ;
 #else
@@ -419,12 +411,10 @@ public:
 	DWORD m_nCode;	//m_nPenStyleが「100」のとき点コード（矢印・ポイントマーカー）
 	DOUBLE m_radKaitenKaku;	//表示角
 	DOUBLE m_dBairitsu;	//表示倍率
-	CDataTen(){;}
-	~CDataTen(){;}
 	const char* className(){return "CDataTen";}
 	friend inline std::ostream& operator<<(std::ostream&, const CDataTen&); 
 	friend inline std::istream& operator>>(std::istream&, CDataTen&); 
-	void Serialize(std::ofstream& ofstr)
+	void Serialize(std::ofstream& ofstr) const
 #ifdef _MSC_VER
         ;
 #else
@@ -479,19 +469,17 @@ class	CDataMoji	:	public	CData
 public:
 	DPoint m_start;//始点X座標、Y座標
 	DPoint m_end;//終点X座標、Y座標
-	DWORD m_nMojiShu;//文字種(斜体文字は20000、ボールド体は10000を加えた数値)
+	mutable DWORD m_nMojiShu;//文字種(斜体文字は20000、ボールド体は10000を加えた数値)
 	DOUBLE m_dSizeX;//文字サイズ横
 	DOUBLE m_dSizeY;//文字サイズ縦
 	DOUBLE m_dKankaku;//文字間隔
 	DOUBLE m_degKakudo;//角度
 	string m_strFontName;//フォント名
 	string m_string;//文字列
-	CDataMoji(){;}
-	~CDataMoji(){;}
 	const char* className(){return "CDataEnko";}
 	friend inline std::ostream& operator<<(std::ostream&, const CDataMoji&); 
 	friend inline std::istream& operator>>(std::istream&, CDataMoji&); 
-	void Serialize(std::ofstream& ofstr)
+	void Serialize(std::ofstream& ofstr) const
 #ifdef _MSC_VER
         ;
 #else
@@ -539,7 +527,7 @@ public:
         m_nMojiShu = (m_nMojiShu % 10000);
 	}
 #endif
-	void Serialize(std::ifstream& ifstr){
+	void Serialize(std::ifstream& ifstr) {
         CData::Serialize(ifstr);
         ifstr >> m_start.x >> m_start.y 
            >> m_end.x >> m_end.y
@@ -619,12 +607,10 @@ public:
 	CDataTen m_Ten2;	//矢印（点)2
 	CDataTen m_TenHo1;	//基準点1
 	CDataTen m_TenHo2;	//基準点2
-	CDataSunpou(){;}
-	~CDataSunpou(){;}
 	const char* className(){return "CDataSunpou";}
 	friend inline std::ostream& operator<<(std::ostream&, const CDataSunpou&); 
 	friend inline std::istream& operator>>(std::istream&, CDataSunpou&); 
-	void Serialize(std::ofstream& ofstr){
+	void Serialize(std::ofstream& ofstr) const {
 	    CData::Serialize(ofstr);
         m_Sen .Serialize(ofstr);
         m_Moji.Serialize(ofstr);
@@ -638,7 +624,7 @@ public:
             m_TenHo2 .Serialize(ofstr);
         }
 	}
-	void Serialize(std::ifstream& ifstr){
+	void Serialize(std::ifstream& ifstr) {
 	    CData::Serialize(ifstr);
         m_Sen .Serialize(ifstr);
         m_Moji.Serialize(ifstr);
@@ -692,12 +678,10 @@ public:
 	DPoint m_DPoint2;//第2点X座標、Y座標
 	DPoint m_DPoint3;//第3点X座標、Y座標
 	DWORD m_Color;//塗潰し色のRGB値(任意色の場合のみ)
-	CDataSolid(){;}
-	~CDataSolid(){;}
 	const char* className(){return "CDataSolid";}
 	friend inline std::ostream& operator<<(std::ostream&, const CDataSolid&); 
 	friend inline std::istream& operator>>(std::istream&, CDataSolid&); 
-	void Serialize(std::ofstream& ofstr)
+	void Serialize(std::ofstream& ofstr) const
 #ifdef _MSC_VER
         ;
 #else
@@ -712,7 +696,7 @@ public:
             }
         }
 #endif
-	void Serialize(std::ifstream& ifstr){
+	void Serialize(std::ifstream& ifstr) {
 	    CData::Serialize(ifstr);
         ifstr >> m_start.x >> m_start.y 
            >> m_end.x >> m_end.y
@@ -743,12 +727,10 @@ public:
 	DOUBLE m_dBairitsuY;//Y方向の倍率
 	DOUBLE m_radKaitenKaku;//回転角
 	DWORD m_n_Number;//ブロック定義データの通し番号
-	CDataBlock(){;}
-	~CDataBlock(){;}
 	const char* className(){return "CDataBlock";}
 	friend inline std::ostream& operator<<(std::ostream&, const CDataBlock&); 
 	friend inline std::istream& operator>>(std::istream&, CDataBlock&); 
-	void Serialize(std::ofstream& ofstr)
+	void Serialize(std::ofstream& ofstr) const
 #ifdef _MSC_VER
         ;
 #else
@@ -795,12 +777,10 @@ public:
                         //3:作図グループ、4:作図部品
 	vector<CData*> m_DataList;	//定義データの実体のリスト
 	WORD Count;	//テスト用
-	CDataList(){;}
-	~CDataList(){;}
 	const char* className(){return "CDataList";}
 	friend inline std::ostream& operator<<(std::ostream&, const CDataList&); 
 	friend inline std::istream& operator>>(std::istream&, CDataList&); 
-	void Serialize(std::ofstream& ofstr){
+	void Serialize(std::ofstream& ofstr) const{
 	    CData::Serialize(ofstr);
         ofstr <<(DWORD)m_nNumber
         	<<(DWORD)m_bReffered
@@ -824,7 +804,7 @@ public:
 		}
 	    //SKIP m_DataList.Serialize(ofstr);
 	}
-	void Serialize(std::ifstream& ifstr){
+	void Serialize(std::ifstream& ifstr) {
 	    CData::Serialize(ifstr);
         ifstr >> m_nNumber
            >> m_bReffered
@@ -892,20 +872,22 @@ private:
 	vector<CDataType> FDataType;
 protected:
 public:
-    CDataList& GetBlockList(unsigned int i);
+	JWWBlockList();
+	~JWWBlockList();
+	CDataList& GetBlockList(unsigned int i);
 	int getBlockListCount();
     int GetDataListCount(unsigned int i);
     void* GetData(unsigned int i, int j );
     CDataType GetDataType(unsigned int i, int j );
 
-	CDataEnko& GetCDataEnko(int i, int j );
-	CDataMoji& GetCDataMoji(int i, int j );
-	CDataSen& GetCDataSen(int i, int j );
-	CDataSolid& GetCDataSolid(int i, int j );
-	CDataSunpou& GetCDataSunpou(int i, int j );
-	CDataTen& GetCDataTen(int i, int j );
+	CDataEnko GetCDataEnko(int i, int j );
+	CDataMoji GetCDataMoji(int i, int j );
+	CDataSen GetCDataSen(int i, int j );
+	CDataSolid GetCDataSolid(int i, int j );
+	CDataSunpou GetCDataSunpou(int i, int j );
+	CDataTen GetCDataTen(int i, int j );
 	CDataType GetCDataType(int i, int j );
-	CDataBlock& GetCDataBlock(int i, int j );
+	CDataBlock GetCDataBlock(int i, int j );
 
 	void AddBlockList(CDataList& CData);
 	void AddDataListSen(CDataSen& D);
@@ -915,8 +897,6 @@ public:
 	void AddDataListSolid(CDataSolid& D);
 	void AddDataListSunpou(CDataSunpou& D);
 	void AddDataListBlock(CDataBlock& D);
-	JWWBlockList();
-	~JWWBlockList();
 	void Init();
 };
 
@@ -933,7 +913,6 @@ class	JWWList
 private:
 	vector<PNoList> FList;
 
-protected:
 public:
 	JWWList();
 	~JWWList();
@@ -1025,14 +1004,14 @@ public:
 	BOOL Read();
 	BOOL Save();
 	BOOL SaveBich16(DWORD id);
-	BOOL SaveSen(CDataSen& DSen);
-	BOOL SaveEnko(CDataEnko& DEnko);
-	BOOL SaveTen(CDataTen& DTen);
-	BOOL SaveMoji(CDataMoji& DMoji);
-	BOOL SaveSunpou(CDataSunpou& DSunpou);
-	BOOL SaveSolid(CDataSolid& DSolid);
-	BOOL SaveBlock(CDataBlock& DBlock);
-	BOOL SaveDataList(CDataList& DList);
+	BOOL SaveSen(CDataSen const& DSen);
+	BOOL SaveEnko(CDataEnko const& DEnko);
+	BOOL SaveTen(CDataTen const& DTen);
+	BOOL SaveMoji(CDataMoji const& DMoji);
+	BOOL SaveSunpou(CDataSunpou const& DSunpou);
+	BOOL SaveSolid(CDataSolid const& DSolid);
+	BOOL SaveBlock(CDataBlock const& DBlock);
+	BOOL SaveDataList(CDataList const& DList);
 };
 
 #endif //JWWDOC_H
