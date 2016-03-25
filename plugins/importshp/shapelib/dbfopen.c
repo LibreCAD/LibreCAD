@@ -1954,7 +1954,7 @@ DBFReorderFields( DBFHandle psDBF, int* panMap )
     psDBF->pszHeader = pszHeaderNew;
 
     /* we're done if we're dealing with not yet created .dbf */
-    if ( !(psDBF->bNoHeader && psDBF->nRecords == 0) )
+	if (!(psDBF->bNoHeader || psDBF->nRecords == 0) )
     {
         /* force update of header with new header and record length */
         psDBF->bNoHeader = TRUE;
