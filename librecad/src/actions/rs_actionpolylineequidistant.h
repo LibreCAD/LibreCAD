@@ -46,20 +46,20 @@ public:
 public:
 	RS_ActionPolylineEquidistant(RS_EntityContainer& container,
 						RS_GraphicView& graphicView);
-	~RS_ActionPolylineEquidistant();
+	~RS_ActionPolylineEquidistant() override;
 
-	virtual void init(int status=0);
+	void init(int status=0) override;
 	
-	virtual void trigger();
+	void trigger() override;
 
-//        virtual void mouseMoveEvent(QMouseEvent* e);
-        virtual void mouseReleaseEvent(QMouseEvent* e);
+//        void mouseMoveEvent(QMouseEvent* e) override;
+		void mouseReleaseEvent(QMouseEvent* e) override;
 	
-	virtual void updateMouseButtonHints();
-	virtual void updateMouseCursor();
-//	virtual void updateToolBar();
-	virtual void showOptions();
-	virtual void hideOptions();
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
+//	void updateToolBar() override;
+	void showOptions() override;
+	void hideOptions() override;
 
     void setDist(const double& d) {
 		dist = d;

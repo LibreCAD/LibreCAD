@@ -49,15 +49,15 @@ public:
                         RS_GraphicView& graphicView);
 	~RS_ActionPolylineAdd() override;
 
-    virtual void init(int status=0);
+	void init(int status=0) override;
 	
-    virtual void trigger();
+	void trigger() override;
 	
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 	
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 
 private:
     RS_Entity* addEntity;

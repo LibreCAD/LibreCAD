@@ -41,11 +41,10 @@ class RS_ActionOptionsDrawing : public RS_ActionInterface {
 public:
     RS_ActionOptionsDrawing(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
-    ~RS_ActionOptionsDrawing() = default;
 
-    virtual void init(int status=0);
+	void init(int status=0) override;
 
-    virtual void trigger();
+	void trigger() override;
 };
 
 #endif

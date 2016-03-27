@@ -46,22 +46,22 @@ class RS_ActionDrawLinePolygonCenCor : public RS_PreviewActionInterface {
 public:
     RS_ActionDrawLinePolygonCenCor(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-	virtual ~RS_ActionDrawLinePolygonCenCor() override;
+	~RS_ActionDrawLinePolygonCenCor() override;
 
-    virtual void trigger();
+	void trigger() override;
 	
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void updateMouseButtonHints();
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
+	void updateMouseButtonHints() override;
 	
-	virtual void coordinateEvent(RS_CoordinateEvent* e);
-    virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+	void coordinateEvent(RS_CoordinateEvent* e) override;
+	void commandEvent(RS_CommandEvent* e) override;
+		QStringList getAvailableCommands() override;
 	
-    virtual void hideOptions();
-    virtual void showOptions();
+	void hideOptions() override;
+	void showOptions() override;
 
-    virtual void updateMouseCursor();
+	void updateMouseCursor() override;
 
 	int getNumber() const{
 		return number;

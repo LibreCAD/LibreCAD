@@ -44,16 +44,15 @@ private:
 public:
     RS_ActionDrawLineOrthTan(RS_EntityContainer& container,
                              RS_GraphicView& graphicView);
-	~RS_ActionDrawLineOrthTan() = default;
 
-    virtual void trigger();
-    virtual void finish(bool updateTB = true);
+	void trigger() override;
+	void finish(bool updateTB = true) override;
 
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 
-    virtual void updateMouseButtonHints();
-	virtual void updateMouseCursor();
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 
 private:
 	void clearLines();

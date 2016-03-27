@@ -52,24 +52,24 @@ public:
                               RS_GraphicView& graphicView,
                               double angle=0.0,
                               bool fixedAngle=false);
-	~RS_ActionDrawLineRelAngle();
+	~RS_ActionDrawLineRelAngle() override;
 	
-	virtual RS2::ActionType rtti() const;
+	RS2::ActionType rtti() const override;
 
-    virtual void trigger();
+	void trigger() override;
 
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 	
-	virtual void coordinateEvent(RS_CoordinateEvent* e);
-    virtual void commandEvent(RS_CommandEvent* e);
-	virtual QStringList getAvailableCommands();
+	void coordinateEvent(RS_CoordinateEvent* e) override;
+	void commandEvent(RS_CommandEvent* e) override;
+	QStringList getAvailableCommands() override;
 	
-    virtual void hideOptions();
-    virtual void showOptions();
+	void hideOptions() override;
+	void showOptions() override;
 	
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 	
 	void setAngle(double a) {
 		angle = a;

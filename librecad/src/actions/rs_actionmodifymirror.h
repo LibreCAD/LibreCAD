@@ -51,15 +51,15 @@ public:
 public:
     RS_ActionModifyMirror(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-	~RS_ActionModifyMirror();
+	~RS_ActionModifyMirror() override;
 	
-    virtual void init(int status=0);
-    virtual void trigger();
-	virtual void coordinateEvent(RS_CoordinateEvent* e);
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+	void init(int status=0) override;
+	void trigger() override;
+	void coordinateEvent(RS_CoordinateEvent* e) override;
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 
 private:
 	struct Points;

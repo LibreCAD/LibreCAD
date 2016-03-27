@@ -50,22 +50,22 @@ private:
 public:
     RS_ActionDrawLineParallel(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-	virtual ~RS_ActionDrawLineParallel() override;
+	~RS_ActionDrawLineParallel() override;
 	
-    virtual void trigger();
+	void trigger() override;
 	
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void updateMouseButtonHints();
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
+	void updateMouseButtonHints() override;
 	
-    virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+	void commandEvent(RS_CommandEvent* e) override;
+		QStringList getAvailableCommands() override;
 	
-    virtual void hideOptions();
-    virtual void showOptions();
+	void hideOptions() override;
+	void showOptions() override;
 
-    virtual void updateMouseCursor();
-//    virtual void updateToolBar();
+	void updateMouseCursor() override;
+//    void updateToolBar() override;
 
 	double getDistance() const;
 

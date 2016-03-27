@@ -41,12 +41,12 @@ class RS_ActionModifyDeleteFree : public RS_ActionInterface {
 public:
     RS_ActionModifyDeleteFree(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-	~RS_ActionModifyDeleteFree();
+	~RS_ActionModifyDeleteFree() override;
 
-    virtual void init(int status=0);
-    virtual void trigger();
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void updateMouseButtonHints();
+	void init(int status=0) override;
+	void trigger() override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
+	void updateMouseButtonHints() override;
 
 private:
     RS_Polyline* polyline;

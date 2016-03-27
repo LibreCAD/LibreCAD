@@ -52,16 +52,16 @@ public:
                         RS_GraphicView& graphicView);
 	~RS_ActionInfoDist() override;
 
-    virtual void init(int status=0);
-    virtual void trigger();
+	void init(int status=0) override;
+	void trigger() override;
 
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 	
-	virtual void coordinateEvent(RS_CoordinateEvent* e);
+	void coordinateEvent(RS_CoordinateEvent* e) override;
 	
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 
 private:
 	struct Points;

@@ -49,22 +49,22 @@ private:
 public:
     RS_ActionDrawLineBisector(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-	~RS_ActionDrawLineBisector();
+	~RS_ActionDrawLineBisector() override;
 	
-	virtual void init(int status=0);
+	void init(int status=0) override;
 
-    virtual void trigger();
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	void trigger() override;
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 
-    virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+	void commandEvent(RS_CommandEvent* e) override;
+		QStringList getAvailableCommands() override;
 	
-    virtual void hideOptions();
-    virtual void showOptions();
+	void hideOptions() override;
+	void showOptions() override;
 
-    virtual void updateMouseButtonHints();
-	virtual void updateMouseCursor();
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 	
 	void setLength(double l);
 

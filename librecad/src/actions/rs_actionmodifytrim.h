@@ -50,14 +50,14 @@ public:
     RS_ActionModifyTrim(RS_EntityContainer& container,
                         RS_GraphicView& graphicView,
                         bool both=false);
-    ~RS_ActionModifyTrim();
+	~RS_ActionModifyTrim() override;
 
-    virtual void init(int status=0);
-    virtual void trigger();
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+	void init(int status=0) override;
+	void trigger() override;
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 
 
 private:

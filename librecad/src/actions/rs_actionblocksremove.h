@@ -40,10 +40,9 @@ class RS_ActionBlocksRemove : public RS_ActionInterface {
 public:
     RS_ActionBlocksRemove(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-	~RS_ActionBlocksRemove() = default;
 
-    virtual void init(int status=0);
-    virtual void trigger();
+	void init(int status=0) override;
+	void trigger() override;
 };
 
 #endif

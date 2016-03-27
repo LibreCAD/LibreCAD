@@ -50,23 +50,23 @@ private:
 public:
     RS_ActionDimAngular(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-	~RS_ActionDimAngular();
+	~RS_ActionDimAngular() override;
 
-	virtual void reset();
+	void reset() override;
 	
-    virtual void trigger();
+	void trigger() override;
 	
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 
-	virtual void coordinateEvent(RS_CoordinateEvent* e);
-    virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+	void coordinateEvent(RS_CoordinateEvent* e) override;
+	void commandEvent(RS_CommandEvent* e) override;
+		QStringList getAvailableCommands() override;
 	
-    virtual void hideOptions();
-    virtual void showOptions();
+	void hideOptions() override;
+	void showOptions() override;
 
-    virtual void updateMouseButtonHints();
+	void updateMouseButtonHints() override;
 
 private:
     /** 1st chosen line */

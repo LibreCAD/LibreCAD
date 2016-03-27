@@ -35,10 +35,9 @@ class RS_ActionBlocksSave : public RS_ActionInterface {
 public:
     RS_ActionBlocksSave(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionBlocksSave() = default;
 
-    virtual void init(int status=0);
-    virtual void trigger();
+	void init(int status=0) override;
+	void trigger() override;
 
 private:
     void addBlock(RS_Insert* in, RS_Graphic* g);

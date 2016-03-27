@@ -55,25 +55,25 @@ public:
 public:
     RS_ActionDefault(RS_EntityContainer& container,
                      RS_GraphicView& graphicView);
-	virtual ~RS_ActionDefault();
+	~RS_ActionDefault() override;
 
-	virtual void finish(bool /*updateTB*/ = true ){}
+	void finish(bool /*updateTB*/ = true ) override{}
 
-    virtual void init(int status=0);
+	void init(int status=0) override;
 
-    virtual void keyPressEvent(QKeyEvent* e);
-    virtual void keyReleaseEvent(QKeyEvent* e);
+	void keyPressEvent(QKeyEvent* e) override;
+	void keyReleaseEvent(QKeyEvent* e) override;
 
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mousePressEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mousePressEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 
-    virtual void commandEvent(RS_CommandEvent* e);
-    virtual QStringList getAvailableCommands();
+	void commandEvent(RS_CommandEvent* e) override;
+	QStringList getAvailableCommands() override;
 
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
-//    virtual void resume();
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
+//    void resume() override;
 
 protected:
 	struct Points;

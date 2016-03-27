@@ -42,17 +42,17 @@ public:
     RS_ActionDimension(const char* name,
                        RS_EntityContainer& container,
                        RS_GraphicView& graphicView);
-    ~RS_ActionDimension();
+	~RS_ActionDimension() override;
 
-    virtual void reset();
+	virtual void reset();
 
-    virtual void init(int status=0);
+	void init(int status=0) override;
 
-    virtual void hideOptions();
-    virtual void showOptions();
+	void hideOptions() override;
+	void showOptions() override;
 
-    virtual void updateMouseCursor();
-//    virtual void updateToolBar();
+	void updateMouseCursor() override;
+//    void updateToolBar() override;
 
 	QString getText() const;
 	

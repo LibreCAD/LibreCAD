@@ -40,11 +40,10 @@ class RS_ActionModifyEntity : public RS_ActionInterface {
 public:
     RS_ActionModifyEntity(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-    ~RS_ActionModifyEntity() = default;
 
-    virtual void trigger();
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void updateMouseCursor();
+	void trigger() override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
+	void updateMouseCursor() override;
 
 private:
     RS_Entity* en;

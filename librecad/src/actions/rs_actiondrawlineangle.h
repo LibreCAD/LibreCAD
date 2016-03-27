@@ -52,27 +52,27 @@ public:
                            double angle=0.0,
                            bool fixedAngle=false,
                            RS2::ActionType actionType=RS2::ActionDrawLineAngle);
-	~RS_ActionDrawLineAngle();
+	~RS_ActionDrawLineAngle() override;
 
     void reset();
 
-    virtual void init(int status=0);
+	void init(int status=0) override;
 	
-    virtual void trigger();
+	void trigger() override;
 
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 	void preparePreview();
 	
-	virtual void coordinateEvent(RS_CoordinateEvent* e);
-    virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+	void coordinateEvent(RS_CoordinateEvent* e) override;
+	void commandEvent(RS_CommandEvent* e) override;
+		QStringList getAvailableCommands() override;
 	
-    virtual void hideOptions();
-    virtual void showOptions();
+	void hideOptions() override;
+	void showOptions() override;
 
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 
 	void setSnapPoint(int sp);
 

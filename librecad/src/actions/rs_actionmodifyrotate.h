@@ -52,19 +52,19 @@ public:
 public:
     RS_ActionModifyRotate(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-	~RS_ActionModifyRotate();
+	~RS_ActionModifyRotate() override;
 
-    virtual void init(int status=0);
+	void init(int status=0) override;
 
-    virtual void trigger();
+	void trigger() override;
 
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 
-    virtual void coordinateEvent(RS_CoordinateEvent* e);
+	void coordinateEvent(RS_CoordinateEvent* e) override;
 
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 
 private:
 	std::unique_ptr<RS_RotateData> data;

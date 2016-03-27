@@ -40,11 +40,10 @@ class RS_ActionBlocksExplode : public RS_PreviewActionInterface {
 public:
     RS_ActionBlocksExplode(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-	~RS_ActionBlocksExplode() = default;
 
-    virtual void init(int status=0);
+	void init(int status=0) override;
 
-    virtual void trigger();
+	void trigger() override;
 };
 
 #endif

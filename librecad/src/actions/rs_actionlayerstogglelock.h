@@ -40,10 +40,9 @@ class RS_ActionLayersToggleLock : public RS_ActionInterface {
 public:
     RS_ActionLayersToggleLock(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionLayersToggleLock() = default;
 
-    virtual void init(int status);
-    virtual void trigger();
+	void init(int status) override;
+	void trigger() override;
 
 };
 

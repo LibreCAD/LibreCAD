@@ -40,10 +40,9 @@ class RS_ActionToolRegenerateDimensions : public RS_ActionInterface {
 public:
     RS_ActionToolRegenerateDimensions(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-    ~RS_ActionToolRegenerateDimensions() = default;
 
-    virtual void init(int status=0);
-    virtual void trigger();
+	void init(int status=0) override;
+	void trigger() override;
 };
 
 #endif
