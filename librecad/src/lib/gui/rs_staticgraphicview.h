@@ -37,17 +37,16 @@
 class RS_StaticGraphicView: public RS_GraphicView {
 public:
 	RS_StaticGraphicView(int w, int h, RS_Painter* p, QSize const* pb = nullptr);
-	virtual ~RS_StaticGraphicView()=default;
 
-	virtual int getWidth() const;
-	virtual int getHeight() const;
-    virtual void redraw(RS2::RedrawMethod) {}
-    virtual void adjustOffsetControls() {}
-    virtual void adjustZoomControls() {}
-    virtual void setMouseCursor(RS2::CursorType ) {}
+	int getWidth() const override;
+	int getHeight() const override;
+	void redraw(RS2::RedrawMethod) override{}
+	void adjustOffsetControls() override{}
+	void adjustZoomControls() override{}
+	void setMouseCursor(RS2::CursorType ) override{}
 
-    virtual void updateGridStatusWidget(const QString& ) {}
-    virtual RS_Vector getMousePosition() const;
+	void updateGridStatusWidget(const QString& ) override{}
+	RS_Vector getMousePosition() const override;
 
     void paint();
 
@@ -57,8 +56,6 @@ private:
 
     //! Height
     int height;
-	
-	RS_Painter* painter;
 };
 
 #endif

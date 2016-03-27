@@ -271,8 +271,8 @@ Area(coord, {coord.x + width, coord.y + height})
 
 	std::array<Coordinate, 4> LC_Rect::vertices() const
 	{
-		return {lowerLeftCorner(), lowerRightCorner(),
-					upperRightCorner(), upperLeftCorner()};
+		return {{lowerLeftCorner(), lowerRightCorner(),
+					upperRightCorner(), upperLeftCorner()}};
 	}
 
 	std::ostream& operator<<(std::ostream& os, const Area& area) {
