@@ -763,7 +763,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["EditKillAllActions"] = action;
 
     action = new QAction(tr("&Undo"), disable_group);
-    action->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/actions/undo2.png")));
+    action->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/icons/undo.svg")));
     action->setShortcut(QKeySequence::Undo);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotEditUndo()));
@@ -771,7 +771,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["EditUndo"] = action;
 
     action = new QAction(tr("&Redo"), disable_group);
-    action->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/actions/redo2.png")));
+    action->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/redo.svg")));
     action->setShortcut(QKeySequence::Redo);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotEditRedo()));
@@ -779,7 +779,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["EditRedo"] = action;
 
     action = new QAction(tr("Cu&t"), disable_group);
-    action->setIcon(QIcon::fromTheme("edit-cut", QIcon(":/actions/editcut2.png")));
+    action->setIcon(QIcon::fromTheme("edit-cut", QIcon(":/icons/cut_b.svg")));
     action->setShortcut(QKeySequence::Cut);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotEditCut()));
@@ -787,7 +787,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["EditCut"] = action;
 
     action = new QAction(tr("&Copy"), disable_group);
-    action->setIcon(QIcon::fromTheme("edit-copy", QIcon(":/actions/editcopy2.png")));
+    action->setIcon(QIcon::fromTheme("edit-copy", QIcon(":/icons/copy.svg")));
     action->setShortcut(QKeySequence::Copy);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotEditCopy()));
@@ -795,12 +795,14 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["EditCopy"] = action;
 
     action = new QAction(tr("&Paste"), disable_group);
-    action->setIcon(QIcon::fromTheme("edit-paste", QIcon(":/actions/editpaste2.png")));
+    action->setIcon(QIcon::fromTheme("edit-paste", QIcon(":/icons/paste.svg")));
     action->setShortcut(QKeySequence::Paste);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotEditPaste()));
     action->setObjectName("EditPaste");
     a_map["EditPaste"] = action;
+
+    // <[~ Order ~]>
 
     action = new QAction(tr("move to bottom"), disable_group);
     action->setShortcut(QKeySequence(Qt::Key_End));
@@ -976,7 +978,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     // <[~ Options ~]>
 
     action = new QAction(tr("&Application Preferences"), main_window);
-    action->setIcon(QIcon(":/actions/configure.png"));
+    action->setIcon(QIcon(":/icons/settings.svg"));
     connect(action, SIGNAL(triggered()),
     main_window, SLOT(slotOptionsGeneral()));
     action->setMenuRole(QAction::NoRole);
@@ -984,7 +986,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["OptionsGeneral"] = action;
 
     action = new QAction(tr("Current &Drawing Preferences"), disable_group);
-    action->setIcon(QIcon(":/actions/drawingprefs.png"));
+    action->setIcon(QIcon(":/icons/drawing_settings.svg"));
     action->setShortcut(QKeySequence::Preferences);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotOptionsDrawing()));
@@ -1093,35 +1095,37 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     // <[~ Main Window Actions ~]>
     // ===========================
 
+    // <[~ File ~]>
+
     action = new QAction(tr("&New"), main_window);
-    action->setIcon(QIcon::fromTheme("document-new", QIcon(":/actions/filenew.png")));
+    action->setIcon(QIcon::fromTheme("document-new", QIcon(":/icons/new.svg")));
     action->setShortcut(QKeySequence::New);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileNewNew()));
     action->setObjectName("FileNew");
     a_map["FileNew"] = action;
 
     action = new QAction(tr("New From &Template"), main_window);
-    action->setIcon(QIcon::fromTheme("document-new", QIcon(":/actions/filenew.png")));
+    action->setIcon(QIcon::fromTheme("document-new", QIcon(":/icons/new_from_template.svg")));
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileNewTemplate()));
     action->setObjectName("FileNewTemplate");
     a_map["FileNewTemplate"] = action;
 
     action = new QAction(tr("&Open..."), main_window);
-    action->setIcon(QIcon::fromTheme("document-open", QIcon(":/actions/fileopen2.png")));
+    action->setIcon(QIcon::fromTheme("document-open", QIcon(":/icons/open.svg")));
     action->setShortcut(QKeySequence::Open);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileOpen()));
     action->setObjectName("FileOpen");
     a_map["FileOpen"] = action;
 
     action = new QAction(tr("&Save"), disable_group);
-    action->setIcon(QIcon::fromTheme("document-save", QIcon(":/actions/filesave2.png")));
+    action->setIcon(QIcon::fromTheme("document-save", QIcon(":/icons/save.svg")));
     action->setShortcut(QKeySequence::Save);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileSave()));
     action->setObjectName("FileSave");
     a_map["FileSave"] = action;
 
     action = new QAction(tr("Save &as..."), disable_group);
-    action->setIcon(QIcon::fromTheme("document-save-as", QIcon(":/actions/filesaveas.png")));
+    action->setIcon(QIcon::fromTheme("document-save-as", QIcon(":/icons/save_as.svg")));
     action->setShortcut(QKeySequence::SaveAs);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileSaveAs()));
     action->setObjectName("FileSaveAs");
@@ -1140,7 +1144,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["FileClose"] = action;
 
     action = new QAction(tr("&Print..."), disable_group);
-    action->setIcon(QIcon::fromTheme("document-print", QIcon(":/actions/fileprint.png")));
+    action->setIcon(QIcon::fromTheme("document-print", QIcon(":/icons/print.svg")));
     action->setShortcut(QKeySequence::Print);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFilePrint()));
     connect(main_window, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
@@ -1154,7 +1158,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["FilePrintPDF"] = action;
 
     action = new QAction(tr("Print Pre&view"), disable_group);
-    action->setIcon(QIcon::fromTheme("document-print-preview", QIcon(":/actions/fileprintpreview.png")));
+    action->setIcon(QIcon::fromTheme("document-print-preview", QIcon(":/icons/print_preview.svg")));
     action->setCheckable(true);
     connect(action, SIGNAL(triggered(bool)), main_window, SLOT(slotFilePrintPreview(bool)));
     connect(main_window, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));

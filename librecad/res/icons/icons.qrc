@@ -32,5 +32,19 @@
         <file>zoom_pan_b.svg</file>
         <file>zoom_previous.svg</file>
         <file>zoom_window.svg</file>
+        <file>copy.svg</file>
+        <file>cut_b.svg</file>
+        <file>drawing_settings.svg</file>
+        <file>new_from_template.svg</file>
+        <file>new.svg</file>
+        <file>open.svg</file>
+        <file>paste.svg</file>
+        <file>print_preview.svg</file>
+        <file>print.svg</file>
+        <file>save_as.svg</file>
+        <file>save.svg</file>
+        <file>settings.svg</file>
+        <file>redo.svg</file>
+        <file>undo.svg</file>
     </qresource>
 </RCC>
