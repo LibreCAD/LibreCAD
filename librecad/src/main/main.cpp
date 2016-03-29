@@ -124,6 +124,7 @@ int main(int argc, char** argv) {
                 continue;
             }
 
+            qDebug() << "test commit for 2.0 Travis CI";
             if (allowOptions&&(
                         help0.compare(argstr, Qt::CaseInsensitive)==0 ||
                         help1.compare(argstr, Qt::CaseInsensitive)==0
