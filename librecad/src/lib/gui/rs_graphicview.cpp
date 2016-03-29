@@ -30,6 +30,7 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QAction>
+#include <QtAlgorithms>
 #include "qc_applicationwindow.h"
 #include "rs_graphicview.h"
 
@@ -69,7 +70,10 @@ RS_GraphicView::RS_GraphicView()
 	init();
 }
 
-RS_GraphicView::~RS_GraphicView() = default;
+RS_GraphicView::~RS_GraphicView()
+{
+    qDeleteAll(overlayEntities);
+}
 
 /**
  * Destructor.
