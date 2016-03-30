@@ -5,7 +5,7 @@ compiler: gcc
 branches:
   only:
     - master
-    - 2.0
+    - "2.0"
 matrix:
   fast_finish: true
   include:
