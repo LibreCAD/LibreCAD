@@ -14,7 +14,7 @@ which will hopefully be released by the first solstice of 2016.
 - https://github.com/LibreCAD/LibreCAD/milestones/2.1.0
 - http://forum.librecad.org/GUI-update-td5712246.html
 
-The 2.0 branch represents the latest stable build (2.0.9) plus bug fixes.
+The 2.0 branch represents the latest stable build (2.0.9) plus bug fixes. [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=2.0)](https://travis-ci.org/LibreCAD/LibreCAD) 
 
 [libdxfrw][1] is an associated project that allows LibreCAD to read DWG files.
 [1]:https://sourceforge.net/projects/libdxfrw/
