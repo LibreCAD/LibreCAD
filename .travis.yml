@@ -2,6 +2,10 @@ language: cpp
 sudo: required
 dist: trusty
 compiler: gcc
+branches:
+  only:
+    - master
+    - "2.0"
 matrix:
   fast_finish: true
   include:
