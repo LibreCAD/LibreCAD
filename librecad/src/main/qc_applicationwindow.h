@@ -197,6 +197,7 @@ public slots:
     void updateDevice(QString);
 
     void invokeDoubleClickMenuCreator();
+    void invokeCustomToolbarCreator();
 
 signals:
     void gridChanged(bool on);

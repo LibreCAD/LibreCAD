@@ -26,7 +26,6 @@
 #include "lc_widgetfactory.h"
 #include "lc_actionfactory.h"
 #include "lc_dockwidget.h"
-#include "lc_customtoolbar.h"
 
 #include "qg_actionhandler.h"
 #include "qg_snaptoolbar.h"
@@ -111,13 +110,6 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["PolylineTrim"]
             << a_map["PolylineEquidistant"]
             << a_map["PolylineSegment"];
-
-    misc_actions
-            << a_map["DrawMText"]
-            << a_map["DrawHatch"]
-            << a_map["DrawImage"]
-            << a_map["BlocksCreate"]
-            << a_map["DrawPoint"];
 
     select_actions
             << a_map["DeselectAll"]
@@ -352,6 +344,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
     order_toolbar->addAction(a_map["OrderBottom"]);
     order_toolbar->addAction(a_map["OrderRaise"]);
     order_toolbar->addAction(a_map["OrderLower"]);
+    order_toolbar->hide();
 
     QToolBar* view_toolbar = new QToolBar(QC_ApplicationWindow::tr("View"), main_window);
     view_toolbar->setObjectName("view_toolbar");
@@ -381,11 +374,6 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
     options_toolbar->setSizePolicy(toolBarPolicy);
     options_toolbar->setObjectName("options_toolbar");
 
-    QToolBar* misc_toolbar = new QToolBar(QC_ApplicationWindow::tr("Misc"), main_window);
-    misc_toolbar->setSizePolicy(toolBarPolicy);
-    misc_toolbar->setObjectName("misc_toolbar");
-    misc_toolbar->addActions(misc_actions);
-
     // <[~ Dock Areas Toolbar ~]>
 
     QToolBar* dockareas_toolbar = new QToolBar(main_window);
@@ -408,7 +396,6 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
     main_window->addToolBar(Qt::TopToolBarArea, options_toolbar);
 
     main_window->addToolBar(Qt::LeftToolBarArea, order_toolbar);
-    main_window->addToolBar(Qt::LeftToolBarArea, misc_toolbar);
 
     main_window->addToolBar(Qt::BottomToolBarArea, snap_toolbar);
     main_window->addToolBar(Qt::BottomToolBarArea, dockareas_toolbar);
@@ -550,28 +537,6 @@ QToolBar* LC_WidgetFactory::createCategoriesToolbar()
     main_window->addToolBar(Qt::LeftToolBarArea, categories_toolbar);
 
     return categories_toolbar;
-}
-
-/**
- * @return pointer to the custom toolbar or nullptr if the file was not found
- */
-LC_CustomToolbar* LC_WidgetFactory::createCustomToolbar(const QString& path
-                                                       ,QActionGroup* tools)
-{
-    LC_CustomToolbar* custom_toolbar = nullptr;
-
-    if (QFile::exists(path))
-    {
-        custom_toolbar = new LC_CustomToolbar(main_window);
-        custom_toolbar->setWindowTitle(QC_ApplicationWindow::tr("Custom"));
-        custom_toolbar->actions_from_file(path, a_map);
-        custom_toolbar->setObjectName("custom_toolbar");
-        custom_toolbar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        connect(tools, SIGNAL(triggered(QAction*)),
-                custom_toolbar, SLOT(slot_most_recent_action(QAction*)));
-        main_window->addToolBar(Qt::TopToolBarArea, custom_toolbar);
-    }
-    return custom_toolbar;
 }
 
 void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
@@ -842,6 +807,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     widgets_menu->addMenu(dockwidgets_menu);
     widgets_menu->addMenu(toolbars_menu);
     widgets_menu->addAction(a_map["CreateDoubleClickMenu"]);
+    widgets_menu->addAction(a_map["CreateCustomToolbars"]);
 
     // <[~ MenuBar Layout~]>
 

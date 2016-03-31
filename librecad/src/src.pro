@@ -680,7 +680,6 @@ HEADERS += ui/lc_actionfactory.h \
     ui/lc_widgetfactory.h \
     ui/twostackedlabels.h \
     ui/qg_commandhistory.h \
-    ui/lc_customtoolbar.h \
     ui/lc_dockwidget.h \
     ui/forms/lc_dlgsplinepoints.h \
     ui/forms/lc_widgetoptionsdialog.h \
@@ -689,7 +688,8 @@ HEADERS += ui/lc_actionfactory.h \
     ui/lc_deviceoptions.h \
     ui/generic/comboboxoption.h \
     ui/generic/actionlist.h \
-    ui/generic/customwidgetcreator.h
+    ui/generic/customwidgetcreator.h \
+    ui/generic/customtoolbarcreator.h
 
 SOURCES += ui/lc_actionfactory.cpp \
     ui/qg_actionhandler.cpp \
@@ -778,7 +778,6 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/lc_widgetfactory.cpp \
     ui/twostackedlabels.cpp \
     ui/qg_commandhistory.cpp \
-    ui/lc_customtoolbar.cpp \
     ui/lc_dockwidget.cpp \
     ui/forms/lc_dlgsplinepoints.cpp \
     ui/forms/lc_widgetoptionsdialog.cpp \
@@ -787,7 +786,8 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/lc_deviceoptions.cpp \
     ui/generic/comboboxoption.cpp \
     ui/generic/actionlist.cpp \
-    ui/generic/customwidgetcreator.cpp
+    ui/generic/customwidgetcreator.cpp \
+    ui/generic/customtoolbarcreator.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_arcoptions.ui \
@@ -860,7 +860,8 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/lc_widgetoptionsdialog.ui \
     ui/lc_deviceoptions.ui \
     ui/generic/comboboxoption.ui \
-    ui/generic/customwidgetcreator.ui
+    ui/generic/customwidgetcreator.ui \
+    ui/generic/customtoolbarcreator.ui
 
 RESOURCES += ../res/ui/ui.qrc
 

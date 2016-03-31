@@ -95,6 +95,7 @@
 #include "lc_printing.h"
 #include "actionlist.h"
 #include "customwidgetcreator.h"
+#include "customtoolbarcreator.h"
 
 #include <boost/version.hpp>
 
@@ -106,7 +107,6 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
 #ifndef QC_ABOUT_ICON
 # define QC_ABOUT_ICON ":/main/intro_librecad.png"
 #endif
-
 
 /*	- Window Title Bar Extra (character) Size.
  *	- Notes: Extra characters appearing in the windows title bar
@@ -211,19 +211,36 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     widget_factory.createCategoriesToolbar();
     widget_factory.createStandardToolbars(actionHandler);
 
-    QString path = RS_SETTINGS->readEntry("/Paths/CustomToolbar");
-
-    LC_CustomToolbar* custom_toolbar = nullptr;
-
-    if (!path.isEmpty())
+    settings.beginGroup("CustomToolbars");
+    foreach (auto key, settings.childKeys())
     {
-        custom_toolbar = widget_factory.createCustomToolbar(path, a_factory.tool_group);
-
-        if (custom_toolbar == nullptr)
+        auto toolbar = new QToolBar(key, this);
+        toolbar->setObjectName(key);
+        foreach (auto action, settings.value(key).toStringList())
         {
-            RS_DEBUG->print("The custom toolbar file was not found.");
-            RS_SETTINGS->writeEntry("/Paths/CustomToolbar", QString::null);
+            toolbar->addAction(a_map[action]);
         }
+        addToolBar(toolbar);
+    }
+    settings.endGroup();
+
+    if (settings.value("Startup/FirstLoad", 1).toBool())
+    {
+        QStringList list;
+        list << "DrawMText"
+             << "DrawHatch"
+             << "DrawImage"
+             << "BlocksCreate"
+             << "DrawPoint";
+
+        auto toolbar = new QToolBar("DefaultCustom", this);
+        toolbar->setObjectName("DefaultCustom");
+        foreach (auto action, list)
+        {
+            toolbar->addAction(a_map[action]);
+        }
+        settings.setValue("CustomToolbars/DefaultCustom", list);
+        addToolBar(Qt::LeftToolBarArea, toolbar);
     }
 
     widget_factory.createMenus(menuBar());
@@ -2900,5 +2917,45 @@ void QC_ApplicationWindow::createDoubleClickMenu(const QStringList& s_list)
             menu->addAction(a_map[key]);
         }
         graphic_view->setDoubleClickMenu(menu);
+    }
+}
+
+void QC_ApplicationWindow::invokeCustomToolbarCreator()
+{
+    // author: ravas
+
+    QDialog dlg;
+    dlg.setWindowTitle(tr("Toolbar Creator"));
+    auto layout = new QVBoxLayout;
+    auto toolbar_creator = new CustomToolbarCreator(&dlg, a_map);
+    toolbar_creator->addCustomWidgets("CustomToolbars");
+    layout->addWidget(toolbar_creator);
+    dlg.setLayout(layout);
+    if (dlg.exec())
+    {
+        QSettings settings;
+        QStringList a_list = toolbar_creator->getChosenActions();
+        if (!a_list.isEmpty())
+        {
+            auto toolbar_name = toolbar_creator->getToolbarName();
+            auto tb = QString("CustomToolbars/%1").arg(toolbar_name);
+            settings.setValue(tb, a_list);
+
+            auto toolbar = findChild<QToolBar*>(toolbar_name);
+
+            if (toolbar)
+                toolbar->clear();
+            else
+            {
+                toolbar = new QToolBar(toolbar_name, this);
+                toolbar->setObjectName(toolbar_name);
+            }
+
+            foreach (auto key, a_list)
+            {
+                toolbar->addAction(a_map[key]);
+            }
+            addToolBar(Qt::BottomToolBarArea, toolbar);
+        }
     }
 }

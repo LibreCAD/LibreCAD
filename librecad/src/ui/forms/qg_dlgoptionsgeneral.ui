@@ -805,15 +805,54 @@
        <string>&amp;Paths</string>
       </attribute>
       <layout class="QGridLayout">
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>Custom Toolbar:</string>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="lePathFonts"/>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="lePathLibrary"/>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="leTemplate"/>
+       </item>
+       <item row="5" column="2">
+        <widget class="QToolButton" name="btTemplate">
+         <property name="icon">
+          <iconset resource="../../../res/extui/extui.qrc">
+           <normaloff>:/extui/fileopen.png</normaloff>:/extui/fileopen.png</iconset>
          </property>
         </widget>
        </item>
+       <item row="6" column="0">
+        <spacer name="spacer5">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>31</width>
+           <height>71</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item row="6" column="1">
-        <widget class="QLineEdit" name="le_custom_toolbar"/>
+        <spacer name="spacer5_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>31</width>
+           <height>71</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item row="0" column="0">
         <widget class="QLabel" name="textLabel2">
@@ -855,6 +894,9 @@
          </property>
         </widget>
        </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="lePathTranslations"/>
+       </item>
        <item row="4" column="0">
         <widget class="QLabel" name="textLabel6">
          <property name="text">
@@ -864,6 +906,9 @@
           <bool>false</bool>
          </property>
         </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="lePathHatch"/>
        </item>
        <item row="5" column="0">
         <widget class="QLabel" name="textLabel7">
@@ -875,71 +920,8 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="lePathTranslations"/>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="lePathHatch"/>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="lePathFonts"/>
-       </item>
        <item row="3" column="1">
         <widget class="QLineEdit" name="lePathScripts"/>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLineEdit" name="lePathLibrary"/>
-       </item>
-       <item row="5" column="1">
-        <widget class="QLineEdit" name="leTemplate"/>
-       </item>
-       <item row="5" column="2">
-        <widget class="QToolButton" name="btTemplate">
-         <property name="icon">
-          <iconset resource="../../../res/extui/extui.qrc">
-           <normaloff>:/extui/fileopen.png</normaloff>:/extui/fileopen.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <spacer name="spacer5">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Expanding</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>31</width>
-           <height>71</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="7" column="1">
-        <spacer name="spacer5_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Expanding</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>31</width>
-           <height>71</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="6" column="2">
-        <widget class="QToolButton" name="bt_custom_toolbar">
-         <property name="icon">
-          <iconset resource="../../../res/extui/extui.qrc">
-           <normaloff>:/extui/fileopen.png</normaloff>:/extui/fileopen.png</iconset>
-         </property>
-        </widget>
        </item>
       </layout>
      </widget>
@@ -1198,8 +1180,8 @@
   <tabstop>lePathHatch</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../res/ui/ui.qrc"/>
   <include location="../../../res/extui/extui.qrc"/>
+  <include location="../../../res/ui/ui.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -1279,22 +1261,6 @@
     <hint type="destinationlabel">
      <x>322</x>
      <y>201</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bt_custom_toolbar</sender>
-   <signal>clicked()</signal>
-   <receiver>QG_DlgOptionsGeneral</receiver>
-   <slot>set_toolbar_file()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>678</x>
-     <y>213</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>700</x>
-     <y>248</y>
     </hint>
    </hints>
   </connection>

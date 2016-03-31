@@ -40,8 +40,6 @@ public:
     void createRightSidebar(QG_ActionHandler* action_handler);
 
     QToolBar* createCategoriesToolbar();
-    LC_CustomToolbar* createCustomToolbar(const QString& path
-                                         ,QActionGroup* tools);
 
     // --- tagged widgets ---
 
@@ -68,7 +66,6 @@ private:
     QList<QAction*> curve_actions;
     QList<QAction*> ellipse_actions;
     QList<QAction*> polyline_actions;
-    QList<QAction*> misc_actions;
     QList<QAction*> select_actions;
     QList<QAction*> dimension_actions;
     QList<QAction*> modify_actions;
