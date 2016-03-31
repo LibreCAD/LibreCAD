@@ -970,6 +970,7 @@ void QG_GraphicView::setCursorHiding(bool state)
 
 void QG_GraphicView::setDoubleClickMenu(QMenu* menu)
 {
+    if (doubleclick_menu) delete doubleclick_menu;
     doubleclick_menu = menu;
 }
 
