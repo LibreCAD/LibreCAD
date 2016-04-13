@@ -22,24 +22,27 @@
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
        <widget class="QComboBox" name="device_combobox">
+        <property name="currentText">
+         <string notr="true">Mouse</string>
+        </property>
         <item>
          <property name="text">
-          <string>Mouse</string>
+          <string notr="true">Mouse</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>Tablet</string>
+          <string notr="true">Tablet</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>Trackpad</string>
+          <string notr="true">Trackpad</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>Touchscreen</string>
+          <string notr="true">Touchscreen</string>
          </property>
         </item>
        </widget>

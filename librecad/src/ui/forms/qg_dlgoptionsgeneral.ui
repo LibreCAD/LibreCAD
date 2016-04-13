@@ -82,9 +82,12 @@
             <property name="editable">
              <bool>true</bool>
             </property>
+            <property name="currentText">
+             <string notr="true">#739373</string>
+            </property>
             <item>
              <property name="text">
-              <string>#739373</string>
+              <string notr="true">#739373</string>
              </property>
             </item>
            </widget>
@@ -110,9 +113,12 @@
             <property name="editable">
              <bool>true</bool>
             </property>
+            <property name="currentText">
+             <string notr="true">#A54747</string>
+            </property>
             <item>
              <property name="text">
-              <string>#A54747</string>
+              <string notr="true">#A54747</string>
              </property>
             </item>
            </widget>
@@ -138,9 +144,12 @@
             <property name="editable">
              <bool>true</bool>
             </property>
+            <property name="currentText">
+             <string notr="true">#736F6E</string>
+            </property>
             <item>
              <property name="text">
-              <string>#736F6E</string>
+              <string notr="true">#736F6E</string>
              </property>
             </item>
            </widget>
@@ -182,19 +191,22 @@
             <property name="editable">
              <bool>true</bool>
             </property>
+            <property name="currentText">
+             <string notr="true">#000000</string>
+            </property>
             <item>
              <property name="text">
-              <string>#000000</string>
+              <string notr="true">#000000</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>#FFFFFF</string>
+              <string notr="true">#FFFFFF</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>#F0F8FF</string>
+              <string notr="true">#F0F8FF</string>
              </property>
             </item>
            </widget>
@@ -207,9 +219,12 @@
             <property name="editable">
              <bool>true</bool>
             </property>
+            <property name="currentText">
+             <string notr="true">#404040</string>
+            </property>
             <item>
              <property name="text">
-              <string>#404040</string>
+              <string notr="true">#404040</string>
              </property>
             </item>
            </widget>
@@ -222,9 +237,12 @@
             <property name="editable">
              <bool>true</bool>
             </property>
+            <property name="currentText">
+             <string notr="true">#00FFFF</string>
+            </property>
             <item>
              <property name="text">
-              <string>#00FFFF</string>
+              <string notr="true">#00FFFF</string>
              </property>
             </item>
            </widget>
@@ -247,9 +265,12 @@
             <property name="editable">
              <bool>true</bool>
             </property>
+            <property name="currentText">
+             <string notr="true">#0000FF</string>
+            </property>
             <item>
              <property name="text">
-              <string>#0000FF</string>
+              <string notr="true">#0000FF</string>
              </property>
             </item>
            </widget>
@@ -285,9 +306,12 @@
             <property name="editable">
              <bool>true</bool>
             </property>
+            <property name="currentText">
+             <string notr="true">#0000FF</string>
+            </property>
             <item>
              <property name="text">
-              <string>#0000FF</string>
+              <string notr="true">#0000FF</string>
              </property>
             </item>
            </widget>
@@ -310,9 +334,12 @@
             <property name="editable">
              <bool>true</bool>
             </property>
+            <property name="currentText">
+             <string notr="true">#FFC200</string>
+            </property>
             <item>
              <property name="text">
-              <string>#FFC200</string>
+              <string notr="true">#FFC200</string>
              </property>
             </item>
             <item>
@@ -502,9 +529,12 @@
             <property name="editable">
              <bool>true</bool>
             </property>
+            <property name="currentText">
+             <string notr="true">#CCFFCC</string>
+            </property>
             <item>
              <property name="text">
-              <string>#CCFFCC</string>
+              <string notr="true">#CCFFCC</string>
              </property>
             </item>
            </widget>
@@ -603,24 +633,27 @@
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
+            <property name="currentText">
+             <string notr="true">Crosshair</string>
+            </property>
             <item>
              <property name="text">
-              <string>Crosshair</string>
+              <string notr="true">Crosshair</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Crosshair2</string>
+              <string notr="true">Crosshair2</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Isometric</string>
+              <string notr="true">Isometric</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Spiderweb</string>
+              <string notr="true">Spiderweb</string>
              </property>
             </item>
            </widget>
@@ -637,19 +670,22 @@
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
+            <property name="currentText">
+             <string notr="true">Circle</string>
+            </property>
             <item>
              <property name="text">
-              <string>Circle</string>
+              <string notr="true">Circle</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Point</string>
+              <string notr="true">Point</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Square</string>
+              <string notr="true">Square</string>
              </property>
             </item>
            </widget>
