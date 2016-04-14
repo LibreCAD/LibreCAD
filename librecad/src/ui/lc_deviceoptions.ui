@@ -23,7 +23,7 @@
       <item row="0" column="0">
        <widget class="QComboBox" name="device_combobox">
         <property name="currentText">
-         <string>Mouse</string>
+         <string notr="true">Mouse</string>
         </property>
         <item>
          <property name="text">
