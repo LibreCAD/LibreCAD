@@ -83,7 +83,7 @@
              <bool>true</bool>
             </property>
             <property name="currentText">
-             <string notr="true">#739373</string>
+             <string>#739373</string>
             </property>
             <item>
              <property name="text">
@@ -114,7 +114,7 @@
              <bool>true</bool>
             </property>
             <property name="currentText">
-             <string notr="true">#A54747</string>
+             <string>#A54747</string>
             </property>
             <item>
              <property name="text">
@@ -145,7 +145,7 @@
              <bool>true</bool>
             </property>
             <property name="currentText">
-             <string notr="true">#736F6E</string>
+             <string>#736F6E</string>
             </property>
             <item>
              <property name="text">
@@ -192,7 +192,7 @@
              <bool>true</bool>
             </property>
             <property name="currentText">
-             <string notr="true">#000000</string>
+             <string>#000000</string>
             </property>
             <item>
              <property name="text">
@@ -220,7 +220,7 @@
              <bool>true</bool>
             </property>
             <property name="currentText">
-             <string notr="true">#404040</string>
+             <string>#404040</string>
             </property>
             <item>
              <property name="text">
@@ -238,7 +238,7 @@
              <bool>true</bool>
             </property>
             <property name="currentText">
-             <string notr="true">#00FFFF</string>
+             <string>#00FFFF</string>
             </property>
             <item>
              <property name="text">
@@ -266,7 +266,7 @@
              <bool>true</bool>
             </property>
             <property name="currentText">
-             <string notr="true">#0000FF</string>
+             <string>#0000FF</string>
             </property>
             <item>
              <property name="text">
@@ -307,7 +307,7 @@
              <bool>true</bool>
             </property>
             <property name="currentText">
-             <string notr="true">#0000FF</string>
+             <string>#0000FF</string>
             </property>
             <item>
              <property name="text">
@@ -335,7 +335,7 @@
              <bool>true</bool>
             </property>
             <property name="currentText">
-             <string notr="true">#FFC200</string>
+             <string>#FFC200</string>
             </property>
             <item>
              <property name="text">
@@ -530,7 +530,7 @@
              <bool>true</bool>
             </property>
             <property name="currentText">
-             <string notr="true">#CCFFCC</string>
+             <string>#CCFFCC</string>
             </property>
             <item>
              <property name="text">
@@ -634,7 +634,7 @@
              <string notr="true"/>
             </property>
             <property name="currentText">
-             <string notr="true">Crosshair</string>
+             <string>Crosshair</string>
             </property>
             <item>
              <property name="text">
@@ -671,7 +671,7 @@
              <string notr="true"/>
             </property>
             <property name="currentText">
-             <string notr="true">Circle</string>
+             <string>Circle</string>
             </property>
             <item>
              <property name="text">
