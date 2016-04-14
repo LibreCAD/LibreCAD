@@ -46,14 +46,12 @@ unix {
     macx {
         TARGET = LibreCAD
         DEFINES += QC_APPDIR="\"LibreCAD\""
-        DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
         RC_FILE = ../res/main/librecad.icns
         QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-osx.sh
     }
     else {
         TARGET = librecad
         DEFINES += QC_APPDIR="\"librecad\""
-        DEFINES += QINITIMAGES_LIBRECAD="qInitImages_librecad"
         RC_FILE = ../res/main/librecad.icns
         QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-unix.sh
     }
@@ -61,7 +59,6 @@ unix {
 win32 {
     TARGET = LibreCAD
     DEFINES += QC_APPDIR="\"LibreCAD\""
-    DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
 
     # add MSYSGIT_DIR = PathToGitBinFolder (without quotes) in custom.pro file, for commit hash in about dialog
     !isEmpty( MSYSGIT_DIR ) {

@@ -42,9 +42,6 @@
 #include "qc_applicationwindow.h"
 #include "rs_debug.h"
 
-// for image mime resources from png files
-extern void QINITIMAGES_LIBRECAD();
-
 /**
  * Main. Creates Application window.
  */
