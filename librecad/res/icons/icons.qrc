@@ -46,5 +46,9 @@
         <file>settings.svg</file>
         <file>redo.svg</file>
         <file>undo.svg</file>
+        <file>text.svg</file>
+        <file>hatch.svg</file>
+        <file>create_block.svg</file>
+        <file>points.svg</file>
     </qresource>
 </RCC>

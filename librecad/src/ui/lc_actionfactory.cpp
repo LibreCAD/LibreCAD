@@ -123,7 +123,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     // <[~ Draw ~]>
 
     action = new QAction(tr("&Points"), tool_group);
-    action->setIcon(QIcon(":/extui/points.png"));
+    action->setIcon(QIcon(":/icons/points.svg"));
 
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawPoint()));
@@ -469,20 +469,21 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
 
     // <[~ Misc ~]>
 
-    action = new QAction(QIcon(":/extui/menutext.png"), tr("&MText"), tool_group);
+    action = new QAction(QIcon(":/icons/text.svg"), tr("&MText"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawMText()));
     action->setObjectName("DrawMText");
     a_map["DrawMText"] = action;
 
     action = new QAction(tr("&Text"), tool_group);
-    action->setIcon(QIcon(":/extui/menutext.png"));
+    action->setIcon(QIcon(":/icons/text.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawText()));
     action->setObjectName("DrawText");
     a_map["DrawText"] = action;
 
-    action = new QAction(QIcon(":/extui/menuhatch.png"), tr("&Hatch"), tool_group);
+    action = new QAction(tr("&Hatch"), tool_group);
+    action->setIcon(QIcon(":/icons/hatch.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawHatch()));
     action->setObjectName("DrawHatch");
@@ -969,7 +970,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     a_map["BlocksToggleView"] = action;
 
     action = new QAction(tr("&Create Block"), disable_group);
-    action->setIcon(QIcon(":/extui/menublock.png"));
+    action->setIcon(QIcon(":/icons/create_block.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksCreate()));
     action->setObjectName("BlocksCreate");
