@@ -855,7 +855,6 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
 
     action = new QAction(QIcon(":/ui/layeradd.png"),
                          tr("&Add Layer"), disable_group);
-    action->setShortcut(QKeySequence("Ctrl+L"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersAdd()));
     action->setObjectName("LayersAdd");

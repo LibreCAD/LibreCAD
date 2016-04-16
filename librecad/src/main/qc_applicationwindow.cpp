@@ -200,6 +200,9 @@ QC_ApplicationWindow::QC_ApplicationWindow()
         setIconSize(QSize(icon_size, icon_size));
 
     actionHandler = new QG_ActionHandler(this);
+    QShortcut* shortcut = new QShortcut(QKeySequence("Ctrl+L"), this);
+    connect(shortcut, SIGNAL(activated()), actionHandler, SLOT(slotLayersAdd()));
+
     LC_ActionFactory a_factory(this, actionHandler);
     a_factory.fillActionContainer(a_map);
     LC_WidgetFactory widget_factory(this, a_map);
