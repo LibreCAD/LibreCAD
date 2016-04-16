@@ -2936,11 +2936,11 @@ void QC_ApplicationWindow::invokeCustomToolbarCreator()
     dlg.setLayout(layout);
     if (dlg.exec())
     {
-        QSettings settings;
         QStringList a_list = toolbar_creator->getChosenActions();
-        if (!a_list.isEmpty())
+        QString toolbar_name = toolbar_creator->getToolbarName();
+        if (!a_list.isEmpty() && !toolbar_name.isEmpty())
         {
-            auto toolbar_name = toolbar_creator->getToolbarName();
+            QSettings settings;
             auto tb = QString("CustomToolbars/%1").arg(toolbar_name);
             settings.setValue(tb, a_list);
 
