@@ -214,6 +214,12 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     widget_factory.createCategoriesToolbar();
     widget_factory.createStandardToolbars(actionHandler);
 
+    foreach(auto action, widget_factory.snap_toolbar->actions())
+    {
+        if(!action->objectName().isEmpty())
+            a_map[action->objectName()] = action;
+    }
+
     settings.beginGroup("CustomToolbars");
     foreach (auto key, settings.childKeys())
     {
