@@ -39,6 +39,11 @@ private slots:
 
     void addWidget();
     void removeWidget();
+    void create();
+
+signals:
+    void widgetToCreate(QString);
+    void widgetToDestroy(QString);
 };
 
 #endif // CUSTOMTOOLBARCREATOR_H

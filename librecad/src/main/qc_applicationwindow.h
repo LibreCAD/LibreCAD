@@ -198,6 +198,8 @@ public slots:
 
     void invokeDoubleClickMenuCreator();
     void invokeCustomToolbarCreator();
+    void createToolbar(const QString& toolbar_name);
+    void destroyToolbar(const QString& toolbar_name);
 
 signals:
     void gridChanged(bool on);

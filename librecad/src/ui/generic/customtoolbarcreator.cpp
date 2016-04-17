@@ -57,7 +57,7 @@ CustomToolbarCreator::CustomToolbarCreator(QWidget* parent,
 
     connect(ui->combo, SIGNAL(activated(QString)), this, SLOT(setLists(QString)));
 
-    connect(ui->save_button, SIGNAL(released()), parent, SLOT(accept()));
+    connect(ui->save_button, SIGNAL(released()), this, SLOT(create()));
 }
 
 CustomToolbarCreator::~CustomToolbarCreator()
@@ -145,6 +145,7 @@ void CustomToolbarCreator::removeWidget()
         QSettings settings;
         settings.remove(QString("%1/%2").arg(w_group).arg(key));
         ui->chosen_actions->clear();
+        emit widgetToDestroy(key);
     }
 }
 
@@ -178,4 +179,16 @@ void CustomToolbarCreator::setLists(QString key)
 QString CustomToolbarCreator::getToolbarName()
 {
     return ui->combo->lineEdit()->text();
+}
+
+void CustomToolbarCreator::create()
+{
+    QStringList a_list = getChosenActions();
+    if (!a_list.isEmpty() && !w_key.isEmpty())
+    {
+        QSettings settings;
+        auto widget = QString("%1/%2").arg(w_group).arg(w_key);
+        settings.setValue(widget, a_list);
+        emit widgetToCreate(w_key);
+    }
 }

@@ -2933,38 +2933,55 @@ void QC_ApplicationWindow::invokeCustomToolbarCreator()
 {
     // author: ravas
 
-    QDialog dlg;
-    dlg.setWindowTitle(tr("Toolbar Creator"));
-    auto layout = new QVBoxLayout;
-    auto toolbar_creator = new CustomToolbarCreator(&dlg, a_map);
+    if (findChild<QDialog*>("Toolbar Creator")) return;
+
+    auto dlg = new QDialog(this);
+    dlg->setAttribute(Qt::WA_DeleteOnClose);
+    dlg->setWindowTitle(tr("Toolbar Creator"));
+    dlg->setObjectName("Toolbar Creator");
+
+    auto toolbar_creator = new CustomToolbarCreator(dlg, a_map);
     toolbar_creator->addCustomWidgets("CustomToolbars");
+
+    connect(toolbar_creator, SIGNAL(widgetToCreate(QString)),
+            this, SLOT(createToolbar(QString)));
+    connect(toolbar_creator, SIGNAL(widgetToDestroy(QString)),
+            this, SLOT(destroyToolbar(QString)));
+
+    auto layout = new QVBoxLayout;
     layout->addWidget(toolbar_creator);
-    dlg.setLayout(layout);
-    if (dlg.exec())
+    dlg->setLayout(layout);
+
+    dlg->show();
+}
+
+void QC_ApplicationWindow::createToolbar(const QString& toolbar_name)
+{
+    // author: ravas
+
+    QSettings settings;
+    auto tb = QString("CustomToolbars/%1").arg(toolbar_name);
+    auto a_list = settings.value(tb).toStringList();
+
+    auto toolbar = findChild<QToolBar*>(toolbar_name);
+
+    if (toolbar)
+        toolbar->clear();
+    else
     {
-        QStringList a_list = toolbar_creator->getChosenActions();
-        QString toolbar_name = toolbar_creator->getToolbarName();
-        if (!a_list.isEmpty() && !toolbar_name.isEmpty())
-        {
-            QSettings settings;
-            auto tb = QString("CustomToolbars/%1").arg(toolbar_name);
-            settings.setValue(tb, a_list);
-
-            auto toolbar = findChild<QToolBar*>(toolbar_name);
-
-            if (toolbar)
-                toolbar->clear();
-            else
-            {
-                toolbar = new QToolBar(toolbar_name, this);
-                toolbar->setObjectName(toolbar_name);
-            }
-
-            foreach (auto key, a_list)
-            {
-                toolbar->addAction(a_map[key]);
-            }
-            addToolBar(Qt::BottomToolBarArea, toolbar);
-        }
+        toolbar = new QToolBar(toolbar_name, this);
+        toolbar->setObjectName(toolbar_name);
     }
+
+    foreach (auto key, a_list)
+    {
+        toolbar->addAction(a_map[key]);
+    }
+    addToolBar(Qt::BottomToolBarArea, toolbar);
+}
+
+void QC_ApplicationWindow::destroyToolbar(const QString& toolbar_name)
+{
+    auto toolbar = findChild<QToolBar*>(toolbar_name);
+    if (toolbar) delete toolbar;
 }
