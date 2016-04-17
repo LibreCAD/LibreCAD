@@ -82,9 +82,6 @@
             <property name="editable">
              <bool>true</bool>
             </property>
-            <property name="currentText">
-             <string notr="true">#739373</string>
-            </property>
             <item>
              <property name="text">
               <string notr="true">#739373</string>
@@ -113,9 +110,6 @@
             <property name="editable">
              <bool>true</bool>
             </property>
-            <property name="currentText">
-             <string notr="true">#A54747</string>
-            </property>
             <item>
              <property name="text">
               <string notr="true">#A54747</string>
@@ -143,9 +137,6 @@
             </property>
             <property name="editable">
              <bool>true</bool>
-            </property>
-            <property name="currentText">
-             <string notr="true">#736F6E</string>
             </property>
             <item>
              <property name="text">
@@ -191,9 +182,6 @@
             <property name="editable">
              <bool>true</bool>
             </property>
-            <property name="currentText">
-             <string notr="true">#000000</string>
-            </property>
             <item>
              <property name="text">
               <string notr="true">#000000</string>
@@ -219,9 +207,6 @@
             <property name="editable">
              <bool>true</bool>
             </property>
-            <property name="currentText">
-             <string notr="true">#404040</string>
-            </property>
             <item>
              <property name="text">
               <string notr="true">#404040</string>
@@ -236,9 +221,6 @@
             </property>
             <property name="editable">
              <bool>true</bool>
-            </property>
-            <property name="currentText">
-             <string notr="true">#00FFFF</string>
             </property>
             <item>
              <property name="text">
@@ -264,9 +246,6 @@
             </property>
             <property name="editable">
              <bool>true</bool>
-            </property>
-            <property name="currentText">
-             <string notr="true">#0000FF</string>
             </property>
             <item>
              <property name="text">
@@ -306,9 +285,6 @@
             <property name="editable">
              <bool>true</bool>
             </property>
-            <property name="currentText">
-             <string notr="true">#0000FF</string>
-            </property>
             <item>
              <property name="text">
               <string notr="true">#0000FF</string>
@@ -333,9 +309,6 @@
             </property>
             <property name="editable">
              <bool>true</bool>
-            </property>
-            <property name="currentText">
-             <string notr="true">#FFC200</string>
             </property>
             <item>
              <property name="text">
@@ -529,9 +502,6 @@
             <property name="editable">
              <bool>true</bool>
             </property>
-            <property name="currentText">
-             <string notr="true">#CCFFCC</string>
-            </property>
             <item>
              <property name="text">
               <string notr="true">#CCFFCC</string>
@@ -633,9 +603,6 @@
             <property name="accessibleDescription">
              <string notr="true"/>
             </property>
-            <property name="currentText">
-             <string notr="true">Crosshair</string>
-            </property>
             <item>
              <property name="text">
               <string notr="true">Crosshair</string>
@@ -669,9 +636,6 @@
            <widget class="QComboBox" name="indicator_shape_combobox">
             <property name="accessibleDescription">
              <string notr="true"/>
-            </property>
-            <property name="currentText">
-             <string notr="true">Circle</string>
             </property>
             <item>
              <property name="text">
