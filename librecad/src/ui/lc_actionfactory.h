@@ -30,6 +30,7 @@
 
 class QActionGroup;
 class QAction;
+class LC_ActionGroupManager;
 
 class LC_ActionFactory : public QObject
 {
@@ -37,10 +38,7 @@ class LC_ActionFactory : public QObject
 
 public:
     LC_ActionFactory(QObject* parent, QObject* a_handler);
-    void fillActionContainer(QMap<QString, QAction*>& a_map);
-
-    QActionGroup* tool_group;
-    QActionGroup* disable_group;
+    void fillActionContainer(QMap<QString, QAction*>& a_map, LC_ActionGroupManager* agm);
 
 private:
     QObject* main_window;

@@ -26,18 +26,26 @@
 
 #include "customtoolbarcreator.h"
 #include "ui_customtoolbarcreator.h"
+#include "lc_actiongroupmanager.h"
 
 #include <QSettings>
 #include <QLineEdit>
 
 CustomToolbarCreator::CustomToolbarCreator(QWidget* parent,
-                                           QMap<QString, QAction*>& action_map)
+                                           QMap<QString, QAction*>& action_map,
+                                           LC_ActionGroupManager* agm)
     : QFrame(parent)
     , ui(new Ui::CustomToolbarCreator)
     , a_map(action_map)
+    , ag_manager(agm)
 {
     ui->setupUi(this);
 
+    foreach (auto ag, ag_manager->findChildren<QActionGroup*>())
+    {
+        ui->categories_combobox->addItem(ag->objectName());
+    }
+    ui->categories_combobox->setCurrentIndex(-1);
     ui->chosen_actions->setDragDropMode(QAbstractItemView::InternalMove);
 
     ui->offered_actions->setSortingEnabled(true);
@@ -58,6 +66,8 @@ CustomToolbarCreator::CustomToolbarCreator(QWidget* parent,
     connect(ui->combo, SIGNAL(activated(QString)), this, SLOT(setLists(QString)));
 
     connect(ui->save_button, SIGNAL(released()), this, SLOT(create()));
+
+    connect(ui->categories_combobox, SIGNAL(activated(QString)), this, SLOT(setCategory(QString)));
 }
 
 CustomToolbarCreator::~CustomToolbarCreator()
@@ -190,5 +200,17 @@ void CustomToolbarCreator::create()
         auto widget = QString("%1/%2").arg(w_group).arg(w_key);
         settings.setValue(widget, a_list);
         emit widgetToCreate(w_key);
+    }
+}
+
+void CustomToolbarCreator::setCategory(QString category)
+{
+    ui->offered_actions->clear();
+    auto chosen_actions = getChosenActions();
+    auto action_group = ag_manager->findChild<QActionGroup*>(category);
+    foreach (auto action, action_group->actions())
+    {
+        if (!chosen_actions.contains(action->objectName()))
+            ui->offered_actions->addActionItem(action);
     }
 }

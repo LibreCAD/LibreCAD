@@ -477,6 +477,8 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     RS_DEBUG->print("RS_EventHandler::setCurrentAction: debugging actions");
     debugActions();
     RS_DEBUG->print("RS_GraphicView::setCurrentAction: OK");
+    if (q_action)
+        q_action->setChecked(true);
 }
 
 
@@ -517,11 +519,9 @@ void RS_EventHandler::killAllActions()
     {
 		if (!p->isFinished())
         {
-            if (right_click_quits)
-            {
+            if (q_action && q_action->isChecked())
                 q_action->setChecked(false);
-                right_click_quits = false;
-            }
+
 			p->finish();
 		}
 	}
@@ -564,10 +564,9 @@ void RS_EventHandler::cleanUp() {
     {
         if( (*it)->isFinished())
         {
-            if (right_click_quits)
+            if (q_action && q_action->isChecked())
             {
                 q_action->setChecked(false);
-                right_click_quits = false;
             }
             delete *it;
             it= currentActions.erase(it);
@@ -638,9 +637,12 @@ void RS_EventHandler::debugActions() const{
 
 void RS_EventHandler::setQAction(QAction* action)
 {
+    if (q_action)
+    {
+        q_action->setChecked(false);
+        killAllActions();
+    }
     q_action = action;
-    right_click_quits = true;
-    killAllActions();
 }
 
 void RS_EventHandler::setRelativeZero(const RS_Vector& point)

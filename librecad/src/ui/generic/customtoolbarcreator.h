@@ -5,6 +5,7 @@
 #include <QList>
 
 class QListWidgetItem;
+class LC_ActionGroupManager;
 
 namespace Ui {
 class CustomToolbarCreator;
@@ -15,7 +16,9 @@ class CustomToolbarCreator : public QFrame
     Q_OBJECT
 
 public:
-    explicit CustomToolbarCreator(QWidget* parent, QMap<QString, QAction*>& action_map);
+    explicit CustomToolbarCreator(QWidget* parent,
+                                  QMap<QString, QAction*>& action_map,
+                                  LC_ActionGroupManager* agm);
     ~CustomToolbarCreator();
 
     QStringList getChosenActions();
@@ -25,6 +28,7 @@ public:
 private:
     Ui::CustomToolbarCreator* ui;
     QMap<QString, QAction*>& a_map;
+    LC_ActionGroupManager* ag_manager;
     QString w_group;
     QString w_key;
 
@@ -40,6 +44,8 @@ private slots:
     void addWidget();
     void removeWidget();
     void create();
+
+    void setCategory(QString);
 
 signals:
     void widgetToCreate(QString);

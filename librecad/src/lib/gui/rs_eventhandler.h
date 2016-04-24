@@ -100,7 +100,6 @@ private:
     bool cliCalculator(const QString& cmd) const;
 
 	QAction* q_action{nullptr};
-	bool right_click_quits{false};
 	RS_ActionInterface* defaultAction{nullptr};
 	QList<RS_ActionInterface*> currentActions;
 	bool coordinateInputEnabled{true};

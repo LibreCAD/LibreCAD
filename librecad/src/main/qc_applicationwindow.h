@@ -56,6 +56,7 @@ class QG_ActionHandler;
 class RS_GraphicView;
 class RS_Document;
 class TwoStackedLabels;
+class LC_ActionGroupManager;
 
 struct LC_Options;
 
@@ -94,9 +95,10 @@ public:
 
     void createDoubleClickMenu(const QStringList& s_list);
 
-    QMap<QString, QAction*> a_map;
-
     std::shared_ptr<LC_Options> options;
+
+    QMap<QString, QAction*> a_map;
+    LC_ActionGroupManager* ag_manager;
 
 public slots:
     void relayAction(QAction* q_action);

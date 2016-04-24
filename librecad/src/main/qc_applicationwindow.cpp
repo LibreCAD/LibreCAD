@@ -96,6 +96,7 @@
 #include "actionlist.h"
 #include "customwidgetcreator.h"
 #include "customtoolbarcreator.h"
+#include "lc_actiongroupmanager.h"
 
 #include <boost/version.hpp>
 
@@ -124,6 +125,8 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
  */
 QC_ApplicationWindow::QC_ApplicationWindow()
     : options(std::make_shared<LC_Options>())
+    , ag_manager(new LC_ActionGroupManager(this))
+    , actionHandler(new QG_ActionHandler(this))
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
@@ -199,12 +202,11 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     if (custom_size)
         setIconSize(QSize(icon_size, icon_size));
 
-    actionHandler = new QG_ActionHandler(this);
     QShortcut* shortcut = new QShortcut(QKeySequence("Ctrl+L"), this);
     connect(shortcut, SIGNAL(activated()), actionHandler, SLOT(slotLayersAdd()));
 
     LC_ActionFactory a_factory(this, actionHandler);
-    a_factory.fillActionContainer(a_map);
+    a_factory.fillActionContainer(a_map, ag_manager);
     LC_WidgetFactory widget_factory(this, a_map);
     if (enable_left_sidebar)
         widget_factory.createLeftSidebar(5, icon_size);
@@ -217,7 +219,10 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     foreach(auto action, widget_factory.snap_toolbar->actions())
     {
         if(!action->objectName().isEmpty())
+        {
+            ag_manager->snap->addAction(action);
             a_map[action->objectName()] = action;
+        }
     }
 
     settings.beginGroup("CustomToolbars");
@@ -2940,7 +2945,7 @@ void QC_ApplicationWindow::invokeCustomToolbarCreator()
     dlg->setWindowTitle(tr("Toolbar Creator"));
     dlg->setObjectName("Toolbar Creator");
 
-    auto toolbar_creator = new CustomToolbarCreator(dlg, a_map);
+    auto toolbar_creator = new CustomToolbarCreator(dlg, a_map, ag_manager);
     toolbar_creator->addCustomWidgets("CustomToolbars");
 
     connect(toolbar_creator, SIGNAL(widgetToCreate(QString)),

@@ -686,7 +686,8 @@ HEADERS += ui/lc_actionfactory.h \
     ui/generic/comboboxoption.h \
     ui/generic/actionlist.h \
     ui/generic/customwidgetcreator.h \
-    ui/generic/customtoolbarcreator.h
+    ui/generic/customtoolbarcreator.h \
+    ui/lc_actiongroupmanager.h
 
 SOURCES += ui/lc_actionfactory.cpp \
     ui/qg_actionhandler.cpp \
@@ -784,7 +785,8 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/generic/comboboxoption.cpp \
     ui/generic/actionlist.cpp \
     ui/generic/customwidgetcreator.cpp \
-    ui/generic/customtoolbarcreator.cpp
+    ui/generic/customtoolbarcreator.cpp \
+    ui/lc_actiongroupmanager.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_arcoptions.ui \
