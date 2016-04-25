@@ -2938,7 +2938,13 @@ void QC_ApplicationWindow::invokeCustomToolbarCreator()
 {
     // author: ravas
 
-    if (findChild<QDialog*>("Toolbar Creator")) return;
+    auto tb_creator = findChild<QDialog*>("Toolbar Creator");
+    if (tb_creator)
+    {
+        tb_creator->raise();
+        tb_creator->activateWindow();
+        return;
+    }
 
     auto dlg = new QDialog(this);
     dlg->setAttribute(Qt::WA_DeleteOnClose);
@@ -2976,13 +2982,13 @@ void QC_ApplicationWindow::createToolbar(const QString& toolbar_name)
     {
         toolbar = new QToolBar(toolbar_name, this);
         toolbar->setObjectName(toolbar_name);
+        addToolBar(Qt::BottomToolBarArea, toolbar);
     }
 
     foreach (auto key, a_list)
     {
         toolbar->addAction(a_map[key]);
     }
-    addToolBar(Qt::BottomToolBarArea, toolbar);
 }
 
 void QC_ApplicationWindow::destroyToolbar(const QString& toolbar_name)
