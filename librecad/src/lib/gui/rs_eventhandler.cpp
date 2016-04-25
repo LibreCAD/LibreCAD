@@ -71,6 +71,11 @@ void RS_EventHandler::back() {
     QMouseEvent e(QEvent::MouseButtonRelease, QPoint(0,0),
                   Qt::RightButton, Qt::RightButton,Qt::NoModifier);
     mouseReleaseEvent(&e);
+    if (!hasAction() && q_action)
+    {
+        q_action->setChecked(false);
+        q_action = nullptr;
+    }
 }
 
 
@@ -515,13 +520,16 @@ void RS_EventHandler::killAllActions()
 {
 	RS_DEBUG->print(__FILE__ ": %s: line %d: begin\n", __func__, __LINE__);
 
+    if (q_action)
+    {
+        q_action->setChecked(false);
+        q_action = nullptr;
+    }
+
 	for(auto p: currentActions)
     {
 		if (!p->isFinished())
         {
-            if (q_action && q_action->isChecked())
-                q_action->setChecked(false);
-
 			p->finish();
 		}
 	}
@@ -564,10 +572,6 @@ void RS_EventHandler::cleanUp() {
     {
         if( (*it)->isFinished())
         {
-            if (q_action && q_action->isChecked())
-            {
-                q_action->setChecked(false);
-            }
             delete *it;
             it= currentActions.erase(it);
         }else{
