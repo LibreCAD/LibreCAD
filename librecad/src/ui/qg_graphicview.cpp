@@ -293,6 +293,18 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
 
     event->accept();
 
+    if (event->modifiers()==Qt::ControlModifier)
+    {
+        if (event->button() == Qt::RightButton)
+        {
+            if (doubleclick_menu)
+            {
+                doubleclick_menu->popup(mapToGlobal(event->pos()));
+                return;
+            }
+        }
+    }
+
     switch (event->button())
     {
     case Qt::RightButton:
