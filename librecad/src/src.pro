@@ -685,8 +685,7 @@ HEADERS += ui/lc_actionfactory.h \
     ui/lc_deviceoptions.h \
     ui/generic/comboboxoption.h \
     ui/generic/actionlist.h \
-    ui/generic/customwidgetcreator.h \
-    ui/generic/customtoolbarcreator.h \
+    ui/generic/widgetcreator.h \
     ui/lc_actiongroupmanager.h
 
 SOURCES += ui/lc_actionfactory.cpp \
@@ -784,8 +783,7 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/lc_deviceoptions.cpp \
     ui/generic/comboboxoption.cpp \
     ui/generic/actionlist.cpp \
-    ui/generic/customwidgetcreator.cpp \
-    ui/generic/customtoolbarcreator.cpp \
+    ui/generic/widgetcreator.cpp \
     ui/lc_actiongroupmanager.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
@@ -859,8 +857,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/lc_widgetoptionsdialog.ui \
     ui/lc_deviceoptions.ui \
     ui/generic/comboboxoption.ui \
-    ui/generic/customwidgetcreator.ui \
-    ui/generic/customtoolbarcreator.ui
+    ui/generic/widgetcreator.ui
 
 RESOURCES += ../res/ui/ui.qrc
 

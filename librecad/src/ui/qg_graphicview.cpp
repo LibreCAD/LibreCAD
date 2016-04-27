@@ -73,7 +73,6 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, Qt::WindowFlags f, RS_Document* 
     ,curHand(new QCursor(QPixmap(":ui/cur_hand_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
     ,redrawMethod(RS2::RedrawAll)
     ,isSmoothScrolling(false)
-    ,doubleclick_menu(nullptr)
 {
     RS_DEBUG->print("QG_GraphicView::QG_GraphicView()..");
 
@@ -276,10 +275,10 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e)
             setCurrentAction(new RS_ActionZoomAuto(*container, *this));
             break;
         case Qt::LeftButton:
-            if (doubleclick_menu)
+            if (menus.contains("Double-Click"))
             {
                 killAllActions();
-                doubleclick_menu->popup(mapToGlobal(e->pos()));
+                menus["Double-Click"]->popup(mapToGlobal(e->pos()));
             }
             break;
     }
@@ -297,9 +296,9 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
     {
         if (event->button() == Qt::RightButton)
         {
-            if (doubleclick_menu)
+            if (menus.contains("Ctrl+Right-Click"))
             {
-                doubleclick_menu->popup(mapToGlobal(event->pos()));
+                menus["Ctrl+Right-Click"]->popup(mapToGlobal(event->pos()));
                 return;
             }
         }
@@ -308,13 +307,19 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
     switch (event->button())
     {
     case Qt::RightButton:
-        if (!eventHandler->hasAction()
-         && !recent_actions.isEmpty())
+        if (!eventHandler->hasAction())
         {
-            QMenu* context_menu = new QMenu(this);
-            context_menu->setAttribute(Qt::WA_DeleteOnClose);
-            context_menu->addActions(recent_actions);
-            context_menu->exec(mapToGlobal(event->pos()));
+            if (menus.contains("Right-Click"))
+            {
+                menus["Right-Click"]->popup(mapToGlobal(event->pos()));
+            }
+            else if (!recent_actions.isEmpty())
+            {
+                QMenu* context_menu = new QMenu(this);
+                context_menu->setAttribute(Qt::WA_DeleteOnClose);
+                context_menu->addActions(recent_actions);
+                context_menu->exec(mapToGlobal(event->pos()));
+            }
         }
         else back();
         break;
@@ -980,12 +985,6 @@ void QG_GraphicView::setCursorHiding(bool state)
     cursor_hiding = state;
 }
 
-void QG_GraphicView::setDoubleClickMenu(QMenu* menu)
-{
-    if (doubleclick_menu) delete doubleclick_menu;
-    doubleclick_menu = menu;
-}
-
 void QG_GraphicView::setCurrentQAction(QAction* q_action)
 {
     eventHandler->setQAction(q_action);
@@ -995,4 +994,21 @@ void QG_GraphicView::setCurrentQAction(QAction* q_action)
         recent_actions.removeOne(q_action);
     }
     recent_actions.prepend(q_action);
+}
+
+void QG_GraphicView::destroyMenu(const QString& menu_name)
+{
+    auto menu = findChild<QMenu*>(menu_name);
+
+    if (menu && menus.contains(menu->title()))
+    {
+        menus.remove(menu->title());
+        delete menu;
+    }
+}
+
+void QG_GraphicView::setMenu(const QString& activator, QMenu* menu)
+{
+    destroyMenu(activator);
+    menus[activator] = menu;
 }

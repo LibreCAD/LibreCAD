@@ -1278,13 +1278,13 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 
     action = new QAction(tr("Menu Creator"), agm->widgets);
     connect(action, SIGNAL(triggered()),
-            main_window, SLOT(invokeDoubleClickMenuCreator()));
-    action->setObjectName("CreateDoubleClickMenu");
-    a_map["CreateDoubleClickMenu"] = action;
+            main_window, SLOT(invokeMenuCreator()));
+    action->setObjectName("InvokeMenuCreator");
+    a_map["InvokeMenuCreator"] = action;
 
     action = new QAction(tr("Toolbar Creator"), agm->widgets);
     connect(action, SIGNAL(triggered()),
-            main_window, SLOT(invokeCustomToolbarCreator()));
-    action->setObjectName("CreateCustomToolbars");
-    a_map["CreateCustomToolbars"] = action;
+            main_window, SLOT(invokeToolbarCreator()));
+    action->setObjectName("InvokeToolbarCreator");
+    a_map["InvokeToolbarCreator"] = action;
 }

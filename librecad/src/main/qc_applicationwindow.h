@@ -92,8 +92,7 @@ public:
     void setRedoEnable(bool enable);
     void setUndoEnable(bool enable);
     bool loadStyleSheet(QString path);
-
-    void createDoubleClickMenu(const QStringList& s_list);
+    void assignMenu(const QString& activator, const QString& menu_name, const QStringList& s_list);
 
     std::shared_ptr<LC_Options> options;
 
@@ -198,10 +197,14 @@ public slots:
 
     void updateDevice(QString);
 
-    void invokeDoubleClickMenuCreator();
-    void invokeCustomToolbarCreator();
+    void invokeMenuCreator();
+    void invokeToolbarCreator();
     void createToolbar(const QString& toolbar_name);
     void destroyToolbar(const QString& toolbar_name);
+    void createMenu(const QString& menu_name);
+    void destroyMenu(const QString& menu_name);
+
+
 
 signals:
     void gridChanged(bool on);

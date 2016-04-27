@@ -811,8 +811,8 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     widgets_menu->addMenu(dockareas_menu);
     widgets_menu->addMenu(dockwidgets_menu);
     widgets_menu->addMenu(toolbars_menu);
-    widgets_menu->addAction(a_map["CreateDoubleClickMenu"]);
-    widgets_menu->addAction(a_map["CreateCustomToolbars"]);
+    widgets_menu->addAction(a_map["InvokeMenuCreator"]);
+    widgets_menu->addAction(a_map["InvokeToolbarCreator"]);
 
     // <[~ MenuBar Layout~]>
 

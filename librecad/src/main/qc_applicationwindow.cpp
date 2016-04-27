@@ -94,8 +94,7 @@
 
 #include "lc_printing.h"
 #include "actionlist.h"
-#include "customwidgetcreator.h"
-#include "customtoolbarcreator.h"
+#include "widgetcreator.h"
 #include "lc_actiongroupmanager.h"
 
 #include <boost/version.hpp>
@@ -1134,8 +1133,17 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     view->options = options;
     if (scrollbars) view->addScrollbars();
 
-    auto s_list = settings.value("CustomWidgets/DoubleClickMenu").toStringList();
-    if (!s_list.isEmpty()) createDoubleClickMenu(s_list);
+    settings.beginGroup("AssignedMenus");
+    auto names = settings.childKeys();
+    settings.endGroup();
+
+    foreach (auto name, names)
+    {
+        auto activator = settings.value("AssignedMenus/"+name).toString();
+        auto path = QString("CustomMenus/%1").arg(name);
+        auto a_list = settings.value(path).toStringList();
+        assignMenu(name, activator, a_list);
+    }
 
     connect(view, SIGNAL(gridStatusChanged(const QString&)),
             this, SLOT(updateGridStatus(const QString&)));
@@ -2891,50 +2899,7 @@ void QC_ApplicationWindow::updateDevice(QString device)
     options->device = device;
 }
 
-
-void QC_ApplicationWindow::invokeDoubleClickMenuCreator()
-{
-    // author: ravas
-
-    QDialog dlg;
-    dlg.setWindowTitle(tr("Double-click Menu Creator"));
-    auto layout = new QVBoxLayout;
-    auto widget_creator = new CustomWidgetCreator(&dlg, a_map);
-    layout->addWidget(widget_creator);
-    dlg.setLayout(layout);
-    if (dlg.exec())
-    {
-        QSettings settings;
-        QStringList s_list = widget_creator->getChosenActions();
-        if (s_list.isEmpty())
-        {
-            settings.remove("CustomWidgets/DoubleClickMenu");
-            return;
-        }
-
-        createDoubleClickMenu(s_list);
-        settings.setValue("CustomWidgets/DoubleClickMenu", s_list);
-    }
-}
-
-
-void QC_ApplicationWindow::createDoubleClickMenu(const QStringList& s_list)
-{
-    // author: ravas
-
-    foreach (auto win, window_list)
-    {
-        auto graphic_view = win->getGraphicView();
-        auto menu = new QMenu(graphic_view);
-        foreach (auto key, s_list)
-        {
-            menu->addAction(a_map[key]);
-        }
-        graphic_view->setDoubleClickMenu(menu);
-    }
-}
-
-void QC_ApplicationWindow::invokeCustomToolbarCreator()
+void QC_ApplicationWindow::invokeToolbarCreator()
 {
     // author: ravas
 
@@ -2951,7 +2916,7 @@ void QC_ApplicationWindow::invokeCustomToolbarCreator()
     dlg->setWindowTitle(tr("Toolbar Creator"));
     dlg->setObjectName("Toolbar Creator");
 
-    auto toolbar_creator = new CustomToolbarCreator(dlg, a_map, ag_manager);
+    auto toolbar_creator = new WidgetCreator(dlg, a_map, ag_manager);
     toolbar_creator->addCustomWidgets("CustomToolbars");
 
     connect(toolbar_creator, SIGNAL(widgetToCreate(QString)),
@@ -2995,4 +2960,85 @@ void QC_ApplicationWindow::destroyToolbar(const QString& toolbar_name)
 {
     auto toolbar = findChild<QToolBar*>(toolbar_name);
     if (toolbar) delete toolbar;
+}
+
+
+void QC_ApplicationWindow::invokeMenuCreator()
+{
+    // author: ravas
+
+    auto menu_creator = findChild<QDialog*>("Menu Creator");
+    if (menu_creator)
+    {
+        menu_creator->raise();
+        menu_creator->activateWindow();
+        return;
+    }
+
+    auto dlg = new QDialog(this);
+    dlg->setAttribute(Qt::WA_DeleteOnClose);
+    dlg->setWindowTitle(tr("Menu Creator"));
+    auto layout = new QVBoxLayout;
+    auto widget_creator = new WidgetCreator(dlg, a_map, ag_manager);
+    widget_creator->addCustomWidgets("CustomMenus");
+
+    connect(widget_creator, SIGNAL(widgetToCreate(QString)),
+            this, SLOT(createMenu(QString)));
+    connect(widget_creator, SIGNAL(widgetToDestroy(QString)),
+            this, SLOT(destroyMenu(QString)));
+
+    layout->addWidget(widget_creator);
+    dlg->setLayout(layout);
+    dlg->show();
+}
+
+
+void QC_ApplicationWindow::createMenu(const QString& menu_name)
+{
+    // author: ravas
+
+    QSettings settings;
+    auto menu_key = QString("CustomMenus/%1").arg(menu_name);
+    auto a_list = settings.value(menu_key).toStringList();
+
+    QStringList items;
+    items << "Double-Click" << "Right-Click" << "Ctrl+Right-Click";
+
+    bool ok;
+    QString activator = QInputDialog::getItem(this, tr("Assign Menu"),
+                                         tr("Activator:"), items, 0, false, &ok);
+    if (ok && !activator.isEmpty())
+    {
+        assignMenu(menu_name, activator, a_list);
+        auto path = QString("AssignedMenus/%1").arg(menu_name);
+        settings.setValue(path, activator);
+    }
+}
+
+void QC_ApplicationWindow::destroyMenu(const QString& menu_name)
+{
+    QSettings settings;
+    settings.remove("AssignedMenus/" + menu_name);
+    foreach (auto win, window_list)
+    {
+        auto view = win->getGraphicView();
+        view->destroyMenu(menu_name);
+    }
+}
+
+void QC_ApplicationWindow::assignMenu(const QString& menu_name, const QString& activator, const QStringList& s_list)
+{
+    // author: ravas
+
+    foreach (auto win, window_list)
+    {
+        auto view = win->getGraphicView();
+        auto menu = new QMenu(activator, view);
+        menu->setObjectName(menu_name);
+        foreach (auto key, s_list)
+        {
+            menu->addAction(a_map[key]);
+        }
+        view->setMenu(activator, menu);
+    }
 }

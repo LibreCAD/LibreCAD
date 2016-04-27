@@ -94,13 +94,15 @@ public:
 
     void setAntialiasing(bool state);
     void setCursorHiding(bool state);
-    void setDoubleClickMenu(QMenu* menu);
     void addScrollbars();
     bool hasScrollbars();
 
     void setCurrentQAction(QAction* q_action);
 
     std::shared_ptr<LC_Options> options;
+
+    void destroyMenu(const QString& menu_name);
+    void setMenu(const QString& activator, QMenu* menu);
 
 protected:
 	void mousePressEvent(QMouseEvent* e) override;
@@ -155,7 +157,7 @@ protected:
     //! Keep tracks of if we are currently doing a high-resolution scrolling
     bool isSmoothScrolling;
 
-    QMenu* doubleclick_menu;
+    QMap<QString, QMenu*> menus;
 
 private:
     bool antialiasing{false};
