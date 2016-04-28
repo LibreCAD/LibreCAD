@@ -1277,12 +1277,14 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     a_map["ReloadStyleSheet"] = action;
 
     action = new QAction(tr("Menu Creator"), agm->widgets);
+    action->setIcon(QIcon(":/icons/create_menu.svg"));
     connect(action, SIGNAL(triggered()),
             main_window, SLOT(invokeMenuCreator()));
     action->setObjectName("InvokeMenuCreator");
     a_map["InvokeMenuCreator"] = action;
 
     action = new QAction(tr("Toolbar Creator"), agm->widgets);
+    action->setIcon(QIcon(":/icons/create_toolbar.svg"));
     connect(action, SIGNAL(triggered()),
             main_window, SLOT(invokeToolbarCreator()));
     action->setObjectName("InvokeToolbarCreator");
