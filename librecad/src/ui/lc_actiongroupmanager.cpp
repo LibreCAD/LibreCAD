@@ -28,6 +28,14 @@
 
 #include <QActionGroup>
 
+namespace Sorting
+{
+    bool byObjectName(QActionGroup* left, QActionGroup* right)
+    {
+        return left->objectName() < right->objectName();
+    }
+}
+
 LC_ActionGroupManager::LC_ActionGroupManager(QObject* parent)
     : QObject(parent)
     , block(new QActionGroup(this))
@@ -85,6 +93,11 @@ LC_ActionGroupManager::LC_ActionGroupManager(QObject* parent)
     }
 }
 
+void LC_ActionGroupManager::sortGroupsByName(QList<QActionGroup*>& list)
+{
+    std::sort(list.begin(), list.end(), Sorting::byObjectName);
+}
+
 QList<QActionGroup*> LC_ActionGroupManager::toolGroups()
 {
     QList<QActionGroup*> ag_list;
@@ -101,4 +114,19 @@ QList<QActionGroup*> LC_ActionGroupManager::toolGroups()
             << select;
 
     return ag_list;
+}
+
+QMap<QString, QActionGroup*> LC_ActionGroupManager::allGroups()
+{
+    QList<QActionGroup*> ag_list = findChildren<QActionGroup*>();
+    sortGroupsByName(ag_list);
+
+    QMap<QString, QActionGroup*> ag_map;
+
+    foreach (auto ag, ag_list)
+    {
+        ag_map[ag->objectName()] = ag;
+    }
+
+    return ag_map;
 }

@@ -2916,7 +2916,7 @@ void QC_ApplicationWindow::invokeToolbarCreator()
     dlg->setWindowTitle(tr("Toolbar Creator"));
     dlg->setObjectName("Toolbar Creator");
 
-    auto toolbar_creator = new WidgetCreator(dlg, a_map, ag_manager);
+    auto toolbar_creator = new WidgetCreator(dlg, a_map, ag_manager->allGroups());
     toolbar_creator->addCustomWidgets("CustomToolbars");
 
     connect(toolbar_creator, SIGNAL(widgetToCreate(QString)),
@@ -2979,7 +2979,7 @@ void QC_ApplicationWindow::invokeMenuCreator()
     dlg->setAttribute(Qt::WA_DeleteOnClose);
     dlg->setWindowTitle(tr("Menu Creator"));
     auto layout = new QVBoxLayout;
-    auto widget_creator = new WidgetCreator(dlg, a_map, ag_manager);
+    auto widget_creator = new WidgetCreator(dlg, a_map, ag_manager->allGroups());
     widget_creator->addCustomWidgets("CustomMenus");
 
     connect(widget_creator, SIGNAL(widgetToCreate(QString)),
@@ -3010,8 +3010,20 @@ void QC_ApplicationWindow::createMenu(const QString& menu_name)
     if (ok && !activator.isEmpty())
     {
         assignMenu(menu_name, activator, a_list);
-        auto path = QString("AssignedMenus/%1").arg(menu_name);
-        settings.setValue(path, activator);
+
+        settings.beginGroup("AssignedMenus");
+        auto names = settings.childKeys();
+
+        foreach (auto name, names)
+        {
+            if (settings.value(name).toString() == activator)
+            {
+                settings.remove(name);
+            }
+        }
+
+        settings.setValue(menu_name, activator);
+        settings.endGroup();
     }
 }
 
@@ -3026,7 +3038,9 @@ void QC_ApplicationWindow::destroyMenu(const QString& menu_name)
     }
 }
 
-void QC_ApplicationWindow::assignMenu(const QString& menu_name, const QString& activator, const QStringList& s_list)
+void QC_ApplicationWindow::assignMenu(const QString& menu_name,
+                                      const QString& activator,
+                                      const QStringList& s_list)
 {
     // author: ravas
 

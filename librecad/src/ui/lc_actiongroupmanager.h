@@ -33,6 +33,9 @@ public:
     QActionGroup* widgets;
 
     QList<QActionGroup*> toolGroups();
+    QMap<QString, QActionGroup*> allGroups();
+    void sortGroupsByName(QList<QActionGroup*>& list);
+
 };
 
 #endif // LC_ACTIONGROUPMANAGER_H

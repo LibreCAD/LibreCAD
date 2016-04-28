@@ -26,22 +26,21 @@
 
 #include "widgetcreator.h"
 #include "ui_widgetcreator.h"
-#include "lc_actiongroupmanager.h"
 
 #include <QSettings>
 #include <QLineEdit>
 
 WidgetCreator::WidgetCreator(QWidget* parent,
-                             QMap<QString, QAction*>& action_map,
-                             LC_ActionGroupManager* agm)
+                             QMap<QString, QAction*>& actions,
+                             QMap<QString, QActionGroup*> action_groups)
     : QFrame(parent)
     , ui(new Ui::WidgetCreator)
-    , a_map(action_map)
-    , ag_manager(agm)
+    , a_map(actions)
+    , ag_map(action_groups)
 {
     ui->setupUi(this);
 
-    foreach (auto ag, ag_manager->findChildren<QActionGroup*>())
+    foreach (auto ag, ag_map)
     {
         ui->categories_combobox->addItem(ag->objectName());
     }
@@ -197,7 +196,7 @@ void WidgetCreator::setCategory(QString category)
 {
     ui->offered_actions->clear();
     auto chosen_actions = getChosenActions();
-    auto action_group = ag_manager->findChild<QActionGroup*>(category);
+    auto action_group = ag_map[category];
     foreach (auto action, action_group->actions())
     {
         if (!chosen_actions.contains(action->objectName()))
