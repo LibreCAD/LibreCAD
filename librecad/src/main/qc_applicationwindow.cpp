@@ -3002,7 +3002,7 @@ void QC_ApplicationWindow::createMenu(const QString& menu_name)
     auto a_list = settings.value(menu_key).toStringList();
 
     QStringList items;
-    items << "Double-Click" << "Right-Click" << "Ctrl+Right-Click";
+    items << "Double-Click" << "Right-Click" << "Ctrl+Right-Click" << "Shift+Right-Click";
 
     bool ok;
     QString activator = QInputDialog::getItem(this, tr("Assign Menu"),

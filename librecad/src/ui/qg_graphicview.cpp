@@ -292,21 +292,26 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
 
     event->accept();
 
-    if (event->modifiers()==Qt::ControlModifier)
+    switch (event->button())
     {
-        if (event->button() == Qt::RightButton)
+    case Qt::RightButton:
+        if (event->modifiers()==Qt::ControlModifier)
         {
             if (menus.contains("Ctrl+Right-Click"))
             {
                 menus["Ctrl+Right-Click"]->popup(mapToGlobal(event->pos()));
-                return;
+                break;
             }
         }
-    }
+        if (event->modifiers()==Qt::ShiftModifier)
+        {
+            if (menus.contains("Shift+Right-Click"))
+            {
+                menus["Shift+Right-Click"]->popup(mapToGlobal(event->pos()));
+                break;
+            }
+        }
 
-    switch (event->button())
-    {
-    case Qt::RightButton:
         if (!eventHandler->hasAction())
         {
             if (menus.contains("Right-Click"))

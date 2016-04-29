@@ -40,6 +40,7 @@ WidgetCreator::WidgetCreator(QWidget* parent,
 {
     ui->setupUi(this);
 
+    ui->categories_combobox->addItem("All");
     foreach (auto ag, ag_map)
     {
         ui->categories_combobox->addItem(ag->objectName());
@@ -163,7 +164,10 @@ void WidgetCreator::createWidget()
 {
     w_key = ui->combo->lineEdit()->text();
     if(!w_key.isEmpty() && ui->combo->findText(w_key) == -1)
+    {
+        w_key.replace("/", "-");
         ui->combo->addItem(w_key);
+    }
 
     QStringList a_list = getChosenActions();
     if (!a_list.isEmpty() && !w_key.isEmpty())
@@ -194,6 +198,15 @@ void WidgetCreator::destroyWidget()
 
 void WidgetCreator::setCategory(QString category)
 {
+    if (category == "All")
+    {
+        ui->offered_actions->clear();
+        ui->offered_actions->fromActionMap(a_map);
+        return;
+    }
+
+    if (!ag_map.contains(category)) return;
+
     ui->offered_actions->clear();
     auto chosen_actions = getChosenActions();
     auto action_group = ag_map[category];
