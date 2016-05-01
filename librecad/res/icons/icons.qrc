@@ -52,5 +52,6 @@
         <file>points.svg</file>
         <file>create_toolbar.svg</file>
         <file>create_menu.svg</file>
+        <file>exclusive.svg</file>
     </qresource>
 </RCC>

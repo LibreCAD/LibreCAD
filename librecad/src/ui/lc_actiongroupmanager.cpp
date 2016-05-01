@@ -52,6 +52,7 @@ LC_ActionGroupManager::LC_ActionGroupManager(QObject* parent)
     , options(new QActionGroup(this))
     , other(new QActionGroup(this))
     , polyline(new QActionGroup(this))
+    , restriction(new QActionGroup(this))
     , select(new QActionGroup(this))
     , snap(new QActionGroup(this))
     , view(new QActionGroup(this))
@@ -71,6 +72,7 @@ LC_ActionGroupManager::LC_ActionGroupManager(QObject* parent)
     options->setObjectName(QObject::tr("Options"));
     other->setObjectName(QObject::tr("Other"));
     polyline->setObjectName(QObject::tr("Polyline"));
+    restriction->setObjectName(QObject::tr("Restriction"));
     select->setObjectName(QObject::tr("Select"));
     snap->setObjectName(QObject::tr("Snap"));
     view->setObjectName(QObject::tr("View"));
@@ -129,4 +131,17 @@ QMap<QString, QActionGroup*> LC_ActionGroupManager::allGroups()
     }
 
     return ag_map;
+}
+
+void LC_ActionGroupManager::toggleSnapExclusiveMode(bool state)
+{
+    if (state == true)
+    {
+        foreach (auto action, snap->actions())
+        {
+            if (action->isChecked())
+                action->activate(QAction::Trigger);
+        }
+    }
+    snap->setExclusive(state);
 }

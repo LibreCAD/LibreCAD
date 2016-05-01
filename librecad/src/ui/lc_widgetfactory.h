@@ -20,6 +20,7 @@ class QG_LibraryWidget;
 class QG_CommandWidget;
 class LC_CustomToolbar;
 class QC_ApplicationWindow;
+class LC_ActionGroupManager;
 
 /**
  * creates the widgets and adds them to the main window;
@@ -31,7 +32,8 @@ class LC_WidgetFactory : public QObject
 
 public:
     LC_WidgetFactory(QC_ApplicationWindow* main_win,
-                     QMap<QString, QAction*>& action_map);
+                     QMap<QString, QAction*>& action_map,
+                     LC_ActionGroupManager* agm);
 
     void createStandardToolbars(QG_ActionHandler* action_handler);
     void createCADToolbars();
@@ -59,6 +61,7 @@ public:
 private:
     QC_ApplicationWindow* main_window;
     QMap<QString, QAction*>& a_map;
+    LC_ActionGroupManager* ag_manager;
 
     QList<QAction*> file_actions;
     QList<QAction*> line_actions;

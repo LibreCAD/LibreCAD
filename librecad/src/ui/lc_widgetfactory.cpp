@@ -26,6 +26,7 @@
 #include "lc_widgetfactory.h"
 #include "lc_actionfactory.h"
 #include "lc_dockwidget.h"
+#include "lc_actiongroupmanager.h"
 
 #include "qg_actionhandler.h"
 #include "qg_snaptoolbar.h"
@@ -45,10 +46,12 @@
 
 
 LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
-                                   QMap<QString, QAction*>& action_map)
+                                   QMap<QString, QAction*>& action_map,
+                                   LC_ActionGroupManager* agm)
     : QObject(nullptr)
     , main_window(main_win)
     , a_map(action_map)
+    , ag_manager(agm)
 {
     file_actions
             << a_map["FileNew"]
@@ -360,7 +363,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
     view_toolbar->addAction(a_map["ZoomWindow"]);
     view_toolbar->addAction(a_map["ZoomPan"]);
 
-    snap_toolbar = new QG_SnapToolBar(main_window, action_handler);
+    snap_toolbar = new QG_SnapToolBar(main_window, action_handler, ag_manager);
     snap_toolbar->setWindowTitle(QC_ApplicationWindow::tr("Snap Selection"));
     snap_toolbar->setSizePolicy(toolBarPolicy);
     snap_toolbar->setObjectName("snap_toolbar" );

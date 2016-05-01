@@ -5,6 +5,7 @@
 #include <QList>
 
 class QActionGroup;
+class QAction;
 
 class LC_ActionGroupManager : public QObject
 {
@@ -27,6 +28,7 @@ public:
     QActionGroup* options;
     QActionGroup* other;
     QActionGroup* polyline;
+    QActionGroup* restriction;
     QActionGroup* select;
     QActionGroup* snap;
     QActionGroup* view;
@@ -35,6 +37,9 @@ public:
     QList<QActionGroup*> toolGroups();
     QMap<QString, QActionGroup*> allGroups();
     void sortGroupsByName(QList<QActionGroup*>& list);
+
+public slots:
+    void toggleSnapExclusiveMode(bool state);
 
 };
 

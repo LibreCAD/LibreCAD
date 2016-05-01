@@ -206,7 +206,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     LC_ActionFactory a_factory(this, actionHandler);
     a_factory.fillActionContainer(a_map, ag_manager);
-    LC_WidgetFactory widget_factory(this, a_map);
+    LC_WidgetFactory widget_factory(this, a_map, ag_manager);
     if (enable_left_sidebar)
         widget_factory.createLeftSidebar(5, icon_size);
     if (enable_cad_toolbars)
@@ -219,7 +219,6 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     {
         if(!action->objectName().isEmpty())
         {
-            ag_manager->snap->addAction(action);
             a_map[action->objectName()] = action;
         }
     }
