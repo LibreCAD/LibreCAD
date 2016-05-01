@@ -53,5 +53,16 @@
         <file>create_toolbar.svg</file>
         <file>create_menu.svg</file>
         <file>exclusive.svg</file>
+        <file>snap_center.svg</file>
+        <file>snap_distance.svg</file>
+        <file>snap_endpoints.svg</file>
+        <file>snap_entity.svg</file>
+        <file>snap_free.svg</file>
+        <file>snap_grid_b.svg</file>
+        <file>snap_grid.svg</file>
+        <file>snap_intersection.svg</file>
+        <file>snap_middle.svg</file>
+        <file>lock_rel_zero.svg</file>
+        <file>set_rel_zero.svg</file>
     </qresource>
 </RCC>
