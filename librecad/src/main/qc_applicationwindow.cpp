@@ -1132,16 +1132,16 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     view->options = options;
     if (scrollbars) view->addScrollbars();
 
-    settings.beginGroup("AssignedMenus");
-    auto names = settings.childKeys();
+    settings.beginGroup("Activators");
+    auto activators = settings.childKeys();
     settings.endGroup();
 
-    foreach (auto name, names)
+    foreach (auto activator, activators)
     {
-        auto activator = settings.value("AssignedMenus/"+name).toString();
-        auto path = QString("CustomMenus/%1").arg(name);
+        auto menu_name = settings.value("Activators/" + activator).toString();
+        auto path = QString("CustomMenus/%1").arg(menu_name);
         auto a_list = settings.value(path).toStringList();
-        assignMenu(name, activator, a_list);
+        assignMenu(menu_name, activator, a_list);
     }
 
     connect(view, SIGNAL(gridStatusChanged(const QString&)),
@@ -3009,19 +3009,8 @@ void QC_ApplicationWindow::createMenu(const QString& menu_name)
     if (ok && !activator.isEmpty())
     {
         assignMenu(menu_name, activator, a_list);
-
-        settings.beginGroup("AssignedMenus");
-        auto names = settings.childKeys();
-
-        foreach (auto name, names)
-        {
-            if (settings.value(name).toString() == activator)
-            {
-                settings.remove(name);
-            }
-        }
-
-        settings.setValue(menu_name, activator);
+        settings.beginGroup("Activators");
+        settings.setValue(activator, menu_name);
         settings.endGroup();
     }
 }
@@ -3029,7 +3018,19 @@ void QC_ApplicationWindow::createMenu(const QString& menu_name)
 void QC_ApplicationWindow::destroyMenu(const QString& menu_name)
 {
     QSettings settings;
-    settings.remove("AssignedMenus/" + menu_name);
+
+    settings.beginGroup("Activators");
+    auto activators = settings.childKeys();
+
+    foreach (auto activator, activators)
+    {
+        if (settings.value(activator).toString() == menu_name)
+        {
+            settings.remove(activator);
+        }
+    }
+    settings.endGroup();
+
     foreach (auto win, window_list)
     {
         auto view = win->getGraphicView();

@@ -1014,6 +1014,10 @@ void QG_GraphicView::destroyMenu(const QString& menu_name)
 
 void QG_GraphicView::setMenu(const QString& activator, QMenu* menu)
 {
-    destroyMenu(activator);
+    if (menus.contains(activator))
+    {
+        auto old_menu = menus.take(activator);
+        delete old_menu;
+    }
     menus[activator] = menu;
 }
