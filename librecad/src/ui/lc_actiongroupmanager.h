@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QList>
+#include <QMap>
 
 class QActionGroup;
 class QAction;
