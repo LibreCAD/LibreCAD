@@ -38,8 +38,7 @@ class QPolygon;
  */
 class RS_InfoArea {
 public:
-    RS_InfoArea();
-	~RS_InfoArea() = default;
+	RS_InfoArea();
 
     void reset();
     void push_back(const RS_Vector& p);

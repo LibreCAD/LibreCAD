@@ -41,13 +41,12 @@ RS_ActionInfoArea::RS_ActionInfoArea(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Info Area",
 							   container, graphicView)
-	,ia(new RS_InfoArea())
+	, ia(new RS_InfoArea{})
 {
 	actionType=RS2::ActionInfoArea;
 }
 
 RS_ActionInfoArea::~RS_ActionInfoArea() = default;
-
 
 void RS_ActionInfoArea::init(int status) {
     RS_ActionInterface::init(status);
@@ -79,24 +78,23 @@ void RS_ActionInfoArea::display() {
     }
 	switch(ia->size()){
     case 2:
-		preview->addEntity(new RS_Line(preview.get(),ia->at(0),ia->at(1)));
+		preview->addEntity(new RS_Line(preview.get(), ia->at(0), ia->at(1)));
         break;
     default:
 		for(int i=0;i<ia->size();i++){
-			preview->addEntity(new RS_Line(preview.get(),ia->at(i),ia->at((i+1) % ia->size())));
-        }
-		QStringList dists;
-		for(double a: {ia->getCircumference(), ia->getArea()}){
-			dists<<RS_Units::formatLinear(a, graphic->getUnit(),
-										  graphic->getLinearFormat(), graphic->getLinearPrecision());
+			preview->addEntity(new RS_Line(preview.get(), ia->at(i), ia->at((i+1) % ia->size())));
 		}
-
-		RS_DIALOGFACTORY->commandMessage(tr("Circumference: %1").arg(dists[0]));
-		RS_DIALOGFACTORY->commandMessage(tr("Area: %1").arg(dists[1]));
+		QString const linear = RS_Units::formatLinear(ia->getCircumference(),
+													  graphic->getUnit(),
+													  graphic->getLinearFormat(),
+													  graphic->getLinearPrecision());
+		RS_DIALOGFACTORY->commandMessage(tr("Circumference: %1").arg(linear));
+		RS_DIALOGFACTORY->commandMessage(tr("Area: %1 %2^2")
+										 .arg(ia->getArea())
+										 .arg(RS_Units::unitToString(graphic->getUnit())));
         break;
     }
     drawPreview();
-
 }
 
 
