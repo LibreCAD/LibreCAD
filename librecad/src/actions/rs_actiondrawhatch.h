@@ -29,7 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 
-class RS_HatchData;
+struct RS_HatchData;
 class RS_Hatch;
 
 /**
