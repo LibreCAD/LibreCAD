@@ -232,8 +232,5 @@ void QG_SnapToolBar::slotRestrictOrthogonal(bool checked)
 void QG_SnapToolBar::actionTriggered()
 {
     actionHandler->slotSetSnaps(getSnaps());
-	//save the current snap mode after any mode change, instead of relying
-	// on the dtor to save the mode, in order to avoid segfault at closing
-	saveSnapMode();
 }
 
