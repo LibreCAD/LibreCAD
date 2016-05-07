@@ -28,8 +28,9 @@
 #define RS_ACTIONDRAWHATCH_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_hatch.h"
 
+struct RS_HatchData;
+class RS_Hatch;
 
 /**
  * This action class can handle user events to draw hatches.
@@ -38,7 +39,7 @@
  */
 class RS_ActionDrawHatch : public RS_PreviewActionInterface {
 	Q_OBJECT
-public:
+
     /**
      * Action States.
      */
@@ -49,6 +50,7 @@ public:
 public:
     RS_ActionDrawHatch(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
+	~RS_ActionDrawHatch();
 
 	void init(int status=0) override;
 	void trigger() override;
@@ -59,9 +61,8 @@ public:
 	void setShowArea(bool s);
 
 private:
-    RS_HatchData data;
-    RS_Hatch* hatch{nullptr};
-    bool m_bShowArea{true};
+	std::unique_ptr<RS_HatchData> data;
+	bool m_bShowArea{true};
 };
 
 #endif

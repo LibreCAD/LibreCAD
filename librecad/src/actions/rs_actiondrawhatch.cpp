@@ -24,22 +24,23 @@
 **
 **********************************************************************/
 #include <iostream>
-#include "rs_actiondrawhatch.h"
-
 #include <QAction>
 #include <QMouseEvent>
+#include "rs_actiondrawhatch.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
+#include "rs_hatch.h"
 #include "rs_debug.h"
-
-
 
 RS_ActionDrawHatch::RS_ActionDrawHatch(RS_EntityContainer& container, RS_GraphicView& graphicView)
                                 :RS_PreviewActionInterface("Draw Hatch", container, graphicView)
+								, data{new RS_HatchData{}}
 {
     actionType = RS2::ActionDrawHatch;
 }
+
+RS_ActionDrawHatch::~RS_ActionDrawHatch() = default;
 
 void RS_ActionDrawHatch::setShowArea(bool s){
 	m_bShowArea=s;
@@ -48,11 +49,11 @@ void RS_ActionDrawHatch::setShowArea(bool s){
 void RS_ActionDrawHatch::init(int status) {
     RS_ActionInterface::init(status);
 
-    RS_Hatch tmp(container, data);
+	RS_Hatch tmp(container, *data);
     tmp.setLayerToActive();
     tmp.setPenToActive();
     if (RS_DIALOGFACTORY->requestHatchDialog(&tmp)) {
-        data = tmp.getData();
+		*data = tmp.getData();
         trigger();
         finish(false);
         graphicView->redraw(RS2::RedrawDrawing); 
@@ -61,8 +62,6 @@ void RS_ActionDrawHatch::init(int status) {
         finish(false);
     }
 }
-
-
 
 void RS_ActionDrawHatch::trigger() {
 
@@ -107,10 +106,10 @@ void RS_ActionDrawHatch::trigger() {
         return;
     }
 
-    hatch = new RS_Hatch(container, data);
+	std::unique_ptr<RS_Hatch> hatch{new RS_Hatch{container, *data}};
     hatch->setLayerToActive();
     hatch->setPenToActive();
-    RS_EntityContainer* loop = new RS_EntityContainer(hatch);
+	RS_EntityContainer* loop = new RS_EntityContainer(hatch.get());
     loop->setPen(RS_Pen(RS2::FlagInvalid));
 
     // add selected contour:
@@ -136,25 +135,25 @@ void RS_ActionDrawHatch::trigger() {
 
     hatch->addEntity(loop);
 	if (hatch->validate()) {
-		container->addEntity(hatch);
+		container->addEntity(hatch.get());
 
 		if (document) {
 			document->startUndoCycle();
-			document->addUndoable(hatch);
+			document->addUndoable(hatch.get());
 			document->endUndoCycle();
 		}
 		hatch->update();
 
 		graphicView->redraw(RS2::RedrawDrawing);
 
-        bool printArea=true;
+		bool printArea = true;
         switch( hatch->getUpdateError()) {
         case RS_Hatch::HATCH_OK :
             RS_DIALOGFACTORY->commandMessage(tr("Hatch created successfully."));
             break;
         case RS_Hatch::HATCH_INVALID_CONTOUR :
             RS_DIALOGFACTORY->commandMessage(tr("Hatch Error: Invalid contour found!"));
-            printArea=false;
+			printArea = false;
             break;
         case RS_Hatch::HATCH_PATTERN_NOT_FOUND :
             RS_DIALOGFACTORY->commandMessage(tr("Hatch Error: Pattern not found!"));
@@ -167,18 +166,18 @@ void RS_ActionDrawHatch::trigger() {
             break;
         default :
             RS_DIALOGFACTORY->commandMessage(tr("Hatch Error: Undefined Error!"));
-            printArea=false;
+			printArea = false;
             break;
         }
-        if(m_bShowArea&&printArea){
+		if(m_bShowArea && printArea){
             RS_DIALOGFACTORY->commandMessage(tr("Total hatch area = %1").
                                              arg(hatch->getTotalArea(),10,'g',8));
         }
 
-	}
-	else {
-		delete hatch;
-		hatch = nullptr;
+		hatch.release();
+
+	} else {
+		hatch.reset();
 		RS_DIALOGFACTORY->commandMessage(tr("Invalid hatch area. Please check that "
 		"the entities chosen form one or more closed contours."));
 	}
