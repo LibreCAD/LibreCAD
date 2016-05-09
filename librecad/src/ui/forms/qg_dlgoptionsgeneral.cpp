@@ -368,8 +368,15 @@ void QG_DlgOptionsGeneral::on_pb_snap_color_clicked()
 
 void QG_DlgOptionsGeneral::on_pb_clear_all_clicked()
 {
-    RS_SETTINGS->clear_all();
-    QMessageBox::information(this, "info", "You must restart LibreCAD to see the changes.");
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, tr("Clear settings"),
+                                tr("This will also include custom menus and toolbars. Continue?"),
+                                QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+    {
+      RS_SETTINGS->clear_all();
+      QMessageBox::information(this, "info", "You must restart LibreCAD to see the changes.");
+    }
 }
 
 void QG_DlgOptionsGeneral::on_pb_clear_geometry_clicked()
