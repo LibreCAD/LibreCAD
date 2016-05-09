@@ -176,29 +176,37 @@ void RS_DimRadial::updateDim(bool autoText) {
     RS_MText* text = new RS_MText(this, textData);
     double textWidth = text->getSize().x;
 
-    // do we have to put the arrow / text outside of the arc?
-    bool outsideArrow = (length<arrowSize*2+textWidth);
-    double arrowAngle;
+    double tick_size = getTickSize()*dimscale;
+    double arrow_size = getArrowSize()*dimscale;
 
-    if (outsideArrow) {
-        length += arrowSize*2 + textWidth;
-        arrowAngle = angle+M_PI;
-    } else {
-        arrowAngle = angle;
+    bool outsideArrow = false;
+
+    if (tick_size == 0 && arrow_size != 0)
+    {
+        // do we have to put the arrow / text outside of the arc?
+        outsideArrow = (length<arrowSize*2+textWidth);
+        double arrowAngle;
+
+        if (outsideArrow) {
+            length += arrowSize*2 + textWidth;
+            arrowAngle = angle+M_PI;
+        } else {
+            arrowAngle = angle;
+        }
+
+        // create arrow:
+        RS_SolidData sd;
+        RS_Solid* arrow;
+
+        arrow = new RS_Solid(this, sd);
+        arrow->shapeArrow(p2,
+                          arrowAngle,
+                          arrowSize);
+        //arrow->setPen(RS_Pen(RS2::FlagInvalid));
+        arrow->setPen(pen);
+        arrow->setLayer(nullptr);
+        addEntity(arrow);
     }
-
-    // create arrow:
-    RS_SolidData sd;
-    RS_Solid* arrow;
-
-    arrow = new RS_Solid(this, sd);
-    arrow->shapeArrow(p2,
-                      arrowAngle,
-                      arrowSize);
-//    arrow->setPen(RS_Pen(RS2::FlagInvalid));
-    arrow->setPen(pen);
-	arrow->setLayer(nullptr);
-    addEntity(arrow);
 
 	RS_Vector p3 = RS_Vector::polar(length, angle);
     p3 += p1;
