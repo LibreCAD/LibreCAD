@@ -13,7 +13,7 @@
    id="svg4295"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="snap_center.svg"
+   sodipodi:docname="snap_middle.svg"
    inkscape:export-filename="D:\LC_Recources\icons\snapentity24.png"
    inkscape:export-xdpi="8.4375"
    inkscape:export-ydpi="8.4375">
@@ -60,7 +60,7 @@
        id="grid4867" />
   </sodipodi:namedview>
   <g
-     id="g4969">
+     id="g4985">
     <path
        sodipodi:open="true"
        d="M 9.0311105,25.964432 A 37.253338,37.253338 0 0 1 46.284448,63.21777"
@@ -86,9 +86,9 @@
        cx="45.15556"
        cy="27.093336" />
     <circle
-       cy="37.253334"
-       cx="34.99556"
-       id="circle4958"
+       cy="58.702229"
+       cx="13.546665"
+       id="circle4956"
        style="opacity:1;fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.25777793;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:20;stroke-opacity:1"
        r="5.6444449" />
   </g>
