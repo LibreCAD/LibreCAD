@@ -46,489 +46,6 @@
        <string>&amp;Appearance</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="1" rowspan="2">
-        <widget class="QGroupBox" name="bgGraphicColors">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="title">
-          <string>Graphic Colors</string>
-         </property>
-         <property name="flat">
-          <bool>false</bool>
-         </property>
-         <layout class="QGridLayout" name="graphicColGridLayout">
-          <item row="4" column="0">
-           <widget class="QLabel" name="lHighlightedColor">
-            <property name="text">
-             <string>&amp;Highlighted Color:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbMetaGridColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QComboBox" name="cbHighlightedColor">
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#739373</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="lMetaGridColor">
-            <property name="text">
-             <string>&amp;Meta Grid Color:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbMetaGridColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QComboBox" name="cbSelectedColor">
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#A54747</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="lSelectedColor">
-            <property name="text">
-             <string>S&amp;elected Color:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbMetaGridColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QComboBox" name="cbGridColor">
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#736F6E</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="lStartHandleColor">
-            <property name="text">
-             <string>St&amp;art Handle Color:</string>
-            </property>
-            <property name="buddy">
-             <cstring>cbStartHandleColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="lBackground">
-            <property name="text">
-             <string>Backgr&amp;ound:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbBackgroundColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QComboBox" name="cbBackgroundColor">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#000000</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">#FFFFFF</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">#F0F8FF</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QComboBox" name="cbMetaGridColor">
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#404040</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="5" column="2">
-           <widget class="QComboBox" name="cbStartHandleColor">
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#00FFFF</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>&amp;Handle Color:</string>
-            </property>
-            <property name="buddy">
-             <cstring>cbHandleColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="2">
-           <widget class="QComboBox" name="cbHandleColor">
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#0000FF</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>&amp;End Handle Color:</string>
-            </property>
-            <property name="buddy">
-             <cstring>cbEndHandleColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="lGridColor">
-            <property name="text">
-             <string>G&amp;rid Color:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbGridColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="2">
-           <widget class="QComboBox" name="cbEndHandleColor">
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#0000FF</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="8" column="0">
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>Snap indicator:</string>
-            </property>
-            <property name="buddy">
-             <cstring>cbEndHandleColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="2">
-           <widget class="QComboBox" name="cb_snap_color">
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#FFC200</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>#1E90FF</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QPushButton" name="pb_background">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QPushButton" name="pb_grid">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="3">
-           <widget class="QPushButton" name="pb_meta">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="3">
-           <widget class="QPushButton" name="pb_selected">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="3">
-           <widget class="QPushButton" name="pb_highlighted">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="3">
-           <widget class="QPushButton" name="pb_start">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="3">
-           <widget class="QPushButton" name="pb_handle">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="3">
-           <widget class="QPushButton" name="pb_end">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="3">
-           <widget class="QPushButton" name="pb_snap_color">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QGroupBox" name="bgGuiColors">
-         <property name="title">
-          <string>GUI Colors</string>
-         </property>
-         <property name="flat">
-          <bool>false</bool>
-         </property>
-         <layout class="QGridLayout" name="guiColGridLayout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>Layer/ Block Selection:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QComboBox" name="cb_layerselection">
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">#CCFFCC</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="0" column="3">
-           <widget class="QPushButton" name="pb_layerselection">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
-              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
        <item row="3" column="0" colspan="2">
         <widget class="QGroupBox" name="bgLanguage">
          <property name="sizePolicy">
@@ -793,6 +310,438 @@
               <string notr="true">800</string>
              </property>
             </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="1" rowspan="3">
+        <widget class="QGroupBox" name="bgGraphicColors">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="title">
+          <string>Graphic Colors</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+         <layout class="QGridLayout" name="graphicColGridLayout">
+          <item row="7" column="2">
+           <widget class="QComboBox" name="cbHandleColor">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#0000FF</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>&amp;End Handle Color:</string>
+            </property>
+            <property name="buddy">
+             <cstring>cbEndHandleColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="lGridColor">
+            <property name="text">
+             <string>G&amp;rid Color:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbGridColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="2">
+           <widget class="QComboBox" name="cbEndHandleColor">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#0000FF</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QPushButton" name="pb_background">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QPushButton" name="pb_grid">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QPushButton" name="pb_meta">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="3">
+           <widget class="QPushButton" name="pb_selected">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="3">
+           <widget class="QPushButton" name="pb_highlighted">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="3">
+           <widget class="QPushButton" name="pb_start">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="3">
+           <widget class="QPushButton" name="pb_handle">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="3">
+           <widget class="QPushButton" name="pb_end">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="lHighlightedColor">
+            <property name="text">
+             <string>&amp;Highlighted Color:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbMetaGridColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QComboBox" name="cbHighlightedColor">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#739373</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="lMetaGridColor">
+            <property name="text">
+             <string>&amp;Meta Grid Color:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbMetaGridColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QComboBox" name="cbSelectedColor">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#A54747</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="lSelectedColor">
+            <property name="text">
+             <string>S&amp;elected Color:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbMetaGridColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QComboBox" name="cbGridColor">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#736F6E</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="lStartHandleColor">
+            <property name="text">
+             <string>St&amp;art Handle Color:</string>
+            </property>
+            <property name="buddy">
+             <cstring>cbStartHandleColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="lBackground">
+            <property name="text">
+             <string>Backgr&amp;ound:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbBackgroundColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QComboBox" name="cbBackgroundColor">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#000000</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">#FFFFFF</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">#F0F8FF</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QComboBox" name="cbMetaGridColor">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#404040</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="6" column="2">
+           <widget class="QComboBox" name="cbStartHandleColor">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#00FFFF</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>&amp;Handle Color:</string>
+            </property>
+            <property name="buddy">
+             <cstring>cbHandleColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Snap indicator:</string>
+            </property>
+            <property name="buddy">
+             <cstring>cbEndHandleColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QComboBox" name="cb_snap_color">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#FFC200</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>#1E90FF</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QPushButton" name="pb_snap_color">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
            </widget>
           </item>
          </layout>

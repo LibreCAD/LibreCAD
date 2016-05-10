@@ -292,13 +292,6 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     if (!keycode_mode)
         mdiAreaCAD->installEventFilter(commandWidget);
 
-    RS_SETTINGS->beginGroup("/Appearance");
-    QString layer_select_color(RS_SETTINGS->readEntry("/LayerSelectColor", "#CCFFCC"));
-    RS_SETTINGS->endGroup();
-
-    layerWidget->setStyleSheet("selection-background-color: " + layer_select_color);
-    blockWidget->setStyleSheet("selection-background-color: " + layer_select_color);
-
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory");
     dialogFactory = new QC_DialogFactory(this, optionWidget);
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory: OK");
@@ -2329,11 +2322,7 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
     QColor startHandleColor(RS_SETTINGS->readEntry("/start_handle", Colors::start_handle));
     QColor handleColor(RS_SETTINGS->readEntry("/handle", Colors::handle));
 	QColor endHandleColor(RS_SETTINGS->readEntry("/end_handle", Colors::end_handle));
-	QString layer_select_color = RS_SETTINGS->readEntry("/layer_selection", Colors::layer_selection);
     RS_SETTINGS->endGroup();
-
-    layerWidget->setStyleSheet("selection-background-color: " + layer_select_color);
-    blockWidget->setStyleSheet("selection-background-color: " + layer_select_color);
 
     RS_SETTINGS->beginGroup("/Appearance");
     int antialiasing = RS_SETTINGS->readNumEntry("/Antialiasing");

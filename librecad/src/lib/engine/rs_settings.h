@@ -48,7 +48,6 @@ namespace Colors
     const QString start_handle     = "Cyan";
     const QString handle           = "Blue";
     const QString end_handle       = "Blue";
-    const QString layer_selection  = "#CCFFCC";
 }
 
 // ---------------------------------------------------------------------------

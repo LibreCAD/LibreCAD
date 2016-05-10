@@ -65,8 +65,6 @@ private slots:
 
     void on_pb_end_clicked();
 
-    void on_pb_layerselection_clicked();
-
     void on_pb_clear_all_clicked();
 
     void on_pb_clear_geometry_clicked();

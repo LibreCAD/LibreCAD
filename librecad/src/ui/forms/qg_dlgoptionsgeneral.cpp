@@ -147,7 +147,6 @@ void QG_DlgOptionsGeneral::init()
     initComboBox(cbStartHandleColor, RS_SETTINGS->readEntry("/start_handle", Colors::start_handle));
     initComboBox(cbHandleColor, RS_SETTINGS->readEntry("/handle", Colors::handle));
     initComboBox(cbEndHandleColor, RS_SETTINGS->readEntry("/end_handle", Colors::end_handle));
-    initComboBox(cb_layerselection, RS_SETTINGS->readEntry("/layer_selection", Colors::layer_selection));
     initComboBox(cb_snap_color, RS_SETTINGS->readEntry("/snap_indicator", Colors::snap_indicator));
     RS_SETTINGS->endGroup();
 
@@ -250,7 +249,6 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/start_handle", cbStartHandleColor->currentText());
         RS_SETTINGS->writeEntry("/handle", cbHandleColor->currentText());
         RS_SETTINGS->writeEntry("/end_handle", cbEndHandleColor->currentText());
-        RS_SETTINGS->writeEntry("/layer_selection", cb_layerselection->currentText());
         RS_SETTINGS->writeEntry("/snap_indicator", cb_snap_color->currentText());
         RS_SETTINGS->endGroup();
 
@@ -354,11 +352,6 @@ void QG_DlgOptionsGeneral::on_pb_handle_clicked()
 void QG_DlgOptionsGeneral::on_pb_end_clicked()
 {
     set_color(cbEndHandleColor, QColor(Colors::end_handle));
-}
-
-void QG_DlgOptionsGeneral::on_pb_layerselection_clicked()
-{
-    set_color(cb_layerselection, QColor(Colors::layer_selection));
 }
 
 void QG_DlgOptionsGeneral::on_pb_snap_color_clicked()
