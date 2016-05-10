@@ -141,7 +141,11 @@ void QG_RecentFiles::updateRecentFilesMenu() {
 		//oldest on top
 //        QString text = tr("&%1 %2").arg(i + 1).arg(recentFiles->get(i));
 		//newest on top
-		QString const& text = tr("&%1 %2").arg(i + 1).arg(get(numRecentFiles-i-1));
+
+        auto file_path = get(numRecentFiles-i-1);
+        if (file_path.length() > 128)
+            file_path = "..." + file_path.right(128);
+        QString const& text = tr("&%1 %2").arg(i + 1).arg(file_path);
 
 		recentFilesAction[i]->setText(text);
 		//newest on top

@@ -306,6 +306,9 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     RS_DEBUG->print("setting dialog factory object: OK");
 
     recentFiles = new QG_RecentFiles(this, 9);
+    auto recent_menu = new QMenu(tr("Recent Files"), file_menu);
+    file_menu->addMenu(recent_menu);
+    recentFiles->addFiles(recent_menu);
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init settings");
     initSettings();
@@ -564,8 +567,6 @@ void QC_ApplicationWindow::initSettings()
     RS_DEBUG->print("QC_ApplicationWindow::initSettings()");
 
     QSettings settings;
-
-    recentFiles->addFiles(file_menu);
 
     settings.beginGroup("Geometry");
     restoreState(settings.value("StateOfWidgets", "").toByteArray());
