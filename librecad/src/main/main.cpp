@@ -52,7 +52,7 @@ int main(int argc, char** argv)
     QApplication app(argc, argv);
     QCoreApplication::setOrganizationName("LibreCAD");
     QCoreApplication::setApplicationName("LibreCAD");
-    QCoreApplication::setApplicationVersion("2.1.0-alpha");
+    QCoreApplication::setApplicationVersion("2.1.0-beta");
 
     QSettings settings;
 

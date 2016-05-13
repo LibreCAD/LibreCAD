@@ -10,7 +10,7 @@ Most of the project is released under the GPLv2 license,
 but please read the [LICENSE](LICENSE) file for additional information.
 
 The master branch is used for the development of version 2.1.0,  
-which will hopefully be released by the first solstice of 2016.  
+which will be released by the end of May 2016.  
 - https://github.com/LibreCAD/LibreCAD/milestones/2.1.0
 - http://forum.librecad.org/GUI-update-td5712246.html
 
