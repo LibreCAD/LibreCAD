@@ -2396,24 +2396,29 @@ void QC_ApplicationWindow::showAboutWindow()
     dlg.setWindowTitle(qApp->applicationName());
     auto layout = new QVBoxLayout;
 
-     // Compiler macro list in Qt source tree
-     // Src/qtbase/src/corelib/global/qcompilerdetection.h
+    QString tag;
+    #ifdef QC_SCMREVISION
+        tag = (XSTR(QC_SCMREVISION));
+    #else
+        tag = "Unknown";
+    #endif
+
+    // Compiler macro list in Qt source tree
+    // Src/qtbase/src/corelib/global/qcompilerdetection.h
 
     QString info
     (
-        tr("Version: %1").arg(qApp->applicationVersion()) + "\n" +
-        #ifdef QC_SCMREVISION
-            tr("Commit: %1").arg(QString(XSTR(QC_SCMREVISION)).right(7)) + "\n" +
-        #endif
+        QString("Version: %1").arg(qApp->applicationVersion()) + "\n" +
+        QString("Tag: %1").arg(tag) + "\n" +
         #if defined(Q_CC_CLANG)
-            tr("Compiler: Clang %1.%2.%3").arg(__clang_major__).arg(__clang_minor__).arg(__clang_patchlevel__) + "\n" +
+            QString("Compiler: Clang %1.%2.%3").arg(__clang_major__).arg(__clang_minor__).arg(__clang_patchlevel__) + "\n" +
         #elif defined(Q_CC_GNU)
-            tr("Compiler: GNU GCC %1.%2.%3").arg(__GNUC__).arg(__GNUC_MINOR__).arg(__GNUC_PATCHLEVEL__) + "\n" +
+            QString("Compiler: GNU GCC %1.%2.%3").arg(__GNUC__).arg(__GNUC_MINOR__).arg(__GNUC_PATCHLEVEL__) + "\n" +
         #elif defined(Q_CC_MSVC)
-            tr("Compiler: Microsoft Visual C++") + "\n" +
+            QString("Compiler: Microsoft Visual C++") + "\n" +
         #endif
-        tr("Compiled on: %1").arg(__DATE__) + "\n" +
-        tr("Qt Version: %1").arg(qVersion()) + "\n" +
+        QString("Compiled on: %1").arg(__DATE__) + "\n" +
+        QString("Qt Version: %1").arg(qVersion()) + "\n" +
         QString("Boost Version: %1.%2.%3").arg(BOOST_VERSION / 100000).arg(BOOST_VERSION / 100 % 1000).arg(BOOST_VERSION % 100)
     );
 
