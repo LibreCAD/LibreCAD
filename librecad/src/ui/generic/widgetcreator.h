@@ -49,6 +49,7 @@ private slots:
     void destroyWidget();
     void createWidget();
     void requestAssignment();
+    void requestUpdate();
 
     void setCategory(QString);
 
@@ -56,7 +57,7 @@ signals:
     void widgetToCreate(QString);
     void widgetToDestroy(QString);
     void widgetToAssign(QString);
-    void widgetToUnassign(QString);
+    void widgetToUpdate(QString);
 };
 
 #endif // WIDGETCREATOR_H

@@ -45,10 +45,12 @@ WidgetCreator::WidgetCreator(QWidget* parent,
     if (!assigner)
     {
         ui->assign_button->hide();
+        ui->update_button->hide();
     }
     else
     {
         connect(ui->assign_button, SIGNAL(released()), this, SLOT(requestAssignment()));
+        connect(ui->update_button, SIGNAL(released()), this, SLOT(requestUpdate()));
     }
 
     ui->categories_combobox->addItem("All");
@@ -243,6 +245,19 @@ void WidgetCreator::requestAssignment()
     auto widget_name = getWidgetName();
     if (hasBeenCreated(widget_name))
         emit widgetToAssign(widget_name);
+}
+
+void WidgetCreator::requestUpdate()
+{
+    auto widget_name = getWidgetName();
+    if (hasBeenCreated(widget_name))
+    {
+        QSettings settings;
+        auto widget = QString("%1/%2").arg(w_group).arg(w_key);
+        QStringList a_list = getChosenActions();
+        settings.setValue(widget, a_list);
+        emit widgetToUpdate(widget_name);
+    }
 }
 
 bool WidgetCreator::hasBeenCreated(const QString& widget_name)

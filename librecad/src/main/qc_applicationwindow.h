@@ -204,7 +204,7 @@ public slots:
     void unassignMenu(const QString& activator, const QString& menu_name);
     void assignMenu(const QString& activator, const QString& menu_name);
     void invokeMenuAssigner(const QString& menu_name);
-
+    void updateMenu(const QString& menu_name);
 
 
 signals:

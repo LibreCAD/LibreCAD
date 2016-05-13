@@ -2987,6 +2987,8 @@ void QC_ApplicationWindow::invokeMenuCreator()
             this, SLOT(destroyMenu(QString)));
     connect(widget_creator, SIGNAL(widgetToAssign(QString)),
             this, SLOT(invokeMenuAssigner(QString)));
+    connect(widget_creator, SIGNAL(widgetToUpdate(QString)),
+            this, SLOT(updateMenu(QString)));
 
     layout->addWidget(widget_creator);
     dlg->setLayout(layout);
@@ -3101,6 +3103,37 @@ void QC_ApplicationWindow::assignMenu(const QString& activator, const QString& m
             menu->addAction(a_map[key]);
         }
         view->setMenu(activator, menu);
+    }
+}
+
+void QC_ApplicationWindow::updateMenu(const QString& menu_name)
+{
+    // author: ravas
+
+    QSettings settings;
+
+    auto menu_key = QString("CustomMenus/%1").arg(menu_name);
+    auto a_list = settings.value(menu_key).toStringList();
+
+    settings.beginGroup("Activators");
+    auto activators = settings.childKeys();
+
+    foreach (auto activator, activators)
+    {
+        if (settings.value(activator).toString() == menu_name)
+        {
+            foreach (auto win, window_list)
+            {
+                auto view = win->getGraphicView();
+                auto menu = new QMenu(activator, view);
+                menu->setObjectName(menu_name);
+                foreach (auto key, a_list)
+                {
+                    menu->addAction(a_map[key]);
+                }
+                view->setMenu(activator, menu);
+            }
+        }
     }
 }
 
