@@ -389,6 +389,14 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
     dockareas_toolbar->addAction(a_map["BottomDockAreaToggle"]);
     dockareas_toolbar->addAction(a_map["FloatingDockwidgetsToggle"]);
 
+    // <[~ Creators ~]>
+
+    auto creators_toolbar = new QToolBar(main_window);
+    creators_toolbar->setWindowTitle(QObject::tr("Creators"));
+    creators_toolbar->setObjectName("creators_toolbar");
+    creators_toolbar->addAction(a_map["InvokeMenuCreator"]);
+    creators_toolbar->addAction(a_map["InvokeToolbarCreator"]);
+
     // <[~ Toolbars Layout~]>
 
     main_window->addToolBar(Qt::TopToolBarArea, file_toolbar);
@@ -402,6 +410,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
 
     main_window->addToolBar(Qt::BottomToolBarArea, snap_toolbar);
     main_window->addToolBar(Qt::BottomToolBarArea, dockareas_toolbar);
+    main_window->addToolBar(Qt::BottomToolBarArea, creators_toolbar);
 }
 
 void LC_WidgetFactory::createCADToolbars()
