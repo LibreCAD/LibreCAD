@@ -55,6 +55,7 @@ LC_ActionGroupManager::LC_ActionGroupManager(QObject* parent)
     , restriction(new QActionGroup(this))
     , select(new QActionGroup(this))
     , snap(new QActionGroup(this))
+    , snap_extras(new QActionGroup(this))
     , view(new QActionGroup(this))
     , widgets(new QActionGroup(this))
 {
@@ -75,6 +76,7 @@ LC_ActionGroupManager::LC_ActionGroupManager(QObject* parent)
     restriction->setObjectName(QObject::tr("Restriction"));
     select->setObjectName(QObject::tr("Select"));
     snap->setObjectName(QObject::tr("Snap"));
+    snap_extras->setObjectName(QObject::tr("Snap Extras"));
     view->setObjectName(QObject::tr("View"));
     widgets->setObjectName(QObject::tr("Widgets"));
 

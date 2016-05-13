@@ -40,7 +40,7 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
     , actionHandler(ah)
 {
 
-    auto action = new QAction(tr("Exclusive Snap Mode"), agm->widgets);
+    auto action = new QAction(tr("Exclusive Snap Mode"), agm->snap_extras);
     action->setIcon(QIcon(":/icons/exclusive.svg"));
     action->setCheckable(true);
     connect(action, SIGNAL(toggled(bool)),
@@ -48,7 +48,7 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
     action->setObjectName("ExclusiveSnapMode");
     addAction(action);
 
-    snapFree = new QAction(QIcon(":/icons/snap_free.svg"), tr("Free Snap"), agm->snap);
+    snapFree = new QAction(QIcon(":/icons/snap_free.svg"), tr("Free Snap"), agm->snap_extras);
     snapFree->setCheckable(true);
     snapFree->setObjectName("SnapFree");
     connect(snapFree, SIGNAL(triggered()), this, SLOT(actionTriggered()));

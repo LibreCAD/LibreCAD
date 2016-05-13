@@ -32,6 +32,7 @@ public:
     QActionGroup* restriction;
     QActionGroup* select;
     QActionGroup* snap;
+    QActionGroup* snap_extras;
     QActionGroup* view;
     QActionGroup* widgets;
 
