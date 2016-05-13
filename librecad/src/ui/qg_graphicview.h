@@ -101,7 +101,7 @@ public:
 
     std::shared_ptr<LC_Options> options;
 
-    void destroyMenu(const QString& menu_name);
+    void destroyMenu(const QString& activator);
     void setMenu(const QString& activator, QMenu* menu);
 
 protected:

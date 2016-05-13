@@ -7,6 +7,7 @@
 
 class QListWidgetItem;
 class QActionGroup;
+class QPushButton;
 
 namespace Ui {
 class WidgetCreator;
@@ -19,11 +20,15 @@ class WidgetCreator : public QFrame
 public:
     explicit WidgetCreator(QWidget* parent,
                            QMap<QString, QAction*>& actions,
-                           QMap<QString, QActionGroup*> action_groups);
+                           QMap<QString, QActionGroup*> action_groups,
+                           bool assigner = false);
     ~WidgetCreator();
 
     QStringList getChosenActions();
+    QString getWidgetName();
     void addCustomWidgets(const QString& group);
+    void addButton(QPushButton* button);
+    bool hasBeenCreated(const QString& widget_name);
 
 private:
     Ui::WidgetCreator* ui;
@@ -43,12 +48,15 @@ private slots:
 
     void destroyWidget();
     void createWidget();
+    void requestAssignment();
 
     void setCategory(QString);
 
 signals:
     void widgetToCreate(QString);
     void widgetToDestroy(QString);
+    void widgetToAssign(QString);
+    void widgetToUnassign(QString);
 };
 
 #endif // WIDGETCREATOR_H

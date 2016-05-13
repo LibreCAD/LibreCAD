@@ -1135,7 +1135,13 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
         auto menu_name = settings.value("Activators/" + activator).toString();
         auto path = QString("CustomMenus/%1").arg(menu_name);
         auto a_list = settings.value(path).toStringList();
-        assignMenu(menu_name, activator, a_list);
+        auto menu = new QMenu(activator, view);
+        menu->setObjectName(menu_name);
+        foreach (auto key, a_list)
+        {
+            menu->addAction(a_map[key]);
+        }
+        view->setMenu(activator, menu);
     }
 
     connect(view, SIGNAL(gridStatusChanged(const QString&)),
@@ -2687,6 +2693,8 @@ void QC_ApplicationWindow::gotoWiki()
  */
 QMenu* QC_ApplicationWindow::createPopupMenu()
 {
+    // author: ravas
+
     QMenu* context_menu = new QMenu("Context");
     context_menu->setAttribute(Qt::WA_DeleteOnClose);
 
@@ -2732,7 +2740,7 @@ void QC_ApplicationWindow::slotFileOpenRecent(QAction* action)
  */
 void QC_ApplicationWindow::widgetOptionsDialog()
 {
-    // writers: ravas, ...
+    // author: ravas
 
     LC_WidgetOptionsDialog dlg;
 
@@ -2825,6 +2833,8 @@ void QC_ApplicationWindow::widgetOptionsDialog()
  */
 void QC_ApplicationWindow::modifyCommandTitleBar(Qt::DockWidgetArea area)
 {
+    // author: ravas
+
     QDockWidget* cmd_dockwidget = findChild<QDockWidget*>("command_dockwidget");
 
     if (area == Qt::BottomDockWidgetArea || area == Qt::TopDockWidgetArea)
@@ -2870,6 +2880,8 @@ void QC_ApplicationWindow::updateGridStatus(const QString & status)
 
 void QC_ApplicationWindow::showDeviceOptions()
 {
+    // author: ravas
+
     QDialog dlg;
     dlg.setWindowTitle(tr("Device Options"));
     auto layout = new QVBoxLayout;
@@ -2968,47 +2980,135 @@ void QC_ApplicationWindow::invokeMenuCreator()
     dlg->setAttribute(Qt::WA_DeleteOnClose);
     dlg->setWindowTitle(tr("Menu Creator"));
     auto layout = new QVBoxLayout;
-    auto widget_creator = new WidgetCreator(dlg, a_map, ag_manager->allGroups());
+    auto widget_creator = new WidgetCreator(dlg, a_map, ag_manager->allGroups(), true);
     widget_creator->addCustomWidgets("CustomMenus");
 
-    connect(widget_creator, SIGNAL(widgetToCreate(QString)),
-            this, SLOT(createMenu(QString)));
     connect(widget_creator, SIGNAL(widgetToDestroy(QString)),
             this, SLOT(destroyMenu(QString)));
+    connect(widget_creator, SIGNAL(widgetToAssign(QString)),
+            this, SLOT(invokeMenuAssigner(QString)));
 
     layout->addWidget(widget_creator);
     dlg->setLayout(layout);
     dlg->show();
 }
 
+void QC_ApplicationWindow::invokeMenuAssigner(const QString& menu_name)
+{
+    //author: ravas
 
-void QC_ApplicationWindow::createMenu(const QString& menu_name)
+    QSettings settings;
+    settings.beginGroup("Activators");
+
+    QDialog dlg;
+    dlg.setWindowTitle(tr("Menu Assigner"));
+
+    auto cb_1 = new QCheckBox("Double-Click");
+    auto cb_2 = new QCheckBox("Right-Click");
+    auto cb_3 = new QCheckBox("Ctrl+Right-Click");
+    auto cb_4 = new QCheckBox("Shift+Right-Click");
+    cb_1->setChecked(settings.value("Double-Click").toString() == menu_name);
+    cb_2->setChecked(settings.value("Right-Click").toString() == menu_name);
+    cb_3->setChecked(settings.value("Ctrl+Right-Click").toString() == menu_name);
+    cb_4->setChecked(settings.value("Shift+Right-Click").toString() == menu_name);
+
+    auto button_box = new QDialogButtonBox;
+    button_box->setStandardButtons(QDialogButtonBox::Save|QDialogButtonBox::Cancel);
+
+    connect(button_box, SIGNAL(accepted()), &dlg, SLOT(accept()));
+    connect(button_box, SIGNAL(rejected()), &dlg, SLOT(reject()));
+
+    auto layout = new QVBoxLayout;
+    dlg.setLayout(layout);
+
+    auto frame = new QFrame;
+    layout->addWidget(frame);
+
+    auto f_layout = new QVBoxLayout;
+    frame->setLayout(f_layout);
+
+    f_layout->addWidget(cb_1);
+    f_layout->addWidget(cb_2);
+    f_layout->addWidget(cb_3);
+    f_layout->addWidget(cb_4);
+    f_layout->addWidget(button_box);
+
+    if (dlg.exec())
+    {
+        if (cb_1->isChecked())
+            assignMenu("Double-Click", menu_name);
+        else
+            unassignMenu("Double-Click", menu_name);
+
+        if (cb_2->isChecked())
+            assignMenu("Right-Click", menu_name);
+        else
+            unassignMenu("Right-Click", menu_name);
+
+        if (cb_3->isChecked())
+            assignMenu("Ctrl+Right-Click", menu_name);
+        else
+            unassignMenu("Ctrl+Right-Click", menu_name);
+
+        if (cb_4->isChecked())
+            assignMenu("Shift+Right-Click", menu_name);
+        else
+            unassignMenu("Shift+Right-Click", menu_name);
+    }
+    settings.endGroup();
+}
+
+void QC_ApplicationWindow::unassignMenu(const QString& activator, const QString& menu_name)
 {
     // author: ravas
 
     QSettings settings;
+    settings.beginGroup("Activators");
+
+    if (settings.value(activator).toString() == menu_name)
+    {
+        settings.remove(activator);
+    }
+    settings.endGroup();
+
+    foreach (auto win, window_list)
+    {
+        auto view = win->getGraphicView();
+        view->destroyMenu(activator);
+    }
+}
+
+void QC_ApplicationWindow::assignMenu(const QString& activator, const QString& menu_name)
+{
+    // author: ravas
+
+    QSettings settings;
+
+    settings.beginGroup("Activators");
+    settings.setValue(activator, menu_name);
+    settings.endGroup();
+
     auto menu_key = QString("CustomMenus/%1").arg(menu_name);
     auto a_list = settings.value(menu_key).toStringList();
 
-    QStringList items;
-    items << "Double-Click" << "Right-Click" << "Ctrl+Right-Click" << "Shift+Right-Click";
-
-    bool ok;
-    QString activator = QInputDialog::getItem(this, tr("Assign Menu"),
-                                         tr("Activator:"), items, 0, false, &ok);
-    if (ok && !activator.isEmpty())
+    foreach (auto win, window_list)
     {
-        assignMenu(menu_name, activator, a_list);
-        settings.beginGroup("Activators");
-        settings.setValue(activator, menu_name);
-        settings.endGroup();
+        auto view = win->getGraphicView();
+        auto menu = new QMenu(activator, view);
+        menu->setObjectName(menu_name);
+        foreach (auto key, a_list)
+        {
+            menu->addAction(a_map[key]);
+        }
+        view->setMenu(activator, menu);
     }
 }
 
 void QC_ApplicationWindow::destroyMenu(const QString& menu_name)
 {
-    QSettings settings;
+    //author: ravas
 
+    QSettings settings;
     settings.beginGroup("Activators");
     auto activators = settings.childKeys();
 
@@ -3017,32 +3117,12 @@ void QC_ApplicationWindow::destroyMenu(const QString& menu_name)
         if (settings.value(activator).toString() == menu_name)
         {
             settings.remove(activator);
+            foreach (auto win, window_list)
+            {
+                auto view = win->getGraphicView();
+                view->destroyMenu(activator);
+            }
         }
     }
     settings.endGroup();
-
-    foreach (auto win, window_list)
-    {
-        auto view = win->getGraphicView();
-        view->destroyMenu(menu_name);
-    }
-}
-
-void QC_ApplicationWindow::assignMenu(const QString& menu_name,
-                                      const QString& activator,
-                                      const QStringList& s_list)
-{
-    // author: ravas
-
-    foreach (auto win, window_list)
-    {
-        auto view = win->getGraphicView();
-        auto menu = new QMenu(activator, view);
-        menu->setObjectName(menu_name);
-        foreach (auto key, s_list)
-        {
-            menu->addAction(a_map[key]);
-        }
-        view->setMenu(activator, menu);
-    }
 }

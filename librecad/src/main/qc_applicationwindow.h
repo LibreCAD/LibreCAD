@@ -92,7 +92,6 @@ public:
     void setRedoEnable(bool enable);
     void setUndoEnable(bool enable);
     bool loadStyleSheet(QString path);
-    void assignMenu(const QString& activator, const QString& menu_name, const QStringList& s_list);
 
     std::shared_ptr<LC_Options> options;
 
@@ -201,8 +200,10 @@ public slots:
     void invokeToolbarCreator();
     void createToolbar(const QString& toolbar_name);
     void destroyToolbar(const QString& toolbar_name);
-    void createMenu(const QString& menu_name);
-    void destroyMenu(const QString& menu_name);
+    void destroyMenu(const QString& activator);
+    void unassignMenu(const QString& activator, const QString& menu_name);
+    void assignMenu(const QString& activator, const QString& menu_name);
+    void invokeMenuAssigner(const QString& menu_name);
 
 
 

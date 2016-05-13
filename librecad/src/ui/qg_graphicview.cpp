@@ -1001,23 +1001,17 @@ void QG_GraphicView::setCurrentQAction(QAction* q_action)
     recent_actions.prepend(q_action);
 }
 
-void QG_GraphicView::destroyMenu(const QString& menu_name)
+void QG_GraphicView::destroyMenu(const QString& activator)
 {
-    auto menu = findChild<QMenu*>(menu_name);
-
-    if (menu && menus.contains(menu->title()))
+    if (menus.contains(activator))
     {
-        menus.remove(menu->title());
+        auto menu = menus.take(activator);
         delete menu;
     }
 }
 
 void QG_GraphicView::setMenu(const QString& activator, QMenu* menu)
 {
-    if (menus.contains(activator))
-    {
-        auto old_menu = menus.take(activator);
-        delete old_menu;
-    }
+    destroyMenu(activator);
     menus[activator] = menu;
 }

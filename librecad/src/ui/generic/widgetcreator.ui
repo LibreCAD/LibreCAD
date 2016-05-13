@@ -176,7 +176,7 @@
     </widget>
    </item>
    <item alignment="Qt::AlignHCenter">
-    <widget class="QFrame" name="frame_4">
+    <widget class="QFrame" name="button_frame">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -207,6 +207,13 @@
         </property>
         <property name="text">
          <string>Destroy</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="assign_button">
+        <property name="text">
+         <string>Assign</string>
         </property>
        </widget>
       </item>

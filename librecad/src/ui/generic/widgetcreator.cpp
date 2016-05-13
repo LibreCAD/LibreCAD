@@ -29,16 +29,27 @@
 
 #include <QSettings>
 #include <QLineEdit>
+#include <QPushButton>
 
 WidgetCreator::WidgetCreator(QWidget* parent,
                              QMap<QString, QAction*>& actions,
-                             QMap<QString, QActionGroup*> action_groups)
+                             QMap<QString, QActionGroup*> action_groups,
+                             bool assigner)
     : QFrame(parent)
     , ui(new Ui::WidgetCreator)
     , a_map(actions)
     , ag_map(action_groups)
 {
     ui->setupUi(this);
+
+    if (!assigner)
+    {
+        ui->assign_button->hide();
+    }
+    else
+    {
+        connect(ui->assign_button, SIGNAL(released()), this, SLOT(requestAssignment()));
+    }
 
     ui->categories_combobox->addItem("All");
     foreach (auto ag, ag_map)
@@ -116,6 +127,11 @@ QStringList WidgetCreator::getChosenActions()
     return s_list;
 }
 
+QString WidgetCreator::getWidgetName()
+{
+    return ui->combo->lineEdit()->text();
+}
+
 
 void WidgetCreator::addCustomWidgets(const QString& group)
 {
@@ -187,7 +203,7 @@ void WidgetCreator::destroyWidget()
     int index = ui->combo->findText(key);
     if (index > -1)
     {
-        ui->combo->removeItem(index);    
+        ui->combo->removeItem(index);
         QSettings settings;
         settings.remove(QString("%1/%2").arg(w_group).arg(key));
         emit widgetToDestroy(key);
@@ -215,4 +231,22 @@ void WidgetCreator::setCategory(QString category)
         if (!chosen_actions.contains(action->objectName()))
             ui->offered_actions->addActionItem(action);
     }
+}
+
+void WidgetCreator::addButton(QPushButton* button)
+{
+    ui->button_frame->layout()->addWidget(button);
+}
+
+void WidgetCreator::requestAssignment()
+{
+    auto widget_name = getWidgetName();
+    if (hasBeenCreated(widget_name))
+        emit widgetToAssign(widget_name);
+}
+
+bool WidgetCreator::hasBeenCreated(const QString& widget_name)
+{
+    int index = ui->combo->findText(widget_name);
+    return (index > -1) ? true : false;
 }
