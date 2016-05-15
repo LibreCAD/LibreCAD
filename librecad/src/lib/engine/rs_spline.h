@@ -203,15 +203,15 @@ public:
         virtual void calculateBorders();
 
 private:
-		static void rbasis(int c, double t, int npts, const std::vector<int>& x, const std::vector<double>& h, std::vector<double>& r);
+		static void rbasis(int c, double t, int npts, const std::vector<double>& x, const std::vector<double>& h, std::vector<double>& r);
 
-		static void knot(int num, int order, std::vector<int>& knotVector);
-		static void rbspline(size_t npts, size_t k, size_t p1,
-							 const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p);
+		std::vector<double> knot(size_t num, size_t order) const;
+		void rbspline(size_t npts, size_t k, size_t p1,
+		                     const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p) const;
 
-		static void knotu(int num, int order, std::vector<int>& knotVector);
-        static void rbsplinu(int npts, int k, int p1,
-							 const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p);
+		std::vector<double> knotu(size_t num, size_t order) const;
+		void rbsplinu(size_t npts, size_t k, size_t p1,
+		                     const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p) const;
 
 protected:
 		RS_SplineData data;
