@@ -148,7 +148,6 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     setWindowIcon(QIcon(QC_APP_ICON));
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init status bar");
-
     QStatusBar* status_bar = statusBar();
     coordinateWidget = new QG_CoordinateWidget(status_bar, "coordinates");
     status_bar->addWidget(coordinateWidget);
@@ -712,15 +711,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
         activedMdiSubWindow=w;
         return;
     }
-    if(w->widget() == nullptr) {
-        mdiAreaCAD->removeSubWindow(w);
 
-        mdiAreaCAD->activateNextSubWindow();
-        auto w0=mdiAreaCAD->currentSubWindow();
-        w0->showNormal();
-        if(w0) slotWindowActivated(w0);
-        return;
-    }
     if(w==activedMdiSubWindow) return;
     activedMdiSubWindow=w;
     QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(w);
@@ -783,8 +774,6 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
     RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated end");
 }
 
-
-
 /**
  * Called when the menu 'windows' is about to be shown.
  * This is used to update the window list in the menu.
@@ -795,37 +784,11 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
 
     windowsMenu->clear();
 
-    QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
-    for (int i=0; i<windows.size(); ) {
-        //clean up invalid sub-windows
-        //fixme, this should be auto, by
-        //setAttribute(Qt::WA_DeleteOnClose);
-
-        if(windows.at(i) && windows.at(i)->widget()){
-            i++;
-        }else{
-            mdiAreaCAD->removeSubWindow(windows.at(i));
-            windows = mdiAreaCAD->subWindowList();
-            if(windows.size() > 0){
-                QMdiSubWindow* active= mdiAreaCAD->currentSubWindow();
-                if(active) {
-                   mdiAreaCAD->setActiveSubWindow(active);
-                   active->raise();
-                   active->setFocus();
-                }
-
-            }
-            continue;
-        }
-    }
-
-    if ( mdiAreaCAD->subWindowList().isEmpty()) {
-        return; //no sub-window to show
-    } else if (mdiAreaCAD->viewMode() == QMdiArea::TabbedView) {
+    if (mdiAreaCAD->viewMode() == QMdiArea::TabbedView) {
         windowsMenu->addAction( tr("Su&b-Window mode"), this, SLOT(slotToggleTab()));
     } else {
         windowsMenu->addAction( tr("Ta&b mode"), this, SLOT(slotToggleTab()));
-        if ( 1 < mdiAreaCAD->subWindowList().size()) {
+        if (window_list.size() > 1) {
             windowsMenu->addAction( tr("&Cascade"), this, SLOT(slotCascade()));
             windowsMenu->addAction( tr("&Tile"), this, SLOT(slotTile()));
             windowsMenu->addAction( tr("Tile &Vertically"), this, SLOT(slotTileVertical()));
@@ -835,20 +798,14 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
 
     windowsMenu->addSeparator();
     QMdiSubWindow* active= mdiAreaCAD->activeSubWindow();
-//    int active=windows.indexOf(mdiAreaCAD->activeSubWindow());
-//    std::cout<<" QC_ApplicationWindow::slotWindowsMenuAboutToShow(): has active: "<< (mdiAreaCAD->activeSubWindow() )<<" index="<<active<<std::endl;
-//    if(active<0) active=windows.size()-1;
-    for (int i=0; i<windows.size(); ++i) {
-        QAction *id = windowsMenu->addAction(windows.at(i)->windowTitle(),
+    for (int i=0; i< window_list.size(); ++i) {
+        QAction *id = windowsMenu->addAction(window_list.at(i)->windowTitle(),
                                          this, SLOT(slotWindowsMenuActivated(bool)));
         id->setCheckable(true);
         id->setData(i);
-        id->setChecked(windows.at(i)==active);
+        id->setChecked(window_list.at(i)==active);
     }
 }
-
-
-
 
 /**
  * Called when the user selects a document window from the
@@ -863,26 +820,13 @@ void QC_ApplicationWindow::slotWindowsMenuActivated(bool /*id*/) {
         if(w==mdiAreaCAD->activeSubWindow()) {
             return;
         }
-        // to avoid showing by tile(), bug#3418133
-        // todo, is showNormal() indeed the proper way?
-        //        w->showNormal();
-        //        w->showMaximized();
+
         mdiAreaCAD->setActiveSubWindow(w);
-        //                w->activateWindow();
+        w->activateWindow();
         w->raise();
         w->showMaximized();
         w->setFocus();
-
-        if (w->widget())
-        {
-            for(int i=0;i<mdiAreaCAD->subWindowList().size();i++){
-                QMdiSubWindow* m=mdiAreaCAD->subWindowList().at(i);
-                if( m != w){
-                    m->hide();
-                }
-            }
-        }
-        // RVT_PORT need to reset/cleanup current menu here to avoid menu clutter
+        slotWindowActivated(w);
     }
 }
 
