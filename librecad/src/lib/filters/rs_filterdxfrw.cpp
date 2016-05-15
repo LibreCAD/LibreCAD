@@ -598,6 +598,8 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
         RS_Spline* spline;
         if (data->degree>=1 && data->degree<=3) {
         RS_SplineData d(data->degree, ((data->flags&0x1)==0x1));
+		if (data->knotslist.size())
+			d.knotslist = data->knotslist;
         spline = new RS_Spline(currentContainer, d);
         setEntityAttributes(spline, data);
 
@@ -608,7 +610,7 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
                         "Accepted values are 1..3.", data->degree);
         return;
 	}
-	for (auto const vert: data->controllist)
+	for (auto const& vert: data->controllist)
 		spline->addControlPoint({vert->x, vert->y});
 
     if (data->ncontrol== 0 && data->degree != 2){
