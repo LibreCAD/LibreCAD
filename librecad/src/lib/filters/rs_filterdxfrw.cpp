@@ -2290,16 +2290,20 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     sp.nknots = sp.ncontrol + sp.degree + 1;
 
     // write spline knots:
-    int k = sp.degree+1;
-    for (int i=1; i<=sp.nknots; i++) {
-        if (i<=k) {
-            sp.knotslist.push_back(0.0);
-        } else if (i<=sp.nknots-k) {
-            sp.knotslist.push_back(1.0/(sp.nknots-2*k+1) * (i-k));
-        } else {
-            sp.knotslist.push_back(1.0);
-        }
-    }
+	if (s->getData().knotslist.size()) {
+		sp.knotslist = s->getData().knotslist;
+	} else {
+		int k = sp.degree+1;
+		for (int i=1; i<=sp.nknots; i++) {
+			if (i<=k) {
+				sp.knotslist.push_back(0.0);
+			} else if (i<=sp.nknots-k) {
+				sp.knotslist.push_back(1.0/(sp.nknots-2*k+1) * (i-k));
+			} else {
+				sp.knotslist.push_back(1.0);
+			}
+		}
+	}
 
     // write spline control points:
 	auto cp = s->getControlPoints();
