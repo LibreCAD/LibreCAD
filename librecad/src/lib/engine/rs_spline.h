@@ -203,8 +203,6 @@ public:
         virtual void calculateBorders();
 
 private:
-		static void rbasis(int c, double t, int npts, const std::vector<double>& x, const std::vector<double>& h, std::vector<double>& r);
-
 		std::vector<double> knot(size_t num, size_t order) const;
 		void rbspline(size_t npts, size_t k, size_t p1,
 		                     const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p) const;
