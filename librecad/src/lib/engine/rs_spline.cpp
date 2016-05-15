@@ -44,8 +44,20 @@ RS_SplineData::RS_SplineData(int _degree, bool _closed):
 
 std::ostream& operator << (std::ostream& os, const RS_SplineData& ld) {
 	os << "( degree: " << ld.degree <<
-		  " closed: " << ld.closed <<
-		  ")";
+	      " closed: " << ld.closed;
+	if (ld.controlPoints.size()) {
+		os << "\n(control points:\n";
+		for (auto const& v: ld.controlPoints)
+			os<<v;
+		os<<")\n";
+	}
+	if (ld.knotslist.size()) {
+		os << "\n(knot vector:\n";
+		for (auto const& v: ld.knotslist)
+			os<<v;
+		os<<")\n";
+	}
+	os  << ")";
 	return os;
 }
 
@@ -482,20 +494,28 @@ void RS_Spline::removeLastControlPoint() {
     data.controlPoints.pop_back();
 }
 
-
+//TODO: private interface cleanup; de Boor's Algorithm
 /**
  * Generates B-Spline open knot vector with multiplicity
  * equal to the order at the ends.
  */
-void RS_Spline::knot(int num, int order, std::vector<int>& knotVector) {
-    knotVector[1] = 0;
-    for (int i = 2; i <= num + order; i++) {
+std::vector<double> RS_Spline::knot(size_t num, size_t order) const{
+	std::vector<double> knotVector(num + order + 1, 0.);
+	if (data.knotslist.size() == num + order) {
+		//use custom knot vector
+		std::copy(data.knotslist.begin(), data.knotslist.end(), knotVector.begin()+1);
+		return knotVector;
+	}
+
+	//use uniform knots
+	for (size_t i = 2; i <= num + order; i++) {
         if ( (i > order) && (i < num + 2) ) {
             knotVector[i] = knotVector[i-1] + 1;
         } else {
             knotVector[i] = knotVector[i-1];
         }
     }
+	return knotVector;
 }
 
 
@@ -504,7 +524,7 @@ void RS_Spline::knot(int num, int order, std::vector<int>& knotVector) {
  * Generates rational B-spline basis functions for an open knot vector.
  */
 void RS_Spline::rbasis(int c, double t, int npts,
-					   const std::vector<int>& x, const std::vector<double>& h, std::vector<double>& r) {
+                       const std::vector<double>& x, const std::vector<double>& h, std::vector<double>& r) {
 
     int nplusc;
     int i,k;
@@ -518,10 +538,7 @@ void RS_Spline::rbasis(int c, double t, int npts,
 
     // calculate the first order nonrational basis functions n[i]
     for (i = 1; i<= nplusc-1; i++) {
-        if (( t >= x[i]) && (t < x[i+1]))
-            temp[i] = 1;
-        else
-            temp[i] = 0;
+		temp[i] = ((t >= x[i]) && (t < x[i+1])) ? 1 : 0;
     }
 
     /* calculate the higher order nonrational basis functions */
@@ -544,7 +561,7 @@ void RS_Spline::rbasis(int c, double t, int npts,
     }
 
     // pick up last point
-    if (t == (double)x[nplusc]) {
+	if (t == x[nplusc]) {
         temp[npts] = 1;
     }
 
@@ -569,7 +586,7 @@ void RS_Spline::rbasis(int c, double t, int npts,
  * Generates a rational B-spline curve using a uniform open knot vector.
  */
 void RS_Spline::rbspline(size_t npts, size_t k, size_t p1,
-						 const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p) {
+                         const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p) const{
 
 	size_t i,j,icount,jcount;
 	size_t i1;
@@ -583,27 +600,27 @@ void RS_Spline::rbspline(size_t npts, size_t k, size_t p1,
 
     nplusc = npts + k;
 
-	std::vector<int> x(nplusc+1, 0);
 	std::vector<double> nbasis(npts+1, 0.);
 
 
     // generate the uniform open knot vector
-    knot(npts,k,x);
+
+	std::vector<double> x = knot(npts, k);
 
     icount = 0;
 
     // calculate the points on the rational B-spline curve
     t = 0;
-    step = ((double)x[nplusc])/((double)(p1-1));
+	step = x[nplusc]/(p1-1);
 
     for (i1 = 1; i1<= p1; i1++) {
 
-        if ((double)x[nplusc] - t < 5e-6) {
-            t = (double)x[nplusc];
+		if (x[nplusc] - t < 5e-6) {
+			t = x[nplusc];
         }
 
         // generate the basis function for this value of t
-        rbasis(k,t,npts,x,h,nbasis);
+		rbasis(k, t, npts, x, h, nbasis);
 
         // generate a point on the curve
         for (j = 1; j <= 3; j++) {
@@ -625,27 +642,31 @@ void RS_Spline::rbspline(size_t npts, size_t k, size_t p1,
 }
 
 
-void RS_Spline::knotu(int num, int order, std::vector<int>& knotVector) {
-    int nplusc,/*nplus2,*/i;
 
-    nplusc = num + order;
-//    nplus2 = num + 2;
+std::vector<double> RS_Spline::knotu(size_t num, size_t order) const{
+	std::vector<double> knotVector(num + order + 1, 0.);
+	if (data.knotslist.size() == num + order) {
+		//use custom knot vector
+		std::copy(data.knotslist.begin(), data.knotslist.end(), knotVector.begin()+1);
+		return knotVector;
+	}
 
     knotVector[1] = 0;
-    for (i = 2; i <= nplusc; i++) {
+	for (size_t i = 2; i <= num + order; i++) {
         knotVector[i] = i-1;
     }
+	return knotVector;
 }
 
 
 
-void RS_Spline::rbsplinu(int npts, int k, int p1,
-						 const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p) {
+void RS_Spline::rbsplinu(size_t npts, size_t k, size_t p1,
+                         const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p) const{
 
-    int i,j,icount,jcount;
-    int i1;
+	size_t i,j,icount,jcount;
+	size_t i1;
     //int x[30];		/* allows for 20 data points with basis function of order 5 */
-    int nplusc;
+	size_t nplusc;
 
     double step;
     double t;
@@ -655,12 +676,11 @@ void RS_Spline::rbsplinu(int npts, int k, int p1,
 
     nplusc = npts + k;
 
-	std::vector<int> x(nplusc+1, 0);
 	std::vector<double> nbasis(npts+1, 0.);
 
     /* generate the uniform periodic knot vector */
 
-    knotu(npts,k,x);
+	std::vector<double> x = knotu(npts, k);
 
     /*
         printf("The knot vector is ");
@@ -685,11 +705,11 @@ void RS_Spline::rbsplinu(int npts, int k, int p1,
 
     for (i1 = 1; i1<= p1; i1++) {
 
-        if ((double)x[nplusc] - t < 5e-6) {
-            t = (double)x[nplusc];
+		if (x[nplusc] - t < 5e-6) {
+			t = x[nplusc];
         }
 
-        rbasis(k,t,npts,x,h,nbasis);      /* generate the basis function for this value of t */
+		rbasis(k, t, npts, x, h, nbasis);      /* generate the basis function for this value of t */
         /*
                         printf("t = %f \n",t);
                         printf("nbasis = ");
