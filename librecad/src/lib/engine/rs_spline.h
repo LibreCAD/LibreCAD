@@ -49,6 +49,7 @@ struct RS_SplineData {
 	bool closed;
 	/** Control points of the spline. */
 	std::vector<RS_Vector> controlPoints;
+	std::vector<double> knotslist;
 };
 
 std::ostream& operator << (std::ostream& os, const RS_SplineData& ld);
