@@ -153,11 +153,15 @@ public:
 private:
 		std::vector<double> knot(size_t num, size_t order) const;
 		void rbspline(size_t npts, size_t k, size_t p1,
-		                     const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p) const;
+		              const std::vector<RS_Vector>& b,
+		              const std::vector<double>& h,
+		              std::vector<RS_Vector>& p) const;
 
 		std::vector<double> knotu(size_t num, size_t order) const;
 		void rbsplinu(size_t npts, size_t k, size_t p1,
-		                     const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p) const;
+		              const std::vector<RS_Vector>& b,
+		              const std::vector<double>& h,
+		              std::vector<RS_Vector>& p) const;
 
 protected:
 		RS_SplineData data;

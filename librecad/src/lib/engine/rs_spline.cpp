@@ -181,44 +181,31 @@ void RS_Spline::update() {
         }
     }
 
-	size_t i;
 	const size_t npts = tControlPoints.size();
     // order:
 	const size_t  k = data.degree+1;
     // resolution:
 	const size_t  p1 = getGraphicVariableInt("$SPLINESEGS", 8) * npts;
 
-	std::vector<double> b(npts*3+2, 0.);
 	std::vector<double> h(npts+2, 1.);
-	std::vector<double> p(3*p1+2, 0.);
-
-    i = 1;
-	for(auto const& vp: tControlPoints){
-		b[i] = vp.x;
-		b[i+1] = vp.y;
-
-        RS_DEBUG->print("RS_Spline::update: b[%d]: %f/%f", i, b[i], b[i+1]);
-        i+=3;
-    }
-
+	std::vector<RS_Vector> p(p1, {0., 0.});
     if (data.closed) {
-        rbsplinu(npts,k,p1,b,h,p);
+		rbsplinu(npts,k,p1,tControlPoints,h,p);
     } else {
-        rbspline(npts,k,p1,b,h,p);
+		rbspline(npts,k,p1,tControlPoints,h,p);
     }
 
-    RS_Vector prev(false);
-	for (i = 1; i <= 3*p1; i += 3) {
-        if (prev.valid) {
-			RS_Line* line = new RS_Line{this, prev, {p[i], p[i+1]}};
+	RS_Vector prev{};
+	for (auto const& vp: p) {
+		if (prev.valid) {
+			RS_Line* line = new RS_Line{this, prev, vp};
 			line->setLayer(nullptr);
 			line->setPen(RS2::FlagInvalid);
-            addEntity(line);
-        }
-        prev = RS_Vector(p[i], p[i+1]);
-
-        minV = RS_Vector::minimum(prev, minV);
-        maxV = RS_Vector::maximum(prev, maxV);
+			addEntity(line);
+		}
+		prev = vp;
+		minV = RS_Vector::minimum(prev, minV);
+		maxV = RS_Vector::maximum(prev, maxV);
 	}
 }
 
@@ -558,11 +545,11 @@ std::vector<double> rbasis(int c, double t, int npts,
 		sum += temp[i]*h[i];
     }
 
-	std::vector<double> r(npts + 1, 0);
+	std::vector<double> r(npts, 0);
     // form rational basis functions and put in r vector
 	if (sum != 0) {
-		for (int i = 1; i <= npts; i++)
-			r[i] = (temp[i]*h[i])/sum;
+		for (int i = 0; i < npts; i++)
+			r[i] = (temp[i+1]*h[i+1])/sum;
 	}
 	return r;
 }
@@ -573,38 +560,28 @@ std::vector<double> rbasis(int c, double t, int npts,
  * Generates a rational B-spline curve using a uniform open knot vector.
  */
 void RS_Spline::rbspline(size_t npts, size_t k, size_t p1,
-                         const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p) const{
+                         const std::vector<RS_Vector>& b,
+                         const std::vector<double>& h,
+                         std::vector<RS_Vector>& p) const{
 	size_t const nplusc = npts + k;
 
 	// generate the open knot vector
 	auto const x = knot(npts, k);
 
-	size_t icount = 0;
-
     // calculate the points on the rational B-spline curve
 	double t = 0;
 	double const step = x[nplusc]/(p1-1);
 
-	for (size_t i1 = 1; i1<= p1; i1++) {
+	for (auto& vp: p) {
 		if (x[nplusc] - t < 5e-6) t = x[nplusc];
 
         // generate the basis function for this value of t
 		auto const nbasis = rbasis(k, t, npts, x, h);
 
         // generate a point on the curve
-		for (int j = 1; j <= 3; j++) {
-			int jcount = j;
-            p[icount+j] = 0.;
+		for (size_t i = 0; i < npts; i++)
+			vp += b[i] * nbasis[i];
 
-            // Do local matrix multiplication
-			for (size_t i = 1; i <= npts; i++) {
-//                temp = nbasis[i]*b[jcount];
-//                p[icount + j] = p[icount + j] + temp;
-                p[icount + j] +=  nbasis[i]*b[jcount];
-                jcount = jcount + 3;
-            }
-        }
-		icount += 3;
 		t += step;
     }
 
@@ -630,33 +607,27 @@ std::vector<double> RS_Spline::knotu(size_t num, size_t order) const{
 
 
 void RS_Spline::rbsplinu(size_t npts, size_t k, size_t p1,
-                         const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p) const{
+                         const std::vector<RS_Vector>& b,
+                         const std::vector<double>& h,
+                         std::vector<RS_Vector>& p) const{
 	size_t const nplusc = npts + k;
 
 	/* generate the periodic knot vector */
 	std::vector<double> const x = knotu(npts, k);
 
     /*    calculate the points on the rational B-spline curve */
-	size_t icount = 0;
 	double t = k-1;
 	double const step = double(npts - k + 1)/(p1 - 1);
 
-	for (size_t i1 = 1; i1 <= p1; i1++) {
+	for (auto& vp: p) {
 		if (x[nplusc] - t < 5e-6) t = x[nplusc];
 
 		/* generate the basis function for this value of t */
 		auto const nbasis = rbasis(k, t, npts, x, h);
 		/* generate a point on the curve, for x, y, z */
-		for (int j = 1; j <= 3; j++) {
-			int jcount = j;
-            p[icount+j] = 0.;
+		for (size_t i = 0; i < npts; i++)
+			vp += b[i] * nbasis[i];
 
-			for (size_t i = 1; i <= npts; i++) { /* Do local matrix multiplication */
-                p[icount + j] += nbasis[i]*b[jcount];
-				jcount += 3;
-            }
-        }
-		icount += 3;
 		t += step;
     }
 
