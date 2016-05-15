@@ -135,15 +135,31 @@ QMap<QString, QActionGroup*> LC_ActionGroupManager::allGroups()
     return ag_map;
 }
 
-void LC_ActionGroupManager::toggleSnapExclusiveMode(bool state)
+void LC_ActionGroupManager::toggleExclusiveSnapMode(bool state)
 {
-    if (state == true)
+    auto snap_actions = snap->actions();
+
+    QList<bool> temp_memory;
+
+    foreach (auto action, snap_actions)
     {
-        foreach (auto action, snap->actions())
+        temp_memory << action->isChecked();
+        if (action->isChecked())
         {
-            if (action->isChecked())
-                action->activate(QAction::Trigger);
+            action->activate(QAction::Trigger);
+            action->setChecked(false);
         }
     }
+
     snap->setExclusive(state);
+
+    if (!snap_memory.isEmpty())
+    {
+        for (int i = 0; i < snap_actions.size(); ++i)
+        {
+            if (snap_memory.at(i) == true)
+                snap_actions.at(i)->activate(QAction::Trigger);
+        }
+    }
+    snap_memory = temp_memory;
 }

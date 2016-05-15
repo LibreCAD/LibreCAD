@@ -44,7 +44,7 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
     action->setIcon(QIcon(":/icons/exclusive.svg"));
     action->setCheckable(true);
     connect(action, SIGNAL(toggled(bool)),
-            agm, SLOT(toggleSnapExclusiveMode(bool)));
+            agm, SLOT(toggleExclusiveSnapMode(bool)));
     action->setObjectName("ExclusiveSnapMode");
     addAction(action);
 

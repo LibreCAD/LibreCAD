@@ -41,7 +41,10 @@ public:
     void sortGroupsByName(QList<QActionGroup*>& list);
 
 public slots:
-    void toggleSnapExclusiveMode(bool state);
+    void toggleExclusiveSnapMode(bool state);
+
+private:
+    QList<bool> snap_memory;
 
 };
 
