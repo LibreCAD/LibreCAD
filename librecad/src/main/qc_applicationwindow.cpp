@@ -42,6 +42,7 @@
 #include <QtSvg>
 #include <QStyleFactory>
 #include <QPrintDialog>
+#include <QRegExp>
 
 #include "main.h"
 
@@ -2351,7 +2352,11 @@ void QC_ApplicationWindow::showAboutWindow()
 
     QString tag;
     #ifdef QC_SCMREVISION
-        tag = (XSTR(QC_SCMREVISION));
+        tag = XSTR(QC_SCMREVISION);
+        QRegExp regex(R"~(-(\d+-\w+))~");
+        int pos = regex.indexIn(tag);
+        if (pos > -1)
+            tag = regex.cap(1);
     #else
         tag = tr("Unknown");
     #endif
