@@ -2338,8 +2338,16 @@ void QC_ApplicationWindow::showAboutWindow()
     // contributors: ravas, ...
 
     QDialog dlg;
-    dlg.setWindowTitle(qApp->applicationName());
+    dlg.setWindowTitle(tr("About"));
+
     auto layout = new QVBoxLayout;
+    dlg.setLayout(layout);
+
+    auto frame = new QGroupBox(qApp->applicationName());
+    layout->addWidget(frame);
+
+    auto f_layout = new QVBoxLayout;
+    frame->setLayout(f_layout);
 
     QString tag;
     #ifdef QC_SCMREVISION
@@ -2369,11 +2377,11 @@ void QC_ApplicationWindow::showAboutWindow()
 
     auto app_info = new QLabel(info);
     app_info->setTextInteractionFlags(Qt::TextSelectableByMouse);
-    layout->addWidget(app_info);
+    f_layout->addWidget(app_info);
 
     auto copy_button = new QPushButton(tr("Copy"));
     // copy_button->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-    layout->addWidget(copy_button);
+    f_layout->addWidget(copy_button);
 
     connect(copy_button, SIGNAL(released()), &dlg, SLOT(accept()));
 
@@ -2387,9 +2395,8 @@ void QC_ApplicationWindow::showAboutWindow()
     auto links_label = new QLabel(links);
     links_label->setOpenExternalLinks(true);
     links_label->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
-    layout->addWidget(links_label);
+    f_layout->addWidget(links_label);
 
-    dlg.setLayout(layout);
     if (dlg.exec())
     {
         QClipboard* clipboard = QApplication::clipboard();
