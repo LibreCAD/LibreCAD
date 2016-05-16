@@ -187,7 +187,7 @@ void RS_Spline::update() {
     // resolution:
 	const size_t  p1 = getGraphicVariableInt("$SPLINESEGS", 8) * npts;
 
-	std::vector<double> h(npts+2, 1.);
+	std::vector<double> h(npts+1, 1.);
 	std::vector<RS_Vector> p(p1, {0., 0.});
     if (data.closed) {
 		rbsplinu(npts,k,p1,tControlPoints,h,p);
@@ -487,21 +487,15 @@ void RS_Spline::removeLastControlPoint() {
  * equal to the order at the ends.
  */
 std::vector<double> RS_Spline::knot(size_t num, size_t order) const{
-	std::vector<double> knotVector(num + order + 1, 0.);
 	if (data.knotslist.size() == num + order) {
 		//use custom knot vector
-		std::copy(data.knotslist.begin(), data.knotslist.end(), knotVector.begin()+1);
-		return knotVector;
+		return data.knotslist;
 	}
 
+	std::vector<double> knotVector(num + order, 0.);
 	//use uniform knots
-	for (size_t i = 2; i <= num + order; i++) {
-        if ( (i > order) && (i < num + 2) ) {
-            knotVector[i] = knotVector[i-1] + 1;
-        } else {
-            knotVector[i] = knotVector[i-1];
-        }
-    }
+	std::iota(knotVector.begin() + order, knotVector.begin() + num + 1, 1);
+	std::fill(knotVector.begin() + num + 1, knotVector.end(), knotVector[num]);
 	return knotVector;
 }
 
@@ -517,16 +511,16 @@ std::vector<double> rbasis(int c, double t, int npts,
 
 	int const nplusc = npts + c;
 
-	std::vector<double> temp(nplusc+1,0.);
+	std::vector<double> temp(nplusc,0.);
 
     // calculate the first order nonrational basis functions n[i]
-	for (int i = 1; i<= nplusc-1; i++)
+	for (int i = 0; i< nplusc-1; i++)
 		if ((t >= x[i]) && (t < x[i+1])) temp[i] = 1;
 
     /* calculate the higher order nonrational basis functions */
 
 	for (int k = 2; k <= c; k++) {
-		for (int i = 1; i <= nplusc-k; i++) {
+		for (int i = 0; i < nplusc-k; i++) {
 			// if the lower order basis function is zero skip the calculation
             if (temp[i] != 0)
 				temp[i] = ((t-x[i])*temp[i])/(x[i+k-1]-x[i]);
@@ -537,11 +531,11 @@ std::vector<double> rbasis(int c, double t, int npts,
     }
 
     // pick up last point
-	if (t >= x[nplusc]) temp[npts] = 1;
+	if (t >= x[nplusc-1]) temp[npts-1] = 1;
 
     // calculate sum for denominator of rational basis functions
 	double sum = 0.;
-	for (int i = 1; i <= npts; i++) {
+	for (int i = 0; i < npts; i++) {
 		sum += temp[i]*h[i];
     }
 
@@ -549,7 +543,7 @@ std::vector<double> rbasis(int c, double t, int npts,
     // form rational basis functions and put in r vector
 	if (sum != 0) {
 		for (int i = 0; i < npts; i++)
-			r[i] = (temp[i+1]*h[i+1])/sum;
+			r[i] = (temp[i]*h[i])/sum;
 	}
 	return r;
 }
@@ -570,10 +564,10 @@ void RS_Spline::rbspline(size_t npts, size_t k, size_t p1,
 
     // calculate the points on the rational B-spline curve
 	double t = 0;
-	double const step = x[nplusc]/(p1-1);
+	double const step = x[nplusc-1]/(p1-1);
 
 	for (auto& vp: p) {
-		if (x[nplusc] - t < 5e-6) t = x[nplusc];
+		if (x[nplusc-1] - t < 5e-6) t = x[nplusc-1];
 
         // generate the basis function for this value of t
 		auto const nbasis = rbasis(k, t, npts, x, h);
@@ -590,17 +584,12 @@ void RS_Spline::rbspline(size_t npts, size_t k, size_t p1,
 
 
 std::vector<double> RS_Spline::knotu(size_t num, size_t order) const{
-	std::vector<double> knotVector(num + order + 1, 0.);
 	if (data.knotslist.size() == num + order) {
 		//use custom knot vector
-		std::copy(data.knotslist.begin(), data.knotslist.end(), knotVector.begin()+1);
-		return knotVector;
+		return data.knotslist;
 	}
-
-    knotVector[1] = 0;
-	for (size_t i = 2; i <= num + order; i++) {
-        knotVector[i] = i-1;
-    }
+	std::vector<double> knotVector(num + order, 0.);
+	std::iota(knotVector.begin(), knotVector.end(), 0);
 	return knotVector;
 }
 
@@ -620,7 +609,7 @@ void RS_Spline::rbsplinu(size_t npts, size_t k, size_t p1,
 	double const step = double(npts - k + 1)/(p1 - 1);
 
 	for (auto& vp: p) {
-		if (x[nplusc] - t < 5e-6) t = x[nplusc];
+		if (x[nplusc-1] - t < 5e-6) t = x[nplusc-1];
 
 		/* generate the basis function for this value of t */
 		auto const nbasis = rbasis(k, t, npts, x, h);
