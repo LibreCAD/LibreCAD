@@ -126,6 +126,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     : options(std::make_shared<LC_Options>())
     , ag_manager(new LC_ActionGroupManager(this))
     , actionHandler(new QG_ActionHandler(this))
+    , autosaveTimer(nullptr)
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
