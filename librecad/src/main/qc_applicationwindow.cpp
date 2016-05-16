@@ -221,7 +221,8 @@ QPrinter::PageSize rsToQtPaperFormat(RS2::PaperFormat f) {
 QC_ApplicationWindow::QC_ApplicationWindow()
         : QMainWindow(0),
         QG_MainWindowInterface()
-      ,m_qDraftModeTitle(" ["+tr("Draft Mode")+"]")
+      , m_qDraftModeTitle(" ["+tr("Draft Mode")+"]")
+      , autosaveTimer(nullptr)
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
