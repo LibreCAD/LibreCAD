@@ -2345,7 +2345,7 @@ void QC_ApplicationWindow::showAboutWindow()
     #ifdef QC_SCMREVISION
         tag = (XSTR(QC_SCMREVISION));
     #else
-        tag = "Unknown";
+        tag = tr("Unknown");
     #endif
 
     // Compiler macro list in Qt source tree
@@ -2353,23 +2353,22 @@ void QC_ApplicationWindow::showAboutWindow()
 
     QString info
     (
-        QString("Version: %1").arg(qApp->applicationVersion()) + "\n" +
-        QString("Tag: %1").arg(tag) + "\n" +
+        tr("Version: %1").arg(qApp->applicationVersion()) + "\n" +
+        tr("SCM Revision: %1").arg(tag) + "\n" +
         #if defined(Q_CC_CLANG)
-            QString("Compiler: Clang %1.%2.%3").arg(__clang_major__).arg(__clang_minor__).arg(__clang_patchlevel__) + "\n" +
+            tr("Compiler: Clang %1.%2.%3").arg(__clang_major__).arg(__clang_minor__).arg(__clang_patchlevel__) + "\n" +
         #elif defined(Q_CC_GNU)
-            QString("Compiler: GNU GCC %1.%2.%3").arg(__GNUC__).arg(__GNUC_MINOR__).arg(__GNUC_PATCHLEVEL__) + "\n" +
+            tr("Compiler: GNU GCC %1.%2.%3").arg(__GNUC__).arg(__GNUC_MINOR__).arg(__GNUC_PATCHLEVEL__) + "\n" +
         #elif defined(Q_CC_MSVC)
-            QString("Compiler: Microsoft Visual C++") + "\n" +
+            tr("Compiler: Microsoft Visual C++") + "\n" +
         #endif
-        QString("Compiled on: %1").arg(__DATE__) + "\n" +
-        QString("Qt Version: %1").arg(qVersion()) + "\n" +
-        QString("Boost Version: %1.%2.%3").arg(BOOST_VERSION / 100000).arg(BOOST_VERSION / 100 % 1000).arg(BOOST_VERSION % 100)
+        tr("Compiled on: %1").arg(__DATE__) + "\n" +
+        tr("Qt Version: %1").arg(qVersion()) + "\n" +
+        tr("Boost Version: %1.%2.%3").arg(BOOST_VERSION / 100000).arg(BOOST_VERSION / 100 % 1000).arg(BOOST_VERSION % 100)
     );
 
-    auto app_info = new QLabel;
+    auto app_info = new QLabel(info);
     app_info->setTextInteractionFlags(Qt::TextSelectableByMouse);
-    app_info->setText(info);
     layout->addWidget(app_info);
 
     auto copy_button = new QPushButton(tr("Copy"));
@@ -2380,15 +2379,14 @@ void QC_ApplicationWindow::showAboutWindow()
 
     QString links
     (
-        QString("<a href=\"https://github.com/LibreCAD/LibreCAD/graphs/contributors\">Contributors</a>")
+        QString("<a href=\"https://github.com/LibreCAD/LibreCAD/graphs/contributors\">%1</a>").arg(tr("Contributors"))
         + "<br/>" +
-        QString("<a href=\"https://github.com/LibreCAD/LibreCAD/blob/master/LICENSE\">License</a>")
+        QString("<a href=\"https://github.com/LibreCAD/LibreCAD/blob/master/LICENSE\">%1</a>").arg(tr("License"))
     );
 
-    auto links_label = new QLabel;
+    auto links_label = new QLabel(links);
     links_label->setOpenExternalLinks(true);
     links_label->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
-    links_label->setText(links);
     layout->addWidget(links_label);
 
     dlg.setLayout(layout);
