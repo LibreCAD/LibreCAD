@@ -447,25 +447,26 @@ void RS_GraphicView::zoomOutY(double f) {
  * @param keepAspectRatio true: keep aspect ratio 1:1
  *                        false: factors in x and y are stretched to the max
  */
+#include <iostream>
 void RS_GraphicView::zoomAuto(bool axis, bool keepAspectRatio) {
 
 	RS_DEBUG->print("RS_GraphicView::zoomAuto");
 
 
 	if (container) {
-		container->calculateBorders();
+		container->forcedCalculateBorders();
 
 		double sx, sy;
 		if (axis) {
-			sx = std::max(container->getMax().x, 0.0)
-					- std::min(container->getMin().x, 0.0);
-			sy = std::max(container->getMax().y, 0.0)
-					- std::min(container->getMin().y, 0.0);
+			auto const dV = container->getMax() - container->getMin();
+			sx = std::max(dV.x, 0.);
+			sy = std::max(dV.y, 0.);
 		} else {
 			sx = container->getSize().x;
 			sy = container->getSize().y;
 		}
-		//    std::cout<<" RS_GraphicView::zoomAuto("<<axis<<","<<keepAspectRatio<<")"<<std::endl;
+//		    std::cout<<" RS_GraphicView::zoomAuto("<<sx<<","<<sy<<")"<<std::endl;
+//			std::cout<<" RS_GraphicView::zoomAuto("<<axis<<","<<keepAspectRatio<<")"<<std::endl;
 
 		double fx=1., fy=1.;
 		unsigned short fFlags=0;
