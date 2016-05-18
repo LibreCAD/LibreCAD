@@ -43,6 +43,7 @@
 #include <QStyleFactory>
 #include <QPrintDialog>
 #include <QRegExp>
+#include <QSysInfo>
 
 #include "main.h"
 
@@ -2405,7 +2406,11 @@ void QC_ApplicationWindow::showAboutWindow()
     if (dlg.exec())
     {
         QClipboard* clipboard = QApplication::clipboard();
-        clipboard->setText(app_info->text());
+        QString info_str = app_info->text();
+        #if QT_VERSION >= 0x050400
+           info_str += "\n" + tr("System") + ": " + QSysInfo::prettyProductName();
+        #endif
+        clipboard->setText(info_str);
     }
 }
 
