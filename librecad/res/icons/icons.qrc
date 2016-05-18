@@ -140,5 +140,28 @@
         <file>deselect_contour.svg</file>
         <file>deselect_layer.svg</file>
         <file>cut.svg</file>
+        <file>trim_segments.svg</file>
+        <file>snap_exclusive.svg</file>
+        <file>rename_active_block.svg</file>
+        <file>remove.svg</file>
+        <file>quit.svg</file>
+        <file>polylines.svg</file>
+        <file>polylines_polyline.svg</file>
+        <file>lock_layer.svg</file>
+        <file>insert_node.svg</file>
+        <file>insert_active_block.svg</file>
+        <file>import.svg</file>
+        <file>eye.svg</file>
+        <file>export.svg</file>
+        <file>export_pdf.svg</file>
+        <file>export_image.svg</file>
+        <file>delete_node.svg</file>
+        <file>delete_between_nodes.svg</file>
+        <file>create_polyline_from_existing_segments.svg</file>
+        <file>create_equidistant_polyline.svg</file>
+        <file>construction_layer.svg</file>
+        <file>close.svg</file>
+        <file>append_node.svg</file>
+        <file>add.svg</file>
     </qresource>
 </RCC>

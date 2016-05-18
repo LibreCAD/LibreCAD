@@ -494,43 +494,43 @@ QToolBar* LC_WidgetFactory::createCategoriesToolbar()
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menuline.png"));
+    tool_button->setIcon(QIcon(":/icons/line.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(line_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menucircle.png"));
+    tool_button->setIcon(QIcon(":/icons/circle.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(circle_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/linesfree.png"));
+    tool_button->setIcon(QIcon(":/icons/line_freehand.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(curve_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menuellipse.png"));
+    tool_button->setIcon(QIcon(":/icons/ellipses.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(ellipse_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menupolyline.png"));
+    tool_button->setIcon(QIcon(":/icons/polylines.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(polyline_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menuselect.png"));
+    tool_button->setIcon(QIcon(":/icons/select.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(select_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/dimhor.png"));
+    tool_button->setIcon(QIcon(":/icons/dim_horizontal.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(dimension_actions);
 
@@ -542,7 +542,7 @@ QToolBar* LC_WidgetFactory::createCategoriesToolbar()
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menumeasure.png"));
+    tool_button->setIcon(QIcon(":/icons/measure.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(info_actions);
 
@@ -560,11 +560,11 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     file_menu->setObjectName("File");
     file_menu->setTearOffEnabled(true);
     file_menu->addActions(file_actions);
-    sub_menu = file_menu->addMenu(QIcon(":/actions/fileimport.png"), QC_ApplicationWindow::tr("Import"));
+    sub_menu = file_menu->addMenu(QIcon(":/icons/import.svg"), QC_ApplicationWindow::tr("Import"));
     sub_menu->setObjectName("Import");
     sub_menu->addAction(a_map["DrawImage"]);
     sub_menu->addAction(a_map["BlocksImport"]);
-    sub_menu = file_menu->addMenu(QIcon(":/actions/fileexport.png"), QC_ApplicationWindow::tr("Export"));
+    sub_menu = file_menu->addMenu(QIcon(":/icons/export.svg"), QC_ApplicationWindow::tr("Export"));
     sub_menu->setObjectName("Export");
     sub_menu->addAction(a_map["FileExportMakerCam"]);
     sub_menu->addAction(a_map["FilePrintPDF"]);
@@ -636,42 +636,42 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     // <[~ Lines ~]>
 
     sub_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("&Line"));
-    sub_menu->setIcon(QIcon(":/extui/menuline.png"));
+    sub_menu->setIcon(QIcon(":/icons/line.svg"));
     sub_menu->setObjectName("Line");
     sub_menu->addActions(line_actions);
 
     // <[~ Circles ~]>
 
     sub_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("&Circle"));
-    sub_menu->setIcon(QIcon(":/extui/menucircle.png"));
+    sub_menu->setIcon(QIcon(":/icons/circle.svg"));
     sub_menu->setObjectName("Circle");
     sub_menu->addActions(circle_actions);
 
     // <[~ Curves ~]>
 
     sub_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("&Curve"));
-    sub_menu->setIcon(QIcon(":/extui/linesfree.png"));
+    sub_menu->setIcon(QIcon(":/icons/line_freehand.svg"));
     sub_menu->setObjectName("Curve");
     sub_menu->addActions(curve_actions);
 
     // <[~ Ellipses ~]>
 
     sub_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("&Ellipse"));
-    sub_menu->setIcon(QIcon(":/extui/menuellipse.png"));
+    sub_menu->setIcon(QIcon(":/icons/ellipses.svg"));
     sub_menu->setObjectName("Ellipse");
     sub_menu->addActions(ellipse_actions);
 
     // <[~ Polylines ~]>
 
     sub_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("&Polyline"));
-    sub_menu->setIcon(QIcon(":/extui/menupolyline.png"));
+    sub_menu->setIcon(QIcon(":/icons/polylines.svg"));
     sub_menu->setObjectName("Polyline");
     sub_menu->addActions(polyline_actions);
 
     // <[~ Select ~]>
 
     QMenu* select_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("&Select"));
-    select_menu->setIcon(QIcon(":/extui/menuselect.png"));
+    select_menu->setIcon(QIcon(":/icons/select.svg"));
     select_menu->setObjectName("Select");
     select_menu->setTearOffEnabled(true);
     select_menu->addActions(select_actions);
@@ -679,7 +679,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     // <[~ Dimension ~]>
 
     QMenu* dimension_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("Dime&nsion"));
-    dimension_menu->setIcon(QIcon(":/extui/dimhor.png"));
+    dimension_menu->setIcon(QIcon(":/icons/dim_horizontal.svg"));
     dimension_menu->setObjectName("dimension_menu");
     dimension_menu->setTearOffEnabled(true);
     dimension_menu->addActions(dimension_actions);
@@ -706,7 +706,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     // <[~ Info ~]>
 
     QMenu* info_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("&Info"));
-    info_menu->setIcon(QIcon(":/extui/menumeasure.png"));
+    info_menu->setIcon(QIcon(":/icons/measure.svg"));
     info_menu->setObjectName("Info");
     info_menu->setTearOffEnabled(true);
     info_menu->addActions(info_actions);

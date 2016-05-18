@@ -416,7 +416,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     // <[~ Polyline ~]>
 
     action = new QAction(tr("&Polyline"), agm->polyline);
-    action->setIcon(QIcon(":/extui/polyline.png"));
+    action->setIcon(QIcon(":/icons/polylines_polyline.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawPolyline()));
     action->setObjectName("DrawPolyline");
@@ -432,7 +432,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 
     action = new QAction(tr("A&ppend node"), agm->polyline);
     action->setShortcut(QKeySequence());
-    action->setIcon(QIcon(":/extui/polylineappend.png"));
+    action->setIcon(QIcon(":/icons/append_node.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineAppend()));
     action->setObjectName("PolylineAppend");
@@ -440,7 +440,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 
     action = new QAction(tr("&Delete node"), agm->polyline);
     action->setShortcut(QKeySequence());
-    action->setIcon(QIcon(":/extui/polylinedel.png"));
+    action->setIcon(QIcon(":/icons/delete_node.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineDel()));
     action->setObjectName("PolylineDel");
@@ -448,7 +448,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 
     action = new QAction(tr("Delete &between two nodes"), agm->polyline);
     action->setShortcut(QKeySequence());
-    action->setIcon(QIcon(":/extui/polylinedelbetween.png"));
+    action->setIcon(QIcon(":/icons/delete_between_nodes.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineDelBetween()));
     action->setObjectName("PolylineDelBetween");
@@ -462,15 +462,15 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("PolylineTrim");
     a_map["PolylineTrim"] = action;
 
-    action = new QAction(QIcon(":/extui/polylineequidstant.png"), tr("Create &Equidistant Polylines"), agm->polyline);
+    action = new QAction(tr("Create &Equidistant Polylines"), agm->polyline);
+    action->setIcon(QIcon(":/icons/create_equidistant_polyline.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineEquidistant()));
     action->setObjectName("PolylineEquidistant");
     a_map["PolylineEquidistant"] = action;
 
     action = new QAction(tr("Create Polyline from Existing &Segments"), agm->polyline);
-    action->setShortcut(QKeySequence());
-    action->setIcon(QIcon(":/extui/polylinesegment.png"));
+    action->setIcon(QIcon(":/icons/create_polyline_from_existing_segments.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineSegment()));
     action->setObjectName("PolylineSegment");
@@ -865,28 +865,28 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("LayersFreezeAll");
     a_map["LayersFreezeAll"] = action;
 
-    action = new QAction(QIcon(":/ui/layeradd.png"),
+    action = new QAction(QIcon(":/icons/add.svg"),
                          tr("&Add Layer"), agm->layer);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersAdd()));
     action->setObjectName("LayersAdd");
     a_map["LayersAdd"] = action;
 
-    action = new QAction(QIcon(":/ui/layerremove.png"),
+    action = new QAction(QIcon(":/icons/remove.svg"),
                          tr("&Remove Layer"), agm->layer);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersRemove()));
     action->setObjectName("LayersRemove");
     a_map["LayersRemove"] = action;
 
-    action = new QAction(QIcon(":/ui/layeredit.png"),
+    action = new QAction(QIcon(":/icons/attributes.svg"),
                          tr("&Edit Layer"), agm->layer);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersEdit()));
     action->setObjectName("LayersEdit");
     a_map["LayersEdit"] = action;
 
-    action = new QAction(QIcon(":/ui/lockedlayer.png"),
+    action = new QAction(QIcon(":/icons/lock_layer.svg"),
                          tr("Toggle Layer Loc&k"), agm->layer);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersToggleLock()));
@@ -894,21 +894,21 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     a_map["LayersToggleLock"] = action;
 
     action = new QAction(tr("&Toggle Layer Visibility"), agm->layer);
-    action->setIcon(QIcon(":/ui/layertoggle.png"));
+    action->setIcon(QIcon(":/icons/eye.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersToggleView()));
     action->setObjectName("LayersToggleView");
     a_map["LayersToggleView"] = action;
 
     action = new QAction(tr("Toggle Layer &Print"), agm->layer);
-    action->setIcon(QIcon(":/ui/fileprint.png"));
+    action->setIcon(QIcon(":/icons/print.svg"));
     connect(action, SIGNAL(triggered()), action_handler,
             SLOT(slotLayersTogglePrint()));
     action->setObjectName("LayersTogglePrint");
     a_map["LayersTogglePrint"] = action;
 
     action = new QAction(tr("Toggle &Construction Layer"), agm->layer);
-    action->setIcon(QIcon(":/ui/constructionlayer.png"));
+    action->setIcon(QIcon(":/icons/construction_layer.svg"));
     connect(action, SIGNAL(triggered()),
             action_handler, SLOT(slotLayersToggleConstruction()));
     action->setObjectName("LayersToggleConstruction");
@@ -930,7 +930,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("BlocksFreezeAll");
     a_map["BlocksFreezeAll"] = action;
 
-    action = new QAction(QIcon(":/ui/blockadd.png"),
+    action = new QAction(QIcon(":/icons/add.svg"),
                          tr("&Add Block"), agm->block);
 
     connect(action, SIGNAL(triggered()),
@@ -939,35 +939,35 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     a_map["BlocksAdd"] = action;
 
     action = new QAction(tr("&Remove Block"), agm->block);
-    action->setIcon(QIcon(":/ui/blockremove.png"));
+    action->setIcon(QIcon(":/icons/remove.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksRemove()));
     action->setObjectName("BlocksRemove");
     a_map["BlocksRemove"] = action;
 
     action = new QAction(tr("&Rename Block"), agm->block);
-    action->setIcon(QIcon(":/ui/blockattributes.png"));
+    action->setIcon(QIcon(":/icons/rename_active_block.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksAttributes()));
     action->setObjectName("BlocksAttributes");
     a_map["BlocksAttributes"] = action;
 
     action = new QAction( tr("&Edit Block"), agm->block);
-    action->setIcon(QIcon(":/ui/blockedit.png"));
+    action->setIcon(QIcon(":/icons/properties.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksEdit()));
     action->setObjectName("BlocksEdit");
     a_map["BlocksEdit"] = action;
 
     action = new QAction( tr("&Save Block"), agm->block);
-    action->setIcon(QIcon(":/main/filesave.png"));
+    action->setIcon(QIcon(":/icons/save.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksSave()));
     action->setObjectName("BlocksSave");
     a_map["BlocksSave"] = action;
 
     action = new QAction(tr("&Insert Block"), agm->block);
-    action->setIcon(QIcon(":/ui/blockinsert.png"));
+    action->setIcon(QIcon(":/icons/insert_active_block.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksInsert()));
     action->setObjectName("BlocksInsert");
@@ -1143,13 +1143,14 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("FileSaveAs");
     a_map["FileSaveAs"] = action;
 
-    action = new QAction( QIcon(":/actions/fileexport.png"), tr("&Export as image"), agm->file);
+    action = new QAction(tr("&Export as image"), agm->file);
+    action->setIcon(QIcon(":/icons/export.svg"));
     connect(action, SIGNAL( triggered()), main_window, SLOT(slotFileExport()));
     action->setObjectName("FileExport");
     a_map["FileExport"] = action;
 
     action = new QAction(tr("&Close"), agm->file);
-    action->setIcon(QIcon(":/actions/fileclose.png"));
+    action->setIcon(QIcon(":/icons/close.svg"));
     action->setShortcut(QKeySequence::Close);
     action->setShortcutContext(Qt::WidgetShortcut);
     action->setObjectName("FileClose");
@@ -1164,7 +1165,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     a_map["FilePrint"] = action;
 
     action = new QAction(tr("Export as PDF"), agm->file);
-    action->setIcon(QIcon(":/actions/fileexportpdf.png"));
+    action->setIcon(QIcon(":/icons/export_pdf.svg"));
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFilePrintPDF()));
     action->setObjectName("FilePrintPDF");
     a_map["FilePrintPDF"] = action;
@@ -1184,7 +1185,8 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("FileQuit");
     a_map["FileQuit"] = action;
 
-    action = new QAction(QIcon(":/ui/blockinsert.png"), tr("&Block"), agm->file);
+    action = new QAction(tr("&Block"), agm->file);
+    action->setIcon(QIcon(":/icons/insert_active_block.svg"));
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotImportBlock()));
     action->setObjectName("BlocksImport");
     a_map["BlocksImport"] = action;
