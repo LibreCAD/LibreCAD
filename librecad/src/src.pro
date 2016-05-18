@@ -8,7 +8,7 @@ TEMPLATE = app
 DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
-SCMREVISION="2.1.0"
+SCMREVISION="2.1.0-beta"
 
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/librecad

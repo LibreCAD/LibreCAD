@@ -2351,24 +2351,12 @@ void QC_ApplicationWindow::showAboutWindow()
     auto f_layout = new QVBoxLayout;
     frame->setLayout(f_layout);
 
-    QString tag;
-    #ifdef QC_SCMREVISION
-        tag = XSTR(QC_SCMREVISION);
-        QRegExp regex(R"~(-(\d+-\w+))~");
-        int pos = regex.indexIn(tag);
-        if (pos > -1)
-            tag = regex.cap(1);
-    #else
-        tag = tr("Unknown");
-    #endif
-
     // Compiler macro list in Qt source tree
     // Src/qtbase/src/corelib/global/qcompilerdetection.h
 
     QString info
     (
-        tr("Version: %1").arg(qApp->applicationVersion()) + "\n" +
-        tr("SCM Revision: %1").arg(tag) + "\n" +
+        tr("Version: %1").arg(XSTR(QC_SCMREVISION)) + "\n" +
         #if defined(Q_CC_CLANG)
             tr("Compiler: Clang %1.%2.%3").arg(__clang_major__).arg(__clang_minor__).arg(__clang_patchlevel__) + "\n" +
         #elif defined(Q_CC_GNU)
@@ -2396,6 +2384,8 @@ void QC_ApplicationWindow::showAboutWindow()
         QString("<a href=\"https://github.com/LibreCAD/LibreCAD/graphs/contributors\">%1</a>").arg(tr("Contributors"))
         + "<br/>" +
         QString("<a href=\"https://github.com/LibreCAD/LibreCAD/blob/master/LICENSE\">%1</a>").arg(tr("License"))
+        + "<br/>" +
+        QString("<a href=\"https://github.com/LibreCAD/LibreCAD/tree/%1\">%2</a>").arg(XSTR(QC_SCMREVISION)).arg("The Code")
     );
 
     auto links_label = new QLabel(links);
@@ -2406,11 +2396,10 @@ void QC_ApplicationWindow::showAboutWindow()
     if (dlg.exec())
     {
         QClipboard* clipboard = QApplication::clipboard();
-        QString info_str = app_info->text();
         #if QT_VERSION >= 0x050400
-           info_str += "\n" + tr("System") + ": " + QSysInfo::prettyProductName();
+           info += "\n" + tr("System") + ": " + QSysInfo::prettyProductName();
         #endif
-        clipboard->setText(info_str);
+        clipboard->setText(info);
     }
 }
 
