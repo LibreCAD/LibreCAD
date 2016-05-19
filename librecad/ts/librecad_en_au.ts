@@ -262,42 +262,42 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">&amp;Plugins</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="534"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="535"/>
         <source>Running script &apos;%1&apos;</source>
         <translation>Running script &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="576"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="577"/>
         <source>Inserting block &apos;%1&apos;</source>
         <translation>Inserting block &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="783"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="784"/>
         <source>&amp;File</source>
         <translation>&amp;File</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="793"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="794"/>
         <source>Import</source>
         <translation>Import</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="825"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="826"/>
         <source>&amp;Edit</source>
         <translation>&amp;Edit</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="867"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="868"/>
         <source>&amp;View</source>
         <translation>&amp;View</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="904"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="905"/>
         <source>&amp;Toolbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="922"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="923"/>
         <source>Focus on &amp;Command Line</source>
         <translation>Focus on &amp;Command Line</translation>
     </message>
@@ -306,12 +306,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">CTRL+M</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="938"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="939"/>
         <source>&amp;Select</source>
         <translation>&amp;Select</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="956"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="957"/>
         <source>&amp;Draw</source>
         <translation>&amp;Draw</translation>
     </message>
@@ -320,68 +320,68 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">&amp;Point</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="965"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="966"/>
         <source>&amp;Line</source>
         <translation>&amp;Line</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="987"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="988"/>
         <source>&amp;Arc</source>
         <translation>&amp;Arc</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="997"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="998"/>
         <source>&amp;Circle</source>
         <translation>&amp;Circle</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1014"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1015"/>
         <source>&amp;Ellipse</source>
         <translation>&amp;Ellipse</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1026"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1027"/>
         <source>&amp;Spline</source>
         <translation>&amp;Spline</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1034"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1035"/>
         <source>&amp;Polyline</source>
         <translation>&amp;Polyline</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1059"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1061"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1060"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1062"/>
         <source>&amp;Dimension</source>
         <translation>&amp;Dimension</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1077"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1078"/>
         <source>&amp;Modify</source>
         <translation>&amp;Modify</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1105"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1106"/>
         <source>&amp;Snap</source>
         <translation>&amp;Snap</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1115"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1116"/>
         <source>&amp;Info</source>
         <translation>&amp;Info</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1130"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1131"/>
         <source>&amp;Layer</source>
         <translation>&amp;Layer</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1144"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1145"/>
         <source>&amp;Block</source>
         <translation>&amp;Block</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1167"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1168"/>
         <source>&amp;Scripts</source>
         <translation>&amp;Scripts</translation>
     </message>
@@ -390,12 +390,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">&amp;CAM</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1182"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1183"/>
         <source>About</source>
         <translation>About</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1189"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1190"/>
         <source>&amp;Manual</source>
         <translation>&amp;Manual</translation>
     </message>
@@ -404,12 +404,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">Insert Image</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1244"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1245"/>
         <source>&amp;Window</source>
         <translation>&amp;Window</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1255"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1256"/>
         <source>&amp;Help</source>
         <translation>&amp;Help</translation>
     </message>
@@ -418,17 +418,17 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">De&amp;bugging</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1288"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1289"/>
         <source>Pen Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1294"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1295"/>
         <source>Snap Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1303"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1304"/>
         <source>Tool Options</source>
         <translation type="unfinished"></translation>
     </message>
@@ -437,82 +437,82 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">CAD Tools</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1434"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1435"/>
         <source>Layer List</source>
         <translation>Layer List</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1455"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1456"/>
         <source>Block List</source>
         <translation>Block List</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1478"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1479"/>
         <source>Library Browser</source>
         <translation>Library Browser</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1486"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1487"/>
         <source>Command line</source>
         <translation>Command line</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1729"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1730"/>
         <source>Su&amp;b-Window mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1733"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1734"/>
         <source>&amp;Cascade</source>
         <translation>&amp;Cascade</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1734"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1735"/>
         <source>&amp;Tile</source>
         <translation>&amp;Tile</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1735"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1736"/>
         <source>Tile &amp;Vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1736"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1737"/>
         <source>Tile &amp;Horizontally</source>
         <translation>Tile &amp;Horizontally</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1731"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1732"/>
         <source>Ta&amp;b mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2026"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2027"/>
         <source>Creating new file...</source>
         <translation>Creating new file...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2035"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2036"/>
         <source>Block &apos;%1&apos;</source>
         <translation>Block &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2037"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2038"/>
         <source>unnamed document %1</source>
         <translation>unnamed document %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2114"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2115"/>
         <source>New Drawing created.</source>
         <translation>New Drawing created.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2167"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2168"/>
         <source>New document from template: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2215"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2216"/>
         <source>Select Template aborted</source>
         <translation type="unfinished"></translation>
     </message>
@@ -521,22 +521,22 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">Opening recent file...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2345"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2346"/>
         <source>Warning: File already opened : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2924"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2925"/>
         <source>Export as PDF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3528"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3529"/>
         <source>Help files not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2231"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2232"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -545,38 +545,38 @@ Please check the permissions.</source>
 Please check the permissions.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2439"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2440"/>
         <source>Loaded document: </source>
         <translation>Loaded document: </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2447"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2448"/>
         <source>Opening aborted</source>
         <translation>Opening aborted</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2461"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2462"/>
         <source>Saving drawing...</source>
         <translation>Saving drawing...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2473"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2535"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2474"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2536"/>
         <source>Saved drawing: %1</source>
         <translation>Saved drawing: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2476"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2477"/>
         <source>Cannot save the file </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2478"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2479"/>
         <source> , please check the filename and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2527"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2528"/>
         <source>Cannot save the file
 %1
 Please check the permissions.</source>
@@ -585,99 +585,99 @@ Please check the permissions.</source>
 Please check the permissions.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3437"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3438"/>
         <source>Compiler: Clang %1.%2.%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3439"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3440"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3441"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3442"/>
         <source>Compiler: Microsoft Visual C++&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3443"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3444"/>
         <source>Qt Version: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3456"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3457"/>
         <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2504"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2505"/>
         <source>Saving drawing under new filename...</source>
         <translation>Saving drawing under new filename...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="224"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="226"/>
         <source>Draft Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="785"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="786"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="802"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="803"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="827"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="828"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="846"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="847"/>
         <source>Draw &amp;Order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="869"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="870"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1047"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1048"/>
         <source>&amp;Text</source>
         <translation type="unfinished">&amp;Text</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1252"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1253"/>
         <source>Online (Wiki)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2381"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2382"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2446"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2447"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2548"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2549"/>
         <source>Auto-saving drawing...</source>
         <translation>Auto-saving drawing...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2556"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2557"/>
         <source>Auto-saved drawing</source>
         <translation>Auto-saved drawing</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2561"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2562"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -688,77 +688,77 @@ Please check the permissions.
 Auto-save disabled.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2566"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2567"/>
         <source>Auto-saving failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2579"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2580"/>
         <source>Exporting drawing...</source>
         <translation>Exporting drawing...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2617"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2618"/>
         <source>Export as</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2681"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2682"/>
         <source>Exported: %1</source>
         <translation>Exported: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2721"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2722"/>
         <source>Exporting...</source>
         <translation>Exporting...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2806"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2807"/>
         <source>Export complete</source>
         <translation>Export complete</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2808"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2809"/>
         <source>Export failed!</source>
         <translation>Export failed!</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2889"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2890"/>
         <source>Printing...</source>
         <translation>Printing...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3026"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3027"/>
         <source>Printing complete</source>
         <translation>Printing complete</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3113"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3114"/>
         <source>Print preview for %1</source>
         <translation>Print preview for %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3179"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3180"/>
         <source>Exiting application...</source>
         <translation>Exiting application...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3418"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3419"/>
         <source>None</source>
         <translation>None</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3424"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3425"/>
         <source>About...</source>
         <translation>About...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3432"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3433"/>
         <source>Version: %1</source>
         <translation type="unfinished">Version: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3434"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3435"/>
         <source>SCM Revision: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -771,17 +771,17 @@ Auto-save disabled.</translation>
         <translation type="obsolete">SVN Revision: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3444"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3445"/>
         <source>Compiled on: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3446"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3447"/>
         <source>Program Icons Supplied by</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3447"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3448"/>
         <source>Splash and Logo supplied by</source>
         <translation type="unfinished"></translation>
     </message>
@@ -790,22 +790,22 @@ Auto-save disabled.</translation>
         <translation type="obsolete">Date: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3449"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3450"/>
         <source>Modules: %1</source>
         <translation>Modules: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3451"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3452"/>
         <source>Main Website : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3519"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3520"/>
         <source>Help</source>
         <translation>Help</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3528"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3529"/>
         <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
         <translation>&apos;Strewth, I couldn&apos;t find the helpfiles on the filesystem.</translation>
     </message>
@@ -7760,10 +7760,10 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2234"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2385"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2526"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2560"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2235"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2386"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2527"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2561"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="175"/>
         <source>Warning</source>
         <translation>Warning</translation>
