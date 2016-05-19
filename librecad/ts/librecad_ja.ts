@@ -17,25 +17,6 @@
     </message>
 </context>
 <context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
@@ -721,7 +702,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Regenerate Dimension Entities</source>
-        <translation>寸法図形再生成</translation>
+        <translation type="obsolete">寸法図形再生成</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
@@ -888,7 +869,11 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Create Double-click Menu</source>
+        <source>Menu Creator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toolbar Creator</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -903,7 +888,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>LC_CustomToolbar</name>
     <message>
         <source>Add or Remove Action</source>
-        <translation>追加/削除の操作</translation>
+        <translation type="obsolete">追加/削除の操作</translation>
     </message>
 </context>
 <context>
@@ -918,19 +903,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Mouse</source>
-        <translation type="unfinished">マウス</translation>
-    </message>
-    <message>
-        <source>Tablet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Trackpad</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Touchscreen</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">マウス</translation>
     </message>
     <message>
         <source>Save</source>
@@ -1298,7 +1271,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Draw</source>
-        <translation>線を引く(&amp;D)</translation>
+        <translation type="obsolete">線を引く(&amp;D)</translation>
     </message>
     <message>
         <source>&amp;Line</source>
@@ -1334,12 +1307,12 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Layer</source>
-        <translation>レイヤー(&amp;L)</translation>
+        <translation type="obsolete">レイヤー(&amp;L)</translation>
     </message>
     <message>
         <source>&amp;Block</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロック(&amp;B)</translation>
+        <translation type="obsolete">ブロック(&amp;B)</translation>
     </message>
     <message>
         <source>&amp;Scripts</source>
@@ -1355,7 +1328,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Window</source>
-        <translation>画面(&amp;W)</translation>
+        <translation type="obsolete">画面(&amp;W)</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -1492,15 +1465,15 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>None</source>
-        <translation>なし</translation>
+        <translation type="obsolete">なし</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation>Librecadの情報...</translation>
+        <translation type="obsolete">Librecadの情報...</translation>
     </message>
     <message>
         <source>Modules: %1</source>
-        <translation>モジュール: %1</translation>
+        <translation type="obsolete">モジュール: %1</translation>
     </message>
     <message>
         <source>Help</source>
@@ -1516,15 +1489,15 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Program Icons Supplied by</source>
-        <translation>供給されたプログラム・アイコン</translation>
+        <translation type="obsolete">供給されたプログラム・アイコン</translation>
     </message>
     <message>
         <source>Splash and Logo supplied by</source>
-        <translation>供給された起動画面とロゴ</translation>
+        <translation type="obsolete">供給された起動画面とロゴ</translation>
     </message>
     <message>
         <source>Main Website : </source>
-        <translation>メインWEBサイト:</translation>
+        <translation type="obsolete">メインWEBサイト:</translation>
     </message>
     <message>
         <source>Version: %1</source>
@@ -1532,7 +1505,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>SCM Revision: %1</source>
-        <translation>SCM リビジョン: %1</translation>
+        <translation type="obsolete">SCM リビジョン: %1</translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
@@ -1548,7 +1521,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
-        <translation>ソースコードとWEBサイトを管理のため、LibreCADに寄付をお願いします.</translation>
+        <translation type="obsolete">ソースコードとWEBサイトを管理のため、LibreCADに寄付をお願いします.</translation>
     </message>
     <message>
         <source>Su&amp;b-Window mode</source>
@@ -1608,7 +1581,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Compiler: Microsoft Visual C++&lt;br&gt;</source>
-        <translation>コンパイラ: Microsoft Visual C++&lt;br&gt;</translation>
+        <translation type="obsolete">コンパイラ: Microsoft Visual C++&lt;br&gt;</translation>
     </message>
     <message>
         <source>Qt Version: %1</source>
@@ -1699,7 +1672,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Misc</source>
-        <translation>その他</translation>
+        <translation type="obsolete">その他</translation>
     </message>
     <message>
         <source>Dimension</source>
@@ -1719,7 +1692,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Custom</source>
-        <translation>カスタム</translation>
+        <translation type="obsolete">カスタム</translation>
     </message>
     <message>
         <source>DockWidgets</source>
@@ -1762,10 +1735,6 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Double-click Menu Creator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pl&amp;ugins</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1774,11 +1743,55 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sna&amp;p</source>
+        <source>Dock Wid&amp;gets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dock Wid&amp;gets</source>
+        <source>Recent Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiler: Microsoft Visual C++</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Boost Version: %1.%2.%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">複写</translation>
+    </message>
+    <message>
+        <source>Contributors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toolbar Creator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Menu Creator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Menu Assigner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Drawings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3896,76 +3909,76 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Aquamarine</source>
-        <translation>藍緑色（アクアマリン）</translation>
+        <translation type="obsolete">藍緑色（アクアマリン）</translation>
     </message>
     <message>
         <source>Azure</source>
-        <translation>アズール（Azure）</translation>
+        <translation type="obsolete">アズール（Azure）</translation>
     </message>
     <message>
         <source>DeepSkyBlue</source>
-        <translation>ディープ・スカイブルー（DeepSkyBlue）</translation>
+        <translation type="obsolete">ディープ・スカイブルー（DeepSkyBlue）</translation>
     </message>
     <message>
         <source>DodgerBlue</source>
-        <translation>ドジャー・ブルー（DodgerBlue）</translation>
+        <translation type="obsolete">ドジャー・ブルー（DodgerBlue）</translation>
     </message>
     <message>
         <source>Gray</source>
-        <translation>灰色</translation>
+        <translation type="obsolete">灰色</translation>
     </message>
     <message>
         <source>HoneyDew</source>
-        <translation>ハニーデュー（HoneyDew）</translation>
+        <translation type="obsolete">ハニーデュー（HoneyDew）</translation>
     </message>
     <message>
         <source>Lavender</source>
-        <translation>ラベンダー（Lavender）</translation>
+        <translation type="obsolete">ラベンダー（Lavender）</translation>
     </message>
     <message>
         <source>LightGrey</source>
-        <translation>ライト・グレイ（LightGrey）</translation>
+        <translation type="obsolete">ライト・グレイ（LightGrey）</translation>
     </message>
     <message>
         <source>Navy</source>
-        <translation>ネイビー（navy）</translation>
+        <translation type="obsolete">ネイビー（navy）</translation>
     </message>
     <message>
         <source>PaleGreen</source>
-        <translation>パレグリーン（PaleGreen）</translation>
+        <translation type="obsolete">パレグリーン（PaleGreen）</translation>
     </message>
     <message>
         <source>Pink</source>
-        <translation>ピンク（Pink）</translation>
+        <translation type="obsolete">ピンク（Pink）</translation>
     </message>
     <message>
         <source>Salmon</source>
-        <translation>サーモンピンク（Salmon）</translation>
+        <translation type="obsolete">サーモンピンク（Salmon）</translation>
     </message>
     <message>
         <source>Silver</source>
-        <translation>灰色・50%</translation>
+        <translation type="obsolete">灰色・50%</translation>
     </message>
     <message>
         <source>Violet</source>
-        <translation>バイオレット（Violet）</translation>
+        <translation type="obsolete">バイオレット（Violet）</translation>
     </message>
     <message>
         <source>Wheat</source>
-        <translation>ウィート（Wheat）</translation>
+        <translation type="obsolete">ウィート（Wheat）</translation>
     </message>
     <message>
         <source>White</source>
-        <translation>白</translation>
+        <translation type="obsolete">白</translation>
     </message>
     <message>
         <source>GUI Colors</source>
-        <translation>GUI の色</translation>
+        <translation type="obsolete">GUI の色</translation>
     </message>
     <message>
         <source>Layer/ Block Selection:</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>レイヤー/ブロック の選択：</translation>
+        <translation type="obsolete">レイヤー/ブロック の選択：</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activation a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities are modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -3989,11 +4002,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Crosshair</source>
-        <translation>水平線と垂直線の交点</translation>
+        <translation type="obsolete">水平線と垂直線の交点</translation>
     </message>
     <message>
         <source>Spiderweb</source>
-        <translation>対角からの線の接点</translation>
+        <translation type="obsolete">対角からの線の接点</translation>
     </message>
     <message>
         <source>Icons</source>
@@ -4005,7 +4018,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Custom Toolbar:</source>
-        <translation>カスタム ツールバー:</translation>
+        <translation type="obsolete">カスタム ツールバー:</translation>
     </message>
     <message>
         <source>Clear Settings</source>
@@ -4037,7 +4050,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Crosshair2</source>
-        <translation>十字線２</translation>
+        <translation type="obsolete">十字線２</translation>
     </message>
     <message>
         <source>Orthogonal</source>
@@ -4053,19 +4066,19 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Circle</source>
-        <translation>円</translation>
+        <translation type="obsolete">円</translation>
     </message>
     <message>
         <source>Point</source>
-        <translation>点</translation>
+        <translation type="obsolete">点</translation>
     </message>
     <message>
         <source>Isometric</source>
-        <translation>アイソメトリック</translation>
+        <translation type="obsolete">アイソメトリック</translation>
     </message>
     <message>
         <source>Square</source>
-        <translation>四角</translation>
+        <translation type="obsolete">四角</translation>
     </message>
     <message>
         <source>Hide cursor when snapping</source>
@@ -4096,47 +4109,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>#739373</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>#A54747</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>#736F6E</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>#000000</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>#FFFFFF</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>#F0F8FF</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>#404040</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>#00FFFF</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>#0000FF</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>#FFC200</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>#1E90FF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will also include custom menus and toolbars. Continue?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6086,6 +6067,10 @@ p, li { white-space: pre-wrap; }
         <source>Lock relative zero position</source>
         <translation>相対原点を固定</translation>
     </message>
+    <message>
+        <source>Exclusive Snap Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_SplineOptions</name>
@@ -7859,6 +7844,90 @@ Continue?</source>
         <comment>modify properties</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Block</source>
+        <translation type="unfinished">ブロックファイル</translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished">円</translation>
+    </message>
+    <message>
+        <source>Curve</source>
+        <translation type="unfinished">曲線</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">編集</translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation type="unfinished">楕円</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation type="unfinished">ファイル</translation>
+    </message>
+    <message>
+        <source>Dimension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished">図形情報</translation>
+    </message>
+    <message>
+        <source>Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modify</source>
+        <translation type="unfinished">変更・修正</translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation type="unfinished">オプション</translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polyline</source>
+        <translation type="unfinished">ポリライン</translation>
+    </message>
+    <message>
+        <source>Restriction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation type="unfinished">選択</translation>
+    </message>
+    <message>
+        <source>Snap</source>
+        <translation type="unfinished">スナップ</translation>
+    </message>
+    <message>
+        <source>Snap Extras</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translation type="unfinished">表示</translation>
+    </message>
+    <message>
+        <source>Widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creators</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
@@ -9153,7 +9222,7 @@ Continue?</source>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Area: %1</source>
-        <translation>面積: %1</translation>
+        <translation type="obsolete">面積: %1</translation>
     </message>
     <message>
         <source>Circumference: %1</source>
@@ -9178,6 +9247,10 @@ Continue?</source>
     <message>
         <source>Closing Point: %1/%2</source>
         <translation>閉じた点: %1/%2</translation>
+    </message>
+    <message>
+        <source>Area: %1 %2^2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10834,6 +10907,41 @@ Continue?</source>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
         <translation>入力された値を全体の長さとする、増加はしない</translation>
+    </message>
+</context>
+<context>
+    <name>WidgetCreator</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destroy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Assign</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
