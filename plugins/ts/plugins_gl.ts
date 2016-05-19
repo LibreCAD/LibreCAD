@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="gl">
 <context>
@@ -323,7 +322,7 @@
         <location filename="../sameprop/sameprop.cpp" line="21"/>
         <location filename="../sameprop/sameprop.cpp" line="28"/>
         <source>Same properties</source>
-        <translation>Igualar &amp;atributos</translation>
+        <translation>Igualar atributos</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
@@ -532,7 +531,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>Non se pode abrir o ficheiro %1</translation>
     </message>
 </context>
@@ -807,7 +806,7 @@
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="139"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>Non se pode abrir o ficheiro %1</translation>
     </message>
     <message>
@@ -856,12 +855,12 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
+If you don't want to use the parametric form, just leave out "Equation2".
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
         <translation>Este plugin permítelle trazar ecuacións matemáticas.
-Se non quere empregar a forma paramétrica, deixe sen cubrir &quot;Ecuación2&quot;.
+Se non quere empregar a forma paramétrica, deixe sen cubrir "Ecuación2".
 Pode empregar pi cando precise o valor de pi (ex. (3 *pi)).
 Use t ou x na súa ecuación como unha variable/parámetro.
 </translation>
