@@ -424,7 +424,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 
     action = new QAction(tr("&Add node"), agm->polyline);
     action->setShortcut(QKeySequence());
-    action->setIcon(QIcon(":/extui/polylineadd.png"));
+    action->setIcon(QIcon(":/icons/insert_node.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineAdd()));
     action->setObjectName("PolylineAdd");
@@ -456,7 +456,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 
     action = new QAction(tr("&Trim segments"), agm->polyline);
     action->setShortcut(QKeySequence());
-    action->setIcon(QIcon(":/extui/polylinetrim.png"));
+    action->setIcon(QIcon(":/icons/trim.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineTrim()));
     action->setObjectName("PolylineTrim");
@@ -591,7 +591,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     a_map["ModifyMove"] = action;
 
     action = new QAction(tr("Re&vert direction"), agm->modify);
-    action->setIcon(QIcon(":/extui/reverse.png"));
+    action->setIcon(QIcon(":/icons/revert_direction.svg"));
     action->setShortcut(QKeySequence(tr("Ctrl+R")));
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotModifyRevertDirection()));
     action->setObjectName("ModifyRevertDirection");
@@ -1179,7 +1179,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     a_map["FilePrintPreview"] = action;
 
     action = new QAction(tr("&Quit"), agm->file);
-    action->setIcon(QIcon::fromTheme("application-exit", QIcon(":/actions/exit.png")));
+    action->setIcon(QIcon::fromTheme("application-exit", QIcon(":/icons/quit.svg")));
     action->setShortcut(QKeySequence::Quit);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileQuit()));
     action->setObjectName("FileQuit");

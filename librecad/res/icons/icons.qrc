@@ -163,5 +163,8 @@
         <file>close.svg</file>
         <file>append_node.svg</file>
         <file>add.svg</file>
+        <file>revert_direction.svg</file>
+        <file>modify.svg</file>
+        <file>icons.qrc</file>
     </qresource>
 </RCC>

@@ -536,7 +536,7 @@ QToolBar* LC_WidgetFactory::createCategoriesToolbar()
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menuedit.png"));
+    tool_button->setIcon(QIcon(":/icons/move_rotate.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(modify_actions);
 
@@ -664,7 +664,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     // <[~ Polylines ~]>
 
     sub_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("&Polyline"));
-    sub_menu->setIcon(QIcon(":/icons/polylines.svg"));
+    sub_menu->setIcon(QIcon(":/icons/polylines_polyline.svg"));
     sub_menu->setObjectName("Polyline");
     sub_menu->addActions(polyline_actions);
 
@@ -697,7 +697,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     // <[~ Modify ~]>
 
     QMenu* modify_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("&Modify"));
-    modify_menu->setIcon(QIcon(":/extui/menuedit.png"));
+    modify_menu->setIcon(QIcon(":/icons/move_rotate.svg"));
     modify_menu->setObjectName("Modify");
     modify_menu->setTearOffEnabled(true);
     modify_menu->addMenu(order_menu);
