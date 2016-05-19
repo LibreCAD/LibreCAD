@@ -9229,7 +9229,7 @@ Continue?</source>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Area: %1</source>
-        <translation>Laukums: %1</translation>
+        <translation type="obsolete">Laukums: %1</translation>
     </message>
     <message>
         <source>Circumference: %1</source>
@@ -9258,6 +9258,10 @@ Continue?</source>
     <message>
         <source>Closing Point: %1/%2</source>
         <translation>Aizverošais punkts: %1/%2</translation>
+    </message>
+    <message>
+        <source>Area: %1 %2^2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

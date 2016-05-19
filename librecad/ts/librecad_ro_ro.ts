@@ -10706,7 +10706,7 @@ Continue?</source>
     </message>
     <message>
         <source>Area: %1</source>
-        <translation>Suprafata: %1</translation>
+        <translation type="obsolete">Suprafata: %1</translation>
     </message>
     <message>
         <source>Circumference: %1</source>
@@ -10739,6 +10739,10 @@ Continue?</source>
     <message>
         <source>Closing Point: %1/%2</source>
         <translation>Punct de inchidere: %1/%2</translation>
+    </message>
+    <message>
+        <source>Area: %1 %2^2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

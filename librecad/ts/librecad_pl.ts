@@ -11983,7 +11983,7 @@ Continue?</source>
     </message>
     <message>
         <source>Area: %1</source>
-        <translation>Obszar: %1</translation>
+        <translation type="obsolete">Obszar: %1</translation>
     </message>
     <message>
         <source>Circumference: %1</source>
@@ -12015,6 +12015,10 @@ Continue?</source>
     </message>
     <message>
         <source>Closing Point: %1/%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Area: %1 %2^2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

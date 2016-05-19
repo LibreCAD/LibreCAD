@@ -8072,10 +8072,6 @@ Continue?</source>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
-        <source>Area: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Circumference: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8101,6 +8097,10 @@ Continue?</source>
     </message>
     <message>
         <source>Closing Point: %1/%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Area: %1 %2^2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
