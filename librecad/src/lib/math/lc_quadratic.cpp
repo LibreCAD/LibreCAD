@@ -577,8 +577,8 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
     }
     if(valid) return sol;
     ce.clear();
-    ce.push_back(p1->flipXY().getCoefficients());
-    ce.push_back(p2->flipXY().getCoefficients());
+	ce.push_back(p1->getCoefficients());
+	ce.push_back(p2->getCoefficients());
     sol=RS_Math::simultaneousQuadraticSolverFull(ce);
     ret.clear();
 	for(auto const& v: sol){
