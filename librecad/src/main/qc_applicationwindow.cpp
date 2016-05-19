@@ -215,14 +215,15 @@ QPrinter::PageSize rsToQtPaperFormat(RS2::PaperFormat f) {
 	}
 }
 }
+
 /**
  * Constructor. Initializes the app.
  */
-QC_ApplicationWindow::QC_ApplicationWindow()
-        : QMainWindow(0),
-        QG_MainWindowInterface()
-      , m_qDraftModeTitle(" ["+tr("Draft Mode")+"]")
-      , autosaveTimer(nullptr)
+QC_ApplicationWindow::QC_ApplicationWindow() :
+    QMainWindow(0),
+    QG_MainWindowInterface(),
+    autosaveTimer(nullptr),
+    m_qDraftModeTitle(" ["+tr("Draft Mode")+"]")
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
