@@ -55,11 +55,13 @@ namespace{
 class EllipseDistanceFunctor
 {
 public:
-	EllipseDistanceFunctor(RS_Ellipse* ellipse, double const& target) : distance(target)
-	{ // Constructor
-		e=ellipse;
-		ra=e->getMajorRadius();
-		k2=1.- e->getRatio()*e->getRatio();
+	EllipseDistanceFunctor(RS_Ellipse const* ellipse, double const& target) :
+		distance{target}
+	  , e{ellipse}
+	  , ra{e->getMajorRadius()}
+	  , k2{1.- e->getRatio()*e->getRatio()}
+	  , k2ra{k2 * ra}
+	{
 	}
 	void setDistance(const double& target){
 		distance=target;
@@ -81,17 +83,62 @@ public:
 #endif
 					e->getEllipseLength(z)-distance,
 					ra*d,
-					k2*ra*sz*cz/d
+					k2ra*sz*cz/d
 					);
 	}
 
 private:
-
 	double distance;
-	RS_Ellipse* e;
-	double ra;
-	double k2;
+	RS_Ellipse const* const e;
+	const double ra;
+	const double k2;
+	const double k2ra;
 };
+
+/**
+ * @brief getNearestDistHelper find end point after trimmed by amount
+ * @param e ellipse which is not reversed, assume ratio (a/b) >= 1
+ * @param trimAmount the length of the trimmed is increased by this amount
+ * @param coord current mouse position
+ * @param dist if this pointer is not nullptr, save the distance from the new
+ * end point to mouse position coord
+ * @return the new end point of the trimmed. Only one end of the entity is
+ *  trimmed
+ */
+RS_Vector getNearestDistHelper(RS_Ellipse const& e,
+							   double trimAmount,
+							   RS_Vector const& coord,
+							   double* dist = nullptr)
+{
+	double const x1 = e.getAngle1();
+
+	double const guess= x1 + M_PI;
+	int const digits=std::numeric_limits<double>::digits;
+
+	double const wholeLength = e.getEllipseLength(0, 0); // start/end angle 0 is used for whole ellipses
+
+	double trimmed = e.getLength() + trimAmount;
+
+	// choose the end to trim by the mouse position coord
+	bool const trimEnd = coord.squaredTo(e.getStartpoint()) <= coord.squaredTo(e.getEndpoint());
+
+	if (trimEnd)
+		trimmed = trimAmount > 0 ? wholeLength - trimAmount : - trimAmount;
+
+	//solve equation of the distance by second order newton_raphson
+	EllipseDistanceFunctor X(&e, trimmed);
+	using namespace boost::math::tools;
+	double const sol =
+			halley_iterate<EllipseDistanceFunctor,double>(X,
+														  guess,
+														  x1,
+														  x1 + 2 * M_PI - RS_TOLERANCE_ANGLE,
+														  digits);
+
+	RS_Vector const vp = e.getEllipsePoint(sol);
+	if (dist) *dist = vp.distanceTo(coord);
+	return vp;
+}
 }
 
 std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed) {
@@ -345,7 +392,7 @@ double RS_Ellipse::getEllipseLength(double x1, double x2) const
 /**
   * arc length from start point (angle1)
   */
-double RS_Ellipse::getEllipseLength( double x2) const
+double RS_Ellipse::getEllipseLength(double x2) const
 {
     return getEllipseLength(getAngle1(),x2);
 }
@@ -366,59 +413,31 @@ RS_Vector RS_Ellipse::getNearestDist(double distance,
 	if( ! isEllipticArc() ) {
         // both angles being 0, whole ellipse
         // no end points for whole ellipse, therefore, no snap by distance from end points.
-        return RS_Vector(false);
+		return {};
     }
 	RS_Ellipse e(nullptr,data);
-    if(e.getRatio()>1.) e.switchMajorMinor();
-    double ra=e.getMajorRadius();
-    double rb=e.getRatio()*ra;
+	if(e.getRatio()>1.) e.switchMajorMinor();
     if(e.isReversed()) {
         std::swap(e.data.angle1,e.data.angle2);
         e.setReversed(false);
     }
-    if(ra<RS_TOLERANCE) { //elipse too small
-        return(RS_Vector(false));
-    }
+
+	if(e.getMajorRadius() < RS_TOLERANCE)
+		return {}; //elipse too small
+
     if(getRatio()<RS_TOLERANCE) {
         //treat the ellipse as a line
 		RS_Line line{e.minV,e.maxV};
-        return line.getNearestDist(distance,coord,dist);
+		return line.getNearestDist(distance, coord, dist);
     }
     double x1=e.getAngle1();
     double x2=e.getAngle2();
-    if(x2<x1+RS_TOLERANCE_ANGLE) x2 += 2.*M_PI;
-    double l=e.getEllipseLength(x1,x2); // the getEllipseLength() function only defined for proper e
-    distance=fabs(distance);
-    if(distance > l+RS_TOLERANCE) return(RS_Vector(false));
-    if(distance > l-RS_TOLERANCE) return(getNearestEndpoint(coord,dist));
-    double guess= distance*(ra+rb)/(2.*ra*rb);
-
-    guess=(RS_Vector(x1+guess).scale(RS_Vector(e.getRatio(),1.))).angle();//convert to ellipse angle
-    if( guess < x1) guess += 2.*M_PI;
-	if( !RS_Math::isAngleBetween(guess,x1,x2,false)) {
-        guess=x1 +0.5*RS_Math::getAngleDifference(x1,x2);
-    }
-    int digits=std::numeric_limits<double>::digits;
-
-    //    solve equation of the distance by second order newton_raphson
-    EllipseDistanceFunctor X(&e,distance);
-
-//std::cout<<"RS_Ellipse::getNearestDist() dist="<<distance<<" out of total="<<l<<std::endl;
-    RS_Vector vp1(e.getEllipsePoint(boost::math::tools::halley_iterate<EllipseDistanceFunctor,double>(
-                                      X, guess, x1, x2, digits)));
-    X.setDistance(l-distance);
-    guess=x1+(x2-guess);
-    RS_Vector vp2(e.getEllipsePoint(boost::math::tools::halley_iterate<EllipseDistanceFunctor,double>(
-                                      X, guess, x1, x2, digits)));
-    x1= (vp1-coord).squared();
-    x2= (vp2-coord).squared();
-    if( x1 > x2 ){
-		if (dist)  *dist=sqrt(x2);
-        return vp2;
-    }else{
-		if (dist)  *dist=sqrt(x1);
-        return vp1;
-    }
+	if(x2 < x1+RS_TOLERANCE_ANGLE) x2 += 2 * M_PI;
+	double const l0=e.getEllipseLength(x1,x2); // the getEllipseLength() function only defined for proper e
+//    distance=fabs(distance);
+	if(distance > l0+RS_TOLERANCE) return {}; // can not trim more than the current length
+	if(distance > l0-RS_TOLERANCE) return(getNearestEndpoint(coord,dist)); // trim to zero length
+	return getNearestDistHelper(e, distance, coord, dist);
 }
 
 

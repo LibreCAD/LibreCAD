@@ -198,7 +198,7 @@ QPrinter::PageSize rsToQtPaperFormat(RS2::PaperFormat f) {
 		return QPrinter::Ledger;
 	case RS2::Tabloid:
 		return QPrinter::Tabloid;
-#if QT_MAJOR_VERSION >= 5
+#if QT_VERSION >= 0x050400
 	case RS2::Arch_A:
 		return QPrinter::ArchA;
 	case RS2::Arch_B:
@@ -221,7 +221,8 @@ QPrinter::PageSize rsToQtPaperFormat(RS2::PaperFormat f) {
 QC_ApplicationWindow::QC_ApplicationWindow()
         : QMainWindow(0),
         QG_MainWindowInterface()
-      ,m_qDraftModeTitle(" ["+tr("Draft Mode")+"]")
+      , m_qDraftModeTitle(" ["+tr("Draft Mode")+"]")
+      , autosaveTimer(nullptr)
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 

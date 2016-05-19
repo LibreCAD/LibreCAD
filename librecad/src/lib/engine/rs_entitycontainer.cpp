@@ -596,7 +596,16 @@ void RS_EntityContainer::calculateBorders() {
     //RS_Entity::calculateBorders();
 }
 
-
+namespace {
+bool isBoundingBoxValid(RS_Entity* e) {
+	if (!(e->getMin() && e->getMax())) return false;
+	if (!(e->getMin().x <= e->getMax().x)) return false;
+	if (!(e->getMin().y <= e->getMax().y)) return false;
+	if (e->getMin().magnitude() > RS_MAXDOUBLE) return false;
+	if (e->getMax().magnitude() > RS_MAXDOUBLE) return false;
+	return true;
+}
+}
 
 /**
  * Recalculates the borders of this entity container including
@@ -614,25 +623,21 @@ void RS_EntityContainer::forcedCalculateBorders() {
             ((RS_EntityContainer*)e)->forcedCalculateBorders();
         } else {
             e->calculateBorders();
-        }
-        adjustBorders(e);
+		}
+
+		// issue #711, ignore invalid bounding boxes
+		if (isBoundingBoxValid(e))
+			adjustBorders(e);
     }
 
-    // needed for correcting corrupt data (PLANS.dxf)
-    if (minV.x>maxV.x || minV.x>RS_MAXDOUBLE || maxV.x>RS_MAXDOUBLE
-            || minV.x<RS_MINDOUBLE || maxV.x<RS_MINDOUBLE) {
+	// needed for correcting corrupt data (PLANS.dxf)
+	// issue #711: better to ignore invalid bounding boxes
+	if (!isBoundingBoxValid(this)) {
+		minV.valid = false;
+		maxV.valid = false;
+	}
 
-        minV.x = 0.0;
-        maxV.x = 0.0;
-    }
-    if (minV.y>maxV.y || minV.y>RS_MAXDOUBLE || maxV.y>RS_MAXDOUBLE
-            || minV.y<RS_MINDOUBLE || maxV.y<RS_MINDOUBLE) {
-
-        minV.y = 0.0;
-        maxV.y = 0.0;
-    }
-
-    //RS_DEBUG->print("  borders: %f/%f %f/%f", minV.x, minV.y, maxV.x, maxV.y);
+	//RS_DEBUG->print("id=%d\trtti=%d\n  borders: %g/%g %g/%g", getId(), rtti(), minV.x, minV.y, maxV.x, maxV.y);
 
     //printf("borders: %lf/%lf  %lf/%lf\n", minV.x, minV.y, maxV.x, maxV.y);
     //RS_Entity::calculateBorders();

@@ -268,8 +268,12 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
 		// issue #484 , quadratic intersection solver is not robust enough for quadratic-quadratic
 		// TODO, implement a robust algorithm for quadratic based solvers, and detecting entity type
 		// circles/arcs can be removed
+		auto isArc = [](RS_Entity const* e) {
+			auto type = e->rtti();
+			return type == RS2::EntityCircle || type == RS2::EntityArc;
+		};
 
-		if(e1->rtti()==RS2::EntityCircle && e2->rtti()==RS2::EntityCircle){
+		if(isArc(e1) && isArc(e2)){
 			//use specialized arc-arc intersection solver
 			ret=getIntersectionArcArc(e1, e2);
 		}else{
@@ -586,18 +590,18 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(
 
     if( e01->getMinorRadius() < RS_TOLERANCE || e01 -> getRatio()< RS_TOLERANCE) {
         // treate e01 as a line
-		RS_Line *l0=new RS_Line{e1->getParent(), {{-a1,0.}, {a1,0.}}};
-        ret= getIntersectionEllipseLine(l0, e02);
+        RS_Line line{e1->getParent(), {{-a1,0.}, {a1,0.}}};
+        ret = getIntersectionEllipseLine(&line, e02);
         ret.rotate(-shifta1);
         ret.move(-shiftc1);
         return ret;
     }
     if( e02->getMinorRadius() < RS_TOLERANCE || e02 -> getRatio()< RS_TOLERANCE) {
         // treate e02 as a line
-		RS_Line *l0=new RS_Line{e1->getParent(), {{-a2,0.}, {a2,0.}}};
-		l0->rotate({0.,0.}, e02->getAngle());
-        l0->move(e02->getCenter());
-        ret= getIntersectionEllipseLine(l0, e01);
+        RS_Line line{e1->getParent(), {{-a2,0.}, {a2,0.}}};
+        line.rotate({0.,0.}, e02->getAngle());
+        line.move(e02->getCenter());
+        ret = getIntersectionEllipseLine(&line, e01);
         ret.rotate(-shifta1);
         ret.move(-shiftc1);
         return ret;

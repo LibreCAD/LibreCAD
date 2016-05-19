@@ -601,6 +601,8 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
         RS_Spline* spline;
         if (data->degree>=1 && data->degree<=3) {
         RS_SplineData d(data->degree, ((data->flags&0x1)==0x1));
+		if (data->knotslist.size())
+			d.knotslist = data->knotslist;
         spline = new RS_Spline(currentContainer, d);
         setEntityAttributes(spline, data);
 
@@ -610,12 +612,10 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
                         "RS_FilterDXF::addSpline: Invalid degree for spline: %d. "
                         "Accepted values are 1..3.", data->degree);
         return;
-    }
-    for (unsigned int i=0; i<data->controllist.size(); i++) {
-        DRW_Coord *vert = data->controllist.at(i);
-        RS_Vector v(vert->x, vert->y);
-        spline->addControlPoint(v);
-    }
+	}
+	for (auto const& vert: data->controllist)
+		spline->addControlPoint({vert->x, vert->y});
+
     if (data->ncontrol== 0 && data->degree != 2){
         for (unsigned int i=0; i<data->fitlist.size(); i++) {
             DRW_Coord *vert = data->fitlist.at(i);
@@ -2290,16 +2290,20 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     sp.nknots = sp.ncontrol + sp.degree + 1;
 
     // write spline knots:
-    int k = sp.degree+1;
-    for (int i=1; i<=sp.nknots; i++) {
-        if (i<=k) {
-            sp.knotslist.push_back(0.0);
-        } else if (i<=sp.nknots-k) {
-            sp.knotslist.push_back(1.0/(sp.nknots-2*k+1) * (i-k));
-        } else {
-            sp.knotslist.push_back(1.0);
-        }
-    }
+	if (s->getData().knotslist.size()) {
+		sp.knotslist = s->getData().knotslist;
+	} else {
+		int k = sp.degree+1;
+		for (int i=1; i<=sp.nknots; i++) {
+			if (i<=k) {
+				sp.knotslist.push_back(0.0);
+			} else if (i<=sp.nknots-k) {
+				sp.knotslist.push_back(1.0/(sp.nknots-2*k+1) * (i-k));
+			} else {
+				sp.knotslist.push_back(1.0);
+			}
+		}
+	}
 
     // write spline control points:
 	auto cp = s->getControlPoints();

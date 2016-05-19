@@ -49,6 +49,7 @@ struct RS_SplineData {
 	bool closed;
 	/** Control points of the spline. */
 	std::vector<RS_Vector> controlPoints;
+	std::vector<double> knotslist;
 };
 
 std::ostream& operator << (std::ostream& os, const RS_SplineData& ld);
@@ -202,15 +203,17 @@ public:
         virtual void calculateBorders();
 
 private:
-		static void rbasis(int c, double t, int npts, const std::vector<int>& x, const std::vector<double>& h, std::vector<double>& r);
+		std::vector<double> knot(size_t num, size_t order) const;
+		void rbspline(size_t npts, size_t k, size_t p1,
+		              const std::vector<RS_Vector>& b,
+		              const std::vector<double>& h,
+		              std::vector<RS_Vector>& p) const;
 
-		static void knot(int num, int order, std::vector<int>& knotVector);
-		static void rbspline(size_t npts, size_t k, size_t p1,
-							 const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p);
-
-		static void knotu(int num, int order, std::vector<int>& knotVector);
-        static void rbsplinu(int npts, int k, int p1,
-							 const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p);
+		std::vector<double> knotu(size_t num, size_t order) const;
+		void rbsplinu(size_t npts, size_t k, size_t p1,
+		              const std::vector<RS_Vector>& b,
+		              const std::vector<double>& h,
+		              std::vector<RS_Vector>& p) const;
 
 protected:
 		RS_SplineData data;

@@ -26,10 +26,6 @@
 
 #include "qg_pentoolbar.h"
 
-#if QT_VERSION >= 0x050500
-#include <QPaintDevice>
-#endif
-
 #include "qg_colorbox.h"
 #include "qg_widthbox.h"
 #include "qg_linetypebox.h"
@@ -46,25 +42,14 @@ QG_PenToolBar::QG_PenToolBar( const QString & title, QWidget * parent )
 		, lineTypeBox(new QG_LineTypeBox{true, false, this, "lineTypebox"})
 {
 
-#if QT_VERSION >= 0x050500
-	int const dPxlRatio=devicePixelRatio();
-#else
-	int const dPxlRatio=1;
-#endif
-	setMinimumWidth(300 * dPxlRatio);
-	setMaximumWidth(420 * dPxlRatio);
-
-	colorBox->setMinimumWidth(64 * dPxlRatio);
     colorBox->setToolTip(tr("Line color"));
 	connect(colorBox.get(), SIGNAL(colorChanged(const RS_Color&)),
             this, SLOT(slotColorChanged(const RS_Color&)));
 
-	widthBox->setMinimumWidth(64 * dPxlRatio);
     widthBox->setToolTip(tr("Line width"));
 	connect(widthBox.get(), SIGNAL(widthChanged(RS2::LineWidth)),
             this, SLOT(slotWidthChanged(RS2::LineWidth)));
 
-	lineTypeBox->setMinimumWidth(64 * dPxlRatio);
     lineTypeBox->setToolTip(tr("Line type"));
 	connect(lineTypeBox.get(), SIGNAL(lineTypeChanged(RS2::LineType)),
             this, SLOT(slotLineTypeChanged(RS2::LineType)));
