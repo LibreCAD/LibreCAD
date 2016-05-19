@@ -899,46 +899,46 @@ void RS_Entity::stretch(const RS_Vector& firstCorner,
  */
 double RS_Entity::getStyleFactor(RS_GraphicView* view) {
     double styleFactor = 1.0;
+	if (!view) return styleFactor;
 
-    if (view) {
-        if (view->isPrinting()==false && view->isDraftMode()) {
-            styleFactor = 1.0/view->getFactor().x;
-        } else {
-            //styleFactor = getStyleFactor();
-            // the factor caused by the unit:
-            RS2::Unit unit = RS2::None;
-            RS_Graphic* g = getGraphic();
-            if (g) {
-                unit = g->getUnit();
-                //double scale = g->getPaperScale();
-                styleFactor = RS_Units::convert(1.0, RS2::Millimeter, unit);
-                // / scale;
-            }
 
-            // the factor caused by the line width:
-            if (((int)getPen(true).getWidth())>0) {
-                styleFactor *= ((double)getPen(true).getWidth()/100.0);
-            } else if (((int)getPen(true).getWidth())==0) {
-                styleFactor *= 0.01;
-            }
-        }
+	if (view->isPrinting()==false && view->isDraftMode()) {
+		styleFactor = 1.0/view->getFactor().x;
+	} else {
+		//styleFactor = getStyleFactor();
+		// the factor caused by the unit:
+		RS2::Unit unit = RS2::None;
+		RS_Graphic* g = getGraphic();
+		if (g) {
+			unit = g->getUnit();
+			//double scale = g->getPaperScale();
+			styleFactor = RS_Units::convert(1.0, RS2::Millimeter, unit);
+			// / scale;
+		}
 
-        if (view->isPrinting() || view->isPrintPreview() || view->isDraftMode()==false) {
-            RS_Graphic* graphic = getGraphic();
-            if (graphic && graphic->getPaperScale()>1.0e-6) {
-                styleFactor /= graphic->getPaperScale();
-            }
-        }
-    }
+		// the factor caused by the line width:
+		if (((int)getPen(true).getWidth())>0) {
+			styleFactor *= ((double)getPen(true).getWidth()/100.0);
+		} else if (((int)getPen(true).getWidth())==0) {
+			styleFactor *= 0.01;
+		}
+	}
 
-        //RS_DEBUG->print("stylefactor: %f", styleFactor);
-        //RS_DEBUG->print("viewfactor: %f", view->getFactor().x);
+	if (view->isPrinting() || view->isPrintPreview() || view->isDraftMode()==false) {
+		RS_Graphic* graphic = getGraphic();
+		if (graphic && graphic->getPaperScale()>1.0e-6) {
+			styleFactor /= graphic->getPaperScale();
+		}
+	}
 
-        if (styleFactor*view->getFactor().x<0.2) {
-                styleFactor = -1.0;
-        }
+	//RS_DEBUG->print("stylefactor: %f", styleFactor);
+	//RS_DEBUG->print("viewfactor: %f", view->getFactor().x);
 
-    return styleFactor;
+	if (styleFactor*view->getFactor().x<0.2) {
+		styleFactor = -1.0;
+	}
+
+	return styleFactor;
 }
 
 

@@ -79,7 +79,7 @@ RS_Image::RS_Image(const RS_Image& _image):
 {
 }
 
-RS_Image RS_Image::operator = (const RS_Image& _image)
+RS_Image& RS_Image::operator = (const RS_Image& _image)
 {
 	data=_image.data;
 	if(_image.img.get()){
@@ -89,6 +89,21 @@ RS_Image RS_Image::operator = (const RS_Image& _image)
 	}
 	return *this;
 }
+
+RS_Image::RS_Image(RS_Image&& _image):
+	RS_AtomicEntity(_image.getParent())
+  ,data(std::move(_image.data))
+  ,img(std::move(_image.img))
+{
+}
+
+RS_Image& RS_Image::operator = (RS_Image&& _image)
+{
+	data=_image.data;
+	img = std::move(_image.img);
+	return *this;
+}
+
 
 RS_Entity* RS_Image::clone() const {
     RS_Image* i = new RS_Image(*this);

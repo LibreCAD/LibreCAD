@@ -220,10 +220,8 @@ void RS_ActionDrawEllipseCenter3Points::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
-        }
         return;
     }
 
@@ -239,9 +237,7 @@ void RS_ActionDrawEllipseCenter3Points::commandEvent(RS_CommandEvent* e) {
                     setStatus(SetAngle1);
                 }
             } else {
-                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                }
             }
         }
         break;
@@ -252,11 +248,8 @@ void RS_ActionDrawEllipseCenter3Points::commandEvent(RS_CommandEvent* e) {
             if (ok) {
                 angle1 = RS_Math::deg2rad(a);
                 setStatus(SetAngle2);
-            } else {
-                if (RS_DIALOGFACTORY) {
+			} else
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                }
-            }
         }
         break;
 
@@ -266,10 +259,8 @@ void RS_ActionDrawEllipseCenter3Points::commandEvent(RS_CommandEvent* e) {
             if (ok) {
                 angle2 = RS_Math::deg2rad(a);
                 trigger();
-            } else {
-                if (RS_DIALOGFACTORY) {
+			} else
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                }
             }
         }
         break;
@@ -285,35 +276,31 @@ QStringList RS_ActionDrawEllipseCenter3Points::getAvailableCommands() {
 	return {};
 }
 
-
-
 void RS_ActionDrawEllipseCenter3Points::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY) {
-        switch (getStatus()) {
-        case SetCenter:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the center of ellipse"),
-                                                tr("Cancel"));
-            break;
+	switch (getStatus()) {
+	case SetCenter:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the center of ellipse"),
+											tr("Cancel"));
+		break;
 
-        case SetPoint1:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first point on ellipse"),
-                                                tr("Cancel"));
-            break;
-        case SetPoint2:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the second point on ellipse"),
-                                                tr("Back"));
-            break;
+	case SetPoint1:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first point on ellipse"),
+											tr("Cancel"));
+		break;
+	case SetPoint2:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the second point on ellipse"),
+											tr("Back"));
+		break;
 
-        case SetPoint3:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the third point on ellipse"),
-                                                tr("Back"));
-            break;
+	case SetPoint3:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the third point on ellipse"),
+											tr("Back"));
+		break;
 
-        default:
-            RS_DIALOGFACTORY->updateMouseWidget();
-            break;
-        }
-    }
+	default:
+		RS_DIALOGFACTORY->updateMouseWidget();
+		break;
+	}
 }
 
 void RS_ActionDrawEllipseCenter3Points::updateMouseCursor() {

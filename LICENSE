@@ -20,9 +20,15 @@ Rights holders (Copyright 2010-2016):
 - Claude Sylvain <csylvain@electro-technica.com>
 - Scott Howard <showard@debian.org>
 - Lisandro Damián Nicanor Pérez Meyer <perezmeyer@gmail.com>
+- Armin Stebich <librecad@mail.lordofbikes.de>
 - ravas <ravas@outlook.com>
+- dellus <dellus@gmx.de>
 
 https://github.com/LibreCAD/LibreCAD/graphs/contributors
+
+The SVG icons in librecad/res/icons are provided by dellus,  
+and are generously released under the CC0 license.  
+https://creativecommons.org/publicdomain/zero/1.0/
 
 WenQuanYi fonts (wqy-unicode.lff) are covered by Apache2 or GPLv3, 
 the text of which is in the base directory.

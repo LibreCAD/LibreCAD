@@ -43,7 +43,7 @@ RS_ActionBlocksAttributes::RS_ActionBlocksAttributes(
 void RS_ActionBlocksAttributes::trigger() {
     RS_DEBUG->print("editing block attributes");
 
-    if (graphic && RS_DIALOGFACTORY) {
+	if (graphic) {
         RS_Block* block = graphic->getActiveBlock();
         RS_BlockList* blockList = graphic->getBlockList();
         if (blockList && block) {

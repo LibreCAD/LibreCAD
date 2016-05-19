@@ -134,10 +134,6 @@ void RS_DimRadial::updateDim(bool autoText) {
         return;
     }
 
-    // dimension line:
-    //updateCreateDimensionLine(data.definitionPoint, edata.definitionPoint,
-    //false, true);
-
     // general scale (DIMSCALE)
     double dimscale = getGeneralScale();
 
@@ -147,13 +143,6 @@ void RS_DimRadial::updateDim(bool autoText) {
 
     // text height (DIMTXT)
     double dimtxt = getTextHeight()*dimscale;
-    // text distance to line (DIMGAP)
-    double dimgap = getDimensionLineGap()*dimscale;
-    // arrow size:
-    double arrowSize = getArrowSize()*dimscale;
-
-    // length of dimension line:
-    double length = p1.distanceTo(p2);
 
     RS_Pen pen(getDimensionLineColor(),
            getDimensionLineWidth(),
@@ -170,35 +159,40 @@ void RS_DimRadial::updateDim(bool autoText) {
                            1.0,
                            getLabel(),
                            getTextStyle(),
-//                           "standard",
                            0.0);
 
     RS_MText* text = new RS_MText(this, textData);
     double textWidth = text->getSize().x;
 
-    // do we have to put the arrow / text outside of the arc?
-    bool outsideArrow = (length<arrowSize*2+textWidth);
-    double arrowAngle;
+    double tick_size = getTickSize()*dimscale;
+    double arrow_size = getArrowSize()*dimscale;
+    double length = p1.distanceTo(p2); // line length
 
-    if (outsideArrow) {
-        length += arrowSize*2 + textWidth;
-        arrowAngle = angle+M_PI;
-    } else {
-        arrowAngle = angle;
+    bool outsideArrow = false;
+
+    if (tick_size == 0 && arrow_size != 0)
+    {
+        // do we have to put the arrow / text outside of the arc?
+        outsideArrow = (length < arrow_size*2+textWidth);
+        double arrowAngle;
+
+        if (outsideArrow) {
+            length += arrow_size*2 + textWidth;
+            arrowAngle = angle+M_PI;
+        } else {
+            arrowAngle = angle;
+        }
+
+        // create arrow:
+        RS_SolidData sd;
+        RS_Solid* arrow;
+
+        arrow = new RS_Solid(this, sd);
+        arrow->shapeArrow(p2, arrowAngle, arrow_size);
+        arrow->setPen(pen);
+        arrow->setLayer(nullptr);
+        addEntity(arrow);
     }
-
-    // create arrow:
-    RS_SolidData sd;
-    RS_Solid* arrow;
-
-    arrow = new RS_Solid(this, sd);
-    arrow->shapeArrow(p2,
-                      arrowAngle,
-                      arrowSize);
-//    arrow->setPen(RS_Pen(RS2::FlagInvalid));
-    arrow->setPen(pen);
-	arrow->setLayer(nullptr);
-    addEntity(arrow);
 
 	RS_Vector p3 = RS_Vector::polar(length, angle);
     p3 += p1;
@@ -206,23 +200,25 @@ void RS_DimRadial::updateDim(bool autoText) {
     // Create dimension line:
 	RS_Line* dimensionLine = new RS_Line{this, p1, p3};
     dimensionLine->setPen(pen);
-//    dimensionLine->setPen(RS_Pen(RS2::FlagInvalid));
 	dimensionLine->setLayer(nullptr);
     addEntity(dimensionLine);
 
     RS_Vector distV;
     double textAngle;
 
+    // text distance to line (DIMGAP)
+    double dimgap = getDimensionLineGap()*dimscale;
+
     // rotate text so it's readable from the bottom or right (ISO)
     // quadrant 1 & 4
-	if (angle>M_PI_2*3.0+0.001 ||
-			angle<M_PI_2+0.001) {
-
+    if (angle > M_PI_2*3.0+0.001 || angle < M_PI_2+0.001)
+    {
 		distV.setPolar(dimgap + dimtxt/2.0, angle+M_PI_2);
         textAngle = angle;
     }
     // quadrant 2 & 3
-    else {
+    else
+    {
 		distV.setPolar(dimgap + dimtxt/2.0, angle-M_PI_2);
         textAngle = angle+M_PI;
     }
@@ -234,11 +230,11 @@ void RS_DimRadial::updateDim(bool autoText) {
         textPos = data.middleOfText;
     } else {
         if (outsideArrow) {
-            textPos.setPolar(length-textWidth/2.0-arrowSize, angle);
+            textPos.setPolar(length-textWidth/2.0-arrow_size, angle);
         } else {
             textPos.setPolar(length/2.0, angle);
         }
-        textPos+=p1;
+        textPos += p1;
         // move text away from dimension line:
         textPos += distV;
         data.middleOfText = textPos;
@@ -248,7 +244,6 @@ void RS_DimRadial::updateDim(bool autoText) {
     text->move(textPos);
 
     text->setPen(RS_Pen(getTextColor(), RS2::WidthByBlock, RS2::SolidLine));
-//    text->setPen(RS_Pen(RS2::FlagInvalid));
 	text->setLayer(nullptr);
     addEntity(text);
 

@@ -240,23 +240,19 @@ void RS_ActionDrawArc::coordinateEvent(RS_CoordinateEvent* e) {
 void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
-    if (RS_COMMANDS->checkCommand("help", c)) {
-		if (RS_DIALOGFACTORY) {
-            RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                             + getAvailableCommands().join(", "));
-        }
+	if (RS_COMMANDS->checkCommand("help", c)) {
+		RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+										 + getAvailableCommands().join(", "));
         return;
     }
 
     if (RS_COMMANDS->checkCommand("reversed", c)) {
         e->accept();
-        setReversed(!isReversed());
+		setReversed(!isReversed());
 
-		if (RS_DIALOGFACTORY) {
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
-        }
-        return;
-    }
+		RS_DIALOGFACTORY->requestOptions(this, true, true);
+		return;
+	}
 
     switch (getStatus()) {
 
@@ -267,11 +263,8 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
 				data->radius = r;
                 setStatus(SetAngle1);
                 e->accept();
-            } else {
-				if (RS_DIALOGFACTORY) {
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                }
-            }
+			} else
+				RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
         }
         break;
 
@@ -282,11 +275,8 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
 				data->angle1 = RS_Math::deg2rad(a);
                 e->accept();
                 setStatus(SetAngle2);
-            } else {
-				if (RS_DIALOGFACTORY) {
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                }
-            }
+			} else
+				RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
         }
         break;
 
@@ -302,11 +292,8 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
 					data->angle2 = RS_Math::deg2rad(a);
                     e->accept();
                     trigger();
-                } else {
-					if (RS_DIALOGFACTORY) {
-                        RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                    }
-                }
+				} else
+					RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
             }
         }
         break;
@@ -318,11 +305,8 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
 				data->angle2 = data->angle1 + RS_Math::deg2rad(a);
                 e->accept();
                 trigger();
-            } else {
-				if (RS_DIALOGFACTORY) {
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                }
-            }
+			} else
+				RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
         }
         break;
 
@@ -333,18 +317,11 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
 				if (fabs(l/(2*data->radius))<=1.0) {
 					data->angle2 = data->angle1 + asin(l/(2*data->radius)) * 2;
                     trigger();
-                } else {
-					if (RS_DIALOGFACTORY) {
-                        RS_DIALOGFACTORY->commandMessage(
-                            tr("Not a valid chord length"));
-                    }
-                }
-                e->accept();
-            } else {
-				if (RS_DIALOGFACTORY) {
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                }
-            }
+				} else
+					RS_DIALOGFACTORY->commandMessage(tr("Not a valid chord length"));
+				e->accept();
+			} else
+				RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
         }
         break;
 
@@ -363,36 +340,34 @@ QStringList RS_ActionDrawArc::getAvailableCommands() {
 
 
 void RS_ActionDrawArc::updateMouseButtonHints() {
-	if (RS_DIALOGFACTORY) {
-        switch (getStatus()) {
-        case SetCenter:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify center"), tr("Cancel"));
-            break;
-        case SetRadius:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify radius"), tr("Back"));
-            break;
-        case SetAngle1:
-            RS_DIALOGFACTORY->updateMouseWidget(
-                tr("Specify start angle:"), tr("Back"));
-            break;
-        case SetAngle2:
-            RS_DIALOGFACTORY->updateMouseWidget(
-                tr("Specify end angle or [angle/chord length]"),
-                tr("Back"));
-            break;
-        case SetIncAngle:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify included angle:"),
-                                                tr("Back"));
-            break;
-        case SetChordLength:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify chord length:"),
-                                                tr("Back"));
-            break;
-        default:
-			RS_DIALOGFACTORY->updateMouseWidget();
-            break;
-        }
-    }
+	switch (getStatus()) {
+	case SetCenter:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify center"), tr("Cancel"));
+		break;
+	case SetRadius:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify radius"), tr("Back"));
+		break;
+	case SetAngle1:
+		RS_DIALOGFACTORY->updateMouseWidget(
+					tr("Specify start angle:"), tr("Back"));
+		break;
+	case SetAngle2:
+		RS_DIALOGFACTORY->updateMouseWidget(
+					tr("Specify end angle or [angle/chord length]"),
+					tr("Back"));
+		break;
+	case SetIncAngle:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify included angle:"),
+											tr("Back"));
+		break;
+	case SetChordLength:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify chord length:"),
+											tr("Back"));
+		break;
+	default:
+		RS_DIALOGFACTORY->updateMouseWidget();
+		break;
+	}
 }
 
 
@@ -400,9 +375,7 @@ void RS_ActionDrawArc::updateMouseButtonHints() {
 void RS_ActionDrawArc::showOptions() {
     RS_ActionInterface::showOptions();
 
-	if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->requestOptions(this, true);
-    }
+	RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
 
@@ -410,9 +383,7 @@ void RS_ActionDrawArc::showOptions() {
 void RS_ActionDrawArc::hideOptions() {
     RS_ActionInterface::hideOptions();
 
-	if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->requestOptions(this, false);
-    }
+	RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
 

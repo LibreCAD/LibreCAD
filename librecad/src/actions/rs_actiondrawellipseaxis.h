@@ -53,21 +53,21 @@ public:
     RS_ActionDrawEllipseAxis(RS_EntityContainer& container,
                              RS_GraphicView& graphicView,
                              bool isArc);
-	~RS_ActionDrawEllipseAxis();
+	~RS_ActionDrawEllipseAxis() override;
 
-    virtual void init(int status=0);
+	void init(int status=0) override;
 	
-    virtual void trigger();
+	void trigger() override;
 	
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 
-	virtual void coordinateEvent(RS_CoordinateEvent* e);
-    virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+	void coordinateEvent(RS_CoordinateEvent* e) override;
+	void commandEvent(RS_CommandEvent* e) override;
+		QStringList getAvailableCommands() override;
 
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 
 protected:
 	struct Points;

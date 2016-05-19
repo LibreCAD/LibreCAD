@@ -61,8 +61,8 @@ RS_EntityContainer::RS_EntityContainer(RS_EntityContainer* parent,
     : RS_Entity(parent) {
 
     autoDelete=owner;
-    RS_DEBUG->print("RS_EntityContainer::RS_EntityContainer: "
-                    "owner: %d", (int)owner);
+//    RS_DEBUG->print("RS_EntityContainer::RS_EntityContainer: "
+//                    "owner: %d", (int)owner);
 	subContainer = nullptr;
     //autoUpdateBorders = true;
     entIdx = -1;
@@ -596,7 +596,15 @@ void RS_EntityContainer::calculateBorders() {
     //RS_Entity::calculateBorders();
 }
 
-
+namespace {
+bool isBoundingBoxValid(RS_Entity* e) {
+	if (!(e->getMin() && e->getMax())) return false;
+	if (!(e->getMin().x <= e->getMax().x)) return false;
+	if (!(e->getMin().y <= e->getMax().y)) return false;
+	if ((e->getMin() - e->getMax()).magnitude() > RS_MAXDOUBLE) return false;
+	return true;
+}
+}
 
 /**
  * Recalculates the borders of this entity container including
@@ -614,25 +622,21 @@ void RS_EntityContainer::forcedCalculateBorders() {
             ((RS_EntityContainer*)e)->forcedCalculateBorders();
         } else {
             e->calculateBorders();
-        }
-        adjustBorders(e);
+		}
+
+		// issue #711, ignore invalid bounding boxes
+		if (isBoundingBoxValid(e))
+			adjustBorders(e);
     }
 
-    // needed for correcting corrupt data (PLANS.dxf)
-    if (minV.x>maxV.x || minV.x>RS_MAXDOUBLE || maxV.x>RS_MAXDOUBLE
-            || minV.x<RS_MINDOUBLE || maxV.x<RS_MINDOUBLE) {
+	// needed for correcting corrupt data (PLANS.dxf)
+	// issue #711: better to ignore invalid bounding boxes
+	if (!isBoundingBoxValid(this)) {
+		minV.valid = false;
+		maxV.valid = false;
+	}
 
-        minV.x = 0.0;
-        maxV.x = 0.0;
-    }
-    if (minV.y>maxV.y || minV.y>RS_MAXDOUBLE || maxV.y>RS_MAXDOUBLE
-            || minV.y<RS_MINDOUBLE || maxV.y<RS_MINDOUBLE) {
-
-        minV.y = 0.0;
-        maxV.y = 0.0;
-    }
-
-    //RS_DEBUG->print("  borders: %f/%f %f/%f", minV.x, minV.y, maxV.x, maxV.y);
+	//RS_DEBUG->print("id=%d\trtti=%d\n  borders: %g/%g %g/%g", getId(), rtti(), minV.x, minV.y, maxV.x, maxV.y);
 
     //printf("borders: %lf/%lf  %lf/%lf\n", minV.x, minV.y, maxV.x, maxV.y);
     //RS_Entity::calculateBorders();
@@ -1572,8 +1576,10 @@ bool RS_EntityContainer::optimizeContours() {
                 vpEnd=e2->getEndpoint();
                 removeEntity(e2);
                 continue;
-            }
-            QG_DIALOGFACTORY->commandMessage(errMsg.arg(dist).arg(vpTmp.x).arg(vpTmp.y).arg(vpEnd.x).arg(vpEnd.y));
+			}
+			QG_DIALOGFACTORY->commandMessage(
+						errMsg.arg(dist).arg(vpTmp.x).arg(vpTmp.y).arg(vpEnd.x).arg(vpEnd.y)
+						);
             closed=false;
         }
 		if(next && closed){ 			//workaround if next is nullptr
@@ -1593,8 +1599,9 @@ bool RS_EntityContainer::optimizeContours() {
     }
 //    DEBUG_HEADER
     if(vpEnd.valid && vpEnd.squaredTo(vpStart)>1e-8) {
-        if(closed) QG_DIALOGFACTORY->commandMessage(errMsg.arg(vpEnd.distanceTo(vpStart))
-                                         .arg(vpStart.x).arg(vpStart.y).arg(vpEnd.x).arg(vpEnd.y));
+		if(closed)
+			QG_DIALOGFACTORY->commandMessage(errMsg.arg(vpEnd.distanceTo(vpStart))
+											 .arg(vpStart.x).arg(vpStart.y).arg(vpEnd.x).arg(vpEnd.y));
         closed=false;
     }
 //    std::cout<<"RS_EntityContainer::optimizeContours: 5"<<std::endl;

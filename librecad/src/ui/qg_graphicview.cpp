@@ -73,7 +73,6 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, Qt::WindowFlags f, RS_Document* 
     ,curHand(new QCursor(QPixmap(":ui/cur_hand_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
     ,redrawMethod(RS2::RedrawAll)
     ,isSmoothScrolling(false)
-    ,doubleclick_menu(nullptr)
 {
     RS_DEBUG->print("QG_GraphicView::QG_GraphicView()..");
 
@@ -276,10 +275,10 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e)
             setCurrentAction(new RS_ActionZoomAuto(*container, *this));
             break;
         case Qt::LeftButton:
-            if (doubleclick_menu)
+            if (menus.contains("Double-Click"))
             {
                 killAllActions();
-                doubleclick_menu->popup(mapToGlobal(e->pos()));
+                menus["Double-Click"]->popup(mapToGlobal(e->pos()));
             }
             break;
     }
@@ -296,13 +295,36 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
     switch (event->button())
     {
     case Qt::RightButton:
-        if (!eventHandler->hasAction()
-         && !recent_actions.isEmpty())
+        if (event->modifiers()==Qt::ControlModifier)
         {
-            QMenu* context_menu = new QMenu(this);
-            context_menu->setAttribute(Qt::WA_DeleteOnClose);
-            context_menu->addActions(recent_actions);
-            context_menu->exec(mapToGlobal(event->pos()));
+            if (menus.contains("Ctrl+Right-Click"))
+            {
+                menus["Ctrl+Right-Click"]->popup(mapToGlobal(event->pos()));
+                break;
+            }
+        }
+        if (event->modifiers()==Qt::ShiftModifier)
+        {
+            if (menus.contains("Shift+Right-Click"))
+            {
+                menus["Shift+Right-Click"]->popup(mapToGlobal(event->pos()));
+                break;
+            }
+        }
+
+        if (!eventHandler->hasAction())
+        {
+            if (menus.contains("Right-Click"))
+            {
+                menus["Right-Click"]->popup(mapToGlobal(event->pos()));
+            }
+            else if (!recent_actions.isEmpty())
+            {
+                QMenu* context_menu = new QMenu(this);
+                context_menu->setAttribute(Qt::WA_DeleteOnClose);
+                context_menu->addActions(recent_actions);
+                context_menu->exec(mapToGlobal(event->pos()));
+            }
         }
         else back();
         break;
@@ -565,18 +587,18 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     // zoom in / out:
     else if (e->modifiers()==0) {
 
-		/**
-		 * The zoomFactor effects how quickly the scroll wheel will zoom in & out.
-		 * 
-		 * Benchmarks:
-		 * 1.250 - the original; fast & usable, but seems a choppy & a bit 'jarring'
-		 * 1.175 - still a bit choppy
-		 * 1.150 - smoother than the original, but still 'quick' enough for good navigation.
-		 * 1.137 - seems to work well for me
-		 * 1.125 - about the lowest that would be acceptable and useful, a tad on the slow side for me
-		 * 1.100 - a very slow & deliberate zooming, but feels very "cautious", "controlled", "safe", and "precise".
-		 * 1.000 - goes nowhere. :)
-		 */
+        /*
+         * The zoomFactor effects how quickly the scroll wheel will zoom in & out.
+         *
+         * Benchmarks:
+         * 1.250 - the original; fast & usable, but seems a choppy & a bit 'jarring'
+         * 1.175 - still a bit choppy
+         * 1.150 - smoother than the original, but still 'quick' enough for good navigation.
+         * 1.137 - seems to work well for me
+         * 1.125 - about the lowest that would be acceptable and useful, a tad on the slow side for me
+         * 1.100 - a very slow & deliberate zooming, but feels very "cautious", "controlled", "safe", and "precise".
+         * 1.000 - goes nowhere. :)
+         */
 		const double zoomFactor=1.137;
 
 		RS_Vector mainViewCenter = toGraph(getWidth()/2, getHeight()/2);
@@ -687,8 +709,6 @@ void QG_GraphicView::adjustOffsetControls()
 
         running = true;
 
-        RS_DEBUG->print("QG_GraphicView::adjustOffsetControls() begin");
-
         if (container==NULL || hScrollBar==NULL || vScrollBar==NULL) {
             return;
         }
@@ -744,15 +764,14 @@ void QG_GraphicView::adjustOffsetControls()
         slotVScrolled(oy);
 
 
-        RS_DEBUG->print("H min: %d / max: %d / step: %d / value: %d\n",
-                        hScrollBar->minimum(), hScrollBar->maximum(),
-                        hScrollBar->pageStep(), ox);
-    //    DEBUG_HEADER
-        RS_DEBUG->print(/*RS_Debug::D_WARNING, */"V min: %d / max: %d / step: %d / value: %d\n",
-                        vScrollBar->minimum(), vScrollBar->maximum(),
-                        vScrollBar->pageStep(), oy);
+//        RS_DEBUG->print("H min: %d / max: %d / step: %d / value: %d\n",
+//                        hScrollBar->minimum(), hScrollBar->maximum(),
+//                        hScrollBar->pageStep(), ox);
 
-        RS_DEBUG->print("QG_GraphicView::adjustOffsetControls() end");
+//        RS_DEBUG->print(/*RS_Debug::D_WARNING, */"V min: %d / max: %d / step: %d / value: %d\n",
+//                        vScrollBar->minimum(), vScrollBar->maximum(),
+//                        vScrollBar->pageStep(), oy);
+
 
         running = false;
     }
@@ -799,7 +818,8 @@ void QG_GraphicView::slotVScrolled(int value) {
     //if (!running) {
     //running = true;
 //    DEBUG_HEADER
-	RS_DEBUG->print(/*RS_Debug::D_WARNING,*/ "%s %s(): set vertical offset from %d to %d\n", __FILE__, __func__, getOffsetY(), value);
+//	RS_DEBUG->print(/*RS_Debug::D_WARNING,*/ "%s %s(): set vertical offset from %d to %d\n",
+//                    __FILE__, __func__, getOffsetY(), value);
     if (vScrollBar->maximum()==vScrollBar->minimum()) {
         centerOffsetY();
     } else {
@@ -871,8 +891,6 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
  */
 void QG_GraphicView::paintEvent(QPaintEvent *)
 {
-    RS_DEBUG->print("QG_GraphicView::paintEvent begin");
-
     // Re-Create or get the layering pixmaps
     getPixmapForView(PixmapLayer1);
     getPixmapForView(PixmapLayer2);
@@ -924,7 +942,6 @@ void QG_GraphicView::paintEvent(QPaintEvent *)
     wPainter.end();
 
     redrawMethod=RS2::RedrawNone;
-    RS_DEBUG->print("QG_GraphicView::paintEvent end");
 }
 
 void QG_GraphicView::setAntialiasing(bool state)
@@ -973,7 +990,28 @@ void QG_GraphicView::setCursorHiding(bool state)
     cursor_hiding = state;
 }
 
-void QG_GraphicView::setDoubleClickMenu(QMenu* menu)
+void QG_GraphicView::setCurrentQAction(QAction* q_action)
 {
-    doubleclick_menu = menu;
+    eventHandler->setQAction(q_action);
+
+    if (recent_actions.contains(q_action))
+    {
+        recent_actions.removeOne(q_action);
+    }
+    recent_actions.prepend(q_action);
+}
+
+void QG_GraphicView::destroyMenu(const QString& activator)
+{
+    if (menus.contains(activator))
+    {
+        auto menu = menus.take(activator);
+        delete menu;
+    }
+}
+
+void QG_GraphicView::setMenu(const QString& activator, QMenu* menu)
+{
+    destroyMenu(activator);
+    menus[activator] = menu;
 }

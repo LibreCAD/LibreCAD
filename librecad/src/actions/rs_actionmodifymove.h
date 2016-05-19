@@ -51,17 +51,17 @@ public:
 public:
 	RS_ActionModifyMove(RS_EntityContainer& container,
 						RS_GraphicView& graphicView);
-	~RS_ActionModifyMove();
+	~RS_ActionModifyMove() override;
 
-	virtual void trigger();
+	void trigger() override;
 
-	virtual void mouseMoveEvent(QMouseEvent* e);
-	virtual void mouseReleaseEvent(QMouseEvent* e);
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 
-	virtual void coordinateEvent(RS_CoordinateEvent* e);
+	void coordinateEvent(RS_CoordinateEvent* e) override;
 
-	virtual void updateMouseButtonHints();
-	virtual void updateMouseCursor();
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 
 private:
 	struct Points;

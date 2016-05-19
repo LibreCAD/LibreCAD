@@ -3126,7 +3126,7 @@ QString RS_FilterJWW::toNativeString(const char* data, const QString& encoding) 
 
     // ASCII code:
     cap = "";
-    uCode = 0;
+//    uCode = 0;
     ok = false;
     do {
         QRegExp regexp("%%[0-9]{3,3}");

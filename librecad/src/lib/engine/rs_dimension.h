@@ -102,10 +102,9 @@ class RS_Dimension : public RS_EntityContainer {
 public:
     RS_Dimension(RS_EntityContainer* parent,
                  const RS_DimensionData& d);
-	virtual ~RS_Dimension() = default;
 
-    RS_Vector getNearestRef( const RS_Vector& coord, double* dist = nullptr) const;
-    RS_Vector getNearestSelectedRef( const RS_Vector& coord, double* dist = nullptr) const;
+	RS_Vector getNearestRef( const RS_Vector& coord, double* dist = nullptr) const override;
+	RS_Vector getNearestSelectedRef( const RS_Vector& coord, double* dist = nullptr) const override;
 
     /** @return Copy of data that defines the dimension. */
     RS_DimensionData getData() const {
@@ -125,7 +124,7 @@ public:
      * Must be overwritten by implementing dimension entity class
      * to update the subentities which make up the dimension entity.
      */
-    virtual void update() {
+	void update() override{
             updateDim();
         }
 
@@ -196,11 +195,11 @@ public:
         //		return -1.0;
         //	}
 
-        virtual void move(const RS_Vector& offset);
-        virtual void rotate(const RS_Vector& center, const double& angle);
-        virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
-        virtual void scale(const RS_Vector& center, const RS_Vector& factor);
-        virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+		void move(const RS_Vector& offset) override;
+		void rotate(const RS_Vector& center, const double& angle) override;
+		void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+		void scale(const RS_Vector& center, const RS_Vector& factor) override;
+		void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
 
 protected:
     /** Data common to all dimension entities. */

@@ -48,17 +48,17 @@ public:
     RS_ActionPolylineSegment(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
 
-    virtual void init(int status=0);
+	void init(int status=0) override;
 	
-    virtual void trigger();
+	void trigger() override;
 	
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	void mouseReleaseEvent(QMouseEvent* e) override;
 	
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 	//! create polyline from segments
 	//! @param useSelected only create from selected entities
-	virtual bool convertPolyline(RS_Entity* selectedEntity, bool useSelected = false);
+	bool convertPolyline(RS_Entity* selectedEntity, bool useSelected = false);
 
 private:
     RS_Vector appendPol(RS_Polyline *current, RS_Polyline *toAdd, bool reversed);

@@ -53,22 +53,22 @@ class RS_ActionModifyBevel : public RS_PreviewActionInterface {
 public:
     RS_ActionModifyBevel(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-	~RS_ActionModifyBevel();
+	~RS_ActionModifyBevel() override;
 
-    virtual void init(int status);
-    virtual void trigger();
+	void init(int status) override;
+	void trigger() override;
 
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 	
-    virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+	void commandEvent(RS_CommandEvent* e) override;
+	QStringList getAvailableCommands() override;
 	
-    virtual void hideOptions();
-    virtual void showOptions();
+	void hideOptions() override;
+	void showOptions() override;
 	
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 
 	void setLength1(double l1);
 

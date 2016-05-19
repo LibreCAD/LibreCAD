@@ -42,13 +42,13 @@ class RS_ActionInfoInside : public RS_ActionInterface {
 public:
     RS_ActionInfoInside(RS_EntityContainer& container,
                        RS_GraphicView& graphicView);
-    ~RS_ActionInfoInside();
+	~RS_ActionInfoInside() override;
 
-    virtual void trigger();
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+	void trigger() override;
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 
 private:
 	std::unique_ptr<RS_Vector> pt;

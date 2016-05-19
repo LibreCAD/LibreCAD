@@ -30,7 +30,6 @@
 #include "rs_math.h"
 #include "rs_debug.h"
 
-
 /**
  * Constructor.
  */

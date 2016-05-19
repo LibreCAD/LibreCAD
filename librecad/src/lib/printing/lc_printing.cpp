@@ -67,6 +67,18 @@ QPrinter::PageSize LC_Printing::rsToQtPaperFormat(RS2::PaperFormat f)
             return QPrinter::Ledger;
         case RS2::Tabloid:
             return QPrinter::Tabloid;
+        #if QT_VERSION >= 0x050400
+         case RS2::Arch_A:
+             return QPrinter::ArchA;
+         case RS2::Arch_B:
+             return QPrinter::ArchB;
+         case RS2::Arch_C:
+             return QPrinter::ArchC;
+         case RS2::Arch_D:
+             return QPrinter::ArchD;
+         case RS2::Arch_E:
+             return QPrinter::ArchE;
+        #endif
         case RS2::NPageSize:
             return QPrinter::NPageSize;
     }

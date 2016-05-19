@@ -37,18 +37,16 @@ RS_ActionLayersAdd::RS_ActionLayersAdd(RS_EntityContainer& container,
         :RS_ActionInterface("Add Layer", container, graphicView) {}
 
 void RS_ActionLayersAdd::trigger() {
-    RS_DEBUG->print("add layer");
+	RS_DEBUG->print("add layer");
 
-    if (RS_DIALOGFACTORY) {
-        if (graphic) {
-            RS_Layer* layer = RS_DIALOGFACTORY->requestNewLayerDialog(
-                                  graphic->getLayerList());
-            if (layer)
-                graphic->addLayer(layer);
-                graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
-        }
-    }
-    finish(false);
+	if (graphic) {
+		RS_Layer* layer = RS_DIALOGFACTORY->requestNewLayerDialog(
+					graphic->getLayerList());
+		if (layer)
+			graphic->addLayer(layer);
+		graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
+	}
+	finish(false);
 }
 
 void RS_ActionLayersAdd::init(int status) {

@@ -55,32 +55,30 @@ public:
     RS_Line(RS_EntityContainer* parent, const RS_Vector& pStart, const RS_Vector& pEnd);
     RS_Line(const RS_Vector& pStart, const RS_Vector& pEnd);
 
-	virtual RS_Entity* clone() const;
-
-	virtual ~RS_Line() = default;
+	RS_Entity* clone() const override;
 
     /**	@return RS2::EntityLine */
-    virtual RS2::EntityType rtti() const {
+	RS2::EntityType rtti() const override{
         return RS2::EntityLine;
     }
     /** @return true */
-    virtual bool isEdge() const {
+	bool isEdge() const override{
         return true;
     }
 
     /** @return Copy of data that defines the line. */
-    RS_LineData getData() const {
+	RS_LineData getData() const{
         return data;
     }
 
-	virtual RS_VectorSolutions getRefPoints() const;
+	RS_VectorSolutions getRefPoints() const override;
 
     /** @return Start point of the entity */
-    virtual RS_Vector getStartpoint() const {
+	RS_Vector getStartpoint() const override{
         return data.startpoint;
     }
     /** @return End point of the entity */
-    virtual RS_Vector getEndpoint() const {
+	RS_Vector getEndpoint() const override{
         return data.endpoint;
     }
     /** Sets the startpoint */
@@ -97,25 +95,25 @@ public:
      * @return Direction 1. The angle at which the line starts at
      * the startpoint.
      */
-    double getDirection1() const {
+	double getDirection1() const override{
         return getAngle1();
     }
     /**
      * @return Direction 2. The angle at which the line starts at
      * the endpoint.
      */
-    double getDirection2() const {
+	double getDirection2() const override{
         return getAngle2();
     }
-    virtual RS_Vector getTangentDirection(const RS_Vector& point)const;
+	RS_Vector getTangentDirection(const RS_Vector& point)const override;
 
-    virtual void moveStartpoint(const RS_Vector& pos);
-    virtual void moveEndpoint(const RS_Vector& pos);
-    virtual RS2::Ending getTrimPoint(const RS_Vector& trimCoord,
-                                     const RS_Vector& trimPoint);
-    virtual RS_Vector prepareTrim(const RS_Vector& trimCoord,
-                                  const RS_VectorSolutions& trimSol);
-    virtual void reverse();
+	void moveStartpoint(const RS_Vector& pos) override;
+	void moveEndpoint(const RS_Vector& pos) override;
+	RS2::Ending getTrimPoint(const RS_Vector& trimCoord,
+									 const RS_Vector& trimPoint) override;
+	RS_Vector prepareTrim(const RS_Vector& trimCoord,
+								  const RS_VectorSolutions& trimSol) override;
+	void reverse() override;
     /** Sets the y coordinate of the startpoint */
     void setStartpointY(double val) {
         data.startpoint.y = val;
@@ -126,78 +124,78 @@ public:
         data.endpoint.y = val;
         calculateBorders();
     }
-    virtual bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2);
+	bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) override;
 
     /**
      * @return The length of the line.
      */
-    virtual double getLength() const {
+	double getLength() const override{
         return data.startpoint.distanceTo(data.endpoint);
     }
 
     /**
      * @return The angle of the line (from start to endpoint).
      */
-    virtual double getAngle1() const {
+	double getAngle1() const{
         return data.startpoint.angleTo(data.endpoint);
     }
 
     /**
      * @return The angle of the line (from end to startpoint).
      */
-    virtual double getAngle2() const {
+	double getAngle2() const{
         return data.endpoint.angleTo(data.startpoint);
     }
-	virtual bool isTangent(const RS_CircleData&  circleData) const;
+	bool isTangent(const RS_CircleData&  circleData) const override;
 
 /**
   * @return a perpendicular vector
   */
-    RS_Vector getNormalVector() const;
-    virtual RS_Vector getMiddlePoint()const;
-    virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-										 double* dist = nullptr)const;
-    virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-			bool onEntity=true, double* dist = nullptr, RS_Entity** entity=nullptr)const;
-//    virtual RS_Vector getNearestCenter(const RS_Vector& coord,
+	RS_Vector getNormalVector() const;
+	RS_Vector getMiddlePoint()const override;
+	RS_Vector getNearestEndpoint(const RS_Vector& coord,
+										 double* dist = nullptr)const override;
+	RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
+			bool onEntity=true, double* dist = nullptr, RS_Entity** entity=nullptr)const override;
+//    RS_Vector getNearestCenter(const RS_Vector& coord,
 //                                       double* dist = nullptr);
-    virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
+	RS_Vector getNearestMiddle(const RS_Vector& coord,
 									   double* dist = nullptr,
                                        int middlePoints = 1
-                                       )const;
-    virtual RS_Vector getNearestDist(double distance,
+									   )const override;
+	RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-									 double* dist = nullptr)const;
-    virtual RS_Vector getNearestDist(double distance,
-									 bool startp)const;
+									 double* dist = nullptr)const override;
+	RS_Vector getNearestDist(double distance,
+									 bool startp)const override;
 
     /**
           * implementations must revert the direction of an atomic entity
           */
-    virtual void revertDirection();
-	 virtual std::vector<RS_Entity* > offsetTwoSides(const double& distance) const;
+	void revertDirection() override;
+	 std::vector<RS_Entity* > offsetTwoSides(const double& distance) const override;
     /**
       * the modify offset action
       */
-    virtual bool offset(const RS_Vector& coord, const double& distance);
-    virtual void move(const RS_Vector& offset);
-    virtual void rotate(const double& angle);
-    virtual void rotate(const RS_Vector& center, const double& angle);
-    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
-    virtual void scale(const RS_Vector& factor);
-    virtual void scale(const RS_Vector& center, const RS_Vector& factor);
-    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
-    virtual void stretch(const RS_Vector& firstCorner,
+	bool offset(const RS_Vector& coord, const double& distance) override;
+	void move(const RS_Vector& offset) override;
+	void rotate(const double& angle);
+	void rotate(const RS_Vector& center, const double& angle) override;
+	void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+	void scale(const RS_Vector& factor) override;
+	void scale(const RS_Vector& center, const RS_Vector& factor) override;
+	void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+	void stretch(const RS_Vector& firstCorner,
                          const RS_Vector& secondCorner,
-                         const RS_Vector& offset);
-    virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
+						 const RS_Vector& offset) override;
+	void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
 
     /** whether the entity's bounding box intersects with visible portion of graphic view */
-    virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
+	void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
 
     friend std::ostream& operator << (std::ostream& os, const RS_Line& l);
 
-    virtual void calculateBorders();
+	void calculateBorders() override;
 	/** \brief getQuadratic() returns the equation of the entity
 for quadratic,
 
@@ -207,14 +205,14 @@ m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
 for linear:
 m0 x + m1 y + m2 =0
 **/
-    virtual LC_Quadratic getQuadratic() const;
+	LC_Quadratic getQuadratic() const override;
     /**
 	 * @brief areaLineIntegral line integral for contour area calculation by Green's Theorem
      * Contour Area =\oint x dy
      * @return line integral \oint x dy along the entity
      * \oint x dy = 0.5*(x0+x1)*(y1-y0)
      */
-    virtual double areaLineIntegral() const override;
+	double areaLineIntegral() const override;
 
 protected:
 	RS_LineData data;

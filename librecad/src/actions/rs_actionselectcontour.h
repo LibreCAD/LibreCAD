@@ -40,11 +40,10 @@ class RS_ActionSelectContour : public RS_ActionInterface {
 public:
     RS_ActionSelectContour(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-	~RS_ActionSelectContour()=default;
 
-    virtual void trigger();
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void updateMouseCursor();
+	void trigger() override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
+	void updateMouseCursor() override;
 
 private:
     RS_Entity* en;

@@ -56,28 +56,28 @@ class RS_ActionLibraryInsert : public RS_PreviewActionInterface {
 public:
     RS_ActionLibraryInsert(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-	virtual ~RS_ActionLibraryInsert() override;
+	~RS_ActionLibraryInsert() override;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	
-	virtual void init(int status=0);
+	void init(int status=0) override;
 
 	void reset();
 
-    virtual void trigger();
+	void trigger() override;
 
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 
-    virtual void coordinateEvent(RS_CoordinateEvent* e);
-    virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+	void coordinateEvent(RS_CoordinateEvent* e) override;
+	void commandEvent(RS_CommandEvent* e) override;
+		QStringList getAvailableCommands() override;
 
-	virtual void showOptions();
-	virtual void hideOptions();
+	void showOptions() override;
+	void hideOptions() override;
 
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 
 	void setFile(const QString& file);
 

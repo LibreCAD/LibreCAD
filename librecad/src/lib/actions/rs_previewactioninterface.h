@@ -42,13 +42,13 @@ public:
     RS_PreviewActionInterface(const char* name,
                               RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    virtual ~RS_PreviewActionInterface();
+	~RS_PreviewActionInterface() override;
 
-    virtual void init(int status=0);
-    virtual void finish(bool updateTB=true);
-    virtual void suspend();
-    virtual void resume();
-    virtual void trigger();
+	void init(int status=0) override;
+	void finish(bool updateTB=true) override;
+	void suspend() override;
+	void resume() override;
+	void trigger() override;
     void drawPreview();
     void deletePreview();
 

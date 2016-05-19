@@ -119,53 +119,45 @@ void RS_ActionDrawLineParallel::mouseReleaseEvent(QMouseEvent* e) {
 }
 
 void RS_ActionDrawLineParallel::updateMouseButtonHints() {
-	if (RS_DIALOGFACTORY) {
-        switch (getStatus()) {
-        case SetEntity:
-            RS_DIALOGFACTORY->updateMouseWidget(
-                tr("Specify Distance <%1> or select entity or [%2]")
-                .arg(distance).arg(RS_COMMANDS->command("through")),
-                tr("Cancel"));
-            break;
+	switch (getStatus()) {
+	case SetEntity:
+		RS_DIALOGFACTORY->updateMouseWidget(
+					tr("Specify Distance <%1> or select entity or [%2]")
+					.arg(distance).arg(RS_COMMANDS->command("through")),
+					tr("Cancel"));
+		break;
 
-        case SetNumber:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter number:"), "");
-            break;
+	case SetNumber:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Enter number:"), "");
+		break;
 
-        default:
-			RS_DIALOGFACTORY->updateMouseWidget();
-            break;
-        }
-    }
+	default:
+		RS_DIALOGFACTORY->updateMouseWidget();
+		break;
+	}
 }
 
 void RS_ActionDrawLineParallel::showOptions() {
-    RS_ActionInterface::showOptions();
+	RS_ActionInterface::showOptions();
 
-	if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->requestOptions(this, true);
-    }
-    updateMouseButtonHints();
+	RS_DIALOGFACTORY->requestOptions(this, true);
+	updateMouseButtonHints();
 }
 
 void RS_ActionDrawLineParallel::hideOptions() {
     RS_ActionInterface::hideOptions();
 
-	if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->requestOptions(this, false);
-    }
+	RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
 void RS_ActionDrawLineParallel::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
-    if (checkCommand("help", c)) {
-		if (RS_DIALOGFACTORY) {
-            RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                             + getAvailableCommands().join(", "));
-        }
-        return;
-    }
+	if (checkCommand("help", c)) {
+		RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+										 + getAvailableCommands().join(", "));
+		return;
+	}
 
     switch (getStatus()) {
     case SetEntity: {
@@ -183,14 +175,9 @@ void RS_ActionDrawLineParallel::commandEvent(RS_CommandEvent* e) {
                 if(ok) e->accept();
                 if (ok && d>1.0e-10) {
                     distance = d;
-                } else {
-					if (RS_DIALOGFACTORY) {
-                        RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                    }
-                }
-				if (RS_DIALOGFACTORY) {
-                    RS_DIALOGFACTORY->requestOptions(this, true, true);
-                }
+				} else
+					RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+				RS_DIALOGFACTORY->requestOptions(this, true, true);
                 updateMouseButtonHints();
                 //setStatus(SetEntity);
             }
@@ -204,20 +191,12 @@ void RS_ActionDrawLineParallel::commandEvent(RS_CommandEvent* e) {
                 e->accept();
                 if (n>0 && n<100) {
                     number = n;
-                } else {
-					if (RS_DIALOGFACTORY) {
-                        RS_DIALOGFACTORY->commandMessage(tr("Not a valid number. "
-                                                            "Try 1..99"));
-                    }
-                }
-            } else {
-				if (RS_DIALOGFACTORY) {
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                }
-            }
-			if (RS_DIALOGFACTORY) {
-                RS_DIALOGFACTORY->requestOptions(this, true, true);
-            }
+				} else
+					RS_DIALOGFACTORY->commandMessage(tr("Not a valid number. "
+														"Try 1..99"));
+			} else
+				RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+			RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(SetEntity);
         }
         break;

@@ -408,7 +408,7 @@ double GetDistToQuadSquared(const RS_Vector& coord, const RS_Vector& x1,
 	else return -1.0;
 
 	bool bResSet = false;
-	double dDist, dNewDist;
+	double dDist = 0., dNewDist;
 	double dRes;
 	for(const double& dSolValue: dSol)
 	{
@@ -705,7 +705,7 @@ RS_VectorSolutions LC_SplinePoints::getRefPoints() const
 }
 
 /** @return Start point of the entity */
-RS_Vector LC_SplinePoints::getStartPoint() const
+RS_Vector LC_SplinePoints::getStartpoint() const
 {
 	if(data.closed) return RS_Vector(false);
 
@@ -717,7 +717,7 @@ RS_Vector LC_SplinePoints::getStartPoint() const
 }
 
 /** @return End point of the entity */
-RS_Vector LC_SplinePoints::getEndPoint() const
+RS_Vector LC_SplinePoints::getEndpoint() const
 {
 	if(data.closed) return RS_Vector(false);
 
@@ -735,8 +735,8 @@ RS_Vector LC_SplinePoints::getNearestEndpoint(const RS_Vector& coord,
 	RS_Vector ret(false);
 	if(!data.closed) // no endpoint for closed spline
 	{
-		RS_Vector vp1(getStartPoint());
-		RS_Vector vp2(getEndPoint());
+		RS_Vector vp1(getStartpoint());
+		RS_Vector vp2(getEndpoint());
 		double d1 = (coord-vp1).squared();
 		double d2 = (coord-vp2).squared();
 		if(d1 < d2)
@@ -822,7 +822,7 @@ int LC_SplinePoints::GetNearestQuad(const RS_Vector& coord,
 
 	RS_Vector vStart(false), vControl(false), vEnd(false), vRes(false);
 
-	double dDist, dNewDist;
+	double dDist = 0., dNewDist = 0.;
 	double dRes, dNewRes;
 	int iRes = -1;
 
@@ -1036,7 +1036,7 @@ RS_Vector LC_SplinePoints::getNearestMiddle(const RS_Vector& coord,
 	}
 
 	int i;
-	double dCurDist, dt;
+	double dCurDist, dt{0.};
 	double dMinDist = RS_MAXDOUBLE;
 	double dDist = getLength()/(1.0 + middlePoints);
 
@@ -1065,7 +1065,7 @@ RS_Vector LC_SplinePoints::getNearestMiddle(const RS_Vector& coord,
 		return vRes;
 	}
 
-	int iNext;
+	int iNext{0};
     vRes = GetSplinePointAtDist(dDist, 1, 0.0, &iNext, &dt);
 	if(vRes.valid) dMinDist = (vRes - coord).magnitude();
     i = 2;

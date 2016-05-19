@@ -27,10 +27,13 @@
 
 #include<climits>
 #include<cmath>
+
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QAction>
 #include <QMouseEvent>
+#include <QtAlgorithms>
+
 #include "rs_graphicview.h"
 
 #include "rs_line.h"
@@ -78,10 +81,7 @@ RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
 
 RS_GraphicView::~RS_GraphicView()
 {
-    foreach (RS_EntityContainer* x, overlayEntities)
-    {
-        delete x;
-    }
+    qDeleteAll(overlayEntities);
 }
 
 /**
@@ -447,25 +447,26 @@ void RS_GraphicView::zoomOutY(double f) {
  * @param keepAspectRatio true: keep aspect ratio 1:1
  *                        false: factors in x and y are stretched to the max
  */
+#include <iostream>
 void RS_GraphicView::zoomAuto(bool axis, bool keepAspectRatio) {
 
 	RS_DEBUG->print("RS_GraphicView::zoomAuto");
 
 
 	if (container) {
-		container->calculateBorders();
+		container->forcedCalculateBorders();
 
 		double sx, sy;
 		if (axis) {
-			sx = std::max(container->getMax().x, 0.0)
-					- std::min(container->getMin().x, 0.0);
-			sy = std::max(container->getMax().y, 0.0)
-					- std::min(container->getMin().y, 0.0);
+			auto const dV = container->getMax() - container->getMin();
+			sx = std::max(dV.x, 0.);
+			sy = std::max(dV.y, 0.);
 		} else {
 			sx = container->getSize().x;
 			sy = container->getSize().y;
 		}
-		//    std::cout<<" RS_GraphicView::zoomAuto("<<axis<<","<<keepAspectRatio<<")"<<std::endl;
+//		    std::cout<<" RS_GraphicView::zoomAuto("<<sx<<","<<sy<<")"<<std::endl;
+//			std::cout<<" RS_GraphicView::zoomAuto("<<axis<<","<<keepAspectRatio<<")"<<std::endl;
 
 		double fx=1., fy=1.;
 		unsigned short fFlags=0;
@@ -1734,7 +1735,7 @@ RS_Grid* RS_GraphicView::getGrid() const{
 }
 
 RS_EventHandler* RS_GraphicView::getEventHandler() const{
-	return eventHandler.get();
+    return eventHandler;
 }
 
 void RS_GraphicView::setBackground(const RS_Color& bg) {
@@ -1845,15 +1846,4 @@ void RS_GraphicView::setDraftMode(bool dm) {
 bool RS_GraphicView::isCleanUp(void) const
 {
 	return m_bIsCleanUp;
-}
-
-void RS_GraphicView::set_action(QAction* q_action)
-{
-    eventHandler->setQAction(q_action);
-
-    if (recent_actions.contains(q_action))
-    {
-        recent_actions.removeOne(q_action);
-    }
-    recent_actions.prepend(q_action);
 }

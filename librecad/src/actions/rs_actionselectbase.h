@@ -41,10 +41,9 @@ public:
     RS_ActionSelectBase(const char* name,
                         RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionSelectBase() = default;
 
-    virtual void keyReleaseEvent(QKeyEvent* e);
-    virtual void updateMouseCursor();
+	void keyReleaseEvent(QKeyEvent* e) override;
+	void updateMouseCursor() override;
 };
 
 #endif

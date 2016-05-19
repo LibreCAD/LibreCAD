@@ -65,28 +65,28 @@ public:
 	RS_Ellipse()=default;
 	RS_Ellipse(RS_EntityContainer* parent, const RS_EllipseData& d);
 
-	virtual RS_Entity* clone() const;
+	RS_Entity* clone() const override;
 
     /**	@return RS2::EntityEllipse */
-    virtual RS2::EntityType rtti() const {
+	RS2::EntityType rtti() const override{
         return RS2::EntityEllipse;
     }
 
     /**
      * @return Start point of the entity.
      */
-    virtual RS_Vector getStartpoint() const;
-    virtual RS_VectorSolutions getFoci() const;
+	RS_Vector getStartpoint() const override;
+	RS_VectorSolutions getFoci() const;
 
     /**
      * @return End point of the entity.
      */
-    virtual RS_Vector getEndpoint() const;
-    virtual RS_Vector getEllipsePoint(const double& a) const; //find the point according to ellipse angle
+	RS_Vector getEndpoint() const override;
+	RS_Vector getEllipsePoint(const double& a) const; //find the point according to ellipse angle
 
-    virtual void moveStartpoint(const RS_Vector& pos);
-    virtual void moveEndpoint(const RS_Vector& pos);
-    virtual double getLength() const;
+	void moveStartpoint(const RS_Vector& pos) override;
+	void moveEndpoint(const RS_Vector& pos) override;
+	double getLength() const override;
 
     /**
     //Ellipse must have ratio<1, and not reversed
@@ -96,20 +96,20 @@ public:
     **/
     double getEllipseLength(double a1, double a2) const;
 	double getEllipseLength(double a2) const;
-    virtual RS_VectorSolutions getTangentPoint(const RS_Vector& point) const;//find the tangential points seeing from given point
-    virtual RS_Vector getTangentDirection(const RS_Vector& point)const;
-    virtual RS2::Ending getTrimPoint(const RS_Vector& trimCoord,
-                                     const RS_Vector& trimPoint);
+	RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;//find the tangential points seeing from given point
+	RS_Vector getTangentDirection(const RS_Vector& point)const override;
+	RS2::Ending getTrimPoint(const RS_Vector& trimCoord,
+									 const RS_Vector& trimPoint) override;
 
-    virtual RS_Vector prepareTrim(const RS_Vector& trimCoord,
-                                  const RS_VectorSolutions& trimSol);
+	RS_Vector prepareTrim(const RS_Vector& trimCoord,
+								  const RS_VectorSolutions& trimSol) override;
 
     double getEllipseAngle (const RS_Vector& pos) const;
 
     /** @return Copy of data that defines the ellipse. **/
 	const RS_EllipseData& getData() const;
 
-	virtual RS_VectorSolutions getRefPoints() const;
+	RS_VectorSolutions getRefPoints() const override;
 
     /**
      * @retval true if the arc is reversed (clockwise),
@@ -133,7 +133,7 @@ public:
 
 
     /** @return The center point (x) of this arc */
-	virtual RS_Vector getCenter() const;
+	RS_Vector getCenter() const override;
     /** Sets new center. */
 	void setCenter(const RS_Vector& c);
 
@@ -150,7 +150,7 @@ public:
     /**
      * @return Angle length in rad.
      */
-    virtual double getAngleLength() const;
+	double getAngleLength() const;
 
     /** @return The major radius of this ellipse. Same as getRadius() */
 	double getMajorRadius() const;
@@ -162,8 +162,8 @@ public:
     /** @return The minor radius of this ellipse */
 	double getMinorRadius() const;
 	//! \brief isEllipticArc the ellipse an Arc, if angle1/angle2 are not both 0
-	virtual bool isEllipticArc() const;
-    virtual bool isEdge() const {
+	bool isEllipticArc() const;
+	bool isEdge() const override{
         return true;
     }
     bool createFrom4P(const RS_VectorSolutions& sol);
@@ -175,40 +175,40 @@ public:
 	bool createFromQuadratic(const LC_Quadratic& q);
 	//! \}
 	bool createInscribeQuadrilateral(const std::vector<RS_Line*>& lines);
-    virtual RS_Vector getMiddlePoint(void)const;
-    virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-										 double* dist = nullptr) const;
-    virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-			bool onEntity = true, double* dist = nullptr, RS_Entity** entity=nullptr) const;
-    virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-									   double* dist = nullptr)const;
-    virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
+	RS_Vector getMiddlePoint(void)const override;
+	RS_Vector getNearestEndpoint(const RS_Vector& coord,
+										 double* dist = nullptr) const override;
+	RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
+			bool onEntity = true, double* dist = nullptr, RS_Entity** entity=nullptr) const override;
+	RS_Vector getNearestCenter(const RS_Vector& coord,
+									   double* dist = nullptr)const override;
+	RS_Vector getNearestMiddle(const RS_Vector& coord,
 									   double* dist = nullptr,
                                        int middlePoints = 1
-                                       )const;
-    virtual RS_Vector getNearestDist(double distance,
+									   )const override;
+	RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-									 double* dist = nullptr)const;
-    virtual RS_Vector getNearestOrthTan(const RS_Vector& coord,
+									 double* dist = nullptr)const override;
+	RS_Vector getNearestOrthTan(const RS_Vector& coord,
                                     const RS_Line& normal,
-									 bool onEntity = false) const;
+									 bool onEntity = false) const override;
     bool switchMajorMinor(void); //switch major minor axes to keep major the longer ellipse radius
-    virtual void correctAngles();//make sure angleLength() is not more than 2*M_PI
-    virtual bool isPointOnEntity(const RS_Vector& coord,
-                                 double tolerance=RS_TOLERANCE) const;
+	void correctAngles();//make sure angleLength() is not more than 2*M_PI
+	bool isPointOnEntity(const RS_Vector& coord,
+								 double tolerance=RS_TOLERANCE) const override;
 
-    virtual void move(const RS_Vector& offset);
-    virtual void rotate(const double& angle);
-    virtual void rotate(const RS_Vector& angleVector);
-    virtual void rotate(const RS_Vector& center, const double& angle);
-    virtual void rotate(const RS_Vector& center, const RS_Vector& angle);
-    virtual void scale(const RS_Vector& center, const RS_Vector& factor);
-    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
-    virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
+	void move(const RS_Vector& offset) override;
+	void rotate(const double& angle);
+	void rotate(const RS_Vector& angleVector);
+	void rotate(const RS_Vector& center, const double& angle) override;
+	void rotate(const RS_Vector& center, const RS_Vector& angle) override;
+	void scale(const RS_Vector& center, const RS_Vector& factor) override;
+	void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+	void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
 
     /** whether the entity's bounding box intersects with visible portion of graphic view
     */
-    bool isVisibleInWindow(RS_GraphicView* view) const;
+	bool isVisibleInWindow(RS_GraphicView* view) const override;
 	//! \{ \brief find visible segments of entity and draw only those visible portion
 	void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
 	void drawVisible(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
@@ -216,12 +216,12 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, const RS_Ellipse& a);
 
-    //virtual void calculateEndpoints();
-    virtual void calculateBorders();
+	//void calculateEndpoints() override;
+	void calculateBorders() override;
 
     //direction of tangent at endpoints
-    virtual double getDirection1() const;
-    virtual double getDirection2() const;
+	double getDirection1() const override;
+	double getDirection2() const override;
 
 	/** \brief return the equation of the entity
 	a quadratic contains coefficients for quadratic:
@@ -230,14 +230,14 @@ public:
     for linear:
     m0 x + m1 y + m2 =0
     **/
-    virtual LC_Quadratic getQuadratic() const;
+	LC_Quadratic getQuadratic() const override;
 	/**
  * @brief areaLineIntegral, line integral for contour area calculation by Green's Theorem
  * Contour Area =\oint x dy
  * @return line integral \oint x dy along the entity
  * \oint x dy = Cx y + \frac{1}{4}((a^{2}+b^{2})sin(2a)cos^{2}(t)-ab(2sin^{2}(a)sin(2t)-2t-sin(2t)))
  */
-	virtual double areaLineIntegral() const override;
+	double areaLineIntegral() const override;
 
 protected:
     RS_EllipseData data;

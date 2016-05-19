@@ -207,7 +207,7 @@ public:
 
 	bool isLocked() const;
 
-	void undoStateChanged(bool undone);
+	void undoStateChanged(bool undone) override;
     virtual bool isUndone() const;
 
     /**

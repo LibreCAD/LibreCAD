@@ -77,7 +77,6 @@ RS_Vector RS_Grid::snapGrid(const RS_Vector& coord) const {
  * Updates the grid point array.
  */
 void RS_Grid::updatePointArray() {
-	RS_DEBUG->print("RS_Grid::update");
 	if (!graphicView->isGridOn()) return;
 
 	RS_Graphic* graphic = graphicView->getGraphic();

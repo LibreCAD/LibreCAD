@@ -94,9 +94,9 @@ void RS_ActionModifyRound::trigger() {
 		entity2 = nullptr;
         setStatus(SetEntity1);
 
-        if (RS_DIALOGFACTORY) {
-            RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
-        }
+		RS_DIALOGFACTORY->updateSelectionWidget(
+					container->countSelected(),
+					container->totalSelectedLength());
     }
 }
 
@@ -197,10 +197,9 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY) {
-            RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                             + getAvailableCommands().join(", "));
-        }
+			RS_DIALOGFACTORY->commandMessage(
+						msgAvailableCommands() +
+						getAvailableCommands().join(", "));
         return;
     }
 
@@ -218,9 +217,7 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
             lastStatus = (Status)getStatus();
             setStatus(SetTrim);
 			pPoints->data.trim = !pPoints->data.trim;
-            if (RS_DIALOGFACTORY) {
-                RS_DIALOGFACTORY->requestOptions(this, true, true);
-            }
+			RS_DIALOGFACTORY->requestOptions(this, true, true);
         }
         break;
 
@@ -230,14 +227,9 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
             if (ok) {
                 e->accept();
 				pPoints->data.radius = r;
-            } else {
-                if (RS_DIALOGFACTORY) {
+			} else
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                }
-            }
-            if (RS_DIALOGFACTORY) {
-                RS_DIALOGFACTORY->requestOptions(this, true, true);
-            }
+			RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(lastStatus);
         }
         break;
@@ -297,9 +289,7 @@ bool RS_ActionModifyRound::isTrimOn() const{
 void RS_ActionModifyRound::showOptions() {
     RS_ActionInterface::showOptions();
 
-    if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->requestOptions(this, true);
-    }
+	RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
 
@@ -307,37 +297,33 @@ void RS_ActionModifyRound::showOptions() {
 void RS_ActionModifyRound::hideOptions() {
     RS_ActionInterface::hideOptions();
 
-    if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->requestOptions(this, false);
-    }
+	RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
 
 
 void RS_ActionModifyRound::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY) {
-        switch (getStatus()) {
-        case SetEntity1:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first entity"),
-                                                tr("Back"));
-            break;
-        case SetEntity2:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second entity"),
-                                                tr("Back"));
-            break;
-        case SetRadius:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter radius:"),
-                                                tr("Cancel"));
-            break;
-            /*case SetTrim:
-                RS_DIALOGFACTORY->updateMouseWidget(tr("Trim on? (yes/no):"),
-                                                    "");
-                break;*/
-        default:
-			RS_DIALOGFACTORY->updateMouseWidget();
-            break;
-        }
-    }
+	switch (getStatus()) {
+	case SetEntity1:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first entity"),
+											tr("Back"));
+		break;
+	case SetEntity2:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second entity"),
+											tr("Back"));
+		break;
+	case SetRadius:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Enter radius:"),
+											tr("Cancel"));
+		break;
+		/*case SetTrim:
+				RS_DIALOGFACTORY->updateMouseWidget(tr("Trim on? (yes/no):"),
+													"");
+				break;*/
+	default:
+		RS_DIALOGFACTORY->updateMouseWidget();
+		break;
+	}
 }
 
 

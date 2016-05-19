@@ -26,7 +26,7 @@
 #include "lc_widgetfactory.h"
 #include "lc_actionfactory.h"
 #include "lc_dockwidget.h"
-#include "lc_customtoolbar.h"
+#include "lc_actiongroupmanager.h"
 
 #include "qg_actionhandler.h"
 #include "qg_snaptoolbar.h"
@@ -46,10 +46,12 @@
 
 
 LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
-                                   QMap<QString, QAction*>& action_map)
+                                   QMap<QString, QAction*>& action_map,
+                                   LC_ActionGroupManager* agm)
     : QObject(nullptr)
     , main_window(main_win)
     , a_map(action_map)
+    , ag_manager(agm)
 {
     file_actions
             << a_map["FileNew"]
@@ -111,13 +113,6 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["PolylineTrim"]
             << a_map["PolylineEquidistant"]
             << a_map["PolylineSegment"];
-
-    misc_actions
-            << a_map["DrawMText"]
-            << a_map["DrawHatch"]
-            << a_map["DrawImage"]
-            << a_map["BlocksCreate"]
-            << a_map["DrawPoint"];
 
     select_actions
             << a_map["DeselectAll"]
@@ -352,6 +347,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
     order_toolbar->addAction(a_map["OrderBottom"]);
     order_toolbar->addAction(a_map["OrderRaise"]);
     order_toolbar->addAction(a_map["OrderLower"]);
+    order_toolbar->hide();
 
     QToolBar* view_toolbar = new QToolBar(QC_ApplicationWindow::tr("View"), main_window);
     view_toolbar->setObjectName("view_toolbar");
@@ -367,7 +363,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
     view_toolbar->addAction(a_map["ZoomWindow"]);
     view_toolbar->addAction(a_map["ZoomPan"]);
 
-    snap_toolbar = new QG_SnapToolBar(main_window, action_handler);
+    snap_toolbar = new QG_SnapToolBar(main_window, action_handler, ag_manager);
     snap_toolbar->setWindowTitle(QC_ApplicationWindow::tr("Snap Selection"));
     snap_toolbar->setSizePolicy(toolBarPolicy);
     snap_toolbar->setObjectName("snap_toolbar" );
@@ -381,11 +377,6 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
     options_toolbar->setSizePolicy(toolBarPolicy);
     options_toolbar->setObjectName("options_toolbar");
 
-    QToolBar* misc_toolbar = new QToolBar(QC_ApplicationWindow::tr("Misc"), main_window);
-    misc_toolbar->setSizePolicy(toolBarPolicy);
-    misc_toolbar->setObjectName("misc_toolbar");
-    misc_toolbar->addActions(misc_actions);
-
     // <[~ Dock Areas Toolbar ~]>
 
     QToolBar* dockareas_toolbar = new QToolBar(main_window);
@@ -398,6 +389,14 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
     dockareas_toolbar->addAction(a_map["BottomDockAreaToggle"]);
     dockareas_toolbar->addAction(a_map["FloatingDockwidgetsToggle"]);
 
+    // <[~ Creators ~]>
+
+    auto creators_toolbar = new QToolBar(main_window);
+    creators_toolbar->setWindowTitle(QObject::tr("Creators"));
+    creators_toolbar->setObjectName("creators_toolbar");
+    creators_toolbar->addAction(a_map["InvokeMenuCreator"]);
+    creators_toolbar->addAction(a_map["InvokeToolbarCreator"]);
+
     // <[~ Toolbars Layout~]>
 
     main_window->addToolBar(Qt::TopToolBarArea, file_toolbar);
@@ -408,10 +407,10 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
     main_window->addToolBar(Qt::TopToolBarArea, options_toolbar);
 
     main_window->addToolBar(Qt::LeftToolBarArea, order_toolbar);
-    main_window->addToolBar(Qt::LeftToolBarArea, misc_toolbar);
 
     main_window->addToolBar(Qt::BottomToolBarArea, snap_toolbar);
     main_window->addToolBar(Qt::BottomToolBarArea, dockareas_toolbar);
+    main_window->addToolBar(Qt::BottomToolBarArea, creators_toolbar);
 }
 
 void LC_WidgetFactory::createCADToolbars()
@@ -495,83 +494,61 @@ QToolBar* LC_WidgetFactory::createCategoriesToolbar()
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menuline.png"));
+    tool_button->setIcon(QIcon(":/icons/line.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(line_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menucircle.png"));
+    tool_button->setIcon(QIcon(":/icons/circle.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(circle_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/linesfree.png"));
+    tool_button->setIcon(QIcon(":/icons/line_freehand.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(curve_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menuellipse.png"));
+    tool_button->setIcon(QIcon(":/icons/ellipses.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(ellipse_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menupolyline.png"));
+    tool_button->setIcon(QIcon(":/icons/polylines.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(polyline_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menuselect.png"));
+    tool_button->setIcon(QIcon(":/icons/select.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(select_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/dimhor.png"));
+    tool_button->setIcon(QIcon(":/icons/dim_horizontal.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(dimension_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menuedit.png"));
+    tool_button->setIcon(QIcon(":/icons/move_rotate.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(modify_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menumeasure.png"));
+    tool_button->setIcon(QIcon(":/icons/measure.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(info_actions);
 
     main_window->addToolBar(Qt::LeftToolBarArea, categories_toolbar);
 
     return categories_toolbar;
-}
-
-/**
- * @return pointer to the custom toolbar or nullptr if the file was not found
- */
-LC_CustomToolbar* LC_WidgetFactory::createCustomToolbar(const QString& path
-                                                       ,QActionGroup* tools)
-{
-    LC_CustomToolbar* custom_toolbar = nullptr;
-
-    if (QFile::exists(path))
-    {
-        custom_toolbar = new LC_CustomToolbar(main_window);
-        custom_toolbar->setWindowTitle(QC_ApplicationWindow::tr("Custom"));
-        custom_toolbar->actions_from_file(path, a_map);
-        custom_toolbar->setObjectName("custom_toolbar");
-        custom_toolbar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        connect(tools, SIGNAL(triggered(QAction*)),
-                custom_toolbar, SLOT(slot_most_recent_action(QAction*)));
-        main_window->addToolBar(Qt::TopToolBarArea, custom_toolbar);
-    }
-    return custom_toolbar;
 }
 
 void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
@@ -583,11 +560,11 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     file_menu->setObjectName("File");
     file_menu->setTearOffEnabled(true);
     file_menu->addActions(file_actions);
-    sub_menu = file_menu->addMenu(QIcon(":/actions/fileimport.png"), QC_ApplicationWindow::tr("Import"));
+    sub_menu = file_menu->addMenu(QIcon(":/icons/import.svg"), QC_ApplicationWindow::tr("Import"));
     sub_menu->setObjectName("Import");
     sub_menu->addAction(a_map["DrawImage"]);
     sub_menu->addAction(a_map["BlocksImport"]);
-    sub_menu = file_menu->addMenu(QIcon(":/actions/fileexport.png"), QC_ApplicationWindow::tr("Export"));
+    sub_menu = file_menu->addMenu(QIcon(":/icons/export.svg"), QC_ApplicationWindow::tr("Export"));
     sub_menu->setObjectName("Export");
     sub_menu->addAction(a_map["FileExportMakerCam"]);
     sub_menu->addAction(a_map["FilePrintPDF"]);
@@ -650,62 +627,59 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     view_menu->addAction(a_map["ZoomWindow"]);
     view_menu->addAction(a_map["ZoomPan"]);
 
-    // <[~ Draw ~]>
+    // <[~ Tools ~]>
 
-    QMenu* draw_menu = new QMenu(QC_ApplicationWindow::tr("&Draw"), menu_bar);
-    draw_menu->setObjectName("Draw");
-    draw_menu->setTearOffEnabled(true);
+    QMenu* tools_menu = new QMenu(QC_ApplicationWindow::tr("&Tools"), menu_bar);
+    tools_menu->setObjectName("tools_menu");
+    tools_menu->setTearOffEnabled(true);
 
     // <[~ Lines ~]>
 
-    sub_menu = draw_menu->addMenu(QC_ApplicationWindow::tr("&Line"));
-    sub_menu->setIcon(QIcon(":/extui/menuline.png"));
+    sub_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("&Line"));
+    sub_menu->setIcon(QIcon(":/icons/line.svg"));
     sub_menu->setObjectName("Line");
     sub_menu->addActions(line_actions);
 
     // <[~ Circles ~]>
 
-    sub_menu = draw_menu->addMenu(QC_ApplicationWindow::tr("&Circle"));
-    sub_menu->setIcon(QIcon(":/extui/menucircle.png"));
+    sub_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("&Circle"));
+    sub_menu->setIcon(QIcon(":/icons/circle.svg"));
     sub_menu->setObjectName("Circle");
     sub_menu->addActions(circle_actions);
 
     // <[~ Curves ~]>
 
-    sub_menu = draw_menu->addMenu(QC_ApplicationWindow::tr("&Curve"));
-    sub_menu->setIcon(QIcon(":/extui/linesfree.png"));
+    sub_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("&Curve"));
+    sub_menu->setIcon(QIcon(":/icons/line_freehand.svg"));
     sub_menu->setObjectName("Curve");
     sub_menu->addActions(curve_actions);
 
     // <[~ Ellipses ~]>
 
-    sub_menu = draw_menu->addMenu(QC_ApplicationWindow::tr("&Ellipse"));
-    sub_menu->setIcon(QIcon(":/extui/menuellipse.png"));
+    sub_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("&Ellipse"));
+    sub_menu->setIcon(QIcon(":/icons/ellipses.svg"));
     sub_menu->setObjectName("Ellipse");
     sub_menu->addActions(ellipse_actions);
 
     // <[~ Polylines ~]>
 
-    sub_menu = draw_menu->addMenu(QC_ApplicationWindow::tr("&Polyline"));
-    sub_menu->setIcon(QIcon(":/extui/menupolyline.png"));
+    sub_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("&Polyline"));
+    sub_menu->setIcon(QIcon(":/icons/polylines_polyline.svg"));
     sub_menu->setObjectName("Polyline");
     sub_menu->addActions(polyline_actions);
 
-    draw_menu->addAction(a_map["DrawMText"]);
-    draw_menu->addAction(a_map["DrawText"]);
-    draw_menu->addAction(a_map["DrawHatch"]);
-    draw_menu->addAction(a_map["DrawPoint"]);
-
     // <[~ Select ~]>
 
-    QMenu* select_menu = new QMenu(QC_ApplicationWindow::tr("&Select"), menu_bar);
+    QMenu* select_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("&Select"));
+    select_menu->setIcon(QIcon(":/icons/select.svg"));
     select_menu->setObjectName("Select");
     select_menu->setTearOffEnabled(true);
     select_menu->addActions(select_actions);
 
     // <[~ Dimension ~]>
 
-    QMenu* dimension_menu = new QMenu(QC_ApplicationWindow::tr("Dime&nsion"), menu_bar);
+    QMenu* dimension_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("Dime&nsion"));
+    dimension_menu->setIcon(QIcon(":/icons/dim_horizontal.svg"));
     dimension_menu->setObjectName("dimension_menu");
     dimension_menu->setTearOffEnabled(true);
     dimension_menu->addActions(dimension_actions);
@@ -722,45 +696,52 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
 
     // <[~ Modify ~]>
 
-    QMenu* modify_menu = new QMenu(QC_ApplicationWindow::tr("&Modify"), menu_bar);
+    QMenu* modify_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("&Modify"));
+    modify_menu->setIcon(QIcon(":/icons/move_rotate.svg"));
     modify_menu->setObjectName("Modify");
     modify_menu->setTearOffEnabled(true);
     modify_menu->addMenu(order_menu);
     modify_menu->addActions(modify_actions);
 
-    // <[~ Snapping ~]>
-
-    QMenu* snap_menu = new QMenu(QC_ApplicationWindow::tr("Sna&p"), menu_bar);
-    snap_menu->setObjectName("snap_menu");
-    snap_menu->setTearOffEnabled(true);
-    // QToolBar* snap_tb = main_window->findChild<QToolBar*>("snap_toolbar");
-    snap_menu->addActions(snap_toolbar->actions());
-
     // <[~ Info ~]>
 
-    QMenu* info_menu = new QMenu(QC_ApplicationWindow::tr("&Info"), menu_bar);
+    QMenu* info_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("&Info"));
+    info_menu->setIcon(QIcon(":/icons/measure.svg"));
     info_menu->setObjectName("Info");
     info_menu->setTearOffEnabled(true);
     info_menu->addActions(info_actions);
 
+    tools_menu->addAction(a_map["DrawMText"]);
+    tools_menu->addAction(a_map["DrawText"]);
+    tools_menu->addAction(a_map["DrawHatch"]);
+    tools_menu->addAction(a_map["DrawPoint"]);
+
     // <[~ Layer ~]>
 
-    QMenu* layer_menu = new QMenu(QC_ApplicationWindow::tr("&Layer"), menu_bar);
-    layer_menu->setObjectName("layer_menu");
-    layer_menu->setTearOffEnabled(true);
-    layer_menu->addActions(layer_actions);
+//    QMenu* layer_menu = new QMenu(QC_ApplicationWindow::tr("&Layer"), menu_bar);
+//    layer_menu->setObjectName("layer_menu");
+//    layer_menu->setTearOffEnabled(true);
+//    layer_menu->addActions(layer_actions);
 
     // <[~ Block ~]>
 
-    QMenu* block_menu = new QMenu(QC_ApplicationWindow::tr("&Block"), menu_bar);
-    block_menu->setObjectName("block_menu");
-    block_menu->setTearOffEnabled(true);
-    block_menu->addActions(block_actions);
+//    QMenu* block_menu = new QMenu(QC_ApplicationWindow::tr("&Block"), menu_bar);
+//    block_menu->setObjectName("block_menu");
+//    block_menu->setTearOffEnabled(true);
+//    block_menu->addActions(block_actions);
 
-    // <[~ Windows ~]>
+    // <[~ Snapping ~]>
 
-    windows_menu = new QMenu(QC_ApplicationWindow::tr("&Window"), menu_bar);
-    windows_menu->setObjectName("windows_menu");
+//    QMenu* snap_menu = new QMenu(QC_ApplicationWindow::tr("Sna&p"), menu_bar);
+//    snap_menu->setObjectName("snap_menu");
+//    snap_menu->setTearOffEnabled(true);
+//    // QToolBar* snap_tb = main_window->findChild<QToolBar*>("snap_toolbar");
+//    snap_menu->addActions(snap_toolbar->actions());
+
+    // <[~ Drawings ~]>
+
+    windows_menu = new QMenu(QC_ApplicationWindow::tr("&Drawings"), menu_bar);
+    windows_menu->setObjectName("drawings_menu");
     windows_menu->setTearOffEnabled(true);
     windows_menu->addAction(a_map["Fullscreen"]); // temp way to show this menu on OS X
 
@@ -780,13 +761,13 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     help_menu->addSeparator();
 
     QAction* help_about = new QAction(QIcon(":/main/librecad.png"), QC_ApplicationWindow::tr("About"), main_window);
-    connect(help_about, SIGNAL(triggered()), main_window, SLOT(slotHelpAbout()));
+    connect(help_about, SIGNAL(triggered()), main_window, SLOT(showAboutWindow()));
     help_menu->addAction(help_about);
-
 
     // <[~ Widgets Menu ~]>
 
     QMenu* widgets_menu = new QMenu("Widgets", menu_bar);
+    widgets_menu->setTearOffEnabled(true);
 
     // <[~ Dock Areas Menu ~]>
 
@@ -842,7 +823,8 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     widgets_menu->addMenu(dockareas_menu);
     widgets_menu->addMenu(dockwidgets_menu);
     widgets_menu->addMenu(toolbars_menu);
-    widgets_menu->addAction(a_map["CreateDoubleClickMenu"]);
+    widgets_menu->addAction(a_map["InvokeMenuCreator"]);
+    widgets_menu->addAction(a_map["InvokeToolbarCreator"]);
 
     // <[~ MenuBar Layout~]>
 
@@ -851,14 +833,14 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     menu_bar->addMenu(edit_menu);
     menu_bar->addMenu(view_menu);
     menu_bar->addMenu(plugins_menu);
-    menu_bar->addMenu(select_menu);
-    menu_bar->addMenu(draw_menu);
-    menu_bar->addMenu(dimension_menu);
-    menu_bar->addMenu(modify_menu);
-    menu_bar->addMenu(snap_menu);
-    menu_bar->addMenu(info_menu);
-    menu_bar->addMenu(layer_menu);
-    menu_bar->addMenu(block_menu);
+//    menu_bar->addMenu(select_menu);
+    menu_bar->addMenu(tools_menu);
+//    menu_bar->addMenu(dimension_menu);
+//    menu_bar->addMenu(modify_menu);
+//    menu_bar->addMenu(snap_menu);
+//    menu_bar->addMenu(info_menu);
+//    menu_bar->addMenu(layer_menu);
+//    menu_bar->addMenu(block_menu);
     menu_bar->addMenu(widgets_menu);
     menu_bar->addMenu(windows_menu);
     menu_bar->addMenu(help_menu);

@@ -206,14 +206,12 @@ void RS_ActionPrintPreview::resume() {
 
 //printout warning in command widget
 void RS_ActionPrintPreview::printWarning(const QString& s) {
-	if(RS_DIALOGFACTORY){
-        RS_DIALOGFACTORY->commandMessage(s);
-    }
+	RS_DIALOGFACTORY->commandMessage(s);
 }
 
 void RS_ActionPrintPreview::showOptions() {
     RS_ActionInterface::showOptions();
-	if(RS_DIALOGFACTORY && ! isFinished() ) {
+	if (!isFinished()) {
         RS_DIALOGFACTORY->requestOptions(this, true,hasOptions);
         hasOptions=true;
     }
@@ -256,7 +254,7 @@ void RS_ActionPrintPreview::fit() {
                          " Paper is too small for fitting to page\n"
                          "Please set paper size by Menu: Edit->Current Drawing Preferences->Paper");
         //        double f0=graphic->getPaperScale();
-        if( graphic->fitToPage()==false && RS_DIALOGFACTORY){
+		if ( graphic->fitToPage()==false) {
             RS_DIALOGFACTORY->commandMessage(
                         tr("RS_ActionPrintPreview::fit(): Invalid paper size")
                         );

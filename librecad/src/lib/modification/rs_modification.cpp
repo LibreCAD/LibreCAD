@@ -682,7 +682,7 @@ bool RS_Modification::splitPolyline(RS_Polyline& polyline,
                 if (pl==pl1) {
                     // Trim endpoint of entity to first vector
                     pl->addVertex(v, 0.0);
-					pl = nullptr;
+//					pl = nullptr;
                 } else {
                     // Trim startpoint of entity to second vector
                     pl = pl2;

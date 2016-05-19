@@ -48,12 +48,11 @@ public:
 public:
     RS_ActionModifyDelete(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-    ~RS_ActionModifyDelete() = default;
 
-    virtual void init(int status=0);
-    virtual void trigger();
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+	void init(int status=0) override;
+	void trigger() override;
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 };
 
 #endif

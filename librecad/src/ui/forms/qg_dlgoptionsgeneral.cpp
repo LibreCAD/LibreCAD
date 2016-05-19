@@ -147,7 +147,6 @@ void QG_DlgOptionsGeneral::init()
     initComboBox(cbStartHandleColor, RS_SETTINGS->readEntry("/start_handle", Colors::start_handle));
     initComboBox(cbHandleColor, RS_SETTINGS->readEntry("/handle", Colors::handle));
     initComboBox(cbEndHandleColor, RS_SETTINGS->readEntry("/end_handle", Colors::end_handle));
-    initComboBox(cb_layerselection, RS_SETTINGS->readEntry("/layer_selection", Colors::layer_selection));
     initComboBox(cb_snap_color, RS_SETTINGS->readEntry("/snap_indicator", Colors::snap_indicator));
     RS_SETTINGS->endGroup();
 
@@ -159,7 +158,6 @@ void QG_DlgOptionsGeneral::init()
     lePathScripts->setText(RS_SETTINGS->readEntry("/Scripts", ""));
     lePathLibrary->setText(RS_SETTINGS->readEntry("/Library", "").trimmed());
     leTemplate->setText(RS_SETTINGS->readEntry("/Template", "").trimmed());
-    le_custom_toolbar->setText(RS_SETTINGS->readEntry("/CustomToolbar", "").trimmed());
     RS_SETTINGS->endGroup();
 
     // units:
@@ -251,7 +249,6 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/start_handle", cbStartHandleColor->currentText());
         RS_SETTINGS->writeEntry("/handle", cbHandleColor->currentText());
         RS_SETTINGS->writeEntry("/end_handle", cbEndHandleColor->currentText());
-        RS_SETTINGS->writeEntry("/layer_selection", cb_layerselection->currentText());
         RS_SETTINGS->writeEntry("/snap_indicator", cb_snap_color->currentText());
         RS_SETTINGS->endGroup();
 
@@ -262,7 +259,6 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/Scripts", lePathScripts->text());
         RS_SETTINGS->writeEntry("/Library", lePathLibrary->text());
         RS_SETTINGS->writeEntry("/Template", leTemplate->text());
-        RS_SETTINGS->writeEntry("/CustomToolbar", le_custom_toolbar->text());
         RS_SETTINGS->endGroup();
 
         RS_SETTINGS->beginGroup("/Defaults");
@@ -358,29 +354,22 @@ void QG_DlgOptionsGeneral::on_pb_end_clicked()
     set_color(cbEndHandleColor, QColor(Colors::end_handle));
 }
 
-void QG_DlgOptionsGeneral::on_pb_layerselection_clicked()
-{
-    set_color(cb_layerselection, QColor(Colors::layer_selection));
-}
-
 void QG_DlgOptionsGeneral::on_pb_snap_color_clicked()
 {
     set_color(cb_snap_color, QColor(Colors::snap_indicator));
 }
 
-void QG_DlgOptionsGeneral::set_toolbar_file()
-{
-    QString path = QFileDialog::getOpenFileName(this);
-    if (!path.isEmpty())
-    {
-        le_custom_toolbar->setText(QDir::toNativeSeparators(path));
-    }
-}
-
 void QG_DlgOptionsGeneral::on_pb_clear_all_clicked()
 {
-    RS_SETTINGS->clear_all();
-    QMessageBox::information(this, "info", "You must restart LibreCAD to see the changes.");
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, tr("Clear settings"),
+                                tr("This will also include custom menus and toolbars. Continue?"),
+                                QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+    {
+      RS_SETTINGS->clear_all();
+      QMessageBox::information(this, "info", "You must restart LibreCAD to see the changes.");
+    }
 }
 
 void QG_DlgOptionsGeneral::on_pb_clear_geometry_clicked()

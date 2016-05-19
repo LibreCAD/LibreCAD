@@ -214,10 +214,8 @@ void RS_ActionDrawCircle4Line::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-		if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
-        }
         return;
     }
 
@@ -232,11 +230,8 @@ void RS_ActionDrawCircle4Line::commandEvent(RS_CommandEvent* e) {
                 } else {
                     setStatus(SetAngle1);
                 }
-            } else {
-				if (RS_DIALOGFACTORY) {
+			} else
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                }
-            }
         }
         break;
 
@@ -246,11 +241,8 @@ void RS_ActionDrawCircle4Line::commandEvent(RS_CommandEvent* e) {
             if (ok) {
                 angle1 = RS_Math::deg2rad(a);
                 setStatus(SetAngle2);
-            } else {
-				if (RS_DIALOGFACTORY) {
+			} else
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                }
-            }
         }
         break;
 
@@ -260,11 +252,8 @@ void RS_ActionDrawCircle4Line::commandEvent(RS_CommandEvent* e) {
             if (ok) {
                 angle2 = RS_Math::deg2rad(a);
                 trigger();
-            } else {
-				if (RS_DIALOGFACTORY) {
+			} else
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                }
-            }
         }
         break;
 
@@ -283,28 +272,26 @@ QStringList RS_ActionDrawCircleInscribe::getAvailableCommands() {
 
 
 void RS_ActionDrawCircleInscribe::updateMouseButtonHints() {
-	if (RS_DIALOGFACTORY) {
-        switch (getStatus()) {
-        case SetLine1:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first line"),
-                                                tr("Cancel"));
-            break;
+	switch (getStatus()) {
+	case SetLine1:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first line"),
+											tr("Cancel"));
+		break;
 
-        case SetLine2:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the second line"),
-                                                tr("Back"));
-            break;
+	case SetLine2:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the second line"),
+											tr("Back"));
+		break;
 
-        case SetLine3:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the third line"),
-                                                tr("Back"));
-            break;
+	case SetLine3:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the third line"),
+											tr("Back"));
+		break;
 
-        default:
-            RS_DIALOGFACTORY->updateMouseWidget();
-            break;
-        }
-    }
+	default:
+		RS_DIALOGFACTORY->updateMouseWidget();
+		break;
+	}
 }
 
 

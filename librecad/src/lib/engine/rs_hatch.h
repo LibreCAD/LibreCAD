@@ -80,12 +80,11 @@ public:
 
     RS_Hatch(RS_EntityContainer* parent,
             const RS_HatchData& d);
-	virtual ~RS_Hatch() = default;
 
-	virtual RS_Entity* clone() const;
+	RS_Entity* clone() const override;
 
     /**	@return RS2::EntityHatch */
-    virtual RS2::EntityType rtti() const {
+	RS2::EntityType rtti() const override{
         return RS2::EntityHatch;
     }
 
@@ -93,7 +92,7 @@ public:
      * @return true: if this is a hatch with lines (hatch pattern),
      *         false: if this is filled with a solid color.
      */
-	virtual bool isContainer() const;
+	bool isContainer() const override;
 
     /** @return Copy of data that defines the hatch. */
     RS_HatchData getData() const {
@@ -132,36 +131,36 @@ public:
         void setAngle(double angle) {
                 data.angle = angle;
         }
-        double getTotalArea();
+		double getTotalArea();
 
-        virtual void calculateBorders();
-        void update();
+		void calculateBorders() override;
+		void update() override;
         int getUpdateError() {
                 return updateError;
         }
         void activateContour(bool on);
 
-        virtual void draw(RS_Painter* painter, RS_GraphicView* view,
-                          double& patternOffset);
+		void draw(RS_Painter* painter, RS_GraphicView* view,
+						  double& patternOffset) override;
 
-        //	virtual double getLength() {
+		//	double getLength() {
         //		return -1.0;
         //	}
 
-        virtual double getDistanceToPoint(const RS_Vector& coord,
+		double getDistanceToPoint(const RS_Vector& coord,
                                           RS_Entity** entity = NULL,
                                           RS2::ResolveLevel level = RS2::ResolveNone,
-                                          double solidDist = RS_MAXDOUBLE) const;
+										  double solidDist = RS_MAXDOUBLE) const override;
 
 
-        virtual void move(const RS_Vector& offset);
-        virtual void rotate(const RS_Vector& center, const double& angle);
-        virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
-        virtual void scale(const RS_Vector& center, const RS_Vector& factor);
-        virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
-        virtual void stretch(const RS_Vector& firstCorner,
+		void move(const RS_Vector& offset) override;
+		void rotate(const RS_Vector& center, const double& angle) override;
+		void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+		void scale(const RS_Vector& center, const RS_Vector& factor) override;
+		void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+		void stretch(const RS_Vector& firstCorner,
                              const RS_Vector& secondCorner,
-                             const RS_Vector& offset);
+							 const RS_Vector& offset) override;
 
         friend std::ostream& operator << (std::ostream& os, const RS_Hatch& p);
 

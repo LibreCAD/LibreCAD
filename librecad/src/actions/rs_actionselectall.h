@@ -41,10 +41,9 @@ public:
     RS_ActionSelectAll(RS_EntityContainer& container,
                        RS_GraphicView& graphicView,
                        bool select);
-	~RS_ActionSelectAll()=default;
 
-    void init(int status);
-    virtual void trigger();
+	void init(int status) override;
+	void trigger() override;
 
 protected:
     bool select;

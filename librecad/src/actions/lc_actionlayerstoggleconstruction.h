@@ -42,10 +42,9 @@ class LC_ActionLayersToggleConstruction : public RS_ActionInterface {
 public:
     LC_ActionLayersToggleConstruction(RS_EntityContainer& container,
                                       RS_GraphicView& graphicView);
-    ~LC_ActionLayersToggleConstruction() {}
 
-    virtual void init(int status=0);
-    virtual void trigger();
+	void init(int status=0) override;
+	void trigger() override;
 
 };
 

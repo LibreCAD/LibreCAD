@@ -43,10 +43,10 @@ public:
 					RS2::Axis axis = RS2::Both,
 					RS_Vector const* pCenter = nullptr,
 					double factor = 1.25);
-	~RS_ActionZoomIn();
+	~RS_ActionZoomIn() override;
 
-    virtual void init(int status=0);
-    virtual void trigger();
+	void init(int status=0) override;
+	void trigger() override;
 
 protected:
     double zoom_factor;

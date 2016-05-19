@@ -36,11 +36,10 @@
  * @param w Width
  * @param h Height
  */
-RS_StaticGraphicView::RS_StaticGraphicView(int w, int h, RS_Painter* p,
+RS_StaticGraphicView::RS_StaticGraphicView(int w, int h, RS_Painter* /*p*/,
 										   QSize const* pb):
 	width(w)
   ,height(h)
-  ,painter(p)
 {
 	setBackground({255,255,255});
 	QSize b{5, 5};

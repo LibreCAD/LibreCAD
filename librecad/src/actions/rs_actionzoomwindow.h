@@ -45,15 +45,15 @@ public:
                         RS_GraphicView& graphicView,
                         bool keepAspectRatio=true);
 
-	~RS_ActionZoomWindow();
+	~RS_ActionZoomWindow() override;
 
-    virtual void init(int status=0);
-    virtual void trigger();
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mousePressEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+	void init(int status=0) override;
+	void trigger() override;
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mousePressEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 
 protected:
 	struct Points;

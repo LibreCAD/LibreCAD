@@ -39,14 +39,12 @@ RS_ActionBlocksEdit::RS_ActionBlocksEdit(RS_EntityContainer& container,
 
 void RS_ActionBlocksEdit::trigger() {
     RS_DEBUG->print("edit block");
-    if (graphic) {
-        if (RS_DIALOGFACTORY) {
-            if(graphic->getBlockList() != NULL){
-//                std::cout<<__func__<<" : "<<__LINE__<<" : graphic->getBlockList()->count()="<<graphic->getBlockList()->count()<<std::endl;
-                RS_DIALOGFACTORY->requestEditBlockWindow(graphic->getBlockList());
-            }
-        }
-    } else {
+	if (graphic) {
+		if(graphic->getBlockList()){
+			//                std::cout<<__func__<<" : "<<__LINE__<<" : graphic->getBlockList()->count()="<<graphic->getBlockList()->count()<<std::endl;
+			RS_DIALOGFACTORY->requestEditBlockWindow(graphic->getBlockList());
+		}
+	} else {
         RS_DEBUG->print(RS_Debug::D_WARNING,
         	"RS_ActionBlocksEdit::trigger(): graphic is NULL");
     }

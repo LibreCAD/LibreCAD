@@ -48,23 +48,23 @@ class RS_ActionDrawLineParallelThrough : public RS_PreviewActionInterface {
 public:
     RS_ActionDrawLineParallelThrough(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-	~RS_ActionDrawLineParallelThrough();
+	~RS_ActionDrawLineParallelThrough() override;
 	
-    virtual void trigger();
+	void trigger() override;
 	
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void updateMouseButtonHints();
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
+	void updateMouseButtonHints() override;
 	
-	virtual void coordinateEvent(RS_CoordinateEvent* e);
-    virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+	void coordinateEvent(RS_CoordinateEvent* e) override;
+	void commandEvent(RS_CommandEvent* e) override;
+		QStringList getAvailableCommands() override;
 	
-    virtual void hideOptions();
-    virtual void showOptions();
-	virtual void finish(bool updateTB=true);
+	void hideOptions() override;
+	void showOptions() override;
+	void finish(bool updateTB=true) override;
 
-    virtual void updateMouseCursor();
+	void updateMouseCursor() override;
 
 	int getNumber() const;
 

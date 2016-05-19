@@ -49,17 +49,17 @@ public:
 public:
     RS_ActionDrawLineRectangle(RS_EntityContainer& container,
                                RS_GraphicView& graphicView);
-	~RS_ActionDrawLineRectangle();
+	~RS_ActionDrawLineRectangle() override;
 
-    virtual void trigger();
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	void trigger() override;
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 	
-	virtual void coordinateEvent(RS_CoordinateEvent* e);
-    virtual void commandEvent(RS_CommandEvent* e);
+	void coordinateEvent(RS_CoordinateEvent* e) override;
+	void commandEvent(RS_CommandEvent* e) override;
 
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 
 protected:
 	struct Points;

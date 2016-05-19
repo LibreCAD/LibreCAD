@@ -28,16 +28,13 @@
 #include "rs_dialogfactory.h"
 #include "rs_debug.h"
 
-RS_DialogFactory* RS_DialogFactory::uniqueInstance = NULL;
-    
-
-
 /**
  * Private constructor.
  */
-RS_DialogFactory::RS_DialogFactory() {
+RS_DialogFactory::RS_DialogFactory():
+	factoryObject{nullptr}
+{
 	RS_DEBUG->print("RS_DialogFacgory::RS_DialogFactory");
-	factoryObject = NULL;
 	RS_DEBUG->print("RS_DialogFacgory::RS_DialogFactory: OK");
 }
 
@@ -46,15 +43,10 @@ RS_DialogFactory::RS_DialogFactory() {
 /**
  * @return Instance to the unique font list.
  */
-RS_DialogFactory* RS_DialogFactory::instance() {
-    RS_DEBUG->print("RS_DialogFactory::instance()");
-    if (uniqueInstance==NULL) {
-        uniqueInstance = new RS_DialogFactory();
-    }
-
-    RS_DEBUG->print("RS_DialogFactory::instance(): OK");
-
-    return uniqueInstance;
+RS_DialogFactory* RS_DialogFactory::instance()
+{
+	static RS_DialogFactory* uniqueInstance = new RS_DialogFactory{};
+	return uniqueInstance;
 }
 
 
@@ -71,20 +63,12 @@ void RS_DialogFactory::setFactoryObject(RS_DialogFactoryInterface* fo) {
 
 
 /**
- * @return Factory object. This is never NULL. If no factory
+ * @return Factory object. This is never nullptr. If no factory
  * object was set, the default adapter will be returned.
  */
-RS_DialogFactoryInterface* RS_DialogFactory::getFactoryObject() {
-	RS_DEBUG->print("RS_DialogFactory::getFactoryObject");
-    if (factoryObject) {
-		RS_DEBUG->print("RS_DialogFactory::getFactoryObject: "
-			"returning factory object");
-        return factoryObject;
-    } else {
-		RS_DEBUG->print("RS_DialogFactory::getFactoryObject: "
-			"returning adapter");
-        return &factoryAdapter;
-    }
+RS_DialogFactoryInterface* RS_DialogFactory::getFactoryObject()
+{
+	return factoryObject ? factoryObject : &factoryAdapter;
 }
 
 
@@ -92,7 +76,6 @@ RS_DialogFactoryInterface* RS_DialogFactory::getFactoryObject() {
 void RS_DialogFactory::commandMessage(const QString& m) {
 	RS_DEBUG->print("RS_DialogFactory::commandMessage");
 
-    if (factoryObject) {
+	if (factoryObject)
 		factoryObject->commandMessage(m);
-	}
 }

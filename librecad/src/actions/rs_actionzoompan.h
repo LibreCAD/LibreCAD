@@ -50,15 +50,14 @@ public:
 public:
     RS_ActionZoomPan(RS_EntityContainer& container,
                      RS_GraphicView& graphicView);
-    ~RS_ActionZoomPan() = default;
 
-    virtual void init(int status=0);
-    virtual void trigger();
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mousePressEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void updateMouseCursor();
-    virtual void updateMouseButtonHints();
+	void init(int status=0) override;
+	void trigger() override;
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mousePressEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
+	void updateMouseCursor() override;
+	void updateMouseButtonHints() override;
 
 protected:
     //RS_Vector v1;

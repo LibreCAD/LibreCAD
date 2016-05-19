@@ -64,9 +64,8 @@ void RS_ActionModifyMirror::trigger() {
     RS_Modification m(*container, graphicView);
 	m.mirror(pPoints->data);
 
-    if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
-    }
+	RS_DIALOGFACTORY->updateSelectionWidget(
+				container->countSelected(), container->totalSelectedLength());
 }
 
 void RS_ActionModifyMirror::mouseMoveEvent(QMouseEvent* e) {
@@ -133,7 +132,6 @@ void RS_ActionModifyMirror::coordinateEvent(RS_CoordinateEvent* e) {
 			pPoints->axisPoint2 = mouse;
             setStatus(ShowDialog);
                 graphicView->moveRelativeZero(mouse);
-            if (RS_DIALOGFACTORY) {
 				if (RS_DIALOGFACTORY->requestMirrorDialog(pPoints->data)) {
 					pPoints->data.axisPoint1 = pPoints->axisPoint1;
 					pPoints->data.axisPoint2 = pPoints->axisPoint2;
@@ -141,7 +139,6 @@ void RS_ActionModifyMirror::coordinateEvent(RS_CoordinateEvent* e) {
                     trigger();
                     finish(false);
                 }
-            }
             break;
 
         default:
@@ -150,27 +147,25 @@ void RS_ActionModifyMirror::coordinateEvent(RS_CoordinateEvent* e) {
 }
 
 void RS_ActionModifyMirror::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY) {
-        switch (getStatus()) {
-            /*case Select:
-                RS_DIALOGFACTORY->updateMouseWidget(tr("Pick entities to move"),
-                                               tr("Cancel"));
-                break;*/
-        case SetAxisPoint1:
-            RS_DIALOGFACTORY->updateMouseWidget(
-                tr("Specify first point of mirror line"),
-                tr("Cancel"));
-            break;
-        case SetAxisPoint2:
-            RS_DIALOGFACTORY->updateMouseWidget(
-                tr("Specify second point of mirror line"),
-                tr("Back"));
-            break;
-        default:
-            RS_DIALOGFACTORY->updateMouseWidget();
-            break;
-        }
-    }
+	switch (getStatus()) {
+	/*case Select:
+				RS_DIALOGFACTORY->updateMouseWidget(tr("Pick entities to move"),
+											   tr("Cancel"));
+				break;*/
+	case SetAxisPoint1:
+		RS_DIALOGFACTORY->updateMouseWidget(
+					tr("Specify first point of mirror line"),
+					tr("Cancel"));
+		break;
+	case SetAxisPoint2:
+		RS_DIALOGFACTORY->updateMouseWidget(
+					tr("Specify second point of mirror line"),
+					tr("Back"));
+		break;
+	default:
+		RS_DIALOGFACTORY->updateMouseWidget();
+		break;
+	}
 }
 
 void RS_ActionModifyMirror::updateMouseCursor() {

@@ -53,23 +53,16 @@ void RS_ActionEditUndo::init(int status) {
 
 
 void RS_ActionEditUndo::trigger() {
-    if (undo) {
-        if(!document->undo()) {
-			if (RS_DIALOGFACTORY) {
-                RS_DIALOGFACTORY->commandMessage(tr("Nothing to undo!"));
-            }
-        }
-    } else {
-        if(!document->redo()) {
-			if (RS_DIALOGFACTORY) {
-                RS_DIALOGFACTORY->commandMessage(tr("Nothing to redo!"));
-            }
-        }
-    }
+	if (undo) {
+		if(!document->undo())
+			RS_DIALOGFACTORY->commandMessage(tr("Nothing to undo!"));
+	} else {
+		if(!document->redo())
+			RS_DIALOGFACTORY->commandMessage(tr("Nothing to redo!"));
+	}
 
-    if (graphic) {
+	if (graphic)
         graphic->addBlockNotification();
-    }
     document->updateInserts();
 
     graphicView->redraw(RS2::RedrawDrawing);

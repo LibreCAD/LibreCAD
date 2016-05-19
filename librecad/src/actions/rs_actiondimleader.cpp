@@ -194,12 +194,10 @@ void RS_ActionDimLeader::coordinateEvent(RS_CoordinateEvent* e) {
 void RS_ActionDimLeader::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
-    if (checkCommand("help", c)) {
-		if (RS_DIALOGFACTORY) {
-            RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                             + getAvailableCommands().join(", "));
-        }
-        return;
+	if (checkCommand("help", c)) {
+		RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+										 + getAvailableCommands().join(", "));
+		return;
     }
 
     // enter to finish
@@ -219,24 +217,20 @@ QStringList RS_ActionDimLeader::getAvailableCommands() {
     return cmd;
 }
 
-
-
 void RS_ActionDimLeader::updateMouseButtonHints() {
-	if (RS_DIALOGFACTORY) {
-        switch (getStatus()) {
-        case SetStartpoint:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point"),
-                                                tr("Cancel"));
-            break;
-        case SetEndpoint:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify next point"),
-                                                tr("Finish"));
-            break;
-        default:
-            RS_DIALOGFACTORY->updateMouseWidget();
-            break;
-        }
-    }
+	switch (getStatus()) {
+	case SetStartpoint:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point"),
+											tr("Cancel"));
+		break;
+	case SetEndpoint:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify next point"),
+											tr("Finish"));
+		break;
+	default:
+		RS_DIALOGFACTORY->updateMouseWidget();
+		break;
+	}
 }
 
 

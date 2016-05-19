@@ -475,6 +475,8 @@ bool RS_Vector::operator != (bool valid) const
  * These might be mixed components from both vectors.
  */
 RS_Vector RS_Vector::minimum (const RS_Vector& v1, const RS_Vector& v2) {
+	if (!v2) return v1;
+	if (!v1) return v2;
 	return {std::min(v1.x, v2.x),
 				std::min(v1.y, v2.y),
 				std::min(v1.z, v2.z)
@@ -485,6 +487,8 @@ RS_Vector RS_Vector::minimum (const RS_Vector& v1, const RS_Vector& v2) {
  * @return A vector with the maximum values from the vectors v1 and v2
  */
 RS_Vector RS_Vector::maximum (const RS_Vector& v1, const RS_Vector& v2) {
+	if (!v2) return v1;
+	if (!v1) return v2;
 	return {std::max(v1.x, v2.x),
 				std::max(v1.y, v2.y),
 				std::max(v1.z, v2.z)

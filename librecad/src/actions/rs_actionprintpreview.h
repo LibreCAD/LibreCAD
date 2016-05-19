@@ -48,24 +48,24 @@ public:
 public:
     RS_ActionPrintPreview(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-	~RS_ActionPrintPreview();
+	~RS_ActionPrintPreview() override;
 
-    virtual void init(int status=0);
-	virtual void resume();
+	void init(int status=0) override;
+	void resume() override;
 
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mousePressEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mousePressEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 
-    virtual void coordinateEvent(RS_CoordinateEvent* e);
-    virtual void commandEvent(RS_CommandEvent* e);
-    virtual QStringList getAvailableCommands();
+	void coordinateEvent(RS_CoordinateEvent* e) override;
+	void commandEvent(RS_CommandEvent* e) override;
+	QStringList getAvailableCommands() override;
 
-    virtual void showOptions();
-    virtual void hideOptions();
+	void showOptions() override;
+	void hideOptions() override;
 
-	virtual void finish(bool /*updateTB*/ = true ){}
-	virtual void updateMouseCursor();
+	void finish(bool /*updateTB*/ = true ) override{}
+	void updateMouseCursor() override;
 
     void center();
     void fit();

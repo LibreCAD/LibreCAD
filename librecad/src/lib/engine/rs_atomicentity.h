@@ -45,57 +45,53 @@ public:
      * Construtor.
      */
 	RS_AtomicEntity(RS_EntityContainer* parent=nullptr);
-    /**
-     * Destrutor.
-     */
-	virtual ~RS_AtomicEntity() = default;
 
     /**
      * @return false because entities made from subclasses are
      *  atomic entities.
      */
-	virtual bool isContainer() const;
+	bool isContainer() const override;
 
     /**
      * @return true because entities made from subclasses are
      *  atomic entities.
      */
-	virtual bool isAtomic() const;
+	bool isAtomic() const override;
 
     /**
      * @return Always 1 for atomic entities.
      */
-	virtual unsigned int count() const;
+	unsigned count() const override;
 
     /**
      * @return Always 1 for atomic entities.
      */
-	virtual unsigned int countDeep() const;
+	unsigned countDeep() const override;
 
     /**
      * Implementation must return the endpoint of the entity or
      * an invalid vector if the entity has no endpoint.
      */
-	virtual RS_Vector getEndpoint() const;
+	RS_Vector getEndpoint() const override;
 
     /**
      * Implementation must return the startpoint of the entity or
      * an invalid vector if the entity has no startpoint.
      */
-	virtual RS_Vector getStartpoint() const;
+	RS_Vector getStartpoint() const override;
 
     /**
      * Implementation must return the angle in which direction the entity starts.
      */
-	virtual double getDirection1() const;
+	double getDirection1() const override;
 
     /**
      * Implementation must return the angle in which direction the entity starts the opposite way.
      */
-	virtual double getDirection2() const;
+	double getDirection2() const override;
 
-	virtual RS_Vector getCenter() const;
-	virtual double getRadius() const;
+	RS_Vector getCenter() const override;
+	double getRadius() const override;
 	/**
     * return the nearest center for snapping
     * @param coord Coordinate (typically a mouse coordinate)
@@ -106,8 +102,8 @@ public:
     *
     * @return The closest center point.
     */
-   virtual RS_Vector getNearestCenter(const RS_Vector& /*coord*/,
-									  double* /*dist*/) const;
+   RS_Vector getNearestCenter(const RS_Vector& /*coord*/,
+									  double* /*dist*/) const override;
 
     /**
      * (De-)selects startpoint.
@@ -130,13 +126,13 @@ public:
      */
 	bool isEndpointSelected() const;
 
-	virtual void revertDirection();
+	void revertDirection() override;
 
     /**
      * Implementation must create offset of the entity to
      * the given direction and distance
      */
-	virtual bool offset(const RS_Vector& /*position*/, const double& /*distance*/);
+	bool offset(const RS_Vector& /*position*/, const double& /*distance*/) override;
 
     /**
      * Implementation must move the startpoint of the entity to
@@ -168,7 +164,7 @@ public:
      * trim entity and 'trimPoint' is the point to which the entity will
      * be trimmed.
      */
-    virtual RS2::Ending getTrimPoint(const RS_Vector& /*coord*/,
+	virtual RS2::Ending getTrimPoint(const RS_Vector& /*coord*/,
 									 const RS_Vector& /*trimPoint*/);
 
     /**
@@ -177,12 +173,12 @@ public:
      * trimCoord indicts the trigger trim position
      * trimSol contains intersections
      * */
-    virtual RS_Vector prepareTrim(const RS_Vector& /*trimCoord*/,
+	virtual RS_Vector prepareTrim(const RS_Vector& /*trimCoord*/,
 								  const RS_VectorSolutions& /*trimSol*/);
 
 	virtual void reverse();
 
-	virtual void moveSelectedRef(const RS_Vector& ref, const RS_Vector& offset);
+	void moveSelectedRef(const RS_Vector& ref, const RS_Vector& offset) override;
 };
 
 

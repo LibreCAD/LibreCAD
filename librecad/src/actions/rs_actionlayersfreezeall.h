@@ -41,10 +41,9 @@ public:
     RS_ActionLayersFreezeAll(bool freeze,
                              RS_EntityContainer& container,
                              RS_GraphicView& graphicView);
-    ~RS_ActionLayersFreezeAll() = default;
 
-    virtual void init(int status=0);
-    virtual void trigger();
+	void init(int status=0) override;
+	void trigger() override;
 
 private:
     bool freeze;

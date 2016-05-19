@@ -49,25 +49,25 @@ public:
 public:
 	RS_ActionDrawLine(RS_EntityContainer& container,
 					  RS_GraphicView& graphicView);
-	virtual ~RS_ActionDrawLine();
+	~RS_ActionDrawLine() override;
 
 	void reset();
 
-	virtual void init(int status=0);
-	virtual void trigger();
+	void init(int status=0) override;
+	void trigger() override;
 
-	virtual void mouseMoveEvent(QMouseEvent* e);
-	virtual void mouseReleaseEvent(QMouseEvent* e);
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 
-	virtual void coordinateEvent(RS_CoordinateEvent* e);
-	virtual void commandEvent(RS_CommandEvent* e);
-	virtual QStringList getAvailableCommands();
+	void coordinateEvent(RS_CoordinateEvent* e) override;
+	void commandEvent(RS_CommandEvent* e) override;
+	QStringList getAvailableCommands() override;
 
-	virtual void showOptions();
-	virtual void hideOptions();
+	void showOptions() override;
+	void hideOptions() override;
 
-	virtual void updateMouseButtonHints();
-	virtual void updateMouseCursor();
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 	void addHistory(const RS_Vector& v);//add history after the current point
 
 	void close();

@@ -1008,37 +1008,31 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
 
 
     // create scaled pattern:
-	std::vector<double> da(0);
+	if(pat->num<=0) { //invalid pattern
+		RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Arc::draw(): invalid line pattern\n");
+		painter->drawArc(cp,
+						 ra,
+						 getAngle1(), getAngle2(),
+						 isReversed());
+		return;
+	}
+	std::vector<double> da(pat->num);
     double patternSegmentLength(pat->totalLength);
-    double ira=1./ra;
-	size_t i(0);          // index counter
-    if(pat->num>0) {
-        double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
-        da.resize(pat->num);
-        while(i<pat->num){
-            //        da[j] = pat->pattern[i++] * styleFactor;
-            //fixme, stylefactor needed
-            da[i] =dpmm*(isReversed()? -fabs(pat->pattern[i]):fabs(pat->pattern[i]));
-            if( fabs(da[i]) < 1. ) da[i] = (da[i]>=0.)?1.:-1.;
-            da[i] *= ira;
-            i++;
-        }
-    }else {
-        //invalid pattern
-
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Arc::draw(): invalid line pattern\n");
-        painter->drawArc(cp,
-                         ra,
-                         getAngle1(), getAngle2(),
-                         isReversed());
-        return;
-    }
+	double ira=1./ra;
+	double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
+	for (size_t i=0; i<pat->num; i++){
+		//        da[j] = pat->pattern[i++] * styleFactor;
+		//fixme, stylefactor needed
+		da[i] =dpmm*(isReversed() ? -fabs(pat->pattern[i]):fabs(pat->pattern[i]));
+		if ( fabs(da[i]) < 1.) da[i] = copysign(1., da[i]);
+		da[i] *= ira;
+	}
 
     //    bool done = false;
     double total=remainder(patternOffset-0.5*patternSegmentLength,patternSegmentLength)-0.5*patternSegmentLength;
 
-    double a1(RS_Math::correctAngle(getAngle1()));
-    double a2(RS_Math::correctAngle(getAngle2()));
+	double a1{RS_Math::correctAngle(getAngle1())};
+	double a2{RS_Math::correctAngle(getAngle2())};
 
     if(isReversed()) {//always draw from a1 to a2, so, patternOffset is is automatic
         if(a1<a2+RS_TOLERANCE_ANGLE) a2 -= 2.*M_PI;
@@ -1049,24 +1043,18 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
     }
     double limit(fabs(a1-a2));
     double t2;
-    double a11,a21;
 
-    for(int j=0; fabs(total-a1)<limit ;j=(j+1)%i) {
-        t2=total+da[j];
+	for(int j=0; fabs(total-a1) < limit; j=(j+1)%pat->num) {
+		t2=total+da[j];
 
-        if(pat->pattern[j]>0.0) {
+		if(pat->pattern[j] > 0.0 && fabs(t2-a2) < limit) {
+			double a11=(fabs(total-a2) < limit)?total:a1;
+			double a21=(fabs(t2-a1) < limit)?t2:a2;
+			painter->drawArc(cp, ra, a11, a21, isReversed());
+		}
 
-            if (fabs(t2-a2)<limit) {
-                a11=(fabs(total-a2)<limit)?total:a1;
-                a21=(fabs(t2-a1)<limit)?t2:a2;
-                painter->drawArc(cp, ra,
-                                 a11,
-                                 a21,
-                                 isReversed());
-            }
-        }
-        total=t2;
-    }
+		total=t2;
+	}
 }
 
 

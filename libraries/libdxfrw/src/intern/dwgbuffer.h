@@ -15,6 +15,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <memory>
 #include "../drw_base.h"
 
 class DRW_Coord;
@@ -22,9 +23,9 @@ class DRW_TextCodec;
 
 class dwgBasicStream{
 protected:
-    dwgBasicStream(){}
+	dwgBasicStream() = default;
 public:
-    virtual ~dwgBasicStream(){}
+	virtual ~dwgBasicStream() = default;
     virtual bool read(duint8* s, duint64 n) = 0;
     virtual duint64 size() = 0;
     virtual duint64 getPos() = 0;
@@ -61,7 +62,7 @@ public:
         pos = 0;
         isOk = true;
     }
-    virtual ~dwgCharStream(){}
+	virtual ~dwgCharStream() = default;
     virtual bool read(duint8* s, duint64 n);
     virtual duint64 size(){return sz;}
     virtual duint64 getPos(){return pos;}
@@ -143,7 +144,7 @@ public:
     DRW_TextCodec *decoder;
 
 private:
-    dwgBasicStream *filestr;
+	std::unique_ptr<dwgBasicStream> filestr;
     int maxSize;
     duint8 currByte;
     duint8 bitPos;

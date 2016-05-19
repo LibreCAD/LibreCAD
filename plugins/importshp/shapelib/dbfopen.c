@@ -1944,17 +1944,25 @@ DBFReorderFields( DBFHandle psDBF, int* panMap )
         memcpy(pszHeaderNew + i * 32,
                psDBF->pszHeader + panMap[i] * 32, 32);
     }
-    panFieldOffsetNew[0] = 1;
-    for(i=1; i < psDBF->nFields; i++)
-    {
-        panFieldOffsetNew[i] = panFieldOffsetNew[i - 1] + panFieldSizeNew[i - 1];
-    }
+	iRecord = 1;
+	for (i=0; i < psDBF->nFields; i++) {
+		panFieldOffsetNew[i] = iRecord;
+		iRecord += panFieldSizeNew[i];
+	}
+
+/*
+	panFieldOffsetNew[0] = 1;
+	for(i=1; i < psDBF->nFields; i++)
+	{
+		panFieldOffsetNew[i] = panFieldOffsetNew[i - 1] + panFieldSizeNew[i - 1];
+	}
+	*/
 
     free(psDBF->pszHeader);
     psDBF->pszHeader = pszHeaderNew;
 
     /* we're done if we're dealing with not yet created .dbf */
-    if ( !(psDBF->bNoHeader && psDBF->nRecords == 0) )
+	if (!(psDBF->bNoHeader && psDBF->nRecords == 0) )
     {
         /* force update of header with new header and record length */
         psDBF->bNoHeader = TRUE;

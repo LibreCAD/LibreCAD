@@ -47,7 +47,7 @@ class RS_Document;
 class QG_LineAngleOptions;
 class RS_Vector;
 
-#define QG_DIALOGFACTORY (RS_DialogFactory::instance()->getFactoryObject()->isAdapter()==false ? ((QG_DialogFactory*)RS_DialogFactory::instance()->getFactoryObject()) : nullptr)
+#define QG_DIALOGFACTORY (RS_DialogFactory::instance()->getFactoryObject())
 
 /**
  * This is the Qt implementation of a widget which can create and
@@ -55,215 +55,212 @@ class RS_Vector;
  */
 class QG_DialogFactory: public RS_DialogFactoryInterface {
 public:
-    QG_DialogFactory(QWidget* parent, QToolBar* ow);
-    virtual ~QG_DialogFactory();
+	QG_DialogFactory(QWidget* parent, QToolBar* ow);
+	~QG_DialogFactory() override;
 
 protected:
-    /**
-     * Links factory to a widget that can host tool options.
-     */
-	virtual void setOptionWidget(QToolBar* ow);
+	/**
+	 * Links factory to a widget that can host tool options.
+	 */
+	void setOptionWidget(QToolBar* ow);
 public:
-    /**
-     * Links this dialog factory to a coordinate widget.
-     */
-    virtual void setCoordinateWidget(QG_CoordinateWidget* cw) {
-        coordinateWidget = cw;
-    }
+	/**
+	 * Links this dialog factory to a coordinate widget.
+	 */
+	void setCoordinateWidget(QG_CoordinateWidget* cw) override{
+		coordinateWidget = cw;
+	}
 
-    /**
-     * Links this dialog factory to a mouse widget.
-     */
-    virtual void setMouseWidget(QG_MouseWidget* mw) {
-        mouseWidget = mw;
-    }
+	/**
+	 * Links this dialog factory to a mouse widget.
+	 */
+	void setMouseWidget(QG_MouseWidget* mw) override{
+		mouseWidget = mw;
+	}
 
-    /**
-     * Links this dialog factory to a selection widget.
-     */
-    virtual void setSelectionWidget(QG_SelectionWidget* sw) {
-        selectionWidget = sw;
-    }
+	/**
+	 * Links this dialog factory to a selection widget.
+	 */
+	void setSelectionWidget(QG_SelectionWidget* sw) override{
+		selectionWidget = sw;
+	}
 
-    /**
-     * Links this dialog factory to a command widget.
-     */
-    virtual void setCommandWidget(QG_CommandWidget* cw) {
-        commandWidget = cw;
-    }
+	/**
+	 * Links this dialog factory to a command widget.
+	 */
+	void setCommandWidget(QG_CommandWidget* cw) override{
+		commandWidget = cw;
+	}
 
-    /**
+	/**
 	 * @return command widget or nullptr.
-     */
-	QG_CommandWidget* getCommandWidget() const {
-        return commandWidget;
-    }
+	 */
+	QG_CommandWidget* getCommandWidget() const{
+		return commandWidget;
+	}
 
-    /**
-     * Links the dialog factory to a main app window.
-     */
+	/**
+	 * Links the dialog factory to a main app window.
+	 */
 
-    virtual void requestWarningDialog(const QString& warning);
+	void requestWarningDialog(const QString& warning) override;
 
-    virtual RS_Layer* requestNewLayerDialog(
-		RS_LayerList* layerList = nullptr);
-    virtual RS_Layer* requestLayerRemovalDialog(
-		RS_LayerList* layerList = nullptr);
-    virtual RS_Layer* requestEditLayerDialog(
-		RS_LayerList* layerList = nullptr);
+	RS_Layer* requestNewLayerDialog(
+			RS_LayerList* layerList = nullptr) override;
+	RS_Layer* requestLayerRemovalDialog(
+			RS_LayerList* layerList = nullptr) override;
+	RS_Layer* requestEditLayerDialog(
+			RS_LayerList* layerList = nullptr) override;
 
-    virtual RS_BlockData requestNewBlockDialog(RS_BlockList* blockList);
-    virtual RS_Block* requestBlockRemovalDialog(
-        RS_BlockList* blockList);
-    virtual RS_BlockData requestBlockAttributesDialog(
-        RS_BlockList* blockList);
-    virtual void requestEditBlockWindow(
-        RS_BlockList* /*blockList*/) {}
-    virtual void closeEditBlockWindow(
-        RS_Block* /*blockList*/) {}
-    //virtual QString requestFileSaveAsDialog();
-    //virtual QString requestFileOpenDialog();
+	RS_BlockData requestNewBlockDialog(RS_BlockList* blockList) override;
+	RS_Block* requestBlockRemovalDialog(
+			RS_BlockList* blockList) override;
+	RS_BlockData requestBlockAttributesDialog(
+			RS_BlockList* blockList) override;
+	void requestEditBlockWindow(RS_BlockList* /*blockList*/) override{}
+	void closeEditBlockWindow(RS_Block* /*blockList*/) override{}
+	//QString requestFileSaveAsDialog() override;
+	//QString requestFileOpenDialog() override;
 
-    virtual QString requestImageOpenDialog();
+	QString requestImageOpenDialog() override;
 
 
-    virtual void requestOptions(RS_ActionInterface* action,
-                                bool on, bool update = false);
+	void requestOptions(RS_ActionInterface* action,
+								bool on, bool update = false) override;
 
 protected:
-    virtual void requestPrintPreviewOptions(RS_ActionInterface* action,
-                                    bool on, bool update);
-    virtual void requestLineOptions(RS_ActionInterface* action,
-                                    bool on);
-    virtual void requestPolylineOptions(RS_ActionInterface* action,
-                                    bool on, bool update);
-    virtual void requestPolylineEquidistantOptions(RS_ActionInterface* action, bool on, bool update=false);
-    virtual void requestLineAngleOptions(RS_ActionInterface* action,
-                                         bool on, bool update);
-    virtual void requestLineRelAngleOptions(RS_ActionInterface* action,
-                                            bool on, bool update);
-    virtual void requestLineParallelOptions(RS_ActionInterface* action,
-                                            bool on, bool update);
-    virtual void requestLineParallelThroughOptions(RS_ActionInterface* action,
-                                            bool on, bool update);
-    virtual void requestLineBisectorOptions(RS_ActionInterface* action,
-                                            bool on, bool update);
-    virtual void requestLinePolygonOptions(RS_ActionInterface* action,
-                                            bool on, bool update);
-    virtual void requestLinePolygon2Options(RS_ActionInterface* action,
-                                            bool on, bool update);
+	void requestPrintPreviewOptions(RS_ActionInterface* action,
+											bool on, bool update);
+	void requestLineOptions(RS_ActionInterface* action,
+									bool on);
+	void requestPolylineOptions(RS_ActionInterface* action,
+										bool on, bool update);
+	void requestPolylineEquidistantOptions(RS_ActionInterface* action, bool on, bool update=false);
+	void requestLineAngleOptions(RS_ActionInterface* action,
+										 bool on, bool update);
+	void requestLineRelAngleOptions(RS_ActionInterface* action,
+											bool on, bool update);
+	void requestLineParallelOptions(RS_ActionInterface* action,
+											bool on, bool update);
+	void requestLineParallelThroughOptions(RS_ActionInterface* action,
+												   bool on, bool update);
+	void requestLineBisectorOptions(RS_ActionInterface* action,
+											bool on, bool update);
+	void requestLinePolygonOptions(RS_ActionInterface* action,
+										   bool on, bool update);
+	void requestLinePolygon2Options(RS_ActionInterface* action,
+											bool on, bool update);
 
-    virtual void requestArcOptions(RS_ActionInterface* action,
-                                   bool on, bool update);
+	void requestArcOptions(RS_ActionInterface* action,
+								   bool on, bool update);
 
-        virtual void requestArcTangentialOptions(RS_ActionInterface* action,
-                                   bool on, bool update);
+	void requestArcTangentialOptions(RS_ActionInterface* action,
+											 bool on, bool update);
 
-    virtual void requestCircleOptions(RS_ActionInterface* action,
-                                      bool on, bool update);
+	void requestCircleOptions(RS_ActionInterface* action,
+									  bool on, bool update);
 
-    virtual void requestCircleTan2Options(RS_ActionInterface* action,
-                                      bool on, bool update);
+	void requestCircleTan2Options(RS_ActionInterface* action,
+										  bool on, bool update);
 
-    virtual void requestSplineOptions(RS_ActionInterface* action,
-                                      bool on, bool update);
+	void requestSplineOptions(RS_ActionInterface* action,
+									  bool on, bool update);
 
-    virtual void requestMTextOptions(RS_ActionInterface* action,
-                                   bool on, bool update);
+	void requestMTextOptions(RS_ActionInterface* action,
+									 bool on, bool update);
 
-    virtual void requestTextOptions(RS_ActionInterface* action,
-                                   bool on, bool update);
+	void requestTextOptions(RS_ActionInterface* action,
+									bool on, bool update);
 
-    virtual void requestDimensionOptions(RS_ActionInterface* action,
-                                         bool on, bool update);
-    virtual void requestDimLinearOptions(RS_ActionInterface* action,
-                                         bool on, bool update);
+	void requestDimensionOptions(RS_ActionInterface* action,
+										 bool on, bool update);
+	void requestDimLinearOptions(RS_ActionInterface* action,
+										 bool on, bool update);
 
-    virtual void requestInsertOptions(RS_ActionInterface* action,
-                                   bool on, bool update);
-    virtual void requestImageOptions(RS_ActionInterface* action,
-                                   bool on, bool update);
+	void requestInsertOptions(RS_ActionInterface* action,
+									  bool on, bool update);
+	void requestImageOptions(RS_ActionInterface* action,
+									 bool on, bool update);
 
-    virtual void requestTrimAmountOptions(RS_ActionInterface* action,
-                                          bool on, bool update);
-    virtual void requestMoveRotateOptions(RS_ActionInterface* action,
-                                          bool on, bool update);
-    virtual void requestBevelOptions(RS_ActionInterface* action,
-                                     bool on, bool update);
-    virtual void requestRoundOptions(RS_ActionInterface* action,
-                                     bool on, bool update);
-    virtual void requestLibraryInsertOptions(RS_ActionInterface* action,
-                                     bool on, bool update);
-
-public:
-    virtual void requestSnapDistOptions(double& dist, bool on);
-    virtual void requestSnapMiddleOptions(int& middlePoints, bool on);
+	void requestTrimAmountOptions(RS_ActionInterface* action,
+										  bool on, bool update);
+	void requestMoveRotateOptions(RS_ActionInterface* action,
+										  bool on, bool update);
+	void requestBevelOptions(RS_ActionInterface* action,
+									 bool on, bool update);
+	void requestRoundOptions(RS_ActionInterface* action,
+									 bool on, bool update);
+	void requestLibraryInsertOptions(RS_ActionInterface* action,
+											 bool on, bool update);
 
 public:
+	void requestSnapDistOptions(double& dist, bool on) override;
+	void requestSnapMiddleOptions(int& middlePoints, bool on) override;
 
-    virtual bool requestAttributesDialog(RS_AttributesData& data,
-                                RS_LayerList& layerList);
-    virtual bool requestMoveDialog(RS_MoveData& data);
-    virtual bool requestRotateDialog(RS_RotateData& data);
-    virtual bool requestScaleDialog(RS_ScaleData& data);
-    virtual bool requestMirrorDialog(RS_MirrorData& data);
-    virtual bool requestMoveRotateDialog(RS_MoveRotateData& data);
-    virtual bool requestRotate2Dialog(RS_Rotate2Data& data);
+public:
 
-    virtual bool requestModifyEntityDialog(RS_Entity* entity);
-    virtual void requestModifyOffsetOptions(double& dist, bool on);
-    virtual bool requestMTextDialog(RS_MText* text);
-    virtual bool requestTextDialog(RS_Text* text);
-    virtual bool requestHatchDialog(RS_Hatch* hatch);
-    virtual void requestOptionsGeneralDialog();
-    virtual void requestOptionsDrawingDialog(RS_Graphic& graphic);
-    virtual bool requestOptionsMakerCamDialog();
+	bool requestAttributesDialog(RS_AttributesData& data,
+										 RS_LayerList& layerList) override;
+	bool requestMoveDialog(RS_MoveData& data) override;
+	bool requestRotateDialog(RS_RotateData& data) override;
+	bool requestScaleDialog(RS_ScaleData& data) override;
+	bool requestMirrorDialog(RS_MirrorData& data) override;
+	bool requestMoveRotateDialog(RS_MoveRotateData& data) override;
+	bool requestRotate2Dialog(RS_Rotate2Data& data) override;
 
-    virtual QString requestFileSaveAsDialog(const QString& caption = QString(),
-                                            const QString& dir = QString(),
-                                            const QString& filter = QString(),
-                                            QString* selectedFilter = 0);
+	bool requestModifyEntityDialog(RS_Entity* entity) override;
+	void requestModifyOffsetOptions(double& dist, bool on) override;
+	bool requestMTextDialog(RS_MText* text) override;
+	bool requestTextDialog(RS_Text* text) override;
+	bool requestHatchDialog(RS_Hatch* hatch) override;
+	void requestOptionsGeneralDialog() override;
+	void requestOptionsDrawingDialog(RS_Graphic& graphic) override;
+	bool requestOptionsMakerCamDialog() override;
 
-    virtual void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false);
+	QString requestFileSaveAsDialog(const QString& caption = QString(),
+											const QString& dir = QString(),
+											const QString& filter = QString(),
+											QString* selectedFilter = 0) override;
+
+	void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false) override;
 	/**
 	 * \brief updateMouseWidget Called when an action has a mouse hint.
 	 * \param left mouse hint for left button
 	 * \param right mouse hint for right button
 	 */
-	virtual void updateMouseWidget(const QString& left=QString::null,
-								   const QString& right=QString::null);
-    virtual void updateSelectionWidget(int num, double length);//updated for total number of selected, and total length of selected
-    virtual void commandMessage(const QString& message);
-		virtual bool isAdapter() const { return false; }
+	void updateMouseWidget(const QString& left=QString::null,
+								   const QString& right=QString::null) override;
+	void updateSelectionWidget(int num, double length) override;//updated for total number of selected, and total length of selected
+	void commandMessage(const QString& message) override;
 
-        static QString extToFormat(const QString& ext);
-        virtual void updateArcTangentialOptions(const double& d, bool byRadius);
+	static QString extToFormat(const QString& ext);
+	void updateArcTangentialOptions(const double& d, bool byRadius) override;
 
 
 
 protected:
-    //! Pointer to the widget which can host dialogs
-    QWidget* parent;
-    //! Pointer to the widget which can host individual tool options
-    QToolBar* optionWidget;
-    //! Pointer to the coordinate widget.
-    QG_CoordinateWidget* coordinateWidget;
-    //! Pointer to the mouse widget.
-    QG_MouseWidget* mouseWidget;
-    //! Pointer to the selection widget.
-    QG_SelectionWidget* selectionWidget;
-    //! Pointer to the command line widget
-    QG_CommandWidget* commandWidget;
-    //! Pointer to arcTangential Option widge
-    QG_ArcTangentialOptions* arcTangentialOptions;
-    QG_PolylineEquidistantOptions* polylineEquidistantOptions;
+	//! Pointer to the widget which can host dialogs
+	QWidget* parent;
+	//! Pointer to the widget which can host individual tool options
+	QToolBar* optionWidget;
+	//! Pointer to the coordinate widget.
+	QG_CoordinateWidget* coordinateWidget;
+	//! Pointer to the mouse widget.
+	QG_MouseWidget* mouseWidget;
+	//! Pointer to the selection widget.
+	QG_SelectionWidget* selectionWidget;
+	//! Pointer to the command line widget
+	QG_CommandWidget* commandWidget;
+	//! Pointer to arcTangential Option widge
+	QG_ArcTangentialOptions* arcTangentialOptions;
+	QG_PolylineEquidistantOptions* polylineEquidistantOptions;
 private:
-    // pointers to snap option widgets
-    QG_SnapMiddleOptions* snapMiddleOptions;
-    QG_SnapDistOptions* snapDistOptions;
-    QG_ModifyOffsetOptions* modifyOffsetOptions;
-    QG_PrintPreviewOptions* printPreviewOptions;
-    QG_LineAngleOptions* m_pLineAngleOptions;
+	// pointers to snap option widgets
+	QG_SnapMiddleOptions* snapMiddleOptions;
+	QG_SnapDistOptions* snapDistOptions;
+	QG_ModifyOffsetOptions* modifyOffsetOptions;
+	QG_PrintPreviewOptions* printPreviewOptions;
+	QG_LineAngleOptions* m_pLineAngleOptions;
 };
 
 #endif

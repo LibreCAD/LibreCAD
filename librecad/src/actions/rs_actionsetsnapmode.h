@@ -41,10 +41,9 @@ public:
     RS_ActionSetSnapMode(RS_EntityContainer& container,
                          RS_GraphicView& graphicView,
                          RS2::SnapMode snapMode);
-	~RS_ActionSetSnapMode()=default;
 
-    virtual void init(int status=0);
-    virtual void trigger();
+	void init(int status=0) override;
+	void trigger() override;
 
 protected:
     RS2::SnapMode snapMode;

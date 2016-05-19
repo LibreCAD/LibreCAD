@@ -46,18 +46,17 @@ class RS_ActionOrder : public RS_PreviewActionInterface {
 public:
     RS_ActionOrder(RS_EntityContainer& container,
                         RS_GraphicView& graphicView, RS2::ActionType type);
-    ~RS_ActionOrder() = default;
 
-    virtual void init(int status=0);
+	void init(int status=0) override;
 
-    virtual void trigger();
+	void trigger() override;
 
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 	
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
-//    virtual void updateToolBar();
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
+//    void updateToolBar() override;
 
 private:
     RS_Entity* targetEntity;

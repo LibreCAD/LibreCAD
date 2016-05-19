@@ -1105,9 +1105,9 @@ BOOL JWWDocument::Read()
     if( wd == 0xFFFF )
     {
         *ifs >> dw;
-        j = dw;
-    } else
-        j = wd;
+//        j = dw;
+	}
+//	else j = wd;
 
     i = 1;
 
@@ -1296,7 +1296,7 @@ BOOL JWWDocument::SaveBich16(DWORD id)
 }
 
 //線
-BOOL JWWDocument::SaveSen(CDataSen& DSen)
+BOOL JWWDocument::SaveSen(CDataSen const& DSen)
 {
     WORD wd;
 //    DWORD dw;
@@ -1324,7 +1324,7 @@ BOOL JWWDocument::SaveSen(CDataSen& DSen)
 }
 
 // 円
-BOOL JWWDocument::SaveEnko(CDataEnko& DEnko)
+BOOL JWWDocument::SaveEnko(CDataEnko const& DEnko)
 {
     WORD wd;
     DWORD dw;
@@ -1362,7 +1362,7 @@ BOOL JWWDocument::SaveEnko(CDataEnko& DEnko)
 }
 
 // 点
-BOOL JWWDocument::SaveTen(CDataTen& DTen)
+BOOL JWWDocument::SaveTen(CDataTen const& DTen)
 {
     WORD wd;
     DWORD dw;
@@ -1402,7 +1402,7 @@ BOOL JWWDocument::SaveTen(CDataTen& DTen)
 }
 
 // 文字
-BOOL JWWDocument::SaveMoji(CDataMoji& DMoji)
+BOOL JWWDocument::SaveMoji(CDataMoji const& DMoji)
 {
     WORD wd;
     DWORD dw;
@@ -1441,7 +1441,7 @@ BOOL JWWDocument::SaveMoji(CDataMoji& DMoji)
 }
 
 // 寸法
-BOOL JWWDocument::SaveSunpou(CDataSunpou& DSunpou)
+BOOL JWWDocument::SaveSunpou(CDataSunpou const& DSunpou)
 {
     WORD wd;
     DWORD dw;
@@ -1480,7 +1480,7 @@ BOOL JWWDocument::SaveSunpou(CDataSunpou& DSunpou)
 }
 
 // ソリッド
-BOOL JWWDocument::SaveSolid(CDataSolid& DSolid)
+BOOL JWWDocument::SaveSolid(CDataSolid const& DSolid)
 {
     WORD wd;
     DWORD dw;
@@ -1519,7 +1519,7 @@ BOOL JWWDocument::SaveSolid(CDataSolid& DSolid)
 }
 
 // ブロック
-BOOL JWWDocument::SaveBlock(CDataBlock& DBlock)
+BOOL JWWDocument::SaveBlock(CDataBlock const& DBlock)
 {
     WORD wd;
     DWORD dw;
@@ -1558,7 +1558,7 @@ BOOL JWWDocument::SaveBlock(CDataBlock& DBlock)
 }
 
 // データリスト
-BOOL JWWDocument::SaveDataList(CDataList& DList)
+BOOL JWWDocument::SaveDataList(CDataList const& DList)
 {
     WORD wd;
     DWORD dw;
@@ -1754,12 +1754,12 @@ JWWBlockList::~JWWBlockList()
 */
 }
 
-CDataList& JWWBlockList::GetBlockList(unsigned int i)
+CDataList JWWBlockList::GetBlockList(unsigned int i)
 {
     for(unsigned int k=0; k < FBlockList.size(); k++)
         if(i == FBlockList[k]->m_n_Number)
             return *(PCDataList)FBlockList[k];
-    return *PCDataList();
+	return {};
 }
 
 int JWWBlockList::getBlockListCount()
@@ -1767,46 +1767,46 @@ int JWWBlockList::getBlockListCount()
     return FBlockList.size();
 }
 
-CDataEnko& JWWBlockList::GetCDataEnko(int i, int j)
+CDataEnko JWWBlockList::GetCDataEnko(int i, int j)
 {
     if( GetCDataType(i,j) == Enko )
         return *(PCDataEnko)GetData(i,j);
-    return *PCDataEnko();
+	return {};
 }
 
-CDataMoji& JWWBlockList::GetCDataMoji(int i, int j)
+CDataMoji JWWBlockList::GetCDataMoji(int i, int j)
 {
     if( GetCDataType(i,j) == Moji )
         return *(PCDataMoji)GetData(i,j);
-    return *PCDataMoji();
+	return {};
 }
 
-CDataSen& JWWBlockList::GetCDataSen(int i, int j)
+CDataSen JWWBlockList::GetCDataSen(int i, int j)
 {
     if( GetCDataType(i,j) == Sen )
         return *(PCDataSen)GetData(i,j);
-    return *PCDataSen();
+	return {};
 }
 
-CDataSolid& JWWBlockList::GetCDataSolid(int i, int j)
+CDataSolid JWWBlockList::GetCDataSolid(int i, int j)
 {
     if( GetCDataType(i,j) == Solid )
         return *(PCDataSolid)GetData(i,j);
-    return *PCDataSolid();
+	return {};
 }
 
-CDataSunpou& JWWBlockList::GetCDataSunpou(int i, int j)
+CDataSunpou JWWBlockList::GetCDataSunpou(int i, int j)
 {
     if( GetCDataType(i,j) == Sunpou )
         return *(PCDataSunpou)GetData(i,j);
-    return *PCDataSunpou();
+	return {};
 }
 
-CDataTen& JWWBlockList::GetCDataTen(int i, int j)
+CDataTen JWWBlockList::GetCDataTen(int i, int j)
 {
     if( GetCDataType(i,j) == Ten )
         return *(PCDataTen)GetData(i,j);
-    return *PCDataTen();
+	return {};
 }
 
 CDataType JWWBlockList::GetCDataType(int i, int j)
@@ -1929,9 +1929,9 @@ void JWWBlockList::AddDataListBlock(CDataBlock& D)
     FDataList.push_back((PCDataList)data);
 }
 
-CDataBlock& JWWBlockList::GetCDataBlock(int i, int j)
+CDataBlock JWWBlockList::GetCDataBlock(int i, int j)
 {
     if( GetCDataType(i,j) == Block )
         return *PCDataBlock(GetData(i,j));
-    return *PCDataBlock();
+	return {};
 }

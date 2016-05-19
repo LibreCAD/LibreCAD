@@ -65,8 +65,6 @@ public:
 
     void cleanUp();
 
-    void set_action(QAction* q_action);
-
 	/**
 	 * @return Pointer to the graphic entity if the entity container
 	 * connected to this view is a graphic and valid.
@@ -370,7 +368,7 @@ public:
 protected:
 
     RS_EntityContainer* container{nullptr}; // Holds a pointer to all the enties
-	std::unique_ptr<RS_EventHandler> eventHandler;
+    RS_EventHandler* eventHandler;
 
 	/** background color (any color) */
 	RS_Color background;
@@ -410,8 +408,6 @@ protected:
 		 * instead.
 		 */
 	bool deleteMode=false;
-
-    QList<QAction*> recent_actions;
 
 private:
 

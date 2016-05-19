@@ -289,13 +289,11 @@ void RS_ActionDrawEllipseAxis::coordinateEvent(RS_CoordinateEvent* e) {
 void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
-    if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY) {
-            RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                             + getAvailableCommands().join(", "));
-        }
-        return;
-    }
+	if (checkCommand("help", c)) {
+		RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+										 + getAvailableCommands().join(", "));
+		return;
+	}
 
     switch (getStatus()) {
     case SetMinor: {
@@ -309,11 +307,8 @@ void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent* e) {
                 } else {
                     setStatus(SetAngle1);
                 }
-            } else {
-                if (RS_DIALOGFACTORY) {
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                }
-            }
+			} else
+				RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
         }
         break;
 
@@ -324,11 +319,8 @@ void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent* e) {
                 e->accept();
 				pPoints->angle1 = RS_Math::deg2rad(a);
                 setStatus(SetAngle2);
-            } else {
-                if (RS_DIALOGFACTORY) {
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                }
-            }
+			} else
+				RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
         }
         break;
 
@@ -339,11 +331,8 @@ void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent* e) {
                 e->accept();
 				pPoints->angle2 = RS_Math::deg2rad(a);
                 trigger();
-            } else {
-                if (RS_DIALOGFACTORY) {
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                }
-            }
+			} else
+				RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
         }
         break;
 
@@ -362,39 +351,37 @@ QStringList RS_ActionDrawEllipseAxis::getAvailableCommands() {
 
 
 void RS_ActionDrawEllipseAxis::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY) {
-        switch (getStatus()) {
-        case SetCenter:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify ellipse center"),
-                                                tr("Cancel"));
-            break;
+	switch (getStatus()) {
+	case SetCenter:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify ellipse center"),
+											tr("Cancel"));
+		break;
 
-        case SetMajor:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify endpoint of major axis"),
-                                                tr("Back"));
-            break;
+	case SetMajor:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify endpoint of major axis"),
+											tr("Back"));
+		break;
 
-        case SetMinor:
-            RS_DIALOGFACTORY->updateMouseWidget(
-                tr("Specify endpoint or length of minor axis:"),
-                tr("Back"));
-            break;
+	case SetMinor:
+		RS_DIALOGFACTORY->updateMouseWidget(
+					tr("Specify endpoint or length of minor axis:"),
+					tr("Back"));
+		break;
 
-        case SetAngle1:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify start angle"),
-                                                tr("Back"));
-            break;
+	case SetAngle1:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify start angle"),
+											tr("Back"));
+		break;
 
-        case SetAngle2:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify end angle"),
-                                                tr("Back"));
-            break;
+	case SetAngle2:
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify end angle"),
+											tr("Back"));
+		break;
 
-        default:
-			RS_DIALOGFACTORY->updateMouseWidget();
-            break;
-        }
-    }
+	default:
+		RS_DIALOGFACTORY->updateMouseWidget();
+		break;
+	}
 }
 
 

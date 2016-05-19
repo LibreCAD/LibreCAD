@@ -48,13 +48,13 @@ public:
 public:
     RS_ActionInfoAngle(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-	~RS_ActionInfoAngle();
+	~RS_ActionInfoAngle() override;
 
-	virtual void init(int status);
-    virtual void trigger();
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+	void init(int status) override;
+	void trigger() override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 
 private:
 	RS_Entity* entity1;

@@ -40,11 +40,10 @@ class RS_ActionSelectLayer : public RS_ActionInterface {
 public:
     RS_ActionSelectLayer(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-	~RS_ActionSelectLayer()=default;
 
-    virtual void trigger();
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void updateMouseCursor();
+	void trigger() override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
+	void updateMouseCursor() override;
 
 private:
     RS_Entity* en;

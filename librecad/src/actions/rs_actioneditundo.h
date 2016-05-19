@@ -41,8 +41,8 @@ public:
                       RS_EntityContainer& container,
 					  RS_GraphicView& graphicView);
 	
-    virtual void init(int status=0);
-    virtual void trigger();
+	void init(int status=0) override;
+	void trigger() override;
 
 protected:
     /** Undo (true) or redo (false) */

@@ -46,16 +46,15 @@ public:
                     RS_GraphicView& graphicView,
                     RS2::ActionType nextAction,
 					std::initializer_list<RS2::EntityType> const& entityTypeList=std::initializer_list<RS2::EntityType>());
-	~RS_ActionSelect()=default;
 
-    virtual void init(int status);
-    virtual void resume();
-    //virtual void keyPressEvent(QKeyEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
-    virtual int countSelected();
-    void keyPressEvent(QKeyEvent* e);
+	void init(int status) override;
+	void resume() override;
+	//void keyPressEvent(QKeyEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
+	int countSelected();
+	void keyPressEvent(QKeyEvent* e) override;
 
 private:
 	std::initializer_list<RS2::EntityType> const entityTypeList;

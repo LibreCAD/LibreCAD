@@ -82,17 +82,18 @@ public:
     RS_Image(RS_EntityContainer* parent,
             const RS_ImageData& d);
 	RS_Image(const RS_Image& _image);
-	RS_Image operator = (const RS_Image& _image);
-	virtual ~RS_Image() = default;
+	RS_Image(RS_Image&& _image);
+	RS_Image& operator = (const RS_Image& _image);
+	RS_Image& operator = (RS_Image&& _image);
 
-	virtual RS_Entity* clone() const;
+	RS_Entity* clone() const override;
 
     /**	@return RS2::EntityImage */
-    virtual RS2::EntityType rtti() const {
+	RS2::EntityType rtti() const override{
         return RS2::EntityImage;
     }
 
-        virtual void update();
+		void update() override;
 
     /** @return Copy of data that defines the image. */
     RS_ImageData getData() const {
@@ -100,7 +101,7 @@ public:
     }
 
     /** @return Insertion point of the entity */
-    virtual RS_Vector getInsertionPoint() const {
+	RS_Vector getInsertionPoint() const {
         return data.insertionPoint;
     }
     /** Sets the insertion point for the image. */
@@ -178,47 +179,47 @@ public:
         }
 
 
-    virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                         double* dist = NULL)const;
-    virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-            bool onEntity=true, double* dist = NULL, RS_Entity** entity=NULL)const;
-    virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-									   double* dist = NULL)const;
-    virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
+	RS_Vector getNearestEndpoint(const RS_Vector& coord,
+										 double* dist = NULL)const override;
+	RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
+			bool onEntity=true, double* dist = NULL, RS_Entity** entity=NULL)const override;
+	RS_Vector getNearestCenter(const RS_Vector& coord,
+									   double* dist = NULL)const override;
+	RS_Vector getNearestMiddle(const RS_Vector& coord,
                                        double* dist = NULL,
-                                       int middlePoints=1)const;
-    virtual RS_Vector getNearestDist(double distance,
+									   int middlePoints=1)const override;
+	RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-									 double* dist = NULL)const;
-    virtual double getDistanceToPoint(const RS_Vector& coord,
+									 double* dist = NULL)const override;
+	double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity=NULL,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
-                                                                          double solidDist = RS_MAXDOUBLE) const;
+							  double solidDist = RS_MAXDOUBLE) const override;
 
-//        virtual double getLength() const {
+//        double getLength() const {
 //                return -1.0;
 //        }
 
-    virtual void move(const RS_Vector& offset);
-    virtual void rotate(const RS_Vector& center, const double& angle);
-    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
-    virtual void scale(const RS_Vector& center, const RS_Vector& factor);
-    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
-    /*virtual void stretch(RS_Vector firstCorner,
+	void move(const RS_Vector& offset) override;
+	void rotate(const RS_Vector& center, const double& angle) override;
+	void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+	void scale(const RS_Vector& center, const RS_Vector& factor) override;
+	void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+	/*void stretch(RS_Vector firstCorner,
                          RS_Vector secondCorner,
                          RS_Vector offset);*/
 
-    virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
+	void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
 
     friend std::ostream& operator << (std::ostream& os, const RS_Image& l);
 
-    virtual void calculateBorders();
-    // whether the the point is within image
-    virtual bool containsPoint(const RS_Vector& coord) const;
+	void calculateBorders() override;
 
 
 protected:
-    RS_ImageData data;
+	// whether the the point is within image
+	bool containsPoint(const RS_Vector& coord) const;
+	RS_ImageData data;
 	std::unique_ptr<QImage> img;
         //QImage** img;
         //int nx;

@@ -8,7 +8,7 @@ TEMPLATE = app
 DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
-SCMREVISION="2.1.0"
+SCMREVISION="2.1.0-beta"
 
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/librecad
@@ -46,14 +46,12 @@ unix {
     macx {
         TARGET = LibreCAD
         DEFINES += QC_APPDIR="\"LibreCAD\""
-        DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
         RC_FILE = ../res/main/librecad.icns
         QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-osx.sh
     }
     else {
         TARGET = librecad
         DEFINES += QC_APPDIR="\"librecad\""
-        DEFINES += QINITIMAGES_LIBRECAD="qInitImages_librecad"
         RC_FILE = ../res/main/librecad.icns
         QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-unix.sh
     }
@@ -61,7 +59,6 @@ unix {
 win32 {
     TARGET = LibreCAD
     DEFINES += QC_APPDIR="\"LibreCAD\""
-    DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
 
     # add MSYSGIT_DIR = PathToGitBinFolder (without quotes) in custom.pro file, for commit hash in about dialog
     !isEmpty( MSYSGIT_DIR ) {
@@ -680,7 +677,6 @@ HEADERS += ui/lc_actionfactory.h \
     ui/lc_widgetfactory.h \
     ui/twostackedlabels.h \
     ui/qg_commandhistory.h \
-    ui/lc_customtoolbar.h \
     ui/lc_dockwidget.h \
     ui/forms/lc_dlgsplinepoints.h \
     ui/forms/lc_widgetoptionsdialog.h \
@@ -689,7 +685,8 @@ HEADERS += ui/lc_actionfactory.h \
     ui/lc_deviceoptions.h \
     ui/generic/comboboxoption.h \
     ui/generic/actionlist.h \
-    ui/generic/customwidgetcreator.h
+    ui/generic/widgetcreator.h \
+    ui/lc_actiongroupmanager.h
 
 SOURCES += ui/lc_actionfactory.cpp \
     ui/qg_actionhandler.cpp \
@@ -778,7 +775,6 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/lc_widgetfactory.cpp \
     ui/twostackedlabels.cpp \
     ui/qg_commandhistory.cpp \
-    ui/lc_customtoolbar.cpp \
     ui/lc_dockwidget.cpp \
     ui/forms/lc_dlgsplinepoints.cpp \
     ui/forms/lc_widgetoptionsdialog.cpp \
@@ -787,7 +783,8 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/lc_deviceoptions.cpp \
     ui/generic/comboboxoption.cpp \
     ui/generic/actionlist.cpp \
-    ui/generic/customwidgetcreator.cpp
+    ui/generic/widgetcreator.cpp \
+    ui/lc_actiongroupmanager.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_arcoptions.ui \
@@ -860,7 +857,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/lc_widgetoptionsdialog.ui \
     ui/lc_deviceoptions.ui \
     ui/generic/comboboxoption.ui \
-    ui/generic/customwidgetcreator.ui
+    ui/generic/widgetcreator.ui
 
 RESOURCES += ../res/ui/ui.qrc
 

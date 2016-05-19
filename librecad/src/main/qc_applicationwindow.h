@@ -56,6 +56,7 @@ class QG_ActionHandler;
 class RS_GraphicView;
 class RS_Document;
 class TwoStackedLabels;
+class LC_ActionGroupManager;
 
 struct LC_Options;
 
@@ -92,11 +93,10 @@ public:
     void setUndoEnable(bool enable);
     bool loadStyleSheet(QString path);
 
-    void createDoubleClickMenu(const QStringList& s_list);
+    std::shared_ptr<LC_Options> options;
 
     QMap<QString, QAction*> a_map;
-
-    std::shared_ptr<LC_Options> options;
+    LC_ActionGroupManager* ag_manager;
 
 public slots:
     void relayAction(QAction* q_action);
@@ -168,7 +168,7 @@ public slots:
     void slotImportBlock();
 
     /** shows an about dlg*/
-    void slotHelpAbout();
+    void showAboutWindow();
 
     /**
      * @brief slotUpdateActiveLayer
@@ -196,7 +196,16 @@ public slots:
 
     void updateDevice(QString);
 
-    void invokeDoubleClickMenuCreator();
+    void invokeMenuCreator();
+    void invokeToolbarCreator();
+    void createToolbar(const QString& toolbar_name);
+    void destroyToolbar(const QString& toolbar_name);
+    void destroyMenu(const QString& activator);
+    void unassignMenu(const QString& activator, const QString& menu_name);
+    void assignMenu(const QString& activator, const QString& menu_name);
+    void invokeMenuAssigner(const QString& menu_name);
+    void updateMenu(const QString& menu_name);
+
 
 signals:
     void gridChanged(bool on);

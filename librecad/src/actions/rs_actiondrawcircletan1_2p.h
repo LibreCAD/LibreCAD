@@ -48,26 +48,26 @@ class RS_ActionDrawCircleTan1_2P : public RS_PreviewActionInterface {
 public:
     RS_ActionDrawCircleTan1_2P(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView);
-	~RS_ActionDrawCircleTan1_2P();
+	~RS_ActionDrawCircleTan1_2P() override;
 
-    virtual void init(int status=0);
+	void init(int status=0) override;
 
-    virtual void trigger();
-    virtual bool getCenters();
-    virtual bool preparePreview();
+	void trigger() override;
+	bool getCenters();
+	bool preparePreview();
 
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 
-            virtual void coordinateEvent(RS_CoordinateEvent* e);
-//        virtual void commandEvent(RS_CommandEvent* e);
-    virtual QStringList getAvailableCommands();
-    virtual void finish(bool updateTB=true);
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+			void coordinateEvent(RS_CoordinateEvent* e) override;
+//        void commandEvent(RS_CommandEvent* e) override;
+	QStringList getAvailableCommands() override;
+	void finish(bool updateTB=true) override;
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 
-//    virtual void showOptions();
-//    virtual void hideOptions();
+//    void showOptions() override;
+//    void hideOptions() override;
 //    void setRadius(const double& r);
 	double getRadius() const;
 

@@ -90,14 +90,13 @@ private:
 
 public:
     LC_SplinePoints(RS_EntityContainer* parent, const LC_SplinePointsData& d);
-	virtual ~LC_SplinePoints() = default;
-	virtual RS_Entity* clone() const;
+	RS_Entity* clone() const override;
 
 	/**	@return RS2::EntitySpline */
-	virtual RS2::EntityType rtti() const;
+	RS2::EntityType rtti() const override;
 
 	/** @return false */
-	virtual bool isEdge() const;
+	bool isEdge() const override;
 
 	/** @return Copy of data that defines the spline. */
 	LC_SplinePointsData const& getData() const;
@@ -117,15 +116,15 @@ public:
 	*/
 	void setClosed(bool c);
 	
-    virtual void update();
+	void update() override;
 
-	virtual RS_VectorSolutions getRefPoints() const;
+	RS_VectorSolutions getRefPoints() const override;
 
 	/** @return Start point of the entity */
-	virtual RS_Vector getStartPoint() const;
+	RS_Vector getStartpoint() const override;
 
 	/** @return End point of the entity */
-	virtual RS_Vector getEndPoint() const;
+	RS_Vector getEndpoint() const override;
 
 	/** Sets the startpoint */
 	//void setStartpoint(RS_Vector s) {
@@ -138,44 +137,44 @@ public:
 	//    calculateBorders();
 	//}
 
-    virtual double getDirection1() const;
-    virtual double getDirection2() const;
+	double getDirection1() const override;
+	double getDirection2() const override;
 
-	//virtual void moveStartpoint(const RS_Vector& pos);
-	//virtual void moveEndpoint(const RS_Vector& pos);
-	//virtual RS2::Ending getTrimPoint(const RS_Vector& coord,
+	//void moveStartpoint(const RS_Vector& pos) override;
+	//void moveEndpoint(const RS_Vector& pos) override;
+	//RS2::Ending getTrimPoint(const RS_Vector& coord,
 	//          const RS_Vector& trimPoint);
-	//virtual void reverse();
+	//void reverse() override;
 	/** @return the center point of the line. */
 	//RS_Vector getMiddlePoint() {
 	//    return (data.startpoint + data.endpoint)/2.0;
 	//}
-	//virtual bool hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2);
+	//bool hasEndpointsWithinWindow(RS_Vector v1, RS_Vector v2) override;
 
 	/**
 	* @return The length of the line.
 	*/
-	virtual double getLength() const;
+	double getLength() const override;
 
 	/**
 	* @return The angle of the line (from start to endpoint).
 	*/
-	//virtual double getAngle1() {
+	//double getAngle1() {
 	//    return data.startpoint.angleTo(data.endpoint);
 	//}
 
 	/**
 	* @return The angle of the line (from end to startpoint).
 	*/
-	//virtual double getAngle2() {
+	//double getAngle2() {
 	//    return data.endpoint.angleTo(data.startpoint);
 	//}
 
-	virtual RS_VectorSolutions getTangentPoint(const RS_Vector& point) const;
-	virtual RS_Vector getTangentDirection(const RS_Vector& point) const;
+	RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;
+	RS_Vector getTangentDirection(const RS_Vector& point) const override;
 
-	virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-		double* dist = nullptr) const;
+	RS_Vector getNearestEndpoint(const RS_Vector& coord,
+		double* dist = nullptr) const override;
     /**
      * @brief getNearestPointOnEntity
      * @param coord
@@ -184,44 +183,44 @@ public:
      * @param entity
      * @return
      */
-	virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-		bool onEntity = true, double* dist = nullptr, RS_Entity** entity = nullptr) const;
-//	virtual RS_Vector getNearestCenter(const RS_Vector& coord,
+	RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
+		bool onEntity = true, double* dist = nullptr, RS_Entity** entity = nullptr) const override;
+//	RS_Vector getNearestCenter(const RS_Vector& coord,
 //		double* dist = nullptr) const;
-	virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
-		double* dist = nullptr, int middlePoints = 1) const;
-	virtual RS_Vector getNearestDist(double distance,
-		const RS_Vector& coord, double* dist = nullptr) const;
-	//virtual RS_Vector getNearestRef(const RS_Vector& coord,
+	RS_Vector getNearestMiddle(const RS_Vector& coord,
+		double* dist = nullptr, int middlePoints = 1) const override;
+	RS_Vector getNearestDist(double distance,
+		const RS_Vector& coord, double* dist = nullptr) const override;
+	//RS_Vector getNearestRef(const RS_Vector& coord,
 	//                                 double* dist = nullptr);
-	virtual double getDistanceToPoint(const RS_Vector& coord,
+	double getDistanceToPoint(const RS_Vector& coord,
 		RS_Entity** entity = nullptr, RS2::ResolveLevel level = RS2::ResolveNone,
-		double solidDist = RS_MAXDOUBLE) const;
+		double solidDist = RS_MAXDOUBLE) const override;
 
 	bool addPoint(const RS_Vector& v);
 	void removeLastPoint();
 	void addControlPoint(const RS_Vector& v);
 
-	virtual void move(const RS_Vector& offset);
-	virtual void rotate(const RS_Vector& center, const double& angle);
-	virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
-	virtual void scale(const RS_Vector& center, const RS_Vector& factor);
-	virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+	void move(const RS_Vector& offset) override;
+	void rotate(const RS_Vector& center, const double& angle) override;
+	void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+	void scale(const RS_Vector& center, const RS_Vector& factor) override;
+	void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
 
-	virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
-	virtual void revertDirection();
+	void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
+	void revertDirection() override;
 
-	virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
+	void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
     std::vector<RS_Vector> const& getPoints() const;
     std::vector<RS_Vector> const& getControlPoints() const;
     std::vector<RS_Vector> getStrokePoints() const;
 
     friend std::ostream& operator << (std::ostream& os, const LC_SplinePoints& l);
 
-	virtual void calculateBorders();
+	void calculateBorders() override;
 
-    virtual bool offset(const RS_Vector& coord, const double& distance);
-	virtual std::vector<RS_Entity*> offsetTwoSides(const double& distance) const;
+	bool offset(const RS_Vector& coord, const double& distance) override;
+	std::vector<RS_Entity*> offsetTwoSides(const double& distance) const override;
 
 	static RS_VectorSolutions getIntersection(RS_Entity const* e1, RS_Entity const* e2);
 	RS_VectorSolutions getLineIntersect(const RS_Vector& x1, const RS_Vector& x2);
@@ -231,8 +230,8 @@ public:
 	RS_VectorSolutions getQuadraticIntersect(RS_Entity const* e1);
 
 	// we will not enable trimming, maybe in the future
-	//virtual void trimStartpoint(const RS_Vector& pos);
-	//virtual void trimEndpoint(const RS_Vector& pos);
+	//void trimStartpoint(const RS_Vector& pos) override;
+	//void trimEndpoint(const RS_Vector& pos) override;
 
     LC_SplinePoints* cut(const RS_Vector& pos);
     //! \{ getBoundingRect find bounding rectangle for the bezier segment

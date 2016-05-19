@@ -40,11 +40,11 @@ class RS_ActionModifyExplodeText : public RS_PreviewActionInterface {
 public:
     RS_ActionModifyExplodeText(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionModifyExplodeText();
+	~RS_ActionModifyExplodeText() override;
 	
-    virtual void init(int status=0);
+	void init(int status=0) override;
 
-    virtual void trigger();
+	void trigger() override;
 };
 
 #endif

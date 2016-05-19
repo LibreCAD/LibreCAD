@@ -42,9 +42,6 @@
 #include "qc_applicationwindow.h"
 #include "rs_debug.h"
 
-// for image mime resources from png files
-extern void QINITIMAGES_LIBRECAD();
-
 /**
  * Main. Creates Application window.
  */
@@ -55,7 +52,7 @@ int main(int argc, char** argv)
     QApplication app(argc, argv);
     QCoreApplication::setOrganizationName("LibreCAD");
     QCoreApplication::setApplicationName("LibreCAD");
-    QCoreApplication::setApplicationVersion("2.1.0-alpha");
+    QCoreApplication::setApplicationVersion(XSTR(QC_SCMREVISION));
 
     QSettings settings;
 
@@ -249,12 +246,12 @@ int main(int argc, char** argv)
 
     RS_DEBUG->print("main: show main window");
 
-    RS_SETTINGS->beginGroup("/Geometry");
-    int windowWidth = RS_SETTINGS->readNumEntry("/WindowWidth", 0);
-    int windowHeight = RS_SETTINGS->readNumEntry("/WindowHeight", 0);
-    int windowX = RS_SETTINGS->readNumEntry("/WindowX", 30);
-    int windowY = RS_SETTINGS->readNumEntry("/WindowY", 30);
-    RS_SETTINGS->endGroup();
+    settings.beginGroup("Geometry");
+    int windowWidth = settings.value("WindowWidth", 1024).toInt();
+    int windowHeight = settings.value("WindowHeight", 1024).toInt();
+    int windowX = settings.value("WindowX", 32).toInt();
+    int windowY = settings.value("WindowY", 32).toInt();
+    settings.endGroup();
 
     if (!first_load)
         appWin.resize(windowWidth, windowHeight);

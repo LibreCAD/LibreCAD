@@ -93,9 +93,8 @@ void RS_ActionDrawCircle3P::trigger() {
 
         setStatus(SetPoint1);
 		pPoints.reset(new Points{});
-	} else {
-        RS_DIALOGFACTORY->requestWarningDialog(tr("Invalid circle data."));
-    }
+	} else
+		RS_DIALOGFACTORY->requestWarningDialog(tr("Invalid circle data."));
 }
 
 

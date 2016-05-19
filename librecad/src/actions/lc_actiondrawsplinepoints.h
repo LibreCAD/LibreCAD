@@ -47,31 +47,31 @@ public:
 
     LC_ActionDrawSplinePoints(RS_EntityContainer& container,
 		RS_GraphicView& graphicView);
-    ~LC_ActionDrawSplinePoints();
+	~LC_ActionDrawSplinePoints() override;
 
 	void reset();
 
-	virtual void init(int status = 0);
-	virtual void trigger();
+	void init(int status = 0) override;
+	void trigger() override;
 
-	virtual void mouseMoveEvent(QMouseEvent* e);
-	virtual void mouseReleaseEvent(QMouseEvent* e);
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 
-	virtual void coordinateEvent(RS_CoordinateEvent* e);
-	virtual void commandEvent(RS_CommandEvent* e);
-	virtual QStringList getAvailableCommands();
+	void coordinateEvent(RS_CoordinateEvent* e) override;
+	void commandEvent(RS_CommandEvent* e) override;
+	QStringList getAvailableCommands() override;
 
-	virtual void showOptions();
-	virtual void hideOptions();
+	void showOptions() override;
+	void hideOptions() override;
 
-	virtual void updateMouseButtonHints();
-	virtual void updateMouseCursor();
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 
-    virtual void setClosed(bool c);
-    virtual bool isClosed();
-    virtual void undo();
+	void setClosed(bool c) override;
+	bool isClosed() override;
+	void undo() override;
     //using degree=2 only
-    virtual void setDegree(int /*deg*/){}
+	void setDegree(int /*deg*/) override{}
 
 private:
 	void redo();

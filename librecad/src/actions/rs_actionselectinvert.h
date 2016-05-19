@@ -40,10 +40,9 @@ class RS_ActionSelectInvert : public RS_ActionInterface {
 public:
     RS_ActionSelectInvert(RS_EntityContainer& container,
                        RS_GraphicView& graphicView);
-	~RS_ActionSelectInvert()=default;
 
-    void init(int status);
-    virtual void trigger();
+	void init(int status) override;
+	void trigger() override;
 };
 
 #endif

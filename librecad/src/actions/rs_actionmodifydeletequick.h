@@ -41,12 +41,11 @@ class RS_ActionModifyDeleteQuick : public RS_ActionInterface {
 public:
     RS_ActionModifyDeleteQuick(RS_EntityContainer& container,
                                RS_GraphicView& graphicView);
-    ~RS_ActionModifyDeleteQuick() = default;
 
-    virtual void trigger();
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+	void trigger() override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
+	void updateMouseButtonHints() override;
+	void updateMouseCursor() override;
 
 private:
     RS_Entity* en;

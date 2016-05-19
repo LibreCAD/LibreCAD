@@ -65,24 +65,24 @@ public:
                        RS_GraphicView& graphicView,
                        double angle=0.0, bool fixedAngle=false,
                        RS2::ActionType type = RS2::ActionDimLinear);
-    ~RS_ActionDimLinear();
+	~RS_ActionDimLinear() override;
 	
-    void reset();
+	void reset() override;
 
-    virtual void trigger();
+	void trigger() override;
 	void preparePreview();
 	
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	void mouseMoveEvent(QMouseEvent* e) override;
+	void mouseReleaseEvent(QMouseEvent* e) override;
 
-	virtual void coordinateEvent(RS_CoordinateEvent* e);
-    virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+	void coordinateEvent(RS_CoordinateEvent* e) override;
+	void commandEvent(RS_CommandEvent* e) override;
+		QStringList getAvailableCommands() override;
 	
-    virtual void hideOptions();
-    virtual void showOptions();
+	void hideOptions() override;
+	void showOptions() override;
 	
-    virtual void updateMouseButtonHints();
+	void updateMouseButtonHints() override;
 
 	double getAngle() const;
 

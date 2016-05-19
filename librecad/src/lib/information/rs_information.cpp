@@ -268,8 +268,12 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
 		// issue #484 , quadratic intersection solver is not robust enough for quadratic-quadratic
 		// TODO, implement a robust algorithm for quadratic based solvers, and detecting entity type
 		// circles/arcs can be removed
+		auto isArc = [](RS_Entity const* e) {
+			auto type = e->rtti();
+			return type == RS2::EntityCircle || type == RS2::EntityArc;
+		};
 
-		if(e1->rtti()==RS2::EntityCircle && e2->rtti()==RS2::EntityCircle){
+		if(isArc(e1) && isArc(e2)){
 			//use specialized arc-arc intersection solver
 			ret=getIntersectionArcArc(e1, e2);
 		}else{

@@ -84,9 +84,6 @@ void RS_ActionBlocksCreate::trigger() {
 
     setStatus(getStatus()+1); // clear mouse button hints
     updateMouseButtonHints();
-//    if(RS_DIALOGFACTORY){
-//        RS_DIALOGFACTORY->requestPreviousToolBar();
-//    }
     graphicView->killSelectActions();
     finish(false);
 }

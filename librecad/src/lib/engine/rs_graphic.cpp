@@ -909,7 +909,7 @@ bool RS_Graphic::fitToPage() {
                                       , getUnit()
                                       )
                     );
-        ret=fitToPage();
+        ret=false;
     }
     setPaperScale(fxy);
     centerToPage();
