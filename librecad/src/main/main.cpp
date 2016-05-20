@@ -33,7 +33,6 @@
 
 #include "rs_fontlist.h"
 #include "rs_patternlist.h"
-#include "rs_scriptlist.h"
 #include "rs_settings.h"
 #include "rs_system.h"
 #include "rs_fileio.h"
@@ -224,10 +223,6 @@ int main(int argc, char** argv)
     RS_DEBUG->print("main: init patternlist..");
     RS_PATTERNLIST->init();
     RS_DEBUG->print("main: init patternlist: OK");
-
-    RS_DEBUG->print("main: init scriptlist..");
-    RS_SCRIPTLIST->init();
-    RS_DEBUG->print("main: init scriptlist: OK");
 
     RS_DEBUG->print("main: loading translation..");
 

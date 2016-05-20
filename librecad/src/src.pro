@@ -91,7 +91,6 @@ INCLUDEPATH += \
     lib/math \
     lib/modification \
     lib/printing \
-    lib/scripting \
     actions \
     main \
     test \
@@ -195,11 +194,6 @@ HEADERS += \
     lib/modification/rs_selection.h \
     lib/math/rs_math.h \
     lib/math/lc_quadratic.h \
-    lib/scripting/rs_python.h \
-    lib/scripting/rs_simplepython.h \
-    lib/scripting/rs_python_wrappers.h \
-    lib/scripting/rs_script.h \
-    lib/scripting/rs_scriptlist.h \
     actions/lc_actiondrawcircle2pr.h \
     test/lc_simpletests.h \
     lib/generators/lc_makercamsvg.h \
@@ -284,11 +278,6 @@ SOURCES += \
     lib/math/lc_quadratic.cpp \
     lib/modification/rs_modification.cpp \
     lib/modification/rs_selection.cpp \
-    lib/scripting/rs_python.cpp \
-    lib/scripting/rs_simplepython.cpp \
-    lib/scripting/rs_python_wrappers.cpp \
-    lib/scripting/rs_script.cpp \
-    lib/scripting/rs_scriptlist.cpp \
     lib/engine/rs_color.cpp \
     lib/engine/rs_pen.cpp \
     actions/lc_actiondrawcircle2pr.cpp \
