@@ -2356,7 +2356,7 @@ void QC_ApplicationWindow::showAboutWindow()
 
     QString info
     (
-        tr("Version: %1").arg(XSTR(QC_SCMREVISION)) + "\n" +
+        tr("Version: %1").arg(XSTR(LC_VERSION)) + "\n" +
         #if defined(Q_CC_CLANG)
             tr("Compiler: Clang %1.%2.%3").arg(__clang_major__).arg(__clang_minor__).arg(__clang_patchlevel__) + "\n" +
         #elif defined(Q_CC_GNU)
