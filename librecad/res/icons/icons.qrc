@@ -147,11 +147,9 @@
         <file>quit.svg</file>
         <file>polylines.svg</file>
         <file>polylines_polyline.svg</file>
-        <file>lock_layer.svg</file>
         <file>insert_node.svg</file>
         <file>insert_active_block.svg</file>
         <file>import.svg</file>
-        <file>eye.svg</file>
         <file>export.svg</file>
         <file>export_pdf.svg</file>
         <file>export_image.svg</file>
@@ -166,5 +164,9 @@
         <file>revert_direction.svg</file>
         <file>modify.svg</file>
         <file>icons.qrc</file>
+        <file>invisible.svg</file>
+        <file>visible.svg</file>
+        <file>locked.svg</file>
+        <file>unlocked.svg</file>
     </qresource>
 </RCC>

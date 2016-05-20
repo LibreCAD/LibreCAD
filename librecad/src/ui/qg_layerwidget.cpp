@@ -43,12 +43,12 @@
 #include "rs_debug.h"
 
 QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
-    layerVisible = QIcon(":/ui/visibleblock.png");
-    layerHidden = QIcon(":/ui/hiddenblock.png");
-    layerDefreeze = QIcon(":/ui/unlockedlayer.png");
-    layerFreeze = QIcon(":/ui/lockedlayer.png");
-    layerPrint = QIcon(":/ui/fileprint.png");
-    layerConstruction = QIcon(":/ui/constructionlayer.png");
+    layerVisible = QIcon(":/icons/visible.svg");
+    layerHidden = QIcon(":/icons/invisible.svg");
+    layerDefreeze = QIcon(":/icons/unlocked.svg");
+    layerFreeze = QIcon(":/icons/locked.svg");
+    layerPrint = QIcon(":/icons/print.svg");
+    layerConstruction = QIcon(":/icons/construction_layer.svg");
 }
 
 
@@ -201,10 +201,10 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
 
 	QHBoxLayout* layButtons = new QHBoxLayout;
     QToolButton* but;
-	const QSize minButSize(22,22);
+    const QSize minButSize(28,28);
     // show all layer:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":ui/visiblelayer.png"));
+    but->setIcon(QIcon(":/icons/visible.svg"));
 	but->setMinimumSize(minButSize);
     but->setToolTip(tr("Show all layers"));
     connect(but, SIGNAL(clicked()),
@@ -212,7 +212,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     layButtons->addWidget(but);
     // hide all layer:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":ui/hiddenlayer.png"));
+    but->setIcon(QIcon(":/icons/invisible.svg"));
 	but->setMinimumSize(minButSize);
     but->setToolTip(tr("Hide all layers"));
     connect(but, SIGNAL(clicked()),
@@ -220,7 +220,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     layButtons->addWidget(but);
     // add layer:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":ui/layeradd.png"));
+    but->setIcon(QIcon(":/icons/add.svg"));
 	but->setMinimumSize(minButSize);
     but->setToolTip(tr("Add a layer"));
     connect(but, SIGNAL(clicked()),
@@ -228,7 +228,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     layButtons->addWidget(but);
     // remove layer:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":ui/layerremove.png"));
+    but->setIcon(QIcon(":/icons/remove.svg"));
 	but->setMinimumSize(minButSize);
     but->setToolTip(tr("Remove the current layer"));
     connect(but, SIGNAL(clicked()),
@@ -236,7 +236,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     layButtons->addWidget(but);
     // rename layer:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":ui/layeredit.png"));
+    but->setIcon(QIcon(":/icons/rename_active_block.svg"));
 	but->setMinimumSize(minButSize);
     but->setToolTip(tr("Modify layer attributes / rename"));
     connect(but, SIGNAL(clicked()),
