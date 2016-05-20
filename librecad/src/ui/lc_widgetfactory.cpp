@@ -325,8 +325,6 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
     file_toolbar->addActions(file_actions);
     file_toolbar->addAction(a_map["FilePrint"]);
     file_toolbar->addAction(a_map["FilePrintPreview"]);
-    file_toolbar->addAction(a_map["OptionsGeneral"]);
-    file_toolbar->addAction(a_map["OptionsDrawing"]);
 
     QToolBar* edit_toolbar = new QToolBar(QC_ApplicationWindow::tr("Edit"), main_window);
     edit_toolbar->setSizePolicy(toolBarPolicy);
