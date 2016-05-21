@@ -31,6 +31,7 @@
 #include "rs_actioninterface.h"
 
 class QG_SnapToolBar;
+class RS_Layer;
 
 /**
  * This class can trigger actions (from menus, buttons, ...).
@@ -251,6 +252,10 @@ public slots:
 	void slotBlocksExplode();
 	void slotOptionsDrawing();
 
+    void toggleVisibility(RS_Layer* layer);
+    void toggleLock(RS_Layer* layer);
+    void togglePrint(RS_Layer* layer);
+    void toggleConstruction(RS_Layer* layer);
 private:
 
 	// Type of draw order selected command

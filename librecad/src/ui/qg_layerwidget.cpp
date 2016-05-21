@@ -352,7 +352,7 @@ void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerNa
         return;
     }
 
-    RS_Layer * lay = layerModel->getLayer( layerIdx.row() );
+    RS_Layer* lay = layerModel->getLayer(layerIdx.row());
     if (lay == 0)
         return;
 
@@ -361,25 +361,22 @@ void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerNa
         return;
     }
 
-    lastLayer = layerList->getActive();
-    layerList->activate(lay, true);
     switch(layerIdx.column()){
     case QG_LayerModel::VISIBLE:
-        actionHandler->slotLayersToggleView();
+        actionHandler->toggleVisibility(lay);
         break;
     case QG_LayerModel::LOCKED:
-        actionHandler->slotLayersToggleLock();
+        actionHandler->toggleLock(lay);
         break;
     case QG_LayerModel::PRINT:
-        actionHandler->slotLayersTogglePrint();
+        actionHandler->togglePrint(lay);
         break;
     case QG_LayerModel::CONSTRUCTION:
-        actionHandler->slotLayersToggleConstruction();
+        actionHandler->toggleConstruction(lay);
         break;
     default:
         break;
     }
-    layerList->activate(lastLayer, true);
 }
 
 /**

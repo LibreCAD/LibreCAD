@@ -42,21 +42,22 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 LC_ActionLayersToggleConstruction::LC_ActionLayersToggleConstruction(
     RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_ActionInterface("Toggle Construction Layer",
-                    container, graphicView) {}
+    RS_GraphicView& graphicView,
+    RS_Layer* layer)
+        : RS_ActionInterface("Toggle Construction Layer", container, graphicView)
+        , a_layer(layer)
+{}
 
 
 void LC_ActionLayersToggleConstruction::trigger() {
     RS_DEBUG->print("toggle layer construction");
     if (graphic) {
-        RS_Layer* layer = graphic->getActiveLayer();
-        if (layer) {
-            graphic->toggleLayerConstruction( layer);
+        if (a_layer) {
+            graphic->toggleLayerConstruction(a_layer);
 
             // deselect entities on locked layer:
 			for(auto e: *container){
-                if (e && e->isVisible() && e->getLayer()==layer) {
+                if (e && e->isVisible() && e->getLayer()==a_layer) {
                     if (graphicView) {
                         graphicView->deleteEntity(e);
                     }

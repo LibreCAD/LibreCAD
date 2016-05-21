@@ -164,6 +164,7 @@
 
 #include "qg_snaptoolbar.h"
 #include "rs_debug.h"
+#include "rs_layer.h"
 
 /**
  * Constructor
@@ -820,18 +821,18 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionLayersEdit:
         a = new RS_ActionLayersEdit(*document, *view);
         break;
-    case RS2::ActionLayersToggleView:
-        a = new RS_ActionLayersToggleView(*document, *view);
-        break;
-    case RS2::ActionLayersToggleLock:
-        a = new RS_ActionLayersToggleLock(*document, *view);
-        break;
-    case RS2::ActionLayersTogglePrint:
-        a = new RS_ActionLayersTogglePrint(*document, *view);
-        break;
-    case RS2::ActionLayersToggleConstruction:
-        a = new LC_ActionLayersToggleConstruction(*document, *view);
-        break;
+//    case RS2::ActionLayersToggleView:
+//        a = new RS_ActionLayersToggleView(*document, *view);
+//        break;
+//    case RS2::ActionLayersToggleLock:
+//        a = new RS_ActionLayersToggleLock(*document, *view);
+//        break;
+//    case RS2::ActionLayersTogglePrint:
+//        a = new RS_ActionLayersTogglePrint(*document, *view);
+//        break;
+//    case RS2::ActionLayersToggleConstruction:
+//        a = new LC_ActionLayersToggleConstruction(*document, *view);
+//        break;
         // Block actions:
         //
     case RS2::ActionBlocksDefreezeAll:
@@ -1865,6 +1866,27 @@ void QG_ActionHandler::set_document(RS_Document* doc)
 void QG_ActionHandler::set_snap_toolbar(QG_SnapToolBar* snap_tb)
 {
     snap_toolbar = snap_tb;
+}
+
+void QG_ActionHandler::toggleVisibility(RS_Layer* layer)
+{
+    auto a = new RS_ActionLayersToggleView(*document, *view, layer);
+    view->setCurrentAction(a);
+}
+void QG_ActionHandler::toggleLock(RS_Layer* layer)
+{
+    auto a = new RS_ActionLayersToggleLock(*document, *view, layer);
+    view->setCurrentAction(a);
+}
+void QG_ActionHandler::togglePrint(RS_Layer* layer)
+{
+    auto a = new RS_ActionLayersTogglePrint(*document, *view, layer);
+    view->setCurrentAction(a);
+}
+void QG_ActionHandler::toggleConstruction(RS_Layer* layer)
+{
+    auto a = new LC_ActionLayersToggleConstruction(*document, *view, layer);
+    view->setCurrentAction(a);
 }
 
 // EOF

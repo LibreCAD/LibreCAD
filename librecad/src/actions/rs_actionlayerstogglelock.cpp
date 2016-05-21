@@ -36,21 +36,22 @@
 
 RS_ActionLayersToggleLock::RS_ActionLayersToggleLock(
         RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-    :RS_ActionInterface("Toggle Layer Visibility" ,container, graphicView)
+        RS_GraphicView& graphicView,
+        RS_Layer* layer)
+    : RS_ActionInterface("Toggle Layer Visibility" ,container, graphicView)
+    , a_layer(layer)
 {}
 
 void RS_ActionLayersToggleLock::trigger() {
     RS_DEBUG->print("toggle layer");
     if (graphic) {
-        RS_Layer* layer = graphic->getActiveLayer();
-        if (layer) {
-            graphic->toggleLayerLock(layer);
+        if (a_layer) {
+            graphic->toggleLayerLock(a_layer);
 
             // deselect entities on locked layer:
-            if (layer->isLocked()) {
+            if (a_layer->isLocked()) {
 				for(auto e: *container){
-                    if (e && e->isVisible() && e->getLayer()==layer) {
+                    if (e && e->isVisible() && e->getLayer()==a_layer) {
 
                         if (graphicView) {
                             graphicView->deleteEntity(e);
