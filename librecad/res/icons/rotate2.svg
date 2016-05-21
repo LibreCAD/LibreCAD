@@ -66,7 +66,7 @@
        cy="49.671112"
        cx="18.062223"
        id="path4146"
-       style="opacity:0.98000004;fill:#7cfc00;fill-opacity:1;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1" />
+       style="opacity:0.98000004;fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1" />
     <rect
        y="37.253338"
        x="28.222225"
@@ -99,12 +99,12 @@
        cy="49.671112"
        cx="47.413338"
        id="path4146-2"
-       style="opacity:0.98000004;fill:#7cfc00;fill-opacity:1;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1" />
+       style="opacity:0.98000004;fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1" />
     <circle
        r="3.386667"
        cy="20.32"
        cx="24.835556"
        id="path4146-1"
-       style="opacity:0.98000004;fill:#7cfc00;fill-opacity:1;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1" />
+       style="opacity:0.98000004;fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1" />
   </g>
 </svg>
