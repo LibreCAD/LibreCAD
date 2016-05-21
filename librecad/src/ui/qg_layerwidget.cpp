@@ -112,12 +112,9 @@ QModelIndex QG_LayerModel::getIndex (RS_Layer * lay){
 
 QPixmap createColorSampleForLayer(RS_Layer* layer)
 {
-	QPixmap pixmap(QSize(20,20));
-	{
-		pixmap.fill(layer->getPen().getColor().toQColor());
-	}
-
-	return pixmap;
+    QPixmap pixmap(QSize(16,16));
+    pixmap.fill(layer->getPen().getColor().toQColor());
+    return pixmap;
 }
 
 QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
@@ -139,11 +136,11 @@ QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
             }
             return layerFreeze;
         case PRINT:
-            return layerPrint.pixmap(QSize(20,20),
+            return layerPrint.pixmap(QSize(16,16),
                                      lay->isPrint() ? QIcon::Normal : QIcon::Disabled,
                                      QIcon::On);
         case CONSTRUCTION:
-            return layerConstruction.pixmap(QSize(14,14),
+            return layerConstruction.pixmap(QSize(16,16),
                                             lay->isConstruction() ? QIcon::Normal : QIcon::Disabled,
                                             QIcon::On);
 
@@ -180,23 +177,22 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
 
     layerModel = new QG_LayerModel(this);
     layerView = new QTableView(this);
-    layerView->setModel (layerModel);
-    layerView->setShowGrid (false);
+    layerView->setModel(layerModel);
+    layerView->setShowGrid(true);
     layerView->setSelectionMode(QAbstractItemView::SingleSelection);
     layerView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     layerView->setFocusPolicy(Qt::NoFocus);
     layerView->setMinimumHeight(140);
-    layerView->setColumnWidth(QG_LayerModel::VISIBLE, 18);
-    layerView->setColumnWidth(QG_LayerModel::LOCKED, 18);
+    layerView->setColumnWidth(QG_LayerModel::VISIBLE, 24);
+    layerView->setColumnWidth(QG_LayerModel::LOCKED, 24);
     layerView->setColumnWidth(QG_LayerModel::PRINT, 24);
-    layerView->setColumnWidth(QG_LayerModel::CONSTRUCTION, 18);
-	layerView->setColumnWidth(QG_LayerModel::COLOR_SAMPLE, 24);
+    layerView->setColumnWidth(QG_LayerModel::CONSTRUCTION, 24);
+    layerView->setColumnWidth(QG_LayerModel::COLOR_SAMPLE, 24);
     layerView->verticalHeader()->hide();
     layerView->horizontalHeader()->setStretchLastSection(true);
     layerView->horizontalHeader()->hide();
 
 	QVBoxLayout* lay = new QVBoxLayout(this);
-    lay->setSpacing ( 0 );
     lay->setContentsMargins(2, 2, 2, 2);
 
 	QHBoxLayout* layButtons = new QHBoxLayout;
@@ -205,7 +201,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     // show all layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/visible.svg"));
-	but->setMinimumSize(minButSize);
+    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Show all layers"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersDefreezeAll()));
@@ -213,7 +209,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     // hide all layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/invisible.svg"));
-	but->setMinimumSize(minButSize);
+    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Hide all layers"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersFreezeAll()));
@@ -221,7 +217,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     // add layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/add.svg"));
-	but->setMinimumSize(minButSize);
+    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Add a layer"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersAdd()));
@@ -229,7 +225,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     // remove layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/remove.svg"));
-	but->setMinimumSize(minButSize);
+    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Remove the current layer"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersRemove()));
@@ -237,7 +233,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     // rename layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/rename_active_block.svg"));
-	but->setMinimumSize(minButSize);
+    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Modify layer attributes / rename"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersEdit()));
