@@ -164,6 +164,8 @@ void WidgetCreator::setLists(QString key)
     ui->offered_actions->clear();
 
     ui->offered_actions->fromActionMap(a_map);
+    int index = ui->categories_combobox->findText("All");
+    ui->categories_combobox->setCurrentIndex(index);
 
     for(int i = 0; i < ui->offered_actions->count(); ++i)
     {
