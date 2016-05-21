@@ -153,7 +153,6 @@ QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
             break;
 
         }
-
     }
     if (role ==Qt::DisplayRole && index.column() == NAME) {
         return lay->getName();
@@ -286,7 +285,6 @@ QString QG_LayerWidget::getActiveName() const
 }
 
 
-
 /**
  * Updates the layer box from the layers in the graphic.
  */
@@ -333,9 +331,6 @@ void QG_LayerWidget::activateLayer(RS_Layer* layer, bool updateScroll) {
     }
     int yPos = layerView->verticalScrollBar()->value();
 
-
-    layerList->activate(layer);
-
     layerList->activate(layer);
     QModelIndex idx = layerModel->getIndex (layer);
 
@@ -362,14 +357,11 @@ void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerNa
         return;
 
     if (layerIdx.column() == QG_LayerModel::NAME) {
-        lastLayer = layerList->getActive();
-        layerList->activate(lay);
-        lastLayer = layerList->getActive();
         layerList->activate(lay, true);
         return;
     }
 
-    RS_Layer* l = layerList->getActive();
+    lastLayer = layerList->getActive();
     layerList->activate(lay, true);
     switch(layerIdx.column()){
     case QG_LayerModel::VISIBLE:
@@ -385,10 +377,9 @@ void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerNa
         actionHandler->slotLayersToggleConstruction();
         break;
     default:
-        activateLayer(l);
-        return;
+        break;
     }
-    activateLayer(l, false);
+    layerList->activate(lastLayer, true);
 }
 
 /**
@@ -417,9 +408,7 @@ void QG_LayerWidget::slotUpdateLayerList() {
             layerView->hideRow(i);
             layerModel->getLayer(i)->visibleInLayerList(false);
         }
-
     }
-
 }
 
 /**
