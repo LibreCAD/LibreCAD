@@ -224,6 +224,8 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         return NULL;
     }
 
+    auto a_layer = document->getLayerList()->getActive();
+
     switch (id) {
         //case RS2::ActionFileNew:
         //    a = new RS_ActionFileNew(*document, *view);
@@ -821,18 +823,18 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionLayersEdit:
         a = new RS_ActionLayersEdit(*document, *view);
         break;
-//    case RS2::ActionLayersToggleView:
-//        a = new RS_ActionLayersToggleView(*document, *view);
-//        break;
-//    case RS2::ActionLayersToggleLock:
-//        a = new RS_ActionLayersToggleLock(*document, *view);
-//        break;
-//    case RS2::ActionLayersTogglePrint:
-//        a = new RS_ActionLayersTogglePrint(*document, *view);
-//        break;
-//    case RS2::ActionLayersToggleConstruction:
-//        a = new LC_ActionLayersToggleConstruction(*document, *view);
-//        break;
+    case RS2::ActionLayersToggleView:
+        a = new RS_ActionLayersToggleView(*document, *view, a_layer);
+        break;
+    case RS2::ActionLayersToggleLock:
+        a = new RS_ActionLayersToggleLock(*document, *view, a_layer);
+        break;
+    case RS2::ActionLayersTogglePrint:
+        a = new RS_ActionLayersTogglePrint(*document, *view, a_layer);
+        break;
+    case RS2::ActionLayersToggleConstruction:
+        a = new LC_ActionLayersToggleConstruction(*document, *view, a_layer);
+        break;
         // Block actions:
         //
     case RS2::ActionBlocksDefreezeAll:
