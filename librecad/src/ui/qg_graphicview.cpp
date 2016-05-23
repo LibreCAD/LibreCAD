@@ -49,6 +49,7 @@
 #include "qg_scrollbar.h"
 #include "rs_modification.h"
 #include "rs_debug.h"
+#include "lc_options.h"
 
 #define QG_SCROLLMARGIN 400
 
@@ -485,42 +486,45 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     RS_Vector mouse = toGraph(RS_Vector(e->x(), e->y()));
 
 #if QT_VERSION >= 0x050500
-    QPoint numPixels = e->pixelDelta();
+    if (options && options->device == "Trackpad")
+    {
+        QPoint numPixels = e->pixelDelta();
 
-    // high-resolution scrolling triggers Pan instead of Zoom logic
-    isSmoothScrolling |= !numPixels.isNull();
+        // high-resolution scrolling triggers Pan instead of Zoom logic
+        isSmoothScrolling |= !numPixels.isNull();
 
-    if (isSmoothScrolling && e->source() == Qt::MouseEventSynthesizedBySystem) {
-        if (e->phase() == Qt::ScrollEnd) isSmoothScrolling = false;
+        if (isSmoothScrolling) {
+            if (e->phase() == Qt::ScrollEnd) isSmoothScrolling = false;
 
-        if (!numPixels.isNull()) {
-            if (e->modifiers()==Qt::ControlModifier) {
-                // Hold ctrl to zoom. 1 % per pixel
-                double v = -numPixels.y() / 100.;
-                RS2::ZoomDirection direction;
-                double factor;
+            if (!numPixels.isNull()) {
+                if (e->modifiers()==Qt::ControlModifier) {
+                    // Hold ctrl to zoom. 1 % per pixel
+                    double v = -numPixels.y() / 100.;
+                    RS2::ZoomDirection direction;
+                    double factor;
 
-                if (v < 0) {
-                    direction = RS2::Out; factor = 1-v;
+                    if (v < 0) {
+                        direction = RS2::Out; factor = 1-v;
+                    } else {
+                        direction = RS2::In;  factor = 1+v;
+                    }
+
+                    setCurrentAction(new RS_ActionZoomIn(*container, *this, direction,
+                                                         RS2::Both, mouse, factor));
                 } else {
-                    direction = RS2::In;  factor = 1+v;
+                    // otherwise, scroll
+                    //scroll by scrollbars: issue #479
+                    hScrollBar->setValue(hScrollBar->value() - numPixels.x());
+                    vScrollBar->setValue(vScrollBar->value() - numPixels.y());
+
+    //                setCurrentAction(new RS_ActionZoomScroll(numPixels.x(), numPixels.y(),
+    //                                                         *container, *this));
                 }
-
-                setCurrentAction(new RS_ActionZoomIn(*container, *this, direction,
-                                                     RS2::Both, mouse, factor));
-            } else {
-                // otherwise, scroll
-				//scroll by scrollbars: issue #479
-				hScrollBar->setValue(hScrollBar->value() - numPixels.x());
-				vScrollBar->setValue(vScrollBar->value() - numPixels.y());
-
-//                setCurrentAction(new RS_ActionZoomScroll(numPixels.x(), numPixels.y(),
-//                                                         *container, *this));
+                redraw();
             }
-            redraw();
+            e->accept();
+            return;
         }
-        e->accept();
-        return;
     }
 #endif
 

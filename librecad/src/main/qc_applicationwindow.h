@@ -59,6 +59,7 @@ class QHelpEngine;
 class QC_PluginInterface;
 class QG_ActiveLayerName;
 class LC_SimpleTests;
+struct LC_Options;
 
 /**
  * Main application window. Hold together document, view and controls.
@@ -94,6 +95,8 @@ public:
     void setRedoEnable(bool enable);
     void setUndoEnable(bool enable);
     void setPreviousZoomEnable(bool enable);
+
+    std::shared_ptr<LC_Options> options;
 
 public slots:
     virtual void show();
@@ -189,6 +192,8 @@ public slots:
 	void execPlug();
 
     void goto_wiki();
+    void showDeviceOptions();
+    void updateDevice(QString device);
 
 signals:
     void gridChanged(bool on);

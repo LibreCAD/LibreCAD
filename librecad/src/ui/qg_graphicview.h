@@ -36,6 +36,7 @@
 class QGridLayout;
 class QLabel;
 class QG_ScrollBar;
+struct LC_Options;
 
 /**
  * This is the Qt implementation of a widget which can view a 
@@ -88,6 +89,8 @@ public:
      * returns the widget center, if cursor is not on the widget
      */
     virtual RS_Vector getMousePosition() const;
+
+    std::shared_ptr<LC_Options> options;
 
 protected:
     virtual void emulateMouseMoveEvent();

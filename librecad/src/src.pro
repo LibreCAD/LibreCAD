@@ -115,6 +115,7 @@ DEPENDPATH += \
 	plugins \
 	ui \
     ui/forms \
+    ui/generic \
 	../res
 
 RESOURCES += ../res/extui/extui.qrc
@@ -706,7 +707,8 @@ HEADERS += ui/qg_actionfactory.h \
     ui/forms/qg_splineoptions.h \
     ui/forms/qg_textoptions.h \
     ui/forms/qg_trimamountoptions.h \
-    ui/forms/qg_widgetpen.h
+    ui/forms/qg_widgetpen.h \
+    ui/generic/comboboxoption.h
 
 SOURCES += ui/qg_actionfactory.cpp \
     ui/qg_actionhandler.cpp \
@@ -802,7 +804,8 @@ SOURCES += ui/qg_actionfactory.cpp \
     ui/forms/qg_splineoptions.cpp \
     ui/forms/qg_textoptions.cpp \
     ui/forms/qg_trimamountoptions.cpp \
-    ui/forms/qg_widgetpen.cpp
+    ui/forms/qg_widgetpen.cpp \
+    ui/generic/comboboxoption.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_arcoptions.ui \
@@ -871,7 +874,8 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_widgetpen.ui \
     ui/forms/qg_snaptoolbar.ui \
     ui/forms/qg_activelayername.ui \
-    ui/forms/lc_dlgsplinepoints.ui
+    ui/forms/lc_dlgsplinepoints.ui \
+    ui/generic/comboboxoption.ui
 
 RESOURCES += ../res/ui/ui.qrc
 
@@ -889,7 +893,8 @@ HEADERS += \
     plugins/intern/qc_actiongetpoint.h \
     plugins/intern/qc_actiongetselect.h \
     plugins/intern/qc_actiongetent.h \
-    main/main.h
+    main/main.h \
+    main/lc_options.h
 
 SOURCES += \
     main/qc_applicationwindow.cpp \

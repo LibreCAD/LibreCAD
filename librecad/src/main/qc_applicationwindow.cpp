@@ -99,6 +99,8 @@
 #include "doc_plugin_interface.h"
 #include "qc_plugininterface.h"
 #include "rs_commands.h"
+#include "comboboxoption.h"
+#include "lc_options.h"
 
 
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
@@ -222,10 +224,15 @@ QPrinter::PageSize rsToQtPaperFormat(RS2::PaperFormat f) {
 QC_ApplicationWindow::QC_ApplicationWindow() :
     QMainWindow(0),
     QG_MainWindowInterface(),
+    options(std::make_shared<LC_Options>()),
     autosaveTimer(nullptr),
     m_qDraftModeTitle(" ["+tr("Draft Mode")+"]")
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
+
+    RS_SETTINGS->beginGroup("Hardware");
+    options->device = RS_SETTINGS->readEntry("/Device", "Mouse");
+    RS_SETTINGS->endGroup();
 
     setAttribute(Qt::WA_DeleteOnClose);
     appWindow = this;
@@ -854,6 +861,13 @@ void QC_ApplicationWindow::initActions(void)
     actionFactory.addGUI(menu, this, RS2::ActionOptionsGeneral);
     actionFactory.addGUI(menu, actionHandler, RS2::ActionOptionsDrawing);
 
+    action = new QAction(tr("Device Options"), this);
+    action->setObjectName("DeviceOptions");
+    connect(action, SIGNAL(triggered()),
+            this, SLOT(showDeviceOptions()));
+
+    menu->addAction(action);
+
     //addToolBar(tb, tr("Edit"));
     addToolBar(Qt::TopToolBarArea, editToolBar); //tr("Edit");
 
@@ -1402,6 +1416,11 @@ void QC_ApplicationWindow::storeSettings() {
     RS_SETTINGS->endGroup();
     //save snapMode
     snapToolBar->saveSnapMode();
+
+    RS_SETTINGS->beginGroup("Hardware");
+    options->device = RS_SETTINGS->writeEntry("/Device", options->device);
+    RS_SETTINGS->endGroup();
+
     RS_DEBUG->print("QC_ApplicationWindow::storeSettings(): OK");
 }
 
@@ -2037,6 +2056,9 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     } else {
         w->setWindowTitle(tr("unnamed document %1").arg(id));
     }
+
+    QG_GraphicView* view = w->getGraphicView();
+    view->options = options;
 
     //check for draft mode
     updateWindowTitle(w);
@@ -3785,4 +3807,26 @@ void QC_ApplicationWindow::updateWindowTitle(QWidget *w)
 void QC_ApplicationWindow::goto_wiki()
 {
     QDesktopServices::openUrl(QUrl("http://wiki.librecad.org/"));
+}
+
+void QC_ApplicationWindow::showDeviceOptions()
+{
+    // author: ravas
+
+    QDialog dlg;
+    dlg.setWindowTitle(tr("Device Options"));
+    auto layout = new QVBoxLayout;
+    auto device_combo = new ComboBoxOption(&dlg);
+    device_combo->setTitle(tr("Device"));
+    device_combo->setOptionsList(QStringList({"Mouse", "Tablet", "Trackpad", "Touchscreen"}));
+    device_combo->setCurrentOption(options->device);
+    layout->addWidget(device_combo);
+    dlg.setLayout(layout);
+    connect(device_combo, SIGNAL(optionToSave(QString)), this, SLOT(updateDevice(QString)));
+    dlg.exec();
+}
+
+void QC_ApplicationWindow::updateDevice(QString device)
+{
+    options->device = device;
 }
