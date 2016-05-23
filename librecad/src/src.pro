@@ -15,7 +15,7 @@ DEFINES += QC_DELAYED_SPLASH_SCREEN=1
 DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
-SCMREVISION="2.0.10"
+SCMREVISION="2.0.11"
 
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/librecad
