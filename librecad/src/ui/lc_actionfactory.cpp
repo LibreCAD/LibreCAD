@@ -886,7 +886,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("LayersEdit");
     a_map["LayersEdit"] = action;
 
-    action = new QAction(QIcon(":/icons/lock_layer.svg"),
+    action = new QAction(QIcon(":/icons/locked.svg"),
                          tr("Toggle Layer Loc&k"), agm->layer);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersToggleLock()));
@@ -894,7 +894,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     a_map["LayersToggleLock"] = action;
 
     action = new QAction(tr("&Toggle Layer Visibility"), agm->layer);
-    action->setIcon(QIcon(":/icons/eye.svg"));
+    action->setIcon(QIcon(":/icons/visible.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersToggleView()));
     action->setObjectName("LayersToggleView");

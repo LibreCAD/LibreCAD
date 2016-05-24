@@ -155,7 +155,6 @@ void QG_DlgOptionsGeneral::init()
     lePathTranslations->setText(RS_SETTINGS->readEntry("/Translations", ""));
     lePathHatch->setText(RS_SETTINGS->readEntry("/Patterns", ""));
     lePathFonts->setText(RS_SETTINGS->readEntry("/Fonts", ""));
-    lePathScripts->setText(RS_SETTINGS->readEntry("/Scripts", ""));
     lePathLibrary->setText(RS_SETTINGS->readEntry("/Library", "").trimmed());
     leTemplate->setText(RS_SETTINGS->readEntry("/Template", "").trimmed());
     RS_SETTINGS->endGroup();
@@ -256,7 +255,6 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/Translations", lePathTranslations->text());
         RS_SETTINGS->writeEntry("/Patterns", lePathHatch->text());
         RS_SETTINGS->writeEntry("/Fonts", lePathFonts->text());
-        RS_SETTINGS->writeEntry("/Scripts", lePathScripts->text());
         RS_SETTINGS->writeEntry("/Library", lePathLibrary->text());
         RS_SETTINGS->writeEntry("/Template", leTemplate->text());
         RS_SETTINGS->endGroup();

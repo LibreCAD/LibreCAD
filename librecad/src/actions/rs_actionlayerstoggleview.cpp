@@ -29,26 +29,23 @@
 #include <QAction>
 #include "rs_graphic.h"
 #include "rs_debug.h"
-
+#include "rs_layer.h"
 
 
 RS_ActionLayersToggleView::RS_ActionLayersToggleView(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_ActionInterface("Toggle Layer Visibility",
-                    container, graphicView) {}
-
+                                RS_EntityContainer& container,
+                                RS_GraphicView& graphicView,
+                                RS_Layer* layer)
+    : RS_ActionInterface("Toggle Layer Visibility", container, graphicView)
+    , a_layer(layer) {}
 
 void RS_ActionLayersToggleView::trigger() {
     RS_DEBUG->print("toggle layer");
     if (graphic) {
-        RS_Layer* layer = graphic->getActiveLayer();
-        graphic->toggleLayer(layer);
+        graphic->toggleLayer(a_layer);
     }
     finish(false);
 }
-
-
 
 void RS_ActionLayersToggleView::init(int status) {
     RS_ActionInterface::init(status);

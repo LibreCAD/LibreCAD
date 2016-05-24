@@ -43,12 +43,12 @@
 #include "rs_debug.h"
 
 QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
-    layerVisible = QIcon(":/ui/visibleblock.png");
-    layerHidden = QIcon(":/ui/hiddenblock.png");
-    layerDefreeze = QIcon(":/ui/unlockedlayer.png");
-    layerFreeze = QIcon(":/ui/lockedlayer.png");
-    layerPrint = QIcon(":/ui/fileprint.png");
-    layerConstruction = QIcon(":/ui/constructionlayer.png");
+    layerVisible = QIcon(":/icons/visible.svg");
+    layerHidden = QIcon(":/icons/invisible.svg");
+    layerDefreeze = QIcon(":/icons/unlocked.svg");
+    layerFreeze = QIcon(":/icons/locked.svg");
+    layerPrint = QIcon(":/icons/print.svg");
+    layerConstruction = QIcon(":/icons/construction_layer.svg");
 }
 
 
@@ -112,12 +112,9 @@ QModelIndex QG_LayerModel::getIndex (RS_Layer * lay){
 
 QPixmap createColorSampleForLayer(RS_Layer* layer)
 {
-	QPixmap pixmap(QSize(20,20));
-	{
-		pixmap.fill(layer->getPen().getColor().toQColor());
-	}
-
-	return pixmap;
+    QPixmap pixmap(QSize(16,16));
+    pixmap.fill(layer->getPen().getColor().toQColor());
+    return pixmap;
 }
 
 QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
@@ -139,11 +136,11 @@ QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
             }
             return layerFreeze;
         case PRINT:
-            return layerPrint.pixmap(QSize(20,20),
+            return layerPrint.pixmap(QSize(16,16),
                                      lay->isPrint() ? QIcon::Normal : QIcon::Disabled,
                                      QIcon::On);
         case CONSTRUCTION:
-            return layerConstruction.pixmap(QSize(14,14),
+            return layerConstruction.pixmap(QSize(16,16),
                                             lay->isConstruction() ? QIcon::Normal : QIcon::Disabled,
                                             QIcon::On);
 
@@ -156,7 +153,6 @@ QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
             break;
 
         }
-
     }
     if (role ==Qt::DisplayRole && index.column() == NAME) {
         return lay->getName();
@@ -180,64 +176,63 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
 
     layerModel = new QG_LayerModel(this);
     layerView = new QTableView(this);
-    layerView->setModel (layerModel);
-    layerView->setShowGrid (false);
+    layerView->setModel(layerModel);
+    layerView->setShowGrid(true);
     layerView->setSelectionMode(QAbstractItemView::SingleSelection);
     layerView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     layerView->setFocusPolicy(Qt::NoFocus);
     layerView->setMinimumHeight(140);
-    layerView->setColumnWidth(QG_LayerModel::VISIBLE, 18);
-    layerView->setColumnWidth(QG_LayerModel::LOCKED, 18);
+    layerView->setColumnWidth(QG_LayerModel::VISIBLE, 24);
+    layerView->setColumnWidth(QG_LayerModel::LOCKED, 24);
     layerView->setColumnWidth(QG_LayerModel::PRINT, 24);
-    layerView->setColumnWidth(QG_LayerModel::CONSTRUCTION, 18);
-	layerView->setColumnWidth(QG_LayerModel::COLOR_SAMPLE, 24);
+    layerView->setColumnWidth(QG_LayerModel::CONSTRUCTION, 24);
+    layerView->setColumnWidth(QG_LayerModel::COLOR_SAMPLE, 24);
     layerView->verticalHeader()->hide();
     layerView->horizontalHeader()->setStretchLastSection(true);
     layerView->horizontalHeader()->hide();
 
 	QVBoxLayout* lay = new QVBoxLayout(this);
-    lay->setSpacing ( 0 );
     lay->setContentsMargins(2, 2, 2, 2);
 
 	QHBoxLayout* layButtons = new QHBoxLayout;
     QToolButton* but;
-	const QSize minButSize(22,22);
+    const QSize minButSize(28,28);
     // show all layer:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":ui/visiblelayer.png"));
-	but->setMinimumSize(minButSize);
+    but->setIcon(QIcon(":/icons/visible.svg"));
+    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Show all layers"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersDefreezeAll()));
     layButtons->addWidget(but);
     // hide all layer:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":ui/hiddenlayer.png"));
-	but->setMinimumSize(minButSize);
+    but->setIcon(QIcon(":/icons/invisible.svg"));
+    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Hide all layers"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersFreezeAll()));
     layButtons->addWidget(but);
     // add layer:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":ui/layeradd.png"));
-	but->setMinimumSize(minButSize);
+    but->setIcon(QIcon(":/icons/add.svg"));
+    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Add a layer"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersAdd()));
     layButtons->addWidget(but);
     // remove layer:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":ui/layerremove.png"));
-	but->setMinimumSize(minButSize);
+    but->setIcon(QIcon(":/icons/remove.svg"));
+    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Remove the current layer"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersRemove()));
     layButtons->addWidget(but);
     // rename layer:
     but = new QToolButton(this);
-    but->setIcon(QIcon(":ui/layeredit.png"));
-	but->setMinimumSize(minButSize);
+    but->setIcon(QIcon(":/icons/rename_active_block.svg"));
+    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Modify layer attributes / rename"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersEdit()));
@@ -290,7 +285,6 @@ QString QG_LayerWidget::getActiveName() const
 }
 
 
-
 /**
  * Updates the layer box from the layers in the graphic.
  */
@@ -337,9 +331,6 @@ void QG_LayerWidget::activateLayer(RS_Layer* layer, bool updateScroll) {
     }
     int yPos = layerView->verticalScrollBar()->value();
 
-
-    layerList->activate(layer);
-
     layerList->activate(layer);
     QModelIndex idx = layerModel->getIndex (layer);
 
@@ -361,38 +352,31 @@ void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerNa
         return;
     }
 
-    RS_Layer * lay = layerModel->getLayer( layerIdx.row() );
+    RS_Layer* lay = layerModel->getLayer(layerIdx.row());
     if (lay == 0)
         return;
 
     if (layerIdx.column() == QG_LayerModel::NAME) {
-        lastLayer = layerList->getActive();
-        layerList->activate(lay);
-        lastLayer = layerList->getActive();
         layerList->activate(lay, true);
         return;
     }
 
-    RS_Layer* l = layerList->getActive();
-    layerList->activate(lay, true);
     switch(layerIdx.column()){
     case QG_LayerModel::VISIBLE:
-        actionHandler->slotLayersToggleView();
+        actionHandler->toggleVisibility(lay);
         break;
     case QG_LayerModel::LOCKED:
-        actionHandler->slotLayersToggleLock();
+        actionHandler->toggleLock(lay);
         break;
     case QG_LayerModel::PRINT:
-        actionHandler->slotLayersTogglePrint();
+        actionHandler->togglePrint(lay);
         break;
     case QG_LayerModel::CONSTRUCTION:
-        actionHandler->slotLayersToggleConstruction();
+        actionHandler->toggleConstruction(lay);
         break;
     default:
-        activateLayer(l);
-        return;
+        break;
     }
-    activateLayer(l, false);
 }
 
 /**
@@ -421,9 +405,7 @@ void QG_LayerWidget::slotUpdateLayerList() {
             layerView->hideRow(i);
             layerModel->getLayer(i)->visibleInLayerList(false);
         }
-
     }
-
 }
 
 /**

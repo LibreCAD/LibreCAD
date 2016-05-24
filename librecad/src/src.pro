@@ -8,7 +8,7 @@ TEMPLATE = app
 DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
-SCMREVISION="2.1.0-beta"
+LC_VERSION="2.1.0-beta"
 
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/librecad
@@ -40,9 +40,8 @@ DESTDIR = $${INSTALLDIR}
 
 # Make translations at the end of the process
 unix {
-    SCMREVISION=$$system([ "$(which git)x" != "x" -a -d ../../.git ] && echo "$(git describe --tags)" || echo "$${SCMREVISION}")
+    LC_VERSION=$$system([ "$(which git)x" != "x" -a -d ../../.git ] && echo "$(git describe --tags)" || echo "$${LC_VERSION}")
 
-    DEFINES += QC_SCMREVISION=\"$$SCMREVISION\"
     macx {
         TARGET = LibreCAD
         DEFINES += QC_APPDIR="\"LibreCAD\""
@@ -62,15 +61,14 @@ win32 {
 
     # add MSYSGIT_DIR = PathToGitBinFolder (without quotes) in custom.pro file, for commit hash in about dialog
     !isEmpty( MSYSGIT_DIR ) {
-        SCMREVISION = $$system( \"$$MSYSGIT_DIR/git.exe\" describe --tags || echo "$${SCMREVISION}")
-        !isEmpty( SCMREVISION ) {
-            DEFINES += QC_SCMREVISION=\"$$SCMREVISION\"
-        }
+        LC_VERSION = $$system( \"$$MSYSGIT_DIR/git.exe\" describe --tags || echo "$${LC_VERSION}")
     }
 
     RC_FILE = ../res/main/librecad.rc
-    QMAKE_POST_LINK = "$$_PRO_FILE_PWD_/../../scripts/postprocess-win.bat" $$SCMREVISION
+    QMAKE_POST_LINK = "$$_PRO_FILE_PWD_/../../scripts/postprocess-win.bat" $$LC_VERSION
 }
+
+DEFINES += LC_VERSION=\"$$LC_VERSION\"
 
 # Additional libraries to load
 LIBS += -L../../generated/lib  \
@@ -93,7 +91,6 @@ INCLUDEPATH += \
     lib/math \
     lib/modification \
     lib/printing \
-    lib/scripting \
     actions \
     main \
     test \
@@ -197,11 +194,6 @@ HEADERS += \
     lib/modification/rs_selection.h \
     lib/math/rs_math.h \
     lib/math/lc_quadratic.h \
-    lib/scripting/rs_python.h \
-    lib/scripting/rs_simplepython.h \
-    lib/scripting/rs_python_wrappers.h \
-    lib/scripting/rs_script.h \
-    lib/scripting/rs_scriptlist.h \
     actions/lc_actiondrawcircle2pr.h \
     test/lc_simpletests.h \
     lib/generators/lc_makercamsvg.h \
@@ -286,11 +278,6 @@ SOURCES += \
     lib/math/lc_quadratic.cpp \
     lib/modification/rs_modification.cpp \
     lib/modification/rs_selection.cpp \
-    lib/scripting/rs_python.cpp \
-    lib/scripting/rs_simplepython.cpp \
-    lib/scripting/rs_python_wrappers.cpp \
-    lib/scripting/rs_script.cpp \
-    lib/scripting/rs_scriptlist.cpp \
     lib/engine/rs_color.cpp \
     lib/engine/rs_pen.cpp \
     actions/lc_actiondrawcircle2pr.cpp \
@@ -583,7 +570,6 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actionzoomwindow.cpp
 
 RESOURCES += ../res/actions/actions.qrc
-RESOURCES += ../res/tools/tools.qrc
 RESOURCES += ../res/icons/icons.qrc
 
 # ################################################################################

@@ -2356,7 +2356,7 @@ void QC_ApplicationWindow::showAboutWindow()
 
     QString info
     (
-        tr("Version: %1").arg(XSTR(QC_SCMREVISION)) + "\n" +
+        tr("Version: %1").arg(XSTR(LC_VERSION)) + "\n" +
         #if defined(Q_CC_CLANG)
             tr("Compiler: Clang %1.%2.%3").arg(__clang_major__).arg(__clang_minor__).arg(__clang_patchlevel__) + "\n" +
         #elif defined(Q_CC_GNU)
@@ -2385,7 +2385,7 @@ void QC_ApplicationWindow::showAboutWindow()
         + "<br/>" +
         QString("<a href=\"https://github.com/LibreCAD/LibreCAD/blob/master/LICENSE\">%1</a>").arg(tr("License"))
         + "<br/>" +
-        QString("<a href=\"https://github.com/LibreCAD/LibreCAD/tree/%1\">%2</a>").arg(XSTR(QC_SCMREVISION)).arg("The Code")
+        QString("<a href=\"https://github.com/LibreCAD/LibreCAD/tree/%1\">%2</a>").arg(XSTR(LC_VERSION)).arg("The Code")
     );
 
     auto links_label = new QLabel(links);
