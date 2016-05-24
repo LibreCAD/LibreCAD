@@ -6391,7 +6391,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Scripts:</source>
-        <translation>Szkriptek:</translation>
+        <translation type="obsolete">Szkriptek:</translation>
     </message>
     <message>
         <source>Part Libraries:</source>

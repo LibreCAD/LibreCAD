@@ -3574,10 +3574,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Scripts:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Part Libraries:</source>
         <translation type="unfinished"></translation>
     </message>

@@ -6180,7 +6180,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Scripts:</source>
-        <translation>Skrypty:</translation>
+        <translation type="obsolete">Skrypty:</translation>
     </message>
     <message>
         <source>Part Libraries:</source>

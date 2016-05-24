@@ -3904,7 +3904,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Scripts:</source>
-        <translation>Skript:</translation>
+        <translation type="obsolete">Skript:</translation>
     </message>
     <message>
         <source>Part Libraries:</source>

@@ -4747,7 +4747,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     </message>
     <message>
         <source>Scripts:</source>
-        <translation>Scripts:</translation>
+        <translation type="obsolete">Scripts:</translation>
     </message>
     <message>
         <source>Part Libraries:</source>

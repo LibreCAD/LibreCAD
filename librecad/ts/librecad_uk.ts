@@ -6243,7 +6243,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Scripts:</source>
-        <translation>Скрипти:</translation>
+        <translation type="obsolete">Скрипти:</translation>
     </message>
     <message>
         <source>Part Libraries:</source>

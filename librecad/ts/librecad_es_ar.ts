@@ -5943,7 +5943,7 @@ Pre&amp;cisión:</translation>
     </message>
     <message>
         <source>Scripts:</source>
-        <translation>Guiones:</translation>
+        <translation type="obsolete">Guiones:</translation>
     </message>
     <message>
         <source>Part Libraries:</source>

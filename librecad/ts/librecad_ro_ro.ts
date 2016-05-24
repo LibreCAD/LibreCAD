@@ -4909,7 +4909,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Scripts:</source>
-        <translation>Scripturi:</translation>
+        <translation type="obsolete">Scripturi:</translation>
     </message>
     <message>
         <source>Part Libraries:</source>

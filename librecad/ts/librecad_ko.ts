@@ -3814,7 +3814,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Scripts:</source>
-        <translation>스크립트:</translation>
+        <translation type="obsolete">스크립트:</translation>
     </message>
     <message>
         <source>Part Libraries:</source>

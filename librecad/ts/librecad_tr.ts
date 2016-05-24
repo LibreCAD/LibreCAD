@@ -4781,7 +4781,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Scripts:</source>
-        <translation>Betikler:</translation>
+        <translation type="obsolete">Betikler:</translation>
     </message>
     <message>
         <source>Part Libraries:</source>

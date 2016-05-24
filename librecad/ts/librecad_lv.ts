@@ -4447,7 +4447,7 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
     </message>
     <message>
         <source>Scripts:</source>
-        <translation>Skripti:</translation>
+        <translation type="obsolete">Skripti:</translation>
     </message>
     <message>
         <source>Part Libraries:</source>

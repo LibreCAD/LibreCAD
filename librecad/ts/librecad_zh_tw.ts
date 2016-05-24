@@ -1247,146 +1247,146 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">插入圖塊 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="489"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="487"/>
         <source>Categories</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="557"/>
         <source>&amp;File</source>
         <translation>檔案(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="563"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="561"/>
         <source>Import</source>
         <translation>匯入</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="593"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="591"/>
         <source>&amp;Edit</source>
         <translation>編輯(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="608"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="606"/>
         <source>Pl&amp;ugins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="632"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="630"/>
         <source>&amp;Tools</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="681"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="679"/>
         <source>Dime&amp;nsion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="689"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="687"/>
         <source>&amp;Order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="784"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="782"/>
         <source>Dock Wid&amp;gets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="343"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="341"/>
         <source>Order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="614"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="612"/>
         <source>&amp;View</source>
         <translation>檢視(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="223"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="450"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="448"/>
         <source>Select</source>
         <translation type="unfinished">選取</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="198"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="420"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="418"/>
         <source>Line</source>
         <translation type="unfinished">線</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="203"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="426"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="424"/>
         <source>Circle</source>
         <translation type="unfinished">圓</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="652"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="650"/>
         <source>&amp;Curve</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="208"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="432"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="430"/>
         <source>Curve</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="213"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="438"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="436"/>
         <source>Ellipse</source>
         <translation type="unfinished">橢圓</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="218"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="444"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="442"/>
         <source>Polyline</source>
         <translation type="unfinished">折線</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="228"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="456"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="454"/>
         <source>Dimension</source>
         <translation type="unfinished">標註</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="233"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="462"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="460"/>
         <source>Modify</source>
         <translation type="unfinished">修改</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="238"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="468"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="466"/>
         <source>Info</source>
         <translation type="unfinished">資訊</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="372"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="370"/>
         <source>Pen</source>
         <translation type="unfinished">筆</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="383"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="381"/>
         <source>Dock Areas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="582"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="580"/>
         <source>&amp;Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="743"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="741"/>
         <source>&amp;Drawings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="757"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="755"/>
         <source>Online (Wiki)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="810"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="808"/>
         <source>&amp;Toolbars</source>
         <translation>工具列(&amp;T)</translation>
     </message>
@@ -1399,7 +1399,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">CTRL+M</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="673"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="671"/>
         <source>&amp;Select</source>
         <translation>選取(&amp;S)</translation>
     </message>
@@ -1413,7 +1413,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">點(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="638"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="636"/>
         <source>&amp;Line</source>
         <translation>線(&amp;L)</translation>
     </message>
@@ -1422,12 +1422,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">弧(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="645"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="643"/>
         <source>&amp;Circle</source>
         <translation>圓(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="659"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="657"/>
         <source>&amp;Ellipse</source>
         <translation>橢圓(&amp;E)</translation>
     </message>
@@ -1436,7 +1436,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">雲形線(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="666"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="664"/>
         <source>&amp;Polyline</source>
         <translation>聚合線(&amp;P)</translation>
     </message>
@@ -1445,7 +1445,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">標註(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="699"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="697"/>
         <source>&amp;Modify</source>
         <translation>修改(&amp;M)</translation>
     </message>
@@ -1454,7 +1454,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">貼齊(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="708"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="706"/>
         <source>&amp;Info</source>
         <translation>資訊(&amp;I)</translation>
     </message>
@@ -1476,7 +1476,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2343"/>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="763"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="761"/>
         <source>About</source>
         <translation>關於</translation>
     </message>
@@ -1493,7 +1493,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">視窗(&amp;W)</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="753"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="751"/>
         <source>&amp;Help</source>
         <translation>說明(&amp;H)</translation>
     </message>
@@ -1506,12 +1506,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">選擇繪圖筆</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="367"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="365"/>
         <source>Snap Selection</source>
         <translation>選擇捕捉</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="376"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="374"/>
         <source>Tool Options</source>
         <translation>工具選項</translation>
     </message>
@@ -1778,12 +1778,12 @@ Please check the permissions.</source>
         <translation>檔案</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="567"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="565"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="331"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="329"/>
         <source>Edit</source>
         <translation>編輯</translation>
     </message>
@@ -1792,7 +1792,7 @@ Please check the permissions.</source>
         <translation type="obsolete">同層物件次序</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="352"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="350"/>
         <source>View</source>
         <translation>視圖</translation>
     </message>
@@ -2103,7 +2103,7 @@ Auto-save disabled.</source>
 <context>
     <name>QG_ActionHandler</name>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1081"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1084"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation type="unfinished"></translation>
@@ -2249,12 +2249,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_BlockWidget</name>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="162"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="163"/>
         <source>Show all blocks</source>
         <translation>顯示所有圖塊</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="170"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="171"/>
         <source>Hide all blocks</source>
         <translation>隱藏所有圖塊</translation>
     </message>
@@ -2263,89 +2263,89 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">新增圖塊</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="178"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="179"/>
         <source>Create Block</source>
         <translation>建立圖塊</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="186"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="187"/>
         <source>Add an empty block</source>
         <translation>新增空白圖塊</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="194"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="195"/>
         <source>Remove the active block</source>
         <translation>移除作用中圖塊</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="202"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="203"/>
         <source>Rename the active block</source>
         <translation>重新命名作用中圖塊</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="210"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="211"/>
         <source>Edit the active block
 in a separate window</source>
         <translation>在分離視窗中
 編輯使用中圖塊</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="219"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="220"/>
         <source>save the active block to a file</source>
         <translation>保存當前圖塊作為檔案</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="227"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="228"/>
         <source>Insert the active block</source>
         <translation>插入當前圖塊</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="328"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="329"/>
         <source>Block Menu</source>
         <translation>圖塊選單</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="334"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="335"/>
         <source>&amp;Defreeze all Blocks</source>
         <translation>解凍所有圖塊(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="336"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="337"/>
         <source>&amp;Freeze all Blocks</source>
         <translation>凍結所有圖塊(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="338"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="339"/>
         <source>&amp;Add Block</source>
         <translation>新增圖塊(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="340"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="341"/>
         <source>&amp;Remove Block</source>
         <translation>移除圖塊(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="342"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="343"/>
         <source>&amp;Rename Block</source>
         <translation>重新命名圖塊(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="344"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="345"/>
         <source>&amp;Edit Block</source>
         <translation>編輯圖塊(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="346"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="347"/>
         <source>&amp;Insert Block</source>
         <translation>插入圖塊(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="348"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="349"/>
         <source>&amp;Toggle Visibility</source>
         <translation>切換可見性(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="350"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="351"/>
         <source>&amp;Create New Block</source>
         <translation>建立新圖塊(&amp;C)</translation>
     </message>
@@ -5876,127 +5876,126 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>路徑(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="809"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="845"/>
         <source>Translations:</source>
         <translation>翻譯：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="819"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="855"/>
         <source>Hatch Patterns:</source>
         <translation>剖面線樣式：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="829"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="760"/>
         <source>Fonts:</source>
         <translation>字型：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="839"/>
         <source>Scripts:</source>
-        <translation>腳本：</translation>
+        <translation type="obsolete">腳本：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="852"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="773"/>
         <source>Part Libraries:</source>
         <translation>構件函式庫：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="865"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="786"/>
         <source>Template:</source>
         <translation>模板:</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="879"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="866"/>
         <source>&amp;Defaults</source>
         <translation>預設值(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="885"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="872"/>
         <source>Startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="891"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="878"/>
         <source>Display loading screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="905"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="892"/>
         <source>Start with main window maximized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="912"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="899"/>
         <source>Enable CAD dockwidgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="919"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="906"/>
         <source>Enable CAD toolbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="926"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="913"/>
         <source>Keycode mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1002"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="989"/>
         <source>Defaults for new drawings</source>
         <translation>預設為新圖</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1014"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1001"/>
         <source>&amp;Unit:</source>
         <translation>單位(&amp;U)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1027"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1014"/>
         <source>Drawing unit.</source>
         <translation>繪圖單位</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1049"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1036"/>
         <source>Program Defaults</source>
         <translation>程式預設值</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1089"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1076"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activation a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities are modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1092"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1079"/>
         <source>Modify layer of selected entities, at  layer activation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="898"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="885"/>
         <source>Start in tab mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="949"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="936"/>
         <source>Clear Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="961"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="948"/>
         <source>restores program geometry/layout to original state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="964"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="951"/>
         <source>Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="977"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="964"/>
         <source>restores the program to its original state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="980"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="967"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6005,22 +6004,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="obsolete">自動存檔間隔分鐘數。</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1067"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1054"/>
         <source>Auto save time:</source>
         <translation>自動存檔時間：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1074"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1061"/>
         <source>Time between automatic saving of the document in minutes.</source>
         <translation>以分鐘為單位的文件自動保存時間間隔。</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1055"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1042"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation>如果設置，LibreCAD會自動生成當前繪圖的備份。</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1058"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1045"/>
         <source>Auto backup</source>
         <translation>自動備份</translation>
     </message>
@@ -6041,22 +6040,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="obsolete">Esc</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="288"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="286"/>
         <source>Preferences</source>
         <translation>偏好設定</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="289"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="287"/>
         <source>Please restart the application to apply all changes.</source>
         <translation>請重新啟動應用程式以套用所有變更。</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="365"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="363"/>
         <source>Clear settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="366"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="364"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7769,77 +7768,77 @@ The contents of a Help Layer should not appear in printout.</source>
 <context>
     <name>QG_LayerWidget</name>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="209"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="204"/>
         <source>Show all layers</source>
         <translation>顯示全部圖層</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="217"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="212"/>
         <source>Hide all layers</source>
         <translation>隱藏全部圖層</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="225"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="220"/>
         <source>Add a layer</source>
         <translation>新增圖層</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="233"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="228"/>
         <source>Remove the current layer</source>
         <translation>移除目前圖層</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="241"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="236"/>
         <source>Modify layer attributes / rename</source>
         <translation>修改圖層屬性 / 重新命名</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="250"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="245"/>
         <source>Looking for matching layer names</source>
         <translation>尋找匹配層名</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="436"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="418"/>
         <source>Layer Menu</source>
         <translation>圖層選單</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="442"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="424"/>
         <source>&amp;Defreeze all Layers</source>
         <translation>解除凍結全部圖層(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="444"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="426"/>
         <source>&amp;Freeze all Layers</source>
         <translation>凍結全部圖層(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="447"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="429"/>
         <source>&amp;Add Layer</source>
         <translation>新增圖層(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="449"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="431"/>
         <source>&amp;Remove Layer</source>
         <translation>移除圖層(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="451"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="433"/>
         <source>Edit Layer &amp;Attributes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="453"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="435"/>
         <source>Toggle Layer &amp;Visibility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="455"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="437"/>
         <source>Toggle Layer &amp;Printing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="457"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="439"/>
         <source>Toggle &amp;Construction Layer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9086,12 +9085,12 @@ This action can NOT be undone.</source>
         <translation>秒差距</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="214"/>
+        <location filename="../src/main/main.cpp" line="213"/>
         <source>Loading..</source>
         <translation>正在載入..</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="276"/>
+        <location filename="../src/main/main.cpp" line="271"/>
         <source>Loading...</source>
         <translation>正在載入...</translation>
     </message>
@@ -9100,7 +9099,7 @@ This action can NOT be undone.</source>
         <translation type="obsolete">載入資料庫路徑..</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="292"/>
+        <location filename="../src/main/main.cpp" line="287"/>
         <source>Loading File %1..</source>
         <translation>正在載入檔案 %1..</translation>
     </message>
@@ -10945,7 +10944,7 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_widgetfactory.cpp" line="395"/>
+        <location filename="../src/ui/lc_widgetfactory.cpp" line="393"/>
         <source>Creators</source>
         <translation type="unfinished"></translation>
     </message>
