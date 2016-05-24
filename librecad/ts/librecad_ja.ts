@@ -2,6 +2,21 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="ja">
 <context>
+    <name>ComboBoxOption</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GroupBox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
@@ -1296,6 +1311,14 @@ Please check its existence and permissions.</source>
     <message>
         <source>Pen</source>
         <translation type="obsolete">ペン</translation>
+    </message>
+    <message>
+        <source>Device Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

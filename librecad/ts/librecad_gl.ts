@@ -2,6 +2,21 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="gl">
 <context>
+    <name>ComboBoxOption</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GroupBox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
@@ -639,6 +654,14 @@ Por favor comprobe se existe e mais os permisos.</translation>
     <message>
         <source>Online (Wiki)</source>
         <translation>Na internet (Wiki)</translation>
+    </message>
+    <message>
+        <source>Device Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
