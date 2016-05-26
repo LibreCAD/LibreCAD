@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>318</width>
-    <height>319</height>
+    <height>330</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -125,6 +125,9 @@
              <horstretch>2</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="toolTip">
+            <string>Input the path of a Qt style sheet.</string>
            </property>
           </widget>
          </item>
