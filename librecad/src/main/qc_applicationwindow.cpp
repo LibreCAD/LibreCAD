@@ -2,7 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2015-2016 ravas (ravas@outlook.com)
+** Copyright (C) 2015-2016 ravas (ravas@outlook.com - github.com/r-a-v-a-s)
 ** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
@@ -2337,7 +2337,7 @@ void QC_ApplicationWindow::slotImportBlock() {
 
 void QC_ApplicationWindow::showAboutWindow()
 {
-    // contributors: ravas, ...
+    // author: ravas
 
     QDialog dlg;
     dlg.setWindowTitle(tr("About"));
@@ -2624,7 +2624,7 @@ void QC_ApplicationWindow::updateWindowTitle(QWidget *w)
 
 void QC_ApplicationWindow::relayAction(QAction* q_action)
 {
-    // SIGNAL = http://doc.qt.io/qt-5/qactiongroup.html#triggered
+    // author: ravas
 
     getMDIWindow()->getGraphicView()->setCurrentQAction(q_action);
 
@@ -2638,6 +2638,8 @@ void QC_ApplicationWindow::relayAction(QAction* q_action)
 
 void QC_ApplicationWindow::gotoWiki()
 {
+    // author: ravas
+
     QDesktopServices::openUrl(QUrl("http://wiki.librecad.org/"));
 }
 
@@ -2669,13 +2671,15 @@ QMenu* QC_ApplicationWindow::createPopupMenu()
 
 void QC_ApplicationWindow::toggleFullscreen(bool checked)
 {
-    // SIGNAL = http://doc.qt.io/qt-5/qaction.html#checked-prop
+    // author: ravas
 
     checked?showFullScreen():showMaximized();
 }
 
 void QC_ApplicationWindow::hideOptions(QC_MDIWindow* win)
 {
+    // author: ravas
+
     win->getGraphicView()->getDefaultAction()->hideOptions();
 }
 
@@ -2810,6 +2814,8 @@ void QC_ApplicationWindow::modifyCommandTitleBar(Qt::DockWidgetArea area)
 
 bool QC_ApplicationWindow::loadStyleSheet(QString path)
 {
+    // author: ravas
+
     if (!path.isEmpty() && QFile::exists(path))
     {
         QFile file(path);
@@ -2824,11 +2830,15 @@ bool QC_ApplicationWindow::loadStyleSheet(QString path)
 
 void QC_ApplicationWindow::reloadStyleSheet()
 {
+    // author: ravas
+
     loadStyleSheet(style_sheet_path);
 }
 
 void QC_ApplicationWindow::updateGridStatus(const QString & status)
 {
+    // author: ravas
+
     grid_status->setBottomLabel(status);
 }
 
@@ -2851,6 +2861,8 @@ void QC_ApplicationWindow::showDeviceOptions()
 
 void QC_ApplicationWindow::updateDevice(QString device)
 {
+    // author: ravas
+
     options->device = device;
 }
 
@@ -2913,6 +2925,8 @@ void QC_ApplicationWindow::createToolbar(const QString& toolbar_name)
 
 void QC_ApplicationWindow::destroyToolbar(const QString& toolbar_name)
 {
+    // author: ravas
+
     auto toolbar = findChild<QToolBar*>(toolbar_name);
     if (toolbar) delete toolbar;
 }
