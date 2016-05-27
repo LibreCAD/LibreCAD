@@ -36,8 +36,6 @@
 #include <QSplitter>
 #include <QMdiArea>
 #include <QPluginLoader>
-#include <QDesktopServices>
-#include <QUrl>
 #include <QImageWriter>
 #include <QtSvg>
 #include <QStyleFactory>
@@ -98,6 +96,7 @@
 #include "actionlist.h"
 #include "widgetcreator.h"
 #include "lc_actiongroupmanager.h"
+#include "linklist.h"
 
 #include <boost/version.hpp>
 
@@ -2636,11 +2635,23 @@ void QC_ApplicationWindow::relayAction(QAction* q_action)
     }
 }
 
-void QC_ApplicationWindow::gotoWiki()
+void QC_ApplicationWindow::invokeLinkList()
 {
     // author: ravas
 
-    QDesktopServices::openUrl(QUrl("http://wiki.librecad.org/"));
+    QDialog dlg;
+    dlg.setWindowTitle(tr("Help Links"));
+    auto layout = new QVBoxLayout;
+    auto list = new LinkList(&dlg);
+    list->addLink(QObject::tr("Wiki"), "http://wiki.librecad.org/");
+    list->addLink(QObject::tr("User's Manual"), "http://wiki.librecad.org/index.php/LibreCAD_users_Manual");
+    list->addLink(QObject::tr("Commands"), "http://wiki.librecad.org/index.php/Commands");
+    list->addLink(QObject::tr("Style Sheets"), "https://github.com/LibreCAD/LibreCAD/wiki/Style-Sheets");
+    list->addLink(QObject::tr("Custom Widgets"), "https://github.com/LibreCAD/LibreCAD/wiki/Custom-Widgets");
+    list->addLink(QObject::tr("Forum"), "http://forum.librecad.org/");
+    layout->addWidget(list);
+    dlg.setLayout(layout);
+    dlg.exec();
 }
 
 /**

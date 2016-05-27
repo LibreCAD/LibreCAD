@@ -177,7 +177,7 @@ public slots:
     void slotUpdateActiveLayer();
 	void execPlug();
 
-    void gotoWiki();
+    void invokeLinkList();
 
     void toggleFullscreen(bool checked);
 
