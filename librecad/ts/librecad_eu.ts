@@ -917,6 +917,10 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Font Size</source>
         <translation>Hizki Neurria</translation>
     </message>
+    <message>
+        <source>Input the path of a Qt style sheet.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LG_DimzerosBox</name>
@@ -1411,7 +1415,7 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>Online (Wiki)</source>
-        <translation>Online (Wiki)</translation>
+        <translation type="obsolete">Online (Wiki)</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
@@ -1511,6 +1515,14 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>&amp;Drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help Links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Online</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3517,6 +3529,10 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
     </message>
     <message>
         <source>This will also include custom menus and toolbars. Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Commands 2 characters in length are automatically accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6727,6 +6743,34 @@ Continue?</source>
     </message>
     <message>
         <source>Creators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wiki</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User&apos;s Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style Sheets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Forum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

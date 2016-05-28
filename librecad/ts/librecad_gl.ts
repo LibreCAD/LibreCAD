@@ -978,6 +978,10 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
         <source>Font Size</source>
         <translation>Tamaño de fonte</translation>
     </message>
+    <message>
+        <source>Input the path of a Qt style sheet.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LG_DimzerosBox</name>
@@ -1560,7 +1564,7 @@ Por favor comprobe se existe e mais se ten permiso.</translation>
     </message>
     <message>
         <source>Online (Wiki)</source>
-        <translation>En liña (Wiki)</translation>
+        <translation type="obsolete">En liña (Wiki)</translation>
     </message>
     <message>
         <source>&amp;Dockwidgets</source>
@@ -1656,6 +1660,14 @@ Por favor comprobe se existe e mais se ten permiso.</translation>
     </message>
     <message>
         <source>&amp;Drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help Links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Online</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4719,6 +4731,10 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>This will also include custom menus and toolbars. Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Commands 2 characters in length are automatically accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8527,6 +8543,34 @@ Seguir?</translation>
     <message>
         <source>Creators</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wiki</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User&apos;s Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style Sheets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Forum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation type="unfinished">Todo</translation>
     </message>
 </context>
 <context>

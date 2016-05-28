@@ -982,6 +982,10 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
         <source>Font Size</source>
         <translation>Fontu izmērs</translation>
     </message>
+    <message>
+        <source>Input the path of a Qt style sheet.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LG_DimzerosBox</name>
@@ -1552,7 +1556,7 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
     </message>
     <message>
         <source>Online (Wiki)</source>
-        <translation>Tiešsaistes (viki)</translation>
+        <translation type="obsolete">Tiešsaistes (viki)</translation>
     </message>
     <message>
         <source>Dock Areas</source>
@@ -1648,6 +1652,14 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
     </message>
     <message>
         <source>&amp;Drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help Links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Online</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4907,6 +4919,10 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
     </message>
     <message>
         <source>This will also include custom menus and toolbars. Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Commands 2 characters in length are automatically accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8832,6 +8848,34 @@ Turpināt?</translation>
     <message>
         <source>Creators</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wiki</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User&apos;s Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style Sheets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Forum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation type="unfinished">Viss</translation>
     </message>
 </context>
 <context>

@@ -1004,6 +1004,10 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
         <source>Font Size</source>
         <translation>Schriftgröße</translation>
     </message>
+    <message>
+        <source>Input the path of a Qt style sheet.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LG_DimzerosBox</name>
@@ -1699,7 +1703,7 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Online (Wiki)</source>
-        <translation>Online (Wiki)</translation>
+        <translation type="obsolete">Online (Wiki)</translation>
     </message>
     <message>
         <source>Dock Areas</source>
@@ -1792,6 +1796,14 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     <message>
         <source>&amp;Drawings</source>
         <translation>&amp;Zeichnen</translation>
+    </message>
+    <message>
+        <source>Help Links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Online</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7240,6 +7252,10 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
         <source>This will also include custom menus and toolbars. Continue?</source>
         <translation>Das betrifft auch benutzerdefinierte Menüs und Werkzeugleisten. Fortfahren?</translation>
     </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Commands 2 characters in length are automatically accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgOptionsMakerCam</name>
@@ -11499,6 +11515,34 @@ Fortfahren?</translation>
     <message>
         <source>Creators</source>
         <translation>Editoren</translation>
+    </message>
+    <message>
+        <source>Wiki</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User&apos;s Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style Sheets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Forum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation type="unfinished">Alle</translation>
     </message>
 </context>
 <context>
