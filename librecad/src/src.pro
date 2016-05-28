@@ -2,6 +2,8 @@
 # (c) Ries van Twisk (librecad@rvt.dds.nl)
 TEMPLATE = app
 
+DISABLE_POSTSCRIPT = false
+
 #uncomment to enable a Debugging menu entry for basic unit testing
 #DEFINES += LC_DEBUGGING
 
@@ -46,13 +48,17 @@ unix {
         TARGET = LibreCAD
         DEFINES += QC_APPDIR="\"LibreCAD\""
         RC_FILE = ../res/main/librecad.icns
-        QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-osx.sh
+        contains(DISABLE_POSTSCRIPT, false) {
+            QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-osx.sh
+        }
     }
     else {
         TARGET = librecad
         DEFINES += QC_APPDIR="\"librecad\""
         RC_FILE = ../res/main/librecad.icns
-        QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-unix.sh
+        contains(DISABLE_POSTSCRIPT, false) {
+            QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-unix.sh
+        }
     }
 }
 win32 {
@@ -65,7 +71,9 @@ win32 {
     }
 
     RC_FILE = ../res/main/librecad.rc
-    QMAKE_POST_LINK = "$$_PRO_FILE_PWD_/../../scripts/postprocess-win.bat" $$LC_VERSION
+    contains(DISABLE_POSTSCRIPT, false) {
+        QMAKE_POST_LINK = "$$_PRO_FILE_PWD_/../../scripts/postprocess-win.bat" $$LC_VERSION
+    }
 }
 
 DEFINES += LC_VERSION=\"$$LC_VERSION\"
@@ -672,7 +680,8 @@ HEADERS += ui/lc_actionfactory.h \
     ui/generic/comboboxoption.h \
     ui/generic/actionlist.h \
     ui/generic/widgetcreator.h \
-    ui/lc_actiongroupmanager.h
+    ui/lc_actiongroupmanager.h \
+    ui/generic/linklist.h
 
 SOURCES += ui/lc_actionfactory.cpp \
     ui/qg_actionhandler.cpp \
@@ -770,7 +779,8 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/generic/comboboxoption.cpp \
     ui/generic/actionlist.cpp \
     ui/generic/widgetcreator.cpp \
-    ui/lc_actiongroupmanager.cpp
+    ui/lc_actiongroupmanager.cpp \
+    ui/generic/linklist.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_arcoptions.ui \

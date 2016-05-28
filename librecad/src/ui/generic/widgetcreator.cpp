@@ -53,7 +53,7 @@ WidgetCreator::WidgetCreator(QWidget* parent,
         connect(ui->update_button, SIGNAL(released()), this, SLOT(requestUpdate()));
     }
 
-    ui->categories_combobox->addItem("All");
+    ui->categories_combobox->addItem(QObject::tr("All"));
     foreach (auto ag, ag_map)
     {
         ui->categories_combobox->addItem(ag->objectName());
@@ -164,7 +164,7 @@ void WidgetCreator::setLists(QString key)
     ui->offered_actions->clear();
 
     ui->offered_actions->fromActionMap(a_map);
-    int index = ui->categories_combobox->findText("All");
+    int index = ui->categories_combobox->findText(QObject::tr("All"));
     ui->categories_combobox->setCurrentIndex(index);
 
     for(int i = 0; i < ui->offered_actions->count(); ++i)
@@ -218,7 +218,7 @@ void WidgetCreator::destroyWidget()
 
 void WidgetCreator::setCategory(QString category)
 {
-    if (category == "All")
+    if (category == QObject::tr("All"))
     {
         ui->offered_actions->clear();
         ui->offered_actions->fromActionMap(a_map);

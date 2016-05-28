@@ -55,8 +55,13 @@ public:
     };
 	QG_LayerModel(QObject * parent = nullptr);
 	~QG_LayerModel() = default;
-    Qt::ItemFlags flags ( const QModelIndex & /*index*/ ) const {
-            return Qt::ItemIsSelectable|Qt::ItemIsEnabled;}
+    Qt::ItemFlags flags (const QModelIndex & index) const
+    {
+        if (index.column() == 5)
+            return Qt::ItemIsSelectable|Qt::ItemIsEnabled;
+        else
+            return Qt::ItemIsEnabled;
+    }
     int columnCount(const QModelIndex &/*parent*/) const {return LAST;}
     int rowCount ( const QModelIndex & parent = QModelIndex() ) const;
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;

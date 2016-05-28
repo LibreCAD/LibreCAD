@@ -752,8 +752,8 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     help_menu->setObjectName("Help");
     help_menu->setTearOffEnabled(true);
 
-    QAction* wiki_link = new QAction(QC_ApplicationWindow::tr("Online (Wiki)"), main_window);
-    connect(wiki_link, SIGNAL(triggered()), main_window, SLOT(gotoWiki()));
+    QAction* wiki_link = new QAction(QC_ApplicationWindow::tr("Online"), main_window);
+    connect(wiki_link, SIGNAL(triggered()), main_window, SLOT(invokeLinkList()));
     help_menu->addAction(wiki_link);
 
     help_menu->addSeparator();

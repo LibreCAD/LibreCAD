@@ -454,7 +454,7 @@ void RS_GraphicView::zoomAuto(bool axis, bool keepAspectRatio) {
 
 
 	if (container) {
-		container->forcedCalculateBorders();
+        container->calculateBorders();
 
 		double sx, sy;
 		if (axis) {
