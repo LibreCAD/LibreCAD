@@ -1027,7 +1027,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("ModifyDeleteQuick");
     a_map["ModifyDeleteQuick"] = action;
 
-    action = new QAction(tr("Select &All"), agm->edit);
+    action = new QAction(tr("Select &All"), agm->select);
     action->setShortcut(QKeySequence::SelectAll);
     action->setIcon(QIcon(":/icons/select_all.svg"));
     connect(action, SIGNAL(triggered()),
