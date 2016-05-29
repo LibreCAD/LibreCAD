@@ -165,6 +165,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     settings.beginGroup("Widgets");
     int allow_statusbar_fontsize = settings.value("AllowStatusbarFontSize", 0).toInt();
+    int allow_statusbar_height = settings.value("AllowStatusbarHeight", 0).toInt();
 
     if (allow_statusbar_fontsize)
     {
@@ -172,6 +173,11 @@ QC_ApplicationWindow::QC_ApplicationWindow()
         QFont font;
         font.setPointSize(fontsize);
         status_bar->setFont(font);
+    }
+    if (allow_statusbar_height)
+    {
+        int height = settings.value("StatusbarHeight", 28).toInt();
+        status_bar->setMinimumHeight(height);
     }
     settings.endGroup();
 
