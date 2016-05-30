@@ -165,6 +165,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     settings.beginGroup("Widgets");
     int allow_statusbar_fontsize = settings.value("AllowStatusbarFontSize", 0).toInt();
+    int allow_statusbar_height = settings.value("AllowStatusbarHeight", 0).toInt();
 
     if (allow_statusbar_fontsize)
     {
@@ -172,6 +173,11 @@ QC_ApplicationWindow::QC_ApplicationWindow()
         QFont font;
         font.setPointSize(fontsize);
         status_bar->setFont(font);
+    }
+    if (allow_statusbar_height)
+    {
+        int height = settings.value("StatusbarHeight", 28).toInt();
+        status_bar->setMinimumHeight(height);
     }
     settings.endGroup();
 
@@ -1114,6 +1120,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     // only graphics offer block lists, blocks don't
     RS_DEBUG->print("  adding listeners");
     RS_Graphic* graphic = w->getDocument()->getGraphic();
+
     if(layerWidget) {
         layerWidget->setLayerList(w->getDocument()->getLayerList(), false);
     }
@@ -1454,7 +1461,25 @@ void QC_ApplicationWindow::
         recentFiles->add(fileName);
         openedFiles.push_back(fileName);
         layerWidget->slotUpdateLayerList();
-        if (w->getGraphic()) {
+        auto graphic = w->getGraphic();
+        if (graphic)
+        {
+            foreach (RS_Entity* e, graphic->getEntityList())
+            {
+                if    (e->getMin().x > e->getMax().x
+                    || e->getMin().y > e->getMax().y
+                    || e->getMin().x > RS_MAXDOUBLE
+                    || e->getMax().x > RS_MAXDOUBLE
+                    || e->getMin().x < RS_MINDOUBLE
+                    || e->getMax().x < RS_MINDOUBLE
+                    || e->getMin().y > RS_MAXDOUBLE
+                    || e->getMax().y > RS_MAXDOUBLE
+                    || e->getMin().y < RS_MINDOUBLE
+                    || e->getMax().y < RS_MINDOUBLE)
+                {
+                    graphic->removeEntity(e);
+                }
+            }
             emit(gridChanged(w->getGraphic()->isGridOn()));
         }
 

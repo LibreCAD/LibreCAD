@@ -40,7 +40,7 @@ QG_MouseWidget::QG_MouseWidget(QWidget* parent, const char* name, Qt::WindowFlag
 
     lLeftButton->setText("");
     lRightButton->setText("");
-    lMousePixmap->setPixmap( QPixmap(":/ui/mousebuttons24.png"));
+    lMousePixmap->setPixmap( QPixmap(":/icons/mouse.svg"));
 }
 
 /*

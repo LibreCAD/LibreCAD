@@ -103,8 +103,14 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
-       <normaloff>:/extui/printbw.png</normaloff>:/extui/printbw.png</iconset>
+      <iconset resource="../../../res/icons/icons.qrc">
+       <normaloff>:/icons/black_n_white_mode.svg</normaloff>:/icons/black_n_white_mode.svg</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
      </property>
      <property name="checkable">
       <bool>true</bool>
@@ -126,8 +132,14 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
-       <normaloff>:/extui/printcenter.png</normaloff>:/extui/printcenter.png</iconset>
+      <iconset resource="../../../res/icons/icons.qrc">
+       <normaloff>:/icons/center_to_page.svg</normaloff>:/icons/center_to_page.svg</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -146,8 +158,14 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
-       <normaloff>:/extui/printfit.png</normaloff>:/extui/printfit.png</iconset>
+      <iconset resource="../../../res/icons/icons.qrc">
+       <normaloff>:/icons/fit_to_page.svg</normaloff>:/icons/fit_to_page.svg</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -171,7 +189,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../../../res/extui/extui.qrc"/>
+  <include location="../../../res/icons/icons.qrc"/>
  </resources>
  <connections>
   <connection>

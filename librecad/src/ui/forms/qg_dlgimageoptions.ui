@@ -216,7 +216,7 @@
       <item>
        <widget class="QRadioButton" name="rbBlack">
         <property name="text">
-         <string>Black</string>
+         <string>B&amp;lack</string>
         </property>
        </widget>
       </item>
@@ -446,7 +446,7 @@
   </connection>
   <connection>
    <sender>cbResolution</sender>
-   <signal>textChanged(QString)</signal>
+   <signal>editTextChanged(QString)</signal>
    <receiver>QG_ImageOptionsDialog</receiver>
    <slot>resolutionChanged()</slot>
    <hints>

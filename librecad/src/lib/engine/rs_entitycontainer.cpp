@@ -1931,3 +1931,7 @@ RS_Entity* RS_EntityContainer::last() const
 	return entities.last();
 }
 
+QList<RS_Entity*> RS_EntityContainer::getEntityList()
+{
+    return entities;
+}
