@@ -27,7 +27,7 @@
 #include <iostream>
 #include <cmath>
 #include <QDir>
-#include <QDebug>
+//#include <QDebug>
 
 #include "rs_graphic.h"
 #include "rs_dialogfactory.h"
@@ -944,7 +944,7 @@ std::ostream& operator << (std::ostream& os, RS_Graphic& g) {
 
 /**
  * Removes invalid objects.
- * @retun how many objects were removed
+ * @return how many objects were removed
  */
 int RS_Graphic::clean()
 {
