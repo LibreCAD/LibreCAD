@@ -228,6 +228,8 @@ public:
 	RS_Entity* first() const;
 	//! \}
 
+    QList<RS_Entity*> getEntityList();
+
 protected:
 
     /** entities in the container */
