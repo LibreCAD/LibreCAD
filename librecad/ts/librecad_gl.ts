@@ -5777,7 +5777,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Black</source>
-        <translation>Negro</translation>
+        <translation type="obsolete">Negro</translation>
     </message>
     <message>
         <source>Resolution:</source>
@@ -5814,6 +5814,10 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>set same size</source>
         <translation>definir o mesmo tamaño</translation>
+    </message>
+    <message>
+        <source>B&amp;lack</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

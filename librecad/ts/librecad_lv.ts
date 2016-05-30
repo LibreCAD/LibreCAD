@@ -5993,7 +5993,7 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
     </message>
     <message>
         <source>Black</source>
-        <translation>Melns</translation>
+        <translation type="obsolete">Melns</translation>
     </message>
     <message>
         <source>Resolution:</source>
@@ -6094,6 +6094,10 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
     <message>
         <source>set same size</source>
         <translation>iestatīt to pašu izmēru</translation>
+    </message>
+    <message>
+        <source>B&amp;lack</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

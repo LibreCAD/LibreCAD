@@ -6438,7 +6438,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     </message>
     <message>
         <source>Black</source>
-        <translation>Negre</translation>
+        <translation type="obsolete">Negre</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -6555,6 +6555,10 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     <message>
         <source>set same size</source>
         <translation>estableix la mateixa mida</translation>
+    </message>
+    <message>
+        <source>B&amp;lack</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

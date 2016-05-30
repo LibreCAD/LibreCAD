@@ -8150,7 +8150,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Black</source>
-        <translation>Черный</translation>
+        <translation type="obsolete">Черный</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -8267,6 +8267,10 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>set same size</source>
         <translation>установить одинаковый размер</translation>
+    </message>
+    <message>
+        <source>B&amp;lack</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

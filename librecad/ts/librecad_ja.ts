@@ -5180,7 +5180,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Black</source>
-        <translation>黒</translation>
+        <translation type="obsolete">黒</translation>
     </message>
     <message>
         <source>Resolution:</source>
@@ -5217,6 +5217,10 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>set same size</source>
         <translation>同じ大きさに設定</translation>
+    </message>
+    <message>
+        <source>B&amp;lack</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

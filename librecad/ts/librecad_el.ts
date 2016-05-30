@@ -8023,7 +8023,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Black</source>
-        <translation>Μαύρο</translation>
+        <translation type="obsolete">Μαύρο</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -8140,6 +8140,10 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>set same size</source>
         <translation>χρήση ίδιου μεγέθους</translation>
+    </message>
+    <message>
+        <source>B&amp;lack</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

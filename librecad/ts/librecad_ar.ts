@@ -4929,10 +4929,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Black</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Resolution:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4967,6 +4963,10 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>set same size</source>
         <translation>ضَبَط بنفس الحجم</translation>
+    </message>
+    <message>
+        <source>B&amp;lack</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -7981,7 +7981,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Black</source>
-        <translation>Černá</translation>
+        <translation type="obsolete">Černá</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -8098,6 +8098,10 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>set same size</source>
         <translation>nastavit stejnou velikost</translation>
+    </message>
+    <message>
+        <source>B&amp;lack</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -7859,7 +7859,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Black</source>
-        <translation>Preto</translation>
+        <translation type="obsolete">Preto</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -7900,6 +7900,10 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>set same size</source>
         <translation>configurar mesmo tamanho</translation>
+    </message>
+    <message>
+        <source>B&amp;lack</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1483,7 +1483,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">&amp;CAM</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2342"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2367"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="761"/>
         <source>About</source>
         <translation>关于</translation>
@@ -1544,7 +1544,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>库浏览器</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2819"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2844"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="300"/>
         <source>Command line</source>
         <translation>命令行</translation>
@@ -1554,142 +1554,142 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="790"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="796"/>
         <source>Su&amp;b-Window mode</source>
         <translation>子窗口模式</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="794"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="800"/>
         <source>&amp;Cascade</source>
         <translation>层叠(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="795"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="801"/>
         <source>&amp;Tile</source>
         <translation>平铺(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="796"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="802"/>
         <source>Tile &amp;Vertically</source>
         <translation>纵向平铺(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="797"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="803"/>
         <source>Tile &amp;Horizontally</source>
         <translation>水平平铺(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="792"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="798"/>
         <source>Ta&amp;b mode</source>
         <translation>标签模式(&amp;b)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="310"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="316"/>
         <source>Recent Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1054"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1060"/>
         <source>Creating new file...</source>
         <translation>新建文件...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1105"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1111"/>
         <source>Block &apos;%1&apos;</source>
         <translation>图块 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1107"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1113"/>
         <source>unnamed document %1</source>
         <translation>未命名文档 %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1153"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1160"/>
         <source>New Drawing created.</source>
         <translation>新图纸已创建.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1206"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1213"/>
         <source>New document from template: </source>
         <translation>从模板新建文档: </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1254"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1261"/>
         <source>Select Template aborted</source>
         <translation>退出选择模板</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2364"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2389"/>
         <source>Compiler: Microsoft Visual C++</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2368"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2393"/>
         <source>Boost Version: %1.%2.%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2375"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2400"/>
         <source>Copy</source>
         <translation type="unfinished">复制</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2383"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2408"/>
         <source>Contributors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2385"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2410"/>
         <source>License</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2399"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2424"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2643"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2668"/>
         <source>Help Links</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2669"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2694"/>
         <source>Toolbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2674"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2699"/>
         <source>Dockwidgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2701"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2726"/>
         <source>Opening recent file...</source>
         <translation>最近打开文件...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2894"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2919"/>
         <source>Toolbar Creator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2960"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2985"/>
         <source>Menu Creator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2985"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3010"/>
         <source>Menu Assigner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1384"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1391"/>
         <source>Warning: File already opened : </source>
         <translation>警告: 文件已被打开.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1907"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1932"/>
         <source>Export as PDF</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1698,7 +1698,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">找不到帮助文件</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1270"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1277"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -1712,38 +1712,38 @@ Please check the permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1480"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1505"/>
         <source>Loaded document: </source>
         <translation>已加载文档: </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1486"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1511"/>
         <source>Opening aborted</source>
         <translation>打开中止</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1500"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1525"/>
         <source>Saving drawing...</source>
         <translation>保存图纸...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1512"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1575"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1537"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1600"/>
         <source>Saved drawing: %1</source>
         <translation>已保存图纸: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1515"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1540"/>
         <source>Cannot save the file </source>
         <translation>无法保存文件 </translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1517"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1542"/>
         <source> , please check the filename and permissions.</source>
         <translation> , 请检查文件名及操作权限.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1567"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1592"/>
         <source>Cannot save the file
 %1
 Please check the permissions.</source>
@@ -1752,12 +1752,12 @@ Please check the permissions.</source>
 请检查权限.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2360"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2385"/>
         <source>Compiler: Clang %1.%2.%3</source>
         <translation>编译器：Clang %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2362"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2387"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
         <translation>编译器： GNU GCC %1.%2.%d</translation>
     </message>
@@ -1766,7 +1766,7 @@ Please check the permissions.</source>
         <translation type="obsolete">编译器：微软 Visual C++&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2367"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2392"/>
         <source>Qt Version: %1</source>
         <translation>Qt版本：%1</translation>
     </message>
@@ -1775,14 +1775,14 @@ Please check the permissions.</source>
         <translation type="obsolete">请资助LibreCAD项目以维护代码及网站</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1543"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1568"/>
         <source>Saving drawing under new filename...</source>
         <translation>使用新文件名保存图纸...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1555"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2191"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2618"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1580"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2216"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2643"/>
         <source>Draft Mode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1815,29 +1815,29 @@ Please check the permissions.</source>
         <translation type="obsolete">文本(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1421"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1428"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1485"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1510"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1588"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1613"/>
         <source>Auto-saving drawing...</source>
         <translation>自动保存图纸...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1596"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1621"/>
         <source>Auto-saved drawing</source>
         <translation>自动保存的图纸</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1601"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1626"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -1848,57 +1848,57 @@ Auto-save disabled.</source>
 自动保存已禁用.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1606"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1631"/>
         <source>Auto-saving failed</source>
         <translation>自动保存失败</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1619"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1644"/>
         <source>Exporting drawing...</source>
         <translation>导出图纸...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1656"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1681"/>
         <source>Export as</source>
         <translation>导出为</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1709"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1734"/>
         <source>Exported: %1</source>
         <translation>导出: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1749"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1774"/>
         <source>Exporting...</source>
         <translation>导出...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1825"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1850"/>
         <source>Export complete</source>
         <translation>导出所有</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1827"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1852"/>
         <source>Export failed!</source>
         <translation>导出失败!</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1876"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1901"/>
         <source>Printing...</source>
         <translation>打印...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2005"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2030"/>
         <source>Printing complete</source>
         <translation>打印所有</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2083"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2108"/>
         <source>Print preview for %1</source>
         <translation>%1 打印预览</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2147"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2172"/>
         <source>Exiting application...</source>
         <translation>退出程序...</translation>
     </message>
@@ -1911,7 +1911,7 @@ Auto-save disabled.</source>
         <translation type="obsolete">关于...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2358"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2383"/>
         <source>Version: %1</source>
         <translation>版本: %1</translation>
     </message>
@@ -1920,12 +1920,12 @@ Auto-save disabled.</source>
         <translation type="obsolete">SCM 版本: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2861"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2886"/>
         <source>Device Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2864"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2889"/>
         <source>Device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1938,7 +1938,7 @@ Auto-save disabled.</source>
         <translation type="obsolete">SVN修订: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2366"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2391"/>
         <source>Compiled on: %1</source>
         <translation>编译时间: %1</translation>
     </message>
@@ -7635,9 +7635,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>白</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="219"/>
         <source>Black</source>
-        <translation>黑</translation>
+        <translation type="obsolete">黑</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -7654,6 +7653,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="219"/>
+        <source>B&amp;lack</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="258"/>
@@ -8307,7 +8311,7 @@ The contents of a Help Layer should not appear in printout.</source>
         <translation>左键</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_mousewidget.ui" line="136"/>
+        <location filename="../src/ui/forms/qg_mousewidget.ui" line="130"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -8940,10 +8944,10 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1273"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1425"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1566"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1600"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1280"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1432"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1591"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1625"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="170"/>
         <source>Warning</source>
         <translation>警告</translation>
@@ -10992,32 +10996,32 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2646"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2671"/>
         <source>Wiki</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2647"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2672"/>
         <source>User&apos;s Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2648"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2673"/>
         <source>Commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2649"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2674"/>
         <source>Style Sheets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2650"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2675"/>
         <source>Custom Widgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2651"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2676"/>
         <source>Forum</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16413,12 +16417,12 @@ Continue?</source>
         <translation type="unfinished">切换黑/白模式</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="123"/>
+        <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="129"/>
         <source>Center to page</source>
         <translation type="unfinished">页面居中</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="143"/>
+        <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="155"/>
         <source>Fit to page</source>
         <translation type="unfinished">页面适应</translation>
     </message>

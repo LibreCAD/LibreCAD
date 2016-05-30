@@ -4527,10 +4527,6 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Black</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Resolution:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4564,6 +4560,10 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
     </message>
     <message>
         <source>set same size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B&amp;lack</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
