@@ -75,8 +75,8 @@ public:
 
         // Wrappers for Layer functions:
     void clearLayers() {
-                layerList.clear();
-        }
+        layerList.clear();
+    }
     unsigned countLayers() const {
         return layerList.count();
     }
@@ -84,56 +84,56 @@ public:
         return layerList.at(i);
     }
     void activateLayer(const QString& name) {
-                layerList.activate(name);
-        }
+        layerList.activate(name);
+    }
     void activateLayer(RS_Layer* layer) {
-                layerList.activate(layer);
-        }
+        layerList.activate(layer);
+    }
     RS_Layer* getActiveLayer() {
         return layerList.getActive();
     }
     virtual void addLayer(RS_Layer* layer) {
-                layerList.add(layer);
-        }
+        layerList.add(layer);
+    }
     virtual void addEntity(RS_Entity* entity);
     virtual void removeLayer(RS_Layer* layer);
     virtual void editLayer(RS_Layer* layer, const RS_Layer& source) {
-                layerList.edit(layer, source);
-        }
+        layerList.edit(layer, source);
+    }
     RS_Layer* findLayer(const QString& name) {
-                return layerList.find(name);
-        }
+        return layerList.find(name);
+    }
     void toggleLayer(const QString& name) {
-                layerList.toggle(name);
-        }
+        layerList.toggle(name);
+    }
     void toggleLayer(RS_Layer* layer) {
-                layerList.toggle(layer);
-        }
+        layerList.toggle(layer);
+    }
     void toggleLayerLock(RS_Layer* layer) {
-                layerList.toggleLock(layer);
-        }
+        layerList.toggleLock(layer);
+    }
     void toggleLayerPrint(RS_Layer* layer) {
-                layerList.togglePrint(layer);
-        }
+        layerList.togglePrint(layer);
+    }
     void toggleLayerConstruction(RS_Layer* layer) {
-                layerList.toggleConstruction(layer);
-        }
+        layerList.toggleConstruction(layer);
+    }
     void freezeAllLayers(bool freeze) {
-                layerList.freezeAll(freeze);
-        }
+        layerList.freezeAll(freeze);
+    }
 
     void addLayerListListener(RS_LayerListListener* listener) {
-                layerList.addListener(listener);
-        }
+        layerList.addListener(listener);
+    }
     void removeLayerListListener(RS_LayerListListener* listener) {
-                layerList.removeListener(listener);
-        }
+        layerList.removeListener(listener);
+    }
 
 
         // Wrapper for block functions:
     void clearBlocks() {
-                blockList.clear();
-        }
+        blockList.clear();
+    }
     unsigned countBlocks() {
         return blockList.count();
     }
@@ -141,164 +141,165 @@ public:
         return blockList.at(i);
     }
     void activateBlock(const QString& name) {
-                blockList.activate(name);
-        }
+        blockList.activate(name);
+    }
     void activateBlock(RS_Block* block) {
-                blockList.activate(block);
-        }
+        blockList.activate(block);
+    }
     RS_Block* getActiveBlock() {
         return blockList.getActive();
     }
     virtual bool addBlock(RS_Block* block, bool notify=true) {
-                return blockList.add(block, notify);
-        }
+        return blockList.add(block, notify);
+    }
     virtual void addBlockNotification() {
-                blockList.addNotification();
-        }
+        blockList.addNotification();
+    }
     virtual void removeBlock(RS_Block* block) {
-                blockList.remove(block);
-        }
+        blockList.remove(block);
+    }
     RS_Block* findBlock(const QString& name) {
-                return blockList.find(name);
-        }
+        return blockList.find(name);
+    }
     QString newBlockName() {
-                return blockList.newName();
-        }
+        return blockList.newName();
+    }
     void toggleBlock(const QString& name) {
-                blockList.toggle(name);
-        }
+        blockList.toggle(name);
+    }
     void toggleBlock(RS_Block* block) {
-                blockList.toggle(block);
-        }
+        blockList.toggle(block);
+    }
     void freezeAllBlocks(bool freeze) {
-                blockList.freezeAll(freeze);
-        }
+        blockList.freezeAll(freeze);
+    }
     void addBlockListListener(RS_BlockListListener* listener) {
-                blockList.addListener(listener);
-        }
+        blockList.addListener(listener);
+    }
     void removeBlockListListener(RS_BlockListListener* listener) {
-                blockList.removeListener(listener);
-        }
+        blockList.removeListener(listener);
+    }
 
         // Wrappers for variable functions:
     void clearVariables() {
-                variableDict.clear();
-        }
+        variableDict.clear();
+    }
     int countVariables() {
-                return variableDict.count();
+        return variableDict.count();
     }
 
     void addVariable(const QString& key, const RS_Vector& value, int code) {
-                variableDict.add(key, value, code);
-        }
+        variableDict.add(key, value, code);
+    }
     void addVariable(const QString& key, const QString& value, int code) {
-                variableDict.add(key, value, code);
-        }
+        variableDict.add(key, value, code);
+    }
     void addVariable(const QString& key, int value, int code) {
-                variableDict.add(key, value, code);
-        }
+        variableDict.add(key, value, code);
+    }
     void addVariable(const QString& key, double value, int code) {
-                variableDict.add(key, value, code);
-        }
+        variableDict.add(key, value, code);
+    }
 
     RS_Vector getVariableVector(const QString& key, const RS_Vector& def) {
-                return variableDict.getVector(key, def);
-        }
+        return variableDict.getVector(key, def);
+    }
     QString getVariableString(const QString& key, const QString& def) {
-                return variableDict.getString(key, def);
-        }
+        return variableDict.getString(key, def);
+    }
     int getVariableInt(const QString& key, int def) {
-                return variableDict.getInt(key, def);
-        }
+        return variableDict.getInt(key, def);
+    }
     double getVariableDouble(const QString& key, double def) {
-                return variableDict.getDouble(key, def);
-        }
+        return variableDict.getDouble(key, def);
+    }
 
     void removeVariable(const QString& key) {
-                variableDict.remove(key);
-        }
+        variableDict.remove(key);
+    }
 
-        QHash<QString, RS_Variable>& getVariableDict() {
-                return variableDict.getVariableDict();
-        }
+    QHash<QString, RS_Variable>& getVariableDict() {
+        return variableDict.getVariableDict();
+    }
 
-        RS2::LinearFormat getLinearFormat();
-        RS2::LinearFormat getLinearFormat(int f);
-        int getLinearPrecision();
-        RS2::AngleFormat getAngleFormat();
-        int getAnglePrecision();
+    RS2::LinearFormat getLinearFormat();
+    RS2::LinearFormat getLinearFormat(int f);
+    int getLinearPrecision();
+    RS2::AngleFormat getAngleFormat();
+    int getAnglePrecision();
 
-        RS_Vector getPaperSize();
-        void setPaperSize(const RS_Vector& s);
+    RS_Vector getPaperSize();
+    void setPaperSize(const RS_Vector& s);
 
-        RS_Vector getPaperInsertionBase();
-        void setPaperInsertionBase(const RS_Vector& p);
+    RS_Vector getPaperInsertionBase();
+    void setPaperInsertionBase(const RS_Vector& p);
 
-        RS2::PaperFormat getPaperFormat(bool* landscape);
-        void setPaperFormat(RS2::PaperFormat f, bool landscape);
+    RS2::PaperFormat getPaperFormat(bool* landscape);
+    void setPaperFormat(RS2::PaperFormat f, bool landscape);
 
-        double getPaperScale();
-        void setPaperScale(double s);
+    double getPaperScale();
+    void setPaperScale(double s);
 
     virtual void setUnit(RS2::Unit u);
     virtual RS2::Unit getUnit();
 
-        bool isGridOn();
-        void setGridOn(bool on);
-        bool isIsometricGrid();
-        void setIsometricGrid(bool on);
-        void setCrosshairType(RS2::CrosshairType chType);
-        RS2::CrosshairType getCrosshairType();
+    bool isGridOn();
+    void setGridOn(bool on);
+    bool isIsometricGrid();
+    void setIsometricGrid(bool on);
+    void setCrosshairType(RS2::CrosshairType chType);
+    RS2::CrosshairType getCrosshairType();
 
-        bool isDraftOn();
-        void setDraftOn(bool on);
+    bool isDraftOn();
+    void setDraftOn(bool on);
 
     /** Sets the unit of this graphic's dimensions to 'u' */
     /*virtual void setDimensionUnit(RS2::Unit u) {
-                addVariable("$INSUNITS", (int)u, 70);
-        dimensionUnit = u;
+            addVariable("$INSUNITS", (int)u, 70);
+    dimensionUnit = u;
     }*/
 
     /** Gets the unit of this graphic's dimension */
     /*virtual RS2::Unit getDimensionUnit() {
-        return dimensionUnit;
+    return dimensionUnit;
     }*/
 
-        void centerToPage();
-        bool fitToPage();
+    void centerToPage();
+    bool fitToPage();
 
-        /**
-         * @retval true The document has been modified since it was last saved.
-         * @retval false The document has not been modified since it was last saved.
-         */
+    /**
+     * @retval true The document has been modified since it was last saved.
+     * @retval false The document has not been modified since it was last saved.
+     */
     virtual bool isModified() const {
         return modified || layerList.isModified() || blockList.isModified();
     }
 
-        /**
-         * Sets the documents modified status to 'm'.
-         */
-        virtual void setModified(bool m) {
-                modified = m;
-                layerList.setModified(m);
-                blockList.setModified(m);
-        }
-virtual QDateTime getModifyTime(void){
-            return modifiedTime;
-        }
+    /**
+     * Sets the documents modified status to 'm'.
+     */
+    virtual void setModified(bool m) {
+        modified = m;
+        layerList.setModified(m);
+        blockList.setModified(m);
+    }
+    virtual QDateTime getModifyTime(void){
+        return modifiedTime;
+    }
 
-        //if set to true, will refuse to modify paper scale
-        void setPaperScaleFixed(bool fixed)
-        {
-            paperScaleFixed=fixed;
-        }
-        bool getPaperScaleFixed()
-        {
-            return paperScaleFixed;
-        }
+    //if set to true, will refuse to modify paper scale
+    void setPaperScaleFixed(bool fixed)
+    {
+        paperScaleFixed=fixed;
+    }
+    bool getPaperScaleFixed()
+    {
+        return paperScaleFixed;
+    }
 
     friend std::ostream& operator << (std::ostream& os, RS_Graphic& g);
 
+    int clean();
 
 private:
 

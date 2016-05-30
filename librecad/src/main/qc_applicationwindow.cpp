@@ -1464,23 +1464,8 @@ void QC_ApplicationWindow::
         auto graphic = w->getGraphic();
         if (graphic)
         {
-            foreach (RS_Entity* e, graphic->getEntityList())
-            {
-                if    (e->getMin().x > e->getMax().x
-                    || e->getMin().y > e->getMax().y
-                    || e->getMin().x > RS_MAXDOUBLE
-                    || e->getMax().x > RS_MAXDOUBLE
-                    || e->getMin().x < RS_MINDOUBLE
-                    || e->getMax().x < RS_MINDOUBLE
-                    || e->getMin().y > RS_MAXDOUBLE
-                    || e->getMax().y > RS_MAXDOUBLE
-                    || e->getMin().y < RS_MINDOUBLE
-                    || e->getMax().y < RS_MINDOUBLE)
-                {
-                    graphic->removeEntity(e);
-                }
-            }
-            emit(gridChanged(w->getGraphic()->isGridOn()));
+            graphic->clean();
+            emit(gridChanged(graphic->isGridOn()));
         }
 
         recentFiles->updateRecentFilesMenu();

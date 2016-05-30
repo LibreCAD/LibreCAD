@@ -4,7 +4,7 @@
 **
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
-**
+** Copyright (C) 2016 ravas (ravas@outlook.com - github.com/r-a-v-a-s)
 **
 ** This file may be distributed and/or modified under the terms of the
 ** GNU General Public License version 2 as published by the Free Software
@@ -942,3 +942,32 @@ std::ostream& operator << (std::ostream& os, RS_Graphic& g) {
     return os;
 }
 
+/**
+ * Removes invalid objects.
+ * @retun how many objects were removed
+ */
+int RS_Graphic::clean()
+{
+    // author: ravas
+
+    int how_many = 0;
+
+    foreach (RS_Entity* e, entities)
+    {
+        if    (e->getMin().x > e->getMax().x
+            || e->getMin().y > e->getMax().y
+            || e->getMin().x > RS_MAXDOUBLE
+            || e->getMax().x > RS_MAXDOUBLE
+            || e->getMin().x < RS_MINDOUBLE
+            || e->getMax().x < RS_MINDOUBLE
+            || e->getMin().y > RS_MAXDOUBLE
+            || e->getMax().y > RS_MAXDOUBLE
+            || e->getMin().y < RS_MINDOUBLE
+            || e->getMax().y < RS_MINDOUBLE)
+        {
+            removeEntity(e);
+            how_many += 1;
+        }
+    }
+    return how_many;
+}
