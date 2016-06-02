@@ -212,7 +212,13 @@ void RS_BlockList::editBlock(RS_Block* block, const RS_Block& source) {
  * \p nullptr if no such block was found.
  */
 RS_Block* RS_BlockList::find(const QString& name) {
-    //RS_DEBUG->print("RS_BlockList::find");
+    try {
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_BlockList::find(): %s", name.toLatin1().constData());
+    }
+    catch(...) {
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_BlockList::find(): wrong name to find");
+        return nullptr;
+    }
 	// Todo : reduce this from O(N) to O(log(N)) complexity based on sorted list or hash
 	//DFS
 	std::vector<RS_BlockList const*> nodes;
@@ -222,17 +228,19 @@ RS_Block* RS_BlockList::find(const QString& name) {
 	while (nodes.size()) {
 		auto list = nodes.back();
 		nodes.pop_back();
-		for (RS_Block* b: *list) {
-			if (b->getName() == name)
-				return b;
-			auto node = b->getBlockList();
+        for (RS_Block* blk: *list) {
+            if (blk->getName() == name) {
+                RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_BlockList::find(): OK");
+                return blk;
+            }
+            auto node = blk->getBlockList();
 			if (!searched.count(node)) {
 				searched.insert(list);
-				nodes.push_back(b->getBlockList());
+                nodes.push_back(blk->getBlockList());
 			}
 		}
 	}
-
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_BlockList::find(): bad");
 	return nullptr;
 }
 
