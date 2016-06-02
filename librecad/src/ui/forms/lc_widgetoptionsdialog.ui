@@ -73,7 +73,7 @@
          <item row="0" column="0">
           <widget class="QCheckBox" name="theme_checkbox">
            <property name="text">
-            <string>Use desktop theme</string>
+            <string>Use themed icons</string>
            </property>
           </widget>
          </item>
