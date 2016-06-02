@@ -59,6 +59,9 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="toolTip">
+            <string>side length in pixels</string>
+           </property>
            <property name="minimum">
             <number>8</number>
            </property>
