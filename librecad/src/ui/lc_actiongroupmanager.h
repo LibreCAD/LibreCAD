@@ -42,6 +42,7 @@ public:
 
 public slots:
     void toggleExclusiveSnapMode(bool state);
+    void toggleTools(bool state);
 
 private:
     QList<bool> snap_memory;

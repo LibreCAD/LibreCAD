@@ -142,6 +142,8 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     appWindow = this;
 
+    connect(this, SIGNAL(printPreviewChanged(bool)), ag_manager, SLOT(toggleTools(bool)));
+
     QSettings settings;
 
     options->device = settings.value("Hardware/Device", "Mouse").toString();

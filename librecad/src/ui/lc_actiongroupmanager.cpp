@@ -163,3 +163,14 @@ void LC_ActionGroupManager::toggleExclusiveSnapMode(bool state)
     }
     snap_memory = temp_memory;
 }
+
+void LC_ActionGroupManager::toggleTools(bool state)
+{
+    foreach(auto group, toolGroups())
+    {
+        foreach(auto action, group->actions())
+        {
+            action->setDisabled(state);
+        }
+    }
+}
