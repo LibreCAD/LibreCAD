@@ -214,6 +214,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     connect(shortcut, SIGNAL(activated()), actionHandler, SLOT(slotLayersAdd()));
 
     LC_ActionFactory a_factory(this, actionHandler);
+    a_factory.using_theme = settings.value("Widgets/AllowTheme", 0).toBool();
     a_factory.fillActionContainer(a_map, ag_manager);
     LC_WidgetFactory widget_factory(this, a_map, ag_manager);
     if (enable_left_sidebar)
@@ -2749,6 +2750,9 @@ void QC_ApplicationWindow::widgetOptionsDialog()
     if (!sheet_path.isEmpty() && QFile::exists(sheet_path))
         dlg.stylesheet_field->setText(sheet_path);
 
+    int allow_theme = settings.value("AllowTheme", 0).toInt();
+    dlg.theme_checkbox->setChecked(allow_theme);
+
     int allow_toolbar_icon_size = settings.value("AllowToolbarIconSize", 0).toInt();
     dlg.toolbar_icon_size_checkbox->setChecked(allow_toolbar_icon_size);
     int toolbar_icon_size = settings.value("ToolbarIconSize", 24).toInt();
@@ -2779,6 +2783,9 @@ void QC_ApplicationWindow::widgetOptionsDialog()
         settings.setValue("StyleSheet", sheet_path);
         if (loadStyleSheet(sheet_path))
             style_sheet_path = sheet_path;
+
+        int allow_theme = dlg.theme_checkbox->isChecked();
+        settings.setValue("AllowTheme", allow_theme);
 
         int allow_toolbar_icon_size = dlg.toolbar_icon_size_checkbox->isChecked();
         settings.setValue("AllowToolbarIconSize", allow_toolbar_icon_size);
