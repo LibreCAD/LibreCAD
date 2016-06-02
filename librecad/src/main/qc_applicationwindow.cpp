@@ -1464,7 +1464,11 @@ void QC_ApplicationWindow::
         auto graphic = w->getGraphic();
         if (graphic)
         {
-            graphic->clean();
+            if (int objects_removed = graphic->clean())
+            {
+                auto msg = QObject::tr("Invalid objects removed:");
+                commandWidget->appendHistory(msg + " " + QString::number(objects_removed));
+            }
             emit(gridChanged(graphic->isGridOn()));
         }
 
