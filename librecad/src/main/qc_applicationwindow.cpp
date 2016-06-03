@@ -142,7 +142,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     appWindow = this;
 
-    connect(this, SIGNAL(printPreviewChanged(bool)), ag_manager, SLOT(toggleTools(bool)));
+//    connect(this, SIGNAL(printPreviewChanged(bool)), ag_manager, SLOT(toggleTools(bool)));
 
     QSettings settings;
 
@@ -2437,7 +2437,10 @@ bool QC_ApplicationWindow::queryExit(bool force) {
         {
             slotFilePrintPreview(false);
             succ = tmp->closeMDI(force);
-            if (!succ) {break;}
+            if (!succ)
+                break;
+            else
+                tmp->close();
         }
     }
 

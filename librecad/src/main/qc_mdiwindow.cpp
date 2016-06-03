@@ -107,6 +107,7 @@ QC_MDIWindow::~QC_MDIWindow()
 {
     RS_DEBUG->print("~QC_MDIWindow");
 	if(!(graphicView && graphicView->isCleanUp())){
+
 		//do not clear layer/block lists, if application is being closed
 
 		if (document->getLayerList()) {
@@ -272,6 +273,9 @@ bool QC_MDIWindow::closeMDI(bool force, bool ask)
  * Called by Qt when the user closes this MDI window.
  */
 void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
+
+    auto view = getGraphicView();
+    view->killAllActions();
 
     RS_DEBUG->print("QC_MDIWindow::closeEvent begin");
     if (forceClosing) {
