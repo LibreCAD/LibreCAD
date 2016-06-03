@@ -60,6 +60,10 @@ public:
     RS_Layer* at(unsigned int i) {
         return layers.at(i);
     }
+    QList<RS_Layer*>::iterator begin();
+    QList<RS_Layer*>::iterator end();
+    QList<RS_Layer*>::const_iterator begin()const;
+    QList<RS_Layer*>::const_iterator end()const;
 
     void activate(const QString& name, bool notify = false);
     void activate(RS_Layer* layer, bool notify = false);
