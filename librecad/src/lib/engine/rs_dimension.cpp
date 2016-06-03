@@ -542,7 +542,7 @@ double RS_Dimension::getGraphicVariable(const QString& key, double defMM,
 QString RS_Dimension::stripZerosAngle(QString angle, int zeros){
     if (zeros == 0) //do nothing
         return angle;
-    if (zeros & 2){
+    if (zeros & 2 && (angle.contains(QString('.')) || angle.contains(QString(',')))) {
         int end = angle.size() - 1;
         QChar format = angle[end--];  //stores & skip format char
         while (end > 0 && angle[end] == QChar('0')) // locate first 0 from end
@@ -569,19 +569,39 @@ QString RS_Dimension::stripZerosAngle(QString angle, int zeros){
  */
 
 QString RS_Dimension::stripZerosLinear(QString linear, int zeros){
-    if (zeros == 1) //do nothing
+
+    //do nothing
+    if (zeros == 1)
         return linear;
-    if (zeros & 8){
-        int end = linear.size() - 1;
-         while (end > 0 && linear[end] == QChar('0')) // locate first 0 from end
-            end--;
-        if (linear[end] == QChar('.'))
-            end--;
-        linear.truncate(end+1);
+
+    // return at least 1 character in string
+    int ls = linear.size();
+    if (ls <= 1) {
+        return linear;
     }
-    if (zeros & 4){
-		if (linear[0] == QChar('0') && linear[1] == QChar('.'))
-        linear = linear.remove(0, 1);
+
+    // if removing of trailing zeroes is needed
+    if (zeros & 8 && (linear.contains(QString('.')) || linear.contains(QString(',')))) {
+        // search index
+        int i = ls - 1;
+        // locate first 0 in row from right
+        while (i > 0 && linear[i] == QChar('0')) {
+            i--;
+        }
+        // strip decimal point
+        if ((linear[i] == QChar('.') || linear[i] == QChar(',')) && i > 0)
+            i--;
+        // strip zeros. Leave at least one character at the beginning
+        linear = linear.remove(i+1, ls-i);
+    }
+    // if removing of initial zeroes is needed
+    if (zeros & 4) {
+        int i = 0;
+        // locate last 0 in row from left
+        while (i < ls-1 && linear[i] == QChar('0')) {
+            i++;
+        }
+        linear = linear.remove(0, i);
     }
     return linear;
 }
