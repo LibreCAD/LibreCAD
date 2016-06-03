@@ -143,7 +143,7 @@
             <item row="3" column="0">
              <widget class="QLabel" name="lLineSpacingFactor">
               <property name="text">
-               <string>Line &amp;spacing:</string>
+               <string>&amp;Line spacing:</string>
               </property>
               <property name="wordWrap">
                <bool>false</bool>
@@ -219,8 +219,8 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../res/extui/extui.qrc">
-                <normaloff>:/extui/align_tr.png</normaloff>:/extui/align_tr.png</iconset>
+               <iconset resource="../../../res/icons/icons.qrc">
+                <normaloff>:/icons/mtext_align_topright.svg</normaloff>:/icons/mtext_align_topright.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -248,8 +248,8 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../res/extui/extui.qrc">
-                <normaloff>:/extui/align_tl.png</normaloff>:/extui/align_tl.png</iconset>
+               <iconset resource="../../../res/icons/icons.qrc">
+                <normaloff>:/icons/mtext_align_topleft.svg</normaloff>:/icons/mtext_align_topleft.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -277,8 +277,8 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../res/extui/extui.qrc">
-                <normaloff>:/extui/align_ml.png</normaloff>:/extui/align_ml.png</iconset>
+               <iconset resource="../../../res/icons/icons.qrc">
+                <normaloff>:/icons/mtext_align_middleleft.svg</normaloff>:/icons/mtext_align_middleleft.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -306,8 +306,8 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../res/extui/extui.qrc">
-                <normaloff>:/extui/align_mc.png</normaloff>:/extui/align_mc.png</iconset>
+               <iconset resource="../../../res/icons/icons.qrc">
+                <normaloff>:/icons/mtext_align_middlecenter.svg</normaloff>:/icons/mtext_align_middlecenter.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -335,8 +335,8 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../res/extui/extui.qrc">
-                <normaloff>:/extui/align_mr.png</normaloff>:/extui/align_mr.png</iconset>
+               <iconset resource="../../../res/icons/icons.qrc">
+                <normaloff>:/icons/mtext_align_middleright.svg</normaloff>:/icons/mtext_align_middleright.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -364,8 +364,8 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../res/extui/extui.qrc">
-                <normaloff>:/extui/align_bl.png</normaloff>:/extui/align_bl.png</iconset>
+               <iconset resource="../../../res/icons/icons.qrc">
+                <normaloff>:/icons/mtext_align_bottomleft.svg</normaloff>:/icons/mtext_align_bottomleft.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -393,8 +393,8 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../res/extui/extui.qrc">
-                <normaloff>:/extui/align_br.png</normaloff>:/extui/align_br.png</iconset>
+               <iconset resource="../../../res/icons/icons.qrc">
+                <normaloff>:/icons/mtext_align_bottomright.svg</normaloff>:/icons/mtext_align_bottomright.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -422,8 +422,8 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../res/extui/extui.qrc">
-                <normaloff>:/extui/align_bc.png</normaloff>:/extui/align_bc.png</iconset>
+               <iconset resource="../../../res/icons/icons.qrc">
+                <normaloff>:/icons/mtext_align_bottomcenter.svg</normaloff>:/icons/mtext_align_bottomcenter.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -451,8 +451,8 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../../../res/extui/extui.qrc">
-                <normaloff>:/extui/align_tc.png</normaloff>:/extui/align_tc.png</iconset>
+               <iconset resource="../../../res/icons/icons.qrc">
+                <normaloff>:/icons/mtext_align_topcenter.svg</normaloff>:/icons/mtext_align_topcenter.svg</iconset>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -552,8 +552,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../res/extui/extui.qrc">
-             <normaloff>:/extui/filenew.png</normaloff>:/extui/filenew.png</iconset>
+            <iconset resource="../../../res/icons/icons.qrc">
+             <normaloff>:/icons/new.svg</normaloff>:/icons/new.svg</iconset>
            </property>
           </widget>
          </item>
@@ -566,8 +566,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../res/extui/extui.qrc">
-             <normaloff>:/extui/fileopen.png</normaloff>:/extui/fileopen.png</iconset>
+            <iconset resource="../../../res/icons/icons.qrc">
+             <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
            </property>
           </widget>
          </item>
@@ -580,8 +580,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../res/extui/extui.qrc">
-             <normaloff>:/extui/filesave.png</normaloff>:/extui/filesave.png</iconset>
+            <iconset resource="../../../res/icons/icons.qrc">
+             <normaloff>:/icons/save.svg</normaloff>:/icons/save.svg</iconset>
            </property>
           </widget>
          </item>
@@ -594,8 +594,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../res/extui/extui.qrc">
-             <normaloff>:/extui/editcut.png</normaloff>:/extui/editcut.png</iconset>
+            <iconset resource="../../../res/icons/icons.qrc">
+             <normaloff>:/icons/cut.svg</normaloff>:/icons/cut.svg</iconset>
            </property>
           </widget>
          </item>
@@ -608,8 +608,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../res/extui/extui.qrc">
-             <normaloff>:/extui/editcopy.png</normaloff>:/extui/editcopy.png</iconset>
+            <iconset resource="../../../res/icons/icons.qrc">
+             <normaloff>:/icons/copy.svg</normaloff>:/icons/copy.svg</iconset>
            </property>
           </widget>
          </item>
@@ -622,8 +622,8 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../../../res/extui/extui.qrc">
-             <normaloff>:/extui/editpaste.png</normaloff>:/extui/editpaste.png</iconset>
+            <iconset resource="../../../res/icons/icons.qrc">
+             <normaloff>:/icons/paste.svg</normaloff>:/icons/paste.svg</iconset>
            </property>
           </widget>
          </item>
@@ -1399,7 +1399,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../res/extui/extui.qrc"/>
+  <include location="../../../res/icons/icons.qrc"/>
  </resources>
  <connections>
   <connection>
