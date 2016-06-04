@@ -982,6 +982,14 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
         <source>Input the path of a Qt style sheet.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>side length in pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use themed icons</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LG_DimzerosBox</name>
@@ -3236,7 +3244,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Line &amp;spacing:</source>
-        <translation>&amp;Espazo entre liñas:</translation>
+        <translation type="obsolete">&amp;Espazo entre liñas:</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
@@ -3821,6 +3829,10 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message utf8="true">
         <source>Diameter (⌀)</source>
         <translation>Diámetro (⌀)</translation>
+    </message>
+    <message>
+        <source>&amp;Line spacing:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5623,15 +5635,23 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Aligned</source>
-        <translation>Proporcionado</translation>
+        <translation type="obsolete">Proporcionado</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>O medio</translation>
+        <translation type="obsolete">O medio</translation>
     </message>
     <message utf8="true">
         <source>Diameter (⌀)</source>
         <translation>Diámetro (⌀)</translation>
+    </message>
+    <message>
+        <source>A&amp;ligned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Middle</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8575,6 +8595,10 @@ Seguir?</translation>
     <message>
         <source>All</source>
         <translation type="unfinished">Todo</translation>
+    </message>
+    <message>
+        <source>Invalid objects removed:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

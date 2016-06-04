@@ -921,6 +921,14 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Input the path of a Qt style sheet.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>side length in pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use themed icons</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LG_DimzerosBox</name>
@@ -2230,7 +2238,7 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
     </message>
     <message>
         <source>Line &amp;spacing:</source>
-        <translation>&amp;Lerroen tartea:</translation>
+        <translation type="obsolete">&amp;Lerroen tartea:</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
@@ -2815,6 +2823,10 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
     <message utf8="true">
         <source>Diameter (⌀)</source>
         <translation>Diametroa (⌀)</translation>
+    </message>
+    <message>
+        <source>&amp;Line spacing:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4403,17 +4415,17 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
         <source>Fit</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Aligned</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message utf8="true">
         <source>Diameter (⌀)</source>
         <translation type="unfinished">Diametroa (⌀)</translation>
+    </message>
+    <message>
+        <source>A&amp;ligned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Middle</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6771,6 +6783,10 @@ Continue?</source>
     </message>
     <message>
         <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid objects removed:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

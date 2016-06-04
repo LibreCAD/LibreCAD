@@ -871,6 +871,14 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Input the path of a Qt style sheet.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>side length in pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use themed icons</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LG_DimzerosBox</name>
@@ -3112,7 +3120,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Line &amp;spacing:</source>
-        <translation type="unfinished">Espaçamento de &amp;Linha:</translation>
+        <translation type="obsolete">Espaçamento de &amp;Linha:</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
@@ -3696,6 +3704,10 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message utf8="true">
         <source>Diameter (⌀)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Line spacing:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6708,16 +6720,20 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Aligned</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Middle</source>
-        <translation type="unfinished">Meio</translation>
+        <translation type="obsolete">Meio</translation>
     </message>
     <message utf8="true">
         <source>Diameter (⌀)</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A&amp;ligned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Middle</source>
+        <translation type="unfinished">&amp;Meio</translation>
     </message>
 </context>
 <context>
@@ -10562,6 +10578,10 @@ Continue?</source>
     </message>
     <message>
         <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid objects removed:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

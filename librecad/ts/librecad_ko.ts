@@ -883,6 +883,14 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Input the path of a Qt style sheet.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>side length in pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use themed icons</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LG_DimzerosBox</name>
@@ -2743,7 +2751,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Line &amp;spacing:</source>
-        <translation>행 간격거리(&amp;s):</translation>
+        <translation type="obsolete">행 간격거리(&amp;s):</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
@@ -3328,6 +3336,10 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message utf8="true">
         <source>Diameter (⌀)</source>
         <translation>직경 (⌀)</translation>
+    </message>
+    <message>
+        <source>&amp;Line spacing:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4974,15 +4986,23 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Aligned</source>
-        <translation>정렬</translation>
+        <translation type="obsolete">정렬</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>중앙</translation>
+        <translation type="obsolete">중앙</translation>
     </message>
     <message utf8="true">
         <source>Diameter (⌀)</source>
         <translation>직경 (⌀)</translation>
+    </message>
+    <message>
+        <source>A&amp;ligned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Middle</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7872,6 +7892,10 @@ Continue?</source>
     </message>
     <message>
         <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid objects removed:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -962,6 +962,14 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
         <source>Input the path of a Qt style sheet.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>side length in pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use themed icons</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LG_DimzerosBox</name>
@@ -5065,7 +5073,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Line &amp;spacing:</source>
-        <translation>Řá&amp;dkování:</translation>
+        <translation type="obsolete">Řá&amp;dkování:</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
@@ -5654,6 +5662,10 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message utf8="true">
         <source>Diameter (⌀)</source>
         <translation>Průměr (⌀)</translation>
+    </message>
+    <message>
+        <source>&amp;Line spacing:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7783,15 +7795,23 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Aligned</source>
-        <translation>Zarovnat</translation>
+        <translation type="obsolete">Zarovnat</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>Uprostřed</translation>
+        <translation type="obsolete">Uprostřed</translation>
     </message>
     <message utf8="true">
         <source>Diameter (⌀)</source>
         <translation>Průměr (⌀)</translation>
+    </message>
+    <message>
+        <source>A&amp;ligned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Middle</source>
+        <translation type="unfinished">Polovin&amp;a</translation>
     </message>
 </context>
 <context>
@@ -10930,6 +10950,10 @@ Continue?</source>
     </message>
     <message>
         <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid objects removed:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -986,6 +986,14 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
         <source>Input the path of a Qt style sheet.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>side length in pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use themed icons</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LG_DimzerosBox</name>
@@ -3268,7 +3276,7 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
     </message>
     <message>
         <source>Line &amp;spacing:</source>
-        <translation>Rind&amp;starpa:</translation>
+        <translation type="obsolete">Rind&amp;starpa:</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
@@ -3857,6 +3865,10 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
     <message utf8="true">
         <source>Diameter (⌀)</source>
         <translation>Diametrs (⌀)</translation>
+    </message>
+    <message>
+        <source>&amp;Line spacing:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5831,15 +5843,23 @@ Lūdzu, izvēlieties, kādas mērvienības vēlaties izmantot jauniem rasējumie
     </message>
     <message>
         <source>Aligned</source>
-        <translation>Līdzināts</translation>
+        <translation type="obsolete">Līdzināts</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>Vidū</translation>
+        <translation type="obsolete">Vidū</translation>
     </message>
     <message utf8="true">
         <source>Diameter (⌀)</source>
         <translation>Diametrs (⌀)</translation>
+    </message>
+    <message>
+        <source>A&amp;ligned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Middle</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8880,6 +8900,10 @@ Turpināt?</translation>
     <message>
         <source>All</source>
         <translation type="unfinished">Viss</translation>
+    </message>
+    <message>
+        <source>Invalid objects removed:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

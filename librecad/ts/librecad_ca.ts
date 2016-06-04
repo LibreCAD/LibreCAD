@@ -982,6 +982,14 @@ la distància entre els punts=%2 és més gran que el diàmetre=%3</translation>
         <source>Input the path of a Qt style sheet.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>side length in pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use themed icons</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LG_DimzerosBox</name>
@@ -3500,7 +3508,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     </message>
     <message>
         <source>Line &amp;spacing:</source>
-        <translation>In&amp;terlineat:</translation>
+        <translation type="obsolete">In&amp;terlineat:</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
@@ -4089,6 +4097,10 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     <message utf8="true">
         <source>Diameter (⌀)</source>
         <translation>Diàmetre (⌀)</translation>
+    </message>
+    <message>
+        <source>&amp;Line spacing:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6259,15 +6271,23 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     </message>
     <message>
         <source>Aligned</source>
-        <translation>Alineat</translation>
+        <translation type="obsolete">Alineat</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>Centra</translation>
+        <translation type="obsolete">Centra</translation>
     </message>
     <message utf8="true">
         <source>Diameter (⌀)</source>
         <translation>Diàmetre (⌀)</translation>
+    </message>
+    <message>
+        <source>A&amp;ligned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Middle</source>
+        <translation type="unfinished">Punt &amp;mitjà</translation>
     </message>
 </context>
 <context>
@@ -9358,6 +9378,10 @@ Voleu continuar?</translation>
     <message>
         <source>All</source>
         <translation type="unfinished">Tot</translation>
+    </message>
+    <message>
+        <source>Invalid objects removed:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

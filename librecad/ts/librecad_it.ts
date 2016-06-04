@@ -926,6 +926,14 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
         <source>Input the path of a Qt style sheet.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>side length in pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use themed icons</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LG_DimzerosBox</name>
@@ -5034,7 +5042,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Line &amp;spacing:</source>
-        <translation type="unfinished">Inter&amp;asse linee:</translation>
+        <translation type="obsolete">Inter&amp;asse linee:</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
@@ -5622,6 +5630,10 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message utf8="true">
         <source>Diameter (⌀)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Line spacing:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7716,15 +7728,23 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Aligned</source>
-        <translation type="unfinished">Allineato</translation>
+        <translation type="obsolete">Allineato</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation type="unfinished">Medio</translation>
+        <translation type="obsolete">Medio</translation>
     </message>
     <message utf8="true">
         <source>Diameter (⌀)</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A&amp;ligned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Middle</source>
+        <translation type="unfinished">&amp;Medio</translation>
     </message>
 </context>
 <context>
@@ -10815,6 +10835,10 @@ Continue?</source>
     </message>
     <message>
         <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid objects removed:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
