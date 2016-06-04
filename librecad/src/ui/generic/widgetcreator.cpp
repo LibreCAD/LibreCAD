@@ -3,7 +3,7 @@
 **
 ** This file was created for LibreCAD (https://github.com/LibreCAD/LibreCAD).
 **
-** Copyright (C) 2016 ravas (https://github.com/r-a-v-a-s)
+** Copyright (C) 2016 ravas (ravas@outlook.com - github.com/r-a-v-a-s)
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License

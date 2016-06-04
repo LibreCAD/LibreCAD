@@ -77,12 +77,12 @@
        cy="25.964445"
        cx="34.99556"
        id="path10169"
-       style="opacity:1;fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.25777793;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:8;stroke-opacity:1" />
+       style="opacity:1;fill:#00ff7f;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.25777793;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:8;stroke-opacity:1" />
     <path
        sodipodi:nodetypes="cccccccc"
        inkscape:connector-curvature="0"
        id="path5315"
        d="m 44.026674,34.995558 0,15.816092 -5.644446,-1.140533 9.031111,15.804443 9.031111,-15.804443 -5.644442,1.045492 -3e-6,-15.721049 -6.773331,-2e-6"
-       style="fill:#00ff00;fill-rule:evenodd;stroke:#000000;stroke-width:2.25777793;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#00ff7f;fill-rule:evenodd;stroke:#000000;stroke-width:2.25777793;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
 </svg>

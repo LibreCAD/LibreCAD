@@ -39,6 +39,8 @@ class LC_ActionFactory : public QObject
 public:
     LC_ActionFactory(QObject* parent, QObject* a_handler);
     void fillActionContainer(QMap<QString, QAction*>& a_map, LC_ActionGroupManager* agm);
+    void commonActions(QMap<QString, QAction*>& a_map, LC_ActionGroupManager* agm);
+    bool using_theme;
 
 private:
     QObject* main_window;

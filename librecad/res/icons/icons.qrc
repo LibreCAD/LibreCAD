@@ -172,5 +172,26 @@
         <file>fit_to_page.svg</file>
         <file>center_to_page.svg</file>
         <file>black_n_white_mode.svg</file>
+        <file>mtext_align_bottomcenter.svg</file>
+        <file>mtext_align_bottomleft.svg</file>
+        <file>mtext_align_bottomright.svg</file>
+        <file>mtext_align_middlecenter.svg</file>
+        <file>mtext_align_middleleft.svg</file>
+        <file>mtext_align_middleright.svg</file>
+        <file>mtext_align_topcenter.svg</file>
+        <file>mtext_align_topleft.svg</file>
+        <file>mtext_align_topright.svg</file>
+        <file>text_align_baselinecenter.svg</file>
+        <file>text_align_baselineleft.svg</file>
+        <file>text_align_baselineright.svg</file>
+        <file>text_align_bottomcenter.svg</file>
+        <file>text_align_bottomleft.svg</file>
+        <file>text_align_bottomright.svg</file>
+        <file>text_align_middlecenter.svg</file>
+        <file>text_align_middleleft.svg</file>
+        <file>text_align_middleright.svg</file>
+        <file>text_align_topcenter.svg</file>
+        <file>text_align_topleft.svg</file>
+        <file>text_align_topright.svg</file>
     </qresource>
 </RCC>

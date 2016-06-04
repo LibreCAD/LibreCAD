@@ -77,7 +77,7 @@
        id="circle6020" />
     <circle
        transform="matrix(0,-1,1,0,0,0)"
-       style="opacity:1;fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.25777793;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:8;stroke-opacity:1"
+       style="opacity:1;fill:#00ff7f;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.25777793;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:8;stroke-opacity:1"
        id="circle5886"
        cx="-23.706665"
        cy="48.542194"
@@ -93,13 +93,13 @@
        cy="36.124397"
        cx="-36.124435"
        id="circle5888"
-       style="opacity:1;fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.25777793;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:8;stroke-opacity:1" />
+       style="opacity:1;fill:#00ff7f;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.25777793;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:8;stroke-opacity:1" />
     <circle
        r="5.6444449"
        cy="13.546636"
        cx="-11.288898"
        id="circle8279"
-       style="opacity:1;fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.25777793;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:8;stroke-opacity:1"
+       style="opacity:1;fill:#00ff7f;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.25777793;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:8;stroke-opacity:1"
        transform="matrix(0,-1,1,0,0,0)" />
   </g>
 </svg>

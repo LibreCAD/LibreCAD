@@ -82,7 +82,7 @@
        cy="45.155567"
        cx="9.0311108"
        id="path4146"
-       style="opacity:0.98000004;fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1" />
+       style="opacity:0.98000004;fill:#00ff7f;fill-opacity:1;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:4.51555586, 2.25777793, 1.12888896, 2.25777793;stroke-dashoffset:0;stroke-opacity:1"
        d="m 25.964446,54.18667 1e-6,-38.382225"
@@ -96,7 +96,7 @@
        d="m 48.542225,54.18667 2e-6,-38.382225"
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:4.51555586, 2.25777793, 1.12888896, 2.25777793;stroke-dashoffset:0;stroke-opacity:1" />
     <circle
-       style="opacity:0.98000004;fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1"
+       style="opacity:0.98000004;fill:#00ff7f;fill-opacity:1;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1"
        id="circle5989"
        cx="31.608892"
        cy="45.155567"
@@ -106,6 +106,6 @@
        cy="45.155567"
        cx="54.186672"
        id="circle5991"
-       style="opacity:0.98000004;fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1" />
+       style="opacity:0.98000004;fill:#00ff7f;fill-opacity:1;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1" />
   </g>
 </svg>

@@ -75,7 +75,7 @@
          inkscape:connector-curvature="0"
          id="path4164"
          d="m 10.160001,62.088893 0,-42.897781 3.386666,-3.386666 15.804446,0 4.515556,4.515555 0,41.768892 z"
-         style="fill:#00ff00;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+         style="fill:#00ff7f;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     </g>
     <path
        inkscape:export-ydpi="11.25"
@@ -84,6 +84,6 @@
        inkscape:connector-curvature="0"
        id="path10912"
        d="m 30.308193,31.886502 8.351639,-8.351637 6.495719,6.495718 6.495719,-6.495718 8.351638,8.351637 -6.495718,6.49572 6.495718,6.49572 -8.35164,8.351637 -6.495718,-6.495719 -6.495718,6.49572 -8.351639,-8.351638 6.495718,-6.49572 -6.495718,-6.49572"
-       style="fill:#00ff00;fill-rule:evenodd;stroke:#000000;stroke-width:1.69333339;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#00ff7f;fill-rule:evenodd;stroke:#000000;stroke-width:1.69333339;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
 </svg>

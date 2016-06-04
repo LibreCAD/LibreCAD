@@ -67,7 +67,7 @@
        d="m 24.835557,48.542226 33.866669,0"
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <circle
-       style="opacity:1;fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:1.60000002;stroke-opacity:1"
+       style="opacity:1;fill:#00ff7f;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:1.60000002;stroke-opacity:1"
        id="circle4170"
        cx="58.702225"
        cy="48.542274"
@@ -77,13 +77,13 @@
        cy="23.706701"
        cx="24.83552"
        id="circle4756"
-       style="opacity:1;fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:1.60000002;stroke-opacity:1" />
+       style="opacity:1;fill:#00ff7f;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:1.60000002;stroke-opacity:1" />
     <circle
        r="5.6444449"
        cy="48.542274"
        cx="24.83552"
        id="circle4155"
-       style="opacity:1;fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:1.60000002;stroke-opacity:1" />
+       style="opacity:1;fill:#00ff7f;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:1.60000002;stroke-opacity:1" />
     <path
        sodipodi:open="true"
        d="M 20.320002,48.542226 A 12.418459,12.417779 0 0 1 9.5653008,42.333336 12.418459,12.417779 0 0 1 9.5653007,29.915557 12.418459,12.417779 0 0 1 20.320002,23.706668"

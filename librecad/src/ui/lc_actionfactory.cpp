@@ -35,6 +35,7 @@
 
 LC_ActionFactory::LC_ActionFactory(QObject* parent, QObject* a_handler)
     : QObject(parent)
+    , using_theme(false)
     , main_window(parent)
     , action_handler(a_handler)
 {
@@ -46,13 +47,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 
     // <[~ Zoom ~]>
 
-    action = new QAction(tr("&Window Zoom"), agm->view);
-    action->setIcon(QIcon::fromTheme("zoom-select", QIcon(":/icons/zoom_window.svg")));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomWindow()));
-    action->setObjectName("ZoomWindow");
-    a_map["ZoomWindow"] = action;
-
-    action = new QAction(tr("Zoom &Panning"), agm->view);
+    action = new QAction(tr("Zoom &Panning"), agm->other);
     action->setIcon(QIcon(":/icons/zoom_pan.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotZoomPan()));
@@ -766,54 +761,6 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     // <[~ not checkable actions ~]>
     // =============================
 
-    // <[~ Edit ~]>
-
-    action = new QAction(tr("&Selection pointer"), agm->edit);
-    action->setIcon(QIcon::fromTheme("go-previous-view", QIcon(":/icons/cursor.svg")));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotEditKillAllActions()));
-    action->setObjectName("EditKillAllActions");
-    a_map["EditKillAllActions"] = action;
-
-    action = new QAction(tr("&Undo"), agm->edit);
-    action->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/icons/undo.svg")));
-    action->setShortcut(QKeySequence::Undo);
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotEditUndo()));
-    action->setObjectName("EditUndo");
-    a_map["EditUndo"] = action;
-
-    action = new QAction(tr("&Redo"), agm->edit);
-    action->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/redo.svg")));
-    action->setShortcut(QKeySequence::Redo);
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotEditRedo()));
-    action->setObjectName("EditRedo");
-    a_map["EditRedo"] = action;
-
-    action = new QAction(tr("Cu&t"), agm->edit);
-    action->setIcon(QIcon::fromTheme("edit-cut", QIcon(":/icons/cut.svg")));
-    action->setShortcut(QKeySequence::Cut);
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotEditCut()));
-    action->setObjectName("EditCut");
-    a_map["EditCut"] = action;
-
-    action = new QAction(tr("&Copy"), agm->edit);
-    action->setIcon(QIcon::fromTheme("edit-copy", QIcon(":/icons/copy.svg")));
-    action->setShortcut(QKeySequence::Copy);
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotEditCopy()));
-    action->setObjectName("EditCopy");
-    a_map["EditCopy"] = action;
-
-    action = new QAction(tr("&Paste"), agm->edit);
-    action->setIcon(QIcon::fromTheme("edit-paste", QIcon(":/icons/paste.svg")));
-    action->setShortcut(QKeySequence::Paste);
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotEditPaste()));
-    action->setObjectName("EditPaste");
-    a_map["EditPaste"] = action;
 
     // <[~ Order ~]>
 
@@ -1065,83 +1012,11 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 //    action->setObjectName("ToolRegenerateDimensions");
 //    a_map["ToolRegenerateDimensions"] = action;
 
-    // <[~ Zoom ~]>
-
-    action = new QAction(tr("Zoom &In"), agm->view);
-    action->setIcon(QIcon::fromTheme("zoom-in", QIcon(":/icons/zoom_in.svg")));
-    action->setShortcut(QKeySequence::ZoomIn);
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomIn()));
-    action->setObjectName("ZoomIn");
-    a_map["ZoomIn"] = action;
-
-    action = new QAction(tr("Zoom &Out"), agm->view);
-    action->setIcon(QIcon::fromTheme("zoom-out", QIcon(":/icons/zoom_out.svg")));
-    action->setShortcut(QKeySequence::ZoomOut);
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomOut()));
-    action->setObjectName("ZoomOut");
-    a_map["ZoomOut"] = action;
-
-    action = new QAction(tr("&Auto Zoom"), agm->view);
-    action->setIcon(QIcon::fromTheme("zoom-fit-best", QIcon(":/icons/zoom_auto.svg")));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomAuto()));
-    action->setObjectName("ZoomAuto");
-    a_map["ZoomAuto"] = action;
-
-    action = new QAction(tr("Previous &View"), agm->view);
-    action->setIcon(QIcon::fromTheme("zoom-previous", QIcon(":/icons/zoom_previous.svg")));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotZoomPrevious()));
-    action->setEnabled(false);
-    action->setObjectName("ZoomPrevious");
-    a_map["ZoomPrevious"] = action;
-
-    action = new QAction(tr("&Redraw"), agm->view);
-    action->setIcon(QIcon::fromTheme("view-refresh", QIcon(":/icons/redraw.svg")));
-    action->setShortcut(QKeySequence::Refresh);
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotZoomRedraw()));
-    action->setObjectName("ZoomRedraw");
-    a_map["ZoomRedraw"] = action;
 
     // ===========================
     // <[~ Main Window Actions ~]>
     // ===========================
 
-    // <[~ File ~]>
-
-    action = new QAction(tr("&New"), agm->file);
-    action->setIcon(QIcon::fromTheme("document-new", QIcon(":/icons/new.svg")));
-    action->setShortcut(QKeySequence::New);
-    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileNewNew()));
-    action->setObjectName("FileNew");
-    a_map["FileNew"] = action;
-
-    action = new QAction(tr("New From &Template"), agm->file);
-    action->setIcon(QIcon::fromTheme("document-new", QIcon(":/icons/new_from_template.svg")));
-    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileNewTemplate()));
-    action->setObjectName("FileNewTemplate");
-    a_map["FileNewTemplate"] = action;
-
-    action = new QAction(tr("&Open..."), agm->file);
-    action->setIcon(QIcon::fromTheme("document-open", QIcon(":/icons/open.svg")));
-    action->setShortcut(QKeySequence::Open);
-    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileOpen()));
-    action->setObjectName("FileOpen");
-    a_map["FileOpen"] = action;
-
-    action = new QAction(tr("&Save"), agm->file);
-    action->setIcon(QIcon::fromTheme("document-save", QIcon(":/icons/save.svg")));
-    action->setShortcut(QKeySequence::Save);
-    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileSave()));
-    action->setObjectName("FileSave");
-    a_map["FileSave"] = action;
-
-    action = new QAction(tr("Save &as..."), agm->file);
-    action->setIcon(QIcon::fromTheme("document-save-as", QIcon(":/icons/save_as.svg")));
-    action->setShortcut(QKeySequence::SaveAs);
-    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileSaveAs()));
-    action->setObjectName("FileSaveAs");
-    a_map["FileSaveAs"] = action;
 
     action = new QAction(tr("&Export as image"), agm->file);
     action->setIcon(QIcon(":/icons/export.svg"));
@@ -1156,34 +1031,11 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("FileClose");
     a_map["FileClose"] = action;
 
-    action = new QAction(tr("&Print..."), agm->file);
-    action->setIcon(QIcon::fromTheme("document-print", QIcon(":/icons/print.svg")));
-    action->setShortcut(QKeySequence::Print);
-    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFilePrint()));
-    connect(main_window, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
-    action->setObjectName("FilePrint");
-    a_map["FilePrint"] = action;
-
     action = new QAction(tr("Export as PDF"), agm->file);
     action->setIcon(QIcon(":/icons/export_pdf.svg"));
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFilePrintPDF()));
     action->setObjectName("FilePrintPDF");
     a_map["FilePrintPDF"] = action;
-
-    action = new QAction(tr("Print Pre&view"), agm->file);
-    action->setIcon(QIcon::fromTheme("document-print-preview", QIcon(":/icons/print_preview.svg")));
-    action->setCheckable(true);
-    connect(action, SIGNAL(triggered(bool)), main_window, SLOT(slotFilePrintPreview(bool)));
-    connect(main_window, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
-    action->setObjectName("FilePrintPreview");
-    a_map["FilePrintPreview"] = action;
-
-    action = new QAction(tr("&Quit"), agm->file);
-    action->setIcon(QIcon::fromTheme("application-exit", QIcon(":/icons/quit.svg")));
-    action->setShortcut(QKeySequence::Quit);
-    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileQuit()));
-    action->setObjectName("FileQuit");
-    a_map["FileQuit"] = action;
 
     action = new QAction(tr("&Block"), agm->file);
     action->setIcon(QIcon(":/icons/insert_active_block.svg"));
@@ -1310,4 +1162,224 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
             main_window, SLOT(invokeToolbarCreator()));
     action->setObjectName("InvokeToolbarCreator");
     a_map["InvokeToolbarCreator"] = action;
+
+    commonActions(a_map, agm);
+}
+
+void LC_ActionFactory::commonActions(QMap<QString, QAction*>& a_map, LC_ActionGroupManager* agm)
+{
+    QAction* action;
+
+    // <[~ Edit ~]>
+
+    action = new QAction(tr("&Selection pointer"), agm->edit);
+    if (using_theme)
+        action->setIcon(QIcon::fromTheme("go-previous-view", QIcon(":/icons/cursor.svg")));
+    else
+        action->setIcon(QIcon(":/icons/cursor.svg"));
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotEditKillAllActions()));
+    action->setObjectName("EditKillAllActions");
+    a_map["EditKillAllActions"] = action;
+
+    action = new QAction(tr("&Undo"), agm->edit);
+    if (using_theme)
+        action->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/icons/undo.svg")));
+    else
+        action->setIcon(QIcon(":/icons/undo.svg"));
+    action->setShortcut(QKeySequence::Undo);
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotEditUndo()));
+    action->setObjectName("EditUndo");
+    a_map["EditUndo"] = action;
+
+    action = new QAction(tr("&Redo"), agm->edit);
+    if (using_theme)
+        action->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/redo.svg")));
+    else
+        action->setIcon(QIcon(":/icons/redo.svg"));
+    action->setShortcut(QKeySequence::Redo);
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotEditRedo()));
+    action->setObjectName("EditRedo");
+    a_map["EditRedo"] = action;
+
+    action = new QAction(tr("Cu&t"), agm->edit);
+    if (using_theme)
+        action->setIcon(QIcon::fromTheme("edit-cut", QIcon(":/icons/cut.svg")));
+    else
+        action->setIcon(QIcon(":/icons/cut.svg"));
+    action->setShortcut(QKeySequence::Cut);
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotEditCut()));
+    action->setObjectName("EditCut");
+    a_map["EditCut"] = action;
+
+    action = new QAction(tr("&Copy"), agm->edit);
+    if (using_theme)
+        action->setIcon(QIcon::fromTheme("edit-copy", QIcon(":/icons/copy.svg")));
+    else
+        action->setIcon(QIcon(":/icons/copy.svg"));
+    action->setShortcut(QKeySequence::Copy);
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotEditCopy()));
+    action->setObjectName("EditCopy");
+    a_map["EditCopy"] = action;
+
+    action = new QAction(tr("&Paste"), agm->edit);
+    if (using_theme)
+        action->setIcon(QIcon::fromTheme("edit-paste", QIcon(":/icons/paste.svg")));
+    else
+        action->setIcon(QIcon(":/icons/paste.svg"));
+    action->setShortcut(QKeySequence::Paste);
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotEditPaste()));
+    action->setObjectName("EditPaste");
+    a_map["EditPaste"] = action;
+
+    // <[~ Zoom ~]>
+
+    action = new QAction(tr("Zoom &In"), agm->view);
+    if (using_theme)
+        action->setIcon(QIcon::fromTheme("zoom-in", QIcon(":/icons/zoom_in.svg")));
+    else
+        action->setIcon(QIcon(":/icons/zoom_in.svg"));
+    action->setShortcut(QKeySequence::ZoomIn);
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomIn()));
+    action->setObjectName("ZoomIn");
+    a_map["ZoomIn"] = action;
+
+    action = new QAction(tr("Zoom &Out"), agm->view);
+    if (using_theme)
+        action->setIcon(QIcon::fromTheme("zoom-out", QIcon(":/icons/zoom_out.svg")));
+    else
+        action->setIcon(QIcon(":/icons/zoom_out.svg"));
+    action->setShortcut(QKeySequence::ZoomOut);
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomOut()));
+    action->setObjectName("ZoomOut");
+    a_map["ZoomOut"] = action;
+
+    action = new QAction(tr("&Auto Zoom"), agm->view);
+    if (using_theme)
+        action->setIcon(QIcon::fromTheme("zoom-fit-best", QIcon(":/icons/zoom_auto.svg")));
+    else
+        action->setIcon(QIcon(":/icons/zoom_auto.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomAuto()));
+    action->setObjectName("ZoomAuto");
+    a_map["ZoomAuto"] = action;
+
+    action = new QAction(tr("Previous &View"), agm->view);
+    if (using_theme)
+        action->setIcon(QIcon::fromTheme("zoom-previous", QIcon(":/icons/zoom_previous.svg")));
+    else
+        action->setIcon(QIcon(":/icons/zoom_previous.svg"));
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotZoomPrevious()));
+    action->setEnabled(false);
+    action->setObjectName("ZoomPrevious");
+    a_map["ZoomPrevious"] = action;
+
+    action = new QAction(tr("&Redraw"), agm->view);
+    if (using_theme)
+        action->setIcon(QIcon::fromTheme("view-refresh", QIcon(":/icons/redraw.svg")));
+    else
+        action->setIcon(QIcon(":/icons/redraw.svg"));
+    action->setShortcut(QKeySequence::Refresh);
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotZoomRedraw()));
+    action->setObjectName("ZoomRedraw");
+    a_map["ZoomRedraw"] = action;
+
+    action = new QAction(tr("&Window Zoom"), agm->other);
+    action->setCheckable(true);
+    if (using_theme)
+        action->setIcon(QIcon::fromTheme("zoom-select", QIcon(":/icons/zoom_window.svg")));
+    else
+        action->setIcon(QIcon(":/icons/zoom_window.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomWindow()));
+    action->setObjectName("ZoomWindow");
+    a_map["ZoomWindow"] = action;
+
+    // <[~ File ~]>
+
+    action = new QAction(tr("&New"), agm->file);
+    if (using_theme)
+        action->setIcon(QIcon::fromTheme("document-new", QIcon(":/icons/new.svg")));
+    else
+        action->setIcon(QIcon(":/icons/new.svg"));
+    action->setShortcut(QKeySequence::New);
+    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileNewNew()));
+    action->setObjectName("FileNew");
+    a_map["FileNew"] = action;
+
+    action = new QAction(tr("New From &Template"), agm->file);
+    if (using_theme)
+        action->setIcon(QIcon::fromTheme("document-new", QIcon(":/icons/new_from_template.svg")));
+    else
+        action->setIcon(QIcon(":/icons/new_from_template.svg"));
+    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileNewTemplate()));
+    action->setObjectName("FileNewTemplate");
+    a_map["FileNewTemplate"] = action;
+
+    action = new QAction(tr("&Open..."), agm->file);
+    if (using_theme)
+        action->setIcon(QIcon::fromTheme("document-open", QIcon(":/icons/open.svg")));
+    else
+        action->setIcon(QIcon(":/icons/open.svg"));
+    action->setShortcut(QKeySequence::Open);
+    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileOpen()));
+    action->setObjectName("FileOpen");
+    a_map["FileOpen"] = action;
+
+    action = new QAction(tr("&Save"), agm->file);
+    if (using_theme)
+        action->setIcon(QIcon::fromTheme("document-save", QIcon(":/icons/save.svg")));
+    else
+        action->setIcon(QIcon(":/icons/save.svg"));
+    action->setShortcut(QKeySequence::Save);
+    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileSave()));
+    action->setObjectName("FileSave");
+    a_map["FileSave"] = action;
+
+    action = new QAction(tr("Save &as..."), agm->file);
+    if (using_theme)
+        action->setIcon(QIcon::fromTheme("document-save-as", QIcon(":/icons/save_as.svg")));
+    else
+        action->setIcon(QIcon(":/icons/save_as.svg"));
+    action->setShortcut(QKeySequence::SaveAs);
+    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileSaveAs()));
+    action->setObjectName("FileSaveAs");
+    a_map["FileSaveAs"] = action;
+
+    action = new QAction(tr("&Print..."), agm->file);
+    if (using_theme)
+        action->setIcon(QIcon::fromTheme("document-print", QIcon(":/icons/print.svg")));
+    else
+        action->setIcon(QIcon(":/icons/print.svg"));
+    action->setShortcut(QKeySequence::Print);
+    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFilePrint()));
+    connect(main_window, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
+    action->setObjectName("FilePrint");
+    a_map["FilePrint"] = action;
+
+    action = new QAction(tr("Print Pre&view"), agm->file);
+    if (using_theme)
+        action->setIcon(QIcon::fromTheme("document-print-preview", QIcon(":/icons/print_preview.svg")));
+    else
+        action->setIcon(QIcon(":/icons/print_preview.svg"));
+    action->setCheckable(true);
+    connect(action, SIGNAL(triggered(bool)), main_window, SLOT(slotFilePrintPreview(bool)));
+    connect(main_window, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
+    action->setObjectName("FilePrintPreview");
+    a_map["FilePrintPreview"] = action;
+
+    action = new QAction(tr("&Quit"), agm->file);
+    if (using_theme)
+        action->setIcon(QIcon::fromTheme("application-exit", QIcon(":/icons/quit.svg")));
+    else
+        action->setIcon(QIcon(":/icons/quit.svg"));
+    action->setShortcut(QKeySequence::Quit);
+    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileQuit()));
+    action->setObjectName("FileQuit");
+    a_map["FileQuit"] = action;
 }

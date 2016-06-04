@@ -9,10 +9,11 @@ The user interface is translated in over 30 languages.  http://translate.libreca
 Most of the project is released under the GPLv2 license,  
 but please read the [LICENSE](LICENSE) file for additional information.
 
-The master branch is used for the development of version 2.1.0,  
-which will be released by the end of May 2016.  
-- https://github.com/LibreCAD/LibreCAD/milestones/2.1.0
-- http://forum.librecad.org/GUI-update-td5712246.html
+The master branch is used for the development of version 2.1.0.
+
+- [Introduction](https://github.com/LibreCAD/ChangeLogs/blob/master/developers/r-a-v-a-s/2-1/2-1-0/2-1-0_introduction.md)
+- [Change Log](https://github.com/LibreCAD/ChangeLogs/blob/master/developers/r-a-v-a-s/2-1/2-1-0/2-1-0.md)
+- [Forum topic](http://forum.librecad.org/2-1-0-td5713751.html)
 
 The 2.0 branch represents the latest release plus bug fixes. [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=2.0)](https://travis-ci.org/LibreCAD/LibreCAD) 
 

@@ -100,13 +100,13 @@
        sodipodi:nodetypes="cc"
        id="path4163-3"
        d="m 32,108 192,0"
-       style="fill:#000000;fill-rule:evenodd;stroke:#00ff00;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#000000;fill-rule:evenodd;stroke:#00ff7f;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:connector-curvature="0" />
     <path
        sodipodi:nodetypes="cc"
        id="path4163-4"
        d="m 32,156 192,0"
-       style="fill:#00ff00;fill-rule:evenodd;stroke:#00ff00;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#00ff7f;fill-rule:evenodd;stroke:#00ff7f;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:connector-curvature="0" />
     <path
        inkscape:connector-curvature="0"
@@ -117,13 +117,13 @@
        sodipodi:nodetypes="cc"
        id="path4163-3-4"
        d="M 104,228 104,36"
-       style="fill:#000000;fill-rule:evenodd;stroke:#00ff00;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#000000;fill-rule:evenodd;stroke:#00ff7f;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:connector-curvature="0" />
     <path
        sodipodi:nodetypes="cc"
        id="path4163-4-7"
        d="M 152,228 152,36"
-       style="fill:#00ff00;fill-rule:evenodd;stroke:#00ff00;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#00ff7f;fill-rule:evenodd;stroke:#00ff7f;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        inkscape:connector-curvature="0" />
     <path
        inkscape:connector-curvature="0"
@@ -147,6 +147,6 @@
        cy="132"
        cx="128"
        id="path4146"
-       style="opacity:1;fill:#00ff00;fill-opacity:1;stroke:#000000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1" />
+       style="opacity:1;fill:#00ff7f;fill-opacity:1;stroke:#000000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:6;stroke-opacity:1" />
   </g>
 </svg>

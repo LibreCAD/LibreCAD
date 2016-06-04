@@ -6,27 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>110</width>
-    <height>24</height>
+    <width>168</width>
+    <height>33</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>110</width>
-    <height>22</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>150</width>
-    <height>24</height>
-   </size>
   </property>
   <property name="windowTitle">
    <string>Trim Amount Options</string>
@@ -36,7 +24,7 @@
   </property>
   <layout class="QHBoxLayout">
    <property name="spacing">
-    <number>1</number>
+    <number>6</number>
    </property>
    <property name="leftMargin">
     <number>1</number>
@@ -52,6 +40,12 @@
    </property>
    <item>
     <widget class="QLabel" name="lDist">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>51</width>
@@ -69,41 +63,35 @@
    <item>
     <widget class="QLineEdit" name="leDist">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
        <horstretch>40</horstretch>
        <verstretch>22</verstretch>
       </sizepolicy>
      </property>
-     <property name="minimumSize">
-      <size>
-       <width>40</width>
-       <height>22</height>
-      </size>
-     </property>
      <property name="maximumSize">
       <size>
-       <width>40</width>
-       <height>22</height>
+       <width>64</width>
+       <height>16777215</height>
       </size>
      </property>
      <property name="toolTip">
       <string>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</string>
      </property>
+     <property name="toolTipDuration">
+      <number>2</number>
+     </property>
+     <property name="maxLength">
+      <number>32769</number>
+     </property>
     </widget>
    </item>
    <item>
     <widget class="QCheckBox" name="cbTotalLength">
-     <property name="minimumSize">
-      <size>
-       <width>8</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16</width>
-       <height>16777215</height>
-      </size>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
      <property name="toolTip">
       <string>The input length is used as total length after trimming, instead of length increase</string>
@@ -114,30 +102,22 @@
     </widget>
    </item>
    <item>
-    <widget class="Line" name="sep1">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
-     <property name="minimumSize">
+     <property name="sizeHint" stdset="0">
       <size>
-       <width>2</width>
-       <height>0</height>
+       <width>4</width>
+       <height>20</height>
       </size>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>2</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::VLine</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
+    </spacer>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
     </widget>
    </item>
@@ -145,22 +125,5 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections>
-  <connection>
-   <sender>leDist</sender>
-   <signal>editingFinished()</signal>
-   <receiver>QG_TrimAmountOptions</receiver>
-   <slot>on_leDist_editingFinished()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
