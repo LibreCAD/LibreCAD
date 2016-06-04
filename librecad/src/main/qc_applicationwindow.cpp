@@ -2667,7 +2667,7 @@ void QC_ApplicationWindow::invokeLinkList()
     list->addLink(QObject::tr("User's Manual"), "http://wiki.librecad.org/index.php/LibreCAD_users_Manual");
     list->addLink(QObject::tr("Commands"), "http://wiki.librecad.org/index.php/Commands");
     list->addLink(QObject::tr("Style Sheets"), "https://github.com/LibreCAD/LibreCAD/wiki/Style-Sheets");
-    list->addLink(QObject::tr("Custom Widgets"), "https://github.com/LibreCAD/LibreCAD/wiki/Custom-Widgets");
+    list->addLink(QObject::tr("Widgets"), "https://github.com/LibreCAD/LibreCAD/wiki/Widgets");
     list->addLink(QObject::tr("Forum"), "http://forum.librecad.org/");
     list->addLink(QObject::tr("Release Information"), "https://github.com/LibreCAD/LibreCAD/releases");
     layout->addWidget(list);
