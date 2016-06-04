@@ -4416,11 +4416,11 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activation a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities are modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>Modify layer of selected entities, at  layer activation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Modify layer of selected entities, at  layer activation</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11930,7 +11930,7 @@ Continue?</source>
     </message>
     <message>
         <source>Deletinging point is invalid.</source>
-        <translation>Punctul de sters nu este valid.</translation>
+        <translation type="obsolete">Punctul de sters nu este valid.</translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
@@ -11938,7 +11938,7 @@ Continue?</source>
     </message>
     <message>
         <source>Deleteinging point is not on entity.</source>
-        <translation>Punctul de sters nu se afla pe entitate.</translation>
+        <translation type="obsolete">Punctul de sters nu se afla pe entitate.</translation>
     </message>
     <message>
         <source>Specify polyline to delete between two nodes</source>

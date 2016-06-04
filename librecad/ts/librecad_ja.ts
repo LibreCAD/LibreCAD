@@ -3601,7 +3601,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activation a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities are modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;可能な時には、アクティブ レイヤーは、その新しいレイヤーに、すべての選択された要素を修正する。複数の要素のレイヤーを変更するために：最初に必要な要素を選ぶ；レイヤーウィジットのレイヤーを作動させる.これは、すべての選ばれた要素を作る 新しいレイヤーに属するために修正される.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;可能な時には、アクティブ レイヤーは、その新しいレイヤーに、すべての選択された要素を修正する。複数の要素のレイヤーを変更するために：最初に必要な要素を選ぶ；レイヤーウィジットのレイヤーを作動させる.これは、すべての選ばれた要素を作る 新しいレイヤーに属するために修正される.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Modify layer of selected entities, at  layer activation</source>
@@ -3610,6 +3610,10 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <source>Crosshair</source>
         <translation type="obsolete">十字線</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10076,11 +10080,11 @@ Continue?</source>
     </message>
     <message>
         <source>Deleteinging point is not on entity.</source>
-        <translation>削除位置が図形上にありません。</translation>
+        <translation type="obsolete">削除位置が図形上にありません。</translation>
     </message>
     <message>
         <source>Deletinging point is invalid.</source>
-        <translation>削除位置が無効です。</translation>
+        <translation type="obsolete">削除位置が無効です。</translation>
     </message>
     <message>
         <source>Cancel</source>

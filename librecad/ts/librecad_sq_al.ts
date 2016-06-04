@@ -3708,7 +3708,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1644"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activation a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities are modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11279,23 +11279,19 @@ Continue?</source>
         <translation>Njësia duhet të jetë një polivijë</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="156"/>
         <source>Deletinging point is invalid.</source>
-        <translation>Pika e fshirë nuk është e vlefshme</translation>
+        <translation type="obsolete">Pika e fshirë nuk është e vlefshme</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="146"/>
+        <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="159"/>
         <source>Deleting point is not on entity.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="143"/>
+        <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="156"/>
         <source>Deleting point is invalid.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="159"/>
-        <source>Deleteinging point is not on entity.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

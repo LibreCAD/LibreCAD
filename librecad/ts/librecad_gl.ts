@@ -3593,11 +3593,15 @@ Vostede pode trocar estas preferencias despois, no cadro de diálogo de opcións
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activation a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities are modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cando está activado, permite cambiar entidades seleccionadas a outra capa diferente. Para cambiar a capa de varias entidades: Primeiro seleccione as entidades a cambiar; despois escolla a capa na xanela de listaxe de capas. Isto fai que todas as entidades seleccionadas antes, se asignen á nova capa.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cando está activado, permite cambiar entidades seleccionadas a outra capa diferente. Para cambiar a capa de varias entidades: Primeiro seleccione as entidades a cambiar; despois escolla a capa na xanela de listaxe de capas. Isto fai que todas as entidades seleccionadas antes, se asignen á nova capa.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Modify layer of selected entities, at  layer activation</source>
         <translation>Cambiar capa de entidades seleccionadas ao  activar a capa</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9870,7 +9874,7 @@ Seguir?</translation>
     </message>
     <message>
         <source>Deletinging point is invalid.</source>
-        <translation>O nodo que tenta desbotar non é válido.</translation>
+        <translation type="obsolete">O nodo que tenta desbotar non é válido.</translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
@@ -9878,7 +9882,7 @@ Seguir?</translation>
     </message>
     <message>
         <source>Deleteinging point is not on entity.</source>
-        <translation>O nodo que tenta desbotar non está na entidade.</translation>
+        <translation type="obsolete">O nodo que tenta desbotar non está na entidade.</translation>
     </message>
     <message>
         <source>Specify polyline to delete between two nodes</source>
