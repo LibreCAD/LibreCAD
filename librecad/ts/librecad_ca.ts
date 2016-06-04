@@ -5155,7 +5155,7 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activation a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities are modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Quan aquesta opció està habilitada, l&apos;activació d&apos;una capa podria modificar totes les entitats seleccionades a aquesta capa nova. Per canviar la capa de múltiples entitats: primer seleccioneu les entitats necessàries; activeu una capa a l&apos;estri de les capes. Això fa que totes les entitats seleccionades es modifiquin perquè pertanyin a la capa nova.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Quan aquesta opció està habilitada, l&apos;activació d&apos;una capa podria modificar totes les entitats seleccionades a aquesta capa nova. Per canviar la capa de múltiples entitats: primer seleccioneu les entitats necessàries; activeu una capa a l&apos;estri de les capes. Això fa que totes les entitats seleccionades es modifiquin perquè pertanyin a la capa nova.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Modify layer of selected entities, at  layer activation</source>
@@ -5271,6 +5271,10 @@ Seleccioneu la unitat que voleu utilitzar per als dibuixos nous i el vostre idio
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Commands 2 characters in length are automatically accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11994,7 +11998,7 @@ Voleu continuar?</translation>
     </message>
     <message>
         <source>Deletinging point is invalid.</source>
-        <translation>El punt a suprimir no és vàlid.</translation>
+        <translation type="obsolete">El punt a suprimir no és vàlid.</translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
@@ -12002,7 +12006,7 @@ Voleu continuar?</translation>
     </message>
     <message>
         <source>Deleteinging point is not on entity.</source>
-        <translation>El punt a suprimir no és a l&apos;entitat.</translation>
+        <translation type="obsolete">El punt a suprimir no és a l&apos;entitat.</translation>
     </message>
     <message>
         <source>Specify polyline to delete between two nodes</source>

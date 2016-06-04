@@ -7150,7 +7150,7 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activation a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities are modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wenn aktiviert, verschiebt die Auswahl einer Ebene alle selektierten Objekte in diese Ebene.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wenn aktiviert, verschiebt die Auswahl einer Ebene alle selektierten Objekte in diese Ebene.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Modify layer of selected entities, at  layer activation</source>
@@ -7267,6 +7267,10 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Commands 2 characters in length are automatically accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zweistellige Kommandos werden automatisch akzeptiert.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -15386,7 +15390,7 @@ Fortfahren?</translation>
     </message>
     <message>
         <source>Deletinging point is invalid.</source>
-        <translation>Der zu löschende Punkt ist ungültig.</translation>
+        <translation type="obsolete">Der zu löschende Punkt ist ungültig.</translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
@@ -15394,7 +15398,7 @@ Fortfahren?</translation>
     </message>
     <message>
         <source>Deleteinging point is not on entity.</source>
-        <translation>Der zu löschende Punkt gehört zu keinem Objekt.</translation>
+        <translation type="obsolete">Der zu löschende Punkt gehört zu keinem Objekt.</translation>
     </message>
     <message>
         <source>Specify polyline to delete between two nodes</source>

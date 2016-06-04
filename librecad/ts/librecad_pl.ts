@@ -6515,10 +6515,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activation a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities are modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Modify layer of selected entities, at  layer activation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6608,6 +6604,10 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Commands 2 characters in length are automatically accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -14108,7 +14108,7 @@ Continue?</source>
     </message>
     <message>
         <source>Deletinging point is invalid.</source>
-        <translation>Usuwany punkt jest nieprawidłowy.</translation>
+        <translation type="obsolete">Usuwany punkt jest nieprawidłowy.</translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
@@ -14116,7 +14116,7 @@ Continue?</source>
     </message>
     <message>
         <source>Deleteinging point is not on entity.</source>
-        <translation>Usuwany punkt nie leży na obiekcie.</translation>
+        <translation type="obsolete">Usuwany punkt nie leży na obiekcie.</translation>
     </message>
     <message>
         <source>Specify polyline to delete between two nodes</source>
