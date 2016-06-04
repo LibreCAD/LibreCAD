@@ -9,13 +9,13 @@ The user interface is translated in over 30 languages.  http://translate.libreca
 Most of the project is released under the GPLv2 license,  
 but please read the [LICENSE](LICENSE) file for additional information.
 
-The master branch is used for the development of version 2.1.0.
+The master branch represents the latest pre-release code. 
 
-- [Introduction](https://github.com/LibreCAD/ChangeLogs/blob/master/developers/r-a-v-a-s/2-1/2-1-0/2-1-0_introduction.md)
-- [Change Log](https://github.com/LibreCAD/ChangeLogs/blob/master/developers/r-a-v-a-s/2-1/2-1-0/2-1-0.md)
-- [Forum topic](http://forum.librecad.org/2-1-0-td5713751.html)
+The 2.0 branch will be the last to support the QCAD toolbar. [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=2.0)](https://travis-ci.org/LibreCAD/LibreCAD) 
 
-The 2.0 branch represents the latest release plus bug fixes. [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=2.0)](https://travis-ci.org/LibreCAD/LibreCAD) 
+https://github.com/LibreCAD/LibreCAD/releases
+
+https://github.com/LibreCAD/LibreCAD/milestones
 
 [libdxfrw][1] is an associated project that allows LibreCAD to read DWG files.
 [1]:https://sourceforge.net/projects/libdxfrw/
@@ -48,11 +48,6 @@ Linux packages:
 - [Gentoo](https://packages.gentoo.org/packages/media-gfx/librecad)
 - [openSUSE](https://software.opensuse.org/package/librecad)
 - [Ubuntu](https://launchpad.net/~librecad-dev)
-
-2.1.0 alpha versions: [Windows][3] - [OS X][4]
-
-[3]:https://sourceforge.net/projects/librecad/files/Windows/NightlyBuilds/master
-[4]:https://sourceforge.net/projects/librecad/files/OSX/2.1/2.1.0/alpha/
 
 **Wiki**
 
