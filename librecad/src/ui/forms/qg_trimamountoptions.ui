@@ -77,9 +77,6 @@
      <property name="toolTip">
       <string>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</string>
      </property>
-     <property name="toolTipDuration">
-      <number>2</number>
-     </property>
      <property name="maxLength">
       <number>32769</number>
      </property>
