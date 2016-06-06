@@ -30,6 +30,7 @@
 #include <QApplication>
 #include <QSplashScreen>
 #include <QSettings>
+#include <QMessageBox>
 
 #include "rs_fontlist.h"
 #include "rs_patternlist.h"
@@ -46,6 +47,8 @@
  */
 int main(int argc, char** argv)
 {
+    QT_REQUIRE_VERSION(argc, argv, "5.2.1");
+
     RS_DEBUG->setLevel(RS_Debug::D_WARNING);
 
     QApplication app(argc, argv);

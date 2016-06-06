@@ -9,13 +9,14 @@ The user interface is translated in over 30 languages.  http://translate.libreca
 Most of the project is released under the GPLv2 license,  
 but please read the [LICENSE](LICENSE) file for additional information.
 
-The master branch represents the latest pre-release code. 
-
+The master branch represents the latest pre-release code,  
+and now requires Qt 5.2.1 or newer.  
+The 2.1 branch will be the last to support Qt4.  
 The 2.0 branch will be the last to support the QCAD toolbar. [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=2.0)](https://travis-ci.org/LibreCAD/LibreCAD) 
 
-https://github.com/LibreCAD/LibreCAD/releases
+- [Releases](https://github.com/LibreCAD/LibreCAD/releases)
 
-https://github.com/LibreCAD/LibreCAD/milestones
+- [Milestones](https://github.com/LibreCAD/LibreCAD/milestones)
 
 [libdxfrw][1] is an associated project that allows LibreCAD to read DWG files.
 [1]:https://sourceforge.net/projects/libdxfrw/
