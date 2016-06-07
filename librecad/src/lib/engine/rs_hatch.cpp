@@ -47,10 +47,6 @@
 #include "rs_debug.h"
 
 
-#if QT_VERSION < 0x040400
-#include "emu_qt44.h"
-#endif
-
 RS_HatchData::RS_HatchData(bool _solid,
 						   double _scale,
 						   double _angle,
@@ -422,11 +418,7 @@ void RS_Hatch::update() {
 						is2.append(av);
 						last = av;
                     }
-#if QT_VERSION < 0x040400
-                    emu_qt44_removeOne(is, av);
-#else
                     is.removeOne(av);
-#endif
 
 					av.valid = false;
                 }
@@ -636,10 +628,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 
                     RS_Vector c=view->toGui(circle->getCenter());
                     double r=view->toGuiDX(circle->getRadius());
-#if QT_VERSION >= 0x040400
                     path.addEllipse(QPoint(c.x,c.y),r,r);
-#else
-                    path.addEllipse(c.x - r, c.y + r, 2.*r, 2.*r);
 //                    QPolygon pa2;
 //                    painter->createArc(pa2, view->toGui(circle->getCenter()),
 //                                       view->toGuiDX(circle->getRadius()),
@@ -647,7 +636,6 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 //                                       2*M_PI,
 //                                       false);
 //                    pa<<pa2;
-#endif
                 }
                     break;
                 case RS2::EntityEllipse:

@@ -115,7 +115,3 @@ void plot::execComm(Document_Interface *doc, QWidget *parent, QString cmd)
     }
 
 }
-
-#if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(plotequation, plot);
-#endif

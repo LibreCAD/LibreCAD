@@ -66,7 +66,6 @@ void QG_FileDialog::getType(const QString filter)
 QG_FileDialog::QG_FileDialog(QWidget* parent, Qt::WindowFlags f, FileType type)
                             :QFileDialog(parent, f)
 {
-#if QT_VERSION >= 0x040500
 //# check if system are linux+KDE to use QFileDialog instead "native" FileDialog
 //# KDE returns the first filter that match the pattern "*.dxf" instead the selected
 #ifdef Q_OS_LINUX
@@ -79,7 +78,6 @@ QG_FileDialog::QG_FileDialog(QWidget* parent, Qt::WindowFlags f, FileType type)
     setOption ( QFileDialog::DontUseNativeDialog, false );
 #endif
     setOption ( QFileDialog::HideNameFilterDetails, false );
-#endif // QT_VERSION
     ftype= RS2::FormatDXFRW;
 
     fDxfrw2007 = tr("Drawing Exchange DXF 2007 %1").arg("(*.dxf)");

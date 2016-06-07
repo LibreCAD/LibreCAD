@@ -26,13 +26,8 @@
 #include<iostream>
 #include "qc_mdiwindow.h"
 
-#if QT_VERSION >= 0x050000
-# include <QtPrintSupport/QPrinter>
-# include <QtPrintSupport/QPrintDialog>
-#else
-# include <QPrinter>
-# include <QPrintDialog>
-#endif
+#include <QtPrintSupport/QPrinter>
+#include <QtPrintSupport/QPrintDialog>
 
 #include <QApplication>
 #include <QCloseEvent>

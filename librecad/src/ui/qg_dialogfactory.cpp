@@ -114,10 +114,6 @@
 #include "rs_vector.h"
 #include "rs_debug.h"
 
-#if QT_VERSION < 0x040400
-#include "emu_qt44.h"
-#endif
-
 //QG_DialogFactory* QG_DialogFactory::uniqueInstance = nullptr;
 
 /**
@@ -476,14 +472,10 @@ QString QG_DialogFactory::requestImageOpenDialog()
     fileDlg.setFileMode(QFileDialog::ExistingFile);
     fileDlg.setWindowTitle(QObject::tr("Open Image"));
     fileDlg.setDirectory(defDir);
-#if QT_VERSION >= 0x040400
     fileDlg.setNameFilters(filters);
     if (defFilter.isEmpty())
         defFilter = strAllImageFiles;
     fileDlg.selectNameFilter(defFilter);
-#else
-    emu_qt44_QFileDialog_setNameFilters(fileDlg, filters);
-#endif
 
     if (QDialog::Accepted == fileDlg.exec()) {
         QStringList strSelectedFiles = fileDlg.selectedFiles();
@@ -493,11 +485,7 @@ QString QG_DialogFactory::requestImageOpenDialog()
         // store new default settings:
         RS_SETTINGS->beginGroup("/Paths");
         RS_SETTINGS->writeEntry("/OpenImage", QFileInfo(strFileName).absolutePath());
-#if QT_VERSION < 0x040400
-        RS_SETTINGS->writeEntry("/ImageFilter", emu_qt44_QFileDialog_selectedNameFilter(fileDlg));
-#else
         RS_SETTINGS->writeEntry("/ImageFilter", fileDlg.selectedNameFilter());
-#endif
         RS_SETTINGS->endGroup();
     }
 

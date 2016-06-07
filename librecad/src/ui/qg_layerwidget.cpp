@@ -70,16 +70,10 @@ void QG_LayerModel::setLayerList(RS_LayerList* ll) {
 	/* since 4.6 the recomended way is to use begin/endResetModel()
 	 * TNick <nicu.tofan@gmail.com>
 	 */
-#if QT_VERSION >= 0x040600
     beginResetModel();
-#endif
     listLayer.clear();
     if (ll == NULL) {
-#if QT_VERSION >= 0x040600
         endResetModel();
-#else
-        reset();
-#endif
         return;
     }
     for (unsigned i=0; i < ll->count(); ++i) {
@@ -89,11 +83,7 @@ void QG_LayerModel::setLayerList(RS_LayerList* ll) {
         return s1->getName() < s2->getName();
     } );
 //called to force redraw
-#if QT_VERSION >= 0x040600
     endResetModel();
-#else
-    reset();
-#endif
 }
 
 
@@ -389,11 +379,7 @@ void QG_LayerWidget::slotUpdateLayerList() {
 
     n=matchLayerName->text();
     rx.setPattern(n);
-#if QT_VERSION < 0x040600
-    rx.setPatternSyntax(QRegExp::Wildcard);
-#else
     rx.setPatternSyntax(QRegExp::WildcardUnix);
-#endif
 
     for (unsigned int i=0; i<layerList->count() ; i++) {
         s=layerModel->getLayer(i)->getName();

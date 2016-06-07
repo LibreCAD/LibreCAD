@@ -18,9 +18,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QCheckBox>
-#if QT_VERSION >= 0x040400
 #include <QFormLayout>
-#endif
 #include <QPushButton>
 #include <QFileDialog>
 #include <QSettings>
@@ -323,7 +321,3 @@ void picPunto::writeSettings()
     settings.setValue("lastfile", fileedit->text());
     settings.setValue("lastscale", scaleedit->text());
  }
-
-#if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(picfile, PicFile);
-#endif

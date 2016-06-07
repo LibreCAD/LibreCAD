@@ -30,10 +30,6 @@
 #include "rs_system.h"
 #include "rs_debug.h"
 
-#if QT_VERSION < 0x040400
-#include "emu_qt44.h"
-#endif
-
 RS_ScriptList* RS_ScriptList::uniqueInstance = NULL;
 
 /**
@@ -94,12 +90,7 @@ void RS_ScriptList::removeScript(RS_Script* script) {
     RS_DEBUG->print("RS_ScriptList::removeScript()");
 
     // here the script is removed from the list but not deleted
-#if QT_VERSION < 0x040400
-    emu_qt44_removeOne(scripts, script);
-#else
     scripts.removeOne(script);
-#endif
-
 
     //for (unsigned i=0; i<scriptListListeners.count(); ++i) {
     //    RS_ScriptListListener* l = scriptListListeners.at(i);
