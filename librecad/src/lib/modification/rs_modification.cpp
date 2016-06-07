@@ -516,7 +516,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     try {
         RS_Layer* layer = source->getActiveLayer();
         graphic->activateLayer(layer);
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: selected layer: %s", layer->getName().toLatin1().data());
+//      // RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: selected layer: %s", layer->getName().toLatin1().data());
     }
     catch (...) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::paste: unable to select layer to paste in");
