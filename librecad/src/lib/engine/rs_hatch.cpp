@@ -151,27 +151,36 @@ void RS_Hatch::calculateBorders() {
 /**
  * Updates the Hatch. Called when the
  * hatch or it's data, position, alignment, .. changes.
+ *
+ * Refill hatch with pattern. Move, scale, rotate, trim, etc.
  */
 void RS_Hatch::update() {
-        RS_DEBUG->print("RS_Hatch::update");
-        RS_DEBUG->print("RS_Hatch::update: contour has %d loops", count());
+
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update");
 
     updateError = HATCH_OK;
     if (updateRunning) {
+        RS_DEBUG->print(RS_Debug::D_NOTICE, "RS_Hatch::update: skip hatch in updating process");
         return;
     }
 
     if (updateEnabled==false) {
+        RS_DEBUG->print(RS_Debug::D_NOTICE, "RS_Hatch::update: skip hatch forbidden to update");
         return;
     }
 
     if (data.solid==true) {
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: processing solid hatch");
         calculateBorders();
         return;
     }
 
-    RS_DEBUG->print("RS_Hatch::update");
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: contour has %d loops", count());
     updateRunning = true;
+
+    // save attributes for the current hatch
+    RS_Layer* hatch_layer = this->getLayer();
+    RS_Pen hatch_pen = this->getPen();
 
     // delete old hatch:
     if (hatch) {
@@ -180,39 +189,45 @@ void RS_Hatch::update() {
     }
 
     if (isUndone()) {
+        RS_DEBUG->print(RS_Debug::D_NOTICE, "RS_Hatch::update: skip undone hatch");
         updateRunning = false;
         return;
     }
 
     if (!validate()) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_Hatch::update: invalid contour in hatch found");
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::update: invalid contour in hatch found");
         updateRunning = false;
         updateError = HATCH_INVALID_CONTOUR;
         return;
     }
 
-    // search pattern:
-    RS_DEBUG->print("RS_Hatch::update: requesting pattern");
+    // search for pattern
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: requesting pattern");
     RS_Pattern* pat = RS_PATTERNLIST->requestPattern(data.pattern);
 	if (!pat) {
         updateRunning = false;
-        RS_DEBUG->print("RS_Hatch::update: requesting pattern: not found");
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::update: requesting pattern: not found");
         updateError = HATCH_PATTERN_NOT_FOUND;
         return;
+    } else {
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: requesting pattern: OK");
+        // make a working copy of hatch pattern
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: cloning pattern");
+        pat = (RS_Pattern*)pat->clone();
+        if (pat) {
+            RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: cloning pattern: OK");
+        } else {
+            RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::update: error while cloning hatch pattern");
+            return;
+        }
     }
-    RS_DEBUG->print("RS_Hatch::update: requesting pattern: OK");
-
-    RS_DEBUG->print("RS_Hatch::update: cloning pattern");
-    pat = (RS_Pattern*)pat->clone();
-    RS_DEBUG->print("RS_Hatch::update: cloning pattern: OK");
 
     // scale pattern
-    RS_DEBUG->print("RS_Hatch::update: scaling pattern");
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: scaling pattern");
     pat->scale(RS_Vector(0.0,0.0), RS_Vector(data.scale, data.scale));
     pat->calculateBorders();
     forcedCalculateBorders();
-    RS_DEBUG->print("RS_Hatch::update: scaling pattern: OK");
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: scaling pattern: OK");
 
     // find out how many pattern-instances we need in x/y:
     int px1, py1, px2, py2;
@@ -227,10 +242,10 @@ void RS_Hatch::update() {
 //    RS_Vector cPos = getMin();
     RS_Vector cSize = getSize();
 
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: pattern size: %f/%f", pSize.x, pSize.y);
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: contour size: %f/%f", cSize.x, cSize.y);
 
-    RS_DEBUG->print("RS_Hatch::update: pattern size: %f/%f", pSize.x, pSize.y);
-    RS_DEBUG->print("RS_Hatch::update: contour size: %f/%f", cSize.x, cSize.y);
-
+    // check pattern sizes for sanity
     if (cSize.x<1.0e-6 || cSize.y<1.0e-6 ||
             pSize.x<1.0e-6 || pSize.y<1.0e-6 ||
             cSize.x>RS_MAXDOUBLE-1 || cSize.y>RS_MAXDOUBLE-1 ||
@@ -238,20 +253,20 @@ void RS_Hatch::update() {
         delete pat;
         delete copy;
         updateRunning = false;
-        RS_DEBUG->print("RS_Hatch::update: contour size or pattern size too small");
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::update: contour size or pattern size too small");
         updateError = HATCH_TOO_SMALL;
         return;
     }
-
     // avoid huge memory consumption:
     else if ( cSize.x* cSize.y/(pSize.x*pSize.y)>1e4) {
-        RS_DEBUG->print("RS_Hatch::update: contour size too large or pattern size too small");
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::update: contour size too large or pattern size too small");
         delete pat;
         delete copy;
         updateError = HATCH_AREA_TOO_BIG;
         return;
     }
 
+    // calculate pattern pieces quantity
     f = copy->getMin().x/pSize.x;
     px1 = (int)floor(f);
     f = copy->getMin().y/pSize.y;
@@ -265,12 +280,10 @@ void RS_Hatch::update() {
     pat->rotate(rot_center, data.angle);
     pat->move(-rot_center);
 
-
     RS_EntityContainer tmp;   // container for untrimmed lines
 
     // adding array of patterns to tmp:
-    RS_DEBUG->print("RS_Hatch::update: creating pattern carpet");
-
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: creating pattern carpet");
     for (int px=px1; px<px2; px++) {
 		for (int py=py1; py<py2; py++) {
 			for(auto e: *pat){
@@ -281,21 +294,27 @@ void RS_Hatch::update() {
         }
     }
 
+    // clean memory
     delete pat;
     pat = nullptr;
     delete copy;
     copy = nullptr;
-    RS_DEBUG->print("RS_Hatch::update: creating pattern carpet: OK");
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: creating pattern carpet: OK");
 
-
-    RS_DEBUG->print("RS_Hatch::update: cutting pattern carpet");
-    // cut pattern to contour shape:
+    // cut pattern to contour shape
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: cutting pattern carpet");
     RS_EntityContainer tmp2;   // container for small cut lines
 	RS_Line* line = nullptr;
 	RS_Arc* arc = nullptr;
 	RS_Circle* circle = nullptr;
 	RS_Ellipse* ellipse = nullptr;
-	for(auto e: tmp){
+
+    for(auto e: tmp) {
+
+        if (!e) {
+            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Hatch::update: nullptr entity found");
+            continue;
+        }
 
 		line = nullptr;
 		arc = nullptr;
@@ -307,35 +326,35 @@ void RS_Hatch::update() {
         RS_Vector center = RS_Vector(false);
         bool reversed=false;
 
-        switch(e->rtti()){
-        case RS2::EntityLine:
-            line=static_cast<RS_Line*>(e);
-            startPoint = line->getStartpoint();
-            endPoint = line->getEndpoint();
-            break;
-        case RS2::EntityArc:
-            arc=static_cast<RS_Arc*>(e);
-            startPoint = arc->getStartpoint();
-            endPoint = arc->getEndpoint();
-            center = arc->getCenter();
-            reversed = arc->isReversed();
-            break;
-        case RS2::EntityCircle:
-            circle=static_cast<RS_Circle*>(e);
-            startPoint = circle->getCenter()
-                    + RS_Vector(circle->getRadius(), 0.0);
-            endPoint = startPoint;
-            center = circle->getCenter();
-            break;
-        case RS2::EntityEllipse:
-            ellipse = static_cast<RS_Ellipse*>(e);
-            startPoint = ellipse->getStartpoint();
-            endPoint = ellipse->getEndpoint();
-            center = ellipse->getCenter();
-            reversed = ellipse->isReversed();
-            break;
-        default:
-            continue;
+        switch(e->rtti()) {
+            case RS2::EntityLine:
+                line=static_cast<RS_Line*>(e);
+                startPoint = line->getStartpoint();
+                endPoint = line->getEndpoint();
+                break;
+            case RS2::EntityArc:
+                arc=static_cast<RS_Arc*>(e);
+                startPoint = arc->getStartpoint();
+                endPoint = arc->getEndpoint();
+                center = arc->getCenter();
+                reversed = arc->isReversed();
+                break;
+            case RS2::EntityCircle:
+                circle=static_cast<RS_Circle*>(e);
+                startPoint = circle->getCenter()
+                        + RS_Vector(circle->getRadius(), 0.0);
+                endPoint = startPoint;
+                center = circle->getCenter();
+                break;
+            case RS2::EntityEllipse:
+                ellipse = static_cast<RS_Ellipse*>(e);
+                startPoint = ellipse->getStartpoint();
+                endPoint = ellipse->getEndpoint();
+                center = ellipse->getCenter();
+                reversed = ellipse->isReversed();
+                break;
+            default:
+                continue;
         }
 
         // getting all intersections of this pattern line with the contour:
@@ -349,28 +368,24 @@ void RS_Hatch::update() {
                     RS_VectorSolutions sol =
                         RS_Information::getIntersection(e, p, true);
 
-					for (const RS_Vector& vp: sol){
+                    for (const RS_Vector& vp: sol) {
 						if (vp.valid) {
 							is.append(vp);
-							RS_DEBUG->print("  pattern line intersection: %f/%f",
-											vp.x, vp.y);
+                            RS_DEBUG->print(RS_Debug::D_DEBUGGING, "  pattern line intersection: %f/%f", vp.x, vp.y);
 						}
 					}
 				}
 			}
 		}
 
-
-		QList<RS_Vector> is2;//to be filled with sorted intersections
+        QList<RS_Vector> is2;       //to be filled with sorted intersections
 		is2.append(startPoint);
 
         // sort the intersection points into is2 (only if there are intersections):
-        if(is.size() == 1)
-        {//only one intersection
+        if(is.size() == 1) {        //only one intersection
             is2.append(is.first());
         }
-        else if(is.size() > 1)
-        {
+        else if(is.size() > 1) {
             RS_Vector sp = startPoint;
             double sa = center.angleTo(sp);
 			if(ellipse ) sa=ellipse->getEllipseAngle(sp);
@@ -380,7 +395,7 @@ void RS_Hatch::update() {
 			RS_Vector av;
 			RS_Vector v;
 			RS_Vector last{};
-            do {
+            do {    // very long while(!done) loop
                 done = true;
                 minDist = RS_MAXDOUBLE;
 				av.valid = false;
@@ -436,43 +451,40 @@ void RS_Hatch::update() {
 		is2.append(endPoint);
 
         // add small cut lines / arcs to tmp2:
-            for (int i = 1; i < is2.size(); ++i) {
-                auto v1 = is2.at(i-1);
-                auto v2 = is2.at(i);
+        for (int i = 1; i < is2.size(); ++i) {
+            auto v1 = is2.at(i-1);
+            auto v2 = is2.at(i);
 
 
-                if (line) {
+            if (line) {
 
-					tmp2.addEntity(new RS_Line{&tmp2, v1, v2});
-                } else if (arc || circle) {
-					if(fabs(center.angleTo(v2)-center.angleTo(v1)) > RS_TOLERANCE_ANGLE)
-                    {//don't create an arc with a too small angle
-                        tmp2.addEntity(new RS_Arc(&tmp2,
-                                                  RS_ArcData(center,
-															 center.distanceTo(v1),
-															 center.angleTo(v1),
-															 center.angleTo(v2),
-                                                             reversed)));
-                    }
-
+                tmp2.addEntity(new RS_Line{&tmp2, v1, v2});
+            } else if (arc || circle) {
+                if(fabs(center.angleTo(v2)-center.angleTo(v1)) > RS_TOLERANCE_ANGLE)
+                {//don't create an arc with a too small angle
+                    tmp2.addEntity(new RS_Arc(&tmp2,
+                                              RS_ArcData(center,
+                                                         center.distanceTo(v1),
+                                                         center.angleTo(v1),
+                                                         center.angleTo(v2),
+                                                         reversed)));
                 }
             }
-
-    }
+        }
+    } // end for very very long for(auto e: tmp) loop
 
     // updating hatch / adding entities that are inside
-    RS_DEBUG->print("RS_Hatch::update: cutting pattern carpet: OK");
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: cutting pattern carpet: OK");
 
     //RS_EntityContainer* rubbish = new RS_EntityContainer(getGraphic());
 
-    // the hatch pattern entities:
+    // add the hatch pattern entities
     hatch = new RS_EntityContainer(this);
-    hatch->setPen(RS_Pen(RS2::FlagInvalid));
-	hatch->setLayer(nullptr);
+    hatch->setPen(hatch_pen);
+    hatch->setLayer(hatch_layer);
     hatch->setFlag(RS2::FlagTemp);
 
     //calculateBorders();
-
 	for(auto e: tmp2){
 
         RS_Vector middlePoint;
@@ -501,8 +513,8 @@ void RS_Hatch::update() {
                     RS_Information::isPointInsideContour(middlePoint2, this)) {
 
                 RS_Entity* te = e->clone();
-				te->setPen(RS2::FlagInvalid);
-				te->setLayer(nullptr);
+                te->setPen(hatch_pen);
+                te->setLayer(hatch_layer);
                 te->reparent(hatch);
                 hatch->addEntity(te);
             }
@@ -519,7 +531,7 @@ void RS_Hatch::update() {
 
     updateRunning = false;
 
-    RS_DEBUG->print("RS_Hatch::update: OK");
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Hatch::update: OK");
 }
 
 
