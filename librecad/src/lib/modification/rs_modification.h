@@ -29,6 +29,8 @@
 
 #include "rs_vector.h"
 #include "rs_pen.h"
+#include <QHash>
+
 class RS_AtomicEntity;
 class RS_Entity;
 class RS_EntityContainer;
