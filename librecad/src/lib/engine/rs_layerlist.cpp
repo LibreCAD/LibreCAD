@@ -54,6 +54,27 @@ void RS_LayerList::clear() {
 }
 
 
+QList<RS_Layer*>::iterator RS_LayerList::begin()
+{
+    return layers.begin();
+}
+
+QList<RS_Layer*>::iterator RS_LayerList::end()
+{
+    return layers.end();
+}
+
+QList<RS_Layer*>::const_iterator RS_LayerList::begin()const
+{
+    return layers.begin();
+}
+
+QList<RS_Layer*>::const_iterator RS_LayerList::end()const
+{
+    return layers.end();
+}
+
+
 
 /**
  * Activates the given layer.
