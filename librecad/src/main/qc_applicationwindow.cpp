@@ -1117,7 +1117,15 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     }
 
     //check for draft mode
-    slotViewDraft(a_map["ViewDraft"]->isChecked());
+
+    if (settings.value("Appearance/DraftMode", 0).toBool())
+    {
+        QString draft_string = " ["+tr("Draft Mode")+"]";
+        w->getGraphicView()->setDraftMode(true);
+        QString title = w->windowTitle();
+        w->setWindowTitle(title + draft_string);
+    }
+
     w->setWindowIcon(QIcon(":/main/document.png"));
 
     // only graphics offer block lists, blocks don't
@@ -1385,6 +1393,8 @@ void QC_ApplicationWindow::
 {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen(..)");
 
+    QSettings settings;
+
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 
     if ( QFileInfo(fileName).exists())
@@ -1483,7 +1493,14 @@ void QC_ApplicationWindow::
                 /*	Format and set caption.
                  *	----------------------- */
         w->setWindowTitle(format_filename_caption(fileName));
-        slotViewDraft(a_map["ViewDraft"]->isChecked());
+        if (settings.value("Appearance/DraftMode", 0).toBool())
+        {
+            QString draft_string = " ["+tr("Draft Mode")+"]";
+            w->getGraphicView()->setDraftMode(true);
+            w->getGraphicView()->redraw();
+            QString title = w->windowTitle();
+            w->setWindowTitle(title + draft_string);
+        }
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: set caption: OK");
 
