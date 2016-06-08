@@ -1128,12 +1128,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
         switch(e->rtti()){
         case RS2::EntityMText:
         case RS2::EntityText:
-            if (toGuiDX(((RS_MText*)e)->getHeight())<4 || e->countDeep()>100) {
-                // large or tiny texts as rectangles:
-                painter->drawRect(toGui(e->getMin()), toGui(e->getMax()));
-            } else {
-                drawEntityPlain(painter, e, patternOffset);
-            }
+            painter->drawRect(toGui(e->getMin()), toGui(e->getMax()));
             break;
         case RS2::EntityImage:
             // all images as rectangles:
