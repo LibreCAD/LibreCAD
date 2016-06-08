@@ -1117,7 +1117,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     }
 
     //check for draft mode
-    updateWindowTitle(w);
+    slotViewDraft(a_map["ViewDraft"]->isChecked());
     w->setWindowIcon(QIcon(":/main/document.png"));
 
     // only graphics offer block lists, blocks don't
@@ -1483,7 +1483,7 @@ void QC_ApplicationWindow::
                 /*	Format and set caption.
                  *	----------------------- */
         w->setWindowTitle(format_filename_caption(fileName));
-        updateWindowTitle(w);
+        slotViewDraft(a_map["ViewDraft"]->isChecked());
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: set caption: OK");
 
