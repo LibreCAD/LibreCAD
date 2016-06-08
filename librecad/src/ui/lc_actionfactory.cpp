@@ -1075,6 +1075,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action = new QAction(tr("&Draft"), agm->view);
     action->setIcon(QIcon(":/icons/draft.svg"));
     action->setCheckable(true);
+    action->setShortcut(QKeySequence(tr("Ctrl+D", "Toggle Draft Mode")));
     connect(action, SIGNAL(toggled(bool)), main_window, SLOT(slotViewDraft(bool)));
     connect(main_window, SIGNAL(draftChanged(bool)), action, SLOT(setChecked(bool)));
     action->setObjectName("ViewDraft");
