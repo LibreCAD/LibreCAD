@@ -230,6 +230,7 @@ public:
 	void remove();
 	void revertDirection();
 	bool changeAttributes(RS_AttributesData& data);
+    bool changeAttributes(RS_AttributesData& data, RS_EntityContainer* container, std::vector<RS_Entity*> addList);
 
         void copy(const RS_Vector& ref, const bool cut);
 private:
