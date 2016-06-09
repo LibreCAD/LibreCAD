@@ -30,9 +30,7 @@
 #include <QLabel>
 #include <QMenu>
 #include <QDebug>
-#if QT_VERSION >= 0x050200
 #include <QNativeGestureEvent>
-#endif
 
 #include "rs_actionzoomin.h"
 #include "rs_actionzoompan.h"
@@ -350,7 +348,6 @@ void QG_GraphicView::mouseMoveEvent(QMouseEvent* event)
 
 bool QG_GraphicView::event(QEvent *event)
 {
-#if QT_VERSION >= 0x050200
     if (event->type() == QEvent::NativeGesture) {
         QNativeGestureEvent *nge = static_cast<QNativeGestureEvent *>(event);
 
@@ -376,8 +373,7 @@ bool QG_GraphicView::event(QEvent *event)
 
         return true;
     }
-#endif
-	return QWidget::event(event);
+    return QWidget::event(event);
 }
 
 /**
@@ -488,8 +484,6 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
     RS_Vector mouse = toGraph(e->x(), e->y());
 
-    #if QT_VERSION >= 0x050200
-
         if (options && options->device == "Trackpad")
         {
             QPoint numPixels = e->pixelDelta();
@@ -532,7 +526,6 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
                 return;
             }
         }
-    #endif
 
     if (e->delta() == 0) {
         // A zero delta event occurs when smooth scrolling is ended. Ignore this

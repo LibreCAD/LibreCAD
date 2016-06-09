@@ -17,9 +17,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QCheckBox>
-#if QT_VERSION >= 0x040400
 #include <QFormLayout>
-#endif
 #include <QPushButton>
 #include <QFileDialog>
 #include <QSettings>
@@ -205,18 +203,14 @@ textBox::textBox(const QString & title, const QString & label, QWidget * parent)
     sepedit = new QLineEdit();
     sepedit->setValidator(val);
 
-#if QT_VERSION >= 0x040400
     QFormLayout *flo = new QFormLayout;
     flo->addRow( tr("Style:"), combostyle);
     flo->addRow( tr("Height:"), heightedit);
     flo->addRow( tr("Separation"), sepedit);
-#endif
 //    posimage.fill(Qt::black);
     img = new imgLabel();
     QHBoxLayout *loimage = new QHBoxLayout;
-#if QT_VERSION >= 0x040400
     loimage->addLayout(flo);
-#endif
     loimage->addWidget(img);
 
     setInLayout(loimage);
@@ -716,7 +710,3 @@ void dibPunto::writeSettings()
     settings.setValue("positionnumber", ptnumber->getPosition());
     settings.setValue("positioncode", ptcode->getPosition());
  }
-
-#if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(asciifile, AsciiFile);
-#endif

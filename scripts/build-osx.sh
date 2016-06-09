@@ -26,10 +26,15 @@
 #default qt from MacPorts
 # specify QT_PATH to customize
 SCRIPTPATH="$(dirname "$0")"
-QT_PATH=/opt/local/bin/
+if [ -x "/opt/local/libexec/qt5/bin/qmake" ]
+then
+	QT_PATH=/opt/local/libexec/qt5/bin/
+else
+	QT_PATH=/opt/local/bin/
+fi
 
 
-QMAKE_OPTS="-spec mkspec/macports"
+QMAKE_OPTS=""
 
 for i in "$@"
 do

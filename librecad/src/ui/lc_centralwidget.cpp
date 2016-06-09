@@ -44,11 +44,8 @@ LC_CentralWidget::LC_CentralWidget(QWidget* parent)
     mdi_area->setFocusPolicy(Qt::ClickFocus);
     mdi_area->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     mdi_area->setActivationOrder(QMdiArea::ActivationHistoryOrder);
-
-    #if QT_VERSION >= 0x040800
-        mdi_area->setTabsMovable(true);
-        mdi_area->setTabsClosable(true);
-    #endif
+    mdi_area->setTabsMovable(true);
+    mdi_area->setTabsClosable(true);
 
     setLayout(layout);
 }

@@ -63,8 +63,3 @@ void LC_SameProp::execComm(Document_Interface *doc,
     while (!obj.isEmpty())
         delete obj.takeFirst();
 }
-
-
-#if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(lc_sameprop, LC_SameProp);
-#endif

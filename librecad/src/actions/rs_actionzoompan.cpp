@@ -81,11 +81,7 @@ void RS_ActionZoomPan::mouseMoveEvent(QMouseEvent* e) {
 
 
 void RS_ActionZoomPan::mousePressEvent(QMouseEvent* e) {
-#if QT_VERSION < 0x040700
-    if (e->button()==Qt::MidButton ||
-#else
     if (e->button()==Qt::MiddleButton ||
-#endif
             e->button()==Qt::LeftButton) {
         //v1 = snapPoint(e);
         x1 = e->x();
