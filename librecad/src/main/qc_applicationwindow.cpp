@@ -216,6 +216,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     LC_ActionFactory a_factory(this, actionHandler);
     a_factory.using_theme = settings.value("Widgets/AllowTheme", 0).toBool();
     a_factory.fillActionContainer(a_map, ag_manager);
+
     LC_WidgetFactory widget_factory(this, a_map, ag_manager);
     if (enable_left_sidebar)
         widget_factory.createLeftSidebar(5, icon_size);
@@ -1875,9 +1876,12 @@ void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
 
     window_list.removeOne(win);
 
-    layerWidget->setLayerList(nullptr, false);
-    blockWidget->setBlockList(nullptr);
-    coordinateWidget->setGraphic(nullptr);
+    if (activedMdiSubWindow == win)
+    {
+        layerWidget->setLayerList(nullptr, false);
+        blockWidget->setBlockList(nullptr);
+        coordinateWidget->setGraphic(nullptr);
+    }
 
     openedFiles.removeAll(win->getDocument()->getFilename());
 
