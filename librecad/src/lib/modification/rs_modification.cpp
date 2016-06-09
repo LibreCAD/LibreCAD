@@ -3164,7 +3164,12 @@ bool RS_Modification::explode() {
                             clone->setLayer(e2->getLayer());
                         }
 
-                        clone->setPen(ec->getPen(resolvePen));
+//                        clone->setPen(ec->getPen(resolvePen));
+                        if (resolvePen) {
+                            clone->setPen(ec->getPen(true));
+                        } else {
+                            clone->setPen(e2->getPen(false));
+                        }
 
 						addList.push_back(clone);
 
