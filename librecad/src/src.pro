@@ -11,6 +11,7 @@ DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
 LC_VERSION="2.2.0-alpha"
+VERSION=$${LC_VERSION}
 
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/librecad
@@ -44,10 +45,13 @@ unix {
 
     macx {
         TARGET = LibreCAD
+        VERSION=$$system(echo "$${LC_VERSION}" | sed -e 's/\-.*//g')
+        QMAKE_INFO_PLIST = Info.plist.app
         DEFINES += QC_APPDIR="\"LibreCAD\""
         RC_FILE = ../res/main/librecad.icns
         contains(DISABLE_POSTSCRIPT, false) {
-            QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-osx.sh
+            QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-osx.sh;
+            QMAKE_POST_LINK += /usr/libexec/PlistBuddy -c \"Set :CFBundleGetInfoString $${TARGET} $${LC_VERSION}\" $$_PRO_FILE_PWD_/$${DESTDIR}/$${TARGET}.app/Contents/Info.plist;
         }
     }
     else {
