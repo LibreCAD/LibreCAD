@@ -12,20 +12,14 @@
 # default is set to "-spec mkspec/macports" for backwards compatibility reasons of this script
 #
 # -no-p|--no-qtpath : Removes the default qtpath, this makes the defaukt search path take over to find qmake
+#
+# -cert=|-codesign-identity= : Run macdeployqt -codesign=<identity> (requires Qt >= 5.4.0)
+# Example: ./build-osx.sh -cert=123456789A
+# Use 'security find-identity -v -p codesigning' to get a list of signing identities.
+# Example: A000000000000000000000000000000000000001 "Developer ID Application: John Smith (123456789A)"
 
-
-# the LibreCAD source folder 
-
-#use default gcc from MacPorts
-# port install gcc49
-# port select gcc mp-gcc49
-# To use the default clang use teh below
-# port select gcc none
-
-#export PATH=/opt/local/bin:$PATH
-#default qt from MacPorts
-# specify QT_PATH to customize
 SCRIPTPATH="$(dirname "$0")"
+
 if [ -x "/opt/local/libexec/qt5/bin/qmake" ]
 then
 	QT_PATH=/opt/local/libexec/qt5/bin/
@@ -33,8 +27,8 @@ else
 	QT_PATH=/opt/local/bin/
 fi
 
-
 QMAKE_OPTS=""
+CODESIGN_IDENTITY=""
 
 for i in "$@"
 do
@@ -52,6 +46,9 @@ case $i in
     -no-p|--no-qtpath)
     QT_PATH=
     ;;
+    -cert=*|-codesign-identity=*)
+    CODESIGN_IDENTITY="${i#*=}"
+    ;;
     *)
             # unknown option
     ;;
@@ -65,12 +62,32 @@ then
 	if [[ -z $QT_PATH ]]
 	then
 		echo "can not locate qmake"
+		exit 1
 	fi
 fi
 
 QMAKE_CMD=${QT_PATH}qmake
 
-$QMAKE_CMD -v
+# validate QT_VERSION
+QT_VERSION=$(${QMAKE_CMD} -query QT_VERSION)
+QT_VERSION_ARRAY=( ${QT_VERSION//./ } )
+echo "QT_VERSION=${QT_VERSION_ARRAY[0]}.${QT_VERSION_ARRAY[1]}.${QT_VERSION_ARRAY[2]}"
+
+# validate CODESIGN
+if [[ $CODESIGN_IDENTITY ]]
+then
+	if [ "${QT_VERSION_ARRAY[0]}" -lt 5 ]
+	then
+		echo "macdeployqt -codesign requires QT_VERSION >= 5.4.0"
+		exit 1
+	else
+		if [ "${QT_VERSION_ARRAY[1]}" -lt 4 ]
+		then
+	                echo "macdeployqt -codesign requires QT_VERSION >= 5.4.0"
+			exit 1
+		fi
+	fi
+fi
 
 cd "${SCRIPTPATH}"/..
 
@@ -100,7 +117,12 @@ make -j4
 APP_FILE=LibreCAD
 OUTPUT_DMG=${APP_FILE}.dmg
 rm -f "${OUTPUT_DMG}"
-${QT_PATH}macdeployqt ${APP_FILE}.app -verbose=2 -dmg
+if [[ $CODESIGN_IDENTITY ]]
+then
+	${QT_PATH}macdeployqt ${APP_FILE}.app -verbose=2 -dmg -codesign=$CODESIGN_IDENTITY
+else
+	${QT_PATH}macdeployqt ${APP_FILE}.app -verbose=2 -dmg
+fi
 
 TMP_DMG=$(mktemp temp-DMG.XXXXXXXXXX)
 
@@ -116,3 +138,7 @@ then
 fi
 
 rm -f "${TMP_DMG}"
+if [[ $CODESIGN_IDENTITY ]]
+then
+	codesign -s $CODESIGN_IDENTITY -v $OUTPUT_DMG
+fi
