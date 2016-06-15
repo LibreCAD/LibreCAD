@@ -46,6 +46,7 @@ protected:
 	virtual void keyPressEvent(QKeyEvent* e);
 	virtual void focusInEvent(QFocusEvent *e);
 	virtual void focusOutEvent(QFocusEvent *e);
+    void evaluateExpression(QString input);
 
 signals:
 	void tabPressed();
