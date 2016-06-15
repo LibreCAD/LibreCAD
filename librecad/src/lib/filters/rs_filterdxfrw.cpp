@@ -238,7 +238,7 @@ void RS_FilterDXFRW::addDimStyle(const DRW_Dimstyle& data){
     QString dimstyle = graphic->getVariableString("$DIMSTYLE", "standard");
 
     if (QString::compare(data.name.c_str(), dimstyle, Qt::CaseInsensitive) == 0) {
-        if (libVersionStr == "dxfrw" && libVersion==0 && libRelease < 62){
+        if (libVersionStr == "dxfrw" && libVersion==0 && libRelease < 602){
             graphic->addVariable("$DIMDEC", graphic->getVariableInt("$DIMDEC",
                                             graphic->getVariableInt("$LUPREC", 4)), 70);
             graphic->addVariable("$DIMADEC", graphic->getVariableInt("$DIMADEC",
@@ -1315,8 +1315,8 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
             QStringList libversionstr = comstr.at(1).split('.',QString::SkipEmptyParts);
             if (libversionstr.size()<3) break;
             libVersion = libversionstr.at(0).toInt();
-            libRelease = (libversionstr.at(1)+ libversionstr.at(2)).toInt();
-            if (libVersion==0 && libRelease < 54){
+            libRelease = 100 * libversionstr.at(1).toInt() + libversionstr.at(2).toInt();
+            if (libVersion==0 && libRelease < 504){
                 oldMText = true;
                 break;
             }
