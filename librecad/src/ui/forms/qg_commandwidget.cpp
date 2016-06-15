@@ -125,9 +125,7 @@ void QG_CommandWidget::handleCommand(QString cmd)
 {
     cmd = cmd.simplified();
     bool isAction=false;
-    if (cmd=="") {
-        cmd="\n";
-    } else {
+    if (!cmd.isEmpty()) {
         appendHistory(cmd);
     }
 
@@ -135,7 +133,7 @@ void QG_CommandWidget::handleCommand(QString cmd)
         isAction=actionHandler->command(cmd);
     }
 
-    if (!isAction && cmd!="\n" && !(cmd.contains(',') || cmd.at(0)=='@')) {
+    if (!isAction && !(cmd.contains(',') || cmd.at(0)=='@')) {
        appendHistory(tr("Unknown command: %1").arg(cmd));
     }
 
