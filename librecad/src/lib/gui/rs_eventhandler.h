@@ -92,12 +92,6 @@ public:
     bool inSelectionMode();
 
 private:
-    /**
-     * @brief cliCalEvent, process cli "cal" calculator command
-     * @param cmd, cli line to check for "cal" command
-     * @return true, if cli starts with "cal"
-     */
-    bool cliCalculator(const QString& cmd) const;
 
 	QAction* q_action{nullptr};
 	RS_ActionInterface* defaultAction{nullptr};

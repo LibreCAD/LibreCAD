@@ -28,6 +28,7 @@
 #define QG_COMMANDEDIT_H
 
 #include <QLineEdit>
+#include <QString>
 
 /**
  * A command line edit with some typical console features 
@@ -52,11 +53,14 @@ signals:
 	void focusIn();
 	void focusOut();
     void clearCommandsHistory();
+    void command(QString cmd);
+    void message(QString msg);
 
 private:
 	QStringList historyList;
 	QStringList::Iterator it;
 	bool acceptCoordinates;
+    bool calculator_mode;
 };
 
 #endif

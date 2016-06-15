@@ -1108,8 +1108,6 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
 
     connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
             this, SLOT(slotFileClosing(QC_MDIWindow*)));
-    connect(w->getGraphicView(), SIGNAL(xbutton1_released()),
-            commandWidget, SLOT(trigger()));
 
     if (w->getDocument()->rtti()==RS2::EntityBlock) {
         w->setWindowTitle(tr("Block '%1'").arg(((RS_Block*)(w->getDocument()))->getName()));

@@ -26,6 +26,8 @@
 
 #include "qg_commandedit.h"
 #include <QKeyEvent>
+#include <QRegExp>
+#include <rs_math.h>
 
 
 /**
@@ -34,6 +36,7 @@
  */
 QG_CommandEdit::QG_CommandEdit(QWidget* parent)
         : QLineEdit(parent)
+        , calculator_mode(false)
 
 {
     setStyleSheet("selection-color: white; selection-background-color: green;");
@@ -59,7 +62,9 @@ bool QG_CommandEdit::event(QEvent* e) {
 /**
  * History (arrow key up/down) support, tab.
  */
-void QG_CommandEdit::keyPressEvent(QKeyEvent* e) {
+void QG_CommandEdit::keyPressEvent(QKeyEvent* e)
+{
+    auto input = text();
 
 	switch (e->key()) {
             case Qt::Key_Up:
@@ -81,14 +86,39 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e) {
                     }
                     break;
 
+            case Qt::Key_Space:
             case Qt::Key_Return:
-                    historyList.append(text());
+                    if (input == QObject::tr("cal"))
+                    {
+                        calculator_mode = !calculator_mode;
+                        if(calculator_mode)
+                            emit message(QObject::tr("Calculator mode: On"));
+                        else
+                            emit message(QObject::tr("Calculator mode: Off"));
+                        clear();
+                        break;
+                    }
+                    if (calculator_mode)
+                    {
+                        QRegExp regex(R"~(([\d\.]+)deg|d)~");
+                        input.replace(regex, R"~(\1*pi/180)~");
+                        bool ok = true;
+                        double result = RS_Math::eval(input, &ok);
+                        if (ok)
+                            emit message(input + " = " + QString::number(result, 'g', 12));
+                        else
+                            emit message(QObject::tr("Calculator error for input: ") + input);
+                        clear();
+                        break;
+                    }
+
+                    historyList.append(input);
                     it = historyList.end();
-                    if(text().compare(tr("clear"), Qt::CaseInsensitive) == 0){
+                    if(input.compare(tr("clear"), Qt::CaseInsensitive) == 0){
                         setText("");
                         emit(clearCommandsHistory());
                     } else {
-                        QLineEdit::keyPressEvent(e);
+                        emit command(input);
                     }
                     break;
 

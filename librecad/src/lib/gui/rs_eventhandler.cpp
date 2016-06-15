@@ -219,42 +219,12 @@ void RS_EventHandler::keyReleaseEvent(QKeyEvent* e) {
     }
 }
 
-
-bool RS_EventHandler::cliCalculator(const QString& cmd) const
-{
-    QString str=RS_Commands::filterCliCal(cmd);
-
-    if(str.isEmpty()){
-//        RS_DIALOGFACTORY->commandMessage("No math expression");
-        return false;
-    }
-    // convert sin(45d) to sin(45*pi/180)
-	// TODO,
-    QRegExp regex(R"~(([\d\.]+)deg|d)~");
-    str.replace(regex, R"~(\1*pi/180)~");
-    bool ok=true;
-    double result=RS_Math::eval(str,&ok);
-    if(ok)
-		RS_DIALOGFACTORY->commandMessage(str + " = "+QString::number(result, 'g', 12));
-    else
-        RS_DIALOGFACTORY->commandMessage(QObject::tr("Calculator error for input: ")+ str);
-    return true;
-}
-
 /**
  * Handles command line events.
  */
 void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
     RS_DEBUG->print("RS_EventHandler::commandEvent");
     QString cmd = e->getCommand();
-
-    // allow using command line as a calculator
-    if (!e->isAccepted())  {
-        if(cliCalculator(cmd)) {
-            e->accept();
-            return;
-        }
-    }
 
     if (coordinateInputEnabled) {
         if (!e->isAccepted()) {

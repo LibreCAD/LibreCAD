@@ -42,6 +42,13 @@ QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::Window
 {
     setObjectName(name);
     setupUi(this);
+    connect(leCommand, SIGNAL(command(QString)), this, SLOT(handleCommand(QString)));
+    connect(leCommand, SIGNAL(escape()), this, SLOT(escape()));
+    connect(leCommand, SIGNAL(focusOut()), this, SLOT(setNormalMode()));
+    connect(leCommand, SIGNAL(focusIn()), this, SLOT(setCommandMode()));
+    connect(leCommand, SIGNAL(tabPressed()), this, SLOT(tabPressed()));
+    connect(leCommand, SIGNAL(clearCommandsHistory()), teHistory, SLOT(clear()));
+    connect(leCommand, SIGNAL(message(QString)), this, SLOT(appendHistory(QString)));
 }
 
 /*
@@ -114,8 +121,8 @@ void QG_CommandWidget::appendHistory(const QString& msg) {
     teHistory->append(msg);
 }
 
-void QG_CommandWidget::trigger() {
-    QString cmd = leCommand->text();
+void QG_CommandWidget::handleCommand(QString cmd)
+{
     cmd = cmd.simplified();
     bool isAction=false;
     if (cmd=="") {

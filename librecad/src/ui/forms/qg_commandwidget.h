@@ -43,7 +43,7 @@ public slots:
     virtual void setFocus();
     virtual void setCommand( const QString & cmd );
     virtual void appendHistory( const QString & msg );
-    virtual void trigger();
+    virtual void handleCommand(QString cmd);
     virtual void tabPressed();
     virtual void escape();
     virtual void setActionHandler( QG_ActionHandler * ah );
