@@ -2487,6 +2487,10 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e)
             return;
         }
     }
+
+    if (e->key() == Qt::Key_Space)
+        actionHandler->slotSnapFree();
+
     // multi key codes:
     static QTime ts = QTime();
     static QList<int> doubleCharacters;
