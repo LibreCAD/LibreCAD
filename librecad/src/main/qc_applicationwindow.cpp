@@ -210,9 +210,6 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     if (custom_size)
         setIconSize(QSize(icon_size, icon_size));
 
-    QShortcut* shortcut = new QShortcut(QKeySequence("Ctrl+L"), this);
-    connect(shortcut, SIGNAL(activated()), actionHandler, SLOT(slotLayersAdd()));
-
     LC_ActionFactory a_factory(this, actionHandler);
     a_factory.using_theme = settings.value("Widgets/AllowTheme", 0).toBool();
     a_factory.fillActionContainer(a_map, ag_manager);
@@ -295,6 +292,12 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
             this, SLOT(slotPenChanged(RS_Pen)));
 
+    auto ctrl_l = new QShortcut(QKeySequence("Ctrl+L"), this);
+    connect(ctrl_l, SIGNAL(activated()), actionHandler, SLOT(slotLayersAdd()));
+
+    auto ctrl_m = new QShortcut(QKeySequence("Ctrl+M"), this);
+    connect(ctrl_m, SIGNAL(activated()), this, SLOT(slotFocusCommandLine()));
+
     // This event filter allows sending key events to the command widget, therefore, no
     // need to activate the command widget before typing commands.
     // Since this nice feature causes a bug of lost key events when the command widget is on
@@ -302,6 +305,11 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     // send key events for mdiAreaCAD to command widget by default
     if (!keycode_mode)
         mdiAreaCAD->installEventFilter(commandWidget);
+    else
+    {
+        auto space = new QShortcut(QKeySequence(Qt::Key_Space), this);
+        connect(space, SIGNAL(activated()), actionHandler, SLOT(slotSnapFree()));
+    }
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory");
     dialogFactory = new QC_DialogFactory(this, optionWidget);
@@ -2477,20 +2485,6 @@ bool QC_ApplicationWindow::queryExit(bool force) {
  */
 void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e)
 {
-
-    if (e->modifiers() & Qt::ControlModifier)
-    {
-        if (e->key() == Qt::Key_M)
-        {
-            slotFocusCommandLine();
-            e->accept();
-            return;
-        }
-    }
-
-    if (e->key() == Qt::Key_Space)
-        actionHandler->slotSnapFree();
-
     // multi key codes:
     static QTime ts = QTime();
     static QList<int> doubleCharacters;
