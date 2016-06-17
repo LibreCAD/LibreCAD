@@ -531,15 +531,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     RS_DEBUG->print(RS_Debug::D_INFORMATIONAL, "RS_Modification::paste");
 
 	if (!graphic) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::paste: source is nullptr");
-        return;
-    }
-
-    try {
-        data.asInsert;
-    }
-    catch (...) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::paste: data is nullptr");
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::paste: graphic is nullptr");
         return;
     }
 

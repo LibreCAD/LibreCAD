@@ -41,31 +41,49 @@ QC_DialogFactory::QC_DialogFactory(QWidget* parent, QToolBar* ow) :
   QG_DialogFactory(parent, ow)
 {}
 
+
+
 /**
  * Provides a new window for editing the active block.
  */
-void QC_DialogFactory::requestEditBlockWindow(RS_BlockList* /*blockList*/) {
-    RS_DEBUG->print("QC_DialogFactory::requestEditBlockWindow()");
+void QC_DialogFactory::requestEditBlockWindow(RS_BlockList* blockList) {
+
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "QC_DialogFactory::requestEditBlockWindow()");
 
     QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
     QC_MDIWindow* parent = appWindow->getMDIWindow();
-    if (parent) {
-        //get blocklist from block widget, bug#3497154
-        RS_BlockList* blist = appWindow->getBlockWidget() -> getBlockList();
-        if (blist ) {
-            RS_Block* blk = blist->getActive();
-//            std::cout<<"QC_DialogFactory::requestEditBlockWindow(): size()="<<((blk==NULL)?0:blk->count() )<<std::endl;
-            if (blk) {
-                QC_MDIWindow* w = appWindow->slotFileNew(blk);
-                // the parent needs a pointer to the block window and
-                //   vice versa
-                parent->addChildWindow(w);
-                w->getGraphicView()->zoomAuto(false);
-                //update grid settings, bug#3443293
-                w->getGraphicView()->getGrid()->updatePointArray();
-            }
-        }
+
+    if (!appWindow || !parent) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "QC_DialogFactory::requestEditBlockWindow(): nullptr ApplicationWindow or MDIWindow");
+        return;
     }
+    //get blocklist from block widget, bug#3497154
+    if (!blockList ) {
+        RS_DEBUG->print(RS_Debug::D_NOTICE, "QC_DialogFactory::requestEditBlockWindow(): get blockList from appWindow");
+        blockList = appWindow->getBlockWidget()->getBlockList();
+    }
+
+    RS_Block* blk = blockList->getActive();
+    if (!blk) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "QC_DialogFactory::requestEditBlockWindow(): no active block is selected");
+        return;
+    }
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "QC_DialogFactory::requestEditBlockWindow(): edit block %s", blk->getName().toLatin1().data());
+//            std::cout<<"QC_DialogFactory::requestEditBlockWindow(): size()="<<((blk==NULL)?0:blk->count() )<<std::endl;
+
+    QC_MDIWindow* w = appWindow->slotFileNew(blk);
+    if (!w) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "QC_DialogFactory::requestEditBlockWindow(): can't create new child window");
+        return;
+    }
+
+    // the parent needs a pointer to the block window and vice versa
+    parent->addChildWindow(w);
+    w->getGraphicView()->zoomAuto(false);
+    //update grid settings, bug#3443293
+    w->getGraphicView()->getGrid()->updatePointArray();
+
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "QC_DialogFactory::requestEditBlockWindow(): OK");
 }
 
 
