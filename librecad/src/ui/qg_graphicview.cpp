@@ -51,8 +51,6 @@
 #include "rs_modification.h"
 #include "rs_debug.h"
 
-#define QG_SCROLLMARGIN 400
-
 #ifdef Q_OS_WIN32
 #define CURSOR_SIZE 16
 #else
@@ -685,7 +683,6 @@ void QG_GraphicView::keyReleaseEvent(QKeyEvent* e)
     eventHandler->keyReleaseEvent(e);
 }
 
-
 /**
  * Called whenever the graphic view has changed.
  * Adjusts the scrollbar ranges / steps.
@@ -727,20 +724,21 @@ void QG_GraphicView::adjustOffsetControls()
             max = RS_Vector(100,100);
         }
 
+        auto factor = getFactor();
 
-        int minVal = (int)(-ox-getWidth()*0.5
-                           - QG_SCROLLMARGIN - getBorderLeft());
-        int maxVal = (int)(-ox+getWidth()*0.5
-                           + QG_SCROLLMARGIN + getBorderRight());
+        int minVal = (int)(-getWidth()*0.75
+                           + std::min(min.x, 0.)*factor.x);
+        int maxVal = (int)(-getWidth()*0.25
+                           + std::max(max.x, 0.)*factor.x);
 
         if (minVal<=maxVal) {
             hScrollBar->setRange(minVal, maxVal);
         }
 
-        minVal = (int)(oy-getHeight()*0.5
-                       - QG_SCROLLMARGIN - getBorderTop());
-        maxVal = (int)(oy+getHeight()*0.5
-                       +QG_SCROLLMARGIN + getBorderBottom());
+        minVal = (int)(+getHeight()*0.25
+                       - std::max(max.y, 0.)*factor.y);
+        maxVal = (int)(+getHeight()*0.75
+                       - std::min(min.y, 0.)*factor.y);
 
         if (minVal<=maxVal) {
             vScrollBar->setRange(minVal, maxVal);
