@@ -473,11 +473,11 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
         writer->writeInt16(70, varInt);
     else
         writer->writeInt16(70, 0);
-        writer->writeString(9, "$DIMSAH");
-        if (getInt("$DIMSAH", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 0);
+    writer->writeString(9, "$DIMSAH");
+    if (getInt("$DIMSAH", &varInt))
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
     writer->writeString(9, "$DIMBLK1");
     if (getStr("$DIMBLK1", &varStr))
         if (ver == DRW::AC1009)

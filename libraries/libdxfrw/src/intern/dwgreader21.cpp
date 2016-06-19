@@ -355,7 +355,7 @@ bool dwgReader21::readDwgClasses(){
     if (!ret)
         return ret;
 
-	dwgBuffer buff(tmpClassesData.data(), si.size, &decoder);
+    dwgBuffer buff(tmpClassesData.data(), si.size, &decoder);
     DRW_DBG("classes section sentinel= ");
     checkSentinel(&buff, secEnum::CLASSES, true);
 
@@ -438,7 +438,7 @@ bool dwgReader21::readDwgHandles(){
     if (!ret)
         return ret;
 
-	dwgBuffer dataBuf(tmpHandlesData.data(), si.size, &decoder);
+    dwgBuffer dataBuf(tmpHandlesData.data(), si.size, &decoder);
 
     ret = dwgReader::readDwgHandles(&dataBuf, 0, si.size);
     return ret;
