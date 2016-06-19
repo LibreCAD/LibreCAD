@@ -90,6 +90,8 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, Qt::WindowFlags f, RS_Document* 
 
     // SourceForge issue 45 (Left-mouse drag shrinks window)
     setAttribute(Qt::WA_NoMousePropagation);
+
+    view_rect = LC_Rect(toGraph(0, 0), toGraph(getWidth(), getHeight()));
 }
 
 
@@ -884,6 +886,7 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
  */
 void QG_GraphicView::paintEvent(QPaintEvent *)
 {
+
     // Re-Create or get the layering pixmaps
     getPixmapForView(PixmapLayer1);
     getPixmapForView(PixmapLayer2);
@@ -900,6 +903,8 @@ void QG_GraphicView::paintEvent(QPaintEvent *)
 
     if (redrawMethod & RS2::RedrawDrawing)
     {
+        view_rect = LC_Rect(toGraph(0, 0),
+                            toGraph(getWidth(), getHeight()));
         // DRaw layer 2
         PixmapLayer2->fill(Qt::transparent);
         RS_PainterQt painter2(PixmapLayer2.get());

@@ -150,8 +150,9 @@ public:
         EntitySpline,       /**< Spline */
         EntitySplinePoints,       /**< SplinePoints */
         EntityOverlayBox,    /**< OverlayBox */
-        EntityPreview    /**< Preview Container */
-		,EntityPattern
+        EntityPreview,    /**< Preview Container */
+        EntityPattern,
+        EntityOverlayLine
     };
 
 

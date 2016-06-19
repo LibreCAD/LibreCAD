@@ -30,6 +30,7 @@
 
 #include "rs_entitycontainer.h"
 #include "rs_snapper.h"
+#include "lc_rect.h"
 
 #include <QDateTime>
 #include <QMap>
@@ -365,6 +366,10 @@ public:
 
 	virtual RS_EntityContainer* getOverlayContainer(RS2::OverlayGraphics position);
 
+    const LC_Rect& getViewRect() {
+        return view_rect;
+    }
+
 protected:
 
     RS_EntityContainer* container{nullptr}; // Holds a pointer to all the enties
@@ -408,6 +413,8 @@ protected:
 		 * instead.
 		 */
 	bool deleteMode=false;
+
+    LC_Rect view_rect;
 
 private:
 

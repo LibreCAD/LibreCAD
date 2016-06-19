@@ -1108,17 +1108,19 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
 		// do not draw construction layer on print preview or print
 		if( ! e->isPrint()
 				||  e->isConstruction())
-			return;
+        return;
 	}
 
-	// test if the entity is in the viewport
-	/* temporary disabled so rs_overlaylien can be drawn
-	if (!e->isContainer() && !isPrinting() &&
-            (painter==nullptr || !painter->isPreviewMode()) &&
-			(toGuiX(e->getMax().x)<0 || toGuiX(e->getMin().x)>getWidth() ||
-			 toGuiY(e->getMin().y)<0 || toGuiY(e->getMax().y)>getHeight())) {
-		return;
-	} */
+    // test if the entity is in the viewport
+    if (!isPrinting()
+        && e->rtti() != RS2::EntityOverlayLine
+        && e->rtti() != RS2::EntityOverlayBox
+        && e->rtti() != RS2::EntityGraphic
+        && e->rtti() != RS2::EntityPreview &&
+       (toGuiX(e->getMax().x)<0 || toGuiX(e->getMin().x)>getWidth() ||
+        toGuiY(e->getMin().y)<0 || toGuiY(e->getMax().y)>getHeight())) {
+        return;
+    }
 
 	// set pen (color):
 	setPenForEntity(painter, e );
@@ -1200,7 +1202,6 @@ void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity* e) {
 	}
 	double patternOffset(0.);
 	e->draw(painter, this, patternOffset);
-
 }
 /**
  * Deletes an entity with the background color.
