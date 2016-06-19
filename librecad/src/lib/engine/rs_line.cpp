@@ -541,40 +541,41 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
         return;
     }
 
-    //only draw the visible portion of line
-	LC_Rect const viewportRect{view->toGraph(0, 0),
-				view->toGraph(view->getWidth(), view->getHeight())};
-	RS_VectorSolutions endPoints(0);
-	if (viewportRect.inArea(getStartpoint(), RS_TOLERANCE))
-		 endPoints.push_back(getStartpoint());
-	if (viewportRect.inArea(getEndpoint(), RS_TOLERANCE))
-		 endPoints.push_back(getEndpoint());
+    auto viewportRect = view->getViewRect();
+    RS_VectorSolutions endPoints(0);
+    endPoints.push_back(getStartpoint());
+    endPoints.push_back(getEndpoint());
 
-	RS_EntityContainer ec(nullptr);
-	ec.addRectangle(viewportRect.minP(), viewportRect.maxP());
+    RS_EntityContainer ec(nullptr);
+    ec.addRectangle(viewportRect.minP(), viewportRect.maxP());
 
-	if (endPoints.size()<2){
-		RS_VectorSolutions vpIts;
-		for(auto p: ec) {
-			auto const sol=RS_Information::getIntersection(this, p, true);
-			for (auto const& vp: sol) {
-				if (vpIts.getClosestDistance(vp) <= RS_TOLERANCE * 10.)
-					continue;
-				vpIts.push_back(vp);
-			}
-		}
-		for (auto const& vp: vpIts) {
-			if (endPoints.getClosestDistance(vp) <= RS_TOLERANCE * 10.)
-				continue;
-			endPoints.push_back(vp);
-		}
-	}
+//    if (viewportRect.inArea(getStartpoint(), RS_TOLERANCE))
+//         endPoints.push_back(getStartpoint());
+//    if (viewportRect.inArea(getEndpoint(), RS_TOLERANCE))
+//         endPoints.push_back(getEndpoint());
 
-	if (endPoints.size()<2) return;
+//    if (endPoints.size() < 2){
+//        RS_VectorSolutions vpIts;
+//        for(auto p: ec) {
+//            auto const sol=RS_Information::getIntersection(this, p, true);
+//            for (auto const& vp: sol) {
+//                if (vpIts.getClosestDistance(vp) <= RS_TOLERANCE * 10.)
+//                    continue;
+//                vpIts.push_back(vp);
+//            }
+//        }
+//        for (auto const& vp: vpIts) {
+//            if (endPoints.getClosestDistance(vp) <= RS_TOLERANCE * 10.)
+//                continue;
+//            endPoints.push_back(vp);
+//        }
+//    }
 
-	if ((endPoints[0] - getStartpoint()).squared() >
-			(endPoints[1] - getStartpoint()).squared() )
-		std::swap(endPoints[0],endPoints[1]);
+//    if (endPoints.size()<2) return;
+
+    if ((endPoints[0] - getStartpoint()).squared() >
+            (endPoints[1] - getStartpoint()).squared() )
+        std::swap(endPoints[0],endPoints[1]);
 
 	RS_Vector pStart{view->toGui(endPoints.at(0))};
 	RS_Vector pEnd{view->toGui(endPoints.at(1))};
