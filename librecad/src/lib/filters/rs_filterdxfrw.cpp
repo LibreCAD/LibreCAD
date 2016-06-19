@@ -527,17 +527,17 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline& data) {
     RS_DEBUG->print("RS_FilterDXFRW::addLWPolyline");
     if (data.vertlist.empty())
         return;
-	RS_PolylineData d(RS_Vector{},
-					  RS_Vector{},
+    RS_PolylineData d(RS_Vector{},
+                      RS_Vector{},
                       data.flags&0x1);
     RS_Polyline *polyline = new RS_Polyline(currentContainer, d);
     setEntityAttributes(polyline, &data);
 
-	std::vector< std::pair<RS_Vector, double> > verList;
-	for (auto const& v: data.vertlist)
-		verList.emplace_back(std::make_pair(RS_Vector{v->x, v->y}, v->bulge));
+    std::vector< std::pair<RS_Vector, double> > verList;
+    for (auto const& v: data.vertlist)
+        verList.emplace_back(std::make_pair(RS_Vector{v->x, v->y}, v->bulge));
 
-	polyline->appendVertexs(verList);
+    polyline->appendVertexs(verList);
 
     currentContainer->addEntity(polyline);
 }
@@ -554,20 +554,20 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
     if ( data.flags&0x40)
         return; //the polyline is a poliface mesh, TODO convert
 
-	RS_PolylineData d(RS_Vector{},
-					  RS_Vector{},
+    RS_PolylineData d(RS_Vector{},
+                      RS_Vector{},
                       data.flags&0x1);
     RS_Polyline *polyline = new RS_Polyline(currentContainer, d);
     setEntityAttributes(polyline, &data);
 
-	std::vector< std::pair<RS_Vector, double> > verList;
+    std::vector< std::pair<RS_Vector, double> > verList;
 
-	for (auto const& v: data.vertlist)
-		verList.emplace_back(
-					std::make_pair(RS_Vector{v->basePoint.x, v->basePoint.y},
-								   v->bulge));
+    for (auto const& v: data.vertlist)
+        verList.emplace_back(
+                    std::make_pair(RS_Vector{v->basePoint.x, v->basePoint.y},
+                                   v->bulge));
 
-	polyline->appendVertexs(verList);
+    polyline->appendVertexs(verList);
 
     currentContainer->addEntity(polyline);
 }

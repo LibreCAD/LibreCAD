@@ -174,7 +174,7 @@ bool dwgReader15::readDwgHandles() {
     if (si.Id<0)//not found, ends
         return false;
 
-	bool ret = dwgReader::readDwgHandles(fileBuf.get(), si.address, si.size);
+    bool ret = dwgReader::readDwgHandles(fileBuf.get(), si.address, si.size);
     return ret;
 }
 

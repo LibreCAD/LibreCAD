@@ -3407,7 +3407,7 @@ RS_VectorSolutions getQuadraticLineIntersect(std::vector<double> dQuadCoefs,
 		{
             if(d < 0.0) d = 0.0;
             if(d > 1.0) d = 1.0;
-			ret.push_back(vx1*(1.0 - d) + vx2*d);
+            ret.push_back(vx1*(1.0 - d) + vx2*d);
 		}
 	}
 
