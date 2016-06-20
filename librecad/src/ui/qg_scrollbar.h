@@ -39,15 +39,34 @@ class QG_ScrollBar: public QScrollBar {
 
 public:
     QG_ScrollBar(QWidget* parent=0)
-            : QScrollBar(parent) {}
+            : QScrollBar(parent) {
+        sizeHintCache = QScrollBar::sizeHint();
+    }
     QG_ScrollBar(Qt::Orientation orientation,
                  QWidget* parent=0)
-            : QScrollBar(orientation, parent) {}
+            : QScrollBar(orientation, parent) {
+        sizeHintCache = QScrollBar::sizeHint();
+    }
+
+    // This sizeHint caches the height value. Out of profiling (see #727),
+    // it appears that sizeHint calls all the way down to the underlying
+    // windowing system to check the size.
+    QSize sizeHint() const override final {
+        return sizeHintCache;
+    }
 
 public slots:
     void slotWheelEvent(QWheelEvent* e) {
         wheelEvent(e);
     }
+
+    void resizeEvent(QResizeEvent* event) override {
+        sizeHintCache = QScrollBar::sizeHint();
+        QScrollBar::resizeEvent(event);
+    }
+
+private:
+    QSize sizeHintCache;
 
 };
 
