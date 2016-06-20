@@ -81,7 +81,11 @@ RS_EntityContainer::RS_EntityContainer(const RS_EntityContainer& ec)
  * Destructor.
  */
 RS_EntityContainer::~RS_EntityContainer() {
-    clear();
+    if (autoDelete) {
+        while (!entities.isEmpty())
+            delete entities.takeFirst();
+    } else
+        entities.clear();
 }
 
 
