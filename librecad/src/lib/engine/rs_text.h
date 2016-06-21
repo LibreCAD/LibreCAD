@@ -241,6 +241,8 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, const RS_Text& p);
 
+    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+
 protected:
     RS_TextData data;
 

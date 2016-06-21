@@ -251,6 +251,8 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, const RS_Text& p);
 
+    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+
 private:
     double updateAddLine(RS_EntityContainer* textLine, int lineCounter);
 

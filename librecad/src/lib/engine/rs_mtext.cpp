@@ -33,6 +33,8 @@
 #include "rs_insert.h"
 #include "rs_math.h"
 #include "rs_debug.h"
+#include "rs_graphicview.h"
+#include "rs_painter.h"
 
 RS_MTextData::RS_MTextData(const RS_Vector& _insertionPoint,
 			double _height,
@@ -647,4 +649,22 @@ void RS_MText::stretch(const RS_Vector& firstCorner, const RS_Vector& secondCorn
 std::ostream& operator << (std::ostream& os, const RS_MText& p) {
     os << " Text: " << p.getData() << "\n";
     return os;
+}
+
+void RS_MText::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/)
+{
+    if (!(painter && view)) {
+        return;
+    }
+
+    if (view->toGuiDY(getHeight()) < 4 && !view->isPrintPreview() && !view->isPrinting())
+    {
+        painter->drawRect(view->toGui(getMin()), view->toGui(getMax()));
+        return;
+    }
+
+    for(auto e: entities)
+    {
+        view->drawEntity(painter, e);
+    }
 }
