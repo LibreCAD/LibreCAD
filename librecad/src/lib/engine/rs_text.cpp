@@ -542,10 +542,13 @@ void RS_Text::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternO
         return;
     }
 
-    if (view->toGuiDY(getHeight()) < 4 && !view->isPrintPreview() && !view->isPrinting())
+    if (!view->isPrintPreview() && !view->isPrinting())
     {
-        painter->drawRect(view->toGui(getMin()), view->toGui(getMax()));
-        return;
+        if (view->isPanning() || view->toGuiDY(getHeight()) < 4)
+        {
+            painter->drawRect(view->toGui(getMin()), view->toGui(getMax()));
+            return;
+        }
     }
 
     foreach (auto e, entities)

@@ -370,6 +370,9 @@ public:
         return view_rect;
     }
 
+    bool isPanning() const;
+    void setPanning(bool state);
+
 protected:
 
     RS_EntityContainer* container{nullptr}; // Holds a pointer to all the enties
@@ -447,6 +450,8 @@ private:
 	QMap<int, RS_EntityContainer *> overlayEntities;
 	/** if true, graphicView is under cleanup */
 	bool m_bIsCleanUp=false;
+
+    bool panning;
 
 signals:
     void relative_zero_changed(const RS_Vector&);

@@ -65,7 +65,8 @@ RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
 	,grid{new RS_Grid{this}}
 	,drawingMode(RS2::ModeFull)
 	,savedViews(16)
-	,previousViewTime(QDateTime::currentDateTime())
+    ,previousViewTime(QDateTime::currentDateTime())
+    ,panning(false)
 {
     RS_SETTINGS->beginGroup("Colors");
     setBackground(QColor(RS_SETTINGS->readEntry("/background", Colors::background)));
@@ -1842,4 +1843,12 @@ void RS_GraphicView::setDraftMode(bool dm) {
 bool RS_GraphicView::isCleanUp(void) const
 {
 	return m_bIsCleanUp;
+}
+
+bool RS_GraphicView::isPanning() const {
+    return panning;
+}
+
+void RS_GraphicView::setPanning(bool state) {
+    panning = state;
 }

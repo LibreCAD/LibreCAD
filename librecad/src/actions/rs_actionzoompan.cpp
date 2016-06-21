@@ -62,7 +62,12 @@ void RS_ActionZoomPan::trigger() {
         x1 = x2;
         y1 = y2;
     }
-    if(getStatus()==SetPanEnd) finish(false);
+    if(getStatus()==SetPanEnd)
+    {
+        finish(false);
+        graphicView->setPanning(false);
+        graphicView->redraw();
+    }
 }
 
 
@@ -87,6 +92,7 @@ void RS_ActionZoomPan::mousePressEvent(QMouseEvent* e) {
         x1 = e->x();
         y1 = e->y();
         setStatus(SetPanning);
+        graphicView->setPanning(true);
     }
 }
 
