@@ -663,7 +663,7 @@ void RS_MText::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
         return;
     }
 
-    for(auto e: entities)
+    foreach (auto e, entities)
     {
         view->drawEntity(painter, e);
     }

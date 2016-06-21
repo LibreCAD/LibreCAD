@@ -557,7 +557,7 @@ void RS_Hatch::activateContour(bool on) {
 void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
 
     if (!data.solid) {
-		for(auto se: entities){
+        foreach (auto se, entities){
 
             view->drawEntity(painter,se);
         }
@@ -572,7 +572,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 
     // loops:
     if (needOptimization==true) {
-		for(auto l: entities){
+        foreach (auto l, entities){
 
             if (l->rtti()==RS2::EntityContainer) {
                 RS_EntityContainer* loop = (RS_EntityContainer*)l;
@@ -584,7 +584,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
     }
 
     // loops:
-	for(auto l: entities){
+    foreach (auto l, entities){
         l->setLayer(getLayer());
 
         if (l->rtti()==RS2::EntityContainer) {
