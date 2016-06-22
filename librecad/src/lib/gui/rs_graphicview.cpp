@@ -1113,11 +1113,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
 	}
 
     // test if the entity is in the viewport
-    if (!isPrinting()
-        && e->rtti() != RS2::EntityOverlayLine
-        && e->rtti() != RS2::EntityOverlayBox
-        && e->rtti() != RS2::EntityGraphic
-        && e->rtti() != RS2::EntityPreview &&
+    if (!isPrinting() && e->rtti() != RS2::EntityGraphic &&
        (toGuiX(e->getMax().x)<0 || toGuiX(e->getMin().x)>getWidth() ||
         toGuiY(e->getMin().y)<0 || toGuiY(e->getMax().y)>getHeight())) {
         return;
@@ -1551,14 +1547,18 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
 
 }
 
-void RS_GraphicView::drawOverlay(RS_Painter *painter) {
-	QList<int> const& keys=overlayEntities.keys();
-	for (int i = 0; i < keys.size(); ++i) {
-		if (overlayEntities[i]) {
-			setPenForEntity(painter, overlayEntities[i] );
-			drawEntityPlain(painter, overlayEntities[i]);
-		}
-	}
+void RS_GraphicView::drawOverlay(RS_Painter *painter)
+{
+    double patternOffset(0.);
+
+    foreach (auto ec, overlayEntities)
+    {
+        foreach (auto e, ec->getEntityList())
+        {
+            setPenForEntity(painter, e);
+            e->draw(painter, this, patternOffset);
+        }
+    }
 }
 
 RS2::SnapRestriction RS_GraphicView::getSnapRestriction() const

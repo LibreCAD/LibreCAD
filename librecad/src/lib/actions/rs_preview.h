@@ -51,6 +51,8 @@ public:
     virtual void addStretchablesFrom(RS_EntityContainer& container,
 	       const RS_Vector& v1, const RS_Vector& v2);
 
+    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+
 private:
 	int maxEntities;
 };
