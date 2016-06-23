@@ -315,6 +315,9 @@ void QG_BlockWidget::slotActivated(QModelIndex blockIdx) {
  */
 void QG_BlockWidget::contextMenuEvent(QContextMenuEvent *e) {
 
+    // select item (block) in Block List widget first because left-mouse-click event are not to be triggered
+    slotActivated(blockView->currentIndex());
+
     QMenu* contextMenu = new QMenu(this);
     QLabel* caption = new QLabel(tr("Block Menu"), this);
     QPalette palette;
