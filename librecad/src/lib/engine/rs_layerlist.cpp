@@ -315,16 +315,25 @@ void RS_LayerList::toggle(const QString& name) {
  * Listeners are notified.
  */
 void RS_LayerList::toggle(RS_Layer* layer) {
-    if (layer==NULL) {
+
+    if (!layer) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_LayerList::toggle: nullptr layer");
         return;
     }
 
+    // set flags
     layer->toggle();
     setModified(true);
 
     // Notify listeners:
-    for (int i=0; i<layerListListeners.size(); ++i) {
-        RS_LayerListListener* l = layerListListeners.at(i);
+    for (auto *i : layerListListeners) {
+
+        if (!i) {
+            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_LayerList::toggle: nullptr layer listener");
+            continue;
+        }
+
+        RS_LayerListListener *l = (RS_LayerListListener *)i;
         l->layerToggled(layer);
     }
 }
