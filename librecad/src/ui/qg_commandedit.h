@@ -48,6 +48,8 @@ protected:
 	virtual void focusOutEvent(QFocusEvent *e);
     void evaluateExpression(QString input);
 
+    QString relative_ray;
+
 signals:
 	void tabPressed();
 	void escape();

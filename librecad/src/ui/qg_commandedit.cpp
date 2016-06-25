@@ -36,6 +36,7 @@
  */
 QG_CommandEdit::QG_CommandEdit(QWidget* parent)
         : QLineEdit(parent)
+        , relative_ray("none")
         , calculator_mode(false)
 
 {
@@ -64,6 +65,52 @@ bool QG_CommandEdit::event(QEvent* e) {
  */
 void QG_CommandEdit::keyPressEvent(QKeyEvent* e)
 {
+    if (e->modifiers() & Qt::ControlModifier)
+    {
+        auto value = text();
+
+        if (value.isEmpty())
+            value = relative_ray;
+
+        QString r_string;
+
+        switch (e->key())
+        {
+            case Qt::Key_Up:
+                r_string = "0," + value;
+                break;
+            case Qt::Key_Down:
+                r_string = "0,-" + value;
+                break;
+            case Qt::Key_Right:
+                r_string = value + ",0";
+                break;
+            case Qt::Key_Left:
+                r_string = "-" + value + ",0";
+                break;
+            default:
+                QLineEdit::keyPressEvent(e);
+                return;
+        }
+
+        // r_string is empty when Ctrl is pressed
+        if (!r_string.isEmpty())
+        {
+            if (value == "none")
+            {
+                emit message(
+                QObject::tr("You must input a distance first.")
+                );
+            }
+            else
+            {
+                relative_ray = value;
+                emit command("@"+r_string);
+            }
+        }
+        return;
+    }
+
     switch (e->key())
     {
         case Qt::Key_Up:
