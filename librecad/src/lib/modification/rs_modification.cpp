@@ -567,15 +567,14 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     }
 
     // select the same layer in graphic as in source
-    try {
-        RS_Layer* layer = source->getActiveLayer();
-        graphic->activateLayer(layer);
-//      // RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: selected layer: %s", layer->getName().toLatin1().data());
-    }
-    catch (...) {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::paste: unable to select layer to paste in");
+    QString ln = source->getActiveLayer()->getName();
+    RS_Layer* l = graphic->getLayerList()->find(ln);
+    if (!l) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::paste: unable to select layer to paste in");
         return;
     }
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: selected layer: %s", l->getName().toLatin1().data());
+    graphic->activateLayer(l);
 
     // hash for renaming duplicated blocks
     QHash<QString, QString> blocksDict;
@@ -737,8 +736,17 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
     RS_Insert* ic = new RS_Insert(container, di);
     ic->reparent(container);
     container->addEntity(ic);
-    ic->setLayerToActive();
-    ic->setPenToActive();
+
+    // set the same layer in clone as in source
+    QString ln = entity->getLayer()->getName();
+    RS_Layer* l = graphic->getLayerList()->find(ln);
+    if (!l) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: unable to select layer to paste in");
+        return false;
+    }
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: selected layer: %s", l->getName().toLatin1().data());
+    ic->setLayer(l);
+    ic->setPen(entity->getPen(false));
 
     // get relative insertion point
     RS_Vector ip = RS_Vector(0.0, 0.0);
@@ -790,6 +798,17 @@ bool RS_Modification::pasteEntity(RS_Entity* entity, RS_EntityContainer* contain
     // create entity copy to paste
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteEntity ID/flag: %d/%d", entity->getId(), entity->rtti());
     RS_Entity* e = entity->clone();
+
+    // set the same layer in clone as in source
+    QString ln = entity->getLayer()->getName();
+    RS_Layer* l = graphic->getLayerList()->find(ln);
+    if (!l) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: unable to select layer to paste in");
+        return false;
+    }
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: selected layer: %s", l->getName().toLatin1().data());
+    e->setLayer(l);
+    e->setPen(entity->getPen(false));
 
     // scaling entity doesn't needed as it scaled with insert object
     // paste entity
