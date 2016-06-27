@@ -346,9 +346,9 @@ void QG_LayerWidget::activateLayer(RS_Layer* layer, bool updateScroll) {
         return;
     }
 
-    if (layer->getName() == layerList->getActive()->getName()) {
-        return;
-    }
+//    if (layer->getName() == layerList->getActive()->getName()) {
+//        return;
+//    }
     layerList->activate(layer);
 
     if (!layerModel) {
