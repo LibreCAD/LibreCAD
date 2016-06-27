@@ -567,7 +567,13 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     }
 
     // select the same layer in graphic as in source
-    QString ln = source->getActiveLayer()->getName();
+    auto a_layer = source->getActiveLayer();
+    if (!a_layer)
+    {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::paste: copy wasn't properly finalized");
+        return;
+    }
+    QString ln = a_layer->getName();
     RS_Layer* l = graphic->getLayerList()->find(ln);
     if (!l) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::paste: unable to select layer to paste in");
