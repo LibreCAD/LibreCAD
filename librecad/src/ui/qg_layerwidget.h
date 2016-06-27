@@ -141,6 +141,7 @@ signals:
 public slots:
     void slotActivated(QModelIndex layerIdx);
     void slotUpdateLayerList();
+    void activateLayer(int row);
 
 protected:
     void contextMenuEvent(QContextMenuEvent *e);

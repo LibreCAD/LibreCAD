@@ -1177,6 +1177,8 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     subWindow->setFocus();
     statusBar()->showMessage(tr("New Drawing created."), 2000);
 
+    layerWidget->activateLayer(0);
+
     RS_DEBUG->print("QC_ApplicationWindow::slotFileNew() OK");
 
     return w;

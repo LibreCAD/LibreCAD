@@ -492,3 +492,13 @@ void QG_LayerWidget::keyPressEvent(QKeyEvent* e) {
     }
 }
 
+
+void QG_LayerWidget::activateLayer(int row)
+{
+    auto layer = layerModel->getLayer(row);
+    if (layer)
+        layerList->activate(layer, true);
+    else
+        qWarning("activateLayer: row %d doesn't exist", row);
+}
+
