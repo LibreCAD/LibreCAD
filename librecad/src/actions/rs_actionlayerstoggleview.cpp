@@ -43,6 +43,7 @@ void RS_ActionLayersToggleView::trigger() {
     RS_DEBUG->print("toggle layer");
     if (graphic) {
         graphic->toggleLayer(a_layer);
+        graphic->updateInserts();
     }
     finish(false);
 }
