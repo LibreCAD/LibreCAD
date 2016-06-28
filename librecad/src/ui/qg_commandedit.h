@@ -29,6 +29,7 @@
 
 #include <QLineEdit>
 #include <QString>
+#include <QMap>
 
 /**
  * A command line edit with some typical console features 
@@ -49,6 +50,9 @@ protected:
     void evaluateExpression(QString input);
 
     QString relative_ray;
+    QMap<QString, QString> variables;
+
+    void processInput();
 
 signals:
 	void tabPressed();

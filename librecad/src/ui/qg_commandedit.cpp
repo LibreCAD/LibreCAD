@@ -136,34 +136,8 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e)
 
         case Qt::Key_Space:
         case Qt::Key_Return:
-            if (text() == QObject::tr("cal"))
-            {
-                calculator_mode = !calculator_mode;
-                if(calculator_mode)
-                    emit message(QObject::tr("Calculator mode: On"));
-                else
-                    emit message(QObject::tr("Calculator mode: Off"));
-                clear();
-                break;
-            }
-            if (calculator_mode)
-            {
-                evaluateExpression(text());
-                clear();
-                break;
-            }
-
-            historyList.append(text());
-            it = historyList.end();
-            if(text().compare(tr("clear"), Qt::CaseInsensitive) == 0)
-            {
-                setText("");
-                emit(clearCommandsHistory());
-            }
-            else
-                emit command(text());
+            processInput();
             break;
-
         case Qt::Key_Escape:
             if (text().isEmpty()) {
                 emit escape();
@@ -199,4 +173,53 @@ void QG_CommandEdit::focusInEvent(QFocusEvent *e) {
 void QG_CommandEdit::focusOutEvent(QFocusEvent *e) {
 	emit focusOut();
 	QLineEdit::focusOutEvent(e);
+}
+
+void QG_CommandEdit::processInput()
+{
+    auto input = text();
+
+    if (input == QObject::tr("cal"))
+    {
+        calculator_mode = !calculator_mode;
+        if(calculator_mode)
+            emit message(QObject::tr("Calculator mode: On"));
+        else
+            emit message(QObject::tr("Calculator mode: Off"));
+        clear();
+        return;
+    }
+    if (calculator_mode)
+    {
+        evaluateExpression(input);
+        clear();
+        return;
+    }
+
+    if (input.contains("="))
+    {
+        auto var_value = input.split("=");
+        variables[var_value[0]] = var_value[1];
+        clear();
+        return;
+    }
+    if (input.contains("\\"))
+    {
+        QRegExp regex(R"~(\\(\w+))~");
+        int pos = regex.indexIn(input);
+        if (pos > -1)
+        {
+            input = variables[regex.cap(1)];
+        }
+    }
+
+    historyList.append(input);
+    it = historyList.end();
+    if(input.compare(tr("clear"), Qt::CaseInsensitive) == 0)
+    {
+        setText("");
+        emit clearCommandsHistory();
+    }
+    else
+        emit command(input);
 }
