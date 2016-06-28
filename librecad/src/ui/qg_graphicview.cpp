@@ -44,7 +44,6 @@
 #include "qg_dialogfactory.h"
 #include "rs_eventhandler.h"
 #include "rs_actiondefault.h"
-#include "lc_options.h"
 
 
 #include "qg_scrollbar.h"
@@ -62,6 +61,7 @@
  */
 QG_GraphicView::QG_GraphicView(QWidget* parent, Qt::WindowFlags f, RS_Document* doc)
     :RS_GraphicView(parent, f)
+    ,device("Mouse")
     ,curCad(new QCursor(QPixmap(":ui/cur_cad_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
     ,curDel(new QCursor(QPixmap(":ui/cur_del_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
     ,curSelect(new QCursor(QPixmap(":ui/cur_select_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
@@ -483,7 +483,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
     RS_Vector mouse = toGraph(e->x(), e->y());
 
-    if (options && options->device == "Trackpad")
+    if (device == "Trackpad")
     {
         QPoint numPixels = e->pixelDelta();
 

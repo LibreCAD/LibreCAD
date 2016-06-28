@@ -211,7 +211,6 @@ HEADERS += \
     lib/generators/lc_xmlwriterqxmlstreamwriter.h \
     actions/lc_actionfileexportmakercam.h \
     lib/engine/lc_rect.h \
-    main/lc_options.h \
     lib/printing/lc_printing.h
 
 SOURCES += \

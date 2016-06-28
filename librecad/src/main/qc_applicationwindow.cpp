@@ -90,7 +90,6 @@
 
 #include "lc_widgetoptionsdialog.h"
 #include "comboboxoption.h"
-#include "lc_options.h"
 
 #include "lc_printing.h"
 #include "actionlist.h"
@@ -124,8 +123,7 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
  * Constructor. Initializes the app.
  */
 QC_ApplicationWindow::QC_ApplicationWindow()
-    : options(std::make_shared<LC_Options>())
-    , ag_manager(new LC_ActionGroupManager(this))
+    : ag_manager(new LC_ActionGroupManager(this))
     , autosaveTimer(nullptr)
     , actionHandler(new QG_ActionHandler(this))
 {
@@ -142,11 +140,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     appWindow = this;
 
-//    connect(this, SIGNAL(printPreviewChanged(bool)), ag_manager, SLOT(toggleTools(bool)));
-
     QSettings settings;
-
-    options->device = settings.value("Hardware/Device", "Mouse").toString();
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: setting icon");
     setWindowIcon(QIcon(QC_APP_ICON));
@@ -636,9 +630,6 @@ void QC_ApplicationWindow::storeSettings() {
         RS_SETTINGS->endGroup();
         //save snapMode
         snapToolBar->saveSnapMode();
-
-        QSettings settings;
-        settings.setValue("Hardware/Device", options->device);
     }
 
     RS_DEBUG->print("QC_ApplicationWindow::storeSettings(): OK");
@@ -1087,7 +1078,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
 
     view->setAntialiasing(aa);
     view->setCursorHiding(cursor_hiding);
-    view->options = options;
+    view->device = settings.value("Hardware/Device", "Mouse").toString();
     if (scrollbars) view->addScrollbars();
 
     settings.beginGroup("Activators");
@@ -2116,6 +2107,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
         {
             if (!parent->getGraphicView()->isPrintPreview())
             {
+                QSettings settings;
                 //generate a new print preview
                 RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): create");
 
@@ -2130,7 +2122,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                 w->setWindowIcon(QIcon(":/main/document.png"));
                 w->slotZoomAuto();
                 QG_GraphicView* gv = w->getGraphicView();
-                gv->options = options;
+                gv->device = settings.value("Hardware/Device", "Mouse").toString();
                 gv->setPrintPreview(true);
                 gv->setBackground(RS_Color(255,255,255));
                 gv->setDefaultAction(new RS_ActionPrintPreview(*w->getDocument(), *w->getGraphicView()));
@@ -2903,24 +2895,31 @@ void QC_ApplicationWindow::showDeviceOptions()
 {
     // author: ravas
 
+    QSettings settings;
+
     QDialog dlg;
     dlg.setWindowTitle(tr("Device Options"));
     auto layout = new QVBoxLayout;
     auto device_combo = new ComboBoxOption(&dlg);
     device_combo->setTitle(tr("Device"));
     device_combo->setOptionsList(QStringList({"Mouse", "Tablet", "Trackpad", "Touchscreen"}));
-    device_combo->setCurrentOption(options->device);
+    device_combo->setCurrentOption(settings.value("Hardware/Device", "Mouse").toString());
     layout->addWidget(device_combo);
     dlg.setLayout(layout);
-    connect(device_combo, SIGNAL(optionToSave(QString)), this, SLOT(updateDevice(QString)));
+    connect(device_combo, &ComboBoxOption::optionToSave,
+            this, &QC_ApplicationWindow::updateDevice);
     dlg.exec();
 }
 
 void QC_ApplicationWindow::updateDevice(QString device)
 {
     // author: ravas
-
-    options->device = device;
+    QSettings settings;
+    settings.setValue("Hardware/Device", device);
+    foreach (auto win, window_list)
+    {
+        win->getGraphicView()->device = device;
+    }
 }
 
 void QC_ApplicationWindow::invokeToolbarCreator()
