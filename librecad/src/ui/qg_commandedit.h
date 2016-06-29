@@ -52,7 +52,9 @@ protected:
     QString relative_ray;
     QMap<QString, QString> variables;
 
-    void processInput();
+    void processInput(QString input);
+    bool isForeignCommand(QString input);
+    void processVariable(QString input);
 
 signals:
 	void tabPressed();

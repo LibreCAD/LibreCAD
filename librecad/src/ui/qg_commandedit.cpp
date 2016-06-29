@@ -136,7 +136,8 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e)
 
         case Qt::Key_Space:
         case Qt::Key_Return:
-            processInput();
+            processInput(text());
+
             break;
         case Qt::Key_Escape:
             if (text().isEmpty()) {
@@ -175,51 +176,88 @@ void QG_CommandEdit::focusOutEvent(QFocusEvent *e) {
 	QLineEdit::focusOutEvent(e);
 }
 
-void QG_CommandEdit::processInput()
+void QG_CommandEdit::processInput(QString input)
 {
-    auto input = text();
+    // author: ravas
 
-    if (input == QObject::tr("cal"))
+    if (isForeignCommand(input))
+    {
+        if (input.contains(";"))
+        {
+            foreach (auto str, input.split(";"))
+            {
+                if (str.contains("\\"))
+                    processVariable(str);
+                else
+                    emit command(str);
+            }
+        }
+        else
+        {
+            if (input.contains("\\"))
+                processVariable(input);
+            else
+                emit command(input);
+        }
+
+        historyList.append(input);
+        it = historyList.end();
+    }
+    clear();
+}
+
+bool QG_CommandEdit::isForeignCommand(QString input)
+{
+    // author: ravas
+
+    bool r_value = true;
+
+    if (input == tr("clear"))
+    {
+        emit clearCommandsHistory();
+        r_value = false;
+    }
+    else if (input == QObject::tr("cal"))
     {
         calculator_mode = !calculator_mode;
         if(calculator_mode)
             emit message(QObject::tr("Calculator mode: On"));
         else
             emit message(QObject::tr("Calculator mode: Off"));
-        clear();
-        return;
+        r_value = false;
     }
-    if (calculator_mode)
+    else if (calculator_mode)
     {
         evaluateExpression(input);
-        clear();
-        return;
+        r_value = false;
     }
-
-    if (input.contains("="))
+    else if (input.contains("="))
     {
         auto var_value = input.split("=");
         variables[var_value[0]] = var_value[1];
-        clear();
-        return;
+        r_value = false;
     }
-    if (input.contains("\\"))
-    {
-        QRegExp regex(R"~(\\(\w+))~");
-        int pos = regex.indexIn(input);
-        if (pos > -1)
-        {
-            input = variables[regex.cap(1)];
-        }
-    }
+    return r_value;
+}
 
-    historyList.append(input);
-    it = historyList.end();
-    if(input.compare(tr("clear"), Qt::CaseInsensitive) == 0)
+void QG_CommandEdit::processVariable(QString input)
+{
+    // author: ravas
+
+    input.remove("\\");
+    if (variables.contains(input))
     {
-        setText("");
-        emit clearCommandsHistory();
+        input = variables[input];
+        if (input.contains(";"))
+        {
+            foreach (auto str, input.split(";"))
+            {
+                if (str.contains("\\"))
+                    processVariable(str);
+                else
+                    emit command(str);
+            }
+        }
+        else emit command(input);
     }
-    else
-        emit command(input);
 }
