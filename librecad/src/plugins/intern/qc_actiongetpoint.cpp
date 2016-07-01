@@ -139,8 +139,12 @@ void QC_ActionGetPoint::setMesage(QString msg){
 
 void QC_ActionGetPoint::getPoint(QPointF *point)
 {
-    point->setX(pPoints->targetPoint.x);
-    point->setY(pPoints->targetPoint.y);
+    if (pPoints)
+    {
+        point->setX(pPoints->targetPoint.x);
+        point->setY(pPoints->targetPoint.y);
+    }
+
 }
 
 // EOF
