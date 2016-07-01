@@ -47,10 +47,10 @@ QC_ActionGetPoint::QC_ActionGetPoint(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Get Point",
 						   container, graphicView)
+        , canceled(false)
 		, completed{false}
 		, setTargetPoint{false}
 		, pPoints(new Points{})
-        , canceled(false)
 {
     pPoints->targetPoint = RS_Vector(0,0);
 }
@@ -96,8 +96,8 @@ void QC_ActionGetPoint::mouseReleaseEvent(QMouseEvent* e) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
-        completed = true;
         canceled = true;
+        completed = true;
         finish();
     }
 }

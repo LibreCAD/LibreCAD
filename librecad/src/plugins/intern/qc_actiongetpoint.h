@@ -62,11 +62,11 @@ public:
     bool wasCanceled(){return canceled;}
 
 private:
+    bool canceled;
 	bool completed;
 	bool setTargetPoint;
 	struct Points;
 	std::unique_ptr<Points> pPoints;
-    bool canceled;
 };
 
 #endif
