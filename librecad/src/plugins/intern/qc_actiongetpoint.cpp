@@ -50,6 +50,7 @@ QC_ActionGetPoint::QC_ActionGetPoint(RS_EntityContainer& container,
 		, completed{false}
 		, setTargetPoint{false}
 		, pPoints(new Points{})
+        , canceled(false)
 {
     pPoints->targetPoint = RS_Vector(0,0);
 }
@@ -96,6 +97,7 @@ void QC_ActionGetPoint::mouseReleaseEvent(QMouseEvent* e) {
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
         completed = true;
+        canceled = true;
         finish();
     }
 }
