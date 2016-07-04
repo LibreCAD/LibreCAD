@@ -1113,7 +1113,9 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
 	}
 
     // test if the entity is in the viewport
-    if (!isPrinting() && e->rtti() != RS2::EntityGraphic &&
+    if (!isPrinting() &&
+        e->rtti() != RS2::EntityGraphic &&
+        e->rtti() != RS2::EntityLine &&
        (toGuiX(e->getMax().x)<0 || toGuiX(e->getMin().x)>getWidth() ||
         toGuiY(e->getMin().y)<0 || toGuiY(e->getMax().y)>getHeight())) {
         return;
