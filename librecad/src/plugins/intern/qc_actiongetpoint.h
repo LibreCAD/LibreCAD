@@ -59,8 +59,10 @@ public:
     void setBasepoint(QPointF* basepoint);
     void setMesage(QString msg);
     bool isCompleted(){return completed;}
+    bool wasCanceled(){return canceled;}
 
 private:
+    bool canceled;
 	bool completed;
 	bool setTargetPoint;
 	struct Points;

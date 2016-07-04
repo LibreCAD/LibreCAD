@@ -1249,9 +1249,11 @@ bool Doc_plugin_interface::getPoint(QPointF *point, const QString& mesage,
             if (!gView->getEventHandler()->hasAction())
                 break;
         }
-        if (a->isCompleted() ){
-        a->getPoint(point);
-        status = true;}
+        if (a->isCompleted() && !a->wasCanceled())
+        {
+            a->getPoint(point);
+            status = true;
+        }
 //RLZ: delete QC_ActionGetPoint. Investigate how to kill only this action
         gView->killAllActions();
     }
