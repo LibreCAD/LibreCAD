@@ -1765,7 +1765,7 @@ void RS_EntityContainer::draw(RS_Painter* painter, RS_GraphicView* view,
     }
 
 
-	for(auto e: entities){
+    foreach (auto e, entities){
 
         view->drawEntity(painter, e);
     }

@@ -553,7 +553,7 @@ void RS_Hatch::activateContour(bool on) {
 void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
 
     if (!data.solid) {
-		for(auto se: entities){
+        foreach (auto se, entities){
 
             view->drawEntity(painter,se);
         }
