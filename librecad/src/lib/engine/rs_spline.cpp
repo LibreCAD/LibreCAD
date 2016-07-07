@@ -26,6 +26,8 @@
 
 #include<iostream>
 #include<cmath>
+#include<numeric>
+
 #include "rs_spline.h"
 
 
