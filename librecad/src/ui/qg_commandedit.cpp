@@ -26,7 +26,7 @@
 
 #include "qg_commandedit.h"
 #include <QKeyEvent>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <rs_math.h>
 
 
@@ -156,7 +156,7 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e)
 
 void QG_CommandEdit::evaluateExpression(QString input)
 {
-    QRegExp regex(R"~(([\d\.]+)deg|d)~");
+    QRegularExpression regex(R"~(([\d\.]+)deg|d)~");
     input.replace(regex, R"~(\1*pi/180)~");
     bool ok = true;
     double result = RS_Math::eval(input, &ok);
@@ -179,6 +179,10 @@ void QG_CommandEdit::focusOutEvent(QFocusEvent *e) {
 void QG_CommandEdit::processInput(QString input)
 {
     // author: ravas
+
+    // convert 10..0 to @10,0
+    QRegularExpression regex(R"~(([\d\.]+)\.\.([\d\.]+))~");
+    input.replace(regex, "@\\1,\\2");
 
     if (isForeignCommand(input))
     {
