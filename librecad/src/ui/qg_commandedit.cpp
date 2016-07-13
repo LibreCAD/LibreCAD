@@ -134,6 +134,7 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e)
             }
             break;
 
+        case Qt::Key_Enter:
         case Qt::Key_Space:
         case Qt::Key_Return:
             processInput(text());
