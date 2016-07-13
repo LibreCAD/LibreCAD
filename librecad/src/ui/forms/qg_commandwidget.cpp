@@ -26,6 +26,7 @@
 #include "qg_commandwidget.h"
 #include <QKeyEvent>
 #include <algorithm>
+#include <QFileDialog>
 
 #include "qg_actionhandler.h"
 #include "rs_commands.h"
@@ -49,6 +50,11 @@ QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::Window
     connect(leCommand, SIGNAL(tabPressed()), this, SLOT(tabPressed()));
     connect(leCommand, SIGNAL(clearCommandsHistory()), teHistory, SLOT(clear()));
     connect(leCommand, SIGNAL(message(QString)), this, SLOT(appendHistory(QString)));
+
+    auto action = new QAction(QObject::tr("Load Command File"), this);
+    connect(action, &QAction::triggered, this, &QG_CommandWidget::chooseCommandFile);
+    options_button->addAction(action);
+    options_button->setStyleSheet("QToolButton::menu-indicator { image: none; }");
 }
 
 /*
@@ -242,3 +248,11 @@ QString QG_CommandWidget::getRootCommand( const QStringList & cmdList, const QSt
 
 }
 
+void QG_CommandWidget::chooseCommandFile()
+{
+    QString path = QFileDialog::getOpenFileName(this);
+    if (!path.isEmpty())
+    {
+        leCommand->readCommandFile(path);
+    }
+}

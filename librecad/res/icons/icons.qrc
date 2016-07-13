@@ -193,5 +193,6 @@
         <file>text_align_topcenter.svg</file>
         <file>text_align_topleft.svg</file>
         <file>text_align_topright.svg</file>
+        <file>options.svg</file>
     </qresource>
 </RCC>
