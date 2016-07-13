@@ -25,8 +25,12 @@
 **********************************************************************/
 
 #include "qg_commandedit.h"
+
 #include <QKeyEvent>
 #include <QRegularExpression>
+#include <QFile>
+#include <QTextStream>
+
 #include <rs_math.h>
 
 
@@ -264,5 +268,23 @@ void QG_CommandEdit::processVariable(QString input)
             }
         }
         else emit command(input);
+    }
+}
+
+void QG_CommandEdit::readCommandFile(const QString& path)
+{
+    // author: ravas
+
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+
+    QTextStream txt_stream(&file);
+    QString line;
+    while (!txt_stream.atEnd())
+    {
+        line = txt_stream.readLine();
+        line.remove(" ");
+        processInput(line);
     }
 }

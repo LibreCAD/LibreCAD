@@ -42,6 +42,8 @@ public:
     QG_CommandEdit(QWidget* parent=0);
     virtual ~QG_CommandEdit()=default;
 
+    void readCommandFile(const QString& path);
+
 protected:
 	virtual bool event(QEvent* e);
 	virtual void keyPressEvent(QKeyEvent* e);

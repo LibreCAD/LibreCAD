@@ -71,6 +71,8 @@ private slots:
 
     void on_pb_snap_color_clicked();
 
+    void setVariableFile();
+
 private:
     bool restartNeeded;
 

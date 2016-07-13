@@ -25,6 +25,7 @@
 **
 **********************************************************************/
 
+
 #include "qc_applicationwindow.h"
 
 #include <QStatusBar>
@@ -325,6 +326,10 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init settings");
     initSettings();
+
+    auto command_file = settings.value("Paths/VariableFile", "").toString();
+    if (!command_file.isEmpty())
+        commandWidget->leCommand->readCommandFile(command_file);
 
     // Activate autosave timer
     if (settings.value("Defaults/AutoBackupDocument", 1).toBool())
