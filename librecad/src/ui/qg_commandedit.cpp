@@ -30,6 +30,8 @@
 #include <QRegularExpression>
 #include <QFile>
 #include <QTextStream>
+#include <QApplication>
+#include <QClipboard>
 
 #include <rs_math.h>
 
@@ -91,6 +93,9 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e)
                 break;
             case Qt::Key_Left:
                 r_string = "-" + value + ",0";
+                break;
+            case Qt::Key_V:
+                modifiedPaste();
                 break;
             default:
                 QLineEdit::keyPressEvent(e);
@@ -288,3 +293,12 @@ void QG_CommandEdit::readCommandFile(const QString& path)
         processInput(line);
     }
 }
+
+void QG_CommandEdit::modifiedPaste()
+{
+    auto txt = qApp->clipboard()->text();
+    txt.replace("\n", ";");
+    setText(txt);
+}
+
+

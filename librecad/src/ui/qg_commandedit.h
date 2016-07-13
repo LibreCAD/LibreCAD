@@ -72,6 +72,9 @@ private:
 	QStringList::Iterator it;
 	bool acceptCoordinates;
     bool calculator_mode;
+
+public slots:
+    void modifiedPaste();
 };
 
 #endif
