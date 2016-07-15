@@ -191,7 +191,7 @@ void QG_CommandEdit::processInput(QString input)
     // author: ravas
 
     // convert 10..0 to @10,0
-    QRegularExpression regex(R"~(([\d\.]+)\.\.([\d\.]+))~");
+    QRegularExpression regex(R"~(([\w\.\\]+)\.\.([\w\.\\]+))~");
     input.replace(regex, "@\\1,\\2");
 
     if (isForeignCommand(input))
@@ -257,6 +257,33 @@ bool QG_CommandEdit::isForeignCommand(QString input)
 void QG_CommandEdit::processVariable(QString input)
 {
     // author: ravas
+
+    if (input.contains(","))
+    {
+        QString rel = "";
+
+        if (input.contains("@"))
+        {
+            rel = "@";
+            input.remove("@");
+        }
+
+        auto x_y = input.split(",");
+        if (x_y[0].contains("\\"))
+        {
+            x_y[0].remove("\\");
+            if (variables.contains(x_y[0]))
+                x_y[0] = variables[x_y[0]];
+        }
+        if (x_y[1].contains("\\"))
+        {
+            x_y[1].remove("\\");
+            if (variables.contains(x_y[1]))
+                x_y[1] = variables[x_y[1]];
+        }
+        emit command(rel + x_y[0] + "," + x_y[1]);
+        return;
+    }
 
     input.remove("\\");
     if (variables.contains(input))
