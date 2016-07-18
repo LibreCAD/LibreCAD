@@ -1057,7 +1057,11 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     // <[~ View ~]>
 
     action = new QAction(tr("&Fullscreen"), agm->view);
-    action->setShortcut(QKeySequence::FullScreen);
+    #if defined(Q_OS_LINUX)
+        action->setShortcut(QKeySequence("F11"));
+    #else
+        action->setShortcut(QKeySequence::FullScreen);
+    #endif
     action->setCheckable(true);
     connect(action, SIGNAL(toggled(bool)), main_window, SLOT(toggleFullscreen(bool)));
     action->setObjectName("Fullscreen");
