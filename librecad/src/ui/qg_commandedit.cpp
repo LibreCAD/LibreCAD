@@ -191,8 +191,8 @@ void QG_CommandEdit::processInput(QString input)
     // author: ravas
 
     // convert 10..0 to @10,0
-    QRegularExpression regex(R"~(([\w\.\\]+)\.\.([\w\.\\]+))~");
-    input.replace(regex, "@\\1,\\2");
+    QRegularExpression regex(R"~(([-\w\.\\]+)\.\.)~");
+    input.replace(regex, "@\\1,");
 
     if (isForeignCommand(input))
     {
