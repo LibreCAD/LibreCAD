@@ -426,7 +426,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Aligned</source>
-        <translation>Вы&amp;равненный</translation>
+        <translation>Вы&amp;ровненный</translation>
     </message>
     <message>
         <source>&amp;Linear</source>
@@ -1121,7 +1121,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Modify</source>
-        <translation>Из&amp;мененить</translation>
+        <translation>Из&amp;менить</translation>
     </message>
     <message>
         <source>&amp;Snap</source>
@@ -2155,15 +2155,15 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Bisector</source>
-        <translation type="obsolete">Бисектрисса</translation>
+        <translation type="obsolete">Биссектриса</translation>
     </message>
     <message>
         <source>&amp;Bisector</source>
-        <translation type="obsolete">Б&amp;исектрисса</translation>
+        <translation type="obsolete">Б&amp;иссектриса</translation>
     </message>
     <message>
         <source>Draw bisectors</source>
-        <translation type="obsolete">Начертить бисектриссу</translation>
+        <translation type="obsolete">Начертить биссектрису</translation>
     </message>
     <message>
         <source>Tangent (P,C)</source>
@@ -2551,15 +2551,15 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Lengthen</source>
-        <translation type="obsolete">Удлиннить</translation>
+        <translation type="obsolete">Удлинить</translation>
     </message>
     <message>
         <source>&amp;Lengthen</source>
-        <translation type="obsolete">У&amp;длиннить</translation>
+        <translation type="obsolete">У&amp;длинить</translation>
     </message>
     <message>
         <source>Lengthen by a given amount</source>
-        <translation type="obsolete">Удлиннить на заданную величину</translation>
+        <translation type="obsolete">Удлинить на заданную величину</translation>
     </message>
     <message>
         <source>&amp;Cut</source>
@@ -2751,7 +2751,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Restrict Vertically</source>
-        <translation type="obsolete">Ограничить вериткально</translation>
+        <translation type="obsolete">Ограничить вертикально</translation>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
@@ -3239,7 +3239,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Opens the integrated development environment for scripting</source>
-        <translation type="obsolete">Открывает инегрированную среду для написания скриптов</translation>
+        <translation type="obsolete">Открывает интегрированную среду для написания скриптов</translation>
     </message>
     <message>
         <source>Run Script..</source>
@@ -3670,7 +3670,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px;margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot;font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Начертить окружность, вписанную втреугольник, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;font-style:italic;&quot;&gt;т.е.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;font-size:9pt;&quot;&gt;, касательную к трём отрезкам. Лучше вместо этогоиспользуйте функцию «Окружность → По трём касательным».&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px;margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot;font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Начертить окружность, вписанную в треугольник, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;font-style:italic;&quot;&gt;т.е.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;font-size:9pt;&quot;&gt;, касательную к трём отрезкам. Лучше вместо этого используйте функцию «Окружность → По трём касательным».&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Circle with 2 Points and Radius&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -3826,7 +3826,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bisectors</source>
-        <translation type="obsolete">Бисектриссы</translation>
+        <translation type="obsolete">Биссектрисы</translation>
     </message>
     <message>
         <source>Tangents from circle to circle</source>
@@ -4400,7 +4400,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Light Gray</source>
-        <translation>Светлосерый</translation>
+        <translation>Светло-серый</translation>
     </message>
     <message>
         <source>Others..</source>
@@ -4950,7 +4950,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Size (px):</source>
-        <translation>Размер (пиксел):</translation>
+        <translation>Размер (пикселей):</translation>
     </message>
     <message>
         <source>path:</source>
@@ -5001,7 +5001,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
 &lt;/font&gt;
 &lt;br&gt;
 Пожалуйста, выберите единицы измерения для новых чертежей и предпочитаемый язык&lt;br&gt;
-Эти установки вы посже сможете изменить в меня Настройки программы QCad.</translation>
+Эти установки вы позже сможете изменить в меню Настройки программы QCad.</translation>
     </message>
     <message>
         <source>Default Unit:</source>
@@ -5100,7 +5100,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Scale Y:</source>
-        <translation>Мастштаб по Y:</translation>
+        <translation>Масштаб по Y:</translation>
     </message>
 </context>
 <context>
@@ -6182,7 +6182,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
-        <translation>Вернее перекрестье на изометрической сетке</translation>
+        <translation>Верхнее перекрестье на изометрической сетке</translation>
     </message>
     <message>
         <source>Top</source>
@@ -6557,7 +6557,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Darkgray</source>
-        <translation type="obsolete">Темносерый</translation>
+        <translation type="obsolete">Темно-серый</translation>
     </message>
     <message>
         <source>#404040</source>
@@ -7412,7 +7412,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Hash (#)</source>
-        <translation>Хэш-символ (#)</translation>
+        <translation>Хеш-символ (#)</translation>
     </message>
     <message>
         <source>Dollar ($)</source>
@@ -8554,7 +8554,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LineBisectorOptions</name>
     <message>
         <source>Line Bisector Options</source>
-        <translation type="obsolete">Параметры бисектриссы</translation>
+        <translation type="obsolete">Параметры биссектрисы</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -9201,7 +9201,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Restrict Orthogonal</source>
-        <translation>Ограничить ортагонально</translation>
+        <translation>Ограничить ортогонально</translation>
     </message>
     <message>
         <source>Restrict Nothing</source>
@@ -9937,7 +9937,7 @@ Continue?</source>
     <message>
         <source>tangentpc</source>
         <comment>tangent point and circle</comment>
-        <translatorcomment>кастелто -- касательная точка окружность</translatorcomment>
+        <translatorcomment>касателто -- касательная точка окружность</translatorcomment>
         <translation>касателто</translation>
     </message>
     <message>
@@ -11719,7 +11719,7 @@ Continue?</source>
     <name>RS_ActionDrawArcTangential</name>
     <message>
         <source>Arc: Tangential</source>
-        <translation type="obsolete">Дуга: Касательна</translation>
+        <translation type="obsolete">Дуга: Касательная</translation>
     </message>
     <message>
         <source>Specify base entity</source>
@@ -12501,15 +12501,15 @@ Continue?</source>
     </message>
     <message>
         <source>Bisector</source>
-        <translation type="obsolete">Бисектрисса</translation>
+        <translation type="obsolete">Биссектриса</translation>
     </message>
     <message>
         <source>&amp;Bisector</source>
-        <translation type="obsolete">Б&amp;исектрисса</translation>
+        <translation type="obsolete">Б&amp;иссектриса</translation>
     </message>
     <message>
         <source>Draw bisectors</source>
-        <translation type="obsolete">Начертить бисектриссу</translation>
+        <translation type="obsolete">Начертить биссектрису</translation>
     </message>
     <message>
         <source>Number sector lines not in range: </source>
@@ -13907,7 +13907,7 @@ Continue?</source>
     </message>
     <message>
         <source>One of the chosen entities is NULL</source>
-        <translation type="obsolete">Один из выбраных объектов — NULL</translation>
+        <translation type="obsolete">Один из выбранных объектов — NULL</translation>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
@@ -14259,7 +14259,7 @@ Continue?</source>
     </message>
     <message>
         <source>Scale</source>
-        <translation type="obsolete">Масшабировать</translation>
+        <translation type="obsolete">Масштабировать</translation>
     </message>
     <message>
         <source>&amp;Scale</source>
@@ -14388,7 +14388,7 @@ Continue?</source>
     </message>
     <message>
         <source>Lengthen</source>
-        <translation type="obsolete">Удлиннить</translation>
+        <translation type="obsolete">Удлинить</translation>
     </message>
     <message>
         <source>&amp;Lengthen</source>
@@ -14396,7 +14396,7 @@ Continue?</source>
     </message>
     <message>
         <source>Lengthen by a given amount</source>
-        <translation type="obsolete">Удлиннить на заданную величину</translation>
+        <translation type="obsolete">Удлинить на заданную величину</translation>
     </message>
 </context>
 <context>
@@ -15426,7 +15426,7 @@ Continue?</source>
     </message>
     <message>
         <source>parallel</source>
-        <translation type="obsolete">паралельно</translation>
+        <translation type="obsolete">параллельно</translation>
     </message>
     <message>
         <source>length</source>
