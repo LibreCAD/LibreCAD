@@ -97,6 +97,8 @@
 #include "widgetcreator.h"
 #include "lc_actiongroupmanager.h"
 #include "linklist.h"
+#include "colorwizard.h"
+#include "lc_penwizard.h"
 
 #include <boost/version.hpp>
 
@@ -127,6 +129,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     : ag_manager(new LC_ActionGroupManager(this))
     , autosaveTimer(nullptr)
     , actionHandler(new QG_ActionHandler(this))
+    , pen_wiz(new LC_PenWizard(QObject::tr("Pen Wizard"), this))
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
@@ -145,6 +148,11 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: setting icon");
     setWindowIcon(QIcon(QC_APP_ICON));
+
+    pen_wiz->setObjectName("pen_wiz");
+    connect(this, &QC_ApplicationWindow::windowsChanged,
+            pen_wiz, &LC_PenWizard::setEnabled);
+    addDockWidget(Qt::RightDockWidgetArea, pen_wiz);
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init status bar");
     QStatusBar* status_bar = statusBar();
@@ -762,6 +770,8 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
 
         // set pen from pen toolbar
         slotPenChanged(penToolBar->getPen());
+
+        pen_wiz->mdi_win = m;
 
         // update toggle button status:
         if (m->getGraphic()) {

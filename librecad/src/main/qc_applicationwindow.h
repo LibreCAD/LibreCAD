@@ -57,6 +57,7 @@ class RS_GraphicView;
 class RS_Document;
 class TwoStackedLabels;
 class LC_ActionGroupManager;
+class LC_PenWizard;
 
 struct DockAreas
 {
@@ -328,6 +329,8 @@ private:
     QG_LibraryWidget* libraryWidget;
     /** Command line */
     QG_CommandWidget* commandWidget;
+
+    LC_PenWizard* pen_wiz;
 
     // --- Statusbar ---
     /** Coordinate widget */

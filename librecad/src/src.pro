@@ -26,7 +26,6 @@ CONFIG += qt \
     verbose \
     depend_includepath
 
-
 QT += widgets printsupport
 CONFIG += c++11
 *-g++ {
@@ -682,7 +681,10 @@ HEADERS += ui/lc_actionfactory.h \
     ui/generic/actionlist.h \
     ui/generic/widgetcreator.h \
     ui/lc_actiongroupmanager.h \
-    ui/generic/linklist.h
+    ui/generic/linklist.h \
+    ui/generic/colorcombobox.h \
+    ui/generic/colorwizard.h \
+    ui/lc_penwizard.h
 
 SOURCES += ui/lc_actionfactory.cpp \
     ui/qg_actionhandler.cpp \
@@ -781,7 +783,10 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/generic/actionlist.cpp \
     ui/generic/widgetcreator.cpp \
     ui/lc_actiongroupmanager.cpp \
-    ui/generic/linklist.cpp
+    ui/generic/linklist.cpp \
+    ui/generic/colorcombobox.cpp \
+    ui/generic/colorwizard.cpp \
+    ui/lc_penwizard.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_arcoptions.ui \
@@ -854,7 +859,8 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/lc_widgetoptionsdialog.ui \
     ui/lc_deviceoptions.ui \
     ui/generic/comboboxoption.ui \
-    ui/generic/widgetcreator.ui
+    ui/generic/widgetcreator.ui \
+    ui/generic/colorwizard.ui
 
 RESOURCES += ../res/ui/ui.qrc
 
