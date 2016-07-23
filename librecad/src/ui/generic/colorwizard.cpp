@@ -48,6 +48,7 @@ ColorWizard::ColorWizard(QWidget *parent) :
             this, &ColorWizard::handleDoubleClick);
 
     ui->fav_list->setContextMenuPolicy(Qt::ActionsContextMenu);
+    ui->fav_list->setDragDropMode(QAbstractItemView::InternalMove);
 
     auto select = new QAction(QObject::tr("Select objects"), ui->fav_list);
     connect(select, &QAction::triggered, this, &ColorWizard::requestSelection);
