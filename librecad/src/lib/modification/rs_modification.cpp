@@ -104,15 +104,10 @@ void RS_Modification::remove() {
 	// not safe (?)
     for(auto e: *container) {
         if (e && e->isSelected()) {
-            try {
-                e->setSelected(false);
-                e->changeUndoState();
-                if (document) {
-                    document->addUndoable(e);
-                }
-            }
-            catch (...) {
-                RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::remove: unable to remove selected entity");
+            e->setSelected(false);
+            e->changeUndoState();
+            if (document) {
+                document->addUndoable(e);
             }
         } else {
             RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::remove: no valid container is selected");
@@ -142,10 +137,6 @@ void RS_Modification::revertDirection() {
 		return;
 	}
 
-	if (document && handleUndo) {
-		document->startUndoCycle();
-	}
-
 	std::vector<RS_Entity*> addList;
     for(auto e: *container) {
 		if (e && e->isSelected()) {
@@ -158,14 +149,6 @@ void RS_Modification::revertDirection() {
 	}
 	deselectOriginals(true);
 	addNewEntities(addList);
-
-	if (document && handleUndo) {
-		document->endUndoCycle();
-	}
-
-	if (graphicView) {
-		graphicView->redraw(RS2::RedrawDrawing);
-	}
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::revertDirection: OK");
 }
@@ -334,7 +317,7 @@ void RS_Modification::copy(const RS_Vector& ref, const bool cut) {
     }
 
     // start undo cycle for the container if we're cutting
-    if (cut && document) {
+    if (cut && document && handleUndo) {
         document->startUndoCycle();
     }
 
@@ -349,7 +332,7 @@ void RS_Modification::copy(const RS_Vector& ref, const bool cut) {
         }
     }
 
-    if (cut && document) {
+    if (cut && document && handleUndo) {
         document->endUndoCycle();
     }
 
@@ -379,25 +362,14 @@ void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref, const bool 
     // add entity to clipboard:
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: to clipboard: %d/%d", e->getId(), e->rtti());
     RS_Entity* c = e->clone();
-    try {
-        c->move(-ref);
-    }
-    catch (...) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::copyEntity: unable to move entity");
-        return;
-    }
+    c->move(-ref);
 
     RS_CLIPBOARD->addEntity(c);
     copyLayers(e);
     copyBlocks(e);
 
     // set layer to the layer clone:
-    try {
-        c->setLayer(e->getLayer()->getName());
-    }
-    catch (...) {
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: unable to set layer for entity ID/flag: %d/%d", c->getId(), c->rtti());
-    }
+    c->setLayer(e->getLayer()->getName());
 
     if (cut) {
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: cut ID/flag: %d/%d", e->getId(), e->rtti());
@@ -556,10 +528,6 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     // default insertion point for container
     RS_Vector ip = data.insertionPoint;
 
-    if (document) {
-        document->startUndoCycle();
-    }
-
     // insert absent layers from source to graphic
     if (!pasteLayers(source)) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::paste: unable to copy due to absence of needed layers");
@@ -652,11 +620,14 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
         b->clear();
         // if this call a destructor for the block?
         graphic->removeBlock(b);
+    } else {
+        if (document && handleUndo) {
+            document->startUndoCycle();
+            document->addUndoable(i);
+            document->endUndoCycle();
+        }
     }
 
-    if (document) {
-        document->endUndoCycle();
-    }
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: OK");
 }
@@ -792,6 +763,10 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
 
 
 
+/**
+ * Paste entity in supplied container
+ *
+ **/
 bool RS_Modification::pasteEntity(RS_Entity* entity, RS_EntityContainer* container) {
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteEntity");
@@ -820,7 +795,6 @@ bool RS_Modification::pasteEntity(RS_Entity* entity, RS_EntityContainer* contain
     // paste entity
     e->reparent(container);
     container->addEntity(e);
-
     e->setSelected(false);
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteEntity: OK");
@@ -1674,10 +1648,6 @@ bool RS_Modification::move(RS_MoveData& data) {
 
 	std::vector<RS_Entity*> addList;
 
-    if (document && handleUndo) {
-        document->startUndoCycle();
-    }
-
     // Create new entites
     for (int num=1;
             num<=data.number || (data.number==0 && num<=1);
@@ -1709,13 +1679,6 @@ bool RS_Modification::move(RS_MoveData& data) {
     deselectOriginals(data.number==0);
     addNewEntities(addList);
 
-    if (document && handleUndo) {
-        document->endUndoCycle();
-    }
-
-    if (graphicView) {
-        graphicView->redraw(RS2::RedrawDrawing);
-    }
     return true;
 }
 
@@ -1733,10 +1696,6 @@ bool RS_Modification::offset(const RS_OffsetData& data) {
     }
 
 	std::vector<RS_Entity*> addList;
-
-    if (document && handleUndo) {
-        document->startUndoCycle();
-    }
 
     // Create new entites
     for (int num=1;
@@ -1772,13 +1731,6 @@ bool RS_Modification::offset(const RS_OffsetData& data) {
     deselectOriginals(data.number==0);
     addNewEntities(addList);
 
-    if (document && handleUndo) {
-        document->endUndoCycle();
-    }
-
-    if (graphicView) {
-        graphicView->redraw(RS2::RedrawDrawing);
-    }
     return true;
 }
 
@@ -1796,10 +1748,6 @@ bool RS_Modification::rotate(RS_RotateData& data) {
     }
 
 	std::vector<RS_Entity*> addList;
-
-    if (document && handleUndo) {
-        document->startUndoCycle();
-    }
 
     // Create new entites
     for (int num=1;
@@ -1831,13 +1779,6 @@ bool RS_Modification::rotate(RS_RotateData& data) {
     deselectOriginals(data.number==0);
     addNewEntities(addList);
 
-    if (document && handleUndo) {
-        document->endUndoCycle();
-    }
-    if (graphicView) {
-        graphicView->redraw(RS2::RedrawDrawing);
-    }
-
     return true;
 }
 
@@ -1856,9 +1797,6 @@ bool RS_Modification::scale(RS_ScaleData& data) {
 
 	std::vector<RS_Entity*> selectedList,addList;
 
-    if (document && handleUndo) {
-        document->startUndoCycle();
-	}
 	for(auto ec: *container){
         if (ec->isSelected() ) {
             if ( fabs(data.factor.x - data.factor.y) > RS_TOLERANCE ) {
@@ -1885,7 +1823,6 @@ bool RS_Modification::scale(RS_ScaleData& data) {
 
         }
     }
-
 
     // Create new entites
     for (int num=1;
@@ -1920,13 +1857,6 @@ bool RS_Modification::scale(RS_ScaleData& data) {
     deselectOriginals(data.number==0);
     addNewEntities(addList);
 
-    if (document && handleUndo) {
-        document->endUndoCycle();
-    }
-
-    if (graphicView) {
-        graphicView->redraw(RS2::RedrawDrawing);
-    }
     return true;
 }
 
@@ -1944,10 +1874,6 @@ bool RS_Modification::mirror(RS_MirrorData& data) {
     }
 
 	std::vector<RS_Entity*> addList;
-
-    if (document && handleUndo) {
-        document->startUndoCycle();
-    }
 
     // Create new entites
     for (int num=1;
@@ -1979,13 +1905,6 @@ bool RS_Modification::mirror(RS_MirrorData& data) {
     deselectOriginals(data.copy==false);
     addNewEntities(addList);
 
-    if (document && handleUndo) {
-        document->endUndoCycle();
-    }
-
-    if (graphicView) {
-        graphicView->redraw(RS2::RedrawDrawing);
-    }
     return true;
 }
 
@@ -2002,10 +1921,6 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data) {
     }
 
 	std::vector<RS_Entity*> addList;
-
-    if (document && handleUndo) {
-        document->startUndoCycle();
-    }
 
     // Create new entites
     for (int num=1;
@@ -2042,13 +1957,6 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data) {
     deselectOriginals(data.number==0);
     addNewEntities(addList);
 
-    if (document && handleUndo) {
-        document->endUndoCycle();
-    }
-
-    if (graphicView) {
-        graphicView->redraw(RS2::RedrawDrawing);
-    }
     return true;
 }
 
@@ -2065,10 +1973,6 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
     }
 
 	std::vector<RS_Entity*> addList;
-
-	if (document && handleUndo) {
-        document->startUndoCycle();
-    }
 
     // Create new entites
     for (int num=1;
@@ -2101,13 +2005,6 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
 
     deselectOriginals(data.number==0);
     addNewEntities(addList);
-
-    if (document && handleUndo) {
-        document->endUndoCycle();
-    }
-    if (graphicView) {
-        graphicView->redraw(RS2::RedrawDrawing);
-    }
 
     return true;
 }
@@ -2174,7 +2071,12 @@ void RS_Modification::deselectOriginals(bool remove
  * @param addList Entities to add.
  */
 void RS_Modification::addNewEntities(std::vector<RS_Entity*>& addList) {
-	for(RS_Entity* e: addList){
+
+    if (document && handleUndo) {
+        document->startUndoCycle();
+    }
+
+    for(RS_Entity* e: addList) {
 		if (e) {
 			container->addEntity(e);
             if (document && handleUndo) {
@@ -2184,6 +2086,14 @@ void RS_Modification::addNewEntities(std::vector<RS_Entity*>& addList) {
             //    graphicView->drawEntity(e);
             //}
         }
+    }
+
+    if (document && handleUndo) {
+        document->endUndoCycle();
+    }
+
+    if (graphicView) {
+        graphicView->redraw(RS2::RedrawDrawing);
     }
 }
 
@@ -2616,10 +2526,6 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner,
 
 	std::vector<RS_Entity*> addList;
 
-    if (document && handleUndo) {
-        document->startUndoCycle();
-    }
-
 	// Create new entites
 	for(auto e: *container){
 		if (e &&
@@ -2640,13 +2546,6 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner,
     deselectOriginals(true);
     addNewEntities(addList);
 
-    if (document && handleUndo) {
-        document->endUndoCycle();
-    }
-
-    if (graphicView) {
-        graphicView->redraw(RS2::RedrawDrawing);
-    }
     return true;
 }
 
@@ -3173,10 +3072,6 @@ bool RS_Modification::explode() {
 
 	std::vector<RS_Entity*> addList;
 
-    if (document && handleUndo) {
-        document->startUndoCycle();
-    }
-
 	for(auto e: *container){
         //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
@@ -3264,14 +3159,6 @@ bool RS_Modification::explode() {
     deselectOriginals(true);
     addNewEntities(addList);
 
-    if (document && handleUndo) {
-        document->endUndoCycle();
-    }
-
-    if (graphicView) {
-        graphicView->redraw(RS2::RedrawDrawing);
-    }
-
     return true;
 }
 
@@ -3287,9 +3174,6 @@ bool RS_Modification::explodeTextIntoLetters() {
 
 	std::vector<RS_Entity*> addList;
 
-    if (document && handleUndo) {
-        document->startUndoCycle();
-	}
 	for(auto e: *container){
         if (e && e->isSelected()) {
             if (e->rtti()==RS2::EntityMText) {
@@ -3308,14 +3192,6 @@ bool RS_Modification::explodeTextIntoLetters() {
 
     deselectOriginals(true);
     addNewEntities(addList);
-
-    if (document && handleUndo) {
-        document->endUndoCycle();
-    }
-
-    if (graphicView) {
-        graphicView->redraw(RS2::RedrawDrawing);
-    }
 
     return true;
 }
@@ -3441,10 +3317,6 @@ bool RS_Modification::moveRef(RS_MoveRefData& data) {
 
 	std::vector<RS_Entity*> addList;
 
-    if (document && handleUndo) {
-        document->startUndoCycle();
-    }
-
     // Create new entites
 	for(auto e: *container){
 		if (e && e->isSelected()) {
@@ -3460,13 +3332,6 @@ bool RS_Modification::moveRef(RS_MoveRefData& data) {
     deselectOriginals(true);
     addNewEntities(addList);
 
-    if (document && handleUndo) {
-        document->endUndoCycle();
-    }
-
-    if (graphicView) {
-        graphicView->redraw(RS2::RedrawDrawing);
-    }
     return true;
 }
 
