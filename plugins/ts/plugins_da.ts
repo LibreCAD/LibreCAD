@@ -4,8 +4,8 @@
 <context>
     <name>AsciiFile</name>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="37"/>
-        <location filename="../asciifile/asciifile.cpp" line="43"/>
+        <location filename="../asciifile/asciifile.cpp" line="35"/>
+        <location filename="../asciifile/asciifile.cpp" line="41"/>
         <source>Read ascii points</source>
         <translation>Importer ASCII punkter</translation>
     </message>
@@ -352,12 +352,12 @@
 <context>
     <name>PicFile</name>
     <message>
-        <location filename="../picfile/picfile.cpp" line="38"/>
+        <location filename="../picfile/picfile.cpp" line="36"/>
         <source>Read PIC file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="44"/>
+        <location filename="../picfile/picfile.cpp" line="42"/>
         <source>import PIC file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -365,177 +365,177 @@
 <context>
     <name>dibPunto</name>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="235"/>
+        <location filename="../asciifile/asciifile.cpp" line="229"/>
         <source>Read ascii points</source>
         <translation type="unfinished">Importer ASCII punkter</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="241"/>
+        <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>File...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="248"/>
+        <location filename="../asciifile/asciifile.cpp" line="242"/>
         <source>Format:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="250"/>
+        <location filename="../asciifile/asciifile.cpp" line="244"/>
         <source>Space Separator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="250"/>
+        <location filename="../asciifile/asciifile.cpp" line="244"/>
         <source>Tab Separator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="250"/>
+        <location filename="../asciifile/asciifile.cpp" line="244"/>
         <source>Comma Separator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="250"/>
+        <location filename="../asciifile/asciifile.cpp" line="244"/>
         <source>Space in Columns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="250"/>
+        <location filename="../asciifile/asciifile.cpp" line="244"/>
         <source>*.odb for Psion 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="252"/>
+        <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>Connect points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="260"/>
+        <location filename="../asciifile/asciifile.cpp" line="254"/>
         <source>2D Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="260"/>
+        <location filename="../asciifile/asciifile.cpp" line="254"/>
         <source>Draw 2D Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="261"/>
+        <location filename="../asciifile/asciifile.cpp" line="255"/>
         <source>3D Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="261"/>
+        <location filename="../asciifile/asciifile.cpp" line="255"/>
         <source>Draw 3D Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="262"/>
+        <location filename="../asciifile/asciifile.cpp" line="256"/>
         <source>Point Number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="262"/>
+        <location filename="../asciifile/asciifile.cpp" line="256"/>
         <source>Draw point number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="263"/>
+        <location filename="../asciifile/asciifile.cpp" line="257"/>
         <source>Point Elevation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="263"/>
+        <location filename="../asciifile/asciifile.cpp" line="257"/>
         <source>Draw point elevation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="264"/>
+        <location filename="../asciifile/asciifile.cpp" line="258"/>
         <source>Point Code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="264"/>
+        <location filename="../asciifile/asciifile.cpp" line="258"/>
         <source>Draw point code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="278"/>
+        <location filename="../asciifile/asciifile.cpp" line="272"/>
         <source>Accept</source>
         <translation>Godkend</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="283"/>
+        <location filename="../asciifile/asciifile.cpp" line="277"/>
         <source>Cancel</source>
         <translation>Annuller</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="313"/>
+        <location filename="../asciifile/asciifile.cpp" line="307"/>
         <source>Select file</source>
         <translation>Vælg fil</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="320"/>
+        <location filename="../asciifile/asciifile.cpp" line="314"/>
         <source>Point 2D layer is empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="323"/>
+        <location filename="../asciifile/asciifile.cpp" line="317"/>
         <source>Point 3D layer is empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="326"/>
+        <location filename="../asciifile/asciifile.cpp" line="320"/>
         <source>Point elevation layer is empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="327"/>
+        <location filename="../asciifile/asciifile.cpp" line="321"/>
         <source>Point elevation height is empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="328"/>
+        <location filename="../asciifile/asciifile.cpp" line="322"/>
         <source>Point elevation separation is empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="331"/>
+        <location filename="../asciifile/asciifile.cpp" line="325"/>
         <source>Point number layer is empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="332"/>
+        <location filename="../asciifile/asciifile.cpp" line="326"/>
         <source>Point number height is empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="333"/>
+        <location filename="../asciifile/asciifile.cpp" line="327"/>
         <source>Point number separation is empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="336"/>
+        <location filename="../asciifile/asciifile.cpp" line="330"/>
         <source>Point code layer is empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="337"/>
+        <location filename="../asciifile/asciifile.cpp" line="331"/>
         <source>Point code height is empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="338"/>
+        <location filename="../asciifile/asciifile.cpp" line="332"/>
         <source>Point code separation is empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="366"/>
+        <location filename="../asciifile/asciifile.cpp" line="360"/>
         <source>The file %1 not exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="371"/>
+        <location filename="../asciifile/asciifile.cpp" line="365"/>
         <source>Can&apos;t open the file %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -775,63 +775,63 @@
 <context>
     <name>picPunto</name>
     <message>
-        <location filename="../picfile/picfile.cpp" line="67"/>
+        <location filename="../picfile/picfile.cpp" line="65"/>
         <source>File...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="77"/>
+        <location filename="../picfile/picfile.cpp" line="75"/>
         <source>Scale:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="81"/>
+        <location filename="../picfile/picfile.cpp" line="79"/>
         <source>Accept</source>
         <translation type="unfinished">Godkend</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="85"/>
+        <location filename="../picfile/picfile.cpp" line="83"/>
         <source>Cancel</source>
         <translation type="unfinished">Annuller</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="113"/>
+        <location filename="../picfile/picfile.cpp" line="111"/>
         <source>Select file</source>
         <translation type="unfinished">Vælg fil</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="121"/>
+        <location filename="../picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="134"/>
+        <location filename="../picfile/picfile.cpp" line="132"/>
         <source>The file %1 not exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="139"/>
+        <location filename="../picfile/picfile.cpp" line="137"/>
         <source>Can&apos;t open the file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="146"/>
+        <location filename="../picfile/picfile.cpp" line="144"/>
         <source>%1 objects imported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="168"/>
+        <location filename="../picfile/picfile.cpp" line="166"/>
         <source>picPunto drawLine: first point is empty %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="181"/>
+        <location filename="../picfile/picfile.cpp" line="179"/>
         <source>picPunto drawLine: next point is empty %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="260"/>
-        <location filename="../picfile/picfile.cpp" line="269"/>
+        <location filename="../picfile/picfile.cpp" line="258"/>
+        <location filename="../picfile/picfile.cpp" line="267"/>
         <source>format error in %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -918,7 +918,7 @@ Use t or x in your equation as a variable/parameter.
 <context>
     <name>pointBox</name>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="177"/>
+        <location filename="../asciifile/asciifile.cpp" line="175"/>
         <source>Layer:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -926,17 +926,17 @@ Use t or x in your equation as a variable/parameter.
 <context>
     <name>textBox</name>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="210"/>
+        <location filename="../asciifile/asciifile.cpp" line="207"/>
         <source>Style:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="211"/>
+        <location filename="../asciifile/asciifile.cpp" line="208"/>
         <source>Height:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="212"/>
+        <location filename="../asciifile/asciifile.cpp" line="209"/>
         <source>Separation</source>
         <translation type="unfinished"></translation>
     </message>

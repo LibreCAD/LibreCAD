@@ -2,6 +2,25 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="id_ID">
 <context>
+    <name>ColorWizard</name>
+    <message>
+        <location filename="../src/ui/generic/colorwizard.ui" line="14"/>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/colorwizard.ui" line="35"/>
+        <source>Add to favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/colorwizard.ui" line="38"/>
+        <location filename="../src/ui/generic/colorwizard.ui" line="62"/>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+</context>
+<context>
     <name>ComboBoxOption</name>
     <message>
         <location filename="../src/ui/generic/comboboxoption.ui" line="14"/>
@@ -141,7 +160,7 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>LC_ActionFactory</name>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1293"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1299"/>
         <source>&amp;Window Zoom</source>
         <translation type="unfinished"></translation>
     </message>
@@ -474,62 +493,68 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="553"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="554"/>
         <source>&amp;Leader</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="561"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="563"/>
         <source>&amp;Attributes</source>
         <translation type="unfinished">&amp;Atribut</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="569"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="571"/>
         <source>&amp;Delete</source>
         <translation type="unfinished">&amp;Hapus</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="575"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="578"/>
         <source>Delete Freehand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="581"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="584"/>
         <source>&amp;Move / Copy</source>
         <translation type="unfinished">&amp;Pindahkan / Salin</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="588"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="592"/>
         <source>Re&amp;vert direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="590"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="594"/>
         <source>Ctrl+R</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="596"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="600"/>
         <source>&amp;Rotate</source>
         <translation type="unfinished">&amp;Putar</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="603"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="608"/>
         <source>&amp;Scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="610"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="616"/>
         <source>&amp;Mirror</source>
         <translation type="unfinished">&amp;Cermin</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1152"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1083"/>
+        <source>Ctrl+D</source>
+        <comment>Toggle Draft Mode</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1158"/>
         <source>Menu Creator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1159"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1165"/>
         <source>Toolbar Creator</source>
         <translation type="unfinished"></translation>
     </message>
@@ -538,284 +563,284 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">Pi&amp;ndahkan dan Putar</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="623"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="631"/>
         <source>Rotate T&amp;wo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="629"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="638"/>
         <source>&amp;Properties</source>
         <translation type="unfinished">&amp;Properti</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="637"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="646"/>
         <source>&amp;Trim</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="653"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="662"/>
         <source>&amp;Lengthen</source>
         <translation type="unfinished">&amp;Perpanjang</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="668"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="678"/>
         <source>&amp;Divide</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="676"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="686"/>
         <source>&amp;Stretch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="683"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="694"/>
         <source>&amp;Bevel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="691"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="702"/>
         <source>&amp;Fillet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="698"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="710"/>
         <source>&amp;Explode Text into Letters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="714"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="726"/>
         <source>Point inside contour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="720"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="732"/>
         <source>&amp;Distance Point to Point</source>
         <translation type="unfinished">&amp;Jarak Titik ke Titik</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="727"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="739"/>
         <source>&amp;Distance Entity to Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="734"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="746"/>
         <source>An&amp;gle between two lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="741"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="753"/>
         <source>&amp;Total length of selected entities</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="748"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="760"/>
         <source>Polygonal &amp;Area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1175"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1181"/>
         <source>&amp;Selection pointer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1185"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1191"/>
         <source>&amp;Undo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1196"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1202"/>
         <source>&amp;Redo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1207"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1213"/>
         <source>Cu&amp;t</source>
         <translation type="unfinished">Poto&amp;ng</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1218"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1224"/>
         <source>&amp;Copy</source>
         <translation type="unfinished">&amp;Salin</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1229"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1235"/>
         <source>&amp;Paste</source>
         <translation type="unfinished">&amp;Tempel</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="767"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="779"/>
         <source>move to bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="955"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="966"/>
         <source>Widget Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="961"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="972"/>
         <source>Device Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1100"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1106"/>
         <source>Left</source>
         <translation type="unfinished">Kiri</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1109"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1115"/>
         <source>Right</source>
         <translation type="unfinished">Kanan</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1118"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1124"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1127"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1133"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1136"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1142"/>
         <source>Floating</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1145"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1151"/>
         <source>Reload Style Sheet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="775"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="787"/>
         <source>lower after entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="617"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="624"/>
         <source>Mo&amp;ve and Rotate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="645"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="654"/>
         <source>Tr&amp;im Two</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="661"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="670"/>
         <source>O&amp;ffset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="783"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="795"/>
         <source>raise over entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="791"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="803"/>
         <source>move to top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="802"/>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="866"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="813"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="878"/>
         <source>&amp;Show all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="809"/>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="873"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="820"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="885"/>
         <source>&amp;Hide all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="816"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="827"/>
         <source>&amp;Add Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="823"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="834"/>
         <source>&amp;Remove Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="830"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="841"/>
         <source>&amp;Edit Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="837"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="848"/>
         <source>Toggle Layer Loc&amp;k</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="843"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="855"/>
         <source>&amp;Toggle Layer Visibility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="850"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="862"/>
         <source>Toggle Layer &amp;Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="857"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="869"/>
         <source>Toggle &amp;Construction Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="881"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="892"/>
         <source>&amp;Add Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="888"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="899"/>
         <source>&amp;Remove Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="895"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="906"/>
         <source>&amp;Rename Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="902"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="913"/>
         <source>&amp;Edit Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="909"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="920"/>
         <source>&amp;Save Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="916"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="927"/>
         <source>&amp;Insert Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="923"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="934"/>
         <source>Toggle Block &amp;Visibility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="930"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="941"/>
         <source>&amp;Create Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="705"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="717"/>
         <source>Ex&amp;plode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="939"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="950"/>
         <source>&amp;Application Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="947"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="958"/>
         <source>Current &amp;Drawing Preferences</source>
         <translation type="unfinished"></translation>
     </message>
@@ -824,169 +849,154 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">Jalankan Skrip..</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="969"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="980"/>
         <source>&amp;Delete selected</source>
         <translation type="unfinished">&amp;Hapus pilihan</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="977"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="988"/>
         <source>Select &amp;All</source>
         <translation type="unfinished">Pilih &amp;Semua</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="987"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="998"/>
         <source>Deselect &amp;all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="989"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1000"/>
         <source>Ctrl+K</source>
         <translation type="unfinished">Ctrl+K</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="996"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1007"/>
         <source>Invert Selection</source>
         <translation type="unfinished">Balik Pilihan</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1005"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
         <source>Export as &amp;MakerCAM SVG...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1242"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1248"/>
         <source>Zoom &amp;In</source>
         <translation type="unfinished">Perbe&amp;sar</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1252"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1258"/>
         <source>Zoom &amp;Out</source>
         <translation type="unfinished">Perke&amp;cil</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1262"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1268"/>
         <source>&amp;Auto Zoom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1271"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1277"/>
         <source>Previous &amp;View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1282"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1288"/>
         <source>&amp;Redraw</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1305"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1311"/>
         <source>&amp;New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1315"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1321"/>
         <source>New From &amp;Template</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1324"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1330"/>
         <source>&amp;Open...</source>
         <translation type="unfinished">&amp;Buka...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1334"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1340"/>
         <source>&amp;Save</source>
         <translation type="unfinished">&amp;Simpan</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1344"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1350"/>
         <source>Save &amp;as...</source>
         <translation type="unfinished">Simpan &amp;sebagai...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1021"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1032"/>
         <source>&amp;Export as image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1027"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1038"/>
         <source>&amp;Close</source>
         <translation type="unfinished">&amp;Tutup</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1354"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1360"/>
         <source>&amp;Print...</source>
         <translation type="unfinished">&amp;Cetak...</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1034"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1045"/>
         <source>Export as PDF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1365"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1371"/>
         <source>Print Pre&amp;view</source>
         <translation type="unfinished">Pr&amp;atinjau Cetak</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1376"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1382"/>
         <source>&amp;Quit</source>
         <translation type="unfinished">&amp;Tutup</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1040"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1051"/>
         <source>&amp;Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1048"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1059"/>
         <source>&amp;Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1053"/>
-        <source>Ctrl+Meta+F</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1055"/>
-        <source>F11</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1057"/>
-        <source>Ctrl+F11</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1065"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1070"/>
         <source>&amp;Grid</source>
         <translation type="unfinished">&amp;Kisi-kisi</translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1067"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1072"/>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1075"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1080"/>
         <source>&amp;Draft</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1083"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1089"/>
         <source>&amp;Statusbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1086"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1092"/>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/lc_actionfactory.cpp" line="1091"/>
+        <location filename="../src/ui/lc_actionfactory.cpp" line="1097"/>
         <source>Focus on &amp;Command Line</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1161,7 +1171,7 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>QC_ActionGetPoint</name>
     <message>
-        <location filename="../src/plugins/intern/qc_actiongetpoint.cpp" line="117"/>
+        <location filename="../src/plugins/intern/qc_actiongetpoint.cpp" line="119"/>
         <source>Cancel</source>
         <translation type="unfinished">Batal</translation>
     </message>
@@ -1373,9 +1383,11 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1572"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2208"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2638"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1136"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1513"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1604"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2244"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2664"/>
         <source>Draft Mode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1403,7 +1415,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">&amp;Skrip</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2359"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2395"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="761"/>
         <source>About</source>
         <translation>Tentang</translation>
@@ -1447,153 +1459,153 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2845"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2872"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="300"/>
         <source>Command line</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="799"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="814"/>
         <source>Su&amp;b-Window mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="803"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="818"/>
         <source>&amp;Cascade</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="804"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="819"/>
         <source>&amp;Tile</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="805"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="820"/>
         <source>Tile &amp;Vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="806"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="821"/>
         <source>Tile &amp;Horizontally</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="801"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="816"/>
         <source>Ta&amp;b mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1063"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1078"/>
         <source>Creating new file...</source>
         <translation>Membuat berkas baru...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1114"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1127"/>
         <source>Block &apos;%1&apos;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1116"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1129"/>
         <source>unnamed document %1</source>
         <translation>dokumen tak-bernama %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1163"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1184"/>
         <source>New Drawing created.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1216"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1239"/>
         <source>New document from template: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1264"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1287"/>
         <source>Select Template aborted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1394"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1419"/>
         <source>Warning: File already opened : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1924"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1959"/>
         <source>Export as PDF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1280"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1303"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="165"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="168"/>
         <source>Grid Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="319"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="331"/>
         <source>Recent Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1497"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1529"/>
         <source>Loaded document: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1503"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1535"/>
         <source>Opening aborted</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1517"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1549"/>
         <source>Saving drawing...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1529"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1592"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1561"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1624"/>
         <source>Saved drawing: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1532"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1564"/>
         <source>Cannot save the file </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1534"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1566"/>
         <source> , please check the filename and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1584"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1616"/>
         <source>Cannot save the file
 %1
 Please check the permissions.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2377"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2413"/>
         <source>Compiler: Clang %1.%2.%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2379"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2415"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2384"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2420"/>
         <source>Qt Version: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1560"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1592"/>
         <source>Saving drawing under new filename...</source>
         <translation></translation>
     </message>
@@ -1603,29 +1615,29 @@ Please check the permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1431"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1456"/>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1502"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1534"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1605"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1637"/>
         <source>Auto-saving drawing...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1613"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1645"/>
         <source>Auto-saved drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1618"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1650"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -1633,107 +1645,107 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1623"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1655"/>
         <source>Auto-saving failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1636"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1668"/>
         <source>Exporting drawing...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1673"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1705"/>
         <source>Export as</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1726"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1758"/>
         <source>Exported: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1766"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1798"/>
         <source>Exporting...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1842"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1874"/>
         <source>Export complete</source>
         <translation>Mengekspor selesai</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1844"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1876"/>
         <source>Export failed!</source>
         <translation>Mengekspor gagal!</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1893"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1928"/>
         <source>Printing...</source>
         <translation>Mencetak...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2022"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2057"/>
         <source>Printing complete</source>
         <translation>Mencetak selesai</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2100"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2136"/>
         <source>Print preview for %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2164"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2200"/>
         <source>Exiting application...</source>
         <translation>Menutup aplikasi...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2381"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2417"/>
         <source>Compiler: Microsoft Visual C++</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2385"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2421"/>
         <source>Boost Version: %1.%2.%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2392"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2428"/>
         <source>Copy</source>
         <translation type="unfinished">Salin</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2400"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2436"/>
         <source>Contributors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2402"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2438"/>
         <source>License</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2416"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2452"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2663"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2689"/>
         <source>Help Links</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2920"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2954"/>
         <source>Toolbar Creator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2986"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3020"/>
         <source>Menu Creator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3011"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3045"/>
         <source>Menu Assigner</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1742,32 +1754,32 @@ Auto-save disabled.</source>
         <translation type="obsolete">Tentang...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2375"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2411"/>
         <source>Version: %1</source>
         <translation type="unfinished">Versi: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2689"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2716"/>
         <source>Toolbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2694"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2721"/>
         <source>Dockwidgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2721"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2748"/>
         <source>Opening recent file...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2887"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2916"/>
         <source>Device Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2890"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2919"/>
         <source>Device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1776,7 +1788,7 @@ Auto-save disabled.</source>
         <translation type="obsolete">Versi: %1 %2</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2383"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2419"/>
         <source>Compiled on: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1796,18 +1808,18 @@ Auto-save disabled.</source>
 <context>
     <name>QC_MDIWindow</name>
     <message>
-        <location filename="../src/main/qc_mdiwindow.cpp" line="510"/>
+        <location filename="../src/main/qc_mdiwindow.cpp" line="505"/>
         <source>Do you really want to close the drawing?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_mdiwindow.cpp" line="516"/>
+        <location filename="../src/main/qc_mdiwindow.cpp" line="511"/>
         <source>Do you really want to close the file
 %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_mdiwindow.cpp" line="519"/>
+        <location filename="../src/main/qc_mdiwindow.cpp" line="514"/>
         <source>Closing Drawing</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1858,7 +1870,7 @@ Auto-save disabled.</source>
 <context>
     <name>QG_ActionHandler</name>
     <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1084"/>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1093"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation type="unfinished"></translation>
@@ -1948,98 +1960,98 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_BlockWidget</name>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="163"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="153"/>
         <source>Show all blocks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="171"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="161"/>
         <source>Hide all blocks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="179"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="169"/>
         <source>Create Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="187"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="177"/>
         <source>Add an empty block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="195"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="185"/>
         <source>Remove the active block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="203"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="193"/>
         <source>Rename the active block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="211"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="201"/>
         <source>Edit the active block
 in a separate window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="220"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="210"/>
         <source>save the active block to a file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="228"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="218"/>
         <source>Insert the active block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="329"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="322"/>
         <source>Block Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="335"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="328"/>
         <source>&amp;Defreeze all Blocks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="337"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="330"/>
         <source>&amp;Freeze all Blocks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="339"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="332"/>
         <source>&amp;Add Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="341"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="334"/>
         <source>&amp;Remove Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="343"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="336"/>
         <source>&amp;Rename Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="345"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="338"/>
         <source>&amp;Edit Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="347"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="340"/>
         <source>&amp;Insert Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="349"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="342"/>
         <source>&amp;Toggle Visibility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="351"/>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="344"/>
         <source>&amp;Create New Block</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2393,7 +2405,7 @@ in a separate window</source>
 <context>
     <name>QG_CommandEdit</name>
     <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="87"/>
+        <location filename="../src/ui/qg_commandedit.cpp" line="229"/>
         <source>clear</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2430,26 +2442,26 @@ in a separate window</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="79"/>
-        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="108"/>
+        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="128"/>
         <source>Command:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_commandwidget.ui" line="113"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;type in coordinates or commands&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/ui/forms/qg_commandwidget.ui" line="116"/>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
         <translation type="obsolete">&amp;Salin</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="132"/>
+        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="150"/>
         <source>Unknown command: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="171"/>
+        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="189"/>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation type="unfinished"></translation>
@@ -4871,17 +4883,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="845"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="836"/>
         <source>Translations:</source>
         <translation type="unfinished">Terjemahan:</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="855"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="846"/>
         <source>Hatch Patterns:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="760"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="767"/>
         <source>Fonts:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4890,132 +4902,137 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="obsolete">Skrip:</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="773"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="780"/>
         <source>Part Libraries:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="786"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="793"/>
         <source>Template:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="866"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="884"/>
         <source>&amp;Defaults</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="872"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="890"/>
         <source>Startup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="878"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="896"/>
         <source>Display loading screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="892"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="910"/>
         <source>Start with main window maximized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="899"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="917"/>
         <source>Enable CAD dockwidgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="906"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="924"/>
         <source>Enable CAD toolbars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="913"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="931"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Commands 2 characters in length are automatically accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="916"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="934"/>
         <source>Keycode mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="992"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1010"/>
         <source>Defaults for new drawings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1004"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1022"/>
         <source>&amp;Unit:</source>
         <translation>&amp;Satuan:</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1017"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1035"/>
         <source>Drawing unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1039"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1057"/>
         <source>Program Defaults</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1057"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1075"/>
         <source>Auto save time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1064"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1082"/>
         <source>Time between automatic saving of the document in minutes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1079"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1097"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1045"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1063"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1048"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1066"/>
         <source>Auto backup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1082"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1100"/>
         <source>Modify layer of selected entities, at  layer activation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="885"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="903"/>
         <source>Start in tab mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="939"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="760"/>
+        <source>Variable File:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="957"/>
         <source>Clear Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="951"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="969"/>
         <source>restores program geometry/layout to original state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="954"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="972"/>
         <source>Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="967"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="985"/>
         <source>restores the program to its original state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="970"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="988"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5032,22 +5049,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="obsolete">Batal</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="286"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="289"/>
         <source>Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="287"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="290"/>
         <source>Please restart the application to apply all changes.</source>
         <translation>Harap mulai ulang aplikasi untuk menerapkan perubahan.</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="363"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="366"/>
         <source>Clear settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="364"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="367"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6304,84 +6321,84 @@ Please choose the unit you want to use for new drawings and your preferred langu
 <context>
     <name>QG_FileDialog</name>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="87"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="85"/>
         <source>Drawing Exchange DXF 2000 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="89"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="87"/>
         <source>Drawing Exchange DXF R12 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="92"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="90"/>
         <source>LFF Font %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="96"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="94"/>
         <source>QCad Font %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="97"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="95"/>
         <source>Jww Drawing %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="90"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="88"/>
         <source>Drawing Exchange %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="85"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="83"/>
         <source>Drawing Exchange DXF 2007 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="86"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="84"/>
         <source>Drawing Exchange DXF 2004 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="88"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="86"/>
         <source>Drawing Exchange DXF R14 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="94"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="92"/>
         <source>dwg Drawing %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="98"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="96"/>
         <source>QCad 1.x file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="101"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="99"/>
         <source>Block</source>
         <comment>block file</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="104"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="102"/>
         <source>Drawing</source>
         <comment>drawing file</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="147"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="145"/>
         <source>Open %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="219"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="217"/>
         <source>Untitled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="230"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="228"/>
         <source>Save %1 As</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6667,77 +6684,77 @@ The contents of a Construction Layer should not appear in printout.</source>
 <context>
     <name>QG_LayerWidget</name>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="204"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="209"/>
         <source>Show all layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="212"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="217"/>
         <source>Hide all layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="220"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="225"/>
         <source>Add a layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="228"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="233"/>
         <source>Remove the current layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="236"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="241"/>
         <source>Modify layer attributes / rename</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="245"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="250"/>
         <source>Looking for matching layer names</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="418"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="448"/>
         <source>Layer Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="424"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="454"/>
         <source>&amp;Defreeze all Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="426"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="456"/>
         <source>&amp;Freeze all Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="429"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="459"/>
         <source>&amp;Add Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="431"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="461"/>
         <source>&amp;Remove Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="433"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="463"/>
         <source>Edit Layer &amp;Attributes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="435"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="465"/>
         <source>Toggle Layer &amp;Visibility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="437"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="467"/>
         <source>Toggle Layer &amp;Printing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="439"/>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="469"/>
         <source>Toggle &amp;Construction Layer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6764,12 +6781,12 @@ The contents of a Construction Layer should not appear in printout.</source>
 <context>
     <name>QG_LibraryWidget</name>
     <message>
-        <location filename="../src/ui/qg_librarywidget.cpp" line="93"/>
+        <location filename="../src/ui/qg_librarywidget.cpp" line="89"/>
         <source>Directories</source>
         <translation>Direktori</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_librarywidget.cpp" line="74"/>
+        <location filename="../src/ui/qg_librarywidget.cpp" line="70"/>
         <source>Insert</source>
         <translation></translation>
     </message>
@@ -7512,11 +7529,11 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1283"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1435"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1583"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1617"/>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="170"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1306"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1460"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1615"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1649"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="166"/>
         <source>Warning</source>
         <translation>Peringatan</translation>
     </message>
@@ -7531,34 +7548,34 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="249"/>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="261"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="245"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="257"/>
         <source>Remove Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="250"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="246"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="262"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="258"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="307"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="303"/>
         <source>Layer Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="422"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="418"/>
         <source>Remove Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="423"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="419"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7692,281 +7709,281 @@ This action can NOT be undone.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="213"/>
+        <location filename="../src/main/main.cpp" line="216"/>
         <source>Loading..</source>
         <translation>Memuat..</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="271"/>
+        <location filename="../src/main/main.cpp" line="274"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="287"/>
+        <location filename="../src/main/main.cpp" line="290"/>
         <source>Loading File %1..</source>
         <translation>Memuat Berkas %1..</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="470"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="466"/>
         <source>All Image Files (%1)</source>
         <translation>Semua Jenis Berkas Gambar (%1)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="472"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="468"/>
         <source>All Files (*.*)</source>
         <translation>Semua Jenis Berkas (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="477"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="473"/>
         <source>Open Image</source>
         <translation>Buka Gambar</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1831"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1819"/>
         <source>Windows Bitmap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1833"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1821"/>
         <source>Joint Photographic Experts Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1835"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1823"/>
         <source>Graphics Interchange Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1837"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1825"/>
         <source>Multiple-image Network Graphics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1839"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1827"/>
         <source>Portable Bit Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1841"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1829"/>
         <source>Portable Grey Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1843"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1831"/>
         <source>Portable Network Graphic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1845"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1833"/>
         <source>Portable Pixel Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1847"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1835"/>
         <source>X Bitmap Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1849"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1837"/>
         <source>X Pixel Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1851"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1839"/>
         <source>Scalable Vector Graphics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1853"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1841"/>
         <source>SGI Black &amp; White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1855"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1843"/>
         <source>Encapsulated PostScript</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1857"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1845"/>
         <source>Encapsulated PostScript Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1859"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1847"/>
         <source>Encapsulated PostScript Interchange</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1861"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1849"/>
         <source>Windows Icon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1863"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1851"/>
         <source>JPEG 2000</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1865"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1853"/>
         <source>ZSoft Paintbrush</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1867"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1855"/>
         <source>PC Paint</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1869"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1857"/>
         <source>SGI-Bilddatei</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1871"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1859"/>
         <source>Targa Image File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="1873"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="1861"/>
         <source>Tagged Image File Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="310"/>
-        <location filename="../src/ui/qg_filedialog.cpp" line="363"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="308"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="361"/>
         <source>Save Drawing As</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="364"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="362"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="429"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="427"/>
         <source>Old Drawing Exchange %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="430"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="428"/>
         <source>Drawing Exchange %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="433"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="431"/>
         <source>dwg Drawing %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="435"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="433"/>
         <source>QCad 1.x file %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="436"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="434"/>
         <source>LFF Font %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="437"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="435"/>
         <source>Font %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="438"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="436"/>
         <source>Jww %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="462"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="460"/>
         <source>Open Drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1357"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1355"/>
         <source>enter an integer number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1361"/>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1383"/>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1400"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1359"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1377"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1394"/>
         <source>LibreCAD query</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1379"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1373"/>
         <source>enter a number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1396"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1390"/>
         <source>enter text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="137"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="136"/>
         <source>Opened dwg file version %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3940"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3945"/>
         <source>unknown error opening dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3944"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3949"/>
         <source>can&apos;t open this dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3948"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3953"/>
         <source>unsupported dwg version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3952"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3957"/>
         <source>error reading file metadata in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3956"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3961"/>
         <source>error reading file header in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3960"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3965"/>
         <source>error reading header vars in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3964"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3969"/>
         <source>error reading classes in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3968"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3973"/>
         <source>error reading offsets in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3972"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3977"/>
         <source>error reading tables in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3976"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3981"/>
         <source>error reading blocks in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3980"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3985"/>
         <source>error reading entities in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3984"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3989"/>
         <source>error reading objects in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7976,7 +7993,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1568"/>
+        <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1571"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9428,8 +9445,28 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/gui/rs_eventhandler.cpp" line="240"/>
+        <location filename="../src/ui/qg_commandedit.cpp" line="111"/>
+        <source>You must input a distance first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_commandedit.cpp" line="176"/>
         <source>Calculator error for input: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_commandedit.cpp" line="234"/>
+        <source>cal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_commandedit.cpp" line="238"/>
+        <source>Calculator mode: On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_commandedit.cpp" line="240"/>
+        <source>Calculator mode: Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9529,6 +9566,7 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2696"/>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
         <source>Widgets</source>
         <translation type="unfinished"></translation>
@@ -9539,37 +9577,42 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1472"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="132"/>
+        <source>Pen Wizard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1497"/>
         <source>Invalid objects removed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2666"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2692"/>
         <source>Wiki</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2667"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2693"/>
         <source>User&apos;s Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2668"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2694"/>
         <source>Commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2669"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2695"/>
         <source>Style Sheets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2670"/>
-        <source>Custom Widgets</source>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2698"/>
+        <source>Release Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2671"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2697"/>
         <source>Forum</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9578,6 +9621,26 @@ Continue?</source>
         <location filename="../src/ui/generic/widgetcreator.cpp" line="167"/>
         <location filename="../src/ui/generic/widgetcreator.cpp" line="221"/>
         <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="54"/>
+        <source>Load Command File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/colorwizard.cpp" line="53"/>
+        <source>Select objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/colorwizard.cpp" line="57"/>
+        <source>Apply to selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/generic/colorwizard.cpp" line="61"/>
+        <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10597,43 +10660,43 @@ Continue?</source>
         <translation type="obsolete">&amp;2 Titik</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawline.cpp" line="270"/>
+        <location filename="../src/actions/rs_actiondrawline.cpp" line="273"/>
         <source>Specify first point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawline.cpp" line="271"/>
+        <location filename="../src/actions/rs_actiondrawline.cpp" line="274"/>
         <source>Cancel</source>
         <translation>Batal</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawline.cpp" line="290"/>
+        <location filename="../src/actions/rs_actiondrawline.cpp" line="293"/>
         <source>Specify next point or [%1]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawline.cpp" line="291"/>
-        <location filename="../src/actions/rs_actiondrawline.cpp" line="295"/>
+        <location filename="../src/actions/rs_actiondrawline.cpp" line="294"/>
+        <location filename="../src/actions/rs_actiondrawline.cpp" line="298"/>
         <source>Back</source>
         <translation>Mundur</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawline.cpp" line="294"/>
+        <location filename="../src/actions/rs_actiondrawline.cpp" line="297"/>
         <source>Specify next point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawline.cpp" line="333"/>
+        <location filename="../src/actions/rs_actiondrawline.cpp" line="336"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawline.cpp" line="376"/>
+        <location filename="../src/actions/rs_actiondrawline.cpp" line="379"/>
         <source>Cannot redo: Not previous line segment defined.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawline.cpp" line="355"/>
+        <location filename="../src/actions/rs_actiondrawline.cpp" line="358"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12650,18 +12713,18 @@ Continue?</source>
 <context>
     <name>RS_ActionZoomPan</name>
     <message>
-        <location filename="../src/actions/rs_actionzoompan.cpp" line="109"/>
+        <location filename="../src/actions/rs_actionzoompan.cpp" line="111"/>
         <source>Click and drag to pan zoom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionzoompan.cpp" line="110"/>
-        <location filename="../src/actions/rs_actionzoompan.cpp" line="114"/>
+        <location filename="../src/actions/rs_actionzoompan.cpp" line="112"/>
+        <location filename="../src/actions/rs_actionzoompan.cpp" line="116"/>
         <source>Cancel</source>
         <translation type="unfinished">Batal</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionzoompan.cpp" line="113"/>
+        <location filename="../src/actions/rs_actionzoompan.cpp" line="115"/>
         <source>Zoom panning</source>
         <translation type="unfinished"></translation>
     </message>
