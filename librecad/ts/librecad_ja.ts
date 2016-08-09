@@ -1,19 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="ja">
 <context>
     <name>ComboBoxOption</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>フレーム</translation>
     </message>
     <message>
         <source>GroupBox</source>
-        <translation type="unfinished"></translation>
+        <translation>グループボックス</translation>
     </message>
     <message>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>設定</translation>
     </message>
 </context>
 <context>
@@ -24,11 +23,11 @@
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">レイヤー:</translation>
+        <translation>レイヤー:</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished">図形</translation>
+        <translation>図形</translation>
     </message>
     <message>
         <source>Closed</source>
@@ -65,7 +64,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation>１点目を指示</translation>
+        <translation>最初の点を指定</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -73,7 +72,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation>２点目を指示</translation>
+        <translation>次の点を指定</translation>
     </message>
     <message>
         <source>Back</source>
@@ -81,7 +80,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Select circle center</source>
-        <translation>中心を選択</translation>
+        <translation>円の中心を選択</translation>
     </message>
 </context>
 <context>
@@ -112,11 +111,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>取り消しできない: 作図されていない.</translation>
+        <translation>取り消しできません:作図されていません。</translation>
     </message>
     <message>
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation>取り消しできない: やり直すことがない.</translation>
+        <translation>取り消しできません:何もやり直すことはありません.</translation>
     </message>
 </context>
 <context>
@@ -327,7 +326,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">ノード追加(&amp;A)</translation>
     </message>
     <message>
-        <source>Add polyline&apos;s node</source>
+        <source>Add polyline's node</source>
         <translation type="obsolete">ポリライン・ノードを追加</translation>
     </message>
     <message>
@@ -335,7 +334,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">ノード結合(&amp;p)</translation>
     </message>
     <message>
-        <source>Append polyline&apos;s node</source>
+        <source>Append polyline's node</source>
         <translation type="obsolete">ポリラインノード結合</translation>
     </message>
     <message>
@@ -343,7 +342,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">ノード削除(&amp;D)</translation>
     </message>
     <message>
-        <source>Delete polyline&apos;s node</source>
+        <source>Delete polyline's node</source>
         <translation type="obsolete">ポリライン・ノードを削除</translation>
     </message>
     <message>
@@ -359,7 +358,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">セグメントの部分削除(&amp;T)</translation>
     </message>
     <message>
-        <source>Trim polyline&apos;s segments</source>
+        <source>Trim polyline's segments</source>
         <translation type="obsolete">ポリラインのセグメントをトリム</translation>
     </message>
     <message>
@@ -813,34 +812,34 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>remove left</source>
-        <translation>左側を取り除く</translation>
+        <translation>小数点以上の0を取り去る</translation>
     </message>
     <message>
         <source>remove right</source>
-        <translation>右側を取り除く</translation>
+        <translation>小数以下の右端が0なら取り去る</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
-        <translation>０’ を取り除く</translation>
+        <source>remove 0'</source>
+        <translation>0フィートを削除</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
-        <translation>０&quot; を取り除く</translation>
+        <source>remove 0"</source>
+        <translation>0インチを削除</translation>
     </message>
 </context>
 <context>
     <name>PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished">線分相対角度オプション</translation>
+        <translation>線分相対角度オプション</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation type="unfinished">間隔:</translation>
+        <translation>間隔:</translation>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation type="unfinished">元のポリラインからの距離</translation>
+        <translation>元のポリラインからの距離</translation>
     </message>
     <message>
         <source>Copies:</source>
@@ -873,7 +872,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>QC_ActionGetSelect</name>
     <message>
         <source>Select objects:</source>
-        <translation>オブジェクトを選択:</translation>
+        <translation>オブジェクトを選択：</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -883,13 +882,13 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>Running script &apos;%1&apos;</source>
-        <translation>スクリプト&apos;%1&apos;を機動中</translation>
+        <source>Running script '%1'</source>
+        <translation>スクリプト '%1' を実行中</translation>
     </message>
     <message>
-        <source>Inserting block &apos;%1&apos;</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
-        <translation>ブロック&apos;%1&apos;を挿入中</translation>
+        <source>Inserting block '%1'</source>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
+        <translation>ブロック'%1'を挿入中</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -917,11 +916,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Draw</source>
-        <translation>描く(&amp;D)</translation>
+        <translation>線を引く(&amp;D)</translation>
     </message>
     <message>
         <source>&amp;Line</source>
-        <translation>線(&amp;L)</translation>
+        <translation>直線(&amp;L)</translation>
     </message>
     <message>
         <source>&amp;Arc</source>
@@ -945,7 +944,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Dimension</source>
-        <translation>寸法(&amp;D)</translation>
+        <translation>寸法記入(&amp;D)</translation>
     </message>
     <message>
         <source>&amp;Modify</source>
@@ -965,7 +964,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロック(&amp;B)</translation>
     </message>
     <message>
@@ -990,16 +989,16 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Layer List</source>
-        <translation>レイヤー一覧</translation>
+        <translation>レイヤーの一覧</translation>
     </message>
     <message>
         <source>Block List</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
-        <translation>ブロック一覧</translation>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
+        <translation>ブロックの一覧</translation>
     </message>
     <message>
         <source>Library Browser</source>
-        <translation>ライブラリ一覧</translation>
+        <translation>ライブラリの一覧</translation>
     </message>
     <message>
         <source>Command line</source>
@@ -1022,9 +1021,9 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>新しいファイルを作成...</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
-        <translation>ブロック&apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
+        <translation>ブロック '%1'</translation>
     </message>
     <message>
         <source>unnamed document %1</source>
@@ -1042,7 +1041,7 @@ Please check the permissions.</source>
     </message>
     <message>
         <source>Loaded document: </source>
-        <translation>ドキュメントをロードじました: </translation>
+        <translation>ドキュメントをロードしました: </translation>
     </message>
     <message>
         <source>Opening aborted</source>
@@ -1054,7 +1053,7 @@ Please check the permissions.</source>
     </message>
     <message>
         <source>Saved drawing: %1</source>
-        <translation>図面 ％１ を保存しました</translation>
+        <translation>図面 %1 を保存しました</translation>
     </message>
     <message>
         <source>Cannot save the file
@@ -1119,7 +1118,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>None</source>
-        <translation>無し</translation>
+        <translation>なし</translation>
     </message>
     <message>
         <source>About...</source>
@@ -1134,7 +1133,7 @@ Auto-save disabled.</source>
         <translation>ヘルプ</translation>
     </message>
     <message>
-        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
+        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
         <translation>故障、ヘルプファイルをシステムの中に見つけることができない.</translation>
     </message>
     <message>
@@ -1155,7 +1154,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Main Website : </source>
-        <translation>メインWEBサイト: </translation>
+        <translation>メインWEBサイト:</translation>
     </message>
     <message>
         <source>Version: %1</source>
@@ -1171,11 +1170,11 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Cannot save the file </source>
-        <translation>ファイルの保存ができません </translation>
+        <translation>ファイルの保存ができません</translation>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
-        <translation> , ファイル名、権限をチェックしてください.</translation>
+        <translation>  , ファイル名、権限をチェックしてください.</translation>
     </message>
     <message>
         <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
@@ -1203,7 +1202,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Select Template aborted</source>
-        <translation>中止したテンプレートを選択</translation>
+        <translation>テンプレートの選択を中止しました</translation>
     </message>
     <message>
         <source>Auto-saving failed</source>
@@ -1263,7 +1262,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Export as PDF</source>
-        <translation>PDFファイルで書き出し</translation>
+        <translation>PDFでエクスポート</translation>
     </message>
     <message>
         <source>&amp;Text</source>
@@ -1281,8 +1280,8 @@ Please check its existence and permissions.</source>
 ファイルが存在しているか、もしくは権限をチェックしてください.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>ファイル %1 は存在しません．開くことは中止しました</translation>
+        <source>File '%1' does not exist. Opening aborted</source>
+        <translation>ファイルを開くことを中止。ファイル '%1' は存在しません。</translation>
     </message>
     <message>
         <source>Online (Wiki)</source>
@@ -1314,11 +1313,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Device Options</source>
-        <translation type="unfinished"></translation>
+        <translation>デバイスの選択</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>デバイス</translation>
     </message>
 </context>
 <context>
@@ -1389,7 +1388,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>&amp;Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロック(&amp;B)</translation>
     </message>
     <message>
@@ -1429,16 +1428,16 @@ Please check its existence and permissions.</source>
         <translation>現在のレイヤー</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;現在、編集しているレイヤー名&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;現在、編集しているレイヤー名&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -1497,132 +1496,132 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Length 1:</source>
-        <translation>長さ１:</translation>
+        <translation>長さ 1:</translation>
     </message>
     <message>
         <source>Length 2:</source>
-        <translation>長さ２:</translation>
+        <translation>長さ 2:</translation>
     </message>
 </context>
 <context>
     <name>QG_BlockDialog</name>
     <message>
         <source>Block Settings</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロック設定</translation>
     </message>
     <message>
         <source>Block Name:</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロック名:</translation>
     </message>
     <message>
         <source>Renaming Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
-        <translation>ブロックの名称変更</translation>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
+        <translation>ブロック名変更</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
-        <translation>指定したブロック名は使用できません。既に&quot;%1&quot;は存在しています。</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
+        <translation>指定したブロック名はつけられません。ブロック名 "%1" は、すでに存在しています。</translation>
     </message>
 </context>
 <context>
     <name>QG_BlockWidget</name>
     <message>
         <source>Remove the active block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>選択ブロック削除</translation>
     </message>
     <message>
         <source>Rename the active block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
-        <translation>選択ブロックの名称変更</translation>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
+        <translation>選択ブロック名変更</translation>
     </message>
     <message>
         <source>Edit the active block
 in a separate window</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
-        <translation>別個のウィンドウで
-アクティブなブロックを編集</translation>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
+        <translation>切り離されたウインドウの
+アクティブ・ブロックを編集</translation>
     </message>
     <message>
         <source>Insert the active block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
-        <translation>編集ブロック挿入</translation>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
+        <translation>選択ブロック挿入</translation>
     </message>
     <message>
         <source>Block Menu</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
-        <translation>ブロック メニュ</translation>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
+        <translation>ブロック メニュー</translation>
     </message>
     <message>
         <source>&amp;Defreeze all Blocks</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>全ブロック固定解除(&amp;D)</translation>
     </message>
     <message>
         <source>&amp;Freeze all Blocks</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>全ブロック固定(&amp;F)</translation>
     </message>
     <message>
         <source>&amp;Add Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロック追加(&amp;A)</translation>
     </message>
     <message>
         <source>&amp;Remove Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロック削除(&amp;R)</translation>
     </message>
     <message>
         <source>&amp;Edit Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロック編集(&amp;E)</translation>
     </message>
     <message>
         <source>&amp;Toggle Visibility</source>
-        <translation>表示切替(&amp;T)</translation>
+        <translation>ブロック表示/非表示(&amp;T)</translation>
     </message>
     <message>
         <source>Show all blocks</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>全ブロック表示</translation>
     </message>
     <message>
         <source>Hide all blocks</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>全ブロック非表示</translation>
     </message>
     <message>
         <source>&amp;Rename Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロック名変更(&amp;R)</translation>
     </message>
     <message>
         <source>&amp;Insert Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロック挿入(&amp;I)</translation>
     </message>
     <message>
         <source>&amp;Create New Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>新規ブロック作成(&amp;C)</translation>
     </message>
     <message>
         <source>Create Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロック作成</translation>
     </message>
     <message>
         <source>Add an empty block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>空のブロックを追加</translation>
     </message>
     <message>
         <source>save the active block to a file</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>アクティブなブロックをファイルに保存</translation>
     </message>
 </context>
@@ -1660,12 +1659,12 @@ in a separate window</source>
     <name>QG_ColorBox</name>
     <message>
         <source>By Layer</source>
-        <translation>レイヤー設定</translation>
+        <translation>レイヤー設定で</translation>
     </message>
     <message>
         <source>By Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
-        <translation>ブロック設定</translation>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
+        <translation>ブロック設定で</translation>
     </message>
     <message>
         <source>Red</source>
@@ -1689,11 +1688,11 @@ in a separate window</source>
     </message>
     <message>
         <source>Magenta</source>
-        <translation>紫</translation>
+        <translation>マゼンダ（紅紫色）</translation>
     </message>
     <message>
         <source>Black / White</source>
-        <translation>黒／白</translation>
+        <translation>黒 / 白</translation>
     </message>
     <message>
         <source>Gray</source>
@@ -1733,7 +1732,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Dark Magenta</source>
-        <translation>暗い紫</translation>
+        <translation>暗いマゼンダ</translation>
     </message>
     <message>
         <source>Dark Gray</source>
@@ -2141,12 +2140,12 @@ in a separate window</source>
         <translation>ようこそ</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;ようこそQCadへ&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;ようこそLibreCADへ&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 新規図面の単位と言語を設定してください。&lt;br&gt;
@@ -2612,7 +2611,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>[2100-214F] Letterlike Symbols</source>
-        <translation>[2100-214F] 文字様記号</translation>
+        <translation>[2100-214F]  文字様記号</translation>
     </message>
     <message>
         <source>[2150-218F] Number Forms</source>
@@ -2728,7 +2727,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation>[3200-32FF] 囲みCJK文字と月</translation>
+        <translation>[3200-32FF] 囲みCJK文字・月</translation>
     </message>
     <message>
         <source>[3300-33FF] CJK Compatibility</source>
@@ -2910,7 +2909,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Use current &amp;layer</source>
-        <translation>現在レイヤー使用(&amp;l)</translation>
+        <translation>現在のレイヤーを使用(&amp;l)</translation>
     </message>
     <message>
         <source>...</source>
@@ -2972,7 +2971,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <name>QG_DlgOptionsDrawing</name>
     <message>
         <source>Main Unit</source>
-        <translation>主単位</translation>
+        <translation>図面で用いる単位（既定値）</translation>
     </message>
     <message>
         <source>Length</source>
@@ -2980,23 +2979,23 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Decimal</source>
-        <translation>十進</translation>
+        <translation>10進数</translation>
     </message>
     <message>
         <source>Scientific</source>
-        <translation>科学</translation>
+        <translation>指数表記（10の乗数）</translation>
     </message>
     <message>
         <source>Engineering</source>
-        <translation>エンジニア</translation>
+        <translation>工学（1インチ未満は小数）</translation>
     </message>
     <message>
         <source>Architectural</source>
-        <translation>建築</translation>
+        <translation>建築（1インチ未満は分数）</translation>
     </message>
     <message>
         <source>Fractional</source>
-        <translation>フラクタル</translation>
+        <translation>10進数（1未満は分数）</translation>
     </message>
     <message>
         <source>Angle</source>
@@ -3004,11 +3003,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Decimal Degrees</source>
-        <translation>十進度数</translation>
+        <translation>度（10進数）</translation>
     </message>
     <message>
         <source>Radians</source>
-        <translation>半径</translation>
+        <translation>ラジアン</translation>
     </message>
     <message>
         <source>Preview</source>
@@ -3028,7 +3027,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Text Height:</source>
-        <translation>文字高さ:</translation>
+        <translation>文字の高さ:</translation>
     </message>
     <message>
         <source>units</source>
@@ -3040,10 +3039,10 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Gradians</source>
-        <translation>グラディアン</translation>
+        <translation>グラード（1g=0.9度）</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>測量用単位</translation>
     </message>
     <message>
@@ -3051,12 +3050,12 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>オプション</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>エンジニア、建築長さはインチに設定されます。</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>寸法の単位に「工学」か「建築」が指定されると、単位はフィート/インチになります。</translation>
     </message>
     <message>
         <source>Arrow size:</source>
-        <translation>矢印の大きさ:</translation>
+        <translation>矢印のサイズ:</translation>
     </message>
     <message>
         <source>Dimension line gap:</source>
@@ -3080,19 +3079,19 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Paper &amp;Height:</source>
-        <translation>用紙高さ(&amp;H):</translation>
+        <translation>用紙の高さ(&amp;H):</translation>
     </message>
     <message>
         <source>Paper &amp;Width:</source>
-        <translation>用紙幅(&amp;W):</translation>
+        <translation>用紙の幅(&amp;W):</translation>
     </message>
     <message>
         <source>&amp;Units</source>
-        <translation>単位系(&amp;U)</translation>
+        <translation>単位・書式(&amp;U)</translation>
     </message>
     <message>
         <source>&amp;Main drawing unit:</source>
-        <translation>主図面単位(&amp;M):</translation>
+        <translation>図面で用いる単位(&amp;M):</translation>
     </message>
     <message>
         <source>&amp;Format:</source>
@@ -3112,7 +3111,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;Dimensions</source>
-        <translation>寸法(&amp;D)</translation>
+        <translation>寸法記入(&amp;D)</translation>
     </message>
     <message>
         <source>Grid Settings</source>
@@ -3120,15 +3119,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Show Grid</source>
-        <translation>グリッド表示</translation>
+        <translation>グリッドを表示</translation>
     </message>
     <message>
         <source>X Spacing:</source>
-        <translation>X間隔:</translation>
+        <translation>X軸の間隔:</translation>
     </message>
     <message>
         <source>Y Spacing:</source>
-        <translation>Y間隔:</translation>
+        <translation>Y軸の間隔:</translation>
     </message>
     <message>
         <source>auto</source>
@@ -3195,12 +3194,12 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>斜線のサイズ:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;斜線を末端記号で使うときのサイズ. 末端記号に斜線を使わない時は 0 に設定する. 斜線のサイズが指定されれば矢印に優先されて用いられる.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Horizontal</source>
-        <translation>水平</translation>
+        <translation>水平にそろえる</translation>
     </message>
     <message>
         <source>General Scale:</source>
@@ -3219,20 +3218,20 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>字体:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;.&apos; (ピリオド)</translation>
+        <source>'.' (Period)</source>
+        <translation>'.' (ピリオド)</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;,&apos; (コンマ)</translation>
+        <source>',' (Comma)</source>
+        <translation>',' (コンマ)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
-        <translation>十進数分離:</translation>
+        <translation>小数点:</translation>
     </message>
     <message>
         <source>Linear units:</source>
-        <translation>寸法単位:</translation>
+        <translation>寸法の単位:</translation>
     </message>
     <message>
         <source>Color:</source>
@@ -3260,15 +3259,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Angular units:</source>
-        <translation>角度単位:</translation>
+        <translation>角度の単位:</translation>
     </message>
     <message>
         <source>Linear zeros:</source>
-        <translation>寸法 0 :</translation>
+        <translation>寸法の端数 0 :</translation>
     </message>
     <message>
         <source>Format units</source>
-        <translation>書式単位</translation>
+        <translation>単位の書式</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -3283,8 +3282,8 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>寸法線の上で拡大する長さ</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;寸法線の矢印のサイズ. &lt;a name=&quot;result_box&quot;/&gt;斜線のときにはサイズ指定は効果がない &lt;a name=&quot;result_box&quot;/&gt;0 以外&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;寸法線の矢印のサイズ. &lt;a name="result_box"/&gt;斜線ときサイズ指定は効果がない &lt;a name="result_box"/&gt;0 以外&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width:</source>
@@ -3292,11 +3291,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>寸法線,矢印か斜線</translation>
+        <translation>寸法線と矢印（または斜線）</translation>
     </message>
     <message>
         <source>Angular zeros:</source>
-        <translation>角度 0:</translation>
+        <translation>角度の端数 0:</translation>
     </message>
     <message>
         <source>Angular precision:</source>
@@ -3315,12 +3314,12 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>寸法精度:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;文字列を並べる &lt;a name=&quot;result_box&quot;/&gt;寸法線にあわせて.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;文字列を並べる &lt;a name="result_box"/&gt;寸法線にあわせて.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Aligned</source>
-        <translation>並列</translation>
+        <translation>寸法線に平行</translation>
     </message>
     <message>
         <source>Supress in feet</source>
@@ -3363,11 +3362,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Hatch Patterns:</source>
-        <translation>ハッチパターン:</translation>
+        <translation>ハッチングの模様:</translation>
     </message>
     <message>
         <source>Fonts:</source>
-        <translation>字体:</translation>
+        <translation>フォント:</translation>
     </message>
     <message>
         <source>Scripts:</source>
@@ -3375,8 +3374,8 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Part Libraries:</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
-        <translation>ブロックライブラリ:</translation>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
+        <translation>部品ライブラリ:</translation>
     </message>
     <message>
         <source>Language</source>
@@ -3384,7 +3383,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Graphic View</source>
-        <translation>ビュー</translation>
+        <translation>画面の表示</translation>
     </message>
     <message>
         <source>Application Preferences</source>
@@ -3392,7 +3391,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Defaults for new drawings</source>
-        <translation>新規図面の規定値</translation>
+        <translation>新規図面の既定値</translation>
     </message>
     <message>
         <source>&amp;Appearance</source>
@@ -3420,7 +3419,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;Defaults</source>
-        <translation>既定(&amp;D)</translation>
+        <translation>既定値(&amp;D)</translation>
     </message>
     <message>
         <source>&amp;Unit:</source>
@@ -3440,7 +3439,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Fontsize</source>
-        <translation>字体の大きさ</translation>
+        <translation>フォント サイズ</translation>
     </message>
     <message>
         <source>Statusbar:</source>
@@ -3448,11 +3447,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>A&amp;utomatically scale grid</source>
-        <translation>自動的にグリッドをスケール(&amp;u)</translation>
+        <translation>グリッドの間隔を自動調整(&amp;u)</translation>
     </message>
     <message>
         <source>S&amp;elected Color:</source>
-        <translation>選択時の色(&amp;e):</translation>
+        <translation>選択した要素(&amp;e):</translation>
     </message>
     <message>
         <source>&amp;Highlighted Color:</source>
@@ -3596,7 +3595,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Layer/ Block Selection:</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>レイヤー/ブロック の選択：</translation>
     </message>
     <message>
@@ -3613,7 +3612,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;有効にすると、作業しているレイヤーの属性は、新しいレイヤーで選択したすべての属性を修正することになります。複数のレイヤーの属性を変更するには：最初に必要とする属性を選択します。レイヤーのウィジェット内のレイヤーを選択します。選択したすべての属性は新しいレイヤーに属するように修正させます&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3627,8 +3626,8 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>レイヤー</translation>
     </message>
     <message>
-        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
-        <translation>2014/11現在、MarkerCAMは、不可視に設定されたSVGであっても隠さない (&quot;display: none;&quot; か &quot;visibility: hidden;&quot;).</translation>
+        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe ("display: none;" or "visibility: hidden;").</source>
+        <translation>2014/11現在、MarkerCAMは、不可視に設定されたSVGであっても隠さない ("display: none;" か "visibility: hidden;").</translation>
     </message>
     <message>
         <source>Export invisible layers</source>
@@ -3640,17 +3639,17 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Blocks</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロック</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks, because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>2014年11月現在のMakerCAMは&lt;use&gt;内で参照ポイントを考慮しないため、ブロックを正しく扱うことができない.</translation>
     </message>
     <message>
         <source>Convert blocks to safe inline SVG content</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロックを安全なインラインSVGの内容に変更する</translation>
     </message>
     <message>
@@ -3658,8 +3657,8 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>楕円/楕円弧</translation>
     </message>
     <message>
-        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>2015年3月現在、MakerCAMは楕円と楕円の弧を正しく表示できない、&lt;ellipse&gt; タグを使って作成される時には &quot;transform&quot; 属性での回転か楕円の弧セグメントを使っている &lt;path&gt; として作成される.</translation>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the "transform" attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation>2015年3月現在、MakerCAMは楕円と楕円の弧を正しく表示できない、&lt;ellipse&gt; タグを使って作成される時には "transform" 属性での回転か楕円の弧セグメントを使っている &lt;path&gt; として作成される.</translation>
     </message>
     <message utf8="true">
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
@@ -3732,7 +3731,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;Angle (a):</source>
-        <translation>角度(&amp;A):</translation>
+        <translation>角度&amp;A(a):</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
@@ -4180,7 +4179,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>[2150-218F] Number Forms</source>
-        <translation>[2150-218F] 数字に準じるもの</translation>
+        <translation>2150-218F] 数字に準じるもの</translation>
     </message>
     <message>
         <source>[2190-21FF] Arrows</source>
@@ -4292,7 +4291,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation>[3200-32FF] 囲みCJK文字と月</translation>
+        <translation>[3200-32FF] 囲みCJK文字・月</translation>
     </message>
     <message>
         <source>[3300-33FF] CJK Compatibility</source>
@@ -4575,7 +4574,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <source>Block</source>
         <comment>block file</comment>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロックファイル</translation>
     </message>
     <message>
@@ -4769,7 +4768,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>作図補助レイヤーの要素は無限のまっすぐな線であり.このレイヤーの内容は印刷されない.</translation>
+        <translation>作図補助レイヤーの要素は無限のまっすぐな線であり、このレイヤーの内容は印刷されない.</translation>
     </message>
     <message>
         <source>Construction Layer</source>
@@ -5061,12 +5060,12 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LineTypeBox</name>
     <message>
         <source>By Layer</source>
-        <translation>レイヤー設定</translation>
+        <translation>レイヤー設定で</translation>
     </message>
     <message>
         <source>By Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
-        <translation>ブロック設定</translation>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
+        <translation>ブロック設定で</translation>
     </message>
     <message>
         <source>No Pen</source>
@@ -5078,7 +5077,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Dot</source>
-        <translation>点</translation>
+        <translation>点線</translation>
     </message>
     <message>
         <source>Dot (small)</source>
@@ -5118,11 +5117,11 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Divide (small)</source>
-        <translation>分割線 (小）</translation>
+        <translation>分割線(小）</translation>
     </message>
     <message>
         <source>Divide (large)</source>
-        <translation>分割線 (大）</translation>
+        <translation>分割線(大）</translation>
     </message>
     <message>
         <source>Center</source>
@@ -5134,7 +5133,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Center (large)</source>
-        <translation>中心線 (大）</translation>
+        <translation>中心線(大）</translation>
     </message>
     <message>
         <source>Border</source>
@@ -5222,16 +5221,16 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>左</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;ヒント 左右のマウスボタンによる動作&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;ヒント 左右のマウスボタンによる動作&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -5398,28 +5397,28 @@ p, li { white-space: pre-wrap; }
         <translation>長さの合計</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;選択された要素の値&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;選択された要素の値&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;選択された要素の長さの合計&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;選択された要素の長さの合計&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -5601,7 +5600,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>距離。トリミングは負の値、拡張は正の値｡</translation>
+        <translation>距離。負の値はトリミング、正の値は伸長。負の符号は最終的な総長さのトリミング時に無視される。</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -5639,16 +5638,16 @@ p, li { white-space: pre-wrap; }
     <name>QG_WidthBox</name>
     <message>
         <source>By Layer</source>
-        <translation>レイヤー設定</translation>
+        <translation>レイヤー設定で</translation>
     </message>
     <message>
         <source>By Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
-        <translation>ブロック設定</translation>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
+        <translation>ブロック設定で</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation>既定</translation>
+        <translation>既定値</translation>
     </message>
     <message>
         <source>0.00mm</source>
@@ -5762,8 +5761,8 @@ p, li { white-space: pre-wrap; }
         <translation>レイヤー削除</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>レイヤー&quot;%1&quot;は削除できません。</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>レイヤー"%1"は削除できません。</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -5771,26 +5770,26 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Remove Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロック削除</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
-        <translation>&quot;%1&quot;ブロックとその構成要素図形は削除されます。</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
+        <translation>ブロック "%1"と、その構成要素図形は削除されます。</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>レイヤーの属性</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>&quot;%1&quot;という名前のレイヤーは既に存在します。別な名前を指定してください。</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>"%1"という名前のレイヤーは既に存在します。別な名前を指定してください。</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>レイヤー&quot;%1&quot;とそれに含まれる全図形が削除されます.
+        <translation>レイヤー"%1"とそれに含まれる全図形が削除されます.
 この操作はやり直せません.</translation>
     </message>
 </context>
@@ -5811,19 +5810,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Open Image</source>
-        <translation>イメージを開く</translation>
+        <translation>画像ファイルを開く</translation>
     </message>
     <message>
         <source>Windows Bitmap</source>
-        <translation>Windowsビットマップ</translation>
+        <translation>BPM - Windows Bitmap</translation>
     </message>
     <message>
         <source>Joint Photographic Experts Group</source>
-        <translation>JPEG</translation>
+        <translation>JPEG - Joint Photographic Experts Group</translation>
     </message>
     <message>
         <source>Multiple-image Network Graphics</source>
-        <translation>Multiple-image Network Graphics</translation>
+        <translation>MNG - Multiple-image Network Graphics</translation>
     </message>
     <message>
         <source>Portable Bit Map</source>
@@ -5831,27 +5830,27 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Portable Grey Map</source>
-        <translation>Portable Grey Map</translation>
+        <translation>PGM - Portable Greymap</translation>
     </message>
     <message>
         <source>Portable Network Graphic</source>
-        <translation>Portable Network Graphic</translation>
+        <translation>PNG - Portable Network Graphic</translation>
     </message>
     <message>
         <source>Portable Pixel Map</source>
-        <translation>Portable Pixel Map</translation>
+        <translation>PPM - Portable Pixelmap</translation>
     </message>
     <message>
         <source>X Bitmap Format</source>
-        <translation>X Bitmap Format</translation>
+        <translation>XBM - X Bitmap</translation>
     </message>
     <message>
         <source>X Pixel Map</source>
-        <translation>X Pixel Map</translation>
+        <translation>XPM -X PixelMap</translation>
     </message>
     <message>
         <source>All Image Files (%1)</source>
-        <translation>すべての画像ファイル (%1)</translation>
+        <translation>＜すべての形式 (%1)＞</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
@@ -5991,51 +5990,51 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Scalable Vector Graphics</source>
-        <translation>SVG ファイル</translation>
+        <translation>SVG - Scalable Vector Graphics</translation>
     </message>
     <message>
         <source>SGI Black &amp; White</source>
-        <translation>SGI 黒/白</translation>
+        <translation>BW - SGI Black &amp; White</translation>
     </message>
     <message>
         <source>Encapsulated PostScript</source>
-        <translation>EPS ファイル</translation>
+        <translation>EPS - Encapsulated PostScript</translation>
     </message>
     <message>
         <source>Encapsulated PostScript Format</source>
-        <translation>EPS 書式</translation>
+        <translation>EPSF - Encapsulated PostScript Format</translation>
     </message>
     <message>
         <source>Encapsulated PostScript Interchange</source>
-        <translation>EPSI ファイル</translation>
+        <translation>EPSI - Encapsulated PostScript Interchange</translation>
     </message>
     <message>
         <source>Windows Icon</source>
-        <translation>Windows アイコン</translation>
+        <translation>ICO - Windows Icon</translation>
     </message>
     <message>
         <source>JPEG 2000</source>
-        <translation>JPEG 2000</translation>
+        <translation>JP2 - JPEG 2000</translation>
     </message>
     <message>
         <source>ZSoft Paintbrush</source>
-        <translation>PCXファイル</translation>
+        <translation>PCX -ZSoft Paintbrush </translation>
     </message>
     <message>
         <source>PC Paint</source>
-        <translation>PC ペイント・ファイル</translation>
+        <translation>PIC - PC Paint</translation>
     </message>
     <message>
         <source>SGI-Bilddatei</source>
-        <translation>SGI-Bilddatei</translation>
+        <translation>RGB - SGI-Bilddatei</translation>
     </message>
     <message>
         <source>Targa Image File</source>
-        <translation>Targa Image File</translation>
+        <translation>TIF - Targa Image File</translation>
     </message>
     <message>
         <source>Tagged Image File Format</source>
-        <translation>TIFFファイル</translation>
+        <translation>TIFF - Tagged Image File Format</translation>
     </message>
     <message>
         <source>Old Drawing Exchange %1</source>
@@ -6050,7 +6049,7 @@ Do you want to replace it?</source>
         <translation>未知のエラー： DWGファイルが開けない</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>このDWGファイルは開くことができない</translation>
     </message>
     <message>
@@ -6087,7 +6086,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>ファイルの内容が変更されています.データ損失を避けるために、別のファイルに保存してください！ 変更されたファイル：%1</translation>
+        <translation>ファイルの内容が変更されています.データ損失を避けるために、別のファイルに保存してください！ 変更されたファイル： %1</translation>
     </message>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
@@ -6105,7 +6104,7 @@ Continue?</source>
     </message>
     <message>
         <source>error reading blocks in dwg file</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>DWGファイル内のブロックの読み込み中にエラー</translation>
     </message>
     <message>
@@ -7528,7 +7527,7 @@ Continue?</source>
     <name>RS_ActionBlocksAdd</name>
     <message>
         <source>&amp;Add Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロック追加(&amp;A)</translation>
     </message>
 </context>
@@ -7536,7 +7535,7 @@ Continue?</source>
     <name>RS_ActionBlocksAttributes</name>
     <message>
         <source>&amp;Rename Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロック名変更(&amp;R)</translation>
     </message>
 </context>
@@ -7544,7 +7543,7 @@ Continue?</source>
     <name>RS_ActionBlocksCreate</name>
     <message>
         <source>&amp;Create Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロック作成(&amp;C)</translation>
     </message>
     <message>
@@ -7560,7 +7559,7 @@ Continue?</source>
     <name>RS_ActionBlocksEdit</name>
     <message>
         <source>&amp;Edit Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロック編集(&amp;E)</translation>
     </message>
 </context>
@@ -7586,7 +7585,7 @@ Continue?</source>
     <name>RS_ActionBlocksInsert</name>
     <message>
         <source>&amp;Insert Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロック挿入(&amp;I)</translation>
     </message>
     <message>
@@ -7606,8 +7605,8 @@ Continue?</source>
         <translation>角度入力:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
     <message>
         <source>Enter factor:</source>
@@ -7634,7 +7633,7 @@ Continue?</source>
     <name>RS_ActionBlocksRemove</name>
     <message>
         <source>&amp;Remove Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロック削除(&amp;R)</translation>
     </message>
 </context>
@@ -7642,20 +7641,20 @@ Continue?</source>
     <name>RS_ActionBlocksSave</name>
     <message>
         <source>&amp;Save Block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロック保存(&amp;S)</translation>
     </message>
     <message>
         <source>No block activated to save</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
-        <translation>保存することのできるブロックはない</translation>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
+        <translation>保存できるブロックはない</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block &amp;Visibility</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロックを表示/非表示(&amp;V)</translation>
     </message>
 </context>
@@ -7923,7 +7922,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation>２点目を指示</translation>
+        <translation>二点目指示</translation>
     </message>
     <message>
         <source>Back</source>
@@ -8378,7 +8377,7 @@ Continue?</source>
     </message>
     <message>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>距離の合計 ％１ はフォーカスの間の距離より小さい</translation>
+        <translation>距離の合計 %1 はフォーカスの間の距離より小さい</translation>
     </message>
 </context>
 <context>
@@ -8474,8 +8473,8 @@ Continue?</source>
         <translation>角度入力:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
     <message>
         <source>Enter factor:</source>
@@ -8518,7 +8517,7 @@ Continue?</source>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>取り消しができない: 図形が定義されていない。</translation>
+        <translation>取り消しができません: 図形が定義されていません。</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
@@ -8605,7 +8604,7 @@ Continue?</source>
     <message>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation>セクター番号の線が範囲内に無い: </translation>
+        <translation>番号のセクターラインが範囲内にない:</translation>
     </message>
 </context>
 <context>
@@ -8738,8 +8737,8 @@ Continue?</source>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -8974,11 +8973,11 @@ Continue?</source>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>線分を閉じることができない: 図形の定義が不足。</translation>
+        <translation>線分を閉じることができません: 図形の定義が不足。</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>取り消しできない: 要素が定義されていない。</translation>
+        <translation>取り消しができません: 要素が定義されていません。</translation>
     </message>
 </context>
 <context>
@@ -9009,7 +9008,7 @@ Continue?</source>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>取り消しできない: 作図されていない。</translation>
+        <translation>取り消しできません:作図されていません。</translation>
     </message>
 </context>
 <context>
@@ -9194,7 +9193,7 @@ Continue?</source>
     </message>
     <message>
         <source>Area: %1 %2^2</source>
-        <translation type="unfinished"></translation>
+        <translation>面積: %1 %2^2</translation>
     </message>
 </context>
 <context>
@@ -9213,7 +9212,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify second point of distance</source>
-        <translation>２点目を指示</translation>
+        <translation>二点目を指示</translation>
     </message>
     <message>
         <source>Back</source>
@@ -9259,7 +9258,7 @@ Continue?</source>
     </message>
     <message>
         <source>Point is inside selected contour.</source>
-        <translation>点は輪郭線の内部.。</translation>
+        <translation>点は輪郭線の内部.</translation>
     </message>
     <message>
         <source>Point is outside selected contour.</source>
@@ -9282,7 +9281,7 @@ Continue?</source>
     </message>
     <message>
         <source>Total Length of selected entities: %1</source>
-        <translation>選択された図形群の全長: %1</translation>
+        <translation>選択要素の全長: %1</translation>
     </message>
     <message>
         <source>At least one of the selected entities cannot be measured.</source>
@@ -9365,16 +9364,16 @@ Continue?</source>
         <translation>角度入力:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
     <message>
         <source>Enter factor:</source>
         <translation>倍率入力:</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>&apos;%1&apos; ファイルを開けません</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>ファイル'%1' を開けません</translation>
     </message>
 </context>
 <context>
@@ -9419,11 +9418,11 @@ Continue?</source>
     </message>
     <message>
         <source>Enter length 1:</source>
-        <translation>長さ１入力:</translation>
+        <translation>長さ 1を入力:</translation>
     </message>
     <message>
         <source>Enter length 2:</source>
-        <translation>長さ２入力:</translation>
+        <translation>長さ 2を入力:</translation>
     </message>
 </context>
 <context>
@@ -9500,7 +9499,7 @@ Continue?</source>
     </message>
     <message>
         <source>Parent of second entity is not a polyline</source>
-        <translation>２番目の図形の親はポリラインではありません</translation>
+        <translation>二番目の図形の親はポリラインではありません</translation>
     </message>
     <message>
         <source>Parent of second entity is NULL</source>
@@ -9512,7 +9511,7 @@ Continue?</source>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
-        <translation>一番目の図形の親はポリラインではありません</translation>
+        <translation>最初の要素の親はポリラインではありません</translation>
     </message>
     <message>
         <source>Parent of first entity is NULL</source>
@@ -9528,23 +9527,23 @@ Continue?</source>
     </message>
     <message>
         <source>Parent of second entity is nullptr</source>
-        <translation>２つ目の要素の親はnullptr</translation>
+        <translation>２番目の要素の親は nullptr</translation>
     </message>
     <message>
         <source>One of the chosen entities is nullptr</source>
-        <translation>選ばれた要素のうちの1つがnullptr</translation>
+        <translation>選択要素の一つが nullptr</translation>
     </message>
     <message>
         <source>Parent of first entity is nullptr</source>
-        <translation>最初の要素の親はnullptr</translation>
+        <translation>最初の要素の親は nullptr</translation>
     </message>
     <message>
         <source>First entity is nullptr</source>
-        <translation>最初の要素はnullptr</translation>
+        <translation>最初の要素は nullptr</translation>
     </message>
     <message>
         <source>Second entity is nullptr</source>
-        <translation>２つ目の要素はnullptr</translation>
+        <translation>２番目の要素は nullptr</translation>
     </message>
 </context>
 <context>
@@ -9592,7 +9591,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify second point of mirror line</source>
-        <translation>対称軸の２点目指示</translation>
+        <translation>対称軸の二点目指示</translation>
     </message>
     <message>
         <source>Back</source>
@@ -9745,7 +9744,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify second entity</source>
-        <translation>２番目の図形指示</translation>
+        <translation>二番目の図形指示</translation>
     </message>
     <message>
         <source>Enter radius:</source>
@@ -9853,8 +9852,8 @@ Continue?</source>
     </message>
     <message>
         <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
-        <translation>選択された図形はブロックの中にある。ブロックを編集してください。</translation>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
+        <translation>選択された要素はブロックの中にあります。ブロックを編集してください。</translation>
     </message>
     <message>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
@@ -9934,7 +9933,7 @@ Continue?</source>
         <translation>ノードを挿入するポリラインを指示</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>挿入するノード位置を指示</translation>
     </message>
     <message>
@@ -9958,7 +9957,7 @@ Continue?</source>
         <translation>戻る</translation>
     </message>
     <message>
-        <source>Add polyline&apos;s node</source>
+        <source>Add polyline's node</source>
         <translation type="obsolete">ポリライン・ノードを追加</translation>
     </message>
     <message>
@@ -10001,7 +10000,7 @@ Continue?</source>
         <translation>戻る</translation>
     </message>
     <message>
-        <source>Append polyline&apos;s node</source>
+        <source>Append polyline's node</source>
         <translation type="obsolete">ポリラインノード結合</translation>
     </message>
     <message>
@@ -10014,7 +10013,7 @@ Continue?</source>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>取り消しできない:作図されていない.</translation>
+        <translation>取り消しできません:作図されていません。</translation>
     </message>
 </context>
 <context>
@@ -10028,7 +10027,7 @@ Continue?</source>
         <translation>ノードを削除するポリラインを指示</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>削除するノード位置を指示</translation>
     </message>
     <message>
@@ -10048,7 +10047,7 @@ Continue?</source>
         <translation>戻る</translation>
     </message>
     <message>
-        <source>Delete polyline&apos;s node</source>
+        <source>Delete polyline's node</source>
         <translation type="obsolete">ポリライン・ノードを削除</translation>
     </message>
     <message>
@@ -10076,7 +10075,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify second node</source>
-        <translation>２番目のノードを指示</translation>
+        <translation>二番目のノードを指示</translation>
     </message>
     <message>
         <source>Deleteinging point is not on entity.</source>
@@ -10193,7 +10192,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify second segment</source>
-        <translation>２番目のセグメントを指示</translation>
+        <translation>二番目のセグメントを指示</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -10216,7 +10215,7 @@ Continue?</source>
         <translation>戻る</translation>
     </message>
     <message>
-        <source>Trim polyline&apos;s segments</source>
+        <source>Trim polyline's segments</source>
         <translation type="obsolete">ポリラインのセグメントをトリム</translation>
     </message>
     <message>
@@ -10259,16 +10258,16 @@ Continue?</source>
         <translation>印刷時にオフセットするため、コマンドラインからオフセット値を入力</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>印刷時のオフセットは相対値 0 を無視. &apos;@&apos;を無視</translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>印刷時のオフセットは相対値 0 を無視. '@'を無視</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>
-        <translation>モノクロで印刷</translation>
+        <translation>モノクロ印刷</translation>
     </message>
     <message>
         <source>Printout in color</source>
-        <translation>カラーで印刷</translation>
+        <translation>カラー印刷</translation>
     </message>
 </context>
 <context>
@@ -10319,7 +10318,7 @@ Continue?</source>
     </message>
     <message>
         <source>Select to create block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>ブロックを新規作成するときに選択</translation>
     </message>
     <message>
@@ -10344,7 +10343,7 @@ Continue?</source>
     </message>
     <message>
         <source>Select to explode block</source>
-        <translatorcomment>訳語をAutoCADに合せて、&quot;部品&quot;から&quot;ブロック&quot;に変更</translatorcomment>
+        <translatorcomment>訳語をAutoCADに合せて、"部品"から"ブロック"に変更</translatorcomment>
         <translation>分解するブロックを選択</translation>
     </message>
     <message>
@@ -10398,7 +10397,7 @@ Continue?</source>
     </message>
     <message>
         <source>Choose second point of intersection line</source>
-        <translation>交差線分の２点目指示</translation>
+        <translation>交差線分の二点目指示</translation>
     </message>
     <message>
         <source>Back</source>
