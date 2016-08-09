@@ -1,19 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="ja">
 <context>
     <name>ComboBoxOption</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>フレーム</translation>
     </message>
     <message>
         <source>GroupBox</source>
-        <translation type="unfinished"></translation>
+        <translation>グループボックス</translation>
     </message>
     <message>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>設定</translation>
     </message>
 </context>
 <context>
@@ -319,7 +318,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>ノード追加(&amp;A)</translation>
     </message>
     <message>
-        <source>Add polyline&apos;s node</source>
+        <source>Add polyline's node</source>
         <translation type="obsolete">ポリライン・ノードを追加</translation>
     </message>
     <message>
@@ -327,7 +326,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>ノード結合(&amp;p)</translation>
     </message>
     <message>
-        <source>Append polyline&apos;s node</source>
+        <source>Append polyline's node</source>
         <translation type="obsolete">ポリラインノード結合</translation>
     </message>
     <message>
@@ -335,7 +334,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>ノード削除(&amp;D)</translation>
     </message>
     <message>
-        <source>Delete polyline&apos;s node</source>
+        <source>Delete polyline's node</source>
         <translation type="obsolete">ポリライン・ノードを削除</translation>
     </message>
     <message>
@@ -351,7 +350,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>セグメントの部分削除(&amp;T)</translation>
     </message>
     <message>
-        <source>Trim polyline&apos;s segments</source>
+        <source>Trim polyline's segments</source>
         <translation type="obsolete">ポリラインのセグメントをトリム</translation>
     </message>
     <message>
@@ -850,31 +849,31 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Device Options</source>
-        <translation type="unfinished"></translation>
+        <translation>デバイスの選択</translation>
     </message>
     <message>
         <source>Reload Style Sheet</source>
-        <translation type="unfinished"></translation>
+        <translation>スタイルシートの再読み込み</translation>
     </message>
     <message>
         <source>Mo&amp;ve and Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>移動・回転（&amp;v）</translation>
     </message>
     <message>
         <source>Tr&amp;im Two</source>
-        <translation type="unfinished"></translation>
+        <translation>2点トリム（&amp;i）</translation>
     </message>
     <message>
         <source>O&amp;ffset</source>
-        <translation type="unfinished"></translation>
+        <translation>オフセット（&amp;f）</translation>
     </message>
     <message>
         <source>Menu Creator</source>
-        <translation type="unfinished"></translation>
+        <translation>メニュー新規作成</translation>
     </message>
     <message>
         <source>Toolbar Creator</source>
-        <translation type="unfinished"></translation>
+        <translation>ツールバー新規作成</translation>
     </message>
 </context>
 <context>
@@ -895,11 +894,11 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>LC_DeviceOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>選択する</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>デバイス</translation>
     </message>
     <message>
         <source>Mouse</source>
@@ -907,7 +906,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>保存</translation>
     </message>
 </context>
 <context>
@@ -1152,27 +1151,27 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation type="unfinished"></translation>
+        <translation>ステータスバー</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation>高さ</translation>
     </message>
     <message>
         <source>Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation>フォントサイズ</translation>
     </message>
     <message>
         <source>Input the path of a Qt style sheet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt スタイルシートのパスを入力.</translation>
     </message>
     <message>
         <source>side length in pixels</source>
-        <translation type="unfinished"></translation>
+        <translation>ピクセル単位での辺の長さ</translation>
     </message>
     <message>
         <source>Use themed icons</source>
-        <translation type="unfinished"></translation>
+        <translation>テーマアイコンを使用</translation>
     </message>
 </context>
 <context>
@@ -1190,11 +1189,11 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>小数以下で取り去る</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
+        <source>remove 0'</source>
         <translation>0フィートを削除</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
+        <source>remove 0"</source>
         <translation>0インチを削除</translation>
     </message>
 </context>
@@ -1253,13 +1252,13 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>Running script &apos;%1&apos;</source>
-        <translation type="obsolete">スクリプト &apos;%1&apos; を実行中</translation>
+        <source>Running script '%1'</source>
+        <translation type="obsolete">スクリプト '%1' を実行中</translation>
     </message>
     <message>
-        <source>Inserting block &apos;%1&apos;</source>
+        <source>Inserting block '%1'</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="obsolete">ブロック&apos;%1&apos;を挿入中</translation>
+        <translation type="obsolete">ブロック'%1'を挿入中</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -1380,9 +1379,9 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>新しいファイルを作成...</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
+        <source>Block '%1'</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロック &apos;%1&apos;</translation>
+        <translation>ブロック '%1'</translation>
     </message>
     <message>
         <source>unnamed document %1</source>
@@ -1623,8 +1622,8 @@ Please check its existence and permissions.</source>
 ファイルが存在しているか、もしくは権限をチェックしてください.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>ファイルを開くことを中止。ファイル &apos;%1&apos; は存在しません。</translation>
+        <source>File '%1' does not exist. Opening aborted</source>
+        <translation>ファイル '%1' は存在しません。ファイルを開くことを中止</translation>
     </message>
     <message>
         <source>Online (Wiki)</source>
@@ -1724,95 +1723,95 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Grid Status</source>
-        <translation type="unfinished"></translation>
+        <translation>グリッドステータス</translation>
     </message>
     <message>
         <source>Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>ツールバー</translation>
     </message>
     <message>
         <source>Dockwidgets</source>
-        <translation type="unfinished"></translation>
+        <translation>ドック ウィジット</translation>
     </message>
     <message>
         <source>Device Options</source>
-        <translation type="unfinished"></translation>
+        <translation>デバイスの選択</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>デバイス</translation>
     </message>
     <message>
         <source>&amp;Options</source>
-        <translation type="unfinished"></translation>
+        <translation>オプション設定（&amp;O）</translation>
     </message>
     <message>
         <source>Pl&amp;ugins</source>
-        <translation type="unfinished"></translation>
+        <translation>プラグイン（&amp;u）</translation>
     </message>
     <message>
         <source>Dime&amp;nsion</source>
-        <translation type="unfinished"></translation>
+        <translation>寸法記入（&amp;n）</translation>
     </message>
     <message>
         <source>Dock Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
+        <translation>ドック ウィジット(&amp;g)</translation>
     </message>
     <message>
         <source>Recent Files</source>
-        <translation type="unfinished"></translation>
+        <translation>最近使用したファイル</translation>
     </message>
     <message>
         <source>Compiler: Microsoft Visual C++</source>
-        <translation type="unfinished"></translation>
+        <translation>コンパイラ: Microsoft Visual C++</translation>
     </message>
     <message>
         <source>Boost Version: %1.%2.%3</source>
-        <translation type="unfinished"></translation>
+        <translation>起動中のバージョン: %1.%2.%3</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">複写</translation>
+        <translation>コピー</translation>
     </message>
     <message>
         <source>Contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>協力者</translation>
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>ライセンス</translation>
     </message>
     <message>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>システム</translation>
     </message>
     <message>
         <source>Toolbar Creator</source>
-        <translation type="unfinished"></translation>
+        <translation>ツールバー作成</translation>
     </message>
     <message>
         <source>Menu Creator</source>
-        <translation type="unfinished"></translation>
+        <translation>メニュー作成</translation>
     </message>
     <message>
         <source>Menu Assigner</source>
-        <translation type="unfinished"></translation>
+        <translation>メニュー配置</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>ツール(&amp;T)</translation>
     </message>
     <message>
         <source>&amp;Drawings</source>
-        <translation type="unfinished"></translation>
+        <translation>製図(&amp;D)</translation>
     </message>
     <message>
         <source>Help Links</source>
-        <translation type="unfinished"></translation>
+        <translation>ヘルプへのリンク</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished"></translation>
+        <translation>オンライン</translation>
     </message>
 </context>
 <context>
@@ -1854,16 +1853,16 @@ Please check its existence and permissions.</source>
         <translation>現在のレイヤー</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;現在、編集しているレイヤー名&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;現在、編集しているレイヤー名&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -1947,9 +1946,9 @@ p, li { white-space: pre-wrap; }
         <translation>ブロック名変更</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
+        <source>Could not name block. A block named "%1" already exists.</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>指定したブロック名はつけられません。ブロック名 &quot;%1&quot; は、すでに存在しています。</translation>
+        <translation>指定したブロック名はつけられません。ブロック名 "%1" は、すでに存在しています。</translation>
     </message>
 </context>
 <context>
@@ -2563,12 +2562,12 @@ in a separate window</source>
         <translation>ようこそ</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation type="obsolete">&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;ようこそLibreCADへ&lt;/b&gt;
+        <translation type="obsolete">&lt;font size="+1"&gt;&lt;b&gt;ようこそLibreCADへ&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 新規図面の単位と言語を設定してください。&lt;br&gt;
@@ -2588,12 +2587,16 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>コマンド 言語:</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;LibreCAD にようこそ&lt;/b&gt;
+&lt;/font&gt;あなたが製図で使用したいユニットと言語を設定してください
+&lt;br&gt;(これらの設定は後で変更できます。)
+Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
+(You can changes these settings later.)</translation>
     </message>
 </context>
 <context>
@@ -3286,7 +3289,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&amp;Line spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>行間(&amp;L):</translation>
     </message>
 </context>
 <context>
@@ -3477,7 +3480,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>グラード（1g=0.9度）</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>測量用単位</translation>
     </message>
     <message>
@@ -3485,7 +3488,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>オプション</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
         <translation>寸法の単位に「工学」か「建築」が指定されると、単位はフィート/インチになります。</translation>
     </message>
     <message>
@@ -3629,7 +3632,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>斜線のサイズ:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;斜線を末端記号で使うときのサイズ. 末端記号に斜線を使わない時は 0 に設定する. 斜線のサイズが指定されれば矢印に優先されて用いられる.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -3653,12 +3656,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>字体:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;.&apos; (ピリオド)</translation>
+        <source>'.' (Period)</source>
+        <translation>'.' (ピリオド)</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;,&apos; (コンマ)</translation>
+        <source>',' (Comma)</source>
+        <translation>',' (コンマ)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
@@ -3701,8 +3704,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>寸法線の上で拡大する長さ</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;寸法線の矢印のサイズ. &lt;a name=&quot;result_box&quot;/&gt;斜線ときサイズ指定は効果がない &lt;a name=&quot;result_box&quot;/&gt;0 以外&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;寸法線の矢印のサイズ. &lt;a name="result_box"/&gt;斜線ときサイズ指定は効果がない &lt;a name="result_box"/&gt;0 以外&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width:</source>
@@ -3733,8 +3736,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>寸法精度:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;文字列を並べる &lt;a name=&quot;result_box&quot;/&gt;寸法線にあわせて.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;文字列を並べる &lt;a name="result_box"/&gt;寸法線にあわせて.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Aligned</source>
@@ -4110,47 +4113,47 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Startup</source>
-        <translation type="unfinished"></translation>
+        <translation>スタート時の設定</translation>
     </message>
     <message>
         <source>Display loading screen</source>
-        <translation type="unfinished"></translation>
+        <translation>画面にスクリーンをロードする</translation>
     </message>
     <message>
         <source>Start with main window maximized</source>
-        <translation type="unfinished"></translation>
+        <translation>メイン画面を最大で開始する</translation>
     </message>
     <message>
         <source>Enable CAD dockwidgets</source>
-        <translation type="unfinished"></translation>
+        <translation>ドック ウィジットを表示する</translation>
     </message>
     <message>
         <source>Enable CAD toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>ツールバーを表示する</translation>
     </message>
     <message>
         <source>Keycode mode</source>
-        <translation type="unfinished"></translation>
+        <translation>キーコード・モード</translation>
     </message>
     <message>
         <source>#1E90FF</source>
-        <translation type="unfinished"></translation>
+        <translation>明るい藍色</translation>
     </message>
     <message>
         <source>Clear settings</source>
-        <translation type="unfinished"></translation>
+        <translation>設定を初期化</translation>
     </message>
     <message>
         <source>This will also include custom menus and toolbars. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>カスタムメニュー、ツールバーに含まれます.よろしいですか?</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Commands 2 characters in length are automatically accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;コマンドは2文字を自動的に受け入れます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;有効にすると、作業しているレイヤーの属性は、新しいレイヤーで選択したすべての属性を修正することになります。複数のレイヤーの属性を変更するには：最初に必要とする属性を選択します。レイヤーのウィジェット内のレイヤーを選択します。選択したすべての属性は新しいレイヤーに属するように修正させます&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -4164,8 +4167,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>レイヤー</translation>
     </message>
     <message>
-        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
-        <translation>2014/11現在、MarkerCAMは、不可視に設定されたSVGであっても隠さない (&quot;display: none;&quot; か &quot;visibility: hidden;&quot;).</translation>
+        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe ("display: none;" or "visibility: hidden;").</source>
+        <translation>2014/11現在、MarkerCAMは、不可視に設定されたSVGであっても隠さない ("display: none;" か "visibility: hidden;").</translation>
     </message>
     <message>
         <source>Export invisible layers</source>
@@ -4195,8 +4198,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>楕円/楕円弧</translation>
     </message>
     <message>
-        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>2015年3月現在、MakerCAMは楕円と楕円の弧を正しく表示できない、&lt;ellipse&gt; タグを使って作成される時には &quot;transform&quot; 属性での回転か楕円の弧セグメントを使っている &lt;path&gt; として作成される.</translation>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the "transform" attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation>2015年3月現在、MakerCAMは楕円と楕円の弧を正しく表示できない、&lt;ellipse&gt; タグを使って作成される時には "transform" 属性での回転か楕円の弧セグメントを使っている &lt;path&gt; として作成される.</translation>
     </message>
     <message utf8="true">
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
@@ -5053,11 +5056,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>A&amp;ligned</source>
-        <translation type="unfinished"></translation>
+        <translation>並列(&amp;l)</translation>
     </message>
     <message>
         <source>&amp;Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>中間点(&amp;M)</translation>
     </message>
 </context>
 <context>
@@ -5244,7 +5247,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>B&amp;lack</source>
-        <translation type="unfinished"></translation>
+        <translation>黒(&amp;l)</translation>
     </message>
 </context>
 <context>
@@ -5771,16 +5774,16 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>左</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;ヒント 左右のマウスボタンによる動作&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;ヒント 左右のマウスボタンによる動作&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -5951,28 +5954,28 @@ p, li { white-space: pre-wrap; }
         <translation>長さの合計</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;選択された要素の値&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;選択された要素の値&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;選択された要素の長さの合計&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;選択された要素の長さの合計&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -6013,7 +6016,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Snap to equidistant points of entity</source>
-        <translation>図形の等距離の点へスナップ</translation>
+        <translation>2点間中点</translation>
     </message>
     <message>
         <source>Snap to center points</source>
@@ -6113,7 +6116,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Exclusive Snap Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>独立スナップモード</translation>
     </message>
 </context>
 <context>
@@ -6319,8 +6322,8 @@ p, li { white-space: pre-wrap; }
         <translation>レイヤー削除</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>レイヤー&quot;%1&quot;は削除できません。</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>レイヤー"%1"は削除できません。</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -6332,22 +6335,22 @@ p, li { white-space: pre-wrap; }
         <translation>ブロック削除</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
+        <source>Block "%1" and all its entities will be removed.</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロック &quot;%1&quot;と、その構成要素図形は削除されます。</translation>
+        <translation>ブロック "%1"と、その構成要素図形は削除されます。</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>レイヤーの属性</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>&quot;%1&quot;という名前のレイヤーは既に存在します。別な名前を指定してください。</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>"%1"という名前のレイヤーは既に存在します。別な名前を指定してください。</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>レイヤー&quot;%1&quot;とそれに含まれる全図形が削除されます.
+        <translation>レイヤー"%1"とそれに含まれる全図形が削除されます.
 この操作はやり直せません.</translation>
     </message>
 </context>
@@ -6627,7 +6630,7 @@ Do you want to replace it?</source>
         <translation>未知のエラー： DWGファイルが開けない</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>このDWGファイルは開くことができない</translation>
     </message>
     <message>
@@ -7876,133 +7879,133 @@ Continue?</source>
     <message>
         <source>di</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
-    </message>
+        <translation>di</translation>
+    <translatorcomment>命令は訳さない</translatorcomment></message>
     <message>
         <source>t2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
-    </message>
+        <translation>t2</translation>
+    <translatorcomment>命令は訳さない</translatorcomment></message>
     <message>
         <source>mp</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"></translation>
-    </message>
+        <translation>mp</translation>
+    <translatorcomment>命令は訳さない</translatorcomment></message>
     <message>
         <source>Block</source>
-        <translation type="unfinished">ブロックファイル</translation>
+        <translation>ブロック</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation type="unfinished">円</translation>
+        <translation>円</translation>
     </message>
     <message>
         <source>Curve</source>
-        <translation type="unfinished">曲線</translation>
+        <translation>曲線</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">編集</translation>
+        <translation>編集</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation type="unfinished">楕円</translation>
+        <translation>楕円</translation>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished">ファイル</translation>
+        <translation>ファイル</translation>
     </message>
     <message>
         <source>Dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>寸法記入</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">図形情報</translation>
+        <translation>図形情報</translation>
     </message>
     <message>
         <source>Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>レイヤー</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>直線</translation>
     </message>
     <message>
         <source>Modify</source>
-        <translation type="unfinished">変更・修正</translation>
+        <translation>変更・修正</translation>
     </message>
     <message>
         <source>Options</source>
-        <translation type="unfinished">オプション</translation>
+        <translation>オプション</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation>その他</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished">ポリライン</translation>
+        <translation>ポリライン</translation>
     </message>
     <message>
         <source>Restriction</source>
-        <translation type="unfinished"></translation>
+        <translation>解像度</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">選択</translation>
+        <translation>選択</translation>
     </message>
     <message>
         <source>Snap</source>
-        <translation type="unfinished">スナップ</translation>
+        <translation>スナップ</translation>
     </message>
     <message>
         <source>Snap Extras</source>
-        <translation type="unfinished"></translation>
+        <translation>独立スナップ</translation>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished">表示</translation>
+        <translation>表示</translation>
     </message>
     <message>
         <source>Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>ウィジット</translation>
     </message>
     <message>
         <source>Creators</source>
-        <translation type="unfinished"></translation>
+        <translation>新規作成</translation>
     </message>
     <message>
         <source>Wiki</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiki</translation>
     </message>
     <message>
-        <source>User&apos;s Manual</source>
-        <translation type="unfinished"></translation>
+        <source>User's Manual</source>
+        <translation>ユーザーマニュアル</translation>
     </message>
     <message>
         <source>Commands</source>
-        <translation type="unfinished"></translation>
+        <translation>コマンド</translation>
     </message>
     <message>
         <source>Style Sheets</source>
-        <translation type="unfinished"></translation>
+        <translation>スタイルシート</translation>
     </message>
     <message>
         <source>Custom Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>カスタム ウィジット</translation>
     </message>
     <message>
         <source>Forum</source>
-        <translation type="unfinished"></translation>
+        <translation>フォーラム</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished">すべて</translation>
+        <translation>すべて</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
-        <translation type="unfinished"></translation>
+        <translation>オブジェクトの削除を無効:</translation>
     </message>
 </context>
 <context>
@@ -8035,8 +8038,8 @@ Continue?</source>
         <translation>角度入力:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
     <message>
         <source>Enter factor:</source>
@@ -8769,8 +8772,8 @@ Continue?</source>
         <translation>角度入力:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
     <message>
         <source>Enter factor:</source>
@@ -8985,8 +8988,8 @@ Continue?</source>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -9326,7 +9329,7 @@ Continue?</source>
     </message>
     <message>
         <source>Area: %1 %2^2</source>
-        <translation type="unfinished"></translation>
+        <translation>面積: %1 %2^2</translation>
     </message>
 </context>
 <context>
@@ -9428,16 +9431,16 @@ Continue?</source>
         <translation>角度入力:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
     <message>
         <source>Enter factor:</source>
         <translation>倍率入力:</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>ファイル&apos;%1&apos; を開けません</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>ファイル'%1' を開けません</translation>
     </message>
 </context>
 <context>
@@ -9835,7 +9838,7 @@ Continue?</source>
         <translation>ノードを挿入するポリラインを指示</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>挿入するノード位置を指示</translation>
     </message>
     <message>
@@ -9913,7 +9916,7 @@ Continue?</source>
         <translation>ノードを削除するポリラインを指示</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>削除するノード位置を指示</translation>
     </message>
     <message>
@@ -10104,8 +10107,8 @@ Continue?</source>
         <translation>印刷時にオフセットするため、コマンドラインからオフセット値を入力</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>印刷時のオフセットは相対値 0 を無視. &apos;@&apos;を無視</translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>印刷時のオフセットは相対値 0 を無視. '@'を無視</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>
@@ -10989,35 +10992,35 @@ Continue?</source>
     <name>WidgetCreator</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>フレーム</translation>
     </message>
     <message>
         <source>&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&gt;</translation>
     </message>
     <message>
         <source>&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>名称</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>新規作成</translation>
     </message>
     <message>
         <source>Destroy</source>
-        <translation type="unfinished"></translation>
+        <translation>取り去る</translation>
     </message>
     <message>
         <source>Assign</source>
-        <translation type="unfinished"></translation>
+        <translation>割り当てる</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>更新する</translation>
     </message>
 </context>
 </TS>

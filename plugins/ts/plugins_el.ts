@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="el">
 <context>
@@ -201,7 +200,7 @@
     <message>
         <location filename="../list/list.cpp" line="162"/>
         <source>CONSTRUCTIONLINE</source>
-        <translatorcomment>CHECKME αυτοσχεδιαστική μετάφραση, καθώς και το &quot;βοηθητική&quot; έχει χρησιμοποιηθεί για το &quot;extension&quot; και ίσως είναι κάτι διαφορετικό</translatorcomment>
+        <translatorcomment>CHECKME αυτοσχεδιαστική μετάφραση, καθώς και το "βοηθητική" έχει χρησιμοποιηθεί για το "extension" και ίσως είναι κάτι διαφορετικό</translatorcomment>
         <translation>ΚΑΤΑΣΚΕΥΑΣΤΙΚΗΓΡΑΜΜΗ</translation>
     </message>
     <message>
@@ -282,7 +281,7 @@
     <message>
         <location filename="../list/list.cpp" line="210"/>
         <source>SPLINEPOINTS</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
@@ -297,7 +296,7 @@
     <message>
         <location filename="../list/list.cpp" line="219"/>
         <source>DIMALIGNED</source>
-        <translatorcomment>CHECKME ΣΤΟΙΧΙΣΜΕΝΗ &apos;Η ΕΥΘΥΓΡΑΜΜΙΣΜΕΝΗ ΚΑΙ ΓΙΑΤΙ ΚΑΙ ΠΡΟΣΟΧΗ ΣΤΑ ΑΛΛΑ</translatorcomment>
+        <translatorcomment>CHECKME ΣΤΟΙΧΙΣΜΕΝΗ 'Η ΕΥΘΥΓΡΑΜΜΙΣΜΕΝΗ ΚΑΙ ΓΙΑΤΙ ΚΑΙ ΠΡΟΣΟΧΗ ΣΤΑ ΑΛΛΑ</translatorcomment>
         <translation>ΔΙΑΣΤΑΣΗΣΤΟΙΧΙΣΜΕΝΗ</translation>
     </message>
     <message>
@@ -359,12 +358,12 @@
     <message>
         <location filename="../picfile/picfile.cpp" line="38"/>
         <source>Read PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="44"/>
         <source>import PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -482,7 +481,7 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="320"/>
         <source>Point 2D layer is empty</source>
-        <translatorcomment>CHECKME ALL TRANSLATIONS BELOW SOS μπορεί να είναι &quot;κωδικών σημείων&quot;, &quot;αριθμών (των) σημείων&quot;</translatorcomment>
+        <translatorcomment>CHECKME ALL TRANSLATIONS BELOW SOS μπορεί να είναι "κωδικών σημείων", "αριθμών (των) σημείων"</translatorcomment>
         <translation>Η στρώση 2Δ του σημείου είναι κενή</translation>
     </message>
     <message>
@@ -542,7 +541,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>Δεν είναι δυνατό το άνοιγμα του αρχείου %1</translation>
     </message>
 </context>
@@ -797,63 +796,63 @@
     <message>
         <location filename="../picfile/picfile.cpp" line="67"/>
         <source>File...</source>
-        <translation type="unfinished">Αρχείο...</translation>
+        <translation>Αρχείο...</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="77"/>
         <source>Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Κλίμακα:</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="81"/>
         <source>Accept</source>
-        <translation type="unfinished">Αποδοχή</translation>
+        <translation>Αποδοχή</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="85"/>
         <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="113"/>
         <source>Select file</source>
-        <translation type="unfinished">Επιλογή αρχείου</translation>
+        <translation>Επιλογή αρχείου</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="121"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="134"/>
         <source>The file %1 not exist</source>
-        <translation type="unfinished">Το αρχείο %1 δεν υπάρχει</translation>
+        <translation>Το αρχείο %1 δεν υπάρχει</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="139"/>
-        <source>Can&apos;t open the file %1</source>
-        <translation type="unfinished">Δεν είναι δυνατό το άνοιγμα του αρχείου %1</translation>
+        <source>Can't open the file %1</source>
+        <translation>Δεν είναι δυνατό το άνοιγμα του αρχείου %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="146"/>
         <source>%1 objects imported</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 αντικείμενα εισήχθησαν</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="168"/>
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="181"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="260"/>
         <location filename="../picfile/picfile.cpp" line="269"/>
         <source>format error in %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -879,12 +878,12 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
+If you don't want to use the parametric form, just leave out "Equation2".
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
         <translation>Το συγκεκριμένο πρόσθετο επιτρέπει τη σχεδιογράφηση μαθηματικών εξισώσεων.
-Σε περίπτωση που δεν επιθυμείτε τη χρήση της παραμετρικής μορφής, απλά αγνοήστε το &quot;Εξίσωση 2&quot;.
+Σε περίπτωση που δεν επιθυμείτε τη χρήση της παραμετρικής μορφής, απλά αγνοήστε το "Εξίσωση 2".
 Μπορείτε να χρησιμοποιήσετε το pi σε περίπτωση που χρειάζεστε την τιμή του π (π.χ. (3*pi)).
 Χρησιμοποιήστε το t ή το x στην εξίσωσή σας ως μεταβλητή/παράμετρο.</translation>
     </message>
@@ -927,19 +926,19 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation type="unfinished"></translation>
+        <translation>Τομείς Γραμμής</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="unfinished"></translation>
+        <translation>Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
