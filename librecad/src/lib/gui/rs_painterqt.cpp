@@ -374,27 +374,12 @@ void RS_PainterQt::drawArcMac(const RS_Vector& cp, double radius,
 
 /**
  * Draws a circle.
- * @param cx center in x
- * @param cy center in y
+ * @param cp Center point
  * @param radius Radius
  */
-void RS_PainterQt::drawCircle(const RS_Vector& cp, double radius) {
-
-// RVT_PORT    if (drawingMode==RS2::ModeXOR && radius<500) {
-                if (radius<500) {
-        // This is _very_ slow for large arcs:
-        QPainter::drawEllipse(toScreenX(cp.x-radius),
-                              toScreenY(cp.y-radius),
-                              RS_Math::round(2.0*radius),
-                              RS_Math::round(2.0*radius));
-    } else {
-        drawArc(cp,
-                radius,
-                0.0, 2*M_PI,
-                cp + RS_Vector(radius, 0.0),
-                cp + RS_Vector(radius, 0.0),
-                false);
-        }
+void RS_PainterQt::drawCircle(const RS_Vector& cp, double radius)
+{
+    QPainter::drawEllipse(QPointF(cp.x, cp.y), radius, radius);
 }
 
 

@@ -228,7 +228,7 @@ public:
 	RS_Entity* first() const;
 	//! \}
 
-    QList<RS_Entity*> getEntityList();
+    const QList<RS_Entity*>& getEntityList();
 
 protected:
 

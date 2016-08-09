@@ -26,6 +26,7 @@
 #include "qg_commandwidget.h"
 #include <QKeyEvent>
 #include <algorithm>
+#include <QFileDialog>
 
 #include "qg_actionhandler.h"
 #include "rs_commands.h"
@@ -42,6 +43,18 @@ QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::Window
 {
     setObjectName(name);
     setupUi(this);
+    connect(leCommand, SIGNAL(command(QString)), this, SLOT(handleCommand(QString)));
+    connect(leCommand, SIGNAL(escape()), this, SLOT(escape()));
+    connect(leCommand, SIGNAL(focusOut()), this, SLOT(setNormalMode()));
+    connect(leCommand, SIGNAL(focusIn()), this, SLOT(setCommandMode()));
+    connect(leCommand, SIGNAL(tabPressed()), this, SLOT(tabPressed()));
+    connect(leCommand, SIGNAL(clearCommandsHistory()), teHistory, SLOT(clear()));
+    connect(leCommand, SIGNAL(message(QString)), this, SLOT(appendHistory(QString)));
+
+    auto action = new QAction(QObject::tr("Load Command File"), this);
+    connect(action, &QAction::triggered, this, &QG_CommandWidget::chooseCommandFile);
+    options_button->addAction(action);
+    options_button->setStyleSheet("QToolButton::menu-indicator { image: none; }");
 }
 
 /*
@@ -63,32 +76,37 @@ void QG_CommandWidget::languageChange()
 
 bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
 {
-	if (event->type() == QEvent::KeyPress) {
+    if (event->type() == QEvent::KeyPress)
+    {
 		QKeyEvent* e=static_cast<QKeyEvent*>(event);
-		//		qDebug()<<QString::number(e->key(), 16);
-		switch(e->key()){
-		case Qt::Key_Return:
-		case Qt::Key_Enter:
-			if(!leCommand->text().size())
-				return false;
-			else
-				break;
-		case Qt::Key_Escape:
-			//			DEBUG_HEADER
-			//			qDebug()<<"Not filtered";
-			return false;
-		default:
-			break;
+
+        switch(e->key())
+        {
+            case Qt::Key_Return:
+            case Qt::Key_Enter:
+                if(!leCommand->text().size())
+                    return false;
+                else
+                    break;
+            case Qt::Key_Escape:
+                return false;
+            default:
+                break;
 		}
+
 		//detect Ctl- Alt- modifier, but not Shift
 		//This should avoid filtering shortcuts, such as Ctl-C
-		if(e->modifiers() & (Qt::KeyboardModifierMask ^ Qt::ShiftModifier)) return false;
+
+        if(e->modifiers())
+        {
+            if (e->modifiers() != Qt::KeypadModifier)
+                return false;
+        }
+
 		event->accept();
+        this->setFocus();
 		QKeyEvent * newEvent = new QKeyEvent(*static_cast<QKeyEvent*>(event));
 		QApplication::postEvent(leCommand, newEvent);
-		this->setFocus();
-		//			DEBUG_HEADER
-		//			qDebug()<<"Filtered";
 		return true;
 	}
 	return false;
@@ -96,6 +114,8 @@ bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
 
 void QG_CommandWidget::setFocus() {
     //setCommandMode();
+    if (!isActiveWindow())
+        activateWindow();
 	QFocusEvent* newEvent=new QFocusEvent(QEvent::FocusIn);
 	QApplication::postEvent(leCommand, newEvent);
     leCommand->setFocus();
@@ -114,13 +134,11 @@ void QG_CommandWidget::appendHistory(const QString& msg) {
     teHistory->append(msg);
 }
 
-void QG_CommandWidget::trigger() {
-    QString cmd = leCommand->text();
+void QG_CommandWidget::handleCommand(QString cmd)
+{
     cmd = cmd.simplified();
     bool isAction=false;
-    if (cmd=="") {
-        cmd="\n";
-    } else {
+    if (!cmd.isEmpty()) {
         appendHistory(cmd);
     }
 
@@ -128,7 +146,7 @@ void QG_CommandWidget::trigger() {
         isAction=actionHandler->command(cmd);
     }
 
-    if (!isAction && cmd!="\n" && !(cmd.contains(',') || cmd.at(0)=='@')) {
+    if (!isAction && !(cmd.contains(',') || cmd.at(0)=='@')) {
        appendHistory(tr("Unknown command: %1").arg(cmd));
     }
 
@@ -230,3 +248,11 @@ QString QG_CommandWidget::getRootCommand( const QStringList & cmdList, const QSt
 
 }
 
+void QG_CommandWidget::chooseCommandFile()
+{
+    QString path = QFileDialog::getOpenFileName(this);
+    if (!path.isEmpty())
+    {
+        leCommand->readCommandFile(path);
+    }
+}

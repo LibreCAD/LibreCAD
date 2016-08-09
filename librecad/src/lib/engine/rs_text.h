@@ -141,10 +141,10 @@ public:
             const RS_TextData& d);
 	virtual ~RS_Text() = default;
 
-	virtual RS_Entity* clone() const;
+    virtual RS_Entity* clone() const override;
 
     /**	@return RS2::EntityText */
-    virtual RS2::EntityType rtti() const {
+    virtual RS2::EntityType rtti() const override{
         return RS2::EntityText;
     }
 
@@ -153,7 +153,7 @@ public:
         return data;
     }
 
-    void update();
+    void update() override;
 
     int getNumberOfLines();
 
@@ -226,20 +226,22 @@ public:
      * @return The insertion point as endpoint.
      */
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                         double* dist = NULL)const;
-	virtual RS_VectorSolutions getRefPoints() const;
+                                         double* dist = NULL)const override;
+    virtual RS_VectorSolutions getRefPoints() const override;
 
-    virtual void move(const RS_Vector& offset);
-    virtual void rotate(const RS_Vector& center, const double& angle);
-    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
-    virtual void scale(const RS_Vector& center, const RS_Vector& factor);
-    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
-    virtual bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2);
+    virtual void move(const RS_Vector& offset) override;
+    virtual void rotate(const RS_Vector& center, const double& angle) override;
+    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+    virtual void scale(const RS_Vector& center, const RS_Vector& factor) override;
+    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+    virtual bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) override;
     virtual void stretch(const RS_Vector& firstCorner,
                          const RS_Vector& secondCorner,
-                         const RS_Vector& offset);
+                         const RS_Vector& offset) override;
 
     friend std::ostream& operator << (std::ostream& os, const RS_Text& p);
+
+    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
 
 protected:
     RS_TextData data;

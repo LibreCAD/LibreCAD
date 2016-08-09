@@ -28,6 +28,8 @@
 #define QG_COMMANDEDIT_H
 
 #include <QLineEdit>
+#include <QString>
+#include <QMap>
 
 /**
  * A command line edit with some typical console features 
@@ -40,11 +42,21 @@ public:
     QG_CommandEdit(QWidget* parent=0);
     virtual ~QG_CommandEdit()=default;
 
+    void readCommandFile(const QString& path);
+
 protected:
 	virtual bool event(QEvent* e);
 	virtual void keyPressEvent(QKeyEvent* e);
 	virtual void focusInEvent(QFocusEvent *e);
 	virtual void focusOutEvent(QFocusEvent *e);
+    void evaluateExpression(QString input);
+
+    QString relative_ray;
+    QMap<QString, QString> variables;
+
+    void processInput(QString input);
+    bool isForeignCommand(QString input);
+    void processVariable(QString input);
 
 signals:
 	void tabPressed();
@@ -52,11 +64,17 @@ signals:
 	void focusIn();
 	void focusOut();
     void clearCommandsHistory();
+    void command(QString cmd);
+    void message(QString msg);
 
 private:
 	QStringList historyList;
 	QStringList::Iterator it;
 	bool acceptCoordinates;
+    bool calculator_mode;
+
+public slots:
+    void modifiedPaste();
 };
 
 #endif

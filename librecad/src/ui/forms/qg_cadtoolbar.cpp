@@ -40,9 +40,7 @@
 #include "qg_cadtoolbarsplines.h"
 #include "rs_debug.h"
 
-#if QT_VERSION >= 0x050500
 #include "qc_applicationwindow.h"
-#endif
 
 /*
  *  Constructs a QG_CadToolBar as a child of 'parent', with the

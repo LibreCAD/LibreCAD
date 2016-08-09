@@ -31,10 +31,6 @@
 #include "rs_layer.h"
 #include "rs_layerlistlistener.h"
 
-#if QT_VERSION < 0x040400
-#include "emu_qt44.h"
-#endif
-
 /**
  * Default constructor.
  */
@@ -51,6 +47,27 @@ RS_LayerList::RS_LayerList() {
 void RS_LayerList::clear() {
     layers.clear();
 	setModified(true);
+}
+
+
+QList<RS_Layer*>::iterator RS_LayerList::begin()
+{
+    return layers.begin();
+}
+
+QList<RS_Layer*>::iterator RS_LayerList::end()
+{
+    return layers.end();
+}
+
+QList<RS_Layer*>::const_iterator RS_LayerList::begin()const
+{
+    return layers.begin();
+}
+
+QList<RS_Layer*>::const_iterator RS_LayerList::end()const
+{
+    return layers.end();
 }
 
 
@@ -182,12 +199,7 @@ void RS_LayerList::remove(RS_Layer* layer) {
     }
 
     // here the layer is removed from the list but not deleted
-#if QT_VERSION < 0x040400
-    emu_qt44_removeOne(layers, layer);
-#else
     layers.removeOne(layer);
-#endif
-
 
     for (int i=0; i<layerListListeners.size(); ++i) {
         RS_LayerListListener* l = layerListListeners.at(i);
@@ -303,16 +315,25 @@ void RS_LayerList::toggle(const QString& name) {
  * Listeners are notified.
  */
 void RS_LayerList::toggle(RS_Layer* layer) {
-    if (layer==NULL) {
+
+    if (!layer) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_LayerList::toggle: nullptr layer");
         return;
     }
 
+    // set flags
     layer->toggle();
     setModified(true);
 
     // Notify listeners:
-    for (int i=0; i<layerListListeners.size(); ++i) {
-        RS_LayerListListener* l = layerListListeners.at(i);
+    for (auto *i : layerListListeners) {
+
+        if (!i) {
+            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_LayerList::toggle: nullptr layer listener");
+            continue;
+        }
+
+        RS_LayerListListener *l = (RS_LayerListListener *)i;
         l->layerToggled(layer);
     }
 }
@@ -419,12 +440,7 @@ void RS_LayerList::addListener(RS_LayerListListener* listener) {
  * removes a LayerListListener from the list of listeners. 
  */
 void RS_LayerList::removeListener(RS_LayerListListener* listener) {
-#if QT_VERSION < 0x040400
-    emu_qt44_removeOne(layerListListeners, listener);
-#else
     layerListListeners.removeOne(listener);
-#endif
-
 }
 
 

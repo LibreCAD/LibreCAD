@@ -38,7 +38,6 @@ class QLabel;
 class QMenu;
 
 class QG_ScrollBar;
-struct LC_Options;
 
 /**
  * This is the Qt implementation of a widget which can view a 
@@ -99,7 +98,7 @@ public:
 
     void setCurrentQAction(QAction* q_action);
 
-    std::shared_ptr<LC_Options> options;
+    QString device;
 
     void destroyMenu(const QString& activator);
     void setMenu(const QString& activator, QMenu* menu);

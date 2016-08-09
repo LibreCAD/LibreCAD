@@ -25,6 +25,7 @@
 **
 **********************************************************************/
 
+
 #include "qc_applicationwindow.h"
 
 #include <QStatusBar>
@@ -90,13 +91,14 @@
 
 #include "lc_widgetoptionsdialog.h"
 #include "comboboxoption.h"
-#include "lc_options.h"
 
 #include "lc_printing.h"
 #include "actionlist.h"
 #include "widgetcreator.h"
 #include "lc_actiongroupmanager.h"
 #include "linklist.h"
+#include "colorwizard.h"
+#include "lc_penwizard.h"
 
 #include <boost/version.hpp>
 
@@ -124,10 +126,10 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
  * Constructor. Initializes the app.
  */
 QC_ApplicationWindow::QC_ApplicationWindow()
-    : options(std::make_shared<LC_Options>())
-    , ag_manager(new LC_ActionGroupManager(this))
+    : ag_manager(new LC_ActionGroupManager(this))
     , autosaveTimer(nullptr)
     , actionHandler(new QG_ActionHandler(this))
+    , pen_wiz(new LC_PenWizard(QObject::tr("Pen Wizard"), this))
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
@@ -142,14 +144,15 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     appWindow = this;
 
-//    connect(this, SIGNAL(printPreviewChanged(bool)), ag_manager, SLOT(toggleTools(bool)));
-
     QSettings settings;
-
-    options->device = settings.value("Hardware/Device", "Mouse").toString();
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: setting icon");
     setWindowIcon(QIcon(QC_APP_ICON));
+
+    pen_wiz->setObjectName("pen_wiz");
+    connect(this, &QC_ApplicationWindow::windowsChanged,
+            pen_wiz, &LC_PenWizard::setEnabled);
+    addDockWidget(Qt::RightDockWidgetArea, pen_wiz);
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init status bar");
     QStatusBar* status_bar = statusBar();
@@ -210,12 +213,10 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     if (custom_size)
         setIconSize(QSize(icon_size, icon_size));
 
-    QShortcut* shortcut = new QShortcut(QKeySequence("Ctrl+L"), this);
-    connect(shortcut, SIGNAL(activated()), actionHandler, SLOT(slotLayersAdd()));
-
     LC_ActionFactory a_factory(this, actionHandler);
     a_factory.using_theme = settings.value("Widgets/AllowTheme", 0).toBool();
     a_factory.fillActionContainer(a_map, ag_manager);
+
     LC_WidgetFactory widget_factory(this, a_map, ag_manager);
     if (enable_left_sidebar)
         widget_factory.createLeftSidebar(5, icon_size);
@@ -294,6 +295,12 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
             this, SLOT(slotPenChanged(RS_Pen)));
 
+    auto ctrl_l = new QShortcut(QKeySequence("Ctrl+L"), this);
+    connect(ctrl_l, SIGNAL(activated()), actionHandler, SLOT(slotLayersAdd()));
+
+    auto ctrl_m = new QShortcut(QKeySequence("Ctrl+M"), this);
+    connect(ctrl_m, SIGNAL(activated()), this, SLOT(slotFocusCommandLine()));
+
     // This event filter allows sending key events to the command widget, therefore, no
     // need to activate the command widget before typing commands.
     // Since this nice feature causes a bug of lost key events when the command widget is on
@@ -301,6 +308,11 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     // send key events for mdiAreaCAD to command widget by default
     if (!keycode_mode)
         mdiAreaCAD->installEventFilter(commandWidget);
+    else
+    {
+        auto space = new QShortcut(QKeySequence(Qt::Key_Space), this);
+        connect(space, SIGNAL(activated()), actionHandler, SLOT(slotSnapFree()));
+    }
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory");
     dialogFactory = new QC_DialogFactory(this, optionWidget);
@@ -322,6 +334,10 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init settings");
     initSettings();
+
+    auto command_file = settings.value("Paths/VariableFile", "").toString();
+    if (!command_file.isEmpty())
+        commandWidget->leCommand->readCommandFile(command_file);
 
     // Activate autosave timer
     if (settings.value("Defaults/AutoBackupDocument", 1).toBool())
@@ -627,9 +643,6 @@ void QC_ApplicationWindow::storeSettings() {
         RS_SETTINGS->endGroup();
         //save snapMode
         snapToolBar->saveSnapMode();
-
-        QSettings settings;
-        settings.setValue("Hardware/Device", options->device);
     }
 
     RS_DEBUG->print("QC_ApplicationWindow::storeSettings(): OK");
@@ -757,6 +770,8 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
 
         // set pen from pen toolbar
         slotPenChanged(penToolBar->getPen());
+
+        pen_wiz->mdi_win = m;
 
         // update toggle button status:
         if (m->getGraphic()) {
@@ -1078,7 +1093,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
 
     view->setAntialiasing(aa);
     view->setCursorHiding(cursor_hiding);
-    view->options = options;
+    view->device = settings.value("Hardware/Device", "Mouse").toString();
     if (scrollbars) view->addScrollbars();
 
     settings.beginGroup("Activators");
@@ -1107,8 +1122,6 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
 
     connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
             this, SLOT(slotFileClosing(QC_MDIWindow*)));
-    connect(w->getGraphicView(), SIGNAL(xbutton1_released()),
-            commandWidget, SLOT(trigger()));
 
     if (w->getDocument()->rtti()==RS2::EntityBlock) {
         w->setWindowTitle(tr("Block '%1'").arg(((RS_Block*)(w->getDocument()))->getName()));
@@ -1117,7 +1130,15 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     }
 
     //check for draft mode
-    updateWindowTitle(w);
+
+    if (settings.value("Appearance/DraftMode", 0).toBool())
+    {
+        QString draft_string = " ["+tr("Draft Mode")+"]";
+        w->getGraphicView()->setDraftMode(true);
+        QString title = w->windowTitle();
+        w->setWindowTitle(title + draft_string);
+    }
+
     w->setWindowIcon(QIcon(":/main/document.png"));
 
     // only graphics offer block lists, blocks don't
@@ -1161,6 +1182,8 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     subWindow->showMaximized();
     subWindow->setFocus();
     statusBar()->showMessage(tr("New Drawing created."), 2000);
+
+    layerWidget->activateLayer(0);
 
     RS_DEBUG->print("QC_ApplicationWindow::slotFileNew() OK");
 
@@ -1385,6 +1408,8 @@ void QC_ApplicationWindow::
 {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen(..)");
 
+    QSettings settings;
+
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 
     if ( QFileInfo(fileName).exists())
@@ -1483,7 +1508,14 @@ void QC_ApplicationWindow::
                 /*	Format and set caption.
                  *	----------------------- */
         w->setWindowTitle(format_filename_caption(fileName));
-        updateWindowTitle(w);
+        if (settings.value("Appearance/DraftMode", 0).toBool())
+        {
+            QString draft_string = " ["+tr("Draft Mode")+"]";
+            w->getGraphicView()->setDraftMode(true);
+            w->getGraphicView()->redraw();
+            QString title = w->windowTitle();
+            w->setWindowTitle(title + draft_string);
+        }
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: set caption: OK");
 
@@ -1858,9 +1890,12 @@ void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
 
     window_list.removeOne(win);
 
-    layerWidget->setLayerList(nullptr, false);
-    blockWidget->setBlockList(nullptr);
-    coordinateWidget->setGraphic(nullptr);
+    if (activedMdiSubWindow == win)
+    {
+        layerWidget->setLayerList(nullptr, false);
+        blockWidget->setBlockList(nullptr);
+        coordinateWidget->setGraphic(nullptr);
+    }
 
     openedFiles.removeAll(win->getDocument()->getFilename());
 
@@ -2087,6 +2122,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
         {
             if (!parent->getGraphicView()->isPrintPreview())
             {
+                QSettings settings;
                 //generate a new print preview
                 RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): create");
 
@@ -2101,7 +2137,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                 w->setWindowIcon(QIcon(":/main/document.png"));
                 w->slotZoomAuto();
                 QG_GraphicView* gv = w->getGraphicView();
-                gv->options = options;
+                gv->device = settings.value("Hardware/Device", "Mouse").toString();
                 gv->setPrintPreview(true);
                 gv->setBackground(RS_Color(255,255,255));
                 gv->setDefaultAction(new RS_ActionPrintPreview(*w->getDocument(), *w->getGraphicView()));
@@ -2458,16 +2494,6 @@ bool QC_ApplicationWindow::queryExit(bool force) {
  */
 void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e)
 {
-
-    if (e->modifiers() & Qt::ControlModifier)
-    {
-        if (e->key() == Qt::Key_M)
-        {
-            slotFocusCommandLine();
-            e->accept();
-            return;
-        }
-    }
     // multi key codes:
     static QTime ts = QTime();
     static QList<int> doubleCharacters;
@@ -2667,8 +2693,9 @@ void QC_ApplicationWindow::invokeLinkList()
     list->addLink(QObject::tr("User's Manual"), "http://wiki.librecad.org/index.php/LibreCAD_users_Manual");
     list->addLink(QObject::tr("Commands"), "http://wiki.librecad.org/index.php/Commands");
     list->addLink(QObject::tr("Style Sheets"), "https://github.com/LibreCAD/LibreCAD/wiki/Style-Sheets");
-    list->addLink(QObject::tr("Custom Widgets"), "https://github.com/LibreCAD/LibreCAD/wiki/Custom-Widgets");
+    list->addLink(QObject::tr("Widgets"), "https://github.com/LibreCAD/LibreCAD/wiki/Widgets");
     list->addLink(QObject::tr("Forum"), "http://forum.librecad.org/");
+    list->addLink(QObject::tr("Release Information"), "https://github.com/LibreCAD/LibreCAD/releases");
     layout->addWidget(list);
     dlg.setLayout(layout);
     dlg.exec();
@@ -2883,24 +2910,31 @@ void QC_ApplicationWindow::showDeviceOptions()
 {
     // author: ravas
 
+    QSettings settings;
+
     QDialog dlg;
     dlg.setWindowTitle(tr("Device Options"));
     auto layout = new QVBoxLayout;
     auto device_combo = new ComboBoxOption(&dlg);
     device_combo->setTitle(tr("Device"));
     device_combo->setOptionsList(QStringList({"Mouse", "Tablet", "Trackpad", "Touchscreen"}));
-    device_combo->setCurrentOption(options->device);
+    device_combo->setCurrentOption(settings.value("Hardware/Device", "Mouse").toString());
     layout->addWidget(device_combo);
     dlg.setLayout(layout);
-    connect(device_combo, SIGNAL(optionToSave(QString)), this, SLOT(updateDevice(QString)));
+    connect(device_combo, &ComboBoxOption::optionToSave,
+            this, &QC_ApplicationWindow::updateDevice);
     dlg.exec();
 }
 
 void QC_ApplicationWindow::updateDevice(QString device)
 {
     // author: ravas
-
-    options->device = device;
+    QSettings settings;
+    settings.setValue("Hardware/Device", device);
+    foreach (auto win, window_list)
+    {
+        win->getGraphicView()->device = device;
+    }
 }
 
 void QC_ApplicationWindow::invokeToolbarCreator()

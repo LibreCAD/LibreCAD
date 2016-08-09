@@ -43,6 +43,10 @@ public:
 	RS_OverlayLine(RS_EntityContainer* parent, const RS_LineData& d);
 	
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
+
+    RS2::EntityType rtti() const override{
+        return RS2::EntityOverlayLine;
+    }
 }
 ;
 

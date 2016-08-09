@@ -210,9 +210,9 @@ private:
     QString versionStr;
     int version;
     /** Library File version. */
-    QString libVersionStr;
-    int libVersion;
-    int libRelease;
+#define LIBDXFRW_VERSION(version,release,patch) (((version) << 16) | ((release) << 8) | (patch))
+    bool isLibDxfRw {false};
+    uint libDxfRwVersion;
     /** dimension style. */
     QString dimStyle;
     /** text style. */

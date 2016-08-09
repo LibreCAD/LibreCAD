@@ -452,7 +452,3 @@ void dibSHP::writeSettings()
     settings.setValue("size", size());
     settings.setValue("lastfile", fileedit->text());
  }
-
-#if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(importshp, ImportShp);
-#endif

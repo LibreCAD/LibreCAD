@@ -350,6 +350,22 @@ void RS_Polyline::setEndpoint(RS_Vector const& v) {
 	data.endpoint = v;
 }
 
+void RS_Polyline::setLayer(const QString& name) {
+    RS_Entity::setLayer(name);
+    // set layer for sub-entities
+    for (auto *e : entities) {
+        e->setLayer(layer);
+    }
+}
+
+void RS_Polyline::setLayer(RS_Layer* l) {
+    layer = l;
+    // set layer for sub-entities
+    for (auto *e : entities) {
+        e->setLayer(layer);
+    }
+}
+
 /** @return End point of the entity */
 RS_Vector RS_Polyline::getEndpoint() const {
 	return data.endpoint;

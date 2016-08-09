@@ -3059,14 +3059,7 @@ QString RS_FilterJWW::toDxfString(const QString& string) {
                         if (c>127) {
                                 QString hex;
                                 hex = QString("%1").arg(c, 4, 16);
-#if QT_VERSION>=0x030000
-
                                 hex = hex.replace(' ', '0');
-#else
-
-                                hex = QStringCompat::replace(hex, ' ', '0');
-#endif
-
                                 res+=QString("\\U+%1").arg(hex);
                         } else {
                                 res+=string.at(i);

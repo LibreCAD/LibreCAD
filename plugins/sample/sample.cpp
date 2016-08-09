@@ -174,7 +174,3 @@ void lc_Sampledlg::writeSettings()
     settings.setValue("endx", endxedit->text());
     settings.setValue("endy", endyedit->text());
  }
-
-#if QT_VERSION < 0x050000
-Q_EXPORT_PLUGIN2(lc_sample, LC_Sample);
-#endif

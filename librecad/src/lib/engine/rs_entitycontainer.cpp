@@ -45,10 +45,6 @@
 #include "rs_information.h"
 #include "rs_graphicview.h"
 
-#if QT_VERSION < 0x040400
-#include "emu_qt44.h"
-#endif
-
 bool RS_EntityContainer::autoUpdateBorders = true;
 
 /**
@@ -85,7 +81,11 @@ RS_EntityContainer::RS_EntityContainer(const RS_EntityContainer& ec)
  * Destructor.
  */
 RS_EntityContainer::~RS_EntityContainer() {
-    clear();
+    if (autoDelete) {
+        while (!entities.isEmpty())
+            delete entities.takeFirst();
+    } else
+        entities.clear();
 }
 
 
@@ -441,11 +441,7 @@ bool RS_EntityContainer::removeEntity(RS_Entity* entity) {
     //    and sets 'entIdx' in next() or last() if 'entity' is the last item in the list.
 	//    in LibreCAD is never called with nullptr
     bool ret;
-#if QT_VERSION < 0x040400
-    ret = emu_qt44_removeOne(entities, entity);
-#else
     ret = entities.removeOne(entity);
-#endif
 
     if (autoDelete && ret) {
         delete entity;
@@ -681,18 +677,25 @@ void RS_EntityContainer::updateDimensions(bool autoText) {
  */
 void RS_EntityContainer::updateInserts() {
 
-    RS_DEBUG->print("RS_EntityContainer::updateInserts()");
+    RS_DEBUG->print("RS_EntityContainer::updateInserts() ID/type: %d/%d", getId(), rtti());
 
-	for (RS_Entity* e: entities){
+    for (RS_Entity* e: entities){
         //// Only update our own inserts and not inserts of inserts
         if (e->rtti()==RS2::EntityInsert  /*&& e->getParent()==this*/) {
             ((RS_Insert*)e)->update();
-        } else if (e->isContainer() && e->rtti()!=RS2::EntityHatch) {
-            ((RS_EntityContainer*)e)->updateInserts();
+            RS_DEBUG->print("RS_EntityContainer::updateInserts: updated ID/type: %d/%d", e->getId(), e->rtti());
+        } else if (e->isContainer()) {
+            if (e->rtti()==RS2::EntityHatch) {
+                RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_EntityContainer::updateInserts: skip hatch ID/type: %d/%d", e->getId(), e->rtti());
+            } else {
+                RS_DEBUG->print("RS_EntityContainer::updateInserts: update container ID/type: %d/%d", e->getId(), e->rtti());
+                ((RS_EntityContainer*)e)->updateInserts();
+            }
+        } else {
+            RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_EntityContainer::updateInserts: skip entity ID/type: %d/%d", e->getId(), e->rtti());
         }
     }
-
-    RS_DEBUG->print("RS_EntityContainer::updateInserts() OK");
+    RS_DEBUG->print("RS_EntityContainer::updateInserts() ID/type: %d/%d OK", getId(), rtti());
 }
 
 
@@ -1567,24 +1570,34 @@ bool RS_EntityContainer::optimizeContours() {
     /** connect entities **/
     const QString errMsg=QObject::tr("Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)");
 
-    while(count()>0){
+    while(count()>0) {
         double dist(0.);
         RS_Vector&& vpTmp=getNearestEndpoint(vpEnd,&dist,&next);
         if(dist>1e-8) {
-            if(vpEnd.squaredTo(vpStart)<1e-8){
+            if(vpEnd.squaredTo(vpStart) < 1e-8) {
                 RS_Entity* e2=entityAt(0);
                 tmp.addEntity(e2->clone());
                 vpStart=e2->getStartpoint();
                 vpEnd=e2->getEndpoint();
                 removeEntity(e2);
                 continue;
-			}
-			QG_DIALOGFACTORY->commandMessage(
-						errMsg.arg(dist).arg(vpTmp.x).arg(vpTmp.y).arg(vpEnd.x).arg(vpEnd.y)
-						);
-            closed=false;
+            }
+            else {
+                QG_DIALOGFACTORY->commandMessage(
+                            errMsg.arg(dist).arg(vpTmp.x).arg(vpTmp.y).arg(vpEnd.x).arg(vpEnd.y)
+                            );
+                RS_DEBUG->print(RS_Debug::D_ERROR, "RS_EntityContainer::optimizeContours: hatch failed due to a gap");
+                closed=false;
+                break;
+            }
         }
-		if(next && closed){ 			//workaround if next is nullptr
+        if(!next) { 	    //workaround if next is nullptr
+//      	    std::cout<<"RS_EntityContainer::optimizeContours: next is nullptr" <<std::endl;
+            RS_DEBUG->print("RS_EntityContainer::optimizeContours: next is nullptr");
+//			closed=false;	//workaround if next is nullptr
+            break;			//workaround if next is nullptr
+        } 					//workaround if next is nullptr
+        if(closed) {
             next->setProcessed(true);
             RS_Entity* eTmp = next->clone();
             if(vpEnd.squaredTo(eTmp->getStartpoint())>vpEnd.squaredTo(eTmp->getEndpoint()))
@@ -1592,20 +1605,15 @@ bool RS_EntityContainer::optimizeContours() {
             vpEnd=eTmp->getEndpoint();
             tmp.addEntity(eTmp);
         	removeEntity(next);
-		} else { 			//workaround if next is nullptr
-//      	    std::cout<<"RS_EntityContainer::optimizeContours: next is nullptr" <<std::endl;
-
-			closed=false;	//workaround if next is nullptr
-			break;			//workaround if next is nullptr
-		} 					//workaround if next is nullptr
+        }
     }
 //    DEBUG_HEADER
-    if(vpEnd.valid && vpEnd.squaredTo(vpStart)>1e-8) {
-		if(closed)
-			QG_DIALOGFACTORY->commandMessage(errMsg.arg(vpEnd.distanceTo(vpStart))
-											 .arg(vpStart.x).arg(vpStart.y).arg(vpEnd.x).arg(vpEnd.y));
-        closed=false;
-    }
+//    if(vpEnd.valid && vpEnd.squaredTo(vpStart) > 1e-8) {
+//		QG_DIALOGFACTORY->commandMessage(errMsg.arg(vpEnd.distanceTo(vpStart))
+//											 .arg(vpStart.x).arg(vpStart.y).arg(vpEnd.x).arg(vpEnd.y));
+//        RS_DEBUG->print("RS_EntityContainer::optimizeContours: hatch failed due to a gap");
+//        closed=false;
+//    }
 //    std::cout<<"RS_EntityContainer::optimizeContours: 5"<<std::endl;
 
 
@@ -1616,7 +1624,12 @@ bool RS_EntityContainer::optimizeContours() {
     }
 //    std::cout<<"RS_EntityContainer::optimizeContours: 6"<<std::endl;
 
-    RS_DEBUG->print("RS_EntityContainer::optimizeContours: OK");
+    if(closed) {
+        RS_DEBUG->print("RS_EntityContainer::optimizeContours: OK");
+    }
+    else {
+        RS_DEBUG->print("RS_EntityContainer::optimizeContours: bad");
+    }
 //    std::cout<<"RS_EntityContainer::optimizeContours: end: count()="<<count()<<std::endl;
 //    std::cout<<"RS_EntityContainer::optimizeContours: closed="<<closed<<std::endl;
     return closed;
@@ -1764,9 +1777,8 @@ void RS_EntityContainer::draw(RS_Painter* painter, RS_GraphicView* view,
         return;
     }
 
-
-	for(auto e: entities){
-
+    foreach (auto e, entities)
+    {
         view->drawEntity(painter, e);
     }
 }
@@ -1931,7 +1943,7 @@ RS_Entity* RS_EntityContainer::last() const
 	return entities.last();
 }
 
-QList<RS_Entity*> RS_EntityContainer::getEntityList()
+const QList<RS_Entity*>& RS_EntityContainer::getEntityList()
 {
     return entities;
 }

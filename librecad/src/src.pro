@@ -10,7 +10,8 @@ DISABLE_POSTSCRIPT = false
 DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
-LC_VERSION="2.1.0-beta"
+LC_VERSION="2.2.0-alpha"
+VERSION=$${LC_VERSION}
 
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/librecad
@@ -25,13 +26,10 @@ CONFIG += qt \
     verbose \
     depend_includepath
 
-
-greaterThan( QT_MAJOR_VERSION, 4 ) {
-    QT += widgets printsupport
-    CONFIG += c++11
-    *-g++ {
-        QMAKE_CXXFLAGS += -fext-numeric-literals
-    }
+QT += widgets printsupport
+CONFIG += c++11
+*-g++ {
+    QMAKE_CXXFLAGS += -fext-numeric-literals
 }
 
 GEN_LIB_DIR = ../../generated/lib
@@ -46,10 +44,13 @@ unix {
 
     macx {
         TARGET = LibreCAD
+        VERSION=$$system(echo "$${LC_VERSION}" | sed -e 's/\-.*//g')
+        QMAKE_INFO_PLIST = Info.plist.app
         DEFINES += QC_APPDIR="\"LibreCAD\""
         RC_FILE = ../res/main/librecad.icns
         contains(DISABLE_POSTSCRIPT, false) {
-            QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-osx.sh
+            QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-osx.sh;
+            QMAKE_POST_LINK += /usr/libexec/PlistBuddy -c \"Set :CFBundleGetInfoString $${TARGET} $${LC_VERSION}\" $$_PRO_FILE_PWD_/$${DESTDIR}/$${TARGET}.app/Contents/Info.plist;
         }
     }
     else {
@@ -209,7 +210,6 @@ HEADERS += \
     lib/generators/lc_xmlwriterqxmlstreamwriter.h \
     actions/lc_actionfileexportmakercam.h \
     lib/engine/lc_rect.h \
-    main/lc_options.h \
     lib/printing/lc_printing.h
 
 SOURCES += \
@@ -681,7 +681,10 @@ HEADERS += ui/lc_actionfactory.h \
     ui/generic/actionlist.h \
     ui/generic/widgetcreator.h \
     ui/lc_actiongroupmanager.h \
-    ui/generic/linklist.h
+    ui/generic/linklist.h \
+    ui/generic/colorcombobox.h \
+    ui/generic/colorwizard.h \
+    ui/lc_penwizard.h
 
 SOURCES += ui/lc_actionfactory.cpp \
     ui/qg_actionhandler.cpp \
@@ -780,7 +783,10 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/generic/actionlist.cpp \
     ui/generic/widgetcreator.cpp \
     ui/lc_actiongroupmanager.cpp \
-    ui/generic/linklist.cpp
+    ui/generic/linklist.cpp \
+    ui/generic/colorcombobox.cpp \
+    ui/generic/colorwizard.cpp \
+    ui/lc_penwizard.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_arcoptions.ui \
@@ -853,7 +859,8 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/lc_widgetoptionsdialog.ui \
     ui/lc_deviceoptions.ui \
     ui/generic/comboboxoption.ui \
-    ui/generic/widgetcreator.ui
+    ui/generic/widgetcreator.ui \
+    ui/generic/colorwizard.ui
 
 RESOURCES += ../res/ui/ui.qrc
 
@@ -888,37 +895,6 @@ contains(DEFINES, EMU_C99) {
     !build_pass:verbose:message(Emulating C99 math features.)
     SOURCES += main/emu_c99.cpp
     HEADERS += main/emu_c99.h
-}
-
-# If Qt 4.3 or Qt 4.4 is used, add the respective workaround
-# source files and defines.
-
-contains(QT_MAJOR_VERSION, 4)   {
-
-    contains(QT_MINOR_VERSION, 0)|contains(QT_MINOR_VERSION, 1)|contains(QT_MINOR_VERSION, 2) {
-        error("Qt version $$[QT_VERSION] is too old, should be version 4.3 or newer.")
-    }
-
-    contains(QT_MINOR_VERSION, 3) {
-        !build_pass:verbose:message(Emulating Qt version 4.4 and 4.5.)
-        SOURCES += main/emu_qt44.cpp main/emu_qt45.cpp
-        HEADERS += main/emu_qt44.h   main/emu_qt45.h
-
-        !build_pass:verbose:message(Using QAssistantClient.)
-        CONFIG += assistant
-    }
-
-    contains(QT_MINOR_VERSION, 4) {
-        !build_pass:verbose:message(Emulating Qt version 4.5.)
-        SOURCES += main/emu_qt45.cpp
-        HEADERS += main/emu_qt45.h
-    }
-
-    contains(QT_MINOR_VERSION, 5)|contains(QT_MINOR_VERSION, 6)|contains(QT_MINOR_VERSION, 7) {
-        !build_pass:verbose:message(Using Qt version $$[QT_VERSION].)
-    }
-
-# QT_MAJOR_VERSION = 4
 }
 
 RESOURCES += ../res/main/main.qrc

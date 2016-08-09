@@ -30,6 +30,7 @@
 
 #include "rs_entitycontainer.h"
 #include "rs_snapper.h"
+#include "lc_rect.h"
 
 #include <QDateTime>
 #include <QMap>
@@ -365,6 +366,13 @@ public:
 
 	virtual RS_EntityContainer* getOverlayContainer(RS2::OverlayGraphics position);
 
+    const LC_Rect& getViewRect() {
+        return view_rect;
+    }
+
+    bool isPanning() const;
+    void setPanning(bool state);
+
 protected:
 
     RS_EntityContainer* container{nullptr}; // Holds a pointer to all the enties
@@ -409,6 +417,8 @@ protected:
 		 */
 	bool deleteMode=false;
 
+    LC_Rect view_rect;
+
 private:
 
 	bool zoomFrozen=false;
@@ -440,6 +450,8 @@ private:
 	QMap<int, RS_EntityContainer *> overlayEntities;
 	/** if true, graphicView is under cleanup */
 	bool m_bIsCleanUp=false;
+
+    bool panning;
 
 signals:
     void relative_zero_changed(const RS_Vector&);

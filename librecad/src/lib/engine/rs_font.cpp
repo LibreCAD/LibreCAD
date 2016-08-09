@@ -39,10 +39,6 @@
 #include "rs_math.h"
 #include "rs_debug.h"
 
-#if QT_VERSION < 0x040500
-#include "emu_qt45.h"
-#endif
-
 /**
  * Constructor.
  *
@@ -79,11 +75,7 @@ bool RS_Font::loadFont() {
     if (!fileName.toLower().contains(".cxf") &&
             !fileName.toLower().contains(".lff")) {
         QStringList fonts = RS_SYSTEM->getNewFontList();
-#if QT_VERSION < 0x040500
-        emu_qt45_QList_append(fonts, RS_SYSTEM->getFontList());
-#else
         fonts.append(RS_SYSTEM->getFontList());
-#endif
 
         QFileInfo file;
         for (QStringList::Iterator it = fonts.begin();

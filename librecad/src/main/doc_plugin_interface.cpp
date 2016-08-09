@@ -54,10 +54,6 @@
 #include "rs_debug.h"
 // #include <QDebug>
 
-#if QT_VERSION < 0x040500
-#include "emu_qt45.h"
-#endif
-
 convLTW::convLTW(){
 //    QHash<int, QString> lType;
     lType.insert(RS2::LineByLayer, "BYLAYER");
@@ -1249,10 +1245,12 @@ bool Doc_plugin_interface::getPoint(QPointF *point, const QString& mesage,
             if (!gView->getEventHandler()->hasAction())
                 break;
         }
-        if (a->isCompleted() ){
-        a->getPoint(point);
-        status = true;}
-//RLZ: delete QC_ActionGetPoint. Investigate how to kill only this action
+        if (a->isCompleted() && !a->wasCanceled())
+        {
+            a->getPoint(point);
+            status = true;
+        }
+        //RLZ: delete QC_ActionGetPoint. Investigate how to kill only this action
         gView->killAllActions();
     }
     return status;
@@ -1362,11 +1360,7 @@ bool Doc_plugin_interface::getInt(int *num, const QString& mesage, const QString
     else
         tit = title;
 
-#if QT_VERSION < 0x040500
-    int data = emu_qt45_QInputDialog_getInt(main_window, tit, msg, 0, -2147483647, 2147483647, 1, &ok);
-#else
     int data = QInputDialog::getInt(main_window, tit, msg, 0, -2147483647, 2147483647, 1, &ok);
-#endif
 
     if (ok)
         *num = data;

@@ -122,9 +122,8 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
     codePage = "ANSI_1252";
     textStyle = "Standard";
     //reset library version
-    libVersionStr = "";
-    libVersion = 0;
-    libRelease = 0;
+    isLibDxfRw = false;
+    libDxfRwVersion = 0;
 
 #ifdef DWGSUPPORT
     if (type == RS2::FormatDWG) {
@@ -219,8 +218,9 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
         }
     }
     //pre dxfrw 0.5.13 plot flag are used to store construction layer
-    if (libVersionStr == "dxfrw" && libVersion == 0 && libRelease < 513)
+    if( isLibDxfRw && libDxfRwVersion < LIBDXFRW_VERSION( 0, 5, 13)) {
         layer->setConstruction(! data.plotF);
+    }
 
     if (layer->isConstruction())
         RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::addLayer: layer %s is construction layer", layer->getName().toStdString().c_str());
@@ -238,7 +238,7 @@ void RS_FilterDXFRW::addDimStyle(const DRW_Dimstyle& data){
     QString dimstyle = graphic->getVariableString("$DIMSTYLE", "standard");
 
     if (QString::compare(data.name.c_str(), dimstyle, Qt::CaseInsensitive) == 0) {
-        if (libVersionStr == "dxfrw" && libVersion==0 && libRelease < 62){
+        if( isLibDxfRw && libDxfRwVersion < LIBDXFRW_VERSION( 0, 6, 2)) {
             graphic->addVariable("$DIMDEC", graphic->getVariableInt("$DIMDEC",
                                             graphic->getVariableInt("$LUPREC", 4)), 70);
             graphic->addVariable("$DIMADEC", graphic->getVariableInt("$DIMADEC",
@@ -527,17 +527,17 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline& data) {
     RS_DEBUG->print("RS_FilterDXFRW::addLWPolyline");
     if (data.vertlist.empty())
         return;
-	RS_PolylineData d(RS_Vector{},
-					  RS_Vector{},
+    RS_PolylineData d(RS_Vector{},
+                      RS_Vector{},
                       data.flags&0x1);
     RS_Polyline *polyline = new RS_Polyline(currentContainer, d);
     setEntityAttributes(polyline, &data);
 
-	std::vector< std::pair<RS_Vector, double> > verList;
-	for (auto const& v: data.vertlist)
-		verList.emplace_back(std::make_pair(RS_Vector{v->x, v->y}, v->bulge));
+    std::vector< std::pair<RS_Vector, double> > verList;
+    for (auto const& v: data.vertlist)
+        verList.emplace_back(std::make_pair(RS_Vector{v->x, v->y}, v->bulge));
 
-	polyline->appendVertexs(verList);
+    polyline->appendVertexs(verList);
 
     currentContainer->addEntity(polyline);
 }
@@ -554,20 +554,20 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
     if ( data.flags&0x40)
         return; //the polyline is a poliface mesh, TODO convert
 
-	RS_PolylineData d(RS_Vector{},
-					  RS_Vector{},
+    RS_PolylineData d(RS_Vector{},
+                      RS_Vector{},
                       data.flags&0x1);
     RS_Polyline *polyline = new RS_Polyline(currentContainer, d);
     setEntityAttributes(polyline, &data);
 
-	std::vector< std::pair<RS_Vector, double> > verList;
+    std::vector< std::pair<RS_Vector, double> > verList;
 
-	for (auto const& v: data.vertlist)
-		verList.emplace_back(
-					std::make_pair(RS_Vector{v->basePoint.x, v->basePoint.y},
-								   v->bulge));
+    for (auto const& v: data.vertlist)
+        verList.emplace_back(
+                    std::make_pair(RS_Vector{v->basePoint.x, v->basePoint.y},
+                                   v->bulge));
 
-	polyline->appendVertexs(verList);
+    polyline->appendVertexs(verList);
 
     currentContainer->addEntity(polyline);
 }
@@ -1301,23 +1301,28 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
     version=acadver.toInt(&ok);
     if (!ok) { version = 1021;}
 
-    //detect if dxf lib are a old dxflib or libdxfrw<0.5.4 (used to correct mtext alignment)
+    //detect if dxf lib are a old dxflib or libdxfrw < 0.5.4 (used to correct mtext alignment)
     oldMText = false;
-    QStringList comm = QString::fromStdString(data->getComments()).split('\n',QString::SkipEmptyParts);
-    for (int i = 0; i < comm.size(); ++i) {
-        QStringList comstr = comm.at(i).split(' ',QString::SkipEmptyParts);
-        if (!comstr.isEmpty() && comstr.at(0) == "dxflib") {
-            libVersionStr = "dxflib";
-            oldMText = true;
-            break;
-        } else if (comstr.size()>1 && comstr.at(0) == "dxfrw"){
-            libVersionStr = "dxfrw";
-            QStringList libversionstr = comstr.at(1).split('.',QString::SkipEmptyParts);
-            if (libversionstr.size()<3) break;
-            libVersion = libversionstr.at(0).toInt();
-            libRelease = (libversionstr.at(1)+ libversionstr.at(2)).toInt();
-            if (libVersion==0 && libRelease < 54){
+    isLibDxfRw = false;
+    libDxfRwVersion = 0;
+    QStringList commentList = QString::fromStdString( data->getComments()).split('\n',QString::SkipEmptyParts);
+    for( auto commentLine: commentList) {
+        QStringList commentWords = commentLine.split(' ',QString::SkipEmptyParts);
+        if( 0 < commentWords.size()) {
+            if( "dxflib" == commentWords.at(0)) {
                 oldMText = true;
+                break;
+            } else if( "dxfrw" == commentWords.at(0)) {
+                QStringList libVersionList = commentWords.at(1).split('.',QString::SkipEmptyParts);
+                if( 2 < libVersionList.size()) {
+                    isLibDxfRw = true;
+                    libDxfRwVersion = LIBDXFRW_VERSION( libVersionList.at(0).toInt(),
+                                                        libVersionList.at(1).toInt(),
+                                                        libVersionList.at(2).toInt() );
+                    if( libDxfRwVersion < LIBDXFRW_VERSION( 0, 5, 4)) {
+                        oldMText = true;
+                    }
+                }
                 break;
             }
         }

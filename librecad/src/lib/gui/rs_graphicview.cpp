@@ -65,7 +65,8 @@ RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
 	,grid{new RS_Grid{this}}
 	,drawingMode(RS2::ModeFull)
 	,savedViews(16)
-	,previousViewTime(QDateTime::currentDateTime())
+    ,previousViewTime(QDateTime::currentDateTime())
+    ,panning(false)
 {
     RS_SETTINGS->beginGroup("Colors");
     setBackground(QColor(RS_SETTINGS->readEntry("/background", Colors::background)));
@@ -1108,17 +1109,17 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
 		// do not draw construction layer on print preview or print
 		if( ! e->isPrint()
 				||  e->isConstruction())
-			return;
+        return;
 	}
 
-	// test if the entity is in the viewport
-	/* temporary disabled so rs_overlaylien can be drawn
-	if (!e->isContainer() && !isPrinting() &&
-            (painter==nullptr || !painter->isPreviewMode()) &&
-			(toGuiX(e->getMax().x)<0 || toGuiX(e->getMin().x)>getWidth() ||
-			 toGuiY(e->getMin().y)<0 || toGuiY(e->getMax().y)>getHeight())) {
-		return;
-	} */
+    // test if the entity is in the viewport
+    if (!isPrinting() &&
+        e->rtti() != RS2::EntityGraphic &&
+        e->rtti() != RS2::EntityLine &&
+       (toGuiX(e->getMax().x)<0 || toGuiX(e->getMin().x)>getWidth() ||
+        toGuiY(e->getMin().y)<0 || toGuiY(e->getMax().y)>getHeight())) {
+        return;
+    }
 
 	// set pen (color):
 	setPenForEntity(painter, e );
@@ -1128,12 +1129,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
         switch(e->rtti()){
         case RS2::EntityMText:
         case RS2::EntityText:
-            if (toGuiDX(((RS_MText*)e)->getHeight())<4 || e->countDeep()>100) {
-                // large or tiny texts as rectangles:
-                painter->drawRect(toGui(e->getMin()), toGui(e->getMax()));
-            } else {
-                drawEntityPlain(painter, e, patternOffset);
-            }
+            painter->drawRect(toGui(e->getMin()), toGui(e->getMax()));
             break;
         case RS2::EntityImage:
             // all images as rectangles:
@@ -1205,7 +1201,6 @@ void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity* e) {
 	}
 	double patternOffset(0.);
 	e->draw(painter, this, patternOffset);
-
 }
 /**
  * Deletes an entity with the background color.
@@ -1554,14 +1549,18 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
 
 }
 
-void RS_GraphicView::drawOverlay(RS_Painter *painter) {
-	QList<int> const& keys=overlayEntities.keys();
-	for (int i = 0; i < keys.size(); ++i) {
-		if (overlayEntities[i]) {
-			setPenForEntity(painter, overlayEntities[i] );
-			drawEntityPlain(painter, overlayEntities[i]);
-		}
-	}
+void RS_GraphicView::drawOverlay(RS_Painter *painter)
+{
+    double patternOffset(0.);
+
+    foreach (auto ec, overlayEntities)
+    {
+        foreach (auto e, ec->getEntityList())
+        {
+            setPenForEntity(painter, e);
+            e->draw(painter, this, patternOffset);
+        }
+    }
 }
 
 RS2::SnapRestriction RS_GraphicView::getSnapRestriction() const
@@ -1846,4 +1845,12 @@ void RS_GraphicView::setDraftMode(bool dm) {
 bool RS_GraphicView::isCleanUp(void) const
 {
 	return m_bIsCleanUp;
+}
+
+bool RS_GraphicView::isPanning() const {
+    return panning;
+}
+
+void RS_GraphicView::setPanning(bool state) {
+    panning = state;
 }

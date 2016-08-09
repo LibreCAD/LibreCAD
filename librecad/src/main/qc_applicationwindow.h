@@ -57,8 +57,7 @@ class RS_GraphicView;
 class RS_Document;
 class TwoStackedLabels;
 class LC_ActionGroupManager;
-
-struct LC_Options;
+class LC_PenWizard;
 
 struct DockAreas
 {
@@ -92,8 +91,6 @@ public:
     void setRedoEnable(bool enable);
     void setUndoEnable(bool enable);
     bool loadStyleSheet(QString path);
-
-    std::shared_ptr<LC_Options> options;
 
     QMap<QString, QAction*> a_map;
     LC_ActionGroupManager* ag_manager;
@@ -332,6 +329,8 @@ private:
     QG_LibraryWidget* libraryWidget;
     /** Command line */
     QG_CommandWidget* commandWidget;
+
+    LC_PenWizard* pen_wiz;
 
     // --- Statusbar ---
     /** Coordinate widget */

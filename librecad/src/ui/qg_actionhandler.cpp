@@ -1077,31 +1077,32 @@ bool QG_ActionHandler::commandLineActions(RS2::ActionType type){
  *         false: the command is not known and was probably intended for a
  *            running action.
  */
-bool QG_ActionHandler::command(const QString& cmd) {
+bool QG_ActionHandler::command(const QString& cmd)
+{
+    if (!view) return false;
+
+    if (cmd.isEmpty())
+    {
+        slotSnapFree();
+        return true;
+    }
+
     RS_DEBUG->print("QG_ActionHandler::command: %s", cmd.toLatin1().data());
     QString c = cmd.toLower();
 
-    if (c=="\n" || c==tr("escape", "escape, go back from action steps")) {
-		if (view) {
-            if(c=="\n" ){
-                view->enter();
-                RS_DEBUG->print("QG_ActionHandler::command: enter");
-            }else{
-                view->back();
-                RS_DEBUG->print("QG_ActionHandler::command: back");
-            }
-        }
+    if (c==tr("escape", "escape, go back from action steps"))
+    {
+        view->back();
+        RS_DEBUG->print("QG_ActionHandler::command: back");
         return true;
     }
 
     // pass command on to running action:
     RS_CommandEvent e(cmd);
 
-	if (view) {
-        RS_DEBUG->print("QG_ActionHandler::command: trigger command event in "
-                        " graphic view");
-        view->commandEvent(&e);
-    }
+    RS_DEBUG->print("QG_ActionHandler::command: trigger command event in "
+                    " graphic view");
+    view->commandEvent(&e);
 
     // if the current action can't deal with the command,
     //   it might be intended to launch a new command

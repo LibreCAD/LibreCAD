@@ -544,13 +544,15 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("DimDiametric");
     a_map["DimDiametric"] = action;
 
-    action = new QAction(QIcon(":/icons/dim_angular.svg"), tr("&Angular"), agm->dimension);
+    action = new QAction(tr("&Angular"), agm->dimension);
+    action->setIcon(QIcon(":/icons/dim_angular.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimAngular()));
     action->setObjectName("DimAngular");
     a_map["DimAngular"] = action;
 
-    action = new QAction(QIcon(":/icons/dim_leader.svg"), tr("&Leader"), agm->dimension);
+    action = new QAction(tr("&Leader"), agm->dimension);
+    action->setIcon(QIcon(":/icons/dim_leader.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimLeader()));
     action->setObjectName("DimLeader");
@@ -566,7 +568,8 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setData("modifyattr, attr, ma");
     a_map["ModifyAttributes"] = action;
 
-    action = new QAction(QIcon(":/icons/delete.svg"), tr("&Delete"), agm->modify);
+    action = new QAction(tr("&Delete"), agm->modify);
+    action->setIcon(QIcon(":/icons/delete.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyDelete()));
     action->setObjectName("ModifyDelete");
@@ -578,7 +581,8 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("ModifyDeleteFree");
     a_map["ModifyDeleteFree"] = action;
 
-    action = new QAction(QIcon(":/icons/move_copy.svg"), tr("&Move / Copy"), agm->modify);
+    action = new QAction(tr("&Move / Copy"), agm->modify);
+    action->setIcon(QIcon(":/icons/move_copy.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyMove()));
     action->setObjectName("ModifyMove");
@@ -593,34 +597,39 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setData("revert, rev");
     a_map["ModifyRevertDirection"] = action;
 
-    action = new QAction(QIcon(":/icons/rotate.svg"), tr("&Rotate"), agm->modify);
+    action = new QAction(tr("&Rotate"), agm->modify);
+    action->setIcon(QIcon(":/icons/rotate.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyRotate()));
     action->setObjectName("ModifyRotate");
     action->setData("rotate, ro");
     a_map["ModifyRotate"] = action;
 
-    action = new QAction(QIcon(":/icons/scale.svg"), tr("&Scale"), agm->modify);
+    action = new QAction(tr("&Scale"), agm->modify);
+    action->setIcon(QIcon(":/icons/scale.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyScale()));
     action->setObjectName("ModifyScale");
     action->setData("scale, sz");
     a_map["ModifyScale"] = action;
 
-    action = new QAction(QIcon(":/icons/mirror.svg"), tr("&Mirror"), agm->modify);
+    action = new QAction(tr("&Mirror"), agm->modify);
+    action->setIcon(QIcon(":/icons/mirror.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyMirror()));
     action->setObjectName("ModifyMirror");
     action->setData("mirror, mi");
     a_map["ModifyMirror"] = action;
 
-    action = new QAction(QIcon(":/icons/move_rotate.svg"), tr("Mo&ve and Rotate"), agm->modify);
+    action = new QAction(tr("Mo&ve and Rotate"), agm->modify);
+    action->setIcon(QIcon(":/icons/move_rotate.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyMoveRotate()));
     action->setObjectName("ModifyMoveRotate");
     a_map["ModifyMoveRotate"] = action;
 
-    action = new QAction(QIcon(":/icons/rotate2.svg"), tr("Rotate T&wo"), agm->modify);
+    action = new QAction(tr("Rotate T&wo"), agm->modify);
+    action->setIcon(QIcon(":/icons/rotate2.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyRotate2()));
     action->setObjectName("ModifyRotate2");
@@ -658,7 +667,8 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setData("lengthen, le");
     a_map["ModifyTrimAmount"] = action;
 
-    action = new QAction(QIcon(":/icons/offset.svg"), tr("O&ffset"),agm->modify);
+    action = new QAction(tr("O&ffset"),agm->modify);
+    action->setIcon(QIcon(":/icons/offset.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyOffset()));
     action->setObjectName("ModifyOffset");
@@ -673,7 +683,8 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setData("divide, cut, div");
     a_map["ModifyCut"] = action;
 
-    action = new QAction(QIcon(":/icons/stretch.svg"), tr("&Stretch"), agm->modify);
+    action = new QAction(tr("&Stretch"), agm->modify);
+    action->setIcon(QIcon(":/icons/stretch.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyStretch()));
     action->setObjectName("ModifyStretch");
@@ -688,7 +699,8 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setData("bevel, bev, ch");
     a_map["ModifyBevel"] = action;
 
-    action = new QAction(QIcon(":/icons/fillet.svg"), tr("&Fillet"), agm->modify);
+    action = new QAction(tr("&Fillet"), agm->modify);
+    action->setIcon(QIcon(":/icons/fillet.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyRound()));
     action->setObjectName("ModifyRound");
@@ -798,43 +810,43 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 
     // <[~ Layer ~]>
 
-    action = new QAction(QIcon(":/ui/visibleblock.png"),
-                         tr("&Show all"), agm->layer);
+    action = new QAction(tr("&Show all"), agm->layer);
+    action->setIcon(QIcon(":/ui/visibleblock.png"));
     connect(action, SIGNAL(triggered()),
             action_handler, SLOT(slotLayersDefreezeAll()));
     action->setObjectName("LayersDefreezeAll");
     a_map["LayersDefreezeAll"] = action;
 
-    action = new QAction(QIcon(":/ui/hiddenblock.png"),
-                         tr("&Hide all"), agm->layer);
+    action = new QAction(tr("&Hide all"), agm->layer);
+    action->setIcon(QIcon(":/ui/hiddenblock.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersFreezeAll()));
     action->setObjectName("LayersFreezeAll");
     a_map["LayersFreezeAll"] = action;
 
-    action = new QAction(QIcon(":/icons/add.svg"),
-                         tr("&Add Layer"), agm->layer);
+    action = new QAction(tr("&Add Layer"), agm->layer);
+    action->setIcon(QIcon(":/icons/add.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersAdd()));
     action->setObjectName("LayersAdd");
     a_map["LayersAdd"] = action;
 
-    action = new QAction(QIcon(":/icons/remove.svg"),
-                         tr("&Remove Layer"), agm->layer);
+    action = new QAction(tr("&Remove Layer"), agm->layer);
+    action->setIcon(QIcon(":/icons/remove.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersRemove()));
     action->setObjectName("LayersRemove");
     a_map["LayersRemove"] = action;
 
-    action = new QAction(QIcon(":/icons/attributes.svg"),
-                         tr("&Edit Layer"), agm->layer);
+    action = new QAction(tr("&Edit Layer"), agm->layer);
+    action->setIcon(QIcon(":/icons/attributes.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersEdit()));
     action->setObjectName("LayersEdit");
     a_map["LayersEdit"] = action;
 
-    action = new QAction(QIcon(":/icons/locked.svg"),
-                         tr("Toggle Layer Loc&k"), agm->layer);
+    action = new QAction(tr("Toggle Layer Loc&k"), agm->layer);
+    action->setIcon(QIcon(":/icons/locked.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersToggleLock()));
     action->setObjectName("LayersToggleLock");
@@ -877,9 +889,8 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("BlocksFreezeAll");
     a_map["BlocksFreezeAll"] = action;
 
-    action = new QAction(QIcon(":/icons/add.svg"),
-                         tr("&Add Block"), agm->block);
-
+    action = new QAction(tr("&Add Block"), agm->block);
+    action->setIcon(QIcon(":/icons/add.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksAdd()));
     action->setObjectName("BlocksAdd");
@@ -899,7 +910,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("BlocksAttributes");
     a_map["BlocksAttributes"] = action;
 
-    action = new QAction( tr("&Edit Block"), agm->block);
+    action = new QAction(tr("&Edit Block"), agm->block);
     action->setIcon(QIcon(":/icons/properties.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksEdit()));
@@ -1046,16 +1057,10 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     // <[~ View ~]>
 
     action = new QAction(tr("&Fullscreen"), agm->view);
-    #if QT_VERSION >= 0x050000
-    action->setShortcut(QKeySequence::FullScreen);
+    #if defined(Q_OS_LINUX)
+        action->setShortcut(QKeySequence("F11"));
     #else
-        #if defined(Q_OS_MAC)
-        action->setShortcut(tr("Ctrl+Meta+F"));
-        #elif defined(Q_OS_WIN)
-        action->setShortcut(tr("F11"));
-        #else
-        action->setShortcut(tr("Ctrl+F11"));
-        #endif
+        action->setShortcut(QKeySequence::FullScreen);
     #endif
     action->setCheckable(true);
     connect(action, SIGNAL(toggled(bool)), main_window, SLOT(toggleFullscreen(bool)));
@@ -1075,6 +1080,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action = new QAction(tr("&Draft"), agm->view);
     action->setIcon(QIcon(":/icons/draft.svg"));
     action->setCheckable(true);
+    action->setShortcut(QKeySequence(tr("Ctrl+D", "Toggle Draft Mode")));
     connect(action, SIGNAL(toggled(bool)), main_window, SLOT(slotViewDraft(bool)));
     connect(main_window, SIGNAL(draftChanged(bool)), action, SLOT(setChecked(bool)));
     action->setObjectName("ViewDraft");

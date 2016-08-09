@@ -45,22 +45,24 @@ public:
                         RS_GraphicView& graphicView);
 	~QC_ActionGetPoint();
 
-    virtual void trigger();
+    virtual void trigger() override;
 	
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+    virtual void mouseMoveEvent(QMouseEvent* e) override;
+    virtual void mouseReleaseEvent(QMouseEvent* e) override;
 	
-	virtual void coordinateEvent(RS_CoordinateEvent* e);
+    virtual void coordinateEvent(RS_CoordinateEvent* e ) override;
 
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+    virtual void updateMouseButtonHints() override;
+    virtual void updateMouseCursor() override;
 
     void getPoint(QPointF *point);
     void setBasepoint(QPointF* basepoint);
     void setMesage(QString msg);
     bool isCompleted(){return completed;}
+    bool wasCanceled(){return canceled;}
 
 private:
+    bool canceled;
 	bool completed;
 	bool setTargetPoint;
 	struct Points;

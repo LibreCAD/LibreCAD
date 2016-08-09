@@ -336,9 +336,8 @@ void RS_ActionPolylineSegment::updateMouseButtonHints() {
 }
 
 
-
 void RS_ActionPolylineSegment::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

@@ -35,15 +35,7 @@
 #include "rs.h"
 #include "rs_debug.h"
 
-#if QT_VERSION < 0x040400
-#include "emu_qt44.h"
-#endif
-
-#if QT_VERSION >= 0x050000
 #include <QStandardPaths>
-#else
-#include <QDesktopServices>
-#endif
 
 RS_System* RS_System::uniqueInstance = NULL;
 
@@ -498,11 +490,7 @@ bool RS_System::createPaths(const QString& directory) {
  */
 QString RS_System::getAppDataDir() {
     QString appData = 
-#if QT_VERSION >= 0x050000
         QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-#else
-        QDesktopServices::storageLocation(QDesktopServices::DataLocation) ;
-#endif 
     QDir dir(appData);
     if (!dir.exists()) {
         if (!dir.mkpath(appData))
@@ -567,31 +555,16 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 
     QString subDirectory=QDir::fromNativeSeparators(_subDirectory);
 
-#if QT_VERSION < 0x040400 && defined(_MSC_VER)
-        dirList.append(emu_qt44_storageLocationDocuments() + "/" + 
-                       appDirName + "/" + 
-                       subDirectory);
-#else // QT_VERSION > 0x040400 or _MSC_VER not defined (!) 
-
 #ifdef Q_OS_MAC
-#if QT_VERSION >= 0x050000
          dirList.append(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
-#else
-        dirList.append(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
-#endif
 #endif // Q_OS_MAC
 		
 #ifdef Q_OS_WIN32
-#if QT_VERSION >= 0x050000
         dirList.append(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
-#else
-        dirList.append(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
-#endif
 #endif // Q_OS_WIN32
 		
     // Unix home directory, it's old style but some people might have stuff there.
     dirList.append(getHomeDir() + "/." + appDirName + "/" + subDirectory);
-#endif // QT_VERSION < 0x040400 && defined(_MSC_VER)
 
         //local (application) directory has priority over other dirs:
         if (!appDir.isEmpty() && appDir!="/" && appDir!=getHomeDir()) {
@@ -692,21 +665,17 @@ QString RS_System::languageToSymbol(const QString& lang) {
 QString RS_System::symbolToLanguage(const QString& symb) {
     RS_Locale loc(symb);
     QString ret;
-#if QT_VERSION >= 0x040800
     if( symb.contains(QRegExp("^en"))){
-#endif
         ret=RS_Locale::languageToString(loc.language());
         if( symb.contains('_') ) {
             ret +=" ("+RS_Locale::countryToString(loc.country())+')';
         }
-#if QT_VERSION >= 0x040800
     }else{
         ret=RS_Locale::languageToString(loc.language())+' '+loc.nativeLanguageName();
         if( symb.contains('_') ) {
             ret +=" ("+RS_Locale::countryToString(loc.country())+' '+ loc.nativeCountryName()+')';
         }
     }
-#endif
 
 //    std::cout<<__FILE__<<" : "<<__func__<<" :  line "<<__LINE__<<" :  symb="<<qPrintable(symb)<<" name="<<qPrintable(ret)<<std::endl;
 

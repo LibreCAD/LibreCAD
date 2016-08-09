@@ -175,3 +175,16 @@ void RS_Preview::addStretchablesFrom(RS_EntityContainer& container,
         }
     }
 }
+
+void RS_Preview::draw(RS_Painter* painter, RS_GraphicView* view,
+                              double& patternOffset) {
+
+    if (!(painter && view)) {
+        return;
+    }
+
+    foreach (auto e, entities)
+    {
+        e->draw(painter, view, patternOffset);
+    }
+}

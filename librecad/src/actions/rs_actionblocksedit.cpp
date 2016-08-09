@@ -38,17 +38,26 @@ RS_ActionBlocksEdit::RS_ActionBlocksEdit(RS_EntityContainer& container,
         :RS_ActionInterface("Edit Block", container, graphicView) {}
 
 void RS_ActionBlocksEdit::trigger() {
-    RS_DEBUG->print("edit block");
-	if (graphic) {
-		if(graphic->getBlockList()){
-			//                std::cout<<__func__<<" : "<<__LINE__<<" : graphic->getBlockList()->count()="<<graphic->getBlockList()->count()<<std::endl;
-			RS_DIALOGFACTORY->requestEditBlockWindow(graphic->getBlockList());
-		}
-	} else {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-        	"RS_ActionBlocksEdit::trigger(): graphic is NULL");
+
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_ActionBlocksEdit::trigger(): edit block");
+
+    if (!graphic) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_ActionBlocksEdit::trigger(): nullptr graphic");
+        return;
     }
+
+    RS_BlockList *bl = graphic->getBlockList();
+
+    if (!bl) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_ActionBlocksEdit::trigger(): nullptr block list in graphic");
+        return;
+    }
+
+//  std::cout<<__func__<<" : "<<__LINE__<<" : graphic->getBlockList()->count()="<<graphic->getBlockList()->count()<<std::endl;
+    RS_DIALOGFACTORY->requestEditBlockWindow(bl);
+
     finish(false);
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_ActionBlocksEdit::trigger(): OK");
 }
 
 

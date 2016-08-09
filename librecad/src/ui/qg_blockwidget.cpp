@@ -65,16 +65,10 @@ void QG_BlockModel::setBlockList(RS_BlockList* bl) {
 	/* since 4.6 the recomended way is to use begin/endResetModel()
 	 * TNick <nicu.tofan@gmail.com>
 	 */
-#if QT_VERSION >= 0x040600
     beginResetModel();
-#endif
     listBlock.clear();
     if (bl == NULL){
-#if QT_VERSION >= 0x040600
         endResetModel();
-#else
-        reset();
-#endif
         return;
     }
     for (int i=0; i<bl->count(); ++i) {
@@ -83,11 +77,7 @@ void QG_BlockModel::setBlockList(RS_BlockList* bl) {
     }
     qSort ( listBlock.begin(), listBlock.end(), blockLessThan );
 //called to force redraw
-#if QT_VERSION >= 0x040600
     endResetModel();
-#else
-    reset();
-#endif
 }
 
 
@@ -324,6 +314,9 @@ void QG_BlockWidget::slotActivated(QModelIndex blockIdx) {
  * Shows a context menu for the block widget. Launched with a right click.
  */
 void QG_BlockWidget::contextMenuEvent(QContextMenuEvent *e) {
+
+    // select item (block) in Block List widget first because left-mouse-click event are not to be triggered
+    slotActivated(blockView->currentIndex());
 
     QMenu* contextMenu = new QMenu(this);
     QLabel* caption = new QLabel(tr("Block Menu"), this);

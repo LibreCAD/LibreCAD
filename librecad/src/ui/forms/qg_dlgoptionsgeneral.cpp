@@ -50,7 +50,8 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent, bool modal, Qt::Wind
     setupUi(this);
     tabWidget->setCurrentIndex(current_tab);
     init();
-
+    connect(variablefile_button, &QToolButton::clicked,
+            this, &QG_DlgOptionsGeneral::setVariableFile);
 }
 
 /*
@@ -157,6 +158,7 @@ void QG_DlgOptionsGeneral::init()
     lePathFonts->setText(RS_SETTINGS->readEntry("/Fonts", ""));
     lePathLibrary->setText(RS_SETTINGS->readEntry("/Library", "").trimmed());
     leTemplate->setText(RS_SETTINGS->readEntry("/Template", "").trimmed());
+    variablefile_field->setText(RS_SETTINGS->readEntry("/VariableFile", "").trimmed());
     RS_SETTINGS->endGroup();
 
     // units:
@@ -257,6 +259,7 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/Fonts", lePathFonts->text());
         RS_SETTINGS->writeEntry("/Library", lePathLibrary->text());
         RS_SETTINGS->writeEntry("/Template", leTemplate->text());
+        RS_SETTINGS->writeEntry("/VariableFile", variablefile_field->text());
         RS_SETTINGS->endGroup();
 
         RS_SETTINGS->beginGroup("/Defaults");
@@ -374,4 +377,13 @@ void QG_DlgOptionsGeneral::on_pb_clear_geometry_clicked()
 {
     RS_SETTINGS->clear_geometry();
     QMessageBox::information(this, "info", "You must restart LibreCAD to see the changes.");
+}
+
+void QG_DlgOptionsGeneral::setVariableFile()
+{
+    QString path = QFileDialog::getOpenFileName(this);
+    if (!path.isEmpty())
+    {
+        variablefile_field->setText(QDir::toNativeSeparators(path));
+    }
 }

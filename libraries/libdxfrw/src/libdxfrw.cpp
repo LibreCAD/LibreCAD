@@ -2521,7 +2521,7 @@ bool dxfRW::processVertex(DRW_Polyline *pl) {
 			if (nextentity == "SEQEND")
 				return true;  //found SEQEND no more vertex, terminate
 			else if (nextentity == "VERTEX")
-				v->reset(); //another vertex
+                v.reset(new DRW_Vertex); //another vertex
 
         default:
 			v->parseCode(code, reader);

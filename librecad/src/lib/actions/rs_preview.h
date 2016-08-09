@@ -41,15 +41,17 @@ class RS_Preview : public RS_EntityContainer {
 public:
     RS_Preview(RS_EntityContainer* parent=nullptr);
 	~RS_Preview() = default;
-    virtual RS2::EntityType rtti() const {
+    virtual RS2::EntityType rtti() const override{
         return RS2::EntityPreview;
     }
-    virtual void addEntity(RS_Entity* entity);
+    virtual void addEntity(RS_Entity* entity) override;
     void addCloneOf(RS_Entity* entity);
     virtual void addSelectionFrom(RS_EntityContainer& container);
     virtual void addAllFrom(RS_EntityContainer& container);
     virtual void addStretchablesFrom(RS_EntityContainer& container,
-	       const RS_Vector& v1, const RS_Vector& v2);
+           const RS_Vector& v1, const RS_Vector& v2);
+
+    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
 
 private:
 	int maxEntities;

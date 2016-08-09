@@ -110,7 +110,6 @@ void RS_PreviewActionInterface::deletePreview() {
         }
 	if(!graphicView->isCleanUp()){
 		graphicView->getOverlayContainer(RS2::ActionPreviewEntity)->clear();
-		graphicView->redraw(RS2::RedrawOverlay);
 	}
 }
 

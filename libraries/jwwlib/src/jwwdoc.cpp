@@ -1759,7 +1759,7 @@ CDataList JWWBlockList::GetBlockList(unsigned int i)
     for(unsigned int k=0; k < FBlockList.size(); k++)
         if(i == FBlockList[k]->m_n_Number)
             return *(PCDataList)FBlockList[k];
-	return {};
+    return {};
 }
 
 int JWWBlockList::getBlockListCount()
@@ -1771,42 +1771,42 @@ CDataEnko JWWBlockList::GetCDataEnko(int i, int j)
 {
     if( GetCDataType(i,j) == Enko )
         return *(PCDataEnko)GetData(i,j);
-	return {};
+    return {};
 }
 
 CDataMoji JWWBlockList::GetCDataMoji(int i, int j)
 {
     if( GetCDataType(i,j) == Moji )
         return *(PCDataMoji)GetData(i,j);
-	return {};
+    return {};
 }
 
 CDataSen JWWBlockList::GetCDataSen(int i, int j)
 {
     if( GetCDataType(i,j) == Sen )
         return *(PCDataSen)GetData(i,j);
-	return {};
+    return {};
 }
 
 CDataSolid JWWBlockList::GetCDataSolid(int i, int j)
 {
     if( GetCDataType(i,j) == Solid )
         return *(PCDataSolid)GetData(i,j);
-	return {};
+    return {};
 }
 
 CDataSunpou JWWBlockList::GetCDataSunpou(int i, int j)
 {
     if( GetCDataType(i,j) == Sunpou )
         return *(PCDataSunpou)GetData(i,j);
-	return {};
+    return {};
 }
 
 CDataTen JWWBlockList::GetCDataTen(int i, int j)
 {
     if( GetCDataType(i,j) == Ten )
         return *(PCDataTen)GetData(i,j);
-	return {};
+    return {};
 }
 
 CDataType JWWBlockList::GetCDataType(int i, int j)
@@ -1933,5 +1933,5 @@ CDataBlock JWWBlockList::GetCDataBlock(int i, int j)
 {
     if( GetCDataType(i,j) == Block )
         return *PCDataBlock(GetData(i,j));
-	return {};
+    return {};
 }

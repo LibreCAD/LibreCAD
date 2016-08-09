@@ -39,7 +39,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
@@ -754,6 +754,13 @@
        <string>&amp;Paths</string>
       </attribute>
       <layout class="QGridLayout">
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Variable File:</string>
+         </property>
+        </widget>
+       </item>
        <item row="2" column="0">
         <widget class="QLabel" name="textLabel4">
          <property name="text">
@@ -764,7 +771,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="0" column="2">
         <widget class="QLineEdit" name="lePathTranslations"/>
        </item>
        <item row="3" column="0">
@@ -777,7 +784,7 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item row="1" column="2">
         <widget class="QLineEdit" name="lePathHatch"/>
        </item>
        <item row="4" column="0">
@@ -790,16 +797,16 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="lePathFonts"/>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="lePathLibrary"/>
-       </item>
-       <item row="4" column="1">
+       <item row="4" column="2">
         <widget class="QLineEdit" name="leTemplate"/>
        </item>
-       <item row="4" column="2">
+       <item row="3" column="2">
+        <widget class="QLineEdit" name="lePathLibrary"/>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLineEdit" name="lePathFonts"/>
+       </item>
+       <item row="4" column="3">
         <widget class="QToolButton" name="btTemplate">
          <property name="icon">
           <iconset resource="../../../res/extui/extui.qrc">
@@ -807,23 +814,7 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
-        <spacer name="spacer5">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Expanding</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>31</width>
-           <height>71</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="5" column="1">
+       <item row="6" column="2">
         <spacer name="spacer5_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -856,6 +847,33 @@
          </property>
          <property name="wordWrap">
           <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <spacer name="spacer5">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>31</width>
+           <height>71</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="5" column="2">
+        <widget class="QLineEdit" name="variablefile_field"/>
+       </item>
+       <item row="5" column="3">
+        <widget class="QToolButton" name="variablefile_button">
+         <property name="icon">
+          <iconset resource="../../../res/extui/extui.qrc">
+           <normaloff>:/extui/fileopen.png</normaloff>:/extui/fileopen.png</iconset>
          </property>
         </widget>
        </item>
@@ -1118,8 +1136,8 @@
   <tabstop>lePathHatch</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../res/extui/extui.qrc"/>
   <include location="../../../res/ui/ui.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>

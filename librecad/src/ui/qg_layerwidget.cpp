@@ -52,13 +52,18 @@ QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
 }
 
 
+
 int QG_LayerModel::rowCount ( const QModelIndex & /*parent*/ ) const {
     return listLayer.size();
 }
 
+
+
 QModelIndex QG_LayerModel::parent ( const QModelIndex & /*index*/ ) const {
     return QModelIndex();
 }
+
+
 
 QModelIndex QG_LayerModel::index ( int row, int column, const QModelIndex & /*parent*/ ) const {
     if ( row >= listLayer.size() || row < 0)
@@ -66,20 +71,16 @@ QModelIndex QG_LayerModel::index ( int row, int column, const QModelIndex & /*pa
     return createIndex ( row, column);
 }
 
+
+
 void QG_LayerModel::setLayerList(RS_LayerList* ll) {
 	/* since 4.6 the recomended way is to use begin/endResetModel()
 	 * TNick <nicu.tofan@gmail.com>
 	 */
-#if QT_VERSION >= 0x040600
     beginResetModel();
-#endif
     listLayer.clear();
     if (ll == NULL) {
-#if QT_VERSION >= 0x040600
         endResetModel();
-#else
-        reset();
-#endif
         return;
     }
     for (unsigned i=0; i < ll->count(); ++i) {
@@ -89,33 +90,35 @@ void QG_LayerModel::setLayerList(RS_LayerList* ll) {
         return s1->getName() < s2->getName();
     } );
 //called to force redraw
-#if QT_VERSION >= 0x040600
     endResetModel();
-#else
-    reset();
-#endif
 }
 
 
-RS_Layer *QG_LayerModel::getLayer( int row ){
+
+RS_Layer *QG_LayerModel::getLayer( int row ) {
     if ( row >= listLayer.size() || row < 0)
         return NULL;
     return listLayer.at(row);
 }
 
-QModelIndex QG_LayerModel::getIndex (RS_Layer * lay){
+
+
+QModelIndex QG_LayerModel::getIndex (RS_Layer * lay) {
     int row = listLayer.indexOf(lay);
     if (row<0)
         return QModelIndex();
     return createIndex ( row, NAME);
 }
 
-QPixmap createColorSampleForLayer(RS_Layer* layer)
-{
+
+
+QPixmap createColorSampleForLayer(RS_Layer* layer) {
     QPixmap pixmap(QSize(16,16));
     pixmap.fill(layer->getPen().getColor().toQColor());
     return pixmap;
 }
+
+
 
 QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
     if (!index.isValid() || index.row() >= listLayer.size())
@@ -160,6 +163,8 @@ QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
 //Other roles:
     return QVariant();
 }
+
+
 
 /**
  * Constructor.
@@ -255,6 +260,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
 }
 
 
+
 /**
  * Sets the layerlist this layer widget should show.
  *
@@ -271,6 +277,8 @@ void QG_LayerWidget::setLayerList(RS_LayerList* layerList, bool showByBlock) {
     update();
 }
 
+
+
 /**
  * @brief getActiveName
  * @return the name of the active layer
@@ -285,38 +293,45 @@ QString QG_LayerWidget::getActiveName() const
 }
 
 
+
 /**
  * Updates the layer box from the layers in the graphic.
  */
 void QG_LayerWidget::update() {
+
     RS_DEBUG->print("QG_LayerWidget::update() begin");
 
-    int yPos = layerView->verticalScrollBar()->value();
-
-    RS_Layer* activeLayer;
-    if (layerList) {
-        activeLayer = layerList->getActive();
-    } else {
-        activeLayer = NULL;
-    }
-
-    layerModel->setLayerList(layerList);
-
-    if (layerList==NULL) {
-        RS_DEBUG->print("QG_LayerWidget::update() abort");
+    if (!layerView) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::update: nullptr layerView");
         return;
     }
-
-    RS_DEBUG->print("QG_LayerWidget::update() reactivating current layer");
-
-    RS_Layer* l = lastLayer;
-    activateLayer(activeLayer);
-    lastLayer = l;
+    int yPos = layerView->verticalScrollBar()->value();
     layerView->resizeRowsToContents();
     layerView->verticalScrollBar()->setValue(yPos);
 
-    RS_DEBUG->print("QG_LayerWidget::update() end");
+    if (!layerList) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::update: nullptr layerList");
+        return;
+    }
+    layerModel->setLayerList(layerList);
+
+    RS_DEBUG->print("QG_LayerWidget::update: reactivating current layer");
+
+    RS_Layer* activeLayer = layerList->getActive();
+    if (!activeLayer) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::update: nullptr activeLayer");
+        return;
+    }
+    activateLayer(activeLayer);
+
+    if (!lastLayer) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "QG_LayerWidget::update: nullptr lastLayer");
+        lastLayer = activeLayer;
+    }
+
+    RS_DEBUG->print("QG_LayerWidget::update(): OK");
 }
+
 
 
 /**
@@ -326,23 +341,40 @@ void QG_LayerWidget::update() {
 void QG_LayerWidget::activateLayer(RS_Layer* layer, bool updateScroll) {
     RS_DEBUG->print("QG_LayerWidget::activateLayer() begin");
 
-    if (layer==NULL || layerList==NULL) {
+    if (!layer || !layerList) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::activateLayer: nullptr layer or layerList");
         return;
     }
-    int yPos = layerView->verticalScrollBar()->value();
 
+//    if (layer->getName() == layerList->getActive()->getName()) {
+//        return;
+//    }
     layerList->activate(layer);
-    QModelIndex idx = layerModel->getIndex (layer);
 
-    layerView->setCurrentIndex ( idx );
-	if (!updateScroll)
+    if (!layerModel) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::activateLayer: nullptr layerModel");
+        return;
+    }
+    QModelIndex idx = layerModel->getIndex(layer);
+
+    if (!idx.model() || !layerView) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::activateLayer: invalid layer or nullptr layerView");
+        return;
+    }
+    layerView->setCurrentIndex(idx);
+
+    if (!updateScroll) {
+        int yPos = layerView->verticalScrollBar()->value();
         layerView->verticalScrollBar()->setValue(yPos);
+    }
 
     //update active layer name in mainwindow status bar
     QC_ApplicationWindow::getAppWindow()->slotUpdateActiveLayer();
 
     RS_DEBUG->print("QG_LayerWidget::activateLayer() end");
 }
+
+
 
 /**
  * Called when the user activates (highlights) a layer.
@@ -379,6 +411,8 @@ void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerNa
     }
 }
 
+
+
 /**
  * Called when reg-expresion matchLayerName->text changed
  */
@@ -389,11 +423,7 @@ void QG_LayerWidget::slotUpdateLayerList() {
 
     n=matchLayerName->text();
     rx.setPattern(n);
-#if QT_VERSION < 0x040600
-    rx.setPatternSyntax(QRegExp::Wildcard);
-#else
     rx.setPatternSyntax(QRegExp::WildcardUnix);
-#endif
 
     for (unsigned int i=0; i<layerList->count() ; i++) {
         s=layerModel->getLayer(i)->getName();
@@ -460,5 +490,15 @@ void QG_LayerWidget::keyPressEvent(QKeyEvent* e) {
         QWidget::keyPressEvent(e);
         break;
     }
+}
+
+
+void QG_LayerWidget::activateLayer(int row)
+{
+    auto layer = layerModel->getLayer(row);
+    if (layer)
+        layerList->activate(layer, true);
+    else
+        qWarning("activateLayer: row %d doesn't exist", row);
 }
 
