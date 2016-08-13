@@ -44,6 +44,8 @@ public:
 
     void readCommandFile(const QString& path);
 
+    bool keycode_mode;
+
 protected:
 	virtual bool event(QEvent* e);
 	virtual void keyPressEvent(QKeyEvent* e);
@@ -66,6 +68,7 @@ signals:
     void clearCommandsHistory();
     void command(QString cmd);
     void message(QString msg);
+    void keycode(QString code);
 
 private:
 	QStringList historyList;

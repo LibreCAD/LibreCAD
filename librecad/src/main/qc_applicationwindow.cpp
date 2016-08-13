@@ -199,7 +199,6 @@ QC_ApplicationWindow::QC_ApplicationWindow()
         mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
     bool enable_left_sidebar = settings.value("EnableLeftSidebar", 1).toBool();
     bool enable_cad_toolbars = settings.value("EnableCADToolbars", 1).toBool();
-    bool keycode_mode = settings.value("KeycodeMode", 0).toBool();
     settings.endGroup();
 
     connect(mdiAreaCAD, SIGNAL(subWindowActivated(QMdiSubWindow*)),
@@ -306,13 +305,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     // Since this nice feature causes a bug of lost key events when the command widget is on
     // a screen different from the main window, disabled for the time being
     // send key events for mdiAreaCAD to command widget by default
-    if (!keycode_mode)
-        mdiAreaCAD->installEventFilter(commandWidget);
-    else
-    {
-        auto space = new QShortcut(QKeySequence(Qt::Key_Space), this);
-        connect(space, SIGNAL(activated()), actionHandler, SLOT(slotSnapFree()));
-    }
+    mdiAreaCAD->installEventFilter(commandWidget);
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory");
     dialogFactory = new QC_DialogFactory(this, optionWidget);
@@ -2494,104 +2487,31 @@ bool QC_ApplicationWindow::queryExit(bool force) {
  */
 void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e)
 {
-    // multi key codes:
-    static QTime ts = QTime();
-    static QList<int> doubleCharacters;
-    bool actionProcessed = false;
-    QTime now = QTime::currentTime();
+    switch (e->key()) {
+    case Qt::Key_Escape:
+        slotKillAllActions();
 
-     // Handle "single" function keys and Alt- hotkeys.
-     QString modCode = "";
-     int fn_nr = 0;
+    case Qt::Key_Return:
+    case Qt::Key_Enter:
+        slotEnter();
+        e->accept();
+        break;
 
-     if(e->key() >= Qt::Key_F1 && e->key() <= Qt::Key_F35) {
-         fn_nr = e->key() - Qt::Key_F1 + 1;
-     }
+    case Qt::Key_Plus:
+    case Qt::Key_Equal:
+        actionHandler->slotZoomIn();
+        e->accept();
+        break;
 
-     if(e->text().size() > 0) {
-         if(e->modifiers() & Qt::AltModifier) {
-             modCode += RS_Commands::AltPrefix;
-             modCode += e->text();
-         } else if(e->modifiers() & Qt::MetaModifier) {
-             modCode += RS_Commands::MetaPrefix;
-             modCode += e->text();
-         }
-     } else if(fn_nr > 0) {
-         modCode += RS_Commands::FnPrefix;
-         modCode += QString::number(fn_nr);
-     }
+    case Qt::Key_Minus:
+        actionHandler->slotZoomOut();
+        e->accept();
+        break;
 
-     if(modCode.size() > 0) {
-        // We found a single function key. Handle it.
-        //std::cout << modCode.toStdString() << std::endl;
-      actionHandler->keycode(modCode);
-        ts = now;
-
-        return;
-     }
-
-     // Handle double character keycodes.
-    doubleCharacters << e->key();
-
-    if (doubleCharacters.size() > 2)
-        doubleCharacters = doubleCharacters.mid(doubleCharacters.size() - 2, 2);
-
-    if (ts.msecsTo(now) < 2000 && doubleCharacters.size() == 2) {
-        QString code = "";
-        QList<int>::iterator i;
-
-        for (i = doubleCharacters.begin(); i != doubleCharacters.end(); ++i)
-             code += QChar(*i);
-
-        // Check against double keycode handler
-        if (actionHandler->keycode(code) == true)
-        {
-            slotFocusCommandLine();
-            actionProcessed = true;
-        }
-
-        // Matches doublescape, since this is not a action, it's not done in actionHandler (is that logical??)
-        if (doubleCharacters == (QList<int>() << Qt::Key_Escape << Qt::Key_Escape) ) {
-            slotKillAllActions();
-            actionProcessed = true;
-            RS_DEBUG->print("QC_ApplicationWindow::Got double escape!");
-        }
-
-        if (actionProcessed) {
-            doubleCharacters.clear();
-        }
-    }
-    ts = now;
-
-    if (actionProcessed == false) {
-        // single key codes:
-        switch (e->key()) {
-        //need to pass Escape to actions, issue#285
-        case Qt::Key_Escape:
-            slotBack();
-
-        case Qt::Key_Return:
-        case Qt::Key_Enter:
-            slotEnter();
-            e->accept();
-            break;
-
-        case Qt::Key_Plus:
-        case Qt::Key_Equal:
-            actionHandler->slotZoomIn();
-            e->accept();
-            break;
-
-        case Qt::Key_Minus:
-            actionHandler->slotZoomOut();
-            e->accept();
-            break;
-
-        default:
-            e->ignore();
-            RS_DEBUG->print("QC_ApplicationWindow::KeyPressEvent: IGNORED");
-            break;
-        }
+    default:
+        e->ignore();
+        RS_DEBUG->print("QC_ApplicationWindow::KeyPressEvent: IGNORED");
+        break;
     }
 
     if (e->isAccepted()) {
