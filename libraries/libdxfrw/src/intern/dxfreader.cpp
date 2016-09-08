@@ -70,6 +70,10 @@ bool dxfReader::readRec(int *codeData) {
         readDouble();
     else if (code < 481)
         readString();
+    else if( 999 == code && m_bIgnoreComments) {
+        readString();
+        return readRec( codeData);
+    }
     else if (code > 998 && code < 1009) //skip not used at the v2012
         readString();
     else if (code < 1060) //TODO this is a floating point double precision??
