@@ -25,7 +25,6 @@
 **
 **********************************************************************/
 
-
 #include "qc_applicationwindow.h"
 
 #include <QStatusBar>
@@ -2591,7 +2590,15 @@ void QC_ApplicationWindow::relayAction(QAction* q_action)
 {
     // author: ravas
 
-    getMDIWindow()->getGraphicView()->setCurrentQAction(q_action);
+    auto view = getMDIWindow()->getGraphicView();
+    if (!view)
+    {   // when switching back to LibreCAD from another program
+        // occasionally no drawings are activated
+        qWarning("relayAction: graphicView is nullptr");
+        return;
+    }
+
+    view->setCurrentQAction(q_action);
 
     const QString commands(q_action->data().toString());
     if (!commands.isEmpty())
