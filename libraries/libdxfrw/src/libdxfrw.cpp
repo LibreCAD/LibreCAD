@@ -1814,11 +1814,16 @@ bool dxfRW::processDxf() {
     bool more = true;
     std::string sectionstr;
 //    section = secUnknown;
+    reader->setIgnoreComments( false);
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG(" processDxf\n");
         if (code == 999) {
+            // when DXF was created by libdxfrw, first record is a comment with dxfrw version info
             header.addComment(reader->getString());
         } else if (code == 0) {
+            // ignore further comments, as libdxfrw doesn't support comments in sections
+            reader->setIgnoreComments( true);
+
             sectionstr = reader->getString();
             DRW_DBG(sectionstr); DRW_DBG(" processDxf\n");
             if (sectionstr == "EOF") {
@@ -1832,7 +1837,7 @@ bool dxfRW::processDxf() {
                 if (code == 2) {
                     sectionstr = reader->getString();
                     DRW_DBG(sectionstr); DRW_DBG("  processDxf\n");
-                //found section, process it
+                    //found section, process it
                     if (sectionstr == "HEADER") {
                         processHeader();
                     } else if (sectionstr == "CLASSES") {
