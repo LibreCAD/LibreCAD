@@ -27,6 +27,7 @@
 #include "qg_filedialog.h"
 
 #include <QMessageBox>
+#include <QSettings>
 #ifdef Q_OS_LINUX
     #include <QDialogButtonBox>
     #include <QStyle>
@@ -66,17 +67,20 @@ void QG_FileDialog::getType(const QString filter)
 QG_FileDialog::QG_FileDialog(QWidget* parent, Qt::WindowFlags f, FileType type)
                             :QFileDialog(parent, f)
 {
-//# check if system are linux+KDE to use QFileDialog instead "native" FileDialog
-//# KDE returns the first filter that match the pattern "*.dxf" instead the selected
-#ifdef Q_OS_LINUX
-    QDialogButtonBox::ButtonLayout layoutPolicy = QDialogButtonBox::ButtonLayout(this->style()->styleHint(QStyle::SH_DialogButtonLayout, 0, this));
-    if (layoutPolicy == QDialogButtonBox::KdeLayout)
-        setOption ( QFileDialog::DontUseNativeDialog, true );
-    else
-        setOption ( QFileDialog::DontUseNativeDialog, false );
-#else
-    setOption ( QFileDialog::DontUseNativeDialog, false );
-#endif
+    // obsolete:
+    //    check if system are linux+KDE to use QFileDialog instead "native" FileDialog
+    //    KDE returns the first filter that match the pattern "*.dxf" instead the selected
+    // new:
+    //    on startup, when UseQtFileOpenDialog is not set, it is set to 1 for all Linux
+    //    and 0 for other OS
+    //    this is because QFileDialog is case insensitive for filters and the native not
+    QSettings settings;
+    if( 0 == settings.value("Defaults/UseQtFileOpenDialog", 0).toInt()) {
+        setOption( QFileDialog::DontUseNativeDialog, false );
+    }
+    else {
+        setOption( QFileDialog::DontUseNativeDialog, true );
+    }
     setOption ( QFileDialog::HideNameFilterDetails, false );
     ftype= RS2::FormatDXFRW;
 

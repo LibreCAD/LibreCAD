@@ -177,6 +177,7 @@ void QG_DlgOptionsGeneral::init()
     // Auto save timer
     cbAutoSaveTime->setValue(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5));
     cbAutoBackup->setChecked(RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1));
+    cbUseQtFileOpenDialog->setChecked(RS_SETTINGS->readNumEntry("/UseQtFileOpenDialog", 1));
     RS_SETTINGS->endGroup();
 
 	//update entities to selected entities to the current active layer
@@ -265,7 +266,8 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/Unit",
             RS_Units::unitToString( RS_Units::stringToUnit( cbUnit->currentText() ), false/*untr.*/) );
         RS_SETTINGS->writeEntry("/AutoSaveTime", cbAutoSaveTime->value() );
-        RS_SETTINGS->writeEntry("/AutoBackupDocument", cbAutoBackup->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/AutoBackupDocument", cbAutoBackup->isChecked() ? 1 : 0);
+        RS_SETTINGS->writeEntry("/UseQtFileOpenDialog", cbUseQtFileOpenDialog->isChecked() ? 1 : 0);
         RS_SETTINGS->endGroup();
 
         //update entities to selected entities to the current active layer

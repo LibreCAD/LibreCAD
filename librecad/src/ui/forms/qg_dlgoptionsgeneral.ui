@@ -1082,6 +1082,13 @@
            </layout>
           </item>
           <item>
+           <widget class="QCheckBox" name="cbUseQtFileOpenDialog">
+            <property name="text">
+             <string>Don't use native OS file open dialog</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QCheckBox" name="cbToActiveLayer">
             <property name="toolTip">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1126,8 +1133,8 @@
   <tabstop>lePathHatch</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../res/extui/extui.qrc"/>
   <include location="../../../res/ui/ui.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>
