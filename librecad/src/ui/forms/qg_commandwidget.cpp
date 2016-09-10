@@ -56,26 +56,28 @@ QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::Window
     connect(leCommand, SIGNAL(message(QString)), this, SLOT(appendHistory(QString)));
     connect(leCommand, &QG_CommandEdit::keycode, this, &QG_CommandWidget::handleKeycode);
 
-    auto a1 = new QAction(QObject::tr("Load Command File"), this);
-    connect(a1, &QAction::triggered, this, &QG_CommandWidget::chooseCommandFile);
+    auto a1 = new QAction(QObject::tr("Keycode Mode"), this);
+    a1->setObjectName("keycode_action");
+    a1->setCheckable(true);
+    connect(a1, &QAction::toggled, this, &QG_CommandWidget::setKeycodeMode);
     options_button->addAction(a1);
-
-    auto a2 = new QAction(QObject::tr("Keycode mode"), this);
-    a2->setObjectName("keycode_action");
-    a2->setCheckable(true);
-    connect(a2, &QAction::toggled, this, &QG_CommandWidget::setKeycodeMode);
-    options_button->addAction(a2);
 
     QSettings settings;
     if (settings.value("Widgets/KeycodeMode", false).toBool())
     {
         leCommand->keycode_mode = true;
-        a2->setChecked(true);
+        a1->setChecked(true);
     }
 
+    auto a2 = new QAction(QObject::tr("Load Command File"), this);
+    connect(a2, &QAction::triggered, this, &QG_CommandWidget::chooseCommandFile);
+    options_button->addAction(a2);
+
+    auto a3 = new QAction(QObject::tr("Paste Multiple Commands"), this);
+    connect(a3, &QAction::triggered, leCommand, &QG_CommandEdit::modifiedPaste);
+    options_button->addAction(a3);
+
     options_button->setStyleSheet("QToolButton::menu-indicator { image: none; }");
-
-
 }
 
 /*

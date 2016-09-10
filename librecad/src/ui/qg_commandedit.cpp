@@ -95,9 +95,6 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e)
             case Qt::Key_Left:
                 r_string = "-" + value + ",0";
                 break;
-            case Qt::Key_V:
-                modifiedPaste();
-                break;
             default:
                 QLineEdit::keyPressEvent(e);
                 return;
