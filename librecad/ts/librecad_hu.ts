@@ -6471,7 +6471,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Number of p&amp;review entities:</source>
-        <translation>&amp;Előnézeti elemek száma:</translation>
+        <translation type="obsolete">&amp;Előnézeti elemek száma:</translation>
     </message>
     <message>
         <source>Colors</source>
@@ -6643,7 +6643,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Minimal Grid Spacing (px):</source>
-        <translation>Minimális háló térköz (px):</translation>
+        <translation type="obsolete">Minimális háló térköz (px):</translation>
     </message>
     <message>
         <source>Program Defaults</source>
@@ -6794,10 +6794,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Keycode mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>#1E90FF</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6810,15 +6806,23 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Commands 2 characters in length are automatically accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Variable File:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minimal Grid Spacing (p&amp;x):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>N&amp;umber of preview entities:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t use native OS file open dialog</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11146,6 +11150,14 @@ Continue?</source>
     </message>
     <message>
         <source>Calculator mode: Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keycode Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste Multiple Commands</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

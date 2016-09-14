@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="ja">
 <context>
@@ -333,7 +334,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>ノード追加(&amp;A)</translation>
     </message>
     <message>
-        <source>Add polyline's node</source>
+        <source>Add polyline&apos;s node</source>
         <translation type="obsolete">ポリライン・ノードを追加</translation>
     </message>
     <message>
@@ -341,7 +342,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>ノード結合(&amp;p)</translation>
     </message>
     <message>
-        <source>Append polyline's node</source>
+        <source>Append polyline&apos;s node</source>
         <translation type="obsolete">ポリラインノード結合</translation>
     </message>
     <message>
@@ -349,7 +350,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>ノード削除(&amp;D)</translation>
     </message>
     <message>
-        <source>Delete polyline's node</source>
+        <source>Delete polyline&apos;s node</source>
         <translation type="obsolete">ポリライン・ノードを削除</translation>
     </message>
     <message>
@@ -365,7 +366,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>セグメントの部分削除(&amp;T)</translation>
     </message>
     <message>
-        <source>Trim polyline's segments</source>
+        <source>Trim polyline&apos;s segments</source>
         <translation type="obsolete">ポリラインのセグメントをトリム</translation>
     </message>
     <message>
@@ -1209,11 +1210,11 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>小数以下で取り去る</translation>
     </message>
     <message>
-        <source>remove 0'</source>
+        <source>remove 0&apos;</source>
         <translation>0フィートを削除</translation>
     </message>
     <message>
-        <source>remove 0"</source>
+        <source>remove 0&quot;</source>
         <translation>0インチを削除</translation>
     </message>
 </context>
@@ -1272,13 +1273,13 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>Running script '%1'</source>
-        <translation type="obsolete">スクリプト '%1' を実行中</translation>
+        <source>Running script &apos;%1&apos;</source>
+        <translation type="obsolete">スクリプト &apos;%1&apos; を実行中</translation>
     </message>
     <message>
-        <source>Inserting block '%1'</source>
+        <source>Inserting block &apos;%1&apos;</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="obsolete">ブロック'%1'を挿入中</translation>
+        <translation type="obsolete">ブロック&apos;%1&apos;を挿入中</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -1399,9 +1400,9 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>新しいファイルを作成...</translation>
     </message>
     <message>
-        <source>Block '%1'</source>
+        <source>Block &apos;%1&apos;</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロック '%1'</translation>
+        <translation>ブロック &apos;%1&apos;</translation>
     </message>
     <message>
         <source>unnamed document %1</source>
@@ -1642,8 +1643,8 @@ Please check its existence and permissions.</source>
 ファイルが存在しているか、もしくは権限をチェックしてください.</translation>
     </message>
     <message>
-        <source>File '%1' does not exist. Opening aborted</source>
-        <translation>ファイル '%1' は存在しません。ファイルを開くことを中止</translation>
+        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
+        <translation>ファイル &apos;%1&apos; は存在しません。ファイルを開くことを中止</translation>
     </message>
     <message>
         <source>Online (Wiki)</source>
@@ -1873,16 +1874,16 @@ Please check its existence and permissions.</source>
         <translation>現在のレイヤー</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;現在、編集しているレイヤー名&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;現在、編集しているレイヤー名&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -1966,9 +1967,9 @@ p, li { white-space: pre-wrap; }
         <translation>ブロック名変更</translation>
     </message>
     <message>
-        <source>Could not name block. A block named "%1" already exists.</source>
+        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>指定したブロック名はつけられません。ブロック名 "%1" は、すでに存在しています。</translation>
+        <translation>指定したブロック名はつけられません。ブロック名 &quot;%1&quot; は、すでに存在しています。</translation>
     </message>
 </context>
 <context>
@@ -2586,12 +2587,12 @@ in a separate window</source>
         <translation>ようこそ</translation>
     </message>
     <message>
-        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation type="obsolete">&lt;font size="+1"&gt;&lt;b&gt;ようこそLibreCADへ&lt;/b&gt;
+        <translation type="obsolete">&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;ようこそLibreCADへ&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 新規図面の単位と言語を設定してください。&lt;br&gt;
@@ -2611,12 +2612,12 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>コマンド 言語:</translation>
     </message>
     <message>
-        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation>&lt;font size="+1"&gt;&lt;b&gt;LibreCAD にようこそ&lt;/b&gt;
+        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;LibreCAD にようこそ&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 あなたが作図で使用したいユニットと言語を設定してください&lt;br&gt;
@@ -3504,7 +3505,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>グラード（1g=0.9度）</translation>
     </message>
     <message>
-        <source>Surveyor's units</source>
+        <source>Surveyor&apos;s units</source>
         <translation>測量用単位</translation>
     </message>
     <message>
@@ -3512,7 +3513,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>オプション</translation>
     </message>
     <message>
-        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
         <translation>寸法の単位に「工学」か「建築」が指定されると、単位はフィート/インチになります。</translation>
     </message>
     <message>
@@ -3656,7 +3657,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>斜線のサイズ:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;斜線を末端記号で使うときのサイズ. 末端記号に斜線を使わない時は 0 に設定する. 斜線のサイズが指定されれば矢印に優先されて用いられる.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -3680,12 +3681,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>字体:</translation>
     </message>
     <message>
-        <source>'.' (Period)</source>
-        <translation>'.' (ピリオド)</translation>
+        <source>&apos;.&apos; (Period)</source>
+        <translation>&apos;.&apos; (ピリオド)</translation>
     </message>
     <message>
-        <source>',' (Comma)</source>
-        <translation>',' (コンマ)</translation>
+        <source>&apos;,&apos; (Comma)</source>
+        <translation>&apos;,&apos; (コンマ)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
@@ -3728,8 +3729,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>寸法線の上で拡大する長さ</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;寸法線の矢印のサイズ. &lt;a name="result_box"/&gt;斜線ときサイズ指定は効果がない &lt;a name="result_box"/&gt;0 以外&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;寸法線の矢印のサイズ. &lt;a name=&quot;result_box&quot;/&gt;斜線ときサイズ指定は効果がない &lt;a name=&quot;result_box&quot;/&gt;0 以外&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width:</source>
@@ -3760,8 +3761,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>寸法精度:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;文字列を並べる &lt;a name="result_box"/&gt;寸法線にあわせて.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;文字列を並べる &lt;a name=&quot;result_box&quot;/&gt;寸法線にあわせて.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Aligned</source>
@@ -3844,7 +3845,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Number of p&amp;review entities:</source>
-        <translation>プレビューする図形群の数(&amp;r):</translation>
+        <translation type="obsolete">プレビューする図形群の数(&amp;r):</translation>
     </message>
     <message>
         <source>&amp;Paths</source>
@@ -3904,7 +3905,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Minimal Grid Spacing (px):</source>
-        <translation>最小グリッド間隔(px):</translation>
+        <translation type="obsolete">最小グリッド間隔(px):</translation>
     </message>
     <message>
         <source>Program Defaults</source>
@@ -4157,7 +4158,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Keycode mode</source>
-        <translation>キーコード・モード</translation>
+        <translation type="obsolete">キーコード・モード</translation>
     </message>
     <message>
         <source>#1E90FF</source>
@@ -4173,7 +4174,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Commands 2 characters in length are automatically accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;コマンドは2文字を自動的に受け入れます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;コマンドは2文字を自動的に受け入れます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -4182,6 +4183,18 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Variable File:</source>
         <translation>可変長ファイル：</translation>
+    </message>
+    <message>
+        <source>Minimal Grid Spacing (p&amp;x):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>N&amp;umber of preview entities:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t use native OS file open dialog</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4195,8 +4208,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>レイヤー</translation>
     </message>
     <message>
-        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe ("display: none;" or "visibility: hidden;").</source>
-        <translation>2014/11現在、MarkerCAMは、不可視に設定されたSVGであっても隠さない ("display: none;" か "visibility: hidden;").</translation>
+        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
+        <translation>2014/11現在、MarkerCAMは、不可視に設定されたSVGであっても隠さない (&quot;display: none;&quot; か &quot;visibility: hidden;&quot;).</translation>
     </message>
     <message>
         <source>Export invisible layers</source>
@@ -4226,8 +4239,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>楕円/楕円弧</translation>
     </message>
     <message>
-        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the "transform" attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>2015年3月現在、MakerCAMは楕円と楕円の弧を正しく表示できない、&lt;ellipse&gt; タグを使って作成される時には "transform" 属性での回転か楕円の弧セグメントを使っている &lt;path&gt; として作成される.</translation>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation>2015年3月現在、MakerCAMは楕円と楕円の弧を正しく表示できない、&lt;ellipse&gt; タグを使って作成される時には &quot;transform&quot; 属性での回転か楕円の弧セグメントを使っている &lt;path&gt; として作成される.</translation>
     </message>
     <message utf8="true">
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
@@ -5802,16 +5815,16 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>左</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;ヒント 左右のマウスボタンによる動作&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;ヒント 左右のマウスボタンによる動作&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -5982,28 +5995,28 @@ p, li { white-space: pre-wrap; }
         <translation>長さの合計</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;選択された要素の値&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;選択された要素の値&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;選択された要素の長さの合計&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;選択された要素の長さの合計&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -6350,8 +6363,8 @@ p, li { white-space: pre-wrap; }
         <translation>レイヤー削除</translation>
     </message>
     <message>
-        <source>Layer "%1" can never be removed.</source>
-        <translation>レイヤー"%1"は削除できません。</translation>
+        <source>Layer &quot;%1&quot; can never be removed.</source>
+        <translation>レイヤー&quot;%1&quot;は削除できません。</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -6363,22 +6376,22 @@ p, li { white-space: pre-wrap; }
         <translation>ブロック削除</translation>
     </message>
     <message>
-        <source>Block "%1" and all its entities will be removed.</source>
+        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>ブロック "%1"と、その構成要素図形は削除されます。</translation>
+        <translation>ブロック &quot;%1&quot;と、その構成要素図形は削除されます。</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>レイヤーの属性</translation>
     </message>
     <message>
-        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
-        <translation>"%1"という名前のレイヤーは既に存在します。別な名前を指定してください。</translation>
+        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
+        <translation>&quot;%1&quot;という名前のレイヤーは既に存在します。別な名前を指定してください。</translation>
     </message>
     <message>
-        <source>Layer "%1" and all entities on it will be removed.
+        <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>レイヤー"%1"とそれに含まれる全図形が削除されます.
+        <translation>レイヤー&quot;%1&quot;とそれに含まれる全図形が削除されます.
 この操作はやり直せません.</translation>
     </message>
 </context>
@@ -6658,7 +6671,7 @@ Do you want to replace it?</source>
         <translation>未知のエラー： DWGファイルが開けない</translation>
     </message>
     <message>
-        <source>can't open this dwg file</source>
+        <source>can&apos;t open this dwg file</source>
         <translation>このDWGファイルは開くことができない</translation>
     </message>
     <message>
@@ -8011,7 +8024,7 @@ Continue?</source>
         <translation>Wiki</translation>
     </message>
     <message>
-        <source>User's Manual</source>
+        <source>User&apos;s Manual</source>
         <translation>ユーザーマニュアル</translation>
     </message>
     <message>
@@ -8078,6 +8091,14 @@ Continue?</source>
         <source>Calculator mode: Off</source>
         <translation>計算モード: Off</translation>
     </message>
+    <message>
+        <source>Keycode Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste Multiple Commands</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
@@ -8109,8 +8130,8 @@ Continue?</source>
         <translation>角度入力:</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Enter factor:</source>
@@ -8843,8 +8864,8 @@ Continue?</source>
         <translation>角度入力:</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Enter factor:</source>
@@ -9059,8 +9080,8 @@ Continue?</source>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -9502,16 +9523,16 @@ Continue?</source>
         <translation>角度入力:</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Enter factor:</source>
         <translation>倍率入力:</translation>
     </message>
     <message>
-        <source>Cannot open file '%1'</source>
-        <translation>ファイル'%1' を開けません</translation>
+        <source>Cannot open file &apos;%1&apos;</source>
+        <translation>ファイル&apos;%1&apos; を開けません</translation>
     </message>
 </context>
 <context>
@@ -9909,7 +9930,7 @@ Continue?</source>
         <translation>ノードを挿入するポリラインを指示</translation>
     </message>
     <message>
-        <source>Specify adding node's point</source>
+        <source>Specify adding node&apos;s point</source>
         <translation>挿入するノード位置を指示</translation>
     </message>
     <message>
@@ -9987,7 +10008,7 @@ Continue?</source>
         <translation>ノードを削除するポリラインを指示</translation>
     </message>
     <message>
-        <source>Specify deleting node's point</source>
+        <source>Specify deleting node&apos;s point</source>
         <translation>削除するノード位置を指示</translation>
     </message>
     <message>
@@ -10178,8 +10199,8 @@ Continue?</source>
         <translation>印刷時にオフセットするため、コマンドラインからオフセット値を入力</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring '@'</source>
-        <translation>印刷時のオフセットは相対値 0 を無視. '@'を無視</translation>
+        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
+        <translation>印刷時のオフセットは相対値 0 を無視. &apos;@&apos;を無視</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>
