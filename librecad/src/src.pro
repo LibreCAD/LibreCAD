@@ -10,7 +10,7 @@ DISABLE_POSTSCRIPT = false
 DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
-LC_VERSION="2.1.0"
+LC_VERSION="2.1.2"
 
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/librecad
