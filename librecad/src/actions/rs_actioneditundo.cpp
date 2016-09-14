@@ -62,7 +62,10 @@ void RS_ActionEditUndo::trigger() {
 	}
 
 	if (graphic)
+    {
         graphic->addBlockNotification();
+        graphic->setModified(true);
+    }
     document->updateInserts();
 
     graphicView->redraw(RS2::RedrawDrawing);
