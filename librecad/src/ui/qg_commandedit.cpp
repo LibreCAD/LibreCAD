@@ -42,6 +42,7 @@
  */
 QG_CommandEdit::QG_CommandEdit(QWidget* parent)
         : QLineEdit(parent)
+        , keycode_mode(false)
         , relative_ray("none")
         , calculator_mode(false)
 
@@ -93,9 +94,6 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e)
                 break;
             case Qt::Key_Left:
                 r_string = "-" + value + ",0";
-                break;
-            case Qt::Key_V:
-                modifiedPaste();
                 break;
             default:
                 QLineEdit::keyPressEvent(e);
@@ -162,6 +160,15 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e)
             QLineEdit::keyPressEvent(e);
             break;
 	}
+
+    if (keycode_mode)
+    {
+        auto input = text();
+        if (input.size() == 2)
+        {
+            emit keycode(input);
+        }
+    }
 }
 
 void QG_CommandEdit::evaluateExpression(QString input)

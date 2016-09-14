@@ -177,6 +177,7 @@ void QG_DlgOptionsGeneral::init()
     // Auto save timer
     cbAutoSaveTime->setValue(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5));
     cbAutoBackup->setChecked(RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1));
+    cbUseQtFileOpenDialog->setChecked(RS_SETTINGS->readNumEntry("/UseQtFileOpenDialog", 1));
     RS_SETTINGS->endGroup();
 
 	//update entities to selected entities to the current active layer
@@ -192,7 +193,6 @@ void QG_DlgOptionsGeneral::init()
     maximize_checkbox->setChecked(RS_SETTINGS->readNumEntry("/Maximize", 0));
     left_sidebar_checkbox->setChecked(RS_SETTINGS->readNumEntry("/EnableLeftSidebar", 1));
     cad_toolbars_checkbox->setChecked(RS_SETTINGS->readNumEntry("/EnableCADToolbars", 1));
-    keycode_checkbox->setChecked(RS_SETTINGS->readNumEntry("/KeycodeMode", 0));
     RS_SETTINGS->endGroup();
 
     restartNeeded = false;
@@ -266,7 +266,8 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/Unit",
             RS_Units::unitToString( RS_Units::stringToUnit( cbUnit->currentText() ), false/*untr.*/) );
         RS_SETTINGS->writeEntry("/AutoSaveTime", cbAutoSaveTime->value() );
-        RS_SETTINGS->writeEntry("/AutoBackupDocument", cbAutoBackup->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/AutoBackupDocument", cbAutoBackup->isChecked() ? 1 : 0);
+        RS_SETTINGS->writeEntry("/UseQtFileOpenDialog", cbUseQtFileOpenDialog->isChecked() ? 1 : 0);
         RS_SETTINGS->endGroup();
 
         //update entities to selected entities to the current active layer
@@ -280,7 +281,6 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/Maximize", maximize_checkbox->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/EnableLeftSidebar", left_sidebar_checkbox->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/EnableCADToolbars", cad_toolbars_checkbox->isChecked()?1:0);
-        RS_SETTINGS->writeEntry("/KeycodeMode", keycode_checkbox->isChecked()?1:0);
         RS_SETTINGS->endGroup();
     }
 

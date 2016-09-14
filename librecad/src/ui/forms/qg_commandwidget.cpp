@@ -24,9 +24,12 @@
 **
 **********************************************************************/
 #include "qg_commandwidget.h"
-#include <QKeyEvent>
+
 #include <algorithm>
+
+#include <QKeyEvent>
 #include <QFileDialog>
+#include <QSettings>
 
 #include "qg_actionhandler.h"
 #include "rs_commands.h"
@@ -39,7 +42,8 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, fl), actionHandler(nullptr)
+    : QWidget(parent, fl)
+    , actionHandler(nullptr)
 {
     setObjectName(name);
     setupUi(this);
@@ -50,10 +54,29 @@ QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::Window
     connect(leCommand, SIGNAL(tabPressed()), this, SLOT(tabPressed()));
     connect(leCommand, SIGNAL(clearCommandsHistory()), teHistory, SLOT(clear()));
     connect(leCommand, SIGNAL(message(QString)), this, SLOT(appendHistory(QString)));
+    connect(leCommand, &QG_CommandEdit::keycode, this, &QG_CommandWidget::handleKeycode);
 
-    auto action = new QAction(QObject::tr("Load Command File"), this);
-    connect(action, &QAction::triggered, this, &QG_CommandWidget::chooseCommandFile);
-    options_button->addAction(action);
+    auto a1 = new QAction(QObject::tr("Keycode Mode"), this);
+    a1->setObjectName("keycode_action");
+    a1->setCheckable(true);
+    connect(a1, &QAction::toggled, this, &QG_CommandWidget::setKeycodeMode);
+    options_button->addAction(a1);
+
+    QSettings settings;
+    if (settings.value("Widgets/KeycodeMode", false).toBool())
+    {
+        leCommand->keycode_mode = true;
+        a1->setChecked(true);
+    }
+
+    auto a2 = new QAction(QObject::tr("Load Command File"), this);
+    connect(a2, &QAction::triggered, this, &QG_CommandWidget::chooseCommandFile);
+    options_button->addAction(a2);
+
+    auto a3 = new QAction(QObject::tr("Paste Multiple Commands"), this);
+    connect(a3, &QAction::triggered, leCommand, &QG_CommandEdit::modifiedPaste);
+    options_button->addAction(a3);
+
     options_button->setStyleSheet("QToolButton::menu-indicator { image: none; }");
 }
 
@@ -62,7 +85,9 @@ QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::Window
  */
 QG_CommandWidget::~QG_CommandWidget()
 {
-    // no need to delete child widgets, Qt does it all for us
+    QSettings settings;
+    auto action = findChild<QAction*>("keycode_action");
+    settings.setValue("Widgets/KeycodeMode", action->isChecked());
 }
 
 /*
@@ -105,18 +130,19 @@ bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
 
 		event->accept();
         this->setFocus();
-		QKeyEvent * newEvent = new QKeyEvent(*static_cast<QKeyEvent*>(event));
-		QApplication::postEvent(leCommand, newEvent);
+        QKeyEvent * newEvent = new QKeyEvent(*static_cast<QKeyEvent*>(event));
+        QApplication::postEvent(leCommand, newEvent);
 		return true;
 	}
 	return false;
 }
 
-void QG_CommandWidget::setFocus() {
-    //setCommandMode();
+void QG_CommandWidget::setFocus()
+{
     if (!isActiveWindow())
         activateWindow();
-	QFocusEvent* newEvent=new QFocusEvent(QEvent::FocusIn);
+
+    auto newEvent = new QFocusEvent(QEvent::FocusIn);
 	QApplication::postEvent(leCommand, newEvent);
     leCommand->setFocus();
 }
@@ -255,4 +281,17 @@ void QG_CommandWidget::chooseCommandFile()
     {
         leCommand->readCommandFile(path);
     }
+}
+
+void QG_CommandWidget::handleKeycode(QString code)
+{
+    if (actionHandler->keycode(code))
+    {
+        leCommand->clear();
+    }
+}
+
+void QG_CommandWidget::setKeycodeMode(bool state)
+{
+    leCommand->keycode_mode = state;
 }

@@ -851,7 +851,7 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) {
         //not found, searching for main commands
         it = mainCommands.find(c);
         if( it == mainCommands.end() ){
-			RS_DIALOGFACTORY->commandMessage(QObject::tr("Command not found: %1").arg(c));
+//			RS_DIALOGFACTORY->commandMessage(QObject::tr("Command not found: %1").arg(c));
             return RS2::ActionNone;
         }
     }

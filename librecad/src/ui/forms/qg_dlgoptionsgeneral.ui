@@ -39,7 +39,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
@@ -205,7 +205,7 @@
           <item row="6" column="0">
            <widget class="QLabel" name="lMinGridSpacing">
             <property name="text">
-             <string>Minimal Grid Spacing (px):</string>
+             <string>Minimal Grid Spacing (p&amp;x):</string>
             </property>
             <property name="wordWrap">
              <bool>false</bool>
@@ -265,7 +265,7 @@
           <item row="7" column="0">
            <widget class="QLabel" name="lMaxPreview">
             <property name="text">
-             <string>Number of p&amp;review entities:</string>
+             <string>N&amp;umber of preview entities:</string>
             </property>
             <property name="wordWrap">
              <bool>false</bool>
@@ -925,16 +925,6 @@
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QCheckBox" name="keycode_checkbox">
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Commands 2 characters in length are automatically accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="text">
-             <string>Keycode mode</string>
-            </property>
-           </widget>
-          </item>
          </layout>
         </widget>
        </item>
@@ -1090,6 +1080,13 @@
              </widget>
             </item>
            </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbUseQtFileOpenDialog">
+            <property name="text">
+             <string>Don't use native OS file open dialog</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="cbToActiveLayer">

@@ -251,6 +251,18 @@ int main(int argc, char** argv)
     int windowY = settings.value("WindowY", 32).toInt();
     settings.endGroup();
 
+    settings.beginGroup("Defaults");
+    if( !settings.contains("UseQtFileOpenDialog")) {
+#ifdef Q_OS_LINUX
+        // on Linux don't use native file dialog
+        // because of case insensitive filters (issue #791)
+        settings.setValue("UseQtFileOpenDialog", QVariant(1));
+#else
+        settings.setValue("UseQtFileOpenDialog", QVariant(0));
+#endif
+    }
+    settings.endGroup();
+
     if (!first_load)
         appWin.resize(windowWidth, windowHeight);
 

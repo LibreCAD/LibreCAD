@@ -120,8 +120,9 @@ QC_MDIWindow::~QC_MDIWindow()
 	}
 }
 
-QG_GraphicView* QC_MDIWindow::getGraphicView() const{
-	return graphicView;
+QG_GraphicView* QC_MDIWindow::getGraphicView() const
+{
+    return (graphicView) ? graphicView : nullptr;
 }
 
 /** @return Pointer to document */
