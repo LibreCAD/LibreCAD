@@ -83,8 +83,8 @@ bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
 		//detect Ctl- Alt- modifier, but not Shift
 		//This should avoid filtering shortcuts, such as Ctl-C
 
-        if (e->modifiers() == Qt::ControlModifier
-          ||e->modifiers() == Qt::AltModifier)
+        if (e->modifiers() != Qt::KeypadModifier
+         && e->modifiers() & (Qt::KeyboardModifierMask ^ Qt::ShiftModifier))
             return false;
 
 		event->accept();
