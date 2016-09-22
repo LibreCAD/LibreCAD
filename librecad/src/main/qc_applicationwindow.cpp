@@ -128,6 +128,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     : ag_manager(new LC_ActionGroupManager(this))
     , autosaveTimer(nullptr)
     , actionHandler(new QG_ActionHandler(this))
+    , current_subwindow(nullptr)
     , pen_wiz(new LC_PenWizard(QObject::tr("Pen Wizard"), this))
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
@@ -3124,4 +3125,23 @@ void QC_ApplicationWindow::destroyMenu(const QString& menu_name)
         }
     }
     settings.endGroup();
+}
+
+void QC_ApplicationWindow::changeEvent(QEvent* event)
+{
+    // author: ravas
+    // returning to LC via Command+Tab won't always activate a subwindow #821
+
+    if (event->type() == QEvent::ActivationChange)
+    {
+        if (isActiveWindow())
+        {
+            if (current_subwindow)
+                mdiAreaCAD->setActiveSubWindow(current_subwindow);
+        }
+        else
+        {
+            current_subwindow = mdiAreaCAD->currentSubWindow();
+        }
+    }
 }

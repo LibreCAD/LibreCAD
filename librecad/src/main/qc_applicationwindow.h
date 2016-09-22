@@ -87,7 +87,7 @@ public:
     bool queryExit(bool force);
 
     /** Catch hotkey for giving focus to command line. */
-    virtual void keyPressEvent(QKeyEvent* e);
+    virtual void keyPressEvent(QKeyEvent* e) override;
     void setRedoEnable(bool enable);
     void setUndoEnable(bool enable);
     bool loadStyleSheet(QString path);
@@ -273,15 +273,16 @@ public:
     }
 
 protected:
-    void closeEvent(QCloseEvent*);
+    void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open
-    virtual void dropEvent(QDropEvent* e);
-    virtual void dragEnterEvent(QDragEnterEvent * event);
+    virtual void dropEvent(QDropEvent* e) override;
+    virtual void dragEnterEvent(QDragEnterEvent * event) override;
+    void changeEvent(QEvent* event) override;
     //! \}
 
 private:
 
-    QMenu* createPopupMenu();
+    QMenu* createPopupMenu() override;
 
     QString format_filename_caption(const QString &qstring_in);
     /** Helper function for Menu file -> New & New.... */
@@ -310,6 +311,8 @@ private:
     /** MdiArea for MDI */
     QMdiArea* mdiAreaCAD{nullptr};
     QMdiSubWindow* activedMdiSubWindow;
+    QMdiSubWindow* current_subwindow;
+
 
     /** Dialog factory */
     QC_DialogFactory* dialogFactory;
@@ -379,6 +382,7 @@ private:
 
     // --- Strings ---
     QString style_sheet_path;
+
 };
 
 
