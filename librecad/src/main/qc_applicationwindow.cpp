@@ -25,6 +25,7 @@
 **
 **********************************************************************/
 
+
 #include "qc_applicationwindow.h"
 
 #include <QStatusBar>
@@ -128,6 +129,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     , ag_manager(new LC_ActionGroupManager(this))
     , autosaveTimer(nullptr)
     , actionHandler(new QG_ActionHandler(this))
+    , current_subwindow(nullptr)
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
@@ -3192,4 +3194,27 @@ void QC_ApplicationWindow::destroyMenu(const QString& menu_name)
         }
     }
     settings.endGroup();
+}
+
+void QC_ApplicationWindow::changeEvent(QEvent* event)
+{
+    // author: ravas
+
+    #if defined(Q_OS_MAC)
+        // returning to LC via Command+Tab won't always activate a subwindow
+        // https://github.com/LibreCAD/LibreCAD/issues/821
+
+        if (event->type() == QEvent::ActivationChange)
+        {
+            if (isActiveWindow())
+            {
+                if (current_subwindow)
+                    mdiAreaCAD->setActiveSubWindow(current_subwindow);
+            }
+            else
+            {
+                current_subwindow = mdiAreaCAD->currentSubWindow();
+            }
+        }
+    #endif
 }
