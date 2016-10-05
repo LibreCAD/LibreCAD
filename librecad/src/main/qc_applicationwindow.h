@@ -24,6 +24,8 @@
 **
 **********************************************************************/
 
+// Changes: https://github.com/LibreCAD/LibreCAD/commits/master/librecad/src/main/qc_applicationwindow.h
+
 #ifndef QC_APPLICATIONWINDOW_H
 #define QC_APPLICATIONWINDOW_H
 
@@ -202,6 +204,8 @@ public slots:
     void assignMenu(const QString& activator, const QString& menu_name);
     void invokeMenuAssigner(const QString& menu_name);
     void updateMenu(const QString& menu_name);
+
+    void invokeLicenseWindow();
 
 
 signals:

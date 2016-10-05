@@ -25,6 +25,8 @@
 **
 **********************************************************************/
 
+// Changes: https://github.com/LibreCAD/LibreCAD/commits/master/librecad/src/main/qc_applicationwindow.cpp
+
 #include "qc_applicationwindow.h"
 
 #include <QStatusBar>
@@ -98,6 +100,7 @@
 #include "linklist.h"
 #include "colorwizard.h"
 #include "lc_penwizard.h"
+#include "textfileviewer.h"
 
 #include <boost/version.hpp>
 
@@ -3144,4 +3147,26 @@ void QC_ApplicationWindow::changeEvent(QEvent* event)
             current_subwindow = mdiAreaCAD->currentSubWindow();
         }
     }
+}
+
+
+void QC_ApplicationWindow::invokeLicenseWindow()
+{
+    // author: ravas
+
+    QDialog dlg;
+
+    dlg.setWindowTitle(QObject::tr("License"));
+
+    auto viewer = new TextFileViewer(&dlg);
+    auto layout = new QVBoxLayout;
+    layout->addWidget(viewer);
+    dlg.setLayout(layout);
+
+    viewer->addFile("readme", ":/readme.md");
+    viewer->addFile("GPLv2", ":/gpl-2.0.txt");
+
+    viewer->setFile("readme");
+
+    dlg.exec();
 }

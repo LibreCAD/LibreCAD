@@ -6,8 +6,9 @@ LibreCAD uses the cross-platform framework [Qt](http://www.qt.io/download-open-s
 which means it works with most operating systems.  
 The user interface is translated in over 30 languages.  http://translate.librecad.org/
 
-Most of the project is released under the GPLv2 license,  
-but please read the [LICENSE](LICENSE) file for additional information.
+The LibreCAD source code is released under the GNU GENERAL PUBLIC LICENSE Version 2.  
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt  
+Please read the [LICENSE](LICENSE) file for additional information.
 
 The master branch represents the latest pre-release code,  
 and now requires Qt 5.2.1 or newer.  

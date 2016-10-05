@@ -762,6 +762,10 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     connect(help_about, SIGNAL(triggered()), main_window, SLOT(showAboutWindow()));
     help_menu->addAction(help_about);
 
+    QAction* license = new QAction(QObject::tr("License"), main_window);
+    connect(license, SIGNAL(triggered()), main_window, SLOT(invokeLicenseWindow()));
+    help_menu->addAction(license);
+
     // <[~ Widgets Menu ~]>
 
     QMenu* widgets_menu = new QMenu("Widgets", menu_bar);
