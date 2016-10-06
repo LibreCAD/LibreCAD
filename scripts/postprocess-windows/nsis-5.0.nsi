@@ -34,7 +34,7 @@
 ;--------------------------------
 ;Pages
 
-  !insertmacro MUI_PAGE_LICENSE "../../gpl-2.0.txt"
+  !insertmacro MUI_PAGE_LICENSE "../../licenses/gpl-2.0.txt"
   !insertmacro MUI_PAGE_DIRECTORY
   !insertmacro MUI_PAGE_INSTFILES
 
