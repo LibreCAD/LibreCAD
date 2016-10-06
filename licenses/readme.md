@@ -36,7 +36,7 @@ The LibreCAD source code is released as a whole under the GPLv2.
 The following refers to the licenses used by these resources,  
 when they were released independently from LibreCAD.
 
-libdfxrw was released under GPLv2 "or any later version".  
+libdxfrw was released under GPLv2 "or any later version".  
 
 - <https://sourceforge.net/projects/libdxfrw/>
 
