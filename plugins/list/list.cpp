@@ -65,8 +65,12 @@ QString LC_List::getStrData(Plug_Entity *ent) {
             strCommon("  %1: %2\n"),
             strSpecific("    %1: %2\n"),
             strSpecificXY( QString("    %1: %2=%3 %4=%5\n").arg("%1",tr("X"),"%2",tr("Y"),"%3"));
-    double numA, numB, numC;
+    double numA {0.0};
+    double numB {0.0};
+    double numC {0.0};
     QPointF ptA, ptB, ptC;
+    int intA {0};
+    int intB {0};
 
     //common entity data
     ent->getData(&data);
@@ -178,10 +182,29 @@ QString LC_List::getStrData(Plug_Entity *ent) {
         strData.prepend( strEntity.arg(tr("INSERT")));
         ptA.setX( data.value(DPI::STARTX).toDouble());
         ptA.setY( data.value(DPI::STARTY).toDouble());
-        strData.append( strSpecific.arg(tr("Name")).arg( data.value(DPI::BLKNAME).toString()));
-        strData.append( strSpecificXY.arg(tr("Insertion point")).
-                        arg(d->realToStr(ptA.x())).
-                        arg(d->realToStr(ptA.y())));
+        strData.append( strSpecific.arg( tr("Name")).
+                        arg( data.value(DPI::BLKNAME).toString()));
+        strData.append( strSpecificXY.arg( tr("Insertion point")).
+                        arg(d->realToStr( ptA.x())).
+                        arg(d->realToStr( ptA.y())));
+        strData.append( strSpecificXY.arg( tr("Scale")).
+                        arg( d->realToStr( data.value(DPI::XSCALE).toDouble())).
+                        arg( d->realToStr( data.value(DPI::YSCALE).toDouble())));
+        strData.append( strSpecific.arg( tr("Rotation")).
+                        arg( QString("%1°").
+                             arg( d->realToStr( data.value(DPI::STARTANGLE).toDouble() * 180 / M_PI))));
+        intA = data.value(DPI::COLCOUNT).toInt();
+        intB = data.value(DPI::ROWCOUNT).toInt();
+        if( 1 < intA || 1 < intB) {
+            strData.append( strSpecific.arg( tr("Columns/Rows")).
+                            arg( QString( "%1 / %2").
+                                 arg( intA).
+                                 arg( intB)));
+            strData.append( strSpecific.arg( tr("Column/Row Spacing")).
+                            arg( QString("%1 / %2").
+                                 arg( d->realToStr( data.value(DPI::COLSPACE).toDouble())).
+                                 arg( d->realToStr( data.value(DPI::ROWSPACE).toDouble()))));
+        }
         break;
     case DPI::POLYLINE: {
         strData.prepend( strEntity.arg(tr("POLYLINE")));
