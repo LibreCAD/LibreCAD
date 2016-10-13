@@ -4,7 +4,7 @@
 **
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
-**
+** Copyright (C) 2015, 2016 ravas (github.com/r-a-v-a-s)
 **
 ** This file may be distributed and/or modified under the terms of the
 ** GNU General Public License version 2 as published by the Free Software 
@@ -72,6 +72,8 @@ private slots:
     void on_pb_snap_color_clicked();
 
     void setVariableFile();
+
+    void setFontsFolder();
 
 private:
     bool restartNeeded;

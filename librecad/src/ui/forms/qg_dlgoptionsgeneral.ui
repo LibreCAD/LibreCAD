@@ -39,7 +39,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
@@ -809,8 +809,8 @@
        <item row="4" column="3">
         <widget class="QToolButton" name="btTemplate">
          <property name="icon">
-          <iconset resource="../../../res/extui/extui.qrc">
-           <normaloff>:/extui/fileopen.png</normaloff>:/extui/fileopen.png</iconset>
+          <iconset resource="../../../res/icons/icons.qrc">
+           <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
          </property>
         </widget>
        </item>
@@ -872,8 +872,16 @@
        <item row="5" column="3">
         <widget class="QToolButton" name="variablefile_button">
          <property name="icon">
-          <iconset resource="../../../res/extui/extui.qrc">
-           <normaloff>:/extui/fileopen.png</normaloff>:/extui/fileopen.png</iconset>
+          <iconset resource="../../../res/icons/icons.qrc">
+           <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QToolButton" name="fonts_button">
+         <property name="icon">
+          <iconset resource="../../../res/icons/icons.qrc">
+           <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
          </property>
         </widget>
        </item>
@@ -1133,8 +1141,8 @@
   <tabstop>lePathHatch</tabstop>
  </tabstops>
  <resources>
+  <include location="../../../res/icons/icons.qrc"/>
   <include location="../../../res/ui/ui.qrc"/>
-  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
   <connection>
