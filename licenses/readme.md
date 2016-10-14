@@ -1,4 +1,4 @@
-### LibreCAD and the GPLv2 ###
+## LibreCAD and the GPLv2 ##
 
 LibreCAD is free software; you can redistribute it and/or modify  
 it under the terms of the GNU General Public License version 2 (GPLv2)  
@@ -30,7 +30,7 @@ The project's first commit on Github was Aug 16, 2010.
 - <http://librecad.org/>
 - <https://github.com/LibreCAD/LibreCAD>
 
-### Rights holders of the code
+### Rights holders of the code ###
 
 Some of the following may be composites of multiple copyright notices.
 
@@ -75,9 +75,9 @@ These are known contributors whose copyright notice could not be found.
 - Lisandro Damián Nicanor Pérez Meyer | <perezmeyer@gmail.com>
 
 A list of contributors to the LibreCAD repository can be found at:   
-https://github.com/LibreCAD/LibreCAD/graphs/contributors
+<https://github.com/LibreCAD/LibreCAD/graphs/contributors>
 
-## Licenses of bundled content ###
+## Licenses of bundled content ##
 
 The LibreCAD source code is released as a whole under the GPLv2.  
 The following refers to the licenses used by these resources,  
@@ -109,12 +109,6 @@ The Amiri font was released under the Open Font License.
 
 - <http://www.amirifont.org/>
 - <https://github.com/khaledhosny/amiri-font/blob/0.108/OFL.txt>
-
-The WenQuanYi fonts (wqy-unicode.lff) were released under Apache 2.0 or GPLv3.
-
-- <http://wenq.org/wqy2/index.cgi?MicroHei%28en%29>
-- <https://www.apache.org/licenses/LICENSE-2.0.html>
-- <https://www.gnu.org/licenses/gpl-3.0.txt>
 
 The Hershey Fonts were originally created by Dr. A. V. Hershey  
 while working at the U. S. National Bureau of Standards.  
