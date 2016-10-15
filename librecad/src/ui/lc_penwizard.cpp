@@ -32,12 +32,21 @@
 #include "rs_entity.h"
 #include "qg_graphicview.h"
 
+#include <QVBoxLayout>
+
 LC_PenWizard::LC_PenWizard(const QString& title, QWidget* parent)
     : QDockWidget(title, parent)
     , mdi_win(nullptr)
     , color_wiz(new ColorWizard(this))
 {
-    setWidget(color_wiz);
+    auto frame = new QFrame(this);
+    auto layout = new QVBoxLayout;
+    frame->setLayout(layout);
+
+    layout->setMargin(0);
+    layout->addWidget(color_wiz);
+
+    setWidget(frame);
 
     connect(color_wiz, &ColorWizard::requestingColorChange,
             this, &LC_PenWizard::setColorForSelected);
