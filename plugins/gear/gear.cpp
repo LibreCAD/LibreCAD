@@ -17,12 +17,16 @@
 #include <QTransform>
 #include <QDoubleSpinBox>
 #include <QSpinBox>
+#include <QComboBox>
 #include <QLabel>
 #include <vector>
 #include <cmath>
 
 #include "document_interface.h"
 #include "gear.h"
+
+#define GEAR_TYPE_SPUR int(0)
+#define GEAR_TYPE_RING int(1)
 
 QString LC_Gear::name() const
  {
@@ -104,17 +108,24 @@ lc_Geardlg::lc_Geardlg(QWidget *parent, QPointF *center) :  QDialog(parent)
     dedendumBox->setSingleStep(0.001);
     mainLayout->addWidget(dedendumBox, 4, 1);
 
+    label = new QLabel(tr("Type"));
+    mainLayout->addWidget(label, 5, 0);
+    typeBox = new QComboBox();
+    typeBox->addItem(tr("Spur"), GEAR_TYPE_SPUR);
+    typeBox->addItem(tr("Ring"), GEAR_TYPE_RING);
+    mainLayout->addWidget(typeBox, 5, 1);
+
     QHBoxLayout *loaccept = new QHBoxLayout;
     QPushButton *acceptbut = new QPushButton(tr("Accept"));
     loaccept->addStretch();
     loaccept->addWidget(acceptbut);
-    mainLayout->addLayout(loaccept, 5, 0);
+    mainLayout->addLayout(loaccept, 6, 0);
 
     QPushButton *cancelbut = new QPushButton(tr("Cancel"));
     QHBoxLayout *locancel = new QHBoxLayout;
     locancel->addWidget(cancelbut);
     locancel->addStretch();
-    mainLayout->addLayout(locancel, 5, 1);
+    mainLayout->addLayout(locancel, 6, 1);
 
     setLayout(mainLayout);
     readSettings();
@@ -198,6 +209,24 @@ std::vector<QPointF> createTooth(int nteeth,
     return tooth;
 }
 
+static
+QPointF mirror(QPointF src, QPointF axis1, QPointF axis2)
+
+{
+    QPointF direction = axis2 - axis1;
+    QPointF v = src - axis1;
+
+    double axisAngle = atan2(direction.y(), direction.x());
+    double vAngle = atan2(v.y(), v.x());
+
+    double angle = axisAngle - vAngle;
+    double dist = sqrt(v.x() * v.x() + v.y() * v.y());
+
+    QPointF dstVector(dist * cos(axisAngle + angle),
+                      dist * sin(axisAngle + angle));
+    return axis1 + dstVector;
+}
+
 void lc_Geardlg::processAction(Document_Interface *doc)
 {
     Q_UNUSED(doc);
@@ -210,6 +239,7 @@ void lc_Geardlg::processAction(Document_Interface *doc)
     double addendum = addendumBox->value();
     double dedendum = dedendumBox->value();
     double delta_angle = 2.0 * M_PI / nteeth;
+    int type = typeBox->currentIndex();
 
     /* Build one tooth */
     std::vector<QPointF> tooth = createTooth(nteeth,
@@ -222,6 +252,11 @@ void lc_Geardlg::processAction(Document_Interface *doc)
     double pitch_diameter = nteeth * modulus;
     double tooth_angle = delta_angle * 0.75;
     double root_radius = pitch_diameter / 2.0 - dedendum;
+    if (type == GEAR_TYPE_RING)
+        root_radius = pitch_diameter / 2.0 + dedendum;
+    QPointF axis1(pitch_diameter / 2.0, 0.0);
+    QPointF axis2(pitch_diameter * cos(tooth_angle) / 2.0,
+                  pitch_diameter * sin(tooth_angle) / 2.0);
 
     /* Create all other teeth by rotating the first one */
     for (int i = 0; i < nteeth; i++) {
@@ -236,6 +271,9 @@ void lc_Geardlg::processAction(Document_Interface *doc)
         for (std::vector<QPointF>::iterator it = tooth.begin();
              it < tooth.end(); ++it) {
             QPointF pt = *it;
+            if (type == GEAR_TYPE_RING) {
+                pt = mirror(pt, axis1, axis2);
+            }
             polyline.push_back(Plug_VertexData(pt * trans, 0.0));
         }
 

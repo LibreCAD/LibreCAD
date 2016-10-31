@@ -19,6 +19,7 @@
 class QPointF;
 class QSpinBox;
 class QDoubleSpinBox;
+class QComboBox;
 
 class LC_Gear : public QObject, QC_PluginInterface
 {
@@ -61,6 +62,7 @@ private:
     QDoubleSpinBox *pressureBox;
     QDoubleSpinBox *addendumBox;
     QDoubleSpinBox *dedendumBox;
+    QComboBox *typeBox;
 };
 
 #endif // WHEEL_H
