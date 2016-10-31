@@ -3135,18 +3135,20 @@ void QC_ApplicationWindow::changeEvent(QEvent* event)
     // author: ravas
     // returning to LC via Command+Tab won't always activate a subwindow #821
 
-    if (event->type() == QEvent::ActivationChange)
-    {
-        if (isActiveWindow())
+    #if defined(Q_OS_OSX)
+        if (event->type() == QEvent::ActivationChange)
         {
-            if (current_subwindow)
-                mdiAreaCAD->setActiveSubWindow(current_subwindow);
+            if (isActiveWindow())
+            {
+                if (current_subwindow)
+                    mdiAreaCAD->setActiveSubWindow(current_subwindow);
+            }
+            else
+            {
+                current_subwindow = mdiAreaCAD->currentSubWindow();
+            }
         }
-        else
-        {
-            current_subwindow = mdiAreaCAD->currentSubWindow();
-        }
-    }
+    #endif
 }
 
 
