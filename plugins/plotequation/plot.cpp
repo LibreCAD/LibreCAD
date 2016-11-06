@@ -69,7 +69,7 @@ void plot::execComm(Document_Interface *doc, QWidget *parent, QString cmd)
 
             p.SetExpr(equation1.toStdString());
 
-            for(equationVariable = startVal; equationVariable < endVal; equationVariable += stepSize)//end value is not used!
+            for(equationVariable = startVal; equationVariable <= endVal; equationVariable += stepSize)
             {//calculate the values of the first equation
                 xValues.append(equationVariable);
                 yValues1.append(p.Eval());
