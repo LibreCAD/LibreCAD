@@ -3148,6 +3148,8 @@ void QC_ApplicationWindow::changeEvent(QEvent* event)
                 current_subwindow = mdiAreaCAD->currentSubWindow();
             }
         }
+    #else
+    Q_UNUSED( event)
     #endif
 }
 
