@@ -103,10 +103,15 @@ void RS_Undo::startUndoCycle() {
  * Adds an undoable to the current undo cycle.
  */
 void RS_Undo::addUndoable(RS_Undoable* u) {
-	RS_DEBUG->print("RS_Undo::%s(): begin", __func__);
+    RS_DEBUG->print("RS_Undo::%s(): begin", __func__);
 
-	currentCycle->addUndoable(u);
-	RS_DEBUG->print("RS_Undo::%s(): end", __func__);
+    if( nullptr == currentCycle) {
+        RS_DEBUG->print( RS_Debug::D_CRITICAL, "RS_Undo::%s(): invalid currentCycle, possibly missing startUndoCycle()", __func__);
+        return;
+    }
+
+    currentCycle->addUndoable(u);
+    RS_DEBUG->print("RS_Undo::%s(): end", __func__);
 }
 
 

@@ -92,7 +92,7 @@ private:
     /**
      * Current undo cycle.
      */
-	std::shared_ptr<RS_UndoCycle> currentCycle;
+    std::shared_ptr<RS_UndoCycle> currentCycle {nullptr};
 
 };
 
