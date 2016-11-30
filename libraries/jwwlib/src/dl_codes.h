@@ -1,4 +1,4 @@
-/****************************************************************************
+************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
@@ -65,43 +65,12 @@
  */
 class DL_Codes {
 public:
-    /**
-     * Standard DXF colors.
-     */
-    enum color {
-        black = 250,
-        green = 3,
-        red = 1,
-        brown = 15,
-        yellow = 2,
-        cyan = 4,
-        magenta = 6,
-        gray = 8,
-        blue = 5,
-        l_blue = 163,
-        l_green = 121,
-        l_cyan = 131,
-        l_red = 23,
-        l_magenta = 221,
-        l_gray = 252,
-        white = 7,
-        bylayer = 256,
-        byblock = 0
-    };
-
-    /**
-     * Version numbers for the DXF Format.
-     */
-    enum version {
-        AC1009, AC1012, AC1014, AC1015
-    };
-};
-
 
 // Extended color palette:
 // The first entry is only for direct indexing starting with [1]
 // Color 1 is red (1,0,0)
-const double dxfColors[][3] = {
+ 
+  static const double dxfColors[][3] = {
                                   {0,0,0},                // unused
                                   {1,0,0},                // 1
                                   {1,1,0},
@@ -360,6 +329,39 @@ const double dxfColors[][3] = {
                                   {1,1,1}                 // 255
                               }
                               ;
+    /**
+     * Standard DXF colors.
+     */
+    enum color {
+        black = 250,
+        green = 3,
+        red = 1,
+        brown = 15,
+        yellow = 2,
+        cyan = 4,
+        magenta = 6,
+        gray = 8,
+        blue = 5,
+        l_blue = 163,
+        l_green = 121,
+        l_cyan = 131,
+        l_red = 23,
+        l_magenta = 221,
+        l_gray = 252,
+        white = 7,
+        bylayer = 256,
+        byblock = 0
+    };
+
+    /**
+     * Version numbers for the DXF Format.
+     */
+    enum version {
+        AC1009, AC1012, AC1014, AC1015
+    };
+};
+
+
 
 
 // AutoCAD VERSION aliases
@@ -538,4 +540,3 @@ const double dxfColors[][3] = {
 #define PCS_TRANS_CODE      3
 
 #endif
-
