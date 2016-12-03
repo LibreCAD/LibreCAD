@@ -32,7 +32,7 @@ The 2.0 branch will be the last to support the QCAD toolbar. [![Build Status](ht
 **Questions or Comments**
 
 - http://forum.librecad.org/
-- irc://chat.freenode.net/librecad
+- [irc://chat.freenode.net/librecad](irc://chat.freenode.net/librecad)
 
 **Git the source**
 
