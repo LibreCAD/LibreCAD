@@ -213,7 +213,7 @@ namespace mu
         switch(a_Oprt)
         {
         case  cmPOW:
-              // Optimization for ploynomials of low order
+              // Optimization for polynomials of low order
               if (m_vRPN[sz-2].Cmd == cmVAR && m_vRPN[sz-1].Cmd == cmVAL)
               {
                 if (m_vRPN[sz-1].Val.data2==2)

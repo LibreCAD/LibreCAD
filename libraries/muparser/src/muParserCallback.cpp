@@ -56,7 +56,7 @@ namespace mu
 
 
   //---------------------------------------------------------------------------
-  /** \brief Constructor for constructing funcstion callbacks taking two arguments. 
+  /** \brief Constructor for constructing function callbacks taking two arguments.
       \throw nothrow
   */
   ParserCallback::ParserCallback(fun_type2 a_pFun, bool a_bAllowOpti)
@@ -204,7 +204,7 @@ namespace mu
 
 
   //---------------------------------------------------------------------------
-  /** \brief Constructor for constructing funcstion callbacks taking two arguments. 
+  /** \brief Constructor for constructing function callbacks taking two arguments.
       \throw nothrow
   */
   ParserCallback::ParserCallback(bulkfun_type2 a_pFun, bool a_bAllowOpti)
