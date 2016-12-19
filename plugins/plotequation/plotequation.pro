@@ -2,7 +2,7 @@ QT       += gui
 TEMPLATE = lib
 CONFIG += plugin
 VERSION = 1.0.1
-PLUGIN_NAME=plotequation
+TARGET = $$qtLibraryTarget(plotequation)
 
 GENERATED_DIR = ../../generated/plugin/plotequation
 # Use common project definitions.
@@ -21,17 +21,15 @@ HEADERS += \
     plotdialog.h \
     plot.h
 
-
-# DLLDESTDIR = ../../unix/resources/plugins/
+# Installation Directory
 win32 {
-        DLLDESTDIR = ../../windows/resources/plugins
-        TARGET = $$PLUGIN_NAME
+        DESTDIR = ../../windows/resources/plugins
 }
 unix {
     macx {
-        TARGET = ../../LibreCAD.app/Contents/Resources/plugins/$$PLUGIN_NAME
+        DESTDIR = ../../LibreCAD.app/Contents/Resources/plugins
     }
     else {
-        TARGET = ../../unix/resources/plugins/$$PLUGIN_NAME
+        DESTDIR = ../../unix/resources/plugins
     }
 }
