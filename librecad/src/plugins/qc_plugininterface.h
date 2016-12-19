@@ -71,7 +71,8 @@ public:
 
 };
 
-Q_DECLARE_INTERFACE(QC_PluginInterface,  "org.librecad.PluginInterface/1.0");
+#define LC_DocumentInterface_iid "org.librecad.PluginInterface/1.0"
+Q_DECLARE_INTERFACE(QC_PluginInterface, LC_DocumentInterface_iid)
 
 
 #endif

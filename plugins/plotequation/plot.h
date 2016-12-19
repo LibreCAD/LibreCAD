@@ -7,15 +7,16 @@
 class plot : public QObject, QC_PluginInterface
 {
     Q_OBJECT
-     Q_INTERFACES(QC_PluginInterface)
-     Q_PLUGIN_METADATA(IID "org.librecad.plotequation" FILE  "plotequation.json")
+    Q_INTERFACES(QC_PluginInterface)
+    Q_PLUGIN_METADATA(IID LC_DocumentInterface_iid FILE  "plotequation.json")
 
 public:
     explicit plot(QObject *parent = 0);
 
-    virtual QString name() const;
-    virtual PluginCapabilities getCapabilities() const;
-    virtual void execComm(Document_Interface *doc, QWidget *parent, QString cmd);
+    virtual PluginCapabilities getCapabilities() const Q_DECL_OVERRIDE;
+    virtual QString name() const Q_DECL_OVERRIDE;
+    virtual void execComm(Document_Interface *doc,
+                          QWidget *parent, QString cmd) Q_DECL_OVERRIDE;
 
 signals:
     

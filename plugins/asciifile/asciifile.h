@@ -32,14 +32,14 @@ class QVBoxLayout;
 class AsciiFile : public QObject, QC_PluginInterface
 {
     Q_OBJECT
-     Q_INTERFACES(QC_PluginInterface)
-     Q_PLUGIN_METADATA(IID "org.librecad.asciifile" FILE  "asciifile.json")
+    Q_INTERFACES(QC_PluginInterface)
+    Q_PLUGIN_METADATA(IID LC_DocumentInterface_iid FILE  "asciifile.json")
 
  public:
-     virtual PluginCapabilities getCapabilities() const;
-     virtual QString name() const;
-     virtual void execComm(Document_Interface *doc,
-                                        QWidget *parent, QString cmd);
+    virtual PluginCapabilities getCapabilities() const Q_DECL_OVERRIDE;
+    virtual QString name() const Q_DECL_OVERRIDE;
+    virtual void execComm(Document_Interface *doc,
+                          QWidget *parent, QString cmd) Q_DECL_OVERRIDE;
 };
 
 namespace DPT {
