@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="zh_CN">
+<TS version="2.1" language="zh_CN">
 <context>
     <name>AsciiFile</name>
     <message>
@@ -39,7 +39,7 @@
     <message>
         <location filename="../align/align.cpp" line="44"/>
         <source>second base point:</source>
-        <translation>第二个目标点</translation>
+        <translation>第二个j基准点：</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="46"/>
@@ -140,7 +140,7 @@
     <message>
         <location filename="../list/list.cpp" line="109"/>
         <source>Inc.</source>
-        <translation>位移</translation>
+        <translation>位移.</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="114"/>
@@ -278,7 +278,7 @@
     <message>
         <location filename="../list/list.cpp" line="210"/>
         <source>SPLINEPOINTS</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
@@ -332,7 +332,7 @@
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
-        <translation>选择原始实体</translation>
+        <translation>选择原始实体：</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="43"/>
@@ -354,12 +354,12 @@
     <message>
         <location filename="../picfile/picfile.cpp" line="36"/>
         <source>Read PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="42"/>
         <source>import PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -545,12 +545,12 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="59"/>
         <source>File...</source>
-        <translation>文件</translation>
+        <translation>文件...</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="67"/>
         <source>File type:</source>
-        <translation>文件类型</translation>
+        <translation>文件类型：</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="75"/>
@@ -613,7 +613,7 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="129"/>
         <source>as Label:</source>
-        <translation>为标识</translation>
+        <translation>作为标识：</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="141"/>
@@ -781,63 +781,63 @@
     <message>
         <location filename="../picfile/picfile.cpp" line="65"/>
         <source>File...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="75"/>
         <source>Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="79"/>
         <source>Accept</source>
-        <translation type="unfinished">同意</translation>
+        <translation>同意</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="83"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="111"/>
         <source>Select file</source>
-        <translation type="unfinished">选择文件</translation>
+        <translation>选择文件</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="132"/>
         <source>The file %1 not exist</source>
-        <translation type="unfinished">文件%1不存在</translation>
+        <translation>文件%1不存在</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="137"/>
         <source>Can&apos;t open the file %1</source>
-        <translation type="unfinished">不能打开文件%1</translation>
+        <translation>不能打开文件%1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="144"/>
         <source>%1 objects imported</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="166"/>
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="179"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="258"/>
         <location filename="../picfile/picfile.cpp" line="267"/>
         <source>format error in %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -846,7 +846,7 @@
         <location filename="../plotequation/plot.cpp" line="21"/>
         <location filename="../plotequation/plot.cpp" line="28"/>
         <source>Plot plugin</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -854,7 +854,7 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
@@ -863,60 +863,60 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>
         <source>Equation 1:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="23"/>
         <source>Equation 2:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="26"/>
         <source>start value:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="27"/>
         <source>end value:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="28"/>
         <source>step size:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32"/>
         <source>Draw</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -946,7 +946,7 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="209"/>
         <source>Separation</source>
-        <translation>分离：</translation>
+        <translation>分离</translation>
     </message>
 </context>
 </TS>
