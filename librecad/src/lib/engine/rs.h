@@ -266,6 +266,7 @@ public:
         ActionDrawLineParallel,
         ActionDrawLineParallelThrough,
         ActionDrawLinePolygonCenCor,
+        ActionDrawLinePolygonCenTan,//add by txmy
         ActionDrawLinePolygonCorCor,
         ActionDrawLineRectangle,
         ActionDrawLineRelAngle,
