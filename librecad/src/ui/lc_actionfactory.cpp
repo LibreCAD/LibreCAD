@@ -228,6 +228,13 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("DrawLinePolygonCenCor");
     a_map["DrawLinePolygonCenCor"] = action;
 
+    action = new QAction(tr("Pol&ygon (Cen,Tan)"), agm->line);  //20161223 added by txmy
+    action->setIcon(QIcon(":/icons/line_polygon_cen_tan.svg"));
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotDrawLinePolygon3()));
+    action->setObjectName("DrawLinePolygonCenTan");
+    a_map["DrawLinePolygonCenTan"] = action;
+
     action = new QAction(tr("Polygo&n (Cor,Cor)"), agm->line);
     action->setIcon(QIcon(":/icons/line_polygon_cor_cor.svg"));
     connect(action, SIGNAL(triggered()),
