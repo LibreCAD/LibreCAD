@@ -54,7 +54,7 @@ Function .onInit
   Push $R1
   Push $R2
 
-; get acount info into $R2
+; get account info into $R2
   userInfo::getAccountType
   pop $0
   StrCpy $R2 $0 5
