@@ -340,7 +340,7 @@ void dibPunto::procesFile(Document_Interface *doc)
     QMessageBox::information(this, "Info", "dibpunto procesFile");
     currDoc = doc;
 
-//Warning, can change ading or reordering "formatedit"
+//Warning, can change adding or reordering "formatedit"
     QString::SplitBehavior skip = QString::KeepEmptyParts;
     switch (formatedit->currentIndex()) {
     case 0:
