@@ -22,7 +22,7 @@
   ;Get installation folder from registry if available
   InstallDirRegKey HKCU "Software\LibreCAD" ""
 
-  ;Request application pivileges for Windows Vista
+  ;Request application privileges for Windows Vista
   RequestExecutionLevel admin
   ;TargetMinimalOS 5.1
 
