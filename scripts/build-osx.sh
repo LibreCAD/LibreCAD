@@ -11,7 +11,7 @@
 # -q=|-qmake_opts= : Set's additional qmake options exaomple : -qmake_opts="QMAKE_MAC_SDK=macosx10.9"
 # default is set to "-spec mkspec/macports" for backwards compatibility reasons of this script
 #
-# -no-p|--no-qtpath : Removes the default qtpath, this makes the defaukt search path take over to find qmake
+# -no-p|--no-qtpath : Removes the default qtpath, this makes the default search path take over to find qmake
 #
 # -cert=|-codesign-identity= : Run macdeployqt -codesign=<identity> (requires Qt >= 5.4.0)
 # Example: ./build-osx.sh -cert=123456789A
