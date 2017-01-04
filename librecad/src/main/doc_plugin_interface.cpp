@@ -792,6 +792,7 @@ bool Doc_plugin_interface::addToUndo(RS_Entity* current, RS_Entity* modified){
 
 void Doc_plugin_interface::updateView(){
     doc->setSelected(false);
+    gView->getContainer()->calculateBorders();
     gView->redraw();
 }
 
