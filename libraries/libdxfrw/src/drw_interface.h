@@ -20,7 +20,7 @@
 #include "drw_header.h"
 
 /**
- * Abstract class (interface) for comunicate dxfReader with the application.
+ * Abstract class (interface) for communicate dxfReader with the application.
  * Inherit your class which takes care of the entities in the 
  * processed DXF file from this interface. 
  *
