@@ -137,6 +137,10 @@ public:
                             const RS_Vector& corner2,
                             int number);
 
+    RS_Line* createPolygon3(const RS_Vector& center,
+                           const RS_Vector& tangent,
+                           int number);
+
 	RS_Insert* createInsert(const RS_InsertData* pdata);
 	
 	RS_Image* createImage(const RS_ImageData* pdata);

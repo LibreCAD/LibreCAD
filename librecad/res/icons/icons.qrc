@@ -194,5 +194,6 @@
         <file>text_align_topleft.svg</file>
         <file>text_align_topright.svg</file>
         <file>options.svg</file>
+        <file>line_polygon_cen_tan.svg</file>
     </qresource>
 </RCC>
