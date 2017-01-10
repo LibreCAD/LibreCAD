@@ -56,14 +56,14 @@ struct RS_SnapMode {
 
 	RS2::SnapRestriction restriction= RS2::RestrictNothing; /// The restriction on the free snap.
 
-	double distance=5.; /// The distance to snap before defaulting to free snaping.
+    double distance=5.; /// The distance to snap before defaulting to free snapping.
 
     /**
       * Disable all snapping.
       *
-      * This effectivly puts the object into free snap mode.
+      * This effectively puts the object into free snap mode.
       *
-      * @returns A refrence to itself.
+      * @returns A reference to itself.
       */
 	 RS_SnapMode const & clear(void);
 	 bool operator == (RS_SnapMode const& rhs) const;
@@ -71,7 +71,7 @@ struct RS_SnapMode {
 
 /**
  * This class is used for snapping functions in a graphic view.
- * Actions are usually derrived from this base class if they need
+ * Actions are usually derived from this base class if they need
  * to catch entities or snap to coordinates. Use the methods to
  * retrieve a graphic coordinate from a mouse coordinate.
  *
@@ -94,7 +94,7 @@ public:
     /**
      * @return Pointer to the entity which was the key entity for the
      * last successful snapping action. If the snap mode is "end point"
-     * the key entity is the entity whos end point was caught.
+     * the key entity is the entity whose end point was caught.
      * If the snap mode didn't require an entity (e.g. free, grid) this
      * method will return NULL.
      */
@@ -184,7 +184,7 @@ protected:
     RS_SnapMode snapMode;
     //RS2::SnapRestriction snapRes;
     /**
-     * Snap distance for snaping to points with a
+     * Snap distance for snapping to points with a
      * given distance from endpoints.
      */
 	double m_SnapDistance;

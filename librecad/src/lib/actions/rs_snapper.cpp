@@ -110,9 +110,9 @@ void RS_Snapper::finish() {
 /**
   * Disable all snapping.
   *
-  * This effectivly puts the object into free snap mode.
+  * This effectively puts the object into free snap mode.
   *
-  * @returns A refrence to itself.
+  * @returns A reference to itself.
   */
  RS_SnapMode const & RS_SnapMode::clear()
 {

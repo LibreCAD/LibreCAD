@@ -697,7 +697,7 @@ void RS_Commands::updateAlias(){
     if (aliasName.isEmpty())
         return;
     aliasName += "/librecad.alias";
-//    qDebug()<<"alisa file:\t"<<aliasName;
+//    qDebug()<<"alias file:\t"<<aliasName;
     QFile f(aliasName);
     QString line;
     std::map<QString, QString> aliasList;
@@ -746,7 +746,7 @@ void RS_Commands::updateAlias(){
 
     }
     //update alias file with non present commands
-//RLZ: to be writen
+//RLZ: to be written
 
     //add alias to shortCommands
     for(auto const& p: aliasList){
