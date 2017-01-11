@@ -1,2 +1,2 @@
-These icons where extracted from the ui files from the old qt3 ui files.
-in qt4 they are seperate icons and stored as PNG.
+These icons were extracted from the ui files from the old qt3 ui files.
+In Qt4 they are separate icons and stored as PNG.
