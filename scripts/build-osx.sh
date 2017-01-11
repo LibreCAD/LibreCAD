@@ -116,21 +116,17 @@ make -j4
 
 APP_FILE=LibreCAD
 OUTPUT_DMG=${APP_FILE}.dmg
-rm -f "${OUTPUT_DMG}"
+
 if [[ $CODESIGN_IDENTITY ]]
 then
-	${QT_PATH}macdeployqt ${APP_FILE}.app -verbose=2 -dmg -codesign=$CODESIGN_IDENTITY
+	${QT_PATH}macdeployqt ${APP_FILE}.app -verbose=2 -dmg -always-overwrite -codesign=$CODESIGN_IDENTITY
 else
-	${QT_PATH}macdeployqt ${APP_FILE}.app -verbose=2 -dmg
+	${QT_PATH}macdeployqt ${APP_FILE}.app -verbose=2 -dmg -always-overwrite
 fi
 
-TMP_DMG=$(mktemp temp-DMG.XXXXXXXXXX)
-
-mv -vf "${OUTPUT_DMG}" "${TMP_DMG}"
-
 #bz2 compression
-rm -f $OUTPUT_DMG
-hdiutil convert -format UDBZ "${TMP_DMG}" -o "$OUTPUT_DMG"
+hdiutil convert -format UDBZ -ov -o "$OUTPUT_DMG" "$OUTPUT_DMG"
+
 if [[ -f  "${OUTPUT_DMG}" ]]
 then
 	echo "DMG installer generated:"
