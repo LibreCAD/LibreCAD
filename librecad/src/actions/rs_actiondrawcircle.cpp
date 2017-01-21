@@ -101,7 +101,7 @@ void RS_ActionDrawCircle::mouseMoveEvent(QMouseEvent* e) {
 		data->center = mouse;
         break;
 
-    case SetRadius:
+    case SetPoint:
 		if (data->center.valid) {
 			data->radius = data->center.distanceTo(mouse);
             deletePreview();
@@ -137,13 +137,13 @@ void RS_ActionDrawCircle::coordinateEvent(RS_CoordinateEvent* e) {
     RS_Vector mouse = e->getCoordinate();
 
     switch (getStatus()) {
-    case SetCenter:
+    case SetCenter:        
 		data->center = mouse;
         graphicView->moveRelativeZero(mouse);
-        setStatus(SetRadius);
+        setStatus(SetPoint);
         break;
 
-    case SetRadius:
+    case SetPoint:
 		if (data->center.valid) {
             graphicView->moveRelativeZero(mouse);
 			data->radius = data->center.distanceTo(mouse);
@@ -167,24 +167,6 @@ void RS_ActionDrawCircle::commandEvent(RS_CommandEvent* e) {
 										 + getAvailableCommands().join(", "));
 		return;
 	}
-
-    switch (getStatus()) {
-
-    case SetRadius: {
-            bool ok;
-            double r = RS_Math::eval(c, &ok);
-            if (ok) {
-				data->radius = r;
-                e->accept();
-                trigger();
-			} else
-				RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-            //setStatus(SetCenter);
-        }
-
-    default:
-        break;
-    }
 }
 
 
@@ -200,8 +182,8 @@ void RS_ActionDrawCircle::updateMouseButtonHints() {
     case SetCenter:
 		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify center"), tr("Cancel"));
         break;
-    case SetRadius:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify radius"), tr("Back"));
+    case SetPoint:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify point"), tr("Back"));
         break;
     default:
 		RS_DIALOGFACTORY->updateMouseWidget();
