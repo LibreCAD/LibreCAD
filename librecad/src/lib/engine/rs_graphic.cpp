@@ -667,6 +667,10 @@ RS2::LinearFormat RS_Graphic::getLinearFormat(int f){
     case 5:
         return RS2::Fractional;
         break;
+
+    case 6:
+        return RS2::ArchitecturalMetric;
+        break;
     }
 
     return RS2::Decimal;

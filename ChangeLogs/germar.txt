@@ -1,0 +1,14 @@
+2017-02-16 Germar <github.com/Germar>
+
+* rs.h (LinearFormat)
+* rs_dimaligned.cpp (getMeasuredLabel)
+* rs_dimdiametric.cpp (getMeasuredLabel)
+* rs_dimlinear.cpp (getMeasuredLabel)
+* rs_dimradial.cpp (getMeasuredLabel)
+* rs_graphic.cpp (getLinearFormat)
+* rs_units.cpp (formatLinear)
+* rs_units.h (public):
+added ArchitecturalMetric using DIN 406 (issue #861)
+
+* qg_dlgoptionsdrawing.cpp (validate):
+add warning about unit for length format 'ArchitecturalMetric' must be 'Meter'

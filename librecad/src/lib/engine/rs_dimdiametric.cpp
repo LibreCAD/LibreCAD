@@ -100,7 +100,7 @@ QString RS_DimDiametric::getMeasuredLabel() {
         if (format == RS2::Decimal)
             ret = stripZerosLinear(ret, dimzin);
         //verify if units are decimal and comma separator
-        if (dimlunit==2){
+        if (format == RS2::Decimal || format == RS2::ArchitecturalMetric){
             if (getGraphicVariableInt("$DIMDSEP", 0) == 44)
                 ret.replace(QChar('.'), QChar(','));
         }
@@ -223,4 +223,3 @@ std::ostream& operator << (std::ostream& os, const RS_DimDiametric& d) {
     os << " DimDiametric: " << d.getData() << "\n" << d.getEData() << "\n";
     return os;
 }
-

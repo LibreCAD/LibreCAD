@@ -481,7 +481,9 @@ public:
         /** Architectural (e.g. 7'-9 1/8")*/
         Architectural,
         /** Fractional (e.g. 7 9 1/8) */
-        Fractional
+        Fractional,
+        /** Metric Architectural using DIN 406 (e.g. 1.12⁵)*/
+        ArchitecturalMetric
     };
 
     /**
