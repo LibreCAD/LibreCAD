@@ -27,6 +27,7 @@
 #include<iostream>
 #include<cmath>
 #include <QObject>
+#include <QStringList>
 #include "rs_units.h"
 #include "rs_math.h"
 #include "rs_vector.h"
