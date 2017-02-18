@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="gl">
 <context>
@@ -7,7 +6,7 @@
         <location filename="../asciifile/asciifile.cpp" line="35"/>
         <location filename="../asciifile/asciifile.cpp" line="41"/>
         <source>Read ascii points</source>
-        <translation>Ler puntos ASCII</translation>
+        <translation>Ler &amp;puntos ASCII</translation>
     </message>
 </context>
 <context>
@@ -15,7 +14,7 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="40"/>
         <source>Import ESRI Shapefile</source>
-        <translation>Importar ESRI Shapefile</translation>
+        <translation>Importar &amp;ESRI Shapefile</translation>
     </message>
 </context>
 <context>
@@ -24,7 +23,7 @@
         <location filename="../align/align.cpp" line="20"/>
         <location filename="../align/align.cpp" line="27"/>
         <source>Align</source>
-        <translation>Aliñar</translation>
+        <translation>&amp;Aliñar</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="40"/>
@@ -274,7 +273,7 @@
     <message>
         <location filename="../list/list.cpp" line="210"/>
         <source>SPLINEPOINTS</source>
-        <translation>SPLINENODOS</translation>
+        <translation>NODOS DE SPLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
@@ -532,7 +531,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="365"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>Non se pode abrir o ficheiro %1</translation>
     </message>
 </context>
@@ -807,7 +806,7 @@
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="137"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>Non se pode abrir o ficheiro %1</translation>
     </message>
     <message>
@@ -855,12 +854,12 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
+If you don't want to use the parametric form, just leave out "Equation2".
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
         <translation>Este plugin permítelle trazar ecuacións matemáticas.
-Se non quere empregar a forma paramétrica, deixe sen cubrir &quot;Ecuación2&quot;.
+Se non quere empregar a forma paramétrica, deixe sen cubrir "Ecuación2".
 Pode empregar pi cando precise o valor de pi (ex. (3 *pi)).
 Use t ou x na súa ecuación como unha variable/parámetro.
 </translation>
