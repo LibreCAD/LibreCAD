@@ -8985,6 +8985,10 @@ Turpināt?</translation>
         <source>Paste Multiple Commands</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>License</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -12868,6 +12872,13 @@ Turpināt?</translation>
         <source>row</source>
         <comment>row</comment>
         <translation type="obsolete">rinda</translation>
+    </message>
+</context>
+<context>
+    <name>TextFileViewer</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished">Kadrs</translation>
     </message>
 </context>
 <context>

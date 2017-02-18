@@ -10640,6 +10640,10 @@ Continue?</source>
         <source>Paste Multiple Commands</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>License</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtBoolPropertyManager</name>
@@ -14986,6 +14990,13 @@ não são exibidas para melhorar a performance de exibição.</translation>
     <message>
         <source>Available commands:</source>
         <translation type="obsolete">Comandos disponíveis:</translation>
+    </message>
+</context>
+<context>
+    <name>TextFileViewer</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

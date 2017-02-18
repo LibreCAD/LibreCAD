@@ -11067,6 +11067,10 @@ Continue?</source>
         <source>Paste Multiple Commands</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>License</source>
+        <translation type="unfinished">Άδεια</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -16146,6 +16150,13 @@ Continue?</source>
         <source>row</source>
         <comment>row</comment>
         <translation type="obsolete">σειρά</translation>
+    </message>
+</context>
+<context>
+    <name>TextFileViewer</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished">Πλαίσιο</translation>
     </message>
 </context>
 <context>

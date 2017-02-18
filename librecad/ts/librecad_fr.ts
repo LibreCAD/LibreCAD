@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr">
+<TS version="2.0" language="fr">
 <context>
     <name>ColorWizard</name>
     <message>
@@ -363,7 +363,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>&amp;Trim segments</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Épurer les segments</translation>
     </message>
     <message>
         <source>Trim polyline&apos;s segments</source>
@@ -3018,19 +3018,19 @@ in a separate window</source>
         <source>ø (Diameter)</source>
         <translation type="obsolete">ø (Diamètre)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>° (Degree)</source>
         <translation>° (degrés)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>± (Plus / Minus)</source>
         <translation>± (plus / moins)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>× (Times)</source>
         <translation>× (par)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>÷ (Division)</source>
         <translation>÷ (division)</translation>
     </message>
@@ -3038,11 +3038,11 @@ in a separate window</source>
         <source>¶ (Pi)</source>
         <translation type="obsolete">¶ (Pi)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>⌀ (Diameter)</source>
         <translation>⌀ (diamètre)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>π (Pi)</source>
         <translation>π (Pi)</translation>
     </message>
@@ -3682,11 +3682,11 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
         <source>Diameter (ø)</source>
         <translation type="obsolete">Diamètre (ø)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Degree (°)</source>
         <translation type="unfinished">Degrés (°)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Plus / Minus (±)</source>
         <translation type="unfinished">Plus / Moins (±)</translation>
     </message>
@@ -3702,35 +3702,35 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
         <source>Dollar ($)</source>
         <translation type="unfinished">Dollar ($)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Copyright (©)</source>
         <translation type="unfinished">Copyright (©)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Registered (®)</source>
         <translation type="unfinished">Enregistré (®)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Paragraph (§)</source>
         <translation type="unfinished">Paragraphe (§)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Pi (π)</source>
         <translation type="unfinished">Pi (π)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Pound (£)</source>
         <translation type="unfinished">Livres (£)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Yen (¥)</source>
         <translation type="unfinished">Yen (¥)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Times (×)</source>
         <translation type="unfinished">Par (×)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Division (÷)</source>
         <translation type="unfinished">Division (÷)</translation>
     </message>
@@ -4178,7 +4178,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
         <translation type="unfinished">[100000-10FFFD] Zone supplémentaire B à usage privé</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Diameter (⌀)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4608,7 +4608,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Haut</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
@@ -5151,7 +5151,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tout</translation>
     </message>
     <message>
         <source>Scrollbars</source>
@@ -5276,7 +5276,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5704,11 +5704,11 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
         <source>Diameter (ø)</source>
         <translation type="obsolete">Diamètre (ø)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Degree (°)</source>
         <translation>Degrés (°)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Plus / Minus (±)</source>
         <translation>Plus / Moins (±)</translation>
     </message>
@@ -5724,19 +5724,19 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
         <source>Dollar ($)</source>
         <translation>Dollar ($)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Paragraph (§)</source>
         <translation>Paragraphe (§)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Pound (£)</source>
         <translation>Livres (£)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Times (×)</source>
         <translation>Par (×)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Division (÷)</source>
         <translation>Division (÷)</translation>
     </message>
@@ -6208,19 +6208,19 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
         <source>Alt+D</source>
         <translation type="obsolete">Alt+D</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Copyright (©)</source>
         <translation>Copyright (©)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Registered (®)</source>
         <translation>Enregistré (®)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Pi (π)</source>
         <translation>Pi (π)</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Yen (¥)</source>
         <translation>Yen (¥)</translation>
     </message>
@@ -6276,7 +6276,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
         <source>Middle</source>
         <translation type="obsolete">Milieu</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>Diameter (⌀)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6336,7 +6336,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>LFF Font %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Police LFF %1</translation>
     </message>
     <message>
         <source>QCad Font %1</source>
@@ -6394,7 +6394,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>dwg Drawing %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">dessin DWG %1</translation>
     </message>
     <message>
         <source>Untitled</source>
@@ -6745,7 +6745,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Toggle &amp;Construction Layer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Basculler le mode &amp;construction du calque</translation>
     </message>
 </context>
 <context>
@@ -9366,6 +9366,10 @@ n</translation>
     <message>
         <source>Paste Multiple Commands</source>
         <translation>Coller plusieurs commandes</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation type="unfinished">Licence</translation>
     </message>
 </context>
 <context>
@@ -14124,6 +14128,13 @@ n</translation>
     </message>
 </context>
 <context>
+    <name>TextFileViewer</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Ui_ArcOptions</name>
     <message>
         <source>Arc Options</source>
@@ -14237,27 +14248,27 @@ n</translation>
         <source>Label:</source>
         <translation type="unfinished">Etiquette :</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>⌀</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>°</source>
         <translation type="unfinished">°</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>±</source>
         <translation type="unfinished">±</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>π</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>×</source>
         <translation type="unfinished">×</translation>
     </message>
-    <message>
+    <message utf8="true">
         <source>÷</source>
         <translation type="unfinished">÷</translation>
     </message>

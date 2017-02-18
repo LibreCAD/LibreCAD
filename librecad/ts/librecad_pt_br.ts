@@ -11692,6 +11692,10 @@ Deseja continuar?</translation>
         <source>Paste Multiple Commands</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>License</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtBoolPropertyManager</name>
@@ -17245,6 +17249,13 @@ não são exibidas para melhorar a performance de exibição.</translation>
         <source>calculate</source>
         <comment>command to trigger cli calculator</comment>
         <translation type="obsolete">calculate</translation>
+    </message>
+</context>
+<context>
+    <name>TextFileViewer</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

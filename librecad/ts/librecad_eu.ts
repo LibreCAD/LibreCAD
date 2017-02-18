@@ -6857,6 +6857,10 @@ Continue?</source>
         <source>Paste Multiple Commands</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>License</source>
+        <translation type="unfinished">Lizentzia</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
@@ -9152,6 +9156,13 @@ Continue?</source>
     <message>
         <source>Back</source>
         <translation type="unfinished">Atzera</translation>
+    </message>
+</context>
+<context>
+    <name>TextFileViewer</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished">Markoa</translation>
     </message>
 </context>
 <context>
