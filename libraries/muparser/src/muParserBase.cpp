@@ -132,9 +132,9 @@ namespace mu
   {}
 
   //---------------------------------------------------------------------------
-  /** \brief Assignement operator. 
+  /** \brief Assignment operator.
 
-    Implemented by calling Assign(a_Parser). Self assignement is suppressed.
+    Implemented by calling Assign(a_Parser). Self assignment is suppressed.
     \param a_Parser Object to copy to this.
     \return *this
     \throw nothrow

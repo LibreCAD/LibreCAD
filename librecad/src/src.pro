@@ -110,6 +110,11 @@ INCLUDEPATH += \
     ../res
 
 RESOURCES += ../res/extui/extui.qrc
+RESOURCES += ../res/actions/actions.qrc
+RESOURCES += ../res/icons/icons.qrc
+RESOURCES += ../res/ui/ui.qrc
+RESOURCES += ../res/main/main.qrc
+RESOURCES += ../../licenses/licenses.qrc
 
 # ################################################################################
 # Library
@@ -577,8 +582,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actionzoomscroll.cpp \
     actions/rs_actionzoomwindow.cpp
 
-RESOURCES += ../res/actions/actions.qrc
-RESOURCES += ../res/icons/icons.qrc
+
 
 # ################################################################################
 # UI
@@ -684,7 +688,8 @@ HEADERS += ui/lc_actionfactory.h \
     ui/generic/linklist.h \
     ui/generic/colorcombobox.h \
     ui/generic/colorwizard.h \
-    ui/lc_penwizard.h
+    ui/lc_penwizard.h \
+    ui/generic/textfileviewer.h
 
 SOURCES += ui/lc_actionfactory.cpp \
     ui/qg_actionhandler.cpp \
@@ -786,7 +791,8 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/generic/linklist.cpp \
     ui/generic/colorcombobox.cpp \
     ui/generic/colorwizard.cpp \
-    ui/lc_penwizard.cpp
+    ui/lc_penwizard.cpp \
+    ui/generic/textfileviewer.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_arcoptions.ui \
@@ -860,9 +866,8 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/lc_deviceoptions.ui \
     ui/generic/comboboxoption.ui \
     ui/generic/widgetcreator.ui \
-    ui/generic/colorwizard.ui
-
-RESOURCES += ../res/ui/ui.qrc
+    ui/generic/colorwizard.ui \
+    ui/generic/textfileviewer.ui
 
 # ################################################################################
 # Main
@@ -897,7 +902,6 @@ contains(DEFINES, EMU_C99) {
     HEADERS += main/emu_c99.h
 }
 
-RESOURCES += ../res/main/main.qrc
 
 # ################################################################################
 # Translations

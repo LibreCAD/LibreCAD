@@ -271,7 +271,7 @@ void RS_ActionDrawArcTangential::updateMouseButtonHints() {
 
 
 void RS_ActionDrawArcTangential::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 

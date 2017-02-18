@@ -1,0 +1,78 @@
+              K S T 3 2 B  (KST32B version 2.0)  説明文書
+ 
+          COPYRIGHT (C) 2004 by Saka.N (Saka.N.06@b3.mnx.ne.jp)
+          FREEWARE (free to copy,change...; NO RESPONSIBILITY) : 無保証
+ 
+                       for KST32B ver 2.000 :  2004/01/24   by Saka.N
+ 
+
+
+ 
+ 【  1 : 概要  】
+ 
+  JIS漢字をモデルにしたKST(Kanji-Stroke-Table:FontFile)です.
+  このKSTは,CSF/1という独自形式のPlainTextFile(ASCII+半角カナ)で,その
+仕様はフォント本体のHeaderCommentに記述しています.  フォント･ファイル
+本体の,先頭から約20行を参照してください.
+  今回のver2.0では,JIS第1水準文字と,(半角の)ASCII,半角ｶﾅ,ISO8859-15,
+それと,多く(約80%)のJIS第2水準漢字が入っています.   但し,ISO8859-15は,
+0xADを除き,且つ,A0～FFを1A20～1A7FにMappingして入れています.
+  KST32Bはフリーウェアですので無保証で,使用,配付改変,再配付等は自由で
+すが,使用した結果のいかなる影響についても,責任及び賠償責任は,一切負いか
+ねます.
+ 
+  CSF/1(CompactStrokeFontFormat/ver1)形式及びKST32Bの特徴を列記します.
+ 
+  ・ コンパクトである; 第2水準を除くと約160KByte.
+  ・ 30x32の格子点座標を結ぶ直線(Segment)で,Strokeを定義している.
+  ・ JISのC6226とX0208の文字定義に基づいているが,厳密に従っているわけ
+    ではない.
+  ・ PlainText形式なので,実用的ではないが,テキスト･エディターでも内容
+    確認や変更が可能である.
+  ・ 同じ理由で,ポータビリティーに優れている.
+
+ 
+ 
+ 
+ 
+ 【  2 : ファイル一覧  】
+ 
+    KST32B.RDM  : THIS FILE : 日本語取説
+    KST32B.MAN  : Brief manual text(EnglishLike?)
+    KST32B.TXT  : KST-FontData 本体
+  
+ 
+ 
+ 
+ 【  3 : 補足  】
+ 
+  (3.1)  関連Tool : 
+    このKST(フォント)の形式は独自形式(CSF/1)ですので,通常は,そのまま
+   では使えません.  KSTの表示/印刷/形式変換/更新等のToolを,'KSTool'と
+   いう名称で,Vector社のWib-siteにて公開中です.  これはUnix(Linux)&
+   X-Windowを主対象としていますが,MS-Windows(95,98,98se,Me,2000,Xp)や
+   NEC/PC-9801での最低限の表示Toolも入っています.
+ 
+  (3.2)  Bitmap展開size : 
+    Bitmapへの展開size(Y-方向)は,12～150pixel程度を想定していますが,
+   KSTの形式上は32pixelが最適です(X-方向には30).  線の太さは,Y-方向の
+   sizeを32とした場合で,1.1～1.9を想定しています.  多少太くても,品質が
+   極端に落ちないと思って(?)います.  描画線の先端形状(Cap)は'丸'を推奨
+   します.
+ 
+  (3.3)  Version_Up History : 
+   (3.3.1) KST32A  : 1999/10
+     (主に)1992年に開発したJIS第1水準KSTをVector-Web-Siteへ公開.
+   (3.3.2) KST32B ver 1.0 : 2001/03
+     JIS第2水準の一部を追加し,半角ASCIIと半角ｶﾅも追加.  一部の漢字の
+    表現をJIS-C6226からX0208へ変更等.
+   (3.3.3) KST32B ver 2.0 : 2004/01
+     JIS第2水準漢字を増やした事(全体の約80%)と,第1水準漢字の見直し,
+    ISO8859-15の追加.  全角EuroSignも0x2921に仮設定等.
+ 
+  (3.4)  半角文字の定義領域 : 
+    全角文字は,CSF/1の全ての定義領域(30x32)を使っていますが,半角文字の
+   場合は,その左半分の,15x32のみを使っています.
+ 
+ 
+ ---  以 上  ---

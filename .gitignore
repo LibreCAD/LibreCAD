@@ -42,6 +42,7 @@ object_script.libdxfrw.*
 # Win/qmake generated project files
 #*.vcproj
 #*.sln
+custom-windows*.*
 
 #Doxygen
 html/

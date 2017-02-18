@@ -102,12 +102,16 @@ namespace DPI {
         XSCALE=41,      /*!< double: x insert scale */
         YSCALE=42,      /*!< double: y insert scale */
         ZSCALE=43,      /*!< double: z insert scale always 1? */
+        COLSPACE = 44,  ///< double: insert column spacing
+        ROWSPACE = 45,  ///< double: insert row spacing
         LTSCALE=48,     /*!< line type scale (not in LibreCAD) */
         STARTANGLE=50,  /*!< double: arc start angle or rotation angle for insert and text */
         ENDANGLE=51,    /*!< double: arc end angle */
         VISIBLE=60,     /*!< int: 1 visible, 0 invisible (reversed from dxf spec, but more logic*/
         COLOR=62,       /*!< int: -1 ByLayer, -2 ByBlock, other 24 bit RGB color: entity color */
         CLOSEPOLY=70,   /*!< int: closed polyline 0=open, 1=closed */
+        COLCOUNT = 70,  ///< int: insert number of columns
+        ROWCOUNT = 71,  ///< int: insert number of rows
         TXTALIGNH=72,   /*!< enum: horizontal alignment for text */
         TXTALIGNV=73,   /*!< enum: vertical alignment for text */
         REVERSED=291 /*!< bool: true if arc is reversed (clockwise) */

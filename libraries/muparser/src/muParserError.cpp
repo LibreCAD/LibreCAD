@@ -253,7 +253,7 @@ namespace mu
   {}
 
   //------------------------------------------------------------------------------
-  /** \brief Replace all ocuurences of a substring with another string. 
+  /** \brief Replace all occurrences of a substring with another string.
       \param strFind The string that shall be replaced.
       \param strReplaceWith The string that should be inserted instead of strFind
   */

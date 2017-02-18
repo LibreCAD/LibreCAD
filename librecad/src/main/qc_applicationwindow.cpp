@@ -2,7 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2015-2016 ravas (ravas@outlook.com - github.com/r-a-v-a-s)
+** Copyright (C) 2015-2016 ravas (github.com/r-a-v-a-s)
 ** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
@@ -24,6 +24,8 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+
+// Changes: https://github.com/LibreCAD/LibreCAD/commits/master/librecad/src/main/qc_applicationwindow.cpp
 
 #include "qc_applicationwindow.h"
 
@@ -98,6 +100,7 @@
 #include "linklist.h"
 #include "colorwizard.h"
 #include "lc_penwizard.h"
+#include "textfileviewer.h"
 
 #include <boost/version.hpp>
 
@@ -128,6 +131,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     : ag_manager(new LC_ActionGroupManager(this))
     , autosaveTimer(nullptr)
     , actionHandler(new QG_ActionHandler(this))
+    , current_subwindow(nullptr)
     , pen_wiz(new LC_PenWizard(QObject::tr("Pen Wizard"), this))
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
@@ -3124,4 +3128,49 @@ void QC_ApplicationWindow::destroyMenu(const QString& menu_name)
         }
     }
     settings.endGroup();
+}
+
+void QC_ApplicationWindow::changeEvent(QEvent* event)
+{
+    // author: ravas
+    // returning to LC via Command+Tab won't always activate a subwindow #821
+
+    #if defined(Q_OS_OSX)
+        if (event->type() == QEvent::ActivationChange)
+        {
+            if (isActiveWindow())
+            {
+                if (current_subwindow)
+                    mdiAreaCAD->setActiveSubWindow(current_subwindow);
+            }
+            else
+            {
+                current_subwindow = mdiAreaCAD->currentSubWindow();
+            }
+        }
+    #else
+    Q_UNUSED( event)
+    #endif
+}
+
+
+void QC_ApplicationWindow::invokeLicenseWindow()
+{
+    // author: ravas
+
+    QDialog dlg;
+
+    dlg.setWindowTitle(QObject::tr("License"));
+
+    auto viewer = new TextFileViewer(&dlg);
+    auto layout = new QVBoxLayout;
+    layout->addWidget(viewer);
+    dlg.setLayout(layout);
+
+    viewer->addFile("readme", ":/readme.md");
+    viewer->addFile("GPLv2", ":/gpl-2.0.txt");
+
+    viewer->setFile("readme");
+
+    dlg.exec();
 }

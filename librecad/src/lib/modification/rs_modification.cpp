@@ -375,7 +375,9 @@ void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref, const bool 
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: cut ID/flag: %d/%d", e->getId(), e->rtti());
         e->changeUndoState();
         if (document) {
+            document->startUndoCycle();
             document->addUndoable(e);
+            document->endUndoCycle();
         }
         // delete entity in graphic view:
         if (graphicView) {
@@ -2050,7 +2052,9 @@ void RS_Modification::deselectOriginals(bool remove
                     //}
                     e->changeUndoState();
                     if (document && handleUndo) {
+                        document->startUndoCycle();
                         document->addUndoable(e);
+                        document->endUndoCycle();
                     }
                 } else {
                     //if (graphicView) {
@@ -2080,7 +2084,9 @@ void RS_Modification::addNewEntities(std::vector<RS_Entity*>& addList) {
 		if (e) {
 			container->addEntity(e);
             if (document && handleUndo) {
-				document->addUndoable(e);
+                document->startUndoCycle();
+                document->addUndoable(e);
+                document->endUndoCycle();
             }
             //if (graphicView) {
             //    graphicView->drawEntity(e);
@@ -2622,6 +2628,9 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
         RS_Information::getIntersection(entity1, entity2, false);
 
     if (sol.getNumber()==0) {
+        if (document && handleUndo) {
+            document->endUndoCycle();
+        }
         return false;
     }
 

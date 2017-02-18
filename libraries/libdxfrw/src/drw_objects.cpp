@@ -690,7 +690,7 @@ bool DRW_Block_Record::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
         DRW_DBG(" xrefindex: "); DRW_DBG(xrefindex); DRW_DBG("\n");
     }
     flags |= buf->getBit() << 4;//is refx dependent, block code 70, bit 5 (16)
-    flags |= buf->getBit(); //if is anonimous block (*U) block code 70, bit 1 (1)
+    flags |= buf->getBit(); //if is anonymous block (*U) block code 70, bit 1 (1)
     flags |= buf->getBit() << 1; //if block contains attdefs, block code 70, bit 2 (2)
     bool blockIsXref = buf->getBit(); //if is a Xref, block code 70, bit 3 (4)
     bool xrefOverlaid = buf->getBit(); //if is a overlaid Xref, block code 70, bit 4 (8)

@@ -381,7 +381,7 @@ namespace mu
                f[4] = {0,0,0,0},
                fEpsilon(a_fEpsilon);
 
-    // Backwards compatible calculation of epsilon inc case the user doesnt provide
+    // Backwards compatible calculation of epsilon in case the user doesn't provide
     // his own epsilon
     if (fEpsilon==0)
       fEpsilon = (a_fPos==0) ? (value_type)1e-10 : (value_type)1e-7 * a_fPos;

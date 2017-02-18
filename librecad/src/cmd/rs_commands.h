@@ -36,8 +36,8 @@
 
 /**
  * Class which holds all commands for the command line. This
- * is separated in this module to alow the use of different
- * languages for the gui and the command interface.
+ * is separated in this module to allow the use of different
+ * languages for the GUI and the command interface.
  * Implemented as singleton.
  *
  * @author Andrew Mustun

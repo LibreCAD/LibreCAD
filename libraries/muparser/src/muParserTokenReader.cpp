@@ -56,9 +56,9 @@ namespace mu
   }
     
   //---------------------------------------------------------------------------
-  /** \brief Assignement operator.
+  /** \brief Assignment operator.
 
-      Self assignement will be suppressed otherwise #Assign is called.
+      Self assignment will be suppressed otherwise #Assign is called.
 
       \param a_Reader Object to copy to this token reader.
       \throw nothrow
@@ -221,13 +221,13 @@ namespace mu
   }
 
   //---------------------------------------------------------------------------
-  /** \brief Set Flag that contronls behaviour in case of undefined variables beeing found. 
+  /** \brief Set Flag that controls behavior in case of undefined variables being found.
   
     If true, the parser does not throw an exception if an undefined variable is found. 
     otherwise it does. This variable is used internally only!
-    It supresses a "undefined variable" exception in GetUsedVar().  
+    It suppresses a "undefined variable" exception in GetUsedVar().
     Those function should return a complete list of variables including 
-    those the are not defined by the time of it's call.
+    those that are not defined by the time of its call.
   */
   void ParserTokenReader::IgnoreUndefVar(bool bIgnore)
   {
@@ -407,7 +407,7 @@ namespace mu
               //if (len!=sTok.length())
               //  continue;
 
-              // The assignement operator need special treatment
+              // The assignment operator need special treatment
               if (i==cmASSIGN && m_iSynFlags & noASSIGN)
                 Error(ecUNEXPECTED_OPERATOR, m_iPos, pOprtDef[i]);
 
@@ -539,7 +539,7 @@ namespace mu
     if (iEnd==m_iPos)
       return false;
 
-    // iteraterate over all postfix operator strings
+    // iterate over all postfix operator strings
     funmap_type::const_reverse_iterator it = m_pInfixOprtDef->rbegin();
     for ( ; it!=m_pInfixOprtDef->rend(); ++it)
     {
@@ -695,7 +695,7 @@ namespace mu
     if (iEnd==m_iPos)
       return false;
 
-    // iteraterate over all postfix operator strings
+    // iterate over all postfix operator strings
     funmap_type::const_reverse_iterator it = m_pPostOprtDef->rbegin();
     for ( ; it!=m_pPostOprtDef->rend(); ++it)
     {
@@ -921,7 +921,7 @@ namespace mu
 		m_pParser->m_vStringBuf.push_back(strTok); // Store string in internal buffer
     a_Tok.SetString(strTok, m_pParser->m_vStringBuf.size());
 
-    m_iPos += (int)strTok.length() + 2 + (int)iSkip;  // +2 wg Anführungszeichen; +iSkip für entfernte escape zeichen
+    m_iPos += (int)strTok.length() + 2 + (int)iSkip;  // +2 wg AnfÃ¼hrungszeichen; +iSkip fÃ¼r entfernte escape zeichen
     m_iSynFlags = noANY ^ ( noARG_SEP | noBC | noOPT | noEND );
 
     return true;

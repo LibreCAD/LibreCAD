@@ -3,7 +3,7 @@
 **
 ** This file was created for the LibreCAD project (librecad.org), a 2D CAD program.
 **
-** Copyright (C) 2015 ravas (ravas@outlook.com)
+** Copyright (C) 2015 ravas (github.com/r-a-v-a-s)
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -761,6 +761,10 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     QAction* help_about = new QAction(QIcon(":/main/librecad.png"), QC_ApplicationWindow::tr("About"), main_window);
     connect(help_about, SIGNAL(triggered()), main_window, SLOT(showAboutWindow()));
     help_menu->addAction(help_about);
+
+    QAction* license = new QAction(QObject::tr("License"), main_window);
+    connect(license, SIGNAL(triggered()), main_window, SLOT(invokeLicenseWindow()));
+    help_menu->addAction(license);
 
     // <[~ Widgets Menu ~]>
 

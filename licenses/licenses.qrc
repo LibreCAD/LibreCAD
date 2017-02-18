@@ -1,0 +1,6 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>readme.md</file>
+    <file>gpl-2.0.txt</file>
+</qresource>
+</RCC>

@@ -4,7 +4,7 @@
 **
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
-**
+** Copyright (C) 2015, 2016 ravas (github.com/r-a-v-a-s)
 **
 ** This file may be distributed and/or modified under the terms of the
 ** GNU General Public License version 2 as published by the Free Software 
@@ -52,6 +52,8 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent, bool modal, Qt::Wind
     init();
     connect(variablefile_button, &QToolButton::clicked,
             this, &QG_DlgOptionsGeneral::setVariableFile);
+    connect(fonts_button, &QToolButton::clicked,
+            this, &QG_DlgOptionsGeneral::setFontsFolder);
 }
 
 /*
@@ -385,5 +387,23 @@ void QG_DlgOptionsGeneral::setVariableFile()
     if (!path.isEmpty())
     {
         variablefile_field->setText(QDir::toNativeSeparators(path));
+    }
+}
+
+/*!
+ * \brief slot for the font folder selection icon
+ * \author ravas
+ * \date 2016-286
+ */
+void QG_DlgOptionsGeneral::setFontsFolder()
+{
+    QFileDialog dlg(this);
+    dlg.setFileMode(QFileDialog::Directory);
+    dlg.setOption(QFileDialog::ShowDirsOnly);
+
+    if (dlg.exec())
+    {
+        auto dir = dlg.selectedFiles()[0];
+        lePathFonts->setText(QDir::toNativeSeparators(dir));
     }
 }

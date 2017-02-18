@@ -17,7 +17,8 @@ SUBDIRS     = \
         importshp \
         sample \
         picfile \
-        plotequation
+        plotequation \
+        gear
 
 TRANSLATIONS = ./ts/plugins_ar.ts \
     ./ts/plugins_ca.ts \

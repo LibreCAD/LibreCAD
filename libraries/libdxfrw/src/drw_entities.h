@@ -29,13 +29,13 @@ namespace DRW {
    //! Entity's type.
     enum ETYPE {
         E3DFACE,
-//        E3DSOLID, //encripted propietry data
+//        E3DSOLID, //encrypted proprietary data
 //        ACAD_PROXY_ENTITY,
         ARC,
 //        ATTDEF,
 //        ATTRIB,
         BLOCK,// and ENDBLK
-//        BODY, //encripted propietry data
+//        BODY, //encrypted proprietary data
         CIRCLE,
         DIMENSION,
         DIMALIGNED,
@@ -64,14 +64,14 @@ namespace DRW {
         POINT,
         POLYLINE,
         RAY,
-//        REGION, //encripted propietry data
+//        REGION, //encrypted proprietary data
 //        SECTION,
 //        SEQEND,//not needed?? used in polyline and insert/attrib and dwg
 //        SHAPE,
         SOLID,
         SPLINE,
 //        SUN,
-//        SURFACE, //encripted propietry data can be four types
+//        SURFACE, //encrypted proprietary data can be four types
 //        TABLE,
         TEXT,
 //        TOLERANCE,

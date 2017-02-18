@@ -3,7 +3,7 @@
 **
 ** This file was created for LibreCAD (https://github.com/LibreCAD/LibreCAD).
 **
-** Copyright (C) 2016 ravas (ravas@outlook.com - github.com/r-a-v-a-s)
+** Copyright (C) 2016 ravas (github.com/r-a-v-a-s)
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License
@@ -32,12 +32,21 @@
 #include "rs_entity.h"
 #include "qg_graphicview.h"
 
+#include <QVBoxLayout>
+
 LC_PenWizard::LC_PenWizard(const QString& title, QWidget* parent)
     : QDockWidget(title, parent)
     , mdi_win(nullptr)
     , color_wiz(new ColorWizard(this))
 {
-    setWidget(color_wiz);
+    auto frame = new QFrame(this);
+    auto layout = new QVBoxLayout;
+    frame->setLayout(layout);
+
+    layout->setMargin(0);
+    layout->addWidget(color_wiz);
+
+    setWidget(frame);
 
     connect(color_wiz, &ColorWizard::requestingColorChange,
             this, &LC_PenWizard::setColorForSelected);

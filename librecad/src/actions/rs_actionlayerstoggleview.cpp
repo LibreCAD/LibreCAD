@@ -22,7 +22,11 @@
 **
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
-**********************************************************************/
+** *************************************************************************
+** ChangeLog
+** *************************************************************************
+** This file was changed in 2016 by ravas. See ChangeLogs/r-a-v-a-s.txt
+****************************************************************************/
 
 #include "rs_actionlayerstoggleview.h"
 
@@ -44,6 +48,7 @@ void RS_ActionLayersToggleView::trigger() {
     if (graphic) {
         graphic->toggleLayer(a_layer);
         graphic->updateInserts();
+        container->calculateBorders();
     }
     finish(false);
 }
