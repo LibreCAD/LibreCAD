@@ -61,7 +61,8 @@ TRANSLATIONS = ./ts/plugins_ar.ts \
     ./ts/plugins_ko.ts \
     ./ts/plugins_lv.ts \
     ./ts/plugins_nl.ts \
-    ./ts/plugins_no.ts \
+    ../ts/librecad_no.ts \
+    ../ts/librecad_mk.ts \
     ./ts/plugins_pa.ts \
     ./ts/plugins_pl.ts \
     ./ts/plugins_pt_br.ts \
