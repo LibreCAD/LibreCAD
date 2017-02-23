@@ -11233,6 +11233,10 @@ Continue?</source>
         <source>Paste Multiple Commands</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>License</source>
+        <translation type="unfinished">Лицензия</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -16091,6 +16095,13 @@ Continue?</source>
     <message>
         <source>Accepted keycode: %1</source>
         <translation type="obsolete">Принята клавиатурная последовательность: %1</translation>
+    </message>
+</context>
+<context>
+    <name>TextFileViewer</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished">Рамка</translation>
     </message>
 </context>
 <context>

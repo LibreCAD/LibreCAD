@@ -48,6 +48,19 @@
     </message>
 </context>
 <context>
+    <name>LC_Gear</name>
+    <message>
+        <location filename="../gear/gear.cpp" line="33"/>
+        <source>Gear creation plugin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="40"/>
+        <source>Gear plugin</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_List</name>
     <message>
         <location filename="../list/list.cpp" line="23"/>
@@ -76,191 +89,211 @@
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="73"/>
+        <location filename="../list/list.cpp" line="77"/>
         <source>Layer</source>
         <translation>Στρώση</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="75"/>
+        <location filename="../list/list.cpp" line="79"/>
         <source>Color</source>
         <translation>Χρώμα</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="76"/>
+        <location filename="../list/list.cpp" line="80"/>
         <source>Line type</source>
         <translation>Τύπος γραμμής</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="77"/>
+        <location filename="../list/list.cpp" line="81"/>
         <source>Line thickness</source>
         <translation>Πάχος γραμμής</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="78"/>
+        <location filename="../list/list.cpp" line="82"/>
         <source>ID</source>
         <translatorcomment>εναλλακτικά {αναγνωριστικό, ταυτότητα}</translatorcomment>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="84"/>
+        <location filename="../list/list.cpp" line="88"/>
         <source>POINT</source>
         <translation>ΣΗΜΕΙΟ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="85"/>
-        <location filename="../list/list.cpp" line="195"/>
+        <location filename="../list/list.cpp" line="89"/>
+        <location filename="../list/list.cpp" line="218"/>
         <source>in point</source>
         <translation>σε σημείο</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="90"/>
+        <location filename="../list/list.cpp" line="94"/>
         <source>LINE</source>
         <translation>ΓΡΑΜΜΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="95"/>
+        <location filename="../list/list.cpp" line="99"/>
         <source>from point</source>
         <translation>από σημείο</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="98"/>
+        <location filename="../list/list.cpp" line="102"/>
         <source>to point</source>
         <translation>προς σημείο</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="103"/>
-        <location filename="../list/list.cpp" line="127"/>
+        <location filename="../list/list.cpp" line="107"/>
+        <location filename="../list/list.cpp" line="131"/>
         <source>length</source>
         <translation>μήκος</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="108"/>
+        <location filename="../list/list.cpp" line="112"/>
         <source>Angle in XY plane</source>
         <translation>Γωνία στο επίπεδο XY</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="109"/>
+        <location filename="../list/list.cpp" line="113"/>
         <source>Inc.</source>
         <translatorcomment>TODO CHECKME είναι inclination το αγγλικό;</translatorcomment>
         <translation>Κλίση.</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="114"/>
+        <location filename="../list/list.cpp" line="118"/>
         <source>ARC</source>
         <translation>ΤΟΞΟ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="115"/>
-        <location filename="../list/list.cpp" line="131"/>
-        <location filename="../list/list.cpp" line="141"/>
+        <location filename="../list/list.cpp" line="119"/>
+        <location filename="../list/list.cpp" line="135"/>
+        <location filename="../list/list.cpp" line="145"/>
         <source>center point</source>
         <translation>κέντρο</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="121"/>
-        <location filename="../list/list.cpp" line="135"/>
-        <location filename="../list/list.cpp" line="199"/>
+        <location filename="../list/list.cpp" line="125"/>
+        <location filename="../list/list.cpp" line="139"/>
+        <location filename="../list/list.cpp" line="222"/>
         <source>radius</source>
         <translation>ακτίνα</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="122"/>
+        <location filename="../list/list.cpp" line="126"/>
         <source>initial angle</source>
         <translation>αρχική γωνία</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="123"/>
+        <location filename="../list/list.cpp" line="127"/>
         <source>final angle</source>
         <translation>τελική γωνία</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="130"/>
+        <location filename="../list/list.cpp" line="134"/>
         <source>CIRCLE</source>
         <translation>ΚΥΚΛΟΣ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="136"/>
+        <location filename="../list/list.cpp" line="140"/>
         <source>circumference</source>
         <translation>περιφέρεια</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="137"/>
+        <location filename="../list/list.cpp" line="141"/>
         <source>area</source>
         <translation>εμβαδό</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="140"/>
+        <location filename="../list/list.cpp" line="144"/>
         <source>ELLIPSE</source>
         <translation>ΕΛΛΕΙΨΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="144"/>
+        <location filename="../list/list.cpp" line="148"/>
         <source>major axis</source>
         <translation>κύριος άξονας</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="162"/>
+        <location filename="../list/list.cpp" line="166"/>
         <source>CONSTRUCTIONLINE</source>
         <translatorcomment>CHECKME αυτοσχεδιαστική μετάφραση, καθώς και το &quot;βοηθητική&quot; έχει χρησιμοποιηθεί για το &quot;extension&quot; και ίσως είναι κάτι διαφορετικό</translatorcomment>
         <translation>ΚΑΤΑΣΚΕΥΑΣΤΙΚΗΓΡΑΜΜΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="165"/>
+        <location filename="../list/list.cpp" line="169"/>
         <source>OVERLAYBOX</source>
         <translation>ΠΛΑΙΣΙΟΕΠΙΚΑΛΥΨΗΣ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="168"/>
+        <location filename="../list/list.cpp" line="172"/>
         <source>SOLID</source>
         <translation>ΣΥΜΠΑΓΕΣ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="172"/>
+        <location filename="../list/list.cpp" line="176"/>
         <source>MTEXT</source>
         <translation>ΠΚΕΙΜΕΝΟ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="175"/>
+        <location filename="../list/list.cpp" line="179"/>
         <source>TEXT</source>
         <translation>ΚΕΙΜΕΝΟ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="178"/>
+        <location filename="../list/list.cpp" line="182"/>
         <source>INSERT</source>
         <translation>ΕΙΣΑΓΩΓΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="181"/>
+        <location filename="../list/list.cpp" line="185"/>
         <source>Name</source>
         <translation>Όνομα</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="182"/>
+        <location filename="../list/list.cpp" line="187"/>
         <source>Insertion point</source>
         <translation>Σημείο εισαγωγής</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="187"/>
+        <location filename="../list/list.cpp" line="190"/>
+        <source>Scale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="193"/>
+        <source>Rotation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="199"/>
+        <source>Columns/Rows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="203"/>
+        <source>Column/Row Spacing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="210"/>
         <source>POLYLINE</source>
         <translation>ΠΟΛΥΓΡΑΜΜΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="188"/>
+        <location filename="../list/list.cpp" line="211"/>
         <source>Closed</source>
         <translation>Κλειστή</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="189"/>
+        <location filename="../list/list.cpp" line="212"/>
         <source>No</source>
         <translation>Όχι</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="189"/>
+        <location filename="../list/list.cpp" line="212"/>
         <source>Yes</source>
         <translation>Ναι</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="190"/>
+        <location filename="../list/list.cpp" line="213"/>
         <source>Vertices</source>
         <translation>Κορυφές</translation>
     </message>
@@ -270,58 +303,58 @@
         <translation type="obsolete">καμπυλότητα</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="204"/>
+        <location filename="../list/list.cpp" line="227"/>
         <source>IMAGE</source>
         <translation>ΕΙΚΟΝΑ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="207"/>
+        <location filename="../list/list.cpp" line="230"/>
         <source>SPLINE</source>
         <translation>SPLINE</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="210"/>
+        <location filename="../list/list.cpp" line="233"/>
         <source>SPLINEPOINTS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="213"/>
+        <location filename="../list/list.cpp" line="236"/>
         <source>HATCH</source>
         <translation>ΔΙΑΓΡΑΜΜΙΣΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="216"/>
+        <location filename="../list/list.cpp" line="239"/>
         <source>DIMLEADER</source>
         <translation>ΔΙΑΣΤΑΣΗΟΔΗΓΟΣ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="219"/>
+        <location filename="../list/list.cpp" line="242"/>
         <source>DIMALIGNED</source>
         <translatorcomment>CHECKME ΣΤΟΙΧΙΣΜΕΝΗ &apos;Η ΕΥΘΥΓΡΑΜΜΙΣΜΕΝΗ ΚΑΙ ΓΙΑΤΙ ΚΑΙ ΠΡΟΣΟΧΗ ΣΤΑ ΑΛΛΑ</translatorcomment>
         <translation>ΔΙΑΣΤΑΣΗΣΤΟΙΧΙΣΜΕΝΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="222"/>
+        <location filename="../list/list.cpp" line="245"/>
         <source>DIMLINEAR</source>
         <translation>ΔΙΑΣΤΑΣΗΓΡΑΜΜΙΚΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="225"/>
+        <location filename="../list/list.cpp" line="248"/>
         <source>DIMRADIAL</source>
         <translation>ΔΙΑΣΤΑΣΗΑΚΤΙΝΙΚΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="228"/>
+        <location filename="../list/list.cpp" line="251"/>
         <source>DIMDIAMETRIC</source>
         <translation>ΔΙΑΣΤΑΣΗΔΙΑΜΕΤΡΙΚΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="231"/>
+        <location filename="../list/list.cpp" line="254"/>
         <source>DIMANGULAR</source>
         <translation>ΔΙΑΣΤΑΣΗΓΩΝΙΑΚΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="234"/>
+        <location filename="../list/list.cpp" line="257"/>
         <source>UNKNOWN</source>
         <translation>ΑΓΝΩΣΤΟ</translation>
     </message>
@@ -722,9 +755,67 @@
     </message>
 </context>
 <context>
+    <name>lc_Geardlg</name>
+    <message>
+        <location filename="../gear/gear.cpp" line="66"/>
+        <source>Draw a gear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="71"/>
+        <source>Number of teeth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="79"/>
+        <source>Circular pitch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="87"/>
+        <source>Pressure angle (deg)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="95"/>
+        <source>Addendum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="103"/>
+        <source>Dedendum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="111"/>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="114"/>
+        <source>Spur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="115"/>
+        <source>Ring</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="119"/>
+        <source>Accept</source>
+        <translation type="unfinished">Αποδοχή</translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="124"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+</context>
+<context>
     <name>lc_Listdlg</name>
     <message>
-        <location filename="../list/list.cpp" line="251"/>
+        <location filename="../list/list.cpp" line="274"/>
         <source>List entities</source>
         <translation>Απαρίθμηση οντοτήτων</translation>
     </message>

@@ -7302,15 +7302,15 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimaler Gitterabstand (p&amp;x)</translation>
     </message>
     <message>
         <source>N&amp;umber of preview entities:</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl Vorscha&amp;uobjekte:</translation>
     </message>
     <message>
         <source>Don&apos;t use native OS file open dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht den Standard-Öffnen-Dialog verwenden</translation>
     </message>
 </context>
 <context>
@@ -11658,11 +11658,15 @@ Fortfahren?</translation>
     </message>
     <message>
         <source>Keycode Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Tastaturcodes Modus</translation>
     </message>
     <message>
         <source>Paste Multiple Commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Mehrzeilige Kommandos einfügen</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation>Lizenz</translation>
     </message>
 </context>
 <context>
@@ -17124,6 +17128,13 @@ Fortfahren?</translation>
         <source>calculate</source>
         <comment>command to trigger cli calculator</comment>
         <translation type="obsolete">berechne</translation>
+    </message>
+</context>
+<context>
+    <name>TextFileViewer</name>
+    <message>
+        <source>Frame</source>
+        <translation>Rahmen</translation>
     </message>
 </context>
 <context>

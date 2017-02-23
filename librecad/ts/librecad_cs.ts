@@ -11020,6 +11020,10 @@ Continue?</source>
         <source>Paste Multiple Commands</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>License</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -16233,6 +16237,13 @@ Continue?</source>
         <source>calculate</source>
         <comment>command to trigger cli calculator</comment>
         <translation type="obsolete">vypocti</translation>
+    </message>
+</context>
+<context>
+    <name>TextFileViewer</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

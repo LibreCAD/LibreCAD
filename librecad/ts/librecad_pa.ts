@@ -9275,6 +9275,10 @@ parallel</translation>
         <source>Paste Multiple Commands</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>License</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -14143,6 +14147,13 @@ parallel</translation>
         <translation type="obsolete">re
 
 ਚਤੁਰਭੁਜ</translation>
+    </message>
+</context>
+<context>
+    <name>TextFileViewer</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

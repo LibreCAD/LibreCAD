@@ -39,6 +39,17 @@
     </message>
 </context>
 <context>
+    <name>LC_Gear</name>
+    <message>
+        <source>Gear creation plugin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gear plugin</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_List</name>
     <message>
         <source>List entities</source>
@@ -251,6 +262,22 @@
     </message>
     <message>
         <source>SPLINEPOINTS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Columns/Rows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Column/Row Spacing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -563,6 +590,53 @@
     <message>
         <source>3D Polygon</source>
         <translation>3D daudzstūris</translation>
+    </message>
+</context>
+<context>
+    <name>lc_Geardlg</name>
+    <message>
+        <source>Draw a gear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of teeth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circular pitch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pressure angle (deg)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Addendum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dedendum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ring</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation type="unfinished">Pieņemt</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Atcelt</translation>
     </message>
 </context>
 <context>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="no">
+<TS version="2.0" language="mk">
 <context>
     <name>ColorWizard</name>
     <message>
@@ -951,35 +951,31 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>QC_ApplicationWindow</name>
     <message>
         <source>&amp;File</source>
-        <translation>&amp;Fil</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation>&amp;Rediger</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;Vis</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Point</source>
-        <translation type="obsolete">&amp;Punkt</translation>
-    </message>
-    <message>
         <source>&amp;Line</source>
-        <translation>&amp;Linje</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Circle</source>
-        <translation>&amp;Sirkel</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Ellipse</source>
-        <translation>&amp;Ellipse</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Modify</source>
@@ -990,27 +986,11 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Layer</source>
-        <translation type="obsolete">&amp;Lag</translation>
-    </message>
-    <message>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Layer List</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Library Browser</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1050,6 +1030,18 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Layer List</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block List</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Library Browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Print preview for %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1059,27 +1051,27 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Saving drawing...</source>
-        <translation>Lagrer tegning...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Saved drawing: %1</source>
-        <translation>Lagret tegning: %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Saving drawing under new filename...</source>
-        <translation>Lagrer tegning under et annet filnavn...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Exporting drawing...</source>
-        <translation>Eksporterer tegning...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Exported: %1</source>
-        <translation>Eksporterte: %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Exporting...</source>
-        <translation>Eksporterer...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Export complete</source>
@@ -1087,7 +1079,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Export failed!</source>
-        <translation>Eksportering mislyktes!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Printing complete</source>
@@ -1112,18 +1104,6 @@ Please check the permissions.</source>
 %1
 Please check the permissions.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Version: %1 %2</source>
-        <translation type="obsolete">Versjon: %1 %2</translation>
-    </message>
-    <message>
-        <source>Modules: %1</source>
-        <translation type="obsolete">Moduler: %1</translation>
-    </message>
-    <message>
-        <source>Date: %1</source>
-        <translation type="obsolete">Dato: %1</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -1158,7 +1138,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Version: %1</source>
-        <translation type="unfinished">Versjon: %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
@@ -1480,14 +1460,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_BlockWidget</name>
     <message>
-        <source>Show all blocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hide all blocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Remove the active block</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1525,19 +1497,27 @@ in a separate window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Rename Block</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Edit Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Insert Block</source>
+        <source>&amp;Toggle Visibility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Toggle Visibility</source>
+        <source>Show all blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide all blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Rename Block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Insert Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1559,10 +1539,6 @@ in a separate window</source>
 </context>
 <context>
     <name>QG_ColorBox</name>
-    <message>
-        <source>Unchanged</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>By Layer</source>
         <translation type="unfinished"></translation>
@@ -1605,6 +1581,10 @@ in a separate window</source>
     </message>
     <message>
         <source>Light Gray</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unchanged</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2808,10 +2788,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
 <context>
     <name>QG_DlgOptionsDrawing</name>
     <message>
-        <source>Paper Format</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Main Unit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2820,39 +2796,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Preview</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>linear</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>angular</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text Height:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>units</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Arrow size:</source>
+        <source>Decimal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Scientific</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Decimal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2868,7 +2816,39 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Decimal Degrees</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radians</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>linear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>angular</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paper Format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text Height:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2877,10 +2857,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Gradians</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Radians</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2893,6 +2869,10 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arrow size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4550,10 +4530,6 @@ The contents of a Construction Layer should not appear in printout.</source>
 <context>
     <name>QG_LineTypeBox</name>
     <message>
-        <source>- Unchanged -</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>By Layer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4639,6 +4615,10 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Border (large)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>- Unchanged -</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4871,10 +4851,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_WidthBox</name>
     <message>
-        <source>- Unchanged -</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>By Layer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4982,6 +4958,10 @@ p, li { white-space: pre-wrap; }
         <source>2.11mm</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>- Unchanged -</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QMessageBox</name>
@@ -5026,6 +5006,19 @@ This action can NOT be undone.</source>
 <context>
     <name>QObject</name>
     <message>
+        <source>Save Drawing As</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 already exists.
+Do you want to replace it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Open Image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5063,19 +5056,6 @@ This action can NOT be undone.</source>
     </message>
     <message>
         <source>X Pixel Map</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save Drawing As</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 already exists.
-Do you want to replace it?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Drawing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

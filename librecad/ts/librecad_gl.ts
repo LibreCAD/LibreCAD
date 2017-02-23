@@ -5,15 +5,15 @@
     <name>ColorWizard</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished">Marco</translation>
+        <translation>Marco</translation>
     </message>
     <message>
         <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Engadir a favoritos</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -66,7 +66,7 @@
     </message>
     <message>
         <source>Spline Points</source>
-        <translation>Puntos de Spline</translation>
+        <translation>Puntos da Spline</translation>
     </message>
     <message>
         <source>Control Points</source>
@@ -74,7 +74,7 @@
     </message>
     <message>
         <source>Points on Spline</source>
-        <translation>Puntos en Spline</translation>
+        <translation>Puntos na Spline</translation>
     </message>
 </context>
 <context>
@@ -111,7 +111,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>Select circle center</source>
-        <translation>Seleccione centro do círculo</translation>
+        <translation>Seleccione o centro do círculo</translation>
     </message>
 </context>
 <context>
@@ -153,7 +153,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     <name>LC_ActionFactory</name>
     <message>
         <source>&amp;Window Zoom</source>
-        <translation>&amp;Zoom por fiestra</translation>
+        <translation>Zoom por &amp;fiestra</translation>
     </message>
     <message>
         <source>Zoom &amp;Panning</source>
@@ -269,7 +269,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>2 Points, Radius</source>
-        <translation>2 p&amp;untos, raio</translation>
+        <translation>2 p&amp;untos e raio</translation>
     </message>
     <message>
         <source>3 Points</source>
@@ -286,7 +286,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     <message>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation>T&amp;anxencial a 2, mais raio</translation>
+        <translation>T&amp;anxencial a 2 mais raio</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, 1 Point</source>
@@ -342,7 +342,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Spline through points</source>
-        <translation>Spline a &amp;través de puntos</translation>
+        <translation>S&amp;pline a través de puntos</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -410,15 +410,15 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;MText</source>
-        <translation>&amp;Multitexto</translation>
+        <translation>Mul&amp;titexto</translation>
     </message>
     <message>
         <source>&amp;Text</source>
-        <translation>&amp;Texto</translation>
+        <translation>Te&amp;xto</translation>
     </message>
     <message>
         <source>&amp;Hatch</source>
-        <translation>&amp;Raiado</translation>
+        <translation>Raia&amp;do</translation>
     </message>
     <message>
         <source>Insert &amp;Image</source>
@@ -498,7 +498,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Properties</source>
-        <translation>&amp;Propiedades</translation>
+        <translation>Propie&amp;dades</translation>
     </message>
     <message>
         <source>&amp;Trim</source>
@@ -518,7 +518,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Divide</source>
-        <translation>Part&amp;ir</translation>
+        <translation>&amp;Partir</translation>
     </message>
     <message>
         <source>&amp;Stretch</source>
@@ -526,7 +526,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Bevel</source>
-        <translation>&amp;Chafrán chairo</translation>
+        <translation>Cha&amp;frán chairo</translation>
     </message>
     <message>
         <source>&amp;Fillet</source>
@@ -534,7 +534,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Explode Text into Letters</source>
-        <translation>Est&amp;oupar o texto en letras</translation>
+        <translation>Estoupar o texto e&amp;n letras</translation>
     </message>
     <message>
         <source>Point inside contour</source>
@@ -562,7 +562,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
-        <translation>P&amp;unteiro de selección</translation>
+        <translation>&amp;Punteiro de selección</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -682,7 +682,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>Ex&amp;plode</source>
-        <translation>Estou&amp;par</translation>
+        <translation>E&amp;stoupar</translation>
     </message>
     <message>
         <source>&amp;Preferences</source>
@@ -706,7 +706,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
-        <translation>De&amp;sbotar escollidas</translation>
+        <translation>Desbotar es&amp;collidas</translation>
     </message>
     <message>
         <source>Select &amp;All</source>
@@ -742,7 +742,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Auto Zoom</source>
-        <translation>Zoom á área g&amp;ráfica</translation>
+        <translation>&amp;Zoom á área gráfica</translation>
     </message>
     <message>
         <source>Previous &amp;View</source>
@@ -750,7 +750,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Redraw</source>
-        <translation>Rede&amp;buxar</translation>
+        <translation>&amp;Redebuxar</translation>
     </message>
     <message>
         <source>&amp;New</source>
@@ -802,7 +802,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Fullscreen</source>
-        <translation>Pan&amp;talla completa</translation>
+        <translation>Pantalla &amp;completa</translation>
     </message>
     <message>
         <source>Ctrl+Meta+F</source>
@@ -827,7 +827,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Draft</source>
-        <translation>Bosque&amp;xo</translation>
+        <translation>&amp;Bosquexo</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
@@ -844,7 +844,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>Widget Options</source>
-        <translation>Opcións de Widget</translation>
+        <translation>Opcións de &amp;Widget</translation>
     </message>
     <message>
         <source>Left</source>
@@ -872,7 +872,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>Device Options</source>
-        <translation>Opcións do dispositivo</translation>
+        <translation>Opcións do &amp;dispositivo</translation>
     </message>
     <message>
         <source>Mo&amp;ve and Rotate</source>
@@ -901,7 +901,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     <message>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+D</translation>
     </message>
 </context>
 <context>
@@ -1142,7 +1142,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Info</source>
-        <translation>&amp;Consultar</translation>
+        <translation>C&amp;onsultar</translation>
     </message>
     <message>
         <source>&amp;Layer</source>
@@ -1154,7 +1154,7 @@ A distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>&amp;Sobre</translation>
+        <translation>Sobre</translation>
     </message>
     <message>
         <source>&amp;Scripts</source>
@@ -1500,7 +1500,7 @@ Gardado automático desactivado.</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation>Exportar</translation>
+        <translation>&amp;Exportar</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -1548,7 +1548,7 @@ Por favor comprobe se existe e mais se ten permiso.</translation>
     </message>
     <message>
         <source>&amp;Curve</source>
-        <translation>&amp;Curva</translation>
+        <translation>Cu&amp;rva</translation>
     </message>
     <message>
         <source>Curve</source>
@@ -1628,7 +1628,7 @@ Por favor comprobe se existe e mais se ten permiso.</translation>
     </message>
     <message>
         <source>Pl&amp;ugins</source>
-        <translation>Pl&amp;ugins</translation>
+        <translation>&amp;Plugins</translation>
     </message>
     <message>
         <source>Dime&amp;nsion</source>
@@ -1644,7 +1644,7 @@ Por favor comprobe se existe e mais se ten permiso.</translation>
     </message>
     <message>
         <source>Recent Files</source>
-        <translation>Ficheiros recentes</translation>
+        <translation>&amp;Ficheiros recentes</translation>
     </message>
     <message>
         <source>Compiler: Microsoft Visual C++</source>
@@ -1684,11 +1684,11 @@ Por favor comprobe se existe e mais se ten permiso.</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Fe&amp;rramentas</translation>
     </message>
     <message>
         <source>&amp;Drawings</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Debuxos</translation>
     </message>
     <message>
         <source>Help Links</source>
@@ -2788,7 +2788,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -3092,7 +3092,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Width:</source>
-        <translation>Anchura:</translation>
+        <translation>Largura:</translation>
     </message>
     <message>
         <source>Height:</source>
@@ -3416,7 +3416,7 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>Page:</source>
-        <translation>Grupo:</translation>
+        <translation>G&amp;rupo:</translation>
     </message>
     <message>
         <source>Char:</source>
@@ -3804,7 +3804,7 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation>[FF00-FFEF] Formas con media anchura e anchura completa</translation>
+        <translation>[FF00-FFEF] Formas con media largura e largura completa</translation>
     </message>
     <message>
         <source>[FFF0-FFFF] Specials</source>
@@ -3860,7 +3860,7 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>&amp;Line spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Espazado de liña:</translation>
     </message>
 </context>
 <context>
@@ -4096,11 +4096,11 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>Paper &amp;Height:</source>
-        <translation>Al&amp;tura do papel:</translation>
+        <translation>&amp;Altura do papel:</translation>
     </message>
     <message>
         <source>Paper &amp;Width:</source>
-        <translation>A&amp;nchura do papel:</translation>
+        <translation>&amp;Largura do papel:</translation>
     </message>
     <message>
         <source>&amp;Units</source>
@@ -4136,15 +4136,15 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>Show Grid</source>
-        <translation>Amosar a grella</translation>
+        <translation>&amp;Amosar a grella</translation>
     </message>
     <message>
         <source>X Spacing:</source>
-        <translation>Espazado en X:</translation>
+        <translation>Espazado en &amp;X:</translation>
     </message>
     <message>
         <source>Y Spacing:</source>
-        <translation>Espazado en Y:</translation>
+        <translation>Espazado en &amp;Y:</translation>
     </message>
     <message>
         <source>auto</source>
@@ -4172,7 +4172,7 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>Left</source>
-        <translation>Esquerda</translation>
+        <translation>&amp;Esquerda</translation>
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
@@ -4180,7 +4180,7 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>Top</source>
-        <translation>Fronte</translation>
+        <translation>&amp;Fronte</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
@@ -4188,7 +4188,7 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>Right</source>
-        <translation>Dereita</translation>
+        <translation>&amp;Dereita</translation>
     </message>
     <message>
         <source>Use orthogonal grid</source>
@@ -4196,11 +4196,11 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>Orthogonal Grid</source>
-        <translation>Grella ortogonal</translation>
+        <translation>Grella &amp;ortogonal</translation>
     </message>
     <message>
         <source>Use isometric grid</source>
-        <translation>Usar grella isométrica</translation>
+        <translation>Usar grella i&amp;sométrica</translation>
     </message>
     <message>
         <source>Isometric Grid</source>
@@ -4367,15 +4367,15 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>Translations:</source>
-        <translation>Traducións:</translation>
+        <translation>&amp;Traducións:</translation>
     </message>
     <message>
         <source>Hatch Patterns:</source>
-        <translation>Patróns de raiado:</translation>
+        <translation>&amp;Patróns de raiado:</translation>
     </message>
     <message>
         <source>Fonts:</source>
-        <translation>Fontes:</translation>
+        <translation>&amp;Fontes:</translation>
     </message>
     <message>
         <source>Scripts:</source>
@@ -4383,7 +4383,7 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>Part Libraries:</source>
-        <translation>Librerías de pezas:</translation>
+        <translation>&amp;Librerías de pezas:</translation>
     </message>
     <message>
         <source>Language</source>
@@ -4467,7 +4467,7 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>A&amp;utomatically scale grid</source>
-        <translation>&amp;Escalar grella automáticamente</translation>
+        <translation>&amp;Escalar grella automaticamente</translation>
     </message>
     <message>
         <source>S&amp;elected Color:</source>
@@ -4499,7 +4499,7 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>Auto save time:</source>
-        <translation>Ínterim de gardado automático:</translation>
+        <translation>Í&amp;nterim de gardado automático:</translation>
     </message>
     <message>
         <source>#FFFFFF</source>
@@ -4523,11 +4523,11 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>Auto backup</source>
-        <translation>Gardado automático</translation>
+        <translation>&amp;Gardado automático</translation>
     </message>
     <message>
         <source>Template:</source>
-        <translation>Patrón:</translation>
+        <translation>P&amp;atrón:</translation>
     </message>
     <message>
         <source>#00FFFF</source>
@@ -4635,11 +4635,11 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>Snap indicator:</source>
-        <translation>Indicador de forzado:</translation>
+        <translation>In&amp;dicador de forzado:</translation>
     </message>
     <message>
         <source>Anti-aliasing</source>
-        <translation>Anti-aliasing</translation>
+        <translation>&amp;Anti-aliasing</translation>
     </message>
     <message>
         <source>Crosshair</source>
@@ -4679,7 +4679,7 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>Layout</source>
-        <translation>Deseño</translation>
+        <translation>&amp;Deseño</translation>
     </message>
     <message>
         <source>restores the program to its original state</source>
@@ -4687,11 +4687,11 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>All</source>
-        <translation>Todo</translation>
+        <translation>&amp;Todo</translation>
     </message>
     <message>
         <source>Scrollbars</source>
-        <translation>Barras de desprazamento</translation>
+        <translation>&amp;Barras de desprazamento</translation>
     </message>
     <message>
         <source>Crosshair2</source>
@@ -4703,11 +4703,11 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>Snap indicator lines</source>
-        <translation>Indicador de forzado de liñas</translation>
+        <translation>Indicador de forzado de li&amp;ñas</translation>
     </message>
     <message>
         <source>Snap indicator shape</source>
-        <translation>Indicador de forzado de formas</translation>
+        <translation>Indicador de forzado de for&amp;mas</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -4723,31 +4723,31 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>Hide cursor when snapping</source>
-        <translation>Agochar cursor en forzado</translation>
+        <translation>Agoc&amp;har cursor en forzado</translation>
     </message>
     <message>
         <source>Start in tab mode</source>
-        <translation>Iniciar en modo lapelas</translation>
+        <translation>Ini&amp;ciar en modo lapelas</translation>
     </message>
     <message>
         <source>Startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Principiar</translation>
     </message>
     <message>
         <source>Display loading screen</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Amosar xanela de carga</translation>
     </message>
     <message>
         <source>Start with main window maximized</source>
-        <translation type="unfinished"></translation>
+        <translation>A&amp;rrincar coa fiestra principal maximizada</translation>
     </message>
     <message>
         <source>Enable CAD dockwidgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar cargador de &amp;widgets CAD</translation>
     </message>
     <message>
         <source>Enable CAD toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Habilitar barra de ferramentas CAD</translation>
     </message>
     <message>
         <source>#739373</source>
@@ -4759,35 +4759,35 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>#1E90FF</source>
-        <translation type="unfinished"></translation>
+        <translation>#1E90FF</translation>
     </message>
     <message>
         <source>Clear settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpar configuracións</translation>
     </message>
     <message>
         <source>This will also include custom menus and toolbars. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Isto vai incluír menús personalizados e barras de ferramentas. Seguir?</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cando se habilita, a activación dunha capa ha cambiar tódalas entidades que estean seleccionadas no debuxo para esta nova capa. Para cambiar de capa varias entidades: Primeiro seleccione as entidades precisas e logo active a capa no widget de capas. Isto fai que tódalas entidades seleccionadas pasen á nova capa.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Variable File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Variables de ficheiro:</translation>
     </message>
     <message>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation type="unfinished"></translation>
+        <translation>Espa&amp;zado mínimo da grella (px):</translation>
     </message>
     <message>
         <source>N&amp;umber of preview entities:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Número de entidades a previsualizar:</translation>
     </message>
     <message>
         <source>Don&apos;t use native OS file open dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Non usar ficheiros do SO nativo en diálogos abertos</translation>
     </message>
 </context>
 <context>
@@ -5087,7 +5087,7 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>Alignment</source>
-        <translation>Situación punteiro</translation>
+        <translation>Situación do punteiro</translation>
     </message>
     <message>
         <source>Top Right</source>
@@ -5191,7 +5191,7 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>Char:</source>
-        <translation>Carácter:</translation>
+        <translation>&amp;Carácter:</translation>
     </message>
     <message>
         <source>[0000-007F] Basic Latin</source>
@@ -5575,7 +5575,7 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation>[FF00-FFEF] Formas con media anchura e anchura completa</translation>
+        <translation>[FF00-FFEF] Formas con media largura e largura completa</translation>
     </message>
     <message>
         <source>[FFF0-FFFF] Specials</source>
@@ -5639,19 +5639,19 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Ángulo do texto:</translation>
+        <translation>Án&amp;gulo do texto:</translation>
     </message>
     <message>
         <source>Oblique:</source>
-        <translation>Oblicua:</translation>
+        <translation>&amp;Oblicua:</translation>
     </message>
     <message>
         <source>Width factor:</source>
-        <translation>Factor de anchura:</translation>
+        <translation>Factor de &amp;largura:</translation>
     </message>
     <message>
         <source>Font:</source>
-        <translation>Fonte:</translation>
+        <translation>&amp;Fonte:</translation>
     </message>
     <message>
         <source>Baseline Left</source>
@@ -5671,7 +5671,7 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>Fit</source>
-        <translation>Acaido</translation>
+        <translation>Acai&amp;do</translation>
     </message>
     <message>
         <source>Aligned</source>
@@ -5687,11 +5687,11 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>A&amp;ligned</source>
-        <translation type="unfinished"></translation>
+        <translation>Ali&amp;ñado</translation>
     </message>
     <message>
         <source>&amp;Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>No &amp;medio</translation>
     </message>
 </context>
 <context>
@@ -5821,7 +5821,7 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>Width:</source>
-        <translation>Anchura:</translation>
+        <translation>Largura:</translation>
     </message>
     <message>
         <source>Height:</source>
@@ -5877,7 +5877,7 @@ Por favor, escolla as unidades preferidas para usar nos debuxos novos e mais a s
     </message>
     <message>
         <source>B&amp;lack</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Negro</translation>
     </message>
 </context>
 <context>
@@ -6758,7 +6758,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Exclusive Snap Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Xeito de forzado exclusivo</translation>
     </message>
 </context>
 <context>
@@ -8512,177 +8512,181 @@ Seguir?</translation>
     <message>
         <source>di</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation>pa</translation>
     </message>
     <message>
         <source>t2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>t2</translation>
     </message>
     <message>
         <source>mp</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>mp</translation>
     </message>
     <message>
         <source>Block</source>
-        <translation type="unfinished">Bloque</translation>
+        <translation>Bloque</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation type="unfinished">Círculo</translation>
+        <translation>Círculo</translation>
     </message>
     <message>
         <source>Curve</source>
-        <translation type="unfinished">Curva</translation>
+        <translation>Curva</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Opcións de edición</translation>
+        <translation>Editar</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation type="unfinished">Elipse</translation>
+        <translation>Elipse</translation>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished">Opcións de ficheiro</translation>
+        <translation>Ficheiro</translation>
     </message>
     <message>
         <source>Dimension</source>
-        <translation type="unfinished">Acoutamento</translation>
+        <translation>Acoutamento</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Consulta</translation>
+        <translation>Consultar</translation>
     </message>
     <message>
         <source>Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished">Liña</translation>
+        <translation>Liña</translation>
     </message>
     <message>
         <source>Modify</source>
-        <translation type="unfinished">Modificar</translation>
+        <translation>Modificar</translation>
     </message>
     <message>
         <source>Options</source>
-        <translation type="unfinished">Opcións</translation>
+        <translation>Opcións</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Outros</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished">Poliliña</translation>
+        <translation>Poliliña</translation>
     </message>
     <message>
         <source>Restriction</source>
-        <translation type="unfinished"></translation>
+        <translation>Restrición</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">Seleccionar</translation>
+        <translation>Seleccionar</translation>
     </message>
     <message>
         <source>Snap</source>
-        <translation type="unfinished">Forzar</translation>
+        <translation>Forzar</translation>
     </message>
     <message>
         <source>Snap Extras</source>
-        <translation type="unfinished"></translation>
+        <translation>Extras de forzado</translation>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished">Opcións de vista</translation>
+        <translation>Opcións de vista</translation>
     </message>
     <message>
         <source>Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Widgets</translation>
     </message>
     <message>
         <source>Creators</source>
-        <translation type="unfinished"></translation>
+        <translation>Creadores</translation>
     </message>
     <message>
         <source>Wiki</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiki</translation>
     </message>
     <message>
         <source>User&apos;s Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>Manual do usuario</translation>
     </message>
     <message>
         <source>Commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Comandos</translation>
     </message>
     <message>
         <source>Style Sheets</source>
-        <translation type="unfinished"></translation>
+        <translation>Estilos de folla de debuxo</translation>
     </message>
     <message>
         <source>Forum</source>
-        <translation type="unfinished"></translation>
+        <translation>Foro</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished">Todo</translation>
+        <translation>Todo</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Obxectos non válidos desbotados:</translation>
     </message>
     <message>
         <source>Pen Wizard</source>
-        <translation type="unfinished"></translation>
+        <translation>Lapis feiticeiro</translation>
     </message>
     <message>
         <source>Release Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Información da versión</translation>
     </message>
     <message>
         <source>Load Command File</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargar ficheiro de comandos</translation>
     </message>
     <message>
         <source>Select objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla obxectos</translation>
     </message>
     <message>
         <source>Apply to selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplicar ós escollidos</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Desbotar</translation>
     </message>
     <message>
         <source>You must input a distance first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Debe escribir primeiro unha distancia.</translation>
     </message>
     <message>
         <source>cal</source>
-        <translation type="unfinished">cal</translation>
+        <translation>cal</translation>
     </message>
     <message>
         <source>Calculator mode: On</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo da calculadora: Acesa</translation>
     </message>
     <message>
         <source>Calculator mode: Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo da calculadora: Apagada</translation>
     </message>
     <message>
         <source>Keycode Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Modo de comandos</translation>
     </message>
     <message>
         <source>Paste Multiple Commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Colar múltiples comandos</translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation type="unfinished">Licenza</translation>
     </message>
 </context>
 <context>
@@ -9452,7 +9456,7 @@ Seguir?</translation>
     </message>
     <message>
         <source>Specify endpoint of major axis</source>
-        <translation>Especifique o punto final do eixe maior</translation>
+        <translation>Especifique o punto final do primeiro eixe</translation>
     </message>
     <message>
         <source>Back</source>
@@ -9460,7 +9464,7 @@ Seguir?</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
-        <translation>Especifique o punto final ou a semilargura do eixe menor:</translation>
+        <translation>Especifique o punto final ou a semilonxitude do outro eixe:</translation>
     </message>
     <message>
         <source>Specify start angle</source>
@@ -10362,7 +10366,7 @@ Seguir?</translation>
     </message>
     <message>
         <source>Area: %1 %2^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Mensura: %1 %2^2</translation>
     </message>
 </context>
 <context>
@@ -12616,6 +12620,13 @@ Seguir?</translation>
     </message>
 </context>
 <context>
+    <name>TextFileViewer</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished">Marco</translation>
+    </message>
+</context>
+<context>
     <name>Ui_ArcOptions</name>
     <message>
         <source>Arc Options</source>
@@ -13264,35 +13275,35 @@ Seguir?</translation>
     <name>WidgetCreator</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished">Marco</translation>
+        <translation>Marco</translation>
     </message>
     <message>
         <source>&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&gt;</translation>
     </message>
     <message>
         <source>&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Crear</translation>
     </message>
     <message>
         <source>Destroy</source>
-        <translation type="unfinished"></translation>
+        <translation>Desfacer</translation>
     </message>
     <message>
         <source>Assign</source>
-        <translation type="unfinished"></translation>
+        <translation>Asignar</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualizar</translation>
     </message>
 </context>
 </TS>
