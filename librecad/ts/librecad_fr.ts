@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="fr">
+<TS version="2.1" language="fr">
 <context>
     <name>ColorWizard</name>
     <message>
@@ -299,7 +299,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>&amp;Foyer de l&apos;ellipse</translation>
+        <translation>&amp;Foyers de l&apos;ellipse</translation>
     </message>
     <message>
         <source>Ellipse &amp;4 Point</source>
@@ -471,7 +471,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Rotate T&amp;wo</source>
-        <translation>&amp;Double Rotation</translation>
+        <translation>&amp;Double rotation</translation>
     </message>
     <message>
         <source>&amp;Properties</source>
@@ -707,7 +707,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Previous &amp;View</source>
-        <translation>&amp;Vue Précédente</translation>
+        <translation>&amp;Vue précédente</translation>
     </message>
     <message>
         <source>&amp;Redraw</source>
@@ -964,7 +964,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     <name>PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Paramètres de lignes avec un angle relatif</translation>
+        <translation>Paramètres des lignes avec inclinaison relative</translation>
     </message>
     <message>
         <source>Spacing:</source>
@@ -1088,7 +1088,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>À Propos</translation>
+        <translation>À propos</translation>
     </message>
     <message>
         <source>About the application</source>
@@ -1204,7 +1204,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Saving drawing...</source>
-        <translation>Enregistrement du Dessin...</translation>
+        <translation>Enregistrement du dessin...</translation>
     </message>
     <message>
         <source>Saved drawing: %1</source>
@@ -1258,9 +1258,9 @@ Veuillez vérifiez les droits d&apos;accès.</translation>
         <source>Cannot save the file
 %1
 Please check the permissions.</source>
-        <translation>Impossible d&apos;enregistrer le fichier 
-%1 
-Vérifiez les permissions SVP.</translation>
+        <translation>Impossible d&apos;enregistrer le fichier
+%1
+Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translation>
     </message>
     <message>
         <source>Launch the online manual</source>
@@ -1436,8 +1436,7 @@ Sauvegarde automatique désactivée.</translation>
     </message>
     <message>
         <source>New document from template: </source>
-        <translatorcomment>Message affichée lorsque un document a été créé depuis un modèle.</translatorcomment>
-        <translation>Nouveau document depuis un modèle :</translation>
+        <translation>Nouveau document depuis un modèle : </translation>
     </message>
     <message>
         <source>Select Template aborted</source>
@@ -1664,7 +1663,7 @@ Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translatio
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation>Fermeture du Dessin</translation>
+        <translation>Fermeture du dessin</translation>
     </message>
 </context>
 <context>
@@ -2047,7 +2046,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Block Name:</source>
-        <translation>Nom du Bloc :</translation>
+        <translation>Nom du bloc :</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2055,7 +2054,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Renaming Block</source>
-        <translation>Renommer Bloc</translation>
+        <translation>Renommer le bloc</translation>
     </message>
     <message>
         <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
@@ -2091,11 +2090,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edit the active block
 in a separate window</source>
-        <translation>Edition du bloc actif dans une nouvelle fenêtre</translation>
+        <translation>Éditer le bloc actif dans une nouvelle fenêtre</translation>
     </message>
     <message>
         <source>Insert the active block</source>
-        <translation>Insère le bloc actif</translation>
+        <translation>Insérer le bloc actif</translation>
     </message>
     <message>
         <source>Block Menu</source>
@@ -2115,7 +2114,7 @@ in a separate window</source>
     </message>
     <message>
         <source>&amp;Remove Block</source>
-        <translation>&amp;Effacer Bloc</translation>
+        <translation>&amp;Effacer le bloc</translation>
     </message>
     <message>
         <source>&amp;Edit Block</source>
@@ -2135,15 +2134,15 @@ in a separate window</source>
     </message>
     <message>
         <source>&amp;Rename Block</source>
-        <translation>&amp;Renommer Bloc</translation>
+        <translation>&amp;Renommer le bloc</translation>
     </message>
     <message>
         <source>&amp;Insert Block</source>
-        <translation>&amp;Insère Bloc</translation>
+        <translation>&amp;Insérer le bloc</translation>
     </message>
     <message>
         <source>&amp;Create New Block</source>
-        <translation>&amp;Créer Nouveau Bloc</translation>
+        <translation>&amp;Créer un nouveau bloc</translation>
     </message>
     <message>
         <source>Create Block</source>
@@ -2155,7 +2154,7 @@ in a separate window</source>
     </message>
     <message>
         <source>save the active block to a file</source>
-        <translation>enregistrer le bloc actuel dans un fichier</translation>
+        <translation>Enregistrer le bloc actuel dans un fichier</translation>
     </message>
 </context>
 <context>
@@ -3018,19 +3017,19 @@ in a separate window</source>
         <source>ø (Diameter)</source>
         <translation type="obsolete">ø (Diamètre)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>° (Degree)</source>
         <translation>° (degrés)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>± (Plus / Minus)</source>
         <translation>± (plus / moins)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>× (Times)</source>
         <translation>× (par)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>÷ (Division)</source>
         <translation>÷ (division)</translation>
     </message>
@@ -3038,11 +3037,11 @@ in a separate window</source>
         <source>¶ (Pi)</source>
         <translation type="obsolete">¶ (Pi)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>⌀ (Diameter)</source>
         <translation>⌀ (diamètre)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>π (Pi)</source>
         <translation>π (Pi)</translation>
     </message>
@@ -3075,11 +3074,11 @@ in a separate window</source>
     </message>
     <message>
         <source>Start Angle:</source>
-        <translation>Angle de Départ :</translation>
+        <translation>Angle de départ :</translation>
     </message>
     <message>
         <source>End Angle:</source>
-        <translation>Angle d&apos;Arrivée :</translation>
+        <translation>Angle d&apos;arrivée :</translation>
     </message>
     <message>
         <source>Reversed</source>
@@ -3262,11 +3261,11 @@ in a separate window</source>
     </message>
     <message>
         <source>End Angle:</source>
-        <translation>Angle d&apos;Arrivée :</translation>
+        <translation>Angle d&apos;arrivée :</translation>
     </message>
     <message>
         <source>Start Angle:</source>
-        <translation>Angle de Départ :</translation>
+        <translation>Angle de départ :</translation>
     </message>
     <message>
         <source>Rotation:</source>
@@ -3502,11 +3501,11 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Row Spacing:</source>
-        <translation>Espacement des Lignes :</translation>
+        <translation>Espacement des lignes :</translation>
     </message>
     <message>
         <source>Column Spacing:</source>
-        <translation>Espacement des Colonnes :</translation>
+        <translation>Espacement des colonnes :</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3580,15 +3579,15 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Calque :</translation>
+        <translation>Calque :</translation>
     </message>
     <message>
         <source>Font</source>
-        <translation type="unfinished">Police</translation>
+        <translation>Police</translation>
     </message>
     <message>
         <source>&amp;Height:</source>
-        <translation type="unfinished">&amp;Hauteur :</translation>
+        <translation>&amp;Hauteur :</translation>
     </message>
     <message>
         <source>Line &amp;spacing:</source>
@@ -3596,59 +3595,59 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>&amp;Default line spacing</source>
-        <translation type="unfinished">Espacement de ligne par &amp;défaut</translation>
+        <translation>Espacement de ligne par &amp;défaut</translation>
     </message>
     <message>
         <source>Alt+D</source>
-        <translation type="unfinished">Alt+D</translation>
+        <translation>Alt+D</translation>
     </message>
     <message>
         <source>Alignment</source>
-        <translation type="unfinished">Alignement</translation>
+        <translation>Alignement</translation>
     </message>
     <message>
         <source>Top Right</source>
-        <translation type="unfinished">En Haut à Droite</translation>
+        <translation>En haut à droite</translation>
     </message>
     <message>
         <source>Top Left</source>
-        <translation type="unfinished">En Haut à Gauche</translation>
+        <translation>En haut à gauche</translation>
     </message>
     <message>
         <source>Middle Left</source>
-        <translation type="unfinished">Au Milieu à Gauche</translation>
+        <translation>Au milieu à gauche</translation>
     </message>
     <message>
         <source>Middle Center</source>
-        <translation type="unfinished">Au Milieu au Centre</translation>
+        <translation>Au milieu au centre</translation>
     </message>
     <message>
         <source>Middle Right</source>
-        <translation type="unfinished">Au Milieu à Droite</translation>
+        <translation>Au milieu à droite</translation>
     </message>
     <message>
         <source>Bottom Left</source>
-        <translation type="unfinished">En Bas à Gauche</translation>
+        <translation>En bas à gauche</translation>
     </message>
     <message>
         <source>Bottom Right</source>
-        <translation type="unfinished">En Bas à Droite</translation>
+        <translation>En bas à droite</translation>
     </message>
     <message>
         <source>Bottom Center</source>
-        <translation type="unfinished">En Bas au Centre</translation>
+        <translation>En bas au centre</translation>
     </message>
     <message>
         <source>Top Center</source>
-        <translation type="unfinished">En Haut au Centre</translation>
+        <translation>En haut au centre</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished">Angle</translation>
+        <translation>Angle</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation type="unfinished">Texte :</translation>
+        <translation>Texte :</translation>
     </message>
     <message>
         <source>Clear Text</source>
@@ -3656,535 +3655,535 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Load Text From File</source>
-        <translation type="unfinished">Charger le Texte depuis un Fichier</translation>
+        <translation>Charger le texte depuis un fichier</translation>
     </message>
     <message>
         <source>Save Text To File</source>
-        <translation type="unfinished">Enregistrer le texte dans un fichier</translation>
+        <translation>Enregistrer le texte dans un fichier</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">Couper</translation>
+        <translation>Couper</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Copier</translation>
+        <translation>Copier</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished">Coller</translation>
+        <translation>Coller</translation>
     </message>
     <message>
         <source>Insert Symbol</source>
-        <translation type="unfinished">Insère Symbole</translation>
+        <translation>Insérer un symbole</translation>
     </message>
     <message>
         <source>Diameter (ø)</source>
         <translation type="obsolete">Diamètre (ø)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Degree (°)</source>
-        <translation type="unfinished">Degrés (°)</translation>
+        <translation>Degrés (°)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Plus / Minus (±)</source>
-        <translation type="unfinished">Plus / Moins (±)</translation>
+        <translation>Plus / moins (±)</translation>
     </message>
     <message>
         <source>At (@)</source>
-        <translation type="unfinished">Arobase (@)</translation>
+        <translation>Arobase (@)</translation>
     </message>
     <message>
         <source>Hash (#)</source>
-        <translation type="unfinished">Dièse (#)</translation>
+        <translation>Dièse (#)</translation>
     </message>
     <message>
         <source>Dollar ($)</source>
-        <translation type="unfinished">Dollar ($)</translation>
+        <translation>Dollar ($)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Copyright (©)</source>
-        <translation type="unfinished">Copyright (©)</translation>
+        <translation>Copyright (©)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Registered (®)</source>
-        <translation type="unfinished">Enregistré (®)</translation>
+        <translation>Enregistré (®)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Paragraph (§)</source>
-        <translation type="unfinished">Paragraphe (§)</translation>
+        <translation>Paragraphe (§)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Pi (π)</source>
-        <translation type="unfinished">Pi (π)</translation>
+        <translation>Pi (π)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Pound (£)</source>
-        <translation type="unfinished">Livres (£)</translation>
+        <translation>Livres (£)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Yen (¥)</source>
-        <translation type="unfinished">Yen (¥)</translation>
+        <translation>Yen (¥)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Times (×)</source>
-        <translation type="unfinished">Par (×)</translation>
+        <translation>Par (×)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Division (÷)</source>
-        <translation type="unfinished">Division (÷)</translation>
+        <translation>Division (÷)</translation>
     </message>
     <message>
         <source>Insert Unicode</source>
-        <translation type="unfinished">Insère Unicode</translation>
+        <translation>Insérer de l&apos;Unicode</translation>
     </message>
     <message>
         <source>Page:</source>
-        <translation type="unfinished">Page :</translation>
+        <translation>Page :</translation>
     </message>
     <message>
         <source>Char:</source>
-        <translation type="unfinished">Caractère :</translation>
+        <translation>Caractère :</translation>
     </message>
     <message>
         <source>[0000-007F] Basic Latin</source>
-        <translation type="unfinished">[0000-007F] Latin de Base</translation>
+        <translation>[0000-007F] Latin de base</translation>
     </message>
     <message>
         <source>[0080-00FF] Latin-1 Supplementary</source>
-        <translation type="unfinished">[0080-00FF] Latin-1 Supplémentaire</translation>
+        <translation>[0080-00FF] Supplément Latin-1</translation>
     </message>
     <message>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation type="unfinished">[0100-017F] Latin Etendu-A</translation>
+        <translation>[0100-017F] Latin étendu A</translation>
     </message>
     <message>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation type="unfinished">[0180-024F] Latin Etendu-B</translation>
+        <translation>[0180-024F] Latin étendu B</translation>
     </message>
     <message>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation type="unfinished">[0250-02AF] Extensions IPA</translation>
+        <translation>[0250-02AF] Alphabet Phonétique International</translation>
     </message>
     <message>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation type="unfinished">[02B0-02FF] Caractères sous forme d&apos;Exposants</translation>
+        <translation>[02B0-02FF] Lettres modificatives avec chasse</translation>
     </message>
     <message>
         <source>[0300-036F] Combining Diacritical Marks</source>
-        <translation type="unfinished">[0300-036F] Caractères de Ponctuation</translation>
+        <translation>[0300-036F] Diacritiques</translation>
     </message>
     <message>
         <source>[0370-03FF] Greek and Coptic</source>
-        <translation type="unfinished">[0370-03FF] Grec et Copt</translation>
+        <translation>[0370-03FF] Grec et copte</translation>
     </message>
     <message>
         <source>[0400-04FF] Cyrillic</source>
-        <translation type="unfinished">[0400-04FF] Cyrillique</translation>
+        <translation>[0400-04FF] Cyrillique</translation>
     </message>
     <message>
         <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation type="unfinished">[0500-052F] Cyrillic Supplémentaire</translation>
+        <translation>[0500-052F] Supplément cyrillique</translation>
     </message>
     <message>
         <source>[0530-058F] Armenian</source>
-        <translation type="unfinished">[0530-058F] Arménien</translation>
+        <translation>[0530-058F] Arménien</translation>
     </message>
     <message>
         <source>[0590-05FF] Hebrew</source>
-        <translation type="unfinished">[0590-05FF] Hébreu</translation>
+        <translation>[0590-05FF] Hébreu</translation>
     </message>
     <message>
         <source>[0600-06FF] Arabic</source>
-        <translation type="unfinished">[0600-06FF] Arabe</translation>
+        <translation>[0600-06FF] Arabe</translation>
     </message>
     <message>
         <source>[0700-074F] Syriac</source>
-        <translation type="unfinished">[0700-074F] Syrien</translation>
+        <translation>[0700-074F] Syriaque</translation>
     </message>
     <message>
         <source>[0780-07BF] Thaana</source>
-        <translation type="unfinished">[0780-07BF] Thaana</translation>
+        <translation>[0780-07BF] Thâna</translation>
     </message>
     <message>
         <source>[0900-097F] Devanagari</source>
-        <translation type="unfinished">[0900-097F] Devanagari</translation>
+        <translation>[0900-097F] Dévanâgarî</translation>
     </message>
     <message>
         <source>[0980-09FF] Bengali</source>
-        <translation type="unfinished">[0980-09FF] Bengali</translation>
+        <translation>[0980-09FF] Bengali</translation>
     </message>
     <message>
         <source>[0A00-0A7F] Gurmukhi</source>
-        <translation type="unfinished">[0A00-0A7F] Gurmukhi</translation>
+        <translation>[0A00-0A7F] Gourmoukhî</translation>
     </message>
     <message>
         <source>[0A80-0AFF] Gujarati</source>
-        <translation type="unfinished">[0A80-0AFF] Gujarati</translation>
+        <translation>[0A80-0AFF] Goudjerate</translation>
     </message>
     <message>
         <source>[0B00-0B7F] Oriya</source>
-        <translation type="unfinished">[0B00-0B7F] Oriya</translation>
+        <translation>[0B00-0B7F] Oriya</translation>
     </message>
     <message>
         <source>[0B80-0BFF] Tamil</source>
-        <translation type="unfinished">[0B80-0BFF] Tamil</translation>
+        <translation>[0B80-0BFF] Tamoul</translation>
     </message>
     <message>
         <source>[0C00-0C7F] Telugu</source>
-        <translation type="unfinished">[0C00-0C7F] Telugu</translation>
+        <translation>[0C00-0C7F] Télougou</translation>
     </message>
     <message>
         <source>[0C80-0CFF] Kannada</source>
-        <translation type="unfinished">[0C80-0CFF] Kannada</translation>
+        <translation>[0C80-0CFF] Kannara</translation>
     </message>
     <message>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation type="unfinished">[0D00-0D7F] Malayalam</translation>
+        <translation>[0D00-0D7F] Malayalam</translation>
     </message>
     <message>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation type="unfinished">[0D80-0DFF] Sinhala</translation>
+        <translation>[0D80-0DFF] Singhalais</translation>
     </message>
     <message>
         <source>[0E00-0E7F] Thai</source>
-        <translation type="unfinished">[0E00-0E7F] Thai</translation>
+        <translation>[0E00-0E7F] Thai</translation>
     </message>
     <message>
         <source>[0E80-0EFF] Lao</source>
-        <translation type="unfinished">[0E80-0EFF] Lao</translation>
+        <translation>[0E80-0EFF] Lao</translation>
     </message>
     <message>
         <source>[0F00-0FFF] Tibetan</source>
-        <translation type="unfinished">[0F00-0FFF] Tibetain</translation>
+        <translation>[0F00-0FFF] Tibétain</translation>
     </message>
     <message>
         <source>[1000-109F] Myanmar</source>
-        <translation type="unfinished">[1000-109F] Myanmar</translation>
+        <translation>[1000-109F] Birman</translation>
     </message>
     <message>
         <source>[10A0-10FF] Georgian</source>
-        <translation type="unfinished">[10A0-10FF] Georgien</translation>
+        <translation>[10A0-10FF] Géorgien</translation>
     </message>
     <message>
         <source>[1100-11FF] Hangul Jamo</source>
-        <translation type="unfinished">[1100-11FF] Hangul Jamo</translation>
+        <translation>[1100-11FF] Jamos hangûl</translation>
     </message>
     <message>
         <source>[1200-137F] Ethiopic</source>
-        <translation type="unfinished">[1200-137F] Ethiopien</translation>
+        <translation>[1200-137F] Éthiopien</translation>
     </message>
     <message>
         <source>[13A0-13FF] Cherokee</source>
-        <translation type="unfinished">[13A0-13FF] Cherokee</translation>
+        <translation>[13A0-13FF] Cherokee</translation>
     </message>
     <message>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation type="unfinished">[1400-167F] Unified Canadian Aboriginal Syllabic</translation>
+        <translation>[1400-167F] Syllabaires autochtones canadiens unifiés</translation>
     </message>
     <message>
         <source>[1680-169F] Ogham</source>
-        <translation type="unfinished">[1680-169F] Ogham</translation>
+        <translation>[1680-169F] Ogam</translation>
     </message>
     <message>
         <source>[16A0-16FF] Runic</source>
-        <translation type="unfinished">[16A0-16FF] Runic</translation>
+        <translation>[16A0-16FF] Runes</translation>
     </message>
     <message>
         <source>[1700-171F] Tagalog</source>
-        <translation type="unfinished">[1700-171F] Tagalog</translation>
+        <translation>[1700-171F] Tagalog</translation>
     </message>
     <message>
         <source>[1720-173F] Hanunoo</source>
-        <translation type="unfinished">[1720-173F] Hanunoo</translation>
+        <translation>[1720-173F] Hanounóo</translation>
     </message>
     <message>
         <source>[1740-175F] Buhid</source>
-        <translation type="unfinished">[1740-175F] Buhid</translation>
+        <translation>[1740-175F] Bouhide</translation>
     </message>
     <message>
         <source>[1760-177F] Tagbanwa</source>
-        <translation type="unfinished">[1760-177F] Tagbanwa</translation>
+        <translation>[1760-177F] Tagbanoua</translation>
     </message>
     <message>
         <source>[1780-17FF] Khmer</source>
-        <translation type="unfinished">[1780-17FF] Khmer</translation>
+        <translation>[1780-17FF] Khmer</translation>
     </message>
     <message>
         <source>[1800-18AF] Mongolian</source>
-        <translation type="unfinished">[1800-18AF] Mongolian</translation>
+        <translation>[1800-18AF] Mongol</translation>
     </message>
     <message>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation type="unfinished">[1E00-1EFF] Latin Etendu Additionnel</translation>
+        <translation>[1E00-1EFF] Latin étendu additionnel</translation>
     </message>
     <message>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation type="unfinished">[1F00-1FFF] Grec Etendu</translation>
+        <translation>[1F00-1FFF] Grec étendu</translation>
     </message>
     <message>
         <source>[2000-206F] General Punctuation</source>
-        <translation type="unfinished">[2000-206F] Ponctuation Générale</translation>
+        <translation>[2000-206F] Ponctuation générale</translation>
     </message>
     <message>
         <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation type="unfinished">[2070-209F] Exposants et indices</translation>
+        <translation>[2070-209F] Exposants et indices</translation>
     </message>
     <message>
         <source>[20A0-20CF] Currency Symbols</source>
-        <translation type="unfinished">[20A0-20CF] Symboles Courants</translation>
+        <translation>[20A0-20CF] Symboles monétaires</translation>
     </message>
     <message>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation type="unfinished">[20D0-20FF] Marques combinées pour symboles</translation>
+        <translation>[20D0-20FF] Signes combinatoires pour symboles</translation>
     </message>
     <message>
         <source>[2100-214F] Letterlike Symbols</source>
-        <translation type="unfinished">[2100-214F] Symboles Lettres</translation>
+        <translation>[2100-214F] Symboles de type lettre</translation>
     </message>
     <message>
         <source>[2150-218F] Number Forms</source>
-        <translation type="unfinished">[2150-218F] Nombres de Formulaires</translation>
+        <translation>[2150-218F] Formes numérales</translation>
     </message>
     <message>
         <source>[2190-21FF] Arrows</source>
-        <translation type="unfinished">[2190-21FF] Flèches</translation>
+        <translation>[2190-21FF] Flèches</translation>
     </message>
     <message>
         <source>[2200-22FF] Mathematical Operators</source>
-        <translation type="unfinished">[2200-22FF] Opérateurs Mathématiques</translation>
+        <translation>[2200-22FF] Opérateurs mathématiques</translation>
     </message>
     <message>
         <source>[2300-23FF] Miscellaneous Technical</source>
-        <translation type="unfinished">[2300-23FF] Divers Technique</translation>
+        <translation>[2300-23FF] Signes techniques divers</translation>
     </message>
     <message>
         <source>[2400-243F] Control Pictures</source>
-        <translation type="unfinished">[2400-243F] Caractères de Contrôle Graphiques</translation>
+        <translation>[2400-243F] Pictogrammes de commande</translation>
     </message>
     <message>
         <source>[2440-245F] Optical Character Recognition</source>
-        <translation type="unfinished">[2440-245F] Reconnaissance optique de caractères</translation>
+        <translation>[2440-245F] Reconnaissance optique de caractères</translation>
     </message>
     <message>
         <source>[2460-24FF] Enclosed Alphanumerics</source>
-        <translation type="unfinished">[2460-24FF] Caractères Alphanumeriques Entourés</translation>
+        <translation>[2460-24FF] Alphanumériques cerclés</translation>
     </message>
     <message>
         <source>[2500-257F] Box Drawing</source>
-        <translation type="unfinished">[2500-257F] Dessins de Bordures</translation>
+        <translation>[2500-257F] Filets</translation>
     </message>
     <message>
         <source>[2580-259F] Block Elements</source>
-        <translation type="unfinished">[2580-259F] Eléments de Bordure</translation>
+        <translation>[2580-259F] Pavés</translation>
     </message>
     <message>
         <source>[25A0-25FF] Geometric Shapes</source>
-        <translation type="unfinished">[25A0-25FF] Formes Géométriques</translation>
+        <translation>[25A0-25FF] Formes géométriques</translation>
     </message>
     <message>
         <source>[2600-26FF] Miscellaneous Symbols</source>
-        <translation type="unfinished">[2600-26FF] Symboles Divers</translation>
+        <translation>[2600-26FF] Symboles divers</translation>
     </message>
     <message>
         <source>[2700-27BF] Dingbats</source>
-        <translation type="unfinished">[2700-27BF] Casseau</translation>
+        <translation>[2700-27BF] Casseau</translation>
     </message>
     <message>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
-        <translation type="unfinished">[27C0-27EF] Symboles Mathématiques Divers-A</translation>
+        <translation>[27C0-27EF] Symboles mathématiques divers A</translation>
     </message>
     <message>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
-        <translation type="unfinished">[27F0-27FF] Flèche Supplémentaires-A</translation>
+        <translation>[27F0-27FF] Supplément A de flèches</translation>
     </message>
     <message>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation type="unfinished">[2800-28FF] Motifs Braille</translation>
+        <translation>[2800-28FF] Combinaisons Braille</translation>
     </message>
     <message>
         <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation type="unfinished">[2900-297F] Flèches Supplémentaires-B</translation>
+        <translation>[2900-297F] Supplément B de flèches</translation>
     </message>
     <message>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
-        <translation type="unfinished">[2980-29FF] Symboles Mathématiques Divers-B</translation>
+        <translation>[2980-29FF] Symboles mathématiques divers B</translation>
     </message>
     <message>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
-        <translation type="unfinished">[2A00-2AFF] Opérateurs Mathématiques Supplémentaires</translation>
+        <translation>[2A00-2AFF] Opérateurs mathématiques supplémentaires</translation>
     </message>
     <message>
         <source>[2E80-2EFF] CJK Radicals Supplement</source>
-        <translation type="unfinished">[2E80-2EFF] Radicaux supplémentaires CJC</translation>
+        <translation>[2E80-2EFF] Formes supplémentaires des clés CJC</translation>
     </message>
     <message>
         <source>[2F00-2FDF] Kangxi Radicals</source>
-        <translation type="unfinished">[2F00-2FDF] Radicaux Kangxi</translation>
+        <translation>[2F00-2FDF] Clés chinoises Kangxi</translation>
     </message>
     <message>
         <source>[2FF0-2FFF] Ideographic Description Characters</source>
-        <translation type="unfinished">[2FF0-2FFF] Description idéophonographique</translation>
+        <translation>[2FF0-2FFF] Description idéographique</translation>
     </message>
     <message>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
-        <translation type="unfinished">[3000-303F] Symboles et ponctuation CJK</translation>
+        <translation>[3000-303F] Symboles et ponctuation CJC</translation>
     </message>
     <message>
         <source>[3040-309F] Hiragana</source>
-        <translation type="unfinished">[3040-309F] Hiragana</translation>
+        <translation>[3040-309F] Hiragana</translation>
     </message>
     <message>
         <source>[30A0-30FF] Katakana</source>
-        <translation type="unfinished">[30A0-30FF] Katakana</translation>
+        <translation>[30A0-30FF] Katakana</translation>
     </message>
     <message>
         <source>[3100-312F] Bopomofo</source>
-        <translation type="unfinished">[3100-312F] Bopomofo</translation>
+        <translation>[3100-312F] Bopomofo</translation>
     </message>
     <message>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation type="unfinished">[3130-318F] Hangul Compatibility Jamo</translation>
+        <translation>[3130-318F] Jamos de compatibilité hangûls</translation>
     </message>
     <message>
         <source>[3190-319F] Kanbun</source>
-        <translation type="unfinished">[3190-319F] Kanbun</translation>
+        <translation>[3190-319F] Kanbun</translation>
     </message>
     <message>
         <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation type="unfinished">[31A0-31BF] Bopomofo Extended</translation>
+        <translation>[31A0-31BF] Bopomofo étendu</translation>
     </message>
     <message>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation type="unfinished">[3200-32FF] Lettes et mois CJK cerclés</translation>
+        <translation>[3200-32FF] Lettes et mois CJC cerclés</translation>
     </message>
     <message>
         <source>[3300-33FF] CJK Compatibility</source>
-        <translation type="unfinished">[3300-33FF] Compatibilité CJC</translation>
+        <translation>[3300-33FF] Compatibilité CJC</translation>
     </message>
     <message>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation type="unfinished">[3400-4DBF] Supplément A aux idéophonogrammes unifiés CJC</translation>
+        <translation>[3400-4DBF] Supplément A aux idéophonogrammes unifiés CJC</translation>
     </message>
     <message>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
-        <translation type="unfinished">[4E00-9FAF] Idéophonogrammes unifiés CJC</translation>
+        <translation>[4E00-9FAF] Idéogrammes unifiés CJC</translation>
     </message>
     <message>
         <source>[A000-A48F] Yi Syllables</source>
-        <translation type="unfinished">[A000-A48F] Syllabaire yi des Monts frais</translation>
+        <translation>[A000-A48F] Syllabaire yi des Monts frais</translation>
     </message>
     <message>
         <source>[A490-A4CF] Yi Radicals</source>
-        <translation type="unfinished">[A490-A4CF] Clefs Yi</translation>
+        <translation>[A490-A4CF] Clés Yi</translation>
     </message>
     <message>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation type="unfinished">[AC00-D7AF] Syllabaire Hangul</translation>
+        <translation>[AC00-D7AF] Syllabaires hangûles</translation>
     </message>
     <message>
         <source>[D800-DBFF] High Surrogates</source>
-        <translation type="unfinished">[D800-DBFF] Demi-zone haute</translation>
+        <translation>[D800-DBFF] Demi-zone haute d’indirection</translation>
     </message>
     <message>
         <source>[DC00-DFFF] Low Surrogate Area</source>
-        <translation type="unfinished">[DC00-DFFF] Demi-zone basse</translation>
+        <translation>[DC00-DFFF] Demi-zone basse d’indirection</translation>
     </message>
     <message>
         <source>[E000-F8FF] Private Use Area</source>
-        <translation type="unfinished">[E000-F8FF] Zone à usage privé</translation>
+        <translation>[E000-F8FF] Zone à usage privé</translation>
     </message>
     <message>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
-        <translation type="unfinished">[F900-FAFF] Idéogrammes de compatibilité CJC</translation>
+        <translation>[F900-FAFF] Idéogrammes de compatibilité CJC</translation>
     </message>
     <message>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
-        <translation type="unfinished">[FB00-FB4F] Formes de présentation alphabétiques</translation>
+        <translation>[FB00-FB4F] Formes de présentation alphabétiques</translation>
     </message>
     <message>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation type="unfinished">[FB50-FDFF] Formes A de présentation arabes</translation>
+        <translation>[FB50-FDFF] Formes A de présentation arabes</translation>
     </message>
     <message>
         <source>[FE00-FE0F] Variation Selectors</source>
-        <translation type="unfinished">[FE00-FE0F] Sélecteurs de variante</translation>
+        <translation>[FE00-FE0F] Sélecteurs de variante</translation>
     </message>
     <message>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation type="unfinished">[FE20-FE2F] Demi-signes combinatoires</translation>
+        <translation>[FE20-FE2F] Demi-signes combinatoires</translation>
     </message>
     <message>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
-        <translation type="unfinished">[FE30-FE4F] Formes de compatibilité CJC</translation>
+        <translation>[FE30-FE4F] Formes de compatibilité CJC</translation>
     </message>
     <message>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation type="unfinished">[FE50-FE6F] Petites variantes de forme</translation>
+        <translation>[FE50-FE6F] Petites variantes de forme</translation>
     </message>
     <message>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
-        <translation type="unfinished">[FB50-FDFF] Formes B de présentation arabes</translation>
+        <translation>[FE70-FEFF] Formes B de présentation arabes</translation>
     </message>
     <message>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation type="unfinished">[FF00-FFEF] Formes de demi et pleine chasse</translation>
+        <translation>[FF00-FFEF] Formes de demi et pleine chasse</translation>
     </message>
     <message>
         <source>[FFF0-FFFF] Specials</source>
-        <translation type="unfinished">[FFF0-FFFF] Spéciaux</translation>
+        <translation>[FFF0-FFFF] Caractères spéciaux</translation>
     </message>
     <message>
         <source>[10300-1032F] Old Italic</source>
-        <translation type="unfinished">[10300-1032F] Italique Ancien</translation>
+        <translation>[10300-1032F] Alphabet italique</translation>
     </message>
     <message>
         <source>[10330-1034F] Gothic</source>
-        <translation type="unfinished">[10330-1034F] Gothique</translation>
+        <translation>[10330-1034F] Gotique</translation>
     </message>
     <message>
         <source>[10400-1044F] Deseret</source>
-        <translation type="unfinished">[10400-1044F] Déséret</translation>
+        <translation>[10400-1044F] Déséret</translation>
     </message>
     <message>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
-        <translation type="unfinished">[1D000-1D0FF] Symboles Musicaux Byzantins</translation>
+        <translation>[1D000-1D0FF] Symboles musicaux byzantins</translation>
     </message>
     <message>
         <source>[1D100-1D1FF] Musical Symbols</source>
-        <translation type="unfinished">[1D100-1D1FF] Symboles Musicaux</translation>
+        <translation>[1D100-1D1FF] Symboles musicaux occidentaux</translation>
     </message>
     <message>
         <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
-        <translation type="unfinished">[1D400-1D7FF] Symboles Alphanumériques Mathématiques</translation>
+        <translation>[1D400-1D7FF] Symboles mathématiques alphanumériques</translation>
     </message>
     <message>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation type="unfinished">[20000-2A6DF] Supplément B aux idéogrammes unifiés CJC</translation>
+        <translation>[20000-2A6DF] Supplément B aux idéogrammes unifiés CJC</translation>
     </message>
     <message>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
-        <translation type="unfinished">[2F800-2FA1F] Supplément aux idéogrammes de compatibilité CJC</translation>
+        <translation>[2F800-2FA1F] Supplément aux idéogrammes de compatibilité CJC</translation>
     </message>
     <message>
         <source>[E0000-E007F] Tags</source>
-        <translation type="unfinished">[E0000-E007F] Étiquettes</translation>
+        <translation>[E0000-E007F] Étiquettes</translation>
     </message>
     <message>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation type="unfinished">[F0000-FFFFD] Zone supplémentaire A à usage privé</translation>
+        <translation>[F0000-FFFFD] Zone supplémentaire A à usage privé</translation>
     </message>
     <message>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation type="unfinished">[100000-10FFFD] Zone supplémentaire B à usage privé</translation>
+        <translation>[100000-10FFFD] Zone supplémentaire B à usage privé</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Diameter (⌀)</source>
-        <translation type="unfinished">Diamètre (ø)</translation>
+        <translation>Diamètre (ø)</translation>
     </message>
     <message>
         <source>&amp;Line spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>E&amp;spacement des lignes :</translation>
     </message>
 </context>
 <context>
@@ -4195,7 +4194,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Number of copies</source>
-        <translation>Nombre de Copies</translation>
+        <translation>Nombre de copies</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4484,7 +4483,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Paper &amp;Width:</source>
-        <translation>L&amp;argeur de Page :</translation>
+        <translation>L&amp;argeur de page :</translation>
     </message>
     <message>
         <source>&amp;Units</source>
@@ -5276,7 +5275,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
         <translation>Depuis mars 2015, MakerCAM n&apos;affiche pas correctement les ellipses et les arcs elliptiques lorsque ils sont créées à l&apos;aide d&apos;une balise &lt;ellipse&gt; avec une rotation dans l&apos;attribut &quot;transform&quot; ou une balise &lt;path&gt; utilisant des segments d&apos;arc elliptique.</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
         <translation>Approximation des ellipses et des arcs elliptiques à l&apos;aide de courbes de bézier cubique</translation>
     </message>
@@ -5704,11 +5703,11 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
         <source>Diameter (ø)</source>
         <translation type="obsolete">Diamètre (ø)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Degree (°)</source>
         <translation>Degrés (°)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Plus / Minus (±)</source>
         <translation>Plus / moins (±)</translation>
     </message>
@@ -5724,19 +5723,19 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
         <source>Dollar ($)</source>
         <translation>Dollar ($)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Paragraph (§)</source>
         <translation>Paragraphe (§)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Pound (£)</source>
         <translation>Livres (£)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Times (×)</source>
         <translation>Par (×)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Division (÷)</source>
         <translation>Division (÷)</translation>
     </message>
@@ -6208,19 +6207,19 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
         <source>Alt+D</source>
         <translation type="obsolete">Alt+D</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Copyright (©)</source>
         <translation>Copyright (©)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Registered (®)</source>
         <translation>Enregistré (®)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Pi (π)</source>
         <translation>Pi (π)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Yen (¥)</source>
         <translation>Yen (¥)</translation>
     </message>
@@ -6276,7 +6275,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
         <source>Middle</source>
         <translation type="obsolete">Milieu</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Diameter (⌀)</source>
         <translation>Diamètre (ø)</translation>
     </message>
@@ -6432,7 +6431,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Bitmap Size</source>
-        <translation>Taille Bitmap</translation>
+        <translation>Taille de la Bitmap</translation>
     </message>
     <message>
         <source>640</source>
@@ -6783,7 +6782,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Insert</source>
-        <translation>Insertion</translation>
+        <translation>Insérer</translation>
     </message>
 </context>
 <context>
@@ -7014,15 +7013,15 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Divide</source>
-        <translation type="unfinished">Diviser</translation>
+        <translation>Séparation</translation>
     </message>
     <message>
         <source>Divide (small)</source>
-        <translation type="unfinished"></translation>
+        <translation>Séparation (petit)</translation>
     </message>
     <message>
         <source>Divide (large)</source>
-        <translation type="unfinished"></translation>
+        <translation>Séparation (grand)</translation>
     </message>
     <message>
         <source>Center</source>
@@ -7066,7 +7065,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Divide (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>Séparation (minuscule)</translation>
     </message>
     <message>
         <source>Center (tiny)</source>
@@ -7520,15 +7519,15 @@ p, li { white-space: pre-wrap; }
     <name>QG_WidthBox</name>
     <message>
         <source>By Layer</source>
-        <translation>Par Calque</translation>
+        <translation>Par calque</translation>
     </message>
     <message>
         <source>By Block</source>
-        <translation>Par Bloc</translation>
+        <translation>Par bloc</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation>Défaut</translation>
+        <translation>Par défaut</translation>
     </message>
     <message>
         <source>0.00mm</source>
@@ -7635,11 +7634,11 @@ p, li { white-space: pre-wrap; }
     <name>QMessageBox</name>
     <message>
         <source>Warning</source>
-        <translation>Attention</translation>
+        <translation>Avertissement</translation>
     </message>
     <message>
         <source>Remove Layer</source>
-        <translation>Effacer Calque</translation>
+        <translation>Supprimer le calque</translation>
     </message>
     <message>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
@@ -7647,32 +7646,32 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Le Calque &quot;%1&quot; ne peut plus être effacé.</translation>
+        <translation>Le calque &quot;%1&quot; ne peut plus être supprimé.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
-        <translation>Menu Calque</translation>
+        <translation>Boîte de dialogue Calque</translation>
     </message>
     <message>
         <source>Remove Block</source>
-        <translation>Effacer Bloc</translation>
+        <translation>Supprimer le bloc</translation>
     </message>
     <message>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>Le Bloc &quot;%1&quot; et son contenu est effacé.</translation>
+        <translation>Le bloc &quot;%1&quot; ainsi que toutes ses entités vont être supprimés.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
-        <translation>Propriétés du Calque</translation>
+        <translation>Propriétés du calque</translation>
     </message>
     <message>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Le Calque nommé &quot;%1&quot; existe déjà. Il faut lui donner un autre nom.</translation>
+        <translation>Un calque nommé &quot;%1&quot; existe déjà. Veuillez indiquer un nom différent.</translation>
     </message>
     <message>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Le calque &quot;%1&quot; ainsi que toutes les entités qu&apos;il contient vont être supprimés.
+        <translation>Le calque &quot;%1&quot; ainsi que toutes ses entités vont être supprimés.
 Cette action NE peut PAS être annulée.</translation>
     </message>
 </context>
@@ -7750,7 +7749,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
-        <translation type="unfinished">Format Graphics Interchange</translation>
+        <translation>Graphics Interchange Format</translation>
     </message>
     <message>
         <source>Drawing Exchange %1</source>
@@ -7866,7 +7865,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
-        <translation type="unfinished">Chargement du fichier %1..</translation>
+        <translation>Chargement du fichier %1..</translation>
     </message>
     <message>
         <source>Loading...</source>
@@ -7930,7 +7929,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>PC Paint</source>
-        <translation type="unfinished"></translation>
+        <translation>PC Paint</translation>
     </message>
     <message>
         <source>SGI-Bilddatei</source>
@@ -7998,7 +7997,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation type="unfinished">Erreur de hachures</translation>
+        <translation>Erreur de hachures à cause d&apos;un écart=%1 entre (%2, %3) et (%4, %5)</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -8040,7 +8039,7 @@ Continuer?</translation>
     <message>
         <source>li</source>
         <comment>draw line</comment>
-        <translation type="unfinished">li</translation>
+        <translation>li</translation>
     </message>
     <message>
         <source>l</source>
@@ -8060,32 +8059,32 @@ Continuer?</translation>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"></translation>
+        <translation>mainlevee</translation>
     </message>
     <message>
         <source>fhl</source>
         <comment>draw freehand line</comment>
-        <translation>lml</translation>
+        <translation>mainl</translation>
     </message>
     <message>
         <source>spline</source>
         <comment>draw spline</comment>
-        <translation type="unfinished">cerce</translation>
+        <translation>cerce</translation>
     </message>
     <message>
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation type="unfinished"></translation>
+        <translation>cer</translation>
     </message>
     <message>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation type="unfinished">cerce2</translation>
+        <translation>cerce2</translation>
     </message>
     <message>
         <source>stp</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"></translation>
+        <translation>cpp</translation>
     </message>
     <message>
         <source>offset</source>
@@ -8105,12 +8104,12 @@ Continuer?</translation>
     <message>
         <source>pa</source>
         <comment>create offset</comment>
-        <translation type="unfinished">pa</translation>
+        <translation>dec</translation>
     </message>
     <message>
         <source>ptp</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"></translation>
+        <translation>ppp</translation>
     </message>
     <message>
         <source>pp</source>
@@ -8120,22 +8119,22 @@ Continuer?</translation>
     <message>
         <source>bisect</source>
         <comment>angle bisector</comment>
-        <translation>bisectrice</translation>
+        <translation>bissectrice</translation>
     </message>
     <message>
         <source>bi</source>
         <comment>angle bisector</comment>
-        <translation>bi</translation>
+        <translation>biss</translation>
     </message>
     <message>
         <source>tangentpc</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>tangentpc</translation>
     </message>
     <message>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>tanpc</translation>
     </message>
     <message>
         <source>perp</source>
@@ -8150,12 +8149,12 @@ Continuer?</translation>
     <message>
         <source>vertical</source>
         <comment>vertical line</comment>
-        <translation type="unfinished"></translation>
+        <translation>verticale</translation>
     </message>
     <message>
         <source>ver</source>
         <comment>vertical line</comment>
-        <translation type="unfinished"></translation>
+        <translation>ver</translation>
     </message>
     <message>
         <source>horizontal</source>
@@ -8245,12 +8244,12 @@ Continuer?</translation>
     <message>
         <source>cc</source>
         <comment>circle with center and radius</comment>
-        <translation>cc</translation>
+        <translation>ccr</translation>
     </message>
     <message>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>tan3</translation>
     </message>
     <message>
         <source>ct3</source>
@@ -8275,12 +8274,12 @@ Continuer?</translation>
     <message>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation type="unfinished"></translation>
+        <translation>hach</translation>
     </message>
     <message>
         <source>ha</source>
         <comment>draw hatch</comment>
-        <translation type="unfinished"></translation>
+        <translation>ha</translation>
     </message>
     <message>
         <source>mtext</source>
@@ -8315,52 +8314,52 @@ Continuer?</translation>
     <message>
         <source>rg</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished">rg</translation>
+        <translation>rv</translation>
     </message>
     <message>
         <source>zr</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished">zr</translation>
+        <translation>rd</translation>
     </message>
     <message>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation type="unfinished"></translation>
+        <translation>zoomzone</translation>
     </message>
     <message>
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation type="unfinished">zf</translation>
+        <translation>zz</translation>
     </message>
     <message>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation type="unfinished"></translation>
+        <translation>zoomauto</translation>
     </message>
     <message>
         <source>za</source>
         <comment>zoom - auto</comment>
-        <translation type="unfinished">za</translation>
+        <translation>za</translation>
     </message>
     <message>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation type="unfinished"></translation>
+        <translation>deplacervue</translation>
     </message>
     <message>
         <source>zp</source>
         <comment>zoom - pan</comment>
-        <translation type="unfinished">zp</translation>
+        <translation>dv</translation>
     </message>
     <message>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation type="unfinished"></translation>
+        <translation>vueprecedente</translation>
     </message>
     <message>
         <source>zv</source>
         <comment>zoom - previous</comment>
-        <translation type="unfinished">zv</translation>
+        <translation>vp</translation>
     </message>
     <message>
         <source>kill</source>
@@ -8380,7 +8379,7 @@ Continuer?</translation>
     <message>
         <source>u</source>
         <comment>undo cycle</comment>
-        <translation type="unfinished">u</translation>
+        <translation>a</translation>
     </message>
     <message>
         <source>redo</source>
@@ -8395,137 +8394,137 @@ Continuer?</translation>
     <message>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation>dimalignee</translation>
+        <translation>cotationalignee</translation>
     </message>
     <message>
         <source>da</source>
         <comment>dimension - aligned</comment>
-        <translation>da</translation>
+        <translation>cotal</translation>
     </message>
     <message>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation>dimhorizontale</translation>
+        <translation>cotationhorizontale</translation>
     </message>
     <message>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation>dh</translation>
+        <translation>coth</translation>
     </message>
     <message>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
-        <translation>dimverticale</translation>
+        <translation>cotationverticale</translation>
     </message>
     <message>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation>dv</translation>
+        <translation>cotv</translation>
     </message>
     <message>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation>dimlineaire</translation>
+        <translation>cotationlineaire</translation>
     </message>
     <message>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation>dl</translation>
+        <translation>cotl</translation>
     </message>
     <message>
         <source>dr</source>
         <comment>dimension - linear</comment>
-        <translation>dr</translation>
+        <translation>cotl</translation>
     </message>
     <message>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation>dimangulaire</translation>
+        <translation>cotationangulaire</translation>
     </message>
     <message>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation>dan</translation>
+        <translation>cotan</translation>
     </message>
     <message>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
-        <translation>dimradiale</translation>
+        <translation>cotationradiale</translation>
     </message>
     <message>
         <source>dimradius</source>
         <comment>dimension - radius</comment>
-        <translation>dimrayon</translation>
+        <translation>cotationrayon</translation>
     </message>
     <message>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation>dimdiametrale</translation>
+        <translation>cotationdiametrale</translation>
     </message>
     <message>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
-        <translation>dimdiametre</translation>
+        <translation>cotationdiametre</translation>
     </message>
     <message>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation>dd</translation>
+        <translation>cotd</translation>
     </message>
     <message>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation>dimrepere</translation>
+        <translation>cotationrepere</translation>
     </message>
     <message>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation>rp</translation>
+        <translation>rep</translation>
     </message>
     <message>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
-        <translation>dimregenerer</translation>
+        <translation>cotationregenerer</translation>
     </message>
     <message>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation type="unfinished"></translation>
+        <translation>contrainteaucune</translation>
     </message>
     <message>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation type="unfinished"></translation>
+        <translation>conta</translation>
     </message>
     <message>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation>contrainteorthogonale</translation>
     </message>
     <message>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation>conto</translation>
     </message>
     <message>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation>restreindrehorizontal</translation>
+        <translation>contraintehorizontale</translation>
     </message>
     <message>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>conth</translation>
     </message>
     <message>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>contrainteverticale</translation>
     </message>
     <message>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>contv</translation>
     </message>
     <message>
         <source>move</source>
@@ -8545,7 +8544,7 @@ Continuer?</translation>
     <message>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation>cha</translation>
+        <translation>chanf</translation>
     </message>
     <message>
         <source>ch</source>
@@ -8555,12 +8554,12 @@ Continuer?</translation>
     <message>
         <source>fillet</source>
         <comment>modify - fillet</comment>
-        <translation type="unfinished"></translation>
+        <translation>arrondi</translation>
     </message>
     <message>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation type="unfinished"></translation>
+        <translation>arr</translation>
     </message>
     <message>
         <source>divide</source>
@@ -8585,37 +8584,37 @@ Continuer?</translation>
     <message>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation>mi</translation>
+        <translation>sym</translation>
     </message>
     <message>
         <source>revert</source>
         <comment>modify -  revert direction</comment>
-        <translation type="unfinished"></translation>
+        <translation>inverser</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation type="unfinished">inv</translation>
+        <translation>inv</translation>
     </message>
     <message>
         <source>rotate</source>
         <comment>modify - rotate</comment>
-        <translation type="unfinished"></translation>
+        <translation>rotation</translation>
     </message>
     <message>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation type="unfinished">ro</translation>
+        <translation>ro</translation>
     </message>
     <message>
         <source>scale</source>
         <comment>modify - scale</comment>
-        <translation type="unfinished"></translation>
+        <translation>echelle</translation>
     </message>
     <message>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation type="unfinished">sz</translation>
+        <translation>ec</translation>
     </message>
     <message>
         <source>trim</source>
@@ -8640,22 +8639,22 @@ Continuer?</translation>
     <message>
         <source>lengthen</source>
         <comment>modify - lengthen</comment>
-        <translation type="unfinished"></translation>
+        <translation>allonger</translation>
     </message>
     <message>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation type="unfinished"></translation>
+        <translation>all</translation>
     </message>
     <message>
         <source>stretch</source>
         <comment>modify - stretch</comment>
-        <translation type="unfinished"></translation>
+        <translation>deformer</translation>
     </message>
     <message>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation type="unfinished">ss</translation>
+        <translation>def</translation>
     </message>
     <message>
         <source>delete</source>
@@ -8665,7 +8664,7 @@ Continuer?</translation>
     <message>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>er</translation>
+        <translation>eff</translation>
     </message>
     <message>
         <source>del</source>
@@ -8685,112 +8684,112 @@ Continuer?</translation>
     <message>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"></translation>
+        <translation>accrochelibre</translation>
     </message>
     <message>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation type="unfinished">os</translation>
+        <translation>accl</translation>
     </message>
     <message>
         <source>sf</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"></translation>
+        <translation>accl</translation>
     </message>
     <message>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation type="unfinished"></translation>
+        <translation>accrochercentre</translation>
     </message>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation type="unfinished"></translation>
+        <translation>accc</translation>
     </message>
     <message>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation type="unfinished"></translation>
+        <translation>accrocherdistance</translation>
     </message>
     <message>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation type="unfinished"></translation>
+        <translation>accd</translation>
     </message>
     <message>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation type="unfinished"></translation>
+        <translation>accrocherextremite</translation>
     </message>
     <message>
         <source>se</source>
         <comment>snap - end points</comment>
-        <translation type="unfinished">se</translation>
+        <translation>acce</translation>
     </message>
     <message>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation type="unfinished"></translation>
+        <translation>accrochergrille</translation>
     </message>
     <message>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation type="unfinished">sg</translation>
+        <translation>accg</translation>
     </message>
     <message>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation type="unfinished"></translation>
+        <translation>accrocherintersection</translation>
     </message>
     <message>
         <source>si</source>
         <comment>snap - intersection</comment>
-        <translation type="unfinished">si</translation>
+        <translation>acci</translation>
     </message>
     <message>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation type="unfinished"></translation>
+        <translation>accrochermilieu</translation>
     </message>
     <message>
         <source>sm</source>
         <comment>snap - middle points</comment>
-        <translation type="unfinished">sm</translation>
+        <translation>accm</translation>
     </message>
     <message>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation type="unfinished"></translation>
+        <translation>accrocherentite</translation>
     </message>
     <message>
         <source>sn</source>
         <comment>snap - on entity</comment>
-        <translation type="unfinished">sn</translation>
+        <translation>acce</translation>
     </message>
     <message>
         <source>np</source>
         <comment>snap - on entity</comment>
-        <translation type="unfinished">np</translation>
+        <translation>acce</translation>
     </message>
     <message>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation type="unfinished"></translation>
+        <translation>positionnerzerorelatif</translation>
     </message>
     <message>
         <source>rz</source>
         <comment>set relative zero position</comment>
-        <translation type="unfinished"></translation>
+        <translation>zr</translation>
     </message>
     <message>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>selectionnertout</translation>
     </message>
     <message>
         <source>sa</source>
         <comment>Select all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>selt</translation>
     </message>
     <message>
         <source>deselectall</source>
@@ -8800,7 +8799,7 @@ Continuer?</translation>
     <message>
         <source>tn</source>
         <comment>deselect all entities</comment>
-        <translation type="unfinished">tn</translation>
+        <translation>as</translation>
     </message>
     <message>
         <source>modifyattr</source>
@@ -8815,7 +8814,7 @@ Continuer?</translation>
     <message>
         <source>ma</source>
         <comment>modify attribute</comment>
-        <translation>ma</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <source>properties</source>
@@ -8914,15 +8913,15 @@ Continuer?</translation>
     </message>
     <message>
         <source>rows</source>
-        <translation type="unfinished">lignes</translation>
+        <translation>lignes</translation>
     </message>
     <message>
         <source>rowspacing</source>
-        <translation type="unfinished">espacementligne</translation>
+        <translation>espacementligne</translation>
     </message>
     <message>
         <source>through</source>
-        <translation type="unfinished">travers</translation>
+        <translation>travers</translation>
     </message>
     <message>
         <source>trim</source>
@@ -8955,12 +8954,12 @@ Continuer?</translation>
     <message>
         <source>cl</source>
         <comment>chord length</comment>
-        <translation>lc</translation>
+        <translation>lonc</translation>
     </message>
     <message>
         <source>c</source>
         <comment>close</comment>
-        <translation>f</translation>
+        <translation>fer</translation>
     </message>
     <message>
         <source>cols</source>
@@ -8970,7 +8969,7 @@ Continuer?</translation>
     <message>
         <source>co</source>
         <comment>columns</comment>
-        <translation>co</translation>
+        <translation>col</translation>
     </message>
     <message>
         <source>columnspacing</source>
@@ -9014,7 +9013,7 @@ Continuer?</translation>
     <message>
         <source>len</source>
         <comment>length</comment>
-        <translation>lon</translation>
+        <translation>long</translation>
     </message>
     <message>
         <source>l</source>
@@ -9029,7 +9028,7 @@ Continuer?</translation>
     <message>
         <source>len1</source>
         <comment>length1</comment>
-        <translation>lon1</translation>
+        <translation>long1</translation>
     </message>
     <message>
         <source>l1</source>
@@ -9044,7 +9043,7 @@ Continuer?</translation>
     <message>
         <source>len2</source>
         <comment>length2</comment>
-        <translation>lon2</translation>
+        <translation>long2</translation>
     </message>
     <message>
         <source>l2</source>
@@ -9059,13 +9058,12 @@ Continuer?</translation>
     <message>
         <source>num</source>
         <comment>number</comment>
-        <translation>nom</translation>
+        <translation>nomb</translation>
     </message>
     <message>
         <source>n</source>
         <comment>number</comment>
-        <translation>
-n</translation>
+        <translation>n</translation>
     </message>
     <message>
         <source>ra</source>
@@ -9075,27 +9073,27 @@ n</translation>
     <message>
         <source>reversed</source>
         <comment>reversed</comment>
-        <translation type="unfinished">inversé</translation>
+        <translation>inversé</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation type="unfinished">inv</translation>
+        <translation>inv</translation>
     </message>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation type="unfinished"></translation>
+        <translation>ligne</translation>
     </message>
     <message>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation type="unfinished">espacementligne</translation>
+        <translation>espacementligne</translation>
     </message>
     <message>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation type="unfinished">el</translation>
+        <translation>el</translation>
     </message>
     <message>
         <source>text</source>
@@ -9109,7 +9107,7 @@ n</translation>
     <message>
         <source>t</source>
         <comment>through</comment>
-        <translation type="unfinished">t</translation>
+        <translation>t</translation>
     </message>
     <message>
         <source>undo</source>
@@ -9118,7 +9116,7 @@ n</translation>
     <message>
         <source>u</source>
         <comment>undo</comment>
-        <translation type="unfinished">u</translation>
+        <translation>a</translation>
     </message>
     <message>
         <source>redo</source>
@@ -9136,15 +9134,15 @@ n</translation>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation>r</translation>
+        <translation>ret</translation>
     </message>
     <message>
         <source>paperoffset</source>
-        <translation type="unfinished"></translation>
+        <translation>decelagepapier</translation>
     </message>
     <message>
         <source>graphoffset</source>
-        <translation type="unfinished"></translation>
+        <translation>decalagegraphique</translation>
     </message>
     <message>
         <source>Command: %1 (%2)</source>
@@ -9156,7 +9154,7 @@ n</translation>
     </message>
     <message>
         <source>Command not found: %1</source>
-        <translation>Commande introuvable</translation>
+        <translation>Commande introuvable : %1</translation>
     </message>
     <message>
         <source>Accepted keycode: %1</source>
@@ -9204,17 +9202,17 @@ n</translation>
     <message>
         <source>di</source>
         <comment>modify - divide (cut)</comment>
-        <translation>cp</translation>
+        <translation>di</translation>
     </message>
     <message>
         <source>t2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>a2</translation>
     </message>
     <message>
         <source>mp</source>
         <comment>modify properties</comment>
-        <translation>mp</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <source>Block</source>
@@ -9274,7 +9272,7 @@ n</translation>
     </message>
     <message>
         <source>Restriction</source>
-        <translation>Restriction</translation>
+        <translation>Contrainte</translation>
     </message>
     <message>
         <source>Select</source>
@@ -9286,7 +9284,7 @@ n</translation>
     </message>
     <message>
         <source>Snap Extras</source>
-        <translation type="unfinished"></translation>
+        <translation>Modes d&apos;accrochage supplémentaires</translation>
     </message>
     <message>
         <source>View</source>
@@ -9378,7 +9376,7 @@ n</translation>
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished">Licence</translation>
+        <translation>Licence</translation>
     </message>
 </context>
 <context>
@@ -9411,7 +9409,7 @@ n</translation>
     <name>RS_ActionBlocksCreate</name>
     <message>
         <source>Specify reference point</source>
-        <translation>Spécifier le point de référence</translation>
+        <translation>Indiquer le point de référence</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9691,7 +9689,7 @@ n</translation>
     <name>RS_ActionDimLeader</name>
     <message>
         <source>Specify target point</source>
-        <translation>Spécifier le point d&apos;arrivée</translation>
+        <translation>Indiquer le point cible</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10373,11 +10371,11 @@ n</translation>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
-        <translation>Indiquer un point de l&apos;ellipse ou la distance totale au foyer</translation>
+        <translation>Indiquer un point de l&apos;ellipse ou la distance totale entre foyers</translation>
     </message>
     <message>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation>indiquer un point de l&apos;ellipse ou la distance totale au foyer</translation>
+        <translation>indiquer un point de l&apos;ellipse ou la distance totale entre foyers</translation>
     </message>
     <message>
         <source>Total distance %1 is smaller than distance between foci</source>
@@ -10470,7 +10468,7 @@ n</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Spécifier le point de référence</translation>
+        <translation>Indiquer le point de référence</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10776,7 +10774,7 @@ n</translation>
     </message>
     <message>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation>Spécifier la distance &lt;%1&gt; ou sélectionner une entité ou [%2]</translation>
+        <translation>Indiquer la distance &lt;%1&gt; ou sélectionner une entité ou [%2]</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..99</source>
@@ -11173,7 +11171,7 @@ n</translation>
     </message>
     <message>
         <source>Enter text:</source>
-        <translation>Saisir du texte :</translation>
+        <translation>Saisir le texte :</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11309,7 +11307,7 @@ n</translation>
     </message>
     <message>
         <source>Enter text:</source>
-        <translation>Saisir du texte :</translation>
+        <translation>Saisir le texte :</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11348,7 +11346,7 @@ n</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Spécifier le point de référence</translation>
+        <translation>Indiquer le point de référence</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -11607,7 +11605,7 @@ n</translation>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation>Distance: %1 Cartésienne: (%2 , %3), Polaire: (%4&lt;%5)</translation>
+        <translation>Distance: %1 cartésienne: (%2 , %3), polaire: (%4&lt;%5)</translation>
     </message>
 </context>
 <context>
@@ -11809,7 +11807,7 @@ n</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Spécifier le point de référence</translation>
+        <translation>Indiquer le point de référence</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12158,7 +12156,7 @@ n</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Spécifier le point de référence</translation>
+        <translation>Indiquer le point de référence</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12166,7 +12164,7 @@ n</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Spécifier le point d&apos;arrivée</translation>
+        <translation>Indiquer le point cible</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12205,7 +12203,7 @@ n</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Indiquer le point d&apos;arrivée</translation>
+        <translation>Indiquer le point cible</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12255,7 +12253,7 @@ n</translation>
     </message>
     <message>
         <source>Specify target point to rotate to</source>
-        <translation>Indiquer le point d&apos;arrivée</translation>
+        <translation>Indiquer le point cible</translation>
     </message>
 </context>
 <context>
@@ -12344,7 +12342,7 @@ n</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Spécifier le point de référence</translation>
+        <translation>Indiquer le point de référence</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12387,7 +12385,7 @@ n</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Spécifier le point d&apos;arrivée</translation>
+        <translation>Indiquer le point cible</translation>
     </message>
 </context>
 <context>
@@ -13169,7 +13167,7 @@ n</translation>
     </message>
     <message>
         <source>I&amp;ntersection Manually</source>
-        <translation>I&amp;ntersection Manuelle</translation>
+        <translation>I&amp;ntersection manuelle</translation>
     </message>
     <message>
         <source>Snap to intersection points manually</source>
@@ -14140,7 +14138,7 @@ n</translation>
     <name>TextFileViewer</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished">Cadre</translation>
+        <translation>Cadre</translation>
     </message>
 </context>
 <context>
@@ -14257,27 +14255,27 @@ n</translation>
         <source>Label:</source>
         <translation>Étiquette :</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>⌀</source>
         <translation>⌀</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <translation>°</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>±</source>
         <translation>±</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>π</source>
         <translation></translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>×</source>
         <translation>×</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>÷</source>
         <translation>÷</translation>
     </message>
@@ -14781,7 +14779,7 @@ n</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation>Distance. Valeurs négatives pour raccourcir, positives pour rallonger.Les signes négatifs sont ignorés lors de l&apos;ajustement final.</translation>
+        <translation>Distance. Valeurs négatives pour raccourcir, positives pour rallonger. Les signes négatifs sont ignorés lors de l&apos;ajustement final.</translation>
     </message>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
