@@ -7,12 +7,14 @@ OSNAME[8]="MountainLion"
 OSNAME[9]="Mavericks"
 OSNAME[10]="Yosemite"
 OSNAME[11]="ElCapitan"
+OSNAME[12]="Sierra"
 
 OSSDK[7]="macosx10.7"
 OSSDK[8]="macosx10.8"
 OSSDK[9]="macosx10.9"
 OSSDK[10]="macosx10.10"
 OSSDK[11]="macosx10.11"
+OSSDK[12]="macosx10.12"
 
 #path of this script file
 SCRIPTPATH="$(dirname "$0")"
