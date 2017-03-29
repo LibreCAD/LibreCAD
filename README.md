@@ -21,8 +21,7 @@ The 2.0 branch will be the last to support the QCAD toolbar. [![Build Status](ht
 
 - [Milestones](https://github.com/LibreCAD/LibreCAD/milestones)
 
-[libdxfrw][1] is an associated project that allows LibreCAD to read DWG files.
-[1]:https://sourceforge.net/projects/libdxfrw/
+[libdxfrw](https://sourceforge.net/projects/libdxfrw/) is an associated project that allows LibreCAD to read DWG files.
 
 **Requests and Bug reports**
 
@@ -31,8 +30,8 @@ The 2.0 branch will be the last to support the QCAD toolbar. [![Build Status](ht
 
 **Questions or Comments**
 
-- http://forum.librecad.org/
-- [irc://chat.freenode.net/librecad](irc://chat.freenode.net/librecad)
+- [LibreCAD Forum](http://forum.librecad.org/)
+- IRC chat: [#librecad](http://webchat.freenode.net/?channels=librecad) at freenode.net
 
 **Git the source**
 
@@ -48,8 +47,7 @@ The 2.0 branch will be the last to support the QCAD toolbar. [![Build Status](ht
 
 https://github.com/LibreCAD/LibreCAD/wiki/Becoming-a-developer
 
-We recently started a [resources repository][5] for people that want to indirectly  
+There is a [resources repository](https://github.com/LibreCAD/Resources) for people that want to indirectly  
 contribute to the project by supplying icons, stylesheets, documentation, templates...
-[5]:https://github.com/LibreCAD/Resources
 
-<https://sourceforge.net/projects/librecad/files/Resources/>
+Associated downloads: <https://sourceforge.net/projects/librecad/files/Resources/>
