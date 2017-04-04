@@ -256,7 +256,7 @@ void replaceAll(QString& str, const QStringRef& from, const QString& to) {
 ** this only holds true for simple +,- operators *,/ require manual braces..
 ** which is probably a good thing.
 */
-void ImperialTxlate(Qstring& str) {
+void ImperialTxlate(QString& str) {
     if (str.isEmpty())
        return;
     // put brackets around everything first
