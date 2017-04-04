@@ -242,7 +242,7 @@ double RS_Math::eval(const QString& expr, double def) {
 ** generic replaceAll will allow substitution of one string for another
 ** as many times as it exists within a given string.
 */
-void replaceAll(std::string& str, const std::string& from, const std::string& to) {
+void replaceAll(QString& str, const std::string& from, const std::string& to) {
     if(from.empty())
         return;
     size_t start_pos = 0;
@@ -256,7 +256,7 @@ void replaceAll(std::string& str, const std::string& from, const std::string& to
 ** this only holds true for simple +,- operators *,/ require manual braces..
 ** which is probably a good thing.
 */
-void ImperialTxlate(std::string & str) {
+void ImperialTxlate(Qstring& str) {
     if (str.empty())
        return;
     // put brackets around everything first
