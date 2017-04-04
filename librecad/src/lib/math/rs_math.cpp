@@ -243,9 +243,9 @@ double RS_Math::eval(const QString& expr, double def) {
 ** as many times as it exists within a given string.
 */
 void replaceAll(QString& str, const QStringRef& from, const QStringRef& to) {
-    if(from.empty())
+    if(from.isEmpty())
         return;
-    size_t start_pos = 0;
+    int start_pos = 0;
     while((start_pos = str.indexOf(from, start_pos)) != std::string::npos) {
         str.replace(start_pos, from.length(), to);
         start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
@@ -257,7 +257,7 @@ void replaceAll(QString& str, const QStringRef& from, const QStringRef& to) {
 ** which is probably a good thing.
 */
 void ImperialTxlate(Qstring& str) {
-    if (str.empty())
+    if (str.isEmpty())
        return;
     // put brackets around everything first
     str = "(" + str + ")";
