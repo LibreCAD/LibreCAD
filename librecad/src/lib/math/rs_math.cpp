@@ -238,7 +238,38 @@ double RS_Math::eval(const QString& expr, double def) {
 
     return res;
 }
-
+/*
+** generic replaceAll will allow substitution of one string for another
+** as many times as it exists within a given string.
+*/
+void RS_Math::replaceAll(std::string& str, const std::string& from, const std::string& to) {
+    if(from.empty())
+        return;
+    size_t start_pos = 0;
+    while((start_pos = str.find(from, start_pos)) != std::string::npos) {
+        str.replace(start_pos, from.length(), to);
+        start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
+    }
+}
+/*
+** Translate imperial shortform to inch equivalent math statements
+** this only holds true for simple +,- operators *,/ require manual braces..
+** which is probably a good thing.
+*/
+void RS_Math::ImperialTxlate(std::string & str) {
+    if (str.empty())
+       return;
+    // put brackets around everything first
+    str = "(" + str + ")";
+    replaceAll(str,"+",")+(");
+    replaceAll(str,"-",")-(");
+    // convert foot shortform
+    replaceAll(str,"\'","*12+");
+    // convert inch shortform
+    replaceAll(str,"\"","+");
+    // fix for inch with no fraction component
+    replaceAll(str,"+)",")");  // -- cleanup 
+}
 
 /**
  * Evaluates a mathematical expression and returns the result.
@@ -252,6 +283,8 @@ double RS_Math::eval(const QString& expr, bool* ok) {
         return 0.0;
     }
     double ret(0.);
+    // translate imperial shorthand before you eval
+    ImperialTxlate(expr);
     try{
         mu::Parser p;
         p.DefineConst("pi",M_PI);
