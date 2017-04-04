@@ -285,12 +285,14 @@ double RS_Math::eval(const QString& expr, bool* ok) {
         return 0.0;
     }
     double ret(0.);
+    // create a local copy of expr
+    QString lexpr = expr;
     // translate imperial shorthand before you eval
-    ImperialTxlate(expr);
+    ImperialTxlate(lexpr);
     try{
         mu::Parser p;
         p.DefineConst("pi",M_PI);
-        p.SetExpr(expr.toStdString());
+        p.SetExpr(lexpr.toStdString());
         ret=p.Eval();
         *ok=true;
     }
