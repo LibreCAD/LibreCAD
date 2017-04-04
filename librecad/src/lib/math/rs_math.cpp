@@ -33,6 +33,8 @@
 #include <QString>
 #include <QDebug>
 
+#include "rs_settings.h"
+#include "rs_units.h"
 #include "rs_math.h"
 #include "rs_vector.h"
 #include "rs_debug.h"
@@ -239,6 +241,43 @@ double RS_Math::eval(const QString& expr, double def) {
     return res;
 }
 
+/**
+ * generic replaceAll will allow substitution of one string for another
+ * as many times as it exists within a given string.
+ */
+void RS_Math::replaceAll(QString& str, const std::string& from, const std::string& to) {
+
+    QString qfrom = QString::fromStdString(from);
+    QString qto = QString::fromStdString(to);
+    if(qfrom.isEmpty())
+        return;
+    int start_pos = 0;
+    while((start_pos = str.indexOf(qfrom, start_pos)) != -1) {
+        str.replace(start_pos, qfrom.length(), qto);
+        start_pos += qto.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
+    }
+}
+
+/**
+ * Translate imperial shortform to inch equivalent math statements
+ * this only holds true for simple +,- operators *,/ require manual braces..
+ * which is probably a good thing.
+ */
+void RS_Math::imperialTranslate(QString& str) {
+
+    if (str.isEmpty())
+       return;
+    // put brackets around everything first
+    str = "(" + str + ")";
+    replaceAll(str,"+",")+(");
+    replaceAll(str,"-",")-(");
+    // convert foot shortform
+    replaceAll(str,"\'","*12+");
+    // convert inch shortform
+    replaceAll(str,"\"","+");
+    // fix for inch with no fraction component
+    replaceAll(str,"+)",")");  // -- cleanup
+}
 
 /**
  * Evaluates a mathematical expression and returns the result.
@@ -252,10 +291,19 @@ double RS_Math::eval(const QString& expr, bool* ok) {
         return 0.0;
     }
     double ret(0.);
+    // create a local copy of expr
+    QString expr_copy = expr;
+    // main drawing unit:
+    int insunits = RS_Units::stringToUnit(RS_SETTINGS->readEntry("/Unit", "None"));
+    // only apply imperial shorthand conversion if current units are 'inch'
+    if (insunits==RS2::Inch) {
+        // translate imperial shorthand before you eval
+        imperialTranslate(expr_copy);
+    }
     try{
         mu::Parser p;
         p.DefineConst("pi",M_PI);
-        p.SetExpr(expr.toStdString());
+        p.SetExpr(expr_copy.toStdString());
         ret=p.Eval();
         *ok=true;
     }
@@ -399,6 +447,20 @@ void RS_Math::test() {
 	assert(s=="0.00");
     s = RS_Math::doubleToString(v, 0.001);
 	assert(s=="0.001");
+
+    std::cout << "RS_Math::test: imperialTranslate:\n";
+
+    s = "20'2\"+10'11\"3/4";
+    RS_Math::imperialTranslate(s);
+    assert(s=="(20*12+2)+(10*12+11+3/4)");
+
+    s = "20'2\"-10'11\"3/4";
+    RS_Math::imperialTranslate(s);
+    assert(s=="(20*12+2)-(10*12+11+3/4)");
+
+    s = "-10'11\"3/4";
+    RS_Math::imperialTranslate(s);
+    assert(s=="()-(10*12+11+3/4)");
 
 	std::cout << "RS_Math::test: complete"<<std::endl;
 }
