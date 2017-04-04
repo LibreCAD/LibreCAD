@@ -242,13 +242,15 @@ double RS_Math::eval(const QString& expr, double def) {
 ** generic replaceAll will allow substitution of one string for another
 ** as many times as it exists within a given string.
 */
-void replaceAll(QString& str, const QStringRef& from, const QString& to) {
-    if(from.isEmpty())
+void replaceAll(QString& str, const std::string &from, const std::string &to) {
+    QString qfrom = QString::fromStdString(from);
+    QString qto = QString::fromStdString(to);
+    if(qfrom.isEmpty())
         return;
     int start_pos = 0;
-    while((start_pos = str.indexOf(from, start_pos)) != -1) {
-        str.replace(start_pos, from.length(), to);
-        start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
+    while((start_pos = str.indexOf(qfrom, start_pos)) != -1) {
+        str.replace(start_pos, qfrom.length(), qto);
+        start_pos += qto.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
     }
 }
 /*
