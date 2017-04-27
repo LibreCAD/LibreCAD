@@ -20,14 +20,14 @@ class QLineEdit;
 class LC_Sample : public QObject, QC_PluginInterface
 {
     Q_OBJECT
-     Q_INTERFACES(QC_PluginInterface)
-     Q_PLUGIN_METADATA(IID "org.librecad.sample" FILE  "sample.json")
+    Q_INTERFACES(QC_PluginInterface)
+    Q_PLUGIN_METADATA(IID LC_DocumentInterface_iid FILE  "sample.json")
 
  public:
-    virtual PluginCapabilities getCapabilities() const;
-    virtual QString name() const;
+    virtual PluginCapabilities getCapabilities() const Q_DECL_OVERRIDE;
+    virtual QString name() const Q_DECL_OVERRIDE;
     virtual void execComm(Document_Interface *doc,
-                                       QWidget *parent, QString cmd);
+                          QWidget *parent, QString cmd) Q_DECL_OVERRIDE;
 };
 
 class lc_Sampledlg : public QDialog

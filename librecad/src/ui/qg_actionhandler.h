@@ -133,6 +133,7 @@ public slots:
 	void slotDrawLineRelAngle();
 	void slotDrawLinePolygon();
 	void slotDrawLinePolygon2();
+    void slotDrawLinePolygon3();//added by txmy
 	void slotDrawCircle();
 	void slotDrawCircleCR();
 	void slotDrawCircle2P();

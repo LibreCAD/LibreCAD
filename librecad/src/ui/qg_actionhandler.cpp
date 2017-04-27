@@ -77,6 +77,7 @@
 #include "rs_actiondrawlineparallelthrough.h"
 #include "rs_actiondrawlinepolygon.h"
 #include "rs_actiondrawlinepolygon2.h"
+#include "rs_actiondrawlinepolygon3.h"
 #include "rs_actiondrawlinerectangle.h"
 #include "rs_actiondrawlinerelangle.h"
 #include "rs_actiondrawlineorthtan.h"
@@ -464,6 +465,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionDrawLinePolygonCenCor:
         a = new RS_ActionDrawLinePolygonCenCor(*document, *view);
+        break;
+    case RS2::ActionDrawLinePolygonCenTan:                      //20161223 added by txmy
+        a = new RS_ActionDrawLinePolygonCenTan(*document, *view);
         break;
     case RS2::ActionDrawLinePolygonCorCor:
         a = new RS_ActionDrawLinePolygonCorCor(*document, *view);
@@ -1379,6 +1383,10 @@ void QG_ActionHandler::slotPolylineSegment() {
 
 void QG_ActionHandler::slotDrawLinePolygon() {
     setCurrentAction(RS2::ActionDrawLinePolygonCenCor);
+}
+
+void QG_ActionHandler::slotDrawLinePolygon3() {           //20161223 added by txmy
+    setCurrentAction(RS2::ActionDrawLinePolygonCenTan);
 }
 
 void QG_ActionHandler::slotDrawLinePolygon2() {

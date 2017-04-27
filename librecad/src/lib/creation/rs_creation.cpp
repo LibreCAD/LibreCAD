@@ -960,7 +960,65 @@ RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
     return ret;
 }
 
+/**
+     * Creates a polygon with 'number' edges.
+     *
+     * @param center Center of the polygon.
+     * @param tangent The first tangent of the polygon with a circle
+     * @param number Number of edges / corners.
+     */
+RS_Line* RS_Creation::createPolygon3(const RS_Vector& center,    //added by txmy
+                                    const RS_Vector& tangent,
+                                    int number) {
+    // check given coords / number:
+    if (!center.valid || !tangent.valid || number<3) {
+        return nullptr;
+    }
 
+    RS_Line* ret = nullptr;
+
+    if (document && handleUndo) {
+        document->startUndoCycle();
+    }
+
+    RS_Vector corner(0, 0);
+    double angle = 2.*M_PI/number/2.0;
+    corner.x = tangent.x + (center.y - tangent.y) * tan(angle);
+    corner.y = tangent.y + (tangent.x - center.x) * tan(angle);
+
+    double const r = center.distanceTo(corner);
+    double const angle0 = center.angleTo(corner);
+    double const da = 2.*M_PI/number;
+
+    for (int i=0; i < number; ++i) {
+        RS_Vector const& c0 = center +
+                RS_Vector::polar(r, angle0 + i*da);
+        RS_Vector const& c1 = center +
+                RS_Vector::polar(r, angle0 + ((i+1)%number)*da);
+
+        RS_Line* line = new RS_Line{container, c0, c1};
+        line->setLayerToActive();
+        line->setPenToActive();
+
+        if (!ret) ret = line;
+
+        if (container) {
+            container->addEntity(line);
+        }
+        if (document && handleUndo) {
+            document->addUndoable(line);
+        }
+        if (graphicView) {
+            graphicView->drawEntity(line);
+        }
+    }
+
+    if (document && handleUndo) {
+        document->endUndoCycle();
+    }
+
+    return ret;
+}
 
 /**
      * Creates an insert with the given data.

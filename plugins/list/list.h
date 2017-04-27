@@ -24,14 +24,14 @@ class Plug_Entity;
 class LC_List : public QObject, QC_PluginInterface
 {
     Q_OBJECT
-     Q_INTERFACES(QC_PluginInterface)
-     Q_PLUGIN_METADATA(IID "org.librecad.list" FILE  "list.json")
+    Q_INTERFACES(QC_PluginInterface)
+    Q_PLUGIN_METADATA(IID LC_DocumentInterface_iid FILE  "list.json")
 
  public:
-    virtual PluginCapabilities getCapabilities() const;
-    virtual QString name() const;
+    virtual PluginCapabilities getCapabilities() const Q_DECL_OVERRIDE;
+    virtual QString name() const Q_DECL_OVERRIDE;
     virtual void execComm(Document_Interface *doc,
-                                       QWidget *parent, QString cmd);
+                          QWidget *parent, QString cmd) Q_DECL_OVERRIDE;
 
 private:
     QString getStrData(Plug_Entity *ent);
