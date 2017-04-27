@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="ca">
 <context>
@@ -30,7 +31,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../align/align.cpp" line="40"/>
         <source>first base point:</source>
-        <translation>primer punt d'origen:</translation>
+        <translation>primer punt d&apos;origen:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="42"/>
@@ -40,7 +41,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../align/align.cpp" line="44"/>
         <source>second base point:</source>
-        <translation>segon punt d'origen:</translation>
+        <translation>segon punt d&apos;origen:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="46"/>
@@ -53,12 +54,12 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="40"/>
         <source>Gear plugin</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -248,27 +249,27 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../list/list.cpp" line="187"/>
         <source>Insertion point</source>
-        <translation>Punt d'inserció</translation>
+        <translation>Punt d&apos;inserció</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="190"/>
         <source>Scale</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="193"/>
         <source>Rotation</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="199"/>
         <source>Columns/Rows</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="203"/>
         <source>Column/Row Spacing</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="210"/>
@@ -366,7 +367,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
-        <translation>seleccioneu l'entitat original:</translation>
+        <translation>seleccioneu l&apos;entitat original:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="43"/>
@@ -481,7 +482,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="257"/>
         <source>Draw point elevation</source>
-        <translation>Traça l'alçada del punt</translation>
+        <translation>Traça l&apos;alçada del punt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="258"/>
@@ -521,17 +522,17 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="320"/>
         <source>Point elevation layer is empty</source>
-        <translation>La capa de l'alçada dels punts està buida</translation>
+        <translation>La capa de l&apos;alçada dels punts està buida</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="321"/>
         <source>Point elevation height is empty</source>
-        <translation>L'alçada del punt és buida</translation>
+        <translation>L&apos;alçada del punt és buida</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="322"/>
         <source>Point elevation separation is empty</source>
-        <translation>La separació de l'alçada del punt és buida</translation>
+        <translation>La separació de l&apos;alçada del punt és buida</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="325"/>
@@ -541,7 +542,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="326"/>
         <source>Point number height is empty</source>
-        <translation>L'alçada del número del punt és buida</translation>
+        <translation>L&apos;alçada del número del punt és buida</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="327"/>
@@ -556,7 +557,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="331"/>
         <source>Point code height is empty</source>
-        <translation>L'alçada del codi del punt és buida</translation>
+        <translation>L&apos;alçada del codi del punt és buida</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="332"/>
@@ -570,7 +571,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="365"/>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation>No es pot obrir el fitxer %1</translation>
     </message>
 </context>
@@ -740,47 +741,47 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../gear/gear.cpp" line="66"/>
         <source>Draw a gear</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="71"/>
         <source>Number of teeth</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="79"/>
         <source>Circular pitch</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="87"/>
         <source>Pressure angle (deg)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="95"/>
         <source>Addendum</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="103"/>
         <source>Dedendum</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="111"/>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="114"/>
         <source>Spur</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
         <source>Ring</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
@@ -894,7 +895,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation>El factor d'escala està buit o no és vàlid</translation>
+        <translation>El factor d&apos;escala està buit o no és vàlid</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="132"/>
@@ -903,7 +904,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="137"/>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation>No es pot obrir el fitxer %1</translation>
     </message>
     <message>
@@ -934,7 +935,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <location filename="../plotequation/plot.cpp" line="21"/>
         <location filename="../plotequation/plot.cpp" line="28"/>
         <source>Plot plugin</source>
-        <translation>Connector d'impressió</translation>
+        <translation>Connector d&apos;impressió</translation>
     </message>
     <message>
         <source>Draw</source>
@@ -946,17 +947,17 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>Imprimeix l'equació</translation>
+        <translation>Imprimeix l&apos;equació</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don't want to use the parametric form, just leave out "Equation2".
+If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
         <translation>Aquest connector us permet traçar equacions matemàtiques.
-Si no voleu utilitzar la forma paramètrica, ometeu l'«Equació 2»
+Si no voleu utilitzar la forma paramètrica, ometeu l&apos;«Equació 2»
 Podeu utilitzar pi quan necessiteu el valor de pi (p. ex. (3*pi)).
 Utilitzeu t o x en la vostra equació com a variable o paràmetre.
 </translation>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="cs">
 <context>
@@ -51,12 +52,12 @@
     <message>
         <location filename="../gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="40"/>
         <source>Gear plugin</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -251,22 +252,22 @@
     <message>
         <location filename="../list/list.cpp" line="190"/>
         <source>Scale</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="193"/>
         <source>Rotation</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="199"/>
         <source>Columns/Rows</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="203"/>
         <source>Column/Row Spacing</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="210"/>
@@ -568,7 +569,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="365"/>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation>Nelze otevřít soubor %1</translation>
     </message>
 </context>
@@ -738,47 +739,47 @@
     <message>
         <location filename="../gear/gear.cpp" line="66"/>
         <source>Draw a gear</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="71"/>
         <source>Number of teeth</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="79"/>
         <source>Circular pitch</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="87"/>
         <source>Pressure angle (deg)</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="95"/>
         <source>Addendum</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="103"/>
         <source>Dedendum</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="111"/>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="114"/>
         <source>Spur</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
         <source>Ring</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
@@ -901,7 +902,7 @@
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="137"/>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation type="unfinished">Nelze otevřít soubor %1</translation>
     </message>
     <message>
@@ -949,12 +950,12 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don't want to use the parametric form, just leave out "Equation2".
+If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
         <translation>Tento zásuvný modul umožňuje vykreslovat matematické rovnice.
-Pokud nechcete použít parametrický tvar, vynechte pole "Rovnice 2".
+Pokud nechcete použít parametrický tvar, vynechte pole &quot;Rovnice 2&quot;.
 V případě potřeby lze použít hodnotu pi (například (3*pi)).
 Jako proměnnou (parametr) rovnice použijte t nebo x.
 </translation>

@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr">
+<TS version="2.0" language="fr">
 <context>
     <name>AsciiFile</name>
     <message>
@@ -136,7 +137,7 @@
     <message>
         <location filename="../list/list.cpp" line="102"/>
         <source>to point</source>
-        <translation>jusqu'au point</translation>
+        <translation>jusqu&apos;au point</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="107"/>
@@ -181,7 +182,7 @@
     <message>
         <location filename="../list/list.cpp" line="127"/>
         <source>final angle</source>
-        <translation>angle d'arrivée</translation>
+        <translation>angle d&apos;arrivée</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="134"/>
@@ -246,7 +247,7 @@
     <message>
         <location filename="../list/list.cpp" line="187"/>
         <source>Insertion point</source>
-        <translation>Point d'insertion</translation>
+        <translation>Point d&apos;insertion</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="190"/>
@@ -360,12 +361,12 @@
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
-        <translation>sélectionner l'entité de référence :</translation>
+        <translation>sélectionner l&apos;entité de référence :</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="43"/>
         <source>select entities to change</source>
-        <translation>sélectionner l'entité à modifier</translation>
+        <translation>sélectionner l&apos;entité à modifier</translation>
     </message>
 </context>
 <context>
@@ -465,7 +466,7 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="256"/>
         <source>Draw point number</source>
-        <translation>Tracer l'index des points</translation>
+        <translation>Tracer l&apos;index des points</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="257"/>
@@ -475,7 +476,7 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="257"/>
         <source>Draw point elevation</source>
-        <translation>Tracer l'altitude des points</translation>
+        <translation>Tracer l&apos;altitude des points</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="258"/>
@@ -505,57 +506,57 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="314"/>
         <source>Point 2D layer is empty</source>
-        <translation>Le calque des points en 2D n'est pas renseigné</translation>
+        <translation>Le calque des points en 2D n&apos;est pas renseigné</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="317"/>
         <source>Point 3D layer is empty</source>
-        <translation>Le calque des points en 3D n'est pas renseigné</translation>
+        <translation>Le calque des points en 3D n&apos;est pas renseigné</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="320"/>
         <source>Point elevation layer is empty</source>
-        <translation>Le calque pour l'altitude des points n'est pas renseigné</translation>
+        <translation>Le calque pour l&apos;altitude des points n&apos;est pas renseigné</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="321"/>
         <source>Point elevation height is empty</source>
-        <translation>La hauteur pour l'altitude des points n'est pas renseignée</translation>
+        <translation>La hauteur pour l&apos;altitude des points n&apos;est pas renseignée</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="322"/>
         <source>Point elevation separation is empty</source>
-        <translation>La séparation pour l'altitude des points n'est pas renseignée</translation>
+        <translation>La séparation pour l&apos;altitude des points n&apos;est pas renseignée</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="325"/>
         <source>Point number layer is empty</source>
-        <translation>Le calque pour l'index des points n'est pas renseigné</translation>
+        <translation>Le calque pour l&apos;index des points n&apos;est pas renseigné</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="326"/>
         <source>Point number height is empty</source>
-        <translation>La hauteur pour l'index des points n'est pas renseignée</translation>
+        <translation>La hauteur pour l&apos;index des points n&apos;est pas renseignée</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="327"/>
         <source>Point number separation is empty</source>
-        <translation>La séparation pour l'index des points n'est pas renseignée</translation>
+        <translation>La séparation pour l&apos;index des points n&apos;est pas renseignée</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="330"/>
         <source>Point code layer is empty</source>
-        <translation>Le calque pour le code des points n'est pas renseigné</translation>
+        <translation>Le calque pour le code des points n&apos;est pas renseigné</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="331"/>
         <source>Point code height is empty</source>
-        <translation>La hauteur pour le code des points n'est pas renseignée</translation>
+        <translation>La hauteur pour le code des points n&apos;est pas renseignée</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="332"/>
         <source>Point code separation is empty</source>
-        <translation>La séparation pour le code des points n'est pas renseignée</translation>
+        <translation>La séparation pour le code des points n&apos;est pas renseignée</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="360"/>
@@ -564,8 +565,8 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="365"/>
-        <source>Can't open the file %1</source>
-        <translation>Impossible d'ouvrir le fichier %1</translation>
+        <source>Can&apos;t open the file %1</source>
+        <translation>Impossible d&apos;ouvrir le fichier %1</translation>
     </message>
 </context>
 <context>
@@ -641,7 +642,7 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="129"/>
         <source>as Label:</source>
-        <translation>en tant qu'étiquette :</translation>
+        <translation>en tant qu&apos;étiquette :</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="141"/>
@@ -721,7 +722,7 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="281"/>
         <source>The file %1 not have extension .shp</source>
-        <translation>Le fichier %1 n'a pas l'extension .shp</translation>
+        <translation>Le fichier %1 n&apos;a pas l&apos;extension .shp</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="286"/>
@@ -835,22 +836,22 @@
     <message>
         <location filename="../sample/sample.cpp" line="107"/>
         <source>Start X is empty</source>
-        <translation>L'abscisse de départ est vide</translation>
+        <translation>L&apos;abscisse de départ est vide</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="108"/>
         <source>Start Y is empty</source>
-        <translation>L'ordonnée de départ est vide</translation>
+        <translation>L&apos;ordonnée de départ est vide</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="109"/>
         <source>End X is empty</source>
-        <translation>L'abscisse d'arrivée est vide</translation>
+        <translation>L&apos;abscisse d&apos;arrivée est vide</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="110"/>
         <source>End Y is empty</source>
-        <translation>L'ordonnée d'arrivée est vide</translation>
+        <translation>L&apos;ordonnée d&apos;arrivée est vide</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="132"/>
@@ -888,7 +889,7 @@
     <message>
         <location filename="../picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation>Le facteur d'échelle est vide ou invalide</translation>
+        <translation>Le facteur d&apos;échelle est vide ou invalide</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="132"/>
@@ -897,8 +898,8 @@
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="137"/>
-        <source>Can't open the file %1</source>
-        <translation>Impossible d'ouvrir le fichier %1</translation>
+        <source>Can&apos;t open the file %1</source>
+        <translation>Impossible d&apos;ouvrir le fichier %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="144"/>
@@ -936,18 +937,18 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>Tracer la courbe représentative d'une équation</translation>
+        <translation>Tracer la courbe représentative d&apos;une équation</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don't want to use the parametric form, just leave out "Equation2".
+If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation>Ce greffon vous permet de tracer la courbe représentative d'une équation.
-Si vous ne souhaitez pas utiliser la forme paramétrique, laissez le champ "Équation 2" vide.
-Vous pouvez utiliser "pi" lorsque vous avez besoin de la valeur de Pi 'par exemple (3*pi)).
+        <translation>Ce greffon vous permet de tracer la courbe représentative d&apos;une équation.
+Si vous ne souhaitez pas utiliser la forme paramétrique, laissez le champ &quot;Équation 2&quot; vide.
+Vous pouvez utiliser &quot;pi&quot; lorsque vous avez besoin de la valeur de Pi &apos;par exemple (3*pi)).
 Utilisez les variables t ou x dans votre équation.</translation>
     </message>
     <message>
@@ -968,7 +969,7 @@ Utilisez les variables t ou x dans votre équation.</translation>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="27"/>
         <source>end value:</source>
-        <translation>valeur d'arrivée :</translation>
+        <translation>valeur d&apos;arrivée :</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="28"/>
