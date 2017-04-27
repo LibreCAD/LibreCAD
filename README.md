@@ -6,10 +6,11 @@
 based on the community edition of [QCAD](http://www.qcad.org).  
 LibreCAD uses the cross-platform framework [Qt](http://www.qt.io/download-open-source/),
 which means it works with most operating systems.  
-The user interface is translated in over 30 languages.  http://translate.librecad.org/
+The user interface is translated in over 30 languages.  http://translate.librecad.org
 
-The LibreCAD source code is released under the GNU GENERAL PUBLIC LICENSE Version 2.  
-https://www.gnu.org/licenses/gpl-2.0.html  
+LibreCAD is free software; you can redistribute it and/or modify  
+it under the terms of the [GNU General Public License version 2](https://www.gnu.org/licenses/gpl-2.0.html) (GPLv2)  
+as published by the Free Software Foundation.  
 Please read the [LICENSE](LICENSE) file for additional information.
 
 The master branch represents the latest pre-release code,  
@@ -21,8 +22,7 @@ The 2.0 branch will be the last to support the QCAD toolbar. [![Build Status](ht
 
 - [Milestones](https://github.com/LibreCAD/LibreCAD/milestones)
 
-[libdxfrw][1] is an associated project that allows LibreCAD to read DWG files.
-[1]:https://sourceforge.net/projects/libdxfrw/
+[libdxfrw](https://sourceforge.net/projects/libdxfrw/) is an associated project that allows LibreCAD to read DWG files.
 
 **Requests and Bug reports**
 
@@ -31,25 +31,30 @@ The 2.0 branch will be the last to support the QCAD toolbar. [![Build Status](ht
 
 **Questions or Comments**
 
-- http://forum.librecad.org/
-- [irc://chat.freenode.net/librecad](irc://chat.freenode.net/librecad)
-
-**Git the source**
-
-- [Git and GitHub](https://github.com/LibreCAD/LibreCAD/wiki/Git-and-GitHub)
-- [Build from source](https://github.com/LibreCAD/LibreCAD/wiki/Build-from-source)
+- [LibreCAD's Forum](http://forum.librecad.org/)
+- IRC: [#librecad](http://webchat.freenode.net/?channels=librecad) at freenode.net
 
 **Wiki**
 
 - [Main Page](http://wiki.librecad.org/index.php/Main_Page)
 - [Users Manual](http://wiki.librecad.org/index.php/LibreCAD_users_Manual)
 
-**Contribute**
+**Building**
 
-https://github.com/LibreCAD/LibreCAD/wiki/Becoming-a-developer
+Requirements:
 
-We recently started a [resources repository][5] for people that want to indirectly  
+- [Qt](http://www.qt.io/download-open-source/) 5.2.1+ (MinGW version on Windows)
+- [Boost](http://www.boost.org/) 
+
+More information: [Build from source](https://github.com/LibreCAD/LibreCAD/wiki/Build-from-source)
+
+**Contributing**
+
+[Git and GitHub](https://github.com/LibreCAD/LibreCAD/wiki/Git-and-GitHub)
+
+[Becoming a developer](https://github.com/LibreCAD/LibreCAD/wiki/Becoming-a-developer)
+
+There is a [resources repository](https://github.com/LibreCAD/Resources) for people that want to indirectly  
 contribute to the project by supplying icons, stylesheets, documentation, templates...
-[5]:https://github.com/LibreCAD/Resources
 
-<https://sourceforge.net/projects/librecad/files/Resources/>
+Associated downloads: <https://sourceforge.net/projects/librecad/files/Resources/>
