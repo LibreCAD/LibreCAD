@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="cs">
 <context>
@@ -52,12 +51,12 @@
     <message>
         <location filename="../gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="40"/>
         <source>Gear plugin</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -252,22 +251,22 @@
     <message>
         <location filename="../list/list.cpp" line="190"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../list/list.cpp" line="193"/>
         <source>Rotation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../list/list.cpp" line="199"/>
         <source>Columns/Rows</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../list/list.cpp" line="203"/>
         <source>Column/Row Spacing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../list/list.cpp" line="210"/>
@@ -311,12 +310,12 @@
     <message>
         <location filename="../list/list.cpp" line="233"/>
         <source>SPLINEPOINTS</source>
-        <translation type="unfinished"></translation>
+        <translation>BODY SPLAJNY</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="236"/>
         <source>HATCH</source>
-        <translation>ŠRAFY</translation>
+        <translation>ŠRAFA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="239"/>
@@ -387,12 +386,12 @@
     <message>
         <location filename="../picfile/picfile.cpp" line="36"/>
         <source>Read PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation>Načíst soubor PIC</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="42"/>
         <source>import PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation>importovat soubor PIC</translation>
     </message>
 </context>
 <context>
@@ -569,7 +568,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="365"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>Nelze otevřít soubor %1</translation>
     </message>
 </context>
@@ -739,47 +738,47 @@
     <message>
         <location filename="../gear/gear.cpp" line="66"/>
         <source>Draw a gear</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="71"/>
         <source>Number of teeth</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="79"/>
         <source>Circular pitch</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="87"/>
         <source>Pressure angle (deg)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="95"/>
         <source>Addendum</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="103"/>
         <source>Dedendum</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="111"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="114"/>
         <source>Spur</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
         <source>Ring</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
@@ -873,7 +872,7 @@
     <message>
         <location filename="../picfile/picfile.cpp" line="75"/>
         <source>Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Měřítko:</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="79"/>
@@ -893,7 +892,7 @@
     <message>
         <location filename="../picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>Měřítko není zadáno nebo je neplatné</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="132"/>
@@ -902,29 +901,29 @@
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="137"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation type="unfinished">Nelze otevřít soubor %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="144"/>
         <source>%1 objects imported</source>
-        <translation type="unfinished"></translation>
+        <translation>importováno %1 objektů</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="166"/>
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation>picPunto drawLine: první bod nezadán %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="179"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation>picPunto drawLine: následující bod nezadán %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="258"/>
         <location filename="../picfile/picfile.cpp" line="267"/>
         <source>format error in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>chyba formátu u %1</translation>
     </message>
 </context>
 <context>
@@ -950,12 +949,12 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
+If you don't want to use the parametric form, just leave out "Equation2".
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
         <translation>Tento zásuvný modul umožňuje vykreslovat matematické rovnice.
-Pokud nechcete použít parametrický tvar, vynechte pole &quot;Rovnice 2&quot;.
+Pokud nechcete použít parametrický tvar, vynechte pole "Rovnice 2".
 V případě potřeby lze použít hodnotu pi (například (3*pi)).
 Jako proměnnou (parametr) rovnice použijte t nebo x.
 </translation>
@@ -999,19 +998,19 @@ Jako proměnnou (parametr) rovnice použijte t nebo x.
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation type="unfinished"></translation>
+        <translation>Segmenty čáry</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="unfinished"></translation>
+        <translation>Křivka</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="unfinished"></translation>
+        <translation>Body splajny</translation>
     </message>
 </context>
 <context>

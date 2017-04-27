@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="ja">
 <context>
@@ -52,12 +51,12 @@
     <message>
         <location filename="../gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>歯車作成のプラグイン</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="40"/>
         <source>Gear plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>歯車のプラグイン</translation>
     </message>
 </context>
 <context>
@@ -252,22 +251,22 @@
     <message>
         <location filename="../list/list.cpp" line="190"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>縮尺</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="193"/>
         <source>Rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>回転</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="199"/>
         <source>Columns/Rows</source>
-        <translation type="unfinished"></translation>
+        <translation>列/行</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="203"/>
         <source>Column/Row Spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>列/行の間隔</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="210"/>
@@ -565,7 +564,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="365"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>ファイル %1 は開くことができない</translation>
     </message>
 </context>
@@ -735,57 +734,57 @@
     <message>
         <location filename="../gear/gear.cpp" line="66"/>
         <source>Draw a gear</source>
-        <translation type="unfinished"></translation>
+        <translation>歯車を描く</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="71"/>
         <source>Number of teeth</source>
-        <translation type="unfinished"></translation>
+        <translation>歯数</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="79"/>
         <source>Circular pitch</source>
-        <translation type="unfinished"></translation>
+        <translation>円形ピッチ</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="87"/>
         <source>Pressure angle (deg)</source>
-        <translation type="unfinished"></translation>
+        <translation>圧力角（度）</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="95"/>
         <source>Addendum</source>
-        <translation type="unfinished"></translation>
+        <translation>補遺</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="103"/>
         <source>Dedendum</source>
-        <translation type="unfinished"></translation>
+        <translation>歯元</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="111"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>タイプ</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="114"/>
         <source>Spur</source>
-        <translation type="unfinished"></translation>
+        <translation>平歯車</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
         <source>Ring</source>
-        <translation type="unfinished"></translation>
+        <translation>リング</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>受け入れる</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Cancel</source>
-        <translation type="unfinished">中止</translation>
+        <translation>中止</translation>
     </message>
 </context>
 <context>
@@ -898,7 +897,7 @@
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="137"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>ファイル %1 は開くことができない</translation>
     </message>
     <message>
@@ -946,7 +945,7 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
+If you don't want to use the parametric form, just leave out "Equation2".
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
