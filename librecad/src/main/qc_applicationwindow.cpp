@@ -398,6 +398,10 @@ void QC_ApplicationWindow::loadPlugins() {
             if (!fileName.contains(".dylib"))
                 continue;
             #endif
+            #ifdef Q_OS_WIN32
+            if (!fileName.contains(".dll"))
+                continue;
+            #endif
 
             if (loadedPluginFileNames.contains(fileName)) {
                 continue;
