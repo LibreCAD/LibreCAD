@@ -968,8 +968,8 @@ RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
      * @param number Number of edges / corners.
      */
 RS_Line* RS_Creation::createPolygon3(const RS_Vector& center,    //added by txmy
-                                    const RS_Vector& tangent,
-                                    int number) {
+                                     const RS_Vector& tangent,
+                                     int number) {
     // check given coords / number:
     if (!center.valid || !tangent.valid || number<3) {
         return nullptr;

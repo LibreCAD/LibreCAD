@@ -1,4 +1,32 @@
-#include "rs_actiondrawlinepolygon3.h"
+/****************************************************************************
+**
+** This file is part of the LibreCAD project, a 2D CAD program
+**
+** Copyright (C) 2017 A. Stebich (librecad@mail.lordofbikes.de)
+** Copyright (C) 2017 taoxumuye (tfy.hi@163.com)
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
+** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
+**
+**
+** This file may be distributed and/or modified under the terms of the
+** GNU General Public License version 2 as published by the Free Software
+** Foundation and appearing in the file gpl-2.0.txt included in the
+** packaging of this file.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+**
+** This copyright notice MUST APPEAR in all copies of the script!
+**
+**********************************************************************/
+
+#include "lc_actiondrawlinepolygon3.h"
 
 #include <QAction>
 #include <QMouseEvent>
@@ -10,14 +38,14 @@
 #include "rs_preview.h"
 #include "rs_debug.h"
 
-struct RS_ActionDrawLinePolygonCenTan::Points {
+struct LC_ActionDrawLinePolygonCenTan::Points {
     /** Center of polygon */
     RS_Vector center;
     /** Edge */
     RS_Vector corner;
 };
 
-RS_ActionDrawLinePolygonCenTan::RS_ActionDrawLinePolygonCenTan(
+LC_ActionDrawLinePolygonCenTan::LC_ActionDrawLinePolygonCenTan(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw Polygons (Center,Corner)", container, graphicView)
@@ -30,7 +58,7 @@ RS_ActionDrawLinePolygonCenTan::RS_ActionDrawLinePolygonCenTan(
 
 RS_ActionDrawLinePolygonCenTan::~RS_ActionDrawLinePolygonCenTan() = default;
 
-void RS_ActionDrawLinePolygonCenTan::trigger() {
+void LC_ActionDrawLinePolygonCenTan::trigger() {
     RS_PreviewActionInterface::trigger();
 
     deletePreview();
@@ -46,7 +74,7 @@ void RS_ActionDrawLinePolygonCenTan::trigger() {
 
 
 
-void RS_ActionDrawLinePolygonCenTan::mouseMoveEvent(QMouseEvent* e) {
+void LC_ActionDrawLinePolygonCenTan::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLinePolygon::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -74,7 +102,7 @@ void RS_ActionDrawLinePolygonCenTan::mouseMoveEvent(QMouseEvent* e) {
 
 
 
-void RS_ActionDrawLinePolygonCenTan::mouseReleaseEvent(QMouseEvent* e) {
+void LC_ActionDrawLinePolygonCenTan::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
@@ -84,7 +112,7 @@ void RS_ActionDrawLinePolygonCenTan::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-void RS_ActionDrawLinePolygonCenTan::coordinateEvent(RS_CoordinateEvent* e) {
+void LC_ActionDrawLinePolygonCenTan::coordinateEvent(RS_CoordinateEvent* e) {
     if (!e)  return;
 
     RS_Vector mouse = e->getCoordinate();
@@ -106,7 +134,7 @@ void RS_ActionDrawLinePolygonCenTan::coordinateEvent(RS_CoordinateEvent* e) {
     }
 }
 
-void RS_ActionDrawLinePolygonCenTan::updateMouseButtonHints() {
+void LC_ActionDrawLinePolygonCenTan::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetCenter:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Specify center"),
@@ -129,19 +157,19 @@ void RS_ActionDrawLinePolygonCenTan::updateMouseButtonHints() {
 
 
 
-void RS_ActionDrawLinePolygonCenTan::showOptions() {
+void LC_ActionDrawLinePolygonCenTan::showOptions() {
     RS_ActionInterface::showOptions();
 
     RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
-void RS_ActionDrawLinePolygonCenTan::hideOptions() {
+void LC_ActionDrawLinePolygonCenTan::hideOptions() {
     RS_ActionInterface::hideOptions();
 
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
-void RS_ActionDrawLinePolygonCenTan::commandEvent(RS_CommandEvent* e) {
+void LC_ActionDrawLinePolygonCenTan::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
@@ -184,7 +212,7 @@ void RS_ActionDrawLinePolygonCenTan::commandEvent(RS_CommandEvent* e) {
 
 
 
-QStringList RS_ActionDrawLinePolygonCenTan::getAvailableCommands() {
+QStringList LC_ActionDrawLinePolygonCenTan::getAvailableCommands() {
     QStringList cmd;
 
     switch (getStatus()) {
@@ -201,6 +229,6 @@ QStringList RS_ActionDrawLinePolygonCenTan::getAvailableCommands() {
 
 
 
-void RS_ActionDrawLinePolygonCenTan::updateMouseCursor() {
+void LC_ActionDrawLinePolygonCenTan::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }

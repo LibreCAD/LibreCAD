@@ -52,10 +52,10 @@ class QString;
  * Data needed to insert library items.
  */
 struct RS_LibraryInsertData {
-        QString file;
-	RS_Vector insertionPoint;
-	double factor;
-	double angle;
+    QString file;
+    RS_Vector insertionPoint;
+    double factor;
+    double angle;
 };
 
 
@@ -69,13 +69,13 @@ struct RS_LibraryInsertData {
 class RS_Creation {
 public:
     RS_Creation(RS_EntityContainer* container,
-				RS_GraphicView* graphicView=nullptr,
+                RS_GraphicView* graphicView=nullptr,
                 bool handleUndo=true);
-	~RS_Creation()=default;
+    ~RS_Creation()=default;
 
     RS_Entity* createParallelThrough(const RS_Vector& coord,
-                              int number,
-                              RS_Entity* e);
+                                     int number,
+                                     RS_Entity* e);
 
     RS_Entity* createParallel(const RS_Vector& coord,
                               double distance,
@@ -95,8 +95,8 @@ public:
                                     RS_Circle* e);
 
     LC_SplinePoints* createParallelSplinePoints(const RS_Vector& coord,
-                                    double distance, int number,
-                                    LC_SplinePoints* e);
+                                                double distance, int number,
+                                                LC_SplinePoints* e);
 
     RS_Line* createBisector(const RS_Vector& coord1,
                             const RS_Vector& coord2,
@@ -112,14 +112,14 @@ public:
  * create a tangent line which is orthogonal to the given RS_Line(normal)
  */
     RS_Line* createLineOrthTan(const RS_Vector& coord,
-                            RS_Line* normal,
-                            RS_Entity* circle);
+                               RS_Line* normal,
+                               RS_Entity* circle);
     RS_Line* createTangent2(const RS_Vector& coord,
                             RS_Entity* circle1,
                             RS_Entity* circle2);
     /**
       * create the path of centers of common tangent circles of the two given circles
-	  *@ return nullptr, if failed
+      *@ return nullptr, if failed
       *@ at success return either an ellipse or hyperbola
       */
     std::vector<RS_Entity*> createCircleTangent2( RS_Entity* circle1,RS_Entity* circle2);
@@ -138,27 +138,27 @@ public:
                             int number);
 
     RS_Line* createPolygon3(const RS_Vector& center,
-                           const RS_Vector& tangent,
-                           int number);
+                            const RS_Vector& tangent,
+                            int number);
 
-	RS_Insert* createInsert(const RS_InsertData* pdata);
-	
-	RS_Image* createImage(const RS_ImageData* pdata);
+    RS_Insert* createInsert(const RS_InsertData* pdata);
 
-	RS_Block* createBlock(const RS_BlockData* data,
+    RS_Image* createImage(const RS_ImageData* pdata);
+
+    RS_Block* createBlock(const RS_BlockData* data,
                           const RS_Vector& referencePoint,
                           const bool remove);
-						  
-	RS_Insert* createLibraryInsert(RS_LibraryInsertData& data);
+
+    RS_Insert* createLibraryInsert(RS_LibraryInsertData& data);
 
 protected:
     RS_EntityContainer* container;
-	RS_Graphic* graphic;
-	RS_Document* document;
+    RS_Graphic* graphic;
+    RS_Document* document;
     RS_GraphicView* graphicView;
     bool handleUndo;
 private:
-	void setEntity(RS_Entity* en) const;
+    void setEntity(RS_Entity* en) const;
 };
 
 #endif
