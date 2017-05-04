@@ -56,7 +56,7 @@ LC_ActionDrawLinePolygonCenTan::LC_ActionDrawLinePolygonCenTan(
     actionType=RS2::ActionDrawLinePolygonCenCor;
 }
 
-RS_ActionDrawLinePolygonCenTan::~RS_ActionDrawLinePolygonCenTan() = default;
+LC_ActionDrawLinePolygonCenTan::~LC_ActionDrawLinePolygonCenTan() = default;
 
 void LC_ActionDrawLinePolygonCenTan::trigger() {
     RS_PreviewActionInterface::trigger();
