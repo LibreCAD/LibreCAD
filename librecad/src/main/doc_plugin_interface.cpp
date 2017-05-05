@@ -1427,6 +1427,9 @@ QString Doc_plugin_interface::realToStr(const qreal num, const int units, const 
     case 5:
         lf = RS2::Fractional;
         break;
+    case 6:
+        lf = RS2::ArchitecturalMetric;
+        break;
     default:
         lf = RS2::Decimal;
     }
@@ -1434,4 +1437,3 @@ QString Doc_plugin_interface::realToStr(const qreal num, const int units, const 
     QString msg = RS_Units::formatLinear(num,RS2::None,lf,pr);
     return msg;
 }
-

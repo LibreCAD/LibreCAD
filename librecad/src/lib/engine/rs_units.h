@@ -72,6 +72,8 @@ public:
                                   int prec, bool showUnit=false);
     static QString formatFractional(double length, RS2::Unit unit,
                                   int prec, bool showUnit=false);
+    static QString formatArchitecturalMetric(double length, RS2::Unit unit,
+                                  int prec, bool showUnit=false);
 
     static QString formatAngle(double angle, RS2::AngleFormat format,
                                  int prec);

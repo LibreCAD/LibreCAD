@@ -108,7 +108,8 @@ void QG_DlgOptionsDrawing::init() {
              << tr("Decimal")
              << tr("Engineering")
              << tr("Architectural")
-             << tr("Fractional");
+             << tr("Fractional")
+             << tr("Architectural (metric)");
     cbLengthFormat->insertItems(0, unitList);
     cbDimLUnit->insertItems(0, unitList);
 
@@ -381,6 +382,16 @@ void QG_DlgOptionsDrawing::validate() {
             return;
         }
     }
+    if (f==RS2::ArchitecturalMetric) {
+        if (RS_Units::stringToUnit(cbUnit->currentText())!=RS2::Meter) {
+            QMessageBox::warning( this, tr("Options"),
+                                  tr("For the length format 'Architectural (metric)', the "
+                                     "unit must be set to Meter."),
+                                  QMessageBox::Ok,
+                                  Qt::NoButton);
+            return;
+        }
+    }
 
 	if (graphic) {
         // units:
@@ -592,6 +603,11 @@ void QG_DlgOptionsDrawing::updateCBLengthPrecision(QComboBox* f, QComboBox* p) {
         p->addItem("0 1/32");
         p->addItem("0 1/64");
         p->addItem("0 1/128");
+        break;
+
+        // architectural metric
+    case 5:
+        p->insertItems(0, listPrec1);
         break;
 
     default:
