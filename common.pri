@@ -61,6 +61,11 @@ win32 {
 QMAKE_CXXFLAGS_DEBUG += -g
 QMAKE_CXXFLAGS += -g
 
+# fix for GitHub Issue #880
+# prevent QMake from using -isystem flag for system include path
+# this breaks gcc 6 builds because of its #include_next feature
+QMAKE_CFLAGS_ISYSTEM = ""
+
 # svg support
 QT += svg
 
