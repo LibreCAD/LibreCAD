@@ -624,7 +624,7 @@ void QG_DlgOptionsDrawing::updateCBLengthPrecision(QComboBox* f, QComboBox* p) {
  * Updates the angle precision combobox
  */
 void QG_DlgOptionsDrawing::updateAnglePrecision() {
-    updateCBAnglePrecision(cbLengthFormat, cbLengthPrecision);
+    updateCBAnglePrecision(cbAngleFormat, cbAnglePrecision);
 }
 
 /**
