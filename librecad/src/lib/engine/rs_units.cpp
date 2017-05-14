@@ -626,6 +626,7 @@ QString RS_Units::formatAngle(double angle, RS2::AngleFormat format,
     double value;
 
     switch (format) {
+    case RS2::Surveyors:
     case RS2::DegreesDecimal:
     case RS2::DegreesMinutesSeconds:
         value = RS_Math::rad2deg(angle);
@@ -699,7 +700,36 @@ QString RS_Units::formatAngle(double angle, RS2::AngleFormat format,
             }
         }
         break;
-
+    case RS2::Surveyors: {
+        QString prefix,suffix;
+        int quadrant;
+        quadrant = ((int)floor(value)/90);
+        switch(quadrant){
+            case 0:
+                prefix="N";
+                suffix="E";
+                break;
+            case 1:
+                prefix="S";
+                suffix="E";
+                value=180. - value;
+                break;
+            case 2:
+                prefix="S";
+                suffix="W";
+                value=value - 180.;
+                break;
+            case 3:
+                prefix="N";
+                suffix="W";
+                value=360. - value;
+                break;
+            }
+            ret = prefix+formatAngle(RS_Math::deg2rad(value),RS2::DegreesMinutesSeconds,prec)+suffix;
+            ret.replace(QChar(0xB0),"d");
+            ret.replace(" ","");
+        }
+        break;
     default:
         break;
     }
