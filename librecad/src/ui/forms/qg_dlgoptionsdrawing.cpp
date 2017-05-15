@@ -399,13 +399,6 @@ void QG_DlgOptionsDrawing::validate() {
 		if (static_cast<RS2::PaperFormat>(cbPaperFormat->currentIndex()) == RS2::Custom) {
             graphic->setPaperSize(RS_Vector(RS_Math::eval(lePaperWidth->text()),
                                             RS_Math::eval(lePaperHeight->text())));
-            //graphic->setPaperSize(
-            //            RS_Units::convert(
-            //                RS_Vector(RS_Math::eval(lePaperWidth->text()),
-            //                          RS_Math::eval(lePaperHeight->text())),
-            //				static_cast<RS2::Unit>(cbUnit->currentIndex()),
-            //				RS2::Millimeter)
-            //			);
 			bool landscape;
 			graphic->getPaperFormat(&landscape);
 			rbLandscape->setChecked(landscape);
