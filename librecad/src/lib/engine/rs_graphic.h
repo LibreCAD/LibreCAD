@@ -227,6 +227,8 @@ public:
     int getLinearPrecision();
     RS2::AngleFormat getAngleFormat();
     int getAnglePrecision();
+    double getAngleBase();
+    RS2::AngleDirection getAngleDirection();
 
     RS_Vector getPaperSize();
     void setPaperSize(const RS_Vector& s);

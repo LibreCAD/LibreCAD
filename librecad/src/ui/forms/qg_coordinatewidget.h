@@ -53,6 +53,8 @@ private:
     RS2::LinearFormat format;
     int aprec;
     RS2::AngleFormat aformat;
+    double angBase;
+    RS2::AngleDirection angDir;
 
 };
 

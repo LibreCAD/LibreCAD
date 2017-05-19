@@ -512,6 +512,11 @@ public:
         Surveyors
     };
 
+    enum AngleDirection {
+        CounterClockwise,
+        Clockwise
+    };
+
     /**
      * Enum of levels of resolving when iterating through an entity tree.
      */

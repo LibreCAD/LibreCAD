@@ -28,6 +28,7 @@
 #include "rs_settings.h"
 #include "rs_vector.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_CoordinateWidget as a child of 'parent', with the
@@ -49,6 +50,8 @@ QG_CoordinateWidget::QG_CoordinateWidget(QWidget* parent, const char* name, Qt::
     format = RS2::Decimal;
     aprec = 2;
     aformat = RS2::DegreesDecimal;
+    angBase = 0.00;
+    angDir = RS2::CounterClockwise;
 }
 
 /*
@@ -90,6 +93,8 @@ void QG_CoordinateWidget::setCoordinates(double x, double y,
             prec = graphic->getLinearPrecision();
             aformat = graphic->getAngleFormat();
             aprec = graphic->getAnglePrecision();
+            angBase = graphic->getAngleBase();
+            angDir = graphic->getAngleDirection();
         }
 
         // abs / rel coordinates:
@@ -110,13 +115,15 @@ void QG_CoordinateWidget::setCoordinates(double x, double y,
         lCoord2->setText(relX + " , " + relY);
 
         // polar coordinates:
+        double d = (angDir==RS2::CounterClockwise)?1.:-1.;
+        double abase = RS_Math::deg2rad(angBase);
         RS_Vector v;
         v = RS_Vector(x, y);
         QString str;
         QString rStr = RS_Units::formatLinear(v.magnitude(),
                                                graphic->getUnit(),
                                                format, prec);
-        QString aStr = RS_Units::formatAngle(v.angle(),
+        QString aStr = RS_Units::formatAngle((v.angle()-abase)*d,
                                                aformat, aprec);
 
         str = rStr + " < " + aStr;
@@ -126,7 +133,7 @@ void QG_CoordinateWidget::setCoordinates(double x, double y,
         rStr = RS_Units::formatLinear(v.magnitude(),
                                                graphic->getUnit(),
                                                format, prec);
-        aStr = RS_Units::formatAngle(v.angle(),
+        aStr = RS_Units::formatAngle((v.angle()-abase)*d,
                                                aformat, aprec);
         str = rStr + " < " + aStr;
         lCoord2b->setText(str);
