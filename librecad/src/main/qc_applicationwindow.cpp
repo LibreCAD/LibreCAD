@@ -1929,15 +1929,18 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     QPrinter printer(QPrinter::HighResolution);
 
     bool landscape = false;
-    QPrinter::PageSize paperSize = LC_Printing::rsToQtPaperFormat(graphic->getPaperFormat(&landscape));
+    RS2::PaperFormat pf = graphic->getPaperFormat(&landscape);
+    QPrinter::PageSize paperSize = LC_Printing::rsToQtPaperFormat(pf);
     if(paperSize==QPrinter::Custom){
-        RS_Vector&& s=graphic->getPaperSize();
+        RS_Vector r=graphic->getPaperSize();
+        RS_Vector&& s=RS_Units::convert(r, graphic->getUnit(),RS2::Millimeter);
         if(landscape) s=s.flipXY();
         printer.setPaperSize(QSizeF(s.x,s.y),QPrinter::Millimeter);
-//        RS_DEBUG->print(RS_Debug::D_ERROR, "set paper size to (%g, %g)\n", s.x,s.y);
-    }else
+        // RS_DEBUG->print(RS_Debug::D_ERROR, "set Custom paper size to (%g, %g)\n", s.x,s.y);
+    }else{
         printer.setPaperSize(paperSize);
-//    qDebug()<<"paper size=("<<printer.paperSize(QPrinter::Millimeter).width()<<", "<<printer.paperSize(QPrinter::Millimeter).height()<<")";
+    }
+    // qDebug()<<"paper size=("<<printer.paperSize(QPrinter::Millimeter).width()<<", "<<printer.paperSize(QPrinter::Millimeter).height()<<")";
     if (landscape) {
         printer.setOrientation(QPrinter::Landscape);
     } else {
