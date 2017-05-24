@@ -1333,7 +1333,7 @@ const RS_EllipseData& RS_Ellipse::getData() const
  * x *= kx
  * y *= ky
  * find the maximum and minimum of x^2 + y^2,
- */
+ 
 void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_Vector vpStart;
     RS_Vector vpEnd;
@@ -1381,6 +1381,36 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     scaleBorders(center,factor);
 // calculateBorders();
 
+}*/
+
+
+void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor)
+{
+    data.center.scale(center, factor);
+   
+    // Get quadratic equation of current ellipse
+    const LC_Quadratic&& eqn = getQuadratic();
+
+    boost::numeric::ublas::matrix<double> eqn_Quad = eqn.getQuad();
+    double const& eqn_a = eqn_Quad(0,0);
+    double const& eqn_c=2.* eqn_Quad(0,1);
+    double const& eqn_b = eqn_Quad(1,1);
+    
+    // quadratic equation of scaled ellipse
+    LC_Quadratic scaled_eqn = eqn;
+ 
+    scaled_eqn.m_mQuad(0,0) = eqn_a * factor.y * factor.y;
+    scaled_eqn.m_mQuad(0,1) = 0.5 * eqn_c * factor.x * factor.y;
+    scaled_eqn.m_mQuad(1,0) = scaled_eqn.m_mQuad(0,1);
+    scaled_eqn.m_mQuad(1,1) = eqn_b * factor.x * factor.x;
+    scaled_eqn.m_vLinear(0) = eqn.m_vLinear(0) * factor.x * factor.y * factor.y;
+    scaled_eqn.m_vLinear(1) = eqn.m_vLinear(1) * factor.y * factor.x * factor.x;
+    scaled_eqn.m_dConst = eqn.m_dConst * factor.x * factor.x * factor.y * factor.y;
+    scaled_eqn.m_bIsQuadratic = true;
+    scaled_eqn.m_bValid = true;
+   
+    // Create from Quadratic
+    createFromQuadratic(scaled_eqn);
 }
 
 
