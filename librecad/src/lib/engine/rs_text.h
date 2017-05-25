@@ -60,9 +60,10 @@ struct RS_TextData {
      * Text drawing direction.
      */
     enum TextGeneration {
-        None,      /**< Normal text */
-        Backward,  /**< Mirrored in X */
-        UpsideDown /**< Mirrored in Y */
+        MirroredNone = 0x00,   /**< Normal text */
+        Backward     = 0x02,   /**< Mirrored in X */
+        UpsideDown   = 0x04,   /**< Mirrored in Y */
+        MirroredXnY  = 0x06    /**< Mirrored in X and Y */
     };
 
     /**
@@ -195,6 +196,18 @@ public:
     RS_TextData::TextGeneration getTextGeneration() {
         return data.textGeneration;
     }
+    void setTextGeneration(bool mirrx, bool mirry) {
+        if (mirrx && mirry) {
+            data.textGeneration = RS_TextData::MirroredXnY;
+        } else if (mirry) {
+            data.textGeneration = RS_TextData::UpsideDown;
+        } else if (mirrx) {
+            data.textGeneration = RS_TextData::Backward;
+        } else {
+            data.textGeneration = RS_TextData::MirroredNone;
+        }
+    }
+
     void setText(const QString& t);
     QString getText() {
         return data.text;

@@ -28,6 +28,7 @@
 #include<cmath>
 #include "rs_font.h"
 #include "rs_mtext.h"
+#include "rs_text.h"
 
 #include "rs_fontlist.h"
 #include "rs_insert.h"
@@ -517,9 +518,12 @@ double RS_MText::updateAddLine(RS_EntityContainer* textLine, int lineCounter) {
         break;
     }
 
+    // text generation direction
+    double mirrx = (data.drawingDirection == RS_MTextData::RightToLeft) ? -1. : 1. ;
+    double mirry = (data.drawingDirection == RS_MTextData::BottomToTop) ? -1. : 1. ;
     // Scale:
     textLine->scale(RS_Vector(0.0,0.0),
-                    RS_Vector(data.height/9.0, data.height/9.0));
+                    RS_Vector(data.height/9.0*mirrx, data.height/9.0*mirry));
 
     textLine->forcedCalculateBorders();
 

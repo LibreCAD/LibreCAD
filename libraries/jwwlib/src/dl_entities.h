@@ -708,7 +708,7 @@ struct DL_TextData {
     double height;
     /*! Relative X scale factor. */
     double xScaleFactor;
-    /*! 0 = default, 2 = Backwards, 4 = Upside down */
+    /*! 0 = default, 2 = Backwards, 4 = Upside down, 6 = Mirrored in X and Y */
     int textGenerationFlags;
     /**
      * Horizontal justification.

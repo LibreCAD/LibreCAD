@@ -3295,7 +3295,7 @@ bool RS_Modification::explodeTextIntoLetters(RS_Text* text, std::vector<RS_Entit
                                     letter->getInsertionPoint(),
                                     text->getHeight(),
                                     text->getWidthRel(), RS_TextData::VABaseline,
-                                    RS_TextData::HALeft, RS_TextData::None, /*text->getTextGeneration(),*/
+                                    RS_TextData::HALeft, RS_TextData::MirroredNone, /*text->getTextGeneration(),*/
                                     letter->getName(),
                                     text->getStyle(),
                                     letter->getAngle(),

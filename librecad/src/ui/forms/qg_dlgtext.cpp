@@ -125,6 +125,7 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
     QString height;
     QString def;
     QString alignment;
+    RS_TextData::TextGeneration textgen;
     //QString letterSpacing;
     //QString wordSpacing;
     QString widthRelation;
@@ -165,6 +166,9 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
         height = QString("%1").arg(text->getHeight());
         widthRelation = QString("%1").arg(text->getWidthRel());
         alignment = QString("%1").arg(text->getAlignment());
+        textgen = text->getTextGeneration();
+        cbMirrorX->setChecked((textgen == RS_TextData::Backward )||(textgen == RS_TextData::MirroredXnY));
+        cbMirrorY->setChecked((textgen == RS_TextData::UpsideDown )||(textgen == RS_TextData::MirroredXnY));
         str = text->getText();
         angle = QString("%1").arg(RS_Math::rad2deg(text->getAngle()));
         wPen->setPen(text->getPen(false), true, false, "Pen");
@@ -198,6 +202,7 @@ void QG_DlgText::updateText() {
         text->setStyle(cbFont->currentText());
         text->setHeight(leHeight->text().toDouble());
         text->setWidthRel(leWidthRel->text().toDouble());
+        text->setTextGeneration(cbMirrorX->isChecked(),cbMirrorY->isChecked());
 
         text->setText(teText->text());
         text->setAlignment(getAlignment());

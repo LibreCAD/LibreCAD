@@ -721,7 +721,7 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
                 RS_TextData d(RS_Vector(0.,0.,0.), RS_Vector(0.,0.,0.),
 
                               data.height, 1, RS_TextData::VABaseline, RS_TextData::HALeft,
-                              RS_TextData::None, txt, sty, 0,
+                              RS_TextData::MirroredNone, txt, sty, 0,
                               RS2::Update);
 				RS_Text* entity = new RS_Text(nullptr, d);
                 double textTail = entity->getMin().y;
@@ -774,8 +774,10 @@ void RS_FilterDXFRW::addText(const DRW_Text& data) {
         dir = RS_TextData::Backward;
     } else if (data.textgen==4) {
         dir = RS_TextData::UpsideDown;
+    } else if (data.textgen==6) {
+        dir = RS_TextData::MirroredXnY;
     } else {
-        dir = RS_TextData::None;
+        dir = RS_TextData::MirroredNone;
     }
 
     QString mtext = toNativeString(QString::fromUtf8(data.text.c_str()));

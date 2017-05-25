@@ -94,7 +94,7 @@ void RS_ActionDrawText::reset() {
                        1.0, 1.0,
                        RS_TextData::VABaseline,
                        RS_TextData::HALeft,
-                       RS_TextData::None,
+                       RS_TextData::MirroredNone,
 					   text,
                        "standard",
                        0.0,

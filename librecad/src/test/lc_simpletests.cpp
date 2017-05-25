@@ -836,7 +836,7 @@ void LC_SimpleTests::slotTestInsertText() {
 							   10.0, 1.0,
 							   RS_TextData::VABaseline,
 							   RS_TextData::HALeft,
-							   RS_TextData::None,
+                               RS_TextData::MirroredNone,
 							   "LibreCAD",
 							   "iso",
 							   0.0);
