@@ -730,6 +730,13 @@ int RS_Graphic::getAnglePrecision() {
     return getVariableInt("$AUPREC", 4);
 }
 
+double RS_Graphic::getAngleBase() {
+    return getVariableDouble("$ANGBASE", 0);
+}
+
+RS2::AngleDirection RS_Graphic::getAngleDirection() {
+    return (RS2::AngleDirection)getVariableInt("$ANGDIR", 0);
+}
 
 
 /**

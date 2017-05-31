@@ -32,6 +32,7 @@
 #include "rs_math.h"
 #include "rs_vector.h"
 #include "rs_debug.h"
+#include "math.h"
 
 /**
  * Converts a DXF integer () to a Unit enum.
@@ -673,18 +674,24 @@ QString RS_Units::formatAngle(double angle, RS2::AngleFormat format,
 
     QString ret;
     double value;
+    double temp;
+    if (angle < (M_PI*-1.)) {
+        temp = angle + M_PI*2.;
+    }else{
+        temp = angle;
+    }
 
     switch (format) {
     case RS2::Surveyors:
     case RS2::DegreesDecimal:
     case RS2::DegreesMinutesSeconds:
-        value = RS_Math::rad2deg(angle);
+        value = RS_Math::rad2deg(temp);
         break;
     case RS2::Radians:
-        value = angle;
+        value = temp;
         break;
     case RS2::Gradians:
-        value = RS_Math::rad2gra(angle);
+        value = RS_Math::rad2gra(temp);
         break;
     default:
         RS_DEBUG->print(RS_Debug::D_WARNING,

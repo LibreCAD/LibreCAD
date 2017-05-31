@@ -123,6 +123,12 @@ void QG_DlgOptionsDrawing::init() {
     cbAngleFormat->insertItems(0, aunitList);
     cbDimAUnit->insertItems(0, aunitList);
 
+    // init angle direction combobox:
+    QStringList angDirList;
+    angDirList << tr("counter-clockwise")
+               << tr("clockwise");
+    cbAngleDirection->insertItems(0,angDirList);
+
     // Paper format:
     for (int i=RS2::Custom; i<=RS2::NPageSize; i++) {
 		cbPaperFormat->addItem(RS_Units::paperFormatToString(static_cast<RS2::PaperFormat>(i)));
@@ -164,6 +170,14 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     int auprec = graphic->getVariableInt("$AUPREC", 2);
     updateCBAnglePrecision(cbAngleFormat, cbAnglePrecision);
     cbAnglePrecision->setCurrentIndex(auprec);
+
+    // units / angle base:
+    double angbase = graphic->getVariableDouble("$ANGBASE", 0);
+    sbAngleBase->setValue(angbase);
+
+    // units / angle direction:
+    int angdir = graphic->getVariableInt("$ANGDIR", 0);
+    cbAngleDirection->setCurrentIndex(angdir);
 
     // paper format:
     bool landscape;
@@ -401,6 +415,8 @@ void QG_DlgOptionsDrawing::validate() {
         graphic->addVariable("$LUPREC", cbLengthPrecision->currentIndex(), 70);
         graphic->addVariable("$AUNITS", cbAngleFormat->currentIndex(), 70);
         graphic->addVariable("$AUPREC", cbAnglePrecision->currentIndex(), 70);
+        graphic->addVariable("$ANGBASE", sbAngleBase->value(), 50);
+        graphic->addVariable("$ANGDIR",cbAngleDirection->currentIndex(), 70);
 
         // paper:
         graphic->setPaperFormat(
