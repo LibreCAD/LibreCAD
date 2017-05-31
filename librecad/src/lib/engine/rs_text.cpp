@@ -42,7 +42,7 @@ RS_TextData::RS_TextData(const RS_Vector& _insertionPoint,
 						 double _widthRel,
 						 VAlign _valign,
 						 HAlign _halign,
-						 TextGeneration _textGeneration,
+                         TextGeneration _textGeneration,
 						 const QString& _text,
 						 const QString& _style,
 						 double _angle,
@@ -379,13 +379,20 @@ void RS_Text::update() {
     }
     RS_EntityContainer::move(offset);
 
+    // text generation direction
+    double mirrx = ((data.textGeneration == RS_TextData::Backward )||(data.textGeneration == RS_TextData::MirroredXnY)) ? -1. : 1. ;
+    double mirry = ((data.textGeneration == RS_TextData::UpsideDown )||(data.textGeneration == RS_TextData::MirroredXnY)) ? -1. : 1. ;
+    if (mirry < 0.) {
+        offset.move(RS_Vector(textSize.x/2.0, -textSize.y*2.0));
+        RS_EntityContainer::move(offset);
+    }
+    RS_EntityContainer::scale(RS_Vector(0.0,0.0),RS_Vector(mirrx,mirry));
 
     // Scale:
     if (data.halign==RS_TextData::HAAligned){
         double dist = data.insertionPoint.distanceTo(data.secondPoint)/textSize.x;
         data.height = vSize*dist;
-        RS_EntityContainer::scale(RS_Vector(0.0,0.0),
-                        RS_Vector(dist, dist));
+        RS_EntityContainer::scale(RS_Vector(0.0,0.0),RS_Vector(dist, dist));
     } else if (data.halign==RS_TextData::HAFit){
         double dist = data.insertionPoint.distanceTo(data.secondPoint)/textSize.x;
         RS_EntityContainer::scale(RS_Vector(0.0,0.0),
@@ -394,7 +401,7 @@ void RS_Text::update() {
         RS_EntityContainer::scale(RS_Vector(0.0,0.0),
                         RS_Vector(data.height*data.widthRel/9.0, data.height/9.0));
         data.secondPoint.scale(RS_Vector(0.0,0.0),
-                               RS_Vector(data.height*data.widthRel/9.0, data.height/9.0));
+                               RS_Vector(data.height*data.widthRel/9.0*mirrx, data.height/9.0*mirry));
     }
 
     forcedCalculateBorders();

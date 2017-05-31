@@ -62,7 +62,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../res/icons/icons.qrc">
+          <iconset>
            <normaloff>:/icons/new.svg</normaloff>:/icons/new.svg</iconset>
          </property>
         </widget>
@@ -76,7 +76,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../res/icons/icons.qrc">
+          <iconset>
            <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
          </property>
         </widget>
@@ -90,7 +90,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../res/icons/icons.qrc">
+          <iconset>
            <normaloff>:/icons/save.svg</normaloff>:/icons/save.svg</iconset>
          </property>
         </widget>
@@ -104,7 +104,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../res/icons/icons.qrc">
+          <iconset>
            <normaloff>:/icons/cut.svg</normaloff>:/icons/cut.svg</iconset>
          </property>
         </widget>
@@ -118,7 +118,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../res/icons/icons.qrc">
+          <iconset>
            <normaloff>:/icons/copy.svg</normaloff>:/icons/copy.svg</iconset>
          </property>
         </widget>
@@ -132,7 +132,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../res/icons/icons.qrc">
+          <iconset>
            <normaloff>:/icons/paste.svg</normaloff>:/icons/paste.svg</iconset>
          </property>
         </widget>
@@ -208,16 +208,6 @@
         <item row="5" column="2">
          <widget class="QLineEdit" name="leWidthRel"/>
         </item>
-        <item row="3" column="2">
-         <widget class="QLineEdit" name="leAngle">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-         </widget>
-        </item>
         <item row="2" column="1">
          <widget class="QLabel" name="lHeight">
           <property name="text">
@@ -231,28 +221,15 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="1">
-         <widget class="QLabel" name="lAngle">
-          <property name="text">
-           <string>Angle:</string>
+        <item row="3" column="2">
+         <widget class="QLineEdit" name="leAngle">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
          </widget>
-        </item>
-        <item row="6" column="1">
-         <spacer name="spacer2">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Expanding</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>16</height>
-           </size>
-          </property>
-         </spacer>
         </item>
         <item row="2" column="2">
          <widget class="QLineEdit" name="leHeight">
@@ -264,7 +241,17 @@
           </property>
          </widget>
         </item>
-        <item row="6" column="2">
+        <item row="4" column="2">
+         <widget class="QLineEdit" name="leOblique"/>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLabel" name="lOblique">
+          <property name="text">
+           <string>Oblique:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="2">
          <spacer name="spacer2_2">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -280,29 +267,28 @@
           </property>
          </spacer>
         </item>
-        <item row="4" column="1">
-         <widget class="QLabel" name="lOblique">
+        <item row="3" column="1">
+         <widget class="QLabel" name="lAngle">
           <property name="text">
-           <string>Oblique:</string>
+           <string>Angle:</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="2">
-         <widget class="QLineEdit" name="leOblique"/>
-        </item>
-        <item row="5" column="1">
-         <widget class="QLabel" name="lWidthFactor">
-          <property name="text">
-           <string>Width factor:</string>
+        <item row="8" column="1">
+         <spacer name="spacer2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLabel" name="lFont">
-          <property name="text">
-           <string>Font:</string>
+          <property name="sizeType">
+           <enum>QSizePolicy::Expanding</enum>
           </property>
-         </widget>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>16</height>
+           </size>
+          </property>
+         </spacer>
         </item>
         <item row="1" column="2">
          <widget class="QG_FontBox" name="cbFont" native="true">
@@ -317,6 +303,41 @@
             <width>0</width>
             <height>0</height>
            </size>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="lFont">
+          <property name="text">
+           <string>Font:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QLabel" name="lWidthFactor">
+          <property name="text">
+           <string>Width factor:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="2">
+         <widget class="QCheckBox" name="cbMirrorX">
+          <property name="text">
+           <string>FlipX</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="2">
+         <widget class="QCheckBox" name="cbMirrorY">
+          <property name="text">
+           <string>FlipY</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QLabel" name="IOrientation">
+          <property name="text">
+           <string>Orientation</string>
           </property>
          </widget>
         </item>
@@ -370,7 +391,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/text_align_bottomcenter.svg</normaloff>:/icons/text_align_bottomcenter.svg</iconset>
             </property>
             <property name="iconSize">
@@ -405,7 +426,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/text_align_bottomright.svg</normaloff>:/icons/text_align_bottomright.svg</iconset>
             </property>
             <property name="iconSize">
@@ -440,7 +461,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/text_align_middleright.svg</normaloff>:/icons/text_align_middleright.svg</iconset>
             </property>
             <property name="iconSize">
@@ -475,7 +496,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/text_align_bottomleft.svg</normaloff>:/icons/text_align_bottomleft.svg</iconset>
             </property>
             <property name="iconSize">
@@ -510,7 +531,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/text_align_middleleft.svg</normaloff>:/icons/text_align_middleleft.svg</iconset>
             </property>
             <property name="iconSize">
@@ -533,7 +554,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/text_align_baselineleft.svg</normaloff>:/icons/text_align_baselineleft.svg</iconset>
             </property>
             <property name="iconSize">
@@ -568,7 +589,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/text_align_topcenter.svg</normaloff>:/icons/text_align_topcenter.svg</iconset>
             </property>
             <property name="iconSize">
@@ -591,7 +612,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/text_align_baselineright.svg</normaloff>:/icons/text_align_baselineright.svg</iconset>
             </property>
             <property name="iconSize">
@@ -614,7 +635,7 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/text_align_baselinecenter.svg</normaloff>:/icons/text_align_baselinecenter.svg</iconset>
             </property>
             <property name="iconSize">
@@ -649,7 +670,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/text_align_topleft.svg</normaloff>:/icons/text_align_topleft.svg</iconset>
             </property>
             <property name="iconSize">
@@ -684,7 +705,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/text_align_topright.svg</normaloff>:/icons/text_align_topright.svg</iconset>
             </property>
             <property name="iconSize">
@@ -719,7 +740,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/icons/icons.qrc">
+             <iconset>
               <normaloff>:/icons/text_align_middlecenter.svg</normaloff>:/icons/text_align_middlecenter.svg</iconset>
             </property>
             <property name="iconSize">
@@ -1528,9 +1549,7 @@
    <header>qg_fontbox.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../../../res/icons/icons.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>
