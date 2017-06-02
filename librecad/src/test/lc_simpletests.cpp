@@ -435,54 +435,6 @@ void LC_SimpleTests::slotTestUpdateInserts() {
 void LC_SimpleTests::slotTestDrawFreehand() {
 	RS_DEBUG->print("%s\n: begin\n", __func__);
 
-	//RS_Graphic* g = document->getMarking();
-	/*
-
-	   RS_ActionDrawLineFree* action =
-		  new RS_ActionDrawLineFree(*document->getGraphic(),
-									*graphicView);
-
-	   for (int i=0; i<100; ++i) {
-
-		   int posx = (random()%600);
-		   int posy = (random()%400);
-
-		   //QMouseEvent rsm1(posx, posy, LEFT);
-		QMouseEvent rsm1(QEvent::MouseButtonPress,
-						   QPoint(posx,posy),
-						   RS2::LeftButton,
-						   RS2::LeftButton);
-		   action->mousePressEvent(&rsm1);
-
-		   int speedx = 0;
-		   int speedy = 0;
-
-		   for (int k=0; k<100; ++k) {
-			   int accx = (random()%40)-20;
-			   int accy = (random()%40)-20;
-
-			   speedx+=accx;
-			   speedy+=accy;
-
-			   posx+=speedx;
-			   posy+=speedy;
-
-			   //QMouseEvent rsm2(posx, posy, LEFT);
-
-			QMouseEvent rsm2(QEvent::MouseMove,
-						   QPoint(posx,posy),
-						   RS2::LeftButton,
-						   RS2::LeftButton);
-			   action->mouseMoveEvent(&rsm2);
-		   }
-
-		   action->mouseReleaseEvent(NULL);
-
-		   slotFileSave();
-	   }
-
-	   delete action;
-	*/
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }
 
@@ -662,8 +614,6 @@ void LC_SimpleTests::slotTestInsertEllipse() {
 								   RS2::SolidLine));
 
 			graphic->addEntity(ellipse);
-			//graphic->addEntity(new RS_Point(graphic, ellipse->getMax()));
-			//graphic->addEntity(new RS_Point(graphic, ellipse->getMin()));
 
 			line = new RS_Line{graphic, {xp, 0.}, RS_Vector{xp, 0.}+v};
 			line->setPen(RS_Pen(RS_Color(128, 128, 128),
@@ -671,30 +621,6 @@ void LC_SimpleTests::slotTestInsertEllipse() {
 								RS2::SolidLine));
 			graphic->addEntity(line);
 
-
-			/*
-					 for (double mx=-60.0; mx<60.0; mx+=1.0) {
-						 //for (double mx=0.0; mx<1.0; mx+=2.5) {
-						 RS_VectorSolutions sol = ellipse->mapX(xp + mx);
-						 //graphic->addEntity(new RS_Point(graphic,
-						 //                   sol.vector2 + RS_Vector(a*500.0, 0.0)));
-						 //graphic->addEntity(new RS_Point(graphic,
-						 //                   sol.vector3 + RS_Vector(a*500.0, 0.0)));
-						 //graphic->addEntity(new RS_Point(graphic,
-						 //                   sol.vector4 + RS_Vector(a*500.0, 0.0)));
-
-						 line = new RS_Line(graphic,
-											RS_LineData(RS_Vector(xp+mx,-50.0),
-														RS_Vector(xp+mx,50.0)));
-						 line->setPen(RS_Pen(RS_Color(60, 60, 60),
-											 RS2::Width01,
-											 RS2::SolidLine));
-						 graphic->addEntity(line);
-
-						 graphic->addEntity(new RS_Point(graphic,
-														 sol.get(0)));
-					 }
-			*/
 		}
 
 
@@ -847,82 +773,6 @@ void LC_SimpleTests::slotTestInsertText() {
 							RS2::Width01,
 							RS2::SolidLine));
 		graphic->addEntity(text);
-
-		/*
-			  double x, y;
-			  for (y=-250.0; y<=250.0; y+=50.0) {
-				  for (x=-250.0; x<=250.0; x+=50.0) {
-					  RS_Vector v(x, y);
-
-					  textData = RS_TextData(v,
-											 10.0, 100.0,
-											 RS2::VAlignTop,
-											 RS2::HAlignLeft,
-											 RS2::LeftToRight,
-											 RS2::Exact,
-											 1.0,
-											 "Andrew",
-											 "normal",
-											 0.0);
-
-					  text = new RS_Text(graphic, textData);
-
-					  text->setLayerToActive();
-					  text->setPen(RS_Pen(RS_Color(255, 0, 0),
-										  RS2::Width01,
-										  RS2::SolidLine));
-					  graphic->addEntity(text);
-				  }
-			  }
-
-			  RS_Line* line;
-			  for (x=0.0; x<M_PI*2.0; x+=0.2) {
-				  RS_Vector v(600.0+cos(x)*50.0, 0.0+sin(x)*50.0);
-
-				  line = new RS_Line(graphic,
-									 RS_LineData(RS_Vector(600.0,0.0),
-												 v));
-				  line->setLayerToActive();
-				  line->setPenToActive();
-				  graphic->addEntity(line);
-
-				  textData = RS_TextData(v,
-										 5.0, 50.0,
-										 RS2::VAlignTop,
-										 RS2::HAlignLeft,
-										 RS2::LeftToRight,
-										 RS2::Exact,
-										 1.0,
-										 "Andrew",
-										 "normal",
-										 x);
-
-				  text = new RS_Text(graphic, textData);
-
-				  text->setLayerToActive();
-				  text->setPen(RS_Pen(RS_Color(255, 0, 0),
-									  RS2::Width01,
-									  RS2::SolidLine));
-				  graphic->addEntity(text);
-			  }
-
-			  RS_SolidData solidData = RS_SolidData(RS_Vector(5.0, 10.0),
-													RS_Vector(25.0, 15.0),
-													RS_Vector(15.0, 30.0));
-
-			  RS_Solid* s = new RS_Solid(graphic, solidData);
-
-			  s->setLayerToActive();
-			  s->setPen(RS_Pen(RS_Color(255, 255, 0),
-							   RS2::Width01,
-							   RS2::SolidLine));
-			  graphic->addEntity(s);
-
-			  RS_GraphicView* v = getGraphicView();
-			  if (v) {
-				  v->redraw();
-			  }
-		*/
 	}
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }
@@ -987,11 +837,9 @@ void LC_SimpleTests::slotTestUnicode() {
 		for (col=0x0000; col<=0xFFF0; col+=0x10) {
 			printf("col: %X\n", col);
 			for (row=0x0; row<=0xF; row++) {
-				//printf("  row: %X\n", row);
 
 				uCode = QChar(col+row);
-				//printf("  code: %X\n", uCode.unicode());
-
+				
 				strCode.setNum(uCode.unicode(), 16);
 				while (strCode.length()<4) {
 					strCode="0"+strCode;
