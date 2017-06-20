@@ -55,9 +55,11 @@ public:
     static bool isAngleBetween(double a,
                                double a1, double a2,
                                bool reversed = false);
-	//! \brief correct angle to be within [0, 2 Pi)
+    //! \brief correct angle to be within [0, +PI*2.0)
     static double correctAngle(double a);
-	//! \brief correct angle to be undirectional [0, Pi)
+    //! \brief correct angle to be within [-PI, +PI)
+    static double correctAngle2(double a);
+    //! \brief correct angle to be unsigned [0, +PI)
 	static double correctAngleU(double a);
 
 	//! \brief angular difference
