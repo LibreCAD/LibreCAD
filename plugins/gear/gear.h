@@ -62,6 +62,8 @@ private:
     QDoubleSpinBox *pressureBox;
     QDoubleSpinBox *addendumBox;
     QDoubleSpinBox *dedendumBox;
+    QSpinBox *n1Box; /* number of points calculated in the dedendum part */
+    QSpinBox *n2Box; /*                    ''              addendum  ''  */
     QComboBox *typeBox;
 };
 
