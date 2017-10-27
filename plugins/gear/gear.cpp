@@ -70,6 +70,15 @@ lc_Geardlg::lc_Geardlg(QWidget *parent, QPointF *center) :  QDialog(parent)
     QGridLayout *mainLayout = new QGridLayout;
 
     int i = 0;
+    label = new QLabel(tr("Rotation angle"));
+    mainLayout->addWidget(label, i, 0);
+    rotateBox = new QDoubleSpinBox();
+    rotateBox->setMinimum(0.0);
+    rotateBox->setMaximum(360.0);
+    rotateBox->setSingleStep(0.1);
+    mainLayout->addWidget(rotateBox, i, 1);
+    i++;
+
     label = new QLabel(tr("Number of teeth"));
     mainLayout->addWidget(label, i, 0);
     nteethBox = new QSpinBox();
@@ -302,10 +311,11 @@ void lc_Geardlg::processAction(Document_Interface *doc)
      * XXX: The first point is going to be rotated 0.0 radians, which makes
      * the transformation useless, but it's only done once. That avoids to
      * repeat the code to copy the first tooth without transformation. */
+    const double rotation = rotateBox->value() * M_PI / 180.0;
     for (i = 0; i < n_teeth; i++) {
         const double angle = M_PI * c_modulus * i;
-        const double cos_angle = cos(angle);
-        const double sin_angle = sin(angle);
+        const double cos_angle = cos(angle + rotation);
+        const double sin_angle = sin(angle + rotation);
 
         /* again, we dont use iterator as it.end() can be changing as we add
          * elements to it */
@@ -346,13 +356,14 @@ void lc_Geardlg::readSettings()
     QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
     QSize size = settings.value("size", QSize(430,140)).toSize();
 
+    rotateBox->setValue(settings.value("rotate", double(0.0)).toDouble());
     nteethBox->setValue(settings.value("teeth", int(20)).toInt());
     modulusBox->setValue(settings.value("modulus", double(1.0)).toDouble());
     pressureBox->setValue(settings.value("pressure", double(20.0)).toDouble());
     addendumBox->setValue(settings.value("addendum", double(1.0)).toDouble());
     dedendumBox->setValue(settings.value("dedendum", double(1.25)).toDouble());
-    n1Box->setValue(settings.value("n1", int(64)).toInt());
-    n2Box->setValue(settings.value("n2", int(64)).toInt());
+    n1Box->setValue(settings.value("n1", int(8)).toInt());
+    n2Box->setValue(settings.value("n2", int(8)).toInt());
 
     resize(size);
     move(pos);
@@ -364,6 +375,7 @@ void lc_Geardlg::writeSettings()
     settings.setValue("pos", pos());
     settings.setValue("size", size());
 
+    settings.setValue("rotate", rotateBox->value());
     settings.setValue("teeth", nteethBox->value());
     settings.setValue("modulus", modulusBox->value());
     settings.setValue("pressure", pressureBox->value());
