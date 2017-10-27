@@ -1,7 +1,8 @@
 /*****************************************************************************/
-/*  gear.cpp - plugin gear for LibreCAD                                    */
+/*  gear.cpp - plugin gear for LibreCAD                                      */
 /*                                                                           */
 /*  Copyright (C) 2016 Cédric Bosdonnat cedric@bosdonnat.fr                  */
+/*  Edited by 2017 Luis Colorado <luiscoloradourcola@gmail.com>              */
 /*                                                                           */
 /*  This library is free software, licensed under the terms of the GNU       */
 /*  General Public License as published by the Free Software Foundation,     */
@@ -68,71 +69,79 @@ lc_Geardlg::lc_Geardlg(QWidget *parent, QPointF *center) :  QDialog(parent)
 
     QGridLayout *mainLayout = new QGridLayout;
 
+    int i = 0;
     label = new QLabel(tr("Number of teeth"));
-    mainLayout->addWidget(label, 0, 0);
+    mainLayout->addWidget(label, i, 0);
     nteethBox = new QSpinBox();
     nteethBox->setMinimum(1);
     nteethBox->setMaximum(500);
     nteethBox->setSingleStep(1);
-    mainLayout->addWidget(nteethBox, 0, 1);
+    mainLayout->addWidget(nteethBox, i, 1);
+    i++;
 
-    label = new QLabel(tr("Circular pitch"));
-    mainLayout->addWidget(label, 1, 0);
-    pitchBox = new QDoubleSpinBox();
-    pitchBox->setMinimum(0.0);
-    pitchBox->setMaximum(999999.999);
-    pitchBox->setSingleStep(0.001);
-    mainLayout->addWidget(pitchBox, 1, 1);
+    label = new QLabel(tr("Modulus"));
+    mainLayout->addWidget(label, i, 0);
+    modulusBox = new QDoubleSpinBox();
+    modulusBox->setMinimum(0.001);
+    modulusBox->setMaximum(999999.999);
+    modulusBox->setSingleStep(0.001);
+    mainLayout->addWidget(modulusBox, i, 1);
+    i++;
 
     label = new QLabel(tr("Pressure angle (deg)"));
-    mainLayout->addWidget(label, 2, 0);
+    mainLayout->addWidget(label, i, 0);
     pressureBox = new QDoubleSpinBox();
     pressureBox->setMinimum(0.0);
-    pressureBox->setMaximum(45.0);
+    pressureBox->setMaximum(80.0);
     pressureBox->setSingleStep(0.01);
-    mainLayout->addWidget(pressureBox, 2, 1);
+    mainLayout->addWidget(pressureBox, i, 1);
+    i++;
 
-    label = new QLabel(tr("Addendum"));
-    mainLayout->addWidget(label, 3, 0);
+    label = new QLabel(tr("Addendum(rel. to modulus)"));
+    mainLayout->addWidget(label, i, 0);
     addendumBox = new QDoubleSpinBox();
     addendumBox->setMinimum(0.0);
-    addendumBox->setMaximum(9999.999);
+    addendumBox->setMaximum(9.999); /* ten times the modulus is far too large */
     addendumBox->setSingleStep(0.001);
-    mainLayout->addWidget(addendumBox, 3, 1);
+    mainLayout->addWidget(addendumBox, i, 1);
+    i++;
 
-    label = new QLabel(tr("Dedendum"));
-    mainLayout->addWidget(label, 4, 0);
+    label = new QLabel(tr("Dedendum(rel. to modulus)"));
+    mainLayout->addWidget(label, i, 0);
     dedendumBox = new QDoubleSpinBox();
     dedendumBox->setMinimum(0.0);
-    dedendumBox->setMaximum(9999.999);
+    dedendumBox->setMaximum(9.999);
     dedendumBox->setSingleStep(0.001);
-    mainLayout->addWidget(dedendumBox, 4, 1);
+    mainLayout->addWidget(dedendumBox, i, 1);
+    i++;
 
     label = new QLabel(tr("Type"));
-    mainLayout->addWidget(label, 5, 0);
+    mainLayout->addWidget(label, i, 0);
     typeBox = new QComboBox();
     typeBox->addItem(tr("Spur"), GEAR_TYPE_SPUR);
     typeBox->addItem(tr("Ring"), GEAR_TYPE_RING);
-    mainLayout->addWidget(typeBox, 5, 1);
+    mainLayout->addWidget(typeBox, i, 1);
+    i++;
 
     QHBoxLayout *loaccept = new QHBoxLayout;
     QPushButton *acceptbut = new QPushButton(tr("Accept"));
     loaccept->addStretch();
     loaccept->addWidget(acceptbut);
-    mainLayout->addLayout(loaccept, 6, 0);
+    mainLayout->addLayout(loaccept, i, 0);
 
     QPushButton *cancelbut = new QPushButton(tr("Cancel"));
     QHBoxLayout *locancel = new QHBoxLayout;
     locancel->addWidget(cancelbut);
     locancel->addStretch();
-    mainLayout->addLayout(locancel, 6, 1);
+    mainLayout->addLayout(locancel, i, 1);
+    i++;
 
     setLayout(mainLayout);
     readSettings();
 
     connect(cancelbut, SIGNAL(clicked()), this, SLOT(reject()));
     connect(acceptbut, SIGNAL(clicked()), this, SLOT(checkAccept()));
-    connect(pitchBox, SIGNAL(valueChanged(double)), this, SLOT(pitchChanged(double)));
+    connect(modulusBox, SIGNAL(valueChanged(double)), this, SLOT(pitchChanged(double)));
 }
 
 /** Computes the points of the involute.
@@ -234,10 +243,11 @@ void lc_Geardlg::processAction(Document_Interface *doc)
     std::vector<Plug_VertexData> polyline;
 
     int nteeth = nteethBox->value();
-    double circular_pitch = pitchBox->value();
+    double modulus = modulusBox->value();
+    double circular_pitch = modulus * nteeth / 2.0;
     double pressure_angle = M_PI / 180.0 * pressureBox->value();
-    double addendum = addendumBox->value();
-    double dedendum = dedendumBox->value();
+    double addendum = addendumBox->value() * modulus;
+    double dedendum = dedendumBox->value() * modulus;
     double delta_angle = 2.0 * M_PI / nteeth;
     int type = typeBox->currentIndex();
 
@@ -248,7 +258,6 @@ void lc_Geardlg::processAction(Document_Interface *doc)
                                              addendum,
                                              dedendum);
 
-    double modulus = circular_pitch / M_PI;
     double pitch_diameter = nteeth * modulus;
     double tooth_angle = delta_angle * 0.75;
     double root_radius = pitch_diameter / 2.0 - dedendum;
@@ -298,43 +307,33 @@ void lc_Geardlg::checkAccept()
     accept();
 }
 
-void lc_Geardlg::pitchChanged(double pitch)
-{
-    double modulus = pitch / M_PI;
-
-    /* Forced update of the addendum and dedendum. All user
-     * changes are lost since the pitch could be drastically
-     * different. */
-    addendumBox->setValue(modulus);
-    dedendumBox->setValue(modulus * 6.0 / 5.0);
-}
-
 lc_Geardlg::~lc_Geardlg()
 {
 }
+
 void lc_Geardlg::closeEvent(QCloseEvent *event)
- {
+{
     writeSettings();
     QWidget::closeEvent(event);
- }
+}
 
 
 void lc_Geardlg::readSettings()
- {
+{
     QString str;
     QSettings settings(QSettings::IniFormat, QSettings::UserScope, "LibreCAD", "gear_plugin");
     QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
     QSize size = settings.value("size", QSize(430,140)).toSize();
 
     nteethBox->setValue(settings.value("teeth", int(20)).toInt());
-    double pitch = settings.value("pitch", double(15.0)).toDouble();
-    pitchBox->setValue(pitch);
+    modulusBox->setValue(settings.value("modulus", double(1.0)).toDouble());
+    addendumBox->setValue(settings.value("addendum", double(1.0)).toDouble());
+    dedendumBox->setValue(settings.value("dedendum", double(1.25)).toDouble());
     pressureBox->setValue(settings.value("pressure", double(20.0)).toDouble());
-    pitchChanged(pitch);
 
     resize(size);
     move(pos);
- }
+}
 
 void lc_Geardlg::writeSettings()
  {
@@ -343,6 +342,8 @@ void lc_Geardlg::writeSettings()
     settings.setValue("size", size());
 
     settings.setValue("teeth", nteethBox->value());
-    settings.setValue("pitch", pitchBox->value());
+    settings.setValue("modulus", modulusBox->value());
+    settings.setValue("addendum", addendumBox->value());
+    settings.setValue("dedendum", addendumBox->value());
     settings.setValue("pressure", pressureBox->value());
  }

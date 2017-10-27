@@ -58,7 +58,7 @@ private:
 
     QPointF *center;
     QSpinBox *nteethBox;
-    QDoubleSpinBox *pitchBox;
+    QDoubleSpinBox *modulusBox;
     QDoubleSpinBox *pressureBox;
     QDoubleSpinBox *addendumBox;
     QDoubleSpinBox *dedendumBox;
