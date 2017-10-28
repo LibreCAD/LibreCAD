@@ -381,7 +381,7 @@ void lc_Geardlg::writeSettings()
     settings.setValue("modulus", modulusBox->value());
     settings.setValue("pressure", pressureBox->value());
     settings.setValue("addendum", addendumBox->value());
-    settings.setValue("dedendum", addendumBox->value());
+    settings.setValue("dedendum", dedendumBox->value());
     settings.setValue("n1", n1Box->value());
     settings.setValue("n2", n2Box->value());
  }
