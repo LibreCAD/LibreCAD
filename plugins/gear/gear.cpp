@@ -73,7 +73,7 @@ lc_Geardlg::lc_Geardlg(QWidget *parent, QPointF *center) :  QDialog(parent)
     label = new QLabel(tr("Rotation angle"));
     mainLayout->addWidget(label, i, 0);
     rotateBox = new QDoubleSpinBox();
-    rotateBox->setMinimum(0.0);
+    rotateBox->setMinimum(-360.0);
     rotateBox->setMaximum(360.0);
     rotateBox->setSingleStep(0.1);
     mainLayout->addWidget(rotateBox, i, 1);
@@ -83,7 +83,7 @@ lc_Geardlg::lc_Geardlg(QWidget *parent, QPointF *center) :  QDialog(parent)
     mainLayout->addWidget(label, i, 0);
     nteethBox = new QSpinBox();
     nteethBox->setMinimum(1);
-    nteethBox->setMaximum(500);
+    nteethBox->setMaximum(2000);
     nteethBox->setSingleStep(1);
     mainLayout->addWidget(nteethBox, i, 1);
     i++;
@@ -331,6 +331,7 @@ void lc_Geardlg::processAction(Document_Interface *doc)
     } /* for */
 
     doc->addPolyline(polyline, true);
+    writeSettings();
 }
 
 void lc_Geardlg::checkAccept()
