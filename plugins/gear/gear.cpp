@@ -357,7 +357,6 @@ void lc_Geardlg::readSettings()
     QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
     QSize size = settings.value("size", QSize(430,140)).toSize();
 
-    rotateBox->setValue(settings.value("rotate", double(0.0)).toDouble());
     nteethBox->setValue(settings.value("teeth", int(20)).toInt());
     modulusBox->setValue(settings.value("modulus", double(1.0)).toDouble());
     pressureBox->setValue(settings.value("pressure", double(20.0)).toDouble());
@@ -376,7 +375,6 @@ void lc_Geardlg::writeSettings()
     settings.setValue("pos", pos());
     settings.setValue("size", size());
 
-    settings.setValue("rotate", rotateBox->value());
     settings.setValue("teeth", nteethBox->value());
     settings.setValue("modulus", modulusBox->value());
     settings.setValue("pressure", pressureBox->value());
