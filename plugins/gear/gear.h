@@ -15,11 +15,11 @@
 
 #include "qc_plugininterface.h"
 #include <QDialog>
-
-class QPointF;
-class QSpinBox;
-class QDoubleSpinBox;
-class QComboBox;
+#include <QPointF>
+#include <QSpinBox>
+#include <QCheckBox>
+#include <QDoubleSpinBox>
+#include <QComboBox>
 
 class LC_Gear : public QObject, QC_PluginInterface
 {
@@ -65,7 +65,11 @@ private:
     QDoubleSpinBox *dedendumBox;
     QSpinBox *n1Box; /* number of points calculated in the dedendum part */
     QSpinBox *n2Box; /*                    ''              addendum  ''  */
-    QComboBox *typeBox;
+    QCheckBox *drawAddendumCircleBox;
+    QCheckBox *drawPitchCircleBox;
+    QCheckBox *drawBaseCircleBox;
+    QCheckBox *drawRootCircleBox;
+    QComboBox *layerAuxCirclesBox;
 };
 
 #endif // WHEEL_H

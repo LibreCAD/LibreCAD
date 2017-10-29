@@ -18,6 +18,7 @@
 #include <QTransform>
 #include <QDoubleSpinBox>
 #include <QSpinBox>
+#include <QCheckBox>
 #include <QComboBox>
 #include <QLabel>
 #include <vector>
@@ -142,12 +143,15 @@ lc_Geardlg::lc_Geardlg(QWidget *parent, QPointF *center) :  QDialog(parent)
     mainLayout->addWidget(n2Box, i, 1);
     i++;
 
-    label = new QLabel(tr("Type"));
-    mainLayout->addWidget(label, i, 0);
-    typeBox = new QComboBox();
-    typeBox->addItem(tr("Spur"), GEAR_TYPE_SPUR);
-    typeBox->addItem(tr("Ring"), GEAR_TYPE_RING);
-    mainLayout->addWidget(typeBox, i, 1);
+    drawAddendumCircleBox = new QCheckBox("Draw addendum circle?", this);
+    mainLayout->addWidget(drawAddendumCircleBox, i, 0);
+    drawPitchCircleBox = new QCheckBox("Draw pitch circle?", this);
+    mainLayout->addWidget(drawPitchCircleBox, i, 1);
+    i++;
+    drawBaseCircleBox = new QCheckBox("Draw base circle?", this);
+    mainLayout->addWidget(drawBaseCircleBox, i, 0);
+    drawRootCircleBox = new QCheckBox("Draw root circle?", this);
+    mainLayout->addWidget(drawRootCircleBox, i, 1);
     i++;
 
     QHBoxLayout *loaccept = new QHBoxLayout;
@@ -238,32 +242,13 @@ void lc_Geardlg::processAction(Document_Interface *doc)
     const double sin_off_rot = sin(off_rot);
     const double pitch_radius = mod_evolute(p_angle + off_rot);
     const double dedendum_radius = pitch_radius - c_modulus * dedendum;
+    const double addendum_radius = pitch_radius + c_modulus * addendum;
     const double phi_at_dedendum = (dedendum_radius >= 1.0)
         ? radius2arg(dedendum_radius)
         : 0.0;
-    const double phi_at_addendum = radius2arg(pitch_radius + c_modulus * addendum);
+    const double phi_at_addendum = radius2arg(addendum_radius);
     const int    n1 = n1Box->value();
     const int    n2 = n2Box->value();
-
-#define P(var) //I("%-20s= " FMT_FLT "\n", #var, (double)(var))
-    P(n_teeth);
-    P(addendum);
-    P(dedendum);
-    P(c_modulus);
-    P(p_angle);
-    P(cos_p_angle);
-    P(scale_factor);
-    P(off_rot);
-    P(cos_off_rot);
-    P(sin_off_rot);
-    P(pitch_radius);
-    P(dedendum_radius);
-    P(phi_at_dedendum);
-    P(phi_at_pitch);
-    P(phi_at_addendum);
-    P(n1);
-    P(n2);
-
 
     /* Build one tooth face */
     if (dedendum_radius < 1.0) {
@@ -297,8 +282,11 @@ void lc_Geardlg::processAction(Document_Interface *doc)
      * navigate it)
      */
     const double axis_angle_x_2 = M_PI / n_teeth;
+    const double axis_angle = axis_angle_x_2 / 2.0;
     const double cos_axis_angle_x_2 = cos(axis_angle_x_2);
     const double sin_axis_angle_x_2 = sin(axis_angle_x_2);
+    first_tooth.push_back(QPointF(scale_factor * addendum_radius * cos(axis_angle),
+                                  scale_factor * addendum_radius * sin(axis_angle)));
     for (i = first_tooth.size() - 1; i >= 0; --i) {
         const QPointF& orig(first_tooth[i]);
 
@@ -306,6 +294,8 @@ void lc_Geardlg::processAction(Document_Interface *doc)
                        sin_axis_angle_x_2 * orig.x() - cos_axis_angle_x_2 * orig.y());
         first_tooth.push_back(target);
     } /* for */
+    first_tooth.push_back(QPointF(scale_factor * dedendum_radius * cos(axis_angle + axis_angle_x_2),
+                                  scale_factor * dedendum_radius * sin(axis_angle + axis_angle_x_2)));
 
     /* now, we have to rotate the tooth to get all the teeth missing.
      * XXX: The first point is going to be rotated 0.0 radians, which makes
@@ -331,6 +321,16 @@ void lc_Geardlg::processAction(Document_Interface *doc)
     } /* for */
 
     doc->addPolyline(polyline, true);
+
+    if (drawAddendumCircleBox->isChecked())
+        doc->addCircle(center, scale_factor * addendum_radius);
+    if (drawPitchCircleBox->isChecked())
+        doc->addCircle(center, scale_factor * pitch_radius);
+    if (drawBaseCircleBox->isChecked())
+        doc->addCircle(center, scale_factor * pitch_radius * cos_p_angle);
+    if (drawRootCircleBox->isChecked())
+        doc->addCircle(center, scale_factor * dedendum_radius);
+
     writeSettings();
 }
 
@@ -364,6 +364,10 @@ void lc_Geardlg::readSettings()
     dedendumBox->setValue(settings.value("dedendum", double(1.25)).toDouble());
     n1Box->setValue(settings.value("n1", int(8)).toInt());
     n2Box->setValue(settings.value("n2", int(8)).toInt());
+    drawAddendumCircleBox->setChecked(settings.value("draw_addendum", bool(false)).toBool());
+    drawPitchCircleBox->setChecked(settings.value("draw_pitch", bool(true)).toBool());
+    drawBaseCircleBox->setChecked(settings.value("draw_base", bool(true)).toBool());
+    drawRootCircleBox->setChecked(settings.value("draw_root", bool(false)).toBool());
 
     resize(size);
     move(pos);
@@ -382,4 +386,8 @@ void lc_Geardlg::writeSettings()
     settings.setValue("dedendum", dedendumBox->value());
     settings.setValue("n1", n1Box->value());
     settings.setValue("n2", n2Box->value());
+    settings.setValue("draw_addendum", bool(drawAddendumCircleBox->isChecked()));
+    settings.setValue("draw_pitch", bool(drawPitchCircleBox->isChecked()));
+    settings.setValue("draw_base", bool(drawBaseCircleBox->isChecked()));
+    settings.setValue("draw_root", bool(drawRootCircleBox->isChecked()));
  }
