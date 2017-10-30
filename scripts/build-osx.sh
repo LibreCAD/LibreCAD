@@ -20,12 +20,21 @@
 
 SCRIPTPATH="$(dirname "$0")"
 
-if [ -x "/opt/local/libexec/qt5/bin/qmake" ]
+for i in /opt/local/libexec /usr/local/opt /usr/local
+do
+    if [ -x "$i/qt5/bin/qmake" ]
+    then
+        QT_PATH=$i/qt5/bin/
+        break
+    fi
+done
+if [ -z "$QT_PATH" ]
 then
-	QT_PATH=/opt/local/libexec/qt5/bin/
-else
-	QT_PATH=/opt/local/bin/
+    echo QT_PATH could not be determined, exiting >&2
+    exit 1
 fi
+
+echo QT_PATH="$QT_PATH"
 
 QMAKE_OPTS=""
 CODESIGN_IDENTITY=""

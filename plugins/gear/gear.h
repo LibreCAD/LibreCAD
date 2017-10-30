@@ -45,7 +45,6 @@ public:
 public slots:
     void processAction(Document_Interface *doc);
     void checkAccept();
-    void pitchChanged(double d);
 
 protected:
     void closeEvent(QCloseEvent *event);
