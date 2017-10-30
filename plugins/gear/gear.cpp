@@ -335,29 +335,36 @@ void lc_Geardlg::processAction(Document_Interface *doc)
 
     QString lastLayer = doc->getCurrentLayer();
 
-    doc->setLayer(QString("gear_pitch_circles"));
+    char buffer[128];
+#define LAYER(fmt) snprintf(buffer, sizeof buffer, "gear_M%6.4f_" fmt, modulus)
 
-    if (drawPitchCircleBox->isChecked())
+    if (drawPitchCircleBox->isChecked()) {
+        LAYER("pitch_circles");
+        doc->setLayer(QString(buffer));
         doc->addCircle(center, scale_factor * pitch_radius);
+    }
 
-    doc->setLayer(QString("gear_addendums"));
-
-    if (drawAddendumCircleBox->isChecked())
+    if (drawAddendumCircleBox->isChecked()) {
+        LAYER("addendums");
+        doc->setLayer(QString(buffer));
         doc->addCircle(center, scale_factor * addendum_radius);
+    }
 
-    doc->setLayer(QString("gear_dedendums"));
-
-    if (drawRootCircleBox->isChecked())
+    if (drawRootCircleBox->isChecked()) {
+        LAYER("dedendums");
+        doc->setLayer(QString(buffer));
         doc->addCircle(center, scale_factor * dedendum_radius);
+    }
 
-    doc->setLayer(QString("gear_base_lines"));
-
-    if (drawBaseCircleBox->isChecked())
+    if (drawBaseCircleBox->isChecked()) {
+        LAYER("base_lines");
+        doc->setLayer(QString(buffer));
         doc->addCircle(center, scale_factor * pitch_radius * cos_p_angle);
-
-    doc->setLayer(QString("gear_action_lines"));
+    }
 
     if (drawPressureLineBox->isChecked()) {
+        LAYER("action_lines");
+        doc->setLayer(QString(buffer));
         QPointF p1(scale_factor * cos(p_angle + rotation),
                    scale_factor * sin(p_angle + rotation)),
                 p2(scale_factor * pitch_radius * cos(rotation),
