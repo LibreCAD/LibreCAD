@@ -331,47 +331,49 @@ void lc_Geardlg::processAction(Document_Interface *doc)
         } /* for */
     } /* for */
 
-    doc->addPolyline(polyline, true);
-
     QString lastLayer = doc->getCurrentLayer();
 
-    char buffer[128];
-#define LAYER(fmt) snprintf(buffer, sizeof buffer, "gear_M%6.4f_" fmt, modulus)
+#define LAYER(fmt) do { \
+            char buffer[128]; \
+            snprintf(buffer, sizeof buffer, \
+                    "gear_M%6.4f_" fmt, modulus); \
+            doc->setLayer(buffer); \
+        } while(0)
+
+    LAYER("shapes"); 
+    doc->addPolyline(polyline, true);
 
     if (drawPitchCircleBox->isChecked()) {
         LAYER("pitch_circles");
-        doc->setLayer(QString(buffer));
         doc->addCircle(center, scale_factor * pitch_radius);
     }
 
     if (drawAddendumCircleBox->isChecked()) {
         LAYER("addendums");
-        doc->setLayer(QString(buffer));
         doc->addCircle(center, scale_factor * addendum_radius);
     }
 
     if (drawRootCircleBox->isChecked()) {
         LAYER("dedendums");
-        doc->setLayer(QString(buffer));
         doc->addCircle(center, scale_factor * dedendum_radius);
     }
 
     if (drawBaseCircleBox->isChecked()) {
         LAYER("base_lines");
-        doc->setLayer(QString(buffer));
         doc->addCircle(center, scale_factor * pitch_radius * cos_p_angle);
     }
 
-    if (drawPressureLineBox->isChecked()) {
+    if (drawPressureLineBox->isChecked() || drawPressureLimitBox->isChecked()) {
         LAYER("action_lines");
-        doc->setLayer(QString(buffer));
         QPointF p1(scale_factor * cos(p_angle + rotation),
                    scale_factor * sin(p_angle + rotation)),
                 p2(scale_factor * pitch_radius * cos(rotation),
                    scale_factor * pitch_radius * sin(rotation));
         p1 += *center; p2 += *center;
-        doc->addLine(center, &p1);
-        doc->addLine(&p1, &p2);
+        if (drawPressureLimitBox->isChecked())
+            doc->addLine(center, &p1);
+        if (drawPressureLineBox->isChecked())
+            doc->addLine(&p1, &p2);
     }
 
     doc->setLayer(lastLayer);
