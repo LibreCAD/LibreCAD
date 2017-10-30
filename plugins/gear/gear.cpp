@@ -148,6 +148,10 @@ lc_Geardlg::lc_Geardlg(QWidget *parent, QPointF *center) :  QDialog(parent)
     mainLayout->addWidget(n2Box, i, 1);
     i++;
 
+    useLayersBox = new QCheckBox("Use layers?", this);
+    mainLayout->addWidget(useLayersBox, i, 0);
+    i++;
+
     drawAddendumCircleBox = new QCheckBox("Draw addendum circle?", this);
     mainLayout->addWidget(drawAddendumCircleBox, i, 0);
     drawPitchCircleBox = new QCheckBox("Draw pitch circle?", this);
@@ -334,10 +338,12 @@ void lc_Geardlg::processAction(Document_Interface *doc)
     QString lastLayer = doc->getCurrentLayer();
 
 #define LAYER(fmt) do { \
-            char buffer[128]; \
-            snprintf(buffer, sizeof buffer, \
-                    "gear_M%6.4f_" fmt, modulus); \
-            doc->setLayer(buffer); \
+            if (useLayersBox->isChecked()) { \
+                char buffer[128]; \
+                snprintf(buffer, sizeof buffer, \
+                        "gear_M%6.4f_" fmt, modulus); \
+                doc->setLayer(buffer); \
+            } \
         } while(0)
 
     LAYER("shapes"); 
@@ -376,7 +382,8 @@ void lc_Geardlg::processAction(Document_Interface *doc)
             doc->addLine(&p1, &p2);
     }
 
-    doc->setLayer(lastLayer);
+    if (useLayersBox->isChecked())
+        doc->setLayer(lastLayer);
 
     writeSettings();
 }
@@ -411,6 +418,7 @@ void lc_Geardlg::readSettings()
     dedendumBox->setValue(settings.value("dedendum", double(1.25)).toDouble());
     n1Box->setValue(settings.value("n1", int(8)).toInt());
     n2Box->setValue(settings.value("n2", int(8)).toInt());
+    useLayersBox->setChecked(settings.value("use_layers", bool(true)).toBool());
     drawAddendumCircleBox->setChecked(settings.value("draw_addendum", bool(false)).toBool());
     drawPitchCircleBox->setChecked(settings.value("draw_pitch", bool(true)).toBool());
     drawBaseCircleBox->setChecked(settings.value("draw_base", bool(true)).toBool());
@@ -435,6 +443,7 @@ void lc_Geardlg::writeSettings()
     settings.setValue("dedendum", dedendumBox->value());
     settings.setValue("n1", n1Box->value());
     settings.setValue("n2", n2Box->value());
+    settings.setValue("use_layers", bool(useLayersBox->isChecked()));
     settings.setValue("draw_addendum", bool(drawAddendumCircleBox->isChecked()));
     settings.setValue("draw_pitch", bool(drawPitchCircleBox->isChecked()));
     settings.setValue("draw_base", bool(drawBaseCircleBox->isChecked()));
