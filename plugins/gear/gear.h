@@ -69,6 +69,8 @@ private:
     QCheckBox *drawPitchCircleBox;
     QCheckBox *drawBaseCircleBox;
     QCheckBox *drawRootCircleBox;
+    QCheckBox *drawPressureLineBox;
+    QCheckBox *drawPressureLimitBox;
     QComboBox *layerAuxCirclesBox;
 };
 

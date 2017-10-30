@@ -76,7 +76,8 @@ lc_Geardlg::lc_Geardlg(QWidget *parent, QPointF *center) :  QDialog(parent)
     rotateBox = new QDoubleSpinBox();
     rotateBox->setMinimum(-360.0);
     rotateBox->setMaximum(360.0);
-    rotateBox->setSingleStep(0.1);
+    rotateBox->setSingleStep(1.0);
+    rotateBox->setDecimals(6);
     mainLayout->addWidget(rotateBox, i, 1);
     i++;
 
@@ -92,18 +93,20 @@ lc_Geardlg::lc_Geardlg(QWidget *parent, QPointF *center) :  QDialog(parent)
     label = new QLabel(tr("Modulus"));
     mainLayout->addWidget(label, i, 0);
     modulusBox = new QDoubleSpinBox();
-    modulusBox->setMinimum(0.001);
-    modulusBox->setMaximum(999999.999);
+    modulusBox->setMinimum(1.0e-10);
+    modulusBox->setMaximum(1.0e+10); /* this is huge */
     modulusBox->setSingleStep(0.001);
+    modulusBox->setDecimals(6);
     mainLayout->addWidget(modulusBox, i, 1);
     i++;
 
     label = new QLabel(tr("Pressure angle (deg)"));
     mainLayout->addWidget(label, i, 0);
     pressureBox = new QDoubleSpinBox();
-    pressureBox->setMinimum(0.0);
-    pressureBox->setMaximum(80.0);
+    pressureBox->setMinimum(0.01);
+    pressureBox->setMaximum(89.99);
     pressureBox->setSingleStep(0.01);
+    pressureBox->setDecimals(5);
     mainLayout->addWidget(pressureBox, i, 1);
     i++;
 
@@ -111,8 +114,9 @@ lc_Geardlg::lc_Geardlg(QWidget *parent, QPointF *center) :  QDialog(parent)
     mainLayout->addWidget(label, i, 0);
     addendumBox = new QDoubleSpinBox();
     addendumBox->setMinimum(0.0);
-    addendumBox->setMaximum(9.999); /* ten times the modulus is far too large */
-    addendumBox->setSingleStep(0.001);
+    addendumBox->setMaximum(10.0); /* ten times the modulus is far too large */
+    addendumBox->setSingleStep(0.1);
+    addendumBox->setDecimals(5);
     mainLayout->addWidget(addendumBox, i, 1);
     i++;
 
@@ -120,8 +124,9 @@ lc_Geardlg::lc_Geardlg(QWidget *parent, QPointF *center) :  QDialog(parent)
     mainLayout->addWidget(label, i, 0);
     dedendumBox = new QDoubleSpinBox();
     dedendumBox->setMinimum(0.0);
-    dedendumBox->setMaximum(9.999);
-    dedendumBox->setSingleStep(0.001);
+    dedendumBox->setMaximum(10.0);
+    dedendumBox->setSingleStep(0.1);
+    dedendumBox->setDecimals(5);
     mainLayout->addWidget(dedendumBox, i, 1);
     i++;
 
@@ -153,6 +158,12 @@ lc_Geardlg::lc_Geardlg(QWidget *parent, QPointF *center) :  QDialog(parent)
     drawRootCircleBox = new QCheckBox("Draw root circle?", this);
     mainLayout->addWidget(drawRootCircleBox, i, 1);
     i++;
+    drawPressureLineBox = new QCheckBox("Draw pressure line?", this);
+    mainLayout->addWidget(drawPressureLineBox, i, 0);
+    drawPressureLimitBox = new QCheckBox("Draw pressure limits?", this);
+    mainLayout->addWidget(drawPressureLimitBox, i, 1);
+    i++;
+
 
     QHBoxLayout *loaccept = new QHBoxLayout;
     QPushButton *acceptbut = new QPushButton(tr("Accept"));
@@ -241,11 +252,11 @@ void lc_Geardlg::processAction(Document_Interface *doc)
     const double cos_off_rot = cos(off_rot);
     const double sin_off_rot = sin(off_rot);
     const double pitch_radius = mod_evolute(p_angle + off_rot);
-    const double dedendum_radius = pitch_radius - c_modulus * dedendum;
-    const double addendum_radius = pitch_radius + c_modulus * addendum;
+    const double dedendum_radius = pitch_radius - c_modulus * dedendum / cos_p_angle;
+    const double addendum_radius = pitch_radius + c_modulus * addendum / cos_p_angle;
     const double phi_at_dedendum = (dedendum_radius >= 1.0)
-        ? radius2arg(dedendum_radius)
-        : 0.0;
+                                 ? radius2arg(dedendum_radius)
+                                 : 0.0;
     const double phi_at_addendum = radius2arg(addendum_radius);
     const int    n1 = n1Box->value();
     const int    n2 = n2Box->value();
@@ -322,14 +333,41 @@ void lc_Geardlg::processAction(Document_Interface *doc)
 
     doc->addPolyline(polyline, true);
 
-    if (drawAddendumCircleBox->isChecked())
-        doc->addCircle(center, scale_factor * addendum_radius);
+    QString lastLayer = doc->getCurrentLayer();
+
+    doc->setLayer(QString("gear_pitch_circles"));
+
     if (drawPitchCircleBox->isChecked())
         doc->addCircle(center, scale_factor * pitch_radius);
-    if (drawBaseCircleBox->isChecked())
-        doc->addCircle(center, scale_factor * pitch_radius * cos_p_angle);
+
+    doc->setLayer(QString("gear_addendums"));
+
+    if (drawAddendumCircleBox->isChecked())
+        doc->addCircle(center, scale_factor * addendum_radius);
+
+    doc->setLayer(QString("gear_dedendums"));
+
     if (drawRootCircleBox->isChecked())
         doc->addCircle(center, scale_factor * dedendum_radius);
+
+    doc->setLayer(QString("gear_base_lines"));
+
+    if (drawBaseCircleBox->isChecked())
+        doc->addCircle(center, scale_factor * pitch_radius * cos_p_angle);
+
+    doc->setLayer(QString("gear_action_lines"));
+
+    if (drawPressureLineBox->isChecked()) {
+        QPointF p1(scale_factor * cos(p_angle + rotation),
+                   scale_factor * sin(p_angle + rotation)),
+                p2(scale_factor * pitch_radius * cos(rotation),
+                   scale_factor * pitch_radius * sin(rotation));
+        p1 += *center; p2 += *center;
+        doc->addLine(center, &p1);
+        doc->addLine(&p1, &p2);
+    }
+
+    doc->setLayer(lastLayer);
 
     writeSettings();
 }
@@ -368,6 +406,8 @@ void lc_Geardlg::readSettings()
     drawPitchCircleBox->setChecked(settings.value("draw_pitch", bool(true)).toBool());
     drawBaseCircleBox->setChecked(settings.value("draw_base", bool(true)).toBool());
     drawRootCircleBox->setChecked(settings.value("draw_root", bool(false)).toBool());
+    drawPressureLineBox->setChecked(settings.value("draw_pressure_line", bool(false)).toBool());
+    drawPressureLimitBox->setChecked(settings.value("draw_pressure_limit", bool(false)).toBool());
 
     resize(size);
     move(pos);
@@ -390,4 +430,6 @@ void lc_Geardlg::writeSettings()
     settings.setValue("draw_pitch", bool(drawPitchCircleBox->isChecked()));
     settings.setValue("draw_base", bool(drawBaseCircleBox->isChecked()));
     settings.setValue("draw_root", bool(drawRootCircleBox->isChecked()));
+    settings.setValue("draw_pressure_line", bool(drawPressureLineBox->isChecked()));
+    settings.setValue("draw_pressure_limit", bool(drawPressureLimitBox->isChecked()));
  }
