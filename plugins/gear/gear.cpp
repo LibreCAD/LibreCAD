@@ -270,6 +270,7 @@ void lc_Geardlg::processAction(Document_Interface *doc)
         QPointF root( scale_factor * dedendum_radius * cos_off_rot,
                      -scale_factor * dedendum_radius * sin_off_rot);
         first_tooth.push_back(root);
+        polyline.push_back(Plug_VertexData(root, 0.0));
     }
 
     int i;
@@ -282,6 +283,7 @@ void lc_Geardlg::processAction(Document_Interface *doc)
                 rot_point( cos_off_rot * point.x() + sin_off_rot * point.y(),
                           -sin_off_rot * point.x() + cos_off_rot * point.y());
         first_tooth.push_back(rot_point);
+        polyline.push_back(Plug_VertexData(rot_point, 0.0));
         if (i == n1) { /* change delta to continue until we have all points */
             delta = (phi_at_addendum - p_angle - off_rot) / n2;
         }
@@ -300,30 +302,40 @@ void lc_Geardlg::processAction(Document_Interface *doc)
     const double axis_angle = axis_angle_x_2 / 2.0;
     const double cos_axis_angle_x_2 = cos(axis_angle_x_2);
     const double sin_axis_angle_x_2 = sin(axis_angle_x_2);
-    first_tooth.push_back(QPointF(scale_factor * addendum_radius * cos(axis_angle),
-                                  scale_factor * addendum_radius * sin(axis_angle)));
-    for (i = first_tooth.size() - 1; i >= 0; --i) {
+
+    /* remember size, as we don't want to duplicate next point */
+    const double n_to_mirror = first_tooth.size();
+
+    /* symmetry axis point (at top of tooth) */
+    QPointF mirror_point(scale_factor * addendum_radius * cos(axis_angle),
+                         scale_factor * addendum_radius * sin(axis_angle));
+    first_tooth.push_back(mirror_point);
+    polyline.push_back(Plug_VertexData(mirror_point, 0.0));
+
+    /* for all points we have to mirror (all but the last one) */
+    for (i = n_to_mirror - 1; i >= 0; --i) {
         const QPointF& orig(first_tooth[i]);
 
         QPointF target(cos_axis_angle_x_2 * orig.x() + sin_axis_angle_x_2 * orig.y(),
                        sin_axis_angle_x_2 * orig.x() - cos_axis_angle_x_2 * orig.y());
         first_tooth.push_back(target);
+        polyline.push_back(Plug_VertexData(target, 0.0));
     } /* for */
-    first_tooth.push_back(QPointF(scale_factor * dedendum_radius * cos(axis_angle + axis_angle_x_2),
-                                  scale_factor * dedendum_radius * sin(axis_angle + axis_angle_x_2)));
 
-    /* now, we have to rotate the tooth to get all the teeth missing.
-     * XXX: The first point is going to be rotated 0.0 radians, which makes
-     * the transformation useless, but it's only done once. That avoids to
-     * repeat the code to copy the first tooth without transformation. */
+    /* symmetry axis point (at interteeth) */
+    QPointF mirror_point2(scale_factor * dedendum_radius * cos(axis_angle + axis_angle_x_2),
+                          scale_factor * dedendum_radius * sin(axis_angle + axis_angle_x_2));
+    first_tooth.push_back(mirror_point2);
+    polyline.push_back(Plug_VertexData(mirror_point2, 0.0));
+
+    /* now, we have to rotate the tooth to get all the teeth missing. */
     const double rotation = rotateBox->value() * M_PI / 180.0;
-    for (i = 0; i < n_teeth; i++) {
+    for (i = 1; i < n_teeth; i++) {
+
         const double angle = M_PI * c_modulus * i;
         const double cos_angle = cos(angle + rotation);
         const double sin_angle = sin(angle + rotation);
 
-        /* again, we dont use iterator as it.end() can be changing as we add
-         * elements to it */
         for (std::vector<QPointF>::iterator it = first_tooth.begin();
                 it != first_tooth.end(); ++it)
         {
