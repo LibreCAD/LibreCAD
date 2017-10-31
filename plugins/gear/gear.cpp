@@ -229,6 +229,7 @@ void lc_Geardlg::processAction(Document_Interface *doc)
 
     std::vector<Plug_VertexData> polyline;
     std::vector<QPointF> first_tooth;
+    QTransform rotate_and_disp;
 
     /* we shall proceed by calculating the points for root radius,
      * base of tooth, n1 line segments to the pitch circle (this makes
@@ -264,13 +265,18 @@ void lc_Geardlg::processAction(Document_Interface *doc)
     const double phi_at_addendum = radius2arg(addendum_radius);
     const int    n1 = n1Box->value();
     const int    n2 = n2Box->value();
+    const double rotation = rotateBox->value() * M_PI / 180.0;
+
+    rotate_and_disp = rotate_and_disp
+        .translate(center->x(), center->y())
+        .rotateRadians(rotation);
 
     /* Build one tooth face */
     if (dedendum_radius < 1.0) {
         QPointF root( scale_factor * dedendum_radius * cos_off_rot,
                      -scale_factor * dedendum_radius * sin_off_rot);
         first_tooth.push_back(root);
-        polyline.push_back(Plug_VertexData(root, 0.0));
+        polyline.push_back(Plug_VertexData(rotate_and_disp.map(root), 0.0));
     }
 
     int i;
@@ -283,7 +289,7 @@ void lc_Geardlg::processAction(Document_Interface *doc)
                 rot_point( cos_off_rot * point.x() + sin_off_rot * point.y(),
                           -sin_off_rot * point.x() + cos_off_rot * point.y());
         first_tooth.push_back(rot_point);
-        polyline.push_back(Plug_VertexData(rot_point, 0.0));
+        polyline.push_back(Plug_VertexData(rotate_and_disp.map(rot_point), 0.0));
         if (i == n1) { /* change delta to continue until we have all points */
             delta = (phi_at_addendum - p_angle - off_rot) / n2;
         }
@@ -310,7 +316,7 @@ void lc_Geardlg::processAction(Document_Interface *doc)
     QPointF mirror_point(scale_factor * addendum_radius * cos(axis_angle),
                          scale_factor * addendum_radius * sin(axis_angle));
     first_tooth.push_back(mirror_point);
-    polyline.push_back(Plug_VertexData(mirror_point, 0.0));
+    polyline.push_back(Plug_VertexData(rotate_and_disp.map(mirror_point), 0.0));
 
     /* for all points we have to mirror (all but the last one) */
     for (i = n_to_mirror - 1; i >= 0; --i) {
@@ -319,30 +325,29 @@ void lc_Geardlg::processAction(Document_Interface *doc)
         QPointF target(cos_axis_angle_x_2 * orig.x() + sin_axis_angle_x_2 * orig.y(),
                        sin_axis_angle_x_2 * orig.x() - cos_axis_angle_x_2 * orig.y());
         first_tooth.push_back(target);
-        polyline.push_back(Plug_VertexData(target, 0.0));
+        polyline.push_back(Plug_VertexData(rotate_and_disp.map(target), 0.0));
     } /* for */
 
     /* symmetry axis point (at interteeth) */
     QPointF mirror_point2(scale_factor * dedendum_radius * cos(axis_angle + axis_angle_x_2),
                           scale_factor * dedendum_radius * sin(axis_angle + axis_angle_x_2));
     first_tooth.push_back(mirror_point2);
-    polyline.push_back(Plug_VertexData(mirror_point2, 0.0));
+    polyline.push_back(Plug_VertexData(rotate_and_disp.map(mirror_point2), 0.0));
 
     /* now, we have to rotate the tooth to get all the teeth missing. */
-    const double rotation = rotateBox->value() * M_PI / 180.0;
     for (i = 1; i < n_teeth; i++) {
 
         const double angle = M_PI * c_modulus * i;
-        const double cos_angle = cos(angle + rotation);
-        const double sin_angle = sin(angle + rotation);
+        const double cos_angle = cos(angle);
+        const double sin_angle = sin(angle);
 
         for (std::vector<QPointF>::iterator it = first_tooth.begin();
                 it != first_tooth.end(); ++it)
         {
             const QPointF& orig = *it;
-            polyline.push_back(Plug_VertexData(
-                        QPointF(cos_angle * orig.x() - sin_angle * orig.y() + center->x(),
-                                sin_angle * orig.x() + cos_angle * orig.y() + center->y()),
+            polyline.push_back(Plug_VertexData(rotate_and_disp.map(QPointF(
+                                cos_angle * orig.x() - sin_angle * orig.y(),
+                                sin_angle * orig.x() + cos_angle * orig.y())),
                                                0.0));
         } /* for */
     } /* for */
