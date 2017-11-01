@@ -148,26 +148,50 @@ lc_Geardlg::lc_Geardlg(QWidget *parent, QPointF *center) :  QDialog(parent)
     mainLayout->addWidget(n2Box, i, 1);
     i++;
 
-    useLayersBox = new QCheckBox("Use layers?", this);
+    useLayersBox = new QCheckBox(tr("Use layers?"), this);
     mainLayout->addWidget(useLayersBox, i, 0);
     i++;
 
-    drawAddendumCircleBox = new QCheckBox("Draw addendum circle?", this);
+    drawAddendumCircleBox = new QCheckBox(tr("Draw addendum circle?"), this);
     mainLayout->addWidget(drawAddendumCircleBox, i, 0);
-    drawPitchCircleBox = new QCheckBox("Draw pitch circle?", this);
+    drawPitchCircleBox = new QCheckBox(tr("Draw pitch circle?"), this);
     mainLayout->addWidget(drawPitchCircleBox, i, 1);
     i++;
-    drawBaseCircleBox = new QCheckBox("Draw base circle?", this);
+    drawBaseCircleBox = new QCheckBox(tr("Draw base circle?"), this);
     mainLayout->addWidget(drawBaseCircleBox, i, 0);
-    drawRootCircleBox = new QCheckBox("Draw root circle?", this);
+    drawRootCircleBox = new QCheckBox(tr("Draw root circle?"), this);
     mainLayout->addWidget(drawRootCircleBox, i, 1);
     i++;
-    drawPressureLineBox = new QCheckBox("Draw pressure line?", this);
+    drawPressureLineBox = new QCheckBox(tr("Draw pressure line?"), this);
     mainLayout->addWidget(drawPressureLineBox, i, 0);
-    drawPressureLimitBox = new QCheckBox("Draw pressure limits?", this);
+    drawPressureLimitBox = new QCheckBox(tr("Draw pressure limits?"), this);
     mainLayout->addWidget(drawPressureLimitBox, i, 1);
     i++;
 
+    calcInterferenceBox = new QCheckBox(tr("Calculate interference?"), this);
+    mainLayout->addWidget(calcInterferenceBox, i, 0);
+    useInterferenceAngleBox = new QCheckBox(tr("Use interference angle?"), this);
+    mainLayout->addWidget(useInterferenceAngleBox, i, 1);
+    i++;
+
+    label = new QLabel(tr("Interference angle?"));
+    mainLayout->addWidget(label, i, 0);
+    interferenceAngleBox = new QDoubleSpinBox();
+    interferenceAngleBox->setMinimum(0.0);
+    interferenceAngleBox->setMaximum(90.0);
+    interferenceAngleBox->setSingleStep(0.1);
+    interferenceAngleBox->setDecimals(5);
+    mainLayout->addWidget(interferenceAngleBox, i, 1);
+    i++;
+
+    label = new QLabel(tr("Number of segments (interference)"));
+    mainLayout->addWidget(label, i, 0);
+    n3Box = new QSpinBox();
+    n3Box->setMinimum(1);
+    n3Box->setMaximum(1024);
+    n3Box->setSingleStep(1);
+    mainLayout->addWidget(n3Box, i, 1);
+    i++;
 
     QHBoxLayout *loaccept = new QHBoxLayout;
     QPushButton *acceptbut = new QPushButton(tr("Accept"));
@@ -273,10 +297,13 @@ void lc_Geardlg::processAction(Document_Interface *doc)
 
     /* Build one tooth face */
     if (dedendum_radius < 1.0) {
-        QPointF root( scale_factor * dedendum_radius * cos_off_rot,
-                     -scale_factor * dedendum_radius * sin_off_rot);
-        first_tooth.push_back(root);
-        polyline.push_back(Plug_VertexData(rotate_and_disp.map(root), 0.0));
+        if (calcInterferenceBox->isChecked()) {
+        } else {
+            QPointF root( scale_factor * dedendum_radius * cos_off_rot,
+                         -scale_factor * dedendum_radius * sin_off_rot);
+            first_tooth.push_back(root);
+            polyline.push_back(Plug_VertexData(rotate_and_disp.map(root), 0.0));
+        }
     }
 
     int i;
@@ -442,6 +469,9 @@ void lc_Geardlg::readSettings()
     drawRootCircleBox->setChecked(settings.value("draw_root", bool(false)).toBool());
     drawPressureLineBox->setChecked(settings.value("draw_pressure_line", bool(false)).toBool());
     drawPressureLimitBox->setChecked(settings.value("draw_pressure_limit", bool(false)).toBool());
+    calcInterferenceBox->setChecked(settings.value("calculate_interference", bool(false)).toBool());
+    interferenceAngleBox->setValue(settings.value("interference_angle", double(0.0)).toDouble());
+    n3Box->setValue(settings.value("n3", int(8)).toInt());
 
     resize(size);
     move(pos);
@@ -460,11 +490,14 @@ void lc_Geardlg::writeSettings()
     settings.setValue("dedendum", dedendumBox->value());
     settings.setValue("n1", n1Box->value());
     settings.setValue("n2", n2Box->value());
-    settings.setValue("use_layers", bool(useLayersBox->isChecked()));
-    settings.setValue("draw_addendum", bool(drawAddendumCircleBox->isChecked()));
-    settings.setValue("draw_pitch", bool(drawPitchCircleBox->isChecked()));
-    settings.setValue("draw_base", bool(drawBaseCircleBox->isChecked()));
-    settings.setValue("draw_root", bool(drawRootCircleBox->isChecked()));
-    settings.setValue("draw_pressure_line", bool(drawPressureLineBox->isChecked()));
-    settings.setValue("draw_pressure_limit", bool(drawPressureLimitBox->isChecked()));
+    settings.setValue("use_layers", useLayersBox->isChecked());
+    settings.setValue("draw_addendum", drawAddendumCircleBox->isChecked());
+    settings.setValue("draw_pitch", drawPitchCircleBox->isChecked());
+    settings.setValue("draw_base", drawBaseCircleBox->isChecked());
+    settings.setValue("draw_root", drawRootCircleBox->isChecked());
+    settings.setValue("draw_pressure_line", drawPressureLineBox->isChecked());
+    settings.setValue("draw_pressure_limit", drawPressureLimitBox->isChecked());
+    settings.setValue("calculate_interference", calcInterferenceBox->isChecked());
+    settings.setValue("interference_angle", interferenceAngleBox->value());
+    settings.setValue("n3", n3Box->value());
  }

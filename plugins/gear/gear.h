@@ -72,7 +72,10 @@ private:
     QCheckBox *drawRootCircleBox;
     QCheckBox *drawPressureLineBox;
     QCheckBox *drawPressureLimitBox;
-    QComboBox *layerAuxCirclesBox;
+    QCheckBox *calcInterferenceBox;
+    QCheckBox *useInterferenceAngleBox;
+    QDoubleSpinBox *interferenceAngleBox;
+    QSpinBox *n3Box;
 };
 
 #endif // WHEEL_H
