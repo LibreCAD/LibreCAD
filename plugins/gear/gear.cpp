@@ -295,14 +295,56 @@ void lc_Geardlg::processAction(Document_Interface *doc)
         .translate(center->x(), center->y())
         .rotateRadians(rotation);
 
+#define F(str) __FILE__":%d:%s: " str, __LINE__, __func__
+#define I(str) "INFO: " str
+#define INFO(str, ...) fprintf(stderr, I(str), ##__VA_ARGS__)
+#define P(exp) INFO("%20s: %.10lg\n", #exp, (double)(exp))
+    P(n_teeth);
+    P(addendum);
+    P(dedendum);
+    P(modulus);
+    P(c_modulus);
+    P(p_angle);
+    P(cos_p_angle);
+    P(scale_factor);
+    P(off_rot);
+    P(cos_off_rot);
+    P(sin_off_rot);
+    P(pitch_radius);
+    P(dedendum_radius);
+    P(addendum_radius);
+    P(phi_at_dedendum);
+    P(phi_at_addendum);
+    P(n1);
+    P(n2);
+    P(rotation);
     /* Build one tooth face */
     if (dedendum_radius < 1.0) {
         if (calcInterferenceBox->isChecked()) {
             /* TODO: I'm here coding. */
-            const bool use_int_ang = useInterferenceAngleBox->isChecked();
-            const double ang_intf = use_int_ang
-                                  ? interferenceAngleBox->value()
-                                  : acos(dedendum_radius / cos_p_angle);
+            const int n3 = n3Box->value();
+            const double ang_intf = useInterferenceAngleBox->isChecked()
+                                  ? M_PI / 180.0 * interferenceAngleBox->value() + p_angle
+                                  : acos(dedendum_radius);
+            const double sin_ang_intf = sin(ang_intf);
+            const double ang_rot = ang_intf - sin_ang_intf;
+            const double alpha = 1.0 - dedendum_radius;
+            P(n3);
+            P(ang_intf);
+            P(sin_ang_intf);
+            P(ang_rot);
+            P(alpha);
+            int i;
+            double phi, delta = sin_ang_intf / n3;
+            for(i = 0, phi = 0.0; i < n3; i++, phi -= delta) {
+                const double re = scale_factor * re_evolute(phi, alpha);
+                const double im = scale_factor * im_evolute(phi, alpha);
+                const double cos_rot = cos(-off_rot - ang_rot), sin_rot = sin(-off_rot - ang_rot);
+                const QPointF rot(cos_rot * re - sin_rot * im,
+                                  sin_rot * re + cos_rot * im);
+                first_tooth.push_back(rot);
+                polyline.push_back(Plug_VertexData(rotate_and_disp.map(rot), 0.0));
+            } /* for */
         } else {
             QPointF root( scale_factor * dedendum_radius * cos_off_rot,
                          -scale_factor * dedendum_radius * sin_off_rot);
