@@ -231,14 +231,14 @@ static double radius2arg(const double radius)
  * We consider it the next complex function:
  * (1.0 - i*phi) * exp(i*phi) 
  */
-static double re_evolute(const double phi)
+static double re_evolute(const double phi, const double alpha = 0.0)
 {
-    return cos(phi) + phi * sin(phi);
+    return (1.0 - alpha) * cos(phi) + phi * sin(phi);
 }
 
-static double im_evolute(const double phi)
+static double im_evolute(const double phi, const double alpha = 0.0)
 {
-    return sin(phi) - phi * cos(phi);
+    return (1.0 - alpha) * sin(phi) - phi * cos(phi);
 }
 
 /* modulus of evolute at point phi */
@@ -298,6 +298,11 @@ void lc_Geardlg::processAction(Document_Interface *doc)
     /* Build one tooth face */
     if (dedendum_radius < 1.0) {
         if (calcInterferenceBox->isChecked()) {
+            /* TODO: I'm here coding. */
+            const bool use_int_ang = useInterferenceAngleBox->isChecked();
+            const double ang_intf = use_int_ang
+                                  ? interferenceAngleBox->value()
+                                  : acos(dedendum_radius / cos_p_angle);
         } else {
             QPointF root( scale_factor * dedendum_radius * cos_off_rot,
                          -scale_factor * dedendum_radius * sin_off_rot);
