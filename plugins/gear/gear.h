@@ -72,8 +72,6 @@ private:
     QCheckBox *drawPressureLineBox;
     QCheckBox *drawPressureLimitBox;
     QCheckBox *calcInterferenceBox;
-    QCheckBox *useInterferenceAngleBox;
-    QDoubleSpinBox *interferenceAngleBox;
     QSpinBox *n3Box;
 };
 
