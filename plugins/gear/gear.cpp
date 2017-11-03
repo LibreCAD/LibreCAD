@@ -315,7 +315,7 @@ void lc_Geardlg::processAction(Document_Interface *doc)
             const int n3 = n3Box->value();
             const double alpha = (pitch_radius - dedendum_radius) / pitch_radius;
             const double angle_0 = alpha * tan(p_angle);
-            const double angle_1 = radius2arg(1.1, alpha);
+            const double angle_1 = radius2arg(1.0, alpha);
             P(n3);
             P(alpha);
             P(angle_0);
