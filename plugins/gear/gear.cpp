@@ -212,7 +212,7 @@ static double offset(const double p_angle)
  * whose radius is given. */
 static double radius2arg(const double radius, const double alpha = 0.0)
 {
-    const double aux = (1.0 - alpha);
+    const double aux = 1.0 - alpha;
     return sqrt(radius * radius - aux*aux);
 }
 
@@ -231,9 +231,10 @@ static double im_evolute(const double phi, const double alpha = 0.0)
 }
 
 /* modulus of evolute at point phi */
-static double mod_evolute(const double phi)
+static double mod_evolute(const double phi, const double alpha = 0.0)
 {
-    return sqrt(1.0 + phi*phi);
+    const double aux = 1.0 - alpha;
+    return sqrt(aux*aux + phi*phi);
 }
 
 void lc_Geardlg::processAction(Document_Interface *doc)
@@ -309,7 +310,7 @@ void lc_Geardlg::processAction(Document_Interface *doc)
     P(rotation);
     /* Build one tooth face */
     if (dedendum_radius < 1.0) {
-        if (calcInterferenceBox->isChecked()) {
+        if (calcInterferenceBox->isChecked() /* && pitch_radius * cos_p_angle * cos_p_angle > dedendum_radius */) {
             /* TODO: I'm here coding. */
             const int n3 = n3Box->value();
             const double alpha = (pitch_radius - dedendum_radius) / pitch_radius;
