@@ -2,7 +2,7 @@
 /*  gear.cpp - plugin gear for LibreCAD                                      */
 /*                                                                           */
 /*  Copyright (C) 2016 Cédric Bosdonnat cedric@bosdonnat.fr                  */
-/*  Edited by 2017 Luis Colorado <luiscoloradourcola@gmail.com>              */
+/*  Edited 2017 Luis Colorado <luiscoloradourcola@gmail.com>                 */
 /*                                                                           */
 /*  This library is free software, licensed under the terms of the GNU       */
 /*  General Public License as published by the Free Software Foundation,     */
@@ -27,13 +27,15 @@
 #include "document_interface.h"
 #include "gear.h"
 
-#define GEAR_TYPE_SPUR int(0)
-#define GEAR_TYPE_RING int(1)
+#define F(str) __FILE__":%d:%s: " str, __LINE__, __func__
+#define I(str) "INFO: " str
+#define INFO(str, ...) do{fprintf(stderr, F(I(str)), ##__VA_ARGS__); fflush(stderr);}while(0)
+#define P(exp) INFO("%20s: %.10lg\n", #exp, (double)(exp))
 
 QString LC_Gear::name() const
- {
-     return (tr("Gear creation plugin"));
- }
+{
+    return (tr("Gear creation plugin"));
+}
 
 PluginCapabilities LC_Gear::getCapabilities() const
 {
@@ -43,162 +45,133 @@ PluginCapabilities LC_Gear::getCapabilities() const
     return pluginCapabilities;
 }
 
+LC_Gear::LC_Gear()
+{
+    parameters_dialog = 0;
+}
+
+LC_Gear::~LC_Gear()
+{
+    if (parameters_dialog) delete parameters_dialog;
+}
+
 void LC_Gear::execComm(Document_Interface *doc,
                         QWidget *parent, QString cmd)
 {
     Q_UNUSED(doc);
     Q_UNUSED(cmd);
+
     QPointF center;
-
-    if (!doc->getPoint(&center, QString("select center")))
+    if (!doc->getPoint(&center, QString("select center"))) {
+        INFO("NO SELECTED CENTER, ABANDON\n");
         return;
+    }
 
-    lc_Geardlg pdt(parent, &center);
-    int result =  pdt.exec();
+    INFO("Selected center is at [%12.8f,%12.8f]\n", center.x(), center.y());
+
+    if (!parameters_dialog) {
+        INFO("CREATING parameters_dialog\n");
+        parameters_dialog = new lc_Geardlg(parent);
+        if (!parameters_dialog) {
+            INFO("Cannot create parameters_dialog\n");
+            return;
+        }
+        INFO("parameters_dialog == %p\n", parameters_dialog);
+    }
+
+    int result =  parameters_dialog->exec();
     if (result == QDialog::Accepted)
-        pdt.processAction(doc);
+        parameters_dialog->processAction(doc, cmd, center);
 }
 
 /*****************************/
 
-lc_Geardlg::lc_Geardlg(QWidget *parent, QPointF *center) :  QDialog(parent)
+lc_Geardlg::lc_Geardlg(QWidget *parent) :
+    QDialog(parent),
+    settings(QSettings::IniFormat, QSettings::UserScope, "LibreCAD", "gear_plugin")
 {
-    this->center = center;
+    const char *windowTitle = "Draw a gear";
 
-    setWindowTitle(tr("Draw a gear"));
+    INFO("SET WINDOW TITLE \"%s\"\n", windowTitle);
+
+    setWindowTitle(tr(windowTitle));
+
     QLabel *label;
+    QGridLayout *mainLayout = new QGridLayout(this);
 
-    QGridLayout *mainLayout = new QGridLayout;
+    int i = 0, j = 0;
 
-    int i = 0;
-    label = new QLabel(tr("Rotation angle"));
-    mainLayout->addWidget(label, i, 0);
-    rotateBox = new QDoubleSpinBox();
-    rotateBox->setMinimum(-360.0);
-    rotateBox->setMaximum(360.0);
-    rotateBox->setSingleStep(1.0);
-    rotateBox->setDecimals(6);
-    mainLayout->addWidget(rotateBox, i, 1);
-    i++;
+#define RST() do{ if(j) { ++i; j = 0; } } while(0)
 
-    label = new QLabel(tr("Number of teeth"));
-    mainLayout->addWidget(label, i, 0);
-    nteethBox = new QSpinBox();
-    nteethBox->setMinimum(1);
-    nteethBox->setMaximum(2000);
-    nteethBox->setSingleStep(1);
-    mainLayout->addWidget(nteethBox, i, 1);
-    i++;
+#define Q(name, type, text, min, max, stp) do {                  \
+            INFO("Creating " #type " " #name " at row %d\n", i); \
+            label = new QLabel((text), this);                    \
+            name = new type(this);                               \
+            name->setMinimum(min);                               \
+            name->setMaximum(max);                               \
+            name->setSingleStep(stp);                            \
+            mainLayout->addWidget(label,  i, 0);                 \
+            mainLayout->addWidget((name), i, 1);                 \
+        } while(0)
 
-    label = new QLabel(tr("Modulus"));
-    mainLayout->addWidget(label, i, 0);
-    modulusBox = new QDoubleSpinBox();
-    modulusBox->setMinimum(1.0e-10);
-    modulusBox->setMaximum(1.0e+10); /* this is huge */
-    modulusBox->setSingleStep(0.001);
-    modulusBox->setDecimals(6);
-    mainLayout->addWidget(modulusBox, i, 1);
-    i++;
+#define QDSB(name, text, min, max, stp, dec) do {                \
+            RST();                                               \
+            Q(name, QDoubleSpinBox, (text),(min),(max),(stp));   \
+            name->setDecimals(dec);                              \
+            ++i; j = 0;                                          \
+        } while(0)
 
-    label = new QLabel(tr("Pressure angle (deg)"));
-    mainLayout->addWidget(label, i, 0);
-    pressureBox = new QDoubleSpinBox();
-    pressureBox->setMinimum(0.01);
-    pressureBox->setMaximum(89.99);
-    pressureBox->setSingleStep(0.01);
-    pressureBox->setDecimals(5);
-    mainLayout->addWidget(pressureBox, i, 1);
-    i++;
+#define QSB(name, text, min, max, stp) do {                      \
+            RST();                                               \
+            Q(name, QSpinBox, (text),(min),(max), (stp));        \
+            ++i; j = 0;                                          \
+        } while(0)
 
-    label = new QLabel(tr("Addendum(rel. to modulus)"));
-    mainLayout->addWidget(label, i, 0);
-    addendumBox = new QDoubleSpinBox();
-    addendumBox->setMinimum(0.0);
-    addendumBox->setMaximum(10.0); /* ten times the modulus is far too large */
-    addendumBox->setSingleStep(0.1);
-    addendumBox->setDecimals(5);
-    mainLayout->addWidget(addendumBox, i, 1);
-    i++;
+#define QCB(name, text) do {                                     \
+            INFO("Creating QCheckBox " #name " at pos (%d, %d)\n", i, j); \
+            name = new QCheckBox((text), this);                   \
+            mainLayout->addWidget(name, i, j);                   \
+            j++; if (j >= 2) { j = 0; i++; }     \
+        } while(0)
 
-    label = new QLabel(tr("Dedendum(rel. to modulus)"));
-    mainLayout->addWidget(label, i, 0);
-    dedendumBox = new QDoubleSpinBox();
-    dedendumBox->setMinimum(0.0);
-    dedendumBox->setMaximum(10.0);
-    dedendumBox->setSingleStep(0.1);
-    dedendumBox->setDecimals(5);
-    mainLayout->addWidget(dedendumBox, i, 1);
-    i++;
+    QDSB(rotateBox,             tr("Rotation angle"),                        -360.0,      360.0,     1.0, 6);
+    QSB (nteethBox,             tr("Number of teeth"),                          1,       2000,       1);
+    QDSB(modulusBox,            tr("Modulus"),                                  1.0E-10,    1.0E+10, 0.1, 6); 
+    QDSB(pressureBox,           tr("Pressure angle (deg)"),                     0.1,       89.9,     1.0, 5);
+    QDSB(addendumBox,           tr("Addendum (rel. to modulus)"),               0.0,        5.0,     0.1, 5);
+    QDSB(dedendumBox,           tr("Dedendum (rel. to modulus)"),               0.0,        5.0,     0.1, 5);
+    QSB (n1Box,                 tr("Number of segments to draw (dedendum)"),    1,       1024,       8);
+    QSB (n2Box,                 tr("Number of segments to draw (addendum)"),    1,       1024,       8);
 
-    label = new QLabel(tr("Number of segments (dedendum)"));
-    mainLayout->addWidget(label, i, 0);
-    n1Box = new QSpinBox();
-    n1Box->setMinimum(1);
-    n1Box->setMaximum(1024);
-    n1Box->setSingleStep(1);
-    mainLayout->addWidget(n1Box, i, 1);
-    i++;
+    QCB (useLayersBox,          tr("Use layers?")); RST();
+    QCB (drawAddendumCircleBox, tr("Draw addendum circle?"));
+    QCB (drawPitchCircleBox,    tr("Draw pitch circle?"));
+    QCB (drawBaseCircleBox,     tr("Draw base circle?"));
+    QCB (drawRootCircleBox,     tr("Draw root circle?"));
+    QCB (drawPressureLineBox,   tr("Draw pressure line?"));
+    QCB (drawPressureLimitBox,  tr("Draw pressure limits?"));
 
-    label = new QLabel(tr("Number of segments (addendum)"));
-    mainLayout->addWidget(label, i, 0);
-    n2Box = new QSpinBox();
-    n2Box->setMinimum(1);
-    n2Box->setMaximum(1024);
-    n2Box->setSingleStep(1);
-    mainLayout->addWidget(n2Box, i, 1);
-    i++;
+    QCB (calcInterferenceBox,   tr("Calculate interference?"));
+    QSB (n3Box,                 tr("Number of segments to draw (interference)"), 1, 1024,     8);
 
-    useLayersBox = new QCheckBox(tr("Use layers?"), this);
-    mainLayout->addWidget(useLayersBox, i, 0);
-    i++;
+    QPushButton *acceptbut = new QPushButton(tr("Accept"), this);
+    QPushButton *cancelbut = new QPushButton(tr("Cancel"), this);
+    QHBoxLayout *acceptLayout = new QHBoxLayout();
 
-    drawAddendumCircleBox = new QCheckBox(tr("Draw addendum circle?"), this);
-    mainLayout->addWidget(drawAddendumCircleBox, i, 0);
-    drawPitchCircleBox = new QCheckBox(tr("Draw pitch circle?"), this);
-    mainLayout->addWidget(drawPitchCircleBox, i, 1);
-    i++;
-    drawBaseCircleBox = new QCheckBox(tr("Draw base circle?"), this);
-    mainLayout->addWidget(drawBaseCircleBox, i, 0);
-    drawRootCircleBox = new QCheckBox(tr("Draw root circle?"), this);
-    mainLayout->addWidget(drawRootCircleBox, i, 1);
-    i++;
-    drawPressureLineBox = new QCheckBox(tr("Draw pressure line?"), this);
-    mainLayout->addWidget(drawPressureLineBox, i, 0);
-    drawPressureLimitBox = new QCheckBox(tr("Draw pressure limits?"), this);
-    mainLayout->addWidget(drawPressureLimitBox, i, 1);
-    i++;
+    acceptLayout->addStretch();
+    acceptLayout->addWidget(acceptbut);
+    acceptLayout->addStretch();
+    acceptLayout->addWidget(cancelbut);
+    acceptLayout->addStretch();
 
-    calcInterferenceBox = new QCheckBox(tr("Calculate interference?"), this);
-    mainLayout->addWidget(calcInterferenceBox, i, 0);
-    i++;
-
-    label = new QLabel(tr("Number of segments (interference)"));
-    mainLayout->addWidget(label, i, 0);
-    n3Box = new QSpinBox();
-    n3Box->setMinimum(1);
-    n3Box->setMaximum(1024);
-    n3Box->setSingleStep(1);
-    mainLayout->addWidget(n3Box, i, 1);
-    i++;
-
-    QHBoxLayout *loaccept = new QHBoxLayout;
-    QPushButton *acceptbut = new QPushButton(tr("Accept"));
-    loaccept->addStretch();
-    loaccept->addWidget(acceptbut);
-    mainLayout->addLayout(loaccept, i, 0);
-
-    QPushButton *cancelbut = new QPushButton(tr("Cancel"));
-    QHBoxLayout *locancel = new QHBoxLayout;
-    locancel->addWidget(cancelbut);
-    locancel->addStretch();
-    mainLayout->addLayout(locancel, i, 1);
-    i++;
-
+    mainLayout->addLayout(acceptLayout, i, 0, 1, 2);
     setLayout(mainLayout);
+
     readSettings();
 
     connect(cancelbut, SIGNAL(clicked()), this, SLOT(reject()));
     connect(acceptbut, SIGNAL(clicked()), this, SLOT(checkAccept()));
+    INFO("END\n");
 }
 
 /* calculate the offset angle to rotate the gear so the
@@ -237,9 +210,11 @@ static double mod_evolute(const double phi, const double alpha = 0.0)
     return sqrt(aux*aux + phi*phi);
 }
 
-void lc_Geardlg::processAction(Document_Interface *doc)
+void lc_Geardlg::processAction(Document_Interface *doc, const QString& cmd, QPointF& center)
 {
     Q_UNUSED(doc);
+    Q_UNUSED(cmd);
+    Q_UNUSED(center);
 
     std::vector<Plug_VertexData> polyline;
     std::vector<QPointF> first_tooth;
@@ -282,13 +257,9 @@ void lc_Geardlg::processAction(Document_Interface *doc)
     const double rotation = rotateBox->value() * M_PI / 180.0;
 
     rotate_and_disp = rotate_and_disp
-        .translate(center->x(), center->y())
+        .translate(center.x(), center.y())
         .rotateRadians(rotation);
 
-#define F(str) __FILE__":%d:%s: " str, __LINE__, __func__
-#define I(str) "INFO: " str
-#define INFO(str, ...) fprintf(stderr, I(str), ##__VA_ARGS__)
-#define P(exp) INFO("%20s: %.10lg\n", #exp, (double)(exp))
     P(n_teeth);
     P(addendum);
     P(dedendum);
@@ -310,7 +281,7 @@ void lc_Geardlg::processAction(Document_Interface *doc)
     P(rotation);
     /* Build one tooth face */
     if (dedendum_radius < 1.0) {
-        if (calcInterferenceBox->isChecked() /* && pitch_radius * cos_p_angle * cos_p_angle > dedendum_radius */) {
+        if (calcInterferenceBox->isChecked() && pitch_radius * cos_p_angle * cos_p_angle > dedendum_radius) {
             /* TODO: I'm here coding. */
             const int n3 = n3Box->value();
             const double alpha = (pitch_radius - dedendum_radius) / pitch_radius;
@@ -428,22 +399,22 @@ void lc_Geardlg::processAction(Document_Interface *doc)
 
     if (drawPitchCircleBox->isChecked()) {
         LAYER("pitch_circles");
-        doc->addCircle(center, scale_factor * pitch_radius);
+        doc->addCircle(&center, scale_factor * pitch_radius);
     }
 
     if (drawAddendumCircleBox->isChecked()) {
         LAYER("addendums");
-        doc->addCircle(center, scale_factor * addendum_radius);
+        doc->addCircle(&center, scale_factor * addendum_radius);
     }
 
     if (drawRootCircleBox->isChecked()) {
         LAYER("dedendums");
-        doc->addCircle(center, scale_factor * dedendum_radius);
+        doc->addCircle(&center, scale_factor * dedendum_radius);
     }
 
     if (drawBaseCircleBox->isChecked()) {
         LAYER("base_lines");
-        doc->addCircle(center, scale_factor * pitch_radius * cos_p_angle);
+        doc->addCircle(&center, scale_factor * pitch_radius * cos_p_angle);
     }
 
     if (drawPressureLineBox->isChecked() || drawPressureLimitBox->isChecked()) {
@@ -452,9 +423,9 @@ void lc_Geardlg::processAction(Document_Interface *doc)
                    scale_factor * sin(p_angle + rotation)),
                 p2(scale_factor * pitch_radius * cos(rotation),
                    scale_factor * pitch_radius * sin(rotation));
-        p1 += *center; p2 += *center;
+        p1 += center; p2 += center;
         if (drawPressureLimitBox->isChecked())
-            doc->addLine(center, &p1);
+            doc->addLine(&center, &p1);
         if (drawPressureLineBox->isChecked())
             doc->addLine(&p1, &p2);
     }
@@ -462,7 +433,6 @@ void lc_Geardlg::processAction(Document_Interface *doc)
     if (useLayersBox->isChecked())
         doc->setLayer(lastLayer);
 
-    writeSettings();
 }
 
 void lc_Geardlg::checkAccept()
@@ -472,6 +442,7 @@ void lc_Geardlg::checkAccept()
 
 lc_Geardlg::~lc_Geardlg()
 {
+    writeSettings();
 }
 
 void lc_Geardlg::closeEvent(QCloseEvent *event)
@@ -483,38 +454,60 @@ void lc_Geardlg::closeEvent(QCloseEvent *event)
 
 void lc_Geardlg::readSettings()
 {
-    QString str;
-    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "LibreCAD", "gear_plugin");
+
     QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
     QSize size = settings.value("size", QSize(430,140)).toSize();
 
-    nteethBox->setValue(settings.value("teeth", int(20)).toInt());
-    modulusBox->setValue(settings.value("modulus", double(1.0)).toDouble());
-    pressureBox->setValue(settings.value("pressure", double(20.0)).toDouble());
-    addendumBox->setValue(settings.value("addendum", double(1.0)).toDouble());
-    dedendumBox->setValue(settings.value("dedendum", double(1.25)).toDouble());
-    n1Box->setValue(settings.value("n1", int(8)).toInt());
-    n2Box->setValue(settings.value("n2", int(8)).toInt());
-    useLayersBox->setChecked(settings.value("use_layers", bool(true)).toBool());
-    drawAddendumCircleBox->setChecked(settings.value("draw_addendum", bool(false)).toBool());
-    drawPitchCircleBox->setChecked(settings.value("draw_pitch", bool(true)).toBool());
-    drawBaseCircleBox->setChecked(settings.value("draw_base", bool(true)).toBool());
-    drawRootCircleBox->setChecked(settings.value("draw_root", bool(false)).toBool());
-    drawPressureLineBox->setChecked(settings.value("draw_pressure_line", bool(false)).toBool());
-    drawPressureLimitBox->setChecked(settings.value("draw_pressure_limit", bool(false)).toBool());
-    calcInterferenceBox->setChecked(settings.value("calculate_interference", bool(false)).toBool());
-    n3Box->setValue(settings.value("n3", int(8)).toInt());
+#define R(var,toFunc, defval) var ## Box->setValue(settings.value(#var, defval).toFunc())
+#define RB(var,defval) var ## Box->setChecked(settings.value(#var, defval).toBool())
+    R(rotate, toDouble,         0.0 );
+    R(nteeth, toInt,           20   );
+    R(modulus, toDouble,        1.0 );
+    R(pressure, toDouble,      20.0 );
+    R(addendum, toDouble,       1.0 );
+    R(dedendum, toDouble,       1.25);
+    R(n1, toInt,               16   );
+    R(n2, toInt,               16   );
+    RB(useLayers,            true   );
+    RB(drawAddendumCircle,  false   );
+    RB(drawPitchCircle,      true   );
+    RB(drawBaseCircle,       true   );
+    RB(drawRootCircle,      false   );
+    RB(drawPressureLine,     true   );
+    RB(drawPressureLimit,   false   );
+    RB(calcInterference,    false   );
+    R(n3, toInt,               16   );
 
     resize(size);
     move(pos);
 }
 
 void lc_Geardlg::writeSettings()
- {
-    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "LibreCAD", "gear_plugin");
+{
+#define W(var, vfunc) settings.setValue(#var, var##Box->vfunc());
+#define WN(var) W(var, value)
+#define WB(var) W(var, isChecked)
+    
     settings.setValue("pos", pos());
     settings.setValue("size", size());
+    WN(nteeth);
+    WN(modulus);
+    WN(pressure);
+    WN(addendum);
+    WN(dedendum);
+    WN(n1);
+    WN(n2);
+    WB(useLayers);
+    WB(drawAddendumCircle);
+    WB(drawPitchCircle);
+    WB(drawBaseCircle);
+    WB(drawRootCircle);
+    WB(drawPressureLine);
+    WB(drawPressureLimit);
+    WB(calcInterference);
+    WN(n3);
 
+#if 0
     settings.setValue("teeth", nteethBox->value());
     settings.setValue("modulus", modulusBox->value());
     settings.setValue("pressure", pressureBox->value());
@@ -531,4 +524,5 @@ void lc_Geardlg::writeSettings()
     settings.setValue("draw_pressure_limit", drawPressureLimitBox->isChecked());
     settings.setValue("calculate_interference", calcInterferenceBox->isChecked());
     settings.setValue("n3", n3Box->value());
- }
+#endif
+}

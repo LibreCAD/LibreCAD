@@ -1,7 +1,8 @@
 /*****************************************************************************/
-/*  gear.h - gear plugin for LibreCAD                                      */
+/*  gear.h - gear plugin for LibreCAD                                        */
 /*                                                                           */
 /*  Copyright (C) 2016 Cédric Bosdonnat cedric@bosdonnat.fr                  */
+/*  Edited 2017 Luis Colorado <luiscoloradourcola@gmail.com>                 */
 /*                                                                           */
 /*  This library is free software, licensed under the terms of the GNU       */
 /*  General Public License as published by the Free Software Foundation,     */
@@ -10,10 +11,11 @@
 /*  along with this program.  If not, see <http://www.gnu.org/licenses/>.    */
 /*****************************************************************************/
 
-#ifndef WHEEL_H
-#define WHEEL_H
+#ifndef GEAR_H
+#define GEAR_H
 
 #include "qc_plugininterface.h"
+#include <QSettings>
 #include <QDialog>
 #include <QPointF>
 #include <QSpinBox>
@@ -21,29 +23,16 @@
 #include <QDoubleSpinBox>
 #include <QComboBox>
 
-class LC_Gear : public QObject, QC_PluginInterface
-{
-    Q_OBJECT
-    Q_INTERFACES(QC_PluginInterface)
-    Q_PLUGIN_METADATA(IID LC_DocumentInterface_iid FILE  "gear.json")
-
- public:
-    virtual PluginCapabilities getCapabilities() const Q_DECL_OVERRIDE;
-    virtual QString name() const Q_DECL_OVERRIDE;
-    virtual void execComm(Document_Interface *doc,
-                          QWidget *parent, QString cmd) Q_DECL_OVERRIDE;
-};
-
 class lc_Geardlg : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit lc_Geardlg(QWidget *parent, QPointF *center);
-    ~lc_Geardlg();
+    explicit lc_Geardlg(QWidget *parent);
+    virtual ~lc_Geardlg();
 
 public slots:
-    void processAction(Document_Interface *doc);
+    void processAction(Document_Interface *doc, const QString& cmd, QPointF& center);
     void checkAccept();
 
 protected:
@@ -55,24 +44,43 @@ private:
 
 private:
 
-    QPointF *center;
-    QDoubleSpinBox *rotateBox;
-    QSpinBox *nteethBox;
-    QDoubleSpinBox *modulusBox;
-    QDoubleSpinBox *pressureBox;
-    QDoubleSpinBox *addendumBox;
-    QDoubleSpinBox *dedendumBox;
-    QSpinBox *n1Box; /* number of points calculated in the dedendum part */
-    QSpinBox *n2Box; /*                    ''              addendum  ''  */
-    QCheckBox *useLayersBox;
-    QCheckBox *drawAddendumCircleBox;
-    QCheckBox *drawPitchCircleBox;
-    QCheckBox *drawBaseCircleBox;
-    QCheckBox *drawRootCircleBox;
-    QCheckBox *drawPressureLineBox;
-    QCheckBox *drawPressureLimitBox;
-    QCheckBox *calcInterferenceBox;
-    QSpinBox *n3Box;
+    QSettings       settings;
+
+    QDoubleSpinBox  *rotateBox;
+    QSpinBox        *nteethBox;
+    QDoubleSpinBox  *modulusBox;
+    QDoubleSpinBox  *pressureBox;
+    QDoubleSpinBox  *addendumBox;
+    QDoubleSpinBox  *dedendumBox;
+    QSpinBox        *n1Box; /* number of points calculated in the dedendum part */
+    QSpinBox        *n2Box; /*                    ''              addendum  ''  */
+    QCheckBox       *useLayersBox;
+    QCheckBox       *drawAddendumCircleBox;
+    QCheckBox       *drawPitchCircleBox;
+    QCheckBox       *drawBaseCircleBox;
+    QCheckBox       *drawRootCircleBox;
+    QCheckBox       *drawPressureLineBox;
+    QCheckBox       *drawPressureLimitBox;
+    QCheckBox       *calcInterferenceBox;
+    QSpinBox        *n3Box;
 };
 
-#endif // WHEEL_H
+class LC_Gear : public QObject, QC_PluginInterface
+{
+    Q_OBJECT
+    Q_INTERFACES(QC_PluginInterface)
+    Q_PLUGIN_METADATA(IID LC_DocumentInterface_iid FILE  "gear.json")
+
+    lc_Geardlg      *parameters_dialog;
+
+ public:
+    LC_Gear();
+    ~LC_Gear();
+
+    virtual PluginCapabilities getCapabilities() const Q_DECL_OVERRIDE;
+    virtual QString name() const Q_DECL_OVERRIDE;
+    virtual void execComm(Document_Interface *doc,
+                          QWidget *parent, QString cmd) Q_DECL_OVERRIDE;
+};
+
+#endif /* GEAR_H */
