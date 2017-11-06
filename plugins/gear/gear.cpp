@@ -284,9 +284,9 @@ void lc_Geardlg::processAction(Document_Interface *doc, const QString& cmd, QPoi
         if (calcInterferenceBox->isChecked() && pitch_radius * cos_p_angle * cos_p_angle > dedendum_radius) {
             /* TODO: I'm here coding. */
             const int n3 = n3Box->value();
-            const double alpha = (pitch_radius - dedendum_radius) / pitch_radius;
+            const double alpha = 1.0 - dedendum_radius / pitch_radius;
             const double angle_0 = alpha * tan(p_angle);
-            const double angle_1 = radius2arg(1.0, alpha);
+            const double angle_1 = radius2arg(cos_p_angle, alpha);
             P(n3);
             P(alpha);
             P(angle_0);
@@ -455,11 +455,20 @@ void lc_Geardlg::closeEvent(QCloseEvent *event)
 void lc_Geardlg::readSettings()
 {
 
+    INFO("BEGIN\n");
+
     QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
     QSize size = settings.value("size", QSize(430,140)).toSize();
 
-#define R(var,toFunc, defval) var ## Box->setValue(settings.value(#var, defval).toFunc())
-#define RB(var,defval) var ## Box->setChecked(settings.value(#var, defval).toBool())
+#define R(var,toFunc, defval) do { \
+        INFO(#var "Box->setValue(settings.value(\""#var"\", " #defval ")." #toFunc "());\n"); \
+        var ## Box->setValue(settings.value(#var, defval).toFunc()); \
+    } while(0)
+        
+#define RB(var,defval) do { \
+        INFO(#var "Box->setChecked(settings.value(\""#var"\", " #defval ").toBool());\n"); \
+        var ## Box->setChecked(settings.value(#var, defval).toBool()); \
+    } while (0)
     R(rotate, toDouble,         0.0 );
     R(nteeth, toInt,           20   );
     R(modulus, toDouble,        1.0 );
@@ -480,11 +489,16 @@ void lc_Geardlg::readSettings()
 
     resize(size);
     move(pos);
+    
+    INFO("END\n");
 }
 
 void lc_Geardlg::writeSettings()
 {
-#define W(var, vfunc) settings.setValue(#var, var##Box->vfunc());
+#define W(var, vfunc) do { \
+        INFO("settings.setValue(\"" #var ", " #var "Box->" #vfunc "());\n"); \
+        settings.setValue(#var, var##Box->vfunc()); \
+    } while (0)
 #define WN(var) W(var, value)
 #define WB(var) W(var, isChecked)
     
@@ -506,23 +520,4 @@ void lc_Geardlg::writeSettings()
     WB(drawPressureLimit);
     WB(calcInterference);
     WN(n3);
-
-#if 0
-    settings.setValue("teeth", nteethBox->value());
-    settings.setValue("modulus", modulusBox->value());
-    settings.setValue("pressure", pressureBox->value());
-    settings.setValue("addendum", addendumBox->value());
-    settings.setValue("dedendum", dedendumBox->value());
-    settings.setValue("n1", n1Box->value());
-    settings.setValue("n2", n2Box->value());
-    settings.setValue("use_layers", useLayersBox->isChecked());
-    settings.setValue("draw_addendum", drawAddendumCircleBox->isChecked());
-    settings.setValue("draw_pitch", drawPitchCircleBox->isChecked());
-    settings.setValue("draw_base", drawBaseCircleBox->isChecked());
-    settings.setValue("draw_root", drawRootCircleBox->isChecked());
-    settings.setValue("draw_pressure_line", drawPressureLineBox->isChecked());
-    settings.setValue("draw_pressure_limit", drawPressureLimitBox->isChecked());
-    settings.setValue("calculate_interference", calcInterferenceBox->isChecked());
-    settings.setValue("n3", n3Box->value());
-#endif
 }
