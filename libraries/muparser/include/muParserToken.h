@@ -69,7 +69,7 @@ namespace mu
       TString m_strTok;   ///< Token string
       TString m_strVal;   ///< Value for string variables
       value_type m_fVal;  ///< the value 
-      std::auto_ptr<ParserCallback> m_pCallback;
+      std::unique_ptr<ParserCallback> m_pCallback;
 
   public:
 
