@@ -208,6 +208,29 @@ static double mod_evolute(const double phi, const double alpha = 0.0)
     return sqrt(aux*aux + phi*phi);
 }
 
+#if 0
+/* finds the root of a function given two points.  The algorithm treats to follow the line
+ * that joins the two images of the points a and b, until it crosses the X axis.  Then the
+ * function is evaluated on the found point and this value is used to substitute and discard
+ * the farthest of the values we had previously.  Once the values are within the epsilon
+ * parameter supplied (or defaulted to 1.0e-13) the algorithm terminates.  This is expected
+ * to work as the value to be found is for a function that is warranted to have a zero and
+ */
+static double find_root(double (*f)(double), double a, double b, const double eps = 1.0e-13)
+{
+    double f_a = f(a), f_b = f(b);
+    do {
+        const double x = (a*f_b - b*f_a) / (f_b - f_a), f_x = f(x);
+        if (fabs(x - a) < fabs(x - b)) {
+            b = x; f_b = f_x;
+        } else {
+            a = x; f_a = f_x;
+        }
+    } while (fabs(a-b) > eps);
+    return a;
+} /* find_root */
+#endif
+
 void lc_Geardlg::processAction(Document_Interface *doc, const QString& cmd, QPointF& center)
 {
     Q_UNUSED(doc);
@@ -284,7 +307,7 @@ void lc_Geardlg::processAction(Document_Interface *doc, const QString& cmd, QPoi
             const int n3 = n3Box->value();
             const double alpha = 1.0 - dedendum_radius / pitch_radius;
             const double angle_0 = alpha * tan(p_angle);
-            const double angle_1 = radius2arg(1.0, alpha);
+            const double angle_1 = radius2arg(cos_p_angle, alpha);
             P(n3);
             P(alpha);
             P(angle_0);
