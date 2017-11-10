@@ -50,7 +50,7 @@ unix {
         RC_FILE = ../res/main/librecad.icns
         contains(DISABLE_POSTSCRIPT, false) {
             QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-osx.sh;
-            QMAKE_POST_LINK += /usr/libexec/PlistBuddy -c \"Set :CFBundleGetInfoString $${TARGET} $${LC_VERSION}\" $$_PRO_FILE_PWD_/$${DESTDIR}/$${TARGET}.app/Contents/Info.plist;
+            QMAKE_POST_LINK += /usr/libexec/PlistBuddy -c \"Add :CFBundleGetInfoString $${TARGET} $${LC_VERSION}\" $$_PRO_FILE_PWD_/$${DESTDIR}/$${TARGET}.app/Contents/Info.plist;
         }
     }
     else {
