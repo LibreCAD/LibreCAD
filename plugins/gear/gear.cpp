@@ -236,7 +236,8 @@ struct evolute {
         off_rot, cos_off_rot, sin_off_rot,
         dedendum_radius, addendum_radius,
         phi_at_dedendum, phi_at_addendum,
-        alpha, angle_0;
+        alpha, angle_0,
+        cos_angle_0, sin_angle_0;;
     double angle_1;
     double operator()(double phi);
 };
@@ -252,7 +253,9 @@ evolute::evolute(int n_t, double add, double ded, double p_ang):
     phi_at_dedendum(dedendum_radius > cos_p_angle ? radius2arg(dedendum_radius / cos_p_angle) : 0.0),
     phi_at_addendum(radius2arg(addendum_radius / cos_p_angle)),
     alpha(1.0 - dedendum_radius),
-    angle_0(alpha * tan(p_angle))
+    angle_0(alpha * tan(p_angle)),
+    cos_angle_0(cos(angle_0)),
+    sin_angle_0(sin(angle_0))
 {
     P(n_teeth);
     P(addendum);
@@ -269,6 +272,8 @@ evolute::evolute(int n_t, double add, double ded, double p_ang):
     P(phi_at_addendum);
     P(alpha);
     P(angle_0);
+    P(cos_angle_0);
+    P(sin_angle_0);
 }
 
 double evolute::operator()(double phi)
@@ -336,9 +341,8 @@ void lc_Geardlg::processAction(Document_Interface *doc, const QString& cmd, QPoi
         for(i = 0, phi = 0.0; i <= n3; i++, phi -= delta) {
             const double re = scale_factor * re_evolute(phi, ev.alpha);
             const double im = scale_factor * im_evolute(phi, ev.alpha);
-            const double cos_rot = cos(ev.angle_0), sin_rot = sin(ev.angle_0);
-            const QPointF rot( cos_rot * re + sin_rot * im,
-                              -sin_rot * re + cos_rot * im);
+            const QPointF rot( ev.cos_angle_0 * re + ev.sin_angle_0 * im,
+                              -ev.sin_angle_0 * re + ev.cos_angle_0 * im);
             first_tooth.push_back(rot);
             polyline.push_back(Plug_VertexData(rotate_and_disp.map(rot), 0.0));
         } /* for */
@@ -536,7 +540,7 @@ void lc_Geardlg::readSettings()
 void lc_Geardlg::writeSettings()
 {
 #define W(var, vfunc) do { \
-        INFO("settings.setValue(\"" #var ", " #var "Box->" #vfunc "());\n"); \
+        INFO("settings.setValue(\"" #var "\", " #var "Box->" #vfunc "());\n"); \
         settings.setValue(#var, var##Box->vfunc()); \
     } while (0)
 #define WN(var) W(var, value)
