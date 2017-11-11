@@ -518,12 +518,19 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
                 setCurrentAction(new RS_ActionZoomIn(*container, *this, direction,
                                                      RS2::Both, &mouse, factor));
             }
-            else if (scrollbars)
+            else
             {
-                // otherwise, scroll
-                //scroll by scrollbars: issue #479
-                hScrollBar->setValue(hScrollBar->value() - numPixels.x());
-                vScrollBar->setValue(vScrollBar->value() - numPixels.y());
+                // scroll by scrollbars: issue #479 (it has its own issues)
+                if (scrollbars)
+                {
+                    hScrollBar->setValue(hScrollBar->value() - numPixels.x());
+                    vScrollBar->setValue(vScrollBar->value() - numPixels.y());
+                }
+                else
+                {
+                    setCurrentAction(new RS_ActionZoomScroll(numPixels.x(), numPixels.y(),
+                                                             *container, *this));
+                }
             }
             redraw();
         }
