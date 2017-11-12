@@ -23,6 +23,7 @@
 #include <QLabel>
 #include <vector>
 #include <cmath>
+#include <cfloat>
 
 #include "document_interface.h"
 #include "gear.h"
@@ -132,14 +133,14 @@ lc_Geardlg::lc_Geardlg(QWidget *parent) :
             j++; if (j >= 2) { j = 0; i++; }     \
         } while(0)
 
-    QDSB(rotateBox,             tr("Rotation angle"),                        -360.0,      360.0,     1.0, 6);
-    QSB (nteethBox,             tr("Number of teeth"),                          1,       2000,       1);
-    QDSB(modulusBox,            tr("Modulus"),                                  1.0E-10,    1.0E+10, 0.1, 6); 
-    QDSB(pressureBox,           tr("Pressure angle (deg)"),                     0.1,       89.9,     1.0, 5);
-    QDSB(addendumBox,           tr("Addendum (rel. to modulus)"),               0.0,        5.0,     0.1, 5);
-    QDSB(dedendumBox,           tr("Dedendum (rel. to modulus)"),               0.0,        5.0,     0.1, 5);
-    QSB (n1Box,                 tr("Number of segments to draw (dedendum)"),    1,       1024,       8);
-    QSB (n2Box,                 tr("Number of segments to draw (addendum)"),    1,       1024,       8);
+    QDSB(rotateBox,             tr("Rotation angle"), -360.0, 360.0, 1.0, 6);
+    QSB (nteethBox,             tr("Number of teeth"), 5, 2000, 1);
+    QDSB(modulusBox,            tr("Modulus"), 1.0E-10, 1.0E+10, 0.1, 6); 
+    QDSB(pressureBox,           tr("Pressure angle (deg)"), 0.1, 89.9, 1.0, 5);
+    QDSB(addendumBox,           tr("Addendum (rel. to modulus)"), 0.0, 5.0, 0.1, 5);
+    QDSB(dedendumBox,           tr("Dedendum (rel. to modulus)"), 0.0, 5.0, 0.1, 5);
+    QSB (n1Box,                 tr("Number of segments to draw (dedendum)"), 1, 1024, 8);
+    QSB (n2Box,                 tr("Number of segments to draw (addendum)"), 1, 1024, 8);
 
     QCB (useLayersBox,          tr("Use layers?")); RST();
     QCB (drawAddendumCircleBox, tr("Draw addendum circle?"));
@@ -196,13 +197,26 @@ static double im_evolute(const double phi, const double alpha = 0.0)
 
 static double mod_evolute(const double phi, const double alpha = 0.0)
 {
-    double aux = (1 - alpha);
-    return aux*aux + phi*phi;
+    double aux = (1.0 - alpha);
+    return sqrt(aux*aux + phi*phi);
+}
+
+static double arg_evolute(const double phi, const double alpha = 0.0)
+{
+    double aux = (1.0 - alpha);
+    return phi - atan2(phi, aux);
 }
 
 struct evolute {
+
     static const double default_eps;
-    evolute(int n_t, double add, double ded, double p_ang, const double eps = default_eps);
+
+    evolute(int n_t, double add, double ded, double p_ang);
+
+    QPointF evo0(const double phi); /* evolute for tooth face */
+    QPointF evo1(const double phi); /* evolute for tooth carving (interference) */
+    double aux(const double phi); /* auxiliar function */
+    double find_common_phi_evo1(const double eps = default_eps); 
 
     const int n_teeth;
     const double
@@ -213,16 +227,12 @@ struct evolute {
         dedendum_radius, addendum_radius,
         phi_at_dedendum, phi_at_addendum,
         alpha, angle_1,
-        cos_angle_1, sin_angle_1;;
-    QPointF evo0(const double phi); /* evolute for tooth face */
-    QPointF evo1(const double phi); /* evolute for tooth carving (interference) */
-    double aux(const double phi); /* auxiliar function */
-    double find_common_phi_evo1(const double eps = default_eps); 
+        cos_angle_1, sin_angle_1;
 };
 
-const double evolute::default_eps = 1.0e-15;
+const double evolute::default_eps = 8 * DBL_EPSILON;
 
-evolute::evolute(int n_t, double add, double ded, double p_ang, const double eps):
+evolute::evolute(int n_t, double add, double ded, double p_ang):
     n_teeth(n_t),
     addendum(add),
     dedendum(ded),
@@ -292,12 +302,14 @@ QPointF evolute::evo1(const double phi)
  */
 double evolute::aux(const double phi)
 {
-    const QPointF aux = evo1(phi);
-    const double mod_aux = sqrt(aux.x() * aux.x() + aux.y() * aux.y());
-    const double arg_aux = atan2(aux.y(), aux.x());
-    if (mod_aux < cos_p_angle) return arg_aux - angle_0;
-    const double phi_aux = radius2arg(mod_aux / cos_p_angle);
-    return arg_aux + phi_aux - tan(phi_aux) - angle_0;
+    const double mod = mod_evolute(phi, alpha);
+    const double arg = arg_evolute(phi, alpha);
+
+    if (mod <= cos_p_angle) {
+        return arg + angle_1 - angle_0;
+    }
+    const double phi0 = radius2arg(mod / cos_p_angle);
+    return arg + angle_1 + phi0 - tan(phi0) - angle_0;
 }
 
 /* find the common point of both evolutes.  this function uses two
@@ -379,7 +391,6 @@ void lc_Geardlg::processAction(Document_Interface *doc, const QString& cmd, QPoi
         .rotateRadians(rotation);
 
     double phi_0 = 0.0;
-    P(phi_0);
 
     /* Build one tooth face */
     if (calcInterferenceBox->isChecked()
@@ -390,11 +401,11 @@ void lc_Geardlg::processAction(Document_Interface *doc, const QString& cmd, QPoi
         double angle_2;
         P(angle_2 = ev.find_common_phi_evo1());
 
-        P(phi_0 = radius2arg(mod_evolute(angle_2, ev.alpha)));
+        P(phi_0 = radius2arg(mod_evolute(angle_2, ev.alpha) / ev.cos_p_angle));
 
         double phi = 0.0,
                delta = angle_2 / n3;
-        for(int i = 0; i <= n3; i++) {
+        for(int i = 0; i < n3; i++) {
             const QPointF point(scale_factor * ev.evo1(phi));
             first_tooth.push_back(point);
             polyline.push_back(Plug_VertexData(rotate_and_disp.map(point), 0.0));
@@ -417,7 +428,7 @@ void lc_Geardlg::processAction(Document_Interface *doc, const QString& cmd, QPoi
 
     /* if the carving has eaten some active part of the tooth dedendum face */
     if (phi < ev.p_angle - ev.angle_0) {
-        double delta = (ev.p_angle - ev.angle_0 - phi_0) / n1;
+        double delta = (ev.p_angle - ev.angle_0 - phi) / n1;
         for (int i = 0; i < n1; ++i) {
             const QPointF point(scale_factor * ev.evo0(phi));
             first_tooth.push_back(point);
