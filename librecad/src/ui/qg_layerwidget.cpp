@@ -246,7 +246,8 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     // lineEdit to filter layer list with RegEx
     matchLayerName = new QLineEdit(this);
     matchLayerName->setReadOnly(false);
-    //matchLayerName->setText("*");
+    matchLayerName->setPlaceholderText("Filter");
+    matchLayerName->setClearButtonEnabled(true);
     matchLayerName->setToolTip(tr("Looking for matching layer names"));
     connect(matchLayerName, SIGNAL( textChanged(QString) ), this, SLOT( slotUpdateLayerList() ) );
 
