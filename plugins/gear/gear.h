@@ -15,13 +15,14 @@
 #define GEAR_H
 
 #include "qc_plugininterface.h"
-#include <QSettings>
 #include <QDialog>
-#include <QPointF>
-#include <QSpinBox>
-#include <QCheckBox>
-#include <QDoubleSpinBox>
-#include <QComboBox>
+#include <QSettings>
+
+class QPointF;
+class QSpinBox;
+class QCheckBox;
+class QDoubleSpinBox;
+class QComboBox;
 
 class lc_Geardlg : public QDialog
 {
@@ -46,23 +47,23 @@ private:
 
     QSettings       settings;
 
-    QDoubleSpinBox  *rotateBox;
-    QSpinBox        *nteethBox;
-    QDoubleSpinBox  *modulusBox;
-    QDoubleSpinBox  *pressureBox;
-    QDoubleSpinBox  *addendumBox;
-    QDoubleSpinBox  *dedendumBox;
-    QSpinBox        *n1Box; /* number of points calculated in the dedendum part */
-    QSpinBox        *n2Box; /*                    ''              addendum  ''  */
-    QCheckBox       *useLayersBox;
-    QCheckBox       *drawAddendumCircleBox;
-    QCheckBox       *drawPitchCircleBox;
-    QCheckBox       *drawBaseCircleBox;
-    QCheckBox       *drawRootCircleBox;
-    QCheckBox       *drawPressureLineBox;
-    QCheckBox       *drawPressureLimitBox;
-    QCheckBox       *calcInterferenceBox;
-    QSpinBox        *n3Box;
+    QDoubleSpinBox  *rotateBox {nullptr};
+    QSpinBox        *nteethBox {nullptr};
+    QDoubleSpinBox  *modulusBox {nullptr};
+    QDoubleSpinBox  *pressureBox {nullptr};
+    QDoubleSpinBox  *addendumBox {nullptr};
+    QDoubleSpinBox  *dedendumBox {nullptr};
+    QSpinBox        *n1Box {nullptr}; /* number of points calculated in the dedendum part */
+    QSpinBox        *n2Box {nullptr}; /*                    ''              addendum  ''  */
+    QCheckBox       *useLayersBox {nullptr};
+    QCheckBox       *drawAddendumCircleBox {nullptr};
+    QCheckBox       *drawPitchCircleBox {nullptr};
+    QCheckBox       *drawBaseCircleBox {nullptr};
+    QCheckBox       *drawRootCircleBox {nullptr};
+    QCheckBox       *drawPressureLineBox {nullptr};
+    QCheckBox       *drawPressureLimitBox {nullptr};
+    QCheckBox       *calcInterferenceBox {nullptr};
+    QSpinBox        *n3Box {nullptr};
 };
 
 class LC_Gear : public QObject, QC_PluginInterface

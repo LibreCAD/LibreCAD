@@ -28,11 +28,6 @@
 #include "document_interface.h"
 #include "gear.h"
 
-#define F(str) __FILE__":%d:%s: " str, __LINE__, __func__
-#define I(str) "INFO: " str
-#define INFO(str, ...) do{fprintf(stderr, F(I(str)), ##__VA_ARGS__); fflush(stderr);}while(0)
-#define P(exp) INFO("%20s: %.10lg\n", #exp, (double)(exp))
-
 QString LC_Gear::name() const
 {
     return (tr("Gear creation plugin"));
@@ -62,20 +57,13 @@ void LC_Gear::execComm(Document_Interface *doc,
 
     QPointF center;
     if (!doc->getPoint(&center, QString("select center"))) {
-        INFO("NO SELECTED CENTER, ABANDON\n");
         return;
     }
 
-    INFO("Selected center is at [%12.8f,%12.8f]\n", center.x(), center.y());
-
     if (!parameters_dialog) {
-        INFO("CREATING parameters_dialog\n");
         parameters_dialog = new lc_Geardlg(parent);
-        if (!parameters_dialog) {
-            INFO("Cannot create parameters_dialog\n");
+        if (!parameters_dialog)
             return;
-        }
-        INFO("parameters_dialog == %p\n", parameters_dialog);
     }
 
     int result =  parameters_dialog->exec();
@@ -91,8 +79,6 @@ lc_Geardlg::lc_Geardlg(QWidget *parent) :
 {
     const char *windowTitle = "Draw a gear";
 
-    INFO("SET WINDOW TITLE \"%s\"\n", windowTitle);
-
     setWindowTitle(tr(windowTitle));
 
     QLabel *label;
@@ -103,7 +89,6 @@ lc_Geardlg::lc_Geardlg(QWidget *parent) :
 #define RST() do{ if(j) { ++i; j = 0; } } while(0)
 
 #define Q(name, type, text, min, max, stp) do {                  \
-            INFO("Creating " #type " " #name " at dialog row %d\n", i); \
             label = new QLabel((text), this);                    \
             name = new type(this);                               \
             name->setMinimum(min);                               \
@@ -127,14 +112,13 @@ lc_Geardlg::lc_Geardlg(QWidget *parent) :
         } while(0)
 
 #define QCB(name, text) do {                                     \
-            INFO("Creating QCheckBox " #name " at dialog position (%d, %d)\n", i, j); \
             name = new QCheckBox((text), this);                   \
             mainLayout->addWidget(name, i, j);                   \
             j++; if (j >= 2) { j = 0; i++; }     \
         } while(0)
 
     QDSB(rotateBox,             tr("Rotation angle"), -360.0, 360.0, 1.0, 6);
-    QSB (nteethBox,             tr("Number of teeth"), 5, 2000, 1);
+    QSB (nteethBox,             tr("Number of teeth"), 3, 2000, 1);
     QDSB(modulusBox,            tr("Modulus"), 1.0E-10, 1.0E+10, 0.1, 6); 
     QDSB(pressureBox,           tr("Pressure angle (deg)"), 0.1, 89.9, 1.0, 5);
     QDSB(addendumBox,           tr("Addendum (rel. to modulus)"), 0.0, 5.0, 0.1, 5);
@@ -170,7 +154,6 @@ lc_Geardlg::lc_Geardlg(QWidget *parent) :
 
     connect(cancelbut, SIGNAL(clicked()), this, SLOT(reject()));
     connect(acceptbut, SIGNAL(clicked()), this, SLOT(checkAccept()));
-    INFO("END\n");
 }
 
 /* calculate the radius of a point in canonical evoluta
@@ -254,24 +237,6 @@ evolute::evolute(int n_t, double add, double ded, double p_ang):
     cos_angle_1(cos(angle_1)),
     sin_angle_1(sin(angle_1))
 {
-    P(n_teeth);
-    P(addendum);
-    P(dedendum);
-    P(c_modulus);
-    P(p_angle);
-    P(cos_p_angle);
-    P(cos2_p_angle);
-    P(angle_0);
-    P(cos_angle_0);
-    P(sin_angle_0);
-    P(dedendum_radius);
-    P(addendum_radius);
-    P(phi_at_dedendum);
-    P(phi_at_addendum);
-    P(alpha);
-    P(angle_1);
-    P(cos_angle_1);
-    P(sin_angle_1);
 }
 
 /* this evolute calculates points for an argument phi for the
@@ -326,14 +291,11 @@ double evolute::find_common_phi_evo1(const double eps)
     double b = -radius2arg(1.0, alpha);
     double f_a = aux(a), f_b = aux(b);
     double x = a, f_x = f_a;
-    P(a); P(f_a);
-    P(b); P(f_b);
 
     if (f_a > 0) do {
 
         x = (a*f_b - b*f_a) / (f_b - f_a);
         f_x = aux(x);
-        P(x); P(f_x);
 
         if (fabs(x - a) < fabs(x - b)) {
             b = x; f_b = f_x;
@@ -380,12 +342,6 @@ void lc_Geardlg::processAction(Document_Interface *doc, const QString& cmd, QPoi
     const int    n2 = n2Box->value();
     const double rotation = rotateBox->value() * M_PI / 180.0;
 
-    P(modulus);
-    P(scale_factor);
-    P(n1);
-    P(n2);
-    P(rotation);
-
     rotate_and_disp = rotate_and_disp
         .translate(center.x(), center.y())
         .rotateRadians(rotation);
@@ -397,11 +353,9 @@ void lc_Geardlg::processAction(Document_Interface *doc, const QString& cmd, QPoi
             && ev.cos2_p_angle > ev.dedendum_radius)
     {
         const int n3 = n3Box->value();
-        P(n3);
-        double angle_2;
-        P(angle_2 = ev.find_common_phi_evo1());
+        double angle_2 = ev.find_common_phi_evo1();
 
-        P(phi_0 = radius2arg(mod_evolute(angle_2, ev.alpha) / ev.cos_p_angle));
+        phi_0 = radius2arg(mod_evolute(angle_2, ev.alpha) / ev.cos_p_angle);
 
         double phi = 0.0,
                delta = angle_2 / n3;
@@ -568,27 +522,21 @@ lc_Geardlg::~lc_Geardlg()
 
 void lc_Geardlg::closeEvent(QCloseEvent *event)
 {
-    INFO("BEGIN\n");
     QWidget::closeEvent(event);
-    INFO("END\n");
 }
 
 
 void lc_Geardlg::readSettings()
 {
 
-    INFO("BEGIN\n");
-
     QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
     QSize size = settings.value("size", QSize(430,140)).toSize();
 
 #define R(var,toFunc, defval) do { \
-        INFO(#var "Box->setValue(settings.value(\""#var"\", " #defval ")." #toFunc "());\n"); \
         var ## Box->setValue(settings.value(#var, defval).toFunc()); \
     } while(0)
         
 #define RB(var,defval) do { \
-        INFO(#var "Box->setChecked(settings.value(\""#var"\", " #defval ").toBool());\n"); \
         var ## Box->setChecked(settings.value(#var, defval).toBool()); \
     } while (0)
     R(rotate, toDouble,         0.0 );
@@ -611,14 +559,11 @@ void lc_Geardlg::readSettings()
 
     resize(size);
     move(pos);
-    
-    INFO("END\n");
 }
 
 void lc_Geardlg::writeSettings()
 {
 #define W(var, vfunc) do { \
-        INFO("settings.setValue(\"" #var "\", " #var "Box->" #vfunc "());\n"); \
         settings.setValue(#var, var##Box->vfunc()); \
     } while (0)
 #define WN(var) W(var, value)
