@@ -196,6 +196,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     setCentralWidget(central);
 
     mdiAreaCAD = central->getMdiArea();
+    mdiAreaCAD->setDocumentMode(true);
 
     settings.beginGroup("Startup");
     if (settings.value("TabMode", 0).toBool())
