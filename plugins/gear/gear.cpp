@@ -118,7 +118,7 @@ lc_Geardlg::lc_Geardlg(QWidget *parent) :
         } while(0)
 
     QDSB(rotateBox,             tr("Rotation angle"), -360.0, 360.0, 1.0, 6);
-    QSB (nteethBox,             tr("Number of teeth"), 3, 2000, 1);
+    QSB (nteethBox,             tr("Number of teeth"), 1, 2000, 1);
     QDSB(modulusBox,            tr("Modulus"), 1.0E-10, 1.0E+10, 0.1, 6); 
     QDSB(pressureBox,           tr("Pressure angle (deg)"), 0.1, 89.9, 1.0, 5);
     QDSB(addendumBox,           tr("Addendum (rel. to modulus)"), 0.0, 5.0, 0.1, 5);
@@ -274,7 +274,7 @@ double evolute::aux(const double phi)
         return arg + angle_1 - angle_0;
     }
     const double phi0 = radius2arg(mod / cos_p_angle);
-    return arg + angle_1 + phi0 - tan(phi0) - angle_0;
+    return arg + angle_1 + atan(phi0) - phi0 - angle_0;
 }
 
 /* find the common point of both evolutes.  this function uses two
