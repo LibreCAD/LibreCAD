@@ -41,7 +41,7 @@ PluginCapabilities LC_Gear::getCapabilities() const
     return pluginCapabilities;
 }
 
-LC_Gear::LC_Gear():parameters_dialog(0)
+LC_Gear::LC_Gear()
 {
 }
 
@@ -62,8 +62,9 @@ void LC_Gear::execComm(Document_Interface *doc,
 
     if (!parameters_dialog) {
         parameters_dialog = new lc_Geardlg(parent);
-        if (!parameters_dialog)
+        if (!parameters_dialog) {
             return;
+        }
     }
 
     int result =  parameters_dialog->exec();
@@ -112,9 +113,9 @@ lc_Geardlg::lc_Geardlg(QWidget *parent) :
         } while(0)
 
 #define QCB(name, text) do {                                     \
-            name = new QCheckBox((text), this);                   \
+            name = new QCheckBox((text), this);                  \
             mainLayout->addWidget(name, i, j);                   \
-            j++; if (j >= 2) { j = 0; i++; }     \
+            j++; if (j >= 2) { j = 0; i++; }                     \
         } while(0)
 
     QDSB(rotateBox,             tr("Rotation angle"), -360.0, 360.0, 1.0, 6);
@@ -524,7 +525,6 @@ void lc_Geardlg::closeEvent(QCloseEvent *event)
 {
     QWidget::closeEvent(event);
 }
-
 
 void lc_Geardlg::readSettings()
 {
