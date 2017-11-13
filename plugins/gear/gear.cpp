@@ -118,25 +118,27 @@ lc_Geardlg::lc_Geardlg(QWidget *parent) :
             j++; if (j >= 2) { j = 0; i++; }                     \
         } while(0)
 
-    QDSB(rotateBox,             tr("Rotation angle"), -360.0, 360.0, 1.0, 6);
-    QSB (nteethBox,             tr("Number of teeth"), 1, 2000, 1);
-    QDSB(modulusBox,            tr("Modulus"), 1.0E-10, 1.0E+10, 0.1, 6); 
-    QDSB(pressureBox,           tr("Pressure angle (deg)"), 0.1, 89.9, 1.0, 5);
-    QDSB(addendumBox,           tr("Addendum (rel. to modulus)"), 0.0, 5.0, 0.1, 5);
-    QDSB(dedendumBox,           tr("Dedendum (rel. to modulus)"), 0.0, 5.0, 0.1, 5);
-    QSB (n1Box,                 tr("Number of segments to draw (dedendum)"), 1, 1024, 8);
-    QSB (n2Box,                 tr("Number of segments to draw (addendum)"), 1, 1024, 8);
+    QDSB(rotateBox,               tr("Rotation angle"), -360.0, 360.0, 1.0, 6);
+    QSB (nteethBox,               tr("Number of teeth"), 1, 2000, 1);
+    QDSB(modulusBox,              tr("Modulus"), 1.0E-10, 1.0E+10, 0.1, 6); 
+    QDSB(pressureBox,             tr("Pressure angle (deg)"), 0.1, 89.9, 1.0, 5);
+    QDSB(addendumBox,             tr("Addendum (rel. to modulus)"), 0.0, 5.0, 0.1, 5);
+    QDSB(dedendumBox,             tr("Dedendum (rel. to modulus)"), 0.0, 5.0, 0.1, 5);
+    QSB (n1Box,                   tr("Number of segments to draw (dedendum)"), 1, 1024, 8);
+    QSB (n2Box,                   tr("Number of segments to draw (addendum)"), 1, 1024, 8);
+    QCB (drawAllTeethBox,         tr("Draw all teeth?"));
+    QCB (drawBothSidesOfToothBox, tr("Draw symmetric face?"));
 
-    QCB (useLayersBox,          tr("Use layers?")); RST();
-    QCB (drawAddendumCircleBox, tr("Draw addendum circle?"));
-    QCB (drawPitchCircleBox,    tr("Draw pitch circle?"));
-    QCB (drawBaseCircleBox,     tr("Draw base circle?"));
-    QCB (drawRootCircleBox,     tr("Draw root circle?"));
-    QCB (drawPressureLineBox,   tr("Draw pressure line?"));
-    QCB (drawPressureLimitBox,  tr("Draw pressure limits?"));
+    QCB (useLayersBox,            tr("Use layers?")); RST();
+    QCB (drawAddendumCircleBox,   tr("Draw addendum circle?"));
+    QCB (drawPitchCircleBox,      tr("Draw pitch circle?"));
+    QCB (drawBaseCircleBox,       tr("Draw base circle?"));
+    QCB (drawRootCircleBox,       tr("Draw root circle?"));
+    QCB (drawPressureLineBox,     tr("Draw pressure line?"));
+    QCB (drawPressureLimitBox,    tr("Draw pressure limits?"));
 
-    QCB (calcInterferenceBox,   tr("Calculate interference?"));
-    QSB (n3Box,                 tr("Number of segments to draw (interference)"), 1, 1024,     8);
+    QCB (calcInterferenceBox,     tr("Calculate interference?"));
+    QSB (n3Box,                   tr("Number of segments to draw (interference)"), 1, 1024,     8);
 
     QPushButton *acceptbut = new QPushButton(tr("Accept"), this);
     QPushButton *cancelbut = new QPushButton(tr("Cancel"), this);
@@ -350,22 +352,22 @@ void lc_Geardlg::processAction(Document_Interface *doc, const QString& cmd, QPoi
     double phi_0 = 0.0;
 
     /* Build one tooth face */
-    if (calcInterferenceBox->isChecked()
-            && ev.cos2_p_angle > ev.dedendum_radius)
-    {
-        const int n3 = n3Box->value();
-        double angle_2 = ev.find_common_phi_evo1();
+    if (calcInterferenceBox->isChecked()) {
+        if (ev.cos2_p_angle > ev.dedendum_radius) {
+            const int n3 = n3Box->value();
+            double angle_2 = ev.find_common_phi_evo1();
 
-        phi_0 = radius2arg(mod_evolute(angle_2, ev.alpha) / ev.cos_p_angle);
+            phi_0 = radius2arg(mod_evolute(angle_2, ev.alpha) / ev.cos_p_angle);
 
-        double phi = 0.0,
-               delta = angle_2 / n3;
-        for(int i = 0; i < n3; i++) {
-            const QPointF point(scale_factor * ev.evo1(phi));
-            first_tooth.push_back(point);
-            polyline.push_back(Plug_VertexData(rotate_and_disp.map(point), 0.0));
-            phi += delta;
-        } /* for */
+            double phi = 0.0,
+                   delta = angle_2 / n3;
+            for(int i = 0; i < n3; i++) {
+                const QPointF point(scale_factor * ev.evo1(phi));
+                first_tooth.push_back(point);
+                polyline.push_back(Plug_VertexData(rotate_and_disp.map(point), 0.0));
+                phi += delta;
+            } /* for */
+        }
     } else {
 
         /* no interference calculation at all.  just draw the point at the
@@ -419,45 +421,49 @@ void lc_Geardlg::processAction(Document_Interface *doc, const QString& cmd, QPoi
     /* remember size, as we don't want to duplicate next point */
     const double n_to_mirror = first_tooth.size();
 
-    /* symmetry axis point (at top of tooth) */
-    QPointF mirror_point(scale_factor * ev.addendum_radius * cos(axis_angle),
-                         scale_factor * ev.addendum_radius * sin(axis_angle));
-    first_tooth.push_back(mirror_point);
-    polyline.push_back(Plug_VertexData(rotate_and_disp.map(mirror_point), 0.0));
+    if (drawBothSidesOfToothBox->isChecked()) {
+        /* symmetry axis point (at top of tooth) */
+        QPointF mirror_point(scale_factor * ev.addendum_radius * cos(axis_angle),
+                             scale_factor * ev.addendum_radius * sin(axis_angle));
+        first_tooth.push_back(mirror_point);
+        polyline.push_back(Plug_VertexData(rotate_and_disp.map(mirror_point), 0.0));
 
-    /* for all points we have to mirror (all but the last one) */
-    for (int i = n_to_mirror - 1; i >= 0; --i) {
-        const QPointF& orig(first_tooth[i]);
+        /* for all points we have to mirror (all but the last one) */
+        for (int i = n_to_mirror - 1; i >= 0; --i) {
+            const QPointF& orig(first_tooth[i]);
 
-        QPointF target(cos_axis_angle_x_2 * orig.x() + sin_axis_angle_x_2 * orig.y(),
-                       sin_axis_angle_x_2 * orig.x() - cos_axis_angle_x_2 * orig.y());
-        first_tooth.push_back(target);
-        polyline.push_back(Plug_VertexData(rotate_and_disp.map(target), 0.0));
-    } /* for */
-
-    /* symmetry axis point (at interteeth) */
-    QPointF mirror_point2(scale_factor * ev.dedendum_radius * cos(axis_angle + axis_angle_x_2),
-                          scale_factor * ev.dedendum_radius * sin(axis_angle + axis_angle_x_2));
-    first_tooth.push_back(mirror_point2);
-    polyline.push_back(Plug_VertexData(rotate_and_disp.map(mirror_point2), 0.0));
-
-    /* now, we have to rotate the tooth to get all the teeth missing. */
-    for (int i = 1; i < ev.n_teeth; i++) {
-
-        const double angle = M_PI * ev.c_modulus * i;
-        const double cos_angle = cos(angle);
-        const double sin_angle = sin(angle);
-
-        for (std::vector<QPointF>::iterator it = first_tooth.begin();
-                it != first_tooth.end(); ++it)
-        {
-            const QPointF& orig = *it;
-            polyline.push_back(Plug_VertexData(rotate_and_disp.map(QPointF(
-                                cos_angle * orig.x() - sin_angle * orig.y(),
-                                sin_angle * orig.x() + cos_angle * orig.y())),
-                                               0.0));
+            QPointF target(cos_axis_angle_x_2 * orig.x() + sin_axis_angle_x_2 * orig.y(),
+                           sin_axis_angle_x_2 * orig.x() - cos_axis_angle_x_2 * orig.y());
+            first_tooth.push_back(target);
+            polyline.push_back(Plug_VertexData(rotate_and_disp.map(target), 0.0));
         } /* for */
-    } /* for */
+
+        if (drawAllTeethBox->isChecked()) {
+            /* symmetry axis point (at interteeth) */
+            QPointF mirror_point2(scale_factor * ev.dedendum_radius * cos(axis_angle + axis_angle_x_2),
+                                  scale_factor * ev.dedendum_radius * sin(axis_angle + axis_angle_x_2));
+            first_tooth.push_back(mirror_point2);
+            polyline.push_back(Plug_VertexData(rotate_and_disp.map(mirror_point2), 0.0));
+
+            /* now, we have to rotate the tooth to get all the teeth missing. */
+            for (int i = 1; i < ev.n_teeth; i++) {
+
+                const double angle = M_PI * ev.c_modulus * i;
+                const double cos_angle = cos(angle);
+                const double sin_angle = sin(angle);
+
+                for (std::vector<QPointF>::iterator it = first_tooth.begin();
+                        it != first_tooth.end(); ++it)
+                {
+                    const QPointF& orig = *it;
+                    polyline.push_back(Plug_VertexData(rotate_and_disp.map(QPointF(
+                                        cos_angle * orig.x() - sin_angle * orig.y(),
+                                        sin_angle * orig.x() + cos_angle * orig.y())),
+                                                       0.0));
+                } /* for */
+            } /* for */
+        }
+    }
 
     QString lastLayer = doc->getCurrentLayer();
 
@@ -471,7 +477,9 @@ void lc_Geardlg::processAction(Document_Interface *doc, const QString& cmd, QPoi
         } while(0)
 
     LAYER("shapes"); 
-    doc->addPolyline(polyline, true);
+    doc->addPolyline(polyline,
+            drawAllTeethBox->isChecked()
+            && drawBothSidesOfToothBox->isChecked());
 
     if (drawPitchCircleBox->isChecked()) {
         LAYER("pitch_circles");
@@ -547,6 +555,8 @@ void lc_Geardlg::readSettings()
     R(dedendum, toDouble,       1.25);
     R(n1, toInt,               16   );
     R(n2, toInt,               16   );
+    RB(drawAllTeeth,         true   );
+    RB(drawBothSidesOfTooth, true   );
     RB(useLayers,            true   );
     RB(drawAddendumCircle,  false   );
     RB(drawPitchCircle,      true   );
@@ -578,6 +588,8 @@ void lc_Geardlg::writeSettings()
     WN(dedendum);
     WN(n1);
     WN(n2);
+    WB(drawAllTeeth);
+    WB(drawBothSidesOfTooth);
     WB(useLayers);
     WB(drawAddendumCircle);
     WB(drawPitchCircle);

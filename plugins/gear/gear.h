@@ -55,6 +55,8 @@ private:
     QDoubleSpinBox  *dedendumBox {nullptr};
     QSpinBox        *n1Box {nullptr}; /* number of points calculated in the dedendum part */
     QSpinBox        *n2Box {nullptr}; /*                    ''              addendum  ''  */
+    QCheckBox       *drawAllTeethBox {nullptr};
+    QCheckBox       *drawBothSidesOfToothBox {nullptr};
     QCheckBox       *useLayersBox {nullptr};
     QCheckBox       *drawAddendumCircleBox {nullptr};
     QCheckBox       *drawPitchCircleBox {nullptr};
