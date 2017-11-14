@@ -13,9 +13,11 @@ TSDIRPI="$SCRIPTDIR/../plugins/ts"
 # Postprocess for osx
 mkdir -p "$RESOURCEDIR/fonts"
 mkdir -p "$RESOURCEDIR/patterns"
+mkdir -p "$RESOURCEDIR/library"
 mkdir -p "$CONTENTSDIR/PlugIns"
 cp "$SCRIPTDIR/../librecad/support/patterns/"*.dxf "$RESOURCEDIR/patterns/"
 cp "$SCRIPTDIR/../librecad/support/fonts/"*.lff "$RESOURCEDIR/fonts/"
+cp -r "$SCRIPTDIR/../librecad/support/library/" "$RESOURCEDIR/library/"
 
 if [ -x $LRELEASE ]
 then
