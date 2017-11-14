@@ -352,8 +352,9 @@ void lc_Geardlg::processAction(Document_Interface *doc, const QString& cmd, QPoi
     double phi_0 = 0.0;
 
     /* Build one tooth face */
-    if (calcInterferenceBox->isChecked()) {
-        if (ev.cos2_p_angle > ev.dedendum_radius) {
+    if (calcInterferenceBox->isChecked()
+        && ev.cos2_p_angle > ev.dedendum_radius)
+    {
             const int n3 = n3Box->value();
             double angle_2 = ev.find_common_phi_evo1();
 
@@ -367,8 +368,7 @@ void lc_Geardlg::processAction(Document_Interface *doc, const QString& cmd, QPoi
                 polyline.push_back(Plug_VertexData(rotate_and_disp.map(point), 0.0));
                 phi += delta;
             } /* for */
-        }
-    } else {
+    } else if (ev.cos_p_angle > ev.dedendum_radius) {
 
         /* no interference calculation at all.  just draw the point at the
          * intersection of the root circle with the 0 press angle point. */
