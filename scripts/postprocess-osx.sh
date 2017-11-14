@@ -1,38 +1,37 @@
 #!/bin/bash
 
-THISDIR="`pwd`"
-RESOURCEDIR="`pwd`/LibreCAD.app/Contents"
-TSDIRLC="`pwd`/librecad/ts"
-TSDIRPI="`pwd`/plugins/ts"
-LRELEASE="$1/lrelease"
+# sh path/to/script <.app directory for output bundle> <path to qt bin>
 
-cd "$THISDIR"
+CONTENTSDIR="$1/Contents"
+LRELEASE="$2/lrelease"
+SCRIPTDIR="$(dirname $0)"
+
+RESOURCEDIR="$CONTENTSDIR/Resources"
+TSDIRLC="$SCRIPTDIR/../librecad/ts"
+TSDIRPI="$SCRIPTDIR/../plugins/ts"
 
 # Postprocess for osx
-mkdir -p $RESOURCEDIR/Resources/fonts
-mkdir -p $RESOURCEDIR/Resources/patterns
-mkdir -p $RESOURCEDIR/PlugIns
-cp librecad/support/patterns/*.dxf $RESOURCEDIR/Resources/patterns
-cp librecad/support/fonts/*.lff $RESOURCEDIR/Resources/fonts
+mkdir -p "$RESOURCEDIR/fonts"
+mkdir -p "$RESOURCEDIR/patterns"
+mkdir -p "$CONTENTSDIR/PlugIns"
+cp "$SCRIPTDIR/../librecad/support/patterns/"*.dxf "$RESOURCEDIR/patterns/"
+cp "$SCRIPTDIR/../librecad/support/fonts/"*.lff "$RESOURCEDIR/fonts/"
 
 if [ -x $LRELEASE ]
 then
 	# Generate translations
-	$LRELEASE librecad/src/src.pro
-	$LRELEASE plugins/plugins.pro
-	mkdir -p $RESOURCEDIR/Resources/qm
+	$LRELEASE "$SCRIPTDIR/../librecad/src/src.pro"
+	$LRELEASE "$SCRIPTDIR/../plugins/plugins.pro"
+	mkdir -p "$RESOURCEDIR/qm"
 
-	# Go into translations directory
-	cd "$TSDIRLC"
-	for tf in *.qm
+	for tf in "$TSDIRLC/"*.qm
 	do
-		cp $tf $RESOURCEDIR/Resources/qm/$tf
+		mv "$tf" "$RESOURCEDIR/qm/$(basename $tf)"
 	done
 
-	cd "$TSDIRPI"
-	for tf in *.qm
+	for tf in "$TSDIRPI/"*.qm
 	do
-		cp $tf $RESOURCEDIR/Resources/qm/$tf
+		mv "$tf" "$RESOURCEDIR/qm/$(basename $tf)"
 	done
 else
 	echo "WARNING: lrelease not found - Translations will not be generated"

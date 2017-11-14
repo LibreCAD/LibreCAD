@@ -47,10 +47,10 @@ unix {
         VERSION=$$system(echo "$${LC_VERSION}" | sed -e 's/\-.*//g')
         QMAKE_INFO_PLIST = Info.plist.app
         DEFINES += QC_APPDIR="\"LibreCAD\""
-        RC_FILE = ../res/main/librecad.icns
+        ICON = ../res/main/librecad.icns
         contains(DISABLE_POSTSCRIPT, false) {
-            QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-osx.sh $$[QT_INSTALL_BINS];
-            QMAKE_POST_LINK += /usr/libexec/PlistBuddy -c \"Set :CFBundleGetInfoString string $${TARGET} $${LC_VERSION}\" $$_PRO_FILE_PWD_/$${DESTDIR}/$${TARGET}.app/Contents/Info.plist;
+            QMAKE_POST_LINK = /bin/sh $$_PRO_FILE_PWD_/../../scripts/postprocess-osx.sh $$OUT_PWD/$${DESTDIR}/$${TARGET}.app/ $$[QT_INSTALL_BINS];
+            QMAKE_POST_LINK += /usr/libexec/PlistBuddy -c \"Set :CFBundleGetInfoString string $${TARGET} $${LC_VERSION}\" $$OUT_PWD/$${DESTDIR}/$${TARGET}.app/Contents/Info.plist;
         }
     }
     else {
