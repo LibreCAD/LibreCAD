@@ -506,7 +506,7 @@ void QC_ApplicationWindow::dropEvent(QDropEvent* event)
     for(QUrl const& url: event->mimeData()->urls()) {
         const QString &fileName = url.toLocalFile();
         if(QFileInfo(fileName).exists() && fileName.endsWith(R"(.dxf)", Qt::CaseInsensitive)){
-            slotFileOpen(fileName, RS2::FormatUnknown);
+            slotFileOpen(fileName);
             if(++counts>32) return;
         }
     }
@@ -1385,7 +1385,6 @@ QString QC_ApplicationWindow::
         return qstring_in;
 }
 
-
 /*	*
  *	Function name:
  *	Description:
@@ -1537,6 +1536,10 @@ void QC_ApplicationWindow::
 
     QApplication::restoreOverrideCursor();
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen(..) OK");
+}
+
+void QC_ApplicationWindow::slotFileOpen(const QString& fileName) {
+    slotFileOpen(fileName, RS2::FormatUnknown);
 }
 
 
@@ -2835,6 +2838,17 @@ void QC_ApplicationWindow::reloadStyleSheet()
     // author: ravas
 
     loadStyleSheet(style_sheet_path);
+}
+
+bool QC_ApplicationWindow::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FileOpen) {
+        QFileOpenEvent *openEvent = static_cast<QFileOpenEvent *>(event);
+        slotFileOpen(openEvent->file(), RS2::FormatUnknown);
+        return true;
+    } else {
+        return QObject::eventFilter(obj, event);
+    }
 }
 
 void QC_ApplicationWindow::updateGridStatus(const QString & status)
