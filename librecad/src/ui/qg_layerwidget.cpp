@@ -74,7 +74,7 @@ QModelIndex QG_LayerModel::index ( int row, int column, const QModelIndex & /*pa
 
 
 void QG_LayerModel::setLayerList(RS_LayerList* ll) {
-	/* since 4.6 the recomended way is to use begin/endResetModel()
+	/* since 4.6 the recommended way is to use begin/endResetModel()
 	 * TNick <nicu.tofan@gmail.com>
 	 */
     beginResetModel();

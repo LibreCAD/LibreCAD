@@ -82,7 +82,7 @@ public:
         return data;
     }
 
-    /** We should make a seperate drawing meganism for overlays and not use entities */
+    /** We should make a separate drawing mechanism for overlays and not use entities */
 	void move(const RS_Vector& /*offset*/)override{}
 	void rotate(const RS_Vector& /*center*/, const double& /*angle*/)override{}
 	void rotate(const RS_Vector& /*center*/, const RS_Vector& /*angleVector*/)override{}

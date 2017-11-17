@@ -422,7 +422,7 @@ Wed Dec 15 08:49:53 1999  Frank Warmerdam  <warmerda@gdal.velocet.ca>
 
 Mon Dec 13 12:29:01 1999  Frank Warmerdam  <warmerda@gdal.velocet.ca>
 
-	* Added support for uppercase .DBF extention c/o 
+	* Added support for uppercase .DBF extension c/o 
           Dennis Christopher <dennis@avenza.com>
 
 Fri Nov  5 09:12:31 1999  Frank Warmerdam  <warmerda@gdal.velocet.ca>

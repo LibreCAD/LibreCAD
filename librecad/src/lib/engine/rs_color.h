@@ -77,7 +77,7 @@ public:
             return c0;
     }
 
-    //These 2 metods is used for plugins
+    //These 2 methods are used for plugins
     int toIntColor(void) const;
     void fromIntColor(int co);
 

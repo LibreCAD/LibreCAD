@@ -276,7 +276,7 @@ void RS_Text::update() {
     RS_Vector space = RS_Vector(font->getWordSpacing(), 0.0);
 
     // First every text line is created with
-    //   alignement: top left
+    //   alignment: top left
     //   angle: 0
     //   height: 9.0
     // Rotation, scaling and centering is done later

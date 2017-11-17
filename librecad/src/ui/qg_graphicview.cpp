@@ -247,7 +247,7 @@ void QG_GraphicView::resizeEvent(QResizeEvent* /*e*/) {
     adjustOffsetControls();
     adjustZoomControls();
 //     updateGrid();
-        // Small hack, delete teh snapper during resizes
+        // Small hack, delete the snapper during resizes
         getOverlayContainer(RS2::Snapper)->clear();
         redraw();
     RS_DEBUG->print("QG_GraphicView::resizeEvent end");

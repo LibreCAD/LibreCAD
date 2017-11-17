@@ -192,10 +192,10 @@ public:
     double bulge;
 };
 
-//! Wrapper for acces entities from plugins.
+//! Wrapper for access entities from plugins.
  /*!
- *  Wrapper class for create, acces and modify entities from plugins.
- *  TODO: terminate acces function -> getData()
+ *  Wrapper class for create, access and modify entities from plugins.
+ *  TODO: terminate access function -> getData()
  *        terminate implementation of modify function -> updateData()
  *        terminate implementation of create function (ctor called from document)
  *           can't create entities:
@@ -309,8 +309,8 @@ public:
     *  \param start insertion point coordinate
     *  \param height height of text
     *  \param angle rotation angle of text
-    *  \param ha horizontal alignement of text
-    *  \param va vertical alignement of text
+    *  \param ha horizontal alignment of text
+    *  \param va vertical alignment of text
     */
     virtual void addText(QString txt, QString sty, QPointF *start, double height,
                 double angle, DPI::HAlign ha,  DPI::VAlign va) = 0;

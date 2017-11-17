@@ -138,7 +138,7 @@ void RS_LayerList::sort()
 /**
  * Adds a layer to the layer list.
  * If there is already a layer with the same name, no layer is 
- * added. In that case the layer passed to the methode will be deleted!
+ * added. In that case the layer passed to the method will be deleted!
  * If no layer was active so far, the new layer becomes the active one.
  *
  * Listeners are notified.

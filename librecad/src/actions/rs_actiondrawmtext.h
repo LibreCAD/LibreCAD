@@ -45,7 +45,7 @@ public:
     enum Status {
         ShowDialog,           /**< Showing the text dialog. */
         SetPos,               /**< Setting the position. */
-                SetText               /**< Settting the text in the command line. */
+        SetText               /**< Setting the text in the command line. */
     };
 
 public:

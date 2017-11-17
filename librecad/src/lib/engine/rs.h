@@ -402,7 +402,7 @@ public:
     };
 
     /**
-    * Entity ending. Used for returning which end of an entity is ment.
+    * Entity ending. Used for returning which end of an entity is meant.
      */
     enum Ending {
         EndingStart,    /**< Start point. */
@@ -908,7 +908,7 @@ public:
         };
 
         /**
-         * Items that can be put on a overlay, teh items are rendered in this order. Best is to leave snapper as last so
+         * Items that can be put on a overlay, the items are rendered in this order. Best is to leave snapper as last so
          * it always shows up
          */
         enum OverlayGraphics {

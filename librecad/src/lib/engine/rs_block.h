@@ -63,7 +63,7 @@ struct RS_BlockData {
  * container has a base point which defines the offset of the
  * block. Note that although technically possible, a block should
  * never be part of the entity tree of a graphic. Blocks are 
- * stored in a seperate list inside the graphic document (a block list).
+ * stored in a separate list inside the graphic document (a block list).
  * The graphic can contain RS_Insert entities that refer to such 
  * blocks.
  *

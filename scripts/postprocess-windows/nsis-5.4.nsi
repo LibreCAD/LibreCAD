@@ -76,13 +76,13 @@ Function .onInit
 
 ${If} ${IsWin2000}
     strCmp $R2 "Admin" lbl_checkok
-    messageBox MB_OK "I am sorry, this installer needs Admin priviledges, Please login as an administrator and install the software."
+    messageBox MB_OK "I am sorry, this installer needs Admin privileges, Please login as an administrator and install the software."
     Quit
 ${EndIf}
 
 ${If} ${IsWinXP}
     strCmp $R2 "Admin" lbl_checkok
-    messageBox MB_OK "I am sorry, this installer needs Admin priviledges, Please login as an administrator and install the software."
+    messageBox MB_OK "I am sorry, this installer needs Admin privileges, Please login as an administrator and install the software."
     Quit
 ${EndIf}
 

@@ -235,7 +235,7 @@ protected:
     /** entities in the container */
     QList<RS_Entity *> entities;
 
-    /** sub container used only temporarly for iteration. */
+    /** sub container used only temporarily for iteration. */
     RS_EntityContainer* subContainer;
 
     /**

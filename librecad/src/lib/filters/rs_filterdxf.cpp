@@ -139,7 +139,7 @@ bool RS_FilterDXF::fileImport(RS_Graphic& g, const QString& file, RS2::FormatTyp
 }
 
 /*
- * get teh encoding of the DXF files,
+ * get the encoding of the DXF files,
  * Acad versions >= 2007 are UTF-8, others in ANSI_1252
  */
 QString RS_FilterDXF::getDXFEncoding() {
@@ -683,7 +683,7 @@ RS_DimensionData RS_FilterDXF::convDimensionData(
 
     // middlepoint of text can be 0/0 which is considered to be invalid (!):
     //  0/0 because older QCad versions save the middle of the text as 0/0
-    //  althought they didn't suport saving of the middle of the text.
+    //  although they didn't support saving of the middle of the text.
     if (fabs(data.mpx)<1.0e-6 && fabs(data.mpy)<1.0e-6) {
         midP = RS_Vector(false);
     }

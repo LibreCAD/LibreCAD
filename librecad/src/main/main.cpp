@@ -290,7 +290,7 @@ int main(int argc, char** argv)
         RS_DEBUG->print("main: updating splash: OK");
     }
 
-    // Set LC_NUMERIC so that entering numeric values uses . as the decimal seperator
+    // Set LC_NUMERIC so that entering numeric values uses . as the decimal separator
     setlocale(LC_NUMERIC, "C");
 
     RS_DEBUG->print("main: loading files..");

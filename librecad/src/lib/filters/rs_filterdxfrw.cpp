@@ -826,7 +826,7 @@ RS_DimensionData RS_FilterDXFRW::convDimensionData(const  DRW_Dimension* data) {
 
     // middlepoint of text can be 0/0 which is considered to be invalid (!):
     //  0/0 because older QCad versions save the middle of the text as 0/0
-    //  althought they didn't suport saving of the middle of the text.
+    //  although they didn't support saving of the middle of the text.
     if (fabs(crd.x)<1.0e-6 && fabs(crd.y)<1.0e-6) {
         midP = RS_Vector(false);
     }
@@ -1463,7 +1463,7 @@ void RS_FilterDXFRW::prepareBlocks() {
  * Writes block records (just the name, not the entities in it).
  */
 void RS_FilterDXFRW::writeBlockRecords(){
-    //first prepare and send unnamed blocks, the while loop can be ommited for R12
+    //first prepare and send unnamed blocks, the while loop can be omitted for R12
     prepareBlocks();
     QHash<RS_Entity*, QString>::const_iterator it = noNameBlock.constBegin();
     while (it != noNameBlock.constEnd()) {

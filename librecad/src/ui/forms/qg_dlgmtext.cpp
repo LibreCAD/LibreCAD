@@ -93,7 +93,7 @@ void QG_DlgMText::updateUniCharComboBox(int) {
     }
 }
 
-//set saveText to false, so, settings won't be saved during destory, feature request#3445306
+//set saveText to false, so, settings won't be saved during destroy, feature request#3445306
 void QG_DlgMText::reject() {
     saveSettings=false;
     QDialog::reject();

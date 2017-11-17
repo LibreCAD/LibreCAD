@@ -52,7 +52,7 @@ RS_Selection::RS_Selection(RS_EntityContainer& container,
 
 
 /**
- * Selects or deselects the given entitiy.
+ * Selects or deselects the given entity.
  */
 void RS_Selection::selectSingle(RS_Entity* e) {
 	if (e && (! (e->getLayer() && e->getLayer()->isLocked()))) {
