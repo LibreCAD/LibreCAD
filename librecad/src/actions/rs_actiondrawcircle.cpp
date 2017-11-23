@@ -198,10 +198,10 @@ QStringList RS_ActionDrawCircle::getAvailableCommands() {
 void RS_ActionDrawCircle::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetCenter:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify center"), tr("Cancel"));
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify center"), tr("Cancel"));
         break;
     case SetRadius:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify radius"), tr("Back"));
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify point on circle"), tr("Back"));
         break;
     default:
 		RS_DIALOGFACTORY->updateMouseWidget();
