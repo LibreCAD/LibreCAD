@@ -253,7 +253,7 @@ void RS_MText::update() {
     RS_EntityContainer* oneLine = new RS_EntityContainer(this);
 
     // First every text line is created with
-    //   alignement: top left
+    //   alignment: top left
     //   angle: 0
     //   height: 9.0
     // Rotation, scaling and centering is done later

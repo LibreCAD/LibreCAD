@@ -42,7 +42,7 @@ class RS_AtomicEntity : public RS_Entity {
 
 public:
     /**
-     * Construtor.
+     * Constructor.
      */
 	RS_AtomicEntity(RS_EntityContainer* parent=nullptr);
 

@@ -198,7 +198,7 @@ void RS_Graphic::newDoc() {
  *
  * Returns:			bool:
  * 						false	: Operation failed.
- * 						true	: Operation successfull.
+ * 						true	: Operation successful.
  */
 
 bool RS_Graphic::BackupDrawingFile(const QString &filename)
@@ -245,7 +245,7 @@ bool RS_Graphic::BackupDrawingFile(const QString &filename)
                                                 qf_dfb->remove();
 
                                         qf_df->copy(*qs_backup_fn);	/*	Create backup file. */
-                                        ret	= true;						/*	Operation successfull. */
+                                        ret	= true;						/*	Operation successful. */
                                         delete qf_dfb;
                                 }
                                 /*	Can't create object.
@@ -281,7 +281,7 @@ bool RS_Graphic::BackupDrawingFile(const QString &filename)
  *
  *	Returns:			bool:
  *							false:	Operation failed.
- *							true:		Operation successfull.
+ *							true:		Operation successful.
  *
  * Notes:			- If this is not an AutoSave, backup the drawing file
  * 					  (if necessary).
@@ -296,7 +296,7 @@ bool RS_Graphic::save(bool isAutoSave)
 
     RS_DEBUG->print("RS_Graphic::save: Entering...");
 
-    /*	- Save drawing file only if it has been modifed.
+    /*	- Save drawing file only if it has been modified.
          *	- Notes: Potentially dangerous in case of an internal
          *	  coding error that make LibreCAD not aware of modification
          *	  when some kind of drawing modification is done.
@@ -415,7 +415,7 @@ bool RS_Graphic::save(bool isAutoSave)
  *
  *	Returns:			bool:
  *							false:	Operation failed.
- *							true:		Operation successfull.
+ *							true:		Operation successful.
  *
  * Notes:			Backup the drawing file (if necessary).
  */

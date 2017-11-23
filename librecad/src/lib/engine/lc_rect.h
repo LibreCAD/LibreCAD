@@ -98,7 +98,7 @@ public:
 
 	/**
 		  * @brief Test of a specific point lies within a area
-		  * @param point Point to test agains
+		  * @param point Point to test against
 		  * @return boolean true of the point is within the area
 		  */
 	bool inArea(const Coordinate& point, double tolerance = 0.) const;

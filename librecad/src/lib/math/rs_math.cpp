@@ -225,7 +225,7 @@ bool RS_Math::isSameDirection(double dir1, double dir2, double tol) {
 
 /**
  * Evaluates a mathematical expression and returns the result.
- * If an error occured, the given default value 'def' will be returned.
+ * If an error occurred, the given default value 'def' will be returned.
  */
 double RS_Math::eval(const QString& expr, double def) {
 
@@ -281,7 +281,7 @@ void RS_Math::imperialTranslate(QString& str) {
 
 /**
  * Evaluates a mathematical expression and returns the result.
- * If an error occured, ok will be set to false (if ok isn't NULL).
+ * If an error occurred, ok will be set to false (if ok isn't NULL).
  */
 double RS_Math::eval(const QString& expr, bool* ok) {
     bool okTmp(false);

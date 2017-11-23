@@ -1074,19 +1074,19 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 void RS_GraphicView::drawEntity(RS_Entity* /*e*/, double& /*patternOffset*/) {
 	RS_DEBUG->print("RS_GraphicView::drawEntity(RS_Entity*,patternOffset) not supported anymore");
 	// RVT_PORT this needs to be optimized
-	// ONe way to do is to send a RS2::RedrawSelected, then teh draw routine will onyl draw all selected entities
+	// One way to do is to send a RS2::RedrawSelected, then the draw routine will only draw all selected entities
 	// Dis-advantage is that we still need to iterate over all entities, but
 	// this might be very fast
-	// For now we just redraw the drawing untill we are going to optmize drawing
+	// For now we just redraw the drawing until we are going to optimize drawing
 	redraw(RS2::RedrawDrawing);
 }
 void RS_GraphicView::drawEntity(RS_Entity* /*e*/ /*patternOffset*/) {
 	RS_DEBUG->print("RS_GraphicView::drawEntity(RS_Entity*,patternOffset) not supported anymore");
 	// RVT_PORT this needs to be optimized
-	// ONe way to do is to send a RS2::RedrawSelected, then teh draw routine will onyl draw all selected entities
+	// One way to do is to send a RS2::RedrawSelected, then the draw routine will only draw all selected entities
 	// Dis-advantage is that we still need to iterate over all entities, but
 	// this might be very fast
-	// For now we just redraw the drawing untill we are going to optmize drawing
+	// For now we just redraw the drawing until we are going to optimize drawing
 	redraw(RS2::RedrawDrawing);
 }
 void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e) {
@@ -1324,7 +1324,7 @@ const RS_LineTypePattern* RS_GraphicView::getPattern(RS2::LineType t) {
 /**
  * This virtual method can be overwritten to draw the absolute
  * zero. It's called from within drawIt(). The default implemetation
- * draws a simple red cross on the zero of thge sheet
+ * draws a simple red cross on the zero of the sheet
  * THis function can ONLY be called from within a paintEvent because it will
  * use the painter
  *

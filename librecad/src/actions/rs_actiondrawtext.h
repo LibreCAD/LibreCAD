@@ -46,7 +46,7 @@ public:
 		ShowDialog,           /**< Showing the text dialog. */
 		SetPos,               /**< Setting the position. */
 		SetSecPos,            /**< Setting the second point for aligned of fit text. */
-		SetText               /**< Settting the text in the command line. */
+		SetText               /**< Setting the text in the command line. */
 	};
 
 public:

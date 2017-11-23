@@ -109,7 +109,7 @@ public:
 
 protected:
     RS_Pen lpen;
-    long rememberX; // Used for the moment because QPainter doesn't support moveTo anymore, thus we need to remember ourselve the moveTo positions
+    long rememberX; // Used for the moment because QPainter doesn't support moveTo anymore, thus we need to remember ourselves the moveTo positions
     long rememberY;
 };
 

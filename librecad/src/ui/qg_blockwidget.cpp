@@ -62,7 +62,7 @@ bool blockLessThan(const RS_Block *s1, const RS_Block *s2) {
 }
 
 void QG_BlockModel::setBlockList(RS_BlockList* bl) {
-	/* since 4.6 the recomended way is to use begin/endResetModel()
+	/* since 4.6 the recommended way is to use begin/endResetModel()
 	 * TNick <nicu.tofan@gmail.com>
 	 */
     beginResetModel();

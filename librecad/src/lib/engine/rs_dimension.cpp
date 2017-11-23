@@ -55,7 +55,7 @@ RS_DimensionData::RS_DimensionData():
  * @param lineSpacingFactor Line spacing factor.
  * @param text Text string entered explicitly by user or null
  *         or "<>" for the actual measurement or " " (one blank space).
- *         for supressing the text.
+ *         for suppressing the text.
  * @param style Dimension style name.
  * @param angle Rotation angle of dimension text away from
  *         default orientation.
@@ -108,7 +108,7 @@ RS_Dimension::RS_Dimension(RS_EntityContainer* parent,
 RS_Vector RS_Dimension::getNearestRef( const RS_Vector& coord,
                                        double* dist /*= nullptr*/) const
 {
-    // override the RS_EntityContainer methode
+    // override the RS_EntityContainer method
     // use RS_Entity instead for refpoint dragging
     return RS_Entity::getNearestRef( coord, dist);
 }
@@ -116,7 +116,7 @@ RS_Vector RS_Dimension::getNearestRef( const RS_Vector& coord,
 RS_Vector RS_Dimension::getNearestSelectedRef( const RS_Vector& coord,
                                                double* dist /*= nullptr*/) const
 {
-    // override the RS_EntityContainer methode
+    // override the RS_EntityContainer method
     // use RS_Entity instead for refpoint dragging
     return RS_Entity::getNearestSelectedRef( coord, dist);
 }
@@ -427,7 +427,7 @@ double RS_Dimension::getTextHeight() {
 
 
 /**
- * @return Dimension labels alignement text true= horizontal, false= aligned.
+ * @return Dimension labels alignment text true= horizontal, false= aligned.
  */
 bool RS_Dimension::getAlignText() {
     int v = getGraphicVariableInt("$DIMTIH", 1);

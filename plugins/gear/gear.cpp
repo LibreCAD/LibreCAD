@@ -201,7 +201,7 @@ struct evolute {
 
     QPointF evo0(const double phi); /* evolute for tooth face */
     QPointF evo1(const double phi); /* evolute for tooth carving (interference) */
-    double aux(const double phi); /* auxiliar function */
+    double aux(const double phi); /* auxiliary function */
     double find_common_phi_evo1(const double eps = default_eps); 
 
     const int n_teeth;

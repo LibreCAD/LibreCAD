@@ -190,7 +190,7 @@ extern "C" {
 /*        #define SHPAPI_CALL __declspec(dllexport) __stdcall           */
 /*        #define SHPAPI_CALL1 __declspec(dllexport) * __stdcall        */
 /*                                                                      */
-/*      The complexity of the situtation is partly caused by the        */
+/*      The complexity of the situation is partly caused by the        */
 /*      peculiar requirement of Visual C++ that __stdcall appear        */
 /*      after any "*"'s in the return value of a function while the     */
 /*      __declspec(dllexport) must appear before them.                  */

@@ -356,7 +356,7 @@ RS_Vector RS_Solid::getNearestDist(double /*distance*/,
 
 
 /**
- * @return Distance from one of the boundry lines of this solid to given point.
+ * @return Distance from one of the boundary lines of this solid to given point.
  *
  */
 double RS_Solid::getDistanceToPoint(const RS_Vector& coord,

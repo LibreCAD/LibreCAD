@@ -119,7 +119,7 @@ Area(coord, {coord.x + width, coord.y + height})
 
 	/**
 	  * @brief Test of a specific point lies within a area
-	  * @param point Point to test agains
+	  * @param point Point to test against
 	  * @return boolean true of the point is within the area
 	  */
 	bool LC_Rect::inArea(const Coordinate& point, double tolerance) const {
