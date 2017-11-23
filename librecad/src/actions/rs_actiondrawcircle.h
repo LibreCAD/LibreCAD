@@ -45,7 +45,7 @@ public:
      */
     enum Status {
         SetCenter,       /**< Setting the center point. */
-        SetRadius        /**< Setting the radius. */
+        SetPoint        /**< Setting the radius. */
     };
 
 public:
@@ -76,7 +76,7 @@ protected:
     /**
      * Circle data defined so far.
      */
-	std::unique_ptr<RS_CircleData> data;
+    std::unique_ptr<RS_CircleData> data;
 };
 
 #endif
