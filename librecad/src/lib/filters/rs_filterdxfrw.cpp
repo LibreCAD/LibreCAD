@@ -2519,6 +2519,7 @@ void RS_FilterDXFRW::writeText(RS_Text* t){
     text.style = t->getStyle().toStdString();
     text.alignH =(DRW_Text::HAlign)t->getHAlign();
     text.alignV =(DRW_Text::VAlign)t->getVAlign();
+    text.widthscale = t->getWidthRel();
 
     if (text.alignV != DRW_Text::VBaseLine || text.alignH != DRW_Text::HLeft) {
 //    if (text.alignV != DRW_Text::VBaseLine || text.alignH == DRW_Text::HMiddle) {
