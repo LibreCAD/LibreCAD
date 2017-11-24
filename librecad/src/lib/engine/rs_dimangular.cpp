@@ -129,12 +129,15 @@ QString RS_DimAngular::getMeasuredLabel() {
 double RS_DimAngular::getAngle() {
     double ang1 = 0.0;
     double ang2 = 0.0;
+    double ang = 0.0;
     bool reversed = false;
         RS_Vector p1;
         RS_Vector p2;
 
     getAngles(ang1, ang2, reversed, p1, p2);
-    return reversed ? RS_Math::correctAngle(ang1 - ang2) :  RS_Math::correctAngle(ang2 - ang1);
+    ang = fabs(RS_Math::correctAngle(ang2 - ang1));
+    // -- if reversed return the explementary of the angle...otherwise just the angle...in radians.
+    return reversed ? M_PI*2.0 - ang :  ang;
 //
 //    if (!reversed) {
 //        if (ang2<ang1) {
@@ -198,14 +201,14 @@ double a1=d*(rp2*p0p1-p1p2*p0p2); // we only need the sign, so, use multiply ins
 if ( a1 >= 0. ) {
             p1 = edata.definitionPoint2;
 } else {
-            vp1 *= -1;
+            // vp1 *= -1;
             p1 = edata.definitionPoint1;
 }
 a1 = d*(rp1*p0p2-p1p2*p0p1);
 if ( a1 >= 0. ) {
 			p2 = data.definitionPoint;
 } else {
-            vp2 *= -1;
+            // vp2 *= -1;
             p2 = edata.definitionPoint3;
 }
 
@@ -457,7 +460,7 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
                            RS_MTextData::LeftToRight,
                            RS_MTextData::Exact,
                            1.0,
-                           getLabel(),
+                           getMeasuredLabel(),
                            getTextStyle(),
 //                           "standard",
                            textAngle);
