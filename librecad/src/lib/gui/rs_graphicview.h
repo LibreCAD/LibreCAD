@@ -50,7 +50,7 @@ struct RS_LineTypePattern;
 
 /**
  * This class is a common GUI interface for the graphic viewer
- * widget which has to be implementet by real GUI classes such
+ * widget which has to be implemented by real GUI classes such
  * as the Qt graphical view.
  *
  * Note that this is just an interface used as a slot to

@@ -36,11 +36,11 @@ Coordinate LC_Rect::Vector(Coordinate const& p, Coordinate const& q) {
 }
 
 	/**
-	  * Create a new Area. The coordinates coordA and coordB will be ordered so that minP wil always be < maxP
-	  * The corordinates are not allowed to describe a volume
+	  * Create a new Area. The coordinates coordA and coordB will be ordered so that minP will always be < maxP
+	  * The coordinates are not allowed to describe a volume
 	  *
-	  * @param CoordA First coordinate of a area
-	  * @param CoordB Second coordinate of a area
+	  * @param CoordA First coordinate of an area
+	  * @param CoordB Second coordinate of an area
 	  */
 LC_Rect::Area(const Coordinate& coordA, const Coordinate& coordB) :
 _minP{std::min(coordA.x, coordB.x), std::min(coordA.y, coordB.y)},
@@ -62,14 +62,14 @@ Area(coord, {coord.x + width, coord.y + height})
 {}
 
 	/**
-	  * Return the smalles corner (closest to (0,0,0) )
+	  * Return the smallest corner (closest to (0,0,0) )
 	  */
 	const Coordinate& LC_Rect::minP() const {
 		return _minP;
 	}
 
 	/**
-	  * Return the heigest corner
+	  * Return the heighest corner
 	  */
 	const Coordinate& LC_Rect::maxP() const {
 		return _maxP;
@@ -118,7 +118,7 @@ Area(coord, {coord.x + width, coord.y + height})
 	}
 
 	/**
-	  * @brief Test of a specific point lies within a area
+	  * @brief Test of a specific point lies within an area
 	  * @param point Point to test against
 	  * @return boolean true of the point is within the area
 	  */
