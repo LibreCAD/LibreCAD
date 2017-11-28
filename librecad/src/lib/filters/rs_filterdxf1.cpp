@@ -587,7 +587,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                     if (currentLayer) {
                         currentLayer->setPen(pen);
                     }
-                    //graphic->setStyle("CONTINOUS");
+                    //graphic->setStyle("CONTINUOUS");
                     //graphic->setWidth(0);
                     //graphic->setColor(0, false);
                 }
