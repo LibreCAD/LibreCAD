@@ -187,9 +187,25 @@ RS_Layer* QG_DialogFactory::requestNewLayerDialog(RS_LayerList* layerList) {
             layer_name = "noname";
         }
         newLayerName = QString(layer_name);
-		int i = 2;
+        QString sBaseLayerName = layer_name;
+        int ndx = newLayerName.length();
+        while (newLayerName.at(--ndx).isDigit()) {
+            if (ndx == 0) {
+                ndx--;
+                break;
+            }
+        }
+        int i = 0;
+        if (ndx <= 0) {
+            sBaseLayerName = "";
+            i = newLayerName.toInt();
+        } else if ((ndx > 0) and (ndx < newLayerName.length()-1)) {
+            sBaseLayerName = newLayerName.left(ndx+1);
+            i = newLayerName.mid(ndx+1).toInt();
+            newLayerName = QString("%1%2").arg(sBaseLayerName).arg(++i);
+        }
 		while(layerList->find(newLayerName)) {
-            newLayerName = QString("%1%2").arg(layer_name).arg(i++);
+            newLayerName = QString("%1%2").arg(sBaseLayerName).arg(++i);
         }
     }
 
