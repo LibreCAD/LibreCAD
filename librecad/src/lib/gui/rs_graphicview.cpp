@@ -1095,7 +1095,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e) {
 }
 void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patternOffset) {
 
-	// update is diabled:
+	// update is disabled:
     // given entity is nullptr:
 	if (!e) {
 		return;
@@ -1323,9 +1323,9 @@ const RS_LineTypePattern* RS_GraphicView::getPattern(RS2::LineType t) {
 
 /**
  * This virtual method can be overwritten to draw the absolute
- * zero. It's called from within drawIt(). The default implemetation
+ * zero. It's called from within drawIt(). The default implementation
  * draws a simple red cross on the zero of the sheet
- * THis function can ONLY be called from within a paintEvent because it will
+ * This function can ONLY be called from within a paintEvent because it will
  * use the painter
  *
  * @see drawIt()
@@ -1352,9 +1352,9 @@ void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter) {
 
 /**
  * This virtual method can be overwritten to draw the relative
- * zero point. It's called from within drawIt(). The default implemetation
+ * zero point. It's called from within drawIt(). The default implementation
  * draws a simple red round zero point. This is the point that was last created by the user, end of a line for example
- * THis function can ONLY be called from within a paintEvent because it will
+ * This function can ONLY be called from within a paintEvent because it will
  * use the painter
  *
  * @see drawIt()

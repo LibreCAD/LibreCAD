@@ -480,7 +480,7 @@ void RS_Math::test() {
 //Equation solvers
 
 // quadratic, cubic, and quartic equation solver
-// @ ce[] contains coefficent of the cubic equation:
+// @ ce[] contains coefficient of the cubic equation:
 // @ returns a vector contains real roots
 //
 // solvers assume arguments are valid, and there's no attempt to verify validity of the argument pointers

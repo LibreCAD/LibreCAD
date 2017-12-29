@@ -102,7 +102,7 @@ public:
 	bool isClosed() const;
 
 	/**
-		 * Sets the closed falg of this spline.
+		 * Sets the closed flag of this spline.
 		 */
 	void setClosed(bool c);
 

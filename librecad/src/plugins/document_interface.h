@@ -98,7 +98,7 @@ namespace DPI {
         ENDZ=30,        /*!< double: end z coordinate always 0 */
         LWIDTH=38,      /*!< QString: line width */  //verify number
         RADIUS=39,      /*!< double: radius */
-        HEIGHT=40,      /*!< double: text heigt or ellipse ratio*/
+        HEIGHT=40,      /*!< double: text height or ellipse ratio*/
         XSCALE=41,      /*!< double: x insert scale */
         YSCALE=42,      /*!< double: y insert scale */
         ZSCALE=43,      /*!< double: z insert scale always 1? */
@@ -459,7 +459,7 @@ public:
     //! Gets a entities selection.
     /*! Prompt message or an default message to the user asking for a selection.
     * You can delete all, the Plug_Entity and the returned QList wen no more needed.
-    * \param sel a QList of poiters to Plug_Entity handled the selected entities.
+    * \param sel a QList of pointers to Plug_Entity handled the selected entities.
     * \param mesage an optional QString with prompt message.
     * \return true if succes.
     * \return false if fail, i.e. user cancel.
@@ -468,7 +468,7 @@ public:
 
     //! Gets all entities in document.
     /*! You can delete all, the Plug_Entity and the returned QList wen no more needed.
-    * \param sel a QList of poiters to Plug_Entity handled the selected entities.
+    * \param sel a QList of pointers to Plug_Entity handled the selected entities.
     * \param visible default fo false, do not select entities in hidden layers.
     * \return true if succes.
     * \return false if fail, i.e. user cancel.

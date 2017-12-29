@@ -127,7 +127,7 @@ bool RS_Arc::createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
  * and radius.
  *
  * @retval true Successfully created arc
- * @retval false Cannot creats arc (radius to small or endpoint to far away)
+ * @retval false Cannot create arc (radius to small or endpoint to far away)
  */
 bool RS_Arc::createFrom2PDirectionRadius(const RS_Vector& startPoint,
         const RS_Vector& endPoint,
@@ -162,7 +162,7 @@ bool RS_Arc::createFrom2PDirectionRadius(const RS_Vector& startPoint,
  * and angle length.
  *
  * @retval true Successfully created arc
- * @retval false Cannot creats arc (radius to small or endpoint to far away)
+ * @retval false Cannot create arc (radius to small or endpoint to far away)
  */
 bool RS_Arc::createFrom2PDirectionAngle(const RS_Vector& startPoint,
                                         const RS_Vector& endPoint,

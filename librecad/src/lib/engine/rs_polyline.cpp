@@ -126,7 +126,7 @@ void RS_Polyline::removeLastVertex() {
  * @param bulge The bulge of the arc or 0 for a line segment (see DXF documentation)
  * @param prepend true: prepend at start instead of append at end
  *
- * @return Pointer to the entity that was addded or nullptr if this
+ * @return Pointer to the entity that was added or nullptr if this
  *         was the first vertex added.
  */
 RS_Entity* RS_Polyline::addVertex(const RS_Vector& v, double bulge, bool prepend) {

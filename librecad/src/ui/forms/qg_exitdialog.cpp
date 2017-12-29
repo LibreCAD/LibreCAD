@@ -56,7 +56,7 @@ void QG_ExitDialog::languageChange()
 {
 	ui->retranslateUi(this);
 }
-//sets aditional accel, eg. Key_A for ALT+Key_A
+//sets additional accel, eg. Key_A for ALT+Key_A
 
 /*
 static void makeLetterAccell(QButton *btn)

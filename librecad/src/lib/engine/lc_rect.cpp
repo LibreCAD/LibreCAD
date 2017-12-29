@@ -69,7 +69,7 @@ Area(coord, {coord.x + width, coord.y + height})
 	}
 
 	/**
-	  * Return the heighest corner
+	  * Return the highest corner
 	  */
 	const Coordinate& LC_Rect::maxP() const {
 		return _maxP;

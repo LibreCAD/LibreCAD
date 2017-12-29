@@ -121,7 +121,7 @@ bool RS_Spline::isClosed() const {
 }
 
 /**
- * Sets the closed falg of this spline.
+ * Sets the closed flag of this spline.
  */
 void RS_Spline::setClosed(bool c) {
 		data.closed = c;

@@ -1526,7 +1526,7 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
         else
             writer->writeDouble(40, 50.0);
         writer->writeString(9, "$CAMERAHEIGHT");
-        if (getDouble("$CAMERAHEIGTH", &varDouble))
+        if (getDouble("$CAMERAHEIGHT", &varDouble))
             writer->writeDouble(40, varDouble);
         else
             writer->writeDouble(40, 0.0);

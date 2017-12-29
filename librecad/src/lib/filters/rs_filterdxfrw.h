@@ -226,7 +226,7 @@ private:
     bool exactColor;
     /** hash of block containers and handleBlock numbers to read dwg files */
     QHash<int, RS_EntityContainer*> blockHash;
-    /** Pointer to entity container to store posible horphan entites like paper space */
+    /** Pointer to entity container to store possible orphan entities like paper space */
     RS_EntityContainer* dummyContainer;
 };
 

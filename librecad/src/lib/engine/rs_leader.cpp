@@ -106,7 +106,7 @@ void RS_Leader::update() {
  *
  * @param v vertex coordinate
  *
- * @return Pointer to the entity that was addded or nullptr if this
+ * @return Pointer to the entity that was added or nullptr if this
  *         was the first vertex added.
  */
 RS_Entity* RS_Leader::addVertex(const RS_Vector& v) {

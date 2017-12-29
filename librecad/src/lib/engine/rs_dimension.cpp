@@ -419,7 +419,7 @@ double RS_Dimension::getDimensionLineGap() {
 
 
 /**
- * @return Dimension lables text height.
+ * @return Dimension labels text height.
  */
 double RS_Dimension::getTextHeight() {
     return getGraphicVariable("$DIMTXT", 2.5, 40);
