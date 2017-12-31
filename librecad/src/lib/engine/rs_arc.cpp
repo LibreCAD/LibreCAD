@@ -1034,7 +1034,7 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
 	double a1{RS_Math::correctAngle(getAngle1())};
 	double a2{RS_Math::correctAngle(getAngle2())};
 
-    if(isReversed()) {//always draw from a1 to a2, so, patternOffset is is automatic
+    if(isReversed()) {//always draw from a1 to a2, so, patternOffset is automatic
         if(a1<a2+RS_TOLERANCE_ANGLE) a2 -= 2.*M_PI;
         total = a1 - total*ira; //in angle
     }else{
