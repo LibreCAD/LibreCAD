@@ -1,7 +1,7 @@
 #include <iostream>
 #include "rs_color.h"
 
-//This metod is used for plugins
+//This method is used for plugins
 int RS_Color::toIntColor(void) const {
     if (isByLayer())
         return -1;
@@ -15,7 +15,7 @@ int RS_Color::toIntColor(void) const {
 
 }
 
-//This metod is used for plugins
+//This method is used for plugins
 void RS_Color::fromIntColor(int co) {
     if (co == -1)
         setFlags(RS2::FlagByLayer);

@@ -443,7 +443,7 @@ public:
     * \param point a pointer to QPointF to store the obtained point.
     * \param mesage an optional QString with prompt message.
     * \param base visual helper point, if present.
-    * \return true if succes.
+    * \return true if success.
     * \return false if fail, i.e. user cancel.
     */
     virtual bool getPoint(QPointF *point, const QString& mesage = "", QPointF *base = 0) = 0;
@@ -461,7 +461,7 @@ public:
     * You can delete all, the Plug_Entity and the returned QList wen no more needed.
     * \param sel a QList of pointers to Plug_Entity handled the selected entities.
     * \param mesage an optional QString with prompt message.
-    * \return true if succes.
+    * \return true if success.
     * \return false if fail, i.e. user cancel.
     */
     virtual bool getSelect(QList<Plug_Entity *> *sel, const QString& mesage = "") = 0;
@@ -470,7 +470,7 @@ public:
     /*! You can delete all, the Plug_Entity and the returned QList wen no more needed.
     * \param sel a QList of pointers to Plug_Entity handled the selected entities.
     * \param visible default fo false, do not select entities in hidden layers.
-    * \return true if succes.
+    * \return true if success.
     * \return false if fail, i.e. user cancel.
     */
     virtual bool getAllEntities(QList<Plug_Entity *> *sel, bool visible = false) = 0;
