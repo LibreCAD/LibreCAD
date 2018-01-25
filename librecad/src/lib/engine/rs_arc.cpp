@@ -127,7 +127,7 @@ bool RS_Arc::createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
  * and radius.
  *
  * @retval true Successfully created arc
- * @retval false Cannot creats arc (radius to small or endpoint to far away)
+ * @retval false Cannot create arc (radius to small or endpoint to far away)
  */
 bool RS_Arc::createFrom2PDirectionRadius(const RS_Vector& startPoint,
         const RS_Vector& endPoint,
@@ -162,7 +162,7 @@ bool RS_Arc::createFrom2PDirectionRadius(const RS_Vector& startPoint,
  * and angle length.
  *
  * @retval true Successfully created arc
- * @retval false Cannot creats arc (radius to small or endpoint to far away)
+ * @retval false Cannot create arc (radius to small or endpoint to far away)
  */
 bool RS_Arc::createFrom2PDirectionAngle(const RS_Vector& startPoint,
                                         const RS_Vector& endPoint,
@@ -1034,7 +1034,7 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
 	double a1{RS_Math::correctAngle(getAngle1())};
 	double a2{RS_Math::correctAngle(getAngle2())};
 
-    if(isReversed()) {//always draw from a1 to a2, so, patternOffset is is automatic
+    if(isReversed()) {//always draw from a1 to a2, so, patternOffset is automatic
         if(a1<a2+RS_TOLERANCE_ANGLE) a2 -= 2.*M_PI;
         total = a1 - total*ira; //in angle
     }else{

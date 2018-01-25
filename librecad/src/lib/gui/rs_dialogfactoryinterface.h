@@ -371,9 +371,9 @@ public:
      * The implementation will be called every time the mouse position
      * changes.
      *
-     * @param abs Absolute coordiante of the mouse cursor or the
+     * @param abs Absolute coordinate of the mouse cursor or the
      *            point it snaps to.
-     * @param rel Relative coordiante.
+     * @param rel Relative coordinate.
      */
     virtual void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false) = 0;
 

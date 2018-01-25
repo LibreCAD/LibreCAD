@@ -64,7 +64,7 @@ public:
 	const Coordinate& minP() const;
 
 	/**
-		  * Return the heighest corner
+		  * Return the highest corner
 		  */
 	const Coordinate& maxP() const;
 	/**

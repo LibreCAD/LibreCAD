@@ -1650,7 +1650,7 @@ bool RS_Modification::move(RS_MoveData& data) {
 
 	std::vector<RS_Entity*> addList;
 
-    // Create new entites
+    // Create new entities
     for (int num=1;
             num<=data.number || (data.number==0 && num<=1);
             num++) {
@@ -1699,7 +1699,7 @@ bool RS_Modification::offset(const RS_OffsetData& data) {
 
 	std::vector<RS_Entity*> addList;
 
-    // Create new entites
+    // Create new entities
     for (int num=1;
             num<=data.number || (data.number==0 && num<=1);
             num++) {
@@ -1751,7 +1751,7 @@ bool RS_Modification::rotate(RS_RotateData& data) {
 
 	std::vector<RS_Entity*> addList;
 
-    // Create new entites
+    // Create new entities
     for (int num=1;
             num<=data.number || (data.number==0 && num<=1);
 			num++) {
@@ -1826,7 +1826,7 @@ bool RS_Modification::scale(RS_ScaleData& data) {
         }
     }
 
-    // Create new entites
+    // Create new entities
     for (int num=1;
             num<=data.number || (data.number==0 && num<=1);
             num++) {
@@ -1877,7 +1877,7 @@ bool RS_Modification::mirror(RS_MirrorData& data) {
 
 	std::vector<RS_Entity*> addList;
 
-    // Create new entites
+    // Create new entities
     for (int num=1;
             num<=(int)data.copy || (data.copy==false && num<=1);
 			++num) {
@@ -1924,7 +1924,7 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data) {
 
 	std::vector<RS_Entity*> addList;
 
-    // Create new entites
+    // Create new entities
     for (int num=1;
             num<=data.number || (data.number==0 && num<=1);
             num++) {
@@ -1976,7 +1976,7 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
 
 	std::vector<RS_Entity*> addList;
 
-    // Create new entites
+    // Create new entities
     for (int num=1;
             num<=data.number || (data.number==0 && num<=1);
 			++num) {
@@ -2016,7 +2016,7 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
 /**
  * Deselects all selected entities and removes them if remove is true;
  *
- * @param remove true: Remove entites.
+ * @param remove true: Remove entities.
  */
 void RS_Modification::deselectOriginals(bool remove
 									   ) {
@@ -2532,7 +2532,7 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner,
 
 	std::vector<RS_Entity*> addList;
 
-	// Create new entites
+	// Create new entities
 	for(auto e: *container){
 		if (e &&
                 e->isVisible() &&
@@ -3326,7 +3326,7 @@ bool RS_Modification::moveRef(RS_MoveRefData& data) {
 
 	std::vector<RS_Entity*> addList;
 
-    // Create new entites
+    // Create new entities
 	for(auto e: *container){
 		if (e && e->isSelected()) {
             RS_Entity* ec = e->clone();

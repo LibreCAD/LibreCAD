@@ -788,7 +788,7 @@ RS_Entity* RS_EntityContainer::firstEntity(RS2::ResolveLevel level) {
 		if (e && e->isContainer() && e->rtti()!=RS2::EntityInsert) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->firstEntity(level);
-            // emtpy container:
+            // empty container:
 			if (!e) {
 				subContainer = nullptr;
                 e = nextEntity(level);
@@ -808,7 +808,7 @@ RS_Entity* RS_EntityContainer::firstEntity(RS2::ResolveLevel level) {
 		if (e && e->isContainer() && e->rtti()!=RS2::EntityText && e->rtti()!=RS2::EntityMText) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->firstEntity(level);
-            // emtpy container:
+            // empty container:
 			if (!e) {
 				subContainer = nullptr;
                 e = nextEntity(level);
@@ -827,7 +827,7 @@ RS_Entity* RS_EntityContainer::firstEntity(RS2::ResolveLevel level) {
 		if (e && e->isContainer()) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->firstEntity(level);
-            // emtpy container:
+            // empty container:
 			if (!e) {
 				subContainer = nullptr;
                 e = nextEntity(level);
@@ -933,7 +933,7 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
 		if (e && e->isContainer() && e->rtti()!=RS2::EntityInsert) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->firstEntity(level);
-            // emtpy container:
+            // empty container:
 			if (!e) {
 				subContainer = nullptr;
                 e = nextEntity(level);
@@ -962,7 +962,7 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
 		if (e && e->isContainer() && e->rtti()!=RS2::EntityText && e->rtti()!=RS2::EntityMText ) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->firstEntity(level);
-            // emtpy container:
+            // empty container:
 			if (!e) {
 				subContainer = nullptr;
                 e = nextEntity(level);
@@ -990,7 +990,7 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
 		if (e && e->isContainer()) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->firstEntity(level);
-            // emtpy container:
+            // empty container:
 			if (!e) {
 				subContainer = nullptr;
                 e = nextEntity(level);
@@ -1036,7 +1036,7 @@ RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
 		if (e && e->isContainer() && e->rtti()!=RS2::EntityInsert) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->lastEntity(level);
-            // emtpy container:
+            // empty container:
 			if (!e) {
 				subContainer = nullptr;
                 e = prevEntity(level);
@@ -1063,7 +1063,7 @@ RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
 		if (e && e->isContainer() && e->rtti()!=RS2::EntityText && e->rtti()!=RS2::EntityMText) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->lastEntity(level);
-            // emtpy container:
+            // empty container:
 			if (!e) {
 				subContainer = nullptr;
                 e = prevEntity(level);
@@ -1090,7 +1090,7 @@ RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
 		if (e && e->isContainer()) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->lastEntity(level);
-            // emtpy container:
+            // empty container:
 			if (!e) {
 				subContainer = nullptr;
                 e = prevEntity(level);
@@ -1140,7 +1140,7 @@ int RS_EntityContainer::findEntity(RS_Entity const* const entity) {
 
 /**
  * @return The point which is closest to 'coord'
- * (one of the vertexes)
+ * (one of the vertices)
  */
 RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
                                                  double* dist  )const {
@@ -1173,7 +1173,7 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
 
 /**
  * @return The point which is closest to 'coord'
- * (one of the vertexes)
+ * (one of the vertices)
  */
 RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
                                                  double* dist,  RS_Entity** pEntity)const {

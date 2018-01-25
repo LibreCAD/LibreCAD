@@ -59,7 +59,7 @@ public:
 	bool isUndone() const;
 
 	/**
-	 * Can be overwriten by the implementing class to be notified
+	 * Can be overwritten by the implementing class to be notified
 	 * when the undo state changes (the undoable becomes visible / invisible).
 	 */
 	virtual void undoStateChanged(bool /*undone*/) = 0;

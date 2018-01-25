@@ -171,7 +171,7 @@ bool RS_Solid::isInCrossWindow(const RS_Vector& v1,const RS_Vector& v2)const {
 //    bool sol = false;
     RS_Vector vBL, vTR;
     RS_VectorSolutions sol;
-//sort imput vectors to BottomLeft & TopRight
+//sort input vectors to BottomLeft & TopRight
     if (v1.x<v2.x) {
         vBL.x = v1.x;
         vTR.x = v2.x;

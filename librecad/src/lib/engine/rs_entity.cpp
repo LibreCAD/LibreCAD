@@ -368,7 +368,7 @@ bool RS_Entity::isVisible() const{
     //if (rtti()==RS2::EntityInsert) {
     //	return true;
     //}
-    // blocks are visible in editting window, issue#253
+    // blocks are visible in editing window, issue#253
     if( isDocument() && (rtti()==RS2::EntityBlock || rtti()==RS2::EntityInsert)) {
         return true;
     }

@@ -356,10 +356,10 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 }
 
 /**
-  * Find a menu entry in the current menu list. This function will try to recursivly find the menu
+  * Find a menu entry in the current menu list. This function will try to recursively find the menu
   * searchMenu for example foo/bar
   * thisMenuList list of Widgets
-  * currentEntry only used internally dueing recursion
+  * currentEntry only used internally during recursion
   * returns 0 when no menu was found
   */
 QMenu *QC_ApplicationWindow::findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry) {
