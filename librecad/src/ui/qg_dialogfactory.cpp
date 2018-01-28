@@ -32,6 +32,7 @@
 #include <QString>
 #include <QFileDialog>
 #include <QToolBar>
+#include <QRegularExpression>
 
 #include "rs_patternlist.h"
 #include "rs_settings.h"
@@ -188,24 +189,21 @@ RS_Layer* QG_DialogFactory::requestNewLayerDialog(RS_LayerList* layerList) {
         }
         newLayerName = QString(layer_name);
         QString sBaseLayerName = layer_name;
-        int ndx = newLayerName.length();
-        while (newLayerName.at(--ndx).isDigit()) {
-            if (ndx == 0) {
-                ndx--;
-                break;
-            }
-        }
+        QString sNumLayerName = "";
+        int nlen = 1;
         int i = 0;
-        if (ndx <= 0) {
-            sBaseLayerName = "";
-            i = newLayerName.toInt();
-        } else if ((ndx > 0) and (ndx < newLayerName.length()-1)) {
-            sBaseLayerName = newLayerName.left(ndx+1);
-            i = newLayerName.mid(ndx+1).toInt();
-            newLayerName = QString("%1%2").arg(sBaseLayerName).arg(++i);
+        QRegularExpression re("^(\\D+?|)(\\d+)$");
+        re.setPatternOptions(QRegularExpression::DotMatchesEverythingOption);
+        QRegularExpressionMatch match = re.match(layer_name);
+        if (match.hasMatch()) {
+            sBaseLayerName = match.captured(1);
+            sNumLayerName = match.captured(2);
+            nlen = sNumLayerName.length();
+            i = sNumLayerName.toInt();
         }
-		while(layerList->find(newLayerName)) {
-            newLayerName = QString("%1%2").arg(sBaseLayerName).arg(++i);
+        while (layerList->find(newLayerName)) {
+            sNumLayerName = QString("%1").arg(++i,nlen,10,QChar('0'));
+            newLayerName = QString("%1%2").arg(sBaseLayerName).arg(sNumLayerName);
         }
     }
 
