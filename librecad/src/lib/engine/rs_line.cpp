@@ -2,7 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
+** Copyright (C) 2015-2018 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -112,37 +112,41 @@ RS_Vector RS_Line::getNearestEndpoint(const RS_Vector& coord,
 
 }
 
-
-
 RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
-                                           bool onEntity, double* dist, RS_Entity** entity)const {
-
-	if (entity) {
+                                           bool onEntity,
+                                           double* dist,
+                                           RS_Entity** entity) const
+{
+    if (entity) {
         *entity = const_cast<RS_Line*>(this);
     }
-    RS_Vector direction = data.endpoint-data.startpoint;
-    RS_Vector vpc=coord-data.startpoint;
-    double a=direction.squared();
+
+    RS_Vector direction {data.endpoint - data.startpoint};
+    RS_Vector vpc {coord - data.startpoint};
+    double a {direction.squared()};
+
     if( a < RS_TOLERANCE2) {
         //line too short
-        vpc=getMiddlePoint();
-    }else{
+        vpc = getMiddlePoint();
+    }
+    else {
         //find projection on line
-        const double t=RS_Vector::dotP(vpc,direction)/a;
-        if( !isConstruction() && onEntity &&
-                ( t<=-RS_TOLERANCE || t>=1.+RS_TOLERANCE )
-                ){
-            //                !( vpc.x>= minV.x && vpc.x <= maxV.x && vpc.y>= minV.y && vpc.y<=maxV.y) ) {
+        const double t {RS_Vector::dotP( vpc, direction) / a};
+        if( !isConstruction()
+            && onEntity
+            && ( t <= -RS_TOLERANCE
+                 || t >= 1. + RS_TOLERANCE ) ) {
             //projection point not within range, find the nearest endpoint
-            //            std::cout<<"not within window, returning endpoints\n";
-            return getNearestEndpoint(coord,dist);
+            return getNearestEndpoint( coord, dist);
         }
-        vpc = data.startpoint + direction*t;
+
+        vpc = data.startpoint + direction * t;
     }
 
-	if (dist) {
-        *dist = vpc.distanceTo(coord);
+    if (dist) {
+        *dist = vpc.distanceTo( coord);
     }
+
     return vpc;
 }
 
