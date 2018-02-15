@@ -80,6 +80,14 @@ RS_Vector RS_Math::pow(RS_Vector vp, double y) {
 }
 
 /**
+ * Save equal function for real types
+ */
+bool RS_Math::equal(const double d1, const double d2)
+{
+    return fabs(d1 - d2) < RS_TOLERANCE;
+}
+
+/**
  * Converts radians to degrees.
  */
 double RS_Math::rad2deg(double a) {

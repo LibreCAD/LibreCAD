@@ -29,7 +29,7 @@
 
 #include "rs_debug.h"
 #include "lc_quadratic.h"
-
+#include "rs_math.h"
 
 RS_ConstructionLineData::RS_ConstructionLineData():
 	point1(false),
@@ -140,6 +140,36 @@ RS_Vector const& RS_ConstructionLine::getPoint1() const {
 /** @return Second definition point. */
 RS_Vector const& RS_ConstructionLine::getPoint2() const {
 	return data.point2;
+}
+
+/** @return Start point of the entity */
+RS_Vector RS_ConstructionLine::getStartpoint() const
+{
+    return data.point1;
+}
+
+/** @return End point of the entity */
+RS_Vector RS_ConstructionLine::getEndpoint() const
+{
+    return data.point2;
+}
+
+/**
+ * @return Direction 1. The angle at which the arc starts at
+ * the startpoint.
+ */
+double RS_ConstructionLine::getDirection1(void) const
+{
+    return RS_Math::correctAngle( data.point1.angleTo( data.point2));
+}
+
+/**
+ * @return Direction 2. The angle at which the arc starts at
+ * the endpoint.
+ */
+double RS_ConstructionLine::getDirection2(void) const
+{
+    return RS_Math::correctAngle( data.point2.angleTo( data.point1));
 }
 
 /** return the equation of the entity

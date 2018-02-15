@@ -83,6 +83,14 @@ public:
 	RS_Vector const& getPoint1() const;
     /** @return Second definition point. */
 	RS_Vector const& getPoint2() const;
+
+    /** @return Start point of the entity */
+    RS_Vector getStartpoint() const override;
+    /** @return End point of the entity */
+    RS_Vector getEndpoint() const override;
+    double getDirection1(void) const override;
+    double getDirection2(void) const override;
+
     /** return the equation of the entity
 for quadratic,
 

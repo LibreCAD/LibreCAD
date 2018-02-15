@@ -46,6 +46,7 @@ public:
 	static int round(double v);
     static double pow(double x, double y);
     static RS_Vector pow(RS_Vector x, double y);
+    static bool equal(const double d1, const double d2);
 
     static double rad2deg(double a);
     static double deg2rad(double a);
@@ -149,6 +150,6 @@ public:
     static QString doubleToString(double value, int prec);
 
     static void test();
-    };
+};
 
 #endif

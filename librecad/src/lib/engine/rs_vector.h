@@ -119,6 +119,9 @@ public:
 //    crossP only defined for 3D
     static RS_Vector crossP(const RS_Vector& v1, const RS_Vector& v2);
     static double dotP(const RS_Vector& v1, const RS_Vector& v2);
+    static double posInLine(const RS_Vector& start,
+                            const RS_Vector& end,
+                            const RS_Vector& pos);
 
     /** switch x,y for all vectors */
     RS_Vector flipXY(void) const;

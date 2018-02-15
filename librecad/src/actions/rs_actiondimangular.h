@@ -29,9 +29,9 @@
 #define RS_ACTIONDIMANGULAR_H
 
 #include "rs_actiondimension.h"
+#include "rs_line.h"
 
 struct RS_DimAngularData;
-class RS_Line;
 
 /**
  * This action class can handle user events to draw angular dimensions.
@@ -72,11 +72,20 @@ public:
     void updateMouseButtonHints() override;
 
 private:
-    RS_Line* line1 {nullptr};                   ///< 1st chosen line
-    RS_Line* line2 {nullptr};                   ///< 2nd chosen line
-    std::unique_ptr<RS_Vector> center;          ///< Center of arc
+    RS_Line     line1;                          ///< 1st chosen line
+    RS_Line     line2;                          ///< 2nd chosen line
+    RS_Vector   click1;                         ///< 1st click pos
+    RS_Vector   click2;                         ///< 2nd click pos
+    RS_Vector   center;                         ///< Center of arc
     std::unique_ptr<RS_DimAngularData> edata;   ///< Data of new dimension
-    Status lastStatus {SetLine1};               ///< Last status before entering text.
+    Status      lastStatus;                     ///< Last status before entering text
+    std::vector<double> angles;                 ///< Array to sort line angles
+    int         quadrantOffset {0};             ///< Offset on starting quadrant
+
+    void justify( RS_Line &line, const RS_Vector &click);
+    void lineOrder(const RS_Vector &dimPos);
+    int quadrant(const double angle);
+    bool setData(const RS_Vector& dimPos, const bool calcCenter = false);
 };
 
 #endif

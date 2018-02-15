@@ -25,6 +25,7 @@
 **
 **********************************************************************/
 
+#include <cmath>
 #include <QAction>
 #include <QMouseEvent>
 #include "rs_actiondimangular.h"
@@ -34,17 +35,15 @@
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_information.h"
-#include "rs_line.h"
 #include "rs_coordinateevent.h"
 #include "rs_preview.h"
 #include "rs_debug.h"
+#include "rs_math.h"
 
 RS_ActionDimAngular::RS_ActionDimAngular(RS_EntityContainer& container,
                                          RS_GraphicView& graphicView) :
-    RS_ActionDimension("Draw Angular Dimensions", container, graphicView),
-    center( new RS_Vector{})
+    RS_ActionDimension( "Draw Angular Dimensions", container, graphicView)
 {
-    actionType= RS2::ActionDimAngular;
     reset();
 }
 
@@ -54,13 +53,11 @@ void RS_ActionDimAngular::reset()
 {
     RS_ActionDimension::reset();
 
-    edata.reset( new RS_DimAngularData( RS_Vector(false),
-                                        RS_Vector(false),
-                                        RS_Vector(false),
-                                        RS_Vector(false)) );
-    line1 = nullptr;
-    line2 = nullptr;
-    *center = {}; //default to invalid vector
+    actionType = RS2::ActionDimAngular;
+    edata.reset( new RS_DimAngularData( RS_Vector( false),
+                                        RS_Vector( false),
+                                        RS_Vector( false),
+                                        RS_Vector( false)) );
     RS_DIALOGFACTORY->requestOptions( this, true, true);
 }
 
@@ -68,10 +65,10 @@ void RS_ActionDimAngular::trigger()
 {
     RS_PreviewActionInterface::trigger();
 
-    if (line1 && line2) {
-        RS_DimAngular* newEntity {new RS_DimAngular(container,
-                                                    *data,
-                                                    *edata)};
+    if (line1.getStartpoint().valid && line2.getStartpoint().valid) {
+        RS_DimAngular* newEntity {new RS_DimAngular( container,
+                                                     *data,
+                                                     *edata)};
 
         newEntity->setLayerToActive();
         newEntity->setPenToActive();
@@ -98,14 +95,12 @@ void RS_ActionDimAngular::trigger()
 
 void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e)
 {
-    RS_DEBUG->print("RS_ActionDimAngular::mouseMoveEvent begin");
+    RS_DEBUG->print( "RS_ActionDimAngular::mouseMoveEvent begin");
 
     switch (getStatus()) {
     case SetPos:
-        if (line1 && line2 && center->valid) {
-            edata->definitionPoint4 = snapPoint(e);
-
-            RS_DimAngular* d {new RS_DimAngular(preview.get(), *data, *edata)};
+        if( setData( snapPoint(e))) {
+            RS_DimAngular *d {new RS_DimAngular( preview.get(), *data, *edata)};
 
             deletePreview();
             preview->addEntity(d);
@@ -126,44 +121,22 @@ void RS_ActionDimAngular::mouseReleaseEvent(QMouseEvent* e)
     if (Qt::LeftButton == e->button()) {
         switch (getStatus()) {
         case SetLine1: {
-            RS_Entity* en {catchEntity( e, RS2::ResolveAll)};
+            RS_Entity *en {catchEntity( e, RS2::ResolveAll)};
             if (en && RS2::EntityLine == en->rtti()) {
-                line1 = dynamic_cast<RS_Line*>(en);
-                setStatus( SetLine2);
+                line1 = *dynamic_cast<RS_Line*>(en);
+                click1 = line1.getNearestPointOnEntity( graphicView->toGraph( e->x(), e->y()));
+                setStatus(SetLine2);
             }
             break; }
 
         case SetLine2: {
-            RS_Entity* en {catchEntity( e, RS2::ResolveAll)};
-            if (en && RS2::EntityLine == en->rtti()) {
-                line2 = dynamic_cast<RS_Line*>(en);
-
-                RS_VectorSolutions sol {RS_Information::getIntersectionLineLine( line1, line2)};
-
-                if (sol.get( 0).valid) {
-                    *center = sol.get( 0);
-
-                    if (center->distanceTo(line1->getStartpoint())
-                        < center->distanceTo(line1->getEndpoint())) {
-                        edata->definitionPoint1 = line1->getStartpoint();
-                        edata->definitionPoint2 = line1->getEndpoint();
-                    }
-                    else {
-                        edata->definitionPoint1 = line1->getEndpoint();
-                        edata->definitionPoint2 = line1->getStartpoint();
-                    }
-
-                    if (center->distanceTo(line2->getStartpoint())
-                        < center->distanceTo(line2->getEndpoint())) {
-                        edata->definitionPoint3 = line2->getStartpoint();
-                        data->definitionPoint = line2->getEndpoint();
-                    }
-                    else {
-                        edata->definitionPoint3 = line2->getEndpoint();
-                        data->definitionPoint = line2->getStartpoint();
-                    }
-                    graphicView->moveRelativeZero( *center);
-                    setStatus( SetPos);
+            RS_Entity *en{catchEntity(e, RS2::ResolveAll)};
+            if (en && en->rtti()==RS2::EntityLine) {
+                line2 = *dynamic_cast<RS_Line*>(en);
+                click2 = line2.getNearestPointOnEntity( graphicView->toGraph( e->x(), e->y()));
+                if( setData( click2, true)) {
+                    graphicView->moveRelativeZero( center);
+                    setStatus(SetPos);
                 }
             }
             break; }
@@ -182,16 +155,17 @@ void RS_ActionDimAngular::mouseReleaseEvent(QMouseEvent* e)
 
 void RS_ActionDimAngular::coordinateEvent(RS_CoordinateEvent* e)
 {
-    if (!e) {
+    if ( ! e) {
         return;
     }
 
     switch (getStatus()) {
     case SetPos:
-        edata->definitionPoint4 = e->getCoordinate();
-        trigger();
-        reset();
-        setStatus( SetLine1);
+        if( setData( e->getCoordinate())) {
+            trigger();
+            reset();
+            setStatus( SetLine1);
+        }
         break;
 
     default:
@@ -284,6 +258,174 @@ void RS_ActionDimAngular::updateMouseButtonHints()
         RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
+}
+
+/**
+ * Justify one of the angle lines to ensure that the starting point
+ * of the line has the same angle from the intersection point as the
+ * selection click point and it is further away than the line end point
+ *
+ * @param line A selected line for the dimension
+ * @param click The click pos which selected the line
+ * @param center The intersection of the 2 lines to dimension
+ */
+void RS_ActionDimAngular::justify(RS_Line &line, const RS_Vector &click)
+{
+    RS_Vector vStartPoint( line.getStartpoint());
+
+    if( ! RS_Math::equal( vStartPoint.angleTo(center), click.angleTo( center))
+        || vStartPoint.distanceTo( center) < click.distanceTo( center)) {
+        line.reverse();
+    }
+}
+
+/**
+ * Create a sorted array with angles from the lines intersection point
+ * to the starting points and their revers angles.
+ * Ensure, that line1 and line2 are in CCW order.
+ * Compute an offset for quadrant() methode.
+ *
+ * @param line A selected line for the dimension
+ * @param click The click pos which selected the line
+ * @param center The intersection of the 2 lines to dimension
+ */
+void RS_ActionDimAngular::lineOrder(const RS_Vector &dimPos)
+{
+    if( ! center.valid) {
+        return;
+    }
+
+    // starting point angles and selection point angle from intersection point
+    double  a0  {(dimPos - center).angle()};
+    double  a1  {(line1.getStartpoint() - center).angle()};
+    double  a2  {(line2.getStartpoint() - center).angle()};
+
+    // swap lines if necessary to ensure CCW order
+    if( RS_Math::correctAngle2( a1 - a0) > RS_Math::correctAngle2( a2 - a0)) {
+        RS_Line swapLines( line1);
+        line1 = line2;
+        line2 = swapLines;
+        double  swapAngle {a1};
+        a1 = a2;
+        a2 = swapAngle;
+    }
+
+    // sorted array with starting point and reverse angles
+    angles.clear();
+    angles.push_back( a1);
+    angles.push_back( RS_Math::correctAngle( a1 + M_PI));
+    angles.push_back( a2);
+    angles.push_back( RS_Math::correctAngle( a2 + M_PI));
+    std::sort( angles.begin(), angles.end());
+
+    // find starting quadrant and compute the offset for quadrant() method
+    int startQuadrant = 0;
+    for( auto angle : angles) {
+        if( RS_Math::equal( a1, angle)) {
+            break;
+        }
+        ++startQuadrant;
+    }
+    quadrantOffset = 0x03 & (4 - startQuadrant);
+}
+
+/**
+ * Find the quadrant of \p angle relative to 1st quadrant.
+ * When the angle lines are selected, the starting quadrant
+ * is shifted to become 0 by \p quadrantOffset.
+ * This is the criterion how the angles dimension is drawn.
+ *
+ * @param angle The angle, e.g. mouse or coordinate position
+ * @return The quadrant of \p angle, relative to the 1st selection quadrant
+ */
+int RS_ActionDimAngular::quadrant(const double angle)
+{
+    if( 1 > angles.size()) {
+        return 0;
+    }
+
+    double a1 {RS_Math::correctAngle2( angles.at(0) - angle)};
+    double a2 {RS_Math::correctAngle2( angles.at(1) - angle)};
+
+    int angleQuadrant {0};
+    if( 0.0 < a1 && 0.0 < a2) {
+        angleQuadrant = 3;
+    }
+    else if( 0.0 >= a1 && 0.0 >= a2) {
+        angleQuadrant = 1;
+    }
+    else if( 0.0 < a1 && 0.0 >= a2) {
+        angleQuadrant = 2;
+    }
+
+    return (0x03 & (angleQuadrant + quadrantOffset));
+}
+
+/**
+ * On \p mouseMoveEvent, \p mouseReleaseEvent and \p coordinateEvent
+ * this methode sets the dimension data appropriate to the mouse
+ * cursor/coordinate in \p dimPos.
+ * When \p calcCenter is true, the intersection point and other static
+ * values are computed. This is only necessary, when line selection changes,
+ * e.g. on \p mouseReleaseEvent. For \p mouseMoveEvent calcCenter is false.
+ *
+ * @param dimPos The mouse/coordinate position
+ * @param calcCenter If true, the center and corresponding values are calculated
+ * @return true If the dimension data were set, false is a parameter is invalid
+ */
+bool RS_ActionDimAngular::setData(const RS_Vector &dimPos, const bool calcCenter /*= false*/)
+{
+    if( ! line1.getStartpoint().valid || ! line2.getStartpoint().valid) {
+        return false;
+    }
+
+    if ( ! center.valid || calcCenter) {
+        RS_VectorSolutions sol = RS_Information::getIntersectionLineLine( &line1, &line2);
+        center = sol.get(0);
+    }
+    if ( ! center.valid) {
+        return false;
+    }
+
+    if( calcCenter) {
+        justify( line1, click1);
+        justify( line2, click2);
+        lineOrder( dimPos);
+    }
+
+    edata->definitionPoint4 = dimPos;
+    switch( quadrant( (dimPos - center).angle())) {
+    default:
+    case 0:
+        edata->definitionPoint1 = line1.getEndpoint();
+        edata->definitionPoint2 = line1.getStartpoint();
+        edata->definitionPoint3 = line2.getEndpoint();
+        data->definitionPoint   = line2.getStartpoint();
+        break;
+
+    case 1:
+        edata->definitionPoint1 = line2.getEndpoint();
+        edata->definitionPoint2 = line2.getStartpoint();
+        edata->definitionPoint3 = line1.getStartpoint();
+        data->definitionPoint   = line1.getEndpoint();
+        break;
+
+    case 2:
+        edata->definitionPoint1 = line2.getEndpoint();
+        edata->definitionPoint2 = line2.getStartpoint();
+        edata->definitionPoint3 = line1.getEndpoint();
+        data->definitionPoint   = line1.getStartpoint();
+        break;
+
+    case 3:
+        edata->definitionPoint1 = line2.getStartpoint();
+        edata->definitionPoint2 = line2.getEndpoint();
+        edata->definitionPoint3 = line1.getEndpoint();
+        data->definitionPoint   = line1.getStartpoint();
+        break;
+    }
+
+    return true;
 }
 
 // EOF

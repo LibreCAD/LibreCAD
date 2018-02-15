@@ -390,6 +390,36 @@ double RS_Vector::dotP(const RS_Vector& v1, const RS_Vector& v2) {
 	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
 }
 
+/**
+ * Get position of \p pos in line \p start -> \p end,
+ * as a factor of line length.
+ *
+ * @param start Start point of the line
+ * @param end End point of the line
+ * @param pos Point to calculate
+ * @return double factor of line length,
+ *         factor == 0.0 : \p pos is same as start point
+ *         factor == 1.0 : \p pos is same as end point
+ *         factor < 0.0 : \p pos is in opposite direction
+ *         factor > 1.0 : \p pos is behind end point
+ *         factor > 0.0 and < 1.0 : \p pos is somewhere between start and end
+ */
+double RS_Vector::posInLine(const RS_Vector& start,
+                            const RS_Vector& end,
+                            const RS_Vector& pos)
+{
+    RS_Vector dirEnd {end - start};
+    RS_Vector dirPos {pos - start};
+    double lenSquared {dirEnd.squared()};
+
+    if( RS_TOLERANCE2 > lenSquared ) {
+        // line too short
+        return start.distanceTo( pos);
+    }
+
+    return dotP( dirPos, dirEnd) / lenSquared;
+}
+
 /** switch x,y for all vectors */
 RS_Vector RS_Vector::flipXY(void) const{
 	return {y, x};

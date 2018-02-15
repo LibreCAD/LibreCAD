@@ -36,6 +36,17 @@ class LC_Quadratic;
  * Holds the data that defines a line.
  */
 struct RS_LineData {
+    RS_LineData() :
+        startpoint( false),
+        endpoint( false)
+    {}
+
+    RS_LineData(const RS_Vector& point1,
+                const RS_Vector& point2) :
+        startpoint( point1),
+        endpoint( point2)
+    {}
+
     RS_Vector startpoint;
     RS_Vector endpoint;
 };
