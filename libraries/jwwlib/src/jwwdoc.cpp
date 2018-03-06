@@ -3,14 +3,14 @@
 #define	LINEBUF_SIZE	1024
 
 #ifdef _MSC_VER
-void CDataSen::Serialize(std::ofstream& ofstr)
+void CDataSen::Serialize(std::ofstream& ofstr) const
 {
     CData::Serialize(ofstr);
     ofstr	<< (double)m_start.x << (double)m_start.y
         << (double)m_end.x << (double)m_end.y;
 }
 
-void CDataEnko::Serialize(std::ofstream& ofstr)
+void CDataEnko::Serialize(std::ofstream& ofstr) const
 {
     CData::Serialize(ofstr);
     ofstr	<< (double)m_start.x << (double)m_start.y
@@ -22,7 +22,7 @@ void CDataEnko::Serialize(std::ofstream& ofstr)
         << (DWORD )m_bZenEnFlg;
 }
 
-void CDataTen::Serialize(std::ofstream& ofstr)
+void CDataTen::Serialize(std::ofstream& ofstr) const
 {
     m_nPenStyle = 1;
     if( nOldVersionSave >= 252 ){   //Ver.2.52以降
@@ -40,7 +40,7 @@ void CDataTen::Serialize(std::ofstream& ofstr)
     }
 }
 
-void CDataMoji::Serialize(std::ofstream& ofstr)
+void CDataMoji::Serialize(std::ofstream& ofstr) const
 {
 ////////////////////////////////////////////
 //SKIP        m_nPenWidth = m_nSunpouFlg; //  (寸法値設定のフラグ)ヘッダーメンバー
@@ -85,7 +85,7 @@ void CDataMoji::Serialize(std::ofstream& ofstr)
         m_nMojiShu = (m_nMojiShu % 10000);
 }
 
-void CDataSolid::Serialize(std::ofstream& ofstr)
+void CDataSolid::Serialize(std::ofstream& ofstr) const
 {
     CData::Serialize(ofstr);
     ofstr << (double)m_start.x << (double)m_start.y
@@ -97,7 +97,7 @@ void CDataSolid::Serialize(std::ofstream& ofstr)
     }
 }
 
-void CDataBlock::Serialize(std::ofstream& ofstr)
+void CDataBlock::Serialize(std::ofstream& ofstr) const
 {
     CData::Serialize(ofstr);
     ofstr <<(double)m_DPKijunTen.x <<(double)m_DPKijunTen.y
