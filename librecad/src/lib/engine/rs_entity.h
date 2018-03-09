@@ -60,8 +60,6 @@ class QString;
  */
 class RS_Entity : public RS_Undoable {
 public:
-
-	RS_Entity()=default;
 	RS_Entity(RS_EntityContainer* parent=nullptr);
 	virtual ~RS_Entity() = default;
 
