@@ -68,7 +68,7 @@
 	* shpopen.c/shapefil.h: Handle the .shp file length limits more
 	gracefully. (http://trac.osgeo.org/gdal/ticket/3236)
 
-	* shpopen.c: Improve the numerical accurancy of algorithms in
+	* shpopen.c: Improve the numerical accuracy of algorithms in
 	SHPRewind() (http://trac.osgeo.org/gdal/ticket/3363).
 
 2010-01-16  Frank Warmerdam  <warmerdam@pobox.com>
