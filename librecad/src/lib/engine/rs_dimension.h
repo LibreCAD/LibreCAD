@@ -177,7 +177,7 @@ public:
     double getExtensionLineOffset();
     double getDimensionLineGap();
     double getTextHeight();
-    bool getAlignText();
+    bool getInsideHorizontalText();
     bool getFixedLengthOn();
     double getFixedLength();
     RS2::LineWidth getExtensionLineWidth();
@@ -200,6 +200,16 @@ public:
 		void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
 		void scale(const RS_Vector& center, const RS_Vector& factor) override;
 		void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+
+private:
+    static RS_VectorSolutions  getIntersectionsLineContainer(
+        const RS_Line* l, const RS_EntityContainer* c, bool infiniteLine=false);
+    void updateCreateHorizontalTextDimensionLine(
+        const RS_Vector& p1, const RS_Vector& p2,
+        bool arrow1=true, bool arrow2=true, bool autoText=false);
+    void updateCreateAlignedTextDimensionLine(
+        const RS_Vector& p1, const RS_Vector& p2,
+        bool arrow1=true, bool arrow2=true, bool autoText=false);
 
 protected:
     /** Data common to all dimension entities. */

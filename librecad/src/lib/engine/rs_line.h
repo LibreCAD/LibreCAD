@@ -163,6 +163,7 @@ public:
      * @return a perpendicular vector
      */
     RS_Vector getNormalVector() const;
+    double getProjectionValueAlongLine(const RS_Vector& coord) const;
     RS_Vector getMiddlePoint() const override;
     RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                  double* dist = nullptr) const override;

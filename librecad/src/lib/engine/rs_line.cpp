@@ -112,6 +112,30 @@ RS_Vector RS_Line::getNearestEndpoint(const RS_Vector& coord,
 
 }
 
+/**
+ *  This is similar to getNearestPointOnEntity, but only returns the value of
+ *  the position of the projection.  The value may be negative, or greater than
+ *  the length of the line since there are no bounds checking.  The absolute
+ *  value of the return value represents a physical distance from the
+ *  startpoint.
+ *
+ *  @param coord The point which will be projected onto the line.
+ */
+double RS_Line::getProjectionValueAlongLine(const RS_Vector& coord) const
+{
+    RS_Vector direction {data.endpoint - data.startpoint};
+    RS_Vector vpc {coord - data.startpoint};
+    double direction_magnitude {direction.magnitude()};
+    double v = 0.0;
+
+    if(direction_magnitude > RS_TOLERANCE2) {
+        //find projection on line
+        v = RS_Vector::dotP(vpc, direction) / direction_magnitude;
+    }
+
+    return v;
+}
+
 RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
                                            bool onEntity,
                                            double* dist,
