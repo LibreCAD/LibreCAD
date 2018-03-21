@@ -361,7 +361,7 @@ void RS_DimAngular::updateDim(bool autoText /*= false*/)
                              RS_MTextData::LeftToRight,
                              RS_MTextData::Exact,
                              1.0,
-                             getMeasuredLabel(),
+                             getLabel(),
                              getTextStyle(),
                              textAngle);
 
