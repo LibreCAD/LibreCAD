@@ -44,7 +44,6 @@ class RS_BlockListListener;
  */
 class RS_BlockList {
 public:
-	RS_BlockList()=default;
     RS_BlockList(bool owner=false);
 	virtual ~RS_BlockList() = default;
 
