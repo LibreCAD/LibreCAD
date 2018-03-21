@@ -283,7 +283,7 @@ void RS_ActionDimAngular::justify(RS_Line &line, const RS_Vector &click)
  * Create a sorted array with angles from the lines intersection point
  * to the starting points and their revers angles.
  * Ensure, that line1 and line2 are in CCW order.
- * Compute an offset for quadrant() methode.
+ * Compute an offset for quadrant() method.
  *
  * @param line A selected line for the dimension
  * @param click The click pos which selected the line
@@ -363,7 +363,7 @@ int RS_ActionDimAngular::quadrant(const double angle)
 
 /**
  * On \p mouseMoveEvent, \p mouseReleaseEvent and \p coordinateEvent
- * this methode sets the dimension data appropriate to the mouse
+ * this method sets the dimension data appropriate to the mouse
  * cursor/coordinate in \p dimPos.
  * When \p calcCenter is true, the intersection point and other static
  * values are computed. This is only necessary, when line selection changes,

@@ -350,7 +350,7 @@ public:
 	void setPrinting(bool p);
 
 	/**
-		 * @retval true This is a a graphic view for printing.
+		 * @retval true This is a graphic view for printing.
 		 * @retval false setSnapOtherwise.
 		 */
 	bool isPrinting() const;

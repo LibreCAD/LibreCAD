@@ -449,7 +449,7 @@ public:
     virtual bool getPoint(QPointF *point, const QString& mesage = "", QPointF *base = 0) = 0;
 
     //! Select a entity.
-    /*! Prompt message or a default message to the user asking for a sigle selection.
+    /*! Prompt message or a default message to the user asking for a single selection.
     * You can delete the Plug_Entity wen no more needed.
     * \param mesage an optional QString with prompt message.
     * \return a Plug_Entity handle the selected entity or NULL.
