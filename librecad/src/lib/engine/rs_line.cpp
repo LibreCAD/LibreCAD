@@ -579,7 +579,9 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
 
     if ((endPoints[0] - getStartpoint()).squared() >
             (endPoints[1] - getStartpoint()).squared() )
+    {
         std::swap(endPoints[0],endPoints[1]);
+    }
 
 	RS_Vector pStart{view->toGui(endPoints.at(0))};
 	RS_Vector pEnd{view->toGui(endPoints.at(1))};
@@ -590,7 +592,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
         //extend line on a construction layer to fill the whole view
 		RS_VectorSolutions vpIts;
 		for(auto p: ec) {
-			auto const sol=RS_Information::getIntersection(this, p, false);
+            auto const sol=RS_Information::getIntersection(this, p, true);
 			for (auto const& vp: sol) {
 				if (vpIts.getClosestDistance(vp) <= RS_TOLERANCE * 10.)
 					continue;
