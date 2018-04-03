@@ -60,36 +60,36 @@ std::ostream& operator << (std::ostream& os, const RS_LineData& ld);
  */
 class RS_Line : public RS_AtomicEntity {
 public:
-	RS_Line() = default;
+    RS_Line() = default;
     RS_Line(RS_EntityContainer* parent,
             const RS_LineData& d);
     RS_Line(RS_EntityContainer* parent, const RS_Vector& pStart, const RS_Vector& pEnd);
     RS_Line(const RS_Vector& pStart, const RS_Vector& pEnd);
 
-	RS_Entity* clone() const override;
+    RS_Entity* clone() const override;
 
-    /**	@return RS2::EntityLine */
-	RS2::EntityType rtti() const override{
+    /** @return RS2::EntityLine */
+    RS2::EntityType rtti() const override{
         return RS2::EntityLine;
     }
     /** @return true */
-	bool isEdge() const override{
+    bool isEdge() const override{
         return true;
     }
 
     /** @return Copy of data that defines the line. */
-	RS_LineData getData() const{
+    RS_LineData getData() const{
         return data;
     }
 
-	RS_VectorSolutions getRefPoints() const override;
+    RS_VectorSolutions getRefPoints() const override;
 
     /** @return Start point of the entity */
-	RS_Vector getStartpoint() const override{
+    RS_Vector getStartpoint() const override{
         return data.startpoint;
     }
     /** @return End point of the entity */
-	RS_Vector getEndpoint() const override{
+    RS_Vector getEndpoint() const override{
         return data.endpoint;
     }
     /** Sets the startpoint */
@@ -106,25 +106,25 @@ public:
      * @return Direction 1. The angle at which the line starts at
      * the startpoint.
      */
-	double getDirection1() const override{
+    double getDirection1() const override{
         return getAngle1();
     }
     /**
      * @return Direction 2. The angle at which the line starts at
      * the endpoint.
      */
-	double getDirection2() const override{
+    double getDirection2() const override{
         return getAngle2();
     }
-	RS_Vector getTangentDirection(const RS_Vector& point)const override;
+    RS_Vector getTangentDirection(const RS_Vector& point)const override;
 
-	void moveStartpoint(const RS_Vector& pos) override;
-	void moveEndpoint(const RS_Vector& pos) override;
-	RS2::Ending getTrimPoint(const RS_Vector& trimCoord,
-									 const RS_Vector& trimPoint) override;
-	RS_Vector prepareTrim(const RS_Vector& trimCoord,
-								  const RS_VectorSolutions& trimSol) override;
-	void reverse() override;
+    void moveStartpoint(const RS_Vector& pos) override;
+    void moveEndpoint(const RS_Vector& pos) override;
+    RS2::Ending getTrimPoint(const RS_Vector& trimCoord,
+                             const RS_Vector& trimPoint) override;
+    RS_Vector prepareTrim(const RS_Vector& trimCoord,
+                          const RS_VectorSolutions& trimSol) override;
+    void reverse() override;
     /** Sets the y coordinate of the startpoint */
     void setStartpointY(double val) {
         data.startpoint.y = val;
@@ -135,98 +135,99 @@ public:
         data.endpoint.y = val;
         calculateBorders();
     }
-	bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) override;
+    bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) override;
 
     /**
      * @return The length of the line.
      */
-	double getLength() const override{
+    double getLength() const override{
         return data.startpoint.distanceTo(data.endpoint);
     }
 
     /**
      * @return The angle of the line (from start to endpoint).
      */
-	double getAngle1() const{
+    double getAngle1() const{
         return data.startpoint.angleTo(data.endpoint);
     }
 
     /**
      * @return The angle of the line (from end to startpoint).
      */
-	double getAngle2() const{
+    double getAngle2() const{
         return data.endpoint.angleTo(data.startpoint);
     }
-	bool isTangent(const RS_CircleData&  circleData) const override;
-
-/**
-  * @return a perpendicular vector
-  */
-	RS_Vector getNormalVector() const;
-	RS_Vector getMiddlePoint()const override;
-	RS_Vector getNearestEndpoint(const RS_Vector& coord,
-										 double* dist = nullptr)const override;
-	RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-			bool onEntity=true, double* dist = nullptr, RS_Entity** entity=nullptr)const override;
-//    RS_Vector getNearestCenter(const RS_Vector& coord,
-//                                       double* dist = nullptr);
-	RS_Vector getNearestMiddle(const RS_Vector& coord,
-									   double* dist = nullptr,
-                                       int middlePoints = 1
-									   )const override;
-	RS_Vector getNearestDist(double distance,
-                                     const RS_Vector& coord,
-									 double* dist = nullptr)const override;
-	RS_Vector getNearestDist(double distance,
-									 bool startp)const override;
+    bool isTangent(const RS_CircleData&  circleData) const override;
 
     /**
-          * implementations must revert the direction of an atomic entity
-          */
-	void revertDirection() override;
-	 std::vector<RS_Entity* > offsetTwoSides(const double& distance) const override;
+     * @return a perpendicular vector
+     */
+    RS_Vector getNormalVector() const;
+    double getProjectionValueAlongLine(const RS_Vector& coord) const;
+    RS_Vector getMiddlePoint() const override;
+    RS_Vector getNearestEndpoint(const RS_Vector& coord,
+                                 double* dist = nullptr) const override;
+    RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
+                                      bool onEntity = true,
+                                      double* dist = nullptr,
+                                      RS_Entity** entity=nullptr) const override;
+    RS_Vector getNearestMiddle(const RS_Vector& coord,
+                               double* dist = nullptr,
+                               int middlePoints = 1) const override;
+    RS_Vector getNearestDist(double distance,
+                             const RS_Vector& coord,
+                             double* dist = nullptr) const override;
+    RS_Vector getNearestDist(double distance,
+                             bool startp) const override;
+
     /**
-      * the modify offset action
-      */
-	bool offset(const RS_Vector& coord, const double& distance) override;
-	void move(const RS_Vector& offset) override;
-	void rotate(const double& angle);
-	void rotate(const RS_Vector& center, const double& angle) override;
-	void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
-	void scale(const RS_Vector& factor) override;
-	void scale(const RS_Vector& center, const RS_Vector& factor) override;
-	void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
-	void stretch(const RS_Vector& firstCorner,
-                         const RS_Vector& secondCorner,
-						 const RS_Vector& offset) override;
-	void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
+     * implementations must revert the direction of an atomic entity
+     */
+    void revertDirection() override;
+    std::vector<RS_Entity* > offsetTwoSides(const double& distance) const override;
+    /**
+     * the modify offset action
+     */
+    bool offset(const RS_Vector& coord, const double& distance) override;
+    void move(const RS_Vector& offset) override;
+    void rotate(const double& angle);
+    void rotate(const RS_Vector& center, const double& angle) override;
+    void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+    void scale(const RS_Vector& factor) override;
+    void scale(const RS_Vector& center, const RS_Vector& factor) override;
+    void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+    void stretch(const RS_Vector& firstCorner,
+                 const RS_Vector& secondCorner,
+                 const RS_Vector& offset) override;
+    void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
 
     /** whether the entity's bounding box intersects with visible portion of graphic view */
-	void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
 
     friend std::ostream& operator << (std::ostream& os, const RS_Line& l);
 
-	void calculateBorders() override;
-	/** \brief getQuadratic() returns the equation of the entity
-for quadratic,
-
-return a vector contains:
-m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
-
-for linear:
-m0 x + m1 y + m2 =0
-**/
-	LC_Quadratic getQuadratic() const override;
+    void calculateBorders() override;
     /**
-	 * @brief areaLineIntegral line integral for contour area calculation by Green's Theorem
+     * @brief getQuadratic() returns the equation of the entity
+     * for quadratic,
+     *
+     * return a vector contains:
+     * m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+     *
+     * for linear:
+     * m0 x + m1 y + m2 =0
+     */
+    LC_Quadratic getQuadratic() const override;
+    /**
+     * @brief areaLineIntegral line integral for contour area calculation by Green's Theorem
      * Contour Area =\oint x dy
      * @return line integral \oint x dy along the entity
      * \oint x dy = 0.5*(x0+x1)*(y1-y0)
      */
-	double areaLineIntegral() const override;
+    double areaLineIntegral() const override;
 
 protected:
-	RS_LineData data;
+    RS_LineData data;
 };
 
 #endif
