@@ -312,7 +312,7 @@ void RS_Polyline::endPolyline() {
 
         // add closing entity to the polyline:
         closingEntity = createVertex(data.startpoint, nextBulge);
-		if (closingEntity) {
+		if (closingEntity && closingEntity->getLength()>1.0E-4) {
             RS_EntityContainer::addEntity(closingEntity);
             //data.endpoint = data.startpoint;
         }
@@ -510,7 +510,7 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
         en1->getNearestEndpoint(vStart,&d0);
         en1->getNearestEndpoint(vEnd,&d1);
         if(d0<d1) en0->revertDirection();
-        for(i=1;i<length;en0=en1){
+        for(i=1;i<length;i++){
                 //linked to head-tail chain
             en1=entityAt(i);
             vStart=en1->getStartpoint();
@@ -519,8 +519,12 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
             en0->getNearestEndpoint(vEnd,&d1);
             if(d0>d1) en1->revertDirection();
             intersections[i-1]=(en0->getEndpoint()+en1->getStartpoint())*0.5;
-            i++;
+            en0=en1;
         }
+		if (isClosed()) {
+			en1=entityAt(0);
+            intersections[length-1]=(en0->getEndpoint()+en1->getStartpoint())*0.5;
+		}
 
     }
     RS_Entity* en(getNearestEntity(coord, &dist, RS2::ResolveNone));
@@ -594,31 +598,46 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
     }
     //trim
     //connect and trim        RS_Modification m(*container, graphicView);
-    for(i=0;i<length-1;i++){
-        RS_VectorSolutions sol0=RS_Information::getIntersection(pnew->entityAt(i),pnew->entityAt(i+1),true);
-        if(sol0.getNumber()==0) {
-            sol0=RS_Information::getIntersection(pnew->entityAt(i),pnew->entityAt(i+1));
+    for(i=0;i<length;i++){
+		RS_Entity* en0;
+		RS_Entity* en1;
+		if (i<length-1){
+			en0=pnew->entityAt(i);
+			en1=pnew->entityAt(i+1);
+		}else{
+			if (isClosed()) {
+				en0=pnew->entityAt(i);
+				en1=pnew->entityAt(0);
+			}else{
+				break;			
+			}
+		}
+		RS_VectorSolutions sol0=RS_Information::getIntersection(en0,en1,true);
+        if(sol0.getNumber()==0){
+            sol0=RS_Information::getIntersection(en0,en1);
 //            RS_Vector vp0(pnew->entityAt(i)->getEndpoint());
 //            RS_Vector vp1(pnew->entityAt(i+1)->getStartpoint());
 //            double a0(intersections.at(i).angleTo(vp0));
 //            double a1(intersections.at(i).angleTo(vp1));
             RS_VectorSolutions sol1;
-			for(const RS_Vector& vp: sol0){
-				if(!RS_Math::isAngleBetween(intersections.at(i).angleTo(vp),
-                                           pnew->entityAt(i)->getDirection2(),
-                                           pnew->entityAt(i+1)->getDirection1(),
-										   false)){
-					sol1.push_back(vp);
-                }
-            }
+			//This lead result isn't connected.
+			//for(const RS_Vector& vp: sol0){
+			//	if(!RS_Math::isAngleBetween(intersections.at(i).angleTo(vp),
+            //                               pnew->entityAt(i)->getDirection2(),
+            //                               pnew->entityAt(i+1)->getDirection1(),
+			//							   false)){
+			//		sol1.push_back(vp);
+            //    }
+            //}
+			sol1=sol0;
             if(sol1.getNumber()==0) continue;
             RS_Vector trimP(sol1.getClosest(intersections.at(i)));
-            static_cast<RS_AtomicEntity*>(pnew->entityAt(i))->trimEndpoint(trimP);
-            static_cast<RS_AtomicEntity*>(pnew->entityAt(i+1))->trimStartpoint(trimP);
+            static_cast<RS_AtomicEntity*>(en0)->trimEndpoint(trimP);
+            static_cast<RS_AtomicEntity*>(en1)->trimStartpoint(trimP);
         }else{
-            RS_Vector trimP(sol0.getClosest(pnew->entityAt(i)->getStartpoint()));
-            static_cast<RS_AtomicEntity*>(pnew->entityAt(i))->trimEndpoint(trimP);
-            static_cast<RS_AtomicEntity*>(pnew->entityAt(i+1))->trimStartpoint(trimP);
+            RS_Vector trimP(sol0.getClosest(intersections.at(i)));
+            static_cast<RS_AtomicEntity*>(en0)->trimEndpoint(trimP);
+            static_cast<RS_AtomicEntity*>(en1)->trimStartpoint(trimP);
         }
 
     }
