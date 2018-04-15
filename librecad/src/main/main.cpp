@@ -2,6 +2,8 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2018 A. Stebich (librecad@mail.lordofbikes.de)
+** Copyright (C) 2018 Simon Wells <simonrwells@gmail.com>
 ** Copyright (C) 2015-2016 ravas (github.com/r-a-v-a-s)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
@@ -240,7 +242,9 @@ int main(int argc, char** argv)
 
     RS_DEBUG->print("main: creating main window..");
     QC_ApplicationWindow appWin;
+#ifdef Q_OS_MAC
     app.installEventFilter(&appWin);
+#endif
     RS_DEBUG->print("main: setting caption");
     appWin.setWindowTitle(app.applicationName());
 
@@ -296,8 +300,10 @@ int main(int argc, char** argv)
     setlocale(LC_NUMERIC, "C");
 
     RS_DEBUG->print("main: loading files..");
+#ifdef Q_OS_MAC
     // get the file list from LC_Application
     fileList << app.fileList();
+#endif
     bool files_loaded = false;
     for (QStringList::Iterator it = fileList.begin(); it != fileList.end(); ++it )
     {
