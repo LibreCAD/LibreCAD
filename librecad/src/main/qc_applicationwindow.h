@@ -94,6 +94,8 @@ public:
     void setUndoEnable(bool enable);
     bool loadStyleSheet(QString path);
 
+    bool eventFilter(QObject *obj, QEvent *event) override;
+
     QMap<QString, QAction*> a_map;
     LC_ActionGroupManager* ag_manager;
 
@@ -134,6 +136,7 @@ public slots:
      * opens the given file.
      */
     void slotFileOpen(const QString& fileName, RS2::FormatType type);
+    void slotFileOpen(const QString& fileName); // Assume Unknown type
     void slotFileOpenRecent(QAction* action);
     /** saves a document */
     void slotFileSave();
