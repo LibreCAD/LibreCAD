@@ -177,7 +177,7 @@ void RS_DimAligned::updateDim(bool autoText) {
 	double extLength = edata.extensionPoint2.distanceTo(data.definitionPoint);
 
     if (getFixedLengthOn()){
-        double dimfxl = getFixedLength();
+        double dimfxl = getFixedLength()*dimscale;
         if (extLength-dimexo > dimfxl)
             dimexo =  extLength - dimfxl;
     }
