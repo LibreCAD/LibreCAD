@@ -211,12 +211,12 @@ void RS_DimLinear::updateDim(bool autoText) {
             extAngle2 = edata.extensionPoint2.angleTo(dimP2);
     }
 
-	RS_Vector vDimexe1 = RS_Vector::polar(dimexe, extAngle1);
-	RS_Vector vDimexe2 = RS_Vector::polar(dimexe, extAngle2);
+    RS_Vector vDimexe1 = RS_Vector::polar(dimexe, extAngle1);
+    RS_Vector vDimexe2 = RS_Vector::polar(dimexe, extAngle2);
 
-	RS_Vector vDimexo1, vDimexo2;
-	if (getFixedLengthOn()){
-        double dimfxl = getFixedLength();
+    RS_Vector vDimexo1, vDimexo2;
+    if (getFixedLengthOn()){
+        double dimfxl = getFixedLength()*dimscale;
         double extLength = (edata.extensionPoint1-dimP1).magnitude();
         if (extLength-dimexo > dimfxl)
             vDimexo1.setPolar(extLength - dimfxl, extAngle1);
