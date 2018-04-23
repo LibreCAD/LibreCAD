@@ -44,9 +44,11 @@ protected slots:
 private:
     void loadSettings();
     void updateCheckbox(QCheckBox* checkbox, QString name, int defaultValue);
+    void updateDoubleSpinBox(QDoubleSpinBox* dSpinBox, QString name, double defaultValue);
 
     void saveSettings();
     void saveBoolean(QString name, QCheckBox* checkbox);
+    void saveDouble(QString name, QDoubleSpinBox* dSpinBox);
 };
 
 #endif

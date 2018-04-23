@@ -3,6 +3,7 @@
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 ** Copyright (C) 2014 Christian Luginbühl (dinkel@pimprecords.com)
+** Copyright (C) 2018 Andrey Yaromenok (ayaromenok@gmail.com)
 **
 **
 ** This program is free software; you can redistribute it and/or modify
@@ -59,7 +60,11 @@ public:
                    bool writeInvisibleLayers = true,
                    bool writeConstructionLayers = true,
                    bool writeBlocksInline = false,
-                   bool convertEllipsesToBeziers = false);
+                   bool convertEllipsesToBeziers = false,
+                   bool exportImages = false,
+                   bool convertLineTypes = false,
+                   double defaultElementWidth = 1.0,
+                   double defaultDashLinePatternLength = 10.0);
 
 	~LC_MakerCamSVG() = default;
 
@@ -90,6 +95,7 @@ private:
 
     void writeCubicBeziers(const std::vector<RS_Vector> &control_points, bool is_closed);
     void writeQuadraticBeziers(const std::vector<RS_Vector> &control_points, bool is_closed);
+    void writeImage(RS_Image* image);
 
     std::vector<RS_Vector> calcCubicBezierPoints(const std::vector<RS_Vector> &control_points, bool is_closed);
     std::vector<RS_Vector> calcQuadraticBezierPoints(const std::vector<RS_Vector> &control_points, bool is_closed);
@@ -111,17 +117,26 @@ private:
     std::string svgPathMoveTo(RS_Vector point) const;
     std::string svgPathArc(RS_Arc* arc) const;
     std::string svgPathArc(RS_Vector point, double radius_x, double radius_y, double x_axis_rotation, bool large_arc_flag, bool sweep_flag) const;
+    std::string svgPathAnyLineType(RS_Vector startpoint, RS_Vector endpoint, RS2::LineType type) const;
+    std::string getLinePattern(RS_Vector *lastPos, RS_Vector step, RS2::LineType type, double lineScale) const;
+    std::string getPointSegment(RS_Vector *lastPos, RS_Vector step, double lineScale)const;
+    std::string getLineSegment(RS_Vector *lastPos, RS_Vector step, double lineScale, bool x2 = false)const;
+
 
     RS_Vector calcEllipsePointDerivative(double majorradius, double minorradius, double x_axis_rotation, double angle) const;
 
     static double calcAlpha(double angle);
 
+    std::unique_ptr<LC_XMLWriterInterface> xmlWriter;
+
     bool writeInvisibleLayers;
     bool writeConstructionLayers;
     bool writeBlocksInline;
     bool convertEllipsesToBeziers;
-
-    std::unique_ptr<LC_XMLWriterInterface> xmlWriter;
+    bool exportImages;
+    bool convertLineTypes;
+    double defaultElementWidth;
+    double defaultDashLinePatternLength;
 
     RS_Vector min;
     RS_Vector max;
@@ -133,6 +148,7 @@ private:
      * @brief lengthFactor factor from current unit to svg length units
      */
     double lengthFactor;
+
 };
 
 #endif

@@ -3,6 +3,7 @@
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 ** Copyright (C) 2014 Christian Luginbühl (dinkel@pimprecords.com)
+** Copyright (C) 2018 Andrey Yaromenok (ayaromenok@gmail.com)
 **
 **
 ** This program is free software; you can redistribute it and/or modify
@@ -66,12 +67,21 @@ LC_MakerCamSVG::LC_MakerCamSVG(LC_XMLWriterInterface* xmlWriter,
                                bool writeInvisibleLayers,
                                bool writeConstructionLayers,
 							   bool writeBlocksInline,
-							   bool convertEllipsesToBeziers):
-	writeInvisibleLayers(writeInvisibleLayers)
+                               bool convertEllipsesToBeziers,
+                               bool exportImages,
+                               bool convertLineTypes,
+                               double defaultElementWidth,
+                               double defaultDashLinePatternLength):
+  xmlWriter(xmlWriter)
+  ,writeInvisibleLayers(writeInvisibleLayers)
   ,writeConstructionLayers(writeConstructionLayers)
   ,writeBlocksInline(writeBlocksInline)
   ,convertEllipsesToBeziers(convertEllipsesToBeziers)
-  ,xmlWriter(xmlWriter)
+  ,exportImages(exportImages)
+  ,convertLineTypes(convertLineTypes)
+  ,defaultElementWidth(defaultElementWidth)
+  ,defaultDashLinePatternLength(defaultDashLinePatternLength)
+
   ,offset(0.,0.)
 {
     RS_DEBUG->print("RS_MakerCamSVG::RS_MakerCamSVG()");
@@ -201,7 +211,7 @@ void LC_MakerCamSVG::writeLayer(RS_Document* document, RS_Layer* layer) {
 
             xmlWriter->addAttribute("fill", "none");
             xmlWriter->addAttribute("stroke", "black");
-            xmlWriter->addAttribute("stroke-width", "1");
+            xmlWriter->addAttribute("stroke-width", QString::number(defaultElementWidth).toStdString());
 
             writeEntities(document, layer);
 
@@ -267,6 +277,9 @@ void LC_MakerCamSVG::writeEntity(RS_Entity* entity) {
             break;
         case RS2::EntitySplinePoints:
             writeSplinepoints((LC_SplinePoints*)entity);
+            break;
+        case RS2::EntityImage:
+            writeImage((RS_Image*)entity);
             break;
 
         default:
@@ -338,14 +351,36 @@ void LC_MakerCamSVG::writeLine(RS_Line* line) {
     RS_Vector startpoint = convertToSvg(line->getStartpoint());
     RS_Vector endpoint = convertToSvg(line->getEndpoint());
 
-    xmlWriter->addElement("line", NAMESPACE_URI_SVG);
+    RS_Pen pen = line->getPen();
+    RS2::LineType lineType = pen.getLineType();
 
-    xmlWriter->addAttribute("x1", lengthXml(startpoint.x));
-    xmlWriter->addAttribute("y1", lengthXml(startpoint.y));
-    xmlWriter->addAttribute("x2", lengthXml(endpoint.x));
-    xmlWriter->addAttribute("y2", lengthXml(endpoint.y));
+    if ((RS2::SolidLine != lineType) & convertLineTypes ) {
+        RS_DEBUG->print("RS_MakerCamSVG::writeLine: write baked line as path");
 
-    xmlWriter->closeElement();
+        std::string path;
+        path += svgPathAnyLineType(startpoint, endpoint, pen.getLineType());
+
+        xmlWriter->addElement("path", NAMESPACE_URI_SVG);
+        xmlWriter->addAttribute("id", QString::number(line->getId()).toStdString());
+        if (RS2::Width00 != pen.getWidth()){
+            xmlWriter->addAttribute("stroke-width", QString::number((pen.getWidth()/100.0)).toStdString());
+         } else {
+            xmlWriter->addAttribute("stroke-width", QString::number(defaultElementWidth).toStdString());
+        }
+        xmlWriter->addAttribute("d", path);
+        xmlWriter->closeElement();
+    }
+    else {
+        RS_DEBUG->print("RS_MakerCamSVG::writeLine: write standard line ");
+        xmlWriter->addElement("line", NAMESPACE_URI_SVG);
+
+        xmlWriter->addAttribute("x1", lengthXml(startpoint.x));
+        xmlWriter->addAttribute("y1", lengthXml(startpoint.y));
+        xmlWriter->addAttribute("x2", lengthXml(endpoint.x));
+        xmlWriter->addAttribute("y2", lengthXml(endpoint.y));
+
+        xmlWriter->closeElement();
+    }
 }
 
 void LC_MakerCamSVG::writePolyline(RS_Polyline* polyline) {
@@ -830,4 +865,199 @@ RS_Vector LC_MakerCamSVG::calcEllipsePointDerivative(double majorradius, double 
 double LC_MakerCamSVG::calcAlpha(double angle) {
 
     return sin(angle) * ((sqrt(4.0 + 3.0 * pow(tan(angle / 2), 2.0)) - 1.0) / 3.0);
+}
+
+void LC_MakerCamSVG::writeImage(RS_Image* image)
+{
+    RS_DEBUG->print("RS_MakerCamSVG::writeImage: Writing image ...");
+    if (exportImages){
+        RS_Vector insertionPoint = convertToSvg(image->getInsertionPoint());
+
+        xmlWriter->addElement("image", NAMESPACE_URI_SVG);
+        xmlWriter->addAttribute("x", lengthXml(insertionPoint.x));
+        xmlWriter->addAttribute("y", lengthXml(insertionPoint.y - image->getImageHeight()));
+        xmlWriter->addAttribute("height", lengthXml(image->getImageHeight()));
+        xmlWriter->addAttribute("width", lengthXml(image->getImageWidth()));
+        xmlWriter->addAttribute("preserveAspectRatio", "none");  //height and width above used
+        xmlWriter->addAttribute("xlink:href", image->getData().file.toStdString());
+        xmlWriter->closeElement();
+    }
+}
+
+
+std::string LC_MakerCamSVG::svgPathAnyLineType(RS_Vector startpoint, RS_Vector endpoint, RS2::LineType type) const
+{
+    RS_DEBUG->print("RS_MakerCamSVG::svgPathUniLineType: convert line to dot/dash path");
+
+    const int dotFactor     = 1;    // ..........
+    const int dashFactor    = 3;    // -- -- -- --
+    const int dashDotFactor = 4;    // --. --. --.
+    const int divideFactor  = 5;    // --.. --.. --.. --..
+    const int centerFactor  = 5;    // -- - -- - -- -
+    const int borderFactor  = 7;    // -- -- . -- -- . -- -- .
+
+    const double lineScaleTiny  = 0.25;
+    const double lineScale2     = 0.5;
+    const double lineScaleOne   = 1.0;
+    const double lineScaleX2    = 2.0;
+
+    std::string path;
+    double lineScale;
+    double lineFactor;
+
+    double lineLengh = startpoint.distanceTo(endpoint);
+    switch(type){
+
+    case RS2::DotLineTiny:{ lineScale = lineScaleTiny; lineFactor = dotFactor; break;}
+    case RS2::DotLine2:{ lineScale = lineScale2; lineFactor = dotFactor; break;}
+    case RS2::DotLine:{ lineScale = lineScaleOne;  lineFactor = dotFactor; break;}
+    case RS2::DotLineX2:{ lineScale = lineScaleX2; lineFactor = dotFactor; break;}
+
+    case RS2::DashLineTiny:{ lineScale = lineScaleTiny; lineFactor = dashFactor; break;}
+    case RS2::DashLine2:{ lineScale = lineScale2; lineFactor = dashFactor; break;}
+    case RS2::DashLine:{ lineScale = lineScaleOne;  lineFactor = dashFactor; break;}
+    case RS2::DashLineX2:{ lineScale = lineScaleX2; lineFactor = dashFactor; break;}
+
+    case RS2::DashDotLineTiny:{ lineScale = lineScaleTiny; lineFactor = dashDotFactor; break;}
+    case RS2::DashDotLine2:{ lineScale = lineScale2; lineFactor = dashDotFactor; break;}
+    case RS2::DashDotLine:{ lineScale = lineScaleOne;  lineFactor = dashDotFactor; break;}
+    case RS2::DashDotLineX2:{ lineScale = lineScaleX2; lineFactor = dashDotFactor; break;}
+
+    case RS2::DivideLineTiny:{ lineScale = lineScaleTiny; lineFactor = divideFactor; break;}
+    case RS2::DivideLine2:{ lineScale = lineScale2; lineFactor = divideFactor; break;}
+    case RS2::DivideLine:{ lineScale = lineScaleOne;  lineFactor = divideFactor; break;}
+    case RS2::DivideLineX2:{ lineScale = lineScaleX2; lineFactor = divideFactor; break;}
+
+    case RS2::CenterLineTiny:{ lineScale = lineScaleTiny; lineFactor = centerFactor; break;}
+    case RS2::CenterLine2:{ lineScale = lineScale2; lineFactor = centerFactor; break;}
+    case RS2::CenterLine:{ lineScale = lineScaleOne;  lineFactor = centerFactor; break;}
+    case RS2::CenterLineX2:{ lineScale = lineScaleX2; lineFactor = centerFactor; break;}
+
+    case RS2::BorderLineTiny:{ lineScale = lineScaleTiny; lineFactor = borderFactor; break;}
+    case RS2::BorderLine2:{ lineScale = lineScale2; lineFactor = borderFactor; break;}
+    case RS2::BorderLine:{ lineScale = lineScaleOne;  lineFactor = borderFactor; break;}
+    case RS2::BorderLineX2:{ lineScale = lineScaleX2; lineFactor = borderFactor; break;}
+    default: { lineScale = lineScaleOne; lineFactor = dotFactor; break;}
+    }
+
+    //don't have any sence to have pattern longer than a line
+    double dashLinePatternLength = defaultDashLinePatternLength;
+
+    if (lineLengh < (dashLinePatternLength*lineFactor*lineScale)) {
+        dashLinePatternLength = lineLengh/(lineFactor*lineScale);
+        RS_DEBUG->print(RS_Debug::D_WARNING, "Line length shorter than a line pattern, updated length is %f mm", dashLinePatternLength);
+    }
+
+    double lineStep = lineScale*dashLinePatternLength*lineFactor;
+    int numOfIter = round(lineLengh/lineStep);
+
+    RS_Vector step((endpoint.x-startpoint.x)/numOfIter,(endpoint.y-startpoint.y)/numOfIter);
+    RS_Vector lastPos(startpoint.x, startpoint.y);
+
+    for (int i=0; i< numOfIter; i++){
+        path += getLinePattern(&lastPos, step, type, (1.0/lineFactor) );
+    }
+
+    return path;
+}
+
+std::string LC_MakerCamSVG::getLinePattern(RS_Vector *lastPos, RS_Vector step, RS2::LineType type, double lineScale) const
+{
+    std::string path;
+
+    switch(type){
+    case RS2::DotLineTiny:
+    case RS2::DotLine2:
+    case RS2::DotLine:
+    case RS2::DotLineX2:{
+        path += getPointSegment(lastPos, step, lineScale);
+        break;
+    }
+
+    case RS2::DashLineTiny:
+    case RS2::DashLine2:
+    case RS2::DashLine:
+    case RS2::DashLineX2:{
+        path += getLineSegment(lastPos, step, lineScale, true);
+        break;
+    }
+
+    case RS2::DashDotLineTiny:
+    case RS2::DashDotLine2:
+    case RS2::DashDotLine:
+    case RS2::DashDotLineX2:{
+        path += getLineSegment(lastPos, step, lineScale, true);
+        path += getPointSegment(lastPos, step, lineScale);
+        break;
+    }
+
+    case RS2::DivideLineTiny:
+    case RS2::DivideLine2:
+    case RS2::DivideLine:
+    case RS2::DivideLineX2: {
+        path += getLineSegment(lastPos, step, lineScale, true);
+        path += getPointSegment(lastPos, step, lineScale);
+        path += getPointSegment(lastPos, step, lineScale);
+        break;
+    }
+
+    case RS2::CenterLineTiny:
+    case RS2::CenterLine2:
+    case RS2::CenterLine:
+    case RS2::CenterLineX2:{
+        path += getLineSegment(lastPos, step, lineScale, true);
+        path += getLineSegment(lastPos, step, lineScale, false);
+        break;
+    }
+
+    case RS2::BorderLineTiny:
+    case RS2::BorderLine2:
+    case RS2::BorderLine:
+    case RS2::BorderLineX2:{
+        path += getLineSegment(lastPos, step, lineScale, true);
+        path += getLineSegment(lastPos, step, lineScale, true);
+        path += getPointSegment(lastPos, step, lineScale);
+        break;
+    }
+
+    default:{
+        RS_DEBUG->print(RS_Debug::D_WARNING,"RS_MakerCamSVG::getLinePattern: unsupported line type %d\n", type);
+        path += svgPathMoveTo(convertToSvg(*lastPos));
+        *lastPos += step*lineScale;
+        path += svgPathLineTo(convertToSvg(*lastPos));
+        break;
+    }
+    }
+    return path;
+}
+
+std::string LC_MakerCamSVG::getPointSegment(RS_Vector *lastPos, RS_Vector step, double lineScale) const
+{
+    std::string path;
+    //0.2 - is a diametr of point on early implementation of MakerCAM.
+    //! \todo need to add a option to control this value from export dialog and test on laser engraver
+    const double dotSize = 0.2;
+    double scaleTo;
+    if (abs(step.x) >= abs(step.y)){
+        scaleTo = dotSize/abs(step.x);
+    } else {
+        scaleTo = dotSize/abs(step.y);
+    }
+    path += svgPathMoveTo(*lastPos);
+    path += svgPathLineTo(*lastPos+step*scaleTo);
+    *lastPos += step*lineScale;
+    return path;
+}
+
+std::string LC_MakerCamSVG::getLineSegment(RS_Vector *lastPos, RS_Vector step, double lineScale, bool x2)const
+{
+    std::string path;
+    path += svgPathMoveTo(*lastPos);
+    if (x2)
+        *lastPos += (step*lineScale*2);
+    else
+        *lastPos += (step*lineScale);
+    path += svgPathLineTo(*lastPos);
+    *lastPos += step*lineScale;
+    return path;
 }
