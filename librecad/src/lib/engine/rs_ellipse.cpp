@@ -1769,7 +1769,7 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
 //    std::cout<<*this<<std::endl;
 	if (!(painter && view)) return;
 
-    //visible in grahic view
+    //visible in graphic view
 	if(!isVisibleInWindow(view)) return;
     double ra(getMajorRadius()*view->getFactor().x);
     double rb(getRatio()*ra);

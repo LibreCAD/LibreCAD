@@ -1063,7 +1063,7 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 
 
 /**
- * Draws an entity. Might be recusively called e.g. for polylines.
+ * Draws an entity. Might be recursively called e.g. for polylines.
  * If the class wide painter is nullptr a new painter will be created
  * and destroyed afterwards.
  *
@@ -1204,11 +1204,11 @@ void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity* e) {
 }
 /**
  * Deletes an entity with the background color.
- * Might be recusively called e.g. for polylines.
+ * Might be recursively called e.g. for polylines.
  */
 void RS_GraphicView::deleteEntity(RS_Entity* e) {
 
-	// RVT_PORT When we delete a single entoty, we can do this but we need to remove this then also from containerEntities
+	// RVT_PORT When we delete a single entity, we can do this but we need to remove this then also from containerEntities
 	RS_DEBUG->print("RS_GraphicView::deleteEntity will for now redraw the whole screen instead of just deleting the entity");
 	setDeleteMode(true);
 	drawEntity(e);

@@ -66,7 +66,7 @@ public:
 	//! \brief angular difference
 	static double getAngleDifference(double a1, double a2, bool reversed = false);
 	/**
-	 * @brief getAngleDifferenceU abs of minimum angular differenct, unsigned version of angular difference
+	 * @brief getAngleDifferenceU abs of minimum angular difference, unsigned version of angular difference
 	 * @param a1,a2 angles
 	 * @return the minimum of angular difference a1-a2 and a2-a1
 	 */
