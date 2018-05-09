@@ -950,7 +950,7 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
                   double& patternOffset) {
 
 	if (!( painter && view)) return;
-    //visible in grahic view
+    //visible in graphic view
     if(isVisibleInWindow(view)==false) return;
 
     RS_Vector cp=view->toGui(getCenter());
