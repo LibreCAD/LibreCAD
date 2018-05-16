@@ -879,7 +879,7 @@ void LC_MakerCamSVG::writeImage(RS_Image* image)
         xmlWriter->addAttribute("height", lengthXml(image->getImageHeight()));
         xmlWriter->addAttribute("width", lengthXml(image->getImageWidth()));
         xmlWriter->addAttribute("preserveAspectRatio", "none");  //height and width above used
-        xmlWriter->addAttribute("xlink:href", image->getData().file.toStdString());
+        xmlWriter->addAttribute("href", image->getData().file.toStdString(), NAMESPACE_URI_XLINK);
         xmlWriter->closeElement();
     }
 }
@@ -1038,10 +1038,11 @@ std::string LC_MakerCamSVG::getPointSegment(RS_Vector *lastPos, RS_Vector step, 
     //! \todo need to add a option to control this value from export dialog and test on laser engraver
     const double dotSize = 0.2;
     double scaleTo;
-    if (abs(step.x) >= abs(step.y)){
-        scaleTo = dotSize/abs(step.x);
+
+    if (fabs(step.x) >= fabs(step.y)){
+        scaleTo = dotSize/fabs(step.x);
     } else {
-        scaleTo = dotSize/abs(step.y);
+        scaleTo = dotSize/fabs(step.y);
     }
     path += svgPathMoveTo(*lastPos);
     path += svgPathLineTo(*lastPos+step*scaleTo);

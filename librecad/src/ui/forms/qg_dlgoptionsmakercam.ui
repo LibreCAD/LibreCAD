@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>490</height>
+    <height>522</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>500</width>
-    <height>490</height>
+    <height>522</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -51,6 +51,12 @@
           </item>
           <item>
            <widget class="QDoubleSpinBox" name="dSpinBoxDefaultElementWidth">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="singleStep">
              <double>0.010000000000000</double>
             </property>
@@ -156,7 +162,7 @@
           <item>
            <widget class="QLabel" name="lbDashLinePatternLength">
             <property name="text">
-             <string>length of the pattern in mm</string>
+             <string>Length of the pattern, mm</string>
             </property>
            </widget>
           </item>
