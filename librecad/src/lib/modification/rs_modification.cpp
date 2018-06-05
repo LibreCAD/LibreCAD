@@ -2481,6 +2481,7 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
             //do not insert between here and default:
         }
     }
+    // fall-through
     default:
         cut1 = (RS_AtomicEntity*)cutEntity->clone();
         cut2 = (RS_AtomicEntity*)cutEntity->clone();

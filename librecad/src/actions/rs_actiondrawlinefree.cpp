@@ -101,6 +101,7 @@ void RS_ActionDrawLineFree::mousePressEvent(QMouseEvent* e) {
         switch(getStatus()){
         case SetStartpoint:
             setStatus(Dragging);
+            // fall-through
         case Dragging:
 			*vertex = snapPoint(e);
 			polyline.reset(new RS_Polyline(container,

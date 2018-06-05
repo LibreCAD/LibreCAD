@@ -2504,7 +2504,7 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e)
     switch (e->key()) {
     case Qt::Key_Escape:
         slotKillAllActions();
-
+        // fall-through
     case Qt::Key_Return:
     case Qt::Key_Enter:
         slotEnter();

@@ -555,8 +555,10 @@ RS_Vector RS_Arc::getNearestOrthTan(const RS_Vector& coord,
                                 vp=sol[1];
                                 break;
                         }
+                        // fall-through
                 default:
                         vp=sol[0];
+                        break;
         }
         return getCenter()+vp;
 }

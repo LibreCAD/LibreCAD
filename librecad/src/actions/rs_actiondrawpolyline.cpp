@@ -230,6 +230,7 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
 //        else
 //            b=0;
 //        break;
+        // fall-through
      case TanRad:
 		if (pPoints->polyline){
 			lastentity = static_cast<RS_AtomicEntity*>(pPoints->polyline->lastEntity());

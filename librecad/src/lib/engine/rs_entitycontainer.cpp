@@ -1532,10 +1532,12 @@ bool RS_EntityContainer::optimizeContours() {
         case RS2::EntityEllipse:
 			if(static_cast<RS_Ellipse*>(e1)->isEllipticArc())
                 continue;
+            // fall-through
         case RS2::EntityCircle:
             //directly detect circles, bug#3443277
             tmp.addEntity(e1->clone());
             enList<<e1;
+            // fall-through
         default:
             continue;
         }

@@ -198,6 +198,7 @@ void RS_ActionDrawEllipseCenter3Points::coordinateEvent(RS_CoordinateEvent* e) {
         }
 //                setStatus(getStatus()+1);
 //                break;
+        // fall-through
     case SetPoint3:
         if( preparePreview()) {
             if(getStatus() == SetPoint3) {
