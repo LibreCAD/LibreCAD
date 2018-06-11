@@ -27,6 +27,7 @@
 #include "colorwizard.h"
 #include "ui_colorwizard.h"
 
+#include <QAction>
 #include <QColorDialog>
 #include <QLineEdit>
 #include <QListWidget>

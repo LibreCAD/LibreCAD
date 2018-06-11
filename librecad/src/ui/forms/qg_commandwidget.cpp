@@ -27,6 +27,7 @@
 
 #include <algorithm>
 
+#include <QAction>
 #include <QKeyEvent>
 #include <QFileDialog>
 #include <QSettings>
