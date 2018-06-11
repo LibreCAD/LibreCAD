@@ -1020,7 +1020,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 
     // <[~ Misc ~]>
 
-    action = new QAction(tr("Export as &MakerCAM SVG..."), agm->file);
+    action = new QAction(tr("Export as CA&M/plain SVG..."), agm->file);
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotFileExportMakerCam()));
     action->setObjectName("FileExportMakerCam");
     a_map["FileExportMakerCam"] = action;

@@ -3,6 +3,7 @@
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 ** Copyright (C) 2014 Christian Luginbühl (dinkel@pimprecords.com)
+** Copyright (C) 2018 Andrey Yaromenok (ayaromenok@gmail.com)
 **
 **
 ** This program is free software; you can redistribute it and/or modify
@@ -36,7 +37,7 @@
 
 LC_ActionFileExportMakerCam::LC_ActionFileExportMakerCam(RS_EntityContainer& container,
                                                          RS_GraphicView& graphicView)
-    : RS_ActionInterface("Export as MakerCAM SVG...", container, graphicView) {}
+    : RS_ActionInterface("Export as CAM/plain SVG...", container, graphicView) {}
 
 
 void LC_ActionFileExportMakerCam::init(int status) {
@@ -67,7 +68,11 @@ void LC_ActionFileExportMakerCam::trigger() {
                                                                (bool)RS_SETTINGS->readNumEntry("/ExportInvisibleLayers"),
                                                                (bool)RS_SETTINGS->readNumEntry("/ExportConstructionLayers"),
                                                                (bool)RS_SETTINGS->readNumEntry("/WriteBlocksInline"),
-															   (bool)RS_SETTINGS->readNumEntry("/ConvertEllipsesToBeziers"))
+                                                               (bool)RS_SETTINGS->readNumEntry("/ConvertEllipsesToBeziers"),
+                                                               (bool)RS_SETTINGS->readNumEntry("/ExportImages"),
+                                                               (bool)RS_SETTINGS->readNumEntry("/BakeDashDotLines"),
+                                                               (double)RS_SETTINGS->readEntry("/DefaultElementWidth").toDouble(),
+                                                               (double)RS_SETTINGS->readEntry("/DefaultDashLinePatternLength").toDouble())
 														  );
 
                 RS_SETTINGS->endGroup();
