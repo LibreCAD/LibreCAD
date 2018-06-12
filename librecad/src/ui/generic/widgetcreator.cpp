@@ -27,6 +27,8 @@
 #include "widgetcreator.h"
 #include "ui_widgetcreator.h"
 
+#include <QAction>
+#include <QActionGroup>
 #include <QSettings>
 #include <QLineEdit>
 #include <QPushButton>
