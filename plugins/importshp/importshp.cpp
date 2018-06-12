@@ -351,6 +351,7 @@ void dibSHP::procesFile(Document_Interface *doc)
             case SHPT_POLYGONM:
             case SHPT_POLYGONZ:
                 readPolylineC(dh, i);
+                // fall-through
             case SHPT_MULTIPATCH:
                 readMultiPolyline(dh, i);
             default:

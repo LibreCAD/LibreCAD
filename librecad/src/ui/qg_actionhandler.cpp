@@ -276,6 +276,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 			a = new RS_ActionSelect(this, *document, *view, RS2::ActionEditCutNoSelect);
 			break;
 		}
+        // fall-through
     case RS2::ActionEditCutNoSelect:
         a = new RS_ActionEditCopy(false, *document, *view);
         break;
@@ -284,6 +285,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 			a = new RS_ActionSelect(this, *document, *view, RS2::ActionEditCopyNoSelect);
 			break;
 		}
+        // fall-through
     case RS2::ActionEditCopyNoSelect:
         a = new RS_ActionEditCopy(true, *document, *view);
         break;
@@ -308,6 +310,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 			a = new RS_ActionSelect(this, *document, *view, RS2::ActionOrderNoSelect);
 			break;
 		}
+        // fall-through
     case RS2::ActionOrderNoSelect:
         a = new RS_ActionOrder(*document, *view, orderType);
         break;
@@ -557,6 +560,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new RS_ActionSelect(this, *document, *view, RS2::ActionDrawHatchNoSelect);
             break;
         }
+        // fall-through
 	case RS2::ActionDrawHatchNoSelect:
 		a = new RS_ActionDrawHatch(*document, *view);
         break;   
@@ -598,6 +602,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyAttributesNoSelect);
 			break;
 		}
+        // fall-through
     case RS2::ActionModifyAttributesNoSelect:
         a = new RS_ActionModifyAttributes(*document, *view);
         break;
@@ -618,6 +623,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyMoveNoSelect);
 			break;
 		}
+        // fall-through
     case RS2::ActionModifyMoveNoSelect:
         a = new RS_ActionModifyMove(*document, *view);
         break;
@@ -626,6 +632,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyRevertDirectionNoSelect);
 			break;
 		}
+		// fall-through
 	case RS2::ActionModifyRevertDirectionNoSelect:
 		a = new RS_ActionModifyRevertDirection(*document, *view);
 		break;
@@ -634,6 +641,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyRotateNoSelect);
 			break;
 		}
+        // fall-through
     case RS2::ActionModifyRotateNoSelect:
         a = new RS_ActionModifyRotate(*document, *view);
         break;
@@ -642,6 +650,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyScaleNoSelect);
 			break;
 		}
+        // fall-through
     case RS2::ActionModifyScaleNoSelect:
 		a = new RS_ActionModifyScale(*document, *view);
 		break;
@@ -650,6 +659,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyMirrorNoSelect);
 			break;
 		}
+        // fall-through
     case RS2::ActionModifyMirrorNoSelect:
         a = new RS_ActionModifyMirror(*document, *view);
         break;
@@ -658,6 +668,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyMoveRotateNoSelect);
 			break;
 		}
+        // fall-through
     case RS2::ActionModifyMoveRotateNoSelect:
         a = new RS_ActionModifyMoveRotate(*document, *view);
         break;
@@ -666,6 +677,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyRotate2NoSelect);
 			break;
 		}
+        // fall-through
     case RS2::ActionModifyRotate2NoSelect:
         a = new RS_ActionModifyRotate2(*document, *view);
 		break;
@@ -703,6 +715,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 			break;
 		}
 	}
+    // fall-through
     case RS2::ActionModifyOffsetNoSelect:
         a = new RS_ActionModifyOffset(*document, *view);
 		break;
@@ -711,6 +724,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyExplodeTextNoSelect);
 			break;
 		}
+        // fall-through
     case RS2::ActionModifyExplodeTextNoSelect:
         a = new RS_ActionModifyExplodeText(*document, *view);
         break;
@@ -803,6 +817,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 			a = new RS_ActionSelect(this, *document, *view, RS2::ActionInfoTotalLengthNoSelect);
 			break;
 		}
+        // fall-through
     case RS2::ActionInfoTotalLengthNoSelect:
         a = new RS_ActionInfoTotalLength(*document, *view);
         break;
@@ -873,6 +888,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 			a = new RS_ActionSelect(this, *document, *view, RS2::ActionBlocksCreateNoSelect);
 			break;
 		}
+        // fall-through
     case RS2::ActionBlocksCreateNoSelect:
         a = new RS_ActionBlocksCreate(*document, *view);
         break;
@@ -881,6 +897,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 			a = new RS_ActionSelect(this, *document, *view, RS2::ActionBlocksExplodeNoSelect);
 			break;
 		}
+        // fall-through
     case RS2::ActionBlocksExplodeNoSelect:
         a = new RS_ActionBlocksExplode(*document, *view);
         break;

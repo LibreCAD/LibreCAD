@@ -393,10 +393,11 @@ void RS_MText::update() {
                     break;
                 }
             }
-            //if char is not handled continue in default: statement
+
             if (handled)
                 break;
-
+            // if char is not handled
+            // fall-through
         default: {
                 // One Letter:
                 QString letterText = QString(data.text.at(i));

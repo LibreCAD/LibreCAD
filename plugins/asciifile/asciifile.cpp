@@ -620,8 +620,10 @@ void dibPunto::procesfileNormal(QFile* file, QString sep, QString::SplitBehavior
         default:
         case 5:
             pd->code=data.at(4);
+            // fall-through
         case 4:
             pd->z = data.at(3);
+            // fall-through
         case 3:
             pd->number = data.at(i);
             pd->x = data.at(1);
