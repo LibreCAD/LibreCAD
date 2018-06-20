@@ -155,9 +155,8 @@ void RS_ActionDrawCircle2P::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawCircle2P::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (!e)
         return;
-    }
 
     RS_Vector mouse = e->getCoordinate();
 

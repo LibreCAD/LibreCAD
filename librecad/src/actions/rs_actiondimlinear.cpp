@@ -108,7 +108,7 @@ void RS_ActionDimLinear::preparePreview() {
 	RS_Vector dirV = RS_Vector::polar(100., edata->angle+M_PI_2);
 
     RS_ConstructionLine cl(
-        NULL,
+        nullptr,
         RS_ConstructionLineData(
 			edata->extensionPoint2,
 			edata->extensionPoint2+dirV));
@@ -171,9 +171,8 @@ void RS_ActionDimLinear::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDimLinear::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (!e)
         return;
-    }
 
     RS_Vector pos = e->getCoordinate();
 

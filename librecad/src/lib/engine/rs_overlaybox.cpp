@@ -48,9 +48,8 @@ RS_Entity* RS_OverlayBox::clone() const{
 }
 
 void RS_OverlayBox::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
-    if (painter==NULL || view==NULL) {
+    if (!painter || !view)
         return;
-    }
 
     RS_Vector v1=view->toGui(getCorner1());
     RS_Vector v2=view->toGui(getCorner2());

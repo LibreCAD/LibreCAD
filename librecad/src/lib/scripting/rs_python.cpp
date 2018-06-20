@@ -37,14 +37,14 @@ extern "C" void initlibrecad();
 /**
  * The unique instance of the Python scripting engine
  */
-RS_Python* RS_Python::uniqueInstance = NULL;
+RS_Python* RS_Python::uniqueInstance = nullptr;
 
 /**
  * Constructor
  */
 RS_Python::RS_Python()
 {
-    graphic = NULL;
+    graphic = nullptr;
     Py_Initialize();
     initlibrecad();
 }
@@ -57,9 +57,8 @@ RS_Python::RS_Python()
  * singleton class
  */
 RS_Python* RS_Python::instance() {
-    if(uniqueInstance==NULL) {
+    if(!uniqueInstance)
         uniqueInstance = new RS_Python;
-    }
     return uniqueInstance;
 }
 

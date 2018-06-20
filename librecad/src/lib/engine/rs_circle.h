@@ -129,15 +129,15 @@ with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are th
 	RS_Vector getNearestEndpoint(const RS_Vector& coord,
 										 double* dist = nullptr) const override;
 	RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-											  bool onEntity = true, double* dist = NULL, RS_Entity** entity=NULL)const override;
+                                              bool onEntity = true, double* dist = nullptr, RS_Entity** entity = nullptr)const override;
 	RS_Vector getNearestCenter(const RS_Vector& coord,
-									   double* dist = NULL)const override;
+                                       double* dist = nullptr)const override;
 	RS_Vector getNearestMiddle(const RS_Vector& coord,
                                        double* dist = nullptr,
 									   int middlePoints = 1 ) const override;
 	RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-									 double* dist = NULL)const override;
+                                     double* dist = nullptr)const override;
 	RS_Vector getNearestDist(double distance,
 									 bool startp)const override;
 	RS_Vector getNearestOrthTan(const RS_Vector& coord,

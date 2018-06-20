@@ -190,21 +190,15 @@ void QG_ActionHandler::killSelectActions() {
 
 void QG_ActionHandler::killAllActions() {
 
-	if (view) {
+    if (view)
 		view->killAllActions();
-	}
 }
 
 /**
  * @return Current action or NULL.
  */
 RS_ActionInterface* QG_ActionHandler::getCurrentAction() {
-
-	if (view) {
-        return view->getCurrentAction();
-    } else {
-        return NULL;
-    }
+    return view ? view->getCurrentAction() : nullptr;
 }
 
 /**
@@ -214,15 +208,15 @@ RS_ActionInterface* QG_ActionHandler::getCurrentAction() {
  */
 RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     RS_DEBUG->print("QG_ActionHandler::setCurrentAction()");
-    RS_ActionInterface* a = NULL;
+    RS_ActionInterface* a = nullptr;
 //    view->killAllActions();
 
     // only global options are allowed without a document:
-    if (view==NULL || document==NULL) {
+    if (!view || !document) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QG_ActionHandler::setCurrentAction: graphic view or "
                 "document is NULL");
-        return NULL;
+        return nullptr;
     }
 
     auto a_layer = document->getLayerList()->getActive();
@@ -321,8 +315,8 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 //        view->killSelectActions();
         if(getCurrentAction()->rtti() != RS2::ActionSelectSingle) {
             a = new RS_ActionSelectSingle(*document, *view,getCurrentAction());
-        }else{
-            a=NULL;
+        } else {
+            a = nullptr;
         }
         break;
     case RS2::ActionSelectContour:

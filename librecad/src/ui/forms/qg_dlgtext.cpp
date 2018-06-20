@@ -70,8 +70,8 @@ void QG_DlgText::languageChange()
 
 void QG_DlgText::init() {
     cbFont->init();
-    font=NULL;
-    text = NULL;
+    font = nullptr;
+    text = nullptr;
     isNew = false;
     leOblique->setDisabled(true);
     updateUniCharComboBox(0);
@@ -83,8 +83,8 @@ void QG_DlgText::updateUniCharComboBox(int) {
     QString t = cbUniPage->currentText();
     int i1 = t.indexOf('-');
     int i2 = t.indexOf(']');
-    int min = t.mid(1, i1-1).toInt(NULL, 16);
-    int max = t.mid(i1+1, i2-i1-1).toInt(NULL, 16);
+    int min = t.mid(1, i1-1).toInt(nullptr, 16);
+    int max = t.mid(i1+1, i2-i1-1).toInt(nullptr, 16);
 
     cbUniChar->clear();
     for (int c=min; c<=max; c++) {
@@ -438,14 +438,14 @@ void QG_DlgText::insertSymbol(int) {
 void QG_DlgText::updateUniCharButton(int) {
     QString t = cbUniChar->currentText();
     int i1 = t.indexOf(']');
-    int c = t.mid(1, i1-1).toInt(NULL, 16);
+    int c = t.mid(1, i1-1).toInt(nullptr, 16);
     bUnicode->setText(QString("%1").arg(QChar(c)));
 }
 
 void QG_DlgText::insertChar() {
     QString t = cbUniChar->currentText();
     int i1 = t.indexOf(']');
-    int c = t.mid(1, i1-1).toInt(NULL, 16);
+    int c = t.mid(1, i1-1).toInt(nullptr, 16);
 //    teText->textCursor().insertText( QString("%1").arg(QChar(c)) );
     teText->insert( QString("%1").arg(QChar(c)) );
 }

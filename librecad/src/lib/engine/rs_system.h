@@ -59,7 +59,7 @@ public:
      * @return Instance to the unique system object.
      */
     static RS_System* instance() {
-        if (uniqueInstance==NULL) {
+        if (!uniqueInstance) {
             uniqueInstance = new RS_System();
         }
         return uniqueInstance;

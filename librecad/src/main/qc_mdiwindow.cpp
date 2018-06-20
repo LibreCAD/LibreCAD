@@ -219,9 +219,8 @@ bool QC_MDIWindow::closeMDI(bool force, bool ask)
 {
     RS_DEBUG->print("QC_MDIWindow::closeMDI begin");
     // should never happen:
-    if (document==NULL) {
+    if (!document)
         return true;
-    }
 
     bool ret = false;
 
@@ -323,7 +322,7 @@ bool QC_MDIWindow::slotFileNewTemplate(const QString& fileName, RS2::FormatType 
 
     bool ret = false;
 
-    if (document==NULL || fileName.isEmpty())
+    if (!document || fileName.isEmpty())
         return ret;
 
     document->newDoc();

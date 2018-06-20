@@ -82,7 +82,7 @@ void RS_ActionBlocksInsert::reset() {
                          0.0,
                          1, 1,
                          RS_Vector(1.0,1.0),
-                         NULL,
+                         nullptr,
 						 RS2::Update));
 }
 
@@ -132,22 +132,29 @@ void RS_ActionBlocksInsert::mouseMoveEvent(QMouseEvent* e) {
 
 
 void RS_ActionBlocksInsert::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
+    switch(e->button())
+    {
+    case Qt::LeftButton:
+    {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
-    } else if (e->button()==Qt::RightButton) {
+        break;
+    }
+    case Qt::RightButton:
         init(getStatus()-1);
+        break;
+    default:
+        break;
     }
 }
 
 
 
 void RS_ActionBlocksInsert::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (!e)
         return;
-    }
 
-	data->insertionPoint = e->getCoordinate();
+    data->insertionPoint = e->getCoordinate();
     trigger();
 }
 

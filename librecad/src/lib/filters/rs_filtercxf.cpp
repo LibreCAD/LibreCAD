@@ -126,7 +126,7 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
     //fout.open((const char*)file.toLocal8Bit());
     FILE* fp;
 
-    if ((fp = fopen(file.toLocal8Bit(), "wt")) != NULL) {
+    if ((fp = fopen(file.toLocal8Bit(), "wt")) != nullptr) {
 
         RS_DEBUG->print("RS_FilterCXF::fileExport: open: OK");
 

@@ -380,7 +380,6 @@ void RS_EventHandler::setDefaultAction(RS_ActionInterface* action) {
     if (defaultAction) {
         defaultAction->finish();
         delete defaultAction;
-        //        defaultAction = NULL;
     }
 
     defaultAction = action;
@@ -393,12 +392,11 @@ void RS_EventHandler::setDefaultAction(RS_ActionInterface* action) {
  */
 void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     RS_DEBUG->print("RS_EventHandler::setCurrentAction");
-    if (action==NULL) {
+    if (!action)
         return;
-    }
 
     // Predecessor of the new action or NULL:
-    RS_ActionInterface* predecessor = NULL;
+    RS_ActionInterface* predecessor = nullptr;
 
     // Suspend current action:
     if(hasAction()){
@@ -420,7 +418,7 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     //        if (currentActions[0]) {
     //            currentActions[0]->finish();
     //            delete currentActions[0];
-    //            currentActions[0] = NULL;
+    //            currentActions[0] = nullptr;
     //        }
     //        // Move up actionstack (optimize):
     //        for (int i=0; i<RS_MAXACTIONS-1; ++i) {

@@ -104,7 +104,7 @@ private:
 class RS_UndoStub : public RS_Undo {
     virtual void removeUndoable(RS_Undoable* u) {
         delete u;
-        u = NULL;
+        u = nullptr;
     }
 };
 #endif

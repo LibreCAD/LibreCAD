@@ -166,7 +166,7 @@ void RS_ActionDrawLine::mouseReleaseEvent(QMouseEvent* e) {
 
 void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLine::coordinateEvent");
-    if (e==NULL) {
+    if (!e) {
         RS_DEBUG->print("RS_ActionDrawLine::coordinateEvent: event was NULL");
         return;
     }

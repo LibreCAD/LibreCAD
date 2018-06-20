@@ -86,7 +86,7 @@ void RS_ActionDrawLinePolygonCorCor::mouseMoveEvent(QMouseEvent* e) {
 			pPoints->corner2 = mouse;
             deletePreview();
 
-			RS_Creation creation(preview.get(), NULL, false);
+            RS_Creation creation(preview.get(), nullptr, false);
 			creation.createPolygon2(pPoints->corner1, pPoints->corner2, number);
 
             drawPreview();
@@ -113,9 +113,8 @@ void RS_ActionDrawLinePolygonCorCor::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawLinePolygonCorCor::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (!e)
         return;
-    }
 
     RS_Vector mouse = e->getCoordinate();
 

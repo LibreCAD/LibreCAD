@@ -40,7 +40,7 @@ RS_SimplePython* RS_SimplePython::uniqueInstance = NULL;
  * singleton class
  */
 RS_SimplePython* RS_SimplePython::instance() {
-    if(uniqueInstance==NULL) {
+    if(!uniqueInstance) {
         uniqueInstance = new RS_SimplePython;
     }
     return uniqueInstance;
@@ -106,7 +106,7 @@ static PyObject *py_inc(PyObject* /*self*/, PyObject* args) {
     long i;
     printf("c: py_inc called\n");
     if (!PyArg_ParseTuple(args, "l", &i))
-        return NULL;
+        return nullptr;
     return Py_BuildValue("l", inc(i));
 }
 
@@ -134,7 +134,7 @@ static PyObject *py_rsPyAddLine(PyObject* /*self*/, PyObject* args) {
     double x1, y1, x2, y2;
     //printf("c: py_rsPyAddLine called\n");
     if (!PyArg_ParseTuple(args, "dddd", &x1, &y1, &x2, &y2)) {
-        return NULL;
+        return nullptr;
     }
     rsPyAddLine(x1, y1, x2, y2);
     return Py_BuildValue("d", 1);
@@ -149,7 +149,7 @@ static PyMethodDef rsLibreCADMethods[] =
          "a silly example method"},
         {"rsPyAddLine", py_rsPyAddLine, 1,
          "adds a line to the current document"},
-        {NULL,      NULL}       /* sentinel */
+        {nullptr,      nullptr}       /* sentinel */
     };
 
 /**

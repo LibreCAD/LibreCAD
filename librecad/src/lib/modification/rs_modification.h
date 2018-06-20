@@ -224,7 +224,7 @@ class RS_Modification {
 public:
 	RS_Modification()=delete;
     RS_Modification(RS_EntityContainer& entityContainer,
-                    RS_GraphicView* graphicView=NULL,
+                    RS_GraphicView* graphicView = nullptr,
                                         bool handleUndo=true);
 
 	void remove();
@@ -241,7 +241,7 @@ private:
         bool pasteContainer(RS_Entity* entity, RS_EntityContainer* container, QHash<QString, QString>blocksDict, RS_Vector insertionPoint);
         bool pasteEntity(RS_Entity* entity, RS_EntityContainer* container);
 public:
-        void paste(const RS_PasteData& data, RS_Graphic* source=NULL);
+        void paste(const RS_PasteData& data, RS_Graphic* source = nullptr);
 
     bool move(RS_MoveData& data);
     bool rotate(RS_RotateData& data);

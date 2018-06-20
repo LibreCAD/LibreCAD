@@ -54,7 +54,7 @@ public:
      * @return Instance to the unique clipboard object.
      */
     static RS_Clipboard* instance() {
-        if (uniqueInstance==NULL) {
+        if (!uniqueInstance) {
             uniqueInstance = new RS_Clipboard();
         }
         return uniqueInstance;

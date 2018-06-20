@@ -30,7 +30,7 @@
 #include "rs_layer.h"
 #include "rs_entity.h"
 
-RS_Clipboard* RS_Clipboard::uniqueInstance = NULL;
+RS_Clipboard* RS_Clipboard::uniqueInstance = nullptr;
 
 
 

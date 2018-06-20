@@ -50,7 +50,7 @@ void LC_ActionFileExportMakerCam::trigger() {
 
 	RS_DEBUG->print("LC_ActionFileExportMakerCam::trigger()");
 
-    if (graphic != NULL) {
+    if (graphic != nullptr) {
 
         bool accepted = RS_DIALOGFACTORY->requestOptionsMakerCamDialog();
 

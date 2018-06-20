@@ -476,7 +476,7 @@ void LC_SimpleTests::slotTestDrawFreehand() {
 			   action->mouseMoveEvent(&rsm2);
 		   }
 
-		   action->mouseReleaseEvent(NULL);
+           action->mouseReleaseEvent(nullptr);
 
 		   slotFileSave();
 	   }
@@ -496,9 +496,8 @@ void LC_SimpleTests::slotTestInsertBlock() {
 	RS_Document* d = appWin->getDocument();
 	if (d && d->rtti()==RS2::EntityGraphic) {
 		RS_Graphic* graphic = (RS_Graphic*)d;
-		if (graphic==NULL) {
-			return;
-		}
+        if (!graphic)
+            return;
 
 		graphic->addLayer(new RS_Layer("default"));
 		RS_Block* block = new RS_Block(graphic, RS_BlockData("debugblock",
@@ -551,7 +550,7 @@ void LC_SimpleTests::slotTestInsertBlock() {
 							  RS_Vector(0.0,0.0),
 							  RS_Vector(1.0,1.0), 0.0,
 							  1, 1, RS_Vector(0.0, 0.0),
-							  NULL, RS2::NoUpdate);
+                              nullptr, RS2::NoUpdate);
 
 		// insert one magenta instance of the block (original):
 		ins = new RS_Insert(graphic, insData);
@@ -567,7 +566,7 @@ void LC_SimpleTests::slotTestInsertBlock() {
 								RS_Vector(-50.0,20.0),
 								RS_Vector(1.0,1.0), M_PI/6.,
 								1, 1, RS_Vector(0.0, 0.0),
-								NULL, RS2::NoUpdate);
+                                nullptr, RS2::NoUpdate);
 		ins = new RS_Insert(graphic, insData);
 		ins->setLayerToActive();
 		ins->setPen(RS_Pen(RS_Color(0, 255, 0),
@@ -581,7 +580,7 @@ void LC_SimpleTests::slotTestInsertBlock() {
 								RS_Vector(10.0,20.0),
 								RS_Vector(1.0,1.0), 0.0,
 								1, 1, RS_Vector(0.0, 0.0),
-								NULL, RS2::NoUpdate);
+                                nullptr, RS2::NoUpdate);
 		ins = new RS_Insert(graphic, insData);
 		ins->setLayerToActive();
 		ins->setPen(RS_Pen(RS_Color(0, 255, 255),
@@ -596,7 +595,7 @@ void LC_SimpleTests::slotTestInsertBlock() {
 									RS_Vector(60.0,0.0),
 									RS_Vector(2.0/5,2.0/5), RS_Math::deg2rad(a),
 									1, 1, RS_Vector(0.0, 0.0),
-									NULL, RS2::NoUpdate);
+                                    nullptr, RS2::NoUpdate);
 			ins = new RS_Insert(graphic, insData);
 			ins->setLayerToActive();
 			ins->setPen(RS_Pen(RS_Color(0, 0, 255),
@@ -611,7 +610,7 @@ void LC_SimpleTests::slotTestInsertBlock() {
 								RS_Vector(-100.0,-100.0),
 								RS_Vector(0.2,0.2), M_PI/6.0,
 								6, 4, RS_Vector(100.0, 100.0),
-								NULL, RS2::NoUpdate);
+                                nullptr, RS2::NoUpdate);
 		ins = new RS_Insert(graphic, insData);
 		ins->setLayerToActive();
 		ins->setPen(RS_Pen(RS_Color(255, 255, 0),
@@ -787,10 +786,6 @@ void LC_SimpleTests::slotTestInsertMText() {
 	RS_Document* d = QC_ApplicationWindow::getAppWindow()->getDocument();
 	if (d) {
 		RS_Graphic* graphic = (RS_Graphic*)d;
-		if (graphic==NULL) {
-			return;
-		}
-
 		RS_MText* text;
 		RS_MTextData textData;
 
@@ -824,11 +819,7 @@ void LC_SimpleTests::slotTestInsertText() {
 
 	RS_Document* d = QC_ApplicationWindow::getAppWindow()->getDocument();
 	if (d) {
-		RS_Graphic* graphic = (RS_Graphic*)d;
-		if (graphic==NULL) {
-			return;
-		}
-
+        RS_Graphic* graphic = (RS_Graphic*)d;
 		RS_Text* text;
 		RS_TextData textData;
 
@@ -936,10 +927,6 @@ void LC_SimpleTests::slotTestInsertImage() {
 	RS_Document* d = QC_ApplicationWindow::getAppWindow()->getDocument();
 	if (d) {
 		RS_Graphic* graphic = (RS_Graphic*)d;
-		if (graphic==NULL) {
-			return;
-		}
-
 		RS_Image* image;
 		RS_ImageData imageData;
 
@@ -971,10 +958,6 @@ void LC_SimpleTests::slotTestUnicode() {
 	RS_Document* d =appWin->getDocument();
 	if (d) {
 		RS_Graphic* graphic = (RS_Graphic*)d;
-		if (graphic==NULL) {
-			return;
-		}
-
 		RS_Insert* ins;
 
 		int col;
@@ -1003,7 +986,7 @@ void LC_SimpleTests::slotTestUnicode() {
 									RS_Vector(col/0x10*20.0,row*20.0),
 									RS_Vector(1.0,1.0), 0.0,
 									1, 1, RS_Vector(0.0, 0.0),
-									NULL, RS2::NoUpdate);
+                                    nullptr, RS2::NoUpdate);
 					ins = new RS_Insert(graphic, d);
 					ins->setLayerToActive();
 					ins->setPen(RS_Pen(RS_Color(255, 255, 255),

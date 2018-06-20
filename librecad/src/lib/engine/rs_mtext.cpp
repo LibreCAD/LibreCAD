@@ -239,9 +239,8 @@ void RS_MText::update() {
 
     RS_Font* font = RS_FONTLIST->requestFont(data.style);
 
-    if (font==NULL) {
+    if (!font)
         return;
-    }
 
     RS_Vector letterPos = RS_Vector(0.0, -9.0);
     RS_Vector letterSpace = RS_Vector(font->getLetterSpacing(), 0.0);
@@ -296,22 +295,26 @@ void RS_MText::update() {
                         i--;
                         continue;
                     }
-                    int j=data.text.indexOf('}',i);
-                    if(j>i){
+
+                    int j = data.text.indexOf('}',i);
+                    if(j > i) {
                         //
                         QString fontName;
-                        if(j==i+1)
-                            fontName="standard";
+                        if(j == (i+1))
+                            fontName = "standard";
                         else
-                            fontName=data.text.mid(i+1,j-i-1);
+                            fontName = data.text.mid(i+1, j-i-1);
+
                         RS_Font* fontNew = RS_FONTLIST->requestFont(
                                     fontName
                                     );
-                        if(fontNew != NULL) {
-                            font=fontNew;
-                        }
-                        if(font==NULL) font = RS_FONTLIST->requestFont("standard");
-                        i=j;
+
+                        if(fontNew)
+                            font = fontNew;
+                        else if(!font)
+                            font = RS_FONTLIST->requestFont("standard");
+
+                        i = j;
                     }
                 }
                         continue;
@@ -355,7 +358,7 @@ void RS_MText::update() {
                                             RS_MTextData::LeftToRight, RS_MTextData::Exact,
                                             1.0, up, data.style,
                                             0.0, RS2::Update));
-                                            upper->setLayer(NULL);
+                                            upper->setLayer(nullptr);
                         upper->setPen(RS_Pen(RS2::FlagInvalid));
                         oneLine->addEntity(upper);
 
@@ -367,7 +370,7 @@ void RS_MText::update() {
                                             RS_MTextData::LeftToRight, RS_MTextData::Exact,
                                             1.0, dw, data.style,
                                             0.0, RS2::Update));
-                                            lower->setLayer(NULL);
+                                            lower->setLayer(nullptr);
                         lower->setPen(RS_Pen(RS2::FlagInvalid));
                         oneLine->addEntity(lower);
 
@@ -401,11 +404,11 @@ void RS_MText::update() {
         default: {
                 // One Letter:
                 QString letterText = QString(data.text.at(i));
-                if (font->findLetter(letterText) == NULL) {
+                if (font->findLetter(letterText) == nullptr) {
                     RS_DEBUG->print("RS_Text::update: missing font for letter( %s ), replaced it with QChar(0xfffd)",qPrintable(letterText));
                     letterText = QChar(0xfffd);
                 }
-//                if (font->findLetter(QString(data.text.at(i))) != NULL) {
+//                if (font->findLetter(QString(data.text.at(i))) != nullptr) {
 
                                         RS_DEBUG->print("RS_Text::update: insert a "
                                           "letter at pos: %f/%f", letterPos.x, letterPos.y);
@@ -420,7 +423,7 @@ void RS_MText::update() {
                     RS_Insert* letter = new RS_Insert(this, d);
                     RS_Vector letterWidth;
                     letter->setPen(RS_Pen(RS2::FlagInvalid));
-                    letter->setLayer(NULL);
+                    letter->setLayer(nullptr);
                     letter->update();
                     letter->forcedCalculateBorders();
 
@@ -540,7 +543,7 @@ double RS_MText::updateAddLine(RS_EntityContainer* textLine, int lineCounter) {
     // Move:
     textLine->move(data.insertionPoint);
     textLine->setPen(RS_Pen(RS2::FlagInvalid));
-    textLine->setLayer(NULL);
+    textLine->setLayer(nullptr);
     textLine->forcedCalculateBorders();
 
     addEntity(textLine);

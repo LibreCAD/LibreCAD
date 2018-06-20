@@ -225,7 +225,7 @@ bool RS_Graphic::BackupDrawingFile(const QString &filename)
 
                 /*	If able to create the objects, process...
                  *	----------------------------------------- */
-                if ((qs_backup_fn != NULL) && (qf_df != NULL))
+                if ((qs_backup_fn != nullptr) && (qf_df != nullptr))
                 {
                         /*	Create backup file only if drawing file already exist.
                          *	------------------------------------------------------ */
@@ -237,7 +237,7 @@ bool RS_Graphic::BackupDrawingFile(const QString &filename)
 
                                 /*	If able to create the object, process...
                                  *	---------------------------------------- */
-                                if (qf_dfb != NULL)
+                                if (qf_dfb != nullptr)
                                 {
                                         /*	If a backup file already exist, remove it!
                                          *	------------------------------------------ */

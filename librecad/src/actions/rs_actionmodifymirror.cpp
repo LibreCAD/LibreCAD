@@ -115,9 +115,8 @@ void RS_ActionModifyMirror::mouseReleaseEvent(QMouseEvent* e) {
 }
 
 void RS_ActionModifyMirror::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (!e)
         return;
-    }
 
     RS_Vector mouse = e->getCoordinate();
 

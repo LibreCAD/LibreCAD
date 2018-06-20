@@ -40,8 +40,8 @@ QG_LayerBox::QG_LayerBox(QWidget* parent)
     showByBlock = false;
 	showUnchanged = false;
 	unchanged = false;
-    layerList = NULL;
-    currentLayer = NULL;
+    layerList = nullptr;
+    currentLayer = nullptr;
 }
 
 

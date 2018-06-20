@@ -37,7 +37,7 @@
 
 #include <QStandardPaths>
 
-RS_System* RS_System::uniqueInstance = NULL;
+RS_System* RS_System::uniqueInstance = nullptr;
 
 
 /**
@@ -364,9 +364,9 @@ void RS_System::initAllLanguagesList() {
  *fixme, need to support command language
  */
 void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/) {
-    static QTranslator* tQt = NULL;
-    static QTranslator* tLibreCAD = NULL;
-    static QTranslator* tPlugIns = NULL;
+    static QTranslator* tQt = nullptr;
+    static QTranslator* tLibreCAD = nullptr;
+    static QTranslator* tPlugIns = nullptr;
 
     //make translation filenames case insensitive, #276
     QString langLower("");
@@ -387,15 +387,15 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
     lst += (RS_SETTINGS->readEntry("/Translations", "")).split(";", QString::SkipEmptyParts);
     RS_SETTINGS->endGroup();
 
-    if( tLibreCAD != NULL) {
+    if( tLibreCAD ) {
         qApp->removeTranslator(tLibreCAD);
         delete tLibreCAD;
     }
-    if( tPlugIns != NULL) {
+    if( tPlugIns ) {
         qApp->removeTranslator(tPlugIns);
         delete tPlugIns;
     }
-    if( tQt != NULL) {
+    if( tQt ) {
         qApp->removeTranslator(tQt);
         delete tQt;
     }
@@ -411,7 +411,7 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
          ++it) {
 
         // load LibreCAD translations
-        if( NULL == tLibreCAD) {
+        if( !tLibreCAD) {
             if(	t->load(langFileLower, *it)==true
                     || (  ! langUpper.isEmpty()
                           &&	t->load(langFileUpper, *it)==true)) {
@@ -422,7 +422,7 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
         }
 
         // load PlugIns translations
-        if( NULL == tPlugIns) {
+        if( !tPlugIns) {
             if(	t->load(langPlugInsLower, *it)==true
                     || (  ! langUpper.isEmpty()
                           &&	t->load(langPlugInsUpper, *it)==true)) {
@@ -433,7 +433,7 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
         }
 
         // load Qt standard dialog translations
-        if( NULL == tQt) {
+        if( !tQt) {
             if( t->load(langQtLower, *it)==true
                     || (  ! langUpper.isEmpty()
                           &&	t->load(langQtUpper, *it)==true)) {
@@ -442,13 +442,13 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
                 t = new QTranslator(0);
             }
         }
-        if( NULL != tLibreCAD && NULL != tPlugIns && NULL != tQt) {
+
+        if( tLibreCAD && tPlugIns && tQt)
             break;
-        }
     }
-    if( NULL != t) {
+
+    if(t)
         delete t;
-    }
 }
 
 
