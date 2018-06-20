@@ -188,7 +188,7 @@ LC_Quadratic LC_Hyperbola::getQuadratic() const
 }
 
 //RS_Vector LC_Hyperbola::getNearestEndpoint(const RS_Vector& /*coord*/,
-//                                         double* /*dist*/ = NULL) const
+//                                         double* /*dist*/ = nullptr) const
 //{
 //}
 

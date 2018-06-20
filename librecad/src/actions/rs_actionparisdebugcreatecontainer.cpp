@@ -40,7 +40,7 @@ RS_ActionPARISDebugCreateContainer::RS_ActionPARISDebugCreateContainer(
                      container, graphicView) {
 
 	actionType=RS2::ActionPARISDebugCreateContainer;
-    //QMessageBox::about(NULL, "info", "check container");
+    //QMessageBox::about(nullptr, "info", "check container");
     RS_Document* theDoc = (RS_Document*) &container;
 
     if (theDoc->countSelected() < 2) {

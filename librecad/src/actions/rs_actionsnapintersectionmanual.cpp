@@ -54,7 +54,7 @@ RS_ActionSnapIntersectionManual::~RS_ActionSnapIntersectionManual()=default;
 
 QAction* RS_ActionSnapIntersectionManual::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	//tr("Intersection Manually")
-    QAction* action = new QAction(tr("I&ntersection Manually"), NULL);
+    QAction* action = new QAction(tr("I&ntersection Manually"), nullptr);
     //action->zetStatusTip(tr("Snap to intersection points manually"));
 	action->setIcon(QIcon(":/extui/snapintersectionm.png"));
     return action;
@@ -78,8 +78,8 @@ void RS_ActionSnapIntersectionManual::trigger() {
         RS_VectorSolutions sol =
             RS_Information::getIntersection(entity1, entity2, false);
 
-        entity2 = NULL;
-        entity1 = NULL;
+        entity2 = nullptr;
+        entity1 = nullptr;
         if (predecessor) {
 			RS_Vector ip = sol.getClosest(*coord);
 

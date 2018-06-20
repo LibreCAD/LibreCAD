@@ -236,7 +236,7 @@ public:
      * @return The insertion point as endpoint.
      */
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                         double* dist = NULL)const override;
+                                         double* dist = nullptr)const override;
     virtual RS_VectorSolutions getRefPoints() const override;
 
     virtual void move(const RS_Vector& offset) override;

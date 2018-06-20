@@ -110,9 +110,8 @@ void RS_ActionModifyMove::mouseReleaseEvent(QMouseEvent* e) {
 
 void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent* e) {
 
-    if (e==NULL) {
+    if (!e)
         return;
-    }
 
     RS_Vector pos = e->getCoordinate();
 
@@ -166,9 +165,8 @@ void RS_ActionModifyMove::updateMouseButtonHints() {
 
 
 void RS_ActionModifyMove::updateMouseCursor() {
-        if(graphicView != NULL){
-    graphicView->setMouseCursor(RS2::CadCursor);
-        }
+    if(graphicView)
+        graphicView->setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

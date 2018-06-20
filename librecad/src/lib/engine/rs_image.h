@@ -180,19 +180,19 @@ public:
 
 
 	RS_Vector getNearestEndpoint(const RS_Vector& coord,
-										 double* dist = NULL)const override;
+                                         double* dist = nullptr)const override;
 	RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-			bool onEntity=true, double* dist = NULL, RS_Entity** entity=NULL)const override;
+            bool onEntity=true, double* dist = nullptr, RS_Entity** entity = nullptr)const override;
 	RS_Vector getNearestCenter(const RS_Vector& coord,
-									   double* dist = NULL)const override;
+                                       double* dist = nullptr)const override;
 	RS_Vector getNearestMiddle(const RS_Vector& coord,
-                                       double* dist = NULL,
+                                       double* dist = nullptr,
 									   int middlePoints=1)const override;
 	RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-									 double* dist = NULL)const override;
+                                     double* dist = nullptr)const override;
 	double getDistanceToPoint(const RS_Vector& coord,
-                                      RS_Entity** entity=NULL,
+                                      RS_Entity** entity = nullptr,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
 							  double solidDist = RS_MAXDOUBLE) const override;
 

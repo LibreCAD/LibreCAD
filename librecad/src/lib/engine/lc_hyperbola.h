@@ -191,29 +191,29 @@ public:
 
 	RS_Vector getMiddlePoint(void)const override{return RS_Vector(false);}
 	RS_Vector getNearestEndpoint(const RS_Vector& /*coord*/,
-										 double*/* dist = NULL*/) const override
+                                         double*/* dist = nullptr*/) const override
     {return RS_Vector(false);}
 	RS_Vector getNearestPointOnEntity(const RS_Vector& /*coord*/,
-			bool /*onEntity = true*/, double*/* dist = NULL*/, RS_Entity**/* entity=NULL*/) const override
+            bool /*onEntity = true*/, double*/* dist = nullptr*/, RS_Entity**/* entity=nullptr*/) const override
     {return RS_Vector(false);}
 	RS_Vector getNearestCenter(const RS_Vector& /*coord*/,
-									   double*/* dist = NULL*/) const override
+                                       double*/* dist = nullptr*/) const override
    {return RS_Vector(false);}
 	RS_Vector getNearestMiddle(const RS_Vector& /*coord*/,
-                                       double*/* dist = NULL*/,
+                                       double*/* dist = nullptr*/,
                                        int/* middlePoints = 1*/
 									   )const override
    {return RS_Vector(false);}
 	RS_Vector getNearestDist(double /*distance*/,
                                      const RS_Vector&/* coord*/,
-									 double*/* dist = NULL*/) const override
+                                     double*/* dist = nullptr*/) const override
     {return RS_Vector(false);}
 	RS_Vector getNearestOrthTan(const RS_Vector& /*coord*/,
                                     const RS_Line& /*normal*/,
 									 bool /*onEntity = false*/) const override
     {return RS_Vector(false);}
 	double getDistanceToPoint(const RS_Vector& /*coord*/,
-                                      RS_Entity** /*entity=NULL*/,
+                                      RS_Entity** /*entity=nullptr*/,
                                       RS2::ResolveLevel/* level=RS2::ResolveNone*/,
 									  double /*solidDist = RS_MAXDOUBLE*/) const override
     {return RS_MAXDOUBLE;}

@@ -267,9 +267,8 @@ void RS_Text::update() {
 
     RS_Font* font = RS_FONTLIST->requestFont(data.style);
 
-    if (font==NULL) {
+    if (!font)
         return;
-    }
 
     RS_Vector letterPos = RS_Vector(0.0, -9.0);
     RS_Vector letterSpace = RS_Vector(font->getLetterSpacing(), 0.0);
@@ -289,7 +288,7 @@ void RS_Text::update() {
         } else {
             // One Letter:
             QString letterText = QString(data.text.at(i));
-            if (font->findLetter(letterText) == NULL) {
+            if (font->findLetter(letterText) == nullptr) {
                 RS_DEBUG->print("RS_Text::update: missing font for letter( %s ), replaced it with QChar(0xfffd)",qPrintable(letterText));
                 letterText = QChar(0xfffd);
             }
@@ -306,7 +305,7 @@ void RS_Text::update() {
             RS_Insert* letter = new RS_Insert(this, d);
             RS_Vector letterWidth;
             letter->setPen(RS_Pen(RS2::FlagInvalid));
-            letter->setLayer(NULL);
+            letter->setLayer(nullptr);
             letter->update();
             letter->forcedCalculateBorders();
 

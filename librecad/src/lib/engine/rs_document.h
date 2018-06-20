@@ -146,7 +146,7 @@ protected:
     /** File name of the document or empty for a new document. */
     QString filename;
 	/** Auto-save file name of document. */
-        QString autosaveFilename;
+    QString autosaveFilename;
 	/** Format type */
 	RS2::FormatType formatType;
     RS_GraphicView * gv;//used to read/save current view

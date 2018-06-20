@@ -36,16 +36,15 @@
  *        for blocks it's the blocklist.
  */
 RS_Document::RS_Document(RS_EntityContainer* parent)
-        : RS_EntityContainer(parent), RS_Undo() {
-
+    : RS_EntityContainer(parent)
+    , RS_Undo()
+    , autosaveFilename("Unnamed")
+    , formatType(RS2::FormatUnknown)
+    , gv(nullptr) //used to read/save current view
+{
     RS_DEBUG->print("RS_Document::RS_Document() ");
 
-    filename = "";
-    autosaveFilename = "Unnamed";
-	formatType = RS2::FormatUnknown;
     setModified(false);
-    RS_Color col(RS2::FlagByLayer);
+    const RS_Color col(RS2::FlagByLayer);
     activePen = RS_Pen(col, RS2::WidthByLayer, RS2::LineByLayer);
-
-    gv = NULL;//used to read/save current view
 }

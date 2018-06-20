@@ -39,7 +39,7 @@
  * @param fileName File name of a DXF file defining the pattern
  */
 RS_Pattern::RS_Pattern(const QString& fileName)
-		: RS_EntityContainer(NULL)
+        : RS_EntityContainer(nullptr)
 		,fileName(fileName)
 		,loaded(false)
 {

@@ -244,7 +244,7 @@ void RS_VariableDict::addBlockNotification()
 {
     for (unsigned i=0; i<blockListListeners.count(); ++i) {
         RS_VariableDictListener* l = blockListListeners.at(i);
-        l->blockAdded(NULL);
+        l->blockAdded(nullptr);
     }
 }
 */

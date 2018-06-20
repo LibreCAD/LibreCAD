@@ -45,7 +45,7 @@
 class RS_SimplePython {
 private:
     RS_SimplePython() {
-        graphic = NULL;
+        graphic = nullptr;
     }
 
 public:

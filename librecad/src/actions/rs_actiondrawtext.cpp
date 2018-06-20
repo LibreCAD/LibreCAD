@@ -62,7 +62,7 @@ void RS_ActionDrawText::init(int status) {
 	case ShowDialog: {
 		reset();
 
-		RS_Text tmp(NULL, *data);
+        RS_Text tmp(nullptr, *data);
 		if (RS_DIALOGFACTORY->requestTextDialog(&tmp)) {
 			data.reset(new RS_TextData(tmp.getData()));
 			setStatus(SetPos);
@@ -186,9 +186,8 @@ void RS_ActionDrawText::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawText::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (!e)
         return;
-    }
 
     RS_Vector mouse = e->getCoordinate();
 

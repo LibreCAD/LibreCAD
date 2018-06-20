@@ -46,7 +46,7 @@ class QG_LayerWidget;
  */
 class RS_Graphic : public RS_Document {
 public:
-    RS_Graphic(RS_EntityContainer* parent=NULL);
+    RS_Graphic(RS_EntityContainer* parent = nullptr);
     virtual ~RS_Graphic();
 
     //virtual RS_Entity* clone() {

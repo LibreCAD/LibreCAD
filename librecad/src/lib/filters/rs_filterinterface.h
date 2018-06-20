@@ -80,7 +80,7 @@ public:
      */
     virtual bool fileExport(RS_Graphic& g, const QString& file, RS2::FormatType type) = 0;
 
-    static RS_FilterInterface * createFilter(){return NULL;}
+    static RS_FilterInterface * createFilter() { return nullptr; }
 };
 
 #endif

@@ -65,7 +65,7 @@ struct RS_InsertData {
 				  RS_Vector scaleFactor,
 				  double angle,
 				  int cols, int rows, RS_Vector spacing,
-				  RS_BlockList* blockSource = NULL,
+                  RS_BlockList* blockSource = nullptr,
 				  RS2::UpdateMode updateMode = RS2::Update);
 
 	QString name;
@@ -111,8 +111,8 @@ public:
          * Reimplementation of reparent. Invalidates block cache pointer.
          */
     virtual void reparent(RS_EntityContainer* parent) {
-                RS_Entity::reparent(parent);
-                block = NULL;
+        RS_Entity::reparent(parent);
+        block = nullptr;
     }
 
 	RS_Block* getBlockForInsert() const;

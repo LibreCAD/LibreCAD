@@ -64,7 +64,7 @@ void QG_DlgOptionsVariables::languageChange()
 }
 
 void QG_DlgOptionsVariables::init() {
-    graphic = NULL;
+    graphic = nullptr;
 
     // variables
     tabVariables->verticalHeader()->hide();
@@ -88,9 +88,8 @@ void QG_DlgOptionsVariables::setGraphic(RS_Graphic* g) {
  * Updates the Variables tab from the graphic values.
  */
 void QG_DlgOptionsVariables::updateVariables() {
-    if (graphic==NULL) {
+    if (!graphic)
         return;
-    }
     
     QVector<int> r(tabVariables->numRows());
     for (int i=0; i<tabVariables->numRows(); ++i) {

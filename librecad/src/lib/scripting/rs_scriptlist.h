@@ -50,7 +50,7 @@ public:
      * @return Instance to the unique script list.
      */
     static RS_ScriptList* instance() {
-        if (uniqueInstance==NULL) {
+        if (!uniqueInstance) {
             uniqueInstance = new RS_ScriptList();
         }
         return uniqueInstance;

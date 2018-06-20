@@ -103,21 +103,21 @@ m0 x + m1 y + m2 =0
     virtual LC_Quadratic getQuadratic() const;
     virtual RS_Vector getMiddlePoint(void) const;
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                         double* dist = NULL)const;
+                                         double* dist = nullptr) const;
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-            bool onEntity = true, double* dist = NULL, RS_Entity** entity=NULL)const;
+            bool onEntity = true, double* dist = nullptr, RS_Entity** entity = nullptr) const;
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-									   double* dist = NULL)const;
+                                       double* dist = nullptr) const;
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
-                                       double* dist = NULL,
-                                       int middlePoints = 1)const;
+                                       double* dist = nullptr,
+                                       int middlePoints = 1) const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-									 double* dist = NULL)const;
+                                     double* dist = nullptr) const;
     virtual double getDistanceToPoint(const RS_Vector& coord,
-                                      RS_Entity** entity=NULL,
+                                      RS_Entity** entity = nullptr,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
-                                                                          double solidDist = RS_MAXDOUBLE) const;
+                                      double solidDist = RS_MAXDOUBLE) const;
 
     virtual void move(const RS_Vector& offset);
     virtual void rotate(const RS_Vector& center, const double& angle);

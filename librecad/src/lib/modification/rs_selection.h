@@ -43,7 +43,7 @@
 class RS_Selection {
 public:
     RS_Selection(RS_EntityContainer& entityContainer,
-                 RS_GraphicView* graphicView=NULL);
+                 RS_GraphicView* graphicView = nullptr);
 
     void selectSingle(RS_Entity* e);
     void selectAll(bool select=true);

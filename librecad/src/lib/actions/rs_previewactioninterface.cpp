@@ -50,7 +50,7 @@ RS_PreviewActionInterface::RS_PreviewActionInterface(const char* name,
     // preview is linked to the container for getting access to
     //   document settings / dictionary variables
 
-    preview->setLayer(NULL);
+    preview->setLayer(nullptr);
     hasPreview = true;
 
     RS_DEBUG->print("RS_PreviewActionInterface::RS_PreviewActionInterface: Setting up action with preview: \"%s\": OK", name);

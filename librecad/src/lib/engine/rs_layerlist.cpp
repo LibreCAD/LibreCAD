@@ -35,7 +35,7 @@
  * Default constructor.
  */
 RS_LayerList::RS_LayerList() {
-    activeLayer = NULL;
+    activeLayer = nullptr;
 	setModified(false);
 }
 
@@ -83,7 +83,7 @@ void RS_LayerList::activate(const QString& name, bool notify) {
 
     activate(find(name), notify);
     /*
-    if (activeLayer==NULL) {
+    if (!activeLayer) {
         RS_DEBUG->print("activeLayer is NULL");
 } else {
         RS_DEBUG->print("activeLayer is %s", activeLayer->getName().latin1());
@@ -146,13 +146,12 @@ void RS_LayerList::sort()
 void RS_LayerList::add(RS_Layer* layer) {
     RS_DEBUG->print("RS_LayerList::addLayer()");
 
-    if (layer==NULL) {
+    if (!layer)
         return;
-    }
 
     // check if layer already exists:
     RS_Layer* l = find(layer->getName());
-    if (l==NULL) {
+    if (!l) {
         layers.append(layer);
         this->sort();
         // notify listeners
@@ -163,14 +162,13 @@ void RS_LayerList::add(RS_Layer* layer) {
 		setModified(true);
 
         // if there was no active layer so far, activate this one.
-        if (activeLayer==NULL) {
+        if (!activeLayer)
             activate(layer);
-        }
+
     } else {
         // if there was no active layer so far, activate this one.
-        if (activeLayer==NULL) {
+        if (!activeLayer)
             activate(l);
-        }
 
         l->freeze( layer->isFrozen());
         l->lock( layer->isLocked());
@@ -181,7 +179,7 @@ void RS_LayerList::add(RS_Layer* layer) {
         l->setPen(layer->getPen());
 
         delete layer;
-        layer = NULL;
+        layer = nullptr;
     }
 }
 
@@ -194,9 +192,8 @@ void RS_LayerList::add(RS_Layer* layer) {
  */
 void RS_LayerList::remove(RS_Layer* layer) {
     RS_DEBUG->print("RS_LayerList::removeLayer()");
-    if (layer==NULL) {
+    if (!layer)
         return;
-    }
 
     // here the layer is removed from the list but not deleted
     layers.removeOne(layer);
@@ -225,9 +222,8 @@ void RS_LayerList::remove(RS_Layer* layer) {
  * Listeners are notified.
  */
 void RS_LayerList::edit(RS_Layer* layer, const RS_Layer& source) {
-    if (layer==NULL) {
+    if (!layer)
         return;
-    }
 
     *layer = source;
 
@@ -249,7 +245,7 @@ void RS_LayerList::edit(RS_Layer* layer, const RS_Layer& source) {
 RS_Layer* RS_LayerList::find(const QString& name) {
     //RS_DEBUG->print("RS_LayerList::find begin");
 
-    RS_Layer* ret = NULL;
+    RS_Layer* ret = nullptr;
 
     for (int i=0; i<layers.size(); ++i) {
         RS_Layer* l = layers.at(i);
@@ -345,9 +341,8 @@ void RS_LayerList::toggle(RS_Layer* layer) {
  * Listeners are notified.
  */
 void RS_LayerList::toggleLock(RS_Layer* layer) {
-    if (layer==NULL) {
+    if (!layer)
         return;
-    }
 
     layer->toggleLock();
     setModified(true);
@@ -366,9 +361,8 @@ void RS_LayerList::toggleLock(RS_Layer* layer) {
  * Listeners are notified.
  */
 void RS_LayerList::togglePrint(RS_Layer* layer) {
-    if (layer==NULL) {
+    if (!layer)
         return;
-    }
 
     layer->togglePrint();
     setModified(true);
@@ -386,9 +380,8 @@ void RS_LayerList::togglePrint(RS_Layer* layer) {
  * Listeners are notified.
  */
 void RS_LayerList::toggleConstruction(RS_Layer* layer) {
-    if (layer==NULL) {
+    if (!layer)
         return;
-    }
 
     layer->toggleConstruction();
     setModified(true);
@@ -418,7 +411,7 @@ void RS_LayerList::freezeAll(bool freeze) {
 
     for (int i=0; i<layerListListeners.size(); ++i) {
         RS_LayerListListener* l = layerListListeners.at(i);
-        l->layerToggled(NULL);
+        l->layerToggled(nullptr);
     }
 }
 

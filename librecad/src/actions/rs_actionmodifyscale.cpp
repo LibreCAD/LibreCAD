@@ -105,7 +105,7 @@ void RS_ActionModifyScale::mouseReleaseEvent(QMouseEvent* e) {
 
 void RS_ActionModifyScale::coordinateEvent(RS_CoordinateEvent* e) {
 
-    if (e==NULL || getStatus() != SetReferencePoint) {
+    if (!e || getStatus() != SetReferencePoint) {
         return;
     }
 

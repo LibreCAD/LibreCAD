@@ -69,7 +69,7 @@ void QC_DialogFactory::requestEditBlockWindow(RS_BlockList* blockList) {
         return;
     }
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "QC_DialogFactory::requestEditBlockWindow(): edit block %s", blk->getName().toLatin1().data());
-//            std::cout<<"QC_DialogFactory::requestEditBlockWindow(): size()="<<((blk==NULL)?0:blk->count() )<<std::endl;
+//            std::cout<<"QC_DialogFactory::requestEditBlockWindow(): size()="<<((blk==nullptr)?0:blk->count() )<<std::endl;
 
     QC_MDIWindow* w = appWindow->slotFileNew(blk);
     if (!w) {
@@ -97,14 +97,14 @@ void QC_DialogFactory::closeEditBlockWindow(RS_Block* block) {
     QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
     QMdiArea* mdiAreaCAD = appWindow->getMdiArea();
 
-    if (mdiAreaCAD==NULL) return; //should not happen
+    if (!mdiAreaCAD) return; //should not happen
     RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: workspace found");
 
     for (int i = 0; i <mdiAreaCAD->subWindowList().size(); ) {
         RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: window: %d",
                         i);
         QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(mdiAreaCAD->subWindowList().at(i));
-        if(m==NULL) {
+        if(!m) {
             mdiAreaCAD->removeSubWindow(mdiAreaCAD->subWindowList().at(i));
             continue;
         }
