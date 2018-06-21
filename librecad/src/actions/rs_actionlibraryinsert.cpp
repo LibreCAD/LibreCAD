@@ -145,7 +145,7 @@ void RS_ActionLibraryInsert::coordinateEvent(RS_CoordinateEvent* e) {
     if (!e)
         return;
 
-	pPoints->data.insertionPoint = e->getCoordinate();
+    pPoints->data.insertionPoint = e->getCoordinate();
     trigger();
 }
 

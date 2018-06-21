@@ -31,13 +31,9 @@
 #include "rs_font.h"
 #include "rs_system.h"
 
-RS_FontList* RS_FontList::uniqueInstance = nullptr;
-
 RS_FontList* RS_FontList::instance() {
-	if (!uniqueInstance) {
-		uniqueInstance = new RS_FontList();
-	}
-	return uniqueInstance;
+    static RS_FontList inst;
+    return &inst;
 }
 
 

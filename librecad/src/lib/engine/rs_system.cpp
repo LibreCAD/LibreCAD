@@ -37,9 +37,6 @@
 
 #include <QStandardPaths>
 
-RS_System* RS_System::uniqueInstance = nullptr;
-
-
 /**
  * Initializes the system.
  *
@@ -50,6 +47,11 @@ RS_System* RS_System::uniqueInstance = nullptr;
  * @param appDir Absolute application directory (e.g. /opt/qcad)
  *                 defaults to current directory.
  */
+RS_System *RS_System::instance() {
+    static RS_System inst;
+    return &inst;
+}
+
 void RS_System::init(const QString& appName, const QString& appVersion,
                      const QString& appDirName, const QString& appDir) {
     this->appName = appName;

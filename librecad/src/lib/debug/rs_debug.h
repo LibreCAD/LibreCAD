@@ -81,7 +81,6 @@ private:
 public:
     static RS_Debug* instance();
 
-    static void deleteInstance();
     void setLevel(RS_DebugLevel level);
     RS_DebugLevel getLevel();
     void print(RS_DebugLevel level, const char* format ...);
@@ -93,8 +92,6 @@ public:
     }
 
 private:
-    static RS_Debug* uniqueInstance;
-
     RS_DebugLevel debugLevel;
     FILE* stream;
 };
