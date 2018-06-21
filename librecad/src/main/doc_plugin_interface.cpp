@@ -642,7 +642,7 @@ void Plugin_Entity::getPolylineData(QList<Plug_VertexData> *data){
     if (et != RS2::EntityPolyline) return;
     RS_Polyline *l = static_cast<RS_Polyline*>(entity);
 
-    RS_Entity* nextEntity = 0;
+    RS_Entity* nextEntity = nullptr;
 	RS_AtomicEntity* ae = nullptr;
     RS_Entity* v = l->firstEntity(RS2::ResolveNone);
     double bulge=0.0;

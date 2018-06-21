@@ -1701,7 +1701,7 @@ void RS_FilterJWW::writePolyline(DL_WriterA& dw,
                                                 l->isClosed()*0x1),
                 attrib);
         bool first = true;
-        RS_Entity* nextEntity = 0;
+        RS_Entity* nextEntity = nullptr;
 		RS_AtomicEntity* ae = nullptr;
         RS_Entity* lastEntity = l->lastEntity(RS2::ResolveNone);
         for (RS_Entity* v=l->firstEntity(RS2::ResolveNone);
