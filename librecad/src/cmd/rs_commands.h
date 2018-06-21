@@ -73,12 +73,8 @@ public:
       */
     static QString filterCliCal(const QString& cmd);
 
-protected:
-    static RS_Commands* uniqueInstance;
-
 private:
     RS_Commands() ;
-    ~RS_Commands()=delete;
     RS_Commands(RS_Commands& ) = delete;
     RS_Commands& operator = ( RS_Commands& ) = delete;
 

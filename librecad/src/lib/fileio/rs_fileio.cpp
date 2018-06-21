@@ -175,11 +175,8 @@ bool RS_FileIO::fileExport(RS_Graphic& graphic, const QString& file,
 
 
 RS_FileIO* RS_FileIO::instance() {
-	static RS_FileIO* uniqueInstance=nullptr;
-	if (!uniqueInstance) {
-		uniqueInstance = new RS_FileIO();
-	}
-	return uniqueInstance;
+    static RS_FileIO inst;
+    return &inst;
 }
 
 /**

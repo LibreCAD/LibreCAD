@@ -30,15 +30,17 @@
 #include "rs_layer.h"
 #include "rs_entity.h"
 
-RS_Clipboard* RS_Clipboard::uniqueInstance = nullptr;
 
-
+RS_Clipboard *RS_Clipboard::instance() {
+    static RS_Clipboard inst;
+    return &inst;
+}
 
 void RS_Clipboard::clear() {
-	graphic.clear();
-	graphic.clearBlocks();
-	graphic.clearLayers();
-	graphic.clearVariables();
+    graphic.clear();
+    graphic.clearBlocks();
+    graphic.clearLayers();
+    graphic.clearVariables();
 }
 
 

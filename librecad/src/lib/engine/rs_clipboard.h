@@ -53,12 +53,7 @@ public:
     /**
      * @return Instance to the unique clipboard object.
      */
-    static RS_Clipboard* instance() {
-        if (!uniqueInstance) {
-            uniqueInstance = new RS_Clipboard();
-        }
-        return uniqueInstance;
-    }
+    static RS_Clipboard* instance();
 
 	void clear();
 
@@ -103,8 +98,6 @@ public:
     friend std::ostream& operator << (std::ostream& os, RS_Clipboard& cb);
 
 protected:
-    static RS_Clipboard* uniqueInstance;
-
 	RS_Graphic graphic;
 };
 

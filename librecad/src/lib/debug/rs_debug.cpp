@@ -35,7 +35,6 @@
 #include <QDateTime>
 #include <QDebug>
 
-RS_Debug* RS_Debug::uniqueInstance = nullptr;
 void debugHeader(char const* file, char const* func, int line)
 {
 	std::cout<<file<<" : "<<func<<" : line "<<line<<std::endl;
@@ -49,41 +48,24 @@ void debugHeader(char const* file, char const* func, int line)
  * singleton class
  */
 RS_Debug* RS_Debug::instance() {
-	if(!uniqueInstance) {
-        QDateTime now = QDateTime::currentDateTime();
-        QString nowStr;
-		nowStr = now.toString("yyyyMMdd_hhmmss");
-
-                //QString fName = QString("%1/debug_%2.log")
-		//	.arg(RS_SYSTEM->getHomeDir())
-		//	.arg(nowStr);
-                QString fName = QString("debug_%1.log")
-			.arg(nowStr);
-
-        uniqueInstance = new RS_Debug;
-        //uniqueInstance->stream = fopen(fName.latin1(), "wt");
-        uniqueInstance->stream = stderr;
-    }
-    return uniqueInstance;
-}
-
-
-/**
- * Deletes the one and only RS_Debug instance.
- */
-void
-RS_Debug::deleteInstance() {
-    if (uniqueInstance) {
-        fclose(uniqueInstance->stream);
-        delete uniqueInstance;
-    }
+    static RS_Debug inst;
+    // static bool notsetfilestream = true;
+    // if(notsetfilestream) {
+    //     const QDateTime now = QDateTime::currentDateTime();
+    //     const QString fName = QString("debug_%1.log").arg(now.toString("yyyyMMdd_hhmmss"));
+    //     inst.stream = fopen(fName.toLatin1().constData(), "wt");
+    //     notsetfilestream = true;
+    // }
+    return &inst;
 }
 
 /**
  * Constructor setting the default debug level.
  */
-RS_Debug::RS_Debug() {
-    debugLevel = D_DEBUGGING;
+RS_Debug::RS_Debug()
+    : debugLevel(D_DEBUGGING)
+    , stream(stderr)
+{
 }
 
 /**

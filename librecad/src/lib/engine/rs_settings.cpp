@@ -28,7 +28,6 @@
 #include <QSettings>
 #include "rs_settings.h"
 
-RS_Settings* RS_Settings::uniqueInstance = nullptr;
 bool RS_Settings::save_is_allowed = true;
 
 RS_Settings::RS_Settings():
@@ -37,10 +36,8 @@ RS_Settings::RS_Settings():
 }
 
 RS_Settings* RS_Settings::instance() {
-	if (!uniqueInstance) {
-		uniqueInstance = new RS_Settings();
-	}
-	return uniqueInstance;
+    static RS_Settings inst;
+    return &inst;
 }
 
 /**

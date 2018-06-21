@@ -56,18 +56,14 @@ bool isCollisionFree(std::map<T1, T2> const& lookUp, T1 const& key, T2 const& va
 }
 }
 
-RS_Commands* RS_Commands::uniqueInstance = nullptr;
-
 const char* RS_Commands::FnPrefix = "Fn";
 const char* RS_Commands::AltPrefix = "Alt-";
 const char* RS_Commands::MetaPrefix = "Meta-";
 
 
 RS_Commands* RS_Commands::instance() {
-    if (!uniqueInstance) {
-        uniqueInstance = new RS_Commands();
-    }
-    return uniqueInstance;
+    static RS_Commands inst;
+    return &inst;
 }
 
 /**

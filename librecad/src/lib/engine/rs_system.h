@@ -58,12 +58,7 @@ public:
     /**
      * @return Instance to the unique system object.
      */
-    static RS_System* instance() {
-        if (!uniqueInstance) {
-            uniqueInstance = new RS_System();
-        }
-        return uniqueInstance;
-    }
+    static RS_System* instance();
 
     void init(const QString& appName, const QString& appVersion,
                   const QString& appDirName, const QString& appDir="");
@@ -190,8 +185,6 @@ public:
     void addLocale(RS_Locale *locale);
 
 protected:
-    static RS_System* uniqueInstance;
-
     QString appName;
     QString appVersion;
     QString appDirName;
