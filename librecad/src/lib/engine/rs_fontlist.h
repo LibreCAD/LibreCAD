@@ -61,8 +61,8 @@ public:
 private:
 	RS_FontList()=default;
 	RS_FontList(RS_FontList const&)=delete;
-	RS_FontList& operator = (RS_FontList const&)=delete;
-	static RS_FontList* uniqueInstance;
+    RS_FontList& operator = (RS_FontList const&)=delete;
+
     //! fonts in the graphic
 	std::vector<std::unique_ptr<RS_Font>> fonts;
 };

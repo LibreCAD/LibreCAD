@@ -67,7 +67,7 @@ void QG_BlockModel::setBlockList(RS_BlockList* bl) {
 	 */
     beginResetModel();
     listBlock.clear();
-    if (bl == NULL){
+    if (!bl){
         endResetModel();
         return;
     }
@@ -83,7 +83,7 @@ void QG_BlockModel::setBlockList(RS_BlockList* bl) {
 
 RS_Block *QG_BlockModel::getBlock( int row ){
     if ( row >= listBlock.size() || row < 0)
-        return NULL;
+        return nullptr;
     return listBlock.at(row);
 }
 
@@ -123,8 +123,8 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
 
     setObjectName(name);
     actionHandler = ah;
-    blockList = NULL;
-    lastBlock = NULL;
+    blockList = nullptr;
+    lastBlock = nullptr;
 
     blockModel = new QG_BlockModel;
     blockView = new QTableView(this);
@@ -247,12 +247,12 @@ void QG_BlockWidget::update() {
     if (blockList) {
         activeBlock = blockList->getActive();
     } else {
-        activeBlock = NULL;
+        activeBlock = nullptr;
     }
 
     blockModel->setBlockList(blockList);
 
-    if (blockList==NULL) {
+    if (!blockList) {
         RS_DEBUG->print("QG_BlockWidget::update(): blockList is NULL");
         return;
     }
@@ -275,9 +275,8 @@ void QG_BlockWidget::update() {
 void QG_BlockWidget::activateBlock(RS_Block* block) {
     RS_DEBUG->print("QG_BlockWidget::activateBlock()");
 
-    if (block==NULL || blockList==NULL) {
+    if (!block || !blockList)
         return;
-    }
 
     lastBlock = blockList->getActive();
     blockList->activate(block);
@@ -289,11 +288,11 @@ void QG_BlockWidget::activateBlock(RS_Block* block) {
  * Called when the user activates (highlights) a block.
  */
 void QG_BlockWidget::slotActivated(QModelIndex blockIdx) {
-    if (!blockIdx.isValid() || blockList==NULL)
+    if (!blockIdx.isValid() || !blockList)
         return;
 
     RS_Block * block = blockModel->getBlock( blockIdx.row() );
-    if (block == 0)
+    if (!block)
         return;
 
     if (blockIdx.column() == QG_BlockModel::VISIBLE) {

@@ -60,14 +60,14 @@ RS_FilterDXF::RS_FilterDXF()
     RS_DEBUG->print("RS_FilterDXF::RS_FilterDXF()");
 
     mtext = "";
-    polyline = NULL;
-    leader = NULL;
-    hatch = NULL;
-    hatchLoop = NULL;
-    currentContainer = NULL;
-    graphic = NULL;
-	spline = NULL;
-	splinePoints = NULL;
+    polyline = nullptr;
+    leader = nullptr;
+    hatch = nullptr;
+    hatchLoop = nullptr;
+    currentContainer = nullptr;
+    graphic = nullptr;
+    spline = nullptr;
+    splinePoints = nullptr;
     //exportVersion = DL_Codes::VER_2002;
     //systemVariables.setAutoDelete(true);
     RS_DEBUG->print("RS_FilterDXF::RS_FilterDXF(): OK");
@@ -273,9 +273,8 @@ void RS_FilterDXF::addLine(const DL_LineData& data) {
 
     RS_DEBUG->print("RS_FilterDXF::addLine: create line");
 
-    if (currentContainer==NULL) {
+    if (!currentContainer)
         RS_DEBUG->print("RS_FilterDXF::addLine: currentContainer is NULL");
-    }
 
     RS_Line* entity = new RS_Line(currentContainer,
                                   RS_LineData(v1, v2));
@@ -385,9 +384,8 @@ void RS_FilterDXF::addVertex(const DL_VertexData& data) {
 
     RS_Vector v(data.x, data.y);
 
-    if (polyline!=NULL) {
+    if (polyline)
         polyline->addVertex(v, data.bulge);
-    }
 }
 
 
@@ -404,17 +402,15 @@ void RS_FilterDXF::addSpline(const DL_SplineData& data) {
 		splinePoints = new RS_SplinePoints(currentContainer, d);
         setEntityAttributes(spline, attributes);
 		currentContainer->addEntity(spline);
-		spline = NULL;
-		return;
-	}
-
-    if (data.degree>=1 && data.degree<=3) {
+        spline = nullptr;
+    }
+    else if (data.degree>=1 && data.degree<=3) {
         RS_SplineData d(data.degree, ((data.flags&0x1)==0x1));
         spline = new RS_Spline(currentContainer, d);
         setEntityAttributes(spline, attributes);
 
         currentContainer->addEntity(spline);
-		splinePoints = NULL;
+        splinePoints = nullptr;
     } else {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_FilterDXF::addSpline: Invalid degree for spline: %d. "
@@ -431,11 +427,11 @@ void RS_FilterDXF::addControlPoint(const DL_ControlPointData& data) {
 
     RS_Vector v(data.x, data.y);
 
-    if (spline!=NULL) {
+    if (spline) {
         spline->addControlPoint(v);
         spline->update();
     }
-    else if (splinePoints != NULL) {
+    else if (splinePoints) {
         splinePoints->addControlPoint(v);
         splinePoints->update();
     }
@@ -464,7 +460,7 @@ void RS_FilterDXF::addInsert(const DL_InsertData& data) {
                     ip, sc, data.angle/ARAD,
                     data.cols, data.rows,
                     sp,
-                    NULL,
+                    nullptr,
                     RS2::NoUpdate);
     RS_Insert* entity = new RS_Insert(currentContainer, d);
     setEntityAttributes(entity, attributes);
@@ -901,9 +897,8 @@ void RS_FilterDXF::addLeaderVertex(const DL_LeaderVertexData& data) {
 
     RS_Vector v(data.x, data.y);
 
-    if (leader!=NULL) {
+    if (leader)
         leader->addVertex(v);
-    }
 }
 
 
@@ -932,13 +927,12 @@ void RS_FilterDXF::addHatch(const DL_HatchData& data) {
  */
 void RS_FilterDXF::addHatchLoop(const DL_HatchLoopData& data) {
     RS_DEBUG->print("RS_FilterDXF::addHatchLoop()");
-    if ( (data.pathType & 32) == 32)
-        omitHatchLoop = true;
-    else
-        omitHatchLoop = false;
-    if (hatch!=NULL && !omitHatchLoop) {
+
+    omitHatchLoop = ( (data.pathType & 32) == 32 );
+
+    if (hatch && !omitHatchLoop) {
         hatchLoop = new RS_EntityContainer(hatch);
-        hatchLoop->setLayer(NULL);
+        hatchLoop->setLayer(nullptr);
         hatch->addEntity(hatchLoop);
     }
 }
@@ -951,8 +945,8 @@ void RS_FilterDXF::addHatchLoop(const DL_HatchLoopData& data) {
 void RS_FilterDXF::addHatchEdge(const DL_HatchEdgeData& data) {
     RS_DEBUG->print("RS_FilterDXF::addHatchEdge()");
 
-    if (hatchLoop!=NULL && !omitHatchLoop) {
-        RS_Entity* e = NULL;
+    if (hatchLoop && !omitHatchLoop) {
+        RS_Entity* e = nullptr;
         switch (data.type) {
         case 1:
             RS_DEBUG->print("RS_FilterDXF::addHatchEdge(): "
@@ -991,8 +985,8 @@ void RS_FilterDXF::addHatchEdge(const DL_HatchEdgeData& data) {
             break;
         }
 
-        if (e!=NULL) {
-            e->setLayer(NULL);
+        if (e) {
+            e->setLayer(nullptr);
             hatchLoop->addEntity(e);
         }
     }
@@ -1014,7 +1008,7 @@ void RS_FilterDXF::addImage(const DL_ImageData& data) {
     RS_Image* image =
         new RS_Image(
             currentContainer,
-            RS_ImageData(QString(data.ref.c_str()).toInt(NULL, 16),
+            RS_ImageData(QString(data.ref.c_str()).toInt(nullptr, 16),
                          ip, uv, vv,
                          size,
                          QString(""),
@@ -1034,7 +1028,7 @@ void RS_FilterDXF::addImage(const DL_ImageData& data) {
 void RS_FilterDXF::linkImage(const DL_ImageDefData& data) {
     RS_DEBUG->print("RS_FilterDXF::linkImage");
 
-    int handle = QString(data.ref.c_str()).toInt(NULL, 16);
+    int handle = QString(data.ref.c_str()).toInt(nullptr, 16);
     QString sfile(QString::fromUtf8(data.file.c_str()));
     QFileInfo fiDxf(file);
     QFileInfo fiBitmap(sfile);
@@ -1063,7 +1057,7 @@ void RS_FilterDXF::linkImage(const DL_ImageDefData& data) {
 
     // Also link images in subcontainers (e.g. inserts):
     for (RS_Entity* e=graphic->firstEntity(RS2::ResolveNone);
-            e!=NULL; e=graphic->nextEntity(RS2::ResolveNone)) {
+            e; e=graphic->nextEntity(RS2::ResolveNone)) {
         if (e->rtti()==RS2::EntityImage) {
             RS_Image* img = (RS_Image*)e;
             if (img->getHandle()==handle) {
@@ -1078,7 +1072,7 @@ void RS_FilterDXF::linkImage(const DL_ImageDefData& data) {
     for (uint i=0; i<graphic->countBlocks(); ++i) {
         RS_Block* b = graphic->blockAt(i);
         for (RS_Entity* e=b->firstEntity(RS2::ResolveNone);
-                e!=NULL; e=b->nextEntity(RS2::ResolveNone)) {
+                e; e=b->nextEntity(RS2::ResolveNone)) {
             if (e->rtti()==RS2::EntityImage) {
                 RS_Image* img = (RS_Image*)e;
                 if (img->getHandle()==handle) {
@@ -1100,20 +1094,21 @@ void RS_FilterDXF::linkImage(const DL_ImageDefData& data) {
  */
 void RS_FilterDXF::endEntity() {
     RS_DEBUG->print("RS_FilterDXF::endEntity");
-
-    if (hatch!=NULL) {
-
-        RS_DEBUG->print("hatch->update()");
-
-        if (hatch->validate()) {
-            hatch->update();
-        } else {
-            graphic->removeEntity(hatch);
-            RS_DEBUG->print(RS_Debug::D_ERROR,
-                            "RS_FilterDXF::endEntity(): updating hatch failed: invalid hatch area");
-        }
-        hatch=NULL;
+    
+    if (!hatch)
+        return;
+    
+    RS_DEBUG->print("hatch->update()");
+    
+    if (hatch->validate()) {
+        hatch->update();
+    } else {
+        graphic->removeEntity(hatch);
+        RS_DEBUG->print(RS_Debug::D_ERROR,
+                        "RS_FilterDXF::endEntity(): updating hatch failed: invalid hatch area");
     }
+
+    hatch = nullptr;
 }
 
 
@@ -1225,7 +1220,7 @@ bool RS_FilterDXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
     //DL_WriterA* dw = dxf.out(file, VER_R12);
     DL_WriterA* dw = dxf.out((const char*)QFile::encodeName(file), exportVersion);
 
-    if (dw==NULL) {
+    if (!dw) {
         RS_DEBUG->print("RS_FilterDXF::fileExport: can't write file");
         return false;
     }
@@ -1358,7 +1353,7 @@ bool RS_FilterDXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
     RS_DEBUG->print("writing section ENTITIES...");
     dw->sectionEntities();
     for (RS_Entity* e=graphic->firstEntity(RS2::ResolveNone);
-            e!=NULL;
+            e;
             e=graphic->nextEntity(RS2::ResolveNone)) {
 
         writeEntity(*dw, e);
@@ -1375,7 +1370,7 @@ bool RS_FilterDXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         for (uint i=0; i<graphic->countBlocks(); ++i) {
             RS_Block* block = graphic->blockAt(i);
             for (RS_Entity* e=block->firstEntity(RS2::ResolveAll);
-                    e!=NULL;
+                    e;
                     e=block->nextEntity(RS2::ResolveAll)) {
 
                 if (e->rtti()==RS2::EntityImage) {
@@ -1388,7 +1383,7 @@ bool RS_FilterDXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
             }
         }
         for (RS_Entity* e=graphic->firstEntity(RS2::ResolveNone);
-                e!=NULL;
+                e;
                 e=graphic->nextEntity(RS2::ResolveNone)) {
 
             if (e->rtti()==RS2::EntityImage) {
@@ -1480,7 +1475,7 @@ void RS_FilterDXF::writeVariables(DL_WriterA& dw) {
  * @todo Add support for unicode layer names
  */
 void RS_FilterDXF::writeLayer(DL_WriterA& dw, RS_Layer* l) {
-    if (l==NULL) {
+    if (!l) {
                 RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_FilterDXF::writeLayer: layer is NULL");
         return;
@@ -1529,7 +1524,7 @@ void RS_FilterDXF::writeAppid(DL_WriterA& dw, const char* appid) {
  * Writes a block (just the definition, not the entities in it).
  */
 void RS_FilterDXF::writeBlock(DL_WriterA& dw, RS_Block* blk) {
-    if (blk==NULL) {
+    if (!blk) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_FilterDXF::writeBlock: Block is NULL");
         return;
@@ -1547,7 +1542,7 @@ void RS_FilterDXF::writeBlock(DL_WriterA& dw, RS_Block* blk) {
                                 blk->getBasePoint().z));
 #endif
     for (RS_Entity* e=blk->firstEntity(RS2::ResolveNone);
-            e!=NULL;
+            e;
             e=blk->nextEntity(RS2::ResolveNone)) {
         writeEntity(dw, e);
     }
@@ -1570,9 +1565,9 @@ void RS_FilterDXF::writeEntity(DL_WriterA& dw, RS_Entity* e) {
 void RS_FilterDXF::writeEntity(DL_WriterA& dw, RS_Entity* e,
                                const DL_Attributes& attrib) {
 
-    if (e==NULL || e->getFlag(RS2::FlagUndone)) {
+    if (!e || e->getFlag(RS2::FlagUndone))
         return;
-    }
+
     RS_DEBUG->print("writing Entity");
 
     switch (e->rtti()) {
@@ -1694,11 +1689,11 @@ void RS_FilterDXF::writePolyline(DL_WriterA& dw,
                         l->isClosed()*0x1),
         attrib);
     bool first = true;
-    RS_Entity* nextEntity = 0;
-    RS_AtomicEntity* ae = NULL;
+    RS_Entity* nextEntity = nullptr;
+    RS_AtomicEntity* ae = nullptr;
         RS_Entity* lastEntity = l->lastEntity(RS2::ResolveNone);
     for (RS_Entity* v=l->firstEntity(RS2::ResolveNone);
-            v!=NULL;
+            v;
             v=nextEntity) {
 
         nextEntity = l->nextEntity(RS2::ResolveNone);
@@ -1724,7 +1719,7 @@ void RS_FilterDXF::writePolyline(DL_WriterA& dw,
         }
 
         //if (dxf.getVersion()==VER_R12) {
-            if (nextEntity!=NULL) {
+            if (nextEntity) {
                 if (nextEntity->rtti()==RS2::EntityArc) {
                     bulge = ((RS_Arc*)nextEntity)->getBulge();
                 }
@@ -2192,7 +2187,7 @@ void RS_FilterDXF::writeLeader(DL_WriterA& dw, RS_Leader* l,
             attrib);
         bool first = true;
         for (RS_Entity* v=l->firstEntity(RS2::ResolveNone);
-                v!=NULL;
+                v;
                 v=l->nextEntity(RS2::ResolveNone)) {
 
             // Write line verties:
@@ -2233,7 +2228,7 @@ void RS_FilterDXF::writeHatch(DL_WriterA& dw, RS_Hatch* h,
     if (h->countLoops()>0) {
         // check if all of the loops contain entities:
         for (RS_Entity* l=h->firstEntity(RS2::ResolveNone);
-                l!=NULL;
+                l;
                 l=h->nextEntity(RS2::ResolveNone)) {
 
             if (l->isContainer() && !l->getFlag(RS2::FlagTemp)) {
@@ -2258,7 +2253,7 @@ void RS_FilterDXF::writeHatch(DL_WriterA& dw, RS_Hatch* h,
         dxf.writeHatch1(dw, data, attrib);
 
         for (RS_Entity* l=h->firstEntity(RS2::ResolveNone);
-                l!=NULL;
+                l;
                 l=h->nextEntity(RS2::ResolveNone)) {
 
             // Write hatch loops:
@@ -2268,7 +2263,7 @@ void RS_FilterDXF::writeHatch(DL_WriterA& dw, RS_Hatch* h,
                 dxf.writeHatchLoop1(dw, lData);
 
                 for (RS_Entity* ed=loop->firstEntity(RS2::ResolveNone);
-                        ed!=NULL;
+                        ed;
                         ed=loop->nextEntity(RS2::ResolveNone)) {
 
                     // Write hatch loop edges:
@@ -2405,7 +2400,7 @@ void RS_FilterDXF::writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con,
 
     RS_Block* blk = new RS_Block(graphic, blkdata);
 
-    for (RS_Entity* e1 = con->firstEntity(); e1 != NULL;
+    for (RS_Entity* e1 = con->firstEntity(); e1;
             e1 = con->nextEntity() ) {
         blk->addEntity(e1);
     }
@@ -2424,7 +2419,7 @@ void RS_FilterDXF::writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c,
                                        RS2::ResolveLevel level) {
 
     for (RS_Entity* e=c->firstEntity(level);
-            e!=NULL;
+            e;
             e=c->nextEntity(level)) {
 
         writeEntity(dw, e, attrib);
@@ -2435,9 +2430,8 @@ void RS_FilterDXF::writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c,
  * Writes an IMAGEDEF object into an OBJECT section.
  */
 void RS_FilterDXF::writeImageDef(DL_WriterA& dw, RS_Image* i) {
-    if (i==NULL || i->getFlag(RS2::FlagUndone)) {
+    if (!i || i->getFlag(RS2::FlagUndone))
         return;
-    }
 
     dxf.writeImageDef(
         dw,
@@ -2479,9 +2473,9 @@ void RS_FilterDXF::setEntityAttributes(RS_Entity* entity,
     } else {
         // add layer in case it doesn't exist:
 
-        if (graphic->findLayer(QString::fromUtf8(attrib.getLayer().c_str()))==NULL) {
+        if (graphic->findLayer(QString::fromUtf8(attrib.getLayer().c_str())) == nullptr)
             addLayer(DL_LayerData(attrib.getLayer(), 0));
-        }
+
         entity->setLayer(QString::fromUtf8(attrib.getLayer().c_str()));
     }
 
@@ -2508,7 +2502,7 @@ DL_Attributes RS_FilterDXF::getEntityAttributes(RS_Entity* entity) {
     // Layer:
     RS_Layer* layer = entity->getLayer();
     QString layerName;
-    if (layer!=NULL) {
+    if (layer) {
         layerName = layer->getName();
     } else {
         layerName = "NULL";

@@ -110,6 +110,7 @@ protected:
      * This flag is set when the action has terminated and
      * can be deleted.
      */
+    //TODO: finished shadows member inerited from RS_Snapper
     bool finished;
 
     /**

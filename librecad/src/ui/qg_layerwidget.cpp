@@ -79,7 +79,7 @@ void QG_LayerModel::setLayerList(RS_LayerList* ll) {
 	 */
     beginResetModel();
     listLayer.clear();
-    if (ll == NULL) {
+    if (!ll) {
         endResetModel();
         return;
     }
@@ -97,7 +97,7 @@ void QG_LayerModel::setLayerList(RS_LayerList* ll) {
 
 RS_Layer *QG_LayerModel::getLayer( int row ) {
     if ( row >= listLayer.size() || row < 0)
-        return NULL;
+        return nullptr;
     return listLayer.at(row);
 }
 
@@ -270,11 +270,12 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
  *                    false: don't show special layer "ByBlock"
  */
 void QG_LayerWidget::setLayerList(RS_LayerList* layerList, bool showByBlock) {
+    if (layerList)
+        layerList->setLayerWitget(this);
+
     this->layerList = layerList;
     this->showByBlock = showByBlock;
-    if (layerList != NULL) {
-        this->layerList->setLayerWitget(this);
-    }
+
     update();
 }
 
@@ -381,12 +382,12 @@ void QG_LayerWidget::activateLayer(RS_Layer* layer, bool updateScroll) {
  * Called when the user activates (highlights) a layer.
  */
 void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerName*/) {
-    if (!layerIdx.isValid() || layerList==NULL) {
+    if (!layerIdx.isValid() || !layerList) {
         return;
     }
 
     RS_Layer* lay = layerModel->getLayer(layerIdx.row());
-    if (lay == 0)
+    if (!lay)
         return;
 
     if (layerIdx.column() == QG_LayerModel::NAME) {

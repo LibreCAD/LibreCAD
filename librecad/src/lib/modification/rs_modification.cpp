@@ -557,9 +557,9 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
 
     // create block to paste entities as a whole
     QString name_old = "paste-block";
-    if (data.blockName != NULL) {
+    if (data.blockName != "")
         name_old = data.blockName;
-    }
+
     QString name_new = name_old;
     if (graphic->findBlock(name_old)) {
         name_new = graphic->getBlockList()->newName(name_old);
@@ -574,7 +574,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     graphic->addBlock(b);
 
     // create insert object for the paste block
-    RS_InsertData di = RS_InsertData(b->getName(), ip, vfactor, data.angle, 1, 1, RS_Vector(0.0,0.0));
+    RS_InsertData di = RS_InsertData(b->getName(), ip, vfactor, data.angle, 1, 1, RS_Vector(0.0, 0.0));
     RS_Insert* i = new RS_Insert(graphic, di);
     i->setLayerToActive();
     i->setPenToActive();

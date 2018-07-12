@@ -31,13 +31,9 @@
 #include "rs_font.h"
 #include "rs_system.h"
 
-RS_FontList* RS_FontList::uniqueInstance = nullptr;
-
 RS_FontList* RS_FontList::instance() {
-	if (!uniqueInstance) {
-		uniqueInstance = new RS_FontList();
-	}
-	return uniqueInstance;
+    static RS_FontList inst;
+    return &inst;
 }
 
 
@@ -95,7 +91,7 @@ RS_Font* RS_FontList::requestFont(const QString& name) {
     RS_DEBUG->print("RS_FontList::requestFont %s",  name.toLatin1().data());
 
     QString name2 = name.toLower();
-    RS_Font* foundFont = NULL;
+    RS_Font* foundFont = nullptr;
 
     // QCAD 1 compatibility:
     if (name2.contains('#') && name2.contains('_')) {

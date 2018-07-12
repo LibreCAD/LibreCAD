@@ -477,9 +477,8 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     //printf("state: %d\n", e->state());
     //printf("ctrl: %d\n", Qt::ControlButton);
 
-    if (container==NULL) {
+    if (!container)
         return;
-    }
 
     RS_Vector mouse = toGraph(e->x(), e->y());
 
@@ -654,9 +653,8 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
 void QG_GraphicView::keyPressEvent(QKeyEvent* e)
 {
-    if (container==NULL) {
+    if (!container)
         return;
-    }
 
     bool scroll = false;
     RS2::Direction direction = RS2::Up;
@@ -712,7 +710,7 @@ void QG_GraphicView::adjustOffsetControls()
 
         running = true;
 
-        if (container==NULL || hScrollBar==NULL || vScrollBar==NULL) {
+        if (!container || !hScrollBar || !vScrollBar) {
             return;
         }
 

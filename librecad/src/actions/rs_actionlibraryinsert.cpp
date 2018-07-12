@@ -45,10 +45,9 @@ struct RS_ActionLibraryInsert::Points {
  */
 RS_ActionLibraryInsert::RS_ActionLibraryInsert(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Library Insert",
-						   container, graphicView)
+        : RS_PreviewActionInterface("Library Insert", container, graphicView)
 		, pPoints(new Points{})
-		,lastStatus(SetTargetPoint)
+        , lastStatus(SetTargetPoint)
 {
 	actionType=RS2::ActionLibraryInsert;
 }
@@ -56,7 +55,7 @@ RS_ActionLibraryInsert::RS_ActionLibraryInsert(RS_EntityContainer& container,
 RS_ActionLibraryInsert::~RS_ActionLibraryInsert() = default;
 
 QAction* RS_ActionLibraryInsert::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-   QAction* action = new QAction(tr("Insert Library Object"), NULL);
+    QAction* action = new QAction(tr("Insert Library Object"), nullptr);
     return action;
 }
 
@@ -65,7 +64,6 @@ void RS_ActionLibraryInsert::init(int status) {
     RS_PreviewActionInterface::init(status);
 
     reset();
-
 }
 
 
@@ -119,7 +117,7 @@ void RS_ActionLibraryInsert::mouseMoveEvent(QMouseEvent* e) {
         }
 		preview->rotate(pPoints->data.insertionPoint, pPoints->data.angle);
         // too slow:
-        //RS_Creation creation(preview, NULL, false);
+        //RS_Creation creation(preview, nullptr, false);
         //creation.createInsert(data);
         drawPreview();
         //}
@@ -144,11 +142,10 @@ void RS_ActionLibraryInsert::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionLibraryInsert::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (!e)
         return;
-    }
 
-	pPoints->data.insertionPoint = e->getCoordinate();
+    pPoints->data.insertionPoint = e->getCoordinate();
     trigger();
 }
 

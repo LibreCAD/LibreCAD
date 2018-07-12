@@ -105,8 +105,6 @@ private:
 	void addToCache(const QString& key, const QVariant& value);
 
 protected:
-    static RS_Settings* uniqueInstance;
-
 	std::map<QString, QVariant> cache;
     QString companyKey;
     QString appKey;

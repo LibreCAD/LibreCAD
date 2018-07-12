@@ -30,7 +30,7 @@
 #include "rs_system.h"
 #include "rs_debug.h"
 
-RS_ScriptList* RS_ScriptList::uniqueInstance = NULL;
+RS_ScriptList* RS_ScriptList::uniqueInstance = nullptr;
 
 /**
  * Default constructor.
@@ -38,7 +38,7 @@ RS_ScriptList* RS_ScriptList::uniqueInstance = NULL;
 RS_ScriptList::RS_ScriptList() {
     //init();
     //scriptListListeners.setAutoDelete(false);
-    //activeScript = NULL;
+    //activeScript = nullptr;
 }
 
 

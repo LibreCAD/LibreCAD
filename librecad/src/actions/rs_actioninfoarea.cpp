@@ -126,9 +126,8 @@ void RS_ActionInfoArea::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionInfoArea::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (!e)
         return;
-    }
 
     RS_Vector mouse = e->getCoordinate();
 	if(ia->duplicated(mouse)) {

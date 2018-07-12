@@ -44,7 +44,7 @@ QG_CoordinateWidget::QG_CoordinateWidget(QWidget* parent, const char* name, Qt::
     lCoord1b->setText("");
     lCoord2b->setText("");
 
-    graphic = NULL;
+    graphic = nullptr;
     prec = 4;
     format = RS2::Decimal;
     aprec = 2;

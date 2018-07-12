@@ -211,13 +211,8 @@ void RS_Selection::selectIntersected(const RS_Vector& v1, const RS_Vector& v2,
  */
 void RS_Selection::selectContour(RS_Entity* e) {
 
-    if (e==NULL) {
+    if (!e || !e->isAtomic())
         return;
-    }
-
-    if (!e->isAtomic()) {
-        return;
-    }
 
     bool select = !e->isSelected();
     RS_AtomicEntity* ae = (RS_AtomicEntity*)e;
@@ -294,16 +289,14 @@ void RS_Selection::selectContour(RS_Entity* e) {
  */
 void RS_Selection::selectLayer(RS_Entity* e) {
 
-    if (e==NULL) {
+    if (!e)
         return;
-    }
 
     bool select = !e->isSelected();
 
     RS_Layer* layer = e->getLayer(true);
-    if (layer==NULL) {
+    if (!layer)
         return;
-    }
 
     QString layerName = layer->getName();
 	selectLayer(layerName, select);

@@ -46,7 +46,7 @@ RS_ActionInfoDist2::RS_ActionInfoDist2(RS_EntityContainer& container,
 }
 
 RS_ActionInfoDist2::~RS_ActionInfoDist2() {
-    if(graphicView != NULL && graphicView->isCleanUp()==false){
+    if(graphicView && graphicView->isCleanUp()==false){
         if( entity && entity->isHighlighted()){
             entity->setHighlighted(false);
             graphicView->redraw(RS2::RedrawDrawing);
@@ -132,16 +132,16 @@ void RS_ActionInfoDist2::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionInfoDist2::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (!e)
         return;
-    }
 
-    if (getStatus()==SetPoint && entity) {
-		*point = e->getCoordinate();
-		graphicView->moveRelativeZero(*point);
-        trigger();
-        setStatus(SetEntity);
-    }
+    if (getStatus() != SetPoint || !entity)
+        return;
+
+    *point = e->getCoordinate();
+    graphicView->moveRelativeZero(*point);
+    trigger();
+    setStatus(SetEntity);
 }
 
 

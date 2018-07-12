@@ -87,7 +87,7 @@ public:
          * is given.
          */
 //    virtual RS_GraphicView* requestNewDocument(const QString& fileName = QString::null,
-//                        RS_Document* doc=NULL) = 0;
+//                        RS_Document* doc = nullptr) = 0;
 
     /**
      * This virtual method must be overwritten and must provide
@@ -100,7 +100,7 @@ public:
      *         cancels the dialog.
      */
     virtual RS_Layer* requestNewLayerDialog(
-        RS_LayerList* layerList = NULL) = 0;
+        RS_LayerList* layerList = nullptr) = 0;
 
     /**
      * This virtual method must be overwritten and must provide
@@ -113,7 +113,7 @@ public:
      *         cancels the dialog.
      */
     virtual RS_Layer* requestLayerRemovalDialog(
-        RS_LayerList* layerList = NULL) = 0;
+        RS_LayerList* layerList = nullptr) = 0;
 
     /**
      * This virtual method must be overwritten and must provide
@@ -125,7 +125,7 @@ public:
      *         cancels the dialog.
      */
     virtual RS_Layer* requestEditLayerDialog(
-        RS_LayerList* layerList = NULL) = 0;
+        RS_LayerList* layerList = nullptr) = 0;
 
     /**
      * This virtual method must be overwritten and must provide

@@ -70,8 +70,8 @@ void QG_DlgMText::languageChange()
 
 void QG_DlgMText::init() {
     cbFont->init();
-    font=NULL;
-    text = NULL;
+    font = nullptr;
+    text = nullptr;
     isNew = false;
     updateUniCharComboBox(0);
     updateUniCharButton(0);
@@ -82,8 +82,8 @@ void QG_DlgMText::updateUniCharComboBox(int) {
     QString t = cbUniPage->currentText();
     int i1 = t.indexOf('-');
     int i2 = t.indexOf(']');
-    int min = t.mid(1, i1-1).toInt(NULL, 16);
-    int max = t.mid(i1+1, i2-i1-1).toInt(NULL, 16);
+    int min = t.mid(1, i1-1).toInt(nullptr, 16);
+    int max = t.mid(i1+1, i2-i1-1).toInt(nullptr, 16);
 
     cbUniChar->clear();
     for (int c=min; c<=max; c++) {
@@ -213,7 +213,7 @@ void QG_DlgMText::setText(RS_MText& t, bool isNew) {
     setFont(fon);
     leHeight->setText(height);
     setAlignment(alignment.toInt());
-    if (def!="1" || font==NULL) {
+    if (def!="1" || !font) {
         //leLetterSpacing->setText(letterSpacing);
         //leWordSpacing->setText(wordSpacing);
         leLineSpacingFactor->setText(lineSpacingFactor);
@@ -455,13 +455,13 @@ void QG_DlgMText::insertSymbol(int) {
 void QG_DlgMText::updateUniCharButton(int) {
     QString t = cbUniChar->currentText();
     int i1 = t.indexOf(']');
-    int c = t.mid(1, i1-1).toInt(NULL, 16);
+    int c = t.mid(1, i1-1).toInt(nullptr, 16);
     bUnicode->setText(QString("%1").arg(QChar(c)));
 }
 
 void QG_DlgMText::insertChar() {
     QString t = cbUniChar->currentText();
     int i1 = t.indexOf(']');
-    int c = t.mid(1, i1-1).toInt(NULL, 16);
+    int c = t.mid(1, i1-1).toInt(nullptr, 16);
     teText->textCursor().insertText( QString("%1").arg(QChar(c)) );
 }

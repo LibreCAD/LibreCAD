@@ -131,9 +131,8 @@ void RS_ActionInfoDist::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionInfoDist::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (!e)
         return;
-    }
 
     RS_Vector mouse = e->getCoordinate();
 

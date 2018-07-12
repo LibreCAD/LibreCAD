@@ -45,8 +45,8 @@ RS_DialogFactory::RS_DialogFactory():
  */
 RS_DialogFactory* RS_DialogFactory::instance()
 {
-	static RS_DialogFactory* uniqueInstance = new RS_DialogFactory{};
-	return uniqueInstance;
+    static RS_DialogFactory inst;
+    return &inst;
 }
 
 

@@ -157,9 +157,9 @@ void RS_ActionDrawEllipseFociPoint::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawEllipseFociPoint::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (!e)
         return;
-    }
+
     RS_Vector mouse = e->getCoordinate();
 
     switch (getStatus()) {

@@ -132,9 +132,8 @@ void RS_ActionModifyStretch::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionModifyStretch::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (!e)
         return;
-    }
 
     RS_Vector mouse = e->getCoordinate();
 

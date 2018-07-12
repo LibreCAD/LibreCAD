@@ -91,14 +91,13 @@ void RS_ActionModifyRotate::mouseReleaseEvent(QMouseEvent* e) {
 }
 
 void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (!e)
         return;
-    }
 
     RS_Vector pos = e->getCoordinate();
-    if (! pos.valid ) {
+    if (! pos.valid )
         return;
-    }
+
     switch (getStatus()) {
     case setCenterPoint:
 		data->center = pos;

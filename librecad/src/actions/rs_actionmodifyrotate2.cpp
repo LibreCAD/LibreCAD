@@ -108,9 +108,8 @@ void RS_ActionModifyRotate2::mouseReleaseEvent(QMouseEvent* e) {
 }
 
 void RS_ActionModifyRotate2::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (!e)
         return;
-    }
 
     RS_Vector pos = e->getCoordinate();
 
