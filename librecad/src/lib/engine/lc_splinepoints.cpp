@@ -3478,15 +3478,17 @@ void addQuadraticQuadIntersect(RS_VectorSolutions *pVS, std::vector<double> dQua
 		dSol.push_back(-a0/a1);
 	}
 
-    for(double& d: dSol)
-	{
-        if(d > -RS_TOLERANCE && d < 1.0 + RS_TOLERANCE)
-		{
-            if(d < 0.0) d = 0.0;
-            if(d > 1.0) d = 1.0;
-			pVS->push_back(GetQuadAtPoint(vx1, vc1, vx2, d));
-		}
-	}
+    for (double& d: dSol) {
+        if (d > -RS_TOLERANCE && d < 1.0 + RS_TOLERANCE) {
+            if (d < 0.0) {
+                d = 0.0;
+            }
+            if (d > 1.0) {
+                d = 1.0;
+            }
+            pVS->push_back(GetQuadAtPoint(vx1, vc1, vx2, d));
+        }
+    }
 }
 
 RS_VectorSolutions LC_SplinePoints::getQuadraticIntersect(RS_Entity const* e1)
