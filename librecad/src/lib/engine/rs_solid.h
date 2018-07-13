@@ -103,23 +103,23 @@ public:
                     double arrowSize);
 
     RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                 double* dist = NULL) const override;
+                                 double* dist = nullptr) const override;
     RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
                                       bool onEntity = true,
-                                      double* dist = NULL,
-                                      RS_Entity** entity = NULL) const override;
+                                      double* dist = nullptr,
+                                      RS_Entity** entity = nullptr) const override;
     RS_Vector getNearestCenter(const RS_Vector& coord,
-                               double* dist = NULL) const override;
+                               double* dist = nullptr) const override;
     RS_Vector getNearestMiddle(const RS_Vector& coord,
-                               double* dist = NULL,
+                               double* dist = nullptr,
                                int middlePoints = 1) const override;
     RS_Vector getNearestDist(double distance,
                              const RS_Vector& coord,
-                             double* dist = NULL) const override;
+                             double* dist = nullptr) const override;
 
     double getDistanceToPoint(const RS_Vector& coord,
-                              RS_Entity** entity=NULL,
-                              RS2::ResolveLevel level=RS2::ResolveNone,
+                              RS_Entity** entity = nullptr,
+                              RS2::ResolveLevel level = RS2::ResolveNone,
                               double solidDist = RS_MAXDOUBLE) const override;
 
     void move(const RS_Vector& offset) override;
@@ -138,7 +138,7 @@ public:
     /** Check if is intersected by v1, v2 window.
     * @return true if is crossed false otherwise.
     **/
-    bool isInCrossWindow(const RS_Vector& v1, const RS_Vector& v2)const;
+    bool isInCrossWindow(const RS_Vector& v1, const RS_Vector& v2) const;
 
 protected:
     RS_SolidData data;
@@ -146,7 +146,7 @@ protected:
 private:
     //helper method for getNearestPointOnEntity
     bool sign (const RS_Vector& v1, const RS_Vector& v2, const RS_Vector& v3) const;
-
+    void setDistPtr(double *dist, const double value) const;
 };
 
 #endif
