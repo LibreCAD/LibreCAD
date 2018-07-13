@@ -251,11 +251,11 @@ void RS_Dimension::updateCreateHorizontalTextDimensionLine(const RS_Vector& p1,
            RS2::LineByBlock);
 
     // Create dimension line:
-    RS_Line* dimensionLine = new RS_Line{this, p1, p2};
-    RS_Line* dimensionLineInside1;
-    RS_Line* dimensionLineInside2;
-    RS_Line* dimensionLineOutside1;
-    RS_Line* dimensionLineOutside2;
+    RS_Line* dimensionLine {new RS_Line{this, p1, p2}};
+    RS_Line* dimensionLineInside1 {nullptr};
+    RS_Line* dimensionLineInside2 {nullptr};
+    RS_Line* dimensionLineOutside1 {nullptr};
+    RS_Line* dimensionLineOutside2 {nullptr};
     dimensionLine->setPen(pen);
     dimensionLine->setLayer(nullptr);
 
