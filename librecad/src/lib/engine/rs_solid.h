@@ -58,8 +58,13 @@ struct RS_SolidData
                  const RS_Vector& corner3,
                  const RS_Vector& corner4);
 
+    enum Corners {
+        FirstCorner = 0,
+        Triangle = 3,
+        MaxCorners
+    };
 
-    std::array<RS_Vector, 4> corner;
+    std::array<RS_Vector, MaxCorners> corner;
 };
 
 

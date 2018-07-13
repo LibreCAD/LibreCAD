@@ -65,7 +65,7 @@ std::ostream& operator << (std::ostream& os,
                            const RS_SolidData& pd)
 {
     os << "(";
-    for (int i = 0; i < 4; i++) {
+    for (int i = RS_SolidData::FirstCorner; i < RS_SolidData::MaxCorners; i++) {
         os << pd.corner[i];
     }
     os << ")";
@@ -97,7 +97,7 @@ RS_Entity* RS_Solid::clone() const
  */
 RS_Vector RS_Solid::getCorner(int num) const
 {
-    if (num >= 0 && num < 4) {
+    if (num >= RS_SolidData::FirstCorner && num < RS_SolidData::MaxCorners) {
         return data.corner[num];
     }
 
@@ -134,7 +134,7 @@ void RS_Solid::calculateBorders()
 {
     resetBorders();
 
-    for (int i = 0; i < 4; ++i) {
+    for (int i = RS_SolidData::FirstCorner; i < RS_SolidData::MaxCorners; ++i) {
         if (data.corner[i].valid) {
             minV = RS_Vector::minimum( minV, data.corner[i]);
             maxV = RS_Vector::maximum( maxV, data.corner[i]);
@@ -148,7 +148,7 @@ RS_Vector RS_Solid::getNearestEndpoint(const RS_Vector& coord, double* dist /*= 
     double curDist {0.0};
     RS_Vector ret;
 
-    for (int i = 0; i < 4; ++i) {
+    for (int i = RS_SolidData::FirstCorner; i < RS_SolidData::MaxCorners; ++i) {
         if (data.corner[i].valid) {
             curDist = data.corner[i].distanceTo(coord);
             if (curDist < minDist) {
@@ -187,7 +187,7 @@ bool RS_Solid::isInCrossWindow(const RS_Vector& v1, const RS_Vector& v2) const
         vTR.y = v1.y;
     }
 
-    //Check if is out of window
+    //Check if entity is out of window
     if (getMin().x > vTR.x
         || getMax().x < vBL.x
         || getMin().y > vTR.y
@@ -299,11 +299,11 @@ RS_Vector RS_Solid::getNearestPointOnEntity(const RS_Vector& coord,
     RS_Vector ret(false);
     double currDist {RS_MAXDOUBLE};
     double tmpDist {0.0};
-    int totalV {isTriangle() ? 3 : 4};
-    for (int i = 0, next = 1; i <= totalV; ++i, ++next) {
+    int totalV {isTriangle() ? RS_SolidData::Triangle : RS_SolidData::MaxCorners};
+    for (int i = RS_SolidData::FirstCorner, next = i + 1; i <= totalV; ++i, ++next) {
         //closing edge
         if (next == totalV) {
-            next = 0;
+            next = RS_SolidData::FirstCorner;
         }
 
         RS_Vector direction {data.corner[next] - data.corner[i]};
@@ -394,8 +394,10 @@ double RS_Solid::getDistanceToPoint(const RS_Vector& coord,
 
 void RS_Solid::move(const RS_Vector& offset)
 {
-    for (int i = 0; i < 4; ++i) {
-        data.corner[i].move(offset);
+    for (int i = RS_SolidData::FirstCorner; i < RS_SolidData::MaxCorners; ++i) {
+        if (data.corner[i].valid) {
+            data.corner[i].move(offset);
+        }
     }
     calculateBorders();
 }
@@ -403,32 +405,40 @@ void RS_Solid::move(const RS_Vector& offset)
 void RS_Solid::rotate(const RS_Vector& center, const double& angle)
 {
     RS_Vector angleVector(angle);
-    for (int i = 0; i < 4; ++i) {
-        data.corner[i].rotate( center, angleVector);
+    for (int i = RS_SolidData::FirstCorner; i < RS_SolidData::MaxCorners; ++i) {
+        if (data.corner[i].valid) {
+            data.corner[i].rotate( center, angleVector);
+        }
     }
     calculateBorders();
 }
 
 void RS_Solid::rotate(const RS_Vector& center, const RS_Vector& angleVector)
 {
-    for (int i = 0; i < 4; ++i) {
-        data.corner[i].rotate( center, angleVector);
+    for (int i = RS_SolidData::FirstCorner; i < RS_SolidData::MaxCorners; ++i) {
+        if (data.corner[i].valid) {
+            data.corner[i].rotate( center, angleVector);
+        }
     }
     calculateBorders();
 }
 
 void RS_Solid::scale(const RS_Vector& center, const RS_Vector& factor)
 {
-    for (int i = 0; i < 4; ++i) {
-        data.corner[i].scale( center, factor);
+    for (int i = RS_SolidData::FirstCorner; i < RS_SolidData::MaxCorners; ++i) {
+        if (data.corner[i].valid) {
+            data.corner[i].scale( center, factor);
+        }
     }
     calculateBorders();
 }
 
 void RS_Solid::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
 {
-    for (int i = 0; i < 4; ++i) {
-        data.corner[i].mirror( axisPoint1, axisPoint2);
+    for (int i = RS_SolidData::FirstCorner; i < RS_SolidData::MaxCorners; ++i) {
+        if (data.corner[i].valid) {
+            data.corner[i].mirror( axisPoint1, axisPoint2);
+        }
     }
     calculateBorders();
 }
