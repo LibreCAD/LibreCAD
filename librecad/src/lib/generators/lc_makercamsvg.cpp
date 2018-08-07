@@ -941,7 +941,7 @@ std::string LC_MakerCamSVG::svgPathAnyLineType(RS_Vector startpoint, RS_Vector e
     default: { lineScale = lineScaleOne; lineFactor = dotFactor; break;}
     }
 
-    //don't have any sence to have pattern longer than a line
+    //doesn't make an sense to have pattern longer than a line
     double dashLinePatternLength = defaultDashLinePatternLength;
 
     if (lineLengh < (dashLinePatternLength*lineFactor*lineScale)) {

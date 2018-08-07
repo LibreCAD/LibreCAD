@@ -695,7 +695,7 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
     QString name_old = ib->getName();
     QString name_new = name_old;
     if (name_old != i->getName()) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: block and insert names don't coinside");
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: block and insert names don't coincide");
         return false;
     }
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: processing container: %s", name_old.toLatin1().data());

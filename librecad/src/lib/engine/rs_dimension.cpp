@@ -782,7 +782,7 @@ double RS_Dimension::getGraphicVariable(const QString& key, double defMM,
  * Removes zeros from angle string.
  *
  * @param angle The string representing angle.
- * @param zeros Zeros supresion (0 none, 1 suppres leading, 2 suppres trailing, 3 both)
+ * @param zeros Zeros suppression (0 none, 1 suppress leading, 2 suppress trailing, 3 both)
  * Decimal separator are '.'
  *
  * @ret String with the formatted angle.
@@ -812,7 +812,7 @@ QString RS_Dimension::stripZerosAngle(QString angle, int zeros){
  * Removes zeros from linear string.
  *
  * @param linear The string representing linear measure.
- * @param zeros Zeros supresion (see dimzin)
+ * @param zeros Zeros suppression (see dimzin)
  *
  * @ret String with the formatted linear measure.
  */

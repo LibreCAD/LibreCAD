@@ -195,7 +195,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                     }
                 }
 
-                // Dimenison Units:
+                // Dimension Units:
                 //
                 else if( dxfLine=="$DIMALT" ) {
 					dxfCode=getBufLine();

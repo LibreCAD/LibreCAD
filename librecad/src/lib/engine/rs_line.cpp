@@ -687,7 +687,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     painter->setPen(pen);
 
 	if (pat->num <= 0) {
-		RS_DEBUG->print(RS_Debug::D_WARNING,"invalid line pattern for line, draw solid line instread");
+		RS_DEBUG->print(RS_Debug::D_WARNING,"invalid line pattern for line, draw solid line instead");
 		painter->drawLine(view->toGui(getStartpoint()),
 						  view->toGui(getEndpoint()));
 		return;
