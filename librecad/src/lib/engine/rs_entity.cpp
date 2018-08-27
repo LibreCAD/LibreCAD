@@ -340,7 +340,7 @@ double RS_Entity::getDistanceToPoint(const RS_Vector& coord,
  * Is this entity visible?
  *
  * @return true Only if the entity and the layer it is on are visible.
- * The Layer might also be nullptr. In that case the layer visiblity
+ * The Layer might also be nullptr. In that case the layer visibility
 * is ignored.
  */
 bool RS_Entity::isVisible() const{

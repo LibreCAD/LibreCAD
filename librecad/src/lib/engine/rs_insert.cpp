@@ -291,9 +291,9 @@ RS_Block* RS_Insert::getBlockForInsert() const{
  *
  * @return true Only if the entity and the block and the layer it is on
  * are visible.
- * The Layer might also be nullptr. In that case the layer visiblity
+ * The Layer might also be nullptr. In that case the layer visibility
  * is ignored.
- * The Block might also be nullptr. In that case the block visiblity
+ * The Block might also be nullptr. In that case the block visibility
  * is ignored.
  */
 bool RS_Insert::isVisible() const
