@@ -565,8 +565,8 @@ void RS_Spline::rbspline(size_t npts, size_t k, size_t p1,
 	auto const x = knot(npts, k);
 
     // calculate the points on the rational B-spline curve
-	double t = 0;
-	double const step = x[nplusc-1]/(p1-1);
+    double t {x[0]};
+    double const step {(x[nplusc-1] - t) / (p1-1)};
 
 	for (auto& vp: p) {
 		if (x[nplusc-1] - t < 5e-6) t = x[nplusc-1];
