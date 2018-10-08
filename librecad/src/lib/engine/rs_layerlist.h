@@ -83,6 +83,7 @@ public:
     void togglePrint(RS_Layer* layer);
     void toggleConstruction(RS_Layer* layer);
     void freezeAll(bool freeze);
+    void lockAll(bool lock);
 
     //! sets the layerWidget pointer in RS_LayerListClass
     void setLayerWitget(QG_LayerWidget * lw) {

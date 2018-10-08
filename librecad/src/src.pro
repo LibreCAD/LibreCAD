@@ -390,6 +390,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actionlayersadd.h \
     actions/rs_actionlayersedit.h \
     actions/rs_actionlayersfreezeall.h \
+    actions/rs_actionlayerslockall.h \
     actions/rs_actionlayersremove.h \
     actions/rs_actionlayerstogglelock.h \
     actions/rs_actionlayerstoggleview.h \
@@ -525,6 +526,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actionlayersadd.cpp \
     actions/rs_actionlayersedit.cpp \
     actions/rs_actionlayersfreezeall.cpp \
+    actions/rs_actionlayerslockall.cpp \
     actions/rs_actionlayersremove.cpp \
     actions/rs_actionlayerstogglelock.cpp \
     actions/rs_actionlayerstoggleview.cpp \

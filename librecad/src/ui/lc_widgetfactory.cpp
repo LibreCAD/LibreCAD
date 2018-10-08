@@ -169,6 +169,8 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
     layer_actions
             << a_map["LayersDefreezeAll"]
             << a_map["LayersFreezeAll"]
+            << a_map["LayersUnlockAll"]
+            << a_map["LayersLockAll"]
             << a_map["LayersAdd"]
             << a_map["LayersRemove"]
             << a_map["LayersEdit"]

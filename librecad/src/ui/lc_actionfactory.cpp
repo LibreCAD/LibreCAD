@@ -831,6 +831,20 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("LayersFreezeAll");
     a_map["LayersFreezeAll"] = action;
 
+    action = new QAction(tr("&Unlock all"), agm->layer);
+    action->setIcon(QIcon(":/ui/unlockedlayer.png"));
+    connect(action, SIGNAL(triggered()),
+            action_handler, SLOT(slotLayersUnlockAll()));
+    action->setObjectName("LayersUnlockAll");
+    a_map["LayersUnlockAll"] = action;
+
+    action = new QAction(tr("&Lock all"), agm->layer);
+    action->setIcon(QIcon(":/ui/lockedlayer.png"));
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotLayersLockAll()));
+    action->setObjectName("LayersLockAll");
+    a_map["LayersLockAll"] = action;
+
     action = new QAction(tr("&Add Layer"), agm->layer);
     action->setIcon(QIcon(":/icons/add.svg"));
     connect(action, SIGNAL(triggered()),

@@ -232,6 +232,8 @@ public slots:
 
 	void slotLayersDefreezeAll();
 	void slotLayersFreezeAll();
+	void slotLayersUnlockAll();
+	void slotLayersLockAll();
 	void slotLayersAdd();
 	void slotLayersRemove();
 	void slotLayersEdit();

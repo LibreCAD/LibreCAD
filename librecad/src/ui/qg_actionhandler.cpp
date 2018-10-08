@@ -104,6 +104,7 @@
 #include "rs_actionlayersadd.h"
 #include "rs_actionlayersedit.h"
 #include "rs_actionlayersfreezeall.h"
+#include "rs_actionlayerslockall.h"
 #include "rs_actionlayersremove.h"
 #include "rs_actionlayerstogglelock.h"
 #include "rs_actionlayerstoggleview.h"
@@ -832,6 +833,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionLayersFreezeAll:
         a = new RS_ActionLayersFreezeAll(true, *document, *view);
+        break;
+    case RS2::ActionLayersUnlockAll:
+        a = new RS_ActionLayersLockAll(false, *document, *view);
+        break;
+    case RS2::ActionLayersLockAll:
+        a = new RS_ActionLayersLockAll(true, *document, *view);
         break;
     case RS2::ActionLayersAdd:
         a = new RS_ActionLayersAdd(*document, *view);
@@ -1802,6 +1809,14 @@ void QG_ActionHandler::slotLayersDefreezeAll() {
 
 void QG_ActionHandler::slotLayersFreezeAll() {
     setCurrentAction(RS2::ActionLayersFreezeAll);
+}
+
+void QG_ActionHandler::slotLayersUnlockAll() {
+    setCurrentAction(RS2::ActionLayersUnlockAll);
+}
+
+void QG_ActionHandler::slotLayersLockAll() {
+    setCurrentAction(RS2::ActionLayersLockAll);
 }
 
 void QG_ActionHandler::slotLayersAdd() {

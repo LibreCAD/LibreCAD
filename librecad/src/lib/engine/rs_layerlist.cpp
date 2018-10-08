@@ -425,6 +425,28 @@ void RS_LayerList::freezeAll(bool freeze) {
 
 
 /**
+ * Locks or unlocks all layers.
+ *
+ * @param lock true: lock, false: unlock
+ */
+void RS_LayerList::lockAll(bool lock) {
+
+    for (unsigned l=0; l<count(); l++) {
+        if (at(l)->isVisibleInLayerList()) {
+             at(l)->lock(lock);
+         }
+    }
+    setModified(true);
+
+    for (int i=0; i<layerListListeners.size(); ++i) {
+        RS_LayerListListener* l = layerListListeners.at(i);
+        l->layerToggled(NULL);
+    }
+}
+
+
+
+/**
  * adds a LayerListListener to the list of listeners. Listeners
  * are notified when the layer list changes.
  *
