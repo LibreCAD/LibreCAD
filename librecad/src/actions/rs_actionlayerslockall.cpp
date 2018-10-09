@@ -42,7 +42,12 @@ RS_ActionLayersLockAll::RS_ActionLayersLockAll(bool lock,
 void RS_ActionLayersLockAll::trigger() {
     RS_DEBUG->print("RS_ActionLayersLockAll::trigger");
     if (graphic) {
-        //RS_Layer* layer = graphic->getActiveLayer();
+
+        // Deselect entities before locking all layers
+        if (lock && container) {
+            container->setSelected(false);
+        }
+
         graphic->lockAllLayers(lock);
     }
     finish(false);
