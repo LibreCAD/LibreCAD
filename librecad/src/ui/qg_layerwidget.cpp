@@ -112,55 +112,57 @@ QModelIndex QG_LayerModel::getIndex (RS_Layer * lay) {
 
 
 
-QPixmap createColorSampleForLayer(RS_Layer* layer) {
-    QPixmap pixmap(QSize(16,16));
-    pixmap.fill(layer->getPen().getColor().toQColor());
-    return pixmap;
-}
-
-
-
 QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
     if (!index.isValid() || index.row() >= listLayer.size())
         return QVariant();
 
-    RS_Layer* lay = listLayer.at(index.row());
+    RS_Layer* layer {listLayer.at(index.row())};
+    int col {index.column()};
 
-    if (role ==Qt::DecorationRole) {
-        switch(index.column()){
+    switch (role) {
+    case Qt::DecorationRole:
+        switch (col){
         case VISIBLE:
-            if (!lay->isFrozen()) {
+            if (!layer->isFrozen()) {
                 return layerVisible;
             }
             return layerHidden;
+
         case LOCKED:
-            if (!lay->isLocked()) {
+            if (!layer->isLocked()) {
                 return layerDefreeze;
             }
             return layerFreeze;
-        case PRINT:
-            return layerPrint.pixmap(QSize(16,16),
-                                     lay->isPrint() ? QIcon::Normal : QIcon::Disabled,
-                                     QIcon::On);
-        case CONSTRUCTION:
-            return layerConstruction.pixmap(QSize(16,16),
-                                            lay->isConstruction() ? QIcon::Normal : QIcon::Disabled,
-                                            QIcon::On);
 
-		case COLOR_SAMPLE:
-		{
-			return createColorSampleForLayer(lay);
-		}
+        case PRINT:
+            return layerPrint.pixmap(QSize( ICONWIDTH, ICONWIDTH),
+                                     layer->isPrint() ? QIcon::Normal : QIcon::Disabled,
+                                     QIcon::On);
+
+        case CONSTRUCTION:
+            return layerConstruction.pixmap(QSize( ICONWIDTH, ICONWIDTH),
+                                            layer->isConstruction() ? QIcon::Normal : QIcon::Disabled,
+                                            QIcon::On);
 
         default:
             break;
-
         }
+        break;
+
+    case Qt::DisplayRole:
+        if (NAME == col) {
+            return layer->getName();
+        }
+        break;
+
+    case Qt::BackgroundColorRole:
+        if( COLOR_SAMPLE == col) {
+            return layer->getPen().getColor().toQColor();
+        }
+        break;
+
     }
-    if (role ==Qt::DisplayRole && index.column() == NAME) {
-        return lay->getName();
-    }
-//Other roles:
+
     return QVariant();
 }
 
@@ -187,14 +189,17 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     layerView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     layerView->setFocusPolicy(Qt::NoFocus);
     layerView->setMinimumHeight(140);
-    layerView->setColumnWidth(QG_LayerModel::VISIBLE, 24);
-    layerView->setColumnWidth(QG_LayerModel::LOCKED, 24);
-    layerView->setColumnWidth(QG_LayerModel::PRINT, 24);
-    layerView->setColumnWidth(QG_LayerModel::CONSTRUCTION, 24);
-    layerView->setColumnWidth(QG_LayerModel::COLOR_SAMPLE, 24);
+    QHeaderView *pHeader {layerView->horizontalHeader()};
+    pHeader->setMinimumSectionSize( QG_LayerModel::ICONWIDTH + 4);
+    pHeader->setStretchLastSection(true);
+    pHeader->hide();
+    layerView->setColumnWidth(QG_LayerModel::VISIBLE, QG_LayerModel::ICONWIDTH);
+    layerView->setColumnWidth(QG_LayerModel::VISIBLE, QG_LayerModel::ICONWIDTH);
+    layerView->setColumnWidth(QG_LayerModel::LOCKED, QG_LayerModel::ICONWIDTH);
+    layerView->setColumnWidth(QG_LayerModel::PRINT, QG_LayerModel::ICONWIDTH);
+    layerView->setColumnWidth(QG_LayerModel::CONSTRUCTION, QG_LayerModel::ICONWIDTH);
+    layerView->setColumnWidth(QG_LayerModel::COLOR_SAMPLE, QG_LayerModel::ICONWIDTH);
     layerView->verticalHeader()->hide();
-    layerView->horizontalHeader()->setStretchLastSection(true);
-    layerView->horizontalHeader()->hide();
 
 	QVBoxLayout* lay = new QVBoxLayout(this);
     lay->setContentsMargins(2, 2, 2, 2);

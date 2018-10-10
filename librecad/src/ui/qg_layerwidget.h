@@ -53,6 +53,10 @@ public:
         NAME,
         LAST
     };
+    enum IconSize {
+        ICONWIDTH = 24,
+        ICONHEIGHT = 24,
+    };
 	QG_LayerModel(QObject * parent = nullptr);
 	~QG_LayerModel() = default;
     Qt::ItemFlags flags (const QModelIndex & index) const
@@ -103,8 +107,9 @@ public:
         activateLayer(layer);
     }
     virtual void layerAdded(RS_Layer* layer) {
-        update();
+        update();   // 1st apply the new layer to the view
         activateLayer(layer);
+        update();   // update again, if new layer is last row, the height was wrong
     }
     virtual void layerEdited(RS_Layer*) {
         update();
