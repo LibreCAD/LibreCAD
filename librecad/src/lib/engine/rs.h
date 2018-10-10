@@ -357,6 +357,8 @@ public:
 
         ActionLayersDefreezeAll,
         ActionLayersFreezeAll,
+        ActionLayersUnlockAll,
+        ActionLayersLockAll,
         ActionLayersAdd,
         ActionLayersRemove,
         ActionLayersEdit,

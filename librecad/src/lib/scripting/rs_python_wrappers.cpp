@@ -380,6 +380,7 @@ BOOST_PYTHON_MODULE(librecad)
 	.def("toggle", RS_LayerList_toggle_string)
 	.def("toggle", RS_LayerList_toggle_layer)
 	.def("freezeAll", &RS_LayerList::freezeAll)
+        .def("lockAll", &RS_LayerList::lockAll)
     ;
 
     class_<RS_Document, bases<RS_EntityContainer>, boost::noncopyable >("Document", no_init)
@@ -404,6 +405,7 @@ BOOST_PYTHON_MODULE(librecad)
 	.def("toggleLayer", RS_Graphic_toggleLayer_layer)
 	.def("clearLayers", &RS_Graphic::clearLayers)
 	.def("freezeAllLayers", &RS_Graphic::freezeAllLayers)
+	.def("lockAllLayers", &RS_Graphic::lockAllLayers)
     ;
 
     /* Entity types */

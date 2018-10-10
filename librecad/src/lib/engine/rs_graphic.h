@@ -121,6 +121,9 @@ public:
     void freezeAllLayers(bool freeze) {
         layerList.freezeAll(freeze);
     }
+    void lockAllLayers(bool lock) {
+        layerList.lockAll(lock);
+    }
 
     void addLayerListListener(RS_LayerListListener* listener) {
         layerList.addListener(listener);

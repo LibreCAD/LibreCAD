@@ -218,6 +218,22 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersFreezeAll()));
     layButtons->addWidget(but);
+    // unlock all layers:
+    but = new QToolButton(this);
+    but->setIcon(QIcon(":/icons/unlocked.svg"));
+    but->setMinimumSize(minButSize);
+    but->setToolTip(tr("Unlock all layers"));
+    connect(but, SIGNAL(clicked()),
+            actionHandler, SLOT(slotLayersUnlockAll()));
+    layButtons->addWidget(but);
+    // lock all layers:
+    but = new QToolButton(this);
+    but->setIcon(QIcon(":/icons/locked.svg"));
+    but->setMinimumSize(minButSize);
+    but->setToolTip(tr("Lock all layers"));
+    connect(but, SIGNAL(clicked()),
+            actionHandler, SLOT(slotLayersLockAll()));
+    layButtons->addWidget(but);
     // add layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/add.svg"));
@@ -456,6 +472,10 @@ void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
                                  SLOT(slotLayersDefreezeAll()), 0);
         contextMenu->addAction( tr("&Freeze all Layers"), actionHandler,
                                  SLOT(slotLayersFreezeAll()), 0);
+        contextMenu->addAction( tr("&Unlock all Layers"), actionHandler,
+                                 SLOT(slotLayersUnlockAll()), 0);
+        contextMenu->addAction( tr("&Lock all Layers"), actionHandler,
+                                 SLOT(slotLayersLockAll()), 0);
         contextMenu->addSeparator();
         contextMenu->addAction( tr("&Add Layer"), actionHandler,
                                  SLOT(slotLayersAdd()), 0);
