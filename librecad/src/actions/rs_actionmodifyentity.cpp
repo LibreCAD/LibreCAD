@@ -90,4 +90,8 @@ void RS_ActionModifyEntity::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
+void RS_ActionModifyEntity::updateMouseButtonHints() {
+    RS_DIALOGFACTORY->updateMouseWidget(tr("Click on entity to modify"), tr("Cancel"));
+}
+
 // EOF

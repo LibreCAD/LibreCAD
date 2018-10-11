@@ -44,6 +44,7 @@ public:
 	void trigger() override;
 	void mouseReleaseEvent(QMouseEvent* e) override;
 	void updateMouseCursor() override;
+    void updateMouseButtonHints() override;
 
 private:
     RS_Entity* en;
