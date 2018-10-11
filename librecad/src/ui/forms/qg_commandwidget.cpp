@@ -102,12 +102,11 @@ void QG_CommandWidget::languageChange()
 
 bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
 {
-    if (event->type() == QEvent::KeyPress)
-    {
-		QKeyEvent* e=static_cast<QKeyEvent*>(event);
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent* e=static_cast<QKeyEvent*>(event);
 
-        switch(e->key())
-        {
+        int key {e->key()};
+        switch(key) {
             case Qt::Key_Return:
             case Qt::Key_Enter:
                 if(!leCommand->text().size())
@@ -118,22 +117,28 @@ bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
                 return false;
             default:
                 break;
-		}
+        }
 
         //detect Ctl- Alt- modifier, but not Shift
         //This should avoid filtering shortcuts, such as Ctl-C
+        RS_DEBUG->print(RS_Debug::D_CRITICAL, "QG_CommandWidget::eventFilter(): key %d  mod 0x%08X", e->key(), e->modifiers());
 
-        if (e->modifiers() != Qt::KeypadModifier
-         && e->modifiers() & (Qt::KeyboardModifierMask ^ Qt::ShiftModifier))
+        Qt::KeyboardModifiers  modifiers {e->modifiers()};
+        if ( !(Qt::GroupSwitchModifier == modifiers && Qt::Key_At == key) // let '@' key pass for relative coords
+          && modifiers != Qt::KeypadModifier
+          && modifiers & (Qt::KeyboardModifierMask ^ Qt::ShiftModifier)) {
             return false;
+        }
 
-		event->accept();
+        event->accept();
         this->setFocus();
         QKeyEvent * newEvent = new QKeyEvent(*static_cast<QKeyEvent*>(event));
         QApplication::postEvent(leCommand, newEvent);
-		return true;
-	}
-	return false;
+
+        return true;
+    }
+
+    return false;
 }
 
 void QG_CommandWidget::setFocus()
