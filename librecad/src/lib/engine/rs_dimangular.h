@@ -149,6 +149,7 @@ public:
         return edata.definitionPoint4;
     }
 
+    void update() override;
     void move(const RS_Vector& offset) override;
     void rotate(const RS_Vector& center, const double& angle) override;
     void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;

@@ -375,6 +375,12 @@ void RS_DimAngular::updateDim(bool autoText /*= false*/)
     calculateBorders();
 }
 
+void RS_DimAngular::update()
+{
+    calcDimension();
+    RS_Dimension::update();
+}
+
 void RS_DimAngular::move(const RS_Vector& offset)
 {
     RS_Dimension::move( offset);
