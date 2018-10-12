@@ -121,8 +121,6 @@ bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
 
         //detect Ctl- Alt- modifier, but not Shift
         //This should avoid filtering shortcuts, such as Ctl-C
-        RS_DEBUG->print(RS_Debug::D_CRITICAL, "QG_CommandWidget::eventFilter(): key %d  mod 0x%08X", e->key(), e->modifiers());
-
         Qt::KeyboardModifiers  modifiers {e->modifiers()};
         if ( !(Qt::GroupSwitchModifier == modifiers && Qt::Key_At == key) // let '@' key pass for relative coords
           && modifiers != Qt::KeypadModifier
