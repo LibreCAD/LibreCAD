@@ -82,7 +82,9 @@ private:
     QIcon layerDefreeze;
     QIcon layerFreeze;
     QIcon layerPrint;
+    QIcon layerNoPrint;
     QIcon layerConstruction;
+    QIcon layerNoConstruction;
 };
 
 

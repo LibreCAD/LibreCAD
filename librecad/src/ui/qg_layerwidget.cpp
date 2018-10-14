@@ -48,7 +48,9 @@ QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
     layerDefreeze = QIcon(":/icons/unlocked.svg");
     layerFreeze = QIcon(":/icons/locked.svg");
     layerPrint = QIcon(":/icons/print.svg");
+    layerNoPrint = QIcon(":/icons/noprint.svg");
     layerConstruction = QIcon(":/icons/construction_layer.svg");
+    layerNoConstruction = QIcon(":/icons/noconstruction.svg");
 }
 
 
@@ -135,14 +137,16 @@ QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
             return layerFreeze;
 
         case PRINT:
-            return layerPrint.pixmap(QSize( ICONWIDTH, ICONWIDTH),
-                                     layer->isPrint() ? QIcon::Normal : QIcon::Disabled,
-                                     QIcon::On);
+            if( !layer->isPrint()) {
+                return layerNoPrint;
+            }
+            return layerPrint;
 
         case CONSTRUCTION:
-            return layerConstruction.pixmap(QSize( ICONWIDTH, ICONWIDTH),
-                                            layer->isConstruction() ? QIcon::Normal : QIcon::Disabled,
-                                            QIcon::On);
+            if( !layer->isConstruction()) {
+                return layerNoConstruction;
+            }
+            return layerConstruction;
 
         default:
             break;
