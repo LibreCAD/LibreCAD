@@ -1991,6 +1991,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
             }
         }
     } else {
+        printer.setOutputFileName(""); // uncheck 'Print to file' checkbox
         printer.setOutputFormat(QPrinter::NativeFormat);
 
         QPrintDialog printDialog(&printer, this);
