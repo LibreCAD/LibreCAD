@@ -1,9 +1,7 @@
 /****************************************************************************
-*  dividedlg.cpph - options dialog for divide plugin                        *
+*  dividedlg.cpp - divide lines, circles and arcs                           *
 *                                                                           *
 *  Copyright (C) 2018 mad-hatter                                            *
-*  somme code borrowed from                                                 *
-*  list.cpp - Copyrighted by Rallaz, rallazz@gmail.com                      *
 *                                                                           *
 *  This library is free software, licensed under the terms of the GNU       *
 *  General Public License as published by the Free Software Foundation,     *
@@ -21,24 +19,24 @@
 #include <QScrollArea>
 #include <QGridLayout>
 #include <QMessageBox>
+#include <QLabel>
+#include <complex>
 
 #include "dividedlg.h"
-#include "document_interface.h"
 
-#include <QDebug>
+//#include <QDebug>
 
-dividedlg::dividedlg( Document_Interface *doc,
-                      QString passedData,
+dividedlg::dividedlg( Document_Interface *doc, QString passedData,
                       QWidget *parent ) : QDialog( parent )
 {
     //hide titie bar '?'
     this->setWindowFlags( this->windowFlags() & ~Qt::WindowContextHelpButtonHint );
 
-    //change text color
+    //change text colour
     //this->setStyleSheet( "QLabel, QRadioButton, QSpinBox, QGroupBox, QPushButton,"
     //                     "QTextBox, QLineEdit { color: blue }" );
 
-    this->resize( 300, 400 );
+    this->setFixedSize( 405, 400 );
 
     QFont font1, font2, font3, font4;
     font1.setPointSize( 14 );
@@ -51,7 +49,7 @@ dividedlg::dividedlg( Document_Interface *doc,
     QList<QString> data = ( passedData.split
                             ( QRegularExpression ( "[\\n\\t\\r]" ) ) );
 
-    QList<QString> splitList = data.at( 0 ).split( ": " ); //"n 1: CIRCLE" typical
+    QList<QString> splitList = data.at( 0 ).split( ": " );
     QString entType = splitList.at( 1 );
     this->setWindowTitle( "Divide - " + entType );
     entType = entType.toLower();
@@ -59,29 +57,29 @@ dividedlg::dividedlg( Document_Interface *doc,
     QFrame *Fr1 = new QFrame( this );
     Fr1->setFrameStyle( QFrame::Box );
     Fr1->setLineWidth( 1 );
-    Fr1->setGeometry( 5, 5, this->width() - 10, 30 );
+    Fr1->setGeometry( 5, 5, this->width() - 115, 30 );
 
     QFrame *Fr2 = new QFrame( this );
     Fr2->setFrameStyle( QFrame::Box );
     Fr2->setLineWidth( 1 );
     Fr2->setGeometry( 5, Fr1->height() + Fr1->y() + 5,
-                      this->width() - 10, 30 );
+                      this->width() - 115, 30 );
 
     QDialogButtonBox *BB1 = new QDialogButtonBox( this );
-    BB1->setGeometry( this->width() / 2, this->height() - 30,
-                     (this->width() / 2) - 5, 30 );
+    BB1->setGeometry( ( this->width() / 2 ) - 105, this->height() - 30,
+                      ( this->width() / 2) - 5, 30 );
     BB1->addButton( tr( "OK" ), QDialogButtonBox::AcceptRole );
     BB1->addButton( tr( "Cancel" ), QDialogButtonBox::RejectRole );
-    QObject::connect( BB1, SIGNAL(accepted()), this, SLOT(onOkClickedSlot()) );
-    QObject::connect( BB1, SIGNAL(rejected()), this, SLOT(reject()) );
+    QObject::connect( BB1, SIGNAL( accepted() ), this, SLOT( onOkClickedSlot() ) );
+    QObject::connect( BB1, SIGNAL( rejected() ), this, SLOT( reject() ) );
 
     QGroupBox *G1 = new QGroupBox( this );
     G1->setFont( font2 );
     G1->setTitle( "Layers" );
-    G1->setVisible(true);
+    G1->setVisible( true );
     G1->setGeometry( 5, Fr2->height() + Fr2->y() + 2,
-                     this->width() - 10,
-                     this->height() - (Fr2->height() + Fr2->y() + 2) - 30 );
+                     this->width() - 115,
+                     this->height() - ( Fr2->height() + Fr2->y() + 2 ) - 30 );
 
     QLabel *L1 = new QLabel( Fr1 );
     L1->setGeometry( 5, 0, 50, Fr1->height() );
@@ -99,8 +97,8 @@ dividedlg::dividedlg( Document_Interface *doc,
     Sp1->setMaximum( 99 );
     Sp1->setMinimum( 0 );
     Sp1->setValue( 0 );
-    QObject::connect( Sp1, SIGNAL(valueChanged( int )), this,
-                      SLOT(onSizeValueChangedSlot( int )) );
+    QObject::connect( Sp1, SIGNAL( valueChanged( int ) ), this,
+                      SLOT( onSizeChangedSlot( int ) ) );
 
     Sp2 = new QSpinBox( Fr2 ); //qty
     Sp2->setGeometry( 60, 0, 45, 30 );
@@ -108,8 +106,8 @@ dividedlg::dividedlg( Document_Interface *doc,
     Sp2->setMaximum( 10 );
     Sp2->setMinimum( 1 );
     Sp2->setValue(5);
-    QObject::connect( Sp2, SIGNAL(valueChanged( int )), this,
-                      SLOT(onQtyValueChangedSlot( int )) );
+    QObject::connect( Sp2, SIGNAL( valueChanged( int ) ), this,
+                      SLOT( onQtyChangedSlot( int ) ) );
 
     QLabel *L3 = new QLabel( Fr1 );
     L3->setGeometry( Sp1->x() + Sp1->width() + 5, 0, 45, Fr1->height() );
@@ -121,13 +119,13 @@ dividedlg::dividedlg( Document_Interface *doc,
     L4->setFont( font1 );
     L4->setText("%");
 
-    R1 = new QRadioButton( Fr1 ); //hide/show ticks
+    R1 = new QRadioButton( Fr1 ); // ticks on/off
     R1->setGeometry( L3->x() + L3->width() + 10, 1, 150, Fr1->height() );
     R1->setFont( font2 );
     R1->setText("Ticks - Off");
     ticksShowHideFlag = false;
     QObject::connect( R1, SIGNAL( toggled( bool ) ), this,
-                      SLOT( onHideShowTicksSlot( bool ) ) );
+                      SLOT( onOffTicksSlot( bool ) ) );
 
     R2 = new QRadioButton( Fr2 ); // breaks on/off
     R2->setGeometry( L4->x() + L4->width() + 10, 1, 150, Fr2->height() );
@@ -136,16 +134,13 @@ dividedlg::dividedlg( Document_Interface *doc,
     breaksOnOffFlag = false;
     QObject::connect (R2, SIGNAL( toggled( bool ) ), this,
                       SLOT( onOffBreaksSlot( bool ) ) );
-    //***
-    R2->setEnabled(false); //breaks to do
-    //^^^
 
     QList<QString> layerList = doc->getAllLayer();
     QString activeLayerName = doc->getCurrentLayer();
     QString num;
     QGridLayout *layout = new QGridLayout;
 
-    for(int i = 0; i < layerList.size(); i++)
+    for( int i = 0; i < layerList.size(); i++ )
     {
         QRadioButton *RB = new QRadioButton;
         RB->setFixedHeight( 14 );
@@ -188,14 +183,12 @@ dividedlg::dividedlg( Document_Interface *doc,
     if ( entType == "line" )
     {
         dataToReturn.append( "LINE:" );
-        this->resize(405, 400);
+        choice( 5, 1, font4 );
+    } //end line
 
-        choice1( 5, 1, font4 );
-    } //end lne
     else if ( entType == "circle" )
     {
         dataToReturn.append( "CIRCLE:" );
-        this->resize(405, 400);
 
         QFrame *Cr2 = new QFrame( this );
         Cr2->setFrameStyle( QFrame::Box );
@@ -218,24 +211,24 @@ dividedlg::dividedlg( Document_Interface *doc,
         Le1->installEventFilter( this );
 
         QObject::connect( Le1, SIGNAL( textChanged( const QString & ) ), this,
-                          SLOT( onTickAngleChangedSlot ( const QString & ) ) );
+                          SLOT( onStartAngleChangedSlot ( const QString & ) ) );
 
-        choice1( ( Le1->y() + Le1->height() + 5 ), 2, font4 );
+        choice( ( Le1->y() + Le1->height() + 5 ), 2, font4 );
     } //end circle
+
     else if ( entType == "arc" )
     {
         dataToReturn.append( "ARC:" );
-        this->resize(405, 400);
-
-        choice1( 5, 2, font4 );
+        choice( 5, 2, font4 );
     }
+
     else if ( entType == "poyline" )
     {
         dataToReturn.append( "POLYLINE:" );
     }
 }
 
-void dividedlg::choice1( int yPos, int msgText , QFont font )
+void dividedlg::choice( int yPos, int msgText, QFont font )
 {
     QString msg1;
     QString msg2;
@@ -243,13 +236,13 @@ void dividedlg::choice1( int yPos, int msgText , QFont font )
 
     switch ( msgText ) {
     case ( 1 ): { // line
-        msg1 = ( "Ticks\nAbove/Below.");
+        msg1 = ( "Ticks\nAbove/Below." );
         msg2 = ( "Ab~" );
         msg3 = ( "Be~" );
         break;
     }
-    case ( 2 ): { //circle
-        msg1 = ( "Ticks\nOutside/Inside.");
+    case ( 2 ): { //circle, arc
+        msg1 = ( "Ticks\nOutside/Inside." );
         msg2 = ( "Out" );
         msg3 = ( "In" );
         break;
@@ -275,7 +268,7 @@ void dividedlg::choice1( int yPos, int msgText , QFont font )
     R1->setText( msg2 );
     R1->setObjectName( "o" );
     QObject::connect(R1,SIGNAL( toggled( bool ) ), this,
-                     SLOT( inOutSelectedSlot( bool ) ) );
+                     SLOT( onInOutSlot( bool ) ) );
     R1->setChecked( true );
 
     QRadioButton *R2 = new QRadioButton( C1 );
@@ -283,7 +276,7 @@ void dividedlg::choice1( int yPos, int msgText , QFont font )
     R2->setText( msg3 );
     R2->setObjectName( "i" );
     QObject::connect(R2, SIGNAL( toggled( bool ) ), this,
-                     SLOT( inOutSelectedSlot( bool ) ) );
+                     SLOT( onInOutSlot( bool ) ) );
 
     QFrame *Cr2= new QFrame( this );
     Cr2->setFrameStyle( QFrame::Box );
@@ -295,26 +288,15 @@ void dividedlg::choice1( int yPos, int msgText , QFont font )
     C2->setFont( font );
     C2->setContentsMargins( 0, 3, 0, 0 );
     C2->setAlignment( Qt::Alignment( Qt::AlignTop ) );
-//    C2->setText( "\"New\"\nEnter name\nfor new layer\n"
-//                 "(if required?) to\ndraw ticks on.");
-    C2->setText( "<i>\"New\"</i><br>Enter name<br>for new layer<br>"
-                 "(if required?) to<br>draw ticks on.");
-}
-
-void dividedlg::inOutSelectedSlot( bool state )
-{
-    QObject *object = QObject::sender();
-    QRadioButton *btn = qobject_cast<QRadioButton *>(object);
-
-    inOut = false;
-    if (state && btn->objectName() == "o") inOut = true;
+    C2->setText( "<i>\"New\"</i><br>Enter name<br>for a new layer<br>"
+                 "(if required?) to<br>draw ticks on." );
 }
 
 bool dividedlg::eventFilter( QObject * obj, QEvent * event )
 {
-    if( Le1->hasFocus() ) //QlineEdit - start angle
+    if ( Le1->hasFocus() ) //QlineEdit - start angle
     {
-        backSpace = true; //see onTickAngleChangedSlot
+        backSpace = true; //see onStartAngleChangedSlot
 
         if ( event->type() == QEvent::KeyPress )
         {
@@ -327,62 +309,54 @@ bool dividedlg::eventFilter( QObject * obj, QEvent * event )
     return ( QWidget::eventFilter( obj, event ) );
 }
 
-//auto add decimal point after 6 digits
-void dividedlg::onTickAngleChangedSlot( const QString & passed )
+//auto add decinal point after 6 digits
+void dividedlg::onStartAngleChangedSlot( const QString & passed )
 {
     if ( backSpace ) //allows backspace on len = 6 or -7 & decimal point
     {                //see eventFilter
         int len = passed.length();
         bool noPoint = ( ! passed.contains( "." ) );
         bool addPoint = false;
-        if ( passed.at( 0 ) == '-' ) //minus
-        {
+        if ( passed.at( 0 ) == "-" ) { //minus
             if ( ( len == 7 ) && noPoint ) addPoint = true;
         }
         else
-        {
             if ( ( len == 6 ) && noPoint ) addPoint = true;
-        }
+
         if ( addPoint ) Le1->setText( Le1->text() + "." );
     }
 }
 
-void dividedlg::onSizeValueChangedSlot( int s )
+void dividedlg::onInOutSlot( bool state )
+{
+    QObject *object = QObject::sender();
+    QRadioButton *btn = qobject_cast<QRadioButton *>( object );
+
+    inOut = ( state && btn->objectName() == "o" ) ? true : false;
+}
+
+void dividedlg::onSizeChangedSlot( int s )
 {
     size = s;
 }
 
-void dividedlg::onQtyValueChangedSlot( int q )
+void dividedlg::onQtyChangedSlot( int q )
 {
     qty = q;
 }
 
-void dividedlg::onHideShowTicksSlot( bool state )
+void dividedlg::onOffTicksSlot( bool state )
 {
-    if ( state )
-    {
-        R1->setText( "Ticks - On" );
-        ticksShowHideFlag = true;
-    }
-    else
-    {
-        R1->setText( "Ticks - Off" );
-        ticksShowHideFlag = false;
-    }
+    state ? R1->setText( "Ticks - On" ) : R1->setText( "Ticks - Off" );
+
+    ticksShowHideFlag = state;
 }
 
 void dividedlg::onOffBreaksSlot( bool state )
 {
-    if( state )
-    {
-        R2->setText( "Breaks - on" );
-        breaksOnOffFlag = true;
-    }
-    else
-    {
-        R2->setText( "Breaks - off" );
-        breaksOnOffFlag = false;
-    }
+    state ? R2->setText( "Breaks - On" ) : R2->setText( "Breaks - Off" );
+
+    breaksOnOffFlag = state;
 }
 
 void dividedlg::onWhichButtonSlot( bool state )
@@ -390,9 +364,9 @@ void dividedlg::onWhichButtonSlot( bool state )
     QObject *object = QObject::sender();
     QRadioButton *btn = qobject_cast<QRadioButton *>(object);
 
-    if (state)
+    if ( state )
     {
-        d->setLayer( ( btn->text() ).split("- ").at( 1 ) );
+        d->setLayer( ( btn->text() ).split( "- " ).at( 1 ) );
         btn->setText( btn->text() + " (ticks)" );
         activeLayer = btn->objectName().toInt();
     }
@@ -400,37 +374,29 @@ void dividedlg::onWhichButtonSlot( bool state )
         btn->setText( btn->text().remove( " (ticks)" ) );
 }
 
-void dividedlg::onOkClickedSlot() //OK quit divideoptionsdlg
+void dividedlg::onOkClickedSlot() //OK quit dividedlg
 {
     dataToReturn.append( QString::number( Sp1->value() ).append(":") ); //ticks
     dataToReturn.append( QString::number( Sp2->value() ).append(":") ); //size
 
-    QString test = "f:";
-    if ( R1->isChecked() ) test = "t:";
-    dataToReturn.append( test ); //ticks show/hide
-
-    test = "f:";
-    if ( R2->isChecked() ) test = "t:";
-    dataToReturn.append( test ); //breaks on/off
+    dataToReturn.append( R1->isChecked() ? "t:" : "f:" ); //ticks on/off
+    dataToReturn.append( R2->isChecked() ? "t:" : "f:" ); //breaks on/off
 
     if ( dataToReturn.startsWith( "CI" ) ) //circle
-        dataToReturn.append( Le1->text().simplified() ).append( ":" );
+        dataToReturn.append( Le1->text().simplified().append( ":" ) );
 
-    //if ( inOut ) dataToReturn.append( "o:" );
-    //else dataToReturn.append( "i:" );
     dataToReturn.append( inOut ? "o:" : "i:" ); //Ternary Operator '?'
 
-    test = Le2->text().simplified();
-    if ( ! ( Le2->text().isEmpty() ) )
-        dataToReturn.append( test ).append( ":" ).append( "lay" );
-    else
-        dataToReturn.append( d->getCurrentLayer()
-                             .remove( " (ticks)" ) ).append( ":" );
+    QString test = Le2->text().simplified(); //QLineEdit, new layer name
 
+    dataToReturn.append( test.isEmpty() ? ( d->getCurrentLayer()
+                                            .remove( " (ticks)" ).append( ":" ) )
+                                        : ( test.append( ":" ).append( "lay" ) ) );
     emit returnData( dataToReturn );
     this->accept();
 }
 
 dividedlg::~dividedlg()
 {
+    this->deleteLater();
 }

@@ -15,15 +15,19 @@
 #include <QtGui>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QDialog>
+#include <QGroupBox>
+#include <QDialogButtonBox>
+#include <QScrollArea>
+#include <QGridLayout>
 #include <QMessageBox>
+#include <QLabel>
 #include <complex>
 
 #include "divide.h"
 #include "dividedlg.h"
 
-#include <QDebug>
-
-class QWidget;
+//#include <QDebug>
 
 QString divide::name() const
 {
@@ -38,8 +42,9 @@ PluginCapabilities divide::getCapabilities() const
     return pluginCapabilities;
 }
 
-void divide::execComm( Document_Interface *doc, QWidget *parent,
-                              QString cmd )
+void divide::execComm( Document_Interface *doc,
+                       QWidget *parent,
+                       QString cmd )
 {
     Q_UNUSED ( parent );
     Q_UNUSED ( cmd );
@@ -55,9 +60,9 @@ void divide::execComm( Document_Interface *doc, QWidget *parent,
         msgBox.setStyleSheet( "QLabel, QPushButton { color: blue; }"
                               "QMessageBox { border: none;"
                               //"background: rgb( 255, 0, 0 );" //white is default
-                              //"font-family: Arial;"
+                              //"font-family: Arial;" //use default font
+                              //text colour is blue from QLabel
                               "font-style: italic; font-size: 11pt; }" );
-                              //text colour is blue from QLabel;
         msgBox.setWindowTitle( tr( "Error" ) );
 
         QString text = ( "Select a line, circle or arc.<br>" );
@@ -82,13 +87,17 @@ void divide::execComm( Document_Interface *doc, QWidget *parent,
         msgBox.move( x, y );
         msgBox.exec();
 
+        while ( ! obj.isEmpty() )
+            delete obj.takeFirst();
+
         return;
     }
 
     QString passedData;
-    for ( int i = 0; i < obj.size(); ++i ) {
+    for ( int i = 0; i < obj.size(); ++i )
+    {
         passedData.append( QString("%1 %2: ").arg( tr("n") ).arg( i + 1 ) );
-        passedData.append( getStrData(obj.at( i )) );
+        passedData.append( getStrData( obj.at( i ) ) );
         passedData.append( "\n" );
     }
 
@@ -99,24 +108,22 @@ void divide::execComm( Document_Interface *doc, QWidget *parent,
     {
         QList<QString> data = ( returnedData.split( ":" ) );
 
-        int qty = data.at( 1 ).toInt(); //defaults to zero
-        if ( qty <= 0 ) return;         //if lineedit is empty
+        int qty = data.at( 1 ).toInt(); //defaults to zero if
+        if ( qty <= 0 ) return;         //qty is empty
 
-        bool ticks = false;
-        bool breaks = false;
-        if ( data.at( 3 ) == "t" ) ticks = true;
-        if ( data.at( 4 ) == "t" ) breaks = true; //breaks - to do
+        bool ticks = ( data.at( 3 ) == "t" ) ? true : false;
+        bool breaks = ( data.at( 4 ) == "t" ) ? true : false;
 
         if ( ticks || breaks )
         {
             double radius { 0.0 };
-            double centerX { 0.0 };
-            double centerY { 0.0 };
             double tickAngle { 0.0 };
             double tickLength { 0.0 };
-            QPointF startX (0.0, 0.0);
-            QPointF result (0.0, 0.0);
-            QString test = "";
+            QPointF startX { 0.0, 0.0 };
+            QPointF startXY { 0.0, 0.0 };
+            QPointF centerCircle { 0.0, 0.0 };
+            QString test { "" };
+            QList<QString> xy { "" } ;
 
             QString oldLayer = doc->getCurrentLayer();
             int dataSize = data.size();
@@ -126,8 +133,11 @@ void divide::execComm( Document_Interface *doc, QWidget *parent,
             QList<QString> pData = ( passedData.split
                                      ( QRegularExpression ( "[\\n\\t\\r]" ) ) );
 
-            QString entType = data.at( 0 ).toLower();
-            if ( entType == "circle" ) //type
+            doc->updateView();
+            QString entType = data.at( 0 ).simplified().toLower();
+
+            //***********
+            if ( entType.startsWith( "ci" ) ) //circle
             {
                 for ( int i = 0; i < pData.size(); i++ )
                 {
@@ -138,52 +148,42 @@ void divide::execComm( Document_Interface *doc, QWidget *parent,
 
                     else if ( test.startsWith( "ce" ) ) //center point
                     {
-                        QList<QString> xy = ( ( test.split( ":" ) ).at( 1 ).split( " " ) );
-                        centerX = ( (xy.at( 1 ).split( "=" ) ).at( 1 ) ).toDouble();
-                        centerY = ( (xy.at( 2 ).split( "=" ) ).at( 1 ) ).toDouble();
+                        xy = ( ( test.split( ":" ) ).at( 1 ).split( " " ) );
+                        centerCircle = { ( ( ( xy.at( 1 )
+                                         .split( "=" ) ).at( 1 ) ).toDouble() ),
+                                         ( ( ( xy.at( 2 )
+                                         .split( "=" ) ).at( 1 ) ).toDouble() )  };
                     }
                 }
 
                 //if data.at(5) is empty, startAngle defaults to zero
                 double startAngle = ( data.at( 5 ).toDouble() * M_PI ) / 180.0; //radians
-                tickLength = ( 2.0 * radius ) * ( data.at( 2 ).toDouble() / 100.0 );
+                tickLength = ( 2.0 * radius * ( data.at( 2 ).toDouble() / 100.0 ) ); //%
 
                 if ( data.at( dataSize - 3 ) == "i") //ticks inside/outside circle
                     tickLength *= -1;
 
-                for ( int i = qty; i >= 1; --i )
-                {
+                for ( int i = 1; i <= qty; i++ ) {
                     tickAngle = ( ( ( 2 * M_PI ) / qty ) * i ) + startAngle;
 
-                    startX.setX( ( radius * cos( tickAngle ) ) + centerX );
-                    startX.setY( ( radius * sin( tickAngle ) ) + centerY );
-
                     if ( ticks )
-                    {
-                        result = findLineEndPoint( startX.rx(), startX.ry(),
-                                                   tickLength, tickAngle );
-                        doc->addLine( &startX, &result );
-                    }
+                        drawTick( ( findStartX( radius, tickAngle, centerCircle ) ),
+                                  tickLength, tickAngle );
 
-//                    if ( breaks ) //to do
-//                    {
-//                        //qDebug() << "breaks on";
-//                        result.setX(qreal(0));
-//                        result.setY(qreal(0));
-//                        doc->addLine( &startX, &result);
-//                        //startX is point on entity
-//                    }
+                    if ( breaks )
+                        segment( & centerCircle, radius,
+                                 ( startAngle * (180.0 / M_PI) )
+                                 + ( ( 360.0 / qty ) * ( i - 1 ) ),
+                                 ( 360.0 / qty ), entType );
                 }
             } // end if CIRCLE
 
             //***********
-            if ( entType == "line" ) //type
+            else if ( entType.startsWith( "li" ) ) //line
             {
-                QPointF startXY ( 0.0, 0.0 );
                 QPointF endXY ( 0.0, 0.0 );
-                QList<QString> part ( { "" } );
-                bool aboveLine = false;
-                QString test = "";
+                QList<QString> part { "" };
+                QString test { "" };
                 int size = data.at( 2 ).toInt();
 
                 for ( int i = 0; i < pData.size(); i++ )
@@ -197,7 +197,6 @@ void divide::execComm( Document_Interface *doc, QWidget *parent,
                         startXY += QPointF( ((part.at( 1 ).split("=")).at( 1 )).toDouble(),
                                             ((part.at( 2 ).split("=")).at( 1 )).toDouble() );
                     }
-
                     else if ( test.startsWith( "to" ) ) //to point
                     {
                         part = part.at( 1 ).split( " " );
@@ -211,15 +210,15 @@ void divide::execComm( Document_Interface *doc, QWidget *parent,
 
                     else if ( test.startsWith( "le" ) ) //length
                         tickLength = ( test.split( ":" ).at( 1 )
-                                       .toDouble() ) * size / 100; //%
+                                       .toDouble() ) * size / 100.0 ; //%
 
                     else if ( test.startsWith("in") ) //inc
                     {
-                        //if line goes left to right or right to left
-                        //aboveLine = false;
+                        //test if line goes left to right or right to left
                         part = part.at( 1 ).split( "=" );
                         if ( part.at( 1 ).startsWith( "-" ) ) //inc, minus 'x' pos
-                            aboveLine = true;
+                            if ( tickAngle >= M_PI )
+                                tickAngle -= M_PI; //180°
                     }
                 }
 
@@ -227,36 +226,86 @@ void divide::execComm( Document_Interface *doc, QWidget *parent,
                     tickLength *= -1;
 
                 qty += 1;
-                for ( int i = 1; i < qty; i++ )
-                {
+                for ( int i = 1; i <= qty; i++ ) {
                     startX.setX( ( ((endXY.rx() - startXY.rx()) / qty) * i )
                                  + startXY.rx() );
                     startX.setY( ( ((endXY.ry() - startXY.ry()) / qty) * i )
                                  + startXY.ry() );
 
-                    if ( ticks )
-                    {
-                        if ( aboveLine )
-                            //M_PI = 180° in rads, put ticks above line
-                            if ( tickAngle >= M_PI ) tickAngle = tickAngle - M_PI;
+                    if ( ticks && ( i < qty ) )
+                        drawTick( startX, tickLength, tickAngle );
 
-                        result = findLineEndPoint( startX.rx(), startX.ry(),
-                                                   tickLength, tickAngle ); //rads
-                        doc->addLine( &startX, &result );
-                    }
-
-//                    if ( breaks ) //to do
-//                    {
-//                        qDebug() << "breaks on";
-//                        result.setX(qreal(0));
-//                        result.setY(qreal(0));
-//                        doc->addLine( &startX, &result); //startX is point on entity
-//                    }
+                    if ( breaks )
+                        segmentLine( startX, endXY, startXY, entType, qty, i );
                 }
             } //end if LINE
 
             //***********
-/*            if ( entType == "polyline" ) //type - to do
+            else if ( entType.startsWith( "ar" ) ) //arc
+            {
+                double initial { 0.0 };
+                double final { 0.0 };
+                double arcLength { 0.0 };
+                double res { 0.0 };
+                QString copyTest { "" };
+
+                for ( int i = 0; i < pData.size(); i++ )
+                {
+                    test = pData.at( i ).simplified().toLower();
+
+                    if ( test.isEmpty() ) continue; //not valid data for 'res = (...'
+
+                    copyTest = test;
+                    res = ( copyTest.split( ":" ).at( 1 ) ).toDouble();
+
+                    if ( test.startsWith( "ce" ) ) //center
+                    {
+                        xy = ( ( test.split( ":" ) ).at( 1 ).split( " " ) );
+                        centerCircle = { ( ( ( xy.at( 1 )
+                                         .split( "=" ) ).at( 1 ) ).toDouble() ),
+                                         ( ( ( xy.at( 2 )
+                                         .split( "=" ) ).at( 1 ) ).toDouble() )  };
+                    }
+
+                    else if ( test.startsWith( "ra" ) ) //radius
+                        radius = res;
+
+                    else if ( test.startsWith( "in" ) ) //initial angle
+                        initial = res / 180.0 * M_PI; //degrees to rads
+
+                    else if ( test.startsWith( "fi" ) ) //final angle
+                        final = res / 180.0 * M_PI; //degrees to rads
+
+                    else if ( test.startsWith( "le" ) ) //length
+                        arcLength = res;
+                }
+
+                tickLength = ( 2 * radius * ( data.at( 2 ).toDouble() / 100.0 ) ); //%
+                if ( data.at( dataSize - 3 ) == "i" ) //ticks inside/outside arc
+                    tickLength *= -1;
+
+                qty += 1;
+
+                double angle = ( final > initial ) ? final : initial;
+                double diff = ( final > initial ) ? ( initial - final ) / qty
+                                                  : ( arcLength / radius ) / qty;
+
+                for ( int i = 1; i <= qty; i++ ) {
+                    tickAngle = ( diff * i ) + angle;
+
+                    if ( ticks && ( i < qty ) )
+                        drawTick( ( findStartX( radius, tickAngle, centerCircle ) ),
+                                  tickLength, tickAngle );
+
+                    if ( breaks )
+                        segment( & centerCircle, radius,
+                                 ( ( tickAngle * 180.0 ) / M_PI ),
+                                 ( ( diff * 180.0 ) / M_PI ) * -1, entType );
+                }
+            } //end if ARC
+
+            //***********
+/*            else if ( entType.startsWith( "po" ) ) //polyline - to do
             {
                 qDebug() << "*** pData " << pData;
                 qDebug() << "*** data  " << data;
@@ -291,105 +340,62 @@ void divide::execComm( Document_Interface *doc, QWidget *parent,
                          << totalLength << tickQ << div;
             } //POLYLINE              */
 
-            //***********
-            if ( entType == "arc" ) //type
-            {
-                double initial { 0.0 };
-                double final { 0.0 };
-                double arcLength { 0.0 };
-                double res { 0.0 };
-                QString copyTest = "";
-
-                for ( int i = 0; i < pData.size(); i++ )
-                {
-                    test = pData.at( i ).simplified().toLower();
-
-                    if ( test == "" ) continue; //not valid data for 'res = (...'
-
-                    copyTest = test;
-                    res = ( copyTest.split( ":" ).at( 1 ) ).toDouble();
-
-                    if ( test.startsWith( "ce" ) ) //center
-                    {
-                        QList<QString> xy = ( ( test.split( ":" ) ).at( 1 ).split( " " ) );
-                        centerX = ( ( xy.at( 1 ).split( "=" ) ).at( 1 ) ).toDouble();
-                        centerY = ( ( xy.at( 2 ).split( "=" ) ).at( 1 ) ).toDouble();
-                    }
-
-                    else if ( test.startsWith( "ra" ) ) //radius
-                        radius = res;
-
-                    else if ( test.startsWith( "in" ) ) //initial angle
-                        initial = res / 180.0 * M_PI; //degrees to rads
-
-                    else if ( test.startsWith( "fi" ) ) //final angle
-                        final = res / 180.0 * M_PI; //degrees to rads
-
-                    else if ( test.startsWith( "le" ) ) //length
-                        arcLength = res;
-                }
-
-                qty += 1;
-                double diff { 0.0 };
-                bool arcStart = false;
-
-                if ( final > initial )
-                    diff = ( initial - final ) / qty;
-                else
-                {
-                    diff = ( arcLength / radius ) / qty;
-                    arcStart = true;
-                }
-
-                tickLength = ( 2 * radius ) * ( data.at( 2 ).toDouble() / 100.0 ); //%
-                if ( data.at( dataSize - 3 ) == "i") //ticks inside/outside arc
-                    tickLength *= -1;
-
-                for ( int i = 1; i < qty; i++ )
-                {
-                    tickAngle = ( diff * i );
-
-                    //if ( arcStart )
-                    //    tickAngle += initial;
-                    //else
-                    //    tickAngle += final;
-                    tickAngle += arcStart ? initial : final; //Ternary Operator '?'
-
-                    startX.setX( ( radius * cos( tickAngle ) ) + centerX );
-                    startX.setY( ( radius * sin( tickAngle ) ) + centerY );
-
-                    if ( ticks )
-                    {
-                        result = findLineEndPoint( startX.rx(), startX.ry(),
-                                                   tickLength, tickAngle ); //rads
-                        doc->addLine( &startX, &result );
-                    }
-
-//                    if ( breaks ) //to do
-//                    {
-//                        qDebug() << "breaks on";
-//                        result.setX ( qreal(0) );
-//                        result.setY ( qreal(0) );
-//                        doc->addLine( &startX, &result ); //startX is point on entity
-//                    }
-                }
-            } //end if ARC
             doc->setLayer( oldLayer );
         } //end if ( ticks || breaks )
         doc->updateView(); //updates & removes highlights
-    }
+        while ( ! obj.isEmpty() )
+            delete obj.takeFirst();
+    } //end dlg.exec()
 //    else //rejected
 //    {
 //        qDebug() << "reject " << returnedData; //cancel button
 //        strData.prepend( strEntity.arg
 //                         (tr("MUST be a line, circle or arc")) );
-//    }
+//        while ( ! obj.isEmpty() )
+//            delete obj.takeFirst();
+    //}
+} // end execComm
+
+
+void divide::segmentLine( QPointF startPoint, QPointF lineEnd, QPointF lineStart,
+                          QString type, int qty, int count )
+{
+    QString layerName = ( "Break layer - " + type );
+    QString cl = d->getCurrentLayer();
+    d->setLayer( layerName );
+
+    static QPointF newStart;
+
+    if ( count == 1 ) { //1st line
+        d->addLine( &lineStart, &startPoint );
+        newStart = startPoint;
+    }
+    else if ( ( count > 1 ) && ( count < qty ) ) { //mid line
+        d->addLine( &newStart, &startPoint );
+        newStart = startPoint;
+    }
+    else if ( count == qty) //end line
+        d->addLine( &newStart, &lineEnd );
+
+    d->setLayer( cl ); //restore layer
+}
+
+void divide::segment( QPointF * centerCircle, double radius,
+                      double angle, double arcAngle, QString type )
+{
+    QString layerName = ( "Break layer - " + type );
+    QString cl = d->getCurrentLayer();
+    d->setLayer( layerName );
+
+    d->addArc( centerCircle, radius, angle, ( angle + arcAngle ) );
+
+    d->setLayer( cl );
 }
 
 double divide::findHypLength( double h1, double h2, double v1, double v2 )
 {
     return ( hypot( h1 - h2, v1 - v2 ) ); //needs (C++11 or later) - hypotenuse
-    //http://www.cplusplus.com/reference/cmath/hypot/ - C99
+    //see - http://www.cplusplus.com/reference/cmath/hypot/  - C99
 }
 
 //line in any quadrant
@@ -397,12 +403,29 @@ double divide::findHypLength( double h1, double h2, double v1, double v2 )
 //startX, startY and length ± value (range - double)
 //take care with values near double max and min limits ???
 QPointF divide::findLineEndPoint( double startX, double startY,
-                                         double length, double angle ) //radians
+                                  double length, double angle ) //radians
 {
     auto endPoint = ( std::complex<double> ( startX, startY )
                       + std::polar<double> ( length, angle ) );
 
     return ( QPointF ( endPoint.real(), endPoint.imag() ) );
+}
+
+void divide::drawTick( QPointF startX, double tickLength, double tickAngle )
+{
+    QPointF result = findLineEndPoint( startX.rx(), startX.ry(),
+                                       tickLength, tickAngle );
+    d->addLine( & startX, & result );
+}
+
+QPointF divide::findStartX( double radius, double angle,  QPointF centerCircle )
+{
+    QPointF startPoint;
+
+    startPoint.setX( ( radius * cos( angle ) ) + centerCircle.rx() );
+    startPoint.setY( ( radius * sin( angle ) ) + centerCircle.ry() );
+
+    return startPoint;
 }
 
 void divide::gotReturnedDataSlot( QString data )
