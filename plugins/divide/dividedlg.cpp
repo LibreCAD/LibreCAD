@@ -317,7 +317,7 @@ void dividedlg::onStartAngleChangedSlot( const QString & passed )
         int len = passed.length();
         bool noPoint = ( ! passed.contains( "." ) );
         bool addPoint = false;
-        if ( passed.at( 0 ) == "-" ) { //minus
+        if (QChar('-') == passed.at( 0)) { //minus
             if ( ( len == 7 ) && noPoint ) addPoint = true;
         }
         else
