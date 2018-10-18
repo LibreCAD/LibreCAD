@@ -420,7 +420,6 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actionmodifyexplodetext.h \
     actions/rs_actionoptionsdrawing.h \
     actions/rs_actionorder.h \
-    actions/rs_actionparisdebugcreatecontainer.h \
     actions/rs_actionpolylineadd.h \
     actions/rs_actionpolylineappend.h \
     actions/rs_actionpolylinedel.h \
@@ -556,7 +555,6 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actionmodifyexplodetext.cpp \
     actions/rs_actionoptionsdrawing.cpp \
     actions/rs_actionorder.cpp \
-    actions/rs_actionparisdebugcreatecontainer.cpp \
     actions/rs_actionpolylineadd.cpp \
     actions/rs_actionpolylineappend.cpp \
     actions/rs_actionpolylinedel.cpp \
