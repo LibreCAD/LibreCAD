@@ -15,7 +15,6 @@
 
 #include "qc_plugininterface.h"
 #include "document_interface.h"
-#include "rs_graphic.h"
 
 class Plug_Entity;
 
@@ -35,7 +34,6 @@ public slots:
     void gotReturnedDataSlot( QString );
 
 private:
-    RS_Entity* entity;
     QString getStrData( Plug_Entity *ent );
     double polylineRadius( const Plug_VertexData& ptA,
                            const Plug_VertexData& ptB );
