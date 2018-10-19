@@ -2,8 +2,6 @@
 *  divide.h - divide lines, circles and arcs                                *
 *                                                                           *
 *  Copyright (C) 2018 mad-hatter                                            *
-*  somme code borrowed from                                                 *
-*  list.h - Copyrighted by Rallaz, rallazz@gmail.com                        *
 *                                                                           *
 *  This library is free software, licensed under the terms of the GNU       *
 *  General Public License as published by the Free Software Foundation,     *
@@ -15,13 +13,6 @@
 #ifndef DIVIDE_H
 #define DIVIDE_H
 
-#include <QLabel>
-#include <QDialog>
-#include <QRadioButton>
-#include <QLineEdit>
-#include <QSpinBox>
-#include <complex>
-
 #include "qc_plugininterface.h"
 #include "document_interface.h"
 
@@ -31,13 +22,13 @@ class divide : public QObject, QC_PluginInterface
 {
     Q_OBJECT
     Q_INTERFACES(QC_PluginInterface)
-    Q_PLUGIN_METADATA( IID LC_DocumentInterface_iid FILE  "divide.json" )
+    Q_PLUGIN_METADATA( IID LC_DocumentInterface_iid FILE "divide.json" )
 
 public:
     virtual PluginCapabilities getCapabilities() const Q_DECL_OVERRIDE;
     virtual QString name() const Q_DECL_OVERRIDE;
-    virtual void execComm (Document_Interface *doc,
-                           QWidget *parent, QString cmd ) Q_DECL_OVERRIDE;
+    virtual void execComm ( Document_Interface *doc,
+                            QWidget *parent, QString cmd ) Q_DECL_OVERRIDE;
 
 public slots:
     void gotReturnedDataSlot( QString );
@@ -51,6 +42,10 @@ private:
     double findHypLength( double, double, double, double );
     QPointF findLineEndPoint( double, double, double, double );
     QPoint findWindowCentre();
+    QPointF findStartX( double, double, QPointF );
+    void drawTick( QPointF, double, double );
+    void segmentLine( QPointF, QPointF, QPointF, QString, int, int );
+    void segment( QPointF *, double, double, double, QString);
 };
 
 #endif //end DIVIDE_H

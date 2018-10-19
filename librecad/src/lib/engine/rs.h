@@ -175,7 +175,7 @@ public:
         ActionFilePrintPDF,
         ActionFilePrintPreview,
         ActionFileExportMakerCam,
-		ActionFileQuit,
+        ActionFileQuit,
 
         ActionEditKillAllActions,
         ActionEditUndo,
@@ -390,14 +390,10 @@ public:
         ActionOptionsGeneral,
         ActionOptionsDrawing,
 
-                ActionToolRegenerateDimensions,
+        ActionToolRegenerateDimensions,
 
-                ActionScriptOpenIDE,
-                ActionScriptRun,
-
-#ifndef RS_NO_COMPLEX_ENTITIES
-                ActionPARISDebugCreateContainer,
-#endif
+        ActionScriptOpenIDE,
+        ActionScriptRun,
 
         /** Needed to loop through all actions */
         ActionLast

@@ -1,9 +1,8 @@
+
 /****************************************************************************
-*  dividedlg.h - options dialog for divide plugin                           *
+*  dividedlg.h - divide lines, circles and arcs                             *
 *                                                                           *
 *  Copyright (C) 2018 mad-hatter                                            *
-*  somme code borrowed from                                                 *
-*  list.h - Copyrighted by Rallaz, rallazz@gmail.com                        *
 *                                                                           *
 *  This library is free software, licensed under the terms of the GNU       *
 *  General Public License as published by the Free Software Foundation,     *
@@ -15,14 +14,12 @@
 #ifndef DIVIDEDLG_H
 #define DIVIDEDLG_H
 
-#include <QLabel>
 #include <QDialog>
 #include <QRadioButton>
 #include <QLineEdit>
 #include <QSpinBox>
-#include <complex>
 
-class Document_Interface;
+#include "document_interface.h"
 
 class dividedlg : public QDialog
 {
@@ -30,7 +27,7 @@ class dividedlg : public QDialog
 
 public:
     dividedlg( Document_Interface *doc, QString,
-                      QWidget *parent = nullptr );
+               QWidget *parent = nullptr );
     ~dividedlg();
 
 protected:
@@ -38,19 +35,19 @@ protected:
 
 public slots:
     void onWhichButtonSlot( bool );
-    void onHideShowTicksSlot( bool );
+    void onOffTicksSlot( bool );
     void onOffBreaksSlot( bool );
-    void onSizeValueChangedSlot( int );
-    void onQtyValueChangedSlot( int );
-    void onTickAngleChangedSlot( const QString & );
+    void onSizeChangedSlot( int );
+    void onQtyChangedSlot( int );
+    void onStartAngleChangedSlot( const QString & );
     void onOkClickedSlot();
-    void inOutSelectedSlot( bool );
+    void onInOutSlot( bool );
 
 signals:
     void returnData( QString );
 
 private:
-    void choice1( int, int, QFont );
+    void choice( int, int, QFont );
     Document_Interface *d;
     QRadioButton *R1; //on/off ticks
     QRadioButton *R2; //on/off breaks
@@ -68,4 +65,4 @@ private:
     int activeLayer;
 };
 
-#endif //end DIVIDEDLG_H
+#endif // end DIVIDEDLG_H
