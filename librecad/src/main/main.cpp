@@ -45,12 +45,35 @@
 #include "qc_applicationwindow.h"
 #include "rs_debug.h"
 
+#include "console_dxf2pdf.h"
+
+
 /**
  * Main. Creates Application window.
  */
 int main(int argc, char** argv)
 {
     QT_REQUIRE_VERSION(argc, argv, "5.2.1");
+
+    // Check first two arguments in order to decide if we want to run librecad
+    // as console dxf2pdf tool. On Linux we can create a link to librecad
+    // executable and  name it dxf2pdf. So, we can run either:
+    //
+    //     librecad dxf2pdf [options] ...
+    //
+    // or just:
+    //
+    //     dxf2pdf [options] ...
+    //
+    for (int i = 0; i < qMin(argc, 2); i++) {
+        QString arg(argv[i]);
+        if (i == 0) {
+            arg = QFileInfo(QFile::decodeName(argv[i])).baseName();
+        }
+        if (arg.compare("dxf2pdf") == 0) {
+            return console_dxf2pdf(argc, argv);
+        }
+    }
 
     RS_DEBUG->setLevel(RS_Debug::D_WARNING);
 
@@ -78,11 +101,17 @@ int main(int argc, char** argv)
         if (allowOptions && (help0.compare(argstr, Qt::CaseInsensitive)==0 ||
                              help1.compare(argstr, Qt::CaseInsensitive)==0 ))
         {
-            qDebug()<<"librecad::usage: <options> <dxf file>";
-            qDebug()<<"-h, --help\tdisplay this message";
+            qDebug()<<"Usage: librecad [command] <options> <dxf file>";
             qDebug()<<"";
-            qDebug()<<" --help\tdisplay this message";
-            qDebug()<<"-d, --debug <level>";
+            qDebug()<<"Commands:";
+            qDebug()<<"";
+            qDebug()<<"  dxf2pdf\tRun librecad as console dxf2pdf tool. Use -h for help.";
+            qDebug()<<"";
+            qDebug()<<"Options:";
+            qDebug()<<"";
+            qDebug()<<"  -h, --help\tdisplay this message";
+            qDebug()<<"  -d, --debug <level>";
+            qDebug()<<"";
             RS_DEBUG->print( RS_Debug::D_NOTHING, "possible debug levels:");
             RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Nothing", RS_Debug::D_NOTHING);
             RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Critical", RS_Debug::D_CRITICAL);
