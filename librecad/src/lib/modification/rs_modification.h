@@ -271,7 +271,7 @@ public:
                RS_AtomicEntity* entity2,
                            RS_RoundData& data);
 
-        bool explode();
+        bool explode(const bool remove = true);
 		bool explodeTextIntoLetters();
         bool moveRef(RS_MoveRefData& data);
 

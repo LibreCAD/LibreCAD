@@ -375,9 +375,7 @@ void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref, const bool 
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: cut ID/flag: %d/%d", e->getId(), e->rtti());
         e->changeUndoState();
         if (document) {
-            document->startUndoCycle();
             document->addUndoable(e);
-            document->endUndoCycle();
         }
         // delete entity in graphic view:
         if (graphicView) {
@@ -617,7 +615,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     if (!data.asInsert) {
         // no inserts should be selected except from paste block and insert
         i->setSelected(true);
-        explode();
+        explode( false);
         graphic->removeEntity(i);
         b->clear();
         // if this call a destructor for the block?
@@ -3071,9 +3069,9 @@ bool RS_Modification::round(const RS_Vector& coord,
  * Removes the selected entity containers and adds the entities in them as
  * new single entities.
  */
-bool RS_Modification::explode() {
-
-	if (!container) {
+bool RS_Modification::explode(const bool remove /*= true*/)
+{
+    if (!container) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::explode: no valid container for addinge entities");
         return false;
@@ -3166,7 +3164,7 @@ bool RS_Modification::explode() {
         }
     }
 
-    deselectOriginals(true);
+    deselectOriginals( remove);
     addNewEntities(addList);
 
     return true;
