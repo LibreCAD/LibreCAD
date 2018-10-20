@@ -74,7 +74,6 @@ public:
 
 	double getLength() const override;
 
-//	void undoStateChanged(bool undone) override;
 	void setVisible(bool v) override;
 
 	bool setSelected(bool select=true) override;

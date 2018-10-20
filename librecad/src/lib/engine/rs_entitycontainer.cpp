@@ -151,19 +151,6 @@ void RS_EntityContainer::reparent(RS_EntityContainer* parent) {
 
 
 
-/**
- * Called when the undo state changed. Forwards the event to all sub-entities.
- *
- * @param undone true: entity has become invisible.
- *               false: entity has become visible.
- */
-//void RS_EntityContainer::undoStateChanged(bool undone) {
-
-//    RS_Entity::undoStateChanged(undone);
-//}
-
-
-
 void RS_EntityContainer::setVisible(bool v) {
     //    RS_DEBUG->print("RS_EntityContainer::setVisible: %d", v);
     RS_Entity::setVisible(v);

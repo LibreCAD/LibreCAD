@@ -216,8 +216,11 @@ bool RS_Entity::isProcessed() const {
  * @param undone true: entity has become invisible.
  *               false: entity has become visible.
  */
-void RS_Entity::undoStateChanged(bool /*undone*/) {
-        setSelected(false);
+void RS_Entity::undoStateChanged(bool undone)
+{
+    Q_UNUSED( undone);
+
+    setSelected(false);
     update();
 }
 

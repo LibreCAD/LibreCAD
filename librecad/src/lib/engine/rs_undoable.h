@@ -29,9 +29,6 @@
 #include "rs.h"
 #include "rs_flags.h"
 
-class RS_UndoCycle;
-
-
 
 /**
  * Base class for something that can be added and deleted and every 
@@ -42,8 +39,6 @@ class RS_UndoCycle;
  */
 class RS_Undoable : public RS_Flags {
 public:
-    virtual ~RS_Undoable();
-
 	/**
      * Runtime type identification for undoables.
      * Note that this is voluntarily. The default implementation 
@@ -53,7 +48,6 @@ public:
         return RS2::UndoableUnknown;
     }
 
-	void setUndoCycle(RS_UndoCycle* cycle);
 	void changeUndoState();
 	void setUndoState(bool undone);
 	bool isUndone() const;
@@ -62,12 +56,8 @@ public:
 	 * Can be overwritten by the implementing class to be notified
 	 * when the undo state changes (the undoable becomes visible / invisible).
 	 */
-	virtual void undoStateChanged(bool /*undone*/) = 0;
+    virtual void undoStateChanged(bool undone) = 0;
 
-    //friend std::ostream& operator << (std::ostream& os, RS_Undoable& a);
-
-private:
-	RS_UndoCycle* cycle = nullptr;
 };
 
 #endif

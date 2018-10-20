@@ -10,7 +10,6 @@ void RS_UndoCycle::addUndoable(RS_Undoable* u) {
         return;
 
     undoables.insert(u);
-    u->setUndoCycle(this);
 }
 
 /**
@@ -21,7 +20,6 @@ void RS_UndoCycle::removeUndoable(RS_Undoable* u) {
         return;
 
     undoables.erase(u);
-    u->setUndoCycle(nullptr);
 }
 
 void RS_UndoCycle::changeUndoState()

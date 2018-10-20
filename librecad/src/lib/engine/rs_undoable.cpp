@@ -28,24 +28,6 @@
 #include "rs_undocycle.h"
 
 /**
- * Destructor. Makes sure that this undoable is removed from 
- * its undo cycle before it is deleted.
- */
-RS_Undoable::~RS_Undoable() {
-	if (cycle)
-        cycle->removeUndoable(this);
-}
-
-/**
- * Sets the undo cycle this entity is in. This is necessary to
- * make sure the entity can remove itself from the cycle before
- * being deleted.
- */
-void RS_Undoable::setUndoCycle(RS_UndoCycle* cycle) {
-    this->cycle = cycle;
-}
-
-/**
  * The undoable thing gets activated if it was undone and 
  * deactivated otherwise.
  */
