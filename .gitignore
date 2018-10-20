@@ -19,6 +19,7 @@ Makefile
 generated/*
 clean
 custom.*
+Unnamed
 
 # Unix generated directories (except Apple)
 unix/
