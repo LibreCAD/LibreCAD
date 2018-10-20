@@ -2018,7 +2018,10 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
  */
 void RS_Modification::deselectOriginals(bool remove
 									   ) {
-	for(auto e: *container){
+    if (document && handleUndo) {
+        document->startUndoCycle();
+    }
+    for (auto e: *container) {
 
         //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
@@ -2050,9 +2053,7 @@ void RS_Modification::deselectOriginals(bool remove
                     //}
                     e->changeUndoState();
                     if (document && handleUndo) {
-                        document->startUndoCycle();
                         document->addUndoable(e);
-                        document->endUndoCycle();
                     }
                 } else {
                     //if (graphicView) {
@@ -2061,6 +2062,9 @@ void RS_Modification::deselectOriginals(bool remove
                 }
             }
         }
+    }
+    if (document && handleUndo) {
+        document->endUndoCycle();
     }
 }
 
@@ -2082,9 +2086,7 @@ void RS_Modification::addNewEntities(std::vector<RS_Entity*>& addList) {
 		if (e) {
 			container->addEntity(e);
             if (document && handleUndo) {
-                document->startUndoCycle();
                 document->addUndoable(e);
-                document->endUndoCycle();
             }
             //if (graphicView) {
             //    graphicView->drawEntity(e);
