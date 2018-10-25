@@ -614,6 +614,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     // unblock all entities if not pasting as a new block by demand
     if (!data.asInsert) {
         // no inserts should be selected except from paste block and insert
+        container->setSelected( false);
         i->setSelected(true);
         explode( false);
         graphic->removeEntity(i);
