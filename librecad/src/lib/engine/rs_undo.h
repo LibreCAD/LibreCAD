@@ -96,6 +96,7 @@ private:
      */
     std::shared_ptr<RS_UndoCycle> currentCycle {nullptr};
 
+    int refCount {0}; ///< reference counter for nested start/end calls
 };
 
 
