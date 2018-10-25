@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2018 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -53,6 +54,7 @@ public:
 
     virtual int countUndoCycles();
     virtual int countRedoCycles();
+    virtual bool hasUndoable();
 
     virtual void startUndoCycle();
     virtual void addUndoable(RS_Undoable* u);

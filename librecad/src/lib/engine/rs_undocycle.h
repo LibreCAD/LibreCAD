@@ -2,12 +2,13 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2018 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +16,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -35,8 +36,8 @@
 #include "rs_undoable.h"
 
 /**
- * An Undo Cycle represents an action that was triggered and can 
- * be undone. It stores all the pointers to the Undoables affected by 
+ * An Undo Cycle represents an action that was triggered and can
+ * be undone. It stores all the pointers to the Undoables affected by
  * the action. Undoables are entities in a container that can be
  * created and deleted.
  *
@@ -58,28 +59,33 @@ public:
      * Adds an Undoable to this Undo Cycle. Every Cycle can contain one or
      * more Undoables.
      */
-	void addUndoable(RS_Undoable* u);
+    void addUndoable(RS_Undoable* u);
 
     /**
      * Removes an undoable from the list.
      */
-	void removeUndoable(RS_Undoable* u);
+    void removeUndoable(RS_Undoable* u);
 
-	//! change undo state of all undoable in the current cycle
-	void changeUndoState();
+    /**
+     * Return number of undoables in cycle
+     */
+    size_t size(void);
 
-    friend std::ostream& operator << (std::ostream& os,
-									  RS_UndoCycle& uc);
+
+    //! change undo state of all undoable in the current cycle
+    void changeUndoState();
+
+    friend std::ostream& operator << (std::ostream& os, RS_UndoCycle& uc);
 
     friend class RS_Undo;
 
-	std::set<RS_Undoable*> const& getUndoables() const;
+    std::set<RS_Undoable*> const& getUndoables() const;
 
 private:
     //! Undo type:
     //RS2::UndoType type;
     //! List of entity id's that were affected by this action
-	std::set<RS_Undoable*> undoables;
+    std::set<RS_Undoable*> undoables;
 };
 
 #endif

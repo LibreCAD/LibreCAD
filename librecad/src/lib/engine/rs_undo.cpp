@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2018 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -48,6 +49,21 @@ int RS_Undo::countRedoCycles() {
     RS_DEBUG->print("RS_Undo::countRedoCycles");
 
     return undoList.size()-1-undoPointer;
+}
+
+
+
+/**
+ * @return true, when current undo cycle has at least one undoable
+ */
+bool RS_Undo::hasUndoable()
+{
+    if (nullptr != currentCycle
+        && 0 < currentCycle->size()) {
+        return true;
+    }
+
+    return false;
 }
 
 

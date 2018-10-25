@@ -2,12 +2,13 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2018 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +16,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -35,7 +36,7 @@
 class RS_BlockList;
 
 /**
- * Base class for documents. Documents can be either graphics or 
+ * Base class for documents. Documents can be either graphics or
  * blocks and are typically shown in graphic views. Documents hold
  * an active pen for drawing in the Document, a file name and they
  * know whether they have been modified or not.
@@ -96,14 +97,14 @@ public:
     QString getFilename() const {
         return filename;
     }
-	
+
     /**
      * @return Auto-save file name of the document currently loaded.
      */
     QString getAutoSaveFilename() const {
         return autosaveFilename;
     }
-	
+
     /**
      * Sets file name for the document currently loaded.
      */
@@ -118,7 +119,7 @@ public:
 		//std::cout << "RS_Document::setModified: %d" << (int)m << std::endl;
 		modified = m;
 	}
-	
+
 	/**
 	 * @retval true The document has been modified since it was last saved.
 	 * @retval false The document has not been modified since it was last saved.
@@ -126,14 +127,11 @@ public:
     virtual bool isModified() const {
         return modified;
     }
-	
-	/**
-	 * Overwritten to set modified flag before starting an undo cycle.
-	 */
-    virtual void startUndoCycle() {
-		setModified(true);
-		RS_Undo::startUndoCycle();
-	}
+
+    /**
+     * Overwritten to set modified flag when undo cycle finished with undoable(s).
+     */
+    virtual void endUndoCycle() override;
 
     void setGraphicView(RS_GraphicView * g) {gv = g;}
     RS_GraphicView* getGraphicView() {return gv;}
