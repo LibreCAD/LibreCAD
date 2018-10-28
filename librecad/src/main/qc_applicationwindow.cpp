@@ -102,6 +102,7 @@
 #include "colorwizard.h"
 #include "lc_penwizard.h"
 #include "textfileviewer.h"
+#include "lc_undosection.h"
 
 #include <boost/version.hpp>
 
@@ -465,6 +466,7 @@ void QC_ApplicationWindow::execPlug() {
 //create document interface instance
     Doc_plugin_interface pligundoc(currdoc, w->getGraphicView(), this);
 //execute plugin
+    LC_UndoSection undo(currdoc);
     plugin->execComm(&pligundoc, this, action->data().toString());
 //TODO call update view
 w->getGraphicView()->redraw();
