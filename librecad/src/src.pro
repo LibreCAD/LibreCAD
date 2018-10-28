@@ -215,6 +215,7 @@ HEADERS += \
     lib/generators/lc_xmlwriterqxmlstreamwriter.h \
     actions/lc_actionfileexportmakercam.h \
     lib/engine/lc_rect.h \
+    lib/engine/lc_undosection.h \
     lib/printing/lc_printing.h \
     actions/lc_actiondrawlinepolygon3.h \
     main/lc_application.h
@@ -304,6 +305,7 @@ SOURCES += \
     lib/engine/rs_undocycle.cpp \
     lib/engine/rs_flags.cpp \
     lib/engine/lc_rect.cpp \
+    lib/engine/lc_undosection.cpp \
     lib/engine/rs.cpp \
     lib/printing/lc_printing.cpp \
     actions/lc_actiondrawlinepolygon3.cpp \

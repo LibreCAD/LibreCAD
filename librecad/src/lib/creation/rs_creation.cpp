@@ -45,6 +45,7 @@
 #include "rs_information.h"
 #include "rs_math.h"
 #include "rs_debug.h"
+#include "lc_undosection.h"
 
 /**
  * Default constructor.
@@ -176,10 +177,7 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
     RS_LineData parallelData;
 	RS_Line* ret = nullptr;
 
-	if (document && handleUndo) {
-        document->startUndoCycle();
-    }
-
+    LC_UndoSection undo( document, handleUndo);
     for (int num=1; num<=number; ++num) {
 
         // calculate 1st parallel:
@@ -213,10 +211,6 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
 			}
 			setEntity(newLine);
         }
-    }
-
-	if (document && handleUndo) {
-        document->endUndoCycle();
     }
 
     return ret;
@@ -282,10 +276,7 @@ RS_Arc* RS_Creation::createParallelArc(const RS_Vector& coord,
             //    parallelData = parallel2.getData();
             //}
 
-			if (document && handleUndo) {
-                document->startUndoCycle();
-            }
-
+            LC_UndoSection undo( document, handleUndo);
             RS_Arc* newArc = new RS_Arc(container, parallelData);
 			if (!ret) {
 				ret = newArc;
@@ -357,10 +348,7 @@ RS_Circle* RS_Creation::createParallelCircle(const RS_Vector& coord,
             //    parallelData = parallel2.getData();
             //}
 
-			if (document && handleUndo) {
-                document->startUndoCycle();
-            }
-
+            LC_UndoSection undo( document, handleUndo);
             RS_Circle* newCircle = new RS_Circle(container, parallelData);
 			if (!ret) {
 				ret = newCircle;
@@ -392,15 +380,11 @@ LC_SplinePoints* RS_Creation::createParallelSplinePoints(const RS_Vector& coord,
 
 	LC_SplinePoints *psp, *ret = nullptr;
 
-	for(int i = 1; i <= number; ++i)
+    LC_UndoSection undo( document, handleUndo);
+    for(int i = 1; i <= number; ++i)
 	{
 		psp = (LC_SplinePoints*)e->clone();
 		psp->offset(coord, i*distance);
-
-		if(document && handleUndo)
-		{
-			document->startUndoCycle();
-		}
 
 		psp->setParent(container);
 		if(!ret) ret = psp;
@@ -455,11 +439,8 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
     }
 	RS_Line* ret = nullptr;
 
-	if (document && handleUndo) {
-        document->startUndoCycle();
-    }
-
-	for (int n=1; n <= num; ++n) {
+    LC_UndoSection undo( document, handleUndo);
+    for (int n=1; n <= num; ++n) {
 
         double angle = angle1 +
                 (angleDiff / (num+1) * n);
@@ -469,9 +450,6 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
 		RS_Line* newLine = new RS_Line{container, inters, inters + v};
 		if (!ret) ret = newLine;
 		setEntity(newLine);
-    }
-	if (document && handleUndo) {
-        document->endUndoCycle();
     }
 
     return ret;
@@ -499,10 +477,8 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
 	RS_Vector const& t0 = circle->getNearestOrthTan(coord,*normal,false);
     if(!t0.valid) return ret;
 	RS_Vector const& vp=normal->getNearestPointOnEntity(t0, false);
-	if (document && handleUndo) {
-        document->startUndoCycle();
-    }
-	ret = new RS_Line{container, vp, t0};
+    LC_UndoSection undo( document, handleUndo);
+    ret = new RS_Line{container, vp, t0};
     ret->setLayerToActive();
     ret->setPenToActive();
     return ret;
@@ -545,12 +521,8 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
 
 
     // create the closest tangent:
-
-	if (document && handleUndo) {
-        document->startUndoCycle();
-    }
-
-	ret = new RS_Line{container, d};
+    LC_UndoSection undo( document, handleUndo);
+    ret = new RS_Line{container, d};
 	setEntity(ret);
 
     return ret;
@@ -737,11 +709,8 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
 				delete p;
 		}
 
-		if (document && handleUndo) {
-            document->startUndoCycle();
-        }
-
-		ret = new RS_Line{container, d};
+        LC_UndoSection undo( document, handleUndo);
+        ret = new RS_Line{container, d};
 		setEntity(ret);
     } else {
 		ret = nullptr;
@@ -828,11 +797,8 @@ RS_Line* RS_Creation::createLineRelAngle(const RS_Vector& coord,
 	RS_Vector const v1 = RS_Vector::polar(length, a1);
     //RS_ConstructionLineData(coord-v1, coord+v1);
 
-	if (document && handleUndo) {
-        document->startUndoCycle();
-    }
-
-	RS_Line* ret = new RS_Line{container, coord-v1, coord+v1};
+    LC_UndoSection undo( document, handleUndo);
+    RS_Line* ret = new RS_Line{container, coord-v1, coord+v1};
 	setEntity(ret);
 
     return ret;
@@ -856,15 +822,11 @@ RS_Line* RS_Creation::createPolygon(const RS_Vector& center,
 
 	RS_Line* ret = nullptr;
 
-	if (document && handleUndo) {
-        document->startUndoCycle();
-    }
-
 	double const r = center.distanceTo(corner);
 	double const angle0 = center.angleTo(corner);
 	double const da = 2.*M_PI/number;
-
-	for (int i=0; i < number; ++i) {
+    LC_UndoSection undo( document, handleUndo);
+    for (int i=0; i < number; ++i) {
 		RS_Vector const& c0 = center +
 				RS_Vector::polar(r, angle0 + i*da);
 		RS_Vector const& c1 = center +
@@ -879,16 +841,10 @@ RS_Line* RS_Creation::createPolygon(const RS_Vector& center,
 		if (container) {
             container->addEntity(line);
         }
-		if (document && handleUndo) {
-            document->addUndoable(line);
-        }
+        undo.addUndoable(line);
 		if (graphicView) {
             graphicView->drawEntity(line);
         }
-    }
-
-	if (document && handleUndo) {
-        document->endUndoCycle();
     }
 
     return ret;
@@ -913,11 +869,8 @@ RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
 
 	RS_Line* ret = nullptr;
 
-	if (document && handleUndo) {
-        document->startUndoCycle();
-    }
-
-	double const len = corner1.distanceTo(corner2);
+    LC_UndoSection undo( document, handleUndo);
+    double const len = corner1.distanceTo(corner2);
 	double const da = 2.*M_PI/number;
 	double const r = 0.5*len/sin(0.5*da);
 	double const angle1 = corner1.angleTo(corner2);
@@ -944,17 +897,11 @@ RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
 		if (container) {
             container->addEntity(line);
         }
-		if (document && handleUndo) {
-            document->addUndoable(line);
-        }
+        undo.addUndoable(line);
 		if (graphicView) {
             graphicView->drawEntity(line);
         }
 
-    }
-
-	if (document && handleUndo) {
-        document->endUndoCycle();
     }
 
     return ret;
@@ -977,10 +924,7 @@ RS_Line* RS_Creation::createPolygon3(const RS_Vector& center,    //added by txmy
 
     RS_Line* ret = nullptr;
 
-    if (document && handleUndo) {
-        document->startUndoCycle();
-    }
-
+    LC_UndoSection undo( document, handleUndo);
     RS_Vector corner(0, 0);
     double angle = 2.*M_PI/number/2.0;
     corner.x = tangent.x + (center.y - tangent.y) * tan(angle);
@@ -1005,16 +949,10 @@ RS_Line* RS_Creation::createPolygon3(const RS_Vector& center,    //added by txmy
         if (container) {
             container->addEntity(line);
         }
-        if (document && handleUndo) {
-            document->addUndoable(line);
-        }
+        undo.addUndoable(line);
         if (graphicView) {
             graphicView->drawEntity(line);
         }
-    }
-
-    if (document && handleUndo) {
-        document->endUndoCycle();
     }
 
     return ret;
@@ -1029,11 +967,8 @@ RS_Insert* RS_Creation::createInsert(const RS_InsertData* pdata) {
 
     RS_DEBUG->print("RS_Creation::createInsert");
 
-	if (document && handleUndo) {
-        document->startUndoCycle();
-    }
-
-	RS_Insert* ins = new RS_Insert(container, *pdata);
+    LC_UndoSection undo( document, handleUndo);
+    RS_Insert* ins = new RS_Insert(container, *pdata);
     // inserts are also on layers
 	setEntity(ins);
 
@@ -1049,11 +984,8 @@ RS_Insert* RS_Creation::createInsert(const RS_InsertData* pdata) {
      */
 RS_Image* RS_Creation::createImage(const RS_ImageData* data) {
 
-	if (document && handleUndo) {
-        document->startUndoCycle();
-    }
-
-	RS_Image* img = new RS_Image(container, *data);
+    LC_UndoSection undo( document, handleUndo);
+    RS_Image* img = new RS_Image(container, *data);
     img->update();
 	setEntity(img);
 
@@ -1073,10 +1005,7 @@ RS_Block* RS_Creation::createBlock(const RS_BlockData* data,
                                    const bool remove) {
 
     // start undo cycle for the container if we're deleting the existing entities
-	if (remove && document) {
-        document->startUndoCycle();
-    }
-
+    LC_UndoSection undo( document, remove);
     RS_Block* block =
             new RS_Block(container,
 						 RS_BlockData(*data));
@@ -1113,15 +1042,9 @@ RS_Block* RS_Creation::createBlock(const RS_BlockData* data,
                 //container->removeEntity(e);
                 //i=0;
                 e->changeUndoState();
-				if (document) {
-                    document->addUndoable(e);
-                }
+                undo.addUndoable(e);
             }
         }
-    }
-
-	if (remove && document) {
-        document->endUndoCycle();
     }
 
 	if (graphic) {
@@ -1181,11 +1104,9 @@ void RS_Creation::setEntity(RS_Entity* en) const
 	if (container) {
 		container->addEntity(en);
 	}
-	if (document && handleUndo) {
-		document->addUndoable(en);
-		document->endUndoCycle();
-	}
-	if (graphicView) {
+    LC_UndoSection undo( document, handleUndo);
+    undo.addUndoable(en);
+    if (graphicView) {
 		graphicView->drawEntity(en);
 	}
 }

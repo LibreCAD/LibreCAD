@@ -115,6 +115,8 @@ void RS_Undo::startUndoCycle()
                 obsolete.push_back( u);
             }
         }
+        // unique() only works correct on sorted list!
+        obsolete.sort();
         obsolete.unique();
 
         // delete obsolte undoables which are not in keep list
@@ -126,7 +128,6 @@ void RS_Undo::startUndoCycle()
 
         // clean up obsolete undoCycles
         while (undoList.size() > removePointer) {
-            RS_DEBUG->print( RS_Debug::D_NOTICE, "    remove obsolete undoCycle  0x%08X", &undoList.back());
             undoList.pop_back();
         }
     }
