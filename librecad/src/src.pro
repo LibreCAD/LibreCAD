@@ -102,6 +102,7 @@ INCLUDEPATH += \
     lib/printing \
     actions \
     main \
+    main/console_dxf2pdf \
     test \
     plugins \
     ui \
@@ -888,7 +889,9 @@ HEADERS += \
     plugins/intern/qc_actiongetselect.h \
     plugins/intern/qc_actiongetent.h \
     main/main.h \
-    main/mainwindowx.h
+    main/mainwindowx.h \
+    main/console_dxf2pdf/console_dxf2pdf.h \
+    main/console_dxf2pdf/pdf_print_loop.h
 
 SOURCES += \
     main/qc_applicationwindow.cpp \
@@ -899,7 +902,9 @@ SOURCES += \
     plugins/intern/qc_actiongetselect.cpp \
     plugins/intern/qc_actiongetent.cpp \
     main/main.cpp \
-    main/mainwindowx.cpp
+    main/mainwindowx.cpp \
+    main/console_dxf2pdf/console_dxf2pdf.cpp \
+    main/console_dxf2pdf/pdf_print_loop.cpp
 
 # If C99 emulation is needed, add the respective source files.
 contains(DEFINES, EMU_C99) {
