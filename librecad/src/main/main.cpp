@@ -168,37 +168,30 @@ int main(int argc, char** argv)
 
             case '0' + RS_Debug::D_NOTHING :
                 RS_DEBUG->setLevel( RS_Debug::D_NOTHING);
-                ++i;
                 break;
 
             case '0' + RS_Debug::D_CRITICAL :
                 RS_DEBUG->setLevel( RS_Debug::D_CRITICAL);
-                ++i;
                 break;
 
             case '0' + RS_Debug::D_ERROR :
                 RS_DEBUG->setLevel( RS_Debug::D_ERROR);
-                ++i;
                 break;
 
             case '0' + RS_Debug::D_WARNING :
                 RS_DEBUG->setLevel( RS_Debug::D_WARNING);
-                ++i;
                 break;
 
             case '0' + RS_Debug::D_NOTICE :
                 RS_DEBUG->setLevel( RS_Debug::D_NOTICE);
-                ++i;
                 break;
 
             case '0' + RS_Debug::D_INFORMATIONAL :
                 RS_DEBUG->setLevel( RS_Debug::D_INFORMATIONAL);
-                ++i;
                 break;
 
             case '0' + RS_Debug::D_DEBUGGING :
                 RS_DEBUG->setLevel( RS_Debug::D_DEBUGGING);
-                ++i;
                 break;
 
             default :
