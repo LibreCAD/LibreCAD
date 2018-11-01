@@ -88,9 +88,9 @@ void QG_DlgInsert::setInsert(RS_Insert& i) {
     leRows->setText(s);
     s.setNum(insert->getCols());
     leCols->setText(s);
-    s.setNum(insert->getSpacing().x);
-    leRowSpacing->setText(s);
     s.setNum(insert->getSpacing().y);
+    leRowSpacing->setText(s);
+    s.setNum(insert->getSpacing().x);
     leColSpacing->setText(s);
 }
 
@@ -102,8 +102,8 @@ void QG_DlgInsert::updateInsert() {
     insert->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
     insert->setRows(RS_Math::round(RS_Math::eval(leRows->text())));
     insert->setCols(RS_Math::round(RS_Math::eval(leCols->text())));
-    insert->setSpacing(RS_Vector(RS_Math::eval(leRowSpacing->text()),
-                                 RS_Math::eval(leColSpacing->text())));
+    insert->setSpacing(RS_Vector(RS_Math::eval(leColSpacing->text()),
+                                 RS_Math::eval(leRowSpacing->text())));
     insert->setPen(wPen->getPen());
     insert->setLayer(cbLayer->currentText());
 }
