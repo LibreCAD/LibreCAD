@@ -489,7 +489,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     }
 
     // adjust scaling factor for units conversion in case of clipboard paste
-    double factor = 1.0;
+    double factor = data.factor;
     // scale factor as vector
     RS_Vector vfactor = RS_Vector(factor, factor);
     // select source for paste
