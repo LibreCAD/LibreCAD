@@ -1906,6 +1906,8 @@ void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
     openedFiles.removeAll(win->getDocument()->getFilename());
 
     activedMdiSubWindow = nullptr;
+    actionHandler->set_view(nullptr);
+    actionHandler->set_document(nullptr);
 }
 
 
@@ -2370,6 +2372,14 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
  * Menu File -> import -> importBlock
  */
 void QC_ApplicationWindow::slotImportBlock() {
+
+    if (getMDIWindow() == nullptr) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                "QC_ApplicationWindow::slotImportBlock: "
+                "no window opened");
+        return;
+    }
+
     QG_FileDialog dlg(this);
     RS2::FormatType type = RS2::FormatDXFRW;
     QString dxfPath = dlg.getOpenFile(&type);

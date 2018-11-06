@@ -218,6 +218,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     RS_ActionInterface* a = NULL;
 //    view->killAllActions();
 
+    RS_DEBUG->print("QC_ActionHandler::setCurrentAction: "
+            "view = %p, document = %p", view, document);
+
     // only global options are allowed without a document:
     if (view==NULL || document==NULL) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
