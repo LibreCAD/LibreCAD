@@ -189,7 +189,7 @@ Section "Install Section" SecInstall
   WriteRegStr HKLM "${UNINSTKEY}" "DisplayVersion" "${SCMREVISION}"
   WriteRegStr HKLM "${UNINSTKEY}" "Publisher" "LibreCAD Team"
   WriteRegStr HKLM "${UNINSTKEY}" "Version" "2.0"
-  WriteRegStr HKLM "${UNINSTKEY}" "HelpLink" "http://librecad.org/cms/home/get-help/forum.html"
+  WriteRegStr HKLM "${UNINSTKEY}" "HelpLink" "https://librecad.org/"
   WriteRegStr HKLM "${UNINSTKEY}" "InstallLocation" "$INSTDIR"
   WriteRegStr HKLM "${UNINSTKEY}" "URLInfoAbout" "http://librecad.org/"
   WriteRegStr HKLM "${UNINSTKEY}" "Comments" "LibreCAD - Open Source 2D-CAD"

@@ -12,6 +12,6 @@
   <screenshots>
     <screenshot type="default" width="1600" height="900">https://sourceforge.net/p/librecad/screenshot/t.png</screenshot>
   </screenshots>
-  <url type="homepage">http://librecad.org/cms/home.html</url>
-  <updatecontact>dongxuli2011_at_gmail.com</updatecontact>
+  <url type="homepage">https://librecad.org/</url>
+  <updatecontact>info@librecad.org</updatecontact>
 </application>
