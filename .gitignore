@@ -9,6 +9,7 @@ Info.plist
 *.lo
 *.la
 
+*.autosave
 *~
 
 # filenames, anywhere
