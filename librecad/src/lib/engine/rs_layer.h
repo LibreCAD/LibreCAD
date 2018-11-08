@@ -43,36 +43,22 @@ class QString;
  * Holds the data that defines a layer.
  */
 struct RS_LayerData {
-	RS_LayerData() = default;
+    RS_LayerData() = default;
 
     RS_LayerData(const QString& name,
                  const RS_Pen& pen,
                  bool frozen,
-				 bool locked);
+                 bool locked);
 
-    //! Layer name
-    QString name;
-
-    //! default pen for this layer
-    RS_Pen pen;
-
-    //! Frozen flag
-    bool frozen;
-
-    //! Locked flag
-    bool locked;
-
-    //! Print flag
-	bool print=true;
-
-    //! Converted flag (cam)
-    bool converted;
-
-    //! a construction layer has entities of infinite length, and will never be printed out
-	bool construction=false;
-
-    //! visible in layer list
-    bool visibleInLayerList;
+    QString name;                   //!< Layer name
+    RS_Pen pen;                     //!< default pen for this layer
+    bool frozen {false};            //!< Frozen flag
+    bool locked {false};            //!< Locked flag
+    bool print {true};              //!< Print flag
+    bool converted {false};         //!< Converted flag (CAM)
+    bool construction {false};      //!< a construction layer has entities of infinite length
+                                    //!< and will never be printed out
+    bool visibleInLayerList {true}; //!< visible in layer list
 };
 
 

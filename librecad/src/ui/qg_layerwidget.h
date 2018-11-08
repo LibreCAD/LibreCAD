@@ -108,11 +108,7 @@ public:
     virtual void layerActivated(RS_Layer* layer) {
         activateLayer(layer);
     }
-    virtual void layerAdded(RS_Layer* layer) {
-        update();   // 1st apply the new layer to the view
-        activateLayer(layer);
-        update();   // update again, if new layer is last row, the height was wrong
-    }
+    virtual void layerAdded(RS_Layer* layer);
     virtual void layerEdited(RS_Layer*) {
         update();
     }

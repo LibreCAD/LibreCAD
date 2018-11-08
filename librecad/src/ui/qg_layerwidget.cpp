@@ -305,6 +305,18 @@ void QG_LayerWidget::setLayerList(RS_LayerList* layerList, bool showByBlock) {
 
 
 
+void QG_LayerWidget::layerAdded(RS_Layer* layer)
+{
+    update();   // 1st apply the new layer to the view
+    if (! matchLayerName->text().isEmpty()) {
+        slotUpdateLayerList();
+    }
+    activateLayer(layer);
+    update();   // update again, if new layer is last row, the height was wrong
+}
+
+
+
 /**
  * @brief getActiveName
  * @return the name of the active layer
