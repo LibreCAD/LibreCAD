@@ -391,7 +391,7 @@ RS_Vector RS_Units::convert(const RS_Vector& val, RS2::Unit src, RS2::Unit dest)
  *
  * @param length The length in the current unit of the drawing.
  * @param format Format of the string.
- * @param prec Precisision of the value (e.g. 0.001 or 1/128 = 0.0078125)
+ * @param prec Precision of the value (e.g. 0.001 or 1/128 = 0.0078125)
  & @param showUnit Append unit to the value.
  */
 QString RS_Units::formatLinear(double length, RS2::Unit unit,
@@ -443,7 +443,7 @@ QString RS_Units::formatLinear(double length, RS2::Unit unit,
  * Formats the given length in scientific format (e.g. 2.5E7).
  *
  * @param length The length in the current unit of the drawing.
- * @param prec Precisision of the value (e.g. 0.001 or 1/128 = 0.0078125)
+ * @param prec Precision of the value (e.g. 0.001 or 1/128 = 0.0078125)
  & @param showUnit Append unit to the value.
  */
 QString RS_Units::formatScientific(double length, RS2::Unit unit,
@@ -461,7 +461,7 @@ QString RS_Units::formatScientific(double length, RS2::Unit unit,
  * Formats the given length in decimal (normal) format (e.g. 2.5).
  *
  * @param length The length in the current unit of the drawing.
- * @param prec Precisision of the value (e.g. 0.001)
+ * @param prec Precision of the value (e.g. 0.001)
  & @param showUnit Append unit to the value.
  */
 QString RS_Units::formatDecimal(double length, RS2::Unit unit,
@@ -479,7 +479,7 @@ QString RS_Units::formatDecimal(double length, RS2::Unit unit,
  * Formats the given length in engineering format (e.g. 5' 4.5").
  *
  * @param length The length in the current unit of the drawing.
- * @param prec Precisision of the value (e.g. 0.001 or 1/128 = 0.0078125)
+ * @param prec Precision of the value (e.g. 0.001 or 1/128 = 0.0078125)
  & @param showUnit Append unit to the value.
  */
 QString RS_Units::formatEngineering(double length, RS2::Unit /*unit*/,
@@ -516,7 +516,7 @@ QString RS_Units::formatEngineering(double length, RS2::Unit /*unit*/,
  * Formats the given length in architectural format (e.g. 5' 4 1/2").
  *
  * @param length The length in the current unit of the drawing.
- * @param prec Precisision of the value (e.g. 0.001 or 1/128 = 0.0078125)
+ * @param prec Precision of the value (e.g. 0.001 or 1/128 = 0.0078125)
  & @param showUnit Append unit to the value.
  */
 QString RS_Units::formatArchitectural(double length, RS2::Unit /*unit*/,
@@ -550,7 +550,7 @@ QString RS_Units::formatArchitectural(double length, RS2::Unit /*unit*/,
  *
  * @param length The length in the current unit of the drawing.
  * @param unit Should be inches.
- * @param prec Precisision of the value (e.g. 0.001 or 1/128 = 0.0078125)
+ * @param prec Precision of the value (e.g. 0.001 or 1/128 = 0.0078125)
  & @param showUnit Append unit to the value.
  */
 QString RS_Units::formatFractional(double length, RS2::Unit /*unit*/,
@@ -617,7 +617,7 @@ QString RS_Units::formatFractional(double length, RS2::Unit /*unit*/,
  *
  * @param angle The angle (always in rad).
  * @param format Format of the string.
- * @param prec Precisision of the value (e.g. 0.001 or 1/128 = 0.0078125)
+ * @param prec Precision of the value (e.g. 0.001 or 1/128 = 0.0078125)
  *
  * @ret String with the formatted angle.
  */
