@@ -303,7 +303,9 @@ void RS_BlockList::toggle(RS_Block* block) {
 void RS_BlockList::freezeAll(bool freeze) {
 
     for (int l=0; l<count(); l++) {
-        at(l)->freeze(freeze);
+        if (at(l)->isVisibleInBlockList()) {
+            at(l)->freeze(freeze);
+        }
     }
     // TODO LordOfBikes: when block attributes are saved, activate this
     //setModified(true);

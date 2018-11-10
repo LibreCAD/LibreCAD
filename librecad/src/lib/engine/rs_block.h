@@ -52,8 +52,8 @@ struct RS_BlockData {
 	 */
 	RS_Vector basePoint;
 
-	//! Frozen flag
-	bool frozen;
+	bool frozen {false};              //!< Frozen flag
+	bool visibleInBlockList {true};   //!< Visible in block list
 };
 
 
@@ -174,6 +174,17 @@ public:
 	
 	virtual void setModified(bool m);
 
+    /**
+     * Sets the visibility of the Block in block list
+     *
+     * @param v true: visible, false: invisible
+     */
+    void visibleInBlockList(bool v);
+
+    /**
+     * Returns the visibility of the Block in block list
+     */
+    bool isVisibleInBlockList() const;
 
 protected:
 	//! Block data

@@ -118,6 +118,25 @@ void RS_Block::setModified(bool m) {
     modified = m;
 }
 
+
+/**
+ * Sets the visibility of the Block in block list
+ *
+ * @param v true: visible, false: invisible
+ */
+void RS_Block::visibleInBlockList(bool v) {
+    data.visibleInBlockList = v;
+}
+
+
+/**
+ * Returns the visibility of the Block in block list
+ */
+bool RS_Block::isVisibleInBlockList() const {
+    return data.visibleInBlockList;
+}
+
+
 std::ostream& operator << (std::ostream& os, const RS_Block& b) {
     os << " name: " << b.getName().toLatin1().data() << "\n";
     os << " entities: " << (RS_EntityContainer&)b << "\n";

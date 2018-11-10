@@ -35,6 +35,7 @@
 
 class QG_ActionHandler;
 class QTableView;
+class QLineEdit;
 
 
 /**
@@ -91,9 +92,8 @@ public:
     void update();
     void activateBlock(RS_Block* block);
 
-    virtual void blockAdded(RS_Block*) {
-        update();
-    }
+    virtual void blockAdded(RS_Block*);
+
     virtual void blockEdited(RS_Block*) {
         update();
     }
@@ -109,6 +109,7 @@ signals:
 
 public slots:
     void slotActivated(QModelIndex blockIdx);
+    void slotUpdateBlockList();
 
 protected:
     void contextMenuEvent(QContextMenuEvent *e);
@@ -116,6 +117,7 @@ protected:
 
 private:
     RS_BlockList* blockList;
+    QLineEdit* matchBlockName;
     QTableView* blockView;
     QG_BlockModel *blockModel;
     RS_Block* lastBlock;

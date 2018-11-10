@@ -31,6 +31,7 @@
 #include <QMenu>
 #include <QBoxLayout>
 #include <QLabel>
+#include <QLineEdit>
 #include <QContextMenuEvent>
 
 #include "qg_blockwidget.h"
@@ -220,6 +221,15 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
             actionHandler, SLOT(slotBlocksInsert()));
     layButtons2->addWidget(but);
 
+    // lineEdit to filter block list with RegEx
+    matchBlockName = new QLineEdit(this);
+    matchBlockName->setReadOnly(false);
+    matchBlockName->setPlaceholderText("Filter");
+    matchBlockName->setClearButtonEnabled(true);
+    matchBlockName->setToolTip(tr("Looking for matching block names"));
+    connect(matchBlockName, SIGNAL(textChanged(QString)), this, SLOT(slotUpdateBlockList()));
+
+    lay->addWidget(matchBlockName);
     lay->addLayout(layButtons);
     lay->addLayout(layButtons2);
     lay->addWidget(blockView);
@@ -363,6 +373,45 @@ void QG_BlockWidget::keyPressEvent(QKeyEvent* e) {
     default:
         QWidget::keyPressEvent(e);
         break;
+    }
+}
+
+
+void QG_BlockWidget::blockAdded(RS_Block*) {
+    update();
+    if (! matchBlockName->text().isEmpty()) {
+        slotUpdateBlockList();
+    }
+}
+
+
+/**
+ * Called when reg-expression matchBlockName->text changed
+ */
+void QG_BlockWidget::slotUpdateBlockList() {
+
+    if (!blockList) {
+        return;
+    }
+
+    QRegExp rx("");
+    int pos = 0;
+    QString s, n;
+
+    n = matchBlockName->text();
+    rx.setPattern(n);
+    rx.setPatternSyntax(QRegExp::WildcardUnix);
+
+    for (int i = 0; i < blockList->count(); i++) {
+        s = blockModel->getBlock(i)->getName();
+        int f = rx.indexIn(s, pos);
+        if (!f) {
+            blockView->showRow(i);
+            blockModel->getBlock(i)->visibleInBlockList(true);
+        } else {
+            blockView->hideRow(i);
+            blockModel->getBlock(i)->visibleInBlockList(false);
+        }
     }
 }
 
