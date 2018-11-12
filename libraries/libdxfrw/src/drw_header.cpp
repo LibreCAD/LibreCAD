@@ -20,6 +20,7 @@ DRW_Header::DRW_Header() {
     linetypeCtrl = layerCtrl = styleCtrl = dimstyleCtrl = appidCtrl = 0;
     blockCtrl = viewCtrl = ucsCtrl = vportCtrl = vpEntHeaderCtrl = 0;
     version = DRW::AC1021;
+    curr = NULL;
 }
 
 void DRW_Header::addComment(std::string c){
@@ -29,6 +30,13 @@ void DRW_Header::addComment(std::string c){
 }
 
 void DRW_Header::parseCode(int code, dxfReader *reader){
+    if (NULL == curr && 9 != code) {
+        DRW_DBG("invalid header code: ");
+        DRW_DBG(code);
+        DRW_DBG("\n");
+        return;
+    }
+
     switch (code) {
     case 9:
         curr = new DRW_Variant();

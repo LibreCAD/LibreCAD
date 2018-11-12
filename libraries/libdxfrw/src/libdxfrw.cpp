@@ -1886,15 +1886,9 @@ bool dxfRW::processHeader() {
                 return true;  //found ENDSEC terminate
             }
             else {
-                DRW_DBG("\nunexpected 0 code in header!\n");
+                DRW_DBG("unexpected 0 code in header!\n");
                 return false;
             }
-        }
-        else if (9 != code) {
-            DRW_DBG("\nnot a variable in header, code: ");
-            DRW_DBG(code);
-            DRW_DBG("\n");
-            return false;
         }
         else {
             header.parseCode(code, reader);
