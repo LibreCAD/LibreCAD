@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QtHelpProject version="1.0">
+    <namespace>LibreCAD.org</namespace>
+    <virtualFolder>librecad</virtualFolder>
+    <filterSection>
+        <toc>
+            <section title="LibreCAD Manual" ref="index.html">
+            </section>
+        </toc>
+        <keywords>
+        </keywords>
+        <files>
+            <file>index.html</file>
+            <file>img/librecadlogo.png</file>
+            <file>style.css</file>
+        </files>
+    </filterSection>
+</QtHelpProject>

@@ -1,0 +1,4 @@
+2016-10-31 ravas <github.com/r-a-v-a-s>
+
+* rs_actionlayerstoggleview.cpp (trigger):
+added calculateBorders (issue #784)

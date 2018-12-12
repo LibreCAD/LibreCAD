@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="256"
+   height="256"
+   viewBox="0 0 256 256"
+   id="svg4267"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="exclusive.svg">
+  <defs
+     id="defs4269" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="4.7287766"
+     inkscape:cx="114.26922"
+     inkscape:cy="110.09967"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     inkscape:window-width="2048"
+     inkscape:window-height="1022"
+     inkscape:window-x="0"
+     inkscape:window-y="1"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4815"
+       spacingx="16"
+       spacingy="16"
+       empspacing="8" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata4272">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-796.36216)">
+    <g
+       transform="translate(7.1484349,820.20815)"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:140px;line-height:125%;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot4817">
+      <path
+         d="m 45.740234,53.484336 64.531246,0 0,11.621093 -50.722652,0 0,30.214844 48.603512,0 0,11.621097 -48.603512,0 0,36.98242 51.953122,0 0,11.62109 -65.761716,0 0,-102.060544 z"
+         style=""
+         id="path4139" />
+      <path
+         d="m 197.15625,78.982383 -27.68555,37.255857 29.1211,39.30664 -14.83399,0 -22.28515,-30.07812 -22.28516,30.07812 -14.83398,0 29.73632,-40.05859 -27.20703,-36.503907 14.83399,0 20.30273,27.275387 20.30274,-27.275387 14.83398,0 z"
+         style=""
+         id="path4141" />
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,28 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dxfrw", "C:/cygwin/home/dli/github/LibreCAD/libraries/libdxfrw\dxfrw.vcxproj", "{4A8D66D0-8131-3619-859C-17CB1F557F76}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "jwwlib", "C:/cygwin/home/dli/github/LibreCAD/libraries/jwwlib\jwwlib.vcxproj", "{00CBBFA8-C541-3574-8AF0-EFD869490FF2}"
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug|Win32
+		ConfigName.1 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{4A8D66D0-8131-3619-859C-17CB1F557F76}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4A8D66D0-8131-3619-859C-17CB1F557F76}.Debug|Win32.Build.0 = Debug|Win32
+		{4A8D66D0-8131-3619-859C-17CB1F557F76}.Release|Win32.ActiveCfg = Release|Win32
+		{4A8D66D0-8131-3619-859C-17CB1F557F76}.Release|Win32.Build.0 = Release|Win32
+		{00CBBFA8-C541-3574-8AF0-EFD869490FF2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{00CBBFA8-C541-3574-8AF0-EFD869490FF2}.Debug|Win32.Build.0 = Debug|Win32
+		{00CBBFA8-C541-3574-8AF0-EFD869490FF2}.Release|Win32.ActiveCfg = Release|Win32
+		{00CBBFA8-C541-3574-8AF0-EFD869490FF2}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

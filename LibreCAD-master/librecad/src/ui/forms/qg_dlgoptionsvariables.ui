@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0" stdsetdef="1">
+  <resources><include location="../../../res/extui/extui.qrc"/></resources><author></author>
+  <comment></comment>
+  <exportmacro></exportmacro>
+  <class>QG_DlgOptionsVariables</class>
+  <widget class="QDialog" name="QG_DlgOptionsVariables">
+    <property name="geometry">
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>439</width>
+        <height>312</height>
+      </rect>
+    </property>
+    <property name="windowTitle">
+      <string>Drawing Variables</string>
+    </property>
+    <property name="sizeGripEnabled">
+      <bool>true</bool>
+    </property>
+    <layout class="QVBoxLayout">
+      <property name="margin">
+        <number>11</number>
+      </property>
+      <property name="spacing">
+        <number>6</number>
+      </property>
+      <item>
+        <widget class="Q3Table" name="tabVariables">
+          <property name="resizePolicy">
+            <enum>Default</enum>
+          </property>
+          <property name="vScrollBarMode">
+            <enum>AlwaysOn</enum>
+          </property>
+          <property name="hScrollBarMode">
+            <enum>AlwaysOff</enum>
+          </property>
+          <property name="numRows">
+            <number>0</number>
+          </property>
+          <property name="numCols">
+            <number>3</number>
+          </property>
+          <property name="showGrid">
+            <bool>true</bool>
+          </property>
+          <property name="selectionMode">
+            <enum>NoSelection</enum>
+          </property>
+          <column>
+            <property name="text">
+              <string>Variable</string>
+            </property>
+          </column>
+          <column>
+            <property name="text">
+              <string>Code</string>
+            </property>
+          </column>
+          <column>
+            <property name="text">
+              <string>Value</string>
+            </property>
+          </column>
+        </widget>
+      </item>
+      <item>
+        <layout class="QHBoxLayout">
+          <property name="margin">
+            <number>0</number>
+          </property>
+          <property name="spacing">
+            <number>6</number>
+          </property>
+          <item>
+            <spacer name="Horizontal Spacing2">
+              <property name="sizeHint">
+                <size>
+                  <width>20</width>
+                  <height>20</height>
+                </size>
+              </property>
+              <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+              </property>
+            </spacer>
+          </item>
+          <item>
+            <widget class="QPushButton" name="buttonOk">
+              <property name="text">
+                <string>&amp;OK</string>
+              </property>
+              <property name="shortcut">
+                <string>Alt+O</string>
+              </property>
+              <property name="autoDefault">
+                <bool>true</bool>
+              </property>
+              <property name="default">
+                <bool>true</bool>
+              </property>
+            </widget>
+          </item>
+          <item>
+            <widget class="QPushButton" name="buttonCancel">
+              <property name="text">
+                <string>Cancel</string>
+              </property>
+              <property name="shortcut">
+                <string>Esc</string>
+              </property>
+              <property name="autoDefault">
+                <bool>true</bool>
+              </property>
+            </widget>
+          </item>
+        </layout>
+      </item>
+    </layout>
+  </widget>
+  <layoutdefault spacing="6" margin="11"/>
+  <tabstops>
+    <tabstop>buttonOk</tabstop>
+    <tabstop>buttonCancel</tabstop>
+  </tabstops>
+  <connections>
+    <connection>
+      <sender>buttonCancel</sender>
+      <signal>clicked()</signal>
+      <receiver>QG_DlgOptionsVariables</receiver>
+      <slot>reject()</slot>
+    </connection>
+  </connections>
+</ui>

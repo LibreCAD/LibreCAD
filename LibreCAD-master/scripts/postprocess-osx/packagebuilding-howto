@@ -1,0 +1,15 @@
+Steps tp create a OSX package:
+
+1) Build LibreCAD
+2) Test of LibreCAD is working, make sure resources are included like fonts, helpfiles and templates
+3) run macdeployqt LibreCAD.app from the root of source directory, this will insure that all qt needed libraries are included
+4) Move LibreCAD.app to /Applications/LibreCAD.app
+5) Start Package Builder and build the package
+
+
+1) To test remove /Applications/LibreCAD.app
+2) Execute The created package, it should re-create LibreCAD.app in the /Applications folder.
+
+
+R. van Twisk
+librecad@rvt.dds.nl

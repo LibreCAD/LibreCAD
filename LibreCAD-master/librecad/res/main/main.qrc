@@ -1,0 +1,15 @@
+<RCC version="1.0">
+<qresource prefix="/main">
+<file>librecad.png</file>
+<file>contents.png</file>
+<file>document.png</file>
+<file>editclear.png</file>
+<file>filenew.png</file>
+<file>fileopen.png</file>
+<file>filesave.png</file>
+<file>intro_librecad.png</file>
+<file>manual.png</file>
+<file>splash_librecad.png</file>
+<file>donate.png</file>
+</qresource>
+</RCC>

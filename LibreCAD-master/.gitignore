@@ -1,0 +1,82 @@
+# Apple generated directories
+LibreCAD.app/
+LibreCAD.pbproj/
+LibreCAD.dmg
+Info.plist
+
+# globs, anywhere
+*.o
+*.lo
+*.la
+
+*.autosave
+*~
+
+# filenames, anywhere
+Makefile.in
+Makefile
+.deps
+.libs
+generated/*
+clean
+custom.*
+Unnamed
+
+# Unix generated directories (except Apple)
+unix/
+
+# Win/MSVC generated files and binaries
+windows/
+release/
+debug/
+*.ncb
+*.suo
+*.idb
+*.pdb
+*.dll
+*.lib
+*.exe
+*.exp
+*.ilk
+*.rc
+*.bak
+object_script.LibreCAD.*
+object_script.libdxfrw.*
+# Win/qmake generated project files
+#*.vcproj
+#*.sln
+custom-windows*.*
+
+#Doxygen
+html/
+
+# All platforms generated directories and files
+*.qm
+*generated*
+Makefile*
+qmake_image_collection.cpp
+librecad.pro.user*
+librecad2.pro.user*
+*.qch
+*.qhc
+plugins.pro.user*
+ttf2lff.pro.user*
+PWD
+scripts/PWD
+
+# Mac store files
+.DS_Store
+
+#pkg files
+*.pkg
+#vim files
+*.swp
+*.orig
+*.user
+
+core
+*.core
+vgcore.*
+core.*
+
+.qmake.stash
