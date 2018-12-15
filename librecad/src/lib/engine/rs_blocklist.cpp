@@ -391,15 +391,28 @@ RS_Block* RS_BlockList::getActive() {
 }
 
 /**
- * Sets the layer lists modified status to 'm'.
+ * Sets the block list modified status to 'm'.
  */
 void RS_BlockList::setModified(bool m) {
 	modified = m;
+
+	// Update each block modified status,
+	// but only when the status is set to false.
+	if (m == false) {
+		for (auto b: blocks) {
+			b->setModifiedFlag(false);
+		}
+	}
+
+	// Notify listeneres
+	for (auto l: blockListListeners) {
+		l->blockListModified(m);
+	}
 }
 
 /**
- * @retval true The layer list has been modified.
- * @retval false The layer list has not been modified.
+ * @retval true The block list has been modified.
+ * @retval false The block list has not been modified.
  */
 bool RS_BlockList::isModified() const {
 	return modified;

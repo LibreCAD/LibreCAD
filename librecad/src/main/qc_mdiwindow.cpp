@@ -85,10 +85,14 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, Qt::WindowFlags wf
 		if (document->getLayerList()) {
             // Link the graphic view to the layer widget
             document->getLayerList()->addListener(graphicView);
+            // Link this window to the layer widget
+            document->getLayerList()->addListener(this);
         }
 		if (document->getBlockList()) {
             // Link the graphic view to the block widget
             document->getBlockList()->addListener(graphicView);
+            // Link this window to the block widget
+            document->getBlockList()->addListener(this);
         }
     }
 }
@@ -107,10 +111,12 @@ QC_MDIWindow::~QC_MDIWindow()
 
 		if (document->getLayerList()) {
 			document->getLayerList()->removeListener(graphicView);
+			document->getLayerList()->removeListener(this);
 		}
 
 		if (document->getBlockList()) {
 			document->getBlockList()->removeListener(graphicView);
+			document->getBlockList()->removeListener(this);
 		}
 
 		if (owner==true && document) {

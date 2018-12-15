@@ -63,6 +63,11 @@ public:
      * Called when a block's visibility is toggled. 
      */
     virtual void blockToggled(RS_Block*) {}
+
+    /**
+     * Called when block list is modified.
+     */
+    virtual void blockListModified(bool) {}
 }
 ;
 

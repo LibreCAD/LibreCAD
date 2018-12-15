@@ -481,3 +481,16 @@ std::ostream& operator << (std::ostream& os, RS_LayerList& l) {
 }
 
 
+/**
+ * Sets the layer lists modified status to 'm'.
+ * Listeners are notified.
+ */
+void RS_LayerList::setModified(bool m) {
+    modified = m;
+
+    // Notify listeners
+    for (auto l: layerListListeners) {
+        l->layerListModified(m);
+    }
+}
+

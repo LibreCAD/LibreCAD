@@ -172,7 +172,16 @@ public:
 		data.frozen = freeze;
     }
 	
+    /**
+     * Sets the parent documents modified status to 'm'.
+     */
 	virtual void setModified(bool m);
+
+    /**
+     * Sets only this block modified status to 'm'
+     * without touching parent document.
+     */
+    void setModifiedFlag(bool m) { modified = m; }
 
     /**
      * Sets the visibility of the Block in block list
