@@ -224,12 +224,11 @@ int RS_MText::getNumberOfLines() {
  * text or it's data, position, alignment, .. changes.
  * This method also updates the usedTextWidth / usedTextHeight property.
  */
-void RS_MText::update() {
-
-    RS_DEBUG->print("RS_Text::update");
+void RS_MText::update()
+{
+    RS_DEBUG->print("RS_MText::update");
 
     clear();
-
     if (isUndone()) {
         return;
     }
@@ -237,20 +236,19 @@ void RS_MText::update() {
     usedTextWidth = 0.0;
     usedTextHeight = 0.0;
 
-    RS_Font* font = RS_FONTLIST->requestFont(data.style);
-
-    if (font==NULL) {
+    RS_Font* font {RS_FONTLIST->requestFont( data.style)};
+    if (nullptr == font) {
         return;
     }
 
-    RS_Vector letterPos = RS_Vector(0.0, -9.0);
-    RS_Vector letterSpace = RS_Vector(font->getLetterSpacing(), 0.0);
-    RS_Vector space = RS_Vector(font->getWordSpacing(), 0.0);
-    int lineCounter = 0;
+    RS_Vector letterPos {RS_Vector( 0.0, -9.0)};
+    RS_Vector letterSpace {RS_Vector( font->getLetterSpacing(), 0.0)};
+    RS_Vector space {RS_Vector( font->getWordSpacing(), 0.0)};
+    int lineCounter {0};
 
     // Every single text line gets stored in this entity container
-    //  so we can move the whole line around easely:
-    RS_EntityContainer* oneLine = new RS_EntityContainer(this);
+    // so we can move the whole line around easely:
+    RS_EntityContainer* oneLine {new RS_EntityContainer(this)};
 
     // First every text line is created with
     //   alignment: top left
@@ -259,200 +257,217 @@ void RS_MText::update() {
     // Rotation, scaling and centering is done later
 
     // For every letter:
-    for (int i=0; i<(int)data.text.length(); ++i) {
-        bool handled = false;
+    for (int i = 0; i < static_cast<int>(data.text.length()); ++i) {
+        bool handled {false};
+
         switch (data.text.at(i).unicode()) {
         case 0x0A:
             // line feed:
-            updateAddLine(oneLine, lineCounter++);
+            updateAddLine( oneLine, lineCounter++);
             oneLine = new RS_EntityContainer(this);
-            letterPos = RS_Vector(0.0, -9.0);
+            letterPos = RS_Vector( 0.0, -9.0);
             break;
 
         case 0x20:
             // Space:
-            letterPos+=space;
+            letterPos += space;
             break;
 
         case 0x5C: {
-                // code (e.g. \S, \P, ..)
-                i++;
-                int ch = data.text.at(i).unicode();
-                switch (ch) {
-                case 'P':
-                    updateAddLine(oneLine, lineCounter++);
-                    oneLine = new RS_EntityContainer(this);
-                    letterPos = RS_Vector(0.0, -9.0);
-                    handled = true;
-                    break;
-                    case 'f':
-                    case 'F':
-                    //font change
-                    // \f{symbol} changes font to symbol
-                    // \f{} sets font to standard
-                {
-                    i++;
-                    if(data.text.at(i).unicode()!='{') {
-                        i--;
-                        continue;
-                    }
-                    int j=data.text.indexOf('}',i);
-                    if(j>i){
-                        //
-                        QString fontName;
-                        if(j==i+1)
-                            fontName="standard";
-                        else
-                            fontName=data.text.mid(i+1,j-i-1);
-                        RS_Font* fontNew = RS_FONTLIST->requestFont(
-                                    fontName
-                                    );
-                        if(fontNew != NULL) {
-                            font=fontNew;
-                        }
-                        if(font==NULL) font = RS_FONTLIST->requestFont("standard");
-                        i=j;
-                    }
-                }
-                        continue;
-
-                case 'S': {
-                        QString up;
-                        QString dw;
-                        //letterPos += letterSpace;
-
-                        // get upper string:
-                        i++;
-                        while (data.text.at(i).unicode()!='^' &&
-                                                       //data.text.at(i).unicode()!='/' &&
-                                                       data.text.at(i).unicode()!='\\' &&
-                                                       //data.text.at(i).unicode()!='#' &&
-                                i<(int)data.text.length()) {
-                            up += data.text.at(i);
-                            i++;
-                        }
-
-                        i++;
-
-                                                if (data.text.at(i-1).unicode()=='^' &&
-                                                     data.text.at(i).unicode()==' ') {
-                                                        i++;
-                                                }
-
-                        // get lower string:
-                        while (data.text.at(i).unicode()!=';' &&
-                                i<(int)data.text.length()) {
-                            dw += data.text.at(i);
-                            i++;
-                        }
-
-                        // add texts:
-                        RS_MText* upper =
-                            new RS_MText(
-                                oneLine,
-                                RS_MTextData(letterPos + RS_Vector(0.0,9.0),
-                                            4.0, 100.0, RS_MTextData::VATop, RS_MTextData::HALeft,
-                                            RS_MTextData::LeftToRight, RS_MTextData::Exact,
-                                            1.0, up, data.style,
-                                            0.0, RS2::Update));
-                                            upper->setLayer(NULL);
-                        upper->setPen(RS_Pen(RS2::FlagInvalid));
-                        oneLine->addEntity(upper);
-
-                        RS_MText* lower =
-                            new RS_MText(
-                                oneLine,
-                                RS_MTextData(letterPos+RS_Vector(0.0,4.0),
-                                            4.0, 100.0, RS_MTextData::VATop, RS_MTextData::HALeft,
-                                            RS_MTextData::LeftToRight, RS_MTextData::Exact,
-                                            1.0, dw, data.style,
-                                            0.0, RS2::Update));
-                                            lower->setLayer(NULL);
-                        lower->setPen(RS_Pen(RS2::FlagInvalid));
-                        oneLine->addEntity(lower);
-
-                        // move cursor:
-                        upper->calculateBorders();
-                        lower->calculateBorders();
-
-                        double w1 = upper->getSize().x;
-                        double w2 = lower->getSize().x;
-
-                        if (w1>w2) {
-                            letterPos += RS_Vector(w1, 0.0);
-                        } else {
-                            letterPos += RS_Vector(w2, 0.0);
-                        }
-                        letterPos += letterSpace;
-                    }
-                    handled = true;
-                    break;
-
-                default:
-                    i--;
-                    break;
-                }
-            }
-
-            if (handled)
+            // code (e.g. \S, \P, ..)
+            ++i;
+            int ch {data.text.at(i).unicode()};
+            switch (ch) {
+            case 'P':
+                updateAddLine( oneLine, lineCounter++);
+                oneLine = new RS_EntityContainer(this);
+                letterPos = RS_Vector( 0.0, -9.0);
+                handled = true;
                 break;
+
+            case 'f':
+            case 'F': {
+                //font change
+                // \f{symbol} changes font to symbol
+                // \f{} sets font to standard
+                ++i;
+                if ('{' != data.text.at(i).unicode()) {
+                    --i;
+                    continue;
+                }
+
+                int j {data.text.indexOf( '}', i)};
+                if (j > i) {
+                    QString fontName;
+                    if (i + 1 == j) {
+                        fontName = "standard";
+                    }
+                    else {
+                        fontName = data.text.mid( i + 1, j - i - 1);
+                    }
+
+                    RS_Font* fontNew {RS_FONTLIST->requestFont( fontName)};
+                    if (nullptr != fontNew) {
+                        font = fontNew;
+                    }
+                    if (nullptr == font) {
+                        font = RS_FONTLIST->requestFont( "standard");
+                    }
+                    i = j;
+                }
+                continue;
+            } // inner case 'f','F'
+
+            case 'S': {
+                QString upperText;
+                QString lowerText;
+
+                // get upper string:
+                ++i;
+                while (data.text.at(i).unicode()!='^'
+                       && data.text.at(i).unicode()!='\\'
+                       && i < static_cast<int>(data.text.length()) ) {
+                    upperText += data.text.at(i);
+                    ++i;
+                }
+
+                ++i;
+
+                if ('^' == data.text.at(i - 1).unicode()
+                    && ' ' == data.text.at(i).unicode() ) {
+                    ++i;
+                }
+
+                // get lower string:
+                while (';' != data.text.at(i).unicode()
+                       && static_cast<int>(data.text.length()) > i) {
+                    lowerText += data.text.at(i);
+                    ++i;
+                }
+
+                // add texts:
+                double upperWidth {0.0};
+                if (! upperText.isEmpty()) {
+                    RS_MText* upper { new RS_MText( oneLine,
+                                                    RS_MTextData( letterPos + RS_Vector( 0.0, 9.0),
+                                                                  4.0,
+                                                                  100.0,
+                                                                  RS_MTextData::VATop,
+                                                                  RS_MTextData::HALeft,
+                                                                  RS_MTextData::LeftToRight,
+                                                                  RS_MTextData::Exact,
+                                                                  1.0,
+                                                                  upperText,
+                                                                  data.style,
+                                                                  0.0,
+                                                                  RS2::Update)) };
+                    upper->setLayer( nullptr);
+                    upper->setPen( RS_Pen( RS2::FlagInvalid));
+                    upper->calculateBorders();
+                    oneLine->addEntity(upper);
+                    upperWidth = upper->getSize().x;
+                }
+
+                double lowerWidth {0.0};
+                if (! lowerText.isEmpty()) {
+                    RS_MText* lower { new RS_MText( oneLine,
+                                                    RS_MTextData( letterPos + RS_Vector( 0.0, 4.0),
+                                                                  4.0,
+                                                                  100.0,
+                                                                  RS_MTextData::VATop,
+                                                                  RS_MTextData::HALeft,
+                                                                  RS_MTextData::LeftToRight,
+                                                                  RS_MTextData::Exact,
+                                                                  1.0,
+                                                                  lowerText,
+                                                                  data.style,
+                                                                  0.0,
+                                                                  RS2::Update)) };
+                    lower->setLayer( nullptr);
+                    lower->setPen( RS_Pen( RS2::FlagInvalid));
+                    lower->calculateBorders();
+                    oneLine->addEntity(lower);
+                    lowerWidth = lower->getSize().x;
+                }
+
+                if (upperWidth > lowerWidth) {
+                    letterPos += RS_Vector( upperWidth, 0.0);
+                }
+                else {
+                    letterPos += RS_Vector( lowerWidth, 0.0);
+                }
+                letterPos += letterSpace;
+                handled = true;
+
+                break;
+            } // inner case 'S'
+
+            default:
+                --i;
+                break;
+            } // inner switch (ch)
+
+            if (handled) {
+                break;
+            }
+        } // outer case 0x5C
+
             // if char is not handled
             // fall-through
         default: {
-                // One Letter:
-                QString letterText = QString(data.text.at(i));
-                if (font->findLetter(letterText) == NULL) {
-                    RS_DEBUG->print("RS_Text::update: missing font for letter( %s ), replaced it with QChar(0xfffd)",qPrintable(letterText));
-                    letterText = QChar(0xfffd);
-                }
-//                if (font->findLetter(QString(data.text.at(i))) != NULL) {
-
-                                        RS_DEBUG->print("RS_Text::update: insert a "
-                                          "letter at pos: %f/%f", letterPos.x, letterPos.y);
-
-                    RS_InsertData d(letterText,
-                                    letterPos,
-                                    RS_Vector(1.0, 1.0),
-                                    0.0,
-                                    1,1, RS_Vector(0.0,0.0),
-                                    font->getLetterList(), RS2::NoUpdate);
-
-                    RS_Insert* letter = new RS_Insert(this, d);
-                    RS_Vector letterWidth;
-                    letter->setPen(RS_Pen(RS2::FlagInvalid));
-                    letter->setLayer(NULL);
-                    letter->update();
-                    letter->forcedCalculateBorders();
-
-                                        // until 2.0.4.5:
-                    //letterWidth = RS_Vector(letter->getSize().x, 0.0);
-                                        // from 2.0.4.6:
-                    letterWidth = RS_Vector(letter->getMax().x-letterPos.x, 0.0);
-                    if (letterWidth.x < 0)
-                        letterWidth.x = -letterSpace.x;
-
-                    oneLine->addEntity(letter);
-
-                    // next letter position:
-                    letterPos += letterWidth;
-                    letterPos += letterSpace;
-//                }
+            // One Letter:
+            QString letterText {QString(data.text.at(i))};
+            if (nullptr == font->findLetter( letterText)) {
+                RS_DEBUG->print("RS_MText::update: missing font for letter( %s ), replaced it with QChar(0xfffd)",
+                                qPrintable( letterText));
+                letterText = QChar( 0xfffd);
             }
+
+            RS_DEBUG->print("RS_MText::update: insert a letter at pos: %f/%f", letterPos.x, letterPos.y);
+
+            RS_InsertData d( letterText,
+                             letterPos,
+                             RS_Vector( 1.0, 1.0),
+                             0.0,
+                             1,
+                             1,
+                             RS_Vector( 0.0, 0.0),
+                             font->getLetterList(),
+                             RS2::NoUpdate);
+
+            RS_Insert* letter {new RS_Insert(this, d)};
+            RS_Vector letterWidth;
+            letter->setPen( RS_Pen( RS2::FlagInvalid));
+            letter->setLayer( nullptr);
+            letter->update();
+            letter->forcedCalculateBorders();
+
+            letterWidth = RS_Vector( letter->getMax().x - letterPos.x, 0.0);
+            if (0 > letterWidth.x) {
+                letterWidth.x = -letterSpace.x;
+            }
+
+            oneLine->addEntity( letter);
+
+            // next letter position:
+            letterPos += letterWidth;
+            letterPos += letterSpace;
+
             break;
-        }
+        } // outer default
+        } // outer switch (data.text.at(i).unicode())
+    } // for (i) loop
+
+    double tt {updateAddLine( oneLine, lineCounter)};
+    if (RS_MTextData::VABottom == data.valign) {
+        RS_Vector ot {RS_Vector( 0.0, -tt).rotate( data.angle)};
+        RS_EntityContainer::move( ot);
     }
 
-    double tt = updateAddLine(oneLine, lineCounter);
-    if (data.valign == RS_MTextData::VABottom) {
-        RS_Vector ot = RS_Vector(0.0,-tt).rotate(data.angle);
-        RS_EntityContainer::move(ot);
-    }
-
-    usedTextHeight -= data.height*data.lineSpacingFactor*5.0/3.0
-                      - data.height;
+    usedTextHeight -= data.height * data.lineSpacingFactor * 5.0 / 3.0 - data.height;
     forcedCalculateBorders();
 
-    RS_DEBUG->print("RS_Text::update: OK");
+    RS_DEBUG->print("RS_MText::update: OK");
 }
 
 
@@ -469,10 +484,10 @@ void RS_MText::update() {
 double RS_MText::updateAddLine(RS_EntityContainer* textLine, int lineCounter) {
     double ls =5.0/3.0;
 
-    RS_DEBUG->print("RS_Text::updateAddLine: width: %f", textLine->getSize().x);
+    RS_DEBUG->print("RS_MText::updateAddLine: width: %f", textLine->getSize().x);
 
         //textLine->forcedCalculateBorders();
-    //RS_DEBUG->print("RS_Text::updateAddLine: width 2: %f", textLine->getSize().x);
+    //RS_DEBUG->print("RS_MText::updateAddLine: width 2: %f", textLine->getSize().x);
 
     // Move to correct line position:
     textLine->move(RS_Vector(0.0, -9.0 * lineCounter
@@ -484,12 +499,12 @@ double RS_MText::updateAddLine(RS_EntityContainer* textLine, int lineCounter) {
     }
     RS_Vector textSize = textLine->getSize();
 
-        RS_DEBUG->print("RS_Text::updateAddLine: width 2: %f", textSize.x);
+        RS_DEBUG->print("RS_MText::updateAddLine: width 2: %f", textSize.x);
 
     // Horizontal Align:
     switch (data.halign) {
     case RS_MTextData::HACenter:
-                RS_DEBUG->print("RS_Text::updateAddLine: move by: %f", -textSize.x/2.0);
+                RS_DEBUG->print("RS_MText::updateAddLine: move by: %f", -textSize.x/2.0);
         textLine->move(RS_Vector(-textSize.x/2.0, 0.0));
         break;
 
