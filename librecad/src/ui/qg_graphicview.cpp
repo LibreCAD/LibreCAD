@@ -575,13 +575,23 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
     if (scroll && scrollbars) {
 		//scroll by scrollbars: issue #479
+
+        RS_SETTINGS->beginGroup("/Defaults");
+        bool inv_h = (RS_SETTINGS->readNumEntry("/WheelScrollInvertH", 0) == 1);
+        bool inv_v = (RS_SETTINGS->readNumEntry("/WheelScrollInvertV", 0) == 1);
+        RS_SETTINGS->endGroup();
+
+        int delta;
+
 		switch(direction){
 		case RS2::Left:
 		case RS2::Right:
-			hScrollBar->setValue(hScrollBar->value()+e->delta());
+            delta = (inv_h) ? -e->delta() : e->delta();
+			hScrollBar->setValue(hScrollBar->value()+delta);
 			break;
 		default:
-			vScrollBar->setValue(vScrollBar->value()+e->delta());
+            delta = (inv_v) ? -e->delta() : e->delta();
+			vScrollBar->setValue(vScrollBar->value()+delta);
 		}
 
 //        setCurrentAction(new RS_ActionZoomScroll(direction,

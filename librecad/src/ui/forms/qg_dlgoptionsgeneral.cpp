@@ -180,6 +180,8 @@ void QG_DlgOptionsGeneral::init()
     cbAutoSaveTime->setValue(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5));
     cbAutoBackup->setChecked(RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1));
     cbUseQtFileOpenDialog->setChecked(RS_SETTINGS->readNumEntry("/UseQtFileOpenDialog", 1));
+    cbWheelScrollInvertH->setChecked(RS_SETTINGS->readNumEntry("/WheelScrollInvertH", 0));
+    cbWheelScrollInvertV->setChecked(RS_SETTINGS->readNumEntry("/WheelScrollInvertV", 0));
     RS_SETTINGS->endGroup();
 
 	//update entities to selected entities to the current active layer
@@ -270,6 +272,8 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/AutoSaveTime", cbAutoSaveTime->value() );
         RS_SETTINGS->writeEntry("/AutoBackupDocument", cbAutoBackup->isChecked() ? 1 : 0);
         RS_SETTINGS->writeEntry("/UseQtFileOpenDialog", cbUseQtFileOpenDialog->isChecked() ? 1 : 0);
+        RS_SETTINGS->writeEntry("/WheelScrollInvertH", cbWheelScrollInvertH->isChecked() ? 1 : 0);
+        RS_SETTINGS->writeEntry("/WheelScrollInvertV", cbWheelScrollInvertV->isChecked() ? 1 : 0);
         RS_SETTINGS->endGroup();
 
         //update entities to selected entities to the current active layer
