@@ -270,6 +270,8 @@ public:
     void centerToPage();
     bool fitToPage();
 
+    bool isBiggerThanPaper();
+
     /**
      * @retval true The document has been modified since it was last saved.
      * @retval false The document has not been modified since it was last saved.

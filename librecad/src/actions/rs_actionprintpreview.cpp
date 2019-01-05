@@ -35,6 +35,7 @@
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
 #include "rs_preview.h"
+#include "rs_settings.h"
 
 struct RS_ActionPrintPreview::Points {
 	RS_Vector v1;
@@ -55,6 +56,10 @@ RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
 {
     showOptions();
 	actionType=RS2::ActionFilePrintPreview;
+    RS_SETTINGS->beginGroup("/PrintPreview");
+    bool fixed = (RS_SETTINGS->readNumEntry("/PrintScaleFixed", 0) != 0);
+    RS_SETTINGS->endGroup();
+    setPaperScaleFixed(fixed);
 }
 
 RS_ActionPrintPreview::~RS_ActionPrintPreview()=default;

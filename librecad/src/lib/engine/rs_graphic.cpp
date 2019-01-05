@@ -920,6 +920,14 @@ bool RS_Graphic::fitToPage() {
     return ret;
 }
 
+
+bool RS_Graphic::isBiggerThanPaper() {
+    RS_Vector ps = getPaperSize();
+    RS_Vector s = getSize() * getPaperScale();
+    return !s.isInWindow(RS_Vector(0.0, 0.0), ps);
+}
+
+
 void RS_Graphic::addEntity(RS_Entity* entity)
 {
     RS_EntityContainer::addEntity(entity);
