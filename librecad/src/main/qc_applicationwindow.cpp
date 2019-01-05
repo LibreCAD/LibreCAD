@@ -2517,7 +2517,12 @@ bool QC_ApplicationWindow::queryExit(bool force) {
         }
     }
 
-    if (succ) {storeSettings();}
+    if (succ) {
+        storeSettings();
+    } else {
+        QMdiSubWindow* subWindow=mdiAreaCAD->currentSubWindow();
+        appWindow->slotWindowActivated(subWindow);
+    }
 
     RS_DEBUG->print("QC_ApplicationWindow::queryExit(): OK");
 
