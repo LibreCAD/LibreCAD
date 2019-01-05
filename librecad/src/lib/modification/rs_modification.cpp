@@ -3012,6 +3012,56 @@ bool RS_Modification::round(const RS_Vector& coord,
 }
 
 
+/**
+ * Repetitive recursive block of code for the explode() method.
+ */
+static void update_exploded_children_recursively(
+        RS_EntityContainer* ec,
+        RS_Entity* e,
+        RS_Entity* clone,
+        RS2::ResolveLevel rl,
+        bool resolveLayer,
+        bool resolvePen) {
+
+    if (!ec) {
+        return;
+    }
+    if (!e) {
+        return;
+    }
+    if (!clone) {
+        return;
+    }
+
+    if (resolveLayer) {
+        clone->setLayer(ec->getLayer());
+    } else {
+        clone->setLayer(e->getLayer());
+    }
+
+    if (resolvePen) {
+        //clone->setPen(ec->getPen(true));
+        clone->setPen(ec->getPen(false));
+    } else {
+        clone->setPen(e->getPen(false));
+    }
+
+    clone->update();
+
+    if (clone->isContainer()) {
+        // Note: reassigning ec and e here, so keep
+        // that in mind when writing code below this block.
+        ec = (RS_EntityContainer*) clone;
+        for (e = ec->firstEntity(rl); e; e = ec->nextEntity(rl)) {
+            if (e) {
+                // Run the same code for every children recursively
+                update_exploded_children_recursively(ec, clone, e,
+                        rl, resolveLayer, resolvePen);
+            }
+        }
+    }
+}
+
 
 /**
  * Removes the selected entity containers and adds the entities in them as
@@ -3053,7 +3103,7 @@ bool RS_Modification::explode(const bool remove /*= true*/)
                 case RS2::EntityPolyline:
                     rl = RS2::ResolveAll;
                     resolveLayer = true;
-                    resolvePen = false;
+                    resolvePen = true;
                     break;
 
                 case RS2::EntityInsert:
@@ -3088,6 +3138,15 @@ bool RS_Modification::explode(const bool remove /*= true*/)
                         clone->setSelected(false);
                         clone->reparent(container);
 
+                        addList.push_back(clone);
+
+                        // In order to fix bug #819 and escape similar issues,
+                        // we have to update all children of exploded entity,
+                        // even those (below the tree) which are not direct
+                        // subjects to the current explode() call.
+                        update_exploded_children_recursively(ec, e2, clone,
+                                rl, resolveLayer, resolvePen);
+/*
                         if (resolveLayer) {
                             clone->setLayer(ec->getLayer());
                         } else {
@@ -3104,6 +3163,7 @@ bool RS_Modification::explode(const bool remove /*= true*/)
 						addList.push_back(clone);
 
                         clone->update();
+*/
                     }
                 }
             } else {
@@ -3115,6 +3175,7 @@ bool RS_Modification::explode(const bool remove /*= true*/)
     LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
     deselectOriginals( remove);
     addNewEntities(addList);
+    container->updateInserts();
 
     return true;
 }
