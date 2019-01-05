@@ -30,6 +30,8 @@
 #include <QMdiSubWindow>
 #include <QList>
 #include "rs.h"
+#include "rs_layerlistlistener.h"
+#include "rs_blocklistlistener.h"
 
 class QG_GraphicView;
 class RS_Document;
@@ -44,7 +46,10 @@ class QCloseEvent;
  *
  * @author Andrew Mustun
  */
-class QC_MDIWindow: public QMdiSubWindow {
+class QC_MDIWindow: public QMdiSubWindow,
+                    public RS_LayerListListener,
+                    public RS_BlockListListener
+{
     Q_OBJECT
 
 public:
@@ -81,6 +86,16 @@ public:
     void addChildWindow(QC_MDIWindow* w);
     void removeChildWindow(QC_MDIWindow* w);
     QC_MDIWindow* getPrintPreview();
+
+    // Methods from RS_LayerListListener Interface:
+    void layerListModified(bool) override {
+        setWindowModified(document->isModified());
+    }
+
+    // Methods from RS_BlockListListener Interface:
+    void blockListModified(bool) override {
+        setWindowModified(document->isModified());
+    }
 
     /**
      * Sets the parent window that will be notified if this 

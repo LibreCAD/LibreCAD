@@ -110,9 +110,7 @@ public:
     /**
      * Sets the layer lists modified status to 'm'.
      */
-    void setModified(bool m) {
-        modified = m;
-    }
+    void setModified(bool m);
 
     /**
      * @retval true The layer list has been modified.

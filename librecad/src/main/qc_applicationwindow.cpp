@@ -829,7 +829,16 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
     windowsMenu->addSeparator();
     QMdiSubWindow* active= mdiAreaCAD->activeSubWindow();
     for (int i=0; i< window_list.size(); ++i) {
-        QAction *id = windowsMenu->addAction(window_list.at(i)->windowTitle(),
+        QString title = window_list.at(i)->windowTitle();
+        if (title.contains("[*]")) { // modification mark placeholder
+            int idx = title.lastIndexOf("[*]");
+            if (window_list.at(i)->isWindowModified()) {
+                title.replace(idx, 3, "*");
+            } else {
+                title.remove(idx, 3);
+            }
+        }
+        QAction *id = windowsMenu->addAction(title,
                                          this, SLOT(slotWindowsMenuActivated(bool)));
         id->setCheckable(true);
         id->setData(i);
@@ -1128,9 +1137,9 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
             this, SLOT(slotFileClosing(QC_MDIWindow*)));
 
     if (w->getDocument()->rtti()==RS2::EntityBlock) {
-        w->setWindowTitle(tr("Block '%1'").arg(((RS_Block*)(w->getDocument()))->getName()));
+        w->setWindowTitle(tr("Block '%1'").arg(((RS_Block*)(w->getDocument()))->getName()) + "[*]");
     } else {
-        w->setWindowTitle(tr("unnamed document %1").arg(id));
+        w->setWindowTitle(tr("unnamed document %1").arg(id) + "[*]");
     }
 
     //check for draft mode
@@ -1509,7 +1518,7 @@ void QC_ApplicationWindow::
 
                 /*	Format and set caption.
                  *	----------------------- */
-        w->setWindowTitle(format_filename_caption(fileName));
+        w->setWindowTitle(format_filename_caption(fileName) + "[*]");
         if (settings.value("Appearance/DraftMode", 0).toBool())
         {
             QString draft_string = " ["+tr("Draft Mode")+"]";
@@ -1605,7 +1614,7 @@ void QC_ApplicationWindow::slotFileSaveAs() {
             if (!cancelled) {
                 name = w->getDocument()->getFilename();
                 recentFiles->add(name);
-                w->setWindowTitle(format_filename_caption(name));
+                w->setWindowTitle(format_filename_caption(name) + "[*]");
                 if(w->getGraphicView()->isDraftMode())
                     w->setWindowTitle(w->windowTitle() + " ["+tr("Draft Mode")+"]");
 

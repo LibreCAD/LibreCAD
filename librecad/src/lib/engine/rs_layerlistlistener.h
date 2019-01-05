@@ -79,6 +79,11 @@ public:
      * Called when a layer's construction attribute is toggled.
      */
     virtual void layerToggledConstruction(RS_Layer*) {}
+
+    /**
+     * Called when layer list is modified.
+     */
+    virtual void layerListModified(bool) {}
 }
 ;
 
