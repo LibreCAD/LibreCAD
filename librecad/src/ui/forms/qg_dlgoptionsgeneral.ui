@@ -1106,6 +1106,26 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QCheckBox" name="cbWheelScrollInvertH">
+            <property name="toolTip">
+             <string>Inverts scrolling direction when using mouse wheel with Shift key.</string>
+            </property>
+            <property name="text">
+             <string>Invert horizontal scrolling direction</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbWheelScrollInvertV">
+            <property name="toolTip">
+             <string>Inverts scrolling direction when using mouse wheel with Ctrl key.</string>
+            </property>
+            <property name="text">
+             <string>Invert vertical scrolling direction</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
