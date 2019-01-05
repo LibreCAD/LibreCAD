@@ -509,6 +509,9 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     // default insertion point for container
     RS_Vector ip = data.insertionPoint;
 
+    // remember active layer before inserting absent layers
+    RS_Layer *l = graphic->getActiveLayer();
+
     // insert absent layers from source to graphic
     if (!pasteLayers(source)) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::paste: unable to copy due to absence of needed layers");
@@ -516,6 +519,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     }
 
     // select the same layer in graphic as in source
+    /*
     auto a_layer = source->getActiveLayer();
     if (!a_layer)
     {
@@ -524,6 +528,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     }
     QString ln = a_layer->getName();
     RS_Layer* l = graphic->getLayerList()->find(ln);
+    */
     if (!l) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::paste: unable to select layer to paste in");
         return;
