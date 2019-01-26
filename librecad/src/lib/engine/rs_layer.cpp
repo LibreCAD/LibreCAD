@@ -169,6 +169,22 @@ bool RS_Layer::isVisibleInLayerList() const{
 }
 
 /**
+ * set selection state of the layer in layer list
+ *
+ * @param val true: selected, false: deselected
+ */
+void RS_Layer::selectedInLayerList(bool val) {
+	data.selectedInLayerList = val;
+}
+
+/**
+ * return selection state of the layer in layer list
+ */
+bool RS_Layer::isSelectedInLayerList() const {
+	return data.selectedInLayerList;
+}
+
+/**
  * set the PRINT state of the Layer
  *
  * @param print true: print layer, false: don't print layer

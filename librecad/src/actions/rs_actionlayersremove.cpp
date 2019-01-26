@@ -41,13 +41,18 @@ void RS_ActionLayersRemove::trigger() {
     RS_DEBUG->print("RS_ActionLayersRemove::trigger");
 
     if (graphic) {
-        RS_Layer* layer =
-            RS_DIALOGFACTORY->requestLayerRemovalDialog(graphic->getLayerList());
+        RS_LayerList *ll = graphic->getLayerList();
+        QStringList names =
+            RS_DIALOGFACTORY->requestSelectedLayersRemovalDialog(ll);
 
-        // Now remove the layer from the layer list:
-		graphic->removeLayer(layer);
-
-		graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
+        if (!names.isEmpty()) {
+            for (auto name: names) {
+                graphic->removeLayer(ll->find(name));
+            }
+            graphic->updateInserts();
+            container->calculateBorders();
+            graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
+        }
     }
     finish(false);
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());

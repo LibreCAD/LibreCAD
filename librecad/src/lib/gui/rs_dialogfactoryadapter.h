@@ -43,6 +43,7 @@ public:
 	RS_GraphicView* requestNewDocument(const QString&, RS_Document*) {return nullptr;}
 	RS_Layer* requestNewLayerDialog(RS_LayerList*) override{return nullptr;}
 	RS_Layer* requestLayerRemovalDialog(RS_LayerList*) override{return nullptr;}
+	QStringList requestSelectedLayersRemovalDialog(RS_LayerList*) override{return {};}
 	RS_Layer* requestEditLayerDialog(RS_LayerList*) override{return nullptr;}
 	RS_BlockData requestNewBlockDialog(RS_BlockList*) override {return {};}
 	RS_Block* requestBlockRemovalDialog(RS_BlockList*) override {return nullptr;}

@@ -852,7 +852,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("LayersAdd");
     a_map["LayersAdd"] = action;
 
-    action = new QAction(tr("&Remove Layer"), agm->layer);
+    action = new QAction(tr("&Remove Selected Layers"), agm->layer);
     action->setIcon(QIcon(":/icons/remove.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersRemove()));
