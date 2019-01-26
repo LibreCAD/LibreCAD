@@ -117,6 +117,19 @@ public:
 
     /**
      * This virtual method must be overwritten and must provide
+     * a dialog that asks for permission for removing the selected
+     * layers from the layer list. The method must not actually
+     * remove those layers. This is up to the caller.
+     *
+     * @return The implementation is expected to return a list
+     *         of selected layers names to be removed, or empty
+     *         list if the user cancels the dialog.
+     */
+    virtual QStringList requestSelectedLayersRemovalDialog(
+        RS_LayerList* layerList = NULL) = 0;
+
+    /**
+     * This virtual method must be overwritten and must provide
      * a dialog to edit the layers attributes. The method must
      * not actually edit the layer. This is up to the caller.
      *

@@ -285,6 +285,85 @@ RS_Layer* QG_DialogFactory::requestLayerRemovalDialog(RS_LayerList* layerList) {
 }
 
 
+/**
+ * Shows a dialog that asks the user if the selected layers
+ * can be removed. Doesn't remove the layers. This is up to the caller.
+ *
+ * @return a list of layers names to be removed.
+ */
+QStringList QG_DialogFactory::requestSelectedLayersRemovalDialog(
+    RS_LayerList* layerList)
+{
+
+    if (!layerList) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                "QG_DialogFactory::requestSelectedLayersRemovalDialog(): "
+                "layerList is nullptr");
+        return QStringList();
+    }
+
+    QStringList names;
+    bool layer_0_selected {false};
+
+    for (auto layer: *layerList) {
+        if (!layer) continue;
+        if (!layer->isSelectedInLayerList()) continue;
+        if (layer->getName() == "0") {
+            layer_0_selected = true;
+            continue;
+        }
+        names << layer->getName();
+    }
+
+    if (names.isEmpty()) {
+        if (layer_0_selected) {
+            QMessageBox::information(
+                parent,
+                QMessageBox::tr("Remove Layer"),
+                QMessageBox::tr("Layer \"0\" can never be removed."),
+                QMessageBox::Ok
+            );
+        }
+        return names; // empty, nothing to remove
+    }
+
+    QString title(
+        QMessageBox::tr("Remove %n selected layer(s)", "", names.size())
+    );
+
+    QStringList text_lines = {
+        QMessageBox::tr("Selected layers and all entities on them will be removed."),
+        "",
+        QMessageBox::tr("Warning: this action can NOT be undone!"),
+    };
+
+    if (layer_0_selected) {
+        text_lines << "" <<
+            QMessageBox::tr("Warning: layer \"0\" can never be removed.");
+    }
+
+    QStringList detail_lines = {
+        QMessageBox::tr("Selected layers:"),
+        "",
+    };
+    detail_lines << names;
+
+    QMessageBox msgBox(
+        QMessageBox::Warning,
+        title,
+        text_lines.join("\n"),
+        QMessageBox::Ok | QMessageBox::Cancel
+    );
+
+    msgBox.setDetailedText(detail_lines.join("\n"));
+
+    if (msgBox.exec() == QMessageBox::Ok) {
+        return names;
+    }
+
+    return QStringList();
+}
+
 
 /**
  * Shows a dialog for editing a layer. A new layer is created and

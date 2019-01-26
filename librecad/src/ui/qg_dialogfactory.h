@@ -109,6 +109,8 @@ public:
 			RS_LayerList* layerList = nullptr) override;
 	RS_Layer* requestLayerRemovalDialog(
 			RS_LayerList* layerList = nullptr) override;
+	QStringList requestSelectedLayersRemovalDialog(
+			RS_LayerList* layerList = nullptr) override;
 	RS_Layer* requestEditLayerDialog(
 			RS_LayerList* layerList = nullptr) override;
 
