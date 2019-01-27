@@ -30,6 +30,7 @@
 #include <QWidget>
 #include <QIcon>
 #include <QAbstractTableModel>
+#include <QItemSelection>
 
 #include "rs_blocklistlistener.h"
 
@@ -61,10 +62,14 @@ public:
     RS_Block *getBlock( int row );
     QModelIndex getIndex (RS_Block * blk);
 
+    RS_Block* getActiveBlock() { return activeBlock; };
+    void setActiveBlock(RS_Block* b) { activeBlock = b; };
+
 private:
     QList<RS_Block*> listBlock;
     QIcon blockVisible;
     QIcon blockHidden;
+    RS_Block* activeBlock {nullptr};
 };
 
 
@@ -109,6 +114,9 @@ signals:
 
 public slots:
     void slotActivated(QModelIndex blockIdx);
+    void slotSelectionChanged(
+        const QItemSelection &selected,
+        const QItemSelection &deselected);
     void slotUpdateBlockList();
 
 protected:
@@ -123,6 +131,8 @@ private:
     RS_Block* lastBlock;
 
     QG_ActionHandler* actionHandler;
+
+    void restoreSelections();
 };
 
 #endif

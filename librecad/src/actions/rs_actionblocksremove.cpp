@@ -45,8 +45,12 @@ void RS_ActionBlocksRemove::trigger() {
 		finish(false);
 		return;
 	}
-	RS_Block* block =
-			RS_DIALOGFACTORY->requestBlockRemovalDialog(graphic->getBlockList());
+	// RS_Block* block =
+	// 		RS_DIALOGFACTORY->requestBlockRemovalDialog(graphic->getBlockList());
+
+	RS_BlockList* bl = graphic->getBlockList();
+	QList<RS_Block*> blocks =
+		RS_DIALOGFACTORY->requestSelectedBlocksRemovalDialog(bl);
 
 	// list of containers that might refer to the block via inserts:
 	std::vector<RS_EntityContainer*> containerList;
@@ -56,37 +60,51 @@ void RS_ActionBlocksRemove::trigger() {
 		containerList.push_back(blkLst->at(bi));
 	}
 
-	if (!block) {
+	// if (!block) {
+	if (blocks.isEmpty()) {
 		finish(false);
 		return;
 	}
-	document->startUndoCycle();
-	for(auto cont: containerList){
-		// remove all inserts from the graphic:
-		bool done;
-		do {
-			done = true;
-			for(auto e: *cont){
 
-				if (e->rtti()==RS2::EntityInsert) {
-					RS_Insert* ins = (RS_Insert*)e;
-					if (ins->getName()==block->getName() && !ins->isUndone()) {
-						document->addUndoable(ins);
-						ins->setUndoState(true);
-						done = false;
-						break;
+	document->startUndoCycle();
+
+	for (auto block: blocks) {
+
+		if (!block) continue;
+
+		for(auto cont: containerList){
+			// remove all inserts from the graphic:
+			bool done;
+			do {
+				done = true;
+				for(auto e: *cont){
+
+					if (e->rtti()==RS2::EntityInsert) {
+						RS_Insert* ins = (RS_Insert*)e;
+						if (ins->getName()==block->getName() && !ins->isUndone()) {
+							document->addUndoable(ins);
+							ins->setUndoState(true);
+							done = false;
+							break;
+						}
 					}
 				}
-			}
-		} while (!done);
+			} while (!done);
+		}
+
+		// clear selection and active state
+		block->selectedInBlockList(false);
+		if (block == bl->getActive()) {
+			bl->activate(nullptr);
+		}
+
+		// close all windows that are editing this block:
+		RS_DIALOGFACTORY->closeEditBlockWindow(block);
+
+		// Now remove the block from the block list, but do not delete:
+		block->setUndoState(true);
+		document->addUndoable(block);
 	}
-
-	// close all windows that are editing this block:
-	RS_DIALOGFACTORY->closeEditBlockWindow(block);
-
-	// Now remove the block from the block list, but do not delete:
-	block->setUndoState(true);
-	document->addUndoable(block);
 	document->endUndoCycle();
 	graphic->addBlockNotification();
 	graphic->updateInserts();

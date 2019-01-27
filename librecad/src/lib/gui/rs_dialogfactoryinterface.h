@@ -170,6 +170,19 @@ public:
 
     /**
      * This virtual method must be overwritten and must provide
+     * a dialog that asks for permission for removing the selected
+     * blocks from the block list. The method must not actually
+     * remove those blocks. This is up to the caller.
+     *
+     * @return The implementation is expected to return a list
+     *         of selected blocks to be removed, or empty
+     *         list if the user cancels the dialog.
+     */
+    virtual QList<RS_Block*> requestSelectedBlocksRemovalDialog(
+        RS_BlockList* blockList = NULL) = 0;
+
+    /**
+     * This virtual method must be overwritten and must provide
      * a dialog that allows to change blocks attributes of the
      * currently active block.
      *
