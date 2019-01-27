@@ -305,6 +305,7 @@ QStringList QG_DialogFactory::requestSelectedLayersRemovalDialog(
     QStringList names;
     bool layer_0_selected {false};
 
+    // first, try to add selected layers
     for (auto layer: *layerList) {
         if (!layer) continue;
         if (!layer->isVisibleInLayerList()) continue;
@@ -316,6 +317,20 @@ QStringList QG_DialogFactory::requestSelectedLayersRemovalDialog(
         names << layer->getName();
     }
 
+    // then, if there're no selected layers,
+    // try to add active layer instead
+    if (names.isEmpty()) {
+        RS_Layer* layer = layerList->getActive();
+        if (layer && layer->isVisibleInLayerList()) {
+            if (layer->getName() == "0") {
+                layer_0_selected = true;
+            } else {
+                names << layer->getName();
+            }
+        }
+    }
+
+    // still there're no layers, so return
     if (names.isEmpty()) {
         if (layer_0_selected) {
             QMessageBox::information(
@@ -328,12 +343,14 @@ QStringList QG_DialogFactory::requestSelectedLayersRemovalDialog(
         return names; // empty, nothing to remove
     }
 
+    // layers added, show confirmation dialog
+
     QString title(
-        QMessageBox::tr("Remove %n selected layer(s)", "", names.size())
+        QMessageBox::tr("Remove %n layer(s)", "", names.size())
     );
 
     QStringList text_lines = {
-        QMessageBox::tr("Selected layers and all entities on them will be removed."),
+        QMessageBox::tr("Listed layers and all entities on them will be removed."),
         "",
         QMessageBox::tr("Warning: this action can NOT be undone!"),
     };
@@ -344,7 +361,7 @@ QStringList QG_DialogFactory::requestSelectedLayersRemovalDialog(
     }
 
     QStringList detail_lines = {
-        QMessageBox::tr("Selected layers:"),
+        QMessageBox::tr("Layers for removal:"),
         "",
     };
     detail_lines << names;
@@ -549,6 +566,7 @@ QList<RS_Block*> QG_DialogFactory::requestSelectedBlocksRemovalDialog(
 
     QList<RS_Block*> blocks;
 
+    // first, try to add selected blocks
     for (auto block: *blockList) {
         if (!block) continue;
         if (!block->isVisibleInBlockList()) continue;
@@ -556,20 +574,32 @@ QList<RS_Block*> QG_DialogFactory::requestSelectedBlocksRemovalDialog(
         blocks << block;
     }
 
+    // then, if there're no selected blocks,
+    // try to add active block instead
+    if (blocks.isEmpty()) {
+        RS_Block* block = blockList->getActive();
+        if (block && block->isVisibleInBlockList()) {
+            blocks << block;
+        }
+    }
+
+    // still nothing was added, so return
     if (blocks.isEmpty()) {
         return blocks; // empty, nothing to remove
     }
 
+    // blocks added, show confirmation dialog
+
     QString title(
-        QMessageBox::tr("Remove %n selected block(s)", "", blocks.size())
+        QMessageBox::tr("Remove %n block(s)", "", blocks.size())
     );
 
     QString text(
-        QMessageBox::tr("Selected blocks and all their entities will be removed.")
+        QMessageBox::tr("Listed blocks and all their entities will be removed.")
     );
 
     QStringList detail_lines = {
-        QMessageBox::tr("Selected blocks:"),
+        QMessageBox::tr("Blocks for removal:"),
         "",
     };
     for (auto block: blocks) {

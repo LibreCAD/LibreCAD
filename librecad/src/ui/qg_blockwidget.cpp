@@ -187,11 +187,11 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotBlocksAdd()));
     layButtons->addWidget(but);
-    // remove selected blocks:
+    // remove block:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/remove.svg"));
     but->setMinimumSize(button_size);
-    but->setToolTip(tr("Remove selected blocks"));
+    but->setToolTip(tr("Remove block"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotBlocksRemove()));
     layButtons->addWidget(but);
@@ -389,14 +389,6 @@ void QG_BlockWidget::slotSelectionChanged(
             block->selectedInBlockList(false);
         }
     }
-
-    // for (auto block: *blockList) {
-    //     if (!block) continue;
-    //     RS_DEBUG->print(RS_Debug::D_WARNING, "=== %s %s: %s",
-    //         block == blockModel->getActiveBlock() ? "*" : " ",
-    //         block->isSelectedInBlockList() ? "+" : "-",
-    //         block->getName().toLatin1().data());
-    // }
 }
 
 
@@ -421,11 +413,12 @@ void QG_BlockWidget::contextMenuEvent(QContextMenuEvent *e) {
     contextMenu->addAction( tr("&Freeze all Blocks"), actionHandler,
                              SLOT(slotBlocksFreezeAll()), 0);
     contextMenu->addSeparator();
-    // Actions for selected blocks:
-    contextMenu->addAction( tr("&Remove Selected Blocks"), actionHandler,
-                             SLOT(slotBlocksRemove()), 0);
-    contextMenu->addAction( tr("&Toggle Visibility of Selected"), actionHandler,
+    // Actions for selected blocks or,
+    // if nothing is selected, for active block:
+    contextMenu->addAction( tr("&Toggle Visibility"), actionHandler,
                              SLOT(slotBlocksToggleView()), 0);
+    contextMenu->addAction( tr("&Remove Block"), actionHandler,
+                             SLOT(slotBlocksRemove()), 0);
     contextMenu->addSeparator();
     // Single block actions:
     contextMenu->addAction( tr("&Add Block"), actionHandler,
