@@ -307,6 +307,7 @@ QStringList QG_DialogFactory::requestSelectedLayersRemovalDialog(
 
     for (auto layer: *layerList) {
         if (!layer) continue;
+        if (!layer->isVisibleInLayerList()) continue;
         if (!layer->isSelectedInLayerList()) continue;
         if (layer->getName() == "0") {
             layer_0_selected = true;

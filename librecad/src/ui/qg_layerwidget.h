@@ -166,6 +166,8 @@ private:
     QG_LayerModel *layerModel;
     RS_Layer* lastLayer;   
     QG_ActionHandler* actionHandler;
+
+    void restoreSelections();
 };
 
 #endif
