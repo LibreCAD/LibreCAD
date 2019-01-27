@@ -261,11 +261,11 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersAdd()));
     layButtons->addWidget(but);
-    // remove selected layers:
+    // remove layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/remove.svg"));
     but->setMinimumSize(minButSize);
-    but->setToolTip(tr("Remove selected layers"));
+    but->setToolTip(tr("Remove layer"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersRemove()));
     layButtons->addWidget(but);
@@ -520,14 +520,6 @@ void QG_LayerWidget::slotSelectionChanged(
             layer->selectedInLayerList(false);
         }
     }
-
-    // for (auto layer: *layerList) {
-    //     if (!layer) continue;
-    //     RS_DEBUG->print(RS_Debug::D_WARNING, "=== %s %s: %s",
-    //         layer == layerModel->getActiveLayer() ? "*" : " ",
-    //         layer->isSelectedInLayerList() ? "+" : "-",
-    //         layer->getName().toLatin1().data());
-    // }
 }
 
 
@@ -571,6 +563,7 @@ void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
         palette.setColor(caption->foregroundRole(), RS_Color(255,255,255));
         caption->setPalette(palette);
         caption->setAlignment( Qt::AlignCenter );
+        // Actions for all layers:
         contextMenu->addAction( tr("&Defreeze all Layers"), actionHandler,
                                  SLOT(slotLayersDefreezeAll()), 0);
         contextMenu->addAction( tr("&Freeze all Layers"), actionHandler,
@@ -580,12 +573,8 @@ void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
         contextMenu->addAction( tr("&Lock all Layers"), actionHandler,
                                  SLOT(slotLayersLockAll()), 0);
         contextMenu->addSeparator();
-        contextMenu->addAction( tr("&Add Layer"), actionHandler,
-                                 SLOT(slotLayersAdd()), 0);
-        contextMenu->addAction( tr("&Remove Selected Layers"), actionHandler,
-                                 SLOT(slotLayersRemove()), 0);
-        contextMenu->addAction( tr("Edit Layer &Attributes"), actionHandler,
-                                 SLOT(slotLayersEdit()), 0);
+        // Actions for selected layers or,
+        // if nothing is selected, for active layer:
         contextMenu->addAction( tr("Toggle Layer &Visibility"), actionHandler,
                                  SLOT(slotLayersToggleView()), 0);
         contextMenu->addAction( tr("Toggle Layer Loc&k"), actionHandler,
@@ -594,6 +583,14 @@ void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
                                  SLOT(slotLayersTogglePrint()), 0);
         contextMenu->addAction( tr("Toggle &Construction Layer"), actionHandler,
                                  SLOT(slotLayersToggleConstruction()), 0);
+        contextMenu->addAction( tr("&Remove Layer"), actionHandler,
+                                 SLOT(slotLayersRemove()), 0);
+        contextMenu->addSeparator();
+        // Single layer actions:
+        contextMenu->addAction( tr("&Add Layer"), actionHandler,
+                                 SLOT(slotLayersAdd()), 0);
+        contextMenu->addAction( tr("Edit Layer &Attributes"), actionHandler,
+                                 SLOT(slotLayersEdit()), 0);
         contextMenu->exec(QCursor::pos());
         delete contextMenu;
     }

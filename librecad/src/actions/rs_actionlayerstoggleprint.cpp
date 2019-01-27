@@ -48,33 +48,50 @@ RS_ActionLayersTogglePrint::RS_ActionLayersTogglePrint(
 void RS_ActionLayersTogglePrint::trigger() {
     RS_DEBUG->print("toggle layer printing");
     if (graphic) {
-        if (a_layer) {
-            graphic->toggleLayerPrint(a_layer);
-
-			// deselect entities on locked layer:
-			for(auto e: *container){
-                if (e && e->isVisible() && e->getLayer()==a_layer) {
-
-                    if (graphicView) {
-                        graphicView->deleteEntity(e);
-                    }
-
-                    if (graphicView) {
-                        graphicView->drawEntity(e);
-                    }
-                }
-            }
+        RS_LayerList* ll = graphic->getLayerList();
+        unsigned cnt = 0;
+        // toggle selected layers
+        for (auto layer: *ll) {
+            if (!layer) continue;
+            if (!layer->isVisibleInLayerList()) continue;
+            if (!layer->isSelectedInLayerList()) continue;
+            graphic->toggleLayerPrint(layer);
+            deselectEntities(layer);
+            cnt++;
         }
-
+        // if there wasn't selected layers, toggle active layer
+        if (!cnt) {
+            graphic->toggleLayerPrint(a_layer);
+            deselectEntities(a_layer);
+        }
     }
     finish(false);
 }
-
 
 
 void RS_ActionLayersTogglePrint::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
+
+
+void RS_ActionLayersTogglePrint::deselectEntities(RS_Layer* layer)
+{
+    if (!layer) return;
+
+    for(auto e: *container){
+        if (e && e->isVisible() && e->getLayer() == layer) {
+
+            if (graphicView) {
+                graphicView->deleteEntity(e);
+            }
+
+            if (graphicView) {
+                graphicView->drawEntity(e);
+            }
+        }
+    }
+}
+
 
 // EOF

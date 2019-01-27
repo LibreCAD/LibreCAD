@@ -43,7 +43,7 @@ RS_ActionBlocksToggleView::RS_ActionBlocksToggleView(
 
 void RS_ActionBlocksToggleView::trigger() {
     RS_DEBUG->print("toggle block");
-	if (graphic) {
+    if (graphic) {
         RS_BlockList* bl = graphic->getBlockList();
         unsigned cnt = 0;
         // toggle selected blocks
@@ -59,7 +59,7 @@ void RS_ActionBlocksToggleView::trigger() {
             graphic->toggleBlock(graphic->getActiveBlock());
         }
     }
-        graphicView->redraw(RS2::RedrawDrawing);
+    graphicView->redraw(RS2::RedrawDrawing);
 
     finish(false);
 }
