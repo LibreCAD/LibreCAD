@@ -531,6 +531,69 @@ RS_Block* QG_DialogFactory::requestBlockRemovalDialog(RS_BlockList* blockList) {
 
 
 /**
+ * Shows a dialog that asks the user if the selected blocks
+ * can be removed. Doesn't remove the blocks. This is up to the caller.
+ *
+ * @return a list of blocks to be removed.
+ */
+QList<RS_Block*> QG_DialogFactory::requestSelectedBlocksRemovalDialog(
+    RS_BlockList* blockList)
+{
+
+    if (!blockList) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                "QG_DialogFactory::requestSelectedBlocksRemovalDialog(): "
+                "blockList is nullptr");
+        return QList<RS_Block*>();
+    }
+
+    QList<RS_Block*> blocks;
+
+    for (auto block: *blockList) {
+        if (!block) continue;
+        if (!block->isVisibleInBlockList()) continue;
+        if (!block->isSelectedInBlockList()) continue;
+        blocks << block;
+    }
+
+    if (blocks.isEmpty()) {
+        return blocks; // empty, nothing to remove
+    }
+
+    QString title(
+        QMessageBox::tr("Remove %n selected block(s)", "", blocks.size())
+    );
+
+    QString text(
+        QMessageBox::tr("Selected blocks and all their entities will be removed.")
+    );
+
+    QStringList detail_lines = {
+        QMessageBox::tr("Selected blocks:"),
+        "",
+    };
+    for (auto block: blocks) {
+        detail_lines << block->getName();
+    }
+
+    QMessageBox msgBox(
+        QMessageBox::Warning,
+        title,
+        text,
+        QMessageBox::Ok | QMessageBox::Cancel
+    );
+
+    msgBox.setDetailedText(detail_lines.join("\n"));
+
+    if (msgBox.exec() == QMessageBox::Ok) {
+        return blocks;
+    }
+
+    return QList<RS_Block*>();
+}
+
+
+/**
  * Shows a dialog for choosing a file name. Opening the file is up to
  * the caller.
  *

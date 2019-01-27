@@ -917,7 +917,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("BlocksAdd");
     a_map["BlocksAdd"] = action;
 
-    action = new QAction(tr("&Remove Block"), agm->block);
+    action = new QAction(tr("&Remove Selected Blocks"), agm->block);
     action->setIcon(QIcon(":/icons/remove.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksRemove()));

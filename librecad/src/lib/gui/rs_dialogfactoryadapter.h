@@ -47,6 +47,7 @@ public:
 	RS_Layer* requestEditLayerDialog(RS_LayerList*) override{return nullptr;}
 	RS_BlockData requestNewBlockDialog(RS_BlockList*) override {return {};}
 	RS_Block* requestBlockRemovalDialog(RS_BlockList*) override {return nullptr;}
+	QList<RS_Block*> requestSelectedBlocksRemovalDialog(RS_BlockList*) override{return {};}
 	RS_BlockData requestBlockAttributesDialog(RS_BlockList*) override{return {};}
 	void requestEditBlockWindow(RS_BlockList*) override{}
 	void closeEditBlockWindow(RS_Block*) override {}
