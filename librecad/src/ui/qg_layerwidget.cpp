@@ -383,19 +383,26 @@ void QG_LayerWidget::update() {
         lastLayer = activeLayer;
     }
 
-    // restore selections
-    QItemSelectionModel* selectionModel = layerView->selectionModel();
-    for (auto layer: *layerList) {
-        if (layer && layer->isSelectedInLayerList()) {
-            QModelIndex idx = layerModel->getIndex(layer);
-            QItemSelection selection(idx, idx);
-            selectionModel->select(selection, QItemSelectionModel::Select);
-        }
-    }
+    restoreSelections();
 
     RS_DEBUG->print("QG_LayerWidget::update(): OK");
 }
 
+
+void QG_LayerWidget::restoreSelections() {
+
+    QItemSelectionModel* selectionModel = layerView->selectionModel();
+
+    for (auto layer: *layerList) {
+        if (!layer) continue;
+        if (!layer->isVisibleInLayerList()) continue;
+        if (!layer->isSelectedInLayerList()) continue;
+
+        QModelIndex idx = layerModel->getIndex(layer);
+        QItemSelection selection(idx, idx);
+        selectionModel->select(selection, QItemSelectionModel::Select);
+    }
+}
 
 
 /**
@@ -440,6 +447,7 @@ void QG_LayerWidget::activateLayer(RS_Layer* layer, bool updateScroll) {
     } else {
         selFlag = QItemSelectionModel::Deselect;
     }
+    layer->selectedInLayerList(selected);
     layerView->selectionModel()->select(QItemSelection(idx, idx), selFlag);
 
     if (!updateScroll) {
@@ -509,7 +517,7 @@ void QG_LayerWidget::slotSelectionChanged(
 
     foreach (index, deselected.indexes()) {
         auto layer = layerModel->getLayer(index.row());
-        if (layer) {
+        if (layer && layer->isVisibleInLayerList()) {
             layer->selectedInLayerList(false);
         }
     }
@@ -547,6 +555,8 @@ void QG_LayerWidget::slotUpdateLayerList() {
             layerModel->getLayer(i)->visibleInLayerList(false);
         }
     }
+
+    restoreSelections();
 }
 
 /**
