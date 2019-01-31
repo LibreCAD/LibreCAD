@@ -70,28 +70,21 @@ QG_LibraryWidget::QG_LibraryWidget(QWidget* parent, const char* name, Qt::Window
     bInsert = new QPushButton(tr("Insert"), this);
     vboxLayout->addWidget(bInsert);
 
-    dirModel = new QStandardItemModel;
-    iconModel = new QStandardItemModel;
-    QStringList directoryList = RS_SYSTEM->getDirectoryList("library");
-    for (int i = 0; i < directoryList.size(); ++i) {
-		appendTree(nullptr, directoryList.at(i));
-     }
+    QHBoxLayout *refreshButtonsLayout = new QHBoxLayout(this);
+    bRefresh = new QPushButton(tr("Refresh"), this);
+    refreshButtonsLayout->addWidget(bRefresh);
+    bRebuild = new QPushButton(tr("Rebuild"), this);
+    refreshButtonsLayout->addWidget(bRebuild);
+    vboxLayout->addLayout(refreshButtonsLayout);
 
-    RS_SETTINGS->beginGroup("/Paths");
-    QString customPath=RS_SETTINGS->readEntry("/Library", "");
-    RS_SETTINGS->endGroup();
-    if(customPath.size()>0){
-            //todo: make the custom path more flexible
-			appendTree(nullptr,customPath);
-    }
-    dirView->setModel(dirModel);
-    ivPreview->setModel(iconModel);
-    dirModel->setHorizontalHeaderLabels ( QStringList(tr("Directories")));
+    buildTree();
 
     connect(dirView, SIGNAL(expanded(QModelIndex)), this, SLOT(expandView(QModelIndex)));
     connect(dirView, SIGNAL(collapsed(QModelIndex)), this, SLOT(collapseView(QModelIndex)));
     connect(dirView, SIGNAL(clicked(QModelIndex)), this, SLOT(updatePreview(QModelIndex)));
     connect(bInsert, SIGNAL(clicked()), this, SLOT(insert()));
+    connect(bRefresh, SIGNAL(clicked()), this, SLOT(refresh()));
+    connect(bRebuild, SIGNAL(clicked()), this, SLOT(buildTree()));
 }
 
 /*
@@ -170,6 +163,50 @@ void QG_LibraryWidget::insert() {
     }
 }
 
+
+/**
+ * Refresh
+ */
+void QG_LibraryWidget::refresh() {
+    scanTree();
+    updatePreview(dirView->selectionModel()->currentIndex());
+}
+
+
+/**
+ * Scan library tree for new items
+ */
+void QG_LibraryWidget::scanTree() {
+    QStringList directoryList = RS_SYSTEM->getDirectoryList("library");
+    for (int i = 0; i < directoryList.size(); ++i) {
+        appendTree(nullptr, directoryList.at(i));
+    }
+
+    RS_SETTINGS->beginGroup("/Paths");
+    QString customPath=RS_SETTINGS->readEntry("/Library", "");
+    RS_SETTINGS->endGroup();
+    if(customPath.size()>0){
+        //todo: make the custom path more flexible
+        appendTree(nullptr,customPath);
+    }
+}
+
+
+/**
+ * (Re)build dirModel and iconModel from scratch
+ */
+void QG_LibraryWidget::buildTree() {
+    if (dirModel)
+        delete dirModel;
+    if (iconModel)
+        delete iconModel;
+    dirModel = new QStandardItemModel;
+    iconModel = new QStandardItemModel;
+    scanTree();
+    dirView->setModel(dirModel);
+    ivPreview->setModel(iconModel);
+    dirModel->setHorizontalHeaderLabels ( QStringList(tr("Directories")));
+}
 
 
 /**
