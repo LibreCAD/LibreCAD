@@ -1217,10 +1217,9 @@ Plug_Entity *Doc_plugin_interface::getEnt(const QString& mesage){
             if (!gView->getEventHandler()->hasAction())
                 break;
         }
-        // qDebug() << "getEnt: passed event loop";
     }
     Plug_Entity *e = reinterpret_cast<Plug_Entity*>(a->getSelected(this));
-    // qDebug() << e;
+    a->finish();
     gView->killAllActions();
     return e;
 }

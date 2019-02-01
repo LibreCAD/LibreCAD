@@ -67,7 +67,6 @@ void QC_ActionGetEnt::trigger() {
         s.selectSingle(en);
         completed = true;
         updateMouseButtonHints();
-        finish();
     } else {
         RS_DEBUG->print("QC_ActionGetEnt::trigger: Entity is NULL\n");
     }
