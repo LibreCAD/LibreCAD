@@ -275,6 +275,9 @@ protected:
 
 public:
     double radious;                 /*!< radius, code 40 */
+    // ratio of radii - ==1 if no extrusion
+    double ratio;
+    DRW_Coord major;
 };
 
 //! Class to handle arc entity
@@ -292,7 +295,7 @@ public:
 
     virtual void applyExtrusion();
 
-    //! center point in OCS
+    //! center point in WCS
     const DRW_Coord & center() { return basePoint; }
     //! the radius of the circle
     double radius() { return radious; }

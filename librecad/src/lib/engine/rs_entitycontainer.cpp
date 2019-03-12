@@ -1431,6 +1431,8 @@ double RS_EntityContainer::getDistanceToPoint(const RS_Vector& coord,
 			 */
 			if (curDist<=minDist)
 			{
+                
+                RS_DEBUG->print("RS_EntityContainer::getDistanceToPoint: curDist<=minDist");
                 switch(level){
                 case RS2::ResolveAll:
                 case RS2::ResolveAllButTextImage:

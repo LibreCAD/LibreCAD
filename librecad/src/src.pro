@@ -28,9 +28,9 @@ CONFIG += qt \
 
 QT += widgets printsupport
 CONFIG += c++11
-*-g++ {
-    QMAKE_CXXFLAGS += -fext-numeric-literals
-}
+#*-g++ {
+#    QMAKE_CXXFLAGS += -fext-numeric-literals
+#}
 
 GEN_LIB_DIR = ../../generated/lib
 PRE_TARGETDEPS += $$GEN_LIB_DIR/libdxfrw.a \

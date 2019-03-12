@@ -443,6 +443,7 @@ void RS_FilterDXFRW::addCircle(const DRW_Circle& data) {
 	RS_Vector v{data.basePoint.x, data.basePoint.y};
 	RS_Circle* entity = new RS_Circle(currentContainer, {v, data.radious});
     setEntityAttributes(entity, &data);
+    entity->setRatio(data.ratio);
 
     currentContainer->addEntity(entity);
 }
@@ -458,11 +459,14 @@ void RS_FilterDXFRW::addCircle(const DRW_Circle& data) {
 void RS_FilterDXFRW::addArc(const DRW_Arc& data) {
     RS_DEBUG->print("RS_FilterDXF::addArc");
     RS_Vector v(data.basePoint.x, data.basePoint.y);
-    RS_ArcData d(v, data.radious,
-                 data.staangle,
-                 data.endangle,
-                 false);
+    
+    printf("RS_FilterDXFRW::addArc  %f %f    ",data.staangle,data.endangle);
+    RS_ArcData d(v, data.radious,data.staangle, data.endangle,false);
     RS_Arc* entity = new RS_Arc(currentContainer, d);
+    entity->setRatio(data.ratio);
+    entity->setMajorP(RS_Vector(data.major.x,data.major.y,data.major.z));
+    
+    printf("  %f %f    %f %f\n",d.angle1,d.angle2,entity->getAngle1(),entity->getAngle2());
     setEntityAttributes(entity, &data);
 
     currentContainer->addEntity(entity);

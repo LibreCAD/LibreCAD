@@ -151,6 +151,52 @@ std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed) {
 	return os;
 }
 
+
+                                   
+ RS_VectorSolutions getCircletTangentPoint (const RS_Circle& c, const RS_Vector& point)
+{
+    RS_VectorSolutions ret;
+    double r2(c.getRadius()*c.getRadius());
+ 
+
+    if(r2<RS_TOLERANCE2) return ret; //circle too small
+    
+    RS_Vector vp(point-c.getCenter());
+    double c2(vp.squared());
+    if(c2<r2-c.getRadius()*2.*RS_TOLERANCE) {
+        //inside point, no tangential point
+        return ret;
+    }
+    
+    if(c2>r2+c.getRadius()*2.*RS_TOLERANCE) {
+        //external point
+        RS_Vector vp1(-vp.y,vp.x);
+        vp1*=c.getRadius()*sqrt(c2-r2)/c2;
+        vp *= r2/c2;
+        vp += c.getCenter();
+        if(vp1.squared()>RS_TOLERANCE2) {
+            ret.push_back(vp+vp1);
+            ret.push_back(vp-vp1);
+            return ret;
+        }
+    }
+
+    ret.push_back(point);
+    return ret;
+}
+  
+                                   
+RS_Vector getCircleTangentDirection(const RS_Circle& c,const RS_Vector& point)
+{
+    RS_Vector vp(point-c.getCenter());
+    //    double c2(vp.squared());
+    //    if(c2<r2-getRadius()*2.*RS_TOLERANCE) {
+    //        //inside point, no tangential point
+    //        return RS_Vector(false);
+    //    }
+    return RS_Vector(-vp.y,vp.x);
+}
+
 /**
  * Constructor.
  */
@@ -284,7 +330,11 @@ RS_VectorSolutions RS_Ellipse::getTangentPoint(const RS_Vector& point) const {
     if(a<RS_TOLERANCE || getRatio()<RS_TOLERANCE) return sol;
 	RS_Circle c(nullptr, RS_CircleData(RS_Vector(0.,0.),a));
     point2.y /=getRatio();
-    sol=c.getTangentPoint(point2);
+    
+    sol=getCircletTangentPoint (c,point2);
+#ifdef NEVER
+    //sol=c.getTangentPoint(point2);
+#endif
     sol.scale(RS_Vector(1.,getRatio()));
     aV.y *= -1.;
     sol.rotate(aV);
@@ -300,7 +350,11 @@ RS_Vector RS_Ellipse::getTangentDirection(const RS_Vector& point) const {
     double a=getMajorRadius();
     if(a<RS_TOLERANCE || getRatio()<RS_TOLERANCE) return RS_Vector(false);
 	RS_Circle c(nullptr, RS_CircleData(RS_Vector(0.,0.),a));
-    RS_Vector direction=c.getTangentDirection(vp);
+    
+    RS_Vector direction = getCircleTangentDirection(c,vp);
+#ifdef NEVER
+    //RS_Vector direction=c.getTangentDirection(vp);
+#endif
     direction.y *= getRatio();
     aV.y *= -1.;
     direction.rotate(aV);
@@ -545,7 +599,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     if( ! ret.valid ) {
         //this should not happen
 //        std::cout<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<std::endl;
-//        std::cout<<"(x,y)=( "<<x<<" , "<<y<<" ) a= "<<a<<" b= "<<b<<" sine= "<<s<<" d2= "<<d2<<" dist= "<<d<<std::endl;
+//        std::cout<<"(x,y)=( "<<x<<" , "<<y<<" ) a= "<<a<<" b= "<<b<<" dist= "<<d<<std::endl;
 //        std::cout<<"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n";
         RS_DEBUG->print(RS_Debug::D_ERROR,"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n");
     }

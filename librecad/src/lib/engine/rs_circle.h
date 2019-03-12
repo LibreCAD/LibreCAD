@@ -29,8 +29,7 @@
 #ifndef RS_CIRCLE_H
 #define RS_CIRCLE_H
 
-#include <vector>
-#include "rs_atomicentity.h"
+#include "rs_ellipse.h"
 
 class LC_Quadratic;
 
@@ -42,6 +41,7 @@ struct RS_CircleData {
 	RS_CircleData(RS_Vector const& center, double radius);
 	bool isValid() const;
 	bool operator == (RS_CircleData const&) const;
+    
 	RS_Vector center;
 	double radius;
 };
@@ -53,7 +53,7 @@ std::ostream& operator << (std::ostream& os, const RS_CircleData& ad);
  *
  * @author Andrew Mustun
  */
-class RS_Circle : public RS_AtomicEntity {
+class RS_Circle : public RS_Ellipse {
 public:
 	RS_Circle()=default;
     RS_Circle (RS_EntityContainer* parent,
@@ -73,6 +73,9 @@ public:
 
     /** @return Copy of data that defines the circle. **/
 	const RS_CircleData& getData() const {
+        RS_CircleData data;
+        data.center = RS_Ellipse::getCenter();
+        data.radius = RS_Ellipse::getMajorP().x;
         return data;
     }
 
@@ -180,7 +183,7 @@ m0 x + m1 y + m2 =0
 	void calculateBorders() override;
 
 protected:
-    RS_CircleData data;
+    //RS_CircleData data;
 };
 
 #endif

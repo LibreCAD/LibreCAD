@@ -591,11 +591,30 @@ bool DRW_Ray::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 
 void DRW_Circle::applyExtrusion(){
     if (haveExtrusion) {
-        //NOTE: Commenting these out causes the the arcs being tested to be located
-        //on the other side of the y axis (all x dimensions are negated).
         calculateAxis(extPoint);
-        extrudePoint(extPoint, &basePoint);
+        
+        DRW_Coord v(radious,radious,0.0);
+        extrudePoint(extPoint, &v);
+
+        printf("Radious: %f       %f %f %f\n",radious,v.x,v.y,v.z);
+        
+        if (v.y > v.x) {
+            radious = v.y;
+            ratio = v.x/v.y;
+            if (ratio < 1e-10)
+                ratio = 1e-10;
+        }
+        else {
+            radious = v.x;                // get major axis in WCS
+            ratio = v.y/v.x;              // get ratio of minor to major axis
+        }
+        
+        printf("ratio:   %f\n",ratio);
+        
+        extrudePoint(extPoint, &basePoint);  //find the center point in WCS
     }
+    else
+        ratio = 1.0;
 }
 
 void DRW_Circle::parseCode(int code, dxfReader *reader){
@@ -635,23 +654,67 @@ bool DRW_Circle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 }
 
 void DRW_Arc::applyExtrusion(){
-    DRW_Circle::applyExtrusion();
 
     if(haveExtrusion){
-        // If the extrusion vector has a z value less than 0, the angles for the arc
-        // have to be mirrored since DXF files use the right hand rule.
-        // Note that the following code only handles the special case where there is a 2D
-        // drawing with the z axis heading into the paper (or rather screen). An arbitrary
-        // extrusion axis (with x and y values greater than 1/64) may still have issues.
-        if (fabs(extPoint.x) < 0.015625 && fabs(extPoint.y) < 0.015625 && extPoint.z < 0.0) {
-            staangle=M_PI-staangle;
-            endangle=M_PI-endangle;
+        extPoint.unitize();
+        calculateAxis(extPoint);
+        
+        printf("extPoint       %f  %f  %f\n",extPoint.x,extPoint.y,extPoint.z);
+        
+        printf("input angles:  %f  %f  %f\n",staangle,endangle,radious);
+        DRW_Coord v(cos(staangle),sin(staangle),0.0);
+        extrudePoint(extPoint, &v);
+        staangle = atan2(v.y,v.x);       // get start angle in WCS
+        printf("staangle  %f    %f %f %f\n",staangle,v.x,v.y,v.z);
 
-            double temp = staangle;
-            staangle=endangle;
-            endangle=temp;
-        }
+        v = DRW_Coord(cos(endangle),sin(endangle),0);
+        extrudePoint(extPoint, &v);
+        endangle = atan2(v.y,v.x);       // get endangle in WCS
+        printf("endangle  %f    %f %f %f\n",endangle,v.x,v.y,v.z);
+        
+        v = DRW_Coord(radious,0,0);
+        extrudePoint(extPoint,&v);
+        double temp1 = v.x;
+        v = DRW_Coord(0,radious,0);
+        extrudePoint(extPoint,&v);
+        double temp2 = v.y;
+        printf("major x,y    %f  %f\n",temp1,temp2);
+        
+        v = DRW_Coord(0,radious,0);
+        extrudePoint(extPoint, &v);
+        double minor = hypot(hypot(v.x, v.y), 0.0);   // minor radius
+        
+        if (minor < 1e-10)
+            minor = 1e-10;
+        printf("radius1     %f    %f %f %f\n",minor,v.x,v.y,v.z);
+        
+        v = DRW_Coord(radious,0,0);
+        extrudePoint(extPoint, &v);
+        double majr = hypot(hypot(v.x, v.y), 0.0);   // major radius
+        if (majr < 1e-10)
+            majr = 1e-10;
+        
+        
+        printf("radius2   %f    %f %f %f\n",majr,v.x,v.y,v.z);
+        
+        major = DRW_Coord(temp1,temp2,0);
+        //extrudePoint(extPoint, &major);
+        printf("major         %f,%f,%f\n",major.x,major.y,major.z);
+        
+        radious = majr;
+        ratio = minor/majr;
+        // convert angle to parm
+        //staangle = atan2(sin(staangle), ratio * cos(staangle));
+        //endangle = atan2(sin(endangle), ratio * cos(endangle));
+        //printf("staangle: %f    %f \n",staangle,endangle);
+        printf("new radius %f  %f ratio %f\n",radious,minor,ratio);
+        
+        extrudePoint(extPoint, &basePoint);  //find the center point in WCS
+        
+        printf("center     %f %f %f\n",basePoint.x,basePoint.y,basePoint.z);
     }
+    else
+        ratio = 1;
 }
 
 void DRW_Arc::parseCode(int code, dxfReader *reader){

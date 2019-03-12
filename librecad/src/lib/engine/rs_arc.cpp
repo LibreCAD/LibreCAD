@@ -81,7 +81,13 @@ std::ostream& operator << (std::ostream& os, const RS_ArcData& ad) {
  */
 RS_Arc::RS_Arc(RS_EntityContainer* parent,
                const RS_ArcData& d)
-    : RS_AtomicEntity(parent), data(d) {
+    : RS_Ellipse(parent,RS_EllipseData()) {
+    RS_Ellipse::setCenter(d.center);
+    RS_Ellipse::setMajorP(RS_Vector(d.radius,0,0));
+    RS_Ellipse::setAngle1(d.angle1);
+    RS_Ellipse::setAngle2(d.angle2);
+    RS_Ellipse::setRatio(1.0);
+    RS_Ellipse::setReversed(d.reversed);
     calculateBorders();
 }
 
@@ -112,7 +118,8 @@ bool RS_Arc::createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
         }
         crossp=1./crossp;
         data.center.set((ra2*vrb.y - rb2*vra.y)*crossp,(rb2*vra.x - ra2*vrb.x)*crossp);
-        data.radius=data.center.magnitude();
+        setMajorP(data.center);
+        setRatio(1.0);
         data.center += p1;
         data.angle1=data.center.angleTo(p1);
         data.angle2=data.center.angleTo(p3);
@@ -132,7 +139,9 @@ bool RS_Arc::createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
 bool RS_Arc::createFrom2PDirectionRadius(const RS_Vector& startPoint,
         const RS_Vector& endPoint,
         double direction1, double radius) {
-
+    printf("RS_Arc::createFrom2PDirectionRadius\n");
+    
+    
 	RS_Vector ortho = RS_Vector::polar(radius, direction1 + M_PI_2);
     RS_Vector center1 = startPoint + ortho;
     RS_Vector center2 = startPoint - ortho;
@@ -143,7 +152,8 @@ bool RS_Arc::createFrom2PDirectionRadius(const RS_Vector& startPoint,
         data.center = center2;
     }
 
-    data.radius = radius;
+    setMajorP(RS_Vector(radius,0.0,0.0));
+    setRatio(1.0);
     data.angle1 = data.center.angleTo(startPoint);
     data.angle2 = data.center.angleTo(endPoint);
     data.reversed = false;
@@ -167,6 +177,9 @@ bool RS_Arc::createFrom2PDirectionRadius(const RS_Vector& startPoint,
 bool RS_Arc::createFrom2PDirectionAngle(const RS_Vector& startPoint,
                                         const RS_Vector& endPoint,
 										double direction1, double angleLength) {
+    printf("RS_Arc::createFrom2PDirectionAngle\n");
+    
+    
 	if (angleLength <= RS_TOLERANCE_ANGLE || angleLength > 2. * M_PI - RS_TOLERANCE_ANGLE) return false;
 	RS_Line l0 {nullptr, startPoint, startPoint - RS_Vector{direction1}};
 	double const halfA = 0.5 * angleLength;
@@ -192,7 +205,8 @@ bool RS_Arc::createFrom2PDirectionAngle(const RS_Vector& startPoint,
 
 	data.center = sol.at(0);
 
-	data.radius = data.center.distanceTo(startPoint);
+    setMajorP(data.center);
+    setRatio(1.0);
     data.angle1 = data.center.angleTo(startPoint);
     data.reversed = false;
 
@@ -215,6 +229,9 @@ bool RS_Arc::createFrom2PDirectionAngle(const RS_Vector& startPoint,
  */
 bool RS_Arc::createFrom2PBulge(const RS_Vector& startPoint, const RS_Vector& endPoint,
                                double bulge) {
+    
+    printf("RS_Arc::createFrom2PBulge\n");
+    
     data.reversed = (bulge<0.0);
     double alpha = atan(bulge)*4.0;
 
@@ -222,9 +239,10 @@ bool RS_Arc::createFrom2PBulge(const RS_Vector& startPoint, const RS_Vector& end
     double dist = startPoint.distanceTo(endPoint)/2.0;
 
     // alpha can't be 0.0 at this point
-    data.radius = fabs(dist / sin(alpha/2.0));
+    setMajorP(RS_Vector(fabs(dist / sin(alpha/2.0)),0.0,0.0));
+    setRatio(1.0);
 
-    double wu = fabs(RS_Math::pow(data.radius, 2.0) - RS_Math::pow(dist, 2.0));
+    double wu = fabs(RS_Math::pow(data.majorP.x, 2.0) - RS_Math::pow(dist, 2.0));
     double h = sqrt(wu);
     double angle = startPoint.angleTo(endPoint);
 
@@ -249,6 +267,8 @@ bool RS_Arc::createFrom2PBulge(const RS_Vector& startPoint, const RS_Vector& end
 }
 
 void RS_Arc::calculateBorders() {
+    RS_Ellipse::calculateBorders();
+#ifdef NEVER
 	RS_Vector const startpoint = data.center + RS_Vector::polar(data.radius, data.angle1);
 	RS_Vector const endpoint = data.center + RS_Vector::polar(data.radius, data.angle2);
 	LC_Rect const rect{startpoint, endpoint};
@@ -275,18 +295,18 @@ void RS_Arc::calculateBorders() {
 
     minV.set(minX, minY);
     maxV.set(maxX, maxY);
+#endif
 }
-
 
 RS_Vector RS_Arc::getStartpoint() const
 {
-	return data.center + RS_Vector::polar(data.radius, data.angle1);
+    return RS_Ellipse::getStartpoint();
 }
 
 /** @return End point of the entity. */
 RS_Vector RS_Arc::getEndpoint() const
 {
-	return data.center + RS_Vector::polar(data.radius, data.angle2);
+    return RS_Ellipse::getEndpoint();
 }
 
 RS_VectorSolutions RS_Arc::getRefPoints() const
@@ -296,11 +316,11 @@ RS_VectorSolutions RS_Arc::getRefPoints() const
 }
 
 double RS_Arc::getDirection1() const {
-	if (!data.reversed) {
-		return RS_Math::correctAngle(data.angle1+M_PI_2);
+    if (!RS_Ellipse::isReversed()) {
+        return RS_Math::correctAngle(RS_Ellipse::getAngle1()+M_PI_2);
 	}
 	else {
-		return RS_Math::correctAngle(data.angle1-M_PI_2);
+        return RS_Math::correctAngle(RS_Ellipse::getAngle1()-M_PI_2);
 	}
 }
 /**
@@ -308,15 +328,17 @@ double RS_Arc::getDirection1() const {
  * the endpoint.
  */
 double RS_Arc::getDirection2() const {
-	if (!data.reversed) {
-		return RS_Math::correctAngle(data.angle2-M_PI_2);
+	if (!RS_Ellipse::isReversed()) {
+        return RS_Math::correctAngle(RS_Ellipse::getAngle2()-M_PI_2);
 	}
 	else {
-		return RS_Math::correctAngle(data.angle2+M_PI_2);
+		return RS_Math::correctAngle(RS_Ellipse::getAngle2()+M_PI_2);
 	}
 }
 
 RS_Vector RS_Arc::getNearestEndpoint(const RS_Vector& coord, double* dist) const{
+    return RS_Ellipse::getNearestEndpoint(coord,dist);
+#ifdef NEVER
     double dist1, dist2;
 
 	auto const startpoint = getStartpoint();
@@ -336,7 +358,7 @@ RS_Vector RS_Arc::getNearestEndpoint(const RS_Vector& coord, double* dist) const
 
         return startpoint;
     }
-
+#endif
 }
 
 
@@ -347,6 +369,9 @@ RS_Vector RS_Arc::getNearestEndpoint(const RS_Vector& coord, double* dist) const
   *Author: Dongxu Li
   */
 RS_VectorSolutions RS_Arc::getTangentPoint(const RS_Vector& point) const {
+    return RS_Ellipse::getTangentPoint(point);
+   
+#ifdef NEVER
     RS_VectorSolutions ret;
     double r2(getRadius()*getRadius());
     if(r2<RS_TOLERANCE2) return ret; //circle too small
@@ -370,9 +395,12 @@ RS_VectorSolutions RS_Arc::getTangentPoint(const RS_Vector& point) const {
     }
     ret.push_back(point);
     return ret;
+#endif
 }
 
 RS_Vector RS_Arc::getTangentDirection(const RS_Vector& point) const {
+    return RS_Ellipse::getTangentDirection(point);
+#ifdef NEVER
     RS_Vector vp(point-getCenter());
 //    double c2(vp.squared());
 //    if(c2<r2-getRadius()*2.*RS_TOLERANCE) {
@@ -380,12 +408,15 @@ RS_Vector RS_Arc::getTangentDirection(const RS_Vector& point) const {
 //        return RS_Vector(false);
 //    }
     return RS_Vector(-vp.y,vp.x);
-
+#endif
 }
 
 RS_Vector RS_Arc::getNearestPointOnEntity(const RS_Vector& coord,
 		bool onEntity, double* dist, RS_Entity** entity) const{
 
+    return RS_Ellipse::getNearestPointOnEntity(coord,onEntity,dist,entity);
+    
+#ifdef NEVER
     RS_Vector vec(false);
 	if (entity) {
         *entity = const_cast<RS_Arc*>(this);
@@ -403,18 +434,21 @@ RS_Vector RS_Arc::getNearestPointOnEntity(const RS_Vector& coord,
         *dist = vec.distanceTo(coord);
 //        RS_DEBUG->print(RS_Debug::D_ERROR, "distance to (%g, %g)=%g\n", coord.x,coord.y,*dist);
     }
-
     return vec;
+#endif
 }
 
 
 
 RS_Vector RS_Arc::getNearestCenter(const RS_Vector& coord,
 								   double* dist) const{
+    return RS_Ellipse::getNearestCenter(coord,dist);
+#ifdef NEVER
 	if (dist) {
         *dist = coord.distanceTo(data.center);
     }
     return data.center;
+#endif
 }
 
 /*
@@ -428,6 +462,8 @@ RS_Vector RS_Arc::getNearestMiddle(const RS_Vector& coord,
                                    double* dist,
                                    int middlePoints
                                    )const {
+    return RS_Ellipse::getNearestMiddle(coord,dist,middlePoints);
+#ifdef NEVER
 #ifndef EMU_C99
     using std::isnormal;
 #endif
@@ -465,11 +501,15 @@ RS_Vector RS_Arc::getNearestMiddle(const RS_Vector& coord,
     }
     RS_DEBUG->print("RS_Arc::getNearestMiddle(): end\n");
     return vp;
+#endif
 }
 
 RS_Vector RS_Arc::getNearestDist(double distance,
                                  const RS_Vector& coord,
 								 double* dist) const{
+    return RS_Ellipse::getNearestDist(distance,coord,dist);
+    
+#ifdef NEVER
 
     if (data.radius<RS_TOLERANCE) {
 		if (dist)
@@ -491,6 +531,7 @@ RS_Vector RS_Arc::getNearestDist(double distance,
     ret += getCenter();
 
     return ret;
+#endif
 }
 
 
@@ -499,12 +540,12 @@ RS_Vector RS_Arc::getNearestDist(double distance,
 RS_Vector RS_Arc::getNearestDist(double distance,
 								 bool startp) const{
 
-    if (data.radius<RS_TOLERANCE) {
+    if (getRadius()<RS_TOLERANCE) {
 		return {};
     }
 
     double a;
-    double aDist = distance / data.radius;
+    double aDist = distance / getRadius();
 
     if (isReversed()) {
         if (startp) {
@@ -520,7 +561,7 @@ RS_Vector RS_Arc::getNearestDist(double distance,
         }
     }
 
-	RS_Vector p = RS_Vector::polar(data.radius, a);
+	RS_Vector p = RS_Vector::polar(getRadius(), a);
     p += data.center;
 
     return p;
@@ -805,6 +846,9 @@ void RS_Arc::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
 
 
 void RS_Arc::scale(const RS_Vector& center, const RS_Vector& factor) {
+    RS_Ellipse::scale(center,factor);
+    
+#ifdef NEVER
     // negative scaling: mirroring
     if (factor.x<0.0) {
         mirror(data.center, data.center + RS_Vector(0.0, 1.0));
@@ -820,6 +864,7 @@ void RS_Arc::scale(const RS_Vector& center, const RS_Vector& factor) {
     data.radius = fabs( data.radius );
     //todo, does this handle negative factors properly?
 	calculateBorders();
+#endif
 }
 
 
@@ -951,6 +996,9 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
 void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
                   double& patternOffset) {
 
+//    RS_Ellipse::drawVisible(painter,view,patternOffset);
+    
+//#ifdef NEVER
 	if (!( painter && view)) return;
     //visible in graphic view
     if(isVisibleInWindow(view)==false) return;
@@ -967,6 +1015,7 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
              view->getDrawingMode()==RS2::ModePreview)) {
         painter->drawArc(cp,
                          ra,
+                        getRatio()*ra,
                          getAngle1(), getAngle2(),
                          isReversed());
         return;
@@ -991,6 +1040,7 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
 	if (!pat || ra<0.5) {//avoid division by zero from small ra
 		RS_DEBUG->print("%s: Invalid line pattern or radius too small, drawing arc using solid line", __func__);
         painter->drawArc(cp, ra,
+                         getRatio()*ra,
                          getAngle1(),getAngle2(),
                          isReversed());
         return;
@@ -1013,7 +1063,8 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
 	if(pat->num<=0) { //invalid pattern
 		RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Arc::draw(): invalid line pattern\n");
 		painter->drawArc(cp,
-						 ra,
+                         ra,
+                         getRatio()*ra,
 						 getAngle1(), getAngle2(),
 						 isReversed());
 		return;
@@ -1045,18 +1096,20 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
     }
     double limit(fabs(a1-a2));
     double t2;
-
 	for(int j=0; fabs(total-a1) < limit; j=(j+1)%pat->num) {
 		t2=total+da[j];
-
+        
 		if(pat->pattern[j] > 0.0 && fabs(t2-a2) < limit) {
 			double a11=(fabs(total-a2) < limit)?total:a1;
 			double a21=(fabs(t2-a1) < limit)?t2:a2;
-			painter->drawArc(cp, ra, a11, a21, isReversed());
+			painter->drawArc(cp, ra,
+                             getRatio()*ra,
+                             a11, a21, isReversed());
 		}
 
 		total=t2;
 	}
+//#endif
 }
 
 
@@ -1103,7 +1156,11 @@ double RS_Arc::getAngleLength() const {
  * @return Length of the arc.
  */
 double RS_Arc::getLength() const {
+    return RS_Ellipse::getLength();
+    
+#ifdef NEVER
     return getAngleLength()*data.radius;
+#endif
 }
 
 
@@ -1130,6 +1187,9 @@ m0 x + m1 y + m2 =0
 **/
 LC_Quadratic RS_Arc::getQuadratic() const
 {
+    return RS_Ellipse::getQuadratic();
+    
+#ifdef NEVER
     std::vector<double> ce(6,0.);
     ce[0]=1.;
     ce[2]=1.;
@@ -1137,6 +1197,7 @@ LC_Quadratic RS_Arc::getQuadratic() const
     LC_Quadratic ret(ce);
     ret.move(data.center);
     return ret;
+#endif
 }
 
 /**
@@ -1147,6 +1208,9 @@ LC_Quadratic RS_Arc::getQuadratic() const
  */
 double RS_Arc::areaLineIntegral() const
 {
+    return RS_Ellipse::areaLineIntegral();
+    
+#ifdef NEVER
     const double& r=data.radius;
     const double& a0=data.angle1;
     const double& a1=data.angle2;
@@ -1154,6 +1218,7 @@ double RS_Arc::areaLineIntegral() const
     const double fStart=data.center.x*r*sin(a0)+r2*sin(a0+a0);
     const double fEnd=data.center.x*r*sin(a1)+r2*sin(a1+a1);
     return (isReversed()?fStart-fEnd:fEnd-fStart) + 2.*r2*getAngleLength();
+#endif
 }
 
 /**

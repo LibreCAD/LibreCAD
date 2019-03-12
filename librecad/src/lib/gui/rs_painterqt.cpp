@@ -264,6 +264,7 @@ void RS_PainterQt::drawArc(const RS_Vector& cp, double radius,
  * @param reversed true: clockwise, false: counterclockwise
  */
 void RS_PainterQt::drawArc(const RS_Vector& cp, double radius,
+                           double radiusy,
                            double a1, double a2,
                            bool reversed) {
     if(radius<=0.5) {
@@ -273,7 +274,7 @@ void RS_PainterQt::drawArc(const RS_Vector& cp, double radius,
                 drawArcMac(cp, radius, a1, a2, reversed);
 #else
         QPolygon pa;
-        createArc(pa, cp, radius, a1, a2, reversed);
+        createEllipse(pa,cp,radius,radiusy,0.0,a1,a2,reversed);
         drawPolyline(pa);
 #endif
     }
@@ -379,7 +380,9 @@ void RS_PainterQt::drawArcMac(const RS_Vector& cp, double radius,
  */
 void RS_PainterQt::drawCircle(const RS_Vector& cp, double radius)
 {
-    QPainter::drawEllipse(QPointF(cp.x, cp.y), radius, radius);
+    QPolygon pa;
+    createEllipse(pa, cp, radius, radius, 0.0, 0.0, 2*M_PI, 0);
+    drawPolyline(pa);
 }
 
 
