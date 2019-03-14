@@ -94,6 +94,14 @@ bool RS_Settings::writeEntry(const QString& key, double value) {
 }
 
 bool RS_Settings::writeEntry(const QString& key, const QVariant& value) {
+
+    // Skip writing operations if the key is found in the cache and
+    // its value is the same as the new one (it was already written).
+    QVariant ret = readEntryCache(key);
+    if (ret.isValid() && ret == value) {
+        return true;
+    }
+
 	QSettings s(companyKey, appKey);
     // RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
 
