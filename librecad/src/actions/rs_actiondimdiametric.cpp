@@ -302,17 +302,12 @@ void RS_ActionDimDiametric::updateMouseButtonHints() {
 
 
 void RS_ActionDimDiametric::showOptions() {
-    RS_ActionInterface::showOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
 
 
 void RS_ActionDimDiametric::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
-    //RS_DIALOGFACTORY->requestDimDiametricOptions(edata, false);
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

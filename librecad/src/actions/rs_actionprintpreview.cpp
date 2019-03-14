@@ -215,7 +215,6 @@ void RS_ActionPrintPreview::printWarning(const QString& s) {
 }
 
 void RS_ActionPrintPreview::showOptions() {
-    RS_ActionInterface::showOptions();
 	if (!isFinished()) {
         RS_DIALOGFACTORY->requestOptions(this, true,hasOptions);
         hasOptions=true;
@@ -225,8 +224,6 @@ void RS_ActionPrintPreview::showOptions() {
 
 
 void RS_ActionPrintPreview::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

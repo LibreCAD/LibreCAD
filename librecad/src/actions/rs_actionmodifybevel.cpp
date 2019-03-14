@@ -238,14 +238,10 @@ QStringList RS_ActionModifyBevel::getAvailableCommands() {
 }
 
 void RS_ActionModifyBevel::showOptions() {
-    RS_ActionInterface::showOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
 void RS_ActionModifyBevel::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

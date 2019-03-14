@@ -301,16 +301,12 @@ void RS_ActionDrawSpline::updateMouseButtonHints() {
 
 
 void RS_ActionDrawSpline::showOptions() {
-    RS_ActionInterface::showOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
 
 
 void RS_ActionDrawSpline::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

@@ -306,16 +306,10 @@ void RS_ActionDrawLine::updateMouseButtonHints() {
 }
 
 void RS_ActionDrawLine::showOptions() {
-	RS_DEBUG->print("RS_ActionDrawLine::showOptions");
-	RS_ActionInterface::showOptions();
-
 	RS_DIALOGFACTORY->requestOptions(this, true);
-	RS_DEBUG->print("RS_ActionDrawLine::showOptions: OK");
 }
 
 void RS_ActionDrawLine::hideOptions() {
-	RS_ActionInterface::hideOptions();
-
 	RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

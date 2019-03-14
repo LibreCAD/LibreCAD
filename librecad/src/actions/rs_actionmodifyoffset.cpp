@@ -108,13 +108,10 @@ void RS_ActionModifyOffset::updateMouseButtonHints() {
 }
 
 void RS_ActionModifyOffset::showOptions() {
-    RS_ActionInterface::showOptions();
 	RS_DIALOGFACTORY->requestModifyOffsetOptions(data->distance, true);
 }
 
 void RS_ActionModifyOffset::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
 	RS_DIALOGFACTORY->requestModifyOffsetOptions(data->distance, false);
 }
 

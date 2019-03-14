@@ -344,16 +344,12 @@ QStringList RS_ActionBlocksInsert::getAvailableCommands() {
 
 
 void RS_ActionBlocksInsert::showOptions() {
-    RS_ActionInterface::showOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
 
 
 void RS_ActionBlocksInsert::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

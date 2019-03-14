@@ -291,13 +291,11 @@ void LC_ActionDrawSplinePoints::updateMouseButtonHints()
 
 void LC_ActionDrawSplinePoints::showOptions()
 {
-	RS_ActionInterface::showOptions();
 	RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
 void LC_ActionDrawSplinePoints::hideOptions()
 {
-	RS_ActionInterface::hideOptions();
 	RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

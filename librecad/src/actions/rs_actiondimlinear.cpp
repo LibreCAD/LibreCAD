@@ -314,16 +314,12 @@ void RS_ActionDimLinear::updateMouseButtonHints() {
 
 
 void RS_ActionDimLinear::showOptions() {
-    RS_ActionInterface::showOptions();
-
 	RS_DIALOGFACTORY->requestOptions(this, true, true);
 }
 
 
 
 void RS_ActionDimLinear::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
 	RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

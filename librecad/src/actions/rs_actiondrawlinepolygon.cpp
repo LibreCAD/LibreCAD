@@ -156,14 +156,10 @@ void RS_ActionDrawLinePolygonCenCor::updateMouseButtonHints() {
 
 
 void RS_ActionDrawLinePolygonCenCor::showOptions() {
-    RS_ActionInterface::showOptions();
-
 	RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
 void RS_ActionDrawLinePolygonCenCor::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
 	RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

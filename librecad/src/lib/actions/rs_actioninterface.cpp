@@ -288,14 +288,12 @@ void RS_ActionInterface::resume() {
  * Hides the tool options. Default implementation does nothing.
  */
 void RS_ActionInterface::hideOptions() {
-    RS_Snapper::hideOptions();
 }
 
 /**
  * Shows the tool options. Default implementation does nothing.
  */
 void RS_ActionInterface::showOptions() {
-    RS_Snapper::showOptions();
 }
 
 void RS_ActionInterface::setActionType(RS2::ActionType actionType){

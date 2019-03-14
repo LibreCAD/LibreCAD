@@ -230,8 +230,6 @@ QStringList RS_ActionDrawArcTangential::getAvailableCommands() {
 
 
 void RS_ActionDrawArcTangential::showOptions() {
-    RS_ActionInterface::showOptions();
-
 	RS_DIALOGFACTORY->requestOptions(this, true);
     updateMouseButtonHints();
 }
@@ -239,8 +237,6 @@ void RS_ActionDrawArcTangential::showOptions() {
 
 
 void RS_ActionDrawArcTangential::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
 	RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

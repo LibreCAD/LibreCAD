@@ -235,16 +235,12 @@ QStringList RS_ActionDrawMText::getAvailableCommands() {
 
 
 void RS_ActionDrawMText::showOptions() {
-    RS_ActionInterface::showOptions();
-
 	RS_DIALOGFACTORY->requestOptions(this, true, true);
 }
 
 
 
 void RS_ActionDrawMText::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
 	RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

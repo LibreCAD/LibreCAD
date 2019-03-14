@@ -281,18 +281,12 @@ void RS_ActionDrawCircleTan2::commandEvent(RS_CommandEvent* e) {
 
 
 void RS_ActionDrawCircleTan2::showOptions() {
-	RS_DEBUG->print("RS_ActionDrawCircleTan2::showOptions");
-	RS_ActionInterface::showOptions();
-
 	RS_DIALOGFACTORY->requestOptions(this, true);
-	RS_DEBUG->print("RS_ActionDrawCircleTan2::showOptions: OK");
 }
 
 
 
 void RS_ActionDrawCircleTan2::hideOptions() {
-	RS_ActionInterface::hideOptions();
-
 	RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

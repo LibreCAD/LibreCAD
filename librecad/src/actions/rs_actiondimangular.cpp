@@ -220,15 +220,11 @@ QStringList RS_ActionDimAngular::getAvailableCommands()
 
 void RS_ActionDimAngular::showOptions()
 {
-    RS_ActionInterface::showOptions();
-
     RS_DIALOGFACTORY->requestOptions( this, true);
 }
 
 void RS_ActionDimAngular::hideOptions()
 {
-    RS_ActionInterface::hideOptions();
-
     RS_DIALOGFACTORY->requestOptions( this, false);
 }
 

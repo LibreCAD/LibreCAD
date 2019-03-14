@@ -297,18 +297,12 @@ void RS_ActionDimRadial::updateMouseButtonHints() {
 
 
 void RS_ActionDimRadial::showOptions() {
-    RS_ActionInterface::showOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, true);
-    //RS_DIALOGFACTORY->requestDimRadialOptions(edata, true);
 }
 
 
 
 void RS_ActionDimRadial::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
-    //RS_DIALOGFACTORY->requestDimRadialOptions(edata, false);
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

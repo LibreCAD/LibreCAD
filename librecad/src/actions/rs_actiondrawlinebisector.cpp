@@ -309,16 +309,12 @@ void RS_ActionDrawLineBisector::updateMouseButtonHints() {
 
 
 void RS_ActionDrawLineBisector::showOptions() {
-    RS_ActionInterface::showOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
 
 
 void RS_ActionDrawLineBisector::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

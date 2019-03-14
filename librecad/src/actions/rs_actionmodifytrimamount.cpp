@@ -165,16 +165,12 @@ QStringList RS_ActionModifyTrimAmount::getAvailableCommands() {
 
 
 void RS_ActionModifyTrimAmount::showOptions() {
-    RS_ActionInterface::showOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
 
 
 void RS_ActionModifyTrimAmount::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

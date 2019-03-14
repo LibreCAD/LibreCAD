@@ -349,16 +349,12 @@ void RS_ActionPolylineEquidistant::mouseReleaseEvent(QMouseEvent* e) {
 }
 
 void RS_ActionPolylineEquidistant::showOptions() {
-        RS_ActionInterface::showOptions();
-
         RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
 
 
 void RS_ActionPolylineEquidistant::hideOptions() {
-        RS_ActionInterface::hideOptions();
-
         RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

@@ -211,15 +211,11 @@ void RS_ActionDrawCircle::updateMouseButtonHints() {
 
 
 
-void RS_ActionDrawCircle::showOptions() {
-    RS_ActionInterface::showOptions();
-}
+void RS_ActionDrawCircle::showOptions() {}
 
 
 
-void RS_ActionDrawCircle::hideOptions() {
-    RS_ActionInterface::hideOptions();
-}
+void RS_ActionDrawCircle::hideOptions() {}
 
 
 

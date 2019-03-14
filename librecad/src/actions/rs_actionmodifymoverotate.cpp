@@ -204,20 +204,12 @@ QStringList RS_ActionModifyMoveRotate::getAvailableCommands() {
 
 
 void RS_ActionModifyMoveRotate::showOptions() {
-    //std::cout << "RS_ActionModifyMoveRotate::showOptions()\n";
-
-    RS_ActionInterface::showOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
 
 
 void RS_ActionModifyMoveRotate::hideOptions() {
-    //std::cout << "RS_ActionModifyMoveRotate::hideOptions()\n";
-
-    RS_ActionInterface::hideOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

@@ -158,14 +158,10 @@ void LC_ActionDrawLinePolygonCenTan::updateMouseButtonHints() {
 
 
 void LC_ActionDrawLinePolygonCenTan::showOptions() {
-    RS_ActionInterface::showOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
 void LC_ActionDrawLinePolygonCenTan::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

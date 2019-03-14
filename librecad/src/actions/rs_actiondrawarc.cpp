@@ -373,16 +373,12 @@ void RS_ActionDrawArc::updateMouseButtonHints() {
 
 
 void RS_ActionDrawArc::showOptions() {
-    RS_ActionInterface::showOptions();
-
 	RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
 
 
 void RS_ActionDrawArc::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
 	RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

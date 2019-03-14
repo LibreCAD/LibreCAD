@@ -227,16 +227,12 @@ QStringList RS_ActionLibraryInsert::getAvailableCommands() {
 
 
 void RS_ActionLibraryInsert::showOptions() {
-    RS_ActionInterface::showOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
 
 
 void RS_ActionLibraryInsert::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

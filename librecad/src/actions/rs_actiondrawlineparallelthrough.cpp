@@ -194,8 +194,6 @@ void RS_ActionDrawLineParallelThrough::updateMouseButtonHints() {
 
 
 void RS_ActionDrawLineParallelThrough::showOptions() {
-    RS_ActionInterface::showOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, true);
     updateMouseButtonHints();
 }
@@ -203,8 +201,6 @@ void RS_ActionDrawLineParallelThrough::showOptions() {
 
 
 void RS_ActionDrawLineParallelThrough::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

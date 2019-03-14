@@ -314,16 +314,12 @@ void RS_ActionDrawLineRelAngle::updateMouseButtonHints() {
 
 
 void RS_ActionDrawLineRelAngle::showOptions() {
-    RS_ActionInterface::showOptions();
-
 	RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
 
 
 void RS_ActionDrawLineRelAngle::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
 	RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

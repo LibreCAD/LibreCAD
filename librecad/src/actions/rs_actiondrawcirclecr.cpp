@@ -231,16 +231,12 @@ void RS_ActionDrawCircleCR::updateMouseButtonHints() {
 
 
 void RS_ActionDrawCircleCR::showOptions() {
-    RS_ActionInterface::showOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
 
 
 void RS_ActionDrawCircleCR::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
 

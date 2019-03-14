@@ -287,16 +287,12 @@ bool RS_ActionModifyRound::isTrimOn() const{
 }
 
 void RS_ActionModifyRound::showOptions() {
-    RS_ActionInterface::showOptions();
-
 	RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
 
 
 void RS_ActionModifyRound::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
 	RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
