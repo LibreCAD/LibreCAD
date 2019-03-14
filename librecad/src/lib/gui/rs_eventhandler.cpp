@@ -444,23 +444,6 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
         q_action->setChecked(true);
 }
 
-bool RS_EventHandler::isInstantAction(RS_ActionInterface* action) {
-    RS2::ActionType actionType = action->rtti();
-
-    switch (actionType) {
-    case RS2::ActionZoomAuto:
-    case RS2::ActionZoomIn:
-    case RS2::ActionZoomOut:
-    case RS2::ActionZoomPrevious:
-    case RS2::ActionZoomRedraw:
-        RS_DEBUG->print(RS_Debug::D_ERROR, "is instant action");
-        return true;
-    default:
-        RS_DEBUG->print(RS_Debug::D_ERROR, "is NOT instant action");
-        return false;
-    }
-}
-
 /**
  * Kills all running selection actions. Called when a selection action
  * is launched to reduce confusion.

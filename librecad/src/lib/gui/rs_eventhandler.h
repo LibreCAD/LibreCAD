@@ -87,7 +87,6 @@ public:
 	void debugActions() const;
     void setSnapMode(RS_SnapMode sm);
     void setSnapRestriction(RS2::SnapRestriction sr);
-    bool isInstantAction(RS_ActionInterface *action);
 private:
 
 	QAction* q_action{nullptr};
