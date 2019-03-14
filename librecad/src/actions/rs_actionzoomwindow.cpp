@@ -55,6 +55,7 @@ RS_ActionZoomWindow::RS_ActionZoomWindow(RS_EntityContainer& container,
 		, pPoints(new Points{})
 		, keepAspectRatio(keepAspectRatio)
 {
+    instantAction = true;
 }
 
 RS_ActionZoomWindow::~RS_ActionZoomWindow() = default;

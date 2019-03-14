@@ -57,6 +57,7 @@ RS_Snapper(container, graphicView) {
 
     this->name = name;
     status = 0;
+    instantAction = false;
     finished = false;
     //triggerOnResume = false;
 
@@ -297,7 +298,11 @@ void RS_ActionInterface::showOptions() {
 }
 
 void RS_ActionInterface::setActionType(RS2::ActionType actionType){
-	this->actionType=actionType;
+    this->actionType=actionType;
+}
+
+bool RS_ActionInterface::isInstantAction(){
+    return this->instantAction;
 }
 
 /**

@@ -47,6 +47,7 @@ RS_ActionZoomIn::RS_ActionZoomIn(RS_EntityContainer& container,
         ,axis(axis)
 		,center(pCenter?new RS_Vector{*pCenter}:new RS_Vector{})
 {
+    instantAction = true;
 }
 
 RS_ActionZoomIn::~RS_ActionZoomIn() = default;

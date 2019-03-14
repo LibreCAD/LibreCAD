@@ -39,6 +39,7 @@
 RS_ActionZoomRedraw::RS_ActionZoomRedraw(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Redraw", container, graphicView) {
+    instantAction = true;
 }
 
 void RS_ActionZoomRedraw::init(int status) {

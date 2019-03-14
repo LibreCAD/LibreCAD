@@ -85,6 +85,7 @@ public:
     virtual void hideOptions();
     virtual void showOptions();
 	virtual void setActionType(RS2::ActionType actionType);
+    virtual bool isInstantAction();
     bool checkCommand(const QString& cmd, const QString& str,
                              RS2::ActionType action=RS2::ActionNone);
         QString command(const QString& cmd);
@@ -155,6 +156,13 @@ protected:
     //static QString cmdNo;
     //static QString cmdNo2;
     RS2::ActionType actionType;
+
+    /**
+     * @brief instantAction tells if this action is of an instant type
+     * which means it does not have to be parametrized, and it gives
+     * immediate control to it's predecessor (e.g. zoom action : RS_ActionZoomIn)
+     */
+    bool instantAction;
 };
 
 

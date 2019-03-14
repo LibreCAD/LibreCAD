@@ -404,31 +404,19 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     if(hasAction()){
         predecessor = currentActions.last();
         predecessor->suspend();
-        predecessor->hideOptions();
+        if (!action->isInstantAction()) {
+            predecessor->hideOptions();
+        }
     }
     else {
         if (defaultAction) {
             predecessor = defaultAction;
             predecessor->suspend();
-            predecessor->hideOptions();
+            if (!action->isInstantAction()) {
+                predecessor->hideOptions();
+            }
         }
     }
-
-    //    // Forget about the oldest action and make space for the new action:
-    //    if (actionIndex==RS_MAXACTIONS-1) {
-    //        // delete oldest action if necessary (usually never happens):
-    //        if (currentActions[0]) {
-    //            currentActions[0]->finish();
-    //            delete currentActions[0];
-    //            currentActions[0] = NULL;
-    //        }
-    //        // Move up actionstack (optimize):
-    //        for (int i=0; i<RS_MAXACTIONS-1; ++i) {
-    //            currentActions[i] = currentActions[i+1];
-    //        }
-    //    } else if (actionIndex<RS_MAXACTIONS-1) {
-    //        actionIndex++;
-    //    }
 
     // Set current action:
     currentActions.push_back(action);
@@ -456,7 +444,22 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
         q_action->setChecked(true);
 }
 
+bool RS_EventHandler::isInstantAction(RS_ActionInterface* action) {
+    RS2::ActionType actionType = action->rtti();
 
+    switch (actionType) {
+    case RS2::ActionZoomAuto:
+    case RS2::ActionZoomIn:
+    case RS2::ActionZoomOut:
+    case RS2::ActionZoomPrevious:
+    case RS2::ActionZoomRedraw:
+        RS_DEBUG->print(RS_Debug::D_ERROR, "is instant action");
+        return true;
+    default:
+        RS_DEBUG->print(RS_Debug::D_ERROR, "is NOT instant action");
+        return false;
+    }
+}
 
 /**
  * Kills all running selection actions. Called when a selection action
@@ -622,24 +625,6 @@ void RS_EventHandler::setQAction(QAction* action)
 void RS_EventHandler::setRelativeZero(const RS_Vector& point)
 {
     relative_zero = point;
-}
-
-bool RS_EventHandler::inSelectionMode()
-{
-    switch (getCurrentAction()->rtti())
-    {
-        case RS2::ActionDefault:
-        case RS2::ActionSelectSingle:
-        case RS2::ActionSelectWindow:
-        case RS2::ActionDeselectWindow:
-        case RS2::ActionSelectContour:
-        case RS2::ActionSelectIntersected:
-        case RS2::ActionDeselectIntersected:
-        case RS2::ActionSelectLayer:
-            return true;
-        default:
-            return false;
-    }
 }
 
 // EOF

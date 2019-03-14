@@ -87,10 +87,7 @@ public:
 	void debugActions() const;
     void setSnapMode(RS_SnapMode sm);
     void setSnapRestriction(RS2::SnapRestriction sr);
-
-    //! return true if the current action is for selecting
-    bool inSelectionMode();
-
+    bool isInstantAction(RS_ActionInterface *action);
 private:
 
 	QAction* q_action{nullptr};

@@ -34,6 +34,7 @@ RS_ActionZoomScroll::RS_ActionZoomScroll(RS2::Direction direction,
 	,direction(direction)
 	,hasOffset(false)
 {
+    instantAction = true;
 }
 
 RS_ActionZoomScroll::RS_ActionZoomScroll(int offsetX, int offsetY,
@@ -44,6 +45,7 @@ RS_ActionZoomScroll::RS_ActionZoomScroll(int offsetX, int offsetY,
 	,offsetX(offsetX)
 	,offsetY(offsetY)
 {
+    instantAction = true;
 }
 
 void RS_ActionZoomScroll::trigger() {

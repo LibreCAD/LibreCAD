@@ -36,7 +36,7 @@
 RS_ActionZoomPrevious::RS_ActionZoomPrevious(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_ActionInterface("Previous zoom", container, graphicView) {
-
+    instantAction = true;
 }
 
 
