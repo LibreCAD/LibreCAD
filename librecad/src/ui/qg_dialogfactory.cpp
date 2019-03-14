@@ -724,8 +724,8 @@ void QG_DialogFactory::requestPolylineOptions(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_PolylineOptions(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -778,8 +778,8 @@ void QG_DialogFactory::requestLineParallelOptions(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_LineParallelOptions(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -805,8 +805,8 @@ void QG_DialogFactory::requestLineParallelThroughOptions(
             if (!toolWidget) {
                 toolWidget = new QG_LineParallelThroughOptions(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -854,8 +854,8 @@ void QG_DialogFactory::requestLineRelAngleOptions(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_LineRelAngleOptions(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -880,8 +880,8 @@ void QG_DialogFactory::requestLineBisectorOptions(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_LineBisectorOptions(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -906,8 +906,8 @@ void QG_DialogFactory::requestLinePolygonOptions(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_LinePolygonOptions(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -932,8 +932,8 @@ void QG_DialogFactory::requestLinePolygon2Options(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_LinePolygon2Options(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -958,8 +958,8 @@ void QG_DialogFactory::requestArcOptions(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_ArcOptions(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -989,8 +989,8 @@ void QG_DialogFactory::requestArcTangentialOptions(RS_ActionInterface* action,
 			if (!toolWidget) {
 				toolWidget = new QG_ArcTangentialOptions(optionWidget);
 				optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, useUpdate);
 			}
-			toolWidget->setAction(action, useUpdate);
 			toolWidget->show();
         }
 		arcTangentialOptions=toolWidget;
@@ -1020,8 +1020,8 @@ void QG_DialogFactory::requestCircleOptions(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_CircleOptions(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -1044,8 +1044,8 @@ void QG_DialogFactory::requestCircleTan2Options(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_CircleTan2Options(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -1069,8 +1069,8 @@ void QG_DialogFactory::requestSplineOptions(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_SplineOptions(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -1095,8 +1095,8 @@ void QG_DialogFactory::requestMTextOptions(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_MTextOptions(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -1120,8 +1120,8 @@ void QG_DialogFactory::requestTextOptions(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_TextOptions(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -1145,8 +1145,8 @@ void QG_DialogFactory::requestInsertOptions(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_InsertOptions(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -1171,8 +1171,8 @@ void QG_DialogFactory::requestImageOptions(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_ImageOptions(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -1197,8 +1197,8 @@ void QG_DialogFactory::requestDimensionOptions(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_DimOptions(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -1222,8 +1222,8 @@ void QG_DialogFactory::requestDimLinearOptions(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_DimLinearOptions(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -1298,8 +1298,8 @@ void QG_DialogFactory::requestMoveRotateOptions(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_MoveRotateOptions(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -1324,8 +1324,8 @@ void QG_DialogFactory::requestTrimAmountOptions(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_TrimAmountOptions(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -1350,8 +1350,8 @@ void QG_DialogFactory::requestBevelOptions(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_BevelOptions(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -1376,8 +1376,8 @@ void QG_DialogFactory::requestRoundOptions(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_RoundOptions(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
@@ -1427,8 +1427,8 @@ void QG_DialogFactory::requestLibraryInsertOptions(RS_ActionInterface* action,
             if (!toolWidget) {
                 toolWidget = new QG_LibraryInsertOptions(optionWidget);
                 optionWidget->addWidget(toolWidget);
+                toolWidget->setAction(action, update);
             }
-            toolWidget->setAction(action, update);
             toolWidget->show();
         } else {
             if (toolWidget) {
