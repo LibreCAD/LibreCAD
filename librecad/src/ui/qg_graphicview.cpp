@@ -49,6 +49,7 @@
 #include "qg_scrollbar.h"
 #include "rs_modification.h"
 #include "rs_debug.h"
+#include "rs_graphic.h"
 
 #ifdef Q_OS_WIN32
 #define CURSOR_SIZE 16
@@ -881,18 +882,45 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
 
 	if(!toActivated) return;
     RS_EntityContainer *container = this->getContainer();
+    RS_Graphic* graphic = this->getGraphic();
+    QList<RS_Entity*> clones;
 
-	//allow undo cycle for layer change of selected
-	RS_AttributesData data;
-	data.pen = RS_Pen();
-	data.layer = layer->getName();
-	data.changeColor = false;
-	data.changeLineType = false;
-	data.changeWidth = false;
-	data.changeLayer = true;
-	RS_Modification m(*container, this);
-	m.changeAttributes(data);
+    if (graphic) {
+        graphic->startUndoCycle();
+    }
 
+    for (auto en: *container) {
+        if (!en) continue;
+        if (!en->isSelected()) continue;
+
+        RS_Entity* cl = en->clone();
+        cl->setLayer(layer);
+        this->deleteEntity(en);
+        en->setSelected(false);
+        cl->setSelected(false);
+        clones << cl;
+
+        if (!graphic) continue;
+
+        en->setUndoState(true);
+        graphic->addUndoable(en);
+    }
+
+    for (auto cl: clones) {
+        container->addEntity(cl);
+        this->drawEntity(cl);
+
+        if (!graphic) continue;
+
+        graphic->addUndoable(cl);
+    }
+
+    if (graphic) {
+        graphic->endUndoCycle();
+        graphic->updateInserts();
+    }
+
+    container->calculateBorders();
     container->setSelected(false);
     redraw(RS2::RedrawDrawing);
 }
