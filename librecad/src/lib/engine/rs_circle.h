@@ -41,7 +41,6 @@ struct RS_CircleData {
 	RS_CircleData(RS_Vector const& center, double radius);
 	bool isValid() const;
 	bool operator == (RS_CircleData const&) const;
-    
 	RS_Vector center;
 	double radius;
 };
@@ -53,6 +52,10 @@ std::ostream& operator << (std::ostream& os, const RS_CircleData& ad);
  *
  * @author Andrew Mustun
  */
+/*
+ * Define Circle in terms of the more general Ellipse to
+ * facilitate OCS to WCS transformation
+*/
 class RS_Circle : public RS_Ellipse {
 public:
 	RS_Circle()=default;
@@ -183,7 +186,6 @@ m0 x + m1 y + m2 =0
 	void calculateBorders() override;
 
 protected:
-    //RS_CircleData data;
 };
 
 #endif

@@ -57,7 +57,7 @@ public:
                          const RS_Vector& p1, const RS_Vector& p2,
                          bool reversed);
 
-    virtual void drawArc(const RS_Vector& cp, double radius, double ratio,
+    virtual void drawArc(const RS_Vector& cp, double radius1, double radius2,
                          double a1, double a2,
                          bool reversed);
     virtual void drawArcMac(const RS_Vector& cp, double radius,

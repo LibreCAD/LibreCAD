@@ -112,15 +112,9 @@ public:
 		curr.reset();
 	}
 
-    virtual void applyExtrusion() = 0;
-
 protected:
     //parses dxf pair to read entity
     bool parseCode(int code, dxfReader *reader);
-    //calculates extrusion axis (normal vector)
-    void calculateAxis(DRW_Coord extPoint);
-    //apply extrusion to @extPoint and return data in @point
-    void extrudePoint(DRW_Coord extPoint, DRW_Coord *point);
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0)=0;
     //parses dwg common start part to read entity
     bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBuf, duint32 bs=0);
@@ -152,6 +146,8 @@ public:
 	DRW::ShadowMode shadow = DRW::CastAndReceieveShadows;    /*!< shadow mode, code 284 */
 	bool haveExtrusion = false;        /*!< set to true if the entity have extrusion*/
 	std::vector<std::shared_ptr<DRW_Variant>> extData; /*!< FIFO list of extended data, codes 1000 to 1071*/
+    void calculateAxis(DRW_Coord normal);    /* calculates arbitrary axis and rotation matrix */
+    void OCSToWCS(DRW_Coord *point);    /*apply rotation transformation to point and return data in point*/
 
 protected: //only for read dwg
     duint8 haveNextLinks; //aka nolinks //B
@@ -174,6 +170,7 @@ private:
 	void init(DRW_Entity const& rhs);
 	DRW_Coord extAxisX;
     DRW_Coord extAxisY;
+    DRW_Coord extAxisZ;
 	std::shared_ptr<DRW_Variant> curr;
 };
 
@@ -192,8 +189,6 @@ public:
         extPoint.z = 1;
         thickness = 0;
     }
-
-	virtual void applyExtrusion(){}
 
 protected:
     void parseCode(int code, dxfReader *reader);
@@ -267,17 +262,12 @@ public:
         eType = DRW::CIRCLE;
     }
 
-    virtual void applyExtrusion();
-
 protected:
     void parseCode(int code, dxfReader *reader);
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
     double radious;                 /*!< radius, code 40 */
-    // ratio of radii - ==1 if no extrusion
-    double ratio;
-    DRW_Coord major;
 };
 
 //! Class to handle arc entity
@@ -293,9 +283,8 @@ public:
         isccw = 1;
     }
 
-    virtual void applyExtrusion();
 
-    //! center point in WCS
+    //! center point in OCS
     const DRW_Coord & center() { return basePoint; }
     //! the radius of the circle
     double radius() { return radious; }
@@ -336,7 +325,6 @@ public:
     }
 
     void toPolyline(DRW_Polyline *pol, int parts = 128);
-    virtual void applyExtrusion();
 
 protected:
     //! interpret code in dxf reading process or dispatch to inherited class
@@ -367,8 +355,6 @@ public:
         thirdPoint.z = 0;
         fourPoint.z = 0;
     }
-
-    virtual void applyExtrusion();
 
 protected:
     void parseCode(int code, dxfReader *reader);
@@ -437,8 +423,6 @@ public:
         invisibleflag = 0;
     }
 
-    virtual void applyExtrusion(){}
-
     //! first corner in WCS
     const DRW_Coord & firstCorner() { return basePoint; }
     //! second corner in WCS
@@ -477,8 +461,6 @@ public:
         isEnd = false;
     }
 
-    virtual void applyExtrusion(){}
-
 protected:
     void parseCode(int code, dxfReader *reader);
     virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0);
@@ -510,8 +492,6 @@ public:
         colspace = 0;
         rowspace = 0;
     }
-
-    virtual void applyExtrusion(){DRW_Point::applyExtrusion();}
 
 protected:
     void parseCode(int code, dxfReader *reader);
@@ -562,7 +542,6 @@ public:
     }
 	// TODO rule of 5
 
-    virtual void applyExtrusion();
     void addVertex (DRW_Vertex2D v) {
 		std::shared_ptr<DRW_Vertex2D> vert = std::make_shared<DRW_Vertex2D>(v);
         vertlist.push_back(vert);
@@ -627,8 +606,6 @@ public:
         alignH = HLeft;
         alignV = VBaseLine;
     }
-
-    virtual void applyExtrusion(){} //RLZ TODO
 
 protected:
     void parseCode(int code, dxfReader *reader);
@@ -798,7 +775,6 @@ public:
         tolknot = tolcontrol = tolfit = 0.0000001;
 
 	}
-    virtual void applyExtrusion(){}
 
 protected:
     void parseCode(int code, dxfReader *reader);
@@ -881,8 +857,6 @@ public:
 	void appendLoop (std::shared_ptr<DRW_HatchLoop> const& v) {
         looplist.push_back(v);
     }
-
-    virtual void applyExtrusion(){}
 
 protected:
     void parseCode(int code, dxfReader *reader);
@@ -1037,8 +1011,6 @@ public:
         //RLZ needed a def value for this: hdir = ???
     }
     virtual ~DRW_Dimension() {}
-
-    virtual void applyExtrusion(){}
 
 protected:
     void parseCode(int code, dxfReader *reader);
@@ -1322,8 +1294,6 @@ public:
         extrusionPoint.z = 1.0;
 	}
 
-    virtual void applyExtrusion(){}
-
 protected:
     void parseCode(int code, dxfReader *reader);
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
@@ -1369,8 +1339,6 @@ public:
         centerPX = 128.5;
         centerPY = 97.5;
     }
-
-    virtual void applyExtrusion(){}
 
 protected:
     void parseCode(int code, dxfReader *reader);

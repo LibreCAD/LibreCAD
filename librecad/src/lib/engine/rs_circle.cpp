@@ -88,12 +88,13 @@ RS_Entity* RS_Circle::clone() const {
 
 
 void RS_Circle::calculateBorders() {
-    RS_Ellipse::calculateBorders();
-#ifdef NEVER
-	RS_Vector r(data.radius,data.radius);
-	minV = data.center - r;
-	maxV = data.center + r;
-#endif
+    if (getRatio() != 1.0)
+        RS_Ellipse::calculateBorders();
+    else {
+        RS_Vector r(data.majorP.x,data.majorP.x);
+        minV = data.center - r;
+        maxV = data.center + r;
+    }
 }
 
 
@@ -107,11 +108,11 @@ void RS_Circle::setCenter(const RS_Vector& c) {
 }
 /** @return The radius of this arc */
 double RS_Circle::getRadius() const {
-	return RS_Ellipse::getMajorP().x;       //data.radius;
+	return data.majorP.x;
 }
 /** Sets new radius. */
 void RS_Circle::setRadius(double r) {
-	RS_Ellipse::setMajorP(RS_Vector(r,0,0));        //data.radius = r;
+	data.majorP = (RS_Vector(r,0,0));
 }
 
 /**
@@ -127,14 +128,14 @@ double RS_Circle::getAngleLength() const {
  * @return Length of the circle which is the circumference.
  */
 double RS_Circle::getLength() const {
-    return RS_Ellipse::getLength();       //2*M_PI*data.radius;
+    return 2*M_PI*data.majorP.x;
 }
 
 bool RS_Circle::isTangent(const RS_CircleData&  circleData) const{
 	const double d=circleData.center.distanceTo(data.center);
 //    DEBUG_HEADER
 	const double r0=fabs(circleData.radius);
-	const double r1=fabs(getRadius());
+	const double r1=fabs(data.majorP.x);
 //    std::cout<<fabs(d-fabs(r0-r1))<<" : "<<fabs(d-fabs(r0+r1))<<std::endl;
     if( fabs(d-fabs(r0-r1))<20.*RS_TOLERANCE ||
             fabs(d-fabs(r0+r1))<20.*RS_TOLERANCE ) return true;
@@ -150,9 +151,9 @@ bool RS_Circle::isTangent(const RS_CircleData&  circleData) const{
  */
 bool RS_Circle::createFromCR(const RS_Vector& c, double r) {
     if (fabs(r)>RS_TOLERANCE && c.valid ) {
-		data.majorP = RS_Vector(/*data.radius*/fabs(r),0,0);
+		data.majorP = RS_Vector(fabs(r),0,0);
 		data.center = c;
-        data.ratio = 1;
+        data.ratio = 1.0;
         return true;
     } else {
         RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFromCR(): "
@@ -172,9 +173,9 @@ bool RS_Circle::createFromCR(const RS_Vector& c, double r) {
 bool RS_Circle::createFrom2P(const RS_Vector& p1, const RS_Vector& p2) {
         double r=0.5*p1.distanceTo(p2);
     if (r>RS_TOLERANCE) {
-		data.majorP = RS_Vector(/*data.radius*/r,0,0);;
+		data.majorP = RS_Vector(r,0,0);
+        data.ratio = 1.0;
 		data.center = (p1+p2)*0.5;
-        data.ratio = 1;
         return true;
     } else {
 //        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom2P(): "
@@ -206,7 +207,8 @@ bool RS_Circle::createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
         }
         crossp=1./crossp;
 		data.center.set((ra2*vrb.y - rb2*vra.y)*crossp,(rb2*vra.x - ra2*vrb.x)*crossp);
-		data.majorP = RS_Vector(/*data.radius*/data.center.magnitude(),0,0);
+		data.majorP = RS_Vector(data.center.magnitude(),0,0);
+        data.ratio = 1.0;
 		data.center += p1;
         return true;
 }
@@ -229,7 +231,8 @@ bool RS_Circle::createFrom3P(const RS_VectorSolutions& sol) {
     }
     crossp=1./crossp;
 	data.center.set((ra2*vrb.y - rb2*vra.y)*crossp,(rb2*vra.x - ra2*vrb.x)*crossp);
-	data.majorP = RS_Vector(/*data.radius*/data.center.magnitude(),0,0);
+	data.majorP = RS_Vector(data.center.magnitude(),0,0);
+    data.ratio = 1.0;
 	data.center += sol.get(0);
     return true;
 }
@@ -383,7 +386,7 @@ bool RS_Circle::testTan3(const std::vector<RS_AtomicEntity*>& circles)
 //        std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //        std::cout<<"to verify Center = ( "<<data.center.x<<" , "<<data.center.y<<" ), r= "<<data.radius<<std::endl;
     for(auto const& c: circles){
-		const double r0 = fabs(getRadius());
+		const double r0 = fabs(data.majorP.x);
         const double r1 = fabs(c->getRadius());
 
         const double dist=fabs((data.center - c->getCenter()).magnitude());
@@ -498,16 +501,16 @@ std::vector<RS_Circle> RS_Circle::solveAppolloniusSingle(const std::vector<RS_Ci
 
 RS_VectorSolutions RS_Circle::getRefPoints() const
 {
-    return RS_Ellipse::getRefPoints();
-    
-#ifdef NEVER
-	RS_Vector v1(data.radius, 0.0);
-	RS_Vector v2(0.0, getRadius());
-
-	return RS_VectorSolutions ({data.center,
-						   data.center+v1, data.center+v2,
-						   data.center-v1, data.center-v2});
-#endif
+    if (data.ratio != 1.0)
+        return RS_Ellipse::getRefPoints();
+    else {
+        RS_Vector v1(data.majorP.x, 0.0);
+        RS_Vector v2(0.0, data.majorP.x);
+        
+        return RS_VectorSolutions ({data.center,
+            data.center+v1, data.center+v2,
+            data.center-v1, data.center-v2});
+    }
 }
 
 
@@ -522,35 +525,33 @@ RS_VectorSolutions RS_Circle::getRefPoints() const
  */
 RS_Vector RS_Circle::getNearestEndpoint(const RS_Vector& coord, double* dist /*= nullptr*/) const
 {
-    return RS_Ellipse::getNearestEndpoint(coord,dist);
-    
-#ifdef NEVER
-    return getNearestMiddle( coord, dist, 0);
-#endif
+    if (data.ratio != 1.0)
+        return RS_Ellipse::getNearestEndpoint(coord,dist);
+    else
+        return getNearestMiddle( coord, dist, 0);
 }
 
 
 RS_Vector RS_Circle::getNearestPointOnEntity(const RS_Vector& coord,
         bool /*onEntity*/, double* dist, RS_Entity** entity)const {
-    
-    RS_Vector vp = RS_Ellipse::getNearestPointOnEntity(coord,true,dist,NULL);
-    
-#ifdef NEVER
-	if (entity) {
-        *entity = const_cast<RS_Circle*>(this);
+    if (data.ratio != 1.0)
+        RS_Vector vp = RS_Ellipse::getNearestPointOnEntity(coord,true,dist,NULL);
+    else {
+        if (entity) {
+            *entity = const_cast<RS_Circle*>(this);
+        }
+        RS_Vector vp(coord - data.center);
+        double d(vp.magnitude());
+        if( d < RS_TOLERANCE ) return RS_Vector(false);
+        vp =data.center+vp*(data.majorP.x/d);
+        //    RS_DEBUG->print(RS_Debug::D_ERROR, "circle(%g, %g), r=%g: distance to point (%g, %g)\n",data.center.x,data.center.y,coord.x,coord.y);
+        
+        if(dist){
+            *dist=coord.distanceTo(vp);
+            //        RS_DEBUG->print(RS_Debug::D_ERROR, "circle(%g, %g), r=%g: distance to point (%g, %g)=%g\n",data.center.x,data.center.y,coord.x,coord.y,*dist);
+        }
+        return vp;
     }
-	RS_Vector vp(coord - data.center);
-    double d(vp.magnitude());
-    if( d < RS_TOLERANCE ) return RS_Vector(false);
-	vp =data.center+vp*(data.radius/d);
-//    RS_DEBUG->print(RS_Debug::D_ERROR, "circle(%g, %g), r=%g: distance to point (%g, %g)\n",data.center.x,data.center.y,coord.x,coord.y);
-
-	if(dist){
-        *dist=coord.distanceTo(vp);
-//        RS_DEBUG->print(RS_Debug::D_ERROR, "circle(%g, %g), r=%g: distance to point (%g, %g)=%g\n",data.center.x,data.center.y,coord.x,coord.y,*dist);
-    }
-#endif
-    return vp;
 }
 
 
@@ -561,68 +562,70 @@ RS_Vector RS_Circle::getNearestPointOnEntity(const RS_Vector& coord,
   *Author: Dongxu Li
   */
 RS_VectorSolutions RS_Circle::getTangentPoint(const RS_Vector& point) const {
-    return RS_Ellipse::getTangentPoint(point);
-    
-#ifdef NEVER
-    RS_VectorSolutions ret;
-    double r2(getRadius()*getRadius());
-    if(r2<RS_TOLERANCE2) return ret; //circle too small
-    RS_Vector vp(point-getCenter());
-    double c2(vp.squared());
-    if(c2<r2-getRadius()*2.*RS_TOLERANCE) {
-        //inside point, no tangential point
-        return ret;
-    }
-    if(c2>r2+getRadius()*2.*RS_TOLERANCE) {
-        //external point
-        RS_Vector vp1(-vp.y,vp.x);
-        vp1*=getRadius()*sqrt(c2-r2)/c2;
-        vp *= r2/c2;
-        vp += getCenter();
-        if(vp1.squared()>RS_TOLERANCE2) {
-            ret.push_back(vp+vp1);
-            ret.push_back(vp-vp1);
+    if (data.ratio != 1.0)
+        return RS_Ellipse::getTangentPoint(point);
+    else {
+        RS_VectorSolutions ret;
+        double r2(getRadius()*getRadius());
+        if(r2<RS_TOLERANCE2) return ret; //circle too small
+        RS_Vector vp(point-getCenter());
+        double c2(vp.squared());
+        if(c2<r2-getRadius()*2.*RS_TOLERANCE) {
+            //inside point, no tangential point
             return ret;
         }
+        if(c2>r2+getRadius()*2.*RS_TOLERANCE) {
+            //external point
+            RS_Vector vp1(-vp.y,vp.x);
+            vp1*=getRadius()*sqrt(c2-r2)/c2;
+            vp *= r2/c2;
+            vp += getCenter();
+            if(vp1.squared()>RS_TOLERANCE2) {
+                ret.push_back(vp+vp1);
+                ret.push_back(vp-vp1);
+                return ret;
+            }
+        }
+        ret.push_back(point);
+        return ret;
     }
-    ret.push_back(point);
-    return ret;
-#endif
 }
 
 
 RS_Vector RS_Circle::getTangentDirection(const RS_Vector& point) const {
-    return RS_Ellipse::getTangentDirection(point);
-#ifdef NEVER
-    RS_Vector vp(point-getCenter());
-//    double c2(vp.squared());
-//    if(c2<r2-getRadius()*2.*RS_TOLERANCE) {
-//        //inside point, no tangential point
-//        return RS_Vector(false);
-//    }
-    return RS_Vector(-vp.y,vp.x);
-#endif
+    if (data.ratio != 1.0)
+        return RS_Ellipse::getTangentDirection(point);
+    else {
+        RS_Vector vp(point-getCenter());
+        //    double c2(vp.squared());
+        //    if(c2<r2-getRadius()*2.*RS_TOLERANCE) {
+        //        //inside point, no tangential point
+        //        return RS_Vector(false);
+        //    }
+        return RS_Vector(-vp.y,vp.x);
+    }
 }
 
 RS_Vector RS_Circle::getNearestCenter(const RS_Vector& coord,
 									  double* dist) const{
-    return RS_Ellipse::getNearestCenter(coord,dist);
-#ifdef NEVER
-    if (dist) {
-		*dist = coord.distanceTo(data.center);
+    if (data.ratio)
+        return RS_Ellipse::getNearestCenter(coord,dist);
+    else {
+        if (dist) {
+            *dist = coord.distanceTo(data.center);
+        }
+        return data.center;
     }
-	return data.center;
-#endif
 }
 
 
 
 RS_Vector RS_Circle::getMiddlePoint(void)const
 {
-    return RS_Ellipse::getMiddlePoint();
-#ifdef NEVER
-    return RS_Vector(false);
-#endif
+    if (data.ratio != 1.0)
+        return RS_Ellipse::getMiddlePoint();
+    else
+        return RS_Vector(false);
 }
 
 /**
@@ -642,43 +645,43 @@ RS_Vector RS_Circle::getNearestMiddle(const RS_Vector& coord,
                                       double* dist /*= nullptr*/,
                                       const int middlePoints /*= 1*/) const
 {
-//    return RS_Ellipse::getNearestMiddle(coord,dist,middlePoints);
-    
-//#ifdef NEVER
-	if( data.majorP.x /*data.radius*/ <= RS_TOLERANCE) {
-        //circle too short
-        if ( nullptr != dist) {
-            *dist = RS_MAXDOUBLE;
+    if (data.ratio != 1.0)
+        return RS_Ellipse::getNearestMiddle(coord,dist,middlePoints);
+    else {
+        if( data.majorP.x /*data.radius*/ <= RS_TOLERANCE) {
+            //circle too short
+            if ( nullptr != dist) {
+                *dist = RS_MAXDOUBLE;
+            }
+            return RS_Vector(false);
         }
-        return RS_Vector(false);
-    }
-
-    RS_Vector vPoint( getNearestPointOnEntity( coord, true, dist));
-    int iCounts = middlePoints + 1;
-	double dAngleSteps = M_PI_2 / iCounts;
-	double dAngleToPoint = data.center.angleTo(vPoint);
-    int iStepCount = static_cast<int>((dAngleToPoint + 0.5 * dAngleSteps) / dAngleSteps);
-    if( 0 < middlePoints) {
-        // for nearest middle eliminate start/endpoints
-        int iQuadrant = static_cast<int>(dAngleToPoint / 0.5 / M_PI);
-        int iQuadrantStep = iStepCount - iQuadrant * iCounts;
-        if( 0 == iQuadrantStep) {
-            ++iStepCount;
+        
+        RS_Vector vPoint( getNearestPointOnEntity( coord, true, dist));
+        int iCounts = middlePoints + 1;
+        double dAngleSteps = M_PI_2 / iCounts;
+        double dAngleToPoint = data.center.angleTo(vPoint);
+        int iStepCount = static_cast<int>((dAngleToPoint + 0.5 * dAngleSteps) / dAngleSteps);
+        if( 0 < middlePoints) {
+            // for nearest middle eliminate start/endpoints
+            int iQuadrant = static_cast<int>(dAngleToPoint / 0.5 / M_PI);
+            int iQuadrantStep = iStepCount - iQuadrant * iCounts;
+            if( 0 == iQuadrantStep) {
+                ++iStepCount;
+            }
+            else if( iCounts == iQuadrantStep) {
+                --iStepCount;
+            }
         }
-        else if( iCounts == iQuadrantStep) {
-            --iStepCount;
+        
+        vPoint.setPolar( data.majorP.x /*data.radius*/, dAngleSteps * iStepCount);
+        vPoint.move( data.center);
+        
+        if(dist) {
+            *dist = vPoint.distanceTo( coord);
         }
+        
+        return vPoint;
     }
-
-	vPoint.setPolar( data.majorP.x /*data.radius*/, dAngleSteps * iStepCount);
-	vPoint.move( data.center);
-
-	if(dist) {
-        *dist = vPoint.distanceTo( coord);
-    }
-
-    return vPoint;
-//#endif
 }
 
 
@@ -703,21 +706,21 @@ RS_Vector RS_Circle::getNearestOrthTan(const RS_Vector& coord,
                     const RS_Line& normal,
 					bool /*onEntity = false*/) const
 {
-    return RS_Ellipse::getNearestOrthTan(coord,normal,0);
-    
-#ifdef NEVER
+    if (data.ratio != 1.0)
+        return RS_Ellipse::getNearestOrthTan(coord,normal,0);
+    else {
         if ( !coord.valid) {
-                return RS_Vector(false);
+            return RS_Vector(false);
         }
         RS_Vector vp0(coord-getCenter());
         RS_Vector vp1(normal.getAngle1());
         double d=RS_Vector::dotP(vp0,vp1);
         if(d >= 0. ) {
-                return getCenter() + vp1*getRadius();
+            return getCenter() + vp1*getRadius();
         }else{
-                return getCenter() - vp1*getRadius();
+            return getCenter() - vp1*getRadius();
         }
-#endif
+    }
 }
 
 void RS_Circle::move(const RS_Vector& offset) {
@@ -751,59 +754,58 @@ bool RS_Circle::offset(const RS_Vector& coord, const double& distance) {
 }
 
 void RS_Circle::rotate(const RS_Vector& center, const double& angle) {
-    RS_Ellipse::rotate(center,angle);
-    
-#ifdef NEVER
-	data.center.rotate(center, angle);
-    calculateBorders();
-#endif
+    if (data.ratio != 1.0)
+        RS_Ellipse::rotate(center,angle);
+    else {
+        data.center.rotate(center, angle);
+        calculateBorders();
+    }
 }
 
 void RS_Circle::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
-    RS_Ellipse::rotate(center,angleVector);
-    
-#ifdef NEVER
-	data.center.rotate(center, angleVector);
-    calculateBorders();
-#endif
+    if (data.ratio != 1.0)
+        RS_Ellipse::rotate(center,angleVector);
+    else {
+        data.center.rotate(center, angleVector);
+        calculateBorders();
+    }
 }
 
 void RS_Circle::scale(const RS_Vector& center, const RS_Vector& factor) {
-    RS_Ellipse::scale(center,factor);
-    
-#ifdef NEVER
-	data.center.scale(center, factor);
-    //radius always is positive
-	data.radius *= fabs(factor.x);
-    scaleBorders(center,factor);
-//    calculateBorders();
-#endif
+    if (data.ratio != 1.0)
+        RS_Ellipse::scale(center,factor);
+    else {
+        data.center.scale(center, factor);
+        //radius always is positive
+        data.majorP.x *= fabs(factor.x);
+        scaleBorders(center,factor);
+        //    calculateBorders();
+    }
 }
 
 double RS_Circle::getDirection1() const{
-    return RS_Ellipse::getDirection1();
-#ifdef NEVER
+    if (data.ratio != 1.0)
+        return RS_Ellipse::getDirection1();
+    else
 		return M_PI_2;
-#endif
 }
 
 double RS_Circle::getDirection2() const{
-    return RS_Ellipse::getDirection2();
-    
-#ifdef NEVER
+    if (data.ratio != 1.0)
+        return RS_Ellipse::getDirection2();
+    else
 		return M_PI_2*3.0;
-#endif
 }
 
 
 
 void RS_Circle::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
-    
-    RS_Ellipse::mirror(axisPoint1, axisPoint2);
-#ifdef NEVER
-	data.center.mirror(axisPoint1, axisPoint2);
-    calculateBorders();
-#endif
+    if (data.ratio != 1.0)
+        RS_Ellipse::mirror(axisPoint1, axisPoint2);
+    else {
+        data.center.mirror(axisPoint1, axisPoint2);
+        calculateBorders();
+    }
 }
 
 
@@ -812,24 +814,25 @@ void RS_Circle::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
 */
 bool RS_Circle::isVisibleInWindow(RS_GraphicView* view) const
 {
-    return RS_Ellipse::isVisibleInWindow(view);
-#ifdef NEVER
-    RS_Vector vpMin(view->toGraph(0,view->getHeight()));
-    RS_Vector vpMax(view->toGraph(view->getWidth(),0));
-    QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
-	std::vector<RS_Vector> vps;
-    for(unsigned short i=0;i<4;i++){
-        const QPointF& vp(visualBox.at(i));
-		vps.emplace_back(vp.x(),vp.y());
-    }
-    for(unsigned short i=0;i<4;i++){
-		RS_Line line{nullptr, {vps.at(i),vps.at((i+1)%4)}};
-		RS_Circle c0{nullptr, getData()};
-        if( RS_Information::getIntersection(&c0, &line, true).size()>0) return true;
-    }
-    if( getCenter().isInWindowOrdered(vpMin,vpMax)==false) return false;
-    return (vpMin-getCenter()).squared() > getRadius()*getRadius();
-#endif
+     if (data.ratio != 1.0)
+         return RS_Ellipse::isVisibleInWindow(view);
+     else {
+         RS_Vector vpMin(view->toGraph(0,view->getHeight()));
+         RS_Vector vpMax(view->toGraph(view->getWidth(),0));
+         QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
+         std::vector<RS_Vector> vps;
+         for(unsigned short i=0;i<4;i++){
+             const QPointF& vp(visualBox.at(i));
+             vps.emplace_back(vp.x(),vp.y());
+         }
+         for(unsigned short i=0;i<4;i++){
+             RS_Line line{nullptr, {vps.at(i),vps.at((i+1)%4)}};
+             RS_Circle c0{nullptr, getData()};
+             if( RS_Information::getIntersection(&c0, &line, true).size()>0) return true;
+         }
+         if( getCenter().isInWindowOrdered(vpMin,vpMax)==false) return false;
+         return (vpMin-getCenter()).squared() > getRadius()*getRadius();
+     }
 }
 
 
@@ -839,31 +842,35 @@ void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patter
 //    arc.setSelected(isSelected());
 //    arc.setPen(getPen());
 //    arc.draw(painter,view,patternOffset);
-
-    painter->drawCircle(view->toGui(getCenter()), view->toGuiDX(getRadius()));
+    if (data.ratio != 1.0) {
+        double offset = 0;
+        RS_Ellipse::drawVisible(painter,view,offset);
+    }
+    else
+        painter->drawCircle(view->toGui(getCenter()), view->toGuiDX(getRadius()));
 }
 
 
 void RS_Circle::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
-    RS_Ellipse::moveRef(ref,offset);
-    
-#ifdef NEVER
-	if(ref.distanceTo(data.center)<1.0e-4){
-		data.center += offset;
-        return;
+    if (data.ratio != 1.0)
+        RS_Ellipse::moveRef(ref,offset);
+    else {
+        if(ref.distanceTo(data.center)<1.0e-4){
+            data.center += offset;
+            return;
+        }
+        RS_Vector v1(data.majorP.x, 0.0);
+        RS_VectorSolutions sol;
+        sol.push_back(data.center + v1);
+        sol.push_back(data.center - v1);
+        v1.set(0., data.majorP.x);
+        sol.push_back(data.center + v1);
+        sol.push_back(data.center - v1);
+        double dist;
+        v1=sol.getClosest(ref,&dist);
+        if(dist>1.0e-4) return;
+        data.majorP.x = data.center.distanceTo(v1 + offset);
     }
-	RS_Vector v1(data.radius, 0.0);
-    RS_VectorSolutions sol;
-	sol.push_back(data.center + v1);
-	sol.push_back(data.center - v1);
-	v1.set(0., data.radius);
-	sol.push_back(data.center + v1);
-	sol.push_back(data.center - v1);
-    double dist;
-    v1=sol.getClosest(ref,&dist);
-    if(dist>1.0e-4) return;
-	data.radius = data.center.distanceTo(v1 + offset);
-#endif
 }
 
 
@@ -878,17 +885,17 @@ m0 x + m1 y + m2 =0
 **/
 LC_Quadratic RS_Circle::getQuadratic() const
 {
-    return RS_Ellipse::getQuadratic();
-    
-#ifdef NEVER
-    std::vector<double> ce(6,0.);
-    ce[0]=1.;
-    ce[2]=1.;
-	ce[5]=-data.radius*data.radius;
-    LC_Quadratic ret(ce);
-	ret.move(data.center);
-    return ret
-#endif
+    if (data.ratio != 1.0)
+        return RS_Ellipse::getQuadratic();
+    else {
+        std::vector<double> ce(6,0.);
+        ce[0]=1.;
+        ce[2]=1.;
+        ce[5]=-data.majorP.x*data.majorP.x;
+        LC_Quadratic ret(ce);
+        ret.move(data.center);
+        return ret;
+    }
 }
 
 
@@ -900,13 +907,12 @@ LC_Quadratic RS_Circle::getQuadratic() const
 */
 double RS_Circle::areaLineIntegral() const
 {
-    return RS_Ellipse::areaLineIntegral();
-    
-#ifdef NEVER
-	const double r = getRadius();
-	
-	return M_PI*r*r;
-#endif
+    if (data.ratio != 1.0)
+        return RS_Ellipse::areaLineIntegral();
+    else {
+        const double r = getRadius();
+        return M_PI*r*r;
+    }
 }
 
 

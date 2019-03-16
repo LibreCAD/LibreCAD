@@ -91,7 +91,7 @@ public:
                          double a1, double a2,
                          const RS_Vector& p1, const RS_Vector& p2,
                          bool reversed) = 0;
-    virtual void drawArc(const RS_Vector& cp, double radius, double ratio,
+    virtual void drawArc(const RS_Vector& cp, double radius1, double radius2,
                          double a1, double a2,
                          bool reversed) = 0;
     void createArc(QPolygon& pa,

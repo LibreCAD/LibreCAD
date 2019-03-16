@@ -495,7 +495,6 @@ void RS_GraphicView::zoomAuto(bool axis, bool keepAspectRatio) {
 			fy=fx;
 			break;
 		case 3:
-                RS_DEBUG->print("RS_GraphicView::zoomAuto - invalid factors sx %f sy %f\n",sx,sy);
 			return; //do not do anything, invalid factors
 		default:
 			if (keepAspectRatio) {

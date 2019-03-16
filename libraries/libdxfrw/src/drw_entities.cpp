@@ -16,49 +16,64 @@
 #include "intern/dwgbuffer.h"
 #include "intern/drw_dbg.h"
 
-//! Calculate arbitrary axis
 /*!
-*   Calculate arbitrary axis for apply extrusions
+*   Calculate arbitrary axis
+*
+*   Creates a rotation matrix to translate
+*   from OCS to WCS
+*
+*   OCSZ usually obtained from group 210,220,230 of a dxf file
+*
+*   See Autodesk Knowlegde Network article about OCS.
 *  @author Rallaz
 */
-void DRW_Entity::calculateAxis(DRW_Coord extPoint){
+/*
+ *   Given a unit-length vector to be used as the Z axis of a coordinate system,
+ *   the arbitrary axis algorithm generates a corresponding X axis for the
+ *   coordinate system. The Y axis follows by application of the right-hand rule.
+ */
+void DRW_Entity::calculateAxis(DRW_Coord OCSZ){
+    extAxisZ = OCSZ;
+    // force 0,0,0 vector to null transform as in Autocad
+    if (extAxisZ.x == 0.0 && extAxisZ.y == 0.0 && extAxisZ.z == 0.0)
+        extAxisZ.z = 1.0;
+    extAxisZ.unitize();
     //Follow the arbitrary DXF definitions for extrusion axes.
-    if (fabs(extPoint.x) < 0.015625 && fabs(extPoint.y) < 0.015625) {
+    if (fabs(extAxisZ.x) < 0.015625 && fabs(extAxisZ.y) < 0.015625) {
         //If we get here, implement Ax = Wy x N where Wy is [0,1,0] per the DXF spec.
         //The cross product works out to Wy.y*N.z-Wy.z*N.y, Wy.z*N.x-Wy.x*N.z, Wy.x*N.y-Wy.y*N.x
         //Factoring in the fixed values for Wy gives N.z,0,-N.x
-        extAxisX.x = extPoint.z;
+        extAxisX.x = extAxisZ.z;
         extAxisX.y = 0;
-        extAxisX.z = -extPoint.x;
+        extAxisX.z = -extAxisZ.x;
     } else {
         //Otherwise, implement Ax = Wz x N where Wz is [0,0,1] per the DXF spec.
         //The cross product works out to Wz.y*N.z-Wz.z*N.y, Wz.z*N.x-Wz.x*N.z, Wz.x*N.y-Wz.y*N.x
         //Factoring in the fixed values for Wz gives -N.y,N.x,0.
-        extAxisX.x = -extPoint.y;
-        extAxisX.y = extPoint.x;
+        extAxisX.x = -extAxisZ.y;
+        extAxisX.y = extAxisZ.x;
         extAxisX.z = 0;
     }
 
     extAxisX.unitize();
 
     //Ay = N x Ax
-    extAxisY.x = (extPoint.y * extAxisX.z) - (extAxisX.y * extPoint.z);
-    extAxisY.y = (extPoint.z * extAxisX.x) - (extAxisX.z * extPoint.x);
-    extAxisY.z = (extPoint.x * extAxisX.y) - (extAxisX.x * extPoint.y);
+    extAxisY.x = (extAxisZ.y * extAxisX.z) - (extAxisX.y * extAxisZ.z);
+    extAxisY.y = (extAxisZ.z * extAxisX.x) - (extAxisX.z * extAxisZ.x);
+    extAxisY.z = (extAxisZ.x * extAxisX.y) - (extAxisX.x * extAxisZ.y);
 
     extAxisY.unitize();
 }
 
-//! Extrude a point using arbitrary axis
+//! Rotate point around the arbitrary axis to transform from OCS to WCS
 /*!
-*   apply extrusion in a point using arbitrary axis (previous calculated)
 *  @author Rallaz
 */
-void DRW_Entity::extrudePoint(DRW_Coord extPoint, DRW_Coord *point){
+void DRW_Entity::OCSToWCS(DRW_Coord *point){
     double px, py, pz;
-    px = (extAxisX.x*point->x)+(extAxisY.x*point->y)+(extPoint.x*point->z);
-    py = (extAxisX.y*point->x)+(extAxisY.y*point->y)+(extPoint.y*point->z);
-    pz = (extAxisX.z*point->x)+(extAxisY.z*point->y)+(extPoint.z*point->z);
+    px = (extAxisX.x*point->x)+(extAxisY.x*point->y)+(extAxisZ.x*point->z);
+    py = (extAxisX.y*point->x)+(extAxisY.y*point->y)+(extAxisZ.y*point->z);
+    pz = (extAxisX.z*point->x)+(extAxisY.z*point->y)+(extAxisZ.z*point->z);
 
     point->x = px;
     point->y = py;
@@ -589,34 +604,6 @@ bool DRW_Ray::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
-void DRW_Circle::applyExtrusion(){
-    if (haveExtrusion) {
-        calculateAxis(extPoint);
-        
-        DRW_Coord v(radious,radious,0.0);
-        extrudePoint(extPoint, &v);
-
-        printf("Radious: %f       %f %f %f\n",radious,v.x,v.y,v.z);
-        
-        if (v.y > v.x) {
-            radious = v.y;
-            ratio = v.x/v.y;
-            if (ratio < 1e-10)
-                ratio = 1e-10;
-        }
-        else {
-            radious = v.x;                // get major axis in WCS
-            ratio = v.y/v.x;              // get ratio of minor to major axis
-        }
-        
-        printf("ratio:   %f\n",ratio);
-        
-        extrudePoint(extPoint, &basePoint);  //find the center point in WCS
-    }
-    else
-        ratio = 1.0;
-}
-
 void DRW_Circle::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 40:
@@ -651,70 +638,6 @@ bool DRW_Circle::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         return ret;
 //    RS crc;   //RS */
     return buf->isGood();
-}
-
-void DRW_Arc::applyExtrusion(){
-
-    if(haveExtrusion){
-        extPoint.unitize();
-        calculateAxis(extPoint);
-        
-        printf("extPoint       %f  %f  %f\n",extPoint.x,extPoint.y,extPoint.z);
-        
-        printf("input angles:  %f  %f  %f\n",staangle,endangle,radious);
-        DRW_Coord v(cos(staangle),sin(staangle),0.0);
-        extrudePoint(extPoint, &v);
-        staangle = atan2(v.y,v.x);       // get start angle in WCS
-        printf("staangle  %f    %f %f %f\n",staangle,v.x,v.y,v.z);
-
-        v = DRW_Coord(cos(endangle),sin(endangle),0);
-        extrudePoint(extPoint, &v);
-        endangle = atan2(v.y,v.x);       // get endangle in WCS
-        printf("endangle  %f    %f %f %f\n",endangle,v.x,v.y,v.z);
-        
-        v = DRW_Coord(radious,0,0);
-        extrudePoint(extPoint,&v);
-        double temp1 = v.x;
-        v = DRW_Coord(0,radious,0);
-        extrudePoint(extPoint,&v);
-        double temp2 = v.y;
-        printf("major x,y    %f  %f\n",temp1,temp2);
-        
-        v = DRW_Coord(0,radious,0);
-        extrudePoint(extPoint, &v);
-        double minor = hypot(hypot(v.x, v.y), 0.0);   // minor radius
-        
-        if (minor < 1e-10)
-            minor = 1e-10;
-        printf("radius1     %f    %f %f %f\n",minor,v.x,v.y,v.z);
-        
-        v = DRW_Coord(radious,0,0);
-        extrudePoint(extPoint, &v);
-        double majr = hypot(hypot(v.x, v.y), 0.0);   // major radius
-        if (majr < 1e-10)
-            majr = 1e-10;
-        
-        
-        printf("radius2   %f    %f %f %f\n",majr,v.x,v.y,v.z);
-        
-        major = DRW_Coord(temp1,temp2,0);
-        //extrudePoint(extPoint, &major);
-        printf("major         %f,%f,%f\n",major.x,major.y,major.z);
-        
-        radious = majr;
-        ratio = minor/majr;
-        // convert angle to parm
-        //staangle = atan2(sin(staangle), ratio * cos(staangle));
-        //endangle = atan2(sin(endangle), ratio * cos(endangle));
-        //printf("staangle: %f    %f \n",staangle,endangle);
-        printf("new radius %f  %f ratio %f\n",radious,minor,ratio);
-        
-        extrudePoint(extPoint, &basePoint);  //find the center point in WCS
-        
-        printf("center     %f %f %f\n",basePoint.x,basePoint.y,basePoint.z);
-    }
-    else
-        ratio = 1;
 }
 
 void DRW_Arc::parseCode(int code, dxfReader *reader){
@@ -772,18 +695,6 @@ void DRW_Ellipse::parseCode(int code, dxfReader *reader){
     default:
         DRW_Line::parseCode(code, reader);
         break;
-    }
-}
-
-void DRW_Ellipse::applyExtrusion(){
-    if (haveExtrusion) {
-        calculateAxis(extPoint);
-        extrudePoint(extPoint, &secPoint);
-        double intialparam = staparam;
-        if (extPoint.z < 0.){
-            staparam = M_PIx2 - endparam;
-            endparam = M_PIx2 - intialparam;
-        }
     }
 }
 
@@ -872,16 +783,6 @@ void DRW_Ellipse::toPolyline(DRW_Polyline *pol, int parts){
     pol->color = this->color;
     pol->lWeight = this->lWeight;
     pol->extPoint = this->extPoint;
-}
-
-void DRW_Trace::applyExtrusion(){
-    if (haveExtrusion) {
-        calculateAxis(extPoint);
-        extrudePoint(extPoint, &basePoint);
-        extrudePoint(extPoint, &secPoint);
-        extrudePoint(extPoint, &thirdPoint);
-        extrudePoint(extPoint, &fourPoint);
-    }
 }
 
 void DRW_Trace::parseCode(int code, dxfReader *reader){
@@ -1176,19 +1077,6 @@ bool DRW_Insert::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         return ret;
 //    RS crc;   //RS */
     return buf->isGood();
-}
-
-void DRW_LWPolyline::applyExtrusion(){
-    if (haveExtrusion) {
-        calculateAxis(extPoint);
-        for (unsigned int i=0; i<vertlist.size(); i++) {
-			auto& vert = vertlist.at(i);
-            DRW_Coord v(vert->x, vert->y, elevation);
-            extrudePoint(extPoint, &v);
-            vert->x = v.x;
-            vert->y = v.y;
-        }
-    }
 }
 
 void DRW_LWPolyline::parseCode(int code, dxfReader *reader){

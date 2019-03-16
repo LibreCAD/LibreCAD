@@ -514,6 +514,7 @@ RS_Vector RS_Snapper::restrictVertical(const RS_Vector& coord) {
 RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos,
                                    RS2::ResolveLevel level) {
 
+    RS_DEBUG->print("RS_Snapper::catchEntity");
 
         // set default distance for points inside solids
     double dist (0.);
@@ -528,10 +529,13 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos,
 
 	if (entity && dist<=getSnapRange()) {
         // highlight:
+        RS_DEBUG->print("RS_Snapper::catchEntity: found: %d", idx);
         return entity;
     } else {
+        RS_DEBUG->print("RS_Snapper::catchEntity: not found");
 		return nullptr;
     }
+    RS_DEBUG->print("RS_Snapper::catchEntity: OK");
 }
 
 

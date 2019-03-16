@@ -2229,8 +2229,6 @@ bool dxfRW::processEllipse() {
         case 0: {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
-            if (applyExt)
-                ellipse.applyExtrusion();
             iface->addEllipse(ellipse);
             return true;  //found new entity or ENDSEC, terminate
         }
@@ -2252,8 +2250,6 @@ bool dxfRW::processTrace() {
         case 0: {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
-            if (applyExt)
-                trace.applyExtrusion();
             iface->addTrace(trace);
             return true;  //found new entity or ENDSEC, terminate
         }
@@ -2275,8 +2271,6 @@ bool dxfRW::processSolid() {
         case 0: {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
-            if (applyExt)
-                solid.applyExtrusion();
             iface->addSolid(solid);
             return true;  //found new entity or ENDSEC, terminate
         }
@@ -2424,8 +2418,6 @@ bool dxfRW::processCircle() {
         case 0: {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
-            if (applyExt)
-                circle.applyExtrusion();
             iface->addCircle(circle);
             return true;  //found new entity or ENDSEC, terminate
         }
@@ -2447,8 +2439,6 @@ bool dxfRW::processArc() {
         case 0: {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
-            if (applyExt)
-                arc.applyExtrusion();
             iface->addArc(arc);
             return true;  //found new entity or ENDSEC, terminate
         }
@@ -2491,8 +2481,6 @@ bool dxfRW::processLWPolyline() {
         case 0: {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
-            if (applyExt)
-                pl.applyExtrusion();
             iface->addLWPolyline(pl);
             return true;  //found new entity or ENDSEC, terminate
         }

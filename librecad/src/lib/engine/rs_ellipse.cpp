@@ -152,7 +152,10 @@ std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed) {
 }
 
 
-                                   
+/*
+ *  Include these two copies of circle functions to avoid
+ *  recursive calls back to the ellipse object
+*/
  RS_VectorSolutions getCircletTangentPoint (const RS_Circle& c, const RS_Vector& point)
 {
     RS_VectorSolutions ret;
@@ -330,11 +333,7 @@ RS_VectorSolutions RS_Ellipse::getTangentPoint(const RS_Vector& point) const {
     if(a<RS_TOLERANCE || getRatio()<RS_TOLERANCE) return sol;
 	RS_Circle c(nullptr, RS_CircleData(RS_Vector(0.,0.),a));
     point2.y /=getRatio();
-    
-    sol=getCircletTangentPoint (c,point2);
-#ifdef NEVER
-    //sol=c.getTangentPoint(point2);
-#endif
+    sol=c.getTangentPoint(point2);
     sol.scale(RS_Vector(1.,getRatio()));
     aV.y *= -1.;
     sol.rotate(aV);
@@ -350,11 +349,7 @@ RS_Vector RS_Ellipse::getTangentDirection(const RS_Vector& point) const {
     double a=getMajorRadius();
     if(a<RS_TOLERANCE || getRatio()<RS_TOLERANCE) return RS_Vector(false);
 	RS_Circle c(nullptr, RS_CircleData(RS_Vector(0.,0.),a));
-    
-    RS_Vector direction = getCircleTangentDirection(c,vp);
-#ifdef NEVER
-    //RS_Vector direction=c.getTangentDirection(vp);
-#endif
+    RS_Vector direction=c.getTangentDirection(vp);
     direction.y *= getRatio();
     aV.y *= -1.;
     direction.rotate(aV);
@@ -599,7 +594,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     if( ! ret.valid ) {
         //this should not happen
 //        std::cout<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<' '<<ce[3]<<std::endl;
-//        std::cout<<"(x,y)=( "<<x<<" , "<<y<<" ) a= "<<a<<" b= "<<b<<" dist= "<<d<<std::endl;
+//        std::cout<<"(x,y)=( "<<x<<" , "<<y<<" ) a= "<<a<<" b= "<<b<<" sine= "<<s<<" d2= "<<d2<<" dist= "<<d<<std::endl;
 //        std::cout<<"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n";
         RS_DEBUG->print(RS_Debug::D_ERROR,"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n");
     }
@@ -1830,7 +1825,7 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
     double ra(getMajorRadius()*view->getFactor().x);
     double rb(getRatio()*ra);
 	if(std::min(ra, rb) < RS_TOLERANCE) {//ellipse too small
-        painter->drawLine(view->toGui(minV),view->toGui(maxV));
+        painter->drawLine(RS_Vector (view->toGui(minV).x,view->toGui(maxV).y,0),RS_Vector (view->toGui(maxV).x,view->toGui(minV).y,0));
         return;
     }
     double mAngle=getAngle();

@@ -28,7 +28,6 @@
 #define RS_ARC_H
 
 #include "rs_ellipse.h"
-
 class LC_Quadratic;
 
 
@@ -63,6 +62,10 @@ std::ostream& operator << (std::ostream& os, const RS_ArcData& ad);
  *
  * @author Andrew Mustun
  */
+/*
+ * Define Arc in terms of the more general Ellipse to
+ * facilitate OCS to WCS transformation
+ */
 class RS_Arc : public RS_Ellipse {
 public:
 	RS_Arc()=default;
@@ -83,12 +86,14 @@ public:
 
     /** @return Copy of data that defines the arc. **/
 	RS_ArcData getData() const {
+
         RS_ArcData data;
         data.center = RS_Ellipse::getCenter();
         data.radius = RS_Ellipse::getMajorP().x;
         data.angle1 = RS_Ellipse::getAngle1();
         data.angle2 = RS_Ellipse::getAngle2();
         data.reversed = RS_Ellipse::isReversed();
+
         return data;
     }
 
@@ -96,6 +101,7 @@ public:
 
     /** Sets new arc parameters. **/
     void setData(RS_ArcData d) {
+
         RS_Ellipse::setCenter(d.center);
         RS_Ellipse::setMajorP(RS_Vector(d.radius,d.radius,0.0));
         RS_Ellipse::setAngle1(d.angle1);
@@ -116,32 +122,31 @@ public:
 
     /** @return The radius of this arc */
 	double getRadius() const override {
-        return RS_Ellipse::getMajorP().x;  //data.radius;
+        return RS_Ellipse::getMajorP().x;
     }
     /** Sets new radius. */
     void setRadius(double r) {
-        RS_Ellipse::setMajorP(RS_Vector(r,r,0.0));   //data.radius = r;
+        RS_Ellipse::setMajorP(RS_Vector(r,r,0.0));
     }
 
     /** @return The start angle of this arc */
 	double getAngle1() const {
-        return RS_Ellipse::getAngle1();   //data.angle1;
+        return RS_Ellipse::getAngle1();
     }
     /** Sets new start angle. */
     void setAngle1(double a1) {
-        RS_Ellipse::setAngle1(a1);        //data.angle1 = a1;
+        RS_Ellipse::setAngle1(a1);
     }
     /** @return The end angle of this arc */
     double getAngle2() const {
-        return RS_Ellipse::getAngle2();    //data.angle2;
+        return RS_Ellipse::getAngle2();
     }
     /** Sets new end angle. */
     void setAngle2(double a2) {
-        RS_Ellipse::setAngle2(a2);       //data.angle2 = a2;
+        RS_Ellipse::setAngle2(a2);
     }
     /** get angle relative arc center*/
     double getArcAngle(const RS_Vector& vp) {
-        //return (vp - data.center).angle();
         return (vp - RS_Ellipse::getCenter()).angle();
     }
     /**
@@ -160,11 +165,11 @@ public:
      * @retval false otherwise
      */
 	bool isReversed() const {
-        return RS_Ellipse::isReversed();    //data.reversed;
+        return RS_Ellipse::isReversed();
     }
     /** sets the reversed status. */
     void setReversed(bool r) {
-        RS_Ellipse::setReversed(r);        //data.reversed = r;
+        RS_Ellipse::setReversed(r);
     }
 
     /** @return Start point of the entity. */
@@ -263,9 +268,6 @@ m0 x + m1 y + m2 =0
      * \oint x dy = c_x r \sin t + \frac{1}{4}r^2\sin 2t +  \frac{1}{2}r^2 t
      */
 	virtual double areaLineIntegral() const override;
-
-protected:
-    //RS_ArcData data;
 };
 
 #endif

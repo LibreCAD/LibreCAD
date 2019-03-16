@@ -442,8 +442,28 @@ void RS_FilterDXFRW::addCircle(const DRW_Circle& data) {
 
 	RS_Vector v{data.basePoint.x, data.basePoint.y};
 	RS_Circle* entity = new RS_Circle(currentContainer, {v, data.radious});
+    if (data.haveExtrusion) {
+        DRW_Circle tmp = data;
+        tmp.calculateAxis(tmp.extPoint);
+        DRW_Coord majorP = DRW_Coord(data.radious,0,0);
+        tmp.OCSToWCS(&majorP);              // major point
+        double majr = hypot(majorP.x,majorP.y);   // major radius
+        if (majr < 1e-10)
+            majr = 1e-10;
+        DRW_Coord v1(0,data.radious,0);
+        tmp.OCSToWCS(&v1);
+        double minor = hypot(v1.x, v1.y);         // minor radius
+        if (minor < 1e-10)
+            minor = 1e-10;
+        tmp.OCSToWCS(&tmp.basePoint);          // basePoint
+        entity->setCenter(RS_Vector (tmp.basePoint.x, tmp.basePoint.y));
+        entity->setRadius(majr);
+        entity->setRatio(minor/majr);
+        entity->setMajorP(RS_Vector(majorP.x,majorP.y,0.0));
+    }
+    else
+        entity->setRatio(1.0);
     setEntityAttributes(entity, &data);
-    entity->setRatio(data.ratio);
 
     currentContainer->addEntity(entity);
 }
@@ -459,14 +479,32 @@ void RS_FilterDXFRW::addCircle(const DRW_Circle& data) {
 void RS_FilterDXFRW::addArc(const DRW_Arc& data) {
     RS_DEBUG->print("RS_FilterDXF::addArc");
     RS_Vector v(data.basePoint.x, data.basePoint.y);
-    
-    printf("RS_FilterDXFRW::addArc  %f %f    ",data.staangle,data.endangle);
-    RS_ArcData d(v, data.radious,data.staangle, data.endangle,false);
+    RS_ArcData d(v, data.radious,
+                 data.staangle,
+                 data.endangle,
+                 false);
     RS_Arc* entity = new RS_Arc(currentContainer, d);
-    entity->setRatio(data.ratio);
-    entity->setMajorP(RS_Vector(data.major.x,data.major.y,data.major.z));
-    
-    printf("  %f %f    %f %f\n",d.angle1,d.angle2,entity->getAngle1(),entity->getAngle2());
+    if (data.haveExtrusion) {
+        DRW_Arc tmp = data;
+        tmp.calculateAxis(tmp.extPoint);
+        DRW_Coord majorP = DRW_Coord(data.radious,0,0);
+        tmp.OCSToWCS(&majorP);              // major point
+        double majr = hypot(majorP.x,majorP.y);   // major radius
+        if (majr < 1e-10)
+            majr = 1e-10;
+        DRW_Coord v1(0,data.radious,0);
+        tmp.OCSToWCS(&v1);
+        double minor = hypot(v1.x, v1.y);         // minor radius
+        if (minor < 1e-10)
+            minor = 1e-10;
+        tmp.OCSToWCS(&tmp.basePoint);          // basePoint
+        entity->setCenter(RS_Vector (tmp.basePoint.x, tmp.basePoint.y));
+        entity->setRadius(majr);
+        entity->setRatio(minor/majr);
+        entity->setMajorP(RS_Vector(majorP.x,majorP.y,0.0));
+    }
+    else
+        entity->setRatio(1.0);
     setEntityAttributes(entity, &data);
 
     currentContainer->addEntity(entity);
@@ -830,7 +868,7 @@ RS_DimensionData RS_FilterDXFRW::convDimensionData(const  DRW_Dimension* data) {
 
     // middlepoint of text can be 0/0 which is considered to be invalid (!):
     //  0/0 because older QCad versions save the middle of the text as 0/0
-    //  although they didn't support saving of the middle of the text.
+    //  althought they didn't suport saving of the middle of the text.
     if (fabs(crd.x)<1.0e-6 && fabs(crd.y)<1.0e-6) {
         midP = RS_Vector(false);
     }
@@ -1467,7 +1505,7 @@ void RS_FilterDXFRW::prepareBlocks() {
  * Writes block records (just the name, not the entities in it).
  */
 void RS_FilterDXFRW::writeBlockRecords(){
-    //first prepare and send unnamed blocks, the while loop can be omitted for R12
+    //first prepare and send unnamed blocks, the while loop can be ommited for R12
     prepareBlocks();
     QHash<RS_Entity*, QString>::const_iterator it = noNameBlock.constBegin();
     while (it != noNameBlock.constEnd()) {
