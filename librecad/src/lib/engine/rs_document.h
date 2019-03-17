@@ -71,7 +71,7 @@ public:
      * from RS_Undo.
      */
     virtual void removeUndoable(RS_Undoable* u) {
-        if (u && u->undoRtti()==RS2::UndoableEntity) {
+        if (u && u->undoRtti()==RS2::UndoableEntity && u->isUndone()) {
 			removeEntity(static_cast<RS_Entity*>(u));
         }
     }
