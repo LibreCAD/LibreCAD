@@ -1126,6 +1126,16 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QCheckBox" name="cbInvertZoomDirection">
+            <property name="toolTip">
+             <string>Inverts zoom direction when using mouse wheel.</string>
+            </property>
+            <property name="text">
+             <string>Invert zoom direction</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>

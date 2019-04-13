@@ -504,8 +504,12 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         {
             if (e->modifiers()==Qt::ControlModifier)
             {
+                RS_SETTINGS->beginGroup("/Defaults");
+                bool invZoom = (RS_SETTINGS->readNumEntry("/InvertZoomDirection", 0) == 1);
+                RS_SETTINGS->endGroup();
+
                 // Hold ctrl to zoom. 1 % per pixel
-                double v = -numPixels.y() / 100.;
+                double v = (invZoom) ? (numPixels.y() / 100.) : (-numPixels.y() / 100.);
                 RS2::ZoomDirection direction;
                 double factor;
 
@@ -617,7 +621,11 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
 		RS_Vector mainViewCenter = toGraph(getWidth()/2, getHeight()/2);
 
-		if (e->delta()>0) {
+		RS_SETTINGS->beginGroup("/Defaults");
+		bool invZoom = (RS_SETTINGS->readNumEntry("/InvertZoomDirection", 0) == 1);
+		RS_SETTINGS->endGroup();
+
+		if ((e->delta()>0 && !invZoom) || (e->delta()<0 && invZoom)) {
 			const double zoomInOvershoot=1.20;
 
 			RS_Vector effect{mouse};
