@@ -1758,6 +1758,8 @@ bool dxfRW::writeObjects() {
        imageDef.pop_back();
     }
 
+    iface->writeObjects();
+
     return true;
 }
 
@@ -2754,6 +2756,8 @@ bool dxfRW::processObjects() {
             return true;  //found ENDSEC terminate
         } else if (nextentity == "IMAGEDEF") {
             processImageDef();
+        } else if (nextentity == "PLOTSETTINGS") {
+            processPlotSettings();
         } else {
             if (reader->readRec(&code)){
                 if (code == 0)
@@ -2784,6 +2788,37 @@ bool dxfRW::processImageDef() {
             break;
         }
     }
+    return true;
+}
+
+bool dxfRW::processPlotSettings() {
+    DRW_DBG("dxfRW::processPlotSettings");
+    int code;
+    DRW_PlotSettings ps;
+    while (reader->readRec(&code)) {
+        DRW_DBG(code); DRW_DBG("\n");
+        switch (code) {
+        case 0: {
+            nextentity = reader->getString();
+            DRW_DBG(nextentity); DRW_DBG("\n");
+            iface->addPlotSettings(&ps);
+            return true;  //found new entity or ENDSEC, terminate
+        }
+        default:
+            ps.parseCode(code, reader);
+            break;
+        }
+    }
+    return true;
+}
+
+bool dxfRW::writePlotSettings(DRW_PlotSettings *ent) {
+    writer->writeString(0, "PLOTSETTINGS");
+    writer->writeString(5, toHexStr(++entCount) );
+    writer->writeDouble(40, ent->marginLeft);
+    writer->writeDouble(41, ent->marginBottom);
+    writer->writeDouble(42, ent->marginRight);
+    writer->writeDouble(43, ent->marginTop);
     return true;
 }
 

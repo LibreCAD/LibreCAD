@@ -70,6 +70,7 @@ public:
     bool writeLeader(DRW_Leader *ent);
     bool writeDimension(DRW_Dimension *ent);
     void setEllipseParts(int parts){elParts = parts;} /*!< set parts munber when convert ellipse to polyline */
+    bool writePlotSettings(DRW_PlotSettings *ent);
 
 private:
     /// used by read() to parse the content of the file
@@ -111,6 +112,7 @@ private:
     bool processImageDef();
     bool processDimension();
     bool processLeader();
+    bool processPlotSettings();
 
 //    bool writeHeader();
     bool writeEntity(DRW_Entity *ent);

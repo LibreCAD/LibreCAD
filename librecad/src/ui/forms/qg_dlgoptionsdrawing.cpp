@@ -49,6 +49,7 @@ int current_tab = 0;
 QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent, bool modal, Qt::WindowFlags fl)
     : QDialog(parent, fl)
 	,graphic{nullptr}
+    ,paperScene{new QGraphicsScene()}
 	,spacing{new RS_Vector{}}
 {
     setModal(modal);
@@ -127,6 +128,10 @@ void QG_DlgOptionsDrawing::init() {
     for (int i=RS2::Custom; i<=RS2::NPageSize; i++) {
 		cbPaperFormat->addItem(RS_Units::paperFormatToString(static_cast<RS2::PaperFormat>(i)));
     }
+    // Paper preview:
+    gvPaperPreview->setScene(paperScene);
+    gvPaperPreview->setBackgroundBrush(this->palette().color(QPalette::Window));
+
     cbDimTxSty->init();
 }
 
@@ -364,6 +369,12 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
 
 	updatePaperSize();
     updateUnitLabels();
+
+    leMarginLeft->setText(QString::number(graphic->getMarginLeftInUnits()));
+    leMarginTop->setText(QString::number(graphic->getMarginTopInUnits()));
+    leMarginRight->setText(QString::number(graphic->getMarginRightInUnits()));
+    leMarginBottom->setText(QString::number(graphic->getMarginBottomInUnits()));
+    updatePaperPreview();
 }
 
 
@@ -395,7 +406,8 @@ void QG_DlgOptionsDrawing::validate() {
 
 	if (graphic) {
         // units:
-		graphic->setUnit(static_cast<RS2::Unit>(cbUnit->currentIndex()));
+        RS2::Unit unit = static_cast<RS2::Unit>(cbUnit->currentIndex());
+		graphic->setUnit(unit);
 
         graphic->addVariable("$LUNITS", cbLengthFormat->currentIndex()+1, 70);
         graphic->addVariable("$LUPREC", cbLengthPrecision->currentIndex(), 70);
@@ -414,6 +426,12 @@ void QG_DlgOptionsDrawing::validate() {
 			graphic->getPaperFormat(&landscape);
 			rbLandscape->setChecked(landscape);
         }
+
+        // Pager margins:
+        graphic->setMarginsInUnits(RS_Math::eval(leMarginLeft->text()),
+                                   RS_Math::eval(leMarginTop->text()),
+                                   RS_Math::eval(leMarginRight->text()),
+                                   RS_Math::eval(leMarginBottom->text()));
 
         // grid:
         //graphic->addVariable("$GRIDMODE", (int)cbGridOn->isChecked() , 70);
@@ -771,6 +789,50 @@ void QG_DlgOptionsDrawing::updateUnitLabels() {
     lDimUnit6->setText(sign);
     //have to update paper size when unit changes
     updatePaperSize();
+}
+
+/**
+ * Updates paper preview with specified size and margins.
+ */
+void QG_DlgOptionsDrawing::updatePaperPreview() {
+    double paperW = RS_Math::eval(lePaperWidth->text());
+    double paperH = RS_Math::eval(lePaperHeight->text());
+    /* Margins of preview are 5 px */
+    int previewW = gvPaperPreview->width() - 10;
+    int previewH = gvPaperPreview->height() - 10;
+    double scale = qMin(previewW / paperW, previewH / paperH);
+    int lMargin = qRound(RS_Math::eval(leMarginLeft->text()) * scale);
+    if (lMargin < 0.0)
+        lMargin = graphic->getMarginLeftInUnits();
+    int tMargin = qRound(RS_Math::eval(leMarginTop->text()) * scale);
+    if (tMargin < 0.0)
+        tMargin = graphic->getMarginTopInUnits();
+    int rMargin = qRound(RS_Math::eval(leMarginRight->text()) * scale);
+    if (rMargin < 0.0)
+        rMargin = graphic->getMarginRightInUnits();
+    int bMargin = qRound(RS_Math::eval(leMarginBottom->text()) * scale);
+    if (bMargin < 0.0)
+        bMargin = graphic->getMarginBottomInUnits();
+    int printAreaW = qRound(paperW*scale) - lMargin - rMargin;
+    int printAreaH = qRound(paperH*scale) - tMargin - bMargin;
+    paperScene->clear();
+    paperScene->setSceneRect(0, 0, qRound(paperW*scale), qRound(paperH*scale));
+    paperScene->addRect(0, 0, qRound(paperW*scale), qRound(paperH*scale),
+                        QPen(Qt::black), QBrush(Qt::lightGray));
+    paperScene->addRect(lMargin+1, tMargin+1, printAreaW-1, printAreaH-1,
+                        QPen(Qt::NoPen), QBrush(Qt::white));
+}
+
+
+void QG_DlgOptionsDrawing::resizeEvent(QResizeEvent* event) {
+    updatePaperPreview();
+    QDialog::resizeEvent(event);
+}
+
+
+void QG_DlgOptionsDrawing::showEvent(QShowEvent* event) {
+    updatePaperPreview();
+    QDialog::showEvent(event);
 }
 
 

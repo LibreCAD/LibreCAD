@@ -1993,6 +1993,16 @@ void RS_FilterDXFRW::writeDimstyles(){
     dxfW->writeDimstyle(&dsty);
 }
 
+void RS_FilterDXFRW::writeObjects() {
+    /* PLOTSETTINGS */
+    DRW_PlotSettings ps;
+    ps.marginLeft = graphic->getMarginLeft();
+    ps.marginTop = graphic->getMarginTop();
+    ps.marginRight = graphic->getMarginRight();
+    ps.marginBottom = graphic->getMarginBottom();
+    dxfW->writePlotSettings(&ps);
+}
+
 void RS_FilterDXFRW::writeAppId(){
     DRW_AppId ai;
     ai.name ="LibreCad";
@@ -3152,6 +3162,10 @@ void RS_FilterDXFRW::addComment(const char*) {
     RS_DEBUG->print("RS_FilterDXF::addComment(const char*) not yet implemented.");
 }
 
+void RS_FilterDXFRW::addPlotSettings(const DRW_PlotSettings *data) {
+    graphic->setMargins(data->marginLeft, data->marginTop,
+                        data->marginRight, data->marginBottom);
+}
 
 /**
  * Converts a line type name (e.g. "CONTINUOUS") into a RS2::LineType

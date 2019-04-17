@@ -47,7 +47,12 @@
 RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
         : RS_Document(parent),
         layerList(),
-blockList(true),paperScaleFixed(false)
+        blockList(true),
+        paperScaleFixed(false),
+        marginLeft(0.0),
+        marginTop(0.0),
+        marginRight(0.0),
+        marginBottom(0.0)
 {
 
     RS_SETTINGS->beginGroup("/Defaults");
@@ -982,4 +987,27 @@ int RS_Graphic::clean()
         }
     }
     return how_many;
+}
+
+/**
+ * Paper margins in graphic units
+ */
+void RS_Graphic::setMarginsInUnits(double left, double top, double right, double bottom) {
+    setMargins(
+        RS_Units::convert(left, getUnit(), RS2::Millimeter),
+        RS_Units::convert(top, getUnit(), RS2::Millimeter),
+        RS_Units::convert(right, getUnit(), RS2::Millimeter),
+        RS_Units::convert(bottom, getUnit(), RS2::Millimeter));
+}
+double RS_Graphic::getMarginLeftInUnits() {
+    return RS_Units::convert(marginLeft, RS2::Millimeter, getUnit());
+}
+double RS_Graphic::getMarginTopInUnits() {
+    return RS_Units::convert(marginTop, RS2::Millimeter, getUnit());
+}
+double RS_Graphic::getMarginRightInUnits() {
+    return RS_Units::convert(marginRight, RS2::Millimeter, getUnit());
+}
+double RS_Graphic::getMarginBottomInUnits() {
+    return RS_Units::convert(marginBottom, RS2::Millimeter, getUnit());
 }

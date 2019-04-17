@@ -122,6 +122,8 @@ public:
     virtual void add3dFace(const DRW_3Dface& data);
     virtual void addComment(const char*);
 
+    virtual void addPlotSettings(const DRW_PlotSettings* data);
+
     // Export:
     virtual bool fileExport(RS_Graphic& g, const QString& file, RS2::FormatType type);
 
@@ -134,6 +136,7 @@ public:
     virtual void writeBlockRecords();
     virtual void writeBlocks();
     virtual void writeDimstyles();
+    virtual void writeObjects();
     virtual void writeAppId();
 
     void writePoint(RS_Point* p);

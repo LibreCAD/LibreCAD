@@ -1193,6 +1193,34 @@ bool DRW_ImageDef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
 }
 
+void DRW_PlotSettings::parseCode(int code, dxfReader *reader){
+    switch (code) {
+    case 5:
+        handle = reader->getHandleString();
+        break;
+    case 40:
+        marginLeft = reader->getDouble();
+        break;
+    case 41:
+        marginBottom = reader->getDouble();
+        break;
+    case 42:
+        marginRight = reader->getDouble();
+        break;
+    case 43:
+        marginTop = reader->getDouble();
+        break;
+    default:
+        break;
+    }
+}
+
+bool DRW_PlotSettings::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    (void) version;
+    DRW_DBG("\n********************** parsing Plot Settings not yet implemented **************************\n");
+    return buf->isGood();
+}
+
 bool DRW_AppId::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     dwgBuffer sBuff = *buf;
     dwgBuffer *sBuf = buf;
