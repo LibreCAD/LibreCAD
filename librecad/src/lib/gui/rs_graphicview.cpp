@@ -1415,26 +1415,42 @@ void RS_GraphicView::drawPaper(RS_Painter *painter) {
 	RS_Vector v1 = toGui((RS_Vector(0,0)-pinsbase)/scale);
 	RS_Vector v2 = toGui((size-pinsbase)/scale);
 
+	int paperX1 = (int)v1.x;
+	int paperY1 = (int)v1.y;
+	int paperW = (int)(v2.x-v1.x);
+	int paperH = (int)(v2.y-v1.y);
+
+	int marginLeft = (int)(graphic->getMarginLeftInUnits() * factor.x / scale);
+	int marginTop = (int)(graphic->getMarginTopInUnits() * factor.y / scale);
+	int marginRight = (int)(graphic->getMarginRightInUnits() * factor.x / scale);
+	int marginBottom = (int)(graphic->getMarginBottomInUnits() * factor.y / scale);
+
 	// gray background:
 	painter->fillRect(0,0, getWidth(), getHeight(),
 					  RS_Color(200,200,200));
 
-	// shadow
+	// shadow:
 	painter->fillRect(
-				(int)(v1.x)+6, (int)(v1.y)+6,
-				(int)((v2.x-v1.x)), (int)((v2.y-v1.y)),
+				paperX1+6, paperY1+6,
+				paperW, paperH,
 				RS_Color(64,64,64));
 
 	// border:
 	painter->fillRect(
-				(int)(v1.x), (int)(v1.y),
-				(int)((v2.x-v1.x)), (int)((v2.y-v1.y)),
+				paperX1, paperY1,
+				paperW, paperH,
 				RS_Color(64,64,64));
 
-	// paper
+	// paper:
 	painter->fillRect(
-				(int)(v1.x)+1, (int)(v1.y)-1,
-				(int)((v2.x-v1.x))-2, (int)((v2.y-v1.y))+2,
+				paperX1+1, paperY1-1,
+				paperW-2, paperH+2,
+				RS_Color(180,180,180));
+
+	// print area:
+	painter->fillRect(
+				paperX1+1+marginLeft, paperY1-1-marginBottom,
+				paperW-2-marginLeft-marginRight, paperH+2+marginBottom+marginTop,
 				RS_Color(255,255,255));
 
 }
