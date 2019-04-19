@@ -24,6 +24,10 @@
 
   !define UNINSTKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
 
+  ; GPL is not an EULA, no need to agree to it.
+  !define MUI_LICENSEPAGE_BUTTON $(^NextBtn)
+  !define MUI_LICENSEPAGE_TEXT_BOTTOM "You are now aware of your rights. Click Next to continue."
+
 ;--------------------------------
 ;General
 
