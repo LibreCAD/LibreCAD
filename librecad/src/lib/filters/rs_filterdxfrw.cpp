@@ -1996,6 +1996,9 @@ void RS_FilterDXFRW::writeDimstyles(){
 void RS_FilterDXFRW::writeObjects() {
     /* PLOTSETTINGS */
     DRW_PlotSettings ps;
+    QString horizXvert = QString("%1x%2").arg(graphic->getPagesNumHoriz())
+                                         .arg(graphic->getPagesNumVert());
+    ps.plotViewName = horizXvert.toStdString();
     ps.marginLeft = graphic->getMarginLeft();
     ps.marginTop = graphic->getMarginTop();
     ps.marginRight = graphic->getMarginRight();
@@ -3163,6 +3166,7 @@ void RS_FilterDXFRW::addComment(const char*) {
 }
 
 void RS_FilterDXFRW::addPlotSettings(const DRW_PlotSettings *data) {
+    graphic->setPagesNum(QString::fromStdString(data->plotViewName));
     graphic->setMargins(data->marginLeft, data->marginTop,
                         data->marginRight, data->marginBottom);
 }

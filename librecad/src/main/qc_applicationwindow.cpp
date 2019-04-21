@@ -2123,15 +2123,30 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
 
         double scale = graphic->getPaperScale();
 
-        gv.setOffset((int)(graphic->getPaperInsertionBase().x * f),
-                     (int)(graphic->getPaperInsertionBase().y * f));
         gv.setFactor(f*scale);
 //RS_DEBUG->print(RS_Debug::D_ERROR, "PaperSize=(%d, %d)\n",printer.widthMM(), printer.heightMM());
         gv.setContainer(graphic);
+
+        double baseX = graphic->getPaperInsertionBase().x;
+        double baseY = graphic->getPaperInsertionBase().y;
+        int numX = graphic->getPagesNumHoriz();
+        int numY = graphic->getPagesNumVert();
+        RS_Vector printArea = graphic->getPrintAreaSize(false);
+
+        for (int pY = 0; pY < numY; pY++) {
+            double offsetY = printArea.y * pY;
+            for (int pX = 0; pX < numX; pX++) {
+                double offsetX = printArea.x * pX;
+                // First page is created automatically.
+                // Extra pages must be created manually.
+                if (pX > 0 || pY > 0) printer.newPage();
+                gv.setOffset((int)((baseX - offsetX) * f),
+                             (int)((baseY - offsetY) * f));
 //fixme, I don't understand the meaning of 'true' here
 //        gv.drawEntity(&painter, graphic, true);
-
-        gv.drawEntity(&painter, graphic );
+                gv.drawEntity(&painter, graphic );
+            }
+        }
 
         // GraphicView deletes painter
         painter.end();

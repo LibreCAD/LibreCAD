@@ -503,6 +503,7 @@ protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
+    UTF8STRING plotViewName;/*!< Plot view name, code 6 */
     double marginLeft;      /*!< Size, in millimeters, of unprintable margin on left side of paper, code 40 */
     double marginBottom;    /*!< Size, in millimeters, of unprintable margin on bottom side of paper, code 41 */
     double marginRight;     /*!< Size, in millimeters, of unprintable margin on right side of paper, code 42 */

@@ -1198,6 +1198,9 @@ void DRW_PlotSettings::parseCode(int code, dxfReader *reader){
     case 5:
         handle = reader->getHandleString();
         break;
+    case 6:
+        plotViewName = reader->getUtf8String();
+        break;
     case 40:
         marginLeft = reader->getDouble();
         break;

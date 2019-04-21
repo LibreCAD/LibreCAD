@@ -370,11 +370,16 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
 	updatePaperSize();
     updateUnitLabels();
 
+    // Paper margins
     leMarginLeft->setText(QString::number(graphic->getMarginLeftInUnits()));
     leMarginTop->setText(QString::number(graphic->getMarginTopInUnits()));
     leMarginRight->setText(QString::number(graphic->getMarginRightInUnits()));
     leMarginBottom->setText(QString::number(graphic->getMarginBottomInUnits()));
     updatePaperPreview();
+
+    // Number of pages
+    sbPagesNumH->setValue(graphic->getPagesNumHoriz());
+    sbPagesNumV->setValue(graphic->getPagesNumVert());
 }
 
 
@@ -432,6 +437,9 @@ void QG_DlgOptionsDrawing::validate() {
                                    RS_Math::eval(leMarginTop->text()),
                                    RS_Math::eval(leMarginRight->text()),
                                    RS_Math::eval(leMarginBottom->text()));
+        // Number of pages:
+        graphic->setPagesNum(sbPagesNumH->value(),
+                             sbPagesNumV->value());
 
         // grid:
         //graphic->addVariable("$GRIDMODE", (int)cbGridOn->isChecked() , 70);

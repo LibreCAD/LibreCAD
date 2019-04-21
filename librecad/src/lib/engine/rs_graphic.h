@@ -233,6 +233,7 @@ public:
 
     RS_Vector getPaperSize();
     void setPaperSize(const RS_Vector& s);
+    RS_Vector getPrintAreaSize(bool total=true);
 
     RS_Vector getPaperInsertionBase();
     void setPaperInsertionBase(const RS_Vector& p);
@@ -338,6 +339,18 @@ public:
     double getMarginRightInUnits();
     double getMarginBottomInUnits();
 
+    /**
+     * Number of pages drawing occupies
+     */
+    void setPagesNum(int horiz, int vert);
+    void setPagesNum(const QString &horizXvert);
+    int getPagesNumHoriz() {
+        return pagesNumH;
+    }
+    int getPagesNumVert() {
+        return pagesNumV;
+    }
+
     friend std::ostream& operator << (std::ostream& os, RS_Graphic& g);
 
     int clean();
@@ -360,6 +373,10 @@ private:
         double marginTop;
         double marginRight;
         double marginBottom;
+
+        // Number of pages drawing occupies
+        int pagesNumH;
+        int pagesNumV;
 };
 
 

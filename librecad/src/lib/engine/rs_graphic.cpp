@@ -52,7 +52,9 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
         marginLeft(0.0),
         marginTop(0.0),
         marginRight(0.0),
-        marginBottom(0.0)
+        marginBottom(0.0),
+        pagesNumH(1),
+        pagesNumV(1)
 {
 
     RS_SETTINGS->beginGroup("/Defaults");
@@ -797,6 +799,21 @@ void RS_Graphic::setPaperSize(const RS_Vector& s) {
 }
 
 
+/**
+ * @return Print Area size in graphic units.
+ */
+RS_Vector RS_Graphic::getPrintAreaSize(bool total) {
+    RS_Vector printArea = getPaperSize();
+    printArea.x -= RS_Units::convert(marginLeft+marginRight, RS2::Millimeter, getUnit());
+    printArea.y -= RS_Units::convert(marginTop+marginBottom, RS2::Millimeter, getUnit());
+    if (total) {
+        printArea.x *= pagesNumH;
+        printArea.y *= pagesNumV;
+    }
+    return printArea;
+}
+
+
 
 /**
  * @return Paper format.
@@ -861,8 +878,7 @@ void RS_Graphic::setPaperScale(double s) {
  * Centers drawing on page. Affects DXF variable $PINSBASE.
  */
 void RS_Graphic::centerToPage() {
-    RS_Vector size = getPaperSize();
-
+    RS_Vector size = getPrintAreaSize();
     double scale = getPaperScale();
 	auto s=getSize();
 	auto sMin=getMin();
@@ -877,6 +893,8 @@ void RS_Graphic::centerToPage() {
     }
 
     RS_Vector pinsbase = (size-s*scale)/2.0 - sMin*scale;
+    pinsbase.x += RS_Units::convert(marginLeft, RS2::Millimeter, getUnit());
+    pinsbase.y += RS_Units::convert(marginBottom, RS2::Millimeter, getUnit());
 
     setPaperInsertionBase(pinsbase);
 }
@@ -889,7 +907,7 @@ void RS_Graphic::centerToPage() {
 bool RS_Graphic::fitToPage() {
     bool ret(true);
     double border = RS_Units::convert(25.0, RS2::Millimeter, getUnit());
-    RS_Vector ps = getPaperSize();
+    RS_Vector ps = getPrintAreaSize();
     if(ps.x>border && ps.y>border) ps -= RS_Vector(border, border);
     RS_Vector s = getSize();
     /** avoid zero size, bug#3573158 */
@@ -903,11 +921,11 @@ bool RS_Graphic::fitToPage() {
     // tin-pot 2011-12-30: TODO: can s.x < 0.0 (==> fx < 0.0) happen?
 	if (fabs(s.x) > RS_TOLERANCE) {
         fx = ps.x / s.x;
-        ret=false;
+        // ret=false;
     }
 	if (fabs(s.y) > RS_TOLERANCE) {
         fy = ps.y / s.y;
-        ret=false;
+        // ret=false;
     }
 
     fxy = std::min(fx, fy);
@@ -927,7 +945,7 @@ bool RS_Graphic::fitToPage() {
 
 
 bool RS_Graphic::isBiggerThanPaper() {
-    RS_Vector ps = getPaperSize();
+    RS_Vector ps = getPrintAreaSize();
     RS_Vector s = getSize() * getPaperScale();
     return !s.isInWindow(RS_Vector(0.0, 0.0), ps);
 }
@@ -1010,4 +1028,22 @@ double RS_Graphic::getMarginRightInUnits() {
 }
 double RS_Graphic::getMarginBottomInUnits() {
     return RS_Units::convert(marginBottom, RS2::Millimeter, getUnit());
+}
+
+void RS_Graphic::setPagesNum(int horiz, int vert) {
+    if (horiz > 0)
+        pagesNumH = horiz;
+    if (vert > 0)
+        pagesNumV = vert;
+}
+void RS_Graphic::setPagesNum(const QString &horizXvert) {
+    if (horizXvert.contains('x')) {
+        bool ok1 = false;
+        bool ok2 = false;
+        int i = horizXvert.indexOf('x');
+        int h = (int)RS_Math::eval(horizXvert.left(i), &ok1);
+        int v = (int)RS_Math::eval(horizXvert.mid(i+1), &ok2);
+        if (ok1 && ok2)
+            setPagesNum(h, v);
+    }
 }

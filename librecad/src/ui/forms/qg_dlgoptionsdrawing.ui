@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>653</width>
-    <height>502</height>
+    <height>519</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -234,6 +234,49 @@
              </layout>
             </widget>
            </item>
+           <item>
+            <widget class="QGroupBox" name="pagesNumGroupBox">
+             <property name="title">
+              <string>Number of pages</string>
+             </property>
+             <layout class="QHBoxLayout" name="pagesNumLayout">
+              <item>
+               <widget class="QLabel" name="lPagesNumH">
+                <property name="text">
+                 <string>Horizontally:</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="sbPagesNumH">
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lPagesNumV">
+                <property name="text">
+                 <string>Vertically:</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="sbPagesNumV">
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
           </layout>
          </item>
          <item>
@@ -244,6 +287,9 @@
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
              <widget class="QGraphicsView" name="gvPaperPreview">
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
               <property name="verticalScrollBarPolicy">
                <enum>Qt::ScrollBarAlwaysOff</enum>
               </property>
@@ -1667,6 +1713,9 @@
   <tabstop>leMarginLeft</tabstop>
   <tabstop>leMarginRight</tabstop>
   <tabstop>leMarginBottom</tabstop>
+  <tabstop>sbPagesNumH</tabstop>
+  <tabstop>sbPagesNumV</tabstop>
+  <tabstop>gvPaperPreview</tabstop>
   <tabstop>cbUnit</tabstop>
   <tabstop>cbLengthFormat</tabstop>
   <tabstop>cbLengthPrecision</tabstop>
