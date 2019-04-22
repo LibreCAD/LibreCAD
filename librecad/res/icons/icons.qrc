@@ -171,6 +171,7 @@
         <file>mouse.svg</file>
         <file>fit_to_page.svg</file>
         <file>center_to_page.svg</file>
+        <file>multi_pages.svg</file>
         <file>black_n_white_mode.svg</file>
         <file>mtext_align_bottomcenter.svg</file>
         <file>mtext_align_bottomleft.svg</file>
