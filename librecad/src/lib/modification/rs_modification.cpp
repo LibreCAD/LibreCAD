@@ -171,20 +171,22 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data, RS_EntityContain
         e->setSelected(false);
         RS_Pen pen = e->getPen(false);
 
-        if (data.changeLayer==true) {
+        if (data.applyLayerBlockDeep && data.changeLayer) {
             e->setLayer(data.layer);
         }
 
-        if (data.changeColor==true) {
-            pen.setColor(data.pen.getColor());
+        if (data.applyPenBlockDeep) {
+            if (data.changeColor==true) {
+                pen.setColor(data.pen.getColor());
+            }
+            if (data.changeLineType==true) {
+                pen.setLineType(data.pen.getLineType());
+            }
+            if (data.changeWidth==true) {
+                pen.setWidth(data.pen.getWidth());
+            }
+            e->setPen(pen);
         }
-        if (data.changeLineType==true) {
-            pen.setLineType(data.pen.getLineType());
-        }
-        if (data.changeWidth==true) {
-            pen.setWidth(data.pen.getWidth());
-        }
-        e->setPen(pen);
 
         if (e->isContainer()) {
             if (e->rtti() == RS2::EntityInsert) {
@@ -223,11 +225,25 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data) {
 //        RS_Entity* e = container->entityAt(i);
         if (e && e->isSelected()) {
 
-            e->setSelected(false);
-            RS_Pen pen = e->getPen(false);
+            bool applyDeep = e->isContainer() &&
+                (data.applyPenBlockDeep || data.applyLayerBlockDeep);
+
+            // Because of Undo does not work currently for modified Block-deep
+            // entities, in order to prevent empty Undo entry, the line
+            // below is checking for 'applyDeep' and does not clone 'e' for
+            // Inserts.
+            //
+            // FIXME: After implementing Undo for modified Block-deep entities
+            //        change to:
+            // RS_Entity* clone = e->clone();
+            //
+            RS_Entity* clone = applyDeep ? e : e->clone();
+
+            clone->setSelected(false);
+            RS_Pen pen = clone->getPen(false);
 
             if (data.changeLayer==true) {
-                e->setLayer(data.layer);
+                clone->setLayer(data.layer);
             }
 
             if (data.changeColor==true) {
@@ -239,18 +255,16 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data) {
             if (data.changeWidth==true) {
                 pen.setWidth(data.pen.getWidth());
             }
-            e->setPen(pen);
+            clone->setPen(pen);
 
-            if (e->isContainer()) {
-                if (e->rtti() == RS2::EntityInsert) {
-                    RS_Block* eb = static_cast<RS_Insert*>(e)->getBlockForInsert();
+            if (applyDeep) {
+                if (clone->rtti() == RS2::EntityInsert) {
+                    RS_Block* eb = static_cast<RS_Insert*>(clone)->getBlockForInsert();
                     changeAttributes(data, (RS_EntityContainer*)eb, addList);
                 } else {
-                    changeAttributes(data, (RS_EntityContainer*)e, addList);
+                    changeAttributes(data, (RS_EntityContainer*)clone, addList);
                 }
             }
-
-            e->update();
 
             //if (data.useCurrentLayer) {
             //    ec->setLayerToActive();
@@ -261,12 +275,22 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data) {
             //if (ec->rtti()==RS2::EntityInsert) {
             //    ((RS_Insert*)ec)->update();
             //}
+
+            clone->update();
+            // FIXME: Remove check for 'applyDeep' after implementing Undo for
+            //        modified Block-deep entities.
+            if (!applyDeep) {
+                addList.push_back(clone);
+            }
         } else {
             RS_DEBUG->print(RS_Debug::D_NOTICE, "RS_Modification::changeAttributes: no valid container is selected");
         }
     }
 
     deselectOriginals(true);
+    addNewEntities(addList);
+    container->updateInserts();
+    container->calculateBorders();
 
     if (graphicView) {
         graphicView->redraw(RS2::RedrawDrawing);

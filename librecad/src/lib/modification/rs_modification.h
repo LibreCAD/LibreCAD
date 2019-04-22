@@ -181,6 +181,8 @@ public:
         bool changeColor;
         bool changeLineType;
         bool changeWidth;
+        bool applyPenBlockDeep;
+        bool applyLayerBlockDeep;
 };
 
 

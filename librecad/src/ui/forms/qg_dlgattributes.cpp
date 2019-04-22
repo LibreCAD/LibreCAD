@@ -83,5 +83,8 @@ void QG_DlgAttributes::updateData() {
     data->changeWidth = !wPen->isWidthUnchanged();
 
     data->changeLayer = !cbLayer->isUnchanged();
+
+    data->applyPenBlockDeep = cbPenBlockDeep->isChecked();
+    data->applyLayerBlockDeep = cbLayerBlockDeep->isChecked();
 }
 

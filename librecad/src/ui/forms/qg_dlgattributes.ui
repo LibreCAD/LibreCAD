@@ -63,6 +63,30 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QCheckBox" name="cbLayerBlockDeep">
+         <property name="toolTip">
+          <string>Apply Layer attribute also to all sub-entities of selected Insert.
+This recursively modifies all entities of the Block itself and
+CAN NOT be undone.</string>
+         </property>
+         <property name="text">
+          <string>Apply Layer Block-deep (EXPERIMENTAL, NO UNDO!)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="cbPenBlockDeep">
+         <property name="toolTip">
+          <string>Apply Pen attributes also to all sub-entities of selected Insert.
+This recursively modifies all entities of the Block itself and
+CAN NOT be undone.</string>
+         </property>
+         <property name="text">
+          <string>Apply Pen Block-deep (EXPERIMENTAL, NO UNDO!)</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
     </layout>
