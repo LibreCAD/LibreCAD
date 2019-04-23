@@ -228,16 +228,17 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data) {
             bool applyDeep = e->isContainer() &&
                 (data.applyPenBlockDeep || data.applyLayerBlockDeep);
 
+            bool skipUndo = applyDeep && e->rtti() == RS2::EntityInsert;
             // Because of Undo does not work currently for modified Block-deep
             // entities, in order to prevent empty Undo entry, the line
-            // below is checking for 'applyDeep' and does not clone 'e' for
+            // below is checking for 'skipUndo' and does not clone 'e' for
             // Inserts.
             //
             // FIXME: After implementing Undo for modified Block-deep entities
             //        change to:
             // RS_Entity* clone = e->clone();
             //
-            RS_Entity* clone = applyDeep ? e : e->clone();
+            RS_Entity* clone = skipUndo ? e : e->clone();
 
             clone->setSelected(false);
             RS_Pen pen = clone->getPen(false);
@@ -277,9 +278,9 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data) {
             //}
 
             clone->update();
-            // FIXME: Remove check for 'applyDeep' after implementing Undo for
+            // FIXME: Remove check for 'skipUndo' after implementing Undo for
             //        modified Block-deep entities.
-            if (!applyDeep) {
+            if (!skipUndo) {
                 addList.push_back(clone);
             }
         } else {
