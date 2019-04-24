@@ -84,7 +84,6 @@ void QG_DlgAttributes::updateData() {
 
     data->changeLayer = !cbLayer->isUnchanged();
 
-    data->applyPenBlockDeep = cbPenBlockDeep->isChecked();
-    data->applyLayerBlockDeep = cbLayerBlockDeep->isChecked();
+    data->applyBlockDeep = cbBlockDeep->isChecked();
 }
 

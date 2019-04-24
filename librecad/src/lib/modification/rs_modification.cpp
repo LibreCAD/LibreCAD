@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 #include<cmath>
+#include <QSet>
 #include "rs_modification.h"
 
 #include "rs_arc.h"
@@ -150,154 +151,93 @@ void RS_Modification::revertDirection() {
 
 
 /**
- * Changes the attributes of container sub-entities. Recursive
- */
-bool RS_Modification::changeAttributes(RS_AttributesData& data, RS_EntityContainer* container, std::vector<RS_Entity*> addList) {
-
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::changeAttributes");
-
-    if (!container) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::changeAttributes: no valid container");
-        return false;
-    }
-
-    for(auto e: *container) {
-
-        if (!e) {
-            RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::changeAttributes: nullptr in container");
-            return false;
-        }
-
-        e->setSelected(false);
-        RS_Pen pen = e->getPen(false);
-
-        if (data.applyLayerBlockDeep && data.changeLayer) {
-            e->setLayer(data.layer);
-        }
-
-        if (data.applyPenBlockDeep) {
-            if (data.changeColor==true) {
-                pen.setColor(data.pen.getColor());
-            }
-            if (data.changeLineType==true) {
-                pen.setLineType(data.pen.getLineType());
-            }
-            if (data.changeWidth==true) {
-                pen.setWidth(data.pen.getWidth());
-            }
-            e->setPen(pen);
-        }
-
-        if (e->isContainer()) {
-            if (e->rtti() == RS2::EntityInsert) {
-                RS_Block* eb = static_cast<RS_Insert*>(e)->getBlockForInsert();
-                changeAttributes(data, (RS_EntityContainer*)eb, addList);
-            } else {
-                changeAttributes(data, (RS_EntityContainer*)e, addList);
-            }
-        }
-        e->update();
-    }
-
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::changeAttributes: OK");
-    return true;
-}
-
-
-
-/**
  * Changes the attributes of all selected
  */
-bool RS_Modification::changeAttributes(RS_AttributesData& data) {
+bool RS_Modification::changeAttributes(RS_AttributesData& data)
+{
+    return changeAttributes(data, container);
+}
 
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::changeAttributes");
-
-    if (!container) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::changeAttributes: no valid container");
+bool RS_Modification::changeAttributes(
+    RS_AttributesData& data,
+    RS_EntityContainer* cont)
+{
+    if (!cont) {
         return false;
     }
 
     LC_UndoSection  undo(document);
-    std::vector<RS_Entity*> addList;
+    QList<RS_Entity*> clones;
+    QSet<RS_Block*> blocks;
 
-    for(auto e: *container) {
-//        for (unsigned i=0; i<container->count(); ++i) {
-//        RS_Entity* e = container->entityAt(i);
-        if (e && e->isSelected()) {
+    for (auto en: *cont) {
+        if (!en) continue;
+        if (!en->isSelected()) continue;
 
-            bool applyDeep = e->isContainer() &&
-                (data.applyPenBlockDeep || data.applyLayerBlockDeep);
+        if (data.applyBlockDeep && en->rtti() == RS2::EntityInsert) {
+            RS_Block* bl = static_cast<RS_Insert*>(en)->getBlockForInsert();
+            blocks << bl;
+        }
 
-            bool skipUndo = applyDeep && e->rtti() == RS2::EntityInsert;
-            // Because of Undo does not work currently for modified Block-deep
-            // entities, in order to prevent empty Undo entry, the line
-            // below is checking for 'skipUndo' and does not clone 'e' for
-            // Inserts.
-            //
-            // FIXME: After implementing Undo for modified Block-deep entities
-            //        change to:
-            // RS_Entity* clone = e->clone();
-            //
-            RS_Entity* clone = skipUndo ? e : e->clone();
+        RS_Entity* cl = en->clone();
+        RS_Pen pen = cl->getPen(false);
 
-            clone->setSelected(false);
-            RS_Pen pen = clone->getPen(false);
+        if (data.changeLayer==true) {
+            cl->setLayer(data.layer);
+        }
 
-            if (data.changeLayer==true) {
-                clone->setLayer(data.layer);
-            }
+        if (data.changeColor==true) {
+            pen.setColor(data.pen.getColor());
+        }
+        if (data.changeLineType==true) {
+            pen.setLineType(data.pen.getLineType());
+        }
+        if (data.changeWidth==true) {
+            pen.setWidth(data.pen.getWidth());
+        }
+        cl->setPen(pen);
 
-            if (data.changeColor==true) {
-                pen.setColor(data.pen.getColor());
-            }
-            if (data.changeLineType==true) {
-                pen.setLineType(data.pen.getLineType());
-            }
-            if (data.changeWidth==true) {
-                pen.setWidth(data.pen.getWidth());
-            }
-            clone->setPen(pen);
+        if (graphicView) {
+            graphicView->deleteEntity(en);
+        }
 
-            if (applyDeep) {
-                if (clone->rtti() == RS2::EntityInsert) {
-                    RS_Block* eb = static_cast<RS_Insert*>(clone)->getBlockForInsert();
-                    changeAttributes(data, (RS_EntityContainer*)eb, addList);
-                } else {
-                    changeAttributes(data, (RS_EntityContainer*)clone, addList);
-                }
-            }
+        en->setSelected(false);
+        cl->setSelected(false);
 
-            //if (data.useCurrentLayer) {
-            //    ec->setLayerToActive();
-            //}
-            //if (data.useCurrentAttributes) {
-            //    ec->setPenToActive();
-            //}
-            //if (ec->rtti()==RS2::EntityInsert) {
-            //    ((RS_Insert*)ec)->update();
-            //}
+        clones << cl;
 
-            clone->update();
-            // FIXME: Remove check for 'skipUndo' after implementing Undo for
-            //        modified Block-deep entities.
-            if (!skipUndo) {
-                addList.push_back(clone);
-            }
-        } else {
-            RS_DEBUG->print(RS_Debug::D_NOTICE, "RS_Modification::changeAttributes: no valid container is selected");
+        if (!graphic) continue;
+
+        en->setUndoState(true);
+        graphic->addUndoable(en);
+    }
+
+    for (auto bl: blocks.values()) {
+        for (auto en: *bl) {
+            if (!en) continue;
+            en->setSelected(true);
+        }
+        changeAttributes(data, (RS_EntityContainer*)bl);
+    }
+
+    for (auto cl: clones) {
+        cont->addEntity(cl);
+
+        if (graphicView) {;
+            graphicView->drawEntity(cl);
+        }
+
+        if (graphic) {
+            graphic->addUndoable(cl);
         }
     }
 
-    deselectOriginals(true);
-    addNewEntities(addList);
-    container->updateInserts();
-    container->calculateBorders();
-
-    if (graphicView) {
-        graphicView->redraw(RS2::RedrawDrawing);
+    if (graphic) {
+        graphic->updateInserts();
     }
 
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::changeAttributes: OK");
+    cont->calculateBorders();
+
     return true;
 }
 
