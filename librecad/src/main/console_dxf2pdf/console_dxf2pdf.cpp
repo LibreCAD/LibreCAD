@@ -39,6 +39,7 @@
 
 
 static RS_Vector parsePageSizeArg(QString);
+static void parseMarginsArg(QString, PdfPrintParams&);
 
 
 int console_dxf2pdf(int argc, char* argv[])
@@ -108,6 +109,10 @@ int console_dxf2pdf(int argc, char* argv[])
         "Output scale. E.g.: 0.01 (for 1:100 scale).", "double");
     parser.addOption(scaleOpt);
 
+    QCommandLineOption marginsOpt(QStringList() << "f" << "margins",
+        "Paper margins in mm (integer or float).", "L,T,R,B");
+    parser.addOption(marginsOpt);
+
     QCommandLineOption outFileOpt(QStringList() << "o" << "outfile",
         "Output PDF file.", "file");
     parser.addOption(outFileOpt);
@@ -142,6 +147,8 @@ int console_dxf2pdf(int argc, char* argv[])
     double scale = parser.value(scaleOpt).toDouble(&scaleOk);
     if (scaleOk)
         params.scale = scale;
+
+    parseMarginsArg(parser.value(marginsOpt), params);
 
     params.outFile = parser.value(outFileOpt);
     params.outDir = parser.value(outDirOpt);
@@ -197,4 +204,30 @@ static RS_Vector parsePageSizeArg(QString arg)
     }
 
     return v;
+}
+
+
+static void parseMarginsArg(QString arg, PdfPrintParams& params)
+{
+    if (arg.isEmpty())
+        return;
+
+    QRegularExpression re("^(?<left>\\d+(?:\\.\\d+)?),"
+                          "(?<top>\\d+(?:\\.\\d+)?),"
+                          "(?<right>\\d+(?:\\.\\d+)?),"
+                          "(?<bottom>\\d+(?:\\.\\d+)?)$");
+    QRegularExpressionMatch match = re.match(arg);
+
+    if (match.hasMatch()) {
+        QString left = match.captured("left");
+        QString top = match.captured("top");
+        QString right = match.captured("right");
+        QString bottom = match.captured("bottom");
+        params.margins.left = left.toDouble();
+        params.margins.top = top.toDouble();
+        params.margins.right = right.toDouble();
+        params.margins.bottom = bottom.toDouble();
+    } else {
+        qDebug() << "WARNING: Ignoring bad paper margins:" << arg;
+    }
 }

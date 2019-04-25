@@ -194,6 +194,11 @@ static bool openDocAndSetGraphic(RS_Document** doc, RS_Graphic** graphic,
 static void touchGraphic(RS_Graphic* graphic, PdfPrintParams& params)
 {
     graphic->calculateBorders();
+    graphic->setMargins(
+                params.margins.left,
+                params.margins.top,
+                params.margins.right,
+                params.margins.bottom);
 
     if (params.scale > 0.0)
         graphic->setPaperScale(params.scale);
@@ -248,14 +253,24 @@ static void setupPrinterAndPaper(RS_Graphic* graphic, QPrinter& printer,
 static void drawPage(RS_Graphic* graphic, QPrinter& printer,
     RS_PainterQt& painter)
 {
+    double printerFx = (double)printer.width() / printer.widthMM();
+    double printerFy = (double)printer.height() / printer.heightMM();
+
+    double marginLeft = graphic->getMarginLeft();
+    double marginTop = graphic-> getMarginTop();
+    double marginRight = graphic->getMarginRight();
+    double marginBottom = graphic->getMarginBottom();
+
+    painter.setClipRect(marginLeft * printerFx, marginTop * printerFy,
+                        printer.width() - (marginLeft + marginRight) * printerFx,
+                        printer.height() - (marginTop + marginBottom) * printerFy);
+
     RS_StaticGraphicView gv(printer.width(), printer.height(), &painter);
     gv.setPrinting(true);
     gv.setBorders(0,0,0,0);
 
-    double fx = (double) printer.width() / printer.widthMM()
-                * RS_Units::getFactorToMM(graphic->getUnit());
-    double fy = (double) printer.height() / printer.heightMM()
-                * RS_Units::getFactorToMM(graphic->getUnit());
+    double fx = printerFx * RS_Units::getFactorToMM(graphic->getUnit());
+    double fy = printerFy * RS_Units::getFactorToMM(graphic->getUnit());
 
     double f = (fx + fy) / 2.0;
 
