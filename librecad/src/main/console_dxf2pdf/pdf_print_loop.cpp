@@ -194,11 +194,9 @@ static bool openDocAndSetGraphic(RS_Document** doc, RS_Graphic** graphic,
 static void touchGraphic(RS_Graphic* graphic, PdfPrintParams& params)
 {
     graphic->calculateBorders();
-    graphic->setMargins(
-                params.margins.left,
-                params.margins.top,
-                params.margins.right,
-                params.margins.bottom);
+    graphic->setMargins(params.margins.left, params.margins.top,
+                        params.margins.right, params.margins.bottom);
+    graphic->setPagesNum(params.pagesH, params.pagesV);
 
     if (params.scale > 0.0)
         graphic->setPaperScale(params.scale);
@@ -280,5 +278,23 @@ static void drawPage(RS_Graphic* graphic, QPrinter& printer,
                  (int)(graphic->getPaperInsertionBase().y * f));
     gv.setFactor(f*scale);
     gv.setContainer(graphic);
-    gv.drawEntity(&painter, graphic);
+
+    double baseX = graphic->getPaperInsertionBase().x;
+    double baseY = graphic->getPaperInsertionBase().y;
+    int numX = graphic->getPagesNumHoriz();
+    int numY = graphic->getPagesNumVert();
+    RS_Vector printArea = graphic->getPrintAreaSize(false);
+
+    for (int pY = 0; pY < numY; pY++) {
+        double offsetY = printArea.y * pY;
+        for (int pX = 0; pX < numX; pX++) {
+            double offsetX = printArea.x * pX;
+            // First page is created automatically.
+            // Extra pages must be created manually.
+            if (pX > 0 || pY > 0) printer.newPage();
+            gv.setOffset((int)((baseX - offsetX) * f),
+                         (int)((baseY - offsetY) * f));
+            gv.drawEntity(&painter, graphic );
+        }
+    }
 }

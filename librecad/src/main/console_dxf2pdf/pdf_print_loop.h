@@ -47,6 +47,8 @@ struct PdfPrintParams {
             double right = -1.0;
             double bottom = -1.0;
         } margins;           // If margin < 0.0, use value from dxf file.
+        int pagesH = 0;      // If number of pages < 1,
+        int pagesV = 0;      // use value from dxf file.
 };
 
 

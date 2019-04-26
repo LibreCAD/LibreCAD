@@ -39,6 +39,7 @@
 
 
 static RS_Vector parsePageSizeArg(QString);
+static void parsePagesNumArg(QString, PdfPrintParams&);
 static void parseMarginsArg(QString, PdfPrintParams&);
 
 
@@ -113,6 +114,10 @@ int console_dxf2pdf(int argc, char* argv[])
         "Paper margins in mm (integer or float).", "L,T,R,B");
     parser.addOption(marginsOpt);
 
+    QCommandLineOption pagesNumOpt(QStringList() << "z" << "pages",
+        "Print on multiple pages (Horiz. x Vert.).", "HxV");
+    parser.addOption(pagesNumOpt);
+
     QCommandLineOption outFileOpt(QStringList() << "o" << "outfile",
         "Output PDF file.", "file");
     parser.addOption(outFileOpt);
@@ -149,6 +154,7 @@ int console_dxf2pdf(int argc, char* argv[])
         params.scale = scale;
 
     parseMarginsArg(parser.value(marginsOpt), params);
+    parsePagesNumArg(parser.value(pagesNumOpt), params);
 
     params.outFile = parser.value(outFileOpt);
     params.outDir = parser.value(outDirOpt);
@@ -204,6 +210,25 @@ static RS_Vector parsePageSizeArg(QString arg)
     }
 
     return v;
+}
+
+
+static void parsePagesNumArg(QString arg, PdfPrintParams& params)
+{
+    if (arg.isEmpty())
+        return;
+
+    QRegularExpression re("^(?<horiz>\\d+)[x|X](?<vert>\\d+)$");
+    QRegularExpressionMatch match = re.match(arg);
+
+    if (match.hasMatch()) {
+        QString h = match.captured("horiz");
+        QString v = match.captured("vert");
+        params.pagesH = h.toInt();
+        params.pagesV = v.toInt();
+    } else {
+        qDebug() << "WARNING: Ignoring bad number of pages:" << arg;
+    }
 }
 
 
