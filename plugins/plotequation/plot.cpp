@@ -11,6 +11,15 @@
 #include <muParser.h>
 #include <QDebug>
 
+mu::string_type toMUPString(const QString &str)
+{
+#if defined(_UNICODE)
+  return str.toStdWString();
+#else
+  return str.toStdString();
+#endif
+}
+
 plot::plot(QObject *parent) :
     QObject(parent)
 {
@@ -57,17 +66,17 @@ void plot::execComm(Document_Interface *doc, QWidget *parent, QString cmd)
 
         try{
             mu::Parser p;
-            p.DefineConst("pi",M_PI);
-            p.DefineConst("e",M_E);
-            p.DefineVar("x", &equationVariable);
-            p.DefineVar("t", &equationVariable);
-            p.SetExpr(startValue.toStdString());
+            p.DefineConst(_T("pi"),M_PI);
+            p.DefineConst(_T("e"),M_E);
+            p.DefineVar(_T("x"), &equationVariable);
+            p.DefineVar(_T("t"), &equationVariable);
+            p.SetExpr(toMUPString(startValue));
             startVal = p.Eval();
 
-            p.SetExpr(endValue.toStdString());
+            p.SetExpr(toMUPString(endValue));
             endVal = p.Eval();
 
-            p.SetExpr(equation1.toStdString());
+            p.SetExpr(toMUPString(equation1));
 
             for(equationVariable = startVal; equationVariable <= endVal; equationVariable += stepSize)
             {//calculate the values of the first equation
@@ -77,7 +86,7 @@ void plot::execComm(Document_Interface *doc, QWidget *parent, QString cmd)
 
             if(!equation2.isEmpty())
             {//calculate the values of the second equation
-                p.SetExpr(equation2.toStdString());
+                p.SetExpr(toMUPString(equation2));
                 for(int i = 0; i < xValues.size(); ++i)
                 {
                     equationVariable = xValues.at(i);
@@ -87,7 +96,7 @@ void plot::execComm(Document_Interface *doc, QWidget *parent, QString cmd)
         }
         catch (mu::Parser::exception_type &e)
         {
-            std::cout << e.GetMsg() << std::endl;
+            mu::console() << e.GetMsg() << std::endl;
         }
 
         QList<double> const& xpoints=(equation2.isEmpty())?xValues:yValues1;
