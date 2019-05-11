@@ -11,19 +11,22 @@
 
 #ifdef _WINDOWS
 #include <windows.h>
+typedef double jwDOUBLE;
+typedef DWORD jwDWORD;
+typedef WORD jwWORD;
+typedef BYTE jwBYTE;
+typedef BOOL jwBOOL;
+#else
+typedef double jwDOUBLE;
+typedef unsigned int jwDWORD;
+typedef unsigned short jwWORD;
+typedef unsigned char jwBYTE;
+typedef bool jwBOOL;
 #endif
 
-using namespace std;
-//typedef	int	INT;
-typedef	double	DOUBLE;
-#ifndef _WINDOWS
-typedef unsigned int DWORD, *LPDWORD;
-typedef	bool	BOOL;
-#endif
-typedef unsigned short WORD, *LPWORD;
-typedef unsigned char BYTE, *LPBYTE;
-//typedef	void*	Pointer;
 typedef	long double	LDouble;
+
+using namespace std;
 
 #ifdef USE_INTEGER
 /////////////////////////////////////////////////////////
@@ -82,15 +85,15 @@ inline istream& operator>> (istream& istr, Integer& input)
 class DWord
 {
  private: 
-	DWORD data;
+	jwDWORD data;
  public:
-	DWord(const DWORD& ulval=0)
+	DWord(const jwDWORD& ulval=0)
 	{
 		data = ulval;
 	}
 	~DWord(){;}
-	DWORD Value(){return data;}
-	DWORD operator=(DWord& val)
+	jwDWORD Value(){return data;}
+	jwDWORD operator=(DWord& val)
 		{
 			return val.data;
 		}
@@ -99,7 +102,7 @@ class DWord
 //			data =  val.data;
 //			return *this;
 //		}
-	DWord& operator=(DWORD val)
+	DWord& operator=(jwDWORD val)
 		{
 			data = val;
 			return *this;
@@ -111,13 +114,13 @@ class DWord
 };
 inline ofstream& operator<< (ofstream& ofstr, const DWord& output) 
 {
-	ofstr.write((char*)&(output.data), sizeof(DWORD));
+	ofstr.write((char*)&(output.data), sizeof(jwDWORD));
 	return ofstr;
 } 
 
 inline ifstream& operator>> (ifstream& ifstr, DWord& input) 
 {
-	ifstr.read((char*)&(input.data), sizeof(DWORD));
+	ifstr.read((char*)&(input.data), sizeof(jwDWORD));
 	return ifstr;
 }
 
@@ -135,19 +138,19 @@ inline istream& operator>> (istream& istr, DWord& input)
 class Word
 {
  private: 
-	WORD data;
+	jwWORD data;
  public:
-	Word(const WORD& uval=0)
+	Word(const jwWORD& uval=0)
 	{
 		data = uval;
 	}
 	~Word(){;}
-	WORD Value(){return data;}
-	WORD operator=(Word& val)
+	jwWORD Value(){return data;}
+	jwWORD operator=(Word& val)
 		{
 			return val.data;
 		}
-	Word& operator=(WORD val)
+	Word& operator=(jwWORD val)
 		{
 			data = val;
 			return *this;
@@ -164,13 +167,13 @@ class Word
 };
 inline ofstream& operator<< (ofstream& ofstr, const Word& output) 
 {
-	ofstr.write((char*)&(output.data), sizeof(WORD));
+	ofstr.write((char*)&(output.data), sizeof(jwWORD));
 	return ofstr;
 } 
 
 inline ifstream& operator>> (ifstream& ifstr, Word& input) 
 {
-	ifstr.read((char*)&(input.data), sizeof(WORD));
+	ifstr.read((char*)&(input.data), sizeof(jwWORD));
 	return ifstr;
 }
 
@@ -188,19 +191,19 @@ inline istream& operator>> (istream& istr, Word& input)
 class Byte
 {
  private: 
-	BYTE data;
+	jwBYTE data;
  public:
-	Byte(const BYTE& bval=0)
+	Byte(const jwBYTE& bval=0)
 	{
 		data = bval;
 	}
 	~Byte(){;}
-	BYTE Value(){return data;}
-	BYTE operator=(Byte& val)
+	jwBYTE Value(){return data;}
+	jwBYTE operator=(Byte& val)
 		{
 			return val.data;
 		}
-	Byte& operator=(BYTE val)
+	Byte& operator=(jwBYTE val)
 		{
 			data = val;
 			return *this;
@@ -227,13 +230,13 @@ class Byte
 };
 inline ofstream& operator<< (ofstream& ofstr, const Byte& output) 
 {
-	ofstr.write((char*)&(output.data), sizeof(BYTE));
+	ofstr.write((char*)&(output.data), sizeof(jwBYTE));
 	return ofstr;
 } 
 
 inline ifstream& operator>> (ifstream& ifstr, Byte& input) 
 {
-	ifstr.read((char*)&(input.data), sizeof(BYTE));
+	ifstr.read((char*)&(input.data), sizeof(jwBYTE));
 	return ifstr;
 }
 
@@ -249,12 +252,12 @@ inline istream& operator>> (istream& istr, Byte& input)
 
 inline bool operator==( char ch, Byte& c )
 {
-    return ((BYTE) ch) == c.data;
+    return ((jwBYTE) ch) == c.data;
 }
 
 inline bool operator==( Byte& c, char ch )
 {
-    return ((BYTE) ch) == c.data;
+    return ((jwBYTE) ch) == c.data;
 }
 
 inline bool operator==( Byte& c1, Byte& c2 )
@@ -269,22 +272,22 @@ inline bool operator!=( Byte& c1, Byte& c2 )
 
 inline bool operator!=( char ch, Byte& c )
 {
-    return ((BYTE)ch) != c.data;
+    return ((jwBYTE)ch) != c.data;
 }
 
 inline bool operator!=( Byte& c, char ch )
 {
-    return ((BYTE) ch) != c.data;
+    return ((jwBYTE) ch) != c.data;
 }
 
 inline bool operator<=( Byte& c, char ch )
 {
-    return c.data <= ((BYTE) ch);
+    return c.data <= ((jwBYTE) ch);
 }
 
 inline bool operator<=( char ch, Byte& c )
 {
-    return ((BYTE) ch) <= c.data;
+    return ((jwBYTE) ch) <= c.data;
 }
 
 inline bool operator<=( Byte& c1, Byte& c2 )
@@ -296,13 +299,13 @@ inline bool operator<=( Byte& c1, Byte& c2 )
 class Double
 {
  private: 
-	DOUBLE data;
+	jwDOUBLE data;
  public:
-	Double(const DOUBLE& db=0.0)
+	Double(const jwDOUBLE& db=0.0)
 		{
 			data = db;
 		}
-	DOUBLE Value(){return data;}
+	jwDOUBLE Value(){return data;}
 	Double& operator+(Double& val)
 		{
 			data += val.data;
@@ -323,7 +326,7 @@ class Double
 			data = val.data;
 			return *this;
 		}
-	Double& operator=(DOUBLE& val)
+	Double& operator=(jwDOUBLE& val)
 		{
 			data = val;
 			return *this;
@@ -337,13 +340,13 @@ class Double
 
 inline ofstream& operator<< (ofstream& ofstr, const Double& output) 
 {
-	ofstr.write((char*)&(output.data), sizeof(DOUBLE));
+	ofstr.write((char*)&(output.data), sizeof(jwDOUBLE));
 	return ofstr;
 } 
 
 inline ifstream& operator>> (ifstream& ifstr, Double& input) 
 {
-	ifstr.read((char*)&(input.data), sizeof(DOUBLE));
+	ifstr.read((char*)&(input.data), sizeof(jwDOUBLE));
 	return ifstr;
 }
 
@@ -358,53 +361,51 @@ inline istream& operator>> (istream& istr, Double& input)
 }
 #endif
 
-#ifndef _WINDOWS
-inline ofstream& operator<< (ofstream& ofstr, const DOUBLE& output) 
+inline ofstream& operator<< (ofstream& ofstr, const jwDOUBLE& output) 
 {
-	ofstr.write((char*)&output, sizeof(DOUBLE));
+	ofstr.write((char*)&output, sizeof(jwDOUBLE));
     return ofstr;
 } 
 
-inline ifstream& operator>> (ifstream& ifstr, DOUBLE& input) 
+inline ifstream& operator>> (ifstream& ifstr, jwDOUBLE& input) 
 {
-	ifstr.read((char*)&input, sizeof(DOUBLE));
-    return ifstr;
-}
-#endif
-
-inline ofstream& operator<< (ofstream& ofstr, const DWORD& output) 
-{
-	ofstr.write((char*)&output, sizeof(DWORD));
-    return ofstr;
-} 
-
-inline ifstream& operator>> (ifstream& ifstr, DWORD& input) 
-{
-	ifstr.read((char*)&input, sizeof(DWORD));
+	ifstr.read((char*)&input, sizeof(jwDOUBLE));
     return ifstr;
 }
 
-inline ofstream& operator<< (ofstream& ofstr, const WORD& output) 
+inline ofstream& operator<< (ofstream& ofstr, const jwDWORD& output) 
 {
-	ofstr.write((char*)&output, sizeof(WORD));
+	ofstr.write((char*)&output, sizeof(jwDWORD));
     return ofstr;
 } 
 
-inline ifstream& operator>> (ifstream& ifstr, WORD& input) 
+inline ifstream& operator>> (ifstream& ifstr, jwDWORD& input) 
 {
-	ifstr.read((char*)&input, sizeof(WORD));
+	ifstr.read((char*)&input, sizeof(jwDWORD));
     return ifstr;
 }
 
-inline ofstream& operator<< (ofstream& ofstr, const BYTE& output) 
+inline ofstream& operator<< (ofstream& ofstr, const jwWORD& output) 
 {
-	ofstr.write((char*)&output, sizeof(BYTE));
+	ofstr.write((char*)&output, sizeof(jwWORD));
     return ofstr;
 } 
 
-inline ifstream& operator>> (ifstream& ifstr, BYTE& input) 
+inline ifstream& operator>> (ifstream& ifstr, jwWORD& input) 
 {
-	ifstr.read((char*)&input, sizeof(BYTE));
+	ifstr.read((char*)&input, sizeof(jwWORD));
+    return ifstr;
+}
+
+inline ofstream& operator<< (ofstream& ofstr, const jwBYTE& output) 
+{
+	ofstr.write((char*)&output, sizeof(jwBYTE));
+    return ofstr;
+} 
+
+inline ifstream& operator>> (ifstream& ifstr, jwBYTE& input) 
+{
+	ifstr.read((char*)&input, sizeof(jwBYTE));
     return ifstr;
 }
 

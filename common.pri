@@ -41,12 +41,10 @@ win32 {
         greaterThan( QT_MAJOR_VERSION, 4 ) {
             QMAKE_CXXFLAGS += -Wno-unused-local-typedefs
         }
-    }
-    # On windows, check for MSVC compilers - they need help on C99
-    # features and a hint to povide M_PI et al.
-    win32-msvc.net|win32-msvc2003|win32-msvc2005|win32-msvc2008|win32-msvc2010 {
+    }else{
        !build_pass:verbose:message(Setting up support for MSVC.)
-       DEFINES += EMU_C99 _USE_MATH_DEFINES
+       # define the M_PI etc macros for MSVC compilers.
+       DEFINES += _USE_MATH_DEFINES
     }
 
     # The .NET 2003 compiler (at least) is touchy about its own headers ...
@@ -57,9 +55,11 @@ win32 {
     }
 }
 
-
+unix|macx|win32-g++ {
+# no such option for MSVC
 QMAKE_CXXFLAGS_DEBUG += -g
 QMAKE_CXXFLAGS += -g
+}
 
 # fix for GitHub Issue #880
 # prevent QMake from using -isystem flag for system include path
@@ -72,8 +72,11 @@ QT += svg
 greaterThan( QT_MAJOR_VERSION, 4) {
 	CONFIG += c++11
 }else{
+    unix|macx|win32-g++ {
+        # no such option for MSVC
 	QMAKE_CXXFLAGS += -std=c++11
 	QMAKE_CXXFLAGS_DEBUG += -std=c++11
+    }
 }
 
 # RVT July 12 2015, I believe we need these here

@@ -41,21 +41,8 @@
 
 #include "jwwdoc.h"
 
-#ifdef _WIN32
-# undef M_PI
-# define M_PI   3.14159265358979323846
-# ifdef _MSC_VER
-#  pragma warning(disable : 4800)
-# endif
-#endif
-
-#ifndef M_PI
-#define M_PI 3.1415926535897932384626433832795
-#endif
-
 class DL_CreationInterface;
 class DL_WriterA;
-
 
 #define DL_VERSION     "2.0.4.8"
 

@@ -1,124 +1,16 @@
 #include "jwwdoc.h"
-
 #define	LINEBUF_SIZE	1024
-
-#ifdef _MSC_VER
-void CDataSen::Serialize(std::ofstream& ofstr) const
-{
-    CData::Serialize(ofstr);
-    ofstr	<< (double)m_start.x << (double)m_start.y
-        << (double)m_end.x << (double)m_end.y;
-}
-
-void CDataEnko::Serialize(std::ofstream& ofstr) const
-{
-    CData::Serialize(ofstr);
-    ofstr	<< (double)m_start.x << (double)m_start.y
-        << (double)m_dHankei
-        << (double)m_radKaishiKaku
-        << (double)m_radEnkoKaku
-        << (double)m_radKatamukiKaku
-        << (double)m_dHenpeiRitsu
-        << (DWORD )m_bZenEnFlg;
-}
-
-void CDataTen::Serialize(std::ofstream& ofstr) const
-{
-    m_nPenStyle = 1;
-    if( nOldVersionSave >= 252 ){   //Ver.2.52以降
-        if( 0 != m_nCode ){ m_nPenStyle = 100; }
-    }
-
-    CData::Serialize(ofstr);
-
-    ofstr << (double)m_start.x << (double)m_start.y;
-    ofstr << (DWORD)m_bKariten;
-    if( 100 == m_nPenStyle ){
-        ofstr << (DWORD )m_nCode;
-        ofstr << (double)m_radKaitenKaku;
-        ofstr << (double)m_dBairitsu;
-    }
-}
-
-void CDataMoji::Serialize(std::ofstream& ofstr) const
-{
-////////////////////////////////////////////
-//SKIP        m_nPenWidth = m_nSunpouFlg; //  (寸法値設定のフラグ)ヘッダーメンバー
-        CData::Serialize(ofstr);
-        m_nPenWidth = 1;            //文字枠幅を1
-//SKIP        if( m_sMojiFlg & 0x0001 ){ m_nMojiShu += 10000; }  //斜体文字
-//SKIP        if( m_sMojiFlg & 0x0010 ){ m_nMojiShu += 20000; }  //ボールド
-
-        ofstr << (double)m_start.x << (double)m_start.y
-           << (double)m_end.x << (double)m_end.y
-           << (DWORD)m_nMojiShu
-           << (double)m_dSizeX << (double)m_dSizeY
-           << (double)m_dKankaku
-           << (double)m_degKakudo;
-
-        int len = m_strFontName.length();
-        if( len == 0 ){
-            ofstr << (BYTE)0x0;
-        }else
-        {
-            if( len >= 0xFF ){
-                ofstr << (BYTE)0xFF;
-                ofstr << (WORD)len;
-            }else{
-                ofstr << (BYTE)len;
-            }
-            ofstr.write(m_strFontName.c_str(),len);
-        }
-        len = m_string.length();
-        if( len == 0 ){
-            ofstr << (BYTE)0x0;
-        }else
-        {
-            if( len >= 0xFF ){
-                ofstr << (BYTE)0xFF;
-                ofstr << (WORD)len;
-            }else{
-                ofstr << (BYTE)len;
-            }
-            ofstr.write(m_string.c_str(),len);
-        }
-        m_nMojiShu = (m_nMojiShu % 10000);
-}
-
-void CDataSolid::Serialize(std::ofstream& ofstr) const
-{
-    CData::Serialize(ofstr);
-    ofstr << (double)m_start.x << (double)m_start.y
-        << (double)m_end.x << (double)m_end.y
-        << (double)m_DPoint2.x << (double)m_DPoint2.y
-        << (double)m_DPoint3.x << (double)m_DPoint3.y;
-    if( 10 == m_nPenColor ){
-        ofstr << (DWORD)m_Color;//RGB
-    }
-}
-
-void CDataBlock::Serialize(std::ofstream& ofstr) const
-{
-    CData::Serialize(ofstr);
-    ofstr <<(double)m_DPKijunTen.x <<(double)m_DPKijunTen.y
-        <<(double)m_dBairitsuX
-        <<(double)m_dBairitsuY
-        <<(double)m_radKaitenKaku
-        <</*(DWORD)m_pDataList->*/m_n_Number;//ポインタでなく通し番号を保存する
-}
-
-#endif
 
 void JWWDocument::WriteString(string s){
     int len = s.length();
     if( len == 0 ){
-        *ofs << (BYTE)0x0;
+        *ofs << (jwBYTE)0x0;
         return;
     }else if( len >= 0xFF ){
-        *ofs << (BYTE)0xFF;
-        *ofs << (WORD)len;
+        *ofs << (jwBYTE)0xFF;
+        *ofs << (jwWORD)len;
     }else{
-        *ofs << (BYTE)len;
+        *ofs << (jwBYTE)len;
     }
     ofs->write(s.c_str(), len);
 }
@@ -148,8 +40,8 @@ string JWWDocument::ReadData(int n)
 
 string JWWDocument::ReadString()
 {
-    BYTE bt;
-    WORD wd;
+    jwBYTE bt;
+    jwWORD wd;
     string	Result("");
     *ifs >> bt;
     if( bt == 0 )
@@ -165,15 +57,12 @@ string JWWDocument::ReadString()
 }
 
 //ヘッダー部読みだし(JWW形式とバージョンチェック)
-BOOL JWWDocument::ReadHeader()
+jwBOOL JWWDocument::ReadHeader()
 {
     int i;
-    DWORD dw;
-    DOUBLE db;
+    jwDWORD dw;
+    jwDOUBLE db;
     string s;
-//    WORD wd;
-//    BYTE bt;
-//    BOOL	Result = false;
 
     if(ifs)
     {
@@ -624,11 +513,10 @@ BOOL JWWDocument::ReadHeader()
 }
 
 //ヘッダー部書き出し
-BOOL JWWDocument::WriteHeader()
+jwBOOL JWWDocument::WriteHeader()
 {
-    DWORD dw;
-//    WORD wd;
-    DOUBLE db;
+    jwDWORD dw;
+    jwDOUBLE db;
     string s;
 
     //JWWのデータファイルの宣言
@@ -1054,19 +942,17 @@ BOOL JWWDocument::WriteHeader()
 }
 
 //データファイル読み込み
-BOOL JWWDocument::Read()
+jwBOOL JWWDocument::Read()
 {
     if(!ifs)
         return false;
 
-    DWORD dw;
-//    DOUBLE db;
+    jwDWORD dw;
     string s, t;
-    WORD wd;
-//    BYTE bt;
-    int	i,j/*,k*/;
+    jwWORD wd;
+    int	i,j;
 
-    BOOL ListFlag;
+    jwBOOL ListFlag;
     int ListCount;
     int ListLength;
     CDataSen	DSen;
@@ -1287,19 +1173,18 @@ cout << DSunpou;
     return true;
 }
 
-BOOL JWWDocument::SaveBich16(DWORD id)
+jwBOOL JWWDocument::SaveBich16(jwDWORD id)
 {
-    DWORD i=((id*2) | 0x0000ffff) >> 16;
+    jwDWORD i=((id*2) | 0x0000ffff) >> 16;
     if( i==0 )
         return true;
     return false;
 }
 
 //線
-BOOL JWWDocument::SaveSen(CDataSen const& DSen)
+jwBOOL JWWDocument::SaveSen(CDataSen const& DSen)
 {
-    WORD wd;
-//    DWORD dw;
+    jwWORD wd;
     string s;
     if( SaveSenCount == 0 )
     {
@@ -1324,10 +1209,10 @@ BOOL JWWDocument::SaveSen(CDataSen const& DSen)
 }
 
 // 円
-BOOL JWWDocument::SaveEnko(CDataEnko const& DEnko)
+jwBOOL JWWDocument::SaveEnko(CDataEnko const& DEnko)
 {
-    WORD wd;
-    DWORD dw;
+    jwWORD wd;
+    jwDWORD dw;
     string s;
     if( SaveEnkoCount == 0 )
     {
@@ -1362,10 +1247,10 @@ BOOL JWWDocument::SaveEnko(CDataEnko const& DEnko)
 }
 
 // 点
-BOOL JWWDocument::SaveTen(CDataTen const& DTen)
+jwBOOL JWWDocument::SaveTen(CDataTen const& DTen)
 {
-    WORD wd;
-    DWORD dw;
+    jwWORD wd;
+    jwDWORD dw;
     string s;
 
     if( SaveTenCount == 0 )
@@ -1402,10 +1287,10 @@ BOOL JWWDocument::SaveTen(CDataTen const& DTen)
 }
 
 // 文字
-BOOL JWWDocument::SaveMoji(CDataMoji const& DMoji)
+jwBOOL JWWDocument::SaveMoji(CDataMoji const& DMoji)
 {
-    WORD wd;
-    DWORD dw;
+    jwWORD wd;
+    jwDWORD dw;
     string s;
 
     if( SaveMojiCount == 0 )
@@ -1441,10 +1326,10 @@ BOOL JWWDocument::SaveMoji(CDataMoji const& DMoji)
 }
 
 // 寸法
-BOOL JWWDocument::SaveSunpou(CDataSunpou const& DSunpou)
+jwBOOL JWWDocument::SaveSunpou(CDataSunpou const& DSunpou)
 {
-    WORD wd;
-    DWORD dw;
+    jwWORD wd;
+    jwDWORD dw;
     string s;
 
     if( SaveSunpouCount == 0 )
@@ -1480,10 +1365,10 @@ BOOL JWWDocument::SaveSunpou(CDataSunpou const& DSunpou)
 }
 
 // ソリッド
-BOOL JWWDocument::SaveSolid(CDataSolid const& DSolid)
+jwBOOL JWWDocument::SaveSolid(CDataSolid const& DSolid)
 {
-    WORD wd;
-    DWORD dw;
+    jwWORD wd;
+    jwDWORD dw;
     string s;
 
     if( SaveSolidCount == 0 )
@@ -1519,10 +1404,10 @@ BOOL JWWDocument::SaveSolid(CDataSolid const& DSolid)
 }
 
 // ブロック
-BOOL JWWDocument::SaveBlock(CDataBlock const& DBlock)
+jwBOOL JWWDocument::SaveBlock(CDataBlock const& DBlock)
 {
-    WORD wd;
-    DWORD dw;
+    jwWORD wd;
+    jwDWORD dw;
     string s;
 
     if( SaveBlockCount == 0 )
@@ -1558,10 +1443,10 @@ BOOL JWWDocument::SaveBlock(CDataBlock const& DBlock)
 }
 
 // データリスト
-BOOL JWWDocument::SaveDataList(CDataList const& DList)
+jwBOOL JWWDocument::SaveDataList(CDataList const& DList)
 {
-    WORD wd;
-    DWORD dw;
+    jwWORD wd;
+    jwDWORD dw;
     string s;
 
     if( SaveDataListCount == 0 )
@@ -1597,13 +1482,12 @@ BOOL JWWDocument::SaveDataList(CDataList const& DList)
 }
 
 //データファイル保存
-BOOL JWWDocument::Save()
+jwBOOL JWWDocument::Save()
 {
     if(!ofs)
         return false;
-    DWORD dw;
-    WORD wd;
-//    DOUBLE db;
+    jwDWORD dw;
+    jwWORD wd;
     string s;
     SaveSenCount=0;
     SaveEnkoCount=0;
