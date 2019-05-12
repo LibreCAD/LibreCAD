@@ -56,6 +56,7 @@ public slots:
     /** print scale fixed to saved value **/
     virtual void setScaleFixed(bool fixed);
 //    virtual void updateScaleBox(const QString& s);
+    virtual void calcPagesNum();
 
 protected:
     RS_ActionPrintPreview* action;

@@ -322,3 +322,9 @@ void QG_PrintPreviewOptions::updateScaleBox(const double& f){
 
 //    ui->cbScale->setCurrentIndex(index);
 //}
+
+void QG_PrintPreviewOptions::calcPagesNum() {
+    if (action) {
+        action->calcPagesNum();
+    }
+}

@@ -27,6 +27,7 @@
 #define QG_DLGOPTIONSDRAWING_H
 
 #include<memory>
+#include <QGraphicsScene>
 #include "ui_qg_dlgoptionsdrawing.h"
 
 class RS_Graphic;
@@ -50,6 +51,7 @@ public slots:
     virtual void updateUnitLabels();
     virtual void updateDimLengthPrecision();
     virtual void updateDimAnglePrecision();
+    virtual void updatePaperPreview();
 
 protected slots:
     virtual void languageChange();
@@ -77,9 +79,14 @@ private:
     void updateCBLengthPrecision(QComboBox* u, QComboBox* l);
     void updateCBAnglePrecision(QComboBox* u, QComboBox* p);
 
+protected:
+    void resizeEvent(QResizeEvent* event) override;
+    void showEvent(QShowEvent* event) override;
+
 private:
     QStringList listPrec1;
     RS_Graphic* graphic;
+    QGraphicsScene* paperScene;
 	std::unique_ptr<RS_Vector> spacing;
     void init();
 };

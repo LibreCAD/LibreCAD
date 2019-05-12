@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>653</width>
-    <height>485</height>
+    <height>519</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,138 +35,289 @@
       </attribute>
       <layout class="QVBoxLayout">
        <item>
-        <widget class="QGroupBox" name="buttonGroup3">
-         <property name="title">
-          <string>Paper Format</string>
+        <layout class="QHBoxLayout" name="tab1Layout">
+         <item>
+          <layout class="QVBoxLayout" name="paperOptionsLayout">
+           <item>
+            <widget class="QGroupBox" name="formatGroupBox">
+             <property name="title">
+              <string>Format</string>
+             </property>
+             <layout class="QVBoxLayout">
+              <item>
+               <layout class="QHBoxLayout">
+                <property name="spacing">
+                 <number>12</number>
+                </property>
+                <item>
+                 <widget class="QComboBox" name="cbPaperFormat"/>
+                </item>
+                <item>
+                 <layout class="QGridLayout" name="gridLayout_3">
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <item row="0" column="2">
+                   <widget class="QLineEdit" name="lePaperWidth"/>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="lPageHeight">
+                    <property name="text">
+                     <string>&amp;Height:</string>
+                    </property>
+                    <property name="wordWrap">
+                     <bool>false</bool>
+                    </property>
+                    <property name="buddy">
+                     <cstring>lePaperHeight</cstring>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="2">
+                   <widget class="QLineEdit" name="lePaperHeight"/>
+                  </item>
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="lPageWidth">
+                    <property name="text">
+                     <string>&amp;Width:</string>
+                    </property>
+                    <property name="wordWrap">
+                     <bool>false</bool>
+                    </property>
+                    <property name="buddy">
+                     <cstring>lePaperWidth</cstring>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="orientGroupBox">
+             <property name="title">
+              <string>Orientation</string>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
+               <widget class="QRadioButton" name="rbLandscape">
+                <property name="text">
+                 <string>&amp;Landscape</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="rbPortrait">
+                <property name="text">
+                 <string>P&amp;ortrait</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="marginsGroupBox">
+             <property name="title">
+              <string>Margins</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_11">
+              <item row="0" column="0">
+               <layout class="QGridLayout" name="gridLayout_10">
+                <item row="2" column="1">
+                 <widget class="QLineEdit" name="leMarginLeft">
+                  <property name="maximumSize">
+                   <size>
+                    <width>70</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Left</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="2">
+                 <widget class="QLineEdit" name="leMarginBottom">
+                  <property name="maximumSize">
+                   <size>
+                    <width>70</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Bottom</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="3">
+                 <widget class="QLineEdit" name="leMarginRight">
+                  <property name="maximumSize">
+                   <size>
+                    <width>70</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Right</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="2">
+                 <widget class="QLabel" name="label_10">
+                  <property name="text">
+                   <string>Bottom</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="2">
+                 <widget class="QLabel" name="label_7">
+                  <property name="text">
+                   <string>Top</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="4">
+                 <widget class="QLabel" name="label_9">
+                  <property name="text">
+                   <string>Right</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_8">
+                  <property name="text">
+                   <string>Left</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="2">
+                 <widget class="QLineEdit" name="leMarginTop">
+                  <property name="maximumSize">
+                   <size>
+                    <width>70</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="toolTip">
+                   <string>Top</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="pagesNumGroupBox">
+             <property name="title">
+              <string>Number of pages</string>
+             </property>
+             <layout class="QHBoxLayout" name="pagesNumLayout">
+              <item>
+               <widget class="QLabel" name="lPagesNumH">
+                <property name="text">
+                 <string>Horizontally:</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="sbPagesNumH">
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lPagesNumV">
+                <property name="text">
+                 <string>Vertically:</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="sbPagesNumV">
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="paperPreviewGroupBox">
+           <property name="title">
+            <string>Preview</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QGraphicsView" name="gvPaperPreview">
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="verticalScrollBarPolicy">
+               <enum>Qt::ScrollBarAlwaysOff</enum>
+              </property>
+              <property name="horizontalScrollBarPolicy">
+               <enum>Qt::ScrollBarAlwaysOff</enum>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QAbstractScrollArea::AdjustToContents</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-         <layout class="QVBoxLayout">
-          <item>
-           <layout class="QHBoxLayout">
-            <item>
-             <widget class="QComboBox" name="cbPaperFormat"/>
-            </item>
-            <item>
-             <spacer name="spacer9">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Expanding</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>211</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout">
-            <item>
-             <widget class="QRadioButton" name="rbLandscape">
-              <property name="text">
-               <string>&amp;Landscape</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="rbPortrait">
-              <property name="text">
-               <string>P&amp;ortrait</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="spacer6">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Expanding</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>231</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QGridLayout" name="gridLayout_3">
-            <item row="1" column="2">
-             <spacer name="spacer8">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Expanding</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>221</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLineEdit" name="lePaperHeight"/>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="lPageHeight">
-              <property name="text">
-               <string>Paper &amp;Height:</string>
-              </property>
-              <property name="wordWrap">
-               <bool>false</bool>
-              </property>
-              <property name="buddy">
-               <cstring>lePaperHeight</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="lPageWidth">
-              <property name="text">
-               <string>Paper &amp;Width:</string>
-              </property>
-              <property name="wordWrap">
-               <bool>false</bool>
-              </property>
-              <property name="buddy">
-               <cstring>lePaperWidth</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="lePaperWidth"/>
-            </item>
-            <item row="0" column="2">
-             <spacer name="spacer7">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Expanding</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>201</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -1554,21 +1705,54 @@
  <tabstops>
   <tabstop>tabWidget</tabstop>
   <tabstop>cbPaperFormat</tabstop>
-  <tabstop>rbLandscape</tabstop>
-  <tabstop>rbPortrait</tabstop>
   <tabstop>lePaperWidth</tabstop>
   <tabstop>lePaperHeight</tabstop>
+  <tabstop>rbLandscape</tabstop>
+  <tabstop>rbPortrait</tabstop>
+  <tabstop>leMarginTop</tabstop>
+  <tabstop>leMarginLeft</tabstop>
+  <tabstop>leMarginRight</tabstop>
+  <tabstop>leMarginBottom</tabstop>
+  <tabstop>sbPagesNumH</tabstop>
+  <tabstop>sbPagesNumV</tabstop>
+  <tabstop>gvPaperPreview</tabstop>
   <tabstop>cbUnit</tabstop>
   <tabstop>cbLengthFormat</tabstop>
   <tabstop>cbLengthPrecision</tabstop>
   <tabstop>cbAngleFormat</tabstop>
   <tabstop>cbAnglePrecision</tabstop>
+  <tabstop>cbGridOn</tabstop>
+  <tabstop>rbOrthogonalGrid</tabstop>
+  <tabstop>rbIsometricGrid</tabstop>
+  <tabstop>rbCrosshairLeft</tabstop>
+  <tabstop>rbCrosshairTop</tabstop>
+  <tabstop>rbCrosshairRight</tabstop>
   <tabstop>cbXSpacing</tabstop>
   <tabstop>cbYSpacing</tabstop>
   <tabstop>cbDimScale</tabstop>
+  <tabstop>cbDimFactor</tabstop>
   <tabstop>cbDimTextHeight</tabstop>
+  <tabstop>cbDimTih</tabstop>
+  <tabstop>cbDimGap</tabstop>
+  <tabstop>cbDimClrT</tabstop>
+  <tabstop>cbDimExo</tabstop>
+  <tabstop>cbDimExe</tabstop>
+  <tabstop>cbDimFxLon</tabstop>
+  <tabstop>cbDimFxL</tabstop>
+  <tabstop>cbDimClrE</tabstop>
+  <tabstop>cbDimLwE</tabstop>
   <tabstop>cbDimAsz</tabstop>
   <tabstop>cbDimTsz</tabstop>
+  <tabstop>cbDimClrD</tabstop>
+  <tabstop>cbDimLwD</tabstop>
+  <tabstop>cbDimLUnit</tabstop>
+  <tabstop>cbDimDec</tabstop>
+  <tabstop>cbDimZin</tabstop>
+  <tabstop>cbDimDSep</tabstop>
+  <tabstop>cbDimAUnit</tabstop>
+  <tabstop>cbDimADec</tabstop>
+  <tabstop>cbDimAZin</tabstop>
+  <tabstop>cbSplineSegs</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -1579,8 +1763,8 @@
    <slot>validate()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>252</x>
-     <y>355</y>
+     <x>261</x>
+     <y>492</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1595,8 +1779,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>252</x>
-     <y>355</y>
+     <x>261</x>
+     <y>492</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1611,8 +1795,8 @@
    <slot>updateLengthPrecision()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>187</x>
+     <y>150</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1627,8 +1811,8 @@
    <slot>updateDimLengthPrecision()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>494</x>
+     <y>241</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1643,8 +1827,8 @@
    <slot>updateAnglePrecision()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>495</x>
+     <y>150</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1659,8 +1843,8 @@
    <slot>updateDimAnglePrecision()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>494</x>
+     <y>356</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1675,8 +1859,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>161</x>
+     <y>86</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1691,8 +1875,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>495</x>
+     <y>150</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1707,8 +1891,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>187</x>
+     <y>150</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1723,8 +1907,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>495</x>
+     <y>179</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1739,8 +1923,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>187</x>
+     <y>179</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1755,8 +1939,8 @@
    <slot>updatePaperSize()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>46</x>
+     <y>104</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1771,12 +1955,108 @@
    <slot>updateUnitLabels()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>161</x>
+     <y>86</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
      <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>leMarginRight</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>QG_DlgOptionsDrawing</receiver>
+   <slot>updatePaperPreview()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>250</x>
+     <y>312</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>326</x>
+     <y>250</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>leMarginLeft</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>QG_DlgOptionsDrawing</receiver>
+   <slot>updatePaperPreview()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>144</x>
+     <y>341</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>326</x>
+     <y>250</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>leMarginBottom</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>QG_DlgOptionsDrawing</receiver>
+   <slot>updatePaperPreview()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>174</x>
+     <y>341</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>326</x>
+     <y>250</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>leMarginTop</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>QG_DlgOptionsDrawing</receiver>
+   <slot>updatePaperPreview()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>144</x>
+     <y>341</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>326</x>
+     <y>250</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lePaperWidth</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>QG_DlgOptionsDrawing</receiver>
+   <slot>updatePaperPreview()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>144</x>
+     <y>341</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>326</x>
+     <y>250</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lePaperHeight</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>QG_DlgOptionsDrawing</receiver>
+   <slot>updatePaperPreview()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>144</x>
+     <y>341</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>326</x>
+     <y>250</y>
     </hint>
    </hints>
   </connection>

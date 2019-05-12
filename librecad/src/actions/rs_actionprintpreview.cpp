@@ -330,4 +330,25 @@ bool RS_ActionPrintPreview::getPaperScaleFixed()
     return graphic->getPaperScaleFixed();
 }
 
+/** calculate number of pages needed to contain a drawing */
+void RS_ActionPrintPreview::calcPagesNum() {
+    if (graphic) {
+        RS_Vector printArea = graphic->getPrintAreaSize(false);
+        RS_Vector graphicSize = graphic->getSize() * graphic->getPaperScale();
+        int pX = ceil(graphicSize.x / printArea.x);
+        int pY = ceil(graphicSize.y / printArea.y);
+
+        if ( pX > 99 || pY > 99) {
+            RS_DIALOGFACTORY->commandMessage(tr("RS_ActionPrintPreview::calcPagesNum(): "
+                                                "Limit of pages has been exceeded."));
+            return;
+        }
+
+        graphic->setPagesNum(pX, pY);
+        graphic->centerToPage();
+        graphicView->zoomPage();
+        graphicView->redraw();
+    }
+}
+
 // EOF

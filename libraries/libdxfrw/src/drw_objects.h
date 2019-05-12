@@ -35,7 +35,8 @@ namespace DRW {
          VPORT,
          BLOCK_RECORD,
          APPID,
-         IMAGEDEF
+         IMAGEDEF,
+         PLOTSETTINGS
      };
 
 //pending VIEW, UCS, APPID, VP_ENT_HDR, GROUP, MLINESTYLE, LONG_TRANSACTION, XRECORD,
@@ -473,6 +474,40 @@ public:
     int resolution;           /*!< resolution units, code 281, 0=no, 2=centimeters, 5=inch */
 
     std::map<std::string,std::string> reactors;
+};
+
+
+//! Class to handle plotsettings entries
+/*!
+*  Class to handle plot settings object entries
+*  @author baranovskiykonstantin@gmail.com
+*/
+class DRW_PlotSettings : public DRW_TableEntry {
+    SETOBJFRIENDS
+public:
+    DRW_PlotSettings() {
+        reset();
+    }
+
+    void reset(){
+        tType = DRW::PLOTSETTINGS;
+        marginLeft = 0.0;
+        marginBottom = 0.0;
+        marginRight = 0.0;
+        marginTop = 0.0;
+        DRW_TableEntry::reset();
+    }
+
+protected:
+    void parseCode(int code, dxfReader *reader);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
+
+public:
+    UTF8STRING plotViewName;/*!< Plot view name, code 6 */
+    double marginLeft;      /*!< Size, in millimeters, of unprintable margin on left side of paper, code 40 */
+    double marginBottom;    /*!< Size, in millimeters, of unprintable margin on bottom side of paper, code 41 */
+    double marginRight;     /*!< Size, in millimeters, of unprintable margin on right side of paper, code 42 */
+    double marginTop;       /*!< Size, in millimeters, of unprintable margin on top side of paper, code 43 */
 };
 
 //! Class to handle AppId entries

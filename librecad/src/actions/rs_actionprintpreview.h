@@ -72,6 +72,7 @@ public:
     bool setScale(double f, bool autoZoom = true);
 	double getScale() const;
     void printWarning(const QString& s);
+    void calcPagesNum();
 
 	void setBlackWhite(bool bw);
     RS2::Unit getUnit();

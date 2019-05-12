@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>314</width>
+    <width>350</width>
     <height>37</height>
    </rect>
   </property>
@@ -183,6 +183,32 @@
     </widget>
    </item>
    <item>
+    <widget class="QToolButton" name="bCalcPagesNum">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Calculate number of pages needed to contain the drawing.</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/icons/icons.qrc">
+       <normaloff>:/icons/multi_pages.svg</normaloff>:/icons/multi_pages.svg</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="Line" name="sep1_2">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
@@ -282,6 +308,22 @@
     <hint type="destinationlabel">
      <x>154</x>
      <y>10</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bCalcPagesNum</sender>
+   <signal>clicked()</signal>
+   <receiver>Ui_PrintPreviewOptions</receiver>
+   <slot>calcPagesNum()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
     </hint>
    </hints>
   </connection>

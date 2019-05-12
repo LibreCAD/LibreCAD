@@ -233,6 +233,7 @@ public:
 
     RS_Vector getPaperSize();
     void setPaperSize(const RS_Vector& s);
+    RS_Vector getPrintAreaSize(bool total=true);
 
     RS_Vector getPaperInsertionBase();
     void setPaperInsertionBase(const RS_Vector& p);
@@ -302,6 +303,54 @@ public:
         return paperScaleFixed;
     }
 
+    /**
+     * Paper margins in millimeters
+     */
+    void setMargins(double left, double top, double right, double bottom)
+    {
+        if (left >= 0.0) marginLeft = left;
+        if (top >= 0.0) marginTop = top;
+        if (right >= 0.0) marginRight = right;
+        if (bottom >= 0.0) marginBottom = bottom;
+    }
+    double getMarginLeft() const
+    {
+        return marginLeft;
+    }
+    double getMarginTop() const
+    {
+        return marginTop;
+    }
+    double getMarginRight() const
+    {
+        return marginRight;
+    }
+    double getMarginBottom() const
+    {
+        return marginBottom;
+    }
+
+    /**
+     * Paper margins in graphic units
+     */
+    void setMarginsInUnits(double left, double top, double right, double bottom);
+    double getMarginLeftInUnits();
+    double getMarginTopInUnits();
+    double getMarginRightInUnits();
+    double getMarginBottomInUnits();
+
+    /**
+     * Number of pages drawing occupies
+     */
+    void setPagesNum(int horiz, int vert);
+    void setPagesNum(const QString &horizXvert);
+    int getPagesNumHoriz() {
+        return pagesNumH;
+    }
+    int getPagesNumVert() {
+        return pagesNumV;
+    }
+
     friend std::ostream& operator << (std::ostream& os, RS_Graphic& g);
 
     int clean();
@@ -318,6 +367,16 @@ private:
         RS2::CrosshairType crosshairType; //corss hair type used by isometric grid
         //if set to true, will refuse to modify paper scale
         bool paperScaleFixed;
+
+        // Paper margins in millimeters
+        double marginLeft;
+        double marginTop;
+        double marginRight;
+        double marginBottom;
+
+        // Number of pages drawing occupies
+        int pagesNumH;
+        int pagesNumV;
 };
 
 

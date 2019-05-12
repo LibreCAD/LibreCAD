@@ -41,6 +41,14 @@ struct PdfPrintParams {
         bool grayscale;
         double scale = 0.0;  // If scale <= 0.0, use value from dxf file.
         RS_Vector pageSize;  // If zeros, use value from dxf file.
+        struct {
+            double left = -1.0;
+            double top = -1.0;
+            double right = -1.0;
+            double bottom = -1.0;
+        } margins;           // If margin < 0.0, use value from dxf file.
+        int pagesH = 0;      // If number of pages < 1,
+        int pagesV = 0;      // use value from dxf file.
 };
 
 
