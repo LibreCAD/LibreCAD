@@ -73,6 +73,12 @@ void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
     case Moving:
 		pPoints->v2 = graphicView->toGraph(e->x(), e->y());
+		// if Shift is pressed the paper moves only horizontally
+		if (e->modifiers() & Qt::ShiftModifier)
+			pPoints->v2.y = pPoints->v1.y;
+		// if Ctrl is pressed the paper moves only vertically
+		if (e->modifiers() & Qt::ControlModifier)
+			pPoints->v2.x = pPoints->v1.x;
         if (graphic) {
             RS_Vector pinsbase = graphic->getPaperInsertionBase();
 
