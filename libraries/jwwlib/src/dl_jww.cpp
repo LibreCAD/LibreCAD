@@ -32,13 +32,8 @@
 #include <cassert>
 #include <cmath>
 
-
-//#include "dl_attributes.h"
-//#include "dl_codes.h"
 #include "dl_creationinterface.h"
-//#include "dl_writer_ascii.h"
 
-//#undef DEBUG
 #define SKIP_MOJI
 #ifdef DEBUG
 #include "rs_debug.h"
@@ -46,38 +41,6 @@
 
 #define  ArraySize(arr)  (sizeof(arr)/sizeof(arr[0]))
 
-/*
-#ifdef	_WINDOWS
-#include "iconv/iconv.h"
-#else
-#include "utf8/utf8cv.h"
-#include "UnicodeF.h"
-#endif
-*/
-
-//static const char* UTF8_CES = "UTF-8";
-//static const char* SHIFTJIS_CES = "SJIS";
-//static const char* EUCJP_CES = "EUC-JP";
-
-/*        black = 250,
-        green = 3,
-        red = 1,
-        brown = 15,
-        yellow = 2,
-        cyan = 4,
-        magenta = 6,
-        gray = 8,
-        blue = 5,
-        l_blue = 163,
-        l_green = 121,
-        l_cyan = 131,
-        l_red = 23,
-        l_magenta = 221,
-        l_gray = 252,
-        white = 7,
-        bylayer = 256,
-        byblock = 0
-*/
 static	int	colTable[] = {
 	250,	//RS_Color(0x00, 0x00, 0x00)
 	4,		//RS_Color(0x00, 0xC0, 0xC0)
@@ -152,11 +115,11 @@ void DL_Jww::CreateSen(DL_CreationInterface* creationInterface, CDataSen& DSen)
 	creationInterface->addLayer(DL_LayerData(lName,0));
 //#ifdef	DEBUG
 if(DSen.m_nPenStyle > ArraySize(lTable)-1)
-	std::cout << "線種番号 " << (WORD)DSen.m_nPenStyle << std::endl;   //線種番号
+	std::cout << "線種番号 " << (jwWORD)DSen.m_nPenStyle << std::endl;   //線種番号
 if(DSen.m_nPenColor > ArraySize(colTable)-1)
-	std::cout << "線色番号 " << (WORD)DSen.m_nPenColor << std::endl;   //線色番号
+	std::cout << "線色番号 " << (jwWORD)DSen.m_nPenColor << std::endl;   //線色番号
 if(DSen.m_nPenWidth > 26)
-	std::cout << "線色幅 " << (WORD)DSen.m_nPenWidth << std::endl;//線色幅
+	std::cout << "線色幅 " << (jwWORD)DSen.m_nPenWidth << std::endl;//線色幅
 //#endif
 	int width;
 	if(DSen.m_nPenWidth > 26)
@@ -223,9 +186,9 @@ std::cout << lName.ascii() << std::endl;
 	}
 	line->setLayer(lName);
 #ifdef	DEBUG
-std::cout << "線種番号 " << (WORD)DSen.m_nPenStyle << std::endl;   //線種番号
-std::cout << "線色番号 " << (WORD)DSen.m_nPenColor << std::endl;   //線色番号
-std::cout << "線色幅 " << (WORD)DSen.m_nPenWidth << std::endl;//線色幅
+std::cout << "線種番号 " << (jwWORD)DSen.m_nPenStyle << std::endl;   //線種番号
+std::cout << "線色番号 " << (jwWORD)DSen.m_nPenColor << std::endl;   //線色番号
+std::cout << "線色幅 " << (jwWORD)DSen.m_nPenWidth << std::endl;//線色幅
 #endif
 
 	// add the line to the graphic
@@ -585,7 +548,7 @@ printf("r = %d, left = %d, bufleft = %d\n", r, left, bufleft);
 RS_DEBUG->setLevel(RS_Debug::D_DEBUGGING);
 #endif
 	data3.updateMode = RS2::Update;
-	//DWORD m_nMojiShu;//文字種(斜体文字は20000、ボールド体は10000を加えた数値)
+	//jwDWORD m_nMojiShu;//文字種(斜体文字は20000、ボールド体は10000を加えた数値)
 
 	text = new RS_Text(graphic, data3);
 	RS2::LineType ltype = lTable[DMoji.m_nPenStyle];
@@ -642,7 +605,7 @@ void DL_Jww::CreateSunpou(DL_CreationInterface* creationInterface, CDataSunpou& 
 	CreateMoji(creationInterface, DSunpou.m_Moji);	//文字メンバ
 #ifdef FINISHED
 //	if(DSunpou.nOldVersionSave >=420){
-////	WORD m_bSxfMode;	//SXFのモード
+////	jwWORD m_bSxfMode;	//SXFのモード
 //		CreateSen(graphic, DSunpou.m_SenHo1);	//補助線1
 //		CreateSen(graphic, DSunpou.m_SenHo2);	//補助線2
 //		CreateTen(graphic, DSunpou.m_Ten1);	//矢印（点)1

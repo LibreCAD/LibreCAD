@@ -320,14 +320,18 @@ double RS_Math::eval(const QString& expr, bool* ok) {
     }
     try{
         mu::Parser p;
-        p.DefineConst("pi",M_PI);
+        p.DefineConst(_T("pi"),M_PI);
+#ifdef _UNICODE
+        p.SetExpr(expr_copy.toStdWString());
+#else
         p.SetExpr(expr_copy.toStdString());
+#endif
         ret=p.Eval();
         *ok=true;
     }
     catch (mu::Parser::exception_type &e)
     {
-        std::cout << e.GetMsg() << std::endl;
+        mu::console() << e.GetMsg() << std::endl;
         *ok=false;
     }
     return ret;
