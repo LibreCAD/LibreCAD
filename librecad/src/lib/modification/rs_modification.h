@@ -181,6 +181,7 @@ public:
         bool changeColor;
         bool changeLineType;
         bool changeWidth;
+        bool applyBlockDeep;
 };
 
 
@@ -230,7 +231,7 @@ public:
 	void remove();
 	void revertDirection();
 	bool changeAttributes(RS_AttributesData& data);
-    bool changeAttributes(RS_AttributesData& data, RS_EntityContainer* container, std::vector<RS_Entity*> addList);
+    bool changeAttributes(RS_AttributesData& data, RS_EntityContainer* container);
 
         void copy(const RS_Vector& ref, const bool cut);
 private:

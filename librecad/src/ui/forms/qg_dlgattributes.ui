@@ -63,6 +63,17 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QCheckBox" name="cbBlockDeep">
+         <property name="toolTip">
+          <string>Apply attributes also to all sub-entities of selected INSERT.
+This recursively modifies all entities of the Block itself.</string>
+         </property>
+         <property name="text">
+          <string>Apply attributes Block-deep</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
     </layout>
