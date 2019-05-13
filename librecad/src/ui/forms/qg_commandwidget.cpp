@@ -58,7 +58,7 @@ QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::Window
     connect(leCommand, SIGNAL(message(QString)), this, SLOT(appendHistory(QString)));
     connect(leCommand, &QG_CommandEdit::keycode, this, &QG_CommandWidget::handleKeycode);
 
-    auto a1 = new QAction(QObject::tr("Keycode Mode"), this);
+    auto a1 = new QAction(QObject::tr("Keycode mode"), this);
     a1->setObjectName("keycode_action");
     a1->setCheckable(true);
     connect(a1, &QAction::toggled, this, &QG_CommandWidget::setKeycodeMode);
@@ -71,19 +71,19 @@ QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::Window
         a1->setChecked(true);
     }
 
-    auto a2 = new QAction(QObject::tr("Load Command File"), this);
+    auto a2 = new QAction(QObject::tr("Load command file"), this);
     connect(a2, &QAction::triggered, this, &QG_CommandWidget::chooseCommandFile);
     options_button->addAction(a2);
 
-    auto a3 = new QAction(QObject::tr("Paste Multiple Commands"), this);
+    auto a3 = new QAction(QObject::tr("Paste multiple commands"), this);
     connect(a3, &QAction::triggered, leCommand, &QG_CommandEdit::modifiedPaste);
     options_button->addAction(a3);
 
-	auto a4 = new QAction(QObject::tr("Allow Whitespace"), this);
+	auto a4 = new QAction(QObject::tr("Evaluate when SPACE BAR is pressed"), this);
 	connect(a4, &QAction::triggered, this, &QG_CommandWidget::allowWhiteSpaceToggle);
 	a4->setObjectName("allow_whitespace");
 	a4->setCheckable(true);
-    a4->setChecked(RS_SETTINGS->readNumEntry("/command_interface_allow_whitespace", true));
+    a4->setChecked(!RS_SETTINGS->readNumEntry("/command_interface_allow_whitespace", true));
 	options_button->addAction(a4);
 
     options_button->setStyleSheet("QToolButton::menu-indicator { image: none; }");
