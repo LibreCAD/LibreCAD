@@ -34,6 +34,7 @@
 #include <QClipboard>
 
 #include <rs_math.h>
+#include <rs_settings.h>
 
 
 /**
@@ -142,11 +143,15 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e)
             break;
 
         case Qt::Key_Enter:
-        case Qt::Key_Space:
         case Qt::Key_Return:
             processInput(text());
-
             break;
+		case Qt::Key_Space:
+            if (!RS_SETTINGS->readNumEntry("/command_interface_allow_whitespace", true))
+				processInput(text());
+            else
+                QLineEdit::keyPressEvent(e);
+			break;
         case Qt::Key_Escape:
             if (text().isEmpty()) {
                 emit escape();

@@ -37,6 +37,7 @@
 #include "rs_commandevent.h"
 #include "rs_system.h"
 #include "rs_utility.h"
+#include "rs_settings.h"
 
 /*
  *  Constructs a QG_CommandWidget as a child of 'parent', with the
@@ -77,6 +78,13 @@ QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::Window
     auto a3 = new QAction(QObject::tr("Paste Multiple Commands"), this);
     connect(a3, &QAction::triggered, leCommand, &QG_CommandEdit::modifiedPaste);
     options_button->addAction(a3);
+
+	auto a4 = new QAction(QObject::tr("Allow Whitespace"), this);
+	connect(a4, &QAction::triggered, this, &QG_CommandWidget::allowWhiteSpaceToggle);
+	a4->setObjectName("allow_whitespace");
+	a4->setCheckable(true);
+    a4->setChecked(RS_SETTINGS->readNumEntry("/command_interface_allow_whitespace", true));
+	options_button->addAction(a4);
 
     options_button->setStyleSheet("QToolButton::menu-indicator { image: none; }");
 }
@@ -283,6 +291,14 @@ void QG_CommandWidget::chooseCommandFile()
     {
         leCommand->readCommandFile(path);
     }
+}
+
+void QG_CommandWidget::allowWhiteSpaceToggle()
+{
+	auto action = findChild<QAction*>("allow_whitespace");
+    bool value = !RS_SETTINGS->readNumEntry("/command_interface_allow_whitespace", true);
+	RS_SETTINGS->writeEntry("/command_interface_allow_whitespace", value);
+	action->setChecked(value);
 }
 
 void QG_CommandWidget::handleKeycode(QString code)

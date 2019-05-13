@@ -56,6 +56,7 @@ public slots:
 protected slots:
     virtual void languageChange();
     virtual void chooseCommandFile();
+	virtual void allowWhiteSpaceToggle();
 
 private:
     QG_ActionHandler* actionHandler;
