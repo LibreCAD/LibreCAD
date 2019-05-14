@@ -132,6 +132,7 @@ void RS_Image::update() {
 	img.reset(new QImage(data.file));
 	if (!img->isNull()) {
 		data.size = RS_Vector(img->width(), img->height());
+		calculateBorders(); // image update need this.
     }
 
     RS_DEBUG->print("RS_Image::update: OK");
