@@ -28,7 +28,6 @@
 #define RS_MATH_H
 
 #include <vector>
-#include <string>
 
 class RS_Vector;
 class RS_VectorSolutions;
@@ -39,10 +38,8 @@ class QString;
  */
 class RS_Math {
 private:
-    static void replaceAll(QString& str, const std::string& from, const std::string& to);
 	RS_Math() = delete;
 public:
-    static void imperialTranslate(QString& str);
 	static int round(double v);
     static double pow(double x, double y);
     static RS_Vector pow(RS_Vector x, double y);
