@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2019 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -35,48 +36,48 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionDrawLine : public RS_PreviewActionInterface {
-	Q_OBJECT
-public:
-	/**
-	 * Action States.
-	 */
-	enum Status {
-		SetStartpoint,   /**< Setting the startpoint.  */
-		SetEndpoint      /**< Setting the endpoint. */
-	};
+class RS_ActionDrawLine : public RS_PreviewActionInterface
+{
+    Q_OBJECT
 
 public:
-	RS_ActionDrawLine(RS_EntityContainer& container,
-					  RS_GraphicView& graphicView);
-	~RS_ActionDrawLine() override;
+    /// Action States
+    enum Status {
+        SetStartpoint,   ///< Setting the startpoint
+        SetEndpoint      ///< Setting the endpoint
+    };
 
-	void reset();
+public:
+    RS_ActionDrawLine(RS_EntityContainer& container,
+                      RS_GraphicView& graphicView);
+    ~RS_ActionDrawLine() override;
 
-	void init(int status=0) override;
-	void trigger() override;
+    void reset();
 
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
+    void init(int status=0) override;
+    void trigger() override;
 
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-	QStringList getAvailableCommands() override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void mouseReleaseEvent(QMouseEvent* e) override;
 
-	void showOptions() override;
-	void hideOptions() override;
+    void coordinateEvent(RS_CoordinateEvent* e) override;
+    void commandEvent(RS_CommandEvent* e) override;
+    QStringList getAvailableCommands() override;
 
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-	void addHistory(const RS_Vector& v);//add history after the current point
+    void showOptions() override;
+    void hideOptions() override;
 
-	void close();
-	void undo();
-	void redo();
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
+    void addHistory(const RS_Vector& v);//add history after the current point
+
+    void close();
+    void undo();
+    void redo();
 
 protected:
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
 };
 
 #endif
