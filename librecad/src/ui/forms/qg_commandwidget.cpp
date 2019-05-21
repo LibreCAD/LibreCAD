@@ -79,13 +79,6 @@ QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::Window
     connect(a3, &QAction::triggered, leCommand, &QG_CommandEdit::modifiedPaste);
     options_button->addAction(a3);
 
-	auto a4 = new QAction(QObject::tr("Evaluate when SPACE BAR is pressed"), this);
-	connect(a4, &QAction::triggered, this, &QG_CommandWidget::allowWhiteSpaceToggle);
-	a4->setObjectName("allow_whitespace");
-	a4->setCheckable(true);
-    a4->setChecked(!RS_SETTINGS->readNumEntry("/command_interface_allow_whitespace", true));
-	options_button->addAction(a4);
-
     options_button->setStyleSheet("QToolButton::menu-indicator { image: none; }");
 }
 
@@ -291,14 +284,6 @@ void QG_CommandWidget::chooseCommandFile()
     {
         leCommand->readCommandFile(path);
     }
-}
-
-void QG_CommandWidget::allowWhiteSpaceToggle()
-{
-	auto action = findChild<QAction*>("allow_whitespace");
-    bool value = !RS_SETTINGS->readNumEntry("/command_interface_allow_whitespace", true);
-	RS_SETTINGS->writeEntry("/command_interface_allow_whitespace", value);
-	action->setChecked(value);
 }
 
 void QG_CommandWidget::handleKeycode(QString code)

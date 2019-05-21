@@ -147,9 +147,10 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e)
             processInput(text());
             break;
 		case Qt::Key_Space:
-            if (!RS_SETTINGS->readNumEntry("/command_interface_allow_whitespace", true))
+			if (RS_SETTINGS->readNumEntry("/Keyboard/EvaluateCommandOnSpace", true) ||
+				(text().isEmpty() && RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", true)))
 				processInput(text());
-            else
+            else if (!text().isEmpty())
                 QLineEdit::keyPressEvent(e);
 			break;
         case Qt::Key_Escape:
