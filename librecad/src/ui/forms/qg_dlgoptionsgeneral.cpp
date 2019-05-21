@@ -200,10 +200,8 @@ void QG_DlgOptionsGeneral::init()
     cad_toolbars_checkbox->setChecked(RS_SETTINGS->readNumEntry("/EnableCADToolbars", 1));
     RS_SETTINGS->endGroup();
 
-	//RS_SETTINGS->beginGroup("/Keyboard");
 	cbEvaluateOnSpace->setChecked(RS_SETTINGS->readNumEntry("/Keyboard/EvaluateCommandOnSpace", false));
 	cbToggleFreeSnapOnSpace->setChecked(RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false));
-	//RS_SETTINGS->endGroup();
 
     restartNeeded = false;
 }
@@ -296,10 +294,8 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/EnableCADToolbars", cad_toolbars_checkbox->isChecked()?1:0);
         RS_SETTINGS->endGroup();
 
-		//RS_SETTINGS->beginGroup("/Keyboard");
 		RS_SETTINGS->writeEntry("/Keyboard/EvaluateCommandOnSpace", cbEvaluateOnSpace->isChecked() ? 1 : 0);
 		RS_SETTINGS->writeEntry("/Keyboard/ToggleFreeSnapOnSpace", cbToggleFreeSnapOnSpace->isChecked() ? 1 : 0);
-		//RS_SETTINGS->endGroup();
     }
 	
 	if (restartNeeded==true) {

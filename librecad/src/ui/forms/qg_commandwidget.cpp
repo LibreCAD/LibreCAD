@@ -37,7 +37,6 @@
 #include "rs_commandevent.h"
 #include "rs_system.h"
 #include "rs_utility.h"
-#include "rs_settings.h"
 
 /*
  *  Constructs a QG_CommandWidget as a child of 'parent', with the
