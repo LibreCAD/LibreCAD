@@ -39,7 +39,7 @@
 #include "rs_debug.h"
 
 namespace {
-auto enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle,
+static auto enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle,
 				 RS2::EntityEllipse};
 }
 

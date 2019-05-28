@@ -36,7 +36,7 @@
 #include "rs_debug.h"
 
 namespace{
-auto circleType={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse};
+static auto circleType={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse};
 }
 
 RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(

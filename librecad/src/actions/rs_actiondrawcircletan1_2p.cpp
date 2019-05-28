@@ -38,7 +38,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 namespace{
 //list of entity types supported by current action
-auto enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
+static auto enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
 }
 
 struct RS_ActionDrawCircleTan1_2P::Points {

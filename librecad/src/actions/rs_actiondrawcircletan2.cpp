@@ -34,7 +34,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_debug.h"
 
 namespace {
-auto enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
+static auto enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
 }
 
 struct RS_ActionDrawCircleTan2::Points {
