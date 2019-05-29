@@ -1,0 +1,9 @@
+files:
+  - source: /librecad/ts/librecad_en.ts
+    translation: /librecad/ts/librecad_%two_letters_code%.ts
+  - source: /librecad/ts/librecad_en.ts
+    translation: /librecad/ts/librecad_%locale_with_underscore%.ts
+  - source: /plugins/ts/plugins_en.ts
+    translation: /plugins/ts/plugins_%two_letters_code%.ts
+  - source: /plugins/ts/plugins_en.ts
+    translation: /plugins/ts/plugins_%locale_with_underscore%.ts
