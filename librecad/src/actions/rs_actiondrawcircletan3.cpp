@@ -36,7 +36,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_debug.h"
 
 namespace {
-auto enTypeList={RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPoint};
+auto enTypeList3={RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPoint};
 }
 
 struct RS_ActionDrawCircleTan3::Points {
@@ -125,7 +125,7 @@ void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent* e) {
 
 	switch(getStatus() ){
 	case SetCenter: {
-		//        RS_Entity*  en = catchEntity(e, enTypeList, RS2::ResolveAll);
+		//        RS_Entity*  en = catchEntity(e, enTypeList3, RS2::ResolveAll);
 		pPoints->coord= graphicView->toGraph(e->x(), e->y());
 		//        circles[getStatus()]=static_cast<RS_Line*>(en);
 		deletePreview();
@@ -326,7 +326,7 @@ bool RS_ActionDrawCircleTan3::preparePreview(){
 
 RS_Entity* RS_ActionDrawCircleTan3::catchCircle(QMouseEvent* e) {
     RS_Entity* ret=nullptr;
-	RS_Entity*  en = catchEntity(e,enTypeList, RS2::ResolveAll);
+	RS_Entity*  en = catchEntity(e,enTypeList3, RS2::ResolveAll);
 	if (!en) return ret;
 	if (!en->isVisible()) return ret;
 	for(int i=0;i<getStatus();++i) {

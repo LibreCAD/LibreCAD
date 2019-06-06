@@ -36,7 +36,7 @@
 #include "rs_debug.h"
 
 namespace{
-auto circleType={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse};
+auto circleType2={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse};
 }
 
 RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(
@@ -100,7 +100,7 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent* e) {
 //    RS_DEBUG->print("RS_ActionDrawLineTangent2::mouseMoveEvent begin");
 	e->accept();
     if(getStatus() != SetCircle2) return;
-	RS_Entity* en= catchEntity(e, circleType, RS2::ResolveAll);
+	RS_Entity* en= catchEntity(e, circleType2, RS2::ResolveAll);
 	if(!en || en==circle1) return;
 	if(circle2){
 		circle2->setHighlighted(false);
@@ -140,7 +140,7 @@ void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent* e) {
     switch (getStatus()) {
     case SetCircle1:
     {
-        circle1 = catchEntity(e, circleType, RS2::ResolveAll);
+        circle1 = catchEntity(e, circleType2, RS2::ResolveAll);
 		if(!circle1) return;
         circle1->setHighlighted(true);
 		graphicView->drawEntity(circle1);

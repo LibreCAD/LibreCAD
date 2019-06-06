@@ -36,7 +36,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_debug.h"
 
 namespace {
-auto enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
+auto enTypeList2_1={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
 }
 
 struct RS_ActionDrawCircleTan2_1P::Points {
@@ -184,7 +184,7 @@ bool RS_ActionDrawCircleTan2_1P::preparePreview(){
 
 RS_Entity* RS_ActionDrawCircleTan2_1P::catchCircle(QMouseEvent* e) {
 	RS_Entity* ret=nullptr;
-    RS_Entity*  en = catchEntity(e,enTypeList, RS2::ResolveAll);
+    RS_Entity*  en = catchEntity(e,enTypeList2_1, RS2::ResolveAll);
 	if (!en) return ret;
 	if (!en->isVisible()) return ret;
 	for(auto p: pPoints->circles){

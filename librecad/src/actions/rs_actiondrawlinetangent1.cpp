@@ -37,7 +37,7 @@
 #include "rs_debug.h"
 
 namespace{
-auto circleType={RS2::EntityArc, RS2::EntityCircle,
+auto circleType1={RS2::EntityArc, RS2::EntityCircle,
 				 RS2::EntityEllipse, RS2::EntitySplinePoints
 				};
 }
@@ -106,7 +106,7 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
 		break;
 
 	case SetCircle: {
-		RS_Entity* en = catchEntity(e, circleType, RS2::ResolveAll);
+		RS_Entity* en = catchEntity(e, circleType1, RS2::ResolveAll);
 		if (en && (en->isArc() ||
 				   en->rtti()==RS2::EntitySplinePoints)) {
 			if(circle){

@@ -38,7 +38,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 namespace{
 //list of entity types supported by current action
-auto enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
+auto enTypeList1_2={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
 }
 
 struct RS_ActionDrawCircleTan1_2P::Points {
@@ -181,7 +181,7 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent* e) {
     }
     case SetCenter: {
 
-        //        RS_Entity*  en = catchEntity(e, enTypeList, RS2::ResolveAll);
+        //        RS_Entity*  en = catchEntity(e, enTypeList1_2, RS2::ResolveAll);
 		pPoints->coord= graphicView->toGraph(e->x(), e->y());
         //        circles[getStatus()]=static_cast<RS_Line*>(en);
         if(preparePreview()) {
@@ -272,7 +272,7 @@ bool RS_ActionDrawCircleTan1_2P::preparePreview(){
 
 RS_Entity* RS_ActionDrawCircleTan1_2P::catchCircle(QMouseEvent* e) {
 	RS_Entity* ret=nullptr;
-	RS_Entity* en = catchEntity(e,enTypeList, RS2::ResolveAll);
+	RS_Entity* en = catchEntity(e,enTypeList1_2, RS2::ResolveAll);
 	if (!en) return ret;
 	if (!en->isVisible()) return ret;
 	if (en->getParent()) {
