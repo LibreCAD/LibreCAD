@@ -9441,7 +9441,7 @@ Continue?</translation>
     </message>
     <message>
       <source>Line</source>
-      <translation type="unfinished">Line</translation>
+      <translation>Çizgi</translation>
     </message>
     <message>
       <source>Tangential</source>
@@ -9453,30 +9453,30 @@ Continue?</translation>
     </message>
     <message>
       <source>Angle</source>
-      <translation type="unfinished">Angle</translation>
+      <translation>Açı</translation>
     </message>
     <message>
       <source>Radius:</source>
-      <translation type="unfinished">Radius:</translation>
+      <translation>Yarıçap:</translation>
     </message>
     <message>
       <source>Angle:</source>
-      <translation type="unfinished">Angle:</translation>
+      <translation>Açı:</translation>
     </message>
     <message>
       <source>Counter Clockwise</source>
-      <translation type="unfinished">Counter Clockwise</translation>
+      <translation>Akrep Yönünün Tersi</translation>
     </message>
     <message>
       <source>Clockwise</source>
-      <translation type="unfinished">Clockwise</translation>
+      <translation>Akrep Yönü</translation>
     </message>
   </context>
   <context>
     <name>Ui_PrintPreviewOptions</name>
     <message>
       <source>Print Preview Options</source>
-      <translation type="unfinished">Print Preview Options</translation>
+      <translation>Yazdırma Önzileme Seçenekleri</translation>
     </message>
     <message>
       <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -9503,37 +9503,37 @@ Continue?</translation>
     <name>Ui_RoundOptions</name>
     <message>
       <source>Round Options</source>
-      <translation type="unfinished">Round Options</translation>
+      <translation>Yuvarlatma Seçenekleri</translation>
     </message>
     <message>
       <source>Check to trim both edges to the rounding</source>
-      <translation type="unfinished">Check to trim both edges to the rounding</translation>
+      <translation>Yuvarlatılacak köşenin kenarlarının kırpılmasını denetler</translation>
     </message>
     <message>
       <source>Trim</source>
-      <translation type="unfinished">Trim</translation>
+      <translation>Kırp</translation>
     </message>
     <message>
       <source>Radius:</source>
-      <translation type="unfinished">Radius:</translation>
+      <translation>Yarıçap:</translation>
     </message>
   </context>
   <context>
     <name>Ui_SnapDistOptions</name>
     <message>
       <source>Snap Distance Options</source>
-      <translation type="unfinished">Snap Distance Options</translation>
+      <translation>Yakalama Mesafesi Seçenekleri</translation>
     </message>
     <message>
       <source>Distance:</source>
-      <translation type="unfinished">Distance:</translation>
+      <translation>Mesafe:</translation>
     </message>
   </context>
   <context>
     <name>Ui_SnapMiddleOptions</name>
     <message>
       <source>Snap Distance Options</source>
-      <translation type="unfinished">Snap Distance Options</translation>
+      <translation>Yakalama Mesafesi Seçenekleri</translation>
     </message>
     <message>
       <source>Middle Points:</source>
@@ -9567,30 +9567,30 @@ Continue?</translation>
     <name>Ui_TextOptions</name>
     <message>
       <source>Text Options</source>
-      <translation type="unfinished">Text Options</translation>
+      <translation>Metin Seçenekleri</translation>
     </message>
     <message>
       <source>Text:</source>
-      <translation type="unfinished">Text:</translation>
+      <translation>Metin:</translation>
     </message>
     <message>
       <source>Angle:</source>
-      <translation type="unfinished">Angle:</translation>
+      <translation>Açı:</translation>
     </message>
   </context>
   <context>
     <name>Ui_TrimAmountOptions</name>
     <message>
       <source>Trim Amount Options</source>
-      <translation type="unfinished">Trim Amount Options</translation>
+      <translation>Kırpma Uzunluğu Seçenekleri</translation>
     </message>
     <message>
       <source>Distance. Negative values for trimming, positive values for extending.</source>
-      <translation type="unfinished">Distance. Negative values for trimming, positive values for extending.</translation>
+      <translation>Mesafe. Negatif değerler kısaltır, pozitif değerler uzatır.</translation>
     </message>
     <message>
       <source>Length:</source>
-      <translation type="unfinished">Length:</translation>
+      <translation>Uzunluk:</translation>
     </message>
     <message>
       <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
