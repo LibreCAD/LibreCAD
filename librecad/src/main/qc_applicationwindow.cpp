@@ -201,9 +201,20 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     mdiAreaCAD = central->getMdiArea();
     mdiAreaCAD->setDocumentMode(true);
 
+	RS_SETTINGS->beginGroup("/WindowOptions");
+	setTabMode(static_cast<QTabWidget::TabShape>(RS_SETTINGS->readNumEntry("/TabShape")), 
+		static_cast<QTabWidget::TabPosition>(RS_SETTINGS->readNumEntry("/TabPosition")));
+	RS_SETTINGS->endGroup();
+
     settings.beginGroup("Startup");
-    if (settings.value("TabMode", 0).toBool())
-        mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
+	if (settings.value("TabMode", 0).toBool()) {
+		mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
+		QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar*>();
+		QTabBar *tabBar = tabBarList.at(0);
+		if (tabBar)
+			tabBar->setExpanding(false);
+	}
+        
     bool enable_left_sidebar = settings.value("EnableLeftSidebar", 1).toBool();
     bool enable_cad_toolbars = settings.value("EnableCADToolbars", 1).toBool();
     settings.endGroup();
@@ -381,6 +392,20 @@ QMenu *QC_ApplicationWindow::findMenu(const QString &searchMenu, const QObjectLi
         ++i;
     }
     return 0;
+}
+
+void QC_ApplicationWindow::setTabMode(QTabWidget::TabShape s, QTabWidget::TabPosition p)
+{
+	mdiAreaCAD->setTabShape(s);
+	mdiAreaCAD->setTabPosition(p);
+}
+
+void QC_ApplicationWindow::setMaximized(bool maximized)
+{
+	RS_SETTINGS->beginGroup("/WindowOptions");
+	RS_SETTINGS->writeEntry("/Maximized", maximized);
+	RS_SETTINGS->endGroup();
+	if (maximized) mdiAreaCAD->currentSubWindow()->showMaximized();
 }
 
 /**
@@ -812,21 +837,67 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
 void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
 
     RS_DEBUG->print( RS_Debug::D_NOTICE, "QC_ApplicationWindow::slotWindowsMenuAboutToShow");
+	RS_SETTINGS->beginGroup("/WindowOptions");
 
+	QAction* menuItem;
     windowsMenu->clear();
 
-    if (mdiAreaCAD->viewMode() == QMdiArea::TabbedView) {
-        windowsMenu->addAction( tr("Su&b-Window mode"), this, SLOT(slotToggleTab()));
-    } else {
-        windowsMenu->addAction( tr("Ta&b mode"), this, SLOT(slotToggleTab()));
-        if (window_list.size() > 1) {
-            windowsMenu->addAction( tr("&Cascade"), this, SLOT(slotCascade()));
-            windowsMenu->addAction( tr("&Tile"), this, SLOT(slotTile()));
-            windowsMenu->addAction( tr("Tile &Vertically"), this, SLOT(slotTileVertical()));
-            windowsMenu->addAction( tr("Tile &Horizontally"), this, SLOT(slotTileHorizontal()));
-        }
-    }
+	menuItem = windowsMenu->addAction(tr("Ta&b mode"), this, SLOT(slotToggleTab()));
+	menuItem->setCheckable(true);
+	menuItem->setChecked(mdiAreaCAD->viewMode() == QMdiArea::TabbedView);
 
+	menuItem = windowsMenu->addAction( tr("&Window mode"), this, SLOT(slotToggleTab()));
+	menuItem->setCheckable(true);
+	menuItem->setChecked(mdiAreaCAD->viewMode() != QMdiArea::TabbedView);
+
+	
+	if (mdiAreaCAD->viewMode() == QMdiArea::TabbedView) {
+		QMenu* menu = new QMenu(tr("&Layout"), windowsMenu);
+		windowsMenu->addMenu(menu);
+
+		menuItem = menu->addAction(tr("Rounded"), this, SLOT(slotTabShapeRounded()));
+		menuItem->setCheckable(true);
+		menuItem->setChecked(RS_SETTINGS->readNumEntry("/TabShape") == QTabWidget::Rounded);
+
+		menuItem = menu->addAction(tr("Triangular"), this, SLOT(slotTabShapeTriangular()));
+		menuItem->setCheckable(true);
+		menuItem->setChecked(RS_SETTINGS->readNumEntry("/TabShape") == QTabWidget::Triangular);
+
+		menu->addSeparator();
+
+		menuItem = menu->addAction(tr("North"), this, SLOT(slotTabPositionNorth()));
+		menuItem->setCheckable(true);
+		menuItem->setChecked(RS_SETTINGS->readNumEntry("/TabPosition") == QTabWidget::North);
+
+		menuItem = menu->addAction(tr("South"), this, SLOT(slotTabPositionSouth()));
+		menuItem->setCheckable(true);
+		menuItem->setChecked(RS_SETTINGS->readNumEntry("/TabPosition") == QTabWidget::South);
+
+		menuItem = menu->addAction(tr("East"), this, SLOT(slotTabPositionEast()));
+		menuItem->setCheckable(true);
+		menuItem->setChecked(RS_SETTINGS->readNumEntry("/TabPosition") == QTabWidget::East);
+
+		menuItem = menu->addAction(tr("West"), this, SLOT(slotTabPositionWest()));
+		menuItem->setCheckable(true);
+		menuItem->setChecked(RS_SETTINGS->readNumEntry("/TabPosition") == QTabWidget::West);
+
+	} else {
+		QMenu* menu = new QMenu(tr("&Arrange"), windowsMenu);
+		windowsMenu->addMenu(menu);
+
+		menuItem = menu->addAction(tr("&Maximized"), this, SLOT(slotSetMaximized()));
+		menuItem->setCheckable(true);
+		menuItem->setChecked(RS_SETTINGS->readNumEntry("/Maximized"));
+
+		menuItem = menu->addAction(tr("&Cascade"), this, SLOT(slotCascade()));
+		menuItem = menu->addAction(tr("&Tile"), this, SLOT(slotTile()));
+		menuItem = menu->addAction(tr("Tile &Vertically"), this, SLOT(slotTileVertical()));
+		menuItem = menu->addAction(tr("Tile &Horizontally"), this, SLOT(slotTileHorizontal()));
+	}
+	
+
+	RS_SETTINGS->endGroup();
+        
     windowsMenu->addSeparator();
     QMdiSubWindow* active= mdiAreaCAD->activeSubWindow();
     for (int i=0; i< window_list.size(); ++i) {
@@ -874,6 +945,7 @@ void QC_ApplicationWindow::slotWindowsMenuActivated(bool /*id*/) {
  * Cascade MDI windows
  */
 void QC_ApplicationWindow::slotTile() {
+	setMaximized(false);
         mdiAreaCAD->tileSubWindows();
         slotZoomAuto();
 }
@@ -892,7 +964,8 @@ void QC_ApplicationWindow::slotZoomAuto() {
 void QC_ApplicationWindow::slotCascade() {
 //    mdiAreaCAD->cascadeSubWindows();
 //return;
-    QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
+	setMaximized(false);
+	QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
     switch(windows.size()){
     case 1:
         mdiAreaCAD->tileSubWindows();
@@ -960,6 +1033,7 @@ void QC_ApplicationWindow::slotCascade() {
 void QC_ApplicationWindow::slotTileHorizontal() {
 
     RS_DEBUG->print("QC_ApplicationWindow::slotTileHorizontal");
+	setMaximized(false);
 
     // primitive horizontal tiling
     QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
@@ -991,9 +1065,10 @@ void QC_ApplicationWindow::slotTileHorizontal() {
  * Tiles MDI windows vertically.
  */
 void QC_ApplicationWindow::slotTileVertical() {
-
+	
     RS_DEBUG->print("QC_ApplicationWindow::slotTileVertical()");
-
+	setMaximized(false);
+	
     // primitive horizontal tiling
     QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
     if (windows.count()<=1) {
@@ -1019,14 +1094,74 @@ void QC_ApplicationWindow::slotTileVertical() {
     mdiAreaCAD->activeSubWindow()->raise();
 }
 
+void QC_ApplicationWindow::slotSetMaximized()
+{
+	setMaximized(true);
+}
+
+void QC_ApplicationWindow::slotTabShapeRounded()
+{
+	RS_SETTINGS->beginGroup("/WindowOptions");
+	RS_SETTINGS->writeEntry("/TabShape", QTabWidget::Rounded);
+	RS_SETTINGS->endGroup();
+	mdiAreaCAD->setTabShape(QTabWidget::Rounded);
+}
+
+void QC_ApplicationWindow::slotTabShapeTriangular()
+{
+	RS_SETTINGS->beginGroup("/WindowOptions");
+	RS_SETTINGS->writeEntry("/TabShape", QTabWidget::Triangular);
+	RS_SETTINGS->endGroup();
+	mdiAreaCAD->setTabShape(QTabWidget::Triangular);
+}
+
+void QC_ApplicationWindow::slotTabPositionNorth()
+{
+	RS_SETTINGS->beginGroup("/WindowOptions");
+	RS_SETTINGS->writeEntry("/TabPosition", QTabWidget::North);
+	RS_SETTINGS->endGroup();
+	mdiAreaCAD->setTabPosition(QTabWidget::North);
+}
+
+void QC_ApplicationWindow::slotTabPositionSouth()
+{
+	RS_SETTINGS->beginGroup("/WindowOptions");
+	RS_SETTINGS->writeEntry("/TabPosition", QTabWidget::South);
+	RS_SETTINGS->endGroup();
+	mdiAreaCAD->setTabPosition(QTabWidget::South);
+}
+
+void QC_ApplicationWindow::slotTabPositionEast()
+{
+	RS_SETTINGS->beginGroup("/WindowOptions");
+	RS_SETTINGS->writeEntry("/TabPosition", QTabWidget::East);
+	RS_SETTINGS->endGroup();
+	mdiAreaCAD->setTabPosition(QTabWidget::East);
+}
+
+void QC_ApplicationWindow::slotTabPositionWest()
+{
+	RS_SETTINGS->beginGroup("/WindowOptions");
+	RS_SETTINGS->writeEntry("/TabPosition", QTabWidget::West);
+	RS_SETTINGS->endGroup();
+	mdiAreaCAD->setTabPosition(QTabWidget::West);
+}
+
 /**
  * toggles between subwindow and tab mode for the MdiArea
  */
 void QC_ApplicationWindow::slotToggleTab()
 {
+	RS_SETTINGS->beginGroup("Startup");
     if (mdiAreaCAD->viewMode() == QMdiArea::SubWindowView)
     {
+		RS_SETTINGS->writeEntry("/TabMode", 1);
         mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
+		QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar*>();
+		QTabBar *tabBar = tabBarList.at(0);
+		if (tabBar) {
+			tabBar->setExpanding(false);
+		}
         QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
         QMdiSubWindow* active=mdiAreaCAD->activeSubWindow();
         for(int i=0;i<windows.size();i++){
@@ -1043,9 +1178,11 @@ void QC_ApplicationWindow::slotToggleTab()
     }
     else
     {
+		RS_SETTINGS->writeEntry("/TabMode", 0);
         mdiAreaCAD->setViewMode(QMdiArea::SubWindowView);
         slotCascade();
     }
+	RS_SETTINGS->endGroup();
 }
 
 /**
@@ -1383,20 +1520,8 @@ void QC_ApplicationWindow::slotFileOpen() {
 QString QC_ApplicationWindow::
     format_filename_caption(const QString &qstring_in)
 {
-        /*	Calculate Window Title Bar Available Space.
-         *	*/
-    int	wtb_as = WTB_MAX_SIZE - ((int) strlen("LibreCAD") + WTB_EXTRA_SIZE);
-
-
-        /*	- If string to display to window title bar is too long, truncate
-         *	  it from the left.
-         *	---------------------------------------------------------------- */
-        if (qstring_in.length() > wtb_as)
-        {
-        return "..." + qstring_in.right(wtb_as - 3);
-        }
-        else
-        return qstring_in;
+	QFileInfo info = QFileInfo(qstring_in);
+	return info.fileName(); // don't include the full path
 }
 
 /*	*
@@ -1433,6 +1558,7 @@ void QC_ApplicationWindow::
             statusBar()->showMessage(message, 2000);
         }
         // Create new document window:
+		QC_MDIWindow* oldMdi = getMDIWindow();
         QMdiSubWindow* old=activedMdiSubWindow;
         QRect geo;
         bool maximized=false;
@@ -1509,7 +1635,7 @@ void QC_ApplicationWindow::
                 auto msg = QObject::tr("Invalid objects removed:");
                 commandWidget->appendHistory(msg + " " + QString::number(objects_removed));
             }
-            emit(gridChanged(graphic->isGridOn()));
+            emit(gridChanged(oldMdi->getGraphic()->isGridOn()));
         }
 
         recentFiles->updateRecentFilesMenu();
@@ -1520,6 +1646,22 @@ void QC_ApplicationWindow::
                 /*	Format and set caption.
                  *	----------------------- */
         w->setWindowTitle(format_filename_caption(fileName) + "[*]");
+
+		if (mdiAreaCAD->viewMode() == QMdiArea::TabbedView) {
+			int index = mdiAreaCAD->children().indexOf(mdiAreaCAD->currentSubWindow());
+			QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar*>();
+			QTabBar *tabBar = tabBarList.at(0);
+			if (tabBar) {
+				tabBar->setExpanding(false);
+				tabBar->setTabToolTip(tabBar->currentIndex(), fileName);
+			}
+		}
+
+		RS_SETTINGS->beginGroup("/CADPreferences");
+		if (RS_SETTINGS->readNumEntry("/AutoZoomDrawing"))
+			w->getGraphicView()->zoomAuto(false);
+		RS_SETTINGS->endGroup();
+
         if (settings.value("Appearance/DraftMode", 0).toBool())
         {
             QString draft_string = " ["+tr("Draft Mode")+"]";

@@ -542,6 +542,10 @@ public:
         Up, Left, Right, Down
     };
 
+	enum SubWindowMode {
+		Cascade, Tile, TileVertical, TileHorizontal
+	};
+
     /**
      * Vertical alignments.
      */

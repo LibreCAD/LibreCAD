@@ -116,6 +116,15 @@ public slots:
     void slotTile();
     void slotTileHorizontal();
     void slotTileVertical();
+	void slotSetMaximized();
+
+	void slotTabShapeRounded();
+	void slotTabShapeTriangular();
+	void slotTabPositionNorth();
+	void slotTabPositionSouth();
+	void slotTabPositionEast();
+	void slotTabPositionWest();
+
     void slotToggleTab();
     void slotZoomAuto();
 
@@ -304,6 +313,9 @@ private:
     //Plugin support
     void loadPlugins();
     QMenu *findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry);
+
+	void setTabMode(QTabWidget::TabShape s, QTabWidget::TabPosition p);
+	void setMaximized(bool maximized);
 
     #ifdef LC_DEBUGGING
         LC_SimpleTests* m_pSimpleTest;

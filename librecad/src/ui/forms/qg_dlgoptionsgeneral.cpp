@@ -192,6 +192,10 @@ void QG_DlgOptionsGeneral::init()
 	RS_SETTINGS->writeEntry("/ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked()?1:0);
 	RS_SETTINGS->endGroup();
 
+	RS_SETTINGS->beginGroup("/CADPreferences");
+	cbAutoZoomDrawing->setChecked(RS_SETTINGS->readNumEntry("/AutoZoomDrawing"));
+	RS_SETTINGS->endGroup();
+
     RS_SETTINGS->beginGroup("Startup");
     cbSplash->setChecked(RS_SETTINGS->readNumEntry("/ShowSplash",1)==1);
     tab_mode_check_box->setChecked(RS_SETTINGS->readNumEntry("/TabMode", 0));
@@ -285,6 +289,10 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->beginGroup("/Modify");
         RS_SETTINGS->writeEntry("/ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked()?1:0);
         RS_SETTINGS->endGroup();
+
+		RS_SETTINGS->beginGroup("/CADPreferences");
+		RS_SETTINGS->writeEntry("/AutoZoomDrawing", cbAutoZoomDrawing->isChecked() ? 1 : 0);
+		RS_SETTINGS->endGroup();
 
         RS_SETTINGS->beginGroup("Startup");
         RS_SETTINGS->writeEntry("/ShowSplash", cbSplash->isChecked()?1:0);
