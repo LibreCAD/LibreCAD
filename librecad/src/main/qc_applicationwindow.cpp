@@ -458,7 +458,7 @@ void QC_ApplicationWindow::setTabLayout(RS2::TabShape s, RS2::TabPosition p)
  * @return true success (or window was not modified)
  * @return false user cancelled (or window was null)
  */
-bool QC_ApplicationWindow::doSave(QC_MDIWindow * w)
+bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs)
 {
 	QString name, msg;
 	bool cancelled;
@@ -469,7 +469,8 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w)
 			doActivate(w); // show the user the drawing for save as
 		msg = name.isEmpty() ? tr("Saving drawing...") : tr("Saving drawing: %1").arg(name);
 		statusBar()->showMessage(msg);
-		if (w->slotFileSave(cancelled)) {
+		bool res = forceSaveAs ? w->slotFileSaveAs(cancelled) : w->slotFileSave(cancelled);
+		if (res) {
 			if (cancelled) {
 				statusBar()->showMessage(tr("Save cancelled"), 2000);
 				return false;
@@ -1897,7 +1898,8 @@ void QC_ApplicationWindow::slotFileSave() {
  */
 void QC_ApplicationWindow::slotFileSaveAs() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileSaveAs()");
-	slotFileSave();
+	if (doSave(getMDIWindow(), true))
+		recentFiles->updateRecentFilesMenu();
 }
 
 bool QC_ApplicationWindow::slotFileSaveAll()
