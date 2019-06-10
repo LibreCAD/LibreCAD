@@ -192,6 +192,10 @@ void QG_DlgOptionsGeneral::init()
 	RS_SETTINGS->writeEntry("/ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked()?1:0);
 	RS_SETTINGS->endGroup();
 
+	RS_SETTINGS->beginGroup("/CADPreferences");
+	cbAutoZoomDrawing->setChecked(RS_SETTINGS->readNumEntry("/AutoZoomDrawing"));
+	RS_SETTINGS->endGroup();
+
     RS_SETTINGS->beginGroup("Startup");
     cbSplash->setChecked(RS_SETTINGS->readNumEntry("/ShowSplash",1)==1);
     tab_mode_check_box->setChecked(RS_SETTINGS->readNumEntry("/TabMode", 0));
@@ -199,6 +203,9 @@ void QG_DlgOptionsGeneral::init()
     left_sidebar_checkbox->setChecked(RS_SETTINGS->readNumEntry("/EnableLeftSidebar", 1));
     cad_toolbars_checkbox->setChecked(RS_SETTINGS->readNumEntry("/EnableCADToolbars", 1));
     RS_SETTINGS->endGroup();
+
+	cbEvaluateOnSpace->setChecked(RS_SETTINGS->readNumEntry("/Keyboard/EvaluateCommandOnSpace", false));
+	cbToggleFreeSnapOnSpace->setChecked(RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false));
 
     restartNeeded = false;
 }
@@ -283,6 +290,10 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked()?1:0);
         RS_SETTINGS->endGroup();
 
+		RS_SETTINGS->beginGroup("/CADPreferences");
+		RS_SETTINGS->writeEntry("/AutoZoomDrawing", cbAutoZoomDrawing->isChecked() ? 1 : 0);
+		RS_SETTINGS->endGroup();
+
         RS_SETTINGS->beginGroup("Startup");
         RS_SETTINGS->writeEntry("/ShowSplash", cbSplash->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/TabMode", tab_mode_check_box->isChecked()?1:0);
@@ -290,10 +301,12 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/EnableLeftSidebar", left_sidebar_checkbox->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/EnableCADToolbars", cad_toolbars_checkbox->isChecked()?1:0);
         RS_SETTINGS->endGroup();
+
+		RS_SETTINGS->writeEntry("/Keyboard/EvaluateCommandOnSpace", cbEvaluateOnSpace->isChecked() ? 1 : 0);
+		RS_SETTINGS->writeEntry("/Keyboard/ToggleFreeSnapOnSpace", cbToggleFreeSnapOnSpace->isChecked() ? 1 : 0);
     }
-
-
-    if (restartNeeded==true) {
+	
+	if (restartNeeded==true) {
         QMessageBox::warning( this, tr("Preferences"),
                               tr("Please restart the application to apply all changes."),
                               QMessageBox::Ok,

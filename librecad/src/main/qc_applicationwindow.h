@@ -116,6 +116,15 @@ public slots:
     void slotTile();
     void slotTileHorizontal();
     void slotTileVertical();
+	void slotSetMaximized();
+
+	void slotTabShapeRounded();
+	void slotTabShapeTriangular();
+	void slotTabPositionNorth();
+	void slotTabPositionSouth();
+	void slotTabPositionEast();
+	void slotTabPositionWest();
+
     void slotToggleTab();
     void slotZoomAuto();
 
@@ -142,6 +151,8 @@ public slots:
     void slotFileSave();
     /** saves a document under a different filename*/
     void slotFileSaveAs();
+	/** saves all open documents; return false == operation cancelled **/
+	bool slotFileSaveAll();
     /** auto-save document */
     void slotFileAutoSave();
     /** exports the document as bitmap */
@@ -150,6 +161,8 @@ public slots:
                 QSize size, QSize borders, bool black, bool bw=true);
     /** closing the current file */
     void slotFileClosing(QC_MDIWindow*);
+	/** close all files; return false == operation cancelled */
+	bool slotFileCloseAll();
     /** prints the current file */
     void slotFilePrint(bool printPDF=false);
     void slotFilePrintPDF();
@@ -294,6 +307,14 @@ private:
     QString format_filename_caption(const QString &qstring_in);
     /** Helper function for Menu file -> New & New.... */
 	bool slotFileNewHelper(QString fileName, QC_MDIWindow* w = nullptr);
+	// more helpers
+	void doArrangeWindows(RS2::SubWindowMode mode, bool actuallyDont = false);
+	void setTabLayout(RS2::TabShape s, RS2::TabPosition p);
+	bool doSave(QC_MDIWindow* w);
+	void doClose(QC_MDIWindow* w, bool activateNext = true);
+	void doActivate(QMdiSubWindow* w);
+	int showCloseDialog(QC_MDIWindow* w, bool showSaveAll = false);
+	void enableFileActions(QC_MDIWindow* w);
 
     /**
      * @brief updateWindowTitle, for draft mode, add "Draft Mode" to window title

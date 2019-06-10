@@ -198,5 +198,7 @@
         <file>line_polygon_cen_tan.svg</file>
         <file>noconstruction.svg</file>
         <file>noprint.svg</file>
+        <file>close_all.svg</file>
+        <file>save_all.svg</file>
     </qresource>
 </RCC>

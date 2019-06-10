@@ -167,6 +167,7 @@
 #include "qg_snaptoolbar.h"
 #include "rs_debug.h"
 #include "rs_layer.h"
+#include "rs_settings.h"
 
 /**
  * Constructor
@@ -1114,7 +1115,8 @@ bool QG_ActionHandler::command(const QString& cmd)
 
     if (cmd.isEmpty())
     {
-        slotSnapFree();
+		if (RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", true))
+			slotSnapFree();
         return true;
     }
 

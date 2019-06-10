@@ -542,6 +542,18 @@ public:
         Up, Left, Right, Down
     };
 
+	enum SubWindowMode {
+		CurrentMode = -1, Maximized, Cascade, Tile, TileVertical, TileHorizontal
+	};
+
+	enum TabShape {
+		AnyShape = -1, Rounded, Triangular
+	};
+
+	enum TabPosition {
+		AnyPosition = -1, North, South, West, East
+	};
+
     /**
      * Vertical alignments.
      */
