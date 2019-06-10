@@ -36,11 +36,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_preview.h"
 #include "rs_debug.h"
 
-namespace{
-//list of entity types supported by current action
-auto enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
-}
-
 struct RS_ActionDrawCircleTan1_2P::Points {
 	std::vector<RS_Vector> points;
 	RS_CircleData cData;
