@@ -53,12 +53,13 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
     , a_map(action_map)
     , ag_manager(agm)
 {
-    file_actions
-            << a_map["FileNew"]
-            << a_map["FileNewTemplate"]
-            << a_map["FileOpen"]
-            << a_map["FileSave"]
-            << a_map["FileSaveAs"];
+	file_actions
+		<< a_map["FileNew"]
+		<< a_map["FileNewTemplate"]
+		<< a_map["FileOpen"]
+		<< a_map["FileSave"]
+		<< a_map["FileSaveAs"]
+		<< a_map["FileSaveAll"];
 
     line_actions
             << a_map["DrawLine"]
@@ -560,7 +561,14 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     file_menu = new QMenu(QC_ApplicationWindow::tr("&File"), menu_bar);
     file_menu->setObjectName("File");
     file_menu->setTearOffEnabled(true);
-    file_menu->addActions(file_actions);
+	file_menu->addAction(a_map["FileNew"]);
+	file_menu->addAction(a_map["FileNewTemplate"]);
+	file_menu->addAction(a_map["FileOpen"]);
+	file_menu->addSeparator();
+	file_menu->addAction(a_map["FileSave"]);
+	file_menu->addAction(a_map["FileSaveAs"]);
+	file_menu->addAction(a_map["FileSaveAll"]);
+	file_menu->addSeparator();
     sub_menu = file_menu->addMenu(QIcon(":/icons/import.svg"), QC_ApplicationWindow::tr("Import"));
     sub_menu->setObjectName("Import");
     sub_menu->addAction(a_map["DrawImage"]);
@@ -575,6 +583,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     file_menu->addAction(a_map["FilePrintPreview"]);
     file_menu->addSeparator();
     file_menu->addAction(a_map["FileClose"]);
+	file_menu->addAction(a_map["FileCloseAll"]);
     file_menu->addAction(a_map["FileQuit"]);
     file_menu->addSeparator();
 

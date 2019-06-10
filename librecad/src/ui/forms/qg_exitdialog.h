@@ -42,14 +42,18 @@ class QG_ExitDialog : public QDialog
 public:
     QG_ExitDialog(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
 	~QG_ExitDialog();
+	enum ExitDialogResult {
+		Cancel, Close, Save, SaveAll
+	};
 
 public slots:
     virtual void setText( const QString & text );
     virtual void setTitle( const QString & text );
     virtual void setForce( bool force );
-    virtual void slotSaveAs();
+	virtual void setShowSaveAll(bool show);
+    virtual void slotSaveAll();
     virtual void slotSave();
-    virtual void clicked(QAbstractButton * button);
+    virtual void clicked(QAbstractButton * button);	
 
 protected slots:
     virtual void languageChange();

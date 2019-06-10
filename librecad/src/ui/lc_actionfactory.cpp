@@ -1063,6 +1063,14 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("FileClose");
     a_map["FileClose"] = action;
 
+	action = new QAction(tr("Close All"), agm->file);
+	action->setIcon(QIcon(":/icons/close_all.svg"));
+	QKeySequence shortcut = QKeySequence::Close;
+	action->setShortcut(QKeySequence("Shift+" + shortcut.toString()));
+	connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileCloseAll()));
+	action->setObjectName("FileCloseAll");
+	a_map["FileCloseAll"] = action;
+
     action = new QAction(tr("Export as PDF"), agm->file);
     action->setIcon(QIcon(":/icons/export_pdf.svg"));
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFilePrintPDF()));
@@ -1377,6 +1385,16 @@ void LC_ActionFactory::commonActions(QMap<QString, QAction*>& a_map, LC_ActionGr
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileSaveAs()));
     action->setObjectName("FileSaveAs");
     a_map["FileSaveAs"] = action;
+
+	action = new QAction(tr("Save A&ll..."), agm->file);
+	action->setIcon(QIcon(":/icons/save_all.svg"));
+	QKeySequence shortcut = QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_S);
+	// only define this shortcut for platforms not already using it for save as
+	if (shortcut != QKeySequence::SaveAs)
+		action->setShortcut(shortcut);
+	connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileSaveAll()));
+	action->setObjectName("FileSaveAll");
+	a_map["FileSaveAll"] = action;
 
     action = new QAction(tr("&Print..."), agm->file);
     if (using_theme)

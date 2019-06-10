@@ -1,7 +1,8 @@
 /****************************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
-**
+** 
+** Copyright (C) 2019 Shawn Curry (noneyabiz@mail.wasent.cz)
 ** Copyright (C) 2018 Simon Wells <simonrwells@gmail.com>
 ** Copyright (C) 2015-2016 ravas (github.com/r-a-v-a-s)
 ** Copyright (C) 2015-2018 A. Stebich (librecad@mail.lordofbikes.de)
@@ -82,6 +83,7 @@
 #include "qg_recentfiles.h"
 #include "qg_dlgimageoptions.h"
 #include "qg_filedialog.h"
+#include "qg_exitdialog.h"
 
 #include "rs_dialogfactory.h"
 #include "qc_dialogfactory.h"
@@ -202,8 +204,8 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     mdiAreaCAD->setDocumentMode(true);
 
 	RS_SETTINGS->beginGroup("/WindowOptions");
-	setTabMode(static_cast<QTabWidget::TabShape>(RS_SETTINGS->readNumEntry("/TabShape")), 
-		static_cast<QTabWidget::TabPosition>(RS_SETTINGS->readNumEntry("/TabPosition")));
+	setTabLayout(static_cast<RS2::TabShape>(RS_SETTINGS->readNumEntry("/TabShape", RS2::Triangular)),
+		static_cast<RS2::TabPosition>(RS_SETTINGS->readNumEntry("/TabPosition", RS2::West)));
 	RS_SETTINGS->endGroup();
 
     settings.beginGroup("Startup");
@@ -359,7 +361,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
         int ms = 60000 * settings.value("Defaults/AutoSaveTime", 5).toInt();
         autosaveTimer->start(ms);
     }
-
+	
     // Disable menu and toolbar items
     emit windowsChanged(false);
 
@@ -394,18 +396,216 @@ QMenu *QC_ApplicationWindow::findMenu(const QString &searchMenu, const QObjectLi
     return 0;
 }
 
-void QC_ApplicationWindow::setTabMode(QTabWidget::TabShape s, QTabWidget::TabPosition p)
-{
-	mdiAreaCAD->setTabShape(s);
-	mdiAreaCAD->setTabPosition(p);
-}
-
-void QC_ApplicationWindow::setMaximized(bool maximized)
+/**
+ * Arrange the sub-windows as specified, and set the setting.
+ * Note: Tab mode always uses (and sets) the RS2::Maximized mode.
+ * @param m the layout mode; if set to RS2::CurrentMode, read the current setting
+ * @param actuallyDont just set the setting, don't actually do the arrangement
+ */
+void QC_ApplicationWindow::doArrangeWindows(RS2::SubWindowMode m, bool actuallyDont)
 {
 	RS_SETTINGS->beginGroup("/WindowOptions");
-	RS_SETTINGS->writeEntry("/Maximized", maximized);
+	int mode = m != RS2::CurrentMode ? m : RS_SETTINGS->readNumEntry("/SubWindowMode", RS2::Maximized);
 	RS_SETTINGS->endGroup();
-	if (maximized) mdiAreaCAD->currentSubWindow()->showMaximized();
+	if (!actuallyDont) switch (mode) {
+	case RS2::Maximized:
+		if (mdiAreaCAD->currentSubWindow())
+			mdiAreaCAD->currentSubWindow()->showMaximized();
+		break;
+	case RS2::Cascade:
+		slotCascade();
+		break;
+	case RS2::Tile:
+		slotTile();
+		break;
+	case RS2::TileHorizontal:
+		slotTileHorizontal();
+		break;
+	case RS2::TileVertical:
+		slotTileVertical();
+		break;
+	}
+	
+	RS_SETTINGS->beginGroup("/WindowOptions");
+	RS_SETTINGS->writeEntry("/SubWindowMode", mode);
+	RS_SETTINGS->endGroup();
+}
+
+/**
+ * Set the QTabWidget shape and position for the MDI area; also the settings.
+ * Note: setting a Tab layout always sets the window arrangement to RS2::Maximized
+ * Used by the Drawing > Layout menu.
+ * @param s the tab shape; if RS2::AnyShape read the current setting
+ * @param p the tab bar position; if RS2::AnyPosition read the current setting
+ */
+void QC_ApplicationWindow::setTabLayout(RS2::TabShape s, RS2::TabPosition p)
+{
+	RS_SETTINGS->beginGroup("/WindowOptions");
+	int shape = s != RS2::AnyShape ? s : RS_SETTINGS->readNumEntry("/TabShape", RS2::Triangular);
+	int position = p != RS2::AnyPosition ? p : RS_SETTINGS->readNumEntry("/TabPosition", RS2::West);
+	RS_SETTINGS->endGroup();
+	mdiAreaCAD->setTabShape(static_cast<QTabWidget::TabShape>(shape));
+	mdiAreaCAD->setTabPosition(static_cast<QTabWidget::TabPosition>(position));
+	doArrangeWindows(RS2::Maximized);
+	RS_SETTINGS->beginGroup("/WindowOptions");
+	RS_SETTINGS->writeEntry("/TabShape", shape);
+	RS_SETTINGS->writeEntry("/TabPosition", position);
+	RS_SETTINGS->endGroup();
+}
+
+/**
+ * Force-Save(as) the content of the sub window.  Retry on failure.
+ * @return true success (or window was not modified)
+ * @return false user cancelled (or window was null)
+ */
+bool QC_ApplicationWindow::doSave(QC_MDIWindow * w)
+{
+	QString name, msg;
+	bool cancelled;
+	if (!w) return false;
+	if (w->getDocument()->isModified()) {
+		name = w->getDocument()->getFilename();
+		if (name.isEmpty())
+			doActivate(w); // show the user the drawing for save as
+		msg = name.isEmpty() ? tr("Saving drawing...") : tr("Saving drawing: %1").arg(name);
+		statusBar()->showMessage(msg);
+		if (w->slotFileSave(cancelled)) {
+			if (cancelled) {
+				statusBar()->showMessage(tr("Save cancelled"), 2000);
+				return false;
+			}
+			name = w->getDocument()->getFilename();			
+			msg = tr("Saved drawing: %1").arg(name);
+			statusBar()->showMessage(msg, 2000);
+			commandWidget->appendHistory(msg);
+			if (!recentFiles->indexOf(name))
+				recentFiles->add(name);
+			w->setWindowTitle(format_filename_caption(name) + "[*]");
+			if (w->getGraphicView()->isDraftMode())
+				w->setWindowTitle(w->windowTitle() + " [" + tr("Draft Mode") + "]");
+
+			if (autosaveTimer && !autosaveTimer->isActive())
+			{
+				RS_SETTINGS->beginGroup("/Defaults");
+				autosaveTimer->start(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5) * 60 * 1000);
+				RS_SETTINGS->endGroup();
+			}
+		}
+		else {
+			msg = tr("Cannot save the file ") +
+				w->getDocument()->getFilename()
+				+ tr(" , please check the filename and permissions.");
+			statusBar()->showMessage(msg, 2000);
+			commandWidget->appendHistory(msg);
+			return doSave(w);
+		}
+	}
+	return true;
+}
+
+/**
+ * Force-Close this sub window.
+ * @param activateNext also activate the next window in the window_list, if any
+ */
+void QC_ApplicationWindow::doClose(QC_MDIWindow * w, bool activateNext)
+{
+	for (auto child : w->getChildWindows()) // block editors; just force these closed
+		doClose(child, false); // they belong to the document (changes already saved there)
+	w->getChildWindows().clear();
+	w->slotWindowClosing();
+	mdiAreaCAD->removeSubWindow(w);
+	window_list.removeOne(w);
+
+	if (!activedMdiSubWindow || activedMdiSubWindow == w)
+	{
+		layerWidget->setLayerList(nullptr, false);
+		blockWidget->setBlockList(nullptr);
+		coordinateWidget->setGraphic(nullptr);
+	}
+
+	openedFiles.removeAll(w->getDocument()->getFilename());
+
+	activedMdiSubWindow = nullptr;
+	actionHandler->set_view(nullptr);
+	actionHandler->set_document(nullptr);
+
+	if (activateNext && window_list.count() > 0)
+		doActivate(window_list.front());
+}
+
+/**
+ * Force-Activate this sub window.
+ */
+void QC_ApplicationWindow::doActivate(QMdiSubWindow * w)
+{
+	RS_SETTINGS->beginGroup("/WindowOptions");
+	bool maximized = RS_SETTINGS->readNumEntry("/Maximized");
+	RS_SETTINGS->endGroup();
+	if (w) {
+		slotWindowActivated(w);
+		w->activateWindow();
+		w->raise();
+		w->setFocus();
+		if (maximized)
+			w->showMaximized();
+		else
+			w->show();
+	}
+	if (mdiAreaCAD->viewMode() == QMdiArea::SubWindowView)
+		doArrangeWindows(RS2::CurrentMode);
+	enableFileActions(qobject_cast<QC_MDIWindow*>(w));
+}
+
+/**
+ * Show a Save/Close/Cancel(All) dialog for the content of this sub-window.
+ * The window handle must not be null, and the document must actually have been modified.
+ *
+ * @param showSaveAll show a Save All button and rename Close -> Close All
+ * @return QG_ExitDialog::ExitDialogResult the button that was pressed, or -1 if invoked in error
+ * @see QG_ExitDialog
+ */
+int QC_ApplicationWindow::showCloseDialog(QC_MDIWindow * w, bool showSaveAll)
+{
+	QG_ExitDialog dlg(this);
+	dlg.setShowSaveAll(showSaveAll);
+	dlg.setTitle(tr("Closing Drawing"));
+	if (w && w->getDocument()->isModified()) {
+		QString fn = w->getDocument()->getFilename();
+		if (fn.isEmpty())
+			fn = w->windowTitle();
+		else if (fn.length() > 50)
+			fn = QString("%1...%2").arg(fn.left(24)).arg(fn.right(24));
+
+		dlg.setText(tr("Save changes to the following item?\n%1").arg(fn));
+		return dlg.exec();
+	}
+	return -1; // should never get here; please send only modified documents
+}
+
+/**
+ * Enable the available file actions for this sub-window.
+ */
+void QC_ApplicationWindow::enableFileActions(QC_MDIWindow* w)
+{
+	if (!w || w->getDocument()->getFilename().isEmpty()) {
+		a_map["FileSave"]->setText(tr("&Save"));
+		a_map["FileSaveAs"]->setText(tr("Save &as..."));
+	}
+	else {
+		QString name = format_filename_caption(w->getDocument()->getFilename());
+		a_map["FileSave"]->setText(tr("&Save %1").arg(name));
+		a_map["FileSaveAs"]->setText(tr("Save %1 &as...").arg(name));
+	}
+	a_map["FileSave"]->setEnabled(w);
+	a_map["FileSaveAs"]->setEnabled(w);
+	a_map["FileSaveAll"]->setEnabled(w && window_list.count() > 1);
+	a_map["FileExportMakerCam"]->setEnabled(w);
+	a_map["FilePrintPDF"]->setEnabled(w);
+	a_map["FileExport"]->setEnabled(w);
+	a_map["FilePrint"]->setEnabled(w);
+	a_map["FilePrintPreview"]->setEnabled(w);
+	a_map["FileClose"]->setEnabled(w);
+	a_map["FileCloseAll"]->setEnabled(w && window_list.count() > 1);
 }
 
 /**
@@ -760,6 +960,8 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
 
     RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated begin");
 
+	enableFileActions(qobject_cast<QC_MDIWindow*>(w));
+
     if(w==nullptr) {
         emit windowsChanged(false);
         activedMdiSubWindow=w;
@@ -839,55 +1041,57 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
     RS_DEBUG->print( RS_Debug::D_NOTICE, "QC_ApplicationWindow::slotWindowsMenuAboutToShow");
 	RS_SETTINGS->beginGroup("/WindowOptions");
 
+	QMenu* menu;
 	QAction* menuItem;
-    windowsMenu->clear();
+	bool tabbed = mdiAreaCAD->viewMode() == QMdiArea::TabbedView;
+    windowsMenu->clear(); // this is a temporary menu; constructed on-demand
 
 	menuItem = windowsMenu->addAction(tr("Ta&b mode"), this, SLOT(slotToggleTab()));
 	menuItem->setCheckable(true);
-	menuItem->setChecked(mdiAreaCAD->viewMode() == QMdiArea::TabbedView);
+	menuItem->setChecked(tabbed);
 
 	menuItem = windowsMenu->addAction( tr("&Window mode"), this, SLOT(slotToggleTab()));
 	menuItem->setCheckable(true);
-	menuItem->setChecked(mdiAreaCAD->viewMode() != QMdiArea::TabbedView);
+	menuItem->setChecked(!tabbed);
 
 	
 	if (mdiAreaCAD->viewMode() == QMdiArea::TabbedView) {
-		QMenu* menu = new QMenu(tr("&Layout"), windowsMenu);
+		menu = new QMenu(tr("&Layout"), windowsMenu);
 		windowsMenu->addMenu(menu);
 
 		menuItem = menu->addAction(tr("Rounded"), this, SLOT(slotTabShapeRounded()));
 		menuItem->setCheckable(true);
-		menuItem->setChecked(RS_SETTINGS->readNumEntry("/TabShape") == QTabWidget::Rounded);
+		menuItem->setChecked(RS_SETTINGS->readNumEntry("/TabShape") == RS2::Rounded);
 
 		menuItem = menu->addAction(tr("Triangular"), this, SLOT(slotTabShapeTriangular()));
 		menuItem->setCheckable(true);
-		menuItem->setChecked(RS_SETTINGS->readNumEntry("/TabShape") == QTabWidget::Triangular);
+		menuItem->setChecked(RS_SETTINGS->readNumEntry("/TabShape") == RS2::Triangular);
 
 		menu->addSeparator();
 
 		menuItem = menu->addAction(tr("North"), this, SLOT(slotTabPositionNorth()));
 		menuItem->setCheckable(true);
-		menuItem->setChecked(RS_SETTINGS->readNumEntry("/TabPosition") == QTabWidget::North);
+		menuItem->setChecked(RS_SETTINGS->readNumEntry("/TabPosition") == RS2::North);
 
 		menuItem = menu->addAction(tr("South"), this, SLOT(slotTabPositionSouth()));
 		menuItem->setCheckable(true);
-		menuItem->setChecked(RS_SETTINGS->readNumEntry("/TabPosition") == QTabWidget::South);
+		menuItem->setChecked(RS_SETTINGS->readNumEntry("/TabPosition") == RS2::South);
 
 		menuItem = menu->addAction(tr("East"), this, SLOT(slotTabPositionEast()));
 		menuItem->setCheckable(true);
-		menuItem->setChecked(RS_SETTINGS->readNumEntry("/TabPosition") == QTabWidget::East);
+		menuItem->setChecked(RS_SETTINGS->readNumEntry("/TabPosition") == RS2::East);
 
 		menuItem = menu->addAction(tr("West"), this, SLOT(slotTabPositionWest()));
 		menuItem->setCheckable(true);
-		menuItem->setChecked(RS_SETTINGS->readNumEntry("/TabPosition") == QTabWidget::West);
+		menuItem->setChecked(RS_SETTINGS->readNumEntry("/TabPosition") == RS2::West);
 
 	} else {
-		QMenu* menu = new QMenu(tr("&Arrange"), windowsMenu);
+		menu = new QMenu(tr("&Arrange"), windowsMenu);
 		windowsMenu->addMenu(menu);
 
 		menuItem = menu->addAction(tr("&Maximized"), this, SLOT(slotSetMaximized()));
 		menuItem->setCheckable(true);
-		menuItem->setChecked(RS_SETTINGS->readNumEntry("/Maximized"));
+		menuItem->setChecked(RS_SETTINGS->readNumEntry("/SubWindowMode") == RS2::Maximized);
 
 		menuItem = menu->addAction(tr("&Cascade"), this, SLOT(slotCascade()));
 		menuItem = menu->addAction(tr("&Tile"), this, SLOT(slotTile()));
@@ -932,12 +1136,7 @@ void QC_ApplicationWindow::slotWindowsMenuActivated(bool /*id*/) {
             return;
         }
 
-        mdiAreaCAD->setActiveSubWindow(w);
-        w->activateWindow();
-        w->raise();
-        w->showMaximized();
-        w->setFocus();
-        slotWindowActivated(w);
+		doActivate(w);
     }
 }
 
@@ -945,7 +1144,7 @@ void QC_ApplicationWindow::slotWindowsMenuActivated(bool /*id*/) {
  * Cascade MDI windows
  */
 void QC_ApplicationWindow::slotTile() {
-	setMaximized(false);
+	doArrangeWindows(RS2::Tile, true);
         mdiAreaCAD->tileSubWindows();
         slotZoomAuto();
 }
@@ -964,11 +1163,12 @@ void QC_ApplicationWindow::slotZoomAuto() {
 void QC_ApplicationWindow::slotCascade() {
 //    mdiAreaCAD->cascadeSubWindows();
 //return;
-	setMaximized(false);
+	doArrangeWindows(RS2::Cascade, true);
 	QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
     switch(windows.size()){
     case 1:
-        mdiAreaCAD->tileSubWindows();
+        //mdiAreaCAD->tileSubWindows();
+		slotTile();
     case 0:
         return;
     default: {
@@ -1033,11 +1233,12 @@ void QC_ApplicationWindow::slotCascade() {
 void QC_ApplicationWindow::slotTileHorizontal() {
 
     RS_DEBUG->print("QC_ApplicationWindow::slotTileHorizontal");
-	setMaximized(false);
-
+	doArrangeWindows(RS2::TileHorizontal, true);
+	
     // primitive horizontal tiling
     QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
     if (windows.count()<=1) {
+		slotTile();
         return;
     }
     for (int i=0; i<windows.count(); ++i) {
@@ -1067,11 +1268,12 @@ void QC_ApplicationWindow::slotTileHorizontal() {
 void QC_ApplicationWindow::slotTileVertical() {
 	
     RS_DEBUG->print("QC_ApplicationWindow::slotTileVertical()");
-	setMaximized(false);
+	doArrangeWindows(RS2::TileVertical, true);
 	
     // primitive horizontal tiling
     QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
     if (windows.count()<=1) {
+		slotTile();
         return;
     }
     for (int i=0; i<windows.count(); ++i) {
@@ -1096,55 +1298,37 @@ void QC_ApplicationWindow::slotTileVertical() {
 
 void QC_ApplicationWindow::slotSetMaximized()
 {
-	setMaximized(true);
+	doArrangeWindows(RS2::Maximized);
 }
 
 void QC_ApplicationWindow::slotTabShapeRounded()
 {
-	RS_SETTINGS->beginGroup("/WindowOptions");
-	RS_SETTINGS->writeEntry("/TabShape", QTabWidget::Rounded);
-	RS_SETTINGS->endGroup();
-	mdiAreaCAD->setTabShape(QTabWidget::Rounded);
+	setTabLayout(RS2::Rounded, RS2::AnyPosition);
 }
 
 void QC_ApplicationWindow::slotTabShapeTriangular()
 {
-	RS_SETTINGS->beginGroup("/WindowOptions");
-	RS_SETTINGS->writeEntry("/TabShape", QTabWidget::Triangular);
-	RS_SETTINGS->endGroup();
-	mdiAreaCAD->setTabShape(QTabWidget::Triangular);
+	setTabLayout(RS2::Triangular, RS2::AnyPosition);
 }
 
 void QC_ApplicationWindow::slotTabPositionNorth()
 {
-	RS_SETTINGS->beginGroup("/WindowOptions");
-	RS_SETTINGS->writeEntry("/TabPosition", QTabWidget::North);
-	RS_SETTINGS->endGroup();
-	mdiAreaCAD->setTabPosition(QTabWidget::North);
+	setTabLayout(RS2::AnyShape, RS2::North);
 }
 
 void QC_ApplicationWindow::slotTabPositionSouth()
 {
-	RS_SETTINGS->beginGroup("/WindowOptions");
-	RS_SETTINGS->writeEntry("/TabPosition", QTabWidget::South);
-	RS_SETTINGS->endGroup();
-	mdiAreaCAD->setTabPosition(QTabWidget::South);
+	setTabLayout(RS2::AnyShape, RS2::South);
 }
 
 void QC_ApplicationWindow::slotTabPositionEast()
 {
-	RS_SETTINGS->beginGroup("/WindowOptions");
-	RS_SETTINGS->writeEntry("/TabPosition", QTabWidget::East);
-	RS_SETTINGS->endGroup();
-	mdiAreaCAD->setTabPosition(QTabWidget::East);
+	setTabLayout(RS2::AnyShape, RS2::East);
 }
 
 void QC_ApplicationWindow::slotTabPositionWest()
 {
-	RS_SETTINGS->beginGroup("/WindowOptions");
-	RS_SETTINGS->writeEntry("/TabPosition", QTabWidget::West);
-	RS_SETTINGS->endGroup();
-	mdiAreaCAD->setTabPosition(QTabWidget::West);
+	setTabLayout(RS2::AnyShape, RS2::West);
 }
 
 /**
@@ -1152,10 +1336,11 @@ void QC_ApplicationWindow::slotTabPositionWest()
  */
 void QC_ApplicationWindow::slotToggleTab()
 {
-	RS_SETTINGS->beginGroup("Startup");
     if (mdiAreaCAD->viewMode() == QMdiArea::SubWindowView)
     {
+		RS_SETTINGS->beginGroup("Startup");
 		RS_SETTINGS->writeEntry("/TabMode", 1);
+		RS_SETTINGS->endGroup();
         mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
 		QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar*>();
 		QTabBar *tabBar = tabBarList.at(0);
@@ -1172,17 +1357,18 @@ void QC_ApplicationWindow::slotToggleTab()
             }else{
                 m->raise();
             }
-            m->showMaximized();
+			slotSetMaximized();
             qobject_cast<QC_MDIWindow*>(m)->slotZoomAuto();
         }
     }
     else
     {
+		RS_SETTINGS->beginGroup("Startup");
 		RS_SETTINGS->writeEntry("/TabMode", 0);
+		RS_SETTINGS->endGroup();
         mdiAreaCAD->setViewMode(QMdiArea::SubWindowView);
-        slotCascade();
+		doArrangeWindows(RS2::CurrentMode);
     }
-	RS_SETTINGS->endGroup();
 }
 
 /**
@@ -1328,10 +1514,8 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     QMdiSubWindow* subWindow=mdiAreaCAD->addSubWindow(w);
 
     RS_DEBUG->print("  showing MDI window");
-    w->show();
-    w->slotZoomAuto();
-    subWindow->showMaximized();
-    subWindow->setFocus();
+	doActivate(w);
+	doArrangeWindows(RS2::CurrentMode);
     statusBar()->showMessage(tr("New Drawing created."), 2000);
 
     layerWidget->activateLayer(0);
@@ -1458,10 +1642,8 @@ void QC_ApplicationWindow::slotFileNewTemplate() {
                                  msg,QMessageBox::Ok);
         //file opening failed, clean up QC_MDIWindow and QMdiSubWindow
         if (w) {
-            w->setForceClosing(true);
-            mdiAreaCAD->removeSubWindow(mdiAreaCAD->currentSubWindow());
             slotFilePrintPreview(false);
-            w->closeMDI(true,false); //force closing, without asking user for confirmation
+            doClose(w); //force closing, without asking user for confirmation
         }
         QMdiSubWindow* active=mdiAreaCAD->currentSubWindow();
         activedMdiSubWindow=nullptr; //to allow reactivate the previous active
@@ -1558,12 +1740,11 @@ void QC_ApplicationWindow::
             statusBar()->showMessage(message, 2000);
         }
         // Create new document window:
-		QC_MDIWindow* oldMdi = getMDIWindow();
-        QMdiSubWindow* old=activedMdiSubWindow;
+		QMdiSubWindow* old=activedMdiSubWindow;
         QRect geo;
         bool maximized=false;
 
-        QC_MDIWindow* w = slotFileNew();
+        QC_MDIWindow* w = slotFileNew(nullptr);
         // RVT_PORT qApp->processEvents(1000);
         qApp->processEvents(QEventLoop::AllEvents, 1000);
 
@@ -1599,10 +1780,8 @@ void QC_ApplicationWindow::
                                         msg,
                                         QMessageBox::Ok);
            //file opening failed, clean up QC_MDIWindow and QMdiSubWindow
-               w->setForceClosing(true);
-               mdiAreaCAD->removeSubWindow(mdiAreaCAD->currentSubWindow());
                slotFilePrintPreview(false);
-               w->closeMDI(true,false); //force closing, without asking user for confirmation
+               doClose(w); //force closing, without asking user for confirmation
                QMdiSubWindow* active=mdiAreaCAD->currentSubWindow();
                activedMdiSubWindow=nullptr; //to allow reactivate the previous active
                if( active){//restore old geometry
@@ -1618,6 +1797,8 @@ void QC_ApplicationWindow::
                }
                return;
         }
+
+		slotWindowActivated(w);
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: open file: OK");
 
@@ -1635,7 +1816,7 @@ void QC_ApplicationWindow::
                 auto msg = QObject::tr("Invalid objects removed:");
                 commandWidget->appendHistory(msg + " " + QString::number(objects_removed));
             }
-            emit(gridChanged(oldMdi->getGraphic()->isGridOn()));
+            emit(gridChanged(graphic->isGridOn()));
         }
 
         recentFiles->updateRecentFilesMenu();
@@ -1648,7 +1829,6 @@ void QC_ApplicationWindow::
         w->setWindowTitle(format_filename_caption(fileName) + "[*]");
 
 		if (mdiAreaCAD->viewMode() == QMdiArea::TabbedView) {
-			int index = mdiAreaCAD->children().indexOf(mdiAreaCAD->currentSubWindow());
 			QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar*>();
 			QTabBar *tabBar = tabBarList.at(0);
 			if (tabBar) {
@@ -1656,6 +1836,8 @@ void QC_ApplicationWindow::
 				tabBar->setTabToolTip(tabBar->currentIndex(), fileName);
 			}
 		}
+		else
+			doArrangeWindows(RS2::CurrentMode);
 
 		RS_SETTINGS->beginGroup("/CADPreferences");
 		if (RS_SETTINGS->readNumEntry("/AutoZoomDrawing"))
@@ -1704,39 +1886,8 @@ void QC_ApplicationWindow::slotFileOpen(const QString& fileName) {
 void QC_ApplicationWindow::slotFileSave() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileSave()");
 
-    statusBar()->showMessage(tr("Saving drawing..."));
-
-    QC_MDIWindow* w = getMDIWindow();
-    QString name;
-    if (w) {
-        if (w->getDocument()->getFilename().isEmpty()) {
-            slotFileSaveAs();
-        } else {
-            bool cancelled;
-            if (w->slotFileSave(cancelled)) {
-                if (!cancelled) {
-                    name = w->getDocument()->getFilename();
-                    statusBar()->showMessage(tr("Saved drawing: %1").arg(name), 2000);
-                }
-            } else {
-                QString message( tr("Cannot save the file ") +
-                                 w->getDocument()->getFilename()
-                                 + tr(" , please check the filename and permissions.")
-                                 );
-                statusBar()->showMessage(message, 2000);
-                commandWidget->appendHistory(message);
-                slotFileSaveAs();
-                // error
-                /*
-                QMessageBox::information(this, QMessageBox::tr("Warning"),
-                                         tr("Cannot save the file\n%1\nPlease "
-                                            "check the permissions.")
-                                         .arg(w->getDocument()->getFilename()),
-                                         QMessageBox::Ok);
-                                         */
-            }
-        }
-    }
+	if (doSave(getMDIWindow()))
+		recentFiles->updateRecentFilesMenu();
 }
 
 
@@ -1746,42 +1897,25 @@ void QC_ApplicationWindow::slotFileSave() {
  */
 void QC_ApplicationWindow::slotFileSaveAs() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileSaveAs()");
+	slotFileSave();
+}
 
-    statusBar()->showMessage(tr("Saving drawing under new filename..."));
-
-    QC_MDIWindow* w = getMDIWindow();
-    QString name;
-    if (w) {
-        bool cancelled;
-        if (w->slotFileSaveAs(cancelled)) {
-            if (!cancelled) {
-                name = w->getDocument()->getFilename();
-                recentFiles->add(name);
-                w->setWindowTitle(format_filename_caption(name) + "[*]");
-                if(w->getGraphicView()->isDraftMode())
-                    w->setWindowTitle(w->windowTitle() + " ["+tr("Draft Mode")+"]");
-
-                if (autosaveTimer && !autosaveTimer->isActive())
-                {
-                    RS_SETTINGS->beginGroup("/Defaults");
-                    autosaveTimer->start(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5)*60*1000);
-                    RS_SETTINGS->endGroup();
-                }
-            }
-        } else {
-            // error
-            QMessageBox::information(this, QMessageBox::tr("Warning"),
-                                     tr("Cannot save the file\n%1\nPlease "
-                                        "check the permissions.")
-                                     .arg(w->getDocument()->getFilename()),
-                                     QMessageBox::Ok);
-        }
-    }
-    recentFiles->updateRecentFilesMenu();
-
-    QString message = tr("Saved drawing: %1").arg(name);
-    statusBar()->showMessage(message, 2000);
-    commandWidget->appendHistory(message);
+bool QC_ApplicationWindow::slotFileSaveAll()
+{
+	QC_MDIWindow* current = getMDIWindow();
+	bool result;
+	for (auto w : window_list) {
+		if (w && w->getDocument()->isModified()) {
+			result = doSave(w);
+			if (!result) {
+				statusBar()->showMessage(tr("Save All cancelled"), 2000);
+				break;
+			}
+		}
+	}
+	doActivate(current);
+	recentFiles->updateRecentFilesMenu();
+	return result;
 }
 
 
@@ -2039,27 +2173,65 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
 
 
 /**
- * Called when a MDI window is actually about to close. Used to
- * detach widgets from the document.
+ * Called when a sub window is about to close. 
+ * If modified, show the Save/Close/Cancel dialog, then do the request.
+ * If a save is needed but the user cancels, the window is not closed.
  */
 void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
 {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClosing()");
+	bool cancel = false;
+	if (win && win->getDocument()->isModified()) {
+		switch (showCloseDialog(win)) {
+		case QG_ExitDialog::Save:
+			cancel = !doSave(win);
+			break;
+		case QG_ExitDialog::Cancel:
+			cancel = true;
+			break;
+		}
+	}
+	if (!cancel) doClose(win);
+}
 
-    window_list.removeOne(win);
+/**
+ * File > Close All - loop through all open windows, and close them.
+ * Prompt user to save changes for modified documents.  If the user cancels
+ * the remaining unsaved documents will not be closed.
+ *
+ * @return true success
+ * @return false the user cancelled.
+ */
+bool QC_ApplicationWindow::slotFileCloseAll()
+{
+	bool cancel(false), closeAll(false);
+	for (auto w : window_list) if (w) {
 
-    if (activedMdiSubWindow == win)
-    {
-        layerWidget->setLayerList(nullptr, false);
-        blockWidget->setBlockList(nullptr);
-        coordinateWidget->setGraphic(nullptr);
-    }
+		if (w->getDocument()->isModified() && !closeAll) {
+			doActivate(w);
+			switch (showCloseDialog(w, window_list.count() > 1)) {
+			case QG_ExitDialog::Close:
+				closeAll = true;
+				break;
+			case QG_ExitDialog::SaveAll:
+				closeAll = slotFileSaveAll();
+				break;
+			case QG_ExitDialog::Save:
+				cancel = !doSave(w);
+				break;
+			case QG_ExitDialog::Cancel:
+				cancel = true;
+				break;
+			}
+		}
+		if (cancel) {
+			statusBar()->showMessage(tr("Close All cancelled"), 2000);
+			return false;
+		}
 
-    openedFiles.removeAll(win->getDocument()->getFilename());
-
-    activedMdiSubWindow = nullptr;
-    actionHandler->set_view(nullptr);
-    actionHandler->set_document(nullptr);
+		doClose(w);
+	}
+	return true;
 }
 
 
@@ -2731,31 +2903,13 @@ void QC_ApplicationWindow::showAboutWindow()
  */
 bool QC_ApplicationWindow::queryExit(bool force) {
     RS_DEBUG->print("QC_ApplicationWindow::queryExit()");
-
-    bool succ = true;
-
-    QList<QMdiSubWindow*> list = mdiAreaCAD->subWindowList();
-
-    while (!list.isEmpty())
-    {
-        QC_MDIWindow* tmp = qobject_cast<QC_MDIWindow*>(list.takeFirst());
-        tmp->getGraphicView()->killAllActions();
-        if (tmp)
-        {
-            slotFilePrintPreview(false);
-            succ = tmp->closeMDI(force);
-            if (!succ)
-                break;
-            else
-                tmp->close();
-        }
-    }
+	bool succ = true;
+	if (force) for (auto w : window_list)
+		doClose(w);
+	else succ = slotFileCloseAll();
 
     if (succ) {
         storeSettings();
-    } else {
-        QMdiSubWindow* subWindow=mdiAreaCAD->currentSubWindow();
-        appWindow->slotWindowActivated(subWindow);
     }
 
     RS_DEBUG->print("QC_ApplicationWindow::queryExit(): OK");
@@ -3125,7 +3279,7 @@ void QC_ApplicationWindow::updateGridStatus(const QString & status)
 {
     // author: ravas
 
-    grid_status->setBottomLabel(status);
+   grid_status->setBottomLabel(status);
 }
 
 void QC_ApplicationWindow::showDeviceOptions()

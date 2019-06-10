@@ -543,7 +543,15 @@ public:
     };
 
 	enum SubWindowMode {
-		Cascade, Tile, TileVertical, TileHorizontal
+		CurrentMode = -1, Maximized, Cascade, Tile, TileVertical, TileHorizontal
+	};
+
+	enum TabShape {
+		AnyShape = -1, Rounded, Triangular
+	};
+
+	enum TabPosition {
+		AnyPosition = -1, North, South, West, East
 	};
 
     /**

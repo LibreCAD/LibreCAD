@@ -347,11 +347,12 @@ void QG_LayerWidget::update() {
     layerView->resizeRowsToContents();
     layerView->verticalScrollBar()->setValue(yPos);
 
-    if (!layerList) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::update: nullptr layerList");
-        return;
-    }
-    layerModel->setLayerList(layerList);
+    layerModel->setLayerList(layerList); // allow a null layerList; this clears the widget
+
+	if (!layerList) {
+		RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::update: nullptr layerList");
+		return;
+	}
 
     RS_DEBUG->print("QG_LayerWidget::update: reactivating current layer");
 
