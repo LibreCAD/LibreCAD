@@ -52,7 +52,6 @@ RS_Font::RS_Font(const QString& fileName, bool owner)
     wordSpacing = 6.75;
     lineSpacingFactor = 1.0;
     rawLffFontList.clear();
-	setFriendlyName(fileName);
 }
 
 
@@ -73,8 +72,8 @@ bool RS_Font::loadFont() {
     QString path;
 
     // Search for the appropriate font if we have only the name of the font:
-    if (!friendlyName.toLower().contains(".cxf") &&
-            !friendlyName.toLower().contains(".lff")) {
+    if (!fileName.toLower().contains(".cxf") &&
+            !fileName.toLower().contains(".lff")) {
         QStringList fonts = RS_SYSTEM->getNewFontList();
         fonts.append(RS_SYSTEM->getFontList());
 
@@ -83,7 +82,7 @@ bool RS_Font::loadFont() {
              it!=fonts.end();
              it++) {
 
-            if (QFileInfo(*it).baseName().toLower()== friendlyName.toLower()) {
+            if (QFileInfo(*it).baseName().toLower()==fileName.toLower()) {
                 path = *it;
                 break;
             }
@@ -92,7 +91,7 @@ bool RS_Font::loadFont() {
 
     // We have the full path of the font:
     else {
-        path = friendlyName;
+        path = fileName;
     }
 
     // No font paths found:
@@ -445,19 +444,6 @@ RS_Block* RS_Font::generateLffFont(const QString& ch){
         letterList.add(letter);
         return letter;
     }
-}
-
-void RS_Font::setFriendlyName(const QString & file_name)
-{
-	friendlyName = file_name;
-	if (friendlyName.contains(".shx", Qt::CaseInsensitive))
-		friendlyName.replace(".shx", "", Qt::CaseInsensitive);
-	else if (friendlyName.contains(".ttf", Qt::CaseInsensitive))
-		friendlyName.replace(".ttf", "", Qt::CaseInsensitive);
-	else if (friendlyName.contains(".cxf", Qt::CaseInsensitive))
-		friendlyName.replace(".cxf", "", Qt::CaseInsensitive);
-	else if (friendlyName.contains(".lff", Qt::CaseInsensitive))
-		friendlyName.replace(".lff", "", Qt::CaseInsensitive);
 }
 
 RS_Block* RS_Font::findLetter(const QString& name) {

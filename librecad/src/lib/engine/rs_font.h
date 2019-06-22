@@ -117,7 +117,6 @@ private:
     void readCXF(QString path);
     void readLFF(QString path);
     RS_Block* generateLffFont(const QString& ch);
-	void setFriendlyName(const QString& file_name);
 
 private:
     //raw lff font file list, not processed into blocks yet
@@ -155,9 +154,6 @@ private:
 
     //! Default line spacing factor for this font
     double lineSpacingFactor;
-
-	// alternative font name in case of shx or ttf
-	QString friendlyName;
 };
 
 #endif
