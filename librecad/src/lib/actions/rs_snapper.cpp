@@ -645,7 +645,7 @@ RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, RS2::EntityType enType,
 				level);
 }
 
-RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, const std::initializer_list<RS2::EntityType>& enTypeList,
+RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, const EntityTypeList& enTypeList,
                                    RS2::ResolveLevel level) {
 	RS_Entity* pten = nullptr;
 	RS_Vector coord{graphicView->toGraphX(e->x()), graphicView->toGraphY(e->y())};

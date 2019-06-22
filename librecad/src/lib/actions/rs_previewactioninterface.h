@@ -66,6 +66,4 @@ protected:
 //	std::unique_ptr<RS_Vector> offset;
 };
 
-typedef std::initializer_list<RS2::EntityType> EntityTypeList;
-
 #endif
