@@ -69,6 +69,8 @@ struct RS_SnapMode {
 	 bool operator == (RS_SnapMode const& rhs) const;
 };
 
+typedef std::initializer_list<RS2::EntityType> EntityTypeList;
+
 /**
  * This class is used for snapping functions in a graphic view.
  * Actions are usually derived from this base class if they need
@@ -153,7 +155,7 @@ public:
                            RS2::ResolveLevel level=RS2::ResolveNone);
     RS_Entity* catchEntity(QMouseEvent* e, RS2::EntityType enType,
                            RS2::ResolveLevel level=RS2::ResolveNone);
-	RS_Entity* catchEntity(QMouseEvent* e, const std::initializer_list<RS2::EntityType>& enTypeList,
+	RS_Entity* catchEntity(QMouseEvent* e, const EntityTypeList& enTypeList,
                            RS2::ResolveLevel level=RS2::ResolveNone);
 
     /**
