@@ -413,6 +413,7 @@ private:
 
 };
 
+extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 
 #endif
 
