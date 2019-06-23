@@ -262,9 +262,15 @@ void QC_MDIWindow::slotWindowClosing()
 void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
 
     RS_DEBUG->print("QC_MDIWindow::closeEvent begin");
-    
-	ce->ignore(); // handling delegated to QApplication
-	emit(signalClosing(this));
+
+	if (!parentWindow) {
+		ce->ignore(); // handling delegated to QApplication
+		emit(signalClosing(this));
+	} else {
+		slotWindowClosing();
+		ce->accept();
+	}		
+		
     RS_DEBUG->print("QC_MDIWindow::closeEvent end");
 }
 
@@ -420,6 +426,9 @@ bool QC_MDIWindow::slotFileSave(bool &cancelled, bool isAutoSave) {
             if (document->getFilename().isEmpty()) {
                 ret = slotFileSaveAs(cancelled);
             } else {
+				QFileInfo info(document->getFilename());
+				if (!info.isWritable())
+					return false;
                 QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
                 ret = document->save();
                 QApplication::restoreOverrideCursor();
@@ -449,6 +458,9 @@ bool QC_MDIWindow::slotFileSaveAs(bool &cancelled) {
     QG_FileDialog dlg(this);
     QString fn = dlg.getSaveFile(&t);
 	if (document && !fn.isEmpty()) {
+		QFileInfo info(fn);
+		if (!info.isWritable())
+			return false;
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
         document->setGraphicView(graphicView);
         ret = document->saveAs(fn, t, true);

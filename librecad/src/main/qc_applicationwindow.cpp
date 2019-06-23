@@ -141,6 +141,8 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
+	qt_ntfs_permission_lookup++; // turn checking on
+
     //accept drop events to open files
     setAcceptDrops(true);
 
@@ -498,7 +500,7 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs)
 				+ tr(" , please check the filename and permissions.");
 			statusBar()->showMessage(msg, 2000);
 			commandWidget->appendHistory(msg);
-			return doSave(w);
+			return doSave(w, true);
 		}
 	}
 	return true;
@@ -708,6 +710,8 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
 
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
                     "deleting dialog factory");
+
+	qt_ntfs_permission_lookup--; // turn it off again
 
     delete dialogFactory;
 
