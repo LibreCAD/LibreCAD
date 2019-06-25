@@ -141,7 +141,9 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
+#ifdef _WINDOWS
 	qt_ntfs_permission_lookup++; // turn checking on
+#endif
 
     //accept drop events to open files
     setAcceptDrops(true);
@@ -711,7 +713,9 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
                     "deleting dialog factory");
 
+#ifdef _WINDOWS
 	qt_ntfs_permission_lookup--; // turn it off again
+#endif
 
     delete dialogFactory;
 
