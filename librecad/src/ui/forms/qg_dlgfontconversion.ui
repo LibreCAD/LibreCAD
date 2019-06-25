@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <author>Shawn Curry</author>
+ <class>QG_DlgFontConversion</class>
+ <widget class="QDialog" name="QG_DlgFontConversion">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>533</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Convert TTF Fonts</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="lblFamily">
+     <property name="text">
+      <string>Font family:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="4">
+    <widget class="QFontComboBox" name="cbFontFamily">
+     <property name="sizeAdjustPolicy">
+      <enum>QComboBox::AdjustToMinimumContentsLength</enum>
+     </property>
+     <property name="currentFont">
+      <font>
+       <family>Arial Black</family>
+      </font>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="lblFont">
+     <property name="text">
+      <string>Font file:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" colspan="4">
+    <widget class="QLineEdit" name="txtFontName">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="readOnly">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="5">
+    <widget class="QToolButton" name="btnFontFile">
+     <property name="text">
+      <string>...</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="lblSaveAs">
+     <property name="text">
+      <string>Save as:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" colspan="4">
+    <widget class="QLineEdit" name="txtSaveAs"/>
+   </item>
+   <item row="2" column="5">
+    <widget class="QToolButton" name="btnSaveAs">
+     <property name="text">
+      <string>...</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Letter spacing:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QDoubleSpinBox" name="sbLetter">
+     <property name="value">
+      <double>0.500000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2">
+    <widget class="QLabel" name="lblAuthor">
+     <property name="text">
+      <string>Author:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="3" colspan="2">
+    <widget class="QLineEdit" name="txtAuthor">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Word spacing:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QDoubleSpinBox" name="sbWord">
+     <property name="value">
+      <double>2.000000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="QLabel" name="lblLicense">
+     <property name="text">
+      <string>License:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="3" colspan="2">
+    <widget class="QLineEdit" name="txtLicense"/>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="lblLineSpacing">
+     <property name="text">
+      <string>Line spacing:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QDoubleSpinBox" name="sbLine">
+     <property name="value">
+      <double>1.000000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="2" colspan="4">
+    <spacer name="horizontalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>351</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="6" column="0" colspan="6">
+    <widget class="QGroupBox" name="gbPreview">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>Preview</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QG_GraphicView" name="gvPreview" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>100</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="7" column="0" colspan="4">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>259</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="7" column="4" colspan="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Apply|QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QG_GraphicView</class>
+   <extends>QWidget</extends>
+   <header>qg_graphicview.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>clicked(QAbstractButton*)</signal>
+   <receiver>QG_DlgFontConversion</receiver>
+   <slot>slotButtonClicked(QAbstractButton*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>325</x>
+     <y>374</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>227</x>
+     <y>373</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnFontFile</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgFontConversion</receiver>
+   <slot>slotFontFileClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>509</x>
+     <y>52</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>472</x>
+     <y>108</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnSaveAs</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgFontConversion</receiver>
+   <slot>slotSaveAsClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>516</x>
+     <y>85</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>471</x>
+     <y>133</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>txtFontName</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>QG_DlgFontConversion</receiver>
+   <slot>slotFontFileChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>342</x>
+     <y>52</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>297</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>txtSaveAs</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>QG_DlgFontConversion</receiver>
+   <slot>slotSaveAsChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>360</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>301</x>
+     <y>81</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbFontFamily</sender>
+   <signal>currentFontChanged(QFont)</signal>
+   <receiver>QG_DlgFontConversion</receiver>
+   <slot>slotFontChanged(QFont)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>330</x>
+     <y>25</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>304</x>
+     <y>23</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sbLetter</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>QG_DlgFontConversion</receiver>
+   <slot>slotFontSpacingChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>133</x>
+     <y>112</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>187</x>
+     <y>115</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sbWord</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>QG_DlgFontConversion</receiver>
+   <slot>slotFontSpacingChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>125</x>
+     <y>142</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>186</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sbLine</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>QG_DlgFontConversion</receiver>
+   <slot>slotFontSpacingChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>124</x>
+     <y>176</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>186</x>
+     <y>177</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>slotSaveAsClicked()</slot>
+  <slot>slotUpdatePreview()</slot>
+  <slot>slotButtonClicked(QAbstractButton*)</slot>
+  <slot>slotFontChanged(QFont)</slot>
+  <slot>slotFontFileClicked()</slot>
+  <slot>slotFontFileChanged()</slot>
+  <slot>slotSaveAsChanged()</slot>
+  <slot>slotFontSpacingChanged()</slot>
+ </slots>
+</ui>

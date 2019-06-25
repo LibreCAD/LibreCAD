@@ -63,6 +63,7 @@
 #include "qg_dlgdimension.h"
 #include "qg_dlgdimlinear.h"
 #include "qg_dlgellipse.h"
+#include "qg_dlgfontconversion.h"
 #include "qg_dlghatch.h"
 #include "qg_dlgimage.h"
 #include "qg_dlginsert.h"
@@ -1770,6 +1771,13 @@ bool QG_DialogFactory::requestOptionsMakerCamDialog() {
     QG_DlgOptionsMakerCam dlg(parent);
 
     return (dlg.exec() == QDialog::Accepted);
+}
+
+bool QG_DialogFactory::requestFontConversionDialog()
+{
+	QG_DlgFontConversion dlg(parent);
+
+	return (dlg.exec() == QDialog::Accepted);
 }
 
 QString QG_DialogFactory::requestFileSaveAsDialog(const QString& caption /* = QString() */,

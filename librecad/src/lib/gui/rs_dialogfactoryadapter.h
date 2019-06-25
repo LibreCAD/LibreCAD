@@ -68,6 +68,7 @@ public:
 	void requestOptionsGeneralDialog() override {}
 	void requestOptionsDrawingDialog(RS_Graphic&) override {}
 	bool requestOptionsMakerCamDialog() override {return false;}
+    bool requestFontConversionDialog() override {return false;}
 	QString requestFileSaveAsDialog(const QString&, const QString&, const QString&, QString*) override {return {};}
 	void updateCoordinateWidget(const RS_Vector& , const RS_Vector& , bool =false) override {}
 	void updateMouseWidget(const QString&, const QString&) override{}

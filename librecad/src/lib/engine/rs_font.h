@@ -43,6 +43,7 @@
 class RS_Font {
 public:
     RS_Font(const QString& name, bool owner=true);
+	virtual ~RS_Font();
     //RS_Font(const char* name);
 
     /** @return the fileName of this font. */
@@ -154,6 +155,8 @@ private:
 
     //! Default line spacing factor for this font
     double lineSpacingFactor;
+
+	bool owner;
 };
 
 #endif

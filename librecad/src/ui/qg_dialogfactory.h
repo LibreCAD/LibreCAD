@@ -216,6 +216,7 @@ public:
 	void requestOptionsGeneralDialog() override;
 	void requestOptionsDrawingDialog(RS_Graphic& graphic) override;
 	bool requestOptionsMakerCamDialog() override;
+	bool requestFontConversionDialog() override;
 
 	QString requestFileSaveAsDialog(const QString& caption = QString(),
 											const QString& dir = QString(),

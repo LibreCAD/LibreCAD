@@ -50,6 +50,8 @@ public:
 
     void init();
 
+	void addFont(RS_Font* font);
+	void deleteFont(RS_Font* font);
     void clearFonts();
 	size_t countFonts() const;
     RS_Font* requestFont(const QString& name);

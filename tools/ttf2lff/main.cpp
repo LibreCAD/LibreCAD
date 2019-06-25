@@ -24,8 +24,9 @@
 #ifdef __APPLE__
     #include <sys/types.h>
 #endif
-#ifdef __WIN32__
+#if defined(__WIN32__) || defined(_WIN32)
     #include <time.h>
+	#include <string>
 #endif
 
 #include <iostream>
@@ -225,7 +226,7 @@ FT_Error convertGlyph(FT_ULong charcode) {
 
     FT_Get_Glyph(face->glyph, &glyph);
     FT_OutlineGlyph og = (FT_OutlineGlyph)glyph;
-    if (face->glyph->format != ft_glyph_format_outline) {
+    if (face->glyph->format != FT_GLYPH_FORMAT_OUTLINE) {
         std::cerr << "Not an outline font\n";
     }
 

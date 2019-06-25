@@ -46,12 +46,20 @@
  *              the letters will be deleted when the font is deleted.
  */
 RS_Font::RS_Font(const QString& fileName, bool owner)
-    :	letterList(owner), fileName(fileName), fileLicense("unknown") {
+    :	letterList(owner), fileName(fileName), fileLicense("unknown"), owner(owner) {
     loaded = false;
     letterSpacing = 3.0;
     wordSpacing = 6.75;
     lineSpacingFactor = 1.0;
     rawLffFontList.clear();
+}
+
+RS_Font::~RS_Font()
+{
+	if (owner) {
+		for (auto letter : letterList)
+			delete letter;
+	}
 }
 
 

@@ -45,6 +45,7 @@ public slots:
 protected slots:
     virtual void languageChange();
     virtual void setTemplateFile();
+	virtual void showFontConversionDialog();
 
 private slots:
     void on_tabWidget_currentChanged(int index);

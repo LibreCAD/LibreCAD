@@ -32,6 +32,7 @@
 #include "rs_units.h"
 #include "qg_filedialog.h"
 #include "rs_debug.h"
+#include "rs_dialogfactory.h"
 
 /*
  *  Constructs a QG_DlgOptionsGeneral as a child of 'parent', with the
@@ -231,6 +232,11 @@ void QG_DlgOptionsGeneral::setTemplateFile() {
     QG_FileDialog dlg(this);
     QString fileName = dlg.getOpenFile(&type);
     leTemplate->setText(fileName);
+}
+
+void QG_DlgOptionsGeneral::showFontConversionDialog()
+{
+	RS_DIALOGFACTORY->requestFontConversionDialog();
 }
 
 void QG_DlgOptionsGeneral::ok()

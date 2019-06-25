@@ -79,6 +79,24 @@ std::vector<std::unique_ptr<RS_Font> >::const_iterator RS_FontList::end() const
 	return fonts.end();
 }
 
+void RS_FontList::addFont(RS_Font * font)
+{
+	for (auto const &f : fonts)
+		if (f.get() == font)
+			return;
+	fonts.emplace_back(font);
+}
+
+void RS_FontList::deleteFont(RS_Font * font)
+{
+	for (auto it = fonts.begin(); it != fonts.end(); it++) {
+		if (it->get() == font) {
+			it = fonts.erase(it);			
+			return;
+		}
+	}
+}
+
 /**
  * Removes all fonts in the fontlist.
  */
@@ -108,8 +126,9 @@ RS_Font* RS_FontList::requestFont(const QString& name) {
 
 	// Search our list of available fonts:
 	for( auto const& f: fonts){
+		QFileInfo info(f->getFileName());
 
-        if (f->getFileName()==name2) {
+        if (info.baseName().toLower()==name2) {
             // Make sure this font is loaded into memory:
             f->loadFont();
 			foundFont = f.get();

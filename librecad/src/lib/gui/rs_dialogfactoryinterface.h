@@ -356,6 +356,11 @@ public:
      */
     virtual bool requestOptionsMakerCamDialog() = 0;
 
+	/**
+	 * Shows a UI for the ttf2lff font conversion utility
+	 */
+	virtual bool requestFontConversionDialog() = 0;
+
     /**
      * This virtual method must be overwritten and must present
      * a dialog for saving a file.

@@ -39,7 +39,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
@@ -753,83 +753,7 @@
       <attribute name="title">
        <string>&amp;Paths</string>
       </attribute>
-      <layout class="QGridLayout">
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>Variable File:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="textLabel4">
-         <property name="text">
-          <string>Fonts:</string>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QLineEdit" name="lePathTranslations"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="textLabel6">
-         <property name="text">
-          <string>Part Libraries:</string>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QLineEdit" name="lePathHatch"/>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="textLabel7">
-         <property name="text">
-          <string>Template:</string>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="2">
-        <widget class="QLineEdit" name="leTemplate"/>
-       </item>
-       <item row="3" column="2">
-        <widget class="QLineEdit" name="lePathLibrary"/>
-       </item>
-       <item row="2" column="2">
-        <widget class="QLineEdit" name="lePathFonts"/>
-       </item>
-       <item row="4" column="3">
-        <widget class="QToolButton" name="btTemplate">
-         <property name="icon">
-          <iconset resource="../../../res/icons/icons.qrc">
-           <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="2">
-        <spacer name="spacer5_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Expanding</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>31</width>
-           <height>71</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
+      <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
         <widget class="QLabel" name="textLabel2">
          <property name="text">
@@ -839,6 +763,9 @@
           <bool>false</bool>
          </property>
         </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="lePathTranslations"/>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="textLabel3">
@@ -850,7 +777,94 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="lePathHatch"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="textLabel4">
+         <property name="text">
+          <string>Fonts:</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="lePathFonts"/>
+       </item>
+       <item row="2" column="2">
+        <widget class="QToolButton" name="fonts_button">
+         <property name="icon">
+          <iconset resource="../../../res/icons/icons.qrc">
+           <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QToolButton" name="btConvertFonts">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../res/icons/icons.qrc">
+           <normaloff>:/icons/add_font.svg</normaloff>:/icons/add_font.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="textLabel6">
+         <property name="text">
+          <string>Part Libraries:</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="lePathLibrary"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="textLabel7">
+         <property name="text">
+          <string>Template:</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="leTemplate"/>
+       </item>
+       <item row="4" column="2">
+        <widget class="QToolButton" name="btTemplate">
+         <property name="icon">
+          <iconset resource="../../../res/icons/icons.qrc">
+           <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Variable File:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="variablefile_field"/>
+       </item>
+       <item row="5" column="2">
+        <widget class="QToolButton" name="variablefile_button">
+         <property name="icon">
+          <iconset resource="../../../res/icons/icons.qrc">
+           <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0" rowspan="2">
         <spacer name="spacer5">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -866,24 +880,21 @@
          </property>
         </spacer>
        </item>
-       <item row="5" column="2">
-        <widget class="QLineEdit" name="variablefile_field"/>
-       </item>
-       <item row="5" column="3">
-        <widget class="QToolButton" name="variablefile_button">
-         <property name="icon">
-          <iconset resource="../../../res/icons/icons.qrc">
-           <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
+       <item row="7" column="1">
+        <spacer name="spacer5_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-        </widget>
-       </item>
-       <item row="2" column="3">
-        <widget class="QToolButton" name="fonts_button">
-         <property name="icon">
-          <iconset resource="../../../res/icons/icons.qrc">
-           <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
          </property>
-        </widget>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>31</width>
+           <height>71</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -1224,8 +1235,8 @@
    <slot>ok()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>344</x>
-     <y>615</y>
+     <x>355</x>
+     <y>591</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1240,8 +1251,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>344</x>
-     <y>615</y>
+     <x>355</x>
+     <y>591</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1256,8 +1267,8 @@
    <slot>setRestartNeeded()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>672</x>
-     <y>563</y>
+     <x>744</x>
+     <y>529</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1272,8 +1283,8 @@
    <slot>setRestartNeeded()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>672</x>
-     <y>537</y>
+     <x>744</x>
+     <y>500</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1288,8 +1299,8 @@
    <slot>setTemplateFile()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>682</x>
-     <y>193</y>
+     <x>722</x>
+     <y>198</y>
     </hint>
     <hint type="destinationlabel">
      <x>322</x>
@@ -1297,8 +1308,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btConvertFonts</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgOptionsGeneral</receiver>
+   <slot>showFontConversionDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>749</x>
+     <y>123</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>588</x>
+     <y>341</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>set_toolbar_file()</slot>
+  <slot>showFontConversionDialog()</slot>
  </slots>
 </ui>
