@@ -219,7 +219,8 @@ HEADERS += \
     lib/engine/lc_undosection.h \
     lib/printing/lc_printing.h \
     actions/lc_actiondrawlinepolygon3.h \
-    main/lc_application.h
+    main/lc_application.h \
+    ui/forms/qg_dlgfontconversion.h
 
 SOURCES += \
     lib/actions/rs_actioninterface.cpp \
@@ -310,7 +311,8 @@ SOURCES += \
     lib/engine/rs.cpp \
     lib/printing/lc_printing.cpp \
     actions/lc_actiondrawlinepolygon3.cpp \
-    main/lc_application.cpp
+    main/lc_application.cpp \
+    ui/forms/qg_dlgfontconversion.cpp
 
 # ################################################################################
 # Command
@@ -813,6 +815,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_dimlinearoptions.ui \
     ui/forms/qg_dimoptions.ui \
     ui/forms/qg_dlgattributes.ui \
+    ui/forms/qg_dlgfontconversion.ui \
     ui/forms/qg_dlghatch.ui \
     ui/forms/qg_dlginitial.ui \
     ui/forms/qg_dlginsert.ui \
