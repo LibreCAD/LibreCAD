@@ -155,6 +155,10 @@ void QC_MDIWindow::setParentWindow(QC_MDIWindow* p) {
 	parentWindow = p;
 }
 
+bool QC_MDIWindow::hasParentWindow() { 
+	return parentWindow != nullptr; 
+}
+
 RS_Graphic* QC_MDIWindow::getGraphic() const {
 	return document->getGraphic();
 }
@@ -263,13 +267,9 @@ void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
 
     RS_DEBUG->print("QC_MDIWindow::closeEvent begin");
 
-	if (!parentWindow) {
-		ce->ignore(); // handling delegated to QApplication
-		emit(signalClosing(this));
-	} else {
-		slotWindowClosing();
-		ce->accept();
-	}		
+	slotWindowClosing();
+	emit(signalClosing(this));
+	ce->accept();
 		
     RS_DEBUG->print("QC_MDIWindow::closeEvent end");
 }
@@ -400,6 +400,38 @@ void QC_MDIWindow::drawChars() {
 
 }
 
+bool QC_MDIWindow::isWritable(const QString & fileName)
+{
+	QFileInfo info(fileName);
+	bool result = info.isWritable();
+#ifdef _WINDOWS
+	if (result) {
+		// check the NTFS security settings as well 
+		qt_ntfs_permission_lookup++; // toggle this every time; qt won't check the readonly flag unless it's off
+		QFile test(fileName);
+		result = test.setPermissions(QFile::WriteOwner | QFile::WriteUser | QFile::WriteGroup | QFile::WriteOther);
+		qt_ntfs_permission_lookup--;
+	}
+#endif
+	return result;
+}
+
+void QC_MDIWindow::showFileSaveError(const QString& fileName)
+{
+	QFileInfo info(fileName);
+	QMessageBox mb(
+		QMessageBox::Warning,
+		tr("Save Drawing"),
+		QString("%1\n%2\n%3").arg(info.filePath(),
+			tr("This file is set to read-only."), 
+			tr("Try again with a different file name.")),
+		QMessageBox::Ok,
+		this
+	);
+	QApplication::beep();
+	mb.exec();
+}
+
 
 /**
  * Saves the current file.
@@ -426,9 +458,10 @@ bool QC_MDIWindow::slotFileSave(bool &cancelled, bool isAutoSave) {
             if (document->getFilename().isEmpty()) {
                 ret = slotFileSaveAs(cancelled);
             } else {
-				QFileInfo info(document->getFilename());
-				if (!info.isWritable())
+				if (!isWritable(document->getFilename())) {
+					showFileSaveError(document->getFilename());
 					return false;
+				}					
                 QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
                 ret = document->save();
                 QApplication::restoreOverrideCursor();
@@ -459,8 +492,10 @@ bool QC_MDIWindow::slotFileSaveAs(bool &cancelled) {
     QString fn = dlg.getSaveFile(&t);
 	if (document && !fn.isEmpty()) {
 		QFileInfo info(fn);
-		if (!info.isWritable())
+		if (info.exists() && !isWritable(fn)) {
+			showFileSaveError(fn);
 			return false;
+		}
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
         document->setGraphicView(graphicView);
         ret = document->saveAs(fn, t, true);

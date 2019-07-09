@@ -141,10 +141,6 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
-#ifdef _WINDOWS
-	qt_ntfs_permission_lookup++; // turn checking on
-#endif
-
     //accept drop events to open files
     setAcceptDrops(true);
 
@@ -467,7 +463,7 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs)
 	QString name, msg;
 	bool cancelled;
 	if (!w) return false;
-	if (w->getDocument()->isModified()) {
+	//if (w->getDocument()->isModified()) {
 		name = w->getDocument()->getFilename();
 		if (name.isEmpty())
 			doActivate(w); // show the user the drawing for save as
@@ -502,9 +498,10 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs)
 				+ tr(" , please check the filename and permissions.");
 			statusBar()->showMessage(msg, 2000);
 			commandWidget->appendHistory(msg);
+			doActivate(w);
 			return doSave(w, true);
 		}
-	}
+	//}
 	return true;
 }
 
@@ -581,6 +578,7 @@ int QC_ApplicationWindow::showCloseDialog(QC_MDIWindow * w, bool showSaveAll)
 		else if (fn.length() > 50)
 			fn = QString("%1...%2").arg(fn.left(24)).arg(fn.right(24));
 
+		QApplication::beep();
 		dlg.setText(tr("Save changes to the following item?\n%1").arg(fn));
 		return dlg.exec();
 	}
@@ -712,10 +710,6 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
 
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
                     "deleting dialog factory");
-
-#ifdef _WINDOWS
-	qt_ntfs_permission_lookup--; // turn it off again
-#endif
 
     delete dialogFactory;
 
@@ -2191,7 +2185,7 @@ void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
 {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClosing()");
 	bool cancel = false;
-	if (win && win->getDocument()->isModified()) {
+	if (win && win->getDocument()->isModified() && !win->hasParentWindow()) {
 		switch (showCloseDialog(win)) {
 		case QG_ExitDialog::Save:
 			cancel = !doSave(win);
@@ -2859,15 +2853,15 @@ void QC_ApplicationWindow::showAboutWindow()
     // Compiler macro list in Qt source tree
     // Src/qtbase/src/corelib/global/qcompilerdetection.h
 
-    QString info
-    (
-        tr("Version: %1").arg(XSTR(LC_VERSION)) + "\n" +
-        #if defined(Q_CC_CLANG)
-            tr("Compiler: Clang %1.%2.%3").arg(__clang_major__).arg(__clang_minor__).arg(__clang_patchlevel__) + "\n" +
-        #elif defined(Q_CC_GNU)
-            tr("Compiler: GNU GCC %1.%2.%3").arg(__GNUC__).arg(__GNUC_MINOR__).arg(__GNUC_PATCHLEVEL__) + "\n" +
-        #elif defined(Q_CC_MSVC)
-            tr("Compiler: Microsoft Visual C++") + "\n" +
+	QString info
+	(
+		tr("Version: %1").arg(XSTR(LC_VERSION)) + "\n" +
+#if defined(Q_CC_CLANG)
+		tr("Compiler: Clang %1.%2.%3").arg(__clang_major__).arg(__clang_minor__).arg(__clang_patchlevel__) + "\n" +
+#elif defined(Q_CC_GNU)
+		tr("Compiler: GNU GCC %1.%2.%3").arg(__GNUC__).arg(__GNUC_MINOR__).arg(__GNUC_PATCHLEVEL__) + "\n" +
+#elif defined(Q_CC_MSVC)
+            tr("Compiler: Microsoft C/C++ %1.%2.%3.%4").arg(_MSC_VER / 100).arg(_MSC_VER % 100).arg(_MSC_FULL_VER % 100000).arg(_MSC_BUILD)+ "\n" +
         #endif
         tr("Compiled on: %1").arg(__DATE__) + "\n" +
         tr("Qt Version: %1").arg(qVersion()) + "\n" +

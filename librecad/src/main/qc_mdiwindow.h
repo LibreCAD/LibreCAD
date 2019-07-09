@@ -103,6 +103,7 @@ public:
      * Sets the parent window that will be notified if this 
      */
 	void setParentWindow(QC_MDIWindow* p);
+	bool hasParentWindow();
     /**
      * @return The MDI window id.
      */
@@ -120,6 +121,8 @@ protected:
 
 private:
     void drawChars();
+	bool isWritable(const QString& fileName);
+	void showFileSaveError(const QString& fileName);
 
 private:
     /** window ID */
@@ -144,6 +147,9 @@ private:
     QMdiArea* cadMdiArea;
 };
 
+#ifdef _WINDOWS
+extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
+#endif
 
 #endif
 
