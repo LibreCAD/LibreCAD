@@ -415,9 +415,5 @@ private:
 
 };
 
-#ifdef _WINDOWS
-extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
-#endif
-
 #endif
 
