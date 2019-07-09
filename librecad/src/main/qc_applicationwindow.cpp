@@ -605,6 +605,7 @@ void QC_ApplicationWindow::enableFileActions(QC_MDIWindow* w)
 	a_map["FileSaveAs"]->setEnabled(w);
 	a_map["FileSaveAll"]->setEnabled(w && window_list.count() > 1);
 	a_map["FileExportMakerCam"]->setEnabled(w);
+	a_map["FileExportToProNest"]->setEnabled(w);
 	a_map["FilePrintPDF"]->setEnabled(w);
 	a_map["FileExport"]->setEnabled(w);
 	a_map["FilePrint"]->setEnabled(w);
@@ -815,6 +816,24 @@ void QC_ApplicationWindow::slotEnableActions(bool enable) {
         undoButton->setEnabled(enable&& undoEnable);
         redoButton->setEnabled(enable&& redoEnable);
     }
+}
+
+void QC_ApplicationWindow::slotExportToProNest()
+{
+	QC_MDIWindow* w = getMDIWindow();	
+	if (w && doSave(w)) {
+		QProcess proc(this);
+		QDir dir = QDir::cleanPath(QCoreApplication::applicationDirPath());
+		QFileInfo info = QFileInfo(dir, "AddPart.exe");
+
+		QString command = "\"" + info.filePath() + "\"" +
+			QString(" \"%1\"").arg(w->getDocument()->getFilename());
+
+		QApplication::setOverrideCursor(Qt::WaitCursor);
+		proc.start(command);
+		proc.waitForFinished();
+		QApplication::restoreOverrideCursor();
+	}
 }
 
 void QC_ApplicationWindow::slotUpdateActiveLayer()

@@ -327,6 +327,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
     file_toolbar->setSizePolicy(toolBarPolicy);
     file_toolbar->setObjectName("file_toolbar");
     file_toolbar->addActions(file_actions);
+	file_toolbar->addAction(a_map["FileExportToProNest"]);
     file_toolbar->addAction(a_map["FilePrint"]);
     file_toolbar->addAction(a_map["FilePrintPreview"]);
 
@@ -578,6 +579,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     sub_menu->addAction(a_map["FileExportMakerCam"]);
     sub_menu->addAction(a_map["FilePrintPDF"]);
     sub_menu->addAction(a_map["FileExport"]);
+	sub_menu->addAction(a_map["FileExportToProNest"]);
     file_menu->addSeparator();
     file_menu->addAction(a_map["FilePrint"]);
     file_menu->addAction(a_map["FilePrintPreview"]);

@@ -132,6 +132,8 @@ public slots:
     void slotSnapsChanged(RS_SnapMode s);
     void slotEnableActions(bool enable);
 
+	void slotExportToProNest();
+
     /** generates a new document for a graphic. */
 	QC_MDIWindow* slotFileNew(RS_Document* doc=nullptr);
     /** generates a new document based in predefined template */

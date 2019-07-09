@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="/icons">
+    <file>ProNestIcon.svg</file>
     <file>add_font.svg</file>
     <file>camera.svg</file>
     <file>cursor.svg</file>

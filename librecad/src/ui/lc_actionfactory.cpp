@@ -1077,6 +1077,12 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("FilePrintPDF");
     a_map["FilePrintPDF"] = action;
 
+	action = new QAction(tr("Export to ProNest"), agm->file);
+	action->setIcon(QIcon(":/icons/ProNestIcon.svg"));
+	connect(action, SIGNAL(triggered()), main_window, SLOT(slotExportToProNest()));
+	action->setObjectName("FileExportToProNest");
+	a_map["FileExportToProNest"] = action;
+
     action = new QAction(tr("&Block"), agm->file);
     action->setIcon(QIcon(":/icons/insert_active_block.svg"));
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotImportBlock()));
