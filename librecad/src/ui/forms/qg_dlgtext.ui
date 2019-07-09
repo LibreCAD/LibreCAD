@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>548</width>
+    <width>555</width>
     <height>441</height>
    </rect>
   </property>
@@ -52,6 +52,17 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <widget class="QToolButton" name="btConvertFonts">
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../res/icons/icons.qrc">
+           <normaloff>:/icons/add_font.svg</normaloff>:/icons/add_font.svg</iconset>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QToolButton" name="bClear">
@@ -1539,8 +1550,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>261</x>
-     <y>329</y>
+     <x>272</x>
+     <y>429</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1555,8 +1566,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>261</x>
-     <y>329</y>
+     <x>272</x>
+     <y>429</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1571,8 +1582,8 @@
    <slot>updateUniCharComboBox(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>223</x>
-     <y>268</y>
+     <x>442</x>
+     <y>350</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1587,8 +1598,8 @@
    <slot>insertChar()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>507</x>
-     <y>267</y>
+     <x>530</x>
+     <y>352</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1603,8 +1614,8 @@
    <slot>updateUniCharButton(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>223</x>
-     <y>268</y>
+     <x>442</x>
+     <y>350</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1619,8 +1630,8 @@
    <slot>updateUniCharButton(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>223</x>
-     <y>296</y>
+     <x>442</x>
+     <y>381</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1635,8 +1646,8 @@
    <slot>insertSymbol(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>32</x>
-     <y>281</y>
+     <x>56</x>
+     <y>365</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1699,8 +1710,8 @@
    <slot>paste()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>512</x>
-     <y>26</y>
+     <x>541</x>
+     <y>38</y>
     </hint>
     <hint type="destinationlabel">
      <x>25</x>
@@ -1747,8 +1758,8 @@
    <slot>setAlignmentMC()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>400</x>
-     <y>143</y>
+     <x>419</x>
+     <y>183</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1763,8 +1774,8 @@
    <slot>setAlignmentMR()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>430</x>
-     <y>143</y>
+     <x>453</x>
+     <y>183</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1779,8 +1790,8 @@
    <slot>setAlignmentBR()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>430</x>
-     <y>200</y>
+     <x>453</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1795,8 +1806,8 @@
    <slot>setAlignmentBL()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>370</x>
-     <y>200</y>
+     <x>385</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1811,8 +1822,8 @@
    <slot>setAlignmentTL()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>370</x>
-     <y>114</y>
+     <x>385</x>
+     <y>142</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1827,8 +1838,8 @@
    <slot>setAlignmentBC()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>400</x>
-     <y>200</y>
+     <x>419</x>
+     <y>265</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1843,8 +1854,8 @@
    <slot>setAlignmentTC()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>400</x>
-     <y>114</y>
+     <x>419</x>
+     <y>142</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1859,8 +1870,8 @@
    <slot>setAlignmentLC()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>392</x>
-     <y>163</y>
+     <x>419</x>
+     <y>224</y>
     </hint>
     <hint type="destinationlabel">
      <x>261</x>
@@ -1875,8 +1886,8 @@
    <slot>setAlignmentLL()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>355</x>
-     <y>170</y>
+     <x>385</x>
+     <y>224</y>
     </hint>
     <hint type="destinationlabel">
      <x>318</x>
@@ -1891,8 +1902,8 @@
    <slot>setAlignmentLR()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>422</x>
-     <y>163</y>
+     <x>453</x>
+     <y>224</y>
     </hint>
     <hint type="destinationlabel">
      <x>261</x>
@@ -1907,8 +1918,8 @@
    <slot>setAlignmentML()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>362</x>
-     <y>135</y>
+     <x>385</x>
+     <y>183</y>
     </hint>
     <hint type="destinationlabel">
      <x>261</x>
@@ -1923,8 +1934,8 @@
    <slot>setAlignmentTR()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>422</x>
-     <y>106</y>
+     <x>453</x>
+     <y>142</y>
     </hint>
     <hint type="destinationlabel">
      <x>261</x>
@@ -1939,8 +1950,8 @@
    <slot>setAlignmentFit()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>475</x>
-     <y>106</y>
+     <x>529</x>
+     <y>139</y>
     </hint>
     <hint type="destinationlabel">
      <x>261</x>
@@ -1955,8 +1966,8 @@
    <slot>setAlignmentAlign()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>475</x>
-     <y>106</y>
+     <x>529</x>
+     <y>180</y>
     </hint>
     <hint type="destinationlabel">
      <x>261</x>
@@ -1971,8 +1982,8 @@
    <slot>setAlignmentMiddle()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>475</x>
-     <y>106</y>
+     <x>529</x>
+     <y>221</y>
     </hint>
     <hint type="destinationlabel">
      <x>261</x>
@@ -1980,5 +1991,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btConvertFonts</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgText</receiver>
+   <slot>showFontConversionDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>322</x>
+     <y>26</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>111</x>
+     <y>31</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>showFontConversionDialog()</slot>
+ </slots>
 </ui>

@@ -33,6 +33,7 @@
 #include "rs_font.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
+#include "rs_dialogfactory.h"
 
 /*
  *  Constructs a QG_DlgText as a child of 'parent', with the
@@ -98,6 +99,12 @@ void QG_DlgText::updateUniCharComboBox(int) {
 void QG_DlgText::reject() {
     saveSettings=false;
     QDialog::reject();
+}
+
+void QG_DlgText::showFontConversionDialog()
+{
+	RS_DIALOGFACTORY->requestFontConversionDialog();
+	cbFont->init();
 }
 
 void QG_DlgText::destroy() {

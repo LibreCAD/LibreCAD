@@ -42,14 +42,23 @@
  */
 class RS_Font {
 public:
+	/**
+	 * @param name The path to the LFF, or a font family name.  If only the family name is given, a lookup is performed.
+	 * @param owner This font owns the memory used for it's letters
+	 */
     RS_Font(const QString& name, bool owner=true);
 	virtual ~RS_Font();
     //RS_Font(const char* name);
 
-    /** @return the fileName of this font. */
+    /** @return the fileName of this font, which is used as a font family name */
     QString getFileName() const {
-        return fileName;
+		//return fileName; // the full path is only needed to load from the lff 
+        return fontFamily; // this is the name that will be commonly used to refer to this font
     }
+
+	QString getFontFamily() const {
+		return fontFamily;
+	}
 	
     /** @return the fileLicense of this font. */
     QString getFileLicense() const {
@@ -128,6 +137,9 @@ private:
 
     //! Font file name
     QString fileName;
+
+	//! Font family
+	QString fontFamily;
 	
     //! Font file license
     QString fileLicense;

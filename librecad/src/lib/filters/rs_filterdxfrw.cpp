@@ -2511,7 +2511,13 @@ void RS_FilterDXFRW::writeMText(RS_MText* t) {
 
         text->text = toDxfString(t->getText()).toUtf8().data();
         //        text->widthscale =t->getWidth();
-        text->widthscale =t->getUsedTextWidth(); //getSize().x;
+        //text->widthscale =t->getUsedTextWidth(); //getSize().x;
+
+		// most MText strings containing normal (breaking) spaces were being forced to 2 lines when rendered by
+		// other viewers.  The cause of this problem is that the extents width (code 41) we compute is determined to be 
+		// too small to fit the complete line.  The computed size is being scaled (n/9) in the update() functions. (?) 
+		// However changing those calcuations seemed riskier than simply scaling it back here.  -SC
+		text->widthscale = t->getUsedTextWidth() * 1.111;
 		txt2.interlin = t->getLineSpacingFactor();
 
         dxfW->writeMText((DRW_MText*)text);

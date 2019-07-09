@@ -54,8 +54,9 @@ void QG_FontBox::init() {
 			continue;
 		}
 
-		fonts.append(f->getFileName());
+		fonts.append(f->getFontFamily());
 	}
+	clear();
     addItems(fonts);
 
     connect(this, SIGNAL(activated(int)),

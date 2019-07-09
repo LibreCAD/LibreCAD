@@ -56,25 +56,28 @@ protected slots:
 	virtual void slotFontSpacingChanged();
 	virtual void slotSaveAsChanged();
 	virtual void slotSaveAsClicked();
+	virtual void slotWritingSystemChanged();
 
 protected slots:
 	virtual void languageChange();
 
 private: //helpers
-	void createFont(QString lff);
-	void enableApply();
+	void addFont(const QString& lff);
+	void createFont(const QString& lff);
+	void enableApply(bool enable);
 	void updatePreview(bool resizing = false);
 	bool containsFamily(const QString& fontFile, const QString& family);
 	QString getFontFileName(const QString& family, const QString& fontDir = "", QHash<QString, int>* checked = nullptr);
 	QString getSaveAsFileName();
 	QString getTempFileName();
+	QString getSampleText();
 
 private:
     Ui::QG_DlgFontConversion *ui;
 	QString fontFolder;
 	bool dirty;
 	RS_EntityContainer* preview;
-	RS_Font* font;
+	RS_Font* font; // the previewed font
 };
 
 #endif // QG_DLGFONTCONVERSION_H

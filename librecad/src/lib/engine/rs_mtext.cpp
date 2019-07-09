@@ -259,6 +259,7 @@ void RS_MText::update()
     // For every letter:
     for (int i = 0; i < static_cast<int>(data.text.length()); ++i) {
         bool handled {false};
+		bool isEscape {false}; // test if an escape char is actually escaping something (otherwise treat it as a literal)
 
         switch (data.text.at(i).unicode()) {
         case 0x0A:
@@ -401,7 +402,12 @@ void RS_MText::update()
 
                 break;
             } // inner case 'S'
-
+			case '\\':
+			case '{':
+			case '}':
+				isEscape = true;
+				--i;
+				break;
             default:
                 --i;
                 break;
@@ -417,6 +423,8 @@ void RS_MText::update()
         default: {
             // One Letter:
             QString letterText {QString(data.text.at(i))};
+			if (letterText == "\\" && isEscape) // this was an escape character
+				letterText = QString(data.text.at(++i)); // the next char is a literal which must be drawn instead
             if (nullptr == font->findLetter( letterText)) {
                 RS_DEBUG->print("RS_MText::update: missing font for letter( %s ), replaced it with QChar(0xfffd)",
                                 qPrintable( letterText));

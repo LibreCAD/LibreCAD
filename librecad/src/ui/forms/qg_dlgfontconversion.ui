@@ -7,12 +7,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>533</width>
+    <width>584</width>
     <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Convert TTF Fonts</string>
+   <string>Convert Fonts</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -22,7 +22,7 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1" colspan="4">
+   <item row="0" column="1" colspan="3">
     <widget class="QFontComboBox" name="cbFontFamily">
      <property name="sizeAdjustPolicy">
       <enum>QComboBox::AdjustToMinimumContentsLength</enum>
@@ -41,7 +41,7 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="1" colspan="4">
+   <item row="1" column="1" colspan="3">
     <widget class="QLineEdit" name="txtFontName">
      <property name="enabled">
       <bool>false</bool>
@@ -51,7 +51,7 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="5">
+   <item row="1" column="4">
     <widget class="QToolButton" name="btnFontFile">
      <property name="text">
       <string>...</string>
@@ -65,10 +65,10 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="1" colspan="4">
+   <item row="2" column="1" colspan="3">
     <widget class="QLineEdit" name="txtSaveAs"/>
    </item>
-   <item row="2" column="5">
+   <item row="2" column="4">
     <widget class="QToolButton" name="btnSaveAs">
      <property name="text">
       <string>...</string>
@@ -99,7 +99,7 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="3" colspan="2">
+   <item row="3" column="3">
     <widget class="QLineEdit" name="txtAuthor">
      <property name="minimumSize">
       <size>
@@ -133,7 +133,7 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="3" colspan="2">
+   <item row="4" column="3">
     <widget class="QLineEdit" name="txtLicense"/>
    </item>
    <item row="5" column="0">
@@ -150,20 +150,27 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="2" colspan="4">
-    <spacer name="horizontalSpacer_3">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+   <item row="5" column="2">
+    <widget class="QLabel" name="lblWritingSystem">
+     <property name="text">
+      <string>Writing System:</string>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>351</width>
-       <height>20</height>
-      </size>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
-    </spacer>
+    </widget>
    </item>
-   <item row="6" column="0" colspan="6">
+   <item row="5" column="3">
+    <widget class="QComboBox" name="cbWritingSystem">
+     <property name="insertPolicy">
+      <enum>QComboBox::NoInsert</enum>
+     </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="5">
     <widget class="QGroupBox" name="gbPreview">
      <property name="minimumSize">
       <size>
@@ -188,7 +195,7 @@
      </layout>
     </widget>
    </item>
-   <item row="7" column="0" colspan="4">
+   <item row="7" column="0" colspan="3">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -201,7 +208,7 @@
      </property>
     </spacer>
    </item>
-   <item row="7" column="4" colspan="2">
+   <item row="7" column="3" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -245,8 +252,8 @@
    <slot>slotFontFileClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>509</x>
-     <y>52</y>
+     <x>572</x>
+     <y>62</y>
     </hint>
     <hint type="destinationlabel">
      <x>472</x>
@@ -261,8 +268,8 @@
    <slot>slotSaveAsClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>516</x>
-     <y>85</y>
+     <x>572</x>
+     <y>93</y>
     </hint>
     <hint type="destinationlabel">
      <x>471</x>
@@ -366,6 +373,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cbWritingSystem</sender>
+   <signal>activated(int)</signal>
+   <receiver>QG_DlgFontConversion</receiver>
+   <slot>slotWritingSystemChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>499</x>
+     <y>175</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>490</x>
+     <y>176</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>slotSaveAsClicked()</slot>
@@ -376,5 +399,6 @@
   <slot>slotFontFileChanged()</slot>
   <slot>slotSaveAsChanged()</slot>
   <slot>slotFontSpacingChanged()</slot>
+  <slot>slotWritingSystemChanged()</slot>
  </slots>
 </ui>

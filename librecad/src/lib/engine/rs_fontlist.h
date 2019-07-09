@@ -50,8 +50,10 @@ public:
 
     void init();
 
+	// added to enable runtime addition/preview of new fonts
 	void addFont(RS_Font* font);
 	void deleteFont(RS_Font* font);
+
     void clearFonts();
 	size_t countFonts() const;
     RS_Font* requestFont(const QString& name);

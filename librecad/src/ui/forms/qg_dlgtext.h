@@ -69,6 +69,7 @@ public slots:
     virtual void updateUniCharButton( int );
     virtual void insertChar();
     virtual void reject();
+	virtual void showFontConversionDialog();
 
 protected slots:
     virtual void languageChange();

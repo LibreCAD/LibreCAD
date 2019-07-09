@@ -136,6 +136,9 @@ void RS_ActionZoomPan::updateMouseCursor() {
     case SetPanning:
         graphicView->setMouseCursor(RS2::ClosedHandCursor);
         break;
+	case SetPanEnd:
+		graphicView->setMouseCursor(RS2::ArrowCursor);
+		break;
     default:
         break;
     }

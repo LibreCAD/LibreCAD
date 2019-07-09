@@ -49,17 +49,20 @@ QG_DlgFontConversion::QG_DlgFontConversion(QWidget *parent) :
 	fontFolder = RS_SETTINGS->readEntry("/Fonts", "").trimmed();
 	RS_SETTINGS->endGroup();
 
-
 	dirty = false;	
 	font = nullptr;
 	preview = new RS_EntityContainer();
 	ui->gvPreview->setContainer(preview);
+
+	ui->buttonBox->button(QDialogButtonBox::Apply)->setText(tr("Create"));
 
 	slotFontChanged(QFont());
 }
 
 QG_DlgFontConversion::~QG_DlgFontConversion()
 {
+	if (font)
+		RS_FONTLIST->deleteFont(font);
 	delete preview;
     delete ui;
 }
@@ -85,13 +88,16 @@ void QG_DlgFontConversion::slotButtonClicked(QAbstractButton* b)
 	QDialogButtonBox::StandardButton bt = ui->buttonBox->standardButton(b);
 	switch (bt) {
 	case QDialogButtonBox::Ok:
-		createFont(ui->txtSaveAs->text());
+		if (dirty) {
+			createFont(ui->txtSaveAs->text());
+			addFont(ui->txtSaveAs->text());
+		}
 		emit accept();
 		break;
 	case QDialogButtonBox::Apply:
 		createFont(ui->txtSaveAs->text());
-		dirty = false;
-		enableApply();
+		addFont(ui->txtSaveAs->text());
+		enableApply(false);
 		break;
 	case QDialogButtonBox::Cancel:	
 	default:
@@ -102,17 +108,18 @@ void QG_DlgFontConversion::slotButtonClicked(QAbstractButton* b)
 
 void QG_DlgFontConversion::slotFontSpacingChanged()
 {
-	dirty = true;
 	updatePreview();
+	enableApply(true);
 }
 
 void QG_DlgFontConversion::slotFontChanged(QFont)
 {
-	dirty = true;
 	QString searching = tr(" - Searching");
 	QApplication::setOverrideCursor(Qt::WaitCursor);
 	setWindowTitle(windowTitle() + searching);
+
 	ui->txtFontName->setText(getFontFileName(ui->cbFontFamily->currentFont().family()));
+
 	setWindowTitle(windowTitle().chopped(windowTitle().size() - searching.size()));
 	QApplication::restoreOverrideCursor();
 	if (!ui->txtFontName->text().isEmpty())
@@ -121,12 +128,13 @@ void QG_DlgFontConversion::slotFontChanged(QFont)
 		preview->clear();
 		ui->gvPreview->redraw();
 	}
+	enableApply(true);
 }
 
 void QG_DlgFontConversion::slotFontFileChanged()
 {
-	dirty = true;
 	ui->txtSaveAs->setText(getSaveAsFileName());
+	enableApply(true);
 }
 
 void QG_DlgFontConversion::slotFontFileClicked()
@@ -135,11 +143,11 @@ void QG_DlgFontConversion::slotFontFileClicked()
 	dlg.setFileMode(QFileDialog::ExistingFile);
 	dlg.setViewMode(QFileDialog::List);
 	dlg.setNameFilter(tr("TrueType Font Files(*.ttf)"));
-	dlg.setDefaultSuffix("ttf");	
+	dlg.setDefaultSuffix("ttf");
 	dlg.setDirectory(QStandardPaths::writableLocation(QStandardPaths::FontsLocation));
 
-	if (dlg.exec()) {
-		
+	if (dlg.exec()) {	
+
 		int id = QFontDatabase::addApplicationFont(dlg.selectedFiles()[0]);
 		QFileInfo file(QDir(fontFolder), QString("%1.%2").arg(QFontDatabase::applicationFontFamilies(id)[0], "lff"));
 		QFontDatabase::removeApplicationFont(id);
@@ -151,7 +159,7 @@ void QG_DlgFontConversion::slotFontFileClicked()
 
 void QG_DlgFontConversion::slotSaveAsChanged()
 {
-	enableApply();
+	enableApply(true);
 }
 
 void QG_DlgFontConversion::slotSaveAsClicked()
@@ -166,6 +174,11 @@ void QG_DlgFontConversion::slotSaveAsClicked()
 		ui->txtSaveAs->setText(dlg.selectedFiles()[0]);
 }
 
+void QG_DlgFontConversion::slotWritingSystemChanged()
+{
+	updatePreview(true);
+}
+
 void QG_DlgFontConversion::updatePreview(bool resizing)
 {
 	if (preview == nullptr) {
@@ -173,8 +186,6 @@ void QG_DlgFontConversion::updatePreview(bool resizing)
 	}
 	if (!resizing)
 		createFont(getTempFileName());
-	preview->clear();
-		
 	if (font) 
 		RS_FONTLIST->deleteFont(font);
 	font = new RS_Font(getTempFileName(), true);
@@ -182,7 +193,7 @@ void QG_DlgFontConversion::updatePreview(bool resizing)
 		RS_FONTLIST->addFont(font);
 
 		RS_Pen p = RS_Pen(RS_Color(255, 255, 255), RS2::WidthDefault, RS2::SolidLine);
-		QString text = "Lorem ipsum dolor sit amet,\n consectetur adipiscing elit";
+		QString text = getSampleText();
 		RS_MTextData d(RS_Vector(0, 0, 0), 1.0, 1.0,
 			RS_MTextData::VABottom,
 			RS_MTextData::HALeft,
@@ -195,52 +206,67 @@ void QG_DlgFontConversion::updatePreview(bool resizing)
 		mtext->setLayer("0");
 		mtext->setPen(p);
 		mtext->update();
-		mtext->calculateBorders();
 
+		preview->clear();
 		preview->setPen(mtext->getPen());
 		preview->addEntity(mtext);
 		preview->calculateBorders();
-
 		ui->gvPreview->zoomAuto();
-		ui->gvPreview->redraw();
 	} else {
 		preview->clear();
-		ui->gvPreview->zoomAuto();
 	}
 }
 
 bool QG_DlgFontConversion::containsFamily(const QString & fontFile, const QString & family)
 {
-	int id = QFontDatabase::addApplicationFont(fontFile);
-	for (auto fam : QFontDatabase::applicationFontFamilies(id)) {
+	QFontDatabase db;
+	ui->cbWritingSystem->clear();
+	int id = db.addApplicationFont(fontFile);
+	for (auto fam : db.applicationFontFamilies(id)) {
 		if (family.compare(fam, Qt::CaseInsensitive) == 0) {
-			QFontDatabase::removeApplicationFont(id);
+			for (auto system : db.writingSystems(family)) {
+				ui->cbWritingSystem->addItem(db.writingSystemName(system), system);
+			}
+			db.removeApplicationFont(id);
 			return true;
 		}
 	}
-	QFontDatabase::removeApplicationFont(id);
+	db.removeApplicationFont(id);
 	return false;
 }
 
-void QG_DlgFontConversion::createFont(QString lff)
+void QG_DlgFontConversion::addFont(const QString & lff)
 {
-	QProcess proc(this);
-	QFileInfo info = QFileInfo(QDir(QDir::cleanPath(QCoreApplication::applicationDirPath())), "ttf2lff.exe");
-	QString command = info.filePath() +
-		QString(" -l %1").arg(ui->sbLetter->value()) +
-		QString(" -w %1").arg(ui->sbWord->value()) +
-		QString(" -f %1").arg(ui->sbLine->value());
-
-	if (!ui->txtAuthor->text().isEmpty())
-		command += QString(" -a \"%1\"").arg(ui->txtAuthor->text());
-	if (!ui->txtLicense->text().isEmpty())
-		command += QString(" -L \"%1\"").arg(ui->txtLicense->text());
-
-	command +=
-		QString(" \"%1\"").arg(ui->txtFontName->text()) +
-		QString(" \"%1\"").arg(lff);
-
 	if (!lff.isEmpty()) {
+		QFileInfo file(lff);
+		RS_Font* f = RS_FONTLIST->requestFont(file.baseName());
+		if (f != nullptr)
+			RS_FONTLIST->deleteFont(f);
+		RS_FONTLIST->addFont(new RS_Font(lff, true));
+	}	
+}
+
+void QG_DlgFontConversion::createFont(const QString & lff)
+{
+	if (!lff.isEmpty()) {
+		QProcess proc(this);
+		QDir dir = QDir::cleanPath(QCoreApplication::applicationDirPath());
+		QFileInfo info = QFileInfo(dir, "ttf2lff.exe");
+
+		QString command = "\"" + info.filePath() + "\"" +
+			QString(" -l %1").arg(ui->sbLetter->value()) +
+			QString(" -w %1").arg(ui->sbWord->value()) +
+			QString(" -f %1").arg(ui->sbLine->value());
+
+		if (!ui->txtAuthor->text().isEmpty())
+			command += QString(" -a \"%1\"").arg(ui->txtAuthor->text());
+		if (!ui->txtLicense->text().isEmpty())
+			command += QString(" -L \"%1\"").arg(ui->txtLicense->text());
+
+		command +=
+			QString(" \"%1\"").arg(ui->txtFontName->text()) +
+			QString(" \"%1\"").arg(lff);
+	
 		QString rendering = tr(" - Rendering");
 		QApplication::setOverrideCursor(Qt::WaitCursor);
 		setWindowTitle(windowTitle() + rendering);
@@ -252,13 +278,24 @@ void QG_DlgFontConversion::createFont(QString lff)
 	}
 }
 
-void QG_DlgFontConversion::enableApply()
+void QG_DlgFontConversion::enableApply(bool enable)
 {
 	QFileInfo file(ui->txtSaveAs->text());
 	bool fileOk = file.dir().exists() && !file.baseName().isEmpty();
-	ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(dirty && fileOk);	
+	ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(enable && fileOk);	
+	dirty = enable;
 }
 
+/**
+ * Locate the file name for the given font family, in the specified font folder.
+ * Sub folders are searched recursively.  If the font folder is blank, the standard
+ * font folders are searched.
+ *
+ * This is an expensive operation.  Each file must be read into the QFontDatabase to
+ * determine if it supports the given font family.  The name must be an exact match.
+ * In order to avoid scanning every font file in the directory tree, a first pass is
+ * made to scan for any likely candidates, before resorting to a brute force approach.
+ */
 QString QG_DlgFontConversion::getFontFileName(const QString & family, const QString & fontDir, QHash<QString, int>* checked)
 {
 	QString result = "";
@@ -272,12 +309,12 @@ QString QG_DlgFontConversion::getFontFileName(const QString & family, const QStr
 		}
 	} else {
 		QDir dir(fontDir);
-		QString part = family.chopped(family.size()-3);
+		QString guess = family.chopped(family.size()-3);
 		checked->insert(fontDir, 1);
 		// make a couple of guesses before scanning every font in the folder tree
 		for (auto dirInfo : dir.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::System)) {
 			QString path = dirInfo.filePath();
-			if (path.contains(part, Qt::CaseInsensitive)) {
+			if (path.contains(guess, Qt::CaseInsensitive)) {
 				checked->insert(path, 1);
 				result = getFontFileName(family, path, checked);
 				if (!result.isEmpty())
@@ -286,7 +323,7 @@ QString QG_DlgFontConversion::getFontFileName(const QString & family, const QStr
 		}
 		for (auto fileInfo : dir.entryInfoList(QDir::Files)) {
 			QString filePath = fileInfo.filePath();
-			if (fileInfo.baseName().contains(part, Qt::CaseInsensitive)) {
+			if (fileInfo.baseName().contains(guess, Qt::CaseInsensitive)) {
 				checked->insert(filePath, 1);
 				if (containsFamily(filePath, family))
 					return filePath;
@@ -328,4 +365,12 @@ QString QG_DlgFontConversion::getTempFileName()
 	QFileInfo result(dir, "preview.lff");
 	QString res = result.filePath();
 	return result.filePath();
+}
+
+QString QG_DlgFontConversion::getSampleText()
+{
+	QFontDatabase::WritingSystem ws = static_cast<QFontDatabase::WritingSystem>(ui->cbWritingSystem->currentData().toInt());
+	if (ws != QFontDatabase::Latin)
+		return QFontDatabase::writingSystemSample(ws);
+	return QString("Lorem ipsum dolor sit amet,\n consectetur adipiscing elit");
 }

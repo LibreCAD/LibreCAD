@@ -29,6 +29,7 @@
 #include <iostream>
 #include <QTextStream>
 #include <QTextCodec>
+#include <QFileInfo>
 
 #include "rs_font.h"
 #include "rs_arc.h"
@@ -47,6 +48,8 @@
  */
 RS_Font::RS_Font(const QString& fileName, bool owner)
     :	letterList(owner), fileName(fileName), fileLicense("unknown"), owner(owner) {
+	QFileInfo info(fileName);
+	fontFamily = info.baseName();
     loaded = false;
     letterSpacing = 3.0;
     wordSpacing = 6.75;
