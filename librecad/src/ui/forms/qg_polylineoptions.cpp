@@ -165,20 +165,20 @@ void QG_PolylineOptions::updateMode( int m )
     case RS_ActionDrawPolyline::Line:
     case RS_ActionDrawPolyline::Tangential:
     default:
-		for(QWidget* p: wLists{ui->leRadius, ui->leAngle, ui->lRadius, ui->lAngle, ui->buttonGroup1, ui->rbPos, ui->rbNeg})
+		for(QWidget* p: QList<QWidget*>(wLists{ui->leRadius, ui->leAngle, ui->lRadius, ui->lAngle, ui->buttonGroup1, ui->rbPos, ui->rbNeg}))
             p->hide();
         break;
     case RS_ActionDrawPolyline::TanRad:
-		for(QWidget* p: wLists{ui->leAngle, ui->lAngle, ui->buttonGroup1, ui->rbPos, ui->rbNeg})
+		for(QWidget* p: QList<QWidget*>(wLists{ui->leAngle, ui->lAngle, ui->buttonGroup1, ui->rbPos, ui->rbNeg}))
             p->hide();
-		for(QWidget* p: wLists{ui->leRadius, ui->lRadius})
+		for(QWidget* p: QList<QWidget*>(wLists{ui->leRadius, ui->lRadius}))
             p->show();
         break;
         //        case TanAng:
     case RS_ActionDrawPolyline::Ang:
-		for(QWidget* p: wLists{ui->leRadius, ui->lRadius})
+		for(QWidget* p: QList<QWidget*>(wLists{ui->leRadius, ui->lRadius}))
             p->hide();
-		for(QWidget* p: wLists{ui->leAngle, ui->lAngle, ui->buttonGroup1, ui->rbPos, ui->rbNeg})
+		for(QWidget* p: QList<QWidget*>(wLists{ui->leAngle, ui->lAngle, ui->buttonGroup1, ui->rbPos, ui->rbNeg}))
             p->show();
         break;
         /*        case TanRadAng:
