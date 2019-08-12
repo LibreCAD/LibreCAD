@@ -4,7 +4,6 @@
 ;--------------------------------
 ;Include custom settings if exists
   !include /NONFATAL "custom.nsh"
-  !include LogicLib.nsh
 
 ;--------------------------------
 ;Include version information
@@ -37,10 +36,10 @@
   OutFile "../../generated/LibreCAD-Installer.exe"
 
   ;Default installation folder
-  ;!define DEF_InstallDir "$PROGRAMFILES\LibreCAD"
+  !define DEF_InstallDir "$PROGRAMFILES\LibreCAD"
 
   ;Get installation folder from registry if available
-  ;InstallDirRegKey HKCU "Software\LibreCAD" ""
+  InstallDirRegKey HKCU "Software\LibreCAD" ""
 
   ;Request application privileges for Windows Vista
   RequestExecutionLevel admin
@@ -70,8 +69,8 @@
 
 Function .onInit
 
-${If} $INSTDIR == "" ; /D not used
-  StrCpy $INSTDIR "$PROGRAMFILES\LibreCAD"
+${If} $InstDir == "" ; /D not used
+  StrCpy $InstDir "${DEF_InstallDir}"
 ${EndIf}
 
   Push $R0
@@ -162,7 +161,7 @@ Section "Install Section" SecInstall
   WriteRegDWORD HKLM "${UNINSTKEY}" "NoRepair" "1"
 
   ; Open Donate URL
-  ;Exec "rundll32 url.dll,FileProtocolHandler http://librecad.org/donate.html"
+  Exec "rundll32 url.dll,FileProtocolHandler http://librecad.org/donate.html"
 
 SectionEnd
 

@@ -7,7 +7,6 @@
 exists( ../custom.pro ):include( ../custom.pro )
 
 TEMPLATE = subdirs
-
 unix {
     packagesExist(freetype2){
 	SUBDIRS = ttf2lff
@@ -17,6 +16,8 @@ unix {
 }
 
 win32 {
+    DEFINES += _USE_MATH_DEFINES
+
     exists( "$$(FREETYPE_DIR)" ) {		# Is it set in the environment?
         SUBDIRS = ttf2lff
         message( "FREETYPE_DIR is set in the environment, building ttf2lff")

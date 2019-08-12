@@ -36,6 +36,9 @@
 #include "rs_preview.h"
 #include "rs_debug.h"
 
+const EntityTypeList RS_ActionDrawLineTangent1::circleType 
+	= { RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntitySplinePoints };
+
 RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
 		RS_EntityContainer& container,
 		RS_GraphicView& graphicView)

@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2019 Shawn Curry (noneyabiz@mail.wasent.cz)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -30,6 +31,10 @@
 #include "rs_debug.h"
 #include "rs_font.h"
 #include "rs_system.h"
+#include "lc_fontcreation.h"
+#include "rs_dialogfactory.h"
+#include "qc_dialogfactory.h"
+#include "qg_commandwidget.h"
 
 RS_FontList* RS_FontList::uniqueInstance = nullptr;
 
@@ -97,6 +102,26 @@ void RS_FontList::deleteFont(RS_Font * font)
 	}
 }
 
+bool RS_FontList::containsFont(const QString & fontFamily)
+{
+	QString name2 = fontFamily.toLower();
+
+	// QCAD 1 compatibility:
+	if (name2.contains('#') && name2.contains('_')) {
+		name2 = name2.left(name2.indexOf('_'));
+	}
+	else if (name2.contains('#')) {
+		name2 = name2.left(name2.indexOf('#'));
+	}
+	// Search our list of available fonts:
+	for (auto const& f : fonts) {
+		if (f->getFontFamily().toLower() == name2) {
+			return true;
+		}
+	}
+	return false;
+}
+
 /**
  * Removes all fonts in the fontlist.
  */
@@ -135,7 +160,15 @@ RS_Font* RS_FontList::requestFont(const QString& name) {
     }
 
 	if (!foundFont && name!="standard") {
-        foundFont = requestFont("standard");
+		LC_FontCreation fc;
+		if (fc.createFont(name)) {
+			foundFont = requestFont(name);
+		} else {
+			QG_CommandWidget *cw = static_cast<QG_DialogFactory*>(QG_DIALOGFACTORY)->getCommandWidget();
+			if (cw)
+				cw->appendHistory(QObject::tr("Could not convert requested font: %1").arg(name));
+			foundFont = requestFont("standard");
+		}			
     }
 
     return foundFont;

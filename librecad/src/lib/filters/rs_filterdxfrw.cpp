@@ -26,6 +26,9 @@
 #include<cstdlib>
 #include <QStringList>
 #include <QTextCodec>
+#include <QProcess>
+#include <QApplication>
+#include <QStandardPaths>
 
 #include "rs_filterdxfrw.h"
 
@@ -108,9 +111,10 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
 
     RS_DEBUG->print("DXFRW Filter: importing file '%s'...", (const char*)QFile::encodeName(file));
 #ifndef DWGSUPPORT
-    Q_UNUSED(type)
+	Q_UNUSED(type)
 #endif
 
+	bool result = false;
     graphic = &g;
     currentContainer = graphic;
 	dummyContainer = new RS_EntityContainer(nullptr, true);
@@ -127,37 +131,16 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
 
 #ifdef DWGSUPPORT
     if (type == RS2::FormatDWG) {
-        dwgR dwgr(QFile::encodeName(file));
-        RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file");
-        if (RS_DEBUG->getLevel()== RS_Debug::D_DEBUGGING)
-            dwgr.setDebug(DRW::DEBUG);
-        bool success = dwgr.read(this, true);
-        RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file: OK");
-        RS_DIALOGFACTORY->commandMessage(QObject::tr("Opened dwg file version %1.").arg(printDwgVersion(dwgr.getVersion())));
-        int  lastError = dwgr.getError();
-        if (success==false) {
-            printDwgError(lastError);
-            RS_DEBUG->print(RS_Debug::D_WARNING,
-                            "Cannot open DWG file '%s'.", (const char*)QFile::encodeName(file));
-            return false;
-        }
+		result = importDWG(file);
     } else {
 #endif
-        dxfRW dxfR(QFile::encodeName(file));
-
-        RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file");
-        bool success = dxfR.read(this, true);
-        RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file: OK");
-        //graphic->setAutoUpdateBorders(true);
-
-        if (success==false) {
-            RS_DEBUG->print(RS_Debug::D_WARNING,
-                            "Cannot open DXF file '%s'.", (const char*)QFile::encodeName(file));
-            return false;
-        }
+		result = importDXF(file);
 #ifdef DWGSUPPORT
     }
 #endif
+
+	if (!result)
+		return false;
 
     delete dummyContainer;
     /*set current layer */
@@ -1411,6 +1394,85 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
     return success;
 }
 
+bool RS_FilterDXFRW::importDWG(const QString & fileName)
+{
+	QDir dir = QDir::cleanPath(QCoreApplication::applicationDirPath());
+	QFileInfo exe = QFileInfo(dir, "PartConverter.exe");
+	if (exe.exists()) {
+		if (convertDWG(QFile::encodeName(file))) {
+			this->file = getTempFileName(file);
+			importDXF(this->file);
+		}
+		else {
+			return false;
+		}
+	} else {
+		dwgR dwgr(QFile::encodeName(file));
+		RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file");
+		if (RS_DEBUG->getLevel()== RS_Debug::D_DEBUGGING)
+			dwgr.setDebug(DRW::DEBUG);
+		bool success = dwgr.read(this, true);
+		RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file: OK");
+		RS_DIALOGFACTORY->commandMessage(QObject::tr("Opened dwg file version %1.").arg(printDwgVersion(dwgr.getVersion())));
+		int  lastError = dwgr.getError();
+		if (success==false) {
+			printDwgError(lastError);
+			RS_DEBUG->print(RS_Debug::D_WARNING,
+							"Cannot open DWG file '%s'.", (const char*)QFile::encodeName(file));
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool RS_FilterDXFRW::importDXF(const QString & fileName)
+{
+	dxfRW dxfR(QFile::encodeName(this->file));
+
+	RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file");
+	bool success = dxfR.read(this, true);
+	RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file: OK");
+	//graphic->setAutoUpdateBorders(true);
+
+	if (success == false) {
+		RS_DEBUG->print(RS_Debug::D_WARNING,
+			"Cannot open DXF file '%s'.", (const char*)QFile::encodeName(file));
+		return false;
+	}
+
+	return true;
+}
+
+bool RS_FilterDXFRW::convertDWG(const QString & fileName)
+{
+	QProcess proc(nullptr);
+	QDir dir = QDir::cleanPath(QCoreApplication::applicationDirPath());
+	QFileInfo exe = QFileInfo(dir, "PartConverter.exe");
+	QString dxfName = getTempFileName(fileName);
+	
+	QString command = "\"" + exe.filePath() + "\"" +
+		QString(" \"%1\"").arg(fileName) +
+		QString(" \"%1\"").arg(dxfName);
+
+	if (QFile::exists(exe.filePath()) && QFile::exists(fileName)) {
+		QApplication::setOverrideCursor(Qt::WaitCursor);
+		proc.start(command);
+		proc.waitForFinished();
+		QApplication::restoreOverrideCursor();
+	}
+
+	return QFile::exists(dxfName);
+}
+
+QString RS_FilterDXFRW::getTempFileName(const QString & fileName)
+{
+	QDir temp = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
+	QFileInfo dwg = QFileInfo(fileName);
+	QFileInfo dxf = QFileInfo(temp, dwg.baseName() + ".dxf");
+	return dxf.filePath();
+}
+
 /**
  * Prepare unnamed blocks.
  */
@@ -2517,7 +2579,7 @@ void RS_FilterDXFRW::writeMText(RS_MText* t) {
 		// other viewers.  The cause of this problem is that the extents width (code 41) we compute is determined to be 
 		// too small to fit the complete line.  The computed size is being scaled (n/9) in the update() functions. (?) 
 		// However changing those calcuations seemed riskier than simply scaling it back here.  -SC
-		text->widthscale = t->getUsedTextWidth() * 1.111;
+		text->widthscale = t->getUsedTextWidth() * 1.112;
 		txt2.interlin = t->getLineSpacingFactor();
 
         dxfW->writeMText((DRW_MText*)text);

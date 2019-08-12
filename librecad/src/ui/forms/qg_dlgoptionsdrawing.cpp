@@ -410,141 +410,20 @@ void QG_DlgOptionsDrawing::validate() {
     }
 
 	if (graphic) {
-        // units:
-        RS2::Unit unit = static_cast<RS2::Unit>(cbUnit->currentIndex());
-		graphic->setUnit(unit);
+		updateGraphic(graphic); // update the current drawing
 
-        graphic->addVariable("$LUNITS", cbLengthFormat->currentIndex()+1, 70);
-        graphic->addVariable("$LUPREC", cbLengthPrecision->currentIndex(), 70);
-        graphic->addVariable("$AUNITS", cbAngleFormat->currentIndex(), 70);
-        graphic->addVariable("$AUPREC", cbAnglePrecision->currentIndex(), 70);
-
-        // paper:
-        graphic->setPaperFormat(
-					static_cast<RS2::PaperFormat>(cbPaperFormat->currentIndex()),
-                    rbLandscape->isChecked());
-        // custom paper size:
-		if (static_cast<RS2::PaperFormat>(cbPaperFormat->currentIndex()) == RS2::Custom) {
-            graphic->setPaperSize(RS_Vector(RS_Math::eval(lePaperWidth->text()),
-                                            RS_Math::eval(lePaperHeight->text())));
-			bool landscape;
-			graphic->getPaperFormat(&landscape);
-			rbLandscape->setChecked(landscape);
-        }
-
-        // Pager margins:
-        graphic->setMarginsInUnits(RS_Math::eval(leMarginLeft->text()),
-                                   RS_Math::eval(leMarginTop->text()),
-                                   RS_Math::eval(leMarginRight->text()),
-                                   RS_Math::eval(leMarginBottom->text()));
-        // Number of pages:
-        graphic->setPagesNum(sbPagesNumH->value(),
-                             sbPagesNumV->value());
-
-        // grid:
-        //graphic->addVariable("$GRIDMODE", (int)cbGridOn->isChecked() , 70);
-        graphic->setGridOn(cbGridOn->isChecked());
-		*spacing=RS_Vector{0.0,0.0,0.0};
-        if (cbXSpacing->currentText()==tr("auto")) {
-			spacing->x = 0.0;
-        } else {
-			spacing->x = cbXSpacing->currentText().toDouble();
-        }
-        if (cbYSpacing->currentText()==tr("auto")) {
-			spacing->y = 0.0;
-        } else {
-			spacing->y = cbYSpacing->currentText().toDouble();
-        }
-		graphic->addVariable("$GRIDUNIT", *spacing, 10);
-
-        // dim:
-        bool ok1;
-        double oldValue=graphic->getVariableDouble("$DIMTXT",1.);
-		double newValue=RS_Math::eval(cbDimTextHeight->currentText(), &ok1);
-        //only update text height if a valid new position is specified, bug#3470605
-		if(ok1 && (fabs(oldValue-newValue)>RS_TOLERANCE)){
-            graphic->addVariable("$DIMTXT",newValue, 40);
-        }
-        graphic->addVariable("$DIMEXE",
-                             RS_Math::eval(cbDimExe->currentText()), 40);
-        graphic->addVariable("$DIMEXO",
-                             RS_Math::eval(cbDimExo->currentText()), 40);
-        bool ok2;
-        oldValue=graphic->getVariableDouble("$DIMGAP",1);
-        newValue=RS_Math::eval(cbDimGap->currentText(),&ok2);
-        //only update text position if a valid new position is specified, bug#3470605
-        ok2 &= (fabs(oldValue-newValue)>RS_TOLERANCE);
-        if(ok2){
-            graphic->addVariable("$DIMGAP",newValue , 40);
-        }
-        ok1 = ok1 || ok2;
-        oldValue=graphic->getVariableDouble("$DIMLFAC",1);
-        newValue=RS_Math::eval(cbDimFactor->currentText(),&ok2);
-		ok2 &= (fabs(oldValue-newValue)>RS_TOLERANCE);
-        ok1 = ok1 || ok2;
-        oldValue=graphic->getVariableDouble("$DIMSCALE",1);
-        newValue=RS_Math::eval(cbDimScale->currentText(),&ok2);
-		ok2 &= (fabs(oldValue-newValue)>RS_TOLERANCE);
-        ok1 = ok1 || ok2;
-
-        graphic->addVariable("$DIMASZ",
-                             RS_Math::eval(cbDimAsz->currentText()), 40);
-        //dimension tick size, 0 for no tick
-        graphic->addVariable("$DIMTSZ",
-                             RS_Math::eval(cbDimTsz->currentText()), 40);
-        //DIMTIH, dimension text, horizontal or aligned
-        int iOldIndex = graphic->getVariableInt("$DIMTIH",0);
-        int iNewIndex = cbDimTih->currentIndex();
-        if( iOldIndex != iNewIndex) {
-            ok1 = true;
-            graphic->addVariable("$DIMTIH", iNewIndex, 70);
-        }
-        //DIMLFAC, general factor for linear dimensions
-        double dimFactor = RS_Math::eval(cbDimFactor->currentText());
-        if( RS_TOLERANCE > fabs(dimFactor)) {
-            dimFactor = 1.0;
-        }
-        graphic->addVariable("$DIMLFAC", dimFactor, 40);
-        //DIMSCALE, general scale for dimensions
-        double dimScale = RS_Math::eval(cbDimScale->currentText());
-		if (dimScale <= DBL_EPSILON)
-            dimScale = 1.0;
-        graphic->addVariable("$DIMSCALE", dimScale, 40);
-        graphic->addVariable("$DIMLWD", cbDimLwD->getWidth(), 70);
-        graphic->addVariable("$DIMLWE", cbDimLwE->getWidth(), 70);
-        graphic->addVariable("$DIMFXL", cbDimFxL->value(), 40);
-        graphic->addVariable("$DIMFXLON", cbDimFxLon->isChecked()? 1:0, 70);
-        graphic->addVariable("$DIMLUNIT", cbDimLUnit->currentIndex()+1, 70);
-        graphic->addVariable("$DIMDEC", cbDimDec->currentIndex(), 70);
-        graphic->addVariable("$DIMZIN", cbDimZin->getData(), 70);
-        graphic->addVariable("$DIMAUNIT", cbDimAUnit->currentIndex(), 70);
-        graphic->addVariable("$DIMADEC", cbDimADec->currentIndex(), 70);
-//        graphic->addVariable("$DIMAZIN", cbDimAZin->currentIndex(), 70);
-        graphic->addVariable("$DIMAZIN", cbDimAZin->getData(), 70);
-        int colNum, colRGB;
-        colNum = RS_FilterDXFRW::colorToNumber(cbDimClrD->getColor(), &colRGB);
-        graphic->addVariable("$DIMCLRD", colNum, 70);
-        colNum = RS_FilterDXFRW::colorToNumber(cbDimClrE->getColor(), &colRGB);
-        graphic->addVariable("$DIMCLRE", colNum, 70);
-        colNum = RS_FilterDXFRW::colorToNumber(cbDimClrT->getColor(), &colRGB);
-        graphic->addVariable("$DIMCLRT", colNum, 70);
-		if (cbDimTxSty->getFont())
-			graphic->addVariable("$DIMTXSTY", cbDimTxSty->getFont()->getFileName() , 2);
-        graphic->addVariable("$DIMDSEP", (cbDimDSep->currentIndex()==1)? 44 : 0, 70);
-
-        // splines:
-        graphic->addVariable("$SPLINESEGS",
-                             (int)RS_Math::eval(cbSplineSegs->currentText()), 70);
-
-        RS_DEBUG->print("QG_DlgOptionsDrawing::validate: splinesegs is: %s",
-                        cbSplineSegs->currentText().toLatin1().data());
-
-        // update all dimension and spline entities in the graphic to match the new settings:
-        // update text position when text height or text gap changed
-        graphic->updateDimensions(ok1);
-        graphic->updateSplines();
-
-        graphic->setModified(true);
+		// also update the drawing template, if any
+		RS_SETTINGS->beginGroup("/Paths");
+		QString drawingTemplate = RS_SETTINGS->readEntry("/Template", "").trimmed();
+		RS_SETTINGS->endGroup();
+		if (!drawingTemplate.isEmpty()) {
+			RS_Graphic* g = new RS_Graphic();
+			if (g->open(drawingTemplate, RS2::FormatDXFRW)) {
+				updateGraphic(g);
+				g->save();
+			}
+			delete g;
+		}
     }
     accept();
 }
@@ -721,6 +600,149 @@ void QG_DlgOptionsDrawing::updateCBAnglePrecision(QComboBox* u, QComboBox* p) {
     }
 
     p->setCurrentIndex(index);
+}
+
+void QG_DlgOptionsDrawing::updateGraphic(RS_Graphic * g)
+{
+	if (g) {
+		// units:
+		RS2::Unit unit = static_cast<RS2::Unit>(cbUnit->currentIndex());
+		g->setUnit(unit);
+
+		g->addVariable("$LUNITS", cbLengthFormat->currentIndex() + 1, 70);
+		g->addVariable("$LUPREC", cbLengthPrecision->currentIndex(), 70);
+		g->addVariable("$AUNITS", cbAngleFormat->currentIndex(), 70);
+		g->addVariable("$AUPREC", cbAnglePrecision->currentIndex(), 70);
+
+		// paper:
+		g->setPaperFormat(
+			static_cast<RS2::PaperFormat>(cbPaperFormat->currentIndex()),
+			rbLandscape->isChecked());
+		// custom paper size:
+		if (static_cast<RS2::PaperFormat>(cbPaperFormat->currentIndex()) == RS2::Custom) {
+			g->setPaperSize(RS_Vector(RS_Math::eval(lePaperWidth->text()),
+				RS_Math::eval(lePaperHeight->text())));
+			bool landscape;
+			g->getPaperFormat(&landscape);
+			rbLandscape->setChecked(landscape);
+		}
+
+		// Pager margins:
+		g->setMarginsInUnits(RS_Math::eval(leMarginLeft->text()),
+			RS_Math::eval(leMarginTop->text()),
+			RS_Math::eval(leMarginRight->text()),
+			RS_Math::eval(leMarginBottom->text()));
+		// Number of pages:
+		g->setPagesNum(sbPagesNumH->value(),
+			sbPagesNumV->value());
+
+		// grid:
+		//g->addVariable("$GRIDMODE", (int)cbGridOn->isChecked() , 70);
+		g->setGridOn(cbGridOn->isChecked());
+		*spacing = RS_Vector{ 0.0,0.0,0.0 };
+		if (cbXSpacing->currentText() == tr("auto")) {
+			spacing->x = 0.0;
+		}
+		else {
+			spacing->x = cbXSpacing->currentText().toDouble();
+		}
+		if (cbYSpacing->currentText() == tr("auto")) {
+			spacing->y = 0.0;
+		}
+		else {
+			spacing->y = cbYSpacing->currentText().toDouble();
+		}
+		g->addVariable("$GRIDUNIT", *spacing, 10);
+
+		// dim:
+		bool ok1;
+		double oldValue = g->getVariableDouble("$DIMTXT", 1.);
+		double newValue = RS_Math::eval(cbDimTextHeight->currentText(), &ok1);
+		//only update text height if a valid new position is specified, bug#3470605
+		if (ok1 && (fabs(oldValue - newValue) > RS_TOLERANCE)) {
+			g->addVariable("$DIMTXT", newValue, 40);
+		}
+		g->addVariable("$DIMEXE",
+			RS_Math::eval(cbDimExe->currentText()), 40);
+		g->addVariable("$DIMEXO",
+			RS_Math::eval(cbDimExo->currentText()), 40);
+		bool ok2;
+		oldValue = g->getVariableDouble("$DIMGAP", 1);
+		newValue = RS_Math::eval(cbDimGap->currentText(), &ok2);
+		//only update text position if a valid new position is specified, bug#3470605
+		ok2 &= (fabs(oldValue - newValue) > RS_TOLERANCE);
+		if (ok2) {
+			g->addVariable("$DIMGAP", newValue, 40);
+		}
+		ok1 = ok1 || ok2;
+		oldValue = g->getVariableDouble("$DIMLFAC", 1);
+		newValue = RS_Math::eval(cbDimFactor->currentText(), &ok2);
+		ok2 &= (fabs(oldValue - newValue) > RS_TOLERANCE);
+		ok1 = ok1 || ok2;
+		oldValue = g->getVariableDouble("$DIMSCALE", 1);
+		newValue = RS_Math::eval(cbDimScale->currentText(), &ok2);
+		ok2 &= (fabs(oldValue - newValue) > RS_TOLERANCE);
+		ok1 = ok1 || ok2;
+
+		g->addVariable("$DIMASZ",
+			RS_Math::eval(cbDimAsz->currentText()), 40);
+		//dimension tick size, 0 for no tick
+		g->addVariable("$DIMTSZ",
+			RS_Math::eval(cbDimTsz->currentText()), 40);
+		//DIMTIH, dimension text, horizontal or aligned
+		int iOldIndex = g->getVariableInt("$DIMTIH", 0);
+		int iNewIndex = cbDimTih->currentIndex();
+		if (iOldIndex != iNewIndex) {
+			ok1 = true;
+			g->addVariable("$DIMTIH", iNewIndex, 70);
+		}
+		//DIMLFAC, general factor for linear dimensions
+		double dimFactor = RS_Math::eval(cbDimFactor->currentText());
+		if (RS_TOLERANCE > fabs(dimFactor)) {
+			dimFactor = 1.0;
+		}
+		g->addVariable("$DIMLFAC", dimFactor, 40);
+		//DIMSCALE, general scale for dimensions
+		double dimScale = RS_Math::eval(cbDimScale->currentText());
+		if (dimScale <= DBL_EPSILON)
+			dimScale = 1.0;
+		g->addVariable("$DIMSCALE", dimScale, 40);
+		g->addVariable("$DIMLWD", cbDimLwD->getWidth(), 70);
+		g->addVariable("$DIMLWE", cbDimLwE->getWidth(), 70);
+		g->addVariable("$DIMFXL", cbDimFxL->value(), 40);
+		g->addVariable("$DIMFXLON", cbDimFxLon->isChecked() ? 1 : 0, 70);
+		g->addVariable("$DIMLUNIT", cbDimLUnit->currentIndex() + 1, 70);
+		g->addVariable("$DIMDEC", cbDimDec->currentIndex(), 70);
+		g->addVariable("$DIMZIN", cbDimZin->getData(), 70);
+		g->addVariable("$DIMAUNIT", cbDimAUnit->currentIndex(), 70);
+		g->addVariable("$DIMADEC", cbDimADec->currentIndex(), 70);
+		//        g->addVariable("$DIMAZIN", cbDimAZin->currentIndex(), 70);
+		g->addVariable("$DIMAZIN", cbDimAZin->getData(), 70);
+		int colNum, colRGB;
+		colNum = RS_FilterDXFRW::colorToNumber(cbDimClrD->getColor(), &colRGB);
+		g->addVariable("$DIMCLRD", colNum, 70);
+		colNum = RS_FilterDXFRW::colorToNumber(cbDimClrE->getColor(), &colRGB);
+		g->addVariable("$DIMCLRE", colNum, 70);
+		colNum = RS_FilterDXFRW::colorToNumber(cbDimClrT->getColor(), &colRGB);
+		g->addVariable("$DIMCLRT", colNum, 70);
+		if (cbDimTxSty->getFont())
+			g->addVariable("$DIMTXSTY", cbDimTxSty->getFont()->getFileName(), 2);
+		g->addVariable("$DIMDSEP", (cbDimDSep->currentIndex() == 1) ? 44 : 0, 70);
+
+		// splines:
+		g->addVariable("$SPLINESEGS",
+			(int)RS_Math::eval(cbSplineSegs->currentText()), 70);
+
+		RS_DEBUG->print("QG_DlgOptionsDrawing::validate: splinesegs is: %s",
+			cbSplineSegs->currentText().toLatin1().data());
+
+		// update all dimension and spline entities in the g to match the new settings:
+		// update text position when text height or text gap changed
+		g->updateDimensions(ok1);
+		g->updateSplines();
+
+		g->setModified(true);
+	}
 }
 
 /**

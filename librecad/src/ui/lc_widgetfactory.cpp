@@ -43,6 +43,7 @@
 #include <QFile>
 #include <QMenuBar>
 #include <QActionGroup>
+#include <QSettings>
 
 
 LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
@@ -322,12 +323,14 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
 void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
 {
     QSizePolicy toolBarPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	QSettings settings;
 
     QToolBar* file_toolbar = new QToolBar(QC_ApplicationWindow::tr("File"), main_window);
     file_toolbar->setSizePolicy(toolBarPolicy);
     file_toolbar->setObjectName("file_toolbar");
     file_toolbar->addActions(file_actions);
-	file_toolbar->addAction(a_map["FileExportToProNest"]);
+	if (settings.value("Startup/ShowExportToProNest", false).toBool())
+		file_toolbar->addAction(a_map["FileExportToProNest"]);
     file_toolbar->addAction(a_map["FilePrint"]);
     file_toolbar->addAction(a_map["FilePrintPreview"]);
 
@@ -556,6 +559,7 @@ QToolBar* LC_WidgetFactory::createCategoriesToolbar()
 
 void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
 {
+	QSettings settings;
     QMenu* sub_menu;
     // <[~ File ~]>
 
@@ -579,7 +583,8 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     sub_menu->addAction(a_map["FileExportMakerCam"]);
     sub_menu->addAction(a_map["FilePrintPDF"]);
     sub_menu->addAction(a_map["FileExport"]);
-	sub_menu->addAction(a_map["FileExportToProNest"]);
+	if (settings.value("Startup/ShowExportToProNest", false).toBool())
+		sub_menu->addAction(a_map["FileExportToProNest"]);
     file_menu->addSeparator();
     file_menu->addAction(a_map["FilePrint"]);
     file_menu->addAction(a_map["FilePrintPreview"]);

@@ -47,6 +47,7 @@
 #include "rs_pen.h"
 #include "qg_graphicview.h"
 #include "rs_debug.h"
+#include "rs_system.h"
 
 int QC_MDIWindow::idCounter = 0;
 
@@ -267,10 +268,8 @@ void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
 
     RS_DEBUG->print("QC_MDIWindow::closeEvent begin");
 
-	slotWindowClosing();
+	ce->ignore(); // handling delegated to QApplication
 	emit(signalClosing(this));
-	ce->accept();
-		
     RS_DEBUG->print("QC_MDIWindow::closeEvent end");
 }
 
@@ -400,22 +399,6 @@ void QC_MDIWindow::drawChars() {
 
 }
 
-bool QC_MDIWindow::isWritable(const QString & fileName)
-{
-	QFileInfo info(fileName);
-	bool result = info.isWritable();
-#ifdef _WINDOWS
-	if (result) {
-		// check the NTFS security settings as well 
-		qt_ntfs_permission_lookup++; // toggle this every time; qt won't check the readonly flag unless it's off
-		QFile test(fileName);
-		result = test.setPermissions(QFile::WriteOwner | QFile::WriteUser | QFile::WriteGroup | QFile::WriteOther);
-		qt_ntfs_permission_lookup--;
-	}
-#endif
-	return result;
-}
-
 void QC_MDIWindow::showFileSaveError(const QString& fileName)
 {
 	QFileInfo info(fileName);
@@ -458,7 +441,7 @@ bool QC_MDIWindow::slotFileSave(bool &cancelled, bool isAutoSave) {
             if (document->getFilename().isEmpty()) {
                 ret = slotFileSaveAs(cancelled);
             } else {
-				if (!isWritable(document->getFilename())) {
+				if (!RS_SYSTEM->isWritable(document->getFilename())) {
 					showFileSaveError(document->getFilename());
 					return false;
 				}					
@@ -492,7 +475,7 @@ bool QC_MDIWindow::slotFileSaveAs(bool &cancelled) {
     QString fn = dlg.getSaveFile(&t);
 	if (document && !fn.isEmpty()) {
 		QFileInfo info(fn);
-		if (info.exists() && !isWritable(fn)) {
+		if (info.exists() && !RS_SYSTEM->isWritable(fn)) {
 			showFileSaveError(fn);
 			return false;
 		}

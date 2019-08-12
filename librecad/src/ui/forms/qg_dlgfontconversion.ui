@@ -327,7 +327,7 @@
   </connection>
   <connection>
    <sender>sbLetter</sender>
-   <signal>valueChanged(double)</signal>
+   <signal>valueChanged(QString)</signal>
    <receiver>QG_DlgFontConversion</receiver>
    <slot>slotFontSpacingChanged()</slot>
    <hints>
@@ -343,7 +343,7 @@
   </connection>
   <connection>
    <sender>sbWord</sender>
-   <signal>valueChanged(double)</signal>
+   <signal>valueChanged(QString)</signal>
    <receiver>QG_DlgFontConversion</receiver>
    <slot>slotFontSpacingChanged()</slot>
    <hints>
@@ -359,7 +359,7 @@
   </connection>
   <connection>
    <sender>sbLine</sender>
-   <signal>valueChanged(double)</signal>
+   <signal>valueChanged(QString)</signal>
    <receiver>QG_DlgFontConversion</receiver>
    <slot>slotFontSpacingChanged()</slot>
    <hints>

@@ -121,7 +121,6 @@ protected:
 
 private:
     void drawChars();
-	bool isWritable(const QString& fileName);
 	void showFileSaveError(const QString& fileName);
 
 private:
@@ -146,10 +145,6 @@ private:
     QC_MDIWindow* parentWindow{nullptr};
     QMdiArea* cadMdiArea;
 };
-
-#ifdef _WINDOWS
-extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
-#endif
 
 #endif
 

@@ -9,6 +9,6 @@ SUBDIRS     = \
     tools
 
 # c++11 is now obligatory for LibreCAD
-message(We will be using CPP11 features)
+message(We will be using CPP14 features)
 
 exists( custom.pro ):include( custom.pro )

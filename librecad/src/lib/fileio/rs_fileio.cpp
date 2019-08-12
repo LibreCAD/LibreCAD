@@ -65,13 +65,13 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
 		std::unique_ptr<RS_FilterInterface>&& filter(getImportFilter(file, t));
 		if (filter){
 #ifdef DWGSUPPORT
-            if (file.endsWith(".dwg",Qt::CaseInsensitive)){
+            /*if (file.endsWith(".dwg",Qt::CaseInsensitive)){
                 QMessageBox::StandardButton sel = QMessageBox::warning(qApp->activeWindow(), QObject::tr("Warning"),
                                                   QObject::tr("experimental, save your work first.\nContinue?"),
                                                   QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::NoButton);
                 if (sel == QMessageBox::Cancel)
                     return false;
-            }
+            }*/
 #endif
             return filter->fileImport(graphic, file, t);
         }

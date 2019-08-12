@@ -193,6 +193,10 @@ public:
     static RS_FilterInterface* createFilter(){return new RS_FilterDXFRW();}
 
 private:
+	bool importDWG(const QString& fileName);
+	bool importDXF(const QString& fileName);
+	bool convertDWG(const QString& fileName);
+	QString getTempFileName(const QString& fileName);
     void prepareBlocks();
     void writeEntity(RS_Entity* e);
 #ifdef DWGSUPPORT

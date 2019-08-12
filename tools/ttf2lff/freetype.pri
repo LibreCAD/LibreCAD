@@ -10,12 +10,13 @@ win32 {
 
     isEmpty( FREETYPE_DIR ) {
         # FREETYPE_DIR was not set in custom.pro
-        FREETYPE_DIR = /Qt/freetype
+        FREETYPE_DIR = C:/Qt/freetype
     }
     !exists("$$FREETYPE_DIR") {
         # check env for FREETYPE_DIR
         exists("$$(FREETYPE_DIR)"){
             FREETYPE_DIR = "$$(FREETYPE_DIR)"
+
         }
     }
 

@@ -64,3 +64,4 @@ if exist %LC_NSISDIR%\custom-*.ns? (
 
 REM return to librecad/src
 popd
+pause

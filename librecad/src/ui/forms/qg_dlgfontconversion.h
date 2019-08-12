@@ -31,6 +31,7 @@
 #include <QAbstractButton>
 #include "rs_font.h"
 #include "rs_entitycontainer.h"
+#include "lc_fontcreation.h"
 
 namespace Ui {
 class QG_DlgFontConversion;
@@ -54,6 +55,7 @@ protected slots:
 	virtual void slotFontFileChanged();
 	virtual void slotFontFileClicked();
 	virtual void slotFontSpacingChanged();
+
 	virtual void slotSaveAsChanged();
 	virtual void slotSaveAsClicked();
 	virtual void slotWritingSystemChanged();
@@ -66,14 +68,14 @@ private: //helpers
 	void createFont(const QString& lff);
 	void enableApply(bool enable);
 	void updatePreview(bool resizing = false);
-	bool containsFamily(const QString& fontFile, const QString& family);
-	QString getFontFileName(const QString& family, const QString& fontDir = "", QHash<QString, int>* checked = nullptr);
+	void setWritingSystems();
 	QString getSaveAsFileName();
 	QString getTempFileName();
 	QString getSampleText();
 
 private:
     Ui::QG_DlgFontConversion *ui;
+	LC_FontCreation creation;
 	QString fontFolder;
 	bool dirty;
 	RS_EntityContainer* preview;

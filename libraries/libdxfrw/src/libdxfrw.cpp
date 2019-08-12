@@ -2813,13 +2813,13 @@ bool dxfRW::processPlotSettings() {
 }
 
 bool dxfRW::writePlotSettings(DRW_PlotSettings *ent) {
-    writer->writeString(0, "PLOTSETTINGS");
+    /*writer->writeString(0, "PLOTSETTINGS");
     writer->writeString(5, toHexStr(++entCount));
     writer->writeUtf8String(6, ent->plotViewName);
     writer->writeDouble(40, ent->marginLeft);
     writer->writeDouble(41, ent->marginBottom);
     writer->writeDouble(42, ent->marginRight);
-    writer->writeDouble(43, ent->marginTop);
+    writer->writeDouble(43, ent->marginTop);*/
     return true;
 }
 

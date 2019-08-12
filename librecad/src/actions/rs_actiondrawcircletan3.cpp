@@ -35,6 +35,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_preview.h"
 #include "rs_debug.h"
 
+const EntityTypeList RS_ActionDrawCircleTan3::enTypeList = { RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPoint };
+
 struct RS_ActionDrawCircleTan3::Points {
 		std::vector<RS_AtomicEntity*> circles;
 		std::shared_ptr<RS_CircleData> cData{std::make_shared<RS_CircleData>()};

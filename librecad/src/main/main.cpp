@@ -209,6 +209,7 @@ int main(int argc, char** argv)
 
     // parse command line arguments that might not need a launched program:
     QStringList fileList = handleArgs(argc, argv, argClean);
+	settings.setValue("Startup/ShowExportToProNest", fileList.count() == 0);
 
     QString unit = settings.value("Defaults/Unit", "Invalid").toString();
 

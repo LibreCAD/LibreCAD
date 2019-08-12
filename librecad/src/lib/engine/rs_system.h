@@ -73,6 +73,8 @@ public:
     bool checkInit();
     bool createPaths(const QString& p);
 
+	bool isWritable(const QString& fileName);
+
     /**
      * @return Users home directory.
      */
@@ -204,6 +206,10 @@ protected:
     QList<QSharedPointer<RS_Locale> > allKnownLocales;
 
 };
+
+#ifdef _WINDOWS
+extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
+#endif
 
 #endif
 

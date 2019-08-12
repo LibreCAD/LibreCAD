@@ -70,13 +70,7 @@ QMAKE_CFLAGS_ISYSTEM = ""
 QT += svg
 
 greaterThan( QT_MAJOR_VERSION, 4) {
-	CONFIG += c++11
-}else{
-    unix|macx|win32-g++ {
-        # no such option for MSVC
-	QMAKE_CXXFLAGS += -std=c++11
-	QMAKE_CXXFLAGS_DEBUG += -std=c++11
-    }
+        CONFIG += c++14
 }
 
 # RVT July 12 2015, I believe we need these here

@@ -78,6 +78,7 @@ private slots:
 private:
     void updateCBLengthPrecision(QComboBox* u, QComboBox* l);
     void updateCBAnglePrecision(QComboBox* u, QComboBox* p);
+	void updateGraphic(RS_Graphic* g);
 
 protected:
     void resizeEvent(QResizeEvent* event) override;

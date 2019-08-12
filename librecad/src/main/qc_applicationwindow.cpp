@@ -511,10 +511,11 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs)
  */
 void QC_ApplicationWindow::doClose(QC_MDIWindow * w, bool activateNext)
 {
-	for (auto child : w->getChildWindows()) // block editors; just force these closed
-		doClose(child, false); // they belong to the document (changes already saved there)
+	for (auto it = w->getChildWindows().begin(); it != w->getChildWindows().end(); it = w->getChildWindows().begin())
+		doClose(*it, false); // block editors and print previews; just force these closed (nothing to save)	
 	w->getChildWindows().clear();
 	w->slotWindowClosing();
+	w->getGraphicView()->getDefaultAction()->hideOptions();
 	mdiAreaCAD->removeSubWindow(w);
 	window_list.removeOne(w);
 
@@ -572,6 +573,7 @@ int QC_ApplicationWindow::showCloseDialog(QC_MDIWindow * w, bool showSaveAll)
 	dlg.setShowSaveAll(showSaveAll);
 	dlg.setTitle(tr("Closing Drawing"));
 	if (w && w->getDocument()->isModified()) {
+		doActivate(w);
 		QString fn = w->getDocument()->getFilename();
 		if (fn.isEmpty())
 			fn = w->windowTitle();
@@ -1929,6 +1931,7 @@ bool QC_ApplicationWindow::slotFileSaveAll()
 	bool result;
 	for (auto w : window_list) {
 		if (w && w->getDocument()->isModified()) {
+			doActivate(w);
 			result = doSave(w);
 			if (!result) {
 				statusBar()->showMessage(tr("Save All cancelled"), 2000);
@@ -2203,6 +2206,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
 void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
 {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClosing()");
+	getGraphicView()->getDefaultAction()->hideOptions();
 	bool cancel = false;
 	if (win && win->getDocument()->isModified() && !win->hasParentWindow()) {
 		switch (showCloseDialog(win)) {
@@ -2540,7 +2544,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
         if (parent->getGraphicView()->isPrintPreview())
         {
             RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): close");
-            mdiAreaCAD->closeActiveSubWindow();
+			mdiAreaCAD->closeActiveSubWindow();
             getMDIWindow()->showMaximized();
             emit(printPreviewChanged(false));
             return;
@@ -2572,7 +2576,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                 subWindow->showMaximized();
                 parent->addChildWindow(w);
                 connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
-                        this, SLOT(hideOptions(QC_MDIWindow*)));
+					this, SLOT(slotFileClosing(QC_MDIWindow*)));
 
                 w->setWindowTitle(tr("Print preview for %1").arg(parent->windowTitle()));
                 w->setWindowIcon(QIcon(":/main/document.png"));

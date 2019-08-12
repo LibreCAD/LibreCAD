@@ -53,6 +53,7 @@ public:
 	// added to enable runtime addition/preview of new fonts
 	void addFont(RS_Font* font);
 	void deleteFont(RS_Font* font);
+	bool containsFont(const QString& fontFamily);
 
     void clearFonts();
 	size_t countFonts() const;

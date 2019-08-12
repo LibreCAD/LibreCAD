@@ -479,6 +479,24 @@ bool RS_System::createPaths(const QString& directory) {
     return true;
 }
 
+bool RS_System::isWritable(const QString & fileName)
+{
+	QFileInfo info(fileName);
+	bool result = info.isWritable();
+	//if (info.isDir())
+	//	return result;
+#ifdef _WINDOWS
+	if (result) {
+		// check the NTFS security settings as well 
+		qt_ntfs_permission_lookup++; // toggle this every time; qt won't check the readonly flag unless it's off
+		QFile test(fileName);
+		result = test.setPermissions(QFile::WriteOwner | QFile::WriteUser | QFile::WriteGroup | QFile::WriteOther);
+		qt_ntfs_permission_lookup--;
+	}
+#endif
+	return result;
+}
+
 
 /**
  * Create if not exist and return the Application data directory.

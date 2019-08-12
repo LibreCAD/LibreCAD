@@ -27,7 +27,7 @@ CONFIG += qt \
     depend_includepath
 
 QT += widgets printsupport
-CONFIG += c++11
+CONFIG += c++14
 *-g++ {
     QMAKE_CXXFLAGS += -fext-numeric-literals
 }
@@ -75,6 +75,8 @@ win32 {
     contains(DISABLE_POSTSCRIPT, false) {
         QMAKE_POST_LINK = "$$_PRO_FILE_PWD_/../../scripts/postprocess-win.bat" $$LC_VERSION
     }
+
+    QMAKE_LFLAGS_WINDOWS += /MANIFESTUAC:level=\'asInvoker\'
 }
 
 DEFINES += LC_VERSION=\"$$LC_VERSION\"
@@ -124,6 +126,7 @@ HEADERS += \
     lib/actions/rs_preview.h \
     lib/actions/rs_previewactioninterface.h \
     lib/actions/rs_snapper.h \
+    lib/creation/lc_fontcreation.h \
     lib/creation/rs_creation.h \
     lib/debug/rs_debug.h \
     lib/engine/rs.h \
@@ -227,6 +230,7 @@ SOURCES += \
     lib/actions/rs_preview.cpp \
     lib/actions/rs_previewactioninterface.cpp \
     lib/actions/rs_snapper.cpp \
+    lib/creation/lc_fontcreation.cpp \
     lib/creation/rs_creation.cpp \
     lib/debug/rs_debug.cpp \
     lib/engine/rs_arc.cpp \

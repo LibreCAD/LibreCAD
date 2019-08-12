@@ -68,10 +68,7 @@ private:
     RS_Entity* circle;
 
     //list of entity types supported by current action
-    const EntityTypeList circleType = EntityTypeList{ RS2::EntityArc,
-                RS2::EntityCircle,
-                RS2::EntityEllipse,
-                RS2::EntitySplinePoints };
+	static const EntityTypeList circleType;
 };
 
 #endif

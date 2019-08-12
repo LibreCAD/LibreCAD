@@ -6,3 +6,4 @@ if _%LC_NSIS_FILE%==_ (
 pushd postprocess-windows
 makensis.exe /X"SetCompressor /FINAL lzma" /V4 %LC_NSIS_FILE%
 popd
+pause
