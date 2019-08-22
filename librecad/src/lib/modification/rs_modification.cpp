@@ -2312,6 +2312,159 @@ bool RS_Modification::trimAmount(const RS_Vector& trimCoord,
     return true;
 }
 
+bool RS_Modification::trimExcess(const RS_Vector & trimCoord, RS_AtomicEntity * trimEntity, RS_Entity ** trimmed)
+{
+	if (!trimEntity || trimEntity->isLocked() || !trimEntity->isVisible())
+		return false;
+
+	// do some preprocessing
+	RS_AtomicEntity* trimmed1 = nullptr;
+	if (trimEntity->rtti() == RS2::EntityCircle) {
+		// convert circles to arcs (which can be trimmed)
+		RS_Circle* c = static_cast<RS_Circle*>(trimEntity);
+		RS_ArcData d(c->getCenter(),c->getRadius(),	0, 2.*M_PI, false);
+		trimmed1 = new RS_Arc(trimEntity->getParent(), d);
+	}
+	else {
+		trimmed1 = (RS_AtomicEntity*)trimEntity->clone();
+		trimmed1->setHighlighted(false);
+	}
+	
+	// search for intersections
+	double startDist = RS_MAXDOUBLE, endDist = RS_MAXDOUBLE;
+	RS_Vector startV, endV; // the closest intersections to the trimPoint, in the respective direction
+	RS_Entity *start = nullptr, *end = nullptr;
+	RS_Entity* e = container->firstEntity(RS2::ResolveAll);	
+	while (e) {
+		if (e != trimEntity && e->isVisible() && !e->isLocked() && !e->isConstruction()) {
+			RS_VectorSolutions sol = RS_Information::getIntersection(trimmed1, e, true);
+			if (sol.hasValid()) {
+				for (auto v : sol) {
+					double d = v.distanceTo(trimCoord);
+					switch (trimmed1->getTrimPoint(trimCoord, v)) {
+					case RS2::EndingStart:
+						if (d < startDist) {
+							start = e;
+							startDist = d;
+							startV = v;
+						}
+						break;
+					case RS2::EndingEnd:
+						if (d < endDist) {
+							end = e;
+							endDist = d;
+							endV = v;
+						}
+						break;
+					default:
+						break;
+					}
+				}
+			}
+		}
+		e = container->nextEntity(RS2::ResolveAll);
+	}
+
+	// consider start and end point of arcs as valid intersection points
+	if (trimEntity->rtti() == RS2::EntityArc) {
+		RS_Arc* arc = (RS_Arc*)trimEntity;
+		if (arc->getStartpoint().distanceTo(trimCoord) < startDist) {
+			start = trimEntity;
+			startV = arc->getStartpoint();
+		}
+		if (arc->getEndpoint().distanceTo(trimCoord) < endDist) {
+			end = trimEntity;
+			endV = arc->getEndpoint();
+		}
+	}
+
+	// move the start point of circles to a found intersection
+	if (trimEntity->rtti() == RS2::EntityCircle && (start || end)) {
+		RS_Arc* arc = (RS_Arc*)trimmed1; // we converted this earlier
+		if (start) 
+			arc->rotate(arc->getCenter(), RS_Math::correctAngle(arc->getCenter().angleTo(startV)));
+		else if (end)
+			arc->rotate(arc->getCenter(), RS_Math::correctAngle(arc->getCenter().angleTo(endV)));
+	}
+
+	// trim trim entity
+	if (trimmed) { // return the section to be trimmed for the preview
+		if (start)
+			trimmed1->trimStartpoint(startV);
+		if (end)
+			trimmed1->trimEndpoint(endV);
+		*trimmed = trimmed1; // caller will delete (or else leak memory)
+
+	} else { // actually do the trim
+		// remove trim entity from view:		
+		if (graphicView) {
+			graphicView->deleteEntity(trimEntity);
+		}
+		LC_UndoSection undo(document);
+
+		startDist = startV.distanceTo(trimmed1->getStartpoint());
+		endDist = endV.distanceTo(trimmed1->getEndpoint());
+
+		// no intersecting entities; delete the trim entity entirely
+		if ((!start && !end) || (start && end && startDist < RS_TOLERANCE && endDist < RS_TOLERANCE)) {
+			trimEntity->setUndoState(true);
+			undo.addUndoable(trimEntity);
+			delete trimmed1;
+			return true;
+		}
+
+		// special case: removing a mid section of an ellipse (and we don't want to end up with 2 ellipses)
+		if (trimEntity->rtti() == RS2::EntityEllipse && start && end 
+			&& (!trimmed1->getEndpoint().valid || trimmed1->getStartpoint().distanceTo(trimmed1->getEndpoint()) < RS_TOLERANCE))
+		{
+			if (startDist > RS_TOLERANCE)
+				trimmed1->trimEndpoint(startV);
+			if (endDist > RS_TOLERANCE)
+				trimmed1->trimStartpoint(endV);
+			container->addEntity(trimmed1);
+			graphicView->drawEntity(trimmed1);
+			undo.addUndoable(trimmed1);
+			trimEntity->setUndoState(true);
+			undo.addUndoable(trimEntity);
+			return true;
+		}
+
+		if (start && startDist > RS_TOLERANCE) {
+			// there was an intersection between the click point and the start point
+			RS_AtomicEntity* startSeg = reinterpret_cast<RS_AtomicEntity*>(trimmed1->clone());
+			startSeg->trimEndpoint(startV); // new segment from the old start point to the intersection
+			container->addEntity(startSeg);
+			if (graphicView) {
+				graphicView->drawEntity(startSeg);
+			}
+			if (handleUndo) {
+				undo.addUndoable(startSeg);
+			}
+		}
+		if (end && endDist > RS_TOLERANCE) {
+			// there was an intersection between the click point and the end point
+			RS_AtomicEntity* endSeg = reinterpret_cast<RS_AtomicEntity*>(trimmed1->clone());
+			endSeg->trimStartpoint(endV); // new segment from the intersection to the old end point
+			container->addEntity(endSeg);
+			if (graphicView) {
+				graphicView->drawEntity(endSeg);
+			}
+			if (handleUndo) {
+				undo.addUndoable(endSeg);
+			}
+		}
+		
+		if (handleUndo) {
+			trimEntity->setUndoState(true);
+			undo.addUndoable(trimEntity);
+		}
+
+		delete trimmed1;
+	}	
+
+	return true;
+}
+
 
 
 /**

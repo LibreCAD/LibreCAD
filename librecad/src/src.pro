@@ -122,6 +122,7 @@ RESOURCES += ../../licenses/licenses.qrc
 # ################################################################################
 # Library
 HEADERS += \
+    actions/rs_actionmodifytrimexcess.h \
     lib/actions/rs_actioninterface.h \
     lib/actions/rs_preview.h \
     lib/actions/rs_previewactioninterface.h \
@@ -226,6 +227,7 @@ HEADERS += \
     ui/forms/qg_dlgfontconversion.h
 
 SOURCES += \
+    actions/rs_actionmodifytrimexcess.cpp \
     lib/actions/rs_actioninterface.cpp \
     lib/actions/rs_preview.cpp \
     lib/actions/rs_previewactioninterface.cpp \

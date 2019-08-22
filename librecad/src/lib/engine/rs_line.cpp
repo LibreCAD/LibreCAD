@@ -358,13 +358,15 @@ RS_Vector RS_Line::prepareTrim(const RS_Vector& trimCoord,
 
 RS2::Ending RS_Line::getTrimPoint(const RS_Vector& trimCoord,
                                   const RS_Vector& trimPoint) {
-    RS_Vector vp1=getStartpoint() - trimCoord;
-    RS_Vector vp2=trimPoint - trimCoord;
-    if ( RS_Vector::dotP(vp1,vp2) < 0 ) {
-        return RS2::EndingEnd;
-    } else {
-        return RS2::EndingStart;
-    }
+
+	if (fabs(trimPoint.distanceTo(getStartpoint())) < RS_TOLERANCE)
+		return RS2::EndingStart;
+	if (fabs(trimPoint.distanceTo(getEndpoint())) < RS_TOLERANCE)
+		return RS2::EndingEnd;
+	if (fabs(trimPoint.distanceTo(getStartpoint())) < fabs(trimCoord.distanceTo(getStartpoint())))
+		return RS2::EndingStart;
+	else
+		return RS2::EndingEnd;
 }
 
 

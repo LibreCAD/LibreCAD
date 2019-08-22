@@ -655,23 +655,14 @@ void RS_Arc::trimEndpoint(const RS_Vector& pos) {
   *@  trimPoint, trim to this intersection point
   */
 RS2::Ending RS_Arc::getTrimPoint(const RS_Vector& trimCoord,
-                                 const RS_Vector& /*trimPoint*/) {
+                                 const RS_Vector& trimPoint) {
 
-    //double angEl = data.center.angleTo(trimPoint);
-    double angMouse = data.center.angleTo(trimCoord);
-//    double angTrim = data.center.angleTo(trimPoint);
-    if( fabs(remainder(angMouse-data.angle1, 2.*M_PI))< fabs(remainder(angMouse-data.angle2, 2.*M_PI)))
-        return RS2::EndingStart;
-    else
-        return RS2::EndingEnd;
-
-//    if( RS_Math::isAngleBetween(angMouse , data.angle1, angTrim, isReversed())) {
-
-//        return RS2::EndingEnd;
-//    } else {
-
-//        return RS2::EndingStart;
-//    }
+	RS_Vector const vStart(trimCoord - getCenter());
+	RS_Vector const vEnd(trimPoint - getCenter());
+	if (atan2(vStart.x*vEnd.y - vStart.y*vEnd.x, vStart.x*vEnd.x + vStart.y*vEnd.y) > 0)
+		return RS2::EndingEnd;
+	else
+		return RS2::EndingStart;
 }
 
 RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,

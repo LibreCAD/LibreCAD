@@ -132,6 +132,7 @@
 #include "rs_actionmodifystretch.h"
 #include "rs_actionmodifytrim.h"
 #include "rs_actionmodifytrimamount.h"
+#include "rs_actionmodifytrimexcess.h"
 #include "rs_actionoptionsdrawing.h"
 #include "rs_actionselect.h"
 #include "rs_actionselectall.h"
@@ -700,6 +701,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionModifyTrimAmount:
         a = new RS_ActionModifyTrimAmount(*document, *view);
         break;
+	case RS2::ActionModifyTrimExcess:
+		a = new RS_ActionModifyTrimExcess(*document, *view, false);
+		break;
     case RS2::ActionModifyCut:
         a = new RS_ActionModifyCut(*document, *view);
         break;
@@ -1632,6 +1636,10 @@ void QG_ActionHandler::slotModifyTrim2() {
 
 void QG_ActionHandler::slotModifyTrimAmount() {
     setCurrentAction(RS2::ActionModifyTrimAmount);
+}
+
+void QG_ActionHandler::slotModifyTrimExcess() {
+	setCurrentAction(RS2::ActionModifyTrimExcess);
 }
 
 void QG_ActionHandler::slotModifyCut() {

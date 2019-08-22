@@ -321,6 +321,7 @@ public:
         ActionModifyTrim,
         ActionModifyTrim2,
         ActionModifyTrimAmount,
+		ActionModifyTrimExcess,
         ActionModifyCut,
         ActionModifyStretch,
         ActionModifyBevel,

@@ -254,8 +254,8 @@ public:
     bool trim(const RS_Vector& trimCoord, RS_AtomicEntity* trimEntity,
               const RS_Vector& limitCoord, RS_Entity* limitEntity,
               bool both);
-    bool trimAmount(const RS_Vector& trimCoord, RS_AtomicEntity* trimEntity,
-                    double dist);
+    bool trimAmount(const RS_Vector& trimCoord, RS_AtomicEntity* trimEntity, double dist);
+	bool trimExcess(const RS_Vector& trimCoord, RS_AtomicEntity* trimEntity, RS_Entity ** trimmed = nullptr);
     bool offset(const RS_OffsetData& data);
     bool cut(const RS_Vector& cutCoord, RS_AtomicEntity* cutEntity);
     bool stretch(const RS_Vector& firstCorner,

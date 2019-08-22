@@ -1203,15 +1203,14 @@ void RS_Ellipse::moveEndpoint(const RS_Vector& pos) {
 
 
 RS2::Ending RS_Ellipse::getTrimPoint(const RS_Vector& trimCoord,
-                                     const RS_Vector& /*trimPoint*/) {
+                                     const RS_Vector& trimPoint) {
 
-    //double angEl = getEllipseAngle(trimPoint);
-    double angM = getEllipseAngle(trimCoord);
-    if (RS_Math::getAngleDifference(angM, data.angle1,isReversed()) > RS_Math::getAngleDifference(data.angle2,angM,isReversed())) {
-        return RS2::EndingStart;
-    } else {
-        return RS2::EndingEnd;
-    }
+	RS_Vector vStart(trimCoord - getCenter());
+	RS_Vector vEnd(trimPoint - getCenter());
+	if (atan2(vStart.x*vEnd.y - vStart.y*vEnd.x, vStart.x*vEnd.x + vStart.y*vEnd.y) > 0)
+		return RS2::EndingEnd;
+	else
+		return RS2::EndingStart;
 }
 
 RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,

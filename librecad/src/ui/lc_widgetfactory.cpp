@@ -150,6 +150,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["ModifyTrim"]
             << a_map["ModifyTrim2"]
             << a_map["ModifyTrimAmount"]
+			<< a_map["ModifyTrimExcess"]
             << a_map["ModifyOffset"]
             << a_map["ModifyBevel"]
             << a_map["ModifyRound"]

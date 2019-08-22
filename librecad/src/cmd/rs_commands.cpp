@@ -434,6 +434,13 @@ RS_Commands::RS_Commands() {
              {"t2", QObject::tr("t2", "modify - multi trim (extend)")}},
             RS2::ActionModifyTrim2
         },
+		//trim excess
+		{
+			{{"trimex", QObject::tr("trimex", "modify - trim excess (extend)")}},
+			{{"tmx", QObject::tr("tmx", "modify - trim excess (extend)")},
+			 {"tx", QObject::tr("tx", "modify - trim excess (extend)")}},
+			RS2::ActionModifyTrimExcess
+		},
         //lengthen
         {
             {{"lengthen", QObject::tr("lengthen", "modify - lengthen")}},
