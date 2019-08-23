@@ -273,13 +273,69 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
 			return type == RS2::EntityCircle || type == RS2::EntityArc;
 		};
 
-		if(isArc(e1) && isArc(e2)){
-			//use specialized arc-arc intersection solver
-			ret=getIntersectionArcArc(e1, e2);
-		}else{
-			const auto qf1=e1->getQuadratic();
-			const auto qf2=e2->getQuadratic();
-			ret=LC_Quadratic::getIntersection(qf1,qf2);
+		//if (isArc(e1) && isArc(e2)) {
+		//	//use specialized arc-arc intersection solver
+		//	ret = getIntersectionArcArc(e1, e2);
+
+		//}else{
+		//	const auto qf1=e1->getQuadratic();
+		//	const auto qf2=e2->getQuadratic();
+		//	ret=LC_Quadratic::getIntersection(qf1,qf2);
+		//}
+		if (e1->rtti() == e2->rtti()) {
+			switch (e1->rtti()) {
+			case RS2::EntityArc:
+			case RS2::EntityCircle:
+				ret = getIntersectionArcArc(e1, e2);
+				break;
+			case RS2::EntityEllipse:
+				ret = getIntersectionEllipseEllipse((RS_Ellipse*)e1, (RS_Ellipse*)e2);
+				break;
+			default:
+				const auto qf1 = e1->getQuadratic();
+				const auto qf2 = e2->getQuadratic();
+				ret = LC_Quadratic::getIntersection(qf1, qf2);
+				break;
+			}
+		}
+		else if (e1->rtti() == RS2::EntityEllipse) {
+			switch (e2->rtti()) {
+			case RS2::EntityArc:
+				ret = getIntersectionArcEllipse((RS_Arc*)e2, (RS_Ellipse*)e1);
+			case RS2::EntityCircle:
+				ret = getIntersectionCircleEllipse((RS_Circle*)e2, (RS_Ellipse*)e1);
+			case RS2::EntityLine:
+				ret = getIntersectionEllipseLine((RS_Line*)e2, (RS_Ellipse*)e1);
+			default:
+				const auto qf1 = e1->getQuadratic();
+				const auto qf2 = e2->getQuadratic();
+				ret = LC_Quadratic::getIntersection(qf1, qf2);
+			}
+		}
+		else if (e2->rtti() == RS2::EntityEllipse) {
+			switch (e1->rtti()) {
+			case RS2::EntityArc:
+				ret = getIntersectionArcEllipse((RS_Arc*)e1, (RS_Ellipse*)e2);
+			case RS2::EntityCircle:
+				ret = getIntersectionCircleEllipse((RS_Circle*)e1, (RS_Ellipse*)e2);
+			case RS2::EntityLine:
+				ret = getIntersectionEllipseLine((RS_Line*)e1, (RS_Ellipse*)e2);
+			default:
+				const auto qf1 = e1->getQuadratic();
+				const auto qf2 = e2->getQuadratic();
+				ret = LC_Quadratic::getIntersection(qf1, qf2);
+			}
+		}
+		else if (e1->rtti() == RS2::EntityLine && e2->rtti() == RS2::EntityArc) {
+			ret = getIntersectionLineArc((RS_Line*)e1, (RS_Arc*)e2);
+		}
+		else if (e2->rtti() == RS2::EntityLine && e1->rtti() == RS2::EntityArc) {
+			ret = getIntersectionLineArc((RS_Line*)e2, (RS_Arc*)e1);
+		}
+		else {
+			const auto qf1 = e1->getQuadratic();
+			const auto qf2 = e2->getQuadratic();
+			ret = LC_Quadratic::getIntersection(qf1, qf2);
 		}
 	}
     RS_VectorSolutions ret2;

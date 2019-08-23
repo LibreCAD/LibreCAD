@@ -660,9 +660,9 @@ RS2::Ending RS_Arc::getTrimPoint(const RS_Vector& trimCoord,
 	RS_Vector const vStart(trimCoord - getCenter());
 	RS_Vector const vEnd(trimPoint - getCenter());
 	if (atan2(vStart.x*vEnd.y - vStart.y*vEnd.x, vStart.x*vEnd.x + vStart.y*vEnd.y) > 0)
-		return RS2::EndingEnd;
+		return isReversed() ? RS2::EndingStart : RS2::EndingEnd;
 	else
-		return RS2::EndingStart;
+		return isReversed() ? RS2::EndingEnd : RS2::EndingStart;
 }
 
 RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,

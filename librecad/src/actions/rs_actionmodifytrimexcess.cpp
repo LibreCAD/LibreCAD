@@ -64,7 +64,7 @@ void RS_ActionModifyTrimExcess::init(int status) {
 
 void RS_ActionModifyTrimExcess::trigger() {
 
-	RS_DEBUG->print("RS_ActionModifyTrim::trigger()");
+	RS_DEBUG->print("RS_ActionModifyTrimExcess::trigger()");
 
 	if (trimEntity && trimEntity->isAtomic()) {
 		RS_Modification m(*container, graphicView);
@@ -85,7 +85,7 @@ void RS_ActionModifyTrimExcess::trigger() {
 }
 
 void RS_ActionModifyTrimExcess::mouseMoveEvent(QMouseEvent* e) {
-	RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent begin");
+	RS_DEBUG->print("RS_ActionModifyTrimExcess::mouseMoveEvent begin");
 
 	RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
 	RS_Entity* se = catchEntity(e, RS2::ResolveAll);
@@ -101,7 +101,7 @@ void RS_ActionModifyTrimExcess::mouseMoveEvent(QMouseEvent* e) {
 		break;
 	}
 
-	RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent end");
+	RS_DEBUG->print("RS_ActionModifyTrimExcess::mouseMoveEvent end");
 }
 
 void RS_ActionModifyTrimExcess::mouseReleaseEvent(QMouseEvent* e) {
@@ -129,14 +129,6 @@ void RS_ActionModifyTrimExcess::mouseReleaseEvent(QMouseEvent* e) {
 	}
 }
 
-//void RS_ActionModifyTrim::finish(bool updateTB) {
-//    if (limitEntity->isHighlighted()){
-//        limitEntity->setHighlighted(false);
-//        graphicView->drawEntity(limitEntity);
-//    }
-//    RS_PreviewActionInterface::finish(updateTB);
-//}
-
 void RS_ActionModifyTrimExcess::updateMouseButtonHints() {
 	switch (getStatus()) {
 	case ChooseTrimEntity:
@@ -163,8 +155,7 @@ void RS_ActionModifyTrimExcess::setTrimPreviewEntity(RS_Entity * entity, const R
 
 	if (entity && entity->isAtomic()) {
 		RS_Modification modify(*container, graphicView);
-		modify.trimExcess(point, reinterpret_cast<RS_AtomicEntity*>(entity), &trimPreview);
-		
+		modify.trimExcess(point, reinterpret_cast<RS_AtomicEntity*>(entity), &trimPreview);		
 	}
 	drawTrimPreview();
 }

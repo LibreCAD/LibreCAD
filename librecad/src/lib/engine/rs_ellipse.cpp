@@ -1205,12 +1205,12 @@ void RS_Ellipse::moveEndpoint(const RS_Vector& pos) {
 RS2::Ending RS_Ellipse::getTrimPoint(const RS_Vector& trimCoord,
                                      const RS_Vector& trimPoint) {
 
-	RS_Vector vStart(trimCoord - getCenter());
-	RS_Vector vEnd(trimPoint - getCenter());
-	if (atan2(vStart.x*vEnd.y - vStart.y*vEnd.x, vStart.x*vEnd.x + vStart.y*vEnd.y) > 0)
-		return RS2::EndingEnd;
+	RS_Vector mouse(trimCoord - getCenter());
+	RS_Vector inter(trimPoint - getCenter());
+	if (atan2(mouse.x*inter.y - mouse.y*inter.x, mouse.x*inter.x + mouse.y*inter.y) > 0)
+		return isReversed() ? RS2::EndingStart : RS2::EndingEnd;
 	else
-		return RS2::EndingStart;
+		return isReversed() ? RS2::EndingEnd : RS2::EndingStart;
 }
 
 RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
