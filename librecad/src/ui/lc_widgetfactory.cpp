@@ -85,6 +85,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["DrawCircle2PR"]
             << a_map["DrawCircle3P"]
             << a_map["DrawCircleCR"]
+            << a_map["DrawCircleDiam"]
             << a_map["DrawCircleTan2_1P"]
             << a_map["DrawCircleTan1_2P"]
             << a_map["DrawCircleTan2"]

@@ -61,6 +61,7 @@
         <file>circle_3_points.svg</file>
         <file>circle_center_point.svg</file>
         <file>circle_center_radius.svg</file>
+        <file>circle_center_diameter.svg</file>
         <file>circle_concentric.svg</file>
         <file>circle_inscribed.svg</file>
         <file>circle_tangential_2circles_point.svg</file>

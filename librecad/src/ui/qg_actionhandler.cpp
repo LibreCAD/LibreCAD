@@ -52,6 +52,7 @@
 #include "rs_actiondrawarc3p.h"
 #include "rs_actiondrawarctangential.h"
 #include "rs_actiondrawcircle.h"
+#include "rs_actiondrawcirclediam.h"
 #include "rs_actiondrawcircle2p.h"
 #include "lc_actiondrawcircle2pr.h"
 #include "rs_actiondrawcircle3p.h"
@@ -486,7 +487,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionDrawCircleCR:
         a = new RS_ActionDrawCircleCR(*document, *view);
         break;
-    case RS2::ActionDrawCircle2P:
+	case RS2::ActionDrawCircleDiam:
+		a = new RS_ActionDrawCircleDiam(*document, *view);
+		break;
+	case RS2::ActionDrawCircle2P:
         a = new RS_ActionDrawCircle2P(*document, *view);
         break;
     case RS2::ActionDrawCircle2PR:
@@ -1428,6 +1432,10 @@ void QG_ActionHandler::slotDrawCircle() {
 
 void QG_ActionHandler::slotDrawCircleCR() {
     setCurrentAction(RS2::ActionDrawCircleCR);
+}
+
+void QG_ActionHandler::slotDrawCircleDiam() {
+	setCurrentAction(RS2::ActionDrawCircleDiam);
 }
 
 void QG_ActionHandler::slotDrawCircle2P() {

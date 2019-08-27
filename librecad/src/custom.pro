@@ -4,4 +4,6 @@
 # src.pro.
 
 # Build LibreCAD with VS .NET 2003, using Qt 4.3, emulate C99.
+BOOST_DIR = c:\boost\boost_1_70_0
+BOOST_LIBDIR=c:\boost\boost_1_70_0\libs
 
