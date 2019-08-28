@@ -178,6 +178,8 @@ void RS_ActionDrawArcTangential::mouseReleaseEvent(QMouseEvent* e) {
         case SetEndAngle: {
             RS_CoordinateEvent ce(snapPoint(e));
             coordinateEvent(&ce);
+			init(getStatus());
+
         }
             break;
         }
