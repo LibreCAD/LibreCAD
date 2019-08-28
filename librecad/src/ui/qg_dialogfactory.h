@@ -160,6 +160,9 @@ protected:
 	void requestCircleOptions(RS_ActionInterface* action,
 									  bool on, bool update);
 
+	void requestCircleDiamOptions(RS_ActionInterface* action,
+										bool on, bool update);
+
 	void requestCircleTan2Options(RS_ActionInterface* action,
 										  bool on, bool update);
 

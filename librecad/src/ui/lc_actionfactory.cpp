@@ -257,7 +257,14 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("DrawCircleCR");
     a_map["DrawCircleCR"] = action;
 
-    action = new QAction(tr("2 Points"), agm->circle);
+	action = new QAction(tr("Center, &Diameter"), agm->circle);
+	action->setIcon(QIcon(":/icons/circle_center_diameter.svg"));
+	connect(action, SIGNAL(triggered()),
+		action_handler, SLOT(slotDrawCircleDiam()));
+	action->setObjectName("DrawCircleDiam");
+	a_map["DrawCircleDiam"] = action;
+
+	action = new QAction(tr("2 Points"), agm->circle);
     action->setIcon(QIcon(":/icons/circle_2_points.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircle2P()));

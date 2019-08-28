@@ -136,6 +136,7 @@ public slots:
     void slotDrawLinePolygon3();//added by txmy
 	void slotDrawCircle();
 	void slotDrawCircleCR();
+	void slotDrawCircleDiam();
 	void slotDrawCircle2P();
 	void slotDrawCircle2PR();
 	void slotDrawCircle3P();

@@ -234,6 +234,7 @@ public:
         ActionDrawArcParallel,
         ActionDrawArcTangential,
         ActionDrawCircle,
+		ActionDrawCircleDiam,
         ActionDrawCircle2P,
         ActionDrawCircle2PR,
         ActionDrawCircle3P,
