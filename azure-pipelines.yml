@@ -1,0 +1,264 @@
+#
+# Azure Pipelines for LibreCAD.
+#
+# Build a fresh Linux, Windows and MacOS versions of LibreCAD continuously on
+# every change to master branch. Built packages will be available for download.
+
+
+# Branches to monitor
+trigger:
+- master
+#- play_with_azure
+
+
+# Don't run on pull requests
+pr: none
+
+
+# Azure Pipelines have retention policy to keep artifacts and attachments
+# for 30 days by default. If at that period no new pushes to monitored
+# branches occur all previously built files will be deleted. In order
+# to have files (almost) always present we can schedule a monthly build.
+schedules:
+- cron: "0 0 1 * *"
+  displayName: 'Monthly build'
+  branches:
+    include:
+    - master
+    #- play_with_azure
+  always: true
+
+
+stages:
+
+- stage: BuildStage
+  displayName: 'Build stage'
+
+
+  jobs:
+
+  - job: LinuxBuild
+    displayName: 'Linux build'
+    #condition: False  # disable this job for now
+
+    pool:
+      vmImage: 'ubuntu-16.04'
+
+    steps:
+
+    - bash: |
+        sudo apt-get -qq install \
+            qt5-default \
+            qtbase5-dev \
+            libqt5svg5-dev \
+            qttools5-dev \
+            qttools5-dev-tools \
+            libmuparser-dev \
+            libboost-dev \
+            libfreetype6-dev \
+            libicu-dev \
+            pkg-config
+      displayName: 'Install dependencies'
+
+    - bash: |
+        qmake -r librecad.pro CONFIG+=debug_and_release \
+        && make release -j$(nproc)
+      displayName: 'Build from source'
+
+    - bash: |
+        ./scripts/build-appimage.sh
+      displayName: 'Build AppImage'
+
+    - task: CopyFiles@2
+      inputs:
+        sourceFolder: './AppImage'
+        contents: '*.AppImage'
+        targetFolder: $(Build.ArtifactStagingDirectory)
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: $(Build.ArtifactStagingDirectory)
+        artifactName: AppImage
+
+
+  - job: WindowsBuild
+    displayName: 'Windows build'
+    #condition: False  # disable this job for now
+
+    pool:
+      vmImage: 'windows-2019'
+
+    steps:
+
+    - bash: |
+        set -e
+
+        QT_VERSION="5.13.1"
+
+        BOOST_VERSION="1.60.0"
+        BOOST_ZIP="boost_$(echo $BOOST_VERSION | sed 's|\.|_|g').7z"
+        BOOST_DIR="/boost/boost_$(echo $BOOST_VERSION | sed 's|\.|_|g')"
+        BOOST_URL="https://sourceforge.net/projects/boost/files/boost"
+        BOOST_URL="$BOOST_URL/$BOOST_VERSION/$BOOST_ZIP/download"
+
+        echo "set Qt_DIR=C:\Qt\Qt$QT_VERSION\\$QT_VERSION" > ./scripts/custom-windows.bat
+        echo 'set NSIS_DIR=C:\Program Files (x86)\NSIS'   >> ./scripts/custom-windows.bat
+        echo 'set MINGW_VER=mingw73_64'                   >> ./scripts/custom-windows.bat
+
+        echo "BOOST_DIR = C:$BOOST_DIR/"    >> ./librecad/src/custom.pro
+        echo "BOOST_LIBDIR = C:$BOOST_DIR/" >> ./librecad/src/custom.pro
+
+        # @xanderdin:
+        # I have no idea of how to install NSIS from this script,
+        # so erasing everything from build-win-setup.bat to prevent
+        # any attempts of building Windows Installer for now.
+        echo '' > ./scripts/build-win-setup.bat
+
+        mkdir /c/Qt /c/boost
+
+        pip install 'aqtinstall==0.4.1'
+        python -m aqt install -O /c/Qt $QT_VERSION windows desktop win64_mingw73
+
+        cd /c/boost
+        curl -L -o ./$BOOST_ZIP "$BOOST_URL"
+        7z x ./$BOOST_ZIP
+      displayName: 'Install dependencies'
+
+    - script: |
+        cd .\scripts
+        build-windows.bat
+      displayName: 'Build from source'
+
+    - bash: |
+        7z a -r LibreCAD_$(git describe --tags).7z ./windows
+      displayName: 'Package built files'
+
+    - task: CopyFiles@2
+      inputs:
+        contents: '*.7z'
+        targetFolder: $(Build.ArtifactStagingDirectory)
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: $(Build.ArtifactStagingDirectory)
+        artifactName: WindowsPackage
+
+
+  - job: MacOSBuild
+    displayName: 'MacOS build'
+    #condition: False  # disable this job for now
+
+    pool:
+      vmImage: 'macos-10.14'
+
+    steps:
+
+    - bash: |
+        set -e
+
+        brew install \
+            boost@1.60 \
+            gcc@9 \
+            qt5
+
+        brew link qt5 --force
+
+        echo "BOOST_DIR = /usr/local/opt/boost@1.60/"    >> ./librecad/src/custom.pro
+        echo "BOOST_LIBDIR = /usr/local/opt/boost@1.60/" >> ./librecad/src/custom.pro
+        echo "QT_CONFIG -= no-pkg-config"                >> ./librecad/src/custom.pro
+
+        #sudo ln -s /usr/local/bin/gcc-9 /usr/local/bin/gcc
+        #sudo ln -s /usr/local/bin/gcc-9 /usr/local/bin/cc
+        #sudo ln -s /usr/local/bin/g++-9 /usr/local/bin/g++
+        #sudo ln -s /usr/local/bin/g++-9 /usr/local/bin/c++
+        #sudo ln -s /usr/local/bin/gcc-ar-9 /usr/local/bin/gcc-ar
+        #sudo ln -s /usr/local/bin/gcc-ar-9 /usr/local/bin/ar
+        #sudo ln -s /usr/local/bin/gcc-nm-9 /usr/local/bin/gcc-nm
+        #sudo ln -s /usr/local/bin/gcc-nm-9 /usr/local/bin/nm
+        #sudo ln -s /usr/local/bin/gcc-ranlib-9 /usr/local/bin/gcc-ranlib
+        #sudo ln -s /usr/local/bin/gcc-ranlib-9 /usr/local/bin/ranlib
+
+        # @xanderdin:
+        # Dirty hack, but this is the only way I found it to work.
+        # Default clang always fails during compilation process.
+        # When trying to use gcc, qmake always ignores its locations.
+        # By looking into .qmake.stash I discovered that qmake always
+        # forces using gcc from
+        #
+        # /Applications/Xcode_10.2.1.app/Contents/Developer/usr/bin/
+        #
+        # So, forcing gcc to be at that location.
+        sudo ln -f -s /usr/local/bin/gcc-9 /Applications/Xcode_10.2.1.app/Contents/Developer/usr/bin/gcc
+        sudo ln -f -s /usr/local/bin/gcc-9 /Applications/Xcode_10.2.1.app/Contents/Developer/usr/bin/cc
+        sudo ln -f -s /usr/local/bin/g++-9 /Applications/Xcode_10.2.1.app/Contents/Developer/usr/bin/g++
+        sudo ln -f -s /usr/local/bin/g++-9 /Applications/Xcode_10.2.1.app/Contents/Developer/usr/bin/c++
+        sudo ln -f -s /usr/local/bin/gcc-ar-9 /Applications/Xcode_10.2.1.app/Contents/Developer/usr/bin/ar
+        sudo ln -f -s /usr/local/bin/gcc-nm-9 /Applications/Xcode_10.2.1.app/Contents/Developer/usr/bin/nm
+        sudo ln -f -s /usr/local/bin/gcc-ranlib-9 /Applications/Xcode_10.2.1.app/Contents/Developer/usr/bin/ranlib
+      displayName: 'Install dependencies'
+
+    - bash: |
+        set -e
+        #qmake librecad.pro -r -spec macx-g++ CONFIG+=debug_and_release
+        #qmake librecad.pro -r -spec macx-g++
+        #qmake librecad.pro -r -spec macx-clang CONFIG+=debug_and_release
+        #qmake librecad.pro -r -spec macx-clang
+        #make release -j$(sysctl -n hw.ncpu)
+        #make -j$(sysctl -n hw.ncpu)
+        ./scripts/build-osx.sh -q="-spec macx-g++"
+        #cat ./.qmake.stash
+      displayName: 'Build from source'
+
+    - task: CopyFiles@2
+      inputs:
+        contents: '*.dmg'
+        targetFolder: $(Build.ArtifactStagingDirectory)
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: $(Build.ArtifactStagingDirectory)
+        artifactName: MacOSPackage
+
+
+#- stage: TestStage
+#  displayName: 'Test Stage'
+#  # TODO: ...
+#
+#
+#- stage: DeployStage
+#  displayName: 'Deploy stage'
+#  # TODO: ...
+#
+#  jobs:
+#
+#  - deployment: UploadFiles
+#    displayName: 'Upload all packages'
+#    condition: False  # disable this job for now
+#
+#    pool:
+#      vmImage: 'ubuntu-16.04'
+#
+#    environment: 'librecad-dev'
+#    strategy:
+#      runOnce:
+#        deploy:
+#          steps:
+#
+#          - task: DownloadBuildArtifacts@0
+#            inputs:
+#              buildType: 'current'
+#              downloadPath: '$(System.ArtifactsDirectory)'
+#
+#          # See: https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/utility/curl-upload-files?view=azure-devops
+#          - task: cURLUploader@2
+#            inputs:
+#              files: '$(System.ArtifactsDirectory)/*'
+#              #authType: 'ServiceEndpoint' # Optional. Options: serviceEndpoint, userAndPass
+#              #serviceEndpoint: # Required when authType == ServiceEndpoint
+#              #username: # Optional
+#              #password: # Optional
+#              #url: # Required when authType == UserAndPass
+#              #remotePath: 'upload/$(Build.BuildId)/' # Optional
+#              #options: # Optional
+#              #redirectStderr: true # Optional
+#

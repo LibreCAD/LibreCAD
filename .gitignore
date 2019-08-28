@@ -93,3 +93,6 @@ core.*
 *.vcxproj
 *.vcxproj.filters
 *.sln
+
+# AppImage generated directories
+AppImage/
