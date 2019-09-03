@@ -29,6 +29,7 @@
 #include "rs_line.h"
 #include "rs_information.h"
 #include "rs_polyline.h"
+#include "rs_ellipse.h"
 #include "rs_entity.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
@@ -56,7 +57,6 @@ RS_Selection::RS_Selection(RS_EntityContainer& container,
  */
 void RS_Selection::selectSingle(RS_Entity* e) {
 	if (e && (! (e->getLayer() && e->getLayer()->isLocked()))) {
-
         if (graphicView) {
             graphicView->deleteEntity(e);
         }
@@ -209,84 +209,164 @@ void RS_Selection::selectIntersected(const RS_Vector& v1, const RS_Vector& v2,
  *
  * @param e The entity where the algorithm starts. Must be an atomic entity.
  */
-void RS_Selection::selectContour(RS_Entity* e) {
+void RS_Selection::selectContour(RS_Entity* e, QList<RS_Entity*>* preview) {
 
-    if (e==NULL) {
-        return;
-    }
+	if (!e || !e->isAtomic())
+		return;
 
-    if (!e->isAtomic()) {
-        return;
-    }
-
-    bool select = !e->isSelected();
-    RS_AtomicEntity* ae = (RS_AtomicEntity*)e;
-    RS_Vector p1 = ae->getStartpoint();
-    RS_Vector p2 = ae->getEndpoint();
-    bool found = false;
-
-    // (de)select 1st entity:
-    if (graphicView) {
-        graphicView->deleteEntity(e);
-    }
-    e->setSelected(select);
-    if (graphicView) {
-        graphicView->drawEntity(e);
-    }
-
-    do {
-        found = false;
-
-		for(auto en: *container){
-        //for (unsigned i=0; i<container->count(); ++i) {
-            //RS_Entity* en = container->entityAt(i);
-
-            if (en && en->isVisible() && 
-				en->isAtomic() && en->isSelected()!=select && 
-				(!(en->getLayer() && en->getLayer()->isLocked()))) {
-
-                ae = (RS_AtomicEntity*)en;
-                bool doit = false;
-
-                // startpoint connects to 1st point
-                if (ae->getStartpoint().distanceTo(p1)<1.0e-4) {
-                    doit = true;
-                    p1 = ae->getEndpoint();
-                }
-
-                // endpoint connects to 1st point
-                else if (ae->getEndpoint().distanceTo(p1)<1.0e-4) {
-                    doit = true;
-                    p1 = ae->getStartpoint();
-                }
-
-                // startpoint connects to 2nd point
-                else if (ae->getStartpoint().distanceTo(p2)<1.0e-4) {
-                    doit = true;
-                    p2 = ae->getEndpoint();
-                }
-
-                // endpoint connects to 1st point
-                else if (ae->getEndpoint().distanceTo(p2)<1.0e-4) {
-                    doit = true;
-                    p2 = ae->getStartpoint();
-                }
-
-                if (doit) {
-                    if (graphicView) {
-                        graphicView->deleteEntity(ae);
-                    }
-                    ae->setSelected(select);
-                    if (graphicView) {
-                        graphicView->drawEntity(ae);
-                    }
-                    found = true;
-                }
-            }
-        }
-    } while(found);
+	QList<RS_Entity*> list, list2;
+	bool select = !e->isSelected();
+	if (!findContour(e, RS2::EndingStart, list)) {
+		findContour(e, RS2::EndingEnd, list2);
+		for (auto e2 : list2)
+			if (!list.contains(e2))
+				list.append(e2);
+	}
+	if (preview == nullptr)
+		setSelected(list, select);
+	else for (auto e2 : list)
+		preview->append(e2->clone());
 }
 
+/**
+ * Select a "contour" of intersecting entities, between the specified entities.
+ * If the contour can be closed, and there are 2 valid paths, the shortest path is selected.  
+ * If the paths are equal length, the path closest to the cursor is selected.
+ *
+ * @param preview if specified; instead of selecting the path, return a cloned copy of it 
+ */
+void RS_Selection::selectContour(RS_Entity * start, RS_Entity * end, const RS_Vector& cursor, QList<RS_Entity*>* preview)
+{
+	if (!end)
+		return;
+	if (!start) {
+		if (preview != nullptr)
+			preview->append(end->clone());
+		else
+			selectSingle(end);
+		return;
+	}
+	
+	QList<RS_Entity*> fromStart, fromEnd, list;
+	double startLength(0), endLength(0);
+	bool select = !end->isSelected();
+
+	findContour(start, RS2::EndingStart, fromStart);
+	findContour(start, RS2::EndingEnd, fromEnd);
+
+	while (!fromStart.empty() && fromStart.last() != end)
+		fromStart.removeLast();
+	while (!fromEnd.empty() && fromEnd.last() != end)
+		fromEnd.removeLast();
+
+	for (auto e : fromStart)
+		startLength += e->getLength();
+	for (auto e : fromEnd)
+		endLength += e->getLength();
+
+	if (fabs(endLength - startLength) < RS_TOLERANCE && startLength > RS_TOLERANCE)
+	{
+		if (start->getStartpoint().distanceTo(cursor) < start->getEndpoint().distanceTo(cursor))
+			list = fromStart;
+		else
+			list = fromEnd;
+	}
+	else if (startLength > RS_TOLERANCE && startLength < endLength)
+		list = fromStart;
+	else if (endLength > RS_TOLERANCE && endLength < startLength)
+		list = fromEnd;
+	else
+		return; // startLength and endLength were both zero; no path
+
+	if (preview == nullptr)
+		setSelected(list, select);
+	else {
+		for (auto e : list)
+			preview->append(e->clone());
+	}
+}
+
+/**
+ * Find a "contour" of intersecting entities, from the specified end of the (atomic) entity.
+ * In the case of a branching path, the algorithm simply follows the first one it encounters.
+ * Closed-circular entities are not considered a valid portion of a contour (unless they are the start entity)
+ *
+ * @return true if the contour was closed and connects back to the start entity
+ */
+bool RS_Selection::findContour(RS_Entity * start, RS2::Ending end, QList<RS_Entity*>& list)
+{
+	if (start == NULL || !start->isAtomic())
+		return false;
+
+	const double INTERSECT_TOL = 1.0e-4;
+	RS_AtomicEntity* ae = (RS_AtomicEntity*)start;
+	RS_Vector startPoint(ae->getStartpoint()), endPoint(ae->getEndpoint());
+	if (end != RS2::EndingStart)
+		std::swap(startPoint, endPoint);
+
+	list.append(ae);
+
+	if (ae->isClosedContour())
+		return true;
+
+	RS_Vector p1 = startPoint;
+	bool found, add;
+
+	do
+	{
+		found = false;
+
+		for (auto en : *container) {
+			add = false;
+
+			if (en && en != start && en->isVisible() && en->isAtomic() && !en->isConstruction() && 
+				(!(en->getLayer() && en->getLayer()->isLocked()))) {
+
+				ae = (RS_AtomicEntity*)en;
+
+				if (ae->isClosedContour() || list.contains(ae))
+					continue;
+
+				// startpoint connects to 1st point
+				if (ae->getStartpoint().distanceTo(p1) < INTERSECT_TOL) {
+					p1 = ae->getEndpoint();
+					add = true;
+				}
+
+				// endpoint connects to 1st point
+				else if (ae->getEndpoint().distanceTo(p1) < INTERSECT_TOL) {
+					p1 = ae->getStartpoint();
+					add = true;
+				}
+
+				if (add) {
+					list.append(ae);
+					found = true;
+				}
+
+				if (p1.distanceTo(endPoint) < INTERSECT_TOL) { // we've connected back to the start point
+					return true;
+				}
+			}
+		}
+	} while (found);
+	return false;
+}
+
+void RS_Selection::setSelected(QList<RS_Entity*>& list, bool select)
+{
+	for (auto e : list) {
+		if (graphicView) {
+			graphicView->deleteEntity(e);
+		}
+		
+		e->setSelected(select);
+
+		if (graphicView) {
+			graphicView->drawEntity(e);
+		}
+	}
+}
 
 
 /**

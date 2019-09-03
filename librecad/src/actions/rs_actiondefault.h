@@ -74,11 +74,15 @@ public:
 	void updateMouseButtonHints() override;
 	void updateMouseCursor() override;
 //    void resume() override;
+	void updateSelectionPreview(RS_Entity* target, const RS_Vector& cursor);
 
 protected:
 	struct Points;
 	std::unique_ptr<Points> pPoints;
     RS2::SnapRestriction restrBak;
+
+private:
+	RS_Entity* lastSelected;
 
 };
 

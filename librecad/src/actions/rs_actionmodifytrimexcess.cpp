@@ -37,9 +37,6 @@
 #include "rs_atomicentity.h"
 #include "rs_debug.h"
 
-/**
- * @param both Trim both entities.
- */
 RS_ActionModifyTrimExcess::RS_ActionModifyTrimExcess(RS_EntityContainer& container,
 	RS_GraphicView& graphicView, bool both)
 	:RS_PreviewActionInterface("Trim Entity",
