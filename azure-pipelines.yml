@@ -188,6 +188,7 @@ stages:
         # /Applications/Xcode_10.2.1.app/Contents/Developer/usr/bin/
         #
         # So, forcing gcc to be at that location.
+        sudo xcode-select -s /Applications/Xcode_10.2.1.app/Contents/Developer
         sudo ln -f -s /usr/local/bin/gcc-9 /Applications/Xcode_10.2.1.app/Contents/Developer/usr/bin/gcc
         sudo ln -f -s /usr/local/bin/gcc-9 /Applications/Xcode_10.2.1.app/Contents/Developer/usr/bin/cc
         sudo ln -f -s /usr/local/bin/g++-9 /Applications/Xcode_10.2.1.app/Contents/Developer/usr/bin/g++
