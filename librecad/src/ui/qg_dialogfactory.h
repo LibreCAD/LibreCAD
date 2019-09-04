@@ -195,6 +195,8 @@ protected:
 									 bool on, bool update);
 	void requestLibraryInsertOptions(RS_ActionInterface* action,
 											 bool on, bool update);
+	void requestShapeTextOptions(RS_ActionInterface* action,
+											 bool on, bool update);
 
 public:
 	void requestSnapDistOptions(double& dist, bool on) override;

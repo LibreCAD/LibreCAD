@@ -227,6 +227,7 @@ HEADERS += \
     actions/lc_actiondrawlinepolygon3.h \
     main/lc_application.h \
     ui/forms/qg_circlediamoptions.h \
+    ui/forms/qg_shapetextoptions.h \
     ui/forms/qg_dlgfontconversion.h
 
 SOURCES += \
@@ -324,6 +325,7 @@ SOURCES += \
     actions/lc_actiondrawlinepolygon3.cpp \
     main/lc_application.cpp \
     ui/forms/qg_circlediamoptions.cpp \
+    ui/forms/qg_shapetextoptions.cpp \
     ui/forms/qg_dlgfontconversion.cpp
 
 # ################################################################################
@@ -821,6 +823,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_beveloptions.ui \
     ui/forms/qg_blockdialog.ui \
     ui/forms/qg_circlediamoptions.ui \
+    ui/forms/qg_shapetextoptions.ui \
     ui/forms/qg_circleoptions.ui \
     ui/forms/qg_circletan2options.ui \
     ui/forms/qg_coordinatewidget.ui \

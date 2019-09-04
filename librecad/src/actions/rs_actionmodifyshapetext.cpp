@@ -46,6 +46,7 @@ RS_ActionModifyShapeText::RS_ActionModifyShapeText(RS_EntityContainer& container
 	, shapePreview{ nullptr }
 {
 	offset = 0.5;
+	actionType=RS2::ActionModifyShapeText;
 }
 
 RS_ActionModifyShapeText::~RS_ActionModifyShapeText() {
@@ -191,4 +192,28 @@ void RS_ActionModifyShapeText::drawShapeTextPreview()
 		preview->addEntity(e);
 	}
 	drawPreview();
+}
+
+void RS_ActionModifyShapeText::showOptions() {
+    RS_ActionInterface::showOptions();
+	
+    RS_DIALOGFACTORY->requestOptions(this, true);
+}
+
+
+
+void RS_ActionModifyShapeText::hideOptions() {
+    RS_ActionInterface::hideOptions();
+	
+	RS_DIALOGFACTORY->requestOptions(this, false);
+}
+
+double RS_ActionModifyShapeText::getOffset() const
+{
+	return (offset);
+}
+
+void RS_ActionModifyShapeText::setOffset(double _offset)
+{
+	offset = _offset;
 }

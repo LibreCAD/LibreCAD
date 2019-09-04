@@ -118,6 +118,7 @@
 #include "qg_snapdistoptions.h"
 #include "rs_vector.h"
 #include "rs_debug.h"
+#include "qg_shapetextoptions.h"
 
 //QG_DialogFactory* QG_DialogFactory::uniqueInstance = nullptr;
 
@@ -660,6 +661,10 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
     case RS2::ActionPolylineEquidistant:
         requestPolylineEquidistantOptions(action, on, update);
         break;
+
+	case RS2::ActionModifyShapeText:
+		requestShapeTextOptions(action, on, update);
+		break;
 
     default:
         break;
@@ -1812,6 +1817,27 @@ QString QG_DialogFactory::requestFileSaveAsDialog(const QString& caption /* = QS
                                                   QString* selectedFilter /* = 0 */) {
 
     return QFileDialog::getSaveFileName(parent, caption, dir, filter, selectedFilter);
+}
+
+/**
+ * Shows a widget for shape text options.
+ */
+void QG_DialogFactory::requestShapeTextOptions(RS_ActionInterface* action,
+    bool on, bool update) {
+
+    if (optionWidget) {
+        static QG_ShapeTextOptions* toolWidget = nullptr;
+        if (toolWidget) {
+            delete toolWidget;
+            toolWidget = nullptr;
+        }
+        if (on) {
+            toolWidget = new QG_ShapeTextOptions(optionWidget);
+            optionWidget->addWidget(toolWidget);
+            toolWidget->setAction(action, update);
+            toolWidget->show();
+        }
+    }
 }
 
 /**

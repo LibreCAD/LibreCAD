@@ -52,6 +52,12 @@ public:
 	void updateMouseButtonHints() override;
 	void updateMouseCursor() override;
 
+	void hideOptions() override;
+	void showOptions() override;
+
+	double getOffset() const;
+	void setOffset(double _offset);
+
 private:
 	void setShapeTextPreviewEntity(RS_Entity* entity, const RS_Vector& point);
 	void drawShapeTextPreview();
