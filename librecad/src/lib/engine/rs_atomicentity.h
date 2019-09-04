@@ -116,6 +116,8 @@ public:
 	virtual void setEndpointSelected(bool select);
 	virtual bool isTangent(const RS_CircleData& /* circleData */) const;
 
+	virtual bool isClosedContour();
+
     /**
      * @return True if the entities startpoint is selected.
      */

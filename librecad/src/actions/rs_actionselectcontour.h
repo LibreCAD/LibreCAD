@@ -27,7 +27,7 @@
 #ifndef RS_ACTIONSELECTCONTOURS_H
 #define RS_ACTIONSELECTCONTOURS_H
 
-#include "rs_actioninterface.h"
+#include "rs_previewactioninterface.h"
 
 
 /**
@@ -35,15 +35,20 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionSelectContour : public RS_ActionInterface {
+class RS_ActionSelectContour : public RS_PreviewActionInterface {
 	Q_OBJECT
 public:
     RS_ActionSelectContour(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
 
+	void init(int status = 0) override;
 	void trigger() override;
 	void mouseReleaseEvent(QMouseEvent* e) override;
 	void updateMouseCursor() override;
+	void mouseMoveEvent(QMouseEvent* e) override;
+
+private:
+	void updateSelectionPreview(RS_Entity* target);
 
 private:
     RS_Entity* en;

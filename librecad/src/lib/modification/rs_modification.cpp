@@ -2449,6 +2449,12 @@ bool RS_Modification::trimExcess(const RS_Vector & trimCoord, RS_AtomicEntity * 
 		angles.push_back(std::make_pair(center.angleBetween(trimCoord, trimEntity->getStartpoint()), trimEntity->getStartpoint()));
 		angles.push_back(std::make_pair(center.angleBetween(trimCoord, trimEntity->getEndpoint()), trimEntity->getEndpoint()));
 	}
+	if (trimEntity->rtti() == RS2::EntityLine) {
+		if (trimEntity->getStartpoint().distanceTo(trimCoord) < startDist)
+			start = trimEntity->getStartpoint();
+		if (trimEntity->getEndpoint().distanceTo(trimCoord) < endDist)
+			end = trimEntity->getEndpoint();
+	}
 
 	if (conic) { // sort the intersections by angle between the trimCoord; first is closest ccw, last is closest cw
 		std::sort(angles.begin(), angles.end(), [](const std::pair<double, RS_Vector> &x, const std::pair<double, RS_Vector> &y)

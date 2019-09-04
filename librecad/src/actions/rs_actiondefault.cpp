@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 #include<QMouseEvent>
+#include<QGuiApplication>
 #include "rs_actiondefault.h"
 
 #include "rs_dialogfactory.h"
@@ -49,6 +50,7 @@ RS_ActionDefault::RS_ActionDefault(RS_EntityContainer& container,
 								container, graphicView)
 	, pPoints(new Points{})
 	, restrBak(RS2::RestrictNothing)
+	, lastSelected(nullptr)
 {
 
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault");
@@ -67,6 +69,7 @@ void RS_ActionDefault::init(int status) {
     }
     RS_PreviewActionInterface::init(status);
     pPoints->v1 = pPoints->v2 = {};
+	lastSelected = nullptr;
     //    snapMode.clear();
     //    snapMode.restriction = RS2::RestrictNothing;
     //    restrBak = RS2::RestrictNothing;
@@ -115,6 +118,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
     case Neutral:
         deleteSnapper();
+		updateSelectionPreview(catchEntity(e), mouse);
         break;
     case Dragging:
         //v2 = graphicView->toGraph(e->x(), e->y());
@@ -272,16 +276,24 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case Dragging: {
             // select single entity:
-            RS_Entity* en = catchEntity(e);
+            RS_Entity* en = catchEntity(e, RS2::ResolveAll);
 
 			if (en) {
                 deletePreview();
-
+				en = catchEntity(e);
                 RS_Selection s(*container, graphicView);
-                s.selectSingle(en);
+				int after, before = container->countSelected();
+				if (QGuiApplication::queryKeyboardModifiers() & Qt::ShiftModifier)
+					s.selectContour(lastSelected, en, pPoints->v2);
+				else
+					s.selectSingle(en);
+
+				after = container->countSelected();
+				if (before != after)
+					lastSelected = en;
 
                 RS_DIALOGFACTORY->updateSelectionWidget(
-                            container->countSelected(),container->totalSelectedLength());
+                            after,container->totalSelectedLength());
 
                 e->accept();
 
@@ -304,6 +316,7 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
             RS_Selection s(*container, graphicView);
             bool select = (e->modifiers() & Qt::ShiftModifier) ? false : true;
 			s.selectWindow(pPoints->v1, pPoints->v2, select, cross);
+			lastSelected = nullptr;
 
             RS_DIALOGFACTORY->updateSelectionWidget(
                         container->countSelected(),container->totalSelectedLength());
@@ -386,6 +399,29 @@ void RS_ActionDefault::updateMouseCursor() {
     default:
         break;
     }
+}
+
+void RS_ActionDefault::updateSelectionPreview(RS_Entity * target, const RS_Vector& cursor)
+{
+	deletePreview();
+
+	if (target) {
+		RS_Selection s(*container, graphicView);
+		QList<RS_Entity*> prev;
+
+		if (QGuiApplication::queryKeyboardModifiers() & Qt::ShiftModifier)
+			s.selectContour(lastSelected, target, cursor, &prev);
+		else
+			prev.append(target->clone());
+
+		for (auto e : prev) {
+			e->setHighlighted(true);
+			preview->setHighlighted(true);
+			preview->addEntity(e);
+		}
+	}
+	
+	drawPreview();
 }
 
 // EOF

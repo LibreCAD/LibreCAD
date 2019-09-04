@@ -31,19 +31,26 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_selection.h"
-#include "rs_selection.h"
+#include "rs_preview.h"
 #include "rs_debug.h"
 
 
 
 RS_ActionSelectContour::RS_ActionSelectContour(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-		:RS_ActionInterface("Select Contours", container, graphicView)
+		:RS_PreviewActionInterface("Select Contours", container, graphicView)
 		,en(nullptr)
 {
 	actionType=RS2::ActionSelectContour;
 }
 
+
+void RS_ActionSelectContour::init(int status)
+{
+	snapMode.clear();
+	snapMode.restriction = RS2::RestrictNothing;
+	RS_PreviewActionInterface::init(status);
+}
 
 void RS_ActionSelectContour::trigger() {
     if (en) {
@@ -74,6 +81,34 @@ void RS_ActionSelectContour::mouseReleaseEvent(QMouseEvent* e) {
 
 void RS_ActionSelectContour::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::SelectCursor);
+}
+
+void RS_ActionSelectContour::mouseMoveEvent(QMouseEvent * e)
+{
+	RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
+	RS_Entity* se = catchEntity(e, RS2::ResolveAll);
+
+	updateSelectionPreview(se);
+}
+
+void RS_ActionSelectContour::updateSelectionPreview(RS_Entity * target)
+{
+	deletePreview();
+
+	if (target) {
+		RS_Selection s(*container, graphicView);
+		QList<RS_Entity*> prev;
+
+		s.selectContour(target, &prev);
+
+		for (auto e : prev) {
+			e->setHighlighted(true);
+			preview->setHighlighted(true);
+			preview->addEntity(e);
+		}
+	}
+	
+	drawPreview();
 }
 
 // EOF

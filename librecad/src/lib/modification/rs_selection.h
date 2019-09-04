@@ -61,13 +61,18 @@ public:
     void deselectIntersected(const RS_Vector& v1, const RS_Vector& v2) {
 		selectIntersected(v1, v2, false);
 	}
-    void selectContour(RS_Entity* e);
+    void selectContour(RS_Entity* e, QList<RS_Entity*>* preview = nullptr);
+	void selectContour(RS_Entity* start, RS_Entity* end, const RS_Vector& cursor, QList<RS_Entity*>* preview = nullptr);
 	
     void selectLayer(RS_Entity* e);
     void selectLayer(const QString& layerName, bool select=true);
     void deselectLayer(QString& layerName) {
 		selectLayer(layerName, false);
 	}
+
+private:	
+	void setSelected(QList<RS_Entity*>& list, bool select = true);
+	bool findContour(RS_Entity* start, RS2::Ending end, QList<RS_Entity*>& list);
 
 protected:
     RS_EntityContainer* container;

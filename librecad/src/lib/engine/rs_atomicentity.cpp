@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "rs_atomicentity.h"
+#include "rs_ellipse.h"
 RS_AtomicEntity::RS_AtomicEntity(RS_EntityContainer* parent) : RS_Entity(parent) {}
 
 bool RS_AtomicEntity::isContainer() const {
@@ -122,6 +123,17 @@ void RS_AtomicEntity::setEndpointSelected(bool select) {
 	}
 }
 bool RS_AtomicEntity::isTangent(const RS_CircleData& /* circleData */) const{
+	return false;
+}
+
+bool RS_AtomicEntity::isClosedContour()
+{
+	if (rtti() == RS2::EntityCircle)
+		return true;
+	if (rtti() == RS2::EntityArc && getStartpoint().distanceTo(getEndpoint()) < 1.0e-4)
+		return true;
+	if (rtti() == RS2::EntityEllipse && !reinterpret_cast<RS_Ellipse*>(this)->isEllipticArc())
+		return true;
 	return false;
 }
 
