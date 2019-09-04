@@ -329,6 +329,7 @@ public:
         ActionModifyRound,
         ActionModifyOffset,
         ActionModifyOffsetNoSelect,
+		ActionModifyShapeText,
 
         ActionSnapFree,
         ActionSnapGrid,

@@ -134,6 +134,7 @@
 #include "rs_actionmodifytrim.h"
 #include "rs_actionmodifytrimamount.h"
 #include "rs_actionmodifytrimexcess.h"
+#include "rs_actionmodifyshapetext.h"
 #include "rs_actionoptionsdrawing.h"
 #include "rs_actionselect.h"
 #include "rs_actionselectall.h"
@@ -741,6 +742,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionModifyExplodeTextNoSelect:
         a = new RS_ActionModifyExplodeText(*document, *view);
         break;
+	case RS2::ActionModifyShapeText:
+		a = new RS_ActionModifyShapeText(*document, *view);
+		break;
 
         // Snapping actions:
         //
@@ -1648,6 +1652,10 @@ void QG_ActionHandler::slotModifyTrimAmount() {
 
 void QG_ActionHandler::slotModifyTrimExcess() {
 	setCurrentAction(RS2::ActionModifyTrimExcess);
+}
+
+void QG_ActionHandler::slotModifyShapeText() {
+	setCurrentAction(RS2::ActionModifyShapeText);
 }
 
 void QG_ActionHandler::slotModifyCut() {

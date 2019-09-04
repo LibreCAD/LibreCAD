@@ -466,7 +466,14 @@ RS_Commands::RS_Commands() {
              {"del", QObject::tr("del", "modify - delete (erase)")}},
             RS2::ActionModifyDelete
 		},
-        //explode
+		//shape text
+		{
+			{{"shapetxt", QObject::tr("shapetxt", "modify - shape text")}},
+			{{"stxt", QObject::tr("stxt", "modify - shape text")},
+			 {"st", QObject::tr("st", "modify - shape text")}},
+			RS2::ActionModifyShapeText
+		},
+         //explode
         {
             {{"explode", QObject::tr("explode", "explode block/polyline into entities")}},
             {{"xp", QObject::tr("xp", "explode block/polyline into entities")}},

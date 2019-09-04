@@ -2311,6 +2311,78 @@ bool RS_Modification::trimAmount(const RS_Vector& trimCoord,
 
     return true;
 }
+bool RS_Modification::shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity* shapeEntity, RS_Entity *textEntity, double offset, RS_Entity ** previewEntity)
+{
+	if (!shapeEntity || !textEntity || !shapeEntity->isVisible() || !textEntity->isVisible() || textEntity->isLocked())
+		return false;
+
+	if (shapeEntity->rtti() == RS2::EntityLine)
+	{
+		RS_Entity *textEntity1 = textEntity->clone();
+		RS_Vector offsetVector,
+			anchorPoint,
+			nearestPoint;
+		double
+			textAngle;
+		bool
+			above(true);
+		nearestPoint = shapeEntity->getNearestPointOnEntity(insertionPoint);
+		double pointangle,
+			rotateAngle,
+			shapeAngle = RS_Math::correctAngle(shapeEntity->getStartpoint().angleTo(shapeEntity->getEndpoint()));
+		pointangle = RS_Math::correctAngle(shapeEntity->getStartpoint().angleTo(insertionPoint) - shapeAngle);
+		above = (pointangle >= 0.0 && pointangle <= M_PI);
+		// move text to start at insertionPoint
+		if (textEntity1->rtti() == RS2::EntityText)
+		{
+			// EntityText insertion point is LL of text
+			RS_Text *tent = dynamic_cast<RS_Text *>(textEntity1);
+			anchorPoint = tent->getInsertionPoint();
+			textAngle = tent->getAngle();
+			if (!above)
+				offset = -offset - tent->getHeight();
+		}
+		else
+		{
+			// RS_MText insertion point is UL of text
+			RS_MText *tent = dynamic_cast<RS_MText *>(textEntity1);
+			anchorPoint = tent->getInsertionPoint();
+			textAngle = tent->getAngle();
+			if (above)
+				offset += tent->getHeight();
+			else
+				offset = -offset;
+		}
+		offsetVector.x = (nearestPoint.x - anchorPoint.x) + cos(textAngle + M_PI_2) * offset;
+		offsetVector.y = (nearestPoint.y - anchorPoint.y) + sin(textAngle + M_PI_2) * offset;
+		textEntity1->move(offsetVector);
+		rotateAngle = shapeAngle - textAngle;
+		textEntity1->rotate(nearestPoint, rotateAngle);
+		// offset by "offset" perpendicular to direction of line
+
+		// create preview entity that combines shapeEntity and textEntity
+		if (previewEntity)
+			*previewEntity = textEntity1;
+		else
+		{
+			if (graphicView)
+				graphicView->deleteEntity(textEntity);
+
+			LC_UndoSection undo(document);
+
+//			alignedtext = new RS_AlingedText(textEntity1, shapeEntity, offset, insertionPoint);
+			container->addEntity(textEntity1);
+			graphicView->drawEntity(textEntity1);
+			undo.addUndoable(textEntity1);
+			textEntity->setUndoState(true);
+			undo.addUndoable(textEntity);
+		}
+	}
+	else
+		return false;
+
+	return true;
+}
 
 bool RS_Modification::trimExcess(const RS_Vector & trimCoord, RS_AtomicEntity * trimEntity, RS_Entity ** trimmed)
 {

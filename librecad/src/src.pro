@@ -124,6 +124,7 @@ RESOURCES += ../../licenses/licenses.qrc
 HEADERS += \
     actions/rs_actiondrawcirclediam.h \
     actions/rs_actionmodifytrimexcess.h \
+    actions/rs_actionmodifyshapetext.h \
     lib/actions/rs_actioninterface.h \
     lib/actions/rs_preview.h \
     lib/actions/rs_previewactioninterface.h \
@@ -231,6 +232,7 @@ HEADERS += \
 SOURCES += \
     actions/rs_actiondrawcirclediam.cpp \
     actions/rs_actionmodifytrimexcess.cpp \
+    actions/rs_actionmodifyshapetext.cpp \
     lib/actions/rs_actioninterface.cpp \
     lib/actions/rs_preview.cpp \
     lib/actions/rs_previewactioninterface.cpp \
