@@ -2311,6 +2311,71 @@ bool RS_Modification::trimAmount(const RS_Vector& trimCoord,
 
     return true;
 }
+
+double TextOffset(RS_Entity *_entity, double offset, bool above)
+{
+	double
+		textOffset(0.0),
+		height(0.0);
+
+	if (_entity->rtti() == RS2::EntityText)
+	{
+		height = dynamic_cast<RS_Text *>(_entity)->getHeight();
+		switch (dynamic_cast<RS_Text *>(_entity)->getVAlign())
+		{
+		case RS_TextData::VABaseline:
+			if (above)
+				textOffset = offset;
+			else
+				textOffset = -offset - height;
+			break;
+		case RS_TextData::VABottom:
+			if (above)
+				textOffset = offset;
+			else
+				textOffset = -offset - height;
+			break;
+		case RS_TextData::VAMiddle:
+			textOffset = offset + height / 2.0;
+			if (!above)
+				textOffset = -textOffset;
+			break;
+		case RS_TextData::VATop:
+			if (above)
+				textOffset = offset + height;
+			else
+				textOffset = -offset;
+			break;
+		}
+
+	}
+	else if (_entity->rtti() == RS2::EntityMText)
+	{
+		height = dynamic_cast<RS_MText *>(_entity)->getHeight();
+		switch (dynamic_cast<RS_MText *>(_entity)->getVAlign())
+		{
+		case RS_MTextData::VABottom:
+			if (above)
+				textOffset = offset;
+			else
+				textOffset = -offset - height;
+			break;
+		case RS_MTextData::VAMiddle:
+			textOffset = offset + height / 2.0;
+			if(!above)
+				textOffset = -textOffset;
+			break;
+		case RS_MTextData::VATop:
+			if (above)
+				textOffset = offset + height;
+			else
+				textOffset = -offset;
+			break;
+		}
+	}
+	return textOffset;
+}
+
 bool RS_Modification::shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity* shapeEntity, RS_Entity *textEntity, double offset, RS_Entity ** previewEntity)
 {
 	if (!shapeEntity || !textEntity || !shapeEntity->isVisible() || !textEntity->isVisible() || textEntity->isLocked())
@@ -2335,23 +2400,17 @@ bool RS_Modification::shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity
 		// move text to start at insertionPoint
 		if (textEntity1->rtti() == RS2::EntityText)
 		{
-			// EntityText insertion point is LL of text
 			RS_Text *tent = dynamic_cast<RS_Text *>(textEntity1);
+			offset = TextOffset(tent, offset, above);
 			anchorPoint = tent->getInsertionPoint();
 			textAngle = tent->getAngle();
-			if (!above)
-				offset = -offset - tent->getHeight();
 		}
 		else
 		{
-			// RS_MText insertion point is UL of text
 			RS_MText *tent = dynamic_cast<RS_MText *>(textEntity1);
+			offset = TextOffset(tent, offset, above);
 			anchorPoint = tent->getInsertionPoint();
 			textAngle = tent->getAngle();
-			if (above)
-				offset += tent->getHeight();
-			else
-				offset = -offset;
 		}
 		offsetVector.x = (nearestPoint.x - anchorPoint.x) + cos(textAngle + M_PI_2) * offset;
 		offsetVector.y = (nearestPoint.y - anchorPoint.y) + sin(textAngle + M_PI_2) * offset;
