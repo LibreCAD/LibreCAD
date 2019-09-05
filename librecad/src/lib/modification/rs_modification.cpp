@@ -2376,12 +2376,29 @@ double TextOffset(RS_Entity *_entity, double offset, bool above)
 	return textOffset;
 }
 
+bool IsValidShapeEntity(RS_Entity *entity)
+{
+	if (entity)
+	{
+		switch (entity->rtti())
+		{
+		case RS2::EntityLine:
+		case RS2::EntityArc:
+		case RS2::EntityCircle:
+		case RS2::EntityEllipse:
+			return true;
+			break;
+		}
+	}
+	return (false);
+}
+
 bool RS_Modification::shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity* shapeEntity, RS_Entity *textEntity, double offset, RS_Entity ** previewEntity)
 {
 	if (!shapeEntity || !textEntity || !shapeEntity->isVisible() || !textEntity->isVisible() || textEntity->isLocked())
 		return false;
 
-	if (shapeEntity->rtti() == RS2::EntityLine)
+	if (IsValidShapeEntity(shapeEntity))
 	{
 		RS_Entity *textEntity1 = textEntity->clone();
 		RS_Vector offsetVector,
@@ -2394,9 +2411,50 @@ bool RS_Modification::shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity
 		nearestPoint = shapeEntity->getNearestPointOnEntity(insertionPoint);
 		double pointangle,
 			rotateAngle,
+			shapeAngle;
+
+		if (shapeEntity->rtti() == RS2::EntityArc)
+		{
+			RS_Arc
+				*arc = dynamic_cast<RS_Arc *>(shapeEntity);
+			shapeAngle = arc->getTangentDirection(nearestPoint).angle() - M_PI;
+			double
+				pointDistance(arc->getCenter().distanceTo(insertionPoint));
+			if (pointDistance > arc->getRadius())
+				above = true;
+			else
+				above = false;
+		}
+		else if (shapeEntity->rtti() == RS2::EntityCircle)
+		{
+			RS_Circle
+				*arc = dynamic_cast<RS_Circle *>(shapeEntity);
+			shapeAngle = arc->getTangentDirection(nearestPoint).angle() - M_PI;
+			double
+				pointDistance(arc->getCenter().distanceTo(insertionPoint));
+			if (pointDistance > arc->getRadius())
+				above = true;
+			else
+				above = false;
+		}
+		else if (shapeEntity->rtti() == RS2::EntityEllipse)
+		{
+			RS_Ellipse
+				*arc = dynamic_cast<RS_Ellipse *>(shapeEntity);
+			shapeAngle = arc->getTangentDirection(nearestPoint).angle() - M_PI;
+			double
+				pointDistance(arc->getCenter().distanceTo(insertionPoint));
+			if (pointDistance > arc->getCenter().distanceTo(nearestPoint))
+				above = true;
+			else
+				above = false;
+		}
+		else if (shapeEntity->rtti() == RS2::EntityLine)
+		{
 			shapeAngle = RS_Math::correctAngle(shapeEntity->getStartpoint().angleTo(shapeEntity->getEndpoint()));
-		pointangle = RS_Math::correctAngle(shapeEntity->getStartpoint().angleTo(insertionPoint) - shapeAngle);
-		above = (pointangle >= 0.0 && pointangle <= M_PI);
+			pointangle = RS_Math::correctAngle(shapeEntity->getStartpoint().angleTo(insertionPoint) - shapeAngle);
+			above = (pointangle >= 0.0 && pointangle <= M_PI);
+		}
 		// move text to start at insertionPoint
 		if (textEntity1->rtti() == RS2::EntityText)
 		{
