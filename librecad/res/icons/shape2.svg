@@ -49,8 +49,8 @@
      inkscape:zoom="1.3161577"
      inkscape:cx="190.79584"
      inkscape:cy="229.21568"
-     inkscape:window-x="1912"
-     inkscape:window-y="-8"
+     inkscape:window-x="-8"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg4295"
      inkscape:object-nodes="true"
@@ -100,18 +100,7 @@
        id="path5715"
        style="display:inline;opacity:1;fill:#00ff7f;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.12888896;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:28.31999969;stroke-opacity:1" />
   </g>
-  <flowRoot
-     transform="matrix(0.73148506,0,0,0.6359504,10.510192,-6.8272942)"
-     xml:space="preserve"
-     id="flowRoot3743"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;opacity:0.19540232;fill:#000000;fill-opacity:1;stroke:none"><flowRegion
-       id="flowRegion3745"><rect
-         id="rect3747"
-         width="10"
-         height="80"
-         x="30"
-         y="36" /></flowRegion><flowPara
-       id="flowPara3749" /></flowRoot>  <path
+  <path
      style="fill:none;stroke:#000000;stroke-width:1.27000005;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
      d="m 1.4111111,55.315558 37.8512729,7.72475 31.293172,6.386361"
      id="path4093"

@@ -2351,7 +2351,7 @@ double TextOffset(RS_Entity *_entity, double offset, bool above)
 	}
 	else if (_entity->rtti() == RS2::EntityMText)
 	{
-		height = dynamic_cast<RS_MText *>(_entity)->getHeight();
+		height = dynamic_cast<RS_MText *>(_entity)->getUsedTextHeight();
 		switch (dynamic_cast<RS_MText *>(_entity)->getVAlign())
 		{
 		case RS_MTextData::VABottom:
