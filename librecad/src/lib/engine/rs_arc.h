@@ -175,6 +175,7 @@ public:
     /** choose an intersection to trim to based on mouse point */
 	RS_Vector prepareTrim(const RS_Vector& mousePoint,
 								  const RS_VectorSolutions& trimSol)override;
+	double getLengthBetween(const RS_Vector& ptOnEnt, const RS_Vector& pt2OnEnt) override;
 
 	void reverse() override;
 

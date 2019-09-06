@@ -87,6 +87,7 @@ public:
 	void moveStartpoint(const RS_Vector& pos) override;
 	void moveEndpoint(const RS_Vector& pos) override;
 	double getLength() const override;
+	double getLengthBetween(const RS_Vector& ptOnEnt, const RS_Vector& pt2OnEnt) override;
 
     /**
     //Ellipse must have ratio<1, and not reversed

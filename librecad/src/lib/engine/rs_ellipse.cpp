@@ -324,6 +324,17 @@ double RS_Ellipse::getLength() const
     return e.getEllipseLength(e.data.angle1,e.data.angle2);
 }
 
+double RS_Ellipse::getLengthBetween(const RS_Vector & ptOnEnt, const RS_Vector & pt2OnEnt)
+{
+	RS_Ellipse e(nullptr, data);
+	if (e.getRatio() > 1.)  e.switchMajorMinor();
+	if (e.isReversed()) {
+		e.setReversed(false);
+		std::swap(e.data.angle1, e.data.angle2);
+	}
+	return e.getEllipseLength(data.center.angleTo(ptOnEnt), data.center.angleTo(pt2OnEnt));
+}
+
 /**
 //Ellipse must have ratio<1, and not reversed
 *@ x1, ellipse angle

@@ -86,6 +86,7 @@ RS_Vector RS_AtomicEntity::getCenter() const {
 double RS_AtomicEntity::getRadius() const {
 	   return 0.;
    }
+
 /**
 * return the nearest center for snapping
 * @param coord Coordinate (typically a mouse coordinate)
