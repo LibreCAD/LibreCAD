@@ -2312,6 +2312,195 @@ bool RS_Modification::trimAmount(const RS_Vector& trimCoord,
     return true;
 }
 
+double TextOffset(RS_Entity *_entity, double offset, bool above)
+{
+	double
+		textOffset(0.0),
+		height(0.0);
+
+	if (_entity->rtti() == RS2::EntityText)
+	{
+		height = dynamic_cast<RS_Text *>(_entity)->getHeight();
+		switch (dynamic_cast<RS_Text *>(_entity)->getVAlign())
+		{
+		case RS_TextData::VABaseline:
+			if (above)
+				textOffset = offset;
+			else
+				textOffset = -offset - height;
+			break;
+		case RS_TextData::VABottom:
+			if (above)
+				textOffset = offset;
+			else
+				textOffset = -offset - height;
+			break;
+		case RS_TextData::VAMiddle:
+			textOffset = offset + height / 2.0;
+			if (!above)
+				textOffset = -textOffset;
+			break;
+		case RS_TextData::VATop:
+			if (above)
+				textOffset = offset + height;
+			else
+				textOffset = -offset;
+			break;
+		}
+
+	}
+	else if (_entity->rtti() == RS2::EntityMText)
+	{
+		height = dynamic_cast<RS_MText *>(_entity)->getHeight();
+		switch (dynamic_cast<RS_MText *>(_entity)->getVAlign())
+		{
+		case RS_MTextData::VABottom:
+			if (above)
+				textOffset = offset;
+			else
+				textOffset = -offset - height;
+			break;
+		case RS_MTextData::VAMiddle:
+			textOffset = offset + height / 2.0;
+			if(!above)
+				textOffset = -textOffset;
+			break;
+		case RS_MTextData::VATop:
+			if (above)
+				textOffset = offset + height;
+			else
+				textOffset = -offset;
+			break;
+		}
+	}
+	return textOffset;
+}
+
+bool IsValidShapeEntity(RS_Entity *entity)
+{
+	if (entity)
+	{
+		switch (entity->rtti())
+		{
+		case RS2::EntityLine:
+		case RS2::EntityArc:
+		case RS2::EntityCircle:
+		case RS2::EntityEllipse:
+			return true;
+			break;
+		}
+	}
+	return (false);
+}
+
+bool RS_Modification::shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity* shapeEntity, RS_Entity *textEntity, double offset, RS_Entity ** previewEntity)
+{
+	if (!shapeEntity || !textEntity || !shapeEntity->isVisible() || !textEntity->isVisible() || textEntity->isLocked())
+		return false;
+
+	if (IsValidShapeEntity(shapeEntity))
+	{
+		RS_Entity *textEntity1 = textEntity->clone();
+		RS_Vector offsetVector,
+			anchorPoint,
+			nearestPoint;
+		double
+			textAngle;
+		bool
+			above(true);
+		nearestPoint = shapeEntity->getNearestPointOnEntity(insertionPoint);
+		double pointangle,
+			rotateAngle,
+			shapeAngle;
+
+		if (shapeEntity->rtti() == RS2::EntityArc)
+		{
+			RS_Arc
+				*arc = dynamic_cast<RS_Arc *>(shapeEntity);
+			shapeAngle = arc->getTangentDirection(nearestPoint).angle() - M_PI;
+			double
+				pointDistance(arc->getCenter().distanceTo(insertionPoint));
+			if (pointDistance > arc->getRadius())
+				above = true;
+			else
+				above = false;
+		}
+		else if (shapeEntity->rtti() == RS2::EntityCircle)
+		{
+			RS_Circle
+				*arc = dynamic_cast<RS_Circle *>(shapeEntity);
+			shapeAngle = arc->getTangentDirection(nearestPoint).angle() - M_PI;
+			double
+				pointDistance(arc->getCenter().distanceTo(insertionPoint));
+			if (pointDistance > arc->getRadius())
+				above = true;
+			else
+				above = false;
+		}
+		else if (shapeEntity->rtti() == RS2::EntityEllipse)
+		{
+			RS_Ellipse
+				*arc = dynamic_cast<RS_Ellipse *>(shapeEntity);
+			shapeAngle = arc->getTangentDirection(nearestPoint).angle() - M_PI;
+			double
+				pointDistance(arc->getCenter().distanceTo(insertionPoint));
+			if (pointDistance > arc->getCenter().distanceTo(nearestPoint))
+				above = true;
+			else
+				above = false;
+		}
+		else if (shapeEntity->rtti() == RS2::EntityLine)
+		{
+			shapeAngle = RS_Math::correctAngle(shapeEntity->getStartpoint().angleTo(shapeEntity->getEndpoint()));
+			pointangle = RS_Math::correctAngle(shapeEntity->getStartpoint().angleTo(insertionPoint) - shapeAngle);
+			above = (pointangle >= 0.0 && pointangle <= M_PI);
+		}
+		// move text to start at insertionPoint
+		if (textEntity1->rtti() == RS2::EntityText)
+		{
+			RS_Text *tent = dynamic_cast<RS_Text *>(textEntity1);
+			offset = TextOffset(tent, offset, above);
+			anchorPoint = tent->getInsertionPoint();
+			textAngle = tent->getAngle();
+		}
+		else
+		{
+			RS_MText *tent = dynamic_cast<RS_MText *>(textEntity1);
+			offset = TextOffset(tent, offset, above);
+			anchorPoint = tent->getInsertionPoint();
+			textAngle = tent->getAngle();
+		}
+		offsetVector.x = (nearestPoint.x - anchorPoint.x) + cos(textAngle + M_PI_2) * offset;
+		offsetVector.y = (nearestPoint.y - anchorPoint.y) + sin(textAngle + M_PI_2) * offset;
+		textEntity1->move(offsetVector);
+		rotateAngle = shapeAngle - textAngle;
+		textEntity1->rotate(nearestPoint, rotateAngle);
+		// offset by "offset" perpendicular to direction of line
+
+		// create preview entity that combines shapeEntity and textEntity
+		if (previewEntity)
+			*previewEntity = textEntity1;
+		else
+		{
+			if (graphicView)
+				graphicView->deleteEntity(textEntity);
+
+			LC_UndoSection undo(document);
+
+//			alignedtext = new RS_AlingedText(textEntity1, shapeEntity, offset, insertionPoint);
+			container->addEntity(textEntity1);
+			graphicView->drawEntity(textEntity1);
+			undo.addUndoable(textEntity1);
+			textEntity->setUndoState(true);
+			undo.addUndoable(textEntity);
+		}
+	}
+	else
+		return false;
+
+	return true;
+}
+
 bool RS_Modification::trimExcess(const RS_Vector & trimCoord, RS_AtomicEntity * trimEntity, RS_Entity ** trimmed)
 {
 	if (!trimEntity || trimEntity->isLocked() || !trimEntity->isVisible())

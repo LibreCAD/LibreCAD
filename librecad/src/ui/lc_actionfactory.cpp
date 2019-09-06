@@ -736,6 +736,14 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("ModifyExplodeText");
     a_map["ModifyExplodeText"] = action;
 
+	action = new QAction(tr("S&hape Text"), agm->modify);
+	action->setIcon(QIcon(":/icons/shape2.svg"));
+	connect(action, SIGNAL(triggered()),
+		action_handler, SLOT(slotModifyShapeText()));
+	action->setObjectName("ModifyshapeText");
+	action->setData("shapetxt, stxt");
+	a_map["ModifyShapeText"] = action;
+
     action = new QAction(tr("Ex&plode"), agm->modify);
     action->setIcon(QIcon(":/icons/explode.svg"));
     connect(action, SIGNAL(triggered()),

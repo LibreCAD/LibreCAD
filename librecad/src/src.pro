@@ -124,6 +124,7 @@ RESOURCES += ../../licenses/licenses.qrc
 HEADERS += \
     actions/rs_actiondrawcirclediam.h \
     actions/rs_actionmodifytrimexcess.h \
+    actions/rs_actionmodifyshapetext.h \
     lib/actions/rs_actioninterface.h \
     lib/actions/rs_preview.h \
     lib/actions/rs_previewactioninterface.h \
@@ -226,11 +227,13 @@ HEADERS += \
     actions/lc_actiondrawlinepolygon3.h \
     main/lc_application.h \
     ui/forms/qg_circlediamoptions.h \
+    ui/forms/qg_shapetextoptions.h \
     ui/forms/qg_dlgfontconversion.h
 
 SOURCES += \
     actions/rs_actiondrawcirclediam.cpp \
     actions/rs_actionmodifytrimexcess.cpp \
+    actions/rs_actionmodifyshapetext.cpp \
     lib/actions/rs_actioninterface.cpp \
     lib/actions/rs_preview.cpp \
     lib/actions/rs_previewactioninterface.cpp \
@@ -322,6 +325,7 @@ SOURCES += \
     actions/lc_actiondrawlinepolygon3.cpp \
     main/lc_application.cpp \
     ui/forms/qg_circlediamoptions.cpp \
+    ui/forms/qg_shapetextoptions.cpp \
     ui/forms/qg_dlgfontconversion.cpp
 
 # ################################################################################
@@ -819,6 +823,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_beveloptions.ui \
     ui/forms/qg_blockdialog.ui \
     ui/forms/qg_circlediamoptions.ui \
+    ui/forms/qg_shapetextoptions.ui \
     ui/forms/qg_circleoptions.ui \
     ui/forms/qg_circletan2options.ui \
     ui/forms/qg_coordinatewidget.ui \
