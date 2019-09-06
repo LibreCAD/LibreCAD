@@ -92,6 +92,8 @@ public:
 
 	RS_Vector getCenter() const override;
 	double getRadius() const override;
+
+	virtual double getLengthBetween(const RS_Vector& ptOnEnt, const RS_Vector& pt2OnEnt) { return ptOnEnt.distanceTo(pt2OnEnt); }
 	/**
     * return the nearest center for snapping
     * @param coord Coordinate (typically a mouse coordinate)

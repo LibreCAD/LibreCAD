@@ -135,6 +135,17 @@ bool RS_Circle::isTangent(const RS_CircleData&  circleData) const{
     return false;
 }
 
+double RS_Circle::getLengthBetween(const RS_Vector & ptOnEnt, const RS_Vector & pt2OnEnt)
+{
+	double a = data.center.angleTo(ptOnEnt);
+	double b = data.center.angleTo(pt2OnEnt);
+	double angle = RS_Math::correctAngle(b - a);
+	// full circle:
+	if (fabs(remainder(angle, 2.*M_PI)) < RS_TOLERANCE_ANGLE) {
+		angle = 2 * M_PI;
+	}
+	return angle * data.radius;
+}
 
 /**
  * Creates this circle from a center point and a radius.

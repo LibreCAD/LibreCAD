@@ -758,7 +758,17 @@ RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,
         return is;
 }
 
-
+double RS_Arc::getLengthBetween(const RS_Vector & ptOnEnt, const RS_Vector & pt2OnEnt)
+{
+	double a = data.center.angleTo(ptOnEnt);
+	double b = data.center.angleTo(pt2OnEnt);
+	double angle = RS_Math::correctAngle(b - a);
+	// full circle:
+	if (fabs(remainder(angle, 2.*M_PI)) < RS_TOLERANCE_ANGLE) {
+		angle = 2 * M_PI;
+	}
+	return angle * data.radius;
+}
 
 void RS_Arc::reverse() {
     std::swap(data.angle1,data.angle2);

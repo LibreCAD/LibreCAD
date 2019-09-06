@@ -107,6 +107,7 @@ public:
     double getAngleLength() const;
 	double getLength() const override;
 	bool isTangent(const RS_CircleData&  circleData) const override;
+	double getLengthBetween(const RS_Vector& ptOnEnt, const RS_Vector& pt2OnEnt) override;
 
     bool createFromCR(const RS_Vector& c, double r);
     bool createFrom2P(const RS_Vector& p1, const RS_Vector& p2);

@@ -251,6 +251,8 @@ void RS_Selection::selectContour(RS_Entity * start, RS_Entity * end, const RS_Ve
 	double startLength(0), endLength(0);
 	bool select = !end->isSelected();
 
+	//findContour_aStar(start, end, RS2::EndingStart, fromStart);
+	//findContour_aStar(start, end, RS2::EndingEnd, fromEnd);
 	findContour(start, RS2::EndingStart, fromStart);
 	findContour(start, RS2::EndingEnd, fromEnd);
 
@@ -351,6 +353,17 @@ bool RS_Selection::findContour(RS_Entity * start, RS2::Ending end, QList<RS_Enti
 		}
 	} while (found);
 	return false;
+}
+
+bool RS_Selection::findContour_aStar(RS_Entity * start, RS_Entity* dest, RS2::Ending end, QList<RS_Entity*>& list)
+{
+	if (!start || !dest || !start->isAtomic() || !dest->isAtomic())
+		return false;
+	RS_AtomicEntity *s = static_cast<RS_AtomicEntity*>(start);
+	RS_AtomicEntity *d = static_cast<RS_AtomicEntity*>(dest);
+	//SearchNode sn(s, end == RS2::EndingStart ? start->getStartpoint() : start->getEndpoint());
+	SearchNode sn(s, RS_Vector(false));
+	return sn.findPath(container, d, list);
 }
 
 void RS_Selection::setSelected(QList<RS_Entity*>& list, bool select)

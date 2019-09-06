@@ -2384,7 +2384,7 @@ bool RS_Modification::trimExcess(const RS_Vector & trimCoord, RS_AtomicEntity * 
 			end = trimEntity->getEndpoint();
 	}
 
-	if (conic) { // sort the intersections by angle between the trimCoord; first is closest ccw, last is closest cw
+	if (conic && angles.size() > 0) { // sort the intersections by angle between the trimCoord; first is closest ccw, last is closest cw
 		std::sort(angles.begin(), angles.end(), [](const std::pair<double, RS_Vector> &x, const std::pair<double, RS_Vector> &y)
 		{
 			return x.first < y.first;
