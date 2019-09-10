@@ -2401,19 +2401,23 @@ bool RS_Modification::shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity
 	if (IsValidShapeEntity(shapeEntity))
 	{
 		RS_Entity *textEntity1 = textEntity->clone();
+		textEntity1->update();
 		RS_Vector offsetVector,
 			anchorPoint,
 			nearestPoint;
 		double
-			textAngle;
+			textAngle,
+			totalAngle;
 		bool
 			above(true);
 		nearestPoint = shapeEntity->getNearestPointOnEntity(insertionPoint);
 		double pointangle,
 			rotateAngle,
 			shapeAngle;
+		RS2::EntityType
+			eType = shapeEntity->rtti();
 
-		if (shapeEntity->rtti() == RS2::EntityArc)
+		if (eType == RS2::EntityArc)
 		{
 			RS_Arc
 				*arc = dynamic_cast<RS_Arc *>(shapeEntity);
@@ -2425,7 +2429,7 @@ bool RS_Modification::shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity
 			else
 				above = false;
 		}
-		else if (shapeEntity->rtti() == RS2::EntityCircle)
+		else if (eType == RS2::EntityCircle)
 		{
 			RS_Circle
 				*arc = dynamic_cast<RS_Circle *>(shapeEntity);
@@ -2437,7 +2441,7 @@ bool RS_Modification::shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity
 			else
 				above = false;
 		}
-		else if (shapeEntity->rtti() == RS2::EntityEllipse)
+		else if (eType == RS2::EntityEllipse)
 		{
 			RS_Ellipse
 				*arc = dynamic_cast<RS_Ellipse *>(shapeEntity);
@@ -2449,19 +2453,24 @@ bool RS_Modification::shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity
 			else
 				above = false;
 		}
-		else if (shapeEntity->rtti() == RS2::EntityLine)
+		else if (eType == RS2::EntityLine)
 		{
 			shapeAngle = RS_Math::correctAngle(shapeEntity->getStartpoint().angleTo(shapeEntity->getEndpoint()));
 			pointangle = RS_Math::correctAngle(shapeEntity->getStartpoint().angleTo(insertionPoint) - shapeAngle);
 			above = (pointangle >= 0.0 && pointangle <= M_PI);
 		}
 		// move text to start at insertionPoint
+		int
+			HAlign;
 		if (textEntity1->rtti() == RS2::EntityText)
 		{
 			RS_Text *tent = dynamic_cast<RS_Text *>(textEntity1);
 			offset = TextOffset(tent, offset, above);
 			anchorPoint = tent->getInsertionPoint();
 			textAngle = tent->getAngle();
+			HAlign = tent->getHAlign();
+			if (HAlign > 2)
+				HAlign = 0;
 		}
 		else
 		{
@@ -2469,13 +2478,232 @@ bool RS_Modification::shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity
 			offset = TextOffset(tent, offset, above);
 			anchorPoint = tent->getInsertionPoint();
 			textAngle = tent->getAngle();
+			HAlign = tent->getHAlign();
 		}
 		offsetVector.x = (nearestPoint.x - anchorPoint.x) + cos(textAngle + M_PI_2) * offset;
 		offsetVector.y = (nearestPoint.y - anchorPoint.y) + sin(textAngle + M_PI_2) * offset;
 		textEntity1->move(offsetVector);
 		rotateAngle = shapeAngle - textAngle;
 		textEntity1->rotate(nearestPoint, rotateAngle);
-		// offset by "offset" perpendicular to direction of line
+		if (eType == RS2::EntityCircle || eType == RS2::EntityArc || eType == RS2::EntityEllipse)
+		{
+			RS_Entity *inner_tent = ((RS_EntityContainer *)textEntity1)->firstEntity();
+			while (inner_tent)
+			{
+				RS_Entity
+					*letter;
+				RS_Insert
+					*iLetter;
+				RS_Vector
+					lastpt,
+					lastrotpt,
+					pt,
+					center;
+				bool
+					first(true);
+				double
+					radius,
+					angle,
+					distance;
+				int
+					count(0),
+					direction(1);		// Left edge orientation
+				if (HAlign == 2)		// Right edge orientation
+					direction = -1;
+				if (eType == RS2::EntityEllipse)
+				{
+					double
+						baseAngle,
+						baseDist;
+					RS_Ellipse
+						*ellipse = dynamic_cast<RS_Ellipse *>(shapeEntity);
+					center = ellipse->getCenter();
+					if (direction == 1)
+						letter = ((RS_EntityContainer *)inner_tent)->firstEntity();
+					else if (direction == -1)
+						letter = ((RS_EntityContainer *)inner_tent)->lastEntity();
+					radius = center.distanceTo(nearestPoint);
+					while (letter)
+					{
+						iLetter = (RS_Insert *)letter;
+						if (first)
+						{
+							lastpt = iLetter->getInsertionPoint();
+							lastrotpt = lastpt;
+							first = false;
+							baseAngle = ellipse->getEllipseAngle(nearestPoint);
+							baseDist = ellipse->getEllipseLength(baseAngle);
+						}
+						else
+						{
+							pt = iLetter->getInsertionPoint();
+							double
+								distance = lastpt.distanceTo(pt),
+								angle,
+								angle0,
+								radius (center.distanceTo(pt));
+							RS_Vector
+								pt2(lastrotpt);
+							lastpt = pt;
+
+							double
+								theta = 2 * atan2(distance / 2, radius),
+								angle1 = baseAngle + theta,
+								angle2 = baseAngle - theta;
+							RS_Vector
+								ep1,
+								ep2,
+								endpt;
+							ep1.x = center.x + cos(angle1) * (ellipse->getMajorRadius() + 1);
+							ep1.y = center.y + sin(angle1) * (ellipse->getMajorRadius() + 1);
+							ep2.x = center.x + cos(angle2) * (ellipse->getMajorRadius() + 1);
+							ep2.y = center.y + sin(angle2) * (ellipse->getMajorRadius() + 1);
+							RS_Line
+								line1(center, ep1),
+								line2(center, ep2);
+							RS_Ellipse e1(nullptr, ellipse->getData()),
+								e2(nullptr, ellipse->getData());
+							RS_VectorSolutions rsvs1,
+								rsvs2;
+							rsvs1 = RS_Information::getIntersection(&e1, &line1, true);
+							rsvs2 = RS_Information::getIntersection(&e2, &line2, true);
+							if (rsvs1.size() > 0 && rsvs2.size() == 0)
+								endpt = rsvs1[0];
+							else if (rsvs2.size() > 0 && rsvs1.size() == 0)
+								endpt = rsvs2[0];
+							else if (rsvs1.size() > 0 && rsvs2.size() > 0)
+							{
+								if (center.distanceTo(rsvs1[0]) < center.distanceTo(rsvs2[0]))	// Try the shorter radius
+									endpt = rsvs1[0];
+								else
+									endpt = rsvs2[0];
+							}
+							double circ_rad = center.distanceTo(endpt);
+							double letterarc = distance / circ_rad;
+							baseAngle -= (theta * direction);
+							angle = ellipse->getEllipseAngle(endpt);
+							angle0 = ellipse->getTangentDirection(endpt).angle() - M_PI;
+							endpt.x = endpt.x + cos(baseAngle) * offset;
+							endpt.y = endpt.y + sin(baseAngle) * offset;
+							iLetter->setInsertionPoint(endpt);
+							iLetter->rotate(iLetter->getInsertionPoint(), -angle0 * direction);		// was -angle
+							lastrotpt = iLetter->getInsertionPoint();
+
+						}
+						count++;
+						// this is where each of the letters gets rotated around the center of the arc
+						if (direction == 1)
+							letter = ((RS_EntityContainer *)inner_tent)->nextEntity();
+						else
+							letter = ((RS_EntityContainer *)inner_tent)->prevEntity();
+					}
+
+				}
+				if (eType == RS2::EntityArc || eType == RS2::EntityCircle)
+				{
+					if (eType == RS2::EntityArc)
+					{
+						radius = ((RS_Arc *)shapeEntity)->getRadius();
+						center = ((RS_Arc *)shapeEntity)->getCenter();
+					}
+					else
+					{
+						radius = ((RS_Circle *)shapeEntity)->getRadius();
+						center = ((RS_Circle *)shapeEntity)->getCenter();
+					}
+					double
+						textInsertionAngle(RS_Math::correctAngle(atan2(anchorPoint.y - center.y, anchorPoint.x - center.x)));
+					totalAngle = 0.0;
+					if (above)
+						radius += fabs(offset);
+					else
+						radius -= fabs(offset);
+					RS_Entity
+						*saved_ent(0);
+					int
+						direction_multiplier(direction);
+					if (HAlign == 1)
+					{
+						direction_multiplier = -1;
+						if (textEntity1->rtti() == RS2::EntityMText)
+							lastpt = ((RS_MText *)textEntity1)->getInsertionPoint();
+						else
+							lastpt = ((RS_Text *)textEntity1)->getInsertionPoint();
+						double
+							saved_angle(99999.0),
+							tempAngle,
+							delta;
+						RS_Vector
+							inPt;
+						// compute angle to center of circle/arc
+						textInsertionAngle = RS_Math::correctAngle(atan2(lastpt.y - center.y, lastpt.x - center.x));
+
+						// Find letter closest to text insertion point
+						letter = ((RS_EntityContainer *)inner_tent)->firstEntity();
+						while (letter)
+						{
+							// compute angle to center of circle/arc
+							inPt = ((RS_Insert *)letter)->getInsertionPoint();
+							tempAngle = RS_Math::correctAngle(atan2(inPt.y - center.y, inPt.x - center.x));
+							delta = RS_Math::getAngleDifference(tempAngle, textInsertionAngle);
+							if (delta < saved_angle)
+							{
+								saved_angle = delta;
+								saved_ent = letter;
+							}
+							letter = ((RS_EntityContainer *)inner_tent)->nextEntity();
+						}
+						lastpt = ((RS_Insert *)saved_ent)->getInsertionPoint();
+						lastrotpt = lastpt;
+						first = false;
+					}
+					if (direction == 1)
+						letter = ((RS_EntityContainer *)inner_tent)->firstEntity();
+					else
+						letter = ((RS_EntityContainer *)inner_tent)->lastEntity();
+					while (letter)
+					{
+						if (HAlign == 1 && letter == saved_ent)
+							direction_multiplier = 1;
+						else
+						{
+							iLetter = (RS_Insert *)letter;
+							if (first)
+							{
+								lastpt = iLetter->getInsertionPoint();
+								lastrotpt = lastpt;
+								first = false;
+							}
+							else
+							{
+								pt = iLetter->getInsertionPoint();
+								distance = lastpt.distanceTo(pt);
+								iLetter->setInsertionPoint(lastrotpt);
+								angle = distance / radius;
+								if (HAlign == 1)
+									totalAngle = angle;
+								else
+									totalAngle += angle;
+								iLetter->rotate(center, -angle * direction_multiplier);
+								if (HAlign != 1)
+								{
+									lastpt = pt;
+									iLetter->rotate(iLetter->getInsertionPoint(), -totalAngle * direction_multiplier);
+									lastrotpt = iLetter->getInsertionPoint();
+								}
+							}
+						}
+						count++;
+						// this is where each of the letters gets rotated around the center of the arc
+						if (direction == 1)
+							letter = ((RS_EntityContainer *)inner_tent)->nextEntity();
+						else
+							letter = ((RS_EntityContainer *)inner_tent)->prevEntity();
+					}
+				}
+				inner_tent = ((RS_EntityContainer *)textEntity1)->nextEntity();
+			}
+		}
 
 		// create preview entity that combines shapeEntity and textEntity
 		if (previewEntity)
