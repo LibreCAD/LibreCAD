@@ -49,6 +49,7 @@
 #include "rs_information.h"
 #include "lc_quadratic.h"
 #include "rs_debug.h"
+#include "rs_alignedtext.h"
 
 /**
  * Default constructor.
@@ -1116,6 +1117,10 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
 
     case RS2::EntityText:
         os << (RS_Text&)e;
+        break;
+
+    case RS2::EntityAlignedText:
+        os << (RS_AlignedText&)e;
         break;
 
     default:

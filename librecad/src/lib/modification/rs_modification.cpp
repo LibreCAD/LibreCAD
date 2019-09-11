@@ -41,6 +41,7 @@
 #include "rs_polyline.h"
 #include "rs_mtext.h"
 #include "rs_text.h"
+#include "rs_alignedtext.h"
 #include "rs_layer.h"
 #include "lc_splinepoints.h"
 #include "rs_math.h"
@@ -2318,7 +2319,9 @@ double TextOffset(RS_Entity *_entity, double offset, bool above)
 		textOffset(0.0),
 		height(0.0);
 
-	if (_entity->rtti() == RS2::EntityText)
+	if (_entity->rtti() == RS2::EntityAlignedText)
+		textOffset = TextOffset(dynamic_cast<RS_AlignedText *>(_entity)->getTextEntity(), offset, above);
+	else if (_entity->rtti() == RS2::EntityText)
 	{
 		height = dynamic_cast<RS_Text *>(_entity)->getHeight();
 		switch (dynamic_cast<RS_Text *>(_entity)->getVAlign())
@@ -2393,6 +2396,28 @@ bool IsValidShapeEntity(RS_Entity *entity)
 	return (false);
 }
 
+void GetTextAttributes(RS_Entity *textEntity1, bool above, double &offset, RS_Vector &anchorPoint, double &textAngle, int &HAlign)
+{
+	if (textEntity1->rtti() == RS2::EntityText)
+	{
+		RS_Text *tent = dynamic_cast<RS_Text *>(textEntity1);
+		offset = TextOffset(tent, offset, above);
+		anchorPoint = tent->getInsertionPoint();
+		textAngle = tent->getAngle();
+		HAlign = tent->getHAlign();
+		if (HAlign > 2)
+			HAlign = 0;
+	}
+	else
+	{
+		RS_MText *tent = dynamic_cast<RS_MText *>(textEntity1);
+		offset = TextOffset(tent, offset, above);
+		anchorPoint = tent->getInsertionPoint();
+		textAngle = tent->getAngle();
+		HAlign = tent->getHAlign();
+	}
+}
+
 bool RS_Modification::shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity* shapeEntity, RS_Entity *textEntity, double offset, RS_Entity ** previewEntity)
 {
 	if (!shapeEntity || !textEntity || !shapeEntity->isVisible() || !textEntity->isVisible() || textEntity->isLocked())
@@ -2400,7 +2425,11 @@ bool RS_Modification::shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity
 
 	if (IsValidShapeEntity(shapeEntity))
 	{
-		RS_Entity *textEntity1 = textEntity->clone();
+		RS_Entity *textEntity1;
+		if (textEntity->rtti() == RS2::EntityAlignedText)
+			textEntity1 = ((RS_AlignedText *)textEntity)->getTextEntity()->clone();
+		else
+			textEntity1 = textEntity->clone();
 		textEntity1->update();
 		RS_Vector offsetVector,
 			anchorPoint,
@@ -2462,24 +2491,14 @@ bool RS_Modification::shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity
 		// move text to start at insertionPoint
 		int
 			HAlign;
-		if (textEntity1->rtti() == RS2::EntityText)
+		if (textEntity1->rtti() == RS2::EntityAlignedText)
 		{
-			RS_Text *tent = dynamic_cast<RS_Text *>(textEntity1);
-			offset = TextOffset(tent, offset, above);
-			anchorPoint = tent->getInsertionPoint();
-			textAngle = tent->getAngle();
-			HAlign = tent->getHAlign();
-			if (HAlign > 2)
-				HAlign = 0;
+			RS_AlignedText
+				*tent = dynamic_cast<RS_AlignedText *>(textEntity1);
+			GetTextAttributes(tent->getTextEntity(), above, offset, anchorPoint, textAngle, HAlign);
 		}
 		else
-		{
-			RS_MText *tent = dynamic_cast<RS_MText *>(textEntity1);
-			offset = TextOffset(tent, offset, above);
-			anchorPoint = tent->getInsertionPoint();
-			textAngle = tent->getAngle();
-			HAlign = tent->getHAlign();
-		}
+			GetTextAttributes(textEntity1, above, offset, anchorPoint, textAngle, HAlign);
 		offsetVector.x = (nearestPoint.x - anchorPoint.x) + cos(textAngle + M_PI_2) * offset;
 		offsetVector.y = (nearestPoint.y - anchorPoint.y) + sin(textAngle + M_PI_2) * offset;
 		textEntity1->move(offsetVector);
@@ -2625,7 +2644,9 @@ bool RS_Modification::shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity
 					if (HAlign == 1)
 					{
 						direction_multiplier = -1;
-						if (textEntity1->rtti() == RS2::EntityMText)
+						if (textEntity1->rtti() == RS2::EntityAlignedText)
+							lastpt = ((RS_AlignedText *)textEntity1)->getInsertionPoint();
+						else if (textEntity1->rtti() == RS2::EntityMText)
 							lastpt = ((RS_MText *)textEntity1)->getInsertionPoint();
 						else
 							lastpt = ((RS_Text *)textEntity1)->getInsertionPoint();
@@ -2707,18 +2728,23 @@ bool RS_Modification::shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity
 
 		// create preview entity that combines shapeEntity and textEntity
 		if (previewEntity)
-			*previewEntity = textEntity1;
+		{
+		//	*previewEntity = textEntity1;
+			*previewEntity = new RS_AlignedText(textEntity->getParent(), RS_AlignedTextData(textEntity1, shapeEntity, insertionPoint, offset, above));
+		}
 		else
 		{
+			RS_AlignedText
+				*aTextEntity = new RS_AlignedText(textEntity->getParent(), RS_AlignedTextData(textEntity1, shapeEntity, insertionPoint, offset, above));
 			if (graphicView)
 				graphicView->deleteEntity(textEntity);
 
 			LC_UndoSection undo(document);
 
-//			alignedtext = new RS_AlingedText(textEntity1, shapeEntity, offset, insertionPoint);
-			container->addEntity(textEntity1);
-			graphicView->drawEntity(textEntity1);
-			undo.addUndoable(textEntity1);
+			textEntity1->setParent(aTextEntity);
+			container->addEntity(aTextEntity);
+			graphicView->drawEntity(aTextEntity);
+			undo.addUndoable(aTextEntity);
 			textEntity->setUndoState(true);
 			undo.addUndoable(textEntity);
 		}
@@ -3651,6 +3677,7 @@ bool RS_Modification::explode(const bool remove /*= true*/)
                 bool resolveLayer;
 
                 switch (ec->rtti()) {
+                case RS2::EntityAlignedText:
                 case RS2::EntityMText:
                 case RS2::EntityText:
                 case RS2::EntityHatch:
@@ -3756,6 +3783,12 @@ bool RS_Modification::explodeTextIntoLetters() {
                 // add letters of text:
                 RS_Text* text = (RS_Text*)e;
                 explodeTextIntoLetters(text, addList);
+			} else if (e->rtti() == RS2::EntityAlignedText) {
+				RS_AlignedText * text = (RS_AlignedText *)e;
+				if (text->AlignedMText())
+					explodeTextIntoLetters(text->getRSMText(), addList);
+				else
+					explodeTextIntoLetters(text->getRSMText(), addList);
             } else {
                 e->setSelected(false);
             }

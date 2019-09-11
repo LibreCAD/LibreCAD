@@ -96,7 +96,7 @@ void RS_ActionModifyShapeText::mouseMoveEvent(QMouseEvent* e) {
 
 	switch (getStatus()) {
 	case ChooseShapeEntity:
-		if (se != textEntity && parent != textEntity && (parent && parent->rtti() != RS2::EntityText && parent->rtti() != RS2::EntityMText))
+		if (se != textEntity && parent != textEntity && (parent && parent->rtti() != RS2::EntityText && parent->rtti() != RS2::EntityMText && parent->rtti() != RS2::EntityAlignedText))
 		{
 			setShapeTextPreviewEntity(se, mouse);
 			insertionPoint = mouse;
@@ -120,7 +120,7 @@ void RS_ActionModifyShapeText::mouseReleaseEvent(QMouseEvent* e) {
 
 		switch (getStatus()) {
 		case ChooseTextEntity:
-			if (parent && (parent->rtti() == RS2::EntityText || parent->rtti() == RS2::EntityMText))
+			if (parent && (parent->rtti() == RS2::EntityText || parent->rtti() == RS2::EntityMText || parent->rtti() == RS2::EntityAlignedText))
 			{
 				textEntity = parent;
 				textEntity->setHighlighted(true);
@@ -128,7 +128,7 @@ void RS_ActionModifyShapeText::mouseReleaseEvent(QMouseEvent* e) {
 			}
 			break;
 		case ChooseShapeEntity:
-			if (se != textEntity && parent != textEntity && (parent && parent->rtti() != RS2::EntityText && parent->rtti() != RS2::EntityMText))
+			if (se != textEntity && parent != textEntity && (parent && parent->rtti() != RS2::EntityText && parent->rtti() != RS2::EntityMText && parent->rtti() != RS2::EntityAlignedText))
 			{
 				textEntity->setHighlighted(false);
 				insertionPoint = mouse;

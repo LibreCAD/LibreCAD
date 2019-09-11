@@ -76,7 +76,7 @@ void RS_ActionDrawHatch::trigger() {
         if (e->isSelected() && 
             (e->rtti()==RS2::EntityHatch ||
             /* e->rtti()==RS2::EntityEllipse ||*/ e->rtti()==RS2::EntityPoint ||
-             e->rtti()==RS2::EntityMText || e->rtti()==RS2::EntityText ||
+             e->rtti()==RS2::EntityMText || e->rtti()==RS2::EntityText || e->rtti() == RS2::EntityAlignedText ||
 			 RS_Information::isDimension(e->rtti()))) {
 			e->setSelected(false);
         }
@@ -86,7 +86,7 @@ void RS_ActionDrawHatch::trigger() {
         if (e->isSelected() && 
             (e->rtti()==RS2::EntityHatch ||
             /* e->rtti()==RS2::EntityEllipse ||*/ e->rtti()==RS2::EntityPoint ||
-             e->rtti()==RS2::EntityMText || e->rtti()==RS2::EntityText ||
+             e->rtti()==RS2::EntityMText || e->rtti()==RS2::EntityText || e->rtti()==RS2::EntityAlignedText ||
 			 RS_Information::isDimension(e->rtti()))) {
 			e->setSelected(false);
         }

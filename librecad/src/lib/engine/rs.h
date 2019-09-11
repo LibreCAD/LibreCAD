@@ -152,7 +152,8 @@ public:
         EntityOverlayBox,    /**< OverlayBox */
         EntityPreview,    /**< Preview Container */
         EntityPattern,
-        EntityOverlayLine
+        EntityOverlayLine,
+		EntityAlignedText	/**< Text aligned to geometry */
     };
 
 
