@@ -38,6 +38,8 @@
 #define RS_TOLERANCE15 1.5e-15
 #define RS_TOLERANCE2 1.0e-20
 #define RS_TOLERANCE_ANGLE 1.0e-8
+//tolerance for selecting/trimming
+#define RS_TOLERANCE_TRIM 1.0e-4
 
 /**
  * Class namespace for various enums along with some simple

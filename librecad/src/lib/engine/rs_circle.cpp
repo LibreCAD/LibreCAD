@@ -147,6 +147,11 @@ double RS_Circle::getLengthBetween(const RS_Vector & ptOnEnt, const RS_Vector & 
 	return angle * data.radius;
 }
 
+void RS_Circle::trimEndpoints(const RS_Vector & pos1, const RS_Vector & pos2)
+{
+	// can't be done, it would have to become an arc
+}
+
 /**
  * Creates this circle from a center point and a radius.
  *

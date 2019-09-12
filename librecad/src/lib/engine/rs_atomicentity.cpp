@@ -127,17 +127,6 @@ bool RS_AtomicEntity::isTangent(const RS_CircleData& /* circleData */) const{
 	return false;
 }
 
-bool RS_AtomicEntity::isClosedContour()
-{
-	if (rtti() == RS2::EntityCircle)
-		return true;
-	if (rtti() == RS2::EntityArc && getStartpoint().distanceTo(getEndpoint()) < 1.0e-4)
-		return true;
-	if (rtti() == RS2::EntityEllipse && !reinterpret_cast<RS_Ellipse*>(this)->isEllipticArc())
-		return true;
-	return false;
-}
-
 /**
  * @return True if the entities startpoint is selected.
  */
@@ -186,6 +175,49 @@ void RS_AtomicEntity::trimStartpoint(const RS_Vector& pos) {
  */
 void RS_AtomicEntity::trimEndpoint(const RS_Vector& pos) {
 	moveEndpoint(pos);
+}
+
+void RS_AtomicEntity::trimEndpoints(const RS_Vector & pos1, const RS_Vector & pos2)
+{
+	if (pos1.distanceTo(pos2) < RS_TOLERANCE_TRIM || (!pos1.valid && !pos2.valid))
+		return;
+	if (hasEndpoints(pos1, pos2, RS_TOLERANCE_TRIM))
+		return;
+	if (pos1.valid && pos2.valid) {
+		switch (getTrimPoint(pos1, pos2)) {
+		case RS2::EndingStart:
+			if (isPointOnEntity(pos2))
+				trimStartpoint(pos2);
+			if (isPointOnEntity(pos1))
+				trimEndpoint(pos1);
+			break;
+		case RS2::EndingEnd:
+			if (isPointOnEntity(pos2))
+				trimEndpoint(pos2);
+			if (isPointOnEntity(pos1))
+				trimStartpoint(pos1);
+			break;
+		default:
+			break;
+		}
+	} else if (pos1.valid && isPointOnEntity(pos1)) {
+		if (getLengthBetween(getStartpoint(), pos1) < getLengthBetween(getEndpoint(), pos1))
+			trimStartpoint(pos1);
+		else
+			trimEndpoint(pos1);
+	}
+	else if (pos2.valid && isPointOnEntity(pos2)) {
+		if (getLengthBetween(getStartpoint(), pos2) < getLengthBetween(getEndpoint(), pos2))
+			trimStartpoint(pos2);
+		else
+			trimEndpoint(pos2);
+	}
+}
+
+bool RS_AtomicEntity::hasEndpoints(const RS_Vector & pos1, const RS_Vector & pos2, double tolerance)
+{
+	return (getStartpoint().distanceTo(pos1) < tolerance && getEndpoint().distanceTo(pos2) < tolerance)
+		|| (getStartpoint().distanceTo(pos2) < tolerance && getEndpoint().distanceTo(pos1) < tolerance);
 }
 
 /**

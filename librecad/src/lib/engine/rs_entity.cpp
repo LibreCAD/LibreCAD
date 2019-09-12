@@ -460,6 +460,17 @@ bool RS_Entity::isHighlighted() const{
     return getFlag(RS2::FlagHighlighted);
 }
 
+bool RS_Entity::isClosedContour()
+{
+	if (rtti() == RS2::EntityCircle)
+		return true;
+	if (rtti() == RS2::EntityArc && getStartpoint().distanceTo(getEndpoint()) < 1.0e-4)
+		return true;
+	if (rtti() == RS2::EntityEllipse && !reinterpret_cast<RS_Ellipse*>(this)->isEllipticArc())
+		return true;
+	return false;
+}
+
 
 RS_Vector RS_Entity::getSize() const {
 	return maxV-minV;

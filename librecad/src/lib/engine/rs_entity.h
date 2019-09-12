@@ -202,6 +202,7 @@ public:
 	virtual void setVisible(bool v);
     virtual void setHighlighted(bool on);
 	virtual bool isHighlighted() const;
+	virtual bool isClosedContour();
 
 	bool isLocked() const;
 

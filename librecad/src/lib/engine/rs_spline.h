@@ -106,6 +106,8 @@ public:
 		 */
 	void setClosed(bool c);
 
+	void setHighlighted(bool on) override;
+
 	RS_VectorSolutions getRefPoints() const override;
 	RS_Vector getNearestRef( const RS_Vector& coord, double* dist = nullptr) const override;
 	RS_Vector getNearestSelectedRef( const RS_Vector& coord, double* dist = nullptr) const override;
