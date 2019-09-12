@@ -134,6 +134,7 @@ HEADERS += \
     lib/debug/rs_debug.h \
     lib/engine/lc_searchgraph.h \
     lib/engine/rs.h \
+    lib/engine/rs_alignedtext.h \
     lib/engine/rs_arc.h \
     lib/engine/rs_atomicentity.h \
     lib/engine/rs_block.h \
@@ -243,6 +244,7 @@ SOURCES += \
     lib/creation/rs_creation.cpp \
     lib/debug/rs_debug.cpp \
     lib/engine/lc_searchgraph.cpp \
+	lib/engine/rs_alignedtext.cpp \
     lib/engine/rs_arc.cpp \
     lib/engine/rs_block.cpp \
     lib/engine/rs_blocklist.cpp \

@@ -1129,6 +1129,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
         switch(e->rtti()){
         case RS2::EntityMText:
         case RS2::EntityText:
+		case RS2::EntityAlignedText:
             painter->drawRect(toGui(e->getMin()), toGui(e->getMax()));
             break;
         case RS2::EntityImage:
