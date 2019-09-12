@@ -85,6 +85,8 @@ public:
     void setLayer(const QString& name);
     void setLayer(RS_Layer* l);
 
+	void setHighlighted(bool on) override;
+
     /** @return End point of the entity */
 	RS_Vector getEndpoint() const override;
 

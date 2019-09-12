@@ -405,7 +405,7 @@ void RS_ActionDefault::updateSelectionPreview(RS_Entity * target, const RS_Vecto
 {
 	deletePreview();
 
-	if (target) {
+	if (target && target != lastSelected) {
 		RS_Selection s(*container, graphicView);
 		QList<RS_Entity*> prev;
 

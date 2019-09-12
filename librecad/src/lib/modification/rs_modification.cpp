@@ -2087,7 +2087,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
                 if (s2.hasValid()) {
 					for (const RS_Vector& vp: s2){
 						if (vp.valid) {
-							if (e->isPointOnEntity(vp, 1.0e-4)) {
+							if (e->isPointOnEntity(vp, RS_TOLERANCE_TRIM)) {
 								sol.push_back(vp);
                             }
                         }
@@ -2679,132 +2679,107 @@ bool RS_Modification::trimExcess(const RS_Vector & trimCoord, RS_AtomicEntity * 
  * Cuts the given entity at the given point.
  */
 bool RS_Modification::cut(const RS_Vector& cutCoord,
-                          RS_AtomicEntity* cutEntity) {
+                          RS_AtomicEntity* cutEntity, QList<RS_AtomicEntity*>* res) {
 
-#ifndef EMU_C99
-    using std::isnormal;
-#endif
+	LC_UndoSection undo(document);
+	QList<RS_AtomicEntity*> pieces;	
+	if (!doCut(cutCoord, cutEntity, pieces))
+		return false;
 
-	if (!cutEntity) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-						"RS_Modification::cut: Entity is nullptr");
-        return false;
-    }
-    if(cutEntity->isLocked() || ! cutEntity->isVisible()) return false;
+	// delete cut entity on the screen:
+	if (graphicView) {
+		graphicView->deleteEntity(cutEntity);
+	}
 
-    if (!cutCoord.valid) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_Modification::cut: Point invalid.");
-        return false;
-    }
-
-    // cut point is at endpoint of entity:
-    if (cutCoord.distanceTo(cutEntity->getStartpoint())<RS_TOLERANCE ||
-            cutCoord.distanceTo(cutEntity->getEndpoint())<RS_TOLERANCE) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_Modification::cut: Cutting point on endpoint");
-        return false;
-    }
-
-    // delete cut entity on the screen:
-    if (graphicView) {
-        graphicView->deleteEntity(cutEntity);
-    }
-
-	RS_AtomicEntity* cut1 = nullptr;
-	RS_AtomicEntity* cut2 = nullptr;
-    double a;
-
-    switch (cutEntity->rtti()) {
-    case RS2::EntityCircle:
-        // convert to a whole 2 pi range arc
-        //RS_Circle* c = (RS_Circle*)cutEntity;
-        a=static_cast<RS_Circle*>(cutEntity)->getCenter().angleTo(cutCoord);
-        cut1 = new RS_Arc(cutEntity->getParent(),
-                          RS_ArcData(static_cast<RS_Circle*>(cutEntity) ->getCenter(),
-                                     static_cast<RS_Circle*>(cutEntity) ->getRadius(),
-                                     a,a+2.*M_PI, false));
-        cut1->setPen(cutEntity->getPen(false));
-        cut1->setLayer(cutEntity->getLayer(false));
-		//cut2 = nullptr; // cut2 is nullptr by default
-        break;
-
-        // handle ellipse arc the using the default method
-    case RS2::EntitySplinePoints: // interpolation spline can be closed
-		// so we cannot use the default implementation
-        cut2 = ((LC_SplinePoints*)cutEntity)->cut(cutCoord);
-		cut1 = (RS_AtomicEntity*)cutEntity->clone();
-
-        cut1->setPen(cutEntity->getPen(false));
-        cut1->setLayer(cutEntity->getLayer(false));
-		if(cut2)
-		{
-		    cut2->setPen(cutEntity->getPen(false));
-		    cut2->setLayer(cutEntity->getLayer(false));
+	for (auto p : pieces)
+	{
+		// add new cut entity:
+		container->addEntity(p);
+		if (graphicView) {
+			graphicView->drawEntity(p);
 		}
-		break;
-    case RS2::EntityEllipse:
-    // ToDo, to really handle Ellipse Arcs properly, we need to create a new class RS_EllipseArc, keep RS_Ellipse for whole range Ellipses
-    {
-        const RS_Ellipse* const ellipse=static_cast<const RS_Ellipse*>(cutEntity);
-        if(RS_Math::isSameDirection( ellipse ->getAngle1(), ellipse ->getAngle2(), RS_TOLERANCE_ANGLE)
-                && ! /*std::*/isnormal(ellipse->getAngle1())
-                && ! /*std::*/isnormal(ellipse->getAngle2())
-                ) {
-            // whole ellipse, convert to a whole range elliptic arc
-            a=ellipse->getEllipseAngle(cutCoord);
-			cut1 = new RS_Ellipse{cutEntity->getParent(),
-					RS_EllipseData{ellipse ->getCenter(),
-					ellipse ->getMajorP(),
-					ellipse ->getRatio(),
-					a,a+2.*M_PI,
-					ellipse ->isReversed()
+
+		if (handleUndo) {
+			undo.addUndoable(p);
+			
 		}
-		};
-            cut1->setPen(cutEntity->getPen(false));
-            cut1->setLayer(cutEntity->getLayer(false));
-			//cut2 = nullptr; // cut2 is nullptr by default
-            break;
-        }else{
-            //elliptic arc
-            //missing "break;" line is on purpose
-            //elliptic arc should be handled by default:
-            //do not insert between here and default:
-        }
-    }
-    // fall-through
-    default:
-        cut1 = (RS_AtomicEntity*)cutEntity->clone();
-        cut2 = (RS_AtomicEntity*)cutEntity->clone();
-
-        cut1->trimEndpoint(cutCoord);
-        cut2->trimStartpoint(cutCoord);
-    }
-    // add new cut entity:
-    container->addEntity(cut1);
-    if (cut2) {
-        container->addEntity(cut2);
-    }
-
-    if (graphicView) {
-        graphicView->drawEntity(cut1);
-        if (cut2) {
-            graphicView->drawEntity(cut2);
-        }
-    }
-
-    if (handleUndo) {
-        LC_UndoSection undo( document);
-
-        undo.addUndoable(cut1);
-        if (cut2) {
-            undo.addUndoable(cut2);
-        }
-        cutEntity->setUndoState(true);
-        undo.addUndoable(cutEntity);
-    }
+	}
+	if (handleUndo) {
+		cutEntity->setUndoState(true);
+		undo.addUndoable(cutEntity);
+	}
+	if (res) {
+		for (auto p : pieces)
+			res->push_back(p);
+	}
 
     return true;
+}
+
+/**
+ * Cuts the given entity at the given points.
+ */
+bool RS_Modification::cut2(const RS_Vector & cutCoord1, const RS_Vector & cutCoord2, 
+	RS_AtomicEntity * cutEntity, QList<RS_AtomicEntity*>* res)
+{
+	if (!cutEntity)
+		return false;
+	if ((cutEntity->getStartpoint().distanceTo(cutCoord1) < RS_TOLERANCE && cutEntity->getEndpoint().distanceTo(cutCoord2) < RS_TOLERANCE)
+		|| (cutEntity->getStartpoint().distanceTo(cutCoord2) < RS_TOLERANCE && cutEntity->getEndpoint().distanceTo(cutCoord1) < RS_TOLERANCE))
+		return false;
+
+	LC_UndoSection undo(document);
+	QList<RS_AtomicEntity*> pieces;
+	RS_AtomicEntity *remnant = nullptr;
+
+	if (!doCut(cutCoord1, cutEntity, pieces))
+		remnant = cutEntity; // no cut has occurred
+		
+	if (cutCoord2.valid && cutCoord1.distanceTo(cutCoord2) > RS_TOLERANCE) {
+		if (!remnant) {
+			for (auto p : pieces) {
+				if (p->isPointOnEntity(cutCoord2)) {
+					remnant = p; // cut this piece next
+					break;
+				}
+			}
+		}		
+		if (doCut(cutCoord2, remnant, pieces) && remnant != cutEntity) { // the remnant was also cut
+			pieces.removeOne(remnant);
+			delete remnant; // it no longer exists; it was cut into 2 new pieces
+		}
+	}
+
+	if (pieces.empty())
+		return false;
+
+	// delete cut entity on the screen:
+	if (graphicView) {
+		graphicView->deleteEntity(cutEntity);
+	}
+
+	for (auto p : pieces)
+	{
+		// add new cut entity:
+		container->addEntity(p);
+		if (graphicView) {
+			graphicView->drawEntity(p);
+		}
+
+		if (handleUndo) {
+			undo.addUndoable(p);
+		}
+	}
+	if (handleUndo) {
+		cutEntity->setUndoState(true);
+		undo.addUndoable(cutEntity);
+	}
+	if (res) {
+		for (auto p : pieces)
+			res->push_back(p);
+	}
+
+	return true;
 }
 
 
@@ -3058,13 +3033,13 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
         // insert bevel at the right position:
         if (trimmed1 == baseContainer->first() && trimmed2 == baseContainer->last()){
             //bevel are from last and first segments, add at the end
-            if (trimmed2->getEndpoint().distanceTo(bevel->getStartpoint())>1.0e-4) {
+            if (trimmed2->getEndpoint().distanceTo(bevel->getStartpoint())>RS_TOLERANCE_TRIM) {
                 bevel->reverse();
             }
             idx = idx2;
         } else{
             //consecutive segments
-            if (trimmed1->getEndpoint().distanceTo(bevel->getStartpoint())>1.0e-4) {
+            if (trimmed1->getEndpoint().distanceTo(bevel->getStartpoint())>RS_TOLERANCE_TRIM) {
                 bevel->reverse();
             }
         }
@@ -3291,12 +3266,12 @@ bool RS_Modification::round(const RS_Vector& coord,
         //	(idx2==0 && idx1==(int)baseContainer->count()-1)) {
         //if (idx1<idx2) {
         if (insertAfter1) {
-            if (trimmed1->getEndpoint().distanceTo(arc->getStartpoint())>1.0e-4) {
+            if (trimmed1->getEndpoint().distanceTo(arc->getStartpoint())>RS_TOLERANCE_TRIM) {
                 arc->reverse();
             }
             baseContainer->insertEntity(idx1+1, arc);
         } else {
-            if (trimmed2->getEndpoint().distanceTo(arc->getStartpoint())>1.0e-4) {
+            if (trimmed2->getEndpoint().distanceTo(arc->getStartpoint())>RS_TOLERANCE_TRIM) {
                 arc->reverse();
             }
             baseContainer->insertEntity(idx2+1, arc);
@@ -3646,6 +3621,111 @@ bool RS_Modification::explodeTextIntoLetters(RS_Text* text, std::vector<RS_Entit
     }
 
     return true;
+}
+
+bool RS_Modification::doCut(const RS_Vector & cutCoord, RS_AtomicEntity * cutEntity, QList<RS_AtomicEntity*>& pieces)
+{
+#ifndef EMU_C99
+	using std::isnormal;
+#endif
+
+	if (!cutEntity) {
+		RS_DEBUG->print(RS_Debug::D_WARNING,
+			"RS_Modification::cut: Entity is nullptr");
+		return false;
+	}
+	if (cutEntity->isLocked() || !cutEntity->isVisible()) return false;
+
+	if (!cutCoord.valid) {
+		RS_DEBUG->print(RS_Debug::D_WARNING,
+			"RS_Modification::cut: Point invalid.");
+		return false;
+	}
+
+	// cut point is at endpoint of entity:
+	if (cutCoord.distanceTo(cutEntity->getStartpoint()) < RS_TOLERANCE_TRIM ||
+		cutCoord.distanceTo(cutEntity->getEndpoint()) < RS_TOLERANCE_TRIM) {
+		RS_DEBUG->print(RS_Debug::D_WARNING,
+			"RS_Modification::cut: Cutting point on endpoint");
+		return false;
+	}
+
+	RS_AtomicEntity* cut1 = nullptr;
+	RS_AtomicEntity* cut2 = nullptr;
+	double a;
+
+	switch (cutEntity->rtti()) {
+	case RS2::EntityCircle:
+		// convert to a whole 2 pi range arc
+		//RS_Circle* c = (RS_Circle*)cutEntity;
+		a = static_cast<RS_Circle*>(cutEntity)->getCenter().angleTo(cutCoord);
+		cut1 = new RS_Arc(cutEntity->getParent(),
+			RS_ArcData(static_cast<RS_Circle*>(cutEntity)->getCenter(),
+				static_cast<RS_Circle*>(cutEntity)->getRadius(),
+				a, a + 2.*M_PI, false));
+		cut1->setPen(cutEntity->getPen(false));
+		cut1->setLayer(cutEntity->getLayer(false));
+		//cut2 = nullptr; // cut2 is nullptr by default
+		break;
+
+		// handle ellipse arc the using the default method
+	case RS2::EntitySplinePoints: // interpolation spline can be closed
+		// so we cannot use the default implementation
+		cut2 = ((LC_SplinePoints*)cutEntity)->cut(cutCoord);
+		cut1 = (RS_AtomicEntity*)cutEntity->clone();
+
+		cut1->setPen(cutEntity->getPen(false));
+		cut1->setLayer(cutEntity->getLayer(false));
+		if (cut2)
+		{
+			cut2->setPen(cutEntity->getPen(false));
+			cut2->setLayer(cutEntity->getLayer(false));
+		}
+		break;
+	case RS2::EntityEllipse:
+		// ToDo, to really handle Ellipse Arcs properly, we need to create a new class RS_EllipseArc, keep RS_Ellipse for whole range Ellipses
+	{
+		const RS_Ellipse* const ellipse = static_cast<const RS_Ellipse*>(cutEntity);
+		if (RS_Math::isSameDirection(ellipse->getAngle1(), ellipse->getAngle2(), RS_TOLERANCE_ANGLE)
+			&& ! /*std::*/isnormal(ellipse->getAngle1())
+			&& ! /*std::*/isnormal(ellipse->getAngle2())
+			) {
+			// whole ellipse, convert to a whole range elliptic arc
+			a = ellipse->getEllipseAngle(cutCoord);
+			cut1 = new RS_Ellipse{ cutEntity->getParent(),
+					RS_EllipseData{ellipse->getCenter(),
+					ellipse->getMajorP(),
+					ellipse->getRatio(),
+					a,a + 2.*M_PI,
+					ellipse->isReversed()
+		}
+			};
+			cut1->setPen(cutEntity->getPen(false));
+			cut1->setLayer(cutEntity->getLayer(false));
+			//cut2 = nullptr; // cut2 is nullptr by default
+			break;
+		}
+		else {
+			//elliptic arc
+			//missing "break;" line is on purpose
+			//elliptic arc should be handled by default:
+			//do not insert between here and default:
+		}
+	}
+	// fall-through
+	default:
+		cut1 = (RS_AtomicEntity*)cutEntity->clone();
+		cut2 = (RS_AtomicEntity*)cutEntity->clone();
+
+		cut1->trimEndpoint(cutCoord);
+		cut2->trimStartpoint(cutCoord);
+	}
+	// add new cut entity:
+	pieces.push_back(cut1);
+	if (cut2)
+		pieces.push_back(cut2);
+
+	return true;
 }
 
 

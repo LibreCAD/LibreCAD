@@ -366,6 +366,15 @@ void RS_Polyline::setLayer(RS_Layer* l) {
     }
 }
 
+void RS_Polyline::setHighlighted(bool on)
+{
+	RS_Entity* e = firstEntity(RS2::ResolveAll);
+	while (e) {
+		e->setHighlighted(on);
+		e = nextEntity(RS2::ResolveAll);
+	}
+}
+
 /** @return End point of the entity */
 RS_Vector RS_Polyline::getEndpoint() const {
 	return data.endpoint;

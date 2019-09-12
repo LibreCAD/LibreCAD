@@ -128,6 +128,12 @@ void RS_Spline::setClosed(bool c) {
 		update();
 }
 
+void RS_Spline::setHighlighted(bool on)
+{
+	for (auto e : entities)
+		e->setHighlighted(on);
+}
+
 RS_VectorSolutions RS_Spline::getRefPoints() const
 {
 	return RS_VectorSolutions(data.controlPoints);

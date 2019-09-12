@@ -707,6 +707,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     // <[~ Order ~]>
 
     QMenu* order_menu = new QMenu(QC_ApplicationWindow::tr("&Order"), menu_bar);
+	order_menu->setIcon(QIcon(":/icons/up.svg"));
     order_menu->setObjectName("order_menu");
     order_menu->setTearOffEnabled(true);
     order_menu->addAction(a_map["OrderTop"]);

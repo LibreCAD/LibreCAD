@@ -674,7 +674,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     a_map["ModifyTrim2"] = action;
 
 	action = new QAction(tr("Trim E&xcess"), agm->modify);
-	action->setIcon(QIcon(":/icons/trim2.svg"));
+	action->setIcon(QIcon(":/icons/trim_excess.svg"));
 	connect(action, SIGNAL(triggered()),
 		action_handler, SLOT(slotModifyTrimExcess()));
 	action->setObjectName("ModifyTrimExcess");

@@ -93,7 +93,9 @@ public:
 	RS_Vector getCenter() const override;
 	double getRadius() const override;
 
-	virtual double getLengthBetween(const RS_Vector& ptOnEnt, const RS_Vector& pt2OnEnt) { return ptOnEnt.distanceTo(pt2OnEnt); }
+	virtual double getLengthBetween(const RS_Vector& ptOnEnt, const RS_Vector& pt2OnEnt) {
+		return ptOnEnt.distanceTo(pt2OnEnt);;
+	}
 	/**
     * return the nearest center for snapping
     * @param coord Coordinate (typically a mouse coordinate)
@@ -117,8 +119,6 @@ public:
      */
 	virtual void setEndpointSelected(bool select);
 	virtual bool isTangent(const RS_CircleData& /* circleData */) const;
-
-	virtual bool isClosedContour();
 
     /**
      * @return True if the entities startpoint is selected.
@@ -161,6 +161,14 @@ public:
      * the given position.
      */
 	virtual void trimEndpoint(const RS_Vector& pos);
+
+	/**
+	 * Implementation must trim the endpoints of the entity to
+	 * the given positions.
+	 */
+	virtual void trimEndpoints(const RS_Vector& pos1, const RS_Vector& pos2);
+
+	virtual bool hasEndpoints(const RS_Vector& pos1, const RS_Vector& pos2, double tolerance);
 
     /**
      * Implementation must return which ending of the entity will

@@ -33,6 +33,8 @@
 #include "rs_entity.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
+#include "rs_modification.h"
+#include "lc_searchgraph.h"
 
 
 
@@ -246,43 +248,49 @@ void RS_Selection::selectContour(RS_Entity * start, RS_Entity * end, const RS_Ve
 			selectSingle(end);
 		return;
 	}
-	
+
 	QList<RS_Entity*> fromStart, fromEnd, list;
 	double startLength(0), endLength(0);
 	bool select = !end->isSelected();
+	bool foundShortestPath = false;
 
-	//findContour_aStar(start, end, RS2::EndingStart, fromStart);
-	//findContour_aStar(start, end, RS2::EndingEnd, fromEnd);
-	findContour(start, RS2::EndingStart, fromStart);
-	findContour(start, RS2::EndingEnd, fromEnd);
+	if (list.size() == 0) {
+		findContour(start, RS2::EndingStart, fromStart);
+		findContour(start, RS2::EndingEnd, fromEnd);
 
-	while (!fromStart.empty() && fromStart.last() != end)
-		fromStart.removeLast();
-	while (!fromEnd.empty() && fromEnd.last() != end)
-		fromEnd.removeLast();
+		while (!fromStart.empty() && fromStart.last() != end)
+			fromStart.removeLast();
+		while (!fromEnd.empty() && fromEnd.last() != end)
+			fromEnd.removeLast();
 
-	for (auto e : fromStart)
-		startLength += e->getLength();
-	for (auto e : fromEnd)
-		endLength += e->getLength();
+		for (auto e : fromStart)
+			startLength += e->getLength();
+		for (auto e : fromEnd)
+			endLength += e->getLength();
 
-	if (fabs(endLength - startLength) < RS_TOLERANCE && startLength > RS_TOLERANCE)
-	{
-		if (start->getStartpoint().distanceTo(cursor) < start->getEndpoint().distanceTo(cursor))
+		if (fabs(endLength - startLength) < RS_TOLERANCE && startLength > RS_TOLERANCE)
+		{
+			if (start->getStartpoint().distanceTo(cursor) < start->getEndpoint().distanceTo(cursor))
+				list = fromStart;
+			else
+				list = fromEnd;
+		}
+		else if (startLength > RS_TOLERANCE && startLength < endLength)
 			list = fromStart;
-		else
+		else if (endLength > RS_TOLERANCE && endLength < startLength)
 			list = fromEnd;
+		else { // startLength and endLength were both zero; no path
+			if (start->isAtomic() && end->isAtomic()) { // try A-star
+				LC_SelectionSearch graph(container, graphicView);
+				foundShortestPath = graph.selectShortestPath(static_cast<RS_AtomicEntity*>(start), static_cast<RS_AtomicEntity*>(end), cursor, preview);
+			}
+		}
+			
 	}
-	else if (startLength > RS_TOLERANCE && startLength < endLength)
-		list = fromStart;
-	else if (endLength > RS_TOLERANCE && endLength < startLength)
-		list = fromEnd;
-	else
-		return; // startLength and endLength were both zero; no path
 
 	if (preview == nullptr)
 		setSelected(list, select);
-	else {
+	else if (!foundShortestPath) {
 		for (auto e : list)
 			preview->append(e->clone());
 	}
@@ -297,18 +305,19 @@ void RS_Selection::selectContour(RS_Entity * start, RS_Entity * end, const RS_Ve
  */
 bool RS_Selection::findContour(RS_Entity * start, RS2::Ending end, QList<RS_Entity*>& list)
 {
-	if (start == NULL || !start->isAtomic())
+	if (start == NULL) 
+		return false;
+	if (!start->isAtomic() && start->rtti() != RS2::EntitySpline)
 		return false;
 
-	const double INTERSECT_TOL = 1.0e-4;
-	RS_AtomicEntity* ae = (RS_AtomicEntity*)start;
-	RS_Vector startPoint(ae->getStartpoint()), endPoint(ae->getEndpoint());
+	double INTERSECT_TOL = start->rtti() == RS2::EntitySpline ? 1.0e-3 : RS_TOLERANCE_TRIM;
+	RS_Vector startPoint(start->getStartpoint()), endPoint(start->getEndpoint());
 	if (end != RS2::EndingStart)
 		std::swap(startPoint, endPoint);
 
-	list.append(ae);
+	list.append(start);
 
-	if (ae->isClosedContour())
+	if (start->isClosedContour())
 		return true;
 
 	RS_Vector p1 = startPoint;
@@ -321,28 +330,26 @@ bool RS_Selection::findContour(RS_Entity * start, RS2::Ending end, QList<RS_Enti
 		for (auto en : *container) {
 			add = false;
 
-			if (en && en != start && en->isVisible() && en->isAtomic() && !en->isConstruction() && 
+			if (en && en != start && en->isVisible() && !en->isConstruction() && 
 				(!(en->getLayer() && en->getLayer()->isLocked()))) {
 
-				ae = (RS_AtomicEntity*)en;
-
-				if (ae->isClosedContour() || list.contains(ae))
+				if (en->isClosedContour() || list.contains(en))
 					continue;
 
 				// startpoint connects to 1st point
-				if (ae->getStartpoint().distanceTo(p1) < INTERSECT_TOL) {
-					p1 = ae->getEndpoint();
+				if (en->getStartpoint().distanceTo(p1) < INTERSECT_TOL) {
+					p1 = en->getEndpoint();
 					add = true;
 				}
 
 				// endpoint connects to 1st point
-				else if (ae->getEndpoint().distanceTo(p1) < INTERSECT_TOL) {
-					p1 = ae->getStartpoint();
+				else if (en->getEndpoint().distanceTo(p1) < INTERSECT_TOL) {
+					p1 = en->getStartpoint();
 					add = true;
 				}
 
 				if (add) {
-					list.append(ae);
+					list.append(en);
 					found = true;
 				}
 
@@ -353,17 +360,6 @@ bool RS_Selection::findContour(RS_Entity * start, RS2::Ending end, QList<RS_Enti
 		}
 	} while (found);
 	return false;
-}
-
-bool RS_Selection::findContour_aStar(RS_Entity * start, RS_Entity* dest, RS2::Ending end, QList<RS_Entity*>& list)
-{
-	if (!start || !dest || !start->isAtomic() || !dest->isAtomic())
-		return false;
-	RS_AtomicEntity *s = static_cast<RS_AtomicEntity*>(start);
-	RS_AtomicEntity *d = static_cast<RS_AtomicEntity*>(dest);
-	//SearchNode sn(s, end == RS2::EndingStart ? start->getStartpoint() : start->getEndpoint());
-	SearchNode sn(s, RS_Vector(false));
-	return sn.findPath(container, d, list);
 }
 
 void RS_Selection::setSelected(QList<RS_Entity*>& list, bool select)

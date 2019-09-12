@@ -258,7 +258,8 @@ public:
 	bool trimExcess(const RS_Vector& trimCoord, RS_AtomicEntity* trimEntity, RS_Entity ** trimmed = nullptr);
 	bool shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity* shapeEntity, RS_Entity *textEntity, double offset, RS_Entity ** previewEntity = nullptr);
     bool offset(const RS_OffsetData& data);
-    bool cut(const RS_Vector& cutCoord, RS_AtomicEntity* cutEntity);
+    bool cut(const RS_Vector& cutCoord, RS_AtomicEntity* cutEntity, QList<RS_AtomicEntity*>* pieces = nullptr);
+	bool cut2(const RS_Vector& cutCoord1, const RS_Vector& cutCoord2, RS_AtomicEntity* cutEntity, QList<RS_AtomicEntity*>* pieces = nullptr);
     bool stretch(const RS_Vector& firstCorner,
                                 const RS_Vector& secondCorner,
                                 const RS_Vector& offset);
@@ -298,6 +299,7 @@ private:
 	void addNewEntities(std::vector<RS_Entity*>& addList);
 	bool explodeTextIntoLetters(RS_MText* text, std::vector<RS_Entity*>& addList);
 	bool explodeTextIntoLetters(RS_Text* text, std::vector<RS_Entity*>& addList);
+	bool doCut(const RS_Vector& cutCoord, RS_AtomicEntity* cutEntity, QList<RS_AtomicEntity*>& pieces);
 
 protected:
     RS_EntityContainer* container;
