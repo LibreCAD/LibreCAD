@@ -169,9 +169,6 @@ public:
      int getNumberOfLines();
 
 
-    RS_Vector getInsertionPoint() {
-        return data.insertionPoint;
-    }
     double getHeight() {
         return data.height;
     }

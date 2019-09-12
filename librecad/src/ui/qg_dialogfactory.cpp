@@ -46,6 +46,7 @@
 #include "rs_dimlinear.h"
 
 #include "rs_actiondimlinear.h"
+#include "rs_alignedtext.h"
 
 #include "qg_arcoptions.h"
 #include "qg_arctangentialoptions.h"
@@ -1663,6 +1664,32 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             }
         }
         break;
+
+	case RS2::EntityAlignedText: {
+			if (((RS_AlignedText*)entity)->AlignedMText())
+			{
+	            QG_DlgMText dlg(parent);
+				RS_MText *mtext = ((RS_AlignedText*)entity)->getRSMText();
+            	dlg.setText(*((RS_MText*)mtext), false);
+            	if (dlg.exec()) {
+                	dlg.updateText();
+                	ret = true;
+                	((RS_AlignedText*)entity)->update();
+            	}
+			}
+			else
+			{
+	            QG_DlgText dlg(parent);
+				RS_Text *text = ((RS_AlignedText*)entity)->getRSText();
+            	dlg.setText(*((RS_Text*)text), false);
+            	if (dlg.exec()) {
+                	dlg.updateText();
+                	ret = true;
+                	((RS_AlignedText*)entity)->update();
+            	}
+			}
+		}
+	break;
 
     case RS2::EntityHatch: {
             QG_DlgHatch dlg(parent);
