@@ -288,7 +288,13 @@ void RS_AlignedText::update()
 	textEntity1->rotate(nearestPoint, rotateAngle);
 	if (eType == RS2::EntityCircle || eType == RS2::EntityArc || eType == RS2::EntityEllipse)
 	{
-		RS_Entity *inner_tent = ((RS_EntityContainer *)textEntity1)->firstEntity();
+		RS_Entity *inner_tent;
+		// MText has an extra level of containers above the letters
+		if (textEntity1->rtti() == RS2::EntityMText)
+			inner_tent = ((RS_EntityContainer *)textEntity1)->firstEntity();
+		else
+			// Text contains the letters directly
+			inner_tent = textEntity1;
 		while (inner_tent)
 		{
 			RS_Entity
@@ -513,7 +519,10 @@ void RS_AlignedText::update()
 						letter = ((RS_EntityContainer *)inner_tent)->prevEntity();
 				}
 			}
-			inner_tent = ((RS_EntityContainer *)textEntity1)->nextEntity();
+			if (textEntity1->rtti() == RS2::EntityMText)
+				inner_tent = ((RS_EntityContainer *)textEntity1)->nextEntity();
+			else
+				inner_tent = 0;
 		}
 	}
 

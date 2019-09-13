@@ -3353,7 +3353,45 @@ bool RS_Modification::explode(const bool remove /*= true*/)
     return true;
 }
 
+bool RS_Modification::unlinkAlignedTextFromGeometry()
+{
+	if (!container) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::unlinkAlignedTextFromGeometry: no valid container for adding entities");
+        return false;
+    }
+    if(container->isLocked() || ! container->isVisible()) return false;
 
+	std::vector<RS_Entity*> addList;
+
+	for(auto e: *container){
+        if (e && e->isSelected()) {
+			if (e->rtti() == RS2::EntityAlignedText) {
+				RS_AlignedText * text = (RS_AlignedText *)e;
+				text->getGeometryEntity()->setSelected(false);
+				if (text->getGeometryEntity()->rtti() == RS2::EntityLine)
+				{
+					RS_Entity *t1 = text->getTextEntity()->clone();
+					addList.push_back(t1);
+					t1->setParent(container);
+					t1->update();
+				}
+				else if (text->AlignedMText())
+					explodeTextIntoLetters(text->getRSMText(), addList);
+				else
+					explodeTextIntoLetters(text->getRSMText(), addList);
+            } else {
+                e->setSelected(false);
+            }
+        }
+    }
+
+    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
+    deselectOriginals(true);
+    addNewEntities(addList);
+
+    return true;
+}
 
 bool RS_Modification::explodeTextIntoLetters() {
 	if (!container) {

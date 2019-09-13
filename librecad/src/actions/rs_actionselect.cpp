@@ -130,6 +130,9 @@ void RS_ActionSelect::updateMouseButtonHints() {
     case RS2::ActionBlocksCreateNoSelect:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Select to create block"), tr("Cancel"));
         break;
+    case RS2::ActionModifyUnlinkTextNoSelect:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to unlink shaped text"), tr("Cancel"));
+        break;
 
     default:
         RS_DIALOGFACTORY->updateMouseWidget(tr(""), tr(""));

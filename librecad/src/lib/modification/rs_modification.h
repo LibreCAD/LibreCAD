@@ -275,6 +275,7 @@ public:
                            RS_RoundData& data);
 
         bool explode(const bool remove = true);
+		bool unlinkAlignedTextFromGeometry();
 		bool explodeTextIntoLetters();
         bool moveRef(RS_MoveRefData& data);
 

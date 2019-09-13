@@ -161,6 +161,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["ModifyAttributes"]
             << a_map["ModifyExplodeText"]
 			<< a_map["ModifyShapeText"]
+			<< a_map["ModifyUnlinkText"]
             << a_map["BlocksExplode"]
             << a_map["ModifyDeleteQuick"];
 
