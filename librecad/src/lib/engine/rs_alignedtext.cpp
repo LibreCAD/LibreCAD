@@ -483,31 +483,29 @@ void RS_AlignedText::update()
 							lastrotpt = lastpt;
 							first = false;
 						}
-						else
-						{
-							// this is where each of the letters gets rotated around the center of the arc
-							RS_Vector
-								tempPt,
-								cPt;
-#if 0
-				iLetter->rotate(iLetter->getInsertionPoint(), -rotateAngle);
-				iLetter->calculateBorders();
-				cPt.x = (iLetter->getMax().x + iLetter->getMin().x) / 2.0;
-				cPt.y = iLetter->getInsertionPoint().y;
-				iLetter->rotate(iLetter->getInsertionPoint(), rotateAngle);
-				cPt.rotate(iLetter->getInsertionPoint(), rotateAngle);
-#endif
-							pt = iLetter->getInsertionPoint();
-							tempPt = lastrotpt;
-						//	distance = lastpt.distanceTo(cPt);
-							distance = lastpt.distanceTo(pt);
-	//						iLetter->setInsertionPoint(lastrotpt);
-							angle = distance / radius;
+						// this is where each of the letters gets rotated around the center of the arc
+						RS_Vector
+							tempPt,
+							cPt;
+						double
+							distance2center,
+							letterAngle;
+						iLetter->rotate(iLetter->getInsertionPoint(), -rotateAngle);
+						iLetter->calculateBorders();
+						cPt.x = (iLetter->getMax().x + iLetter->getMin().x) / 2.0;
+						cPt.y = iLetter->getInsertionPoint().y;
+						iLetter->rotate(iLetter->getInsertionPoint(), rotateAngle);
+						cPt.rotate(iLetter->getInsertionPoint(), rotateAngle);
+
+						pt = iLetter->getInsertionPoint();
+						tempPt = lastrotpt;
+						distance2center = lastpt.distanceTo(cPt);
+						distance = lastpt.distanceTo(pt);
+						angle = distance / radius;
+						letterAngle = distance2center / radius;
 						
-							iLetter->setInsertionPoint(tempPt.rotate(center, -angle * direction_multiplier));
-							iLetter->rotate(iLetter->getInsertionPoint(), -angle * direction_multiplier);
-	//	iLetter->rotate(cPt, -angle * direction_multiplier);
-						}
+						iLetter->setInsertionPoint(tempPt.rotate(center, -angle * direction_multiplier));
+						iLetter->rotate(iLetter->getInsertionPoint(), -letterAngle * direction_multiplier);
 					}
 					if (direction == 1)
 						letter = ((RS_EntityContainer *)inner_tent)->nextEntity();
@@ -518,7 +516,6 @@ void RS_AlignedText::update()
 			inner_tent = ((RS_EntityContainer *)textEntity1)->nextEntity();
 		}
 	}
-// end of added stuff
 
 	addEntity(data.textEntity);
     forcedCalculateBorders();
