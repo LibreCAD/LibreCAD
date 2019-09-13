@@ -135,6 +135,7 @@
 #include "rs_actionmodifytrimamount.h"
 #include "rs_actionmodifytrimexcess.h"
 #include "rs_actionmodifyshapetext.h"
+#include "rs_actionmodifyunlinktext.h"
 #include "rs_actionoptionsdrawing.h"
 #include "rs_actionselect.h"
 #include "rs_actionselectall.h"
@@ -748,6 +749,15 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 
         // Snapping actions:
         //
+	case RS2::ActionModifyUnlinkText:
+		if(!document->countSelected(false, {RS2::EntityAlignedText})){
+			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyUnlinkTextNoSelect);
+			break;
+		}
+        // fall-through
+    case RS2::ActionModifyUnlinkTextNoSelect:
+        a = new RS_ActionModifyUnlinkText(*document, *view);
+        break;
     case RS2::ActionSnapFree:
 //        a = new RS_ActionSetSnapMode(*document, *view, RS2::SnapFree);
         slotSnapFree();
@@ -1656,6 +1666,10 @@ void QG_ActionHandler::slotModifyTrimExcess() {
 
 void QG_ActionHandler::slotModifyShapeText() {
 	setCurrentAction(RS2::ActionModifyShapeText);
+}
+
+void QG_ActionHandler::slotModifyUnlinkText() {
+	setCurrentAction(RS2::ActionModifyUnlinkText);
 }
 
 void QG_ActionHandler::slotModifyCut() {

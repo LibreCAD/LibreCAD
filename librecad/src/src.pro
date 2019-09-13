@@ -125,6 +125,7 @@ HEADERS += \
     actions/rs_actiondrawcirclediam.h \
     actions/rs_actionmodifytrimexcess.h \
     actions/rs_actionmodifyshapetext.h \
+    actions/rs_actionmodifyunlinktext.h \
     lib/actions/rs_actioninterface.h \
     lib/actions/rs_preview.h \
     lib/actions/rs_previewactioninterface.h \
@@ -236,6 +237,7 @@ SOURCES += \
     actions/rs_actiondrawcirclediam.cpp \
     actions/rs_actionmodifytrimexcess.cpp \
     actions/rs_actionmodifyshapetext.cpp \
+    actions/rs_actionmodifyunlinktext.cpp \
     lib/actions/rs_actioninterface.cpp \
     lib/actions/rs_preview.cpp \
     lib/actions/rs_previewactioninterface.cpp \

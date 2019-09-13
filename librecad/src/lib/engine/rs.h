@@ -401,6 +401,9 @@ public:
         ActionScriptOpenIDE,
         ActionScriptRun,
 
+        ActionModifyUnlinkText,
+        ActionModifyUnlinkTextNoSelect,
+
         /** Needed to loop through all actions */
         ActionLast
     };

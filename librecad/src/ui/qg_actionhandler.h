@@ -197,6 +197,7 @@ public slots:
 	void slotModifyTrimAmount();
 	void slotModifyTrimExcess();
 	void slotModifyShapeText();
+	void slotModifyUnlinkText();
 	void slotModifyCut();
 	void slotModifyStretch();
 	void slotModifyBevel();

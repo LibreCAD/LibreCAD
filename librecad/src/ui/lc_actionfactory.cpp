@@ -744,7 +744,14 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 	action->setData("shapetxt, stxt");
 	a_map["ModifyShapeText"] = action;
 
-    action = new QAction(tr("Ex&plode"), agm->modify);
+     action = new QAction(tr("&Unlink Text from Geometry"), agm->modify);
+    action->setIcon(QIcon(":/icons/unlink_shaped_text.svg"));
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotModifyUnlinkText()));
+    action->setObjectName("ModifyUnlinkText");
+    a_map["ModifyUnlinkText"] = action;
+
+   action = new QAction(tr("Ex&plode"), agm->modify);
     action->setIcon(QIcon(":/icons/explode.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksExplode()));

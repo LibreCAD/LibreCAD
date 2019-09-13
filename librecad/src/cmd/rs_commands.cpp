@@ -473,6 +473,13 @@ RS_Commands::RS_Commands() {
 			 {"st", QObject::tr("st", "modify - shape text")}},
 			RS2::ActionModifyShapeText
 		},
+		//unlink text
+		{
+			{{"unlinktxt", QObject::tr("unlinktxt", "modify - unlink shaped text")}},
+			{{"utxt", QObject::tr("utxt", "modify - unlink shaped text")},
+			 {"ut", QObject::tr("ut", "modify - unlink shaped text")}},
+			RS2::ActionModifyUnlinkText
+		},
          //explode
         {
             {{"explode", QObject::tr("explode", "explode block/polyline into entities")}},

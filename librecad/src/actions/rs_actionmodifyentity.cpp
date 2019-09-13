@@ -31,6 +31,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_debug.h"
+#include "lc_undosection.h"
 
 
 
@@ -46,15 +47,16 @@ void RS_ActionModifyEntity::trigger() {
     if (en) {
         RS_Entity* clone = en->clone();
         if (RS_DIALOGFACTORY->requestModifyEntityDialog(clone)) {
+            graphicView->deleteEntity(en);
             container->addEntity(clone);
 
-            graphicView->deleteEntity(en);
                         en->setSelected(false);
 
                         clone->setSelected(false);
             graphicView->drawEntity(clone);
 
             if (document) {
+
                 document->startUndoCycle();
 
                 document->addUndoable(clone);
