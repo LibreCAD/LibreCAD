@@ -2,7 +2,7 @@
 
 REM from librecad/src goto LibreCAD root folder
 REM CAUTION! pushd isn't tolerant for /, use \
-pushd ..\..
+pushd ..
 cd > PWD
 set /p LC_PWD= < PWD
 del PWD
@@ -44,6 +44,9 @@ for /f %%F in ('dir /b *.qm') do (
         copy "%%F" "%LC_RESOURCEDIR%\qm\%%F"
 )
 
+call :jdate tnow "%date%"
+call :jdate tthen "1/1/2000"
+set /a diff = tnow-tthen
 REM Create NSIS-Include file
 set LC_SCMREV_NSH=%LC_NSISDIR%\generated_scmrev.nsh
 echo Create %LC_SCMREV_NSH% for NSIS Installer
@@ -51,7 +54,7 @@ echo ;CAUTION! >%LC_SCMREV_NSH%
 echo ;this file is created by postprocess-win.bat during build process >>%LC_SCMREV_NSH%
 echo ;changes will be overwritten, use custom.nsh for local settings >>%LC_SCMREV_NSH%
 echo. >>%LC_SCMREV_NSH%
-echo !define SCMREVISION "%1" >>%LC_SCMREV_NSH%
+echo !define SCMREVISION "2.2.0.%diff%" >>%LC_SCMREV_NSH%
 echo. >>%LC_SCMREV_NSH%
 
 if exist %LC_NSISDIR%\custom-*.ns? (
@@ -64,4 +67,19 @@ if exist %LC_NSISDIR%\custom-*.ns? (
 
 REM return to librecad/src
 popd
-pause
+
+:jdate JD DateStr -- converts a date string to julian day number with respect to regional date format
+::                -- JD      [out,opt] - julian days
+::                -- DateStr [in,opt]  - date string, e.g. "03/31/2006" or "Fri 03/31/2006" or "31.3.2006"
+:$reference https://groups.google.com/group/alt.msdos.batch.nt/browse_frm/thread/a0c34d593e782e94/50ed3430b6446af8#50ed3430b6446af8
+:$created 20060101 :$changed 20080219
+:$source https://www.dostips.com
+SETLOCAL
+set DateStr=%~2&if "%~2"=="" set DateStr=%date%
+for /f "skip=1 tokens=2-4 delims=(-)" %%a in ('"echo.|date"') do (
+    for /f "tokens=1-3 delims=/.- " %%A in ("%DateStr:* =%") do (
+        set %%a=%%A&set %%b=%%B&set %%c=%%C))
+set /a "yy=10000%yy% %%10000,mm=100%mm% %% 100,dd=100%dd% %% 100"
+set /a JD=dd-32075+1461*(yy+4800+(mm-14)/12)/4+367*(mm-2-(mm-14)/12*12)/12-3*((yy+4900+(mm-14)/12)/100)/4
+ENDLOCAL & IF "%~1" NEQ "" (SET %~1=%JD%) ELSE (echo.%JD%)
+EXIT /b

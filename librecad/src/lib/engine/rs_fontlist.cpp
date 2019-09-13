@@ -31,7 +31,6 @@
 #include "rs_debug.h"
 #include "rs_font.h"
 #include "rs_system.h"
-#include "lc_fontcreation.h"
 #include "rs_dialogfactory.h"
 #include "qc_dialogfactory.h"
 #include "qg_commandwidget.h"
@@ -159,14 +158,13 @@ RS_Font* RS_FontList::requestFont(const QString& name) {
         }
     }
 
-	if (!foundFont && name!="standard") {
-		LC_FontCreation fc;
-		if (fc.createFont(name)) {
-			foundFont = requestFont(name);
+	if (!foundFont && name2!="standard") {
+		if (fontCreation.createFont(name2)) {
+			foundFont = requestFont(name2);
 		} else {
 			QG_CommandWidget *cw = static_cast<QG_DialogFactory*>(QG_DIALOGFACTORY)->getCommandWidget();
 			if (cw)
-				cw->appendHistory(QObject::tr("Could not convert requested font: %1").arg(name));
+				cw->appendHistory(QObject::tr("Could not convert requested font: %1").arg(name2));
 			foundFont = requestFont("standard");
 		}			
     }

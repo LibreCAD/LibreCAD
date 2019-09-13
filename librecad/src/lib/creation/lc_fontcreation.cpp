@@ -52,7 +52,7 @@ LC_FontCreation::LC_FontCreation()
 
 bool LC_FontCreation::createFont(const QString & fontFamily)
 {
-	if (fontFolder.isEmpty() || fontFamily.isEmpty())
+	if (fontFolder.isEmpty() || fontFamily.isEmpty() || invalidFonts.contains(fontFamily))
 		return false;
 	if (RS_FONTLIST->containsFont(fontFamily))
 		return true;
@@ -62,6 +62,7 @@ bool LC_FontCreation::createFont(const QString & fontFamily)
 		RS_FONTLIST->addFont(new RS_Font(lff, true));
 		return true;
 	}
+	invalidFonts.push_back(fontFamily);
 	return false;
 }
 
