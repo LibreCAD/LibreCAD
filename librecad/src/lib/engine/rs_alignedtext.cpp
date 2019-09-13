@@ -307,7 +307,6 @@ void RS_AlignedText::update()
 				angle,
 				distance;
 			int
-				count(0),
 				direction(1);		// Left edge orientation
 			if (HAlign == 2)		// Right edge orientation
 				direction = -1;
@@ -379,6 +378,7 @@ void RS_AlignedText::update()
 							else
 								endpt = rsvs2[0];
 						}
+						// this is where each of the letters gets rotated around the center of the arc
 						double circ_rad = center.distanceTo(endpt);
 						double letterarc = distance / circ_rad;
 						baseAngle -= (theta * direction);
@@ -398,8 +398,6 @@ void RS_AlignedText::update()
 						lastrotpt = iLetter->getInsertionPoint();
 
 					}
-					count++;
-					// this is where each of the letters gets rotated around the center of the arc
 					if (direction == 1)
 						letter = ((RS_EntityContainer *)inner_tent)->nextEntity();
 					else
@@ -439,6 +437,7 @@ void RS_AlignedText::update()
 						lastpt = ((RS_MText *)textEntity1)->getInsertionPoint();
 					else
 						lastpt = ((RS_Text *)textEntity1)->getInsertionPoint();
+
 					double
 						saved_angle(99999.0),
 						tempAngle,
@@ -486,25 +485,30 @@ void RS_AlignedText::update()
 						}
 						else
 						{
+							// this is where each of the letters gets rotated around the center of the arc
+							RS_Vector
+								tempPt,
+								cPt;
+#if 0
+				iLetter->rotate(iLetter->getInsertionPoint(), -rotateAngle);
+				iLetter->calculateBorders();
+				cPt.x = (iLetter->getMax().x + iLetter->getMin().x) / 2.0;
+				cPt.y = iLetter->getInsertionPoint().y;
+				iLetter->rotate(iLetter->getInsertionPoint(), rotateAngle);
+				cPt.rotate(iLetter->getInsertionPoint(), rotateAngle);
+#endif
 							pt = iLetter->getInsertionPoint();
+							tempPt = lastrotpt;
+						//	distance = lastpt.distanceTo(cPt);
 							distance = lastpt.distanceTo(pt);
-							iLetter->setInsertionPoint(lastrotpt);
+	//						iLetter->setInsertionPoint(lastrotpt);
 							angle = distance / radius;
-							if (HAlign == 1)
-								totalAngle = angle;
-							else
-								totalAngle += angle;
-							iLetter->rotate(center, -angle * direction_multiplier);
-							if (HAlign != 1)
-							{
-								lastpt = pt;
-								iLetter->rotate(iLetter->getInsertionPoint(), -totalAngle * direction_multiplier);
-								lastrotpt = iLetter->getInsertionPoint();
-							}
+						
+							iLetter->setInsertionPoint(tempPt.rotate(center, -angle * direction_multiplier));
+							iLetter->rotate(iLetter->getInsertionPoint(), -angle * direction_multiplier);
+	//	iLetter->rotate(cPt, -angle * direction_multiplier);
 						}
 					}
-					count++;
-					// this is where each of the letters gets rotated around the center of the arc
 					if (direction == 1)
 						letter = ((RS_EntityContainer *)inner_tent)->nextEntity();
 					else
