@@ -27,6 +27,7 @@
 #define RS_FONTLIST_H
 #include <memory>
 #include <vector>
+#include "lc_fontcreation.h"
 
 class RS_Font;
 
@@ -70,6 +71,7 @@ private:
 	static RS_FontList* uniqueInstance;
     //! fonts in the graphic
 	std::vector<std::unique_ptr<RS_Font>> fonts;
+	LC_FontCreation fontCreation;
 };
 
 #endif

@@ -267,9 +267,8 @@ void QC_MDIWindow::slotWindowClosing()
 void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
 
     RS_DEBUG->print("QC_MDIWindow::closeEvent begin");
-
-	ce->ignore(); // handling delegated to QApplication
 	emit(signalClosing(this));
+	ce->accept();
     RS_DEBUG->print("QC_MDIWindow::closeEvent end");
 }
 

@@ -64,6 +64,7 @@ public:
 private:
 	bool containsFamily(const QString& fontFile, const QString& family);
 	QString fontFolder;
+	QStringList invalidFonts;
 };
 
 #endif // LC_FONTCREATION_H

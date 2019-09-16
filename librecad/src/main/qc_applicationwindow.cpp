@@ -516,7 +516,6 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow * w, bool activateNext)
 	w->getChildWindows().clear();
 	w->slotWindowClosing();
 	w->getGraphicView()->getDefaultAction()->hideOptions();
-	mdiAreaCAD->removeSubWindow(w);
 	window_list.removeOne(w);
 
 	if (!activedMdiSubWindow || activedMdiSubWindow == w)
@@ -534,6 +533,8 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow * w, bool activateNext)
 
 	if (activateNext && window_list.count() > 0)
 		doActivate(window_list.front());
+	mdiAreaCAD->removeSubWindow(w);
+	w->close();
 }
 
 /**
@@ -2206,7 +2207,8 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
 void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
 {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClosing()");
-	getGraphicView()->getDefaultAction()->hideOptions();
+	if (getGraphicView()->getDefaultAction())
+		getGraphicView()->getDefaultAction()->hideOptions();
 	bool cancel = false;
 	if (win && win->getDocument()->isModified() && !win->hasParentWindow()) {
 		switch (showCloseDialog(win)) {
