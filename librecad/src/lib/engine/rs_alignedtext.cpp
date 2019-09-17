@@ -168,6 +168,8 @@ RS_AlignedText::RS_AlignedText(RS_EntityContainer* parent,
         : RS_EntityContainer(parent), data(d) {
 	setOwner(false);		// don't autodelete entities
 	addEntity(data.textEntity);
+	// keep text entity's layer, just to have a valid layer for the object
+	setLayer(data.textEntity->getLayer());
 	update();
 }
 

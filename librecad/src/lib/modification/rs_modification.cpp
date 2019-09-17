@@ -3269,7 +3269,6 @@ bool RS_Modification::explode(const bool remove /*= true*/)
                 bool resolveLayer;
 
                 switch (ec->rtti()) {
-                case RS2::EntityAlignedText:
                 case RS2::EntityMText:
                 case RS2::EntityText:
                 case RS2::EntityHatch:
@@ -3277,6 +3276,12 @@ bool RS_Modification::explode(const bool remove /*= true*/)
                     rl = RS2::ResolveAll;
                     resolveLayer = true;
                     resolvePen = true;
+                    break;
+
+                case RS2::EntityAlignedText:
+                    resolvePen = false;
+                    resolveLayer = false;
+                    rl = RS2::ResolveAll;
                     break;
 
                 case RS2::EntityInsert:
