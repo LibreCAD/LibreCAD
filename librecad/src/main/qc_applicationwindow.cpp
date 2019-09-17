@@ -534,7 +534,8 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow * w, bool activateNext)
 	if (activateNext && window_list.count() > 0)
 		doActivate(window_list.front());
 	mdiAreaCAD->removeSubWindow(w);
-	w->close();
+	w->hide();
+	delete w;
 }
 
 /**
@@ -2877,7 +2878,6 @@ void QC_ApplicationWindow::showAboutWindow()
 
     // Compiler macro list in Qt source tree
     // Src/qtbase/src/corelib/global/qcompilerdetection.h
-
 	QString info
 	(
 		tr("Version: %1").arg(XSTR(LC_VERSION)) + "\n" +

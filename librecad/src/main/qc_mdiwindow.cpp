@@ -61,7 +61,7 @@ int QC_MDIWindow::idCounter = 0;
 QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, Qt::WindowFlags wflags)
                             : QMdiSubWindow(parent, wflags)
 {
-    setAttribute(Qt::WA_DeleteOnClose);
+	//setAttribute(Qt::WA_DeleteOnClose);
     cadMdiArea=qobject_cast<QMdiArea*>(parent);
 
     if (doc==nullptr) {
@@ -266,9 +266,9 @@ void QC_MDIWindow::slotWindowClosing()
  */
 void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
 
-    RS_DEBUG->print("QC_MDIWindow::closeEvent begin");
+    RS_DEBUG->print("QC_MDIWindow::closeEvent begin");	
 	emit(signalClosing(this));
-	ce->accept();
+	ce->ignore();
     RS_DEBUG->print("QC_MDIWindow::closeEvent end");
 }
 
