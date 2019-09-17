@@ -43,8 +43,6 @@
 #include "rs_graphicview.h"
 #include "rs_painter.h"
 
-#include "windows.h"
-
 double TextOffset(RS_Entity *_entity, double offset, bool above)
 {
 	double
@@ -196,6 +194,59 @@ RS_AlignedText::~RS_AlignedText()
 	clear();
 }
 
+double RS_AlignedText::setArcParams(RS_Vector &_nearestPoint)
+{
+	RS_Entity
+		*shapeEntity = this->data.entity;
+	RS2::EntityType
+		eType(shapeEntity->rtti());
+	double
+		shapeAngle(0.0);
+	switch (eType)
+	{
+		case RS2::EntityArc:
+		{
+			RS_Arc
+				*arc = dynamic_cast<RS_Arc *>(shapeEntity);
+			shapeAngle = arc->getTangentDirection(_nearestPoint).angle() - M_PI;
+			double
+				pointDistance(arc->getCenter().distanceTo(data.insertionPoint));
+			if (pointDistance > arc->getRadius())
+				data.above = true;
+			else
+				data.above = false;
+		}
+		break;
+		case RS2::EntityCircle:
+		{
+			RS_Circle
+				*arc = dynamic_cast<RS_Circle *>(shapeEntity);
+			shapeAngle = arc->getTangentDirection(_nearestPoint).angle() - M_PI;
+			double
+				pointDistance(arc->getCenter().distanceTo(data.insertionPoint));
+			if (pointDistance > arc->getRadius())
+				data.above = true;
+			else
+				data.above = false;
+		}
+		break;
+		case RS2::EntityEllipse:
+		{
+			RS_Ellipse
+				*arc = dynamic_cast<RS_Ellipse *>(shapeEntity);
+			shapeAngle = arc->getTangentDirection(_nearestPoint).angle() - M_PI;
+			double
+				pointDistance(arc->getCenter().distanceTo(data.insertionPoint));
+			if (pointDistance > arc->getCenter().distanceTo(_nearestPoint))
+				data.above = true;
+			else
+				data.above = false;
+		}
+		break;
+	}
+	return (shapeAngle);
+}
+
 /**
  * Updates the Inserts (letters) of this text. Called when the
  * text or it's data, position, alignment, .. changes.
@@ -212,62 +263,31 @@ void RS_AlignedText::update()
         return;
     }
 
-// beginning of added stuff
 	RS_Entity
 		*textEntity1 = data.textEntity,
 		*shapeEntity = data.entity;
-
-	textEntity1->update();
-	RS_Vector offsetVector,
+	int
+		HAlign;
+	RS_Vector
+		offsetVector,
 		anchorPoint,
 		nearestPoint;
 	double
 		textAngle,
 		totalAngle,
-		offset(data.offset);
-	nearestPoint = shapeEntity->getNearestPointOnEntity(data.insertionPoint);
-	double pointangle,
+		pointangle,
 		rotateAngle,
-		shapeAngle;
+		shapeAngle,
+		offset(data.offset);
 	RS2::EntityType
-		eType = shapeEntity->rtti();
+		eType(shapeEntity->rtti()),
+		tType(textEntity1->rtti());
 
-	if (eType == RS2::EntityArc)
-	{
-		RS_Arc
-			*arc = dynamic_cast<RS_Arc *>(shapeEntity);
-		shapeAngle = arc->getTangentDirection(nearestPoint).angle() - M_PI;
-		double
-			pointDistance(arc->getCenter().distanceTo(data.insertionPoint));
-		if (pointDistance > arc->getRadius())
-			data.above = true;
-		else
-			data.above = false;
-	}
-	else if (eType == RS2::EntityCircle)
-	{
-		RS_Circle
-			*arc = dynamic_cast<RS_Circle *>(shapeEntity);
-		shapeAngle = arc->getTangentDirection(nearestPoint).angle() - M_PI;
-		double
-			pointDistance(arc->getCenter().distanceTo(data.insertionPoint));
-		if (pointDistance > arc->getRadius())
-			data.above = true;
-		else
-			data.above = false;
-	}
-	else if (eType == RS2::EntityEllipse)
-	{
-		RS_Ellipse
-			*arc = dynamic_cast<RS_Ellipse *>(shapeEntity);
-		shapeAngle = arc->getTangentDirection(nearestPoint).angle() - M_PI;
-		double
-			pointDistance(arc->getCenter().distanceTo(data.insertionPoint));
-		if (pointDistance > arc->getCenter().distanceTo(nearestPoint))
-			data.above = true;
-		else
-			data.above = false;
-	}
+	textEntity1->update();
+	nearestPoint = shapeEntity->getNearestPointOnEntity(data.insertionPoint);
+
+	if (eType == RS2::EntityArc || eType == RS2::EntityCircle || eType == RS2::EntityEllipse)
+		shapeAngle = setArcParams(nearestPoint);
 	else if (eType == RS2::EntityLine)
 	{
 		shapeAngle = RS_Math::correctAngle(shapeEntity->getStartpoint().angleTo(shapeEntity->getEndpoint()));
@@ -275,9 +295,7 @@ void RS_AlignedText::update()
 		data.above = (pointangle >= 0.0 && pointangle <= M_PI);
 	}
 	// move text to start at insertionPoint
-	int
-		HAlign;
-	if (textEntity1->rtti() == RS2::EntityAlignedText)
+	if (tType == RS2::EntityAlignedText)
 	{
 		RS_AlignedText
 			*tent = dynamic_cast<RS_AlignedText *>(textEntity1);
@@ -294,7 +312,7 @@ void RS_AlignedText::update()
 	{
 		RS_Entity *inner_tent;
 		// MText has an extra level of containers above the letters
-		if (textEntity1->rtti() == RS2::EntityMText)
+		if (tType == RS2::EntityMText)
 			inner_tent = ((RS_EntityContainer *)textEntity1)->firstEntity();
 		else
 			// Text contains the letters directly
@@ -302,6 +320,7 @@ void RS_AlignedText::update()
 		while (inner_tent)
 		{
 			RS_Entity
+				*saved_ent(0),
 				*letter;
 			RS_Insert
 				*iLetter;
@@ -317,49 +336,69 @@ void RS_AlignedText::update()
 				angle,
 				distance;
 			int
+				direction_multiplier,
 				direction(1);		// Left edge orientation
 			if (HAlign == 2)		// Right edge orientation
 				direction = -1;
+			direction_multiplier = direction;
+			double
+				saved_angle(99999.0),
+				tempAngle,
+				delta;
+			RS_Vector
+				inPt;
+			RS_Ellipse
+				*ellipse;
+			double
+				baseAngle,
+				baseDist,
+				textInsertionAngle;
+			RS_Vector
+				cPt;
 			if (eType == RS2::EntityEllipse)
 			{
-				int
-					direction_multiplier(direction);
-				double
-					baseAngle,
-					baseDist,
-					distance2center;
-				RS_Ellipse
-					*ellipse = dynamic_cast<RS_Ellipse *>(shapeEntity->clone());
+				ellipse = dynamic_cast<RS_Ellipse *>(shapeEntity->clone());
 				RS_Vector
-					cPt,
 					tempPt;
 				center = ellipse->getCenter();
 				if (data.above)
 					radius += fabs(offset);
 				else
 					radius -= fabs(offset);
-				RS_Entity
-					*saved_ent(0);
-
+			}
+			else if (eType == RS2::EntityCircle || eType == RS2::EntityArc)
+			{
+				if (eType == RS2::EntityArc)
+				{
+					radius = ((RS_Arc *)shapeEntity)->getRadius();
+					center = ((RS_Arc *)shapeEntity)->getCenter();
+				}
+				else
+				{
+					radius = ((RS_Circle *)shapeEntity)->getRadius();
+					center = ((RS_Circle *)shapeEntity)->getCenter();
+				}
+				textInsertionAngle = RS_Math::correctAngle(atan2(anchorPoint.y - center.y, anchorPoint.x - center.x));
+				totalAngle = 0.0;
+				if (data.above)
+					radius += fabs(offset);
+				else
+					radius -= fabs(offset);
+			}
+			if (eType == RS2::EntityEllipse || eType == RS2::EntityArc || eType == RS2::EntityCircle)
+			{
 				if (HAlign == 1)
 				{
 					direction_multiplier = -1;
-					if (textEntity1->rtti() == RS2::EntityAlignedText)
+					if (tType == RS2::EntityAlignedText)
 						lastpt = ((RS_AlignedText *)textEntity1)->getInsertionPoint();
-					else if (textEntity1->rtti() == RS2::EntityMText)
+					else if (tType == RS2::EntityMText)
 						lastpt = ((RS_MText *)textEntity1)->getInsertionPoint();
 					else
 						lastpt = ((RS_Text *)textEntity1)->getInsertionPoint();
 
-					double
-						saved_angle(99999.0),
-						tempAngle,
-						delta;
-					RS_Vector
-						inPt;
 					// compute angle to center of circle/arc
-					double
-						textInsertionAngle = RS_Math::correctAngle(atan2(lastpt.y - center.y, lastpt.x - center.x));
+					textInsertionAngle = RS_Math::correctAngle(atan2(lastpt.y - center.y, lastpt.x - center.x));
 
 					// Find letter closest to text insertion point
 					letter = ((RS_EntityContainer *)inner_tent)->firstEntity();
@@ -380,6 +419,9 @@ void RS_AlignedText::update()
 					lastrotpt = lastpt;
 					first = false;
 				}
+			}
+			if (eType == RS2::EntityEllipse)
+			{
 				if (direction == 1)
 					letter = ((RS_EntityContainer *)inner_tent)->firstEntity();
 				else if (direction == -1)
@@ -408,10 +450,8 @@ void RS_AlignedText::update()
 						tempAngle,
 						minAngle,
 						maxAngle,
-						angle1,
 						eTol(0.005);
-					offset = hypot(lastpt.x - nearestPoint.x, lastpt.y - nearestPoint.y) * (data.above ? 1.0 : -1.0);
-
+					
 					tempAngle = distance / minorRadius;
 					ellipseDistance = ellipse->getEllipseLength(baseAngle - tempAngle * direction_multiplier);
 					double circum = ellipse->getLength();
@@ -435,21 +475,14 @@ void RS_AlignedText::update()
 						if (ellipseDistance > circum / 2.0)
 							ellipseDistance = circum - ellipseDistance;
 					}
-					angle1 = baseAngle - tempAngle * direction_multiplier;
 					RS_Vector
-						ep1,
+						tempPt,
 						endpt;
-					ep1.x = center.x + cos(angle1) * (ellipse->getMajorRadius() + 1);
-					ep1.y = center.y + sin(angle1) * (ellipse->getMajorRadius() + 1);
 					RS_Line
-						line1(center, ep1);
+						line1;
 					RS_Ellipse e1(nullptr, ellipse->getData());
 					RS_VectorSolutions rsvs1;
-					rsvs1 = RS_Information::getIntersection(&e1, &line1, true);
-					endpt = rsvs1[0];
 
-					endpt.x = endpt.x + cos(angle1) * offset;
-					endpt.y = endpt.y + sin(angle1) * offset;
 					iLetter->rotate(iLetter->getInsertionPoint(), -rotateAngle);
 					iLetter->calculateBorders();
 					cPt.x = (iLetter->getMax().x + iLetter->getMin().x) / 2.0;
@@ -457,8 +490,36 @@ void RS_AlignedText::update()
 					iLetter->rotate(iLetter->getInsertionPoint(), rotateAngle);
 					cPt.rotate(iLetter->getInsertionPoint(), rotateAngle);
 
+					double
+						distance2center,
+						letterAngle;
+					pt = iLetter->getInsertionPoint();
+					tempPt = lastrotpt;
+					distance2center = lastpt.distanceTo(cPt);
+					distance = lastpt.distanceTo(pt);
+					angle = distance / radius;
+					letterAngle = distance2center / radius;
+
+					iLetter->setInsertionPoint(tempPt.rotate(center, -tempAngle * direction_multiplier));
+					line1.setStartpoint(center);
+					line1.setEndpoint(iLetter->getInsertionPoint());
+					endpt.x = line1.getEndpoint().x + cos(line1.getAngle1()) * ellipse->getMajorRadius();
+					endpt.y = line1.getEndpoint().y + sin(line1.getAngle1()) * ellipse->getMajorRadius();
+					endpt.valid = true;
+					line1.setEndpoint(endpt);
+					rsvs1 = RS_Information::getIntersection(&e1, &line1, true);
+					endpt = rsvs1[0];
+					double
+						radius2 = endpt.distanceTo(center),
+						diff(radius2 - radius);
+
+					endpt = iLetter->getInsertionPoint();
+					endpt.x = endpt.x + cos(line1.getAngle1()) * diff;
+					endpt.y = endpt.y + sin(line1.getAngle1()) * diff;
 					iLetter->setInsertionPoint(endpt);
-					iLetter->rotate(iLetter->getInsertionPoint(), -tempAngle * direction_multiplier);		// was -angle
+
+					iLetter->rotate(iLetter->getInsertionPoint(), -letterAngle * direction_multiplier);
+
 					if (direction == 1)
 						letter = ((RS_EntityContainer *)inner_tent)->nextEntity();
 					else
@@ -468,65 +529,6 @@ void RS_AlignedText::update()
 			}
 			if (eType == RS2::EntityArc || eType == RS2::EntityCircle)
 			{
-				if (eType == RS2::EntityArc)
-				{
-					radius = ((RS_Arc *)shapeEntity)->getRadius();
-					center = ((RS_Arc *)shapeEntity)->getCenter();
-				}
-				else
-				{
-					radius = ((RS_Circle *)shapeEntity)->getRadius();
-					center = ((RS_Circle *)shapeEntity)->getCenter();
-				}
-				double
-					textInsertionAngle(RS_Math::correctAngle(atan2(anchorPoint.y - center.y, anchorPoint.x - center.x)));
-				totalAngle = 0.0;
-				if (data.above)
-					radius += fabs(offset);
-				else
-					radius -= fabs(offset);
-				RS_Entity
-					*saved_ent(0);
-				int
-					direction_multiplier(direction);
-				if (HAlign == 1)
-				{
-					direction_multiplier = -1;
-					if (textEntity1->rtti() == RS2::EntityAlignedText)
-						lastpt = ((RS_AlignedText *)textEntity1)->getInsertionPoint();
-					else if (textEntity1->rtti() == RS2::EntityMText)
-						lastpt = ((RS_MText *)textEntity1)->getInsertionPoint();
-					else
-						lastpt = ((RS_Text *)textEntity1)->getInsertionPoint();
-
-					double
-						saved_angle(99999.0),
-						tempAngle,
-						delta;
-					RS_Vector
-						inPt;
-					// compute angle to center of circle/arc
-					textInsertionAngle = RS_Math::correctAngle(atan2(lastpt.y - center.y, lastpt.x - center.x));
-
-					// Find letter closest to text insertion point
-					letter = ((RS_EntityContainer *)inner_tent)->firstEntity();
-					while (letter)
-					{
-						// compute angle to center of circle/arc
-						inPt = ((RS_Insert *)letter)->getInsertionPoint();
-						tempAngle = RS_Math::correctAngle(atan2(inPt.y - center.y, inPt.x - center.x));
-						delta = RS_Math::getAngleDifference(tempAngle, textInsertionAngle);
-						if (delta < saved_angle)
-						{
-							saved_angle = delta;
-							saved_ent = letter;
-						}
-						letter = ((RS_EntityContainer *)inner_tent)->nextEntity();
-					}
-					lastpt = ((RS_Insert *)saved_ent)->getInsertionPoint();
-					lastrotpt = lastpt;
-					first = false;
-				}
 				if (direction == 1)
 					letter = ((RS_EntityContainer *)inner_tent)->firstEntity();
 				else
@@ -574,7 +576,7 @@ void RS_AlignedText::update()
 						letter = ((RS_EntityContainer *)inner_tent)->prevEntity();
 				}
 			}
-			if (textEntity1->rtti() == RS2::EntityMText)
+			if (tType == RS2::EntityMText)
 				inner_tent = ((RS_EntityContainer *)textEntity1)->nextEntity();
 			else
 				inner_tent = 0;
@@ -654,7 +656,7 @@ bool RS_AlignedText::hasEndpointsWithinWindow(const RS_Vector& /*v1*/, const RS_
  * Implementations must stretch the given range of the entity
  * by the given offset.
  */
-void RS_AlignedText::stretch(const RS_Vector& firstCorner, const RS_Vector& secondCorner, const RS_Vector& offset) {
+void RS_AlignedText::stretch(const RS_Vector& /* firstCorner */, const RS_Vector& /* secondCorner */, const RS_Vector& /* offset */) {
 #if 0
     if (getMin().isInWindow(firstCorner, secondCorner) &&
             getMax().isInWindow(firstCorner, secondCorner)) {

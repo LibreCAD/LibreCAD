@@ -255,6 +255,7 @@ public:
 
 private:
 //    double updateAddLine(RS_EntityContainer* textLine, int lineCounter);
+	double setArcParams(RS_Vector &_nearestPoint);
 
 protected:
     RS_AlignedTextData data;
