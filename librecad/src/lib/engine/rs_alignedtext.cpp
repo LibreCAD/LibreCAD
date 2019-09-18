@@ -247,6 +247,43 @@ double RS_AlignedText::setArcParams(RS_Vector &_nearestPoint)
 	return (shapeAngle);
 }
 
+double RS_AlignedText::computeEllipseAngle(RS_Vector &_insertPoint, RS_Vector &_lastPoint, RS_Ellipse *_ellipse, double _baseAngle, int _direction_multiplier)
+{
+	double
+		distance = _lastPoint.distanceTo(_insertPoint),
+		minorRadius = _ellipse->getMinorRadius(),
+		ellipseDistance,
+		ellipseAngle,
+		minAngle,
+		maxAngle,
+		eTol(0.005);
+
+	ellipseAngle = distance / minorRadius;
+	ellipseDistance = _ellipse->getEllipseLength(_baseAngle - ellipseAngle * _direction_multiplier);
+	double circum = _ellipse->getLength();
+	if (ellipseDistance > circum / 2.0)
+		ellipseDistance = circum - ellipseDistance;
+	minAngle = 0.0;
+	maxAngle = ellipseAngle * 2.0;
+	while (fabs(ellipseDistance - distance) > eTol)
+	{
+		if (ellipseDistance > distance)
+		{
+			maxAngle = ellipseAngle;
+			ellipseAngle = (minAngle + ellipseAngle) / 2.0;
+		}
+		else
+		{
+			minAngle = ellipseAngle;
+			ellipseAngle = (maxAngle + ellipseAngle) / 2.0;
+		}
+		ellipseDistance = _ellipse->getEllipseLength(_baseAngle - ellipseAngle * _direction_multiplier);
+		if (ellipseDistance > circum / 2.0)
+			ellipseDistance = circum - ellipseDistance;
+	}
+	return (ellipseAngle);
+}
+
 /**
  * Updates the Inserts (letters) of this text. Called when the
  * text or it's data, position, alignment, .. changes.
@@ -444,37 +481,7 @@ void RS_AlignedText::update()
 					}
 					pt = iLetter->getInsertionPoint();
 					double
-						distance = lastpt.distanceTo(pt),
-						minorRadius = ellipse->getMinorRadius(),
-						ellipseDistance,
-						tempAngle,
-						minAngle,
-						maxAngle,
-						eTol(0.005);
-					
-					tempAngle = distance / minorRadius;
-					ellipseDistance = ellipse->getEllipseLength(baseAngle - tempAngle * direction_multiplier);
-					double circum = ellipse->getLength();
-					if (ellipseDistance > circum / 2.0)
-						ellipseDistance = circum - ellipseDistance;
-					minAngle = 0.0;
-					maxAngle = tempAngle * 2.0;
-					while (fabs(ellipseDistance - distance) > eTol)
-					{
-						if (ellipseDistance > distance)
-						{
-							maxAngle = tempAngle;
-							tempAngle = (minAngle + tempAngle) / 2.0;
-						}
-						else
-						{
-							minAngle = tempAngle;
-							tempAngle = (maxAngle + tempAngle) / 2.0;
-						}
-						ellipseDistance = ellipse->getEllipseLength(baseAngle - tempAngle * direction_multiplier);
-						if (ellipseDistance > circum / 2.0)
-							ellipseDistance = circum - ellipseDistance;
-					}
+						ellipseAngle(computeEllipseAngle(pt, lastpt, ellipse, baseAngle, direction_multiplier));
 					RS_Vector
 						tempPt,
 						endpt;
@@ -500,7 +507,7 @@ void RS_AlignedText::update()
 					angle = distance / radius;
 					letterAngle = distance2center / radius;
 
-					iLetter->setInsertionPoint(tempPt.rotate(center, -tempAngle * direction_multiplier));
+					iLetter->setInsertionPoint(tempPt.rotate(center, -ellipseAngle * direction_multiplier));
 					line1.setStartpoint(center);
 					line1.setEndpoint(iLetter->getInsertionPoint());
 					endpt.x = line1.getEndpoint().x + cos(line1.getAngle1()) * ellipse->getMajorRadius();
@@ -606,32 +613,28 @@ RS_VectorSolutions RS_AlignedText::getRefPoints() const{
 }
 
 void RS_AlignedText::move(const RS_Vector& offset) {
-    RS_EntityContainer::move(offset);
 	data.insertionPoint.move(offset);
-//	getTextEntity()->move(offset);
-//    update();
+	getTextEntity()->move(offset);
+    update();
 }
 
 
 
 void RS_AlignedText::rotate(const RS_Vector& center, const double& angle) {
     RS_Vector angleVector(angle);
-    RS_EntityContainer::rotate(center, angleVector);
 	data.insertionPoint.rotate(center, angleVector);
-//	getTextEntity()->rotate(center, angle);
-//    update();
+	getTextEntity()->rotate(center, angle);
+    update();
 }
 void RS_AlignedText::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
-    RS_EntityContainer::rotate(center, angleVector);
 	data.insertionPoint.rotate(center, angleVector);
-//	getTextEntity()->rotate(center, angleVector);
-//    update();
+	getTextEntity()->rotate(center, angleVector);
+    update();
 }
 
 
 
 void RS_AlignedText::scale(const RS_Vector& center, const RS_Vector& factor) {
-	data.insertionPoint.scale(center, factor);
 	getTextEntity()->scale(center, factor);
     update();
 }

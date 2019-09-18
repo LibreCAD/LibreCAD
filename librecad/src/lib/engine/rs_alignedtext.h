@@ -33,6 +33,7 @@
 
 class RS_MText;
 class RS_Text;
+class RS_Ellipse;
 
 /**
  * Holds the data that defines an aligned text entity.
@@ -256,6 +257,7 @@ public:
 private:
 //    double updateAddLine(RS_EntityContainer* textLine, int lineCounter);
 	double setArcParams(RS_Vector &_nearestPoint);
+	double computeEllipseAngle(RS_Vector &_insertPoint, RS_Vector &_lastPoint, RS_Ellipse *_ellipse, double _baseAngle, int _direction_multiplier);
 
 protected:
     RS_AlignedTextData data;
