@@ -2595,8 +2595,7 @@ bool RS_Modification::cut2(const RS_Vector & cutCoord1, const RS_Vector & cutCoo
 {
 	if (!cutEntity)
 		return false;
-	if ((cutEntity->getStartpoint().distanceTo(cutCoord1) < RS_TOLERANCE && cutEntity->getEndpoint().distanceTo(cutCoord2) < RS_TOLERANCE)
-		|| (cutEntity->getStartpoint().distanceTo(cutCoord2) < RS_TOLERANCE && cutEntity->getEndpoint().distanceTo(cutCoord1) < RS_TOLERANCE))
+	if (cutEntity->hasEndpoints(cutCoord1, cutCoord2, RS_TOLERANCE))
 		return false;
 
 	LC_UndoSection undo(document);
