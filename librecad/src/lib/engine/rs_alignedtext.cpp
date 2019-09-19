@@ -43,6 +43,8 @@
 #include "rs_graphicview.h"
 #include "rs_painter.h"
 
+#include "qt_windows.h"
+
 double TextOffset(RS_Entity *_entity, double offset, bool above)
 {
 	double
@@ -516,17 +518,20 @@ void RS_AlignedText::update()
 					line1.setEndpoint(endpt);
 					rsvs1 = RS_Information::getIntersection(&e1, &line1, true);
 					endpt = rsvs1[0];
+					angle = e1.getEllipseAngle(endpt);
+					tempAngle = e1.getTangentDirection(endpt).angle();
 					double
 						radius2 = endpt.distanceTo(center),
 						diff(radius2 - radius);
+					letterAngle = distance / ((radius + radius2) / 2.0);
 
 					endpt = iLetter->getInsertionPoint();
 					endpt.x = endpt.x + cos(line1.getAngle1()) * diff;
 					endpt.y = endpt.y + sin(line1.getAngle1()) * diff;
 					iLetter->setInsertionPoint(endpt);
 
-					iLetter->rotate(iLetter->getInsertionPoint(), -letterAngle * direction_multiplier);
-
+					iLetter->rotate(iLetter->getInsertionPoint(), -iLetter->getAngle());
+					iLetter->rotate(iLetter->getInsertionPoint(), (tempAngle - M_PI));
 					if (direction == 1)
 						letter = ((RS_EntityContainer *)inner_tent)->nextEntity();
 					else
