@@ -499,15 +499,10 @@ void RS_AlignedText::update()
 					iLetter->rotate(iLetter->getInsertionPoint(), rotateAngle);
 					cPt.rotate(iLetter->getInsertionPoint(), rotateAngle);
 
-					double
-						distance2center,
-						letterAngle;
 					pt = iLetter->getInsertionPoint();
 					tempPt = lastrotpt;
-					distance2center = lastpt.distanceTo(cPt);
 					distance = lastpt.distanceTo(pt);
 					angle = distance / radius;
-					letterAngle = distance2center / radius;
 
 					iLetter->setInsertionPoint(tempPt.rotate(center, -ellipseAngle * direction_multiplier));
 					line1.setStartpoint(center);
@@ -518,18 +513,30 @@ void RS_AlignedText::update()
 					line1.setEndpoint(endpt);
 					rsvs1 = RS_Information::getIntersection(&e1, &line1, true);
 					endpt = rsvs1[0];
-					angle = e1.getEllipseAngle(endpt);
-					tempAngle = e1.getTangentDirection(endpt).angle();
 					double
 						radius2 = endpt.distanceTo(center),
 						diff(radius2 - radius);
-					letterAngle = distance / ((radius + radius2) / 2.0);
-
+					
 					endpt = iLetter->getInsertionPoint();
 					endpt.x = endpt.x + cos(line1.getAngle1()) * diff;
 					endpt.y = endpt.y + sin(line1.getAngle1()) * diff;
 					iLetter->setInsertionPoint(endpt);
 
+					// Rotate center point to position it relative to the letter's insertion point
+					tempPt = cPt - pt + lastrotpt;
+
+					cPt = tempPt.rotate(center, -ellipseAngle * direction_multiplier);
+					line1.setStartpoint(center);
+					line1.setEndpoint(cPt);
+					endpt.x = line1.getEndpoint().x + cos(line1.getAngle1()) * ellipse->getMajorRadius();
+					endpt.y = line1.getEndpoint().y + sin(line1.getAngle1()) * ellipse->getMajorRadius();
+					endpt.valid = true;
+					line1.setEndpoint(endpt);
+					rsvs1 = RS_Information::getIntersection(&e1, &line1, true);
+					cPt = rsvs1[0];
+					tempAngle = e1.getTangentDirection(cPt).angle();
+
+					// end of center point rotation
 					iLetter->rotate(iLetter->getInsertionPoint(), -iLetter->getAngle());
 					iLetter->rotate(iLetter->getInsertionPoint(), (tempAngle - M_PI));
 					if (direction == 1)
