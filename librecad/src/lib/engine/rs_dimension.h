@@ -204,12 +204,6 @@ public:
 private:
     static RS_VectorSolutions  getIntersectionsLineContainer(
         const RS_Line* l, const RS_EntityContainer* c, bool infiniteLine=false);
-    void updateCreateHorizontalTextDimensionLine(
-        const RS_Vector& p1, const RS_Vector& p2,
-        bool arrow1=true, bool arrow2=true, bool autoText=false);
-    void updateCreateAlignedTextDimensionLine(
-        const RS_Vector& p1, const RS_Vector& p2,
-        bool arrow1=true, bool arrow2=true, bool autoText=false);
 
 protected:
     /** Data common to all dimension entities. */

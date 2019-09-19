@@ -179,7 +179,6 @@ RS_VectorSolutions RS_Dimension::getIntersectionsLineContainer(
 {
     RS_VectorSolutions solutions_initial;
     RS_VectorSolutions solutions_filtered;
-    const double tol = 1.0e-4;
 
     // Find all intersections, including those beyond limits of container
     // entities.
@@ -192,14 +191,14 @@ RS_VectorSolutions RS_Dimension::getIntersectionsLineContainer(
     // Filter solutions based on whether they are actually on any entities.
     for(const RS_Vector& vp: solutions_initial){
         for(RS_Entity* e: *c) {
-            if (e->isConstruction(true) || e->isPointOnEntity(vp, tol)) {
+            if (e->isConstruction(true) || e->isPointOnEntity(vp, RS_TOLERANCE_TRIM)) {
                 // the intersection is at least on the container, now check the line:
                 if (infiniteLine) {
                     // The line is treated as infinitely long so we don't need to
                     // check if the intersection is on the line.
                     solutions_filtered.push_back(vp);
                     break;
-                } else if (l->isConstruction(true) || l->isPointOnEntity(vp, tol)) {
+                } else if (l->isConstruction(true) || l->isPointOnEntity(vp, RS_TOLERANCE_TRIM)) {
                     solutions_filtered.push_back(vp);
                     break;
                 }
@@ -229,7 +228,7 @@ RS_VectorSolutions RS_Dimension::getIntersectionsLineContainer(
  *
  * @param forceAutoText Automatically reposition the text label.
  */
-void RS_Dimension::updateCreateHorizontalTextDimensionLine(const RS_Vector& p1,
+void RS_Dimension::updateCreateDimensionLine(const RS_Vector& p1,
         const RS_Vector& p2, bool arrow1, bool arrow2, bool forceAutoText) {
     // general scale (DIMSCALE)
     double dimscale = getGeneralScale();
@@ -262,18 +261,45 @@ void RS_Dimension::updateCreateHorizontalTextDimensionLine(const RS_Vector& p1,
     // Text label:
     RS_MTextData textData;
     RS_Vector textPos;
-    double textAngle = 0.0;
-    bool autoText = !data.middleOfText.valid || forceAutoText;
+	double textAngle = 0.0;
+	if (getInsideHorizontalText()) {		
+		if (!data.middleOfText.valid || forceAutoText) {
+			textPos = dimensionLine->getMiddlePoint();
 
-    if (autoText) {
-        textPos = dimensionLine->getMiddlePoint();
+			//// the next update should still be able to adjust this
+			////   auto text position. leave it invalid
+			data.middleOfText = textPos;
+		}
+		else {
+			textPos = data.middleOfText;
+		}
+	}
+		
+	else {
+		bool corrected = false;
+		double dimAngle1 = dimensionLine->getAngle1();
+		textAngle = RS_Math::makeAngleReadable(dimAngle1, true, &corrected);
 
-        //// the next update should still be able to adjust this
-        ////   auto text position. leave it invalid
-        data.middleOfText = textPos;
-    } else {
-        textPos = data.middleOfText;
-    }
+		if (data.middleOfText.valid && !forceAutoText) {
+			textPos = data.middleOfText;
+		}
+		else {
+			textPos = dimensionLine->getMiddlePoint();
+
+			// rotate text so it's readable from the bottom or right (ISO)
+			// quadrant 1 & 4
+			/*double const a = corrected ? -M_PI_2 : M_PI_2;
+			RS_Vector distV = RS_Vector::polar(dimgap + dimtxt / 2.0, dimAngle1 + a);*/
+
+			// move text away from dimension line:
+			//textPos += distV;
+
+			//// the next update should still be able to adjust this
+			////   auto text position. leave it invalid
+			data.middleOfText = textPos;
+		}
+	}
+    
 
     textData = RS_MTextData(textPos,
                             dimtxt, 30.0,
@@ -300,6 +326,7 @@ void RS_Dimension::updateCreateHorizontalTextDimensionLine(const RS_Vector& p1,
     RS_Vector textCorner2 = dimensionLine->getMiddlePoint() + RS_Vector{w, h};
     RS_EntityContainer c;
     c.addRectangle(textCorner1, textCorner2);
+	c.rotate(dimensionLine->getMiddlePoint(), textAngle);
     RS_VectorSolutions sol1 = getIntersectionsLineContainer(
         dimensionLine, &c,
         true  // treat line as infinitely long in both directions
@@ -321,10 +348,12 @@ void RS_Dimension::updateCreateHorizontalTextDimensionLine(const RS_Vector& p1,
         RS_Vector dir = RS_Vector::polar(arrowSize*2, dimensionLine->getAngle1());
         dimensionLineOutside1 = new RS_Line{this, p1 - dir, p1};
         dimensionLineOutside2 = new RS_Line{this, p2 + dir, p2};
+		dimensionLineOutside1->setPen(pen);
+		dimensionLineOutside2->setPen(pen);
 
         // move text to the side if it won't fit either
         RS_Vector distH;
-        if (textIntersectionLength>distance && autoText) {
+        if (textIntersectionLength>distance && forceAutoText) {
             distH.setPolar(textIntersectionLength/2.0+arrowSize*2+distance/2.0,
                            arrowAngle1);
             text->move(distH);
@@ -394,6 +423,7 @@ void RS_Dimension::updateCreateHorizontalTextDimensionLine(const RS_Vector& p1,
         RS_Vector s2 = text->getInsertionPoint() + RS_Vector{w, h};
         c = RS_EntityContainer();
         c.addRectangle(s1, s2);
+		c.rotate(dimensionLine->getMiddlePoint(), textAngle);
         sol1 = getIntersectionsLineContainer(dimensionLine, &c);
         if (sol1.size()>1) {
             // the text bounding box intersects dimensionLine on two sides
@@ -426,6 +456,8 @@ void RS_Dimension::updateCreateHorizontalTextDimensionLine(const RS_Vector& p1,
         if (splitDimensionLine) {
             dimensionLineInside1 = new RS_Line{this, p1, s1};
             dimensionLineInside2 = new RS_Line{this, s2, p2};
+			dimensionLineInside1->setPen(pen);
+			dimensionLineInside2->setPen(pen);
         }
     }
 
@@ -442,174 +474,6 @@ void RS_Dimension::updateCreateHorizontalTextDimensionLine(const RS_Vector& p1,
 
     addEntity(text);
 }
-
-
-/**
- * Creates an aligned-text dimensioning line (line with one, two or no arrows
- * and aligned text).
- *
- * @param forceAutoText Automatically reposition the text label.
- */
-void RS_Dimension::updateCreateAlignedTextDimensionLine(const RS_Vector& p1,
-        const RS_Vector& p2, bool arrow1, bool arrow2, bool forceAutoText) {
-    // general scale (DIMSCALE)
-    double dimscale = getGeneralScale();
-    // text height (DIMTXT)
-    double dimtxt = getTextHeight()*dimscale;
-    // text distance to line (DIMGAP)
-    double dimgap = getDimensionLineGap()*dimscale;
-
-    // length of dimension line:
-    double distance = p1.distanceTo(p2);
-    // arrow size:
-    double arrowSize = getArrowSize()*dimscale;
-
-    // do we have to put the arrows outside of the line?
-    bool outsideArrows = (distance<arrowSize*2.5);
-
-    // arrow angles:
-    double arrowAngle1, arrowAngle2;
-
-    RS_Pen pen(getDimensionLineColor(),
-           getDimensionLineWidth(),
-           RS2::LineByBlock);
-
-    // Create dimension line:
-    RS_Line* dimensionLine = new RS_Line{this, p1, p2};
-    dimensionLine->setPen(pen);
-    dimensionLine->setLayer(nullptr);
-    addEntity(dimensionLine);
-
-    // Text label:
-    RS_MTextData textData;
-    RS_Vector textPos;
-    double dimAngle1 = dimensionLine->getAngle1();
-    bool corrected = false;
-    double textAngle = RS_Math::makeAngleReadable(dimAngle1, true, &corrected);
-
-    if (data.middleOfText.valid && !forceAutoText) {
-        textPos = data.middleOfText;
-    } else {
-        textPos = dimensionLine->getMiddlePoint();
-
-        // rotate text so it's readable from the bottom or right (ISO)
-        // quadrant 1 & 4
-        double const a = corrected?-M_PI_2:M_PI_2;
-        RS_Vector distV = RS_Vector::polar(dimgap + dimtxt/2.0, dimAngle1+a);
-
-        // move text away from dimension line:
-        textPos+=distV;
-
-        //// the next update should still be able to adjust this
-        ////   auto text position. leave it invalid
-        data.middleOfText = textPos;
-    }
-
-    textData = RS_MTextData(textPos,
-                            dimtxt, 30.0,
-                            RS_MTextData::VAMiddle,
-                            RS_MTextData::HACenter,
-                            RS_MTextData::LeftToRight,
-                            RS_MTextData::Exact,
-                            1.0,
-                            getLabel(),
-                            getTextStyle(),
-                            textAngle);
-
-    RS_MText* text = new RS_MText(this, textData);
-    text->setPen(RS_Pen(getTextColor(), RS2::WidthByBlock, RS2::SolidLine));
-    text->setLayer(nullptr);
-
-    // move text to the side:
-    RS_Vector distH;
-    if (text->getUsedTextWidth()>distance) {
-        distH.setPolar(text->getUsedTextWidth()/2.0
-                       +distance/2.0+dimgap, textAngle);
-        text->move(distH);
-    }
-
-    addEntity(text);
-
-    // add arrows
-    if (outsideArrows==false) {
-        arrowAngle1 = dimensionLine->getAngle2();
-        arrowAngle2 = dimensionLine->getAngle1();
-    } else {
-        arrowAngle1 = dimensionLine->getAngle1();
-        arrowAngle2 = dimensionLine->getAngle2();
-
-        // extend dimension line outside arrows
-        RS_Vector dir = RS_Vector::polar(arrowSize*2, arrowAngle2);
-        dimensionLine->setStartpoint(p1 + dir);
-        dimensionLine->setEndpoint(p2 - dir);
-    }
-    double dimtsz=getTickSize()*dimscale;
-    if(dimtsz < 0.01) {
-        //display arrow
-        // Arrows:
-        RS_SolidData sd;
-        RS_Solid* arrow;
-
-        if (arrow1) {
-            // arrow 1
-            arrow = new RS_Solid(this, sd);
-            arrow->shapeArrow(p1,
-                              arrowAngle1,
-                              arrowSize);
-            arrow->setPen(pen);
-            arrow->setLayer(nullptr);
-            addEntity(arrow);
-        }
-
-        if (arrow2) {
-            // arrow 2:
-            arrow = new RS_Solid(this, sd);
-            arrow->shapeArrow(p2,
-                              arrowAngle2,
-                              arrowSize);
-            arrow->setPen(pen);
-            arrow->setLayer(nullptr);
-            addEntity(arrow);
-        }
-    }else{
-        //display ticks
-        // Arrows:
-
-        RS_Line* tick;
-        RS_Vector tickVector = RS_Vector::polar(dimtsz,arrowAngle1 + M_PI*0.25); //tick is 45 degree away
-
-        if (arrow1) {
-            // tick 1
-            tick = new RS_Line(this, p1-tickVector, p1+tickVector);
-            tick->setPen(pen);
-            tick->setLayer(nullptr);
-            addEntity(tick);
-        }
-
-        if (arrow2) {
-            // tick 2:
-            tick = new RS_Line(this, p2-tickVector, p2+tickVector);
-            tick->setPen(pen);
-            tick->setLayer(nullptr);
-            addEntity(tick);
-        }
-    }
-}
-
-
-/**
- * Creates a dimensioning line (line with one, two or no arrows and a text).
- *
- * @param forceAutoText Automatically reposition the text label.
- */
-void RS_Dimension::updateCreateDimensionLine(const RS_Vector& p1,
-        const RS_Vector& p2, bool arrow1, bool arrow2, bool forceAutoText) {
-    if (getInsideHorizontalText())
-        updateCreateHorizontalTextDimensionLine(p1, p2, arrow1, arrow2, forceAutoText);
-    else
-        updateCreateAlignedTextDimensionLine(p1, p2, arrow1, arrow2, forceAutoText);
-}
-
 
 /**
  * @return general factor for linear dimensions.
