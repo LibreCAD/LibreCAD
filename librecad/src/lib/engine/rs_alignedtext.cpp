@@ -45,6 +45,14 @@
 
 #include "qt_windows.h"
 
+double min(double _val1, double _val2)
+{
+	if (_val2 < _val1)
+		return (_val2);
+	else
+		return (_val1);
+}
+
 double TextOffset(RS_Entity *_entity, double offset, bool above)
 {
 	double
@@ -260,13 +268,19 @@ double RS_AlignedText::computeEllipseAngle(RS_Vector &_insertPoint, RS_Vector &_
 		maxAngle,
 		eTol(0.005);
 
-	ellipseAngle = distance / minorRadius;
-	ellipseDistance = _ellipse->getEllipseLength(_baseAngle, _baseAngle - ellipseAngle * _direction_multiplier);
 	double circum = _ellipse->getLength();
-	if (ellipseDistance > circum / 2.0)
-		ellipseDistance = circum - ellipseDistance;
+	distance = fmod(distance, circum);
+	ellipseAngle = distance / minorRadius;
+	if (ellipseAngle > 2 * M_PI)
+		ellipseAngle = (2 * M_PI) - 0.0001;
+	if (distance < 0.00001)
+		ellipseDistance = 0.0;
+	else if (_direction_multiplier < 0)
+		ellipseDistance = _ellipse->getEllipseLength(_baseAngle, _baseAngle - ellipseAngle * _direction_multiplier);
+	else
+		ellipseDistance = _ellipse->getEllipseLength(_baseAngle - ellipseAngle * _direction_multiplier, _baseAngle);
 	minAngle = 0.0;
-	maxAngle = ellipseAngle * 2.0;
+	maxAngle = min(ellipseAngle * 2.0, 2 * M_PI);
 	while (fabs(ellipseDistance - distance) > eTol)
 	{
 		if (ellipseDistance > distance)
@@ -279,9 +293,10 @@ double RS_AlignedText::computeEllipseAngle(RS_Vector &_insertPoint, RS_Vector &_
 			minAngle = ellipseAngle;
 			ellipseAngle = (maxAngle + ellipseAngle) / 2.0;
 		}
-		ellipseDistance = _ellipse->getEllipseLength(_baseAngle,  _baseAngle - ellipseAngle * _direction_multiplier);
-		if (ellipseDistance > circum / 2.0)
-			ellipseDistance = circum - ellipseDistance;
+		if (_direction_multiplier < 0)
+			ellipseDistance = _ellipse->getEllipseLength(_baseAngle,  _baseAngle - ellipseAngle * _direction_multiplier);
+		else
+			ellipseDistance = _ellipse->getEllipseLength(_baseAngle - ellipseAngle * _direction_multiplier, _baseAngle);
 	}
 	RS_Vector
 		endPt = _ellipse->getCenter();
