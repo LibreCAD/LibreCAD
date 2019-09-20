@@ -261,7 +261,7 @@ double RS_AlignedText::computeEllipseAngle(RS_Vector &_insertPoint, RS_Vector &_
 		eTol(0.005);
 
 	ellipseAngle = distance / minorRadius;
-	ellipseDistance = _ellipse->getEllipseLength(_baseAngle - ellipseAngle * _direction_multiplier);
+	ellipseDistance = _ellipse->getEllipseLength(_baseAngle, _baseAngle - ellipseAngle * _direction_multiplier);
 	double circum = _ellipse->getLength();
 	if (ellipseDistance > circum / 2.0)
 		ellipseDistance = circum - ellipseDistance;
@@ -279,10 +279,15 @@ double RS_AlignedText::computeEllipseAngle(RS_Vector &_insertPoint, RS_Vector &_
 			minAngle = ellipseAngle;
 			ellipseAngle = (maxAngle + ellipseAngle) / 2.0;
 		}
-		ellipseDistance = _ellipse->getEllipseLength(_baseAngle - ellipseAngle * _direction_multiplier);
+		ellipseDistance = _ellipse->getEllipseLength(_baseAngle,  _baseAngle - ellipseAngle * _direction_multiplier);
 		if (ellipseDistance > circum / 2.0)
 			ellipseDistance = circum - ellipseDistance;
 	}
+	RS_Vector
+		endPt = _ellipse->getCenter();
+	ellipseAngle = _ellipse->getCenter().angleTo(_ellipse->getEllipsePoint(_baseAngle - ellipseAngle * _direction_multiplier));
+	ellipseAngle = (_baseAngle - ellipseAngle) * _direction_multiplier;
+
 	return (ellipseAngle);
 }
 
@@ -324,6 +329,22 @@ void RS_AlignedText::update()
 
 	textEntity1->update();
 	nearestPoint = shapeEntity->getNearestPointOnEntity(data.insertionPoint);
+	if (eType == RS2::EntityEllipse)
+	{
+		RS_Ellipse
+			*nEllipse = dynamic_cast<RS_Ellipse *>(shapeEntity->clone());
+		RS_Vector
+			nEnd(data.insertionPoint);
+		RS_Line
+			nLine(nEllipse->getCenter(), nEnd);
+		nEnd.x = nEnd.x + cos(nLine.getAngle1()) * nEllipse->getMajorRadius();
+		nEnd.y = nEnd.y + sin(nLine.getAngle1()) * nEllipse->getMajorRadius();
+		nLine.setEndpoint(nEnd);
+		RS_VectorSolutions
+			nVs = RS_Information::getIntersection(nEllipse, &nLine, true);
+		nearestPoint = nVs[0];
+		delete (nEllipse);
+	}
 
 	if (eType == RS2::EntityArc || eType == RS2::EntityCircle || eType == RS2::EntityEllipse)
 		shapeAngle = setArcParams(nearestPoint);
@@ -465,11 +486,10 @@ void RS_AlignedText::update()
 					letter = ((RS_EntityContainer *)inner_tent)->firstEntity();
 				else if (direction == -1)
 					letter = ((RS_EntityContainer *)inner_tent)->lastEntity();
-				ellipse->moveStartpoint(nearestPoint);
-				ellipse->moveEndpoint(nearestPoint);
 				radius = center.distanceTo(nearestPoint);
 				baseAngle = ellipse->getEllipseAngle(nearestPoint);
 				baseDist = ellipse->getEllipseLength(baseAngle);
+
 				while (letter)
 				{
 					iLetter = (RS_Insert *)letter;
@@ -505,6 +525,7 @@ void RS_AlignedText::update()
 					angle = distance / radius;
 
 					iLetter->setInsertionPoint(tempPt.rotate(center, -ellipseAngle * direction_multiplier));
+
 					line1.setStartpoint(center);
 					line1.setEndpoint(iLetter->getInsertionPoint());
 					endpt.x = line1.getEndpoint().x + cos(line1.getAngle1()) * ellipse->getMajorRadius();
