@@ -295,6 +295,9 @@ public:
                                 RS_AtomicEntity& segment1,
                                 RS_AtomicEntity& segment2);
 
+		bool getUnlinkedText(RS_Entity *e, std::vector<RS_Entity *>&addList);
+		bool getExplodedText(RS_Entity *e, std::vector<RS_Entity *>&addList);
+
 private:
     void deselectOriginals(bool remove);
 	void addNewEntities(std::vector<RS_Entity*>& addList);

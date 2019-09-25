@@ -42,6 +42,8 @@
 #include "rs_debug.h"
 #include "rs_graphicview.h"
 #include "rs_painter.h"
+#include "rs_graphic.h"
+#include "rs_modification.h"
 
 #include "qt_windows.h"
 
@@ -748,4 +750,112 @@ void RS_AlignedText::draw(RS_Painter* painter, RS_GraphicView* view, double& pat
     {
         view->drawEntity(painter, e);
     }
+}
+
+#if 0
+// This has gnerally the right idea, but not sure how to get 'undo' to work properly for it
+RS_Block *RS_AlignedText::createBlock(bool _createBlock)
+{
+	RS_Entity
+		*textContainer(0),
+		*letter,
+		*textEntity = data.textEntity;
+	RS2::EntityType
+		tType = textEntity->rtti();
+	RS_Insert
+		*iLetter;
+	RS_Block
+		*b(0);
+	RS_Graphic
+		*graphic = parent->getGraphic();
+	RS_Insert
+		*i(0);
+
+	if (tType == RS2::EntityMText)
+		textContainer = ((RS_EntityContainer *)textEntity)->firstEntity();
+	else
+		textContainer = textEntity;
+	std::vector<RS_Entity *> addList;
+
+	RS_Modification
+		modify(*((RS_EntityContainer *)textContainer), NULL, false);
+	if (textContainer)
+	{
+		if (modify.getExplodedText(textEntity, addList))
+		{
+			letter = ((RS_EntityContainer *)textContainer)->firstEntity();
+			iLetter = (RS_Insert *)letter;
+
+			int
+				count(1);
+			char
+				baseName[50];
+			strcpy(baseName, "textBlock");
+			QString
+				blockName;
+			blockName = baseName;
+			while (graphic->findBlock(blockName) != 0)
+				blockName = baseName + QString("%1").arg(count++);
+			RS_BlockData bd = RS_BlockData(blockName, iLetter->getInsertionPoint(), false);
+			b = new RS_Block(graphic, bd);
+			b->visibleInBlockList(false);
+			b->reparent(graphic);
+			b->setLayer(textContainer->getLayer());
+			b->setPen(textContainer->getPen());
+			graphic->addBlock(b);
+			
+			if (_createBlock)
+			{
+				// create insert object for the paste block
+				RS_Vector vfactor(1.0, 1.0);
+				double angle(0.0);
+				RS_InsertData di = RS_InsertData(b->getName(), iLetter->getInsertionPoint(), vfactor, angle, 1, 1, RS_Vector(0.0, 0.0));
+				i = new RS_Insert(graphic, di);
+				i->setLayer(textContainer->getLayer());
+				i->setPen(textContainer->getPen());
+				i->reparent(graphic);
+				graphic->addEntity(i);
+				// end of insert object for paste block
+			}
+
+			for (RS_Entity* e : addList)
+			{
+				if (e)
+				{
+					b->addEntity(e);
+					e->setLayer(textContainer->getLayer());
+					e->setPen(textContainer->getPen(false));
+					e->setSelected(false);
+					e->reparent(b);
+				}
+			}
+			if (i)
+			{
+				i->update();
+				i->setSelected(false);
+			}
+		}
+	}
+	return (b);
+}
+#endif
+
+bool RS_AlignedText::getUnlinkedText(RS_EntityContainer *container, std::vector<RS_Entity *>&addList)
+{
+	bool
+		result(false),
+		unselect(false);
+
+	RS_Modification
+		modify(*container, NULL, false);
+	if (!this->isSelected())
+	{
+		this->setSelected(true);
+		unselect = true;
+	}
+	result = modify.getUnlinkedText(this, addList);
+	if (unselect)
+		this->setSelected(false);
+
+	return (result);
 }

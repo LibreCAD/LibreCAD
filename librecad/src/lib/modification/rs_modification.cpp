@@ -3381,9 +3381,13 @@ bool RS_Modification::unlinkAlignedTextFromGeometry()
 					t1->update();
 				}
 				else if (text->AlignedMText())
+				{
 					explodeTextIntoLetters(text->getRSMText(), addList);
+				}
 				else
-					explodeTextIntoLetters(text->getRSMText(), addList);
+				{
+					explodeTextIntoLetters(text->getRSText(), addList);
+				}
             } else {
                 e->setSelected(false);
             }
@@ -3393,8 +3397,57 @@ bool RS_Modification::unlinkAlignedTextFromGeometry()
     LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
     deselectOriginals(true);
     addNewEntities(addList);
+	if (graphicView)
+		graphicView->redraw(RS2::RedrawDrawing);
 
     return true;
+}
+
+bool RS_Modification::getUnlinkedText(RS_Entity *e, std::vector<RS_Entity*>& addList)
+{
+	if (e && e->isSelected()) {
+		if (e->rtti() == RS2::EntityAlignedText) {
+			RS_AlignedText * text = (RS_AlignedText *)e;
+			text->getGeometryEntity()->setSelected(false);
+			if (text->getGeometryEntity()->rtti() == RS2::EntityLine)
+			{
+				RS_Entity *t1 = text->getTextEntity()->clone();
+				addList.push_back(t1);
+				t1->setParent(container);
+				t1->update();
+			}
+			else		
+				getExplodedText(text->getTextEntity(), addList);
+		}
+	}
+	return (true);
+}
+
+bool RS_Modification::getExplodedText(RS_Entity *e, std::vector<RS_Entity*>& addList)
+{
+	if (e && e->isSelected()) {
+		if (e->rtti() == RS2::EntityMText) {
+			// add letters of text:
+			RS_MText* text = (RS_MText*)e;
+			explodeTextIntoLetters(text, addList);
+		}
+		else if (e->rtti() == RS2::EntityText) {
+			// add letters of text:
+			RS_Text* text = (RS_Text*)e;
+			explodeTextIntoLetters(text, addList);
+		}
+		else if (e->rtti() == RS2::EntityAlignedText) {
+			RS_AlignedText * text = (RS_AlignedText *)e;
+			if (text->AlignedMText())
+				explodeTextIntoLetters(text->getRSMText(), addList);
+			else
+				explodeTextIntoLetters(text->getRSText(), addList);
+		}
+		else {
+			e->setSelected(false);
+		}
+	}
+	return (true);
 }
 
 bool RS_Modification::explodeTextIntoLetters() {
@@ -3422,7 +3475,7 @@ bool RS_Modification::explodeTextIntoLetters() {
 				if (text->AlignedMText())
 					explodeTextIntoLetters(text->getRSMText(), addList);
 				else
-					explodeTextIntoLetters(text->getRSMText(), addList);
+					explodeTextIntoLetters(text->getRSText(), addList);
             } else {
                 e->setSelected(false);
             }
