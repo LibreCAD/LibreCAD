@@ -60,7 +60,8 @@ void RS_ActionModifyMove::trigger() {
 	m.move(pPoints->data);
 
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
-    finish(false);
+	if (pPoints->data.number == 0) // move operation
+		finish(false);
 }
 
 
@@ -80,11 +81,8 @@ void RS_ActionModifyMove::mouseMoveEvent(QMouseEvent* e) {
         case SetTargetPoint:
 			if (pPoints->referencePoint.valid) {
 				pPoints->targetPoint = mouse;
-
-                deletePreview();
-                preview->addSelectionFrom(*container);
-				preview->move(pPoints->targetPoint-pPoints->referencePoint);
-                drawPreview();
+				pPoints->data.amount = mouse - pPoints->referencePoint;
+				drawMovePreview();
             }
             break;
 
@@ -104,7 +102,7 @@ void RS_ActionModifyMove::mouseReleaseEvent(QMouseEvent* e) {
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
         deletePreview();
-        init(getStatus()-1);
+        finish(true);
     }
 }
 
@@ -120,21 +118,19 @@ void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent* e) {
     case SetReferencePoint:
 		pPoints->referencePoint = pos;
 		graphicView->moveRelativeZero(pPoints->referencePoint);
+		if (RS_DIALOGFACTORY->requestMoveDialog(pPoints->data)) {
+			if (pPoints->data.number < 0) {
+				pPoints->data.number = abs(pPoints->data.number);
+				RS_DIALOGFACTORY->commandMessage(tr("Invalid number of copies, use %1 ").arg(pPoints->data.number));
+			}
+		}
         setStatus(SetTargetPoint);
         break;
 
     case SetTargetPoint:
 		pPoints->targetPoint = pos;
-		graphicView->moveRelativeZero(pPoints->targetPoint);
-        setStatus(ShowDialog);
-		if (RS_DIALOGFACTORY->requestMoveDialog(pPoints->data)) {
-			if(pPoints->data.number<0){
-				pPoints->data.number=abs(pPoints->data.number);
-				RS_DIALOGFACTORY->commandMessage(tr("Invalid number of copies, use %1 ").arg(pPoints->data.number));
-            }
-			pPoints->data.offset = pPoints->targetPoint - pPoints->referencePoint;
-            trigger();
-        }
+		pPoints->data.amount = pos - pPoints->referencePoint;
+		trigger();
         break;
 
     default:
@@ -145,10 +141,6 @@ void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent* e) {
 
 void RS_ActionModifyMove::updateMouseButtonHints() {
 	switch (getStatus()) {
-	/*case Select:
-			RS_DIALOGFACTORY->updateMouseWidget(tr("Pick entities to move"),
-										   tr("Cancel"));
-			break;*/
 	case SetReferencePoint:
 		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
 											tr("Cancel"));
@@ -169,6 +161,20 @@ void RS_ActionModifyMove::updateMouseCursor() {
         if(graphicView != NULL){
     graphicView->setMouseCursor(RS2::CadCursor);
         }
+}
+
+void RS_ActionModifyMove::drawMovePreview()
+{
+	RS_Modification m(*container, graphicView);
+	QList<RS_Entity*> previewEntities;
+
+	deletePreview();
+	m.move(pPoints->data, &previewEntities);
+	for (auto e : previewEntities) {
+		preview->addEntity(e);
+	}
+
+	drawPreview();
 }
 
 // EOF

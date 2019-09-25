@@ -262,44 +262,22 @@ void RS_Dimension::updateCreateDimensionLine(const RS_Vector& p1,
     RS_MTextData textData;
     RS_Vector textPos;
 	double textAngle = 0.0;
-	if (getInsideHorizontalText()) {		
-		if (!data.middleOfText.valid || forceAutoText) {
-			textPos = dimensionLine->getMiddlePoint();
-
-			//// the next update should still be able to adjust this
-			////   auto text position. leave it invalid
-			data.middleOfText = textPos;
-		}
-		else {
-			textPos = data.middleOfText;
-		}
-	}
 		
-	else {
+	if (!getInsideHorizontalText()) {
 		bool corrected = false;
-		double dimAngle1 = dimensionLine->getAngle1();
-		textAngle = RS_Math::makeAngleReadable(dimAngle1, true, &corrected);
-
-		if (data.middleOfText.valid && !forceAutoText) {
-			textPos = data.middleOfText;
-		}
-		else {
-			textPos = dimensionLine->getMiddlePoint();
-
-			// rotate text so it's readable from the bottom or right (ISO)
-			// quadrant 1 & 4
-			/*double const a = corrected ? -M_PI_2 : M_PI_2;
-			RS_Vector distV = RS_Vector::polar(dimgap + dimtxt / 2.0, dimAngle1 + a);*/
-
-			// move text away from dimension line:
-			//textPos += distV;
-
-			//// the next update should still be able to adjust this
-			////   auto text position. leave it invalid
-			data.middleOfText = textPos;
-		}
+		textAngle = RS_Math::makeAngleReadable(dimensionLine->getAngle1(), true, &corrected);
 	}
-    
+
+	if (data.middleOfText.valid && !forceAutoText) {
+		textPos = data.middleOfText;
+	}
+	else {
+		textPos = dimensionLine->getMiddlePoint();
+
+		//// the next update should still be able to adjust this
+		////   auto text position. leave it invalid
+		data.middleOfText = textPos;
+	}    
 
     textData = RS_MTextData(textPos,
                             dimtxt, 30.0,

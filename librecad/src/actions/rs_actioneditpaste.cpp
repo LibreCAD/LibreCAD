@@ -66,9 +66,7 @@ void RS_ActionEditPaste::trigger() {
 	m.paste(RS_PasteData(*targetPoint, 1.0, 0.0, false, ""));
     //std::cout << *RS_Clipboard::instance();
 
-	graphicView->redraw(RS2::RedrawDrawing); 
-
-    finish(false);
+	graphicView->redraw(RS2::RedrawDrawing);
 }
 
 

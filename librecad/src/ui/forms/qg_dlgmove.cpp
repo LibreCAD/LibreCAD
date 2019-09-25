@@ -72,6 +72,8 @@ void QG_DlgMove::init() {
         (bool)RS_SETTINGS->readNumEntry("/MoveUseCurrentLayer", 0);
     useCurrentAttributes =
         (bool)RS_SETTINGS->readNumEntry("/MoveUseCurrentAttributes", 0);
+	leOffsetX->setText(RS_SETTINGS->readEntry("/MoveOffsetX", "0"));
+	leOffsetY->setText(RS_SETTINGS->readEntry("/MoveOffsetY", "0"));
     RS_SETTINGS->endGroup();
 
     switch (numberMode) {
@@ -107,6 +109,8 @@ void QG_DlgMove::destroy() {
                             (int)cbCurrentLayer->isChecked());
     RS_SETTINGS->writeEntry("/MoveUseCurrentAttributes",
                             (int)cbCurrentAttributes->isChecked());
+	RS_SETTINGS->writeEntry("/MoveOffsetX", leOffsetX->text());
+	RS_SETTINGS->writeEntry("/MoveOffsetY", leOffsetY->text());
     RS_SETTINGS->endGroup();
 }
 
@@ -130,6 +134,8 @@ void QG_DlgMove::updateData() {
             }
             leNumber->setText(QString::number(abs(data->number)));
         }
+		data->offset.x = RS_Math::eval(leOffsetX->text(), &ok);
+		data->offset.y = RS_Math::eval(leOffsetY->text(), &ok);
     }
     data->useCurrentAttributes = cbCurrentAttributes->isChecked();
     data->useCurrentLayer = cbCurrentLayer->isChecked();

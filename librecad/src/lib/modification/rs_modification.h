@@ -50,6 +50,7 @@ public:
     bool useCurrentAttributes;
     bool useCurrentLayer;
     RS_Vector offset;
+	RS_Vector amount;
 };
 
 
@@ -114,8 +115,9 @@ public:
     bool useCurrentAttributes;
     bool useCurrentLayer;
     RS_Vector referencePoint;
-        RS_Vector offset;
-        double angle;
+    RS_Vector offset;
+    double angle;
+	RS_Vector amount;
 };
 
 
@@ -244,11 +246,11 @@ private:
 public:
         void paste(const RS_PasteData& data, RS_Graphic* source=NULL);
 
-    bool move(RS_MoveData& data);
+    bool move(RS_MoveData& data, QList<RS_Entity*>* preview = nullptr);
     bool rotate(RS_RotateData& data);
     bool scale(RS_ScaleData& data);
     bool mirror(RS_MirrorData& data);
-    bool moveRotate(RS_MoveRotateData& data);
+    bool moveRotate(RS_MoveRotateData& data, QList<RS_Entity*>* preview = nullptr);
     bool rotate2(RS_Rotate2Data& data);
 
     bool trim(const RS_Vector& trimCoord, RS_AtomicEntity* trimEntity,

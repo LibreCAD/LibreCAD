@@ -46,8 +46,6 @@ public:
     enum Status {
         SetReferencePoint,    /**< Setting the reference point. */
         SetTargetPoint,       /**< Setting the target point. */
-        ShowDialog,           /**< Showing the options dialog. */
-		SetAngle              /**< Setting angle in command line. */ 
     };
 
 public:
@@ -64,7 +62,6 @@ public:
 	
 	void coordinateEvent(RS_CoordinateEvent* e) override;
 	void commandEvent(RS_CommandEvent* e) override;
-		QStringList getAvailableCommands() override;
 
 	void hideOptions() override;
 	void showOptions() override;
@@ -74,6 +71,9 @@ public:
 
 	void setAngle(double a);
 	double getAngle() const;
+
+private:
+	void drawMovePreview();
 
 private:
 	struct Points;

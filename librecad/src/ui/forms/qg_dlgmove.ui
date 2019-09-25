@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>398</width>
-    <height>218</height>
+    <height>287</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,14 +25,14 @@
   <property name="windowTitle">
    <string>Move/Copy Options</string>
   </property>
-  <layout class="QGridLayout">
-   <item row="0" column="0" rowspan="3">
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0" rowspan="4">
     <widget class="QGroupBox" name="bgNumber">
      <property name="title">
       <string>Number of copies</string>
      </property>
-     <layout class="QVBoxLayout">
-      <item>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0" colspan="3">
        <widget class="QRadioButton" name="rbMove">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -51,7 +51,7 @@
         </property>
        </widget>
       </item>
-      <item>
+      <item row="1" column="0" colspan="3">
        <widget class="QRadioButton" name="rbCopy">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -70,7 +70,7 @@
         </property>
        </widget>
       </item>
-      <item>
+      <item row="2" column="0" colspan="3">
        <widget class="QRadioButton" name="rbMultiCopy">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -89,44 +89,88 @@
         </property>
        </widget>
       </item>
-      <item>
+      <item row="3" column="0">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>3</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLabel" name="lblQuantity">
+        <property name="text">
+         <string>Quantity</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
        <widget class="QLineEdit" name="leNumber">
         <property name="toolTip">
          <string>Number of copies. Maximum 100</string>
         </property>
        </widget>
       </item>
-      <item>
-       <spacer name="spacer7">
+      <item row="4" column="0">
+       <spacer name="horizontalSpacer_2">
         <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Expanding</enum>
+         <enum>Qt::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>20</width>
-          <height>130</height>
+          <width>3</width>
+          <height>20</height>
          </size>
         </property>
        </spacer>
       </item>
+      <item row="4" column="1">
+       <widget class="QLabel" name="lblOffsetX">
+        <property name="text">
+         <string>Offset X</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2">
+       <widget class="QLineEdit" name="leOffsetX">
+        <property name="toolTip">
+         <string>Number of copies. Maximum 100</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>3</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLabel" name="lblOffsetY">
+        <property name="text">
+         <string>Offset Y</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="QLineEdit" name="leOffsetY">
+        <property name="toolTip">
+         <string>Number of copies. Maximum 100</string>
+        </property>
+       </widget>
+      </item>
      </layout>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QCheckBox" name="cbCurrentAttributes">
-     <property name="text">
-      <string>Use current &amp;attributes</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QCheckBox" name="cbCurrentLayer">
-     <property name="text">
-      <string>Use current &amp;layer</string>
-     </property>
     </widget>
    </item>
    <item row="0" column="1">
@@ -146,7 +190,34 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0" colspan="2">
+   <item row="1" column="1">
+    <widget class="QCheckBox" name="cbCurrentAttributes">
+     <property name="text">
+      <string>Use current &amp;attributes</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QCheckBox" name="cbCurrentLayer">
+     <property name="text">
+      <string>Use current &amp;layer</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>101</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="4" column="1">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
@@ -167,12 +238,12 @@
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>39</x>
+     <y>51</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
+     <x>96</x>
+     <y>178</y>
     </hint>
    </hints>
   </connection>
@@ -183,12 +254,12 @@
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>39</x>
+     <y>93</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
+     <x>96</x>
+     <y>178</y>
     </hint>
    </hints>
   </connection>
@@ -199,12 +270,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>39</x>
+     <y>136</y>
     </hint>
     <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
+     <x>96</x>
+     <y>178</y>
     </hint>
    </hints>
   </connection>
@@ -215,8 +286,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>198</x>
-     <y>201</y>
+     <x>388</x>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -231,12 +302,108 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>198</x>
-     <y>201</y>
+     <x>388</x>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
      <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rbMultiCopy</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>leOffsetX</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>35</x>
+     <y>133</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>78</x>
+     <y>196</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rbCopy</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>leOffsetX</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>24</x>
+     <y>89</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>91</x>
+     <y>198</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rbMove</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>leOffsetX</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>159</x>
+     <y>58</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>159</x>
+     <y>197</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rbMultiCopy</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>leOffsetY</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>60</x>
+     <y>132</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>80</x>
+     <y>220</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rbCopy</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>leOffsetY</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>81</x>
+     <y>87</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>90</x>
+     <y>224</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rbMove</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>leOffsetY</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>64</x>
+     <y>46</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>87</x>
+     <y>218</y>
     </hint>
    </hints>
   </connection>
