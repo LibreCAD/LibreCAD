@@ -1580,7 +1580,7 @@ RS_Polyline* RS_Modification::polylineTrim(RS_Polyline& polyline,
  * Moves all selected entities with the given data for the move
  * modification.
  */
-bool RS_Modification::move(RS_MoveData& data) {
+bool RS_Modification::move(RS_MoveData& data, QList<RS_Entity*>* preview) {
 	if (!container) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::move: no valid container");
@@ -1588,19 +1588,15 @@ bool RS_Modification::move(RS_MoveData& data) {
     }
 
 	std::vector<RS_Entity*> addList;
-
-    // Create new entities
-    for (int num=1;
-            num<=data.number || (data.number==0 && num<=1);
-            num++) {
-        // too slow:
-        //for (unsigned i=0; i<container->count(); ++i) {
-		//RS_Entity* e = container->entityAt(i);
+	int num = 0;    
+	do {	
 		for(auto e: *container){
 			if (e && e->isSelected()) {
                 RS_Entity* ec = e->clone();
 
                 ec->move(data.offset*num);
+				if (data.amount.valid)
+					ec->move(data.amount);
                 if (data.useCurrentLayer) {
                     ec->setLayerToActive();
                 }
@@ -1610,16 +1606,23 @@ bool RS_Modification::move(RS_MoveData& data) {
                 if (ec->rtti()==RS2::EntityInsert) {
                     ((RS_Insert*)ec)->update();
                 }
-                // since 2.0.4.0: keep selection
-                ec->setSelected(true);
+				ec->setSelected(data.number == 0);
 				addList.push_back(ec);
             }
         }
-    }
+	} while (++num < data.number);
 
-    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
-    deselectOriginals(data.number==0);
-    addNewEntities(addList);
+	if (preview) {
+		for (auto e : addList)
+			preview->append(e);
+	}
+	else {
+		LC_UndoSection undo(document, handleUndo); // bundle remove/add entities in one undoCycle
+		if (data.number == 0)
+			deselectOriginals(true);
+		addNewEntities(addList);
+	}
+    
 
     return true;
 }
@@ -1912,7 +1915,7 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data) {
 /**
  * Moves and rotates entities with the given parameters.
  */
-bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
+bool RS_Modification::moveRotate(RS_MoveRotateData& data, QList<RS_Entity*>* preview) {
 	if (!container) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::moveRotate: no valid container");
@@ -1920,22 +1923,18 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
     }
 
 	std::vector<RS_Entity*> addList;
-
-    // Create new entities
-    for (int num=1;
-            num<=data.number || (data.number==0 && num<=1);
-			++num) {
-		for(auto e: *container){
-            //for (unsigned i=0; i<container->count(); ++i) {
-            //RS_Entity* e = container->entityAt(i);
-
+	int num = 1;
+	do {
+    	for(auto e: *container){
+    
             if (e && e->isSelected()) {
                 RS_Entity* ec = e->clone();
-                ec->setSelected(false);
+                ec->setSelected(data.number == 0);
 
-                ec->move(data.offset*num);
-                ec->rotate(data.referencePoint + data.offset*num,
-                           data.angle*num);
+				if (data.amount.valid)
+					ec->move(data.amount);
+
+				ec->rotate(data.referencePoint + data.amount, data.angle*num);
                 if (data.useCurrentLayer) {
                     ec->setLayerToActive();
                 }
@@ -1948,11 +1947,18 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
 				addList.push_back(ec);
             }
         }
-    }
+	} while (num++ < data.number);
 
-    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
-    deselectOriginals(data.number==0);
-    addNewEntities(addList);
+	if (preview) {
+		for (auto e : addList)
+			preview->append(e);
+	}
+	else {
+		LC_UndoSection undo(document, handleUndo); // bundle remove/add entities in one undoCycle
+		if (data.number == 0)
+			deselectOriginals(true);
+		addNewEntities(addList);
+	}
 
     return true;
 }

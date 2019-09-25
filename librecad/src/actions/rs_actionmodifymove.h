@@ -44,8 +44,7 @@ public:
 	 */
 	enum Status {
 		SetReferencePoint,    /**< Setting the reference point. */
-		SetTargetPoint,       /**< Setting the target point. */
-		ShowDialog            /**< Showing the options dialog. */
+		SetTargetPoint       /**< Setting the target point. */
 	};
 
 public:
@@ -62,6 +61,9 @@ public:
 
 	void updateMouseButtonHints() override;
 	void updateMouseCursor() override;
+
+private:
+	void drawMovePreview();
 
 private:
 	struct Points;
