@@ -57,6 +57,7 @@
 #include "rs_graphicview.h"
 #include "rs_dialogfactory.h"
 #include "rs_math.h"
+#include "rs_alignedtext.h"
 
 #ifdef DWGSUPPORT
 #include "libdwgr.h"
@@ -2123,6 +2124,9 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
     case RS2::EntityText:
         writeText((RS_Text*)e);
         break;
+	case RS2::EntityAlignedText:
+		writeAlignedText((RS_AlignedText *)e);
+		break;
     case RS2::EntityDimLinear:
     case RS2::EntityDimAligned:
     case RS2::EntityDimAngular:
@@ -2489,6 +2493,14 @@ void RS_FilterDXFRW::writeInsert(RS_Insert* i) {
     dxfW->writeInsert(&in);
 }
 
+
+void RS_FilterDXFRW::writeAlignedText(RS_AlignedText *t)
+{
+	std::vector<RS_Entity *>list;
+	t->getUnlinkedText(t, list);
+	for (auto e : list)
+		this->writeEntity(e);
+}
 
 /**
  * Writes the given mText entity to the file.

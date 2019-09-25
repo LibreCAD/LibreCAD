@@ -233,6 +233,10 @@ public:
 //	}
 
 #endif
+
+	// RS_Block *createBlock(bool _realBlock = true);
+	bool getUnlinkedText(RS_EntityContainer *container, std::vector<RS_Entity *>&addList);
+
     /**
      * @return The insertion point as endpoint.
      */

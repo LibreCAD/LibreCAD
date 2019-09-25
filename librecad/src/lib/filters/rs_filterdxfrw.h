@@ -50,6 +50,7 @@ class RS_Image;
 class RS_Leader;
 class RS_Polyline;
 class DL_WriterA;
+class RS_AlignedText;
 
 /**
  * This format filter class can import and export DXF files.
@@ -149,6 +150,7 @@ public:
     void writeSpline(RS_Spline* s);
 	void writeSplinePoints(LC_SplinePoints *s);
     void writeInsert(RS_Insert* i);
+    void writeAlignedText(RS_AlignedText* t);
     void writeMText(RS_MText* t);
     void writeText(RS_Text* t);
     void writeHatch(RS_Hatch* h);
