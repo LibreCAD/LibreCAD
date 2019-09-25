@@ -52,6 +52,7 @@ public slots:
     virtual void updateDimLengthPrecision();
     virtual void updateDimAnglePrecision();
     virtual void updatePaperPreview();
+	virtual void updateTemplate();
 
 protected slots:
     virtual void languageChange();

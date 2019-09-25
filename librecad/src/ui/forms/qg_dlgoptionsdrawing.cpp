@@ -133,6 +133,11 @@ void QG_DlgOptionsDrawing::init() {
     gvPaperPreview->setBackgroundBrush(this->palette().color(QPalette::Window));
 
     cbDimTxSty->init();
+
+	RS_SETTINGS->beginGroup("/Paths");
+	QString drawingTemplate = RS_SETTINGS->readEntry("/Template", "").trimmed();
+	RS_SETTINGS->endGroup();
+	btnUpdateTemplate->setVisible(!drawingTemplate.isEmpty());
 }
 
 
@@ -853,6 +858,20 @@ void QG_DlgOptionsDrawing::updatePaperPreview() {
                         QPen(Qt::NoPen), QBrush(Qt::white));
 }
 
+void QG_DlgOptionsDrawing::updateTemplate()
+{
+	RS_SETTINGS->beginGroup("/Paths");
+	QString drawingTemplate = RS_SETTINGS->readEntry("/Template", "").trimmed();
+	RS_SETTINGS->endGroup();
+	if (!drawingTemplate.isEmpty()) {
+		RS_Graphic* g = new RS_Graphic();
+		if (g->open(drawingTemplate, RS2::FormatDXFRW)) {
+			updateGraphic(g);
+			g->save();
+		}
+		delete g;
+	}
+}
 
 void QG_DlgOptionsDrawing::resizeEvent(QResizeEvent* event) {
     updatePaperPreview();

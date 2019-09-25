@@ -232,7 +232,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
             data.number = 0;
             data.useCurrentLayer = false;
             data.useCurrentAttributes = false;
-			data.offset = pPoints->v2 - pPoints->v1;
+			data.amount = pPoints->v2 - pPoints->v1;
             m.move(data);
             setStatus(Neutral);
             RS_DIALOGFACTORY->updateSelectionWidget(
