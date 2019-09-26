@@ -2614,6 +2614,9 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
 		}
 	}
 	if (handleUndo) {
+		std::vector<RS_Entity *> addList;
+		unlinkTextFrom(cutEntity, addList, &undo);
+		addNewEntities(addList);
 		cutEntity->setUndoState(true);
 		undo.addUndoable(cutEntity);
 	}
@@ -2679,6 +2682,9 @@ bool RS_Modification::cut2(const RS_Vector & cutCoord1, const RS_Vector & cutCoo
 		}
 	}
 	if (handleUndo) {
+		std::vector<RS_Entity *> addList;
+		unlinkTextFrom(cutEntity, addList, &undo);
+		addNewEntities(addList);
 		cutEntity->setUndoState(true);
 		undo.addUndoable(cutEntity);
 	}
