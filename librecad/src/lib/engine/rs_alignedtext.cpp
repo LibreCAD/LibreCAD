@@ -843,19 +843,12 @@ RS_Block *RS_AlignedText::createBlock(bool _createBlock)
 bool RS_AlignedText::getUnlinkedText(RS_EntityContainer *container, std::vector<RS_Entity *>&addList)
 {
 	bool
-		result(false),
-		unselect(false);
+		result(false);
 
 	RS_Modification
 		modify(*container, NULL, false);
-	if (!this->isSelected())
-	{
-		this->setSelected(true);
-		unselect = true;
-	}
-	result = modify.getUnlinkedText(this, addList);
-	if (unselect)
-		this->setSelected(false);
+
+	result = modify.getUnlinkedText(this, addList, false);
 
 	return (result);
 }

@@ -40,6 +40,7 @@ class RS_Polyline;
 class RS_Document;
 class RS_Graphic;
 class RS_GraphicView;
+class LC_UndoSection;
 
 /**
  * Holds the data needed for move modifications.
@@ -297,7 +298,7 @@ public:
                                 RS_AtomicEntity& segment1,
                                 RS_AtomicEntity& segment2);
 
-		bool getUnlinkedText(RS_Entity *e, std::vector<RS_Entity *>&addList);
+		bool getUnlinkedText(RS_Entity *e, std::vector<RS_Entity *>&addList, bool _require_selection = true, bool _unselect_geometry = true);
 		bool getExplodedText(RS_Entity *e, std::vector<RS_Entity *>&addList);
 
 private:
@@ -306,6 +307,8 @@ private:
 	bool explodeTextIntoLetters(RS_MText* text, std::vector<RS_Entity*>& addList);
 	bool explodeTextIntoLetters(RS_Text* text, std::vector<RS_Entity*>& addList);
 	bool doCut(const RS_Vector& cutCoord, RS_AtomicEntity* cutEntity, QList<RS_AtomicEntity*>& pieces);
+
+	bool RS_Modification::unlinkTextFrom(RS_Entity *entity, std::vector<RS_Entity*>& addList, LC_UndoSection *undo = 0);
 
 protected:
     RS_EntityContainer* container;

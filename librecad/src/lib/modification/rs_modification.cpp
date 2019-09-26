@@ -1587,12 +1587,17 @@ bool RS_Modification::move(RS_MoveData& data, QList<RS_Entity*>* preview) {
         return false;
     }
 
-	std::vector<RS_Entity*> addList;
+	LC_UndoSection undo(document, handleUndo); // bundle remove/add entities in one undoCycle
+	std::vector<RS_Entity *> addList;
 	int num = 0;    
 	do {	
 		for(auto e: *container){
 			if (e && e->isSelected()) {
+
                 RS_Entity* ec = e->clone();
+
+				if (!preview && data.number == 0)
+					unlinkTextFrom(e, addList, &undo);
 
                 ec->move(data.offset*num);
 				if (data.amount.valid)
@@ -1617,7 +1622,7 @@ bool RS_Modification::move(RS_MoveData& data, QList<RS_Entity*>* preview) {
 			preview->append(e);
 	}
 	else {
-		LC_UndoSection undo(document, handleUndo); // bundle remove/add entities in one undoCycle
+//		LC_UndoSection undo(document, handleUndo); // bundle remove/add entities in one undoCycle
 		if (data.number == 0)
 			deselectOriginals(true);
 		addNewEntities(addList);
@@ -1641,6 +1646,7 @@ bool RS_Modification::offset(const RS_OffsetData& data) {
     }
 
 	std::vector<RS_Entity*> addList;
+	LC_UndoSection undo(document, handleUndo); // bundle remove/add entities in one undoCycle
 
     // Create new entities
     for (int num=1;
@@ -1669,11 +1675,12 @@ bool RS_Modification::offset(const RS_OffsetData& data) {
                 // since 2.0.4.0: keep selection
                 ec->setSelected(true);
 				addList.push_back(ec);
+				if (data.number == 0)
+					unlinkTextFrom(e, addList, &undo);
             }
         }
     }
 
-    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
     deselectOriginals(data.number==0);
     addNewEntities(addList);
 
@@ -1693,6 +1700,7 @@ bool RS_Modification::rotate(RS_RotateData& data) {
         return false;
     }
 
+    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
 	std::vector<RS_Entity*> addList;
 
     // Create new entities
@@ -1718,11 +1726,12 @@ bool RS_Modification::rotate(RS_RotateData& data) {
                     ((RS_Insert*)ec)->update();
                 }
 				addList.push_back(ec);
+				if (data.number == 0)
+					unlinkTextFrom(e, addList, &undo);
             }
         }
     }
 
-    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
     deselectOriginals(data.number==0);
     addNewEntities(addList);
 
@@ -1741,7 +1750,7 @@ bool RS_Modification::scale(RS_ScaleData& data) {
                         "RS_Modification::scale: no valid container");
         return false;
     }
-
+    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
 	std::vector<RS_Entity*> selectedList,addList;
 
 	for(auto ec: *container){
@@ -1797,11 +1806,12 @@ bool RS_Modification::scale(RS_ScaleData& data) {
                     ((RS_Insert*)ec)->update();
                 }
 				addList.push_back(ec);
+				if (data.number == 0)
+					unlinkTextFrom(e, addList, &undo);
             }
         }
     }
 
-    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
     deselectOriginals(data.number==0);
     addNewEntities(addList);
 
@@ -1821,6 +1831,7 @@ bool RS_Modification::mirror(RS_MirrorData& data) {
         return false;
     }
 
+    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
 	std::vector<RS_Entity*> addList;
 
     // Create new entities
@@ -1846,11 +1857,12 @@ bool RS_Modification::mirror(RS_MirrorData& data) {
                     ((RS_Insert*)ec)->update();
                 }
 				addList.push_back(ec);
+				if (data.copy == false)
+					unlinkTextFrom(e, addList, &undo);
             }
         }
     }
 
-    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
     deselectOriginals(data.copy==false);
     addNewEntities(addList);
 
@@ -1869,6 +1881,7 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data) {
         return false;
     }
 
+    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
 	std::vector<RS_Entity*> addList;
 
     // Create new entities
@@ -1899,11 +1912,12 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data) {
                     ((RS_Insert*)ec)->update();
                 }
 				addList.push_back(ec);
+				if (data.number == 0)
+					unlinkTextFrom(e, addList, &undo);
             }
         }
     }
 
-    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
     deselectOriginals(data.number==0);
     addNewEntities(addList);
 
@@ -1922,6 +1936,7 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data, QList<RS_Entity*>* pre
         return false;
     }
 
+	LC_UndoSection undo(document, handleUndo); // bundle remove/add entities in one undoCycle
 	std::vector<RS_Entity*> addList;
 	int num = 1;
 	do {
@@ -1945,6 +1960,8 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data, QList<RS_Entity*>* pre
                     ((RS_Insert*)ec)->update();
                 }
 				addList.push_back(ec);
+				if (!preview && data.number == 0)
+					unlinkTextFrom(e, addList, &undo);
             }
         }
 	} while (num++ < data.number);
@@ -1954,7 +1971,7 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data, QList<RS_Entity*>* pre
 			preview->append(e);
 	}
 	else {
-		LC_UndoSection undo(document, handleUndo); // bundle remove/add entities in one undoCycle
+//		LC_UndoSection undo(document, handleUndo); // bundle remove/add entities in one undoCycle
 		if (data.number == 0)
 			deselectOriginals(true);
 		addNewEntities(addList);
@@ -2249,15 +2266,19 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
 
     if (handleUndo) {
         LC_UndoSection undo( document);
-
+		std::vector<RS_Entity *> addList;
+		
         undo.addUndoable(trimmed1);
+		unlinkTextFrom(trimEntity, addList, &undo);
         trimEntity->setUndoState(true);
         undo.addUndoable(trimEntity);
         if (trimBoth) {
             undo.addUndoable(trimmed2);
+			unlinkTextFrom(limitEntity, addList, &undo);
             limitEntity->setUndoState(true);
             undo.addUndoable(limitEntity);
         }
+		addNewEntities(addList);
     }
 
     return true;
@@ -2311,8 +2332,11 @@ bool RS_Modification::trimAmount(const RS_Vector& trimCoord,
     if (handleUndo) {
         LC_UndoSection undo( document);
 
+		std::vector<RS_Entity *> addList;
         undo.addUndoable(trimmed);
+		unlinkTextFrom(trimEntity, addList, &undo);
         trimEntity->setUndoState(true);
+		addNewEntities(addList);
         undo.addUndoable(trimEntity);
     }
 
@@ -2382,6 +2406,8 @@ bool RS_Modification::trimExcess(const RS_Vector & trimCoord, RS_AtomicEntity * 
 {
 	if (!trimEntity || trimEntity->isLocked() || !trimEntity->isVisible())
 		return false;
+
+	std::vector<RS_Entity *> addList;
 
 	// do some preprocessing
 	RS_AtomicEntity* trimmed1 = nullptr;
@@ -2493,8 +2519,10 @@ bool RS_Modification::trimExcess(const RS_Vector & trimCoord, RS_AtomicEntity * 
 
 		// no intersecting entities; delete the trim entity entirely
 		if ((!start.valid && !end.valid) || (start.valid && end.valid && startDist < RS_TOLERANCE && endDist < RS_TOLERANCE)) {
+			unlinkTextFrom(trimEntity, addList, &undo);
 			trimEntity->setUndoState(true);
 			undo.addUndoable(trimEntity);
+			addNewEntities(addList);
 			delete trimmed1;
 			return true;
 		}
@@ -2509,8 +2537,10 @@ bool RS_Modification::trimExcess(const RS_Vector & trimCoord, RS_AtomicEntity * 
 			container->addEntity(trimmed1);
 			graphicView->drawEntity(trimmed1);
 			undo.addUndoable(trimmed1);
+			unlinkTextFrom(trimEntity, addList, &undo);
 			trimEntity->setUndoState(true);
 			undo.addUndoable(trimEntity);
+			addNewEntities(addList);
 			return true;
 		}
 
@@ -2540,8 +2570,10 @@ bool RS_Modification::trimExcess(const RS_Vector & trimCoord, RS_AtomicEntity * 
 		}
 		
 		if (handleUndo) {
+			unlinkTextFrom(trimEntity, addList, &undo);
 			trimEntity->setUndoState(true);
 			undo.addUndoable(trimEntity);
+			addNewEntities(addList);
 		}
 
 		delete trimmed1;
@@ -2673,6 +2705,7 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner,
         return false;
     }
 
+    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
 	std::vector<RS_Entity*> addList;
 
 	// Create new entities
@@ -2688,11 +2721,11 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner,
                 ec->stretch(firstCorner, secondCorner, offset);
 				addList.push_back(ec);
                 e->setSelected(true);
+				unlinkTextFrom(e, addList, &undo);
             }
         }
     }
 
-    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
     deselectOriginals(true);
     addNewEntities(addList);
 
@@ -2937,14 +2970,18 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
     RS_DEBUG->print("RS_Modification::bevel: handling undo");
 
     if (handleUndo) {
+		std::vector<RS_Entity *> addList;
 		if (!isPolyline && data.trim) {
             undo.addUndoable(trimmed1);
+			unlinkTextFrom(entity1, addList, &undo);
             entity1->setUndoState(true);
             undo.addUndoable(entity1);
 
             undo.addUndoable(trimmed2);
+			unlinkTextFrom(entity2, addList, &undo);
             entity2->setUndoState(true);
             undo.addUndoable(entity2);
+			addNewEntities(addList);
         }
 
 		if (!isPolyline) {
@@ -3167,14 +3204,18 @@ bool RS_Modification::round(const RS_Vector& coord,
     }
 
     if (handleUndo) {
+		std::vector<RS_Entity *> addList;
 		if (!isPolyline && data.trim) {
             undo.addUndoable(trimmed1);
+			unlinkTextFrom(entity1, addList, &undo);
             entity1->setUndoState(true);
             undo.addUndoable(entity1);
 
             undo.addUndoable(trimmed2);
+			unlinkTextFrom(entity2, addList, &undo);
             entity2->setUndoState(true);
             undo.addUndoable(entity2);
+			addNewEntities(addList);
         }
 
 		if (!isPolyline) {
@@ -3409,17 +3450,19 @@ bool RS_Modification::unlinkAlignedTextFromGeometry()
     return true;
 }
 
-bool RS_Modification::getUnlinkedText(RS_Entity *e, std::vector<RS_Entity*>& addList)
+bool RS_Modification::getUnlinkedText(RS_Entity *e, std::vector<RS_Entity*>& addList, bool _require_selection, bool _unselect_geometry)
 {
-	if (e && e->isSelected()) {
+	if (e && (!_require_selection || e->isSelected())) {
 		if (e->rtti() == RS2::EntityAlignedText) {
 			RS_AlignedText * text = (RS_AlignedText *)e;
-			text->getGeometryEntity()->setSelected(false);
+			if (_unselect_geometry)
+				text->getGeometryEntity()->setSelected(false);
 			if (text->getGeometryEntity()->rtti() == RS2::EntityLine)
 			{
 				RS_Entity *t1 = text->getTextEntity()->clone();
 				addList.push_back(t1);
 				t1->setParent(container);
+				t1->setSelected(false);
 				t1->update();
 			}
 			else		
@@ -3719,12 +3762,15 @@ bool RS_Modification::moveRef(RS_MoveRefData& data) {
     }
     if(container->isLocked() || ! container->isVisible()) return false;
 
-	std::vector<RS_Entity*> addList;
+	LC_UndoSection undo(document, handleUndo); // bundle remove/add entities in one undoCycle
+	std::vector <RS_Entity *> addList;
 
-    // Create new entities
+	// Create new entities
 	for(auto e: *container){
 		if (e && e->isSelected()) {
             RS_Entity* ec = e->clone();
+
+			unlinkTextFrom(e, addList, &undo);
 
             ec->moveRef(data.ref, data.offset);
             // since 2.0.4.0: keep it selected
@@ -3733,11 +3779,33 @@ bool RS_Modification::moveRef(RS_MoveRefData& data) {
         }
     }
 
-    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
+//    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
     deselectOriginals(true);
     addNewEntities(addList);
 
     return true;
 }
 
+bool RS_Modification::unlinkTextFrom(RS_Entity *entity, std::vector<RS_Entity *>& addList, LC_UndoSection *undo)
+{
+	for (auto e: *container)
+	{
+		if (e->rtti() == RS2::EntityAlignedText && !e->isUndone())
+		{
+			RS_AlignedText *t = (RS_AlignedText *)e;
+			if (t->getGeometryEntity() == entity)
+			{
+				t->getTextEntity()->setSelected(true);
+				getUnlinkedText(e, addList, false, false);
+				t->getTextEntity()->setSelected(false);
+				if (undo)
+				{
+					e->changeUndoState();
+					undo->addUndoable(e);
+				}
+			}
+		}
+	}
+	return (true);
+}
 // EOF
