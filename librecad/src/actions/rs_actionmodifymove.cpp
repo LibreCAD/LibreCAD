@@ -37,16 +37,7 @@
 #include "rs_modification.h"
 #include "rs_preview.h"
 #include "rs_debug.h"
-
 #include "rs_line.h"
-//#include "rs_pen.h"
-
-/*
-#include <QMouseEvent>
-#include "rs_actioneditundo.h"
-#include "rs_commands.h"
-#include "rs_commandevent.h"
-*/
 
 
 
@@ -79,30 +70,6 @@ void RS_ActionModifyMove::trigger() {
 }
 
 
-RS_Vector RS_ActionModifyMove::snapToAngle(const RS_Vector &currentCoord)
-{
-    if(getStatus() != SetTargetPoint)
-    {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "Trying to snap to angle when not setting EndPoint!");
-        return currentCoord;
-    }
-
-    if(snapMode.restriction != RS2::RestrictNothing || snapMode.snapGrid)
-    {
-        return currentCoord;
-    }
-    double angle = pPoints->referencePoint.angleTo(currentCoord)*180.0/M_PI;
-    /*Snapping to angle(15*) if shift key is pressed*/
-    const double angularResolution=15.;
-    angle -= remainder(angle,angularResolution);
-    angle *= M_PI/180.;
-    RS_Vector res = RS_Vector::polar(pPoints->referencePoint.distanceTo(currentCoord),angle);
-    res += pPoints->referencePoint;
-    snapPoint(res, true);
-    return res;
-}
-
-
 void RS_ActionModifyMove::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyMove::mouseMoveEvent begin");
 
@@ -120,7 +87,9 @@ void RS_ActionModifyMove::mouseMoveEvent(QMouseEvent* e) {
             if (pPoints->referencePoint.valid)
             {
                 if(e->modifiers() & Qt::ShiftModifier)
-                    mouse = snapToAngle(mouse);
+                    mouse = snapToAngle(mouse, pPoints->referencePoint, 15.);
+
+
 
 				pPoints->targetPoint = mouse;
 
@@ -132,11 +101,9 @@ void RS_ActionModifyMove::mouseMoveEvent(QMouseEvent* e) {
                 {
                     auto line = new RS_Line(pPoints->referencePoint, mouse);
                     preview->addEntity(line);
-                    RS_Vector factor(2,2);
-                    line->scale(line->getMiddlePoint(), factor);
+                    line->setSelected(true);
                     line->setLayerToActive();
                     line->setPenToActive();
-
                 }
                 drawPreview();
 
@@ -160,8 +127,7 @@ void RS_ActionModifyMove::mouseReleaseEvent(QMouseEvent* e) {
 
 
         if((e->modifiers() & Qt::ShiftModifier) && getStatus() == SetTargetPoint )
-            snapped = snapToAngle(snapped);
-
+            snapped = snapToAngle(snapped, pPoints->referencePoint, 15.);
 
         RS_CoordinateEvent ce(snapped);
         coordinateEvent(&ce);

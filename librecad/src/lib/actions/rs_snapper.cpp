@@ -969,3 +969,22 @@ RS_SnapMode RS_Snapper::intToSnapMode(unsigned int ret)
     }
    return s;
 }
+
+
+RS_Vector RS_Snapper::snapToAngle(const RS_Vector &currentCoord, const RS_Vector &referenceCoord, const double angularResolution)
+{
+
+    if(snapMode.restriction != RS2::RestrictNothing || snapMode.snapGrid)
+    {
+        return currentCoord;
+    }
+
+    double angle = referenceCoord.angleTo(currentCoord)*180.0/M_PI;
+    angle -= remainder(angle,angularResolution);
+    angle *= M_PI/180.;
+    RS_Vector res = RS_Vector::polar(referenceCoord.distanceTo(currentCoord),angle);
+    res += referenceCoord;
+    snapPoint(res, true);
+    return res;
+}
+
