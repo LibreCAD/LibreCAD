@@ -740,7 +740,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 	action->setIcon(QIcon(":/icons/shape2.svg"));
 	connect(action, SIGNAL(triggered()),
 		action_handler, SLOT(slotModifyShapeText()));
-	action->setObjectName("ModifyshapeText");
+	action->setObjectName("ModifyShapeText");
 	action->setData("shapetxt, stxt");
 	a_map["ModifyShapeText"] = action;
 
