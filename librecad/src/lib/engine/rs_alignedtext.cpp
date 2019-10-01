@@ -148,13 +148,15 @@ RS_AlignedTextData::RS_AlignedTextData(RS_Entity *_textEntity,
 			RS_Vector _insertionPoint,
 			double _offset,
 			bool _above,
-			RS2::UpdateMode _updateMode):
+			RS2::UpdateMode _updateMode,
+			int _directionMultiplier):
 	textEntity(_textEntity)
 	,entity(_entity)
 	,insertionPoint(_insertionPoint)
 	,offset(_offset)
 	,above(_above)
 	,updateMode(_updateMode)
+	,directionMultiplier(_directionMultiplier)
 {
 }
 
@@ -227,6 +229,12 @@ double RS_AlignedText::setArcParams(RS_Vector &_nearestPoint)
 				data.above = true;
 			else
 				data.above = false;
+			if (arc->isReversed())
+			{
+				shapeAngle += M_PI;
+				data.directionMultiplier *= -1;
+				data.above = !data.above;
+			}
 		}
 		break;
 		case RS2::EntityCircle:
@@ -324,6 +332,7 @@ void RS_AlignedText::update()
         return;
     }
 
+	data.directionMultiplier = 1;
 	RS_Entity
 		*textEntity1 = data.textEntity,
 		*shapeEntity = data.entity;
@@ -417,7 +426,7 @@ void RS_AlignedText::update()
 				direction(1);		// Left edge orientation
 			if (HAlign == 2)		// Right edge orientation
 				direction = -1;
-			direction_multiplier = direction;
+			direction_multiplier = direction * data.directionMultiplier;
 			double
 				saved_angle(99999.0),
 				tempAngle,
@@ -466,7 +475,7 @@ void RS_AlignedText::update()
 			{
 				if (HAlign == 1)
 				{
-					direction_multiplier = -1;
+					direction_multiplier *= -1;
 					if (tType == RS2::EntityAlignedText)
 						lastpt = ((RS_AlignedText *)textEntity1)->getInsertionPoint();
 					else if (tType == RS2::EntityMText)
@@ -511,7 +520,7 @@ void RS_AlignedText::update()
 				{
 					iLetter = (RS_Insert *)letter;
 					if (HAlign == 1 && letter == saved_ent)
-						direction_multiplier = 1;
+						direction_multiplier *= -1;
 					if (first)
 					{
 						lastpt = iLetter->getInsertionPoint();
@@ -593,7 +602,7 @@ void RS_AlignedText::update()
 				while (letter)
 				{
 					if (HAlign == 1 && letter == saved_ent)
-						direction_multiplier = 1;
+						direction_multiplier *= -1;
 					else
 					{
 						iLetter = (RS_Insert *)letter;

@@ -63,7 +63,8 @@ struct RS_AlignedTextData {
 				 RS_Vector _insertionPoint,
 				 double _offset,
 				 bool _above,
-				 RS2::UpdateMode updateMode = RS2::Update);
+				 RS2::UpdateMode updateMode = RS2::Update,
+				 int _directionMultiplier = 1);
 
 	/** Text entity */
 	RS_Entity *textEntity;
@@ -77,6 +78,8 @@ struct RS_AlignedTextData {
 	bool above;
 	/** Update mode */
 	RS2::UpdateMode updateMode;
+	/** Default ("forward") direction multiplier */
+	int directionMultiplier;
 };
 
 std::ostream& operator << (std::ostream& os, const RS_AlignedTextData& td);
