@@ -101,9 +101,11 @@ void RS_Modification::remove() {
     }
 
     LC_UndoSection undo( document);
+	std::vector<RS_Entity *> addList;
 	// not safe (?)
     for(auto e: *container) {
         if (e && e->isSelected()) {
+			unlinkTextFrom(e, addList, &undo);
             e->setSelected(false);
             e->changeUndoState();
             undo.addUndoable(e);
@@ -112,6 +114,7 @@ void RS_Modification::remove() {
         }
     }
 
+	addNewEntities(addList);
     graphicView->redraw(RS2::RedrawDrawing);
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::remove: OK");
