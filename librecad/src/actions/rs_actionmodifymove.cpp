@@ -128,6 +128,7 @@ void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent* e) {
         break;
 
     case SetTargetPoint:
+		graphicView->moveRelativeZero(pos);
 		pPoints->targetPoint = pos;
 		pPoints->data.amount = pos - pPoints->referencePoint;
 		trigger();
