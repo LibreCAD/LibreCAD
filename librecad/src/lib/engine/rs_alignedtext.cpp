@@ -180,8 +180,8 @@ RS_AlignedText::RS_AlignedText(RS_EntityContainer* parent,
         : RS_EntityContainer(parent), data(d) {
 	setOwner(false);		// don't autodelete entities
 	addEntity(data.textEntity);
-	// keep text entity's layer, just to have a valid layer for the object
-	setLayer(data.textEntity->getLayer());
+	// keep entity's layer, just to have a valid layer for the object
+	setLayer(data.entity->getLayer());
 	update();
 }
 
@@ -739,8 +739,8 @@ std::ostream& operator << (std::ostream& os, const RS_AlignedText& p) {
 
 void RS_AlignedText::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset)
 {
-	getTextEntity()->draw(painter, view, patternOffset);
 	getGeometryEntity()->draw(painter, view, patternOffset);
+	getTextEntity()->draw(painter, view, patternOffset);
 
     if (!(painter && view)) {
         return;
