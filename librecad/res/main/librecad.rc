@@ -1,1 +1,31 @@
-IDI_ICON1 ICON DISCARDABLE "librecad.ico"
+#ifndef RCFILE_H
+#define RCFILE_H
+#include <windows.h>
+LANGUAGE 0x409, 1252
+IDI_ICON1               ICON    DISCARDABLE     "librecad.ico"
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION 2,2,0,7216
+PRODUCTVERSION 2,2,0
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "CompanyName",        "Hypertherm"
+            VALUE "FileDescription",    "LibreCAD by Hypertherm"
+            VALUE "FileVersion",        "2.2.0.7216"
+            VALUE "InternalName",       "LibreCAD by Hypertherm"
+            VALUE "LegalCopyright",     "GPL v2.0"
+            VALUE "OriginalFilename",   "LibreCAD.exe"
+            VALUE "ProductName",        "LibreCAD"
+            VALUE "ProductVersion",     "2.2.0"
+            VALUE "Rev",     7216
+            VALUE "Date",     10/04/2019
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+#endif // RCFILE_H

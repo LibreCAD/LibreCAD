@@ -94,22 +94,7 @@ void QG_DlgMoveRotate::init() {
 }
 
 void QG_DlgMoveRotate::destroy() {
-    RS_SETTINGS->beginGroup("/Modify");
-    RS_SETTINGS->writeEntry("/MoveRotateCopies", leNumber->text());
-    if (rbMove->isChecked()) {
-        numberMode = 0;
-    } else if (rbCopy->isChecked()) {
-        numberMode = 1;
-    } else {
-        numberMode = 2;
-    }
-    RS_SETTINGS->writeEntry("/MoveRotateMode", numberMode);
-    RS_SETTINGS->writeEntry("/MoveRotateAngle", leAngle->text());
-    RS_SETTINGS->writeEntry("/MoveRotateUseCurrentLayer",
-                            (int)cbCurrentLayer->isChecked());
-    RS_SETTINGS->writeEntry("/MoveRotateUseCurrentAttributes",
-                            (int)cbCurrentAttributes->isChecked());
-    RS_SETTINGS->endGroup();
+	updateSettings();
 }
 
 void QG_DlgMoveRotate::setData(RS_MoveRotateData* d) {
@@ -129,5 +114,29 @@ void QG_DlgMoveRotate::updateData() {
     data->angle = RS_Math::deg2rad(RS_Math::eval(leAngle->text()));
     data->useCurrentAttributes = cbCurrentAttributes->isChecked();
     data->useCurrentLayer = cbCurrentLayer->isChecked();
+	updateSettings();
+}
+
+void QG_DlgMoveRotate::updateSettings()
+{
+	RS_SETTINGS->beginGroup("/Modify");
+	RS_SETTINGS->writeEntry("/MoveRotateCopies", leNumber->text());
+	if (rbMove->isChecked()) {
+		numberMode = 0;
+	}
+	else if (rbCopy->isChecked()) {
+		numberMode = 1;
+	}
+	else {
+		numberMode = 2;
+	}
+	RS_SETTINGS->writeEntry("/MoveRotateMode", numberMode);
+	QString angle = leAngle->text();
+	RS_SETTINGS->writeEntry("/MoveRotateAngle", angle);
+	RS_SETTINGS->writeEntry("/MoveRotateUseCurrentLayer",
+		(int)cbCurrentLayer->isChecked());
+	RS_SETTINGS->writeEntry("/MoveRotateUseCurrentAttributes",
+		(int)cbCurrentAttributes->isChecked());
+	RS_SETTINGS->endGroup();
 }
 

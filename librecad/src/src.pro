@@ -63,12 +63,16 @@ unix {
     }
 }
 win32 {
+
     TARGET = LibreCAD
     DEFINES += QC_APPDIR="\"LibreCAD\""
 
     # add MSYSGIT_DIR = PathToGitBinFolder (without quotes) in custom.pro file, for commit hash in about dialog
     !isEmpty( MSYSGIT_DIR ) {
         LC_VERSION = $$system( \"$$MSYSGIT_DIR/git.exe\" describe --tags || echo "$${LC_VERSION}")
+    } else {
+        LC_VERSION="2.2.0."$$system($$_PRO_FILE_PWD_/../../scripts/dailybuildnumber.bat)
+        VERSION=$${LC_VERSION}
     }
 
     RC_FILE = ../res/main/librecad.rc

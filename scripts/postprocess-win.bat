@@ -19,11 +19,21 @@ if not exist "%LC_RESOURCEDIR%\patterns\" (mkdir "%LC_RESOURCEDIR%\patterns")
 if not exist "%LC_RESOURCEDIR%\library\" (mkdir "%LC_RESOURCEDIR%\library")
 if not exist "%LC_RESOURCEDIR%\library\misc\" (mkdir "%LC_RESOURCEDIR%\library\misc")
 if not exist "%LC_RESOURCEDIR%\library\templates\" (mkdir "%LC_RESOURCEDIR%\library\templates")
+if not exist "%LC_RESOURCEDIR%\library\algoritm\" (mkdir "%LC_RESOURCEDIR%\library\algoritm")
+if not exist "%LC_RESOURCEDIR%\library\block\" (mkdir "%LC_RESOURCEDIR%\library\block")
+if not exist "%LC_RESOURCEDIR%\library\kinetics\" (mkdir "%LC_RESOURCEDIR%\library\kinetics")
+if not exist "%LC_RESOURCEDIR%\library\power_station\" (mkdir "%LC_RESOURCEDIR%\library\power_station")
+if not exist "%LC_RESOURCEDIR%\library\sheets\" (mkdir "%LC_RESOURCEDIR%\library\sheets")
 
 copy "librecad\support\patterns\*.dxf" "%LC_RESOURCEDIR%\patterns"
 copy "librecad\support\fonts\*.lff" "%LC_RESOURCEDIR%\fonts"
 copy "librecad\support\library\misc\*.dxf" "%LC_RESOURCEDIR%\library\misc"
 copy "librecad\support\library\templates\*.dxf" "%LC_RESOURCEDIR%\library\templates"
+copy "librecad\support\library\algoritm\*.dxf" "%LC_RESOURCEDIR%\library\algorithm"
+copy "librecad\support\library\block\*.dxf" "%LC_RESOURCEDIR%\library\block"
+copy "librecad\support\library\kinetics\*.dxf" "%LC_RESOURCEDIR%\library\kinetics"
+copy "librecad\support\library\power_station\*.dxf" "%LC_RESOURCEDIR%\library\power_station"
+copy "librecad\support\library\sheets\*.dxf" "%LC_RESOURCEDIR%\library\sheets"
 
 
 REM Generate translations

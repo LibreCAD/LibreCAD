@@ -74,7 +74,6 @@ void QG_DlgText::init() {
     font=NULL;
     text = NULL;
     isNew = false;
-    leOblique->setDisabled(true);
     updateUniCharComboBox(0);
     updateUniCharButton(0);
 }

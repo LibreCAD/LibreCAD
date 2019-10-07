@@ -1298,7 +1298,7 @@ void QG_DialogFactory::requestMoveRotateOptions(RS_ActionInterface* action,
 			toolWidget = new QG_MoveRotateOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
             toolWidget->setAction(action, update);
-                        toolWidget->show();
+			toolWidget->show();
         }
     }
 }

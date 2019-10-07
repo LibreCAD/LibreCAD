@@ -46,6 +46,7 @@ protected slots:
     virtual void languageChange();
 
 private:
+	void updateSettings();
     bool useCurrentAttributes;
     bool useCurrentLayer;
     int numberMode;
