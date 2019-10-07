@@ -1755,9 +1755,11 @@ bool RS_Modification::scale(RS_ScaleData& data) {
     }
     LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
 	std::vector<RS_Entity*> selectedList,addList;
+	RS_Entity *e;
 
 	for(auto ec: *container){
         if (ec->isSelected() ) {
+			e = ec;
             if ( fabs(data.factor.x - data.factor.y) > RS_TOLERANCE ) {
                     if ( ec->rtti() == RS2::EntityCircle ) {
     //non-isotropic scaling, replacing selected circles with ellipses
@@ -1777,6 +1779,8 @@ bool RS_Modification::scale(RS_ScaleData& data) {
 								   c->getAngle2(),
 								   c->isReversed()}};
             }
+			if (data.number == 0)
+				unlinkTextFrom(e, addList, &undo);
             }
 			selectedList.push_back(ec);
 
@@ -3483,7 +3487,7 @@ bool RS_Modification::getUnlinkedText(RS_Entity *e, std::vector<RS_Entity*>& add
 
 bool RS_Modification::getExplodedText(RS_Entity *e, std::vector<RS_Entity*>& addList)
 {
-	if (e && e->isSelected()) {
+	if (e) {
 		if (e->rtti() == RS2::EntityMText) {
 			// add letters of text:
 			RS_MText* text = (RS_MText*)e;
