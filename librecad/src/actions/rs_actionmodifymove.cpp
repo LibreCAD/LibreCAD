@@ -90,7 +90,6 @@ void RS_ActionModifyMove::mouseMoveEvent(QMouseEvent* e) {
                     mouse = snapToAngle(mouse, pPoints->referencePoint, 15.);
 
 
-
 				pPoints->targetPoint = mouse;
 
                 deletePreview();
@@ -122,10 +121,9 @@ void RS_ActionModifyMove::mouseMoveEvent(QMouseEvent* e) {
 
 
 void RS_ActionModifyMove::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
+    if (e->button()==Qt::LeftButton)
+    {
         RS_Vector snapped = snapPoint(e);
-
-
         if((e->modifiers() & Qt::ShiftModifier) && getStatus() == SetTargetPoint )
             snapped = snapToAngle(snapped, pPoints->referencePoint, 15.);
 

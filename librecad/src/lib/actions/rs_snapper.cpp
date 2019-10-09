@@ -321,6 +321,9 @@ RS_Vector RS_Snapper::snapPoint(const RS_Vector& coord, bool setSpot)
     }
     return coord;
 }
+
+
+
 double RS_Snapper::getSnapRange() const
 {
 	if(graphicView )
@@ -929,6 +932,7 @@ unsigned int RS_Snapper::snapModeToInt(const RS_SnapMode& s)
     ret <<=1;ret |= s.snapCenter;
     ret <<=1;ret |= s.snapOnEntity;
     ret <<=1;ret |= s.snapIntersection;
+    ret <<=1;ret |= s.snapAngle;
    return ret;
 }
 /**
@@ -954,6 +958,9 @@ RS_SnapMode RS_Snapper::intToSnapMode(unsigned int ret)
     ret >>= 1;
     s.snapFree =ret & binaryOne;
     ret >>= 1;
+    s.snapAngle =ret & binaryOne;
+    ret >>= 1;
+
     switch (ret) {
     case 1:
             s.restriction=RS2::RestrictHorizontal;
@@ -984,7 +991,21 @@ RS_Vector RS_Snapper::snapToAngle(const RS_Vector &currentCoord, const RS_Vector
     angle *= M_PI/180.;
     RS_Vector res = RS_Vector::polar(referenceCoord.distanceTo(currentCoord),angle);
     res += referenceCoord;
-    snapPoint(res, true);
-    return res;
+
+    if (snapMode.snapOnEntity)
+    {
+        RS_Vector t(false);
+        //RS_Vector mouseCoord = graphicView->toGraph(currentCoord.x(), currentCoord.y());
+        t = container->getNearestVirtualIntersection(res,angle,nullptr);
+
+        pImpData->snapSpot = t;
+        snapPoint(pImpData->snapSpot, true);
+        return t;
+    }
+    else
+    {
+        snapPoint(res, true);
+        return res;
+    }
 }
 
