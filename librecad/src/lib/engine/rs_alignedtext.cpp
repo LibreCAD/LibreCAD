@@ -208,6 +208,7 @@ RS_AlignedText::~RS_AlignedText()
 {
 	setOwner(true);
 	clear();
+	delete (this->data.entity);
 }
 
 double RS_AlignedText::setArcParams(RS_Vector &_nearestPoint)
@@ -683,6 +684,9 @@ void RS_AlignedText::move(const RS_Vector& offset) {
 
 
 void RS_AlignedText::rotate(const RS_Vector& center, const double& angle) {
+	if (fabs(angle) < 0.00001)
+		return;
+
     RS_Vector angleVector(angle);
 	data.insertionPoint.rotate(center, angleVector);
 	getTextEntity()->rotate(center, angle);
@@ -699,6 +703,8 @@ void RS_AlignedText::rotate(const RS_Vector& center, const RS_Vector& angleVecto
 
 
 void RS_AlignedText::scale(const RS_Vector& center, const RS_Vector& factor) {
+	if (fabs(factor.x - 1.0) < 0.00001 && fabs(factor.y - 1.0) < 0.00001)
+		return;
 	data.insertionPoint.scale(center, factor);
 	getTextEntity()->scale(center, factor);
 	getGeometryEntity()->scale(center, factor);
