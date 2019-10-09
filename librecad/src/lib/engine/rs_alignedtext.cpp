@@ -182,14 +182,16 @@ RS_AlignedText::RS_AlignedText(RS_EntityContainer* parent,
 	addEntity(data.textEntity);
 	// keep entity's layer, just to have a valid layer for the object
 	setLayer(data.entity->getLayer());
+	data.entity->setVisible(false);
 	update();
 }
 
-RS_Entity* RS_AlignedText::clone() const{
+RS_Entity *RS_AlignedText::clone() const {
 	RS_AlignedText* t = new RS_AlignedText(*this);
 
 												// need to create new copy of text entity in "t"
 	t->data.textEntity = this->data.textEntity->clone();
+	t->data.entity = this->data.entity->clone();
 	if (t->entities.size() > 0)
 		t->removeEntity(t->entities[0]);
 												// and add it to the entity list
@@ -674,6 +676,7 @@ RS_VectorSolutions RS_AlignedText::getRefPoints() const{
 void RS_AlignedText::move(const RS_Vector& offset) {
 	data.insertionPoint.move(offset);
 	getTextEntity()->move(offset);
+	getGeometryEntity()->move(offset);
     update();
 }
 
@@ -683,18 +686,22 @@ void RS_AlignedText::rotate(const RS_Vector& center, const double& angle) {
     RS_Vector angleVector(angle);
 	data.insertionPoint.rotate(center, angleVector);
 	getTextEntity()->rotate(center, angle);
+	getGeometryEntity()->rotate(center, angle);
     update();
 }
 void RS_AlignedText::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
 	data.insertionPoint.rotate(center, angleVector);
 	getTextEntity()->rotate(center, angleVector);
+	getGeometryEntity()->rotate(center, angleVector);
     update();
 }
 
 
 
 void RS_AlignedText::scale(const RS_Vector& center, const RS_Vector& factor) {
+	data.insertionPoint.scale(center, factor);
 	getTextEntity()->scale(center, factor);
+	getGeometryEntity()->scale(center, factor);
     update();
 }
 
@@ -703,6 +710,7 @@ void RS_AlignedText::scale(const RS_Vector& center, const RS_Vector& factor) {
 void RS_AlignedText::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
 	data.insertionPoint.mirror(axisPoint1, axisPoint2);
 	getTextEntity()->mirror(axisPoint1, axisPoint2);
+	getGeometryEntity()->mirror(axisPoint1, axisPoint2);
     update();
 }
 
@@ -739,7 +747,7 @@ std::ostream& operator << (std::ostream& os, const RS_AlignedText& p) {
 
 void RS_AlignedText::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset)
 {
-	getGeometryEntity()->draw(painter, view, patternOffset);
+//	getGeometryEntity()->draw(painter, view, patternOffset);
 	getTextEntity()->draw(painter, view, patternOffset);
 
     if (!(painter && view)) {

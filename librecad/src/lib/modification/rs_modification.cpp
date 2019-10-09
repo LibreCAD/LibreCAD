@@ -2384,12 +2384,12 @@ bool RS_Modification::shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity
 		if (previewEntity)
 		{
 		//	*previewEntity = textEntity1;
-			*previewEntity = new RS_AlignedText(textEntity->getParent(), RS_AlignedTextData(textEntity1, shapeEntity, insertionPoint, offset, true));
+			*previewEntity = new RS_AlignedText(textEntity->getParent(), RS_AlignedTextData(textEntity1, shapeEntity->clone(), insertionPoint, offset, true));
 		}
 		else
 		{
 			RS_AlignedText
-				*aTextEntity = new RS_AlignedText(textEntity->getParent(), RS_AlignedTextData(textEntity1, shapeEntity, insertionPoint, offset, true));
+				*aTextEntity = new RS_AlignedText(textEntity->getParent(), RS_AlignedTextData(textEntity1, shapeEntity->clone(), insertionPoint, offset, true));
 			if (graphicView)
 				graphicView->deleteEntity(textEntity);
 
@@ -3323,7 +3323,7 @@ bool RS_Modification::explode(const bool remove /*= true*/)
                 // iterate and explode container:
                 //for (unsigned i2=0; i2<ec->count(); ++i2) {
                 //    RS_Entity* e2 = ec->entityAt(i2);
-                RS2::ResolveLevel rl;
+                RS2::ResolveLevel rl, irl;
                 bool resolvePen;
                 bool resolveLayer;
 
@@ -3371,6 +3371,9 @@ bool RS_Modification::explode(const bool remove /*= true*/)
                         e2 = ec->nextEntity(rl)) {
 
                     if (e2) {
+						irl = rl;
+						if (rl == RS2::ResolveNone && e2->rtti() == RS2::EntityAlignedText) /* Need to resolve all of the subentities without modifying the text itself */
+							irl = RS2::ResolveAll;
                         RS_Entity* clone = e2->clone();
                         clone->setSelected(false);
                         clone->reparent(container);
@@ -3382,7 +3385,7 @@ bool RS_Modification::explode(const bool remove /*= true*/)
                         // even those (below the tree) which are not direct
                         // subjects to the current explode() call.
                         update_exploded_children_recursively(ec, e2, clone,
-                                rl, resolveLayer, resolvePen);
+                                irl, resolveLayer, resolvePen);
 /*
                         if (resolveLayer) {
                             clone->setLayer(ec->getLayer());
