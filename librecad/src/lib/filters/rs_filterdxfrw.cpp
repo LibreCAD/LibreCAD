@@ -29,6 +29,7 @@
 #include <QProcess>
 #include <QApplication>
 #include <QStandardPaths>
+#include <QLibrary>
 
 #include "rs_filterdxfrw.h"
 
@@ -1398,7 +1399,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
 bool RS_FilterDXFRW::importDWG(const QString & fileName)
 {
 	QDir dir = QDir::cleanPath(QCoreApplication::applicationDirPath());
-	QFileInfo exe = QFileInfo(dir, "PartConverter.exe");
+	QFileInfo exe = QFileInfo(dir, "ProNestUtils.dll");
 	if (exe.exists()) {
 		if (convertDWG(QFile::encodeName(file))) {
 			this->file = getTempFileName(file);
@@ -1447,19 +1448,14 @@ bool RS_FilterDXFRW::importDXF(const QString & fileName)
 
 bool RS_FilterDXFRW::convertDWG(const QString & fileName)
 {
-	QProcess proc(nullptr);
 	QDir dir = QDir::cleanPath(QCoreApplication::applicationDirPath());
-	QFileInfo exe = QFileInfo(dir, "PartConverter.exe");
 	QString dxfName = getTempFileName(fileName);
-	
-	QString command = "\"" + exe.filePath() + "\"" +
-		QString(" \"%1\"").arg(fileName) +
-		QString(" \"%1\"").arg(dxfName);
-
-	if (QFile::exists(exe.filePath()) && QFile::exists(fileName)) {
+	QLibrary library(QFileInfo(dir, "ProNestUtils.dll").filePath());
+	typedef void(*ConvertFunc)(const wchar_t*, const wchar_t*);
+	ConvertFunc Convert = (ConvertFunc)library.resolve("ConvertDwgToDxf");
+	if (Convert) {
 		QApplication::setOverrideCursor(Qt::WaitCursor);
-		proc.start(command);
-		proc.waitForFinished();
+		Convert(fileName.toStdWString().c_str(), dxfName.toStdWString().c_str());
 		QApplication::restoreOverrideCursor();
 	}
 

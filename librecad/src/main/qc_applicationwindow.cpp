@@ -820,17 +820,15 @@ void QC_ApplicationWindow::slotExportToProNest()
 {
 	QC_MDIWindow* w = getMDIWindow();	
 	if (w && doSave(w)) {
-		QProcess proc(this);
 		QDir dir = QDir::cleanPath(QCoreApplication::applicationDirPath());
-		QFileInfo info = QFileInfo(dir, "AddPart.exe");
-
-		QString command = "\"" + info.filePath() + "\"" +
-			QString(" \"%1\"").arg(w->getDocument()->getFilename());
-
-		QApplication::setOverrideCursor(Qt::WaitCursor);
-		proc.start(command);
-		proc.waitForFinished();
-		QApplication::restoreOverrideCursor();
+		QLibrary library(QFileInfo(dir, "ProNestUtils.dll").filePath());
+		typedef void(*ExportFunc)(const wchar_t*);
+		ExportFunc Export = (ExportFunc)library.resolve("AddPart");
+		if (Export) {
+			QApplication::setOverrideCursor(Qt::WaitCursor);
+			Export(QFileInfo(w->getDocument()->getFilename()).filePath().toStdWString().c_str());
+			QApplication::restoreOverrideCursor();
+		}
 	}
 }
 
