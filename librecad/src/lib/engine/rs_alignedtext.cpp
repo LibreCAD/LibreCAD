@@ -200,7 +200,7 @@ RS_Entity *RS_AlignedText::clone() const {
 
 	t->setOwner(isOwner());
 	t->initId();
-	t->update();
+//	t->update();
 	return t;
 }
 
@@ -362,6 +362,7 @@ void RS_AlignedText::update()
 	{
 		RS_Ellipse
 			*nEllipse = dynamic_cast<RS_Ellipse *>(shapeEntity->clone());
+		nEllipse->setAngle2(nEllipse->getAngle1());
 		RS_Vector
 			nEnd(data.insertionPoint);
 		RS_Line
@@ -539,6 +540,7 @@ void RS_AlignedText::update()
 					RS_Line
 						line1;
 					RS_Ellipse e1(nullptr, ellipse->getData());
+					e1.setAngle2(e1.getAngle1());
 					RS_VectorSolutions rsvs1;
 
 					iLetter->rotate(iLetter->getInsertionPoint(), -rotateAngle);
