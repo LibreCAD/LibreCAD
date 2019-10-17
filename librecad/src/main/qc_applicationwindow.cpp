@@ -372,7 +372,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
 	LC_Telemetry t;
 	t.BeginSession();
-	t.TrackEvent("LibreCAD Started");
+	t.TrackEvent("ApplicationStarted");
 	t.EndSession();
 
     statusBar()->showMessage(qApp->applicationName() + " Ready", 2000);
@@ -835,7 +835,7 @@ void QC_ApplicationWindow::slotExportToProNest()
 			Export(QFileInfo(w->getDocument()->getFilename()).filePath().toStdWString().c_str());
 			LC_Telemetry t;
 			t.BeginSession();
-			t.TrackEvent("LibreCAD ExportToProNest");
+			t.TrackEvent("ExportToProNest");
 			t.EndSession();
 			QApplication::restoreOverrideCursor();
 		}

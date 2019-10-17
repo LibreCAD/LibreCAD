@@ -59,6 +59,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_math.h"
 #include "rs_alignedtext.h"
+#include "lc_telemetry.h"
 
 #ifdef DWGSUPPORT
 #include "libdwgr.h"
@@ -1402,27 +1403,38 @@ bool RS_FilterDXFRW::importDWG(const QString & fileName)
 	QFileInfo exe = QFileInfo(dir, "ProNestUtils.dll");
 	if (exe.exists()) {
 		if (convertDWG(QFile::encodeName(file))) {
+			LC_Telemetry t;
+			t.BeginSession();
+			t.TrackEvent("Convert DWG to DXF");
+			t.EndSession();
 			this->file = getTempFileName(file);
 			importDXF(this->file);
 		}
 		else {
-			return false;
+			return importDWG_dwgR(fileName);
 		}
 	} else {
-		dwgR dwgr(QFile::encodeName(file));
-		RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file");
-		if (RS_DEBUG->getLevel()== RS_Debug::D_DEBUGGING)
-			dwgr.setDebug(DRW::DEBUG);
-		bool success = dwgr.read(this, true);
-		RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file: OK");
-		RS_DIALOGFACTORY->commandMessage(QObject::tr("Opened dwg file version %1.").arg(printDwgVersion(dwgr.getVersion())));
-		int  lastError = dwgr.getError();
-		if (success==false) {
-			printDwgError(lastError);
-			RS_DEBUG->print(RS_Debug::D_WARNING,
-							"Cannot open DWG file '%s'.", (const char*)QFile::encodeName(file));
-			return false;
-		}
+		return importDWG_dwgR(fileName);
+	}
+
+	return true;
+}
+
+bool RS_FilterDXFRW::importDWG_dwgR(const QString & fileName)
+{
+	dwgR dwgr(QFile::encodeName(file));
+	RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file");
+	if (RS_DEBUG->getLevel() == RS_Debug::D_DEBUGGING)
+		dwgr.setDebug(DRW::DEBUG);
+	bool success = dwgr.read(this, true);
+	RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file: OK");
+	RS_DIALOGFACTORY->commandMessage(QObject::tr("Opened dwg file version %1.").arg(printDwgVersion(dwgr.getVersion())));
+	int  lastError = dwgr.getError();
+	if (success == false) {
+		printDwgError(lastError);
+		RS_DEBUG->print(RS_Debug::D_WARNING,
+			"Cannot open DWG file '%s'.", (const char*)QFile::encodeName(file));
+		return false;
 	}
 
 	return true;
@@ -1451,7 +1463,7 @@ bool RS_FilterDXFRW::convertDWG(const QString & fileName)
 	QDir dir = QDir::cleanPath(QCoreApplication::applicationDirPath());
 	QString dxfName = getTempFileName(fileName);
 	QLibrary library(QFileInfo(dir, "ProNestUtils.dll").filePath());
-	typedef void(*ConvertFunc)(const wchar_t*, const wchar_t*);
+	typedef bool (*ConvertFunc)(const wchar_t*, const wchar_t*);
 	ConvertFunc Convert = (ConvertFunc)library.resolve("ConvertDwgToDxf");
 	if (Convert) {
 		QApplication::setOverrideCursor(Qt::WaitCursor);

@@ -43,7 +43,7 @@ LC_Telemetry::~LC_Telemetry()
 
 void LC_Telemetry::BeginSession()
 {
-	if (beginSession && addProperty && !GetHaspId().isEmpty()) {
+	if (beginSession && addProperty) {
 		beginSession(
 			GetUserName().toStdWString().c_str(), 
 			GetHaspId().toStdWString().c_str(), 

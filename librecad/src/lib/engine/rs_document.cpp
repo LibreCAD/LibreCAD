@@ -80,14 +80,12 @@ void RS_Document::endUndoCycle()
 		 t.AddProperty("Trim Excess Clicks", QString("%1").arg(telemetryData.trimExcessClicks));
 	 if (telemetryData.ttfFontsConverted)
 		 t.AddProperty("TTF Fonts Converted", QString("%1").arg(telemetryData.ttfFontsConverted));
-	 t.AddProperty("IsDwg", filename.endsWith(".dwg", Qt::CaseInsensitive) ? "-1" : "0");
-	 t.TrackEvent("LibreCAD Save Drawing");
+	 t.TrackEvent("File Save");
 	 t.RemoveProperty("Fonts Manually Converted");
 	 t.RemoveProperty("SHX Fonts Converted");
 	 t.RemoveProperty("Shape Text Clicks");
 	 t.RemoveProperty("Trim Excess Clicks");
 	 t.RemoveProperty("TTF Fonts Converted");
-	 t.RemoveProperty("IsDwg");
 	 telemetryData.fontConversionClicks = 0;
 	 telemetryData.shxFontsConverted = 0;
 	 telemetryData.textShapingClicks = 0;

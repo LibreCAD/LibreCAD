@@ -196,6 +196,7 @@ public:
 
 private:
 	bool importDWG(const QString& fileName);
+	bool importDWG_dwgR(const QString& fileName);
 	bool importDXF(const QString& fileName);
 	bool convertDWG(const QString& fileName);
 	QString getTempFileName(const QString& fileName);
