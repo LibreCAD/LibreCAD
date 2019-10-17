@@ -58,6 +58,9 @@ public:
 	double getOffset() const;
 	void setOffset(double _offset);
 
+	bool getReversed() const;
+	void setReversed(bool _reversed);
+
 private:
 	void setShapeTextPreviewEntity(RS_Entity* entity, const RS_Vector& point);
 	void drawShapeTextPreview();
@@ -68,6 +71,7 @@ private:
 	RS_Entity* shapePreview;
 	RS_Vector insertionPoint;
 	double offset;
+	int reversed;
 };
 
 #endif // RS_ACTIONMODIFYSHAPETEXT_H

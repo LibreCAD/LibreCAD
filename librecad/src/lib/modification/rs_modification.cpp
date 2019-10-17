@@ -2367,7 +2367,7 @@ bool IsValidShapeEntity(RS_Entity *entity)
 	return (false);
 }
 
-bool RS_Modification::shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity* shapeEntity, RS_Entity *textEntity, double offset, RS_Entity ** previewEntity)
+bool RS_Modification::shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity* shapeEntity, RS_Entity *textEntity, double offset, bool _reversed, RS_Entity ** previewEntity)
 {
 	if (!shapeEntity || !textEntity || !shapeEntity->isVisible() || !textEntity->isVisible() || textEntity->isLocked())
 		return false;
@@ -2384,12 +2384,12 @@ bool RS_Modification::shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity
 		if (previewEntity)
 		{
 		//	*previewEntity = textEntity1;
-			*previewEntity = new RS_AlignedText(textEntity->getParent(), RS_AlignedTextData(textEntity1, shapeEntity->clone(), insertionPoint, offset, true));
+			*previewEntity = new RS_AlignedText(textEntity->getParent(), RS_AlignedTextData(textEntity1, shapeEntity->clone(), insertionPoint, offset, true, _reversed));
 		}
 		else
 		{
 			RS_AlignedText
-				*aTextEntity = new RS_AlignedText(textEntity->getParent(), RS_AlignedTextData(textEntity1, shapeEntity->clone(), insertionPoint, offset, true));
+				*aTextEntity = new RS_AlignedText(textEntity->getParent(), RS_AlignedTextData(textEntity1, shapeEntity->clone(), insertionPoint, offset, true, _reversed));
 			if (graphicView)
 				graphicView->deleteEntity(textEntity);
 

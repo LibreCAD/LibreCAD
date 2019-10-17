@@ -148,6 +148,7 @@ RS_AlignedTextData::RS_AlignedTextData(RS_Entity *_textEntity,
 			RS_Vector _insertionPoint,
 			double _offset,
 			bool _above,
+			bool _reversed,
 			RS2::UpdateMode _updateMode,
 			int _directionMultiplier):
 	textEntity(_textEntity)
@@ -157,6 +158,7 @@ RS_AlignedTextData::RS_AlignedTextData(RS_Entity *_textEntity,
 	,above(_above)
 	,updateMode(_updateMode)
 	,directionMultiplier(_directionMultiplier)
+	,reversed(_reversed)
 {
 }
 
@@ -168,6 +170,8 @@ std::ostream& operator << (std::ostream& os, const RS_AlignedTextData& td) {
 	 <<td.offset<<','
 	<<td.above<<','
 	<<td.updateMode<<','
+	<<td.directionMultiplier<<','
+	<<td.reversed<<','
 	<<")";
 	return os;
 }
@@ -232,7 +236,7 @@ double RS_AlignedText::setArcParams(RS_Vector &_nearestPoint)
 				data.above = true;
 			else
 				data.above = false;
-			if (arc->isReversed())
+			if (arc->isReversed() != data.reversed)
 			{
 				shapeAngle += M_PI;
 				data.directionMultiplier *= -1;
@@ -251,6 +255,13 @@ double RS_AlignedText::setArcParams(RS_Vector &_nearestPoint)
 				data.above = true;
 			else
 				data.above = false;
+			if (data.reversed)
+			{
+				// play with reversing text here
+				shapeAngle += M_PI;
+				data.directionMultiplier *= -1;
+				data.above = !data.above;
+			}
 		}
 		break;
 		case RS2::EntityEllipse:
@@ -264,6 +275,13 @@ double RS_AlignedText::setArcParams(RS_Vector &_nearestPoint)
 				data.above = true;
 			else
 				data.above = false;
+			if (data.reversed)
+			{
+				// play with reversing text here
+				shapeAngle += M_PI;
+				data.directionMultiplier *= -1;
+				data.above = !data.above;
+			}
 		}
 		break;
 	}
