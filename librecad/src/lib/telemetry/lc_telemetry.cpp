@@ -29,18 +29,21 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "winreg.h"
 #include "winerror.h"
 
-LC_Telemetry::LC_Telemetry() : library(QFileInfo(QDir::cleanPath(QCoreApplication::applicationDirPath()), "ProNestUtils.dll").filePath())
+LC_Telemetry::LC_Telemetry() : open(false)
 {
+	QString path = QFileInfo(QDir::cleanPath(QCoreApplication::applicationDirPath()), "ProNestUtils.dll").filePath();
+	library = new QLibrary(path);
 	ConnectFunctions();
 }
 
 LC_Telemetry::~LC_Telemetry()
 {
+	delete library;
 }
 
 void LC_Telemetry::BeginSession()
 {
-	if (beginSession && addProperty) {
+	if (beginSession && addProperty && !GetHaspId().isEmpty()) {
 		beginSession(
 			GetUserName().toStdWString().c_str(), 
 			GetHaspId().toStdWString().c_str(), 
@@ -48,54 +51,59 @@ void LC_Telemetry::BeginSession()
 			GetProductVersion().toStdWString().c_str()
 		);
 		addProperty(L"Associate", GetAssociate().toStdWString().c_str());
+		open = true;
 	}
 }
 
 void LC_Telemetry::EndSession()
 {
-	if (endSession)
+	if (open && endSession) {
 		endSession();
+		open = false;
+	}		
 }
 
 void LC_Telemetry::TrackEvent(const QString & eventName)
 {
-	if (trackEvent)
+	if (open && trackEvent)
 		trackEvent(eventName.toStdWString().c_str());
 }
 
 void LC_Telemetry::TrackMetric(const QString & metricName, const double value)
 {
-	if (trackMetric)
+	if (open && trackMetric)
 		trackMetric(metricName.toStdWString().c_str(), value);
 }
 
 void LC_Telemetry::TrackPageView(const QString & pageName)
 {
-	if (trackPageView)
+	if (open && trackPageView)
 		trackPageView(pageName.toStdWString().c_str());
 }
 
 void LC_Telemetry::AddProperty(const QString & key, const QString & value)
 {
-	if (addProperty)
+	if (open && addProperty)
 		addProperty(key.toStdWString().c_str(), value.toStdWString().c_str());
 }
 
 void LC_Telemetry::RemoveProperty(const QString & key)
 {
-	if (removeProperty)
+	if (open && removeProperty)
 		removeProperty(key.toStdWString().c_str());
 }
 
 void LC_Telemetry::ConnectFunctions()
 {
-	beginSession = (BeginSessionFunc)library.resolve("BeginTelemetrySession");
-	endSession = (EndSessionFunc)library.resolve("EndTelemetrySession");
-	trackEvent = (TrackEventFunc)library.resolve("TrackEvent");
-	trackMetric = (TrackMetricFunc)library.resolve("TrackMetric");
-	trackPageView = (TrackPageViewFunc)library.resolve("TrackPageView");
-	addProperty = (AddPropertyFunc)library.resolve("AddProperty");
-	removeProperty = (RemovePropertyFunc)library.resolve("RemoveProperty");
+	if (library->load()) {
+		beginSession = (BeginSessionFunc)library->resolve("BeginTelemetrySession");
+		endSession = (EndSessionFunc)library->resolve("EndTelemetrySession");
+		trackEvent = (TrackEventFunc)library->resolve("TrackEvent");
+		trackMetric = (TrackMetricFunc)library->resolve("TrackMetric");
+		trackPageView = (TrackPageViewFunc)library->resolve("TrackPageView");
+		addProperty = (AddPropertyFunc)library->resolve("AddProperty");
+		removeProperty = (RemovePropertyFunc)library->resolve("RemoveProperty");
+	}	
 }
 
 QString LC_Telemetry::GetUserName()
@@ -110,7 +118,7 @@ QString LC_Telemetry::GetHaspId()
 		WCHAR szBuffer[512];
 		DWORD dwBufferSize = sizeof(szBuffer);
 		ULONG nError;
-		if (RegQueryValueExW(hKey, L"", 0, NULL, (LPBYTE)szBuffer, &dwBufferSize) == ERROR_SUCCESS) {
+		if (RegQueryValueExW(hKey, L"HaspId", 0, NULL, (LPBYTE)szBuffer, &dwBufferSize) == ERROR_SUCCESS) {
 			return QString::fromStdWString(szBuffer);
 		}
 	}
@@ -131,7 +139,7 @@ QString LC_Telemetry::GetAssociate()
 {
 	std::string dns = std::getenv("USERDNSDOMAIN");
 	std::transform(dns.begin(), dns.end(), dns.begin(), toupper);
-	if (dns.find("HYPERTHERM", 0))
+	if (dns.find("HYPERTHERM", 0) != std::string::npos)
 		return QString("-1");
 	return QString("0");
 }

@@ -35,6 +35,9 @@
 #include "rs_fontlist.h"
 #include "rs_system.h"
 #include "lc_fontcreation.h"
+#include "qc_applicationwindow.h"
+#include "rs_document.h"
+#include "lc_telemetry.h"
 
 LC_FontCreation::LC_FontCreation()
 {
@@ -99,6 +102,16 @@ bool LC_FontCreation::createFont(const QString& fontFileName, const QString& lff
 		proc.start(command);
 		proc.waitForFinished();
 	}
+
+	bool result = QFile::exists(lff);
+	if (result) {
+		RS_Document *doc = QC_ApplicationWindow::getAppWindow()->getDocument();
+		if (fontFileName.endsWith(".shp", Qt::CaseInsensitive))
+			doc->getTelemetryData().shxFontsConverted++;
+		else
+			doc->getTelemetryData().ttfFontsConverted++;
+	}
+
 	return QFile::exists(lff);
 }
 

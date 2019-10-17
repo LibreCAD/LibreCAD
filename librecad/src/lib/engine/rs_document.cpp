@@ -63,3 +63,36 @@ void RS_Document::endUndoCycle()
     RS_Undo::endUndoCycle();
 }
 
+ void RS_Document::sendTelemetryData()
+ {
+	 if (!telemetryData.shxFontsConverted && !telemetryData.ttfFontsConverted && !telemetryData.fontConversionClicks
+		 && !telemetryData.textShapingClicks && !telemetryData.trimExcessClicks)
+		 return;
+	 LC_Telemetry t;
+	 t.BeginSession();
+	 if (telemetryData.fontConversionClicks)
+		 t.AddProperty("Fonts Manually Converted", QString("%1").arg(telemetryData.fontConversionClicks));
+	 if (telemetryData.shxFontsConverted)
+		t.AddProperty("SHX Fonts Converted", QString("%1").arg(telemetryData.shxFontsConverted));
+	 if (telemetryData.textShapingClicks)
+		 t.AddProperty("Shape Text Clicks", QString("%1").arg(telemetryData.textShapingClicks));
+	 if (telemetryData.trimExcessClicks)
+		 t.AddProperty("Trim Excess Clicks", QString("%1").arg(telemetryData.trimExcessClicks));
+	 if (telemetryData.ttfFontsConverted)
+		 t.AddProperty("TTF Fonts Converted", QString("%1").arg(telemetryData.ttfFontsConverted));
+	 t.AddProperty("IsDwg", filename.endsWith(".dwg", Qt::CaseInsensitive) ? "-1" : "0");
+	 t.TrackEvent("LibreCAD Save Drawing");
+	 t.RemoveProperty("Fonts Manually Converted");
+	 t.RemoveProperty("SHX Fonts Converted");
+	 t.RemoveProperty("Shape Text Clicks");
+	 t.RemoveProperty("Trim Excess Clicks");
+	 t.RemoveProperty("TTF Fonts Converted");
+	 t.RemoveProperty("IsDwg");
+	 telemetryData.fontConversionClicks = 0;
+	 telemetryData.shxFontsConverted = 0;
+	 telemetryData.textShapingClicks = 0;
+	 telemetryData.trimExcessClicks = 0;
+	 telemetryData.ttfFontsConverted = 0;
+	 t.EndSession();
+ }
+

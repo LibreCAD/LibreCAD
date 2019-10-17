@@ -382,6 +382,8 @@ bool RS_Graphic::save(bool isAutoSave)
 			layerList.setModified(false);
 			blockList.setModified(false);
 
+			sendTelemetryData();
+
 			/*	- Remove autosave file, if able to create associated object,
 						 *	  and if autosave file exist.
 						 *	------------------------------------------------------------ */

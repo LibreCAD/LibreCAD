@@ -32,6 +32,7 @@
 #include "rs_layerlist.h"
 #include "rs_entitycontainer.h"
 #include "rs_undo.h"
+#include "lc_telemetry.h"
 
 class RS_BlockList;
 
@@ -136,6 +137,11 @@ public:
     void setGraphicView(RS_GraphicView * g) {gv = g;}
     RS_GraphicView* getGraphicView() {return gv;}
 
+	LC_TelemetryData& getTelemetryData() { return telemetryData; }
+
+protected:
+	void sendTelemetryData();
+
 protected:
     /** Flag set if the document was modified and not yet saved. */
     bool modified;
@@ -148,7 +154,7 @@ protected:
 	/** Format type */
 	RS2::FormatType formatType;
     RS_GraphicView * gv;//used to read/save current view
-
+	LC_TelemetryData telemetryData;
 };
 
 

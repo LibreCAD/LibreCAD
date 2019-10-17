@@ -76,7 +76,9 @@ void RS_ActionModifyShapeText::trigger() {
 			shapeEntity = catchEntity(insertionPoint, RS2::ResolveNone);
 		}
 		if (shapeEntity->isAtomic())
-			m.shapeText(insertionPoint, reinterpret_cast<RS_AtomicEntity*>(shapeEntity), textEntity, offset);		
+			m.shapeText(insertionPoint, reinterpret_cast<RS_AtomicEntity*>(shapeEntity), textEntity, offset);
+
+		this->document->getTelemetryData().textShapingClicks++;
 
 		textEntity = nullptr;
 		shapeEntity = nullptr;

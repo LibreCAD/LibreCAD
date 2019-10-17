@@ -38,6 +38,9 @@
 #include "rs_system.h"
 #include <cstdlib>
 #include <math.h>
+#include "qc_applicationwindow.h"
+#include "rs_document.h"
+#include "lc_telemetry.h"
 
 QG_DlgFontConversion::QG_DlgFontConversion(QWidget *parent) :
     QDialog(parent),
@@ -55,6 +58,10 @@ QG_DlgFontConversion::QG_DlgFontConversion(QWidget *parent) :
 	ui->gvPreview->setContainer(preview);
 
 	ui->buttonBox->button(QDialogButtonBox::Apply)->setText(tr("Create"));
+
+	RS_Document* doc = QC_ApplicationWindow::getAppWindow()->getDocument();
+	if (doc)
+		doc->getTelemetryData().fontConversionClicks++;
 
 	slotFontChanged(QFont());
 }

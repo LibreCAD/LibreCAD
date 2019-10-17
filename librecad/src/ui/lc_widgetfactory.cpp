@@ -44,6 +44,8 @@
 #include <QMenuBar>
 #include <QActionGroup>
 #include <QSettings>
+#include <QDir>
+#include <QLibrary>
 
 
 LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
@@ -559,6 +561,20 @@ QToolBar* LC_WidgetFactory::createCategoriesToolbar()
     main_window->addToolBar(Qt::LeftToolBarArea, categories_toolbar);
 
     return categories_toolbar;
+}
+
+bool LC_WidgetFactory::showExportToProNest()
+{
+	QSettings settings;
+	if (!settings.value("Startup/ShowExportToProNest", false).toBool())
+		return false;
+	QDir dir = QDir::cleanPath(QCoreApplication::applicationDirPath());
+	QLibrary library(QFileInfo(dir, "ProNestUtils.dll").filePath());
+	typedef bool(*AvailableFunc)();
+	AvailableFunc Available = (AvailableFunc)library.resolve("ProNestAvailable");
+	if (Available)
+		return Available();
+	return false;
 }
 
 void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)

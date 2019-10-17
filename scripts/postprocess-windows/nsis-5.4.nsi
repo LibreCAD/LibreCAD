@@ -71,7 +71,7 @@
 Function .onInit
 
 ${If} $INSTDIR == "" ; /D not used
-  StrCpy $INSTDIR "$PROGRAMFILES\LibreCAD"
+  StrCpy $INSTDIR "$PROGRAMFILES\Hypertherm CAM\LibreCAD"
 ${EndIf}
 
   Push $R0
@@ -130,6 +130,10 @@ Section "Install Section" SecInstall
   SetOutPath "$INSTDIR\resources\qm"
   File /NONFATAL "${TRANSLATIONS_DIR}\qt*.qm"
   SetOutPath "$INSTDIR"
+
+  ;Install Visual C++ Redistributable
+  ExecWait '"$INSTDIR\vcredist_x86.exe"  /quiet /norestart'
+  Delete "$INSTDIR\vcredist_x86.exe"
 
   ;Store installation folder
   WriteRegStr HKCU "Software\LibreCAD" "" $INSTDIR

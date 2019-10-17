@@ -106,6 +106,7 @@
 #include "lc_penwizard.h"
 #include "textfileviewer.h"
 #include "lc_undosection.h"
+#include "lc_telemetry.h"
 
 #include <boost/version.hpp>
 
@@ -368,6 +369,11 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     RS_COMMANDS->updateAlias();
     //plugin load
     loadPlugins();
+
+	LC_Telemetry t;
+	t.BeginSession();
+	t.TrackEvent("LibreCAD Started");
+	t.EndSession();
 
     statusBar()->showMessage(qApp->applicationName() + " Ready", 2000);
 }
@@ -822,11 +828,15 @@ void QC_ApplicationWindow::slotExportToProNest()
 	if (w && doSave(w)) {
 		QDir dir = QDir::cleanPath(QCoreApplication::applicationDirPath());
 		QLibrary library(QFileInfo(dir, "ProNestUtils.dll").filePath());
-		typedef void(*ExportFunc)(const wchar_t*);
+		typedef bool (*ExportFunc)(const wchar_t*);
 		ExportFunc Export = (ExportFunc)library.resolve("AddPart");
 		if (Export) {
 			QApplication::setOverrideCursor(Qt::WaitCursor);
 			Export(QFileInfo(w->getDocument()->getFilename()).filePath().toStdWString().c_str());
+			LC_Telemetry t;
+			t.BeginSession();
+			t.TrackEvent("LibreCAD ExportToProNest");
+			t.EndSession();
 			QApplication::restoreOverrideCursor();
 		}
 	}

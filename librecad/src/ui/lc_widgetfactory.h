@@ -57,6 +57,8 @@ public:
     QMenu* file_menu;
     QMenu* windows_menu;
 
+private:
+	bool showExportToProNest();
 
 private:
     QC_ApplicationWindow* main_window;

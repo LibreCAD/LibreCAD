@@ -55,7 +55,7 @@ private:
 	QString GetAssociate();
 
 private:
-	QLibrary library;
+	QLibrary *library;
 	BeginSessionFunc beginSession;
 	EndSessionFunc endSession;
 	TrackEventFunc trackEvent;
@@ -63,14 +63,16 @@ private:
 	TrackPageViewFunc trackPageView;
 	AddPropertyFunc addProperty;
 	RemovePropertyFunc removeProperty;
+	bool open;
 };
 
 struct LC_TelemetryData 
 {
-	int trimExcessClicks;
-	int textShapingClicks;
-	int ttfFontsConverted;
-	int shxFontsConverted;
+	int trimExcessClicks = 0;
+	int textShapingClicks = 0;
+	int ttfFontsConverted = 0;
+	int shxFontsConverted = 0;
+	int fontConversionClicks = 0;
 };
 
 #endif // LC_TELEMETRY_H

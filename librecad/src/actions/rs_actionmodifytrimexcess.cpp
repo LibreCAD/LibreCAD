@@ -74,6 +74,8 @@ void RS_ActionModifyTrimExcess::trigger() {
 		if (trimEntity->isAtomic())
 			m.trimExcess(trimCoord, (RS_AtomicEntity*)trimEntity);
 
+		this->document->getTelemetryData().trimExcessClicks++;
+
 		trimEntity = nullptr;
 		setTrimPreviewEntity(nullptr, RS_Vector());		
 		setStatus(ChooseTrimEntity);
