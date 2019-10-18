@@ -236,7 +236,7 @@ double RS_AlignedText::setArcParams(RS_Vector &_nearestPoint)
 				data.above = true;
 			else
 				data.above = false;
-			if (arc->isReversed() != data.reversed)
+			if (arc->isReversed())
 			{
 				shapeAngle += M_PI;
 				data.directionMultiplier *= -1;
@@ -255,13 +255,6 @@ double RS_AlignedText::setArcParams(RS_Vector &_nearestPoint)
 				data.above = true;
 			else
 				data.above = false;
-			if (data.reversed)
-			{
-				// play with reversing text here
-				shapeAngle += M_PI;
-				data.directionMultiplier *= -1;
-				data.above = !data.above;
-			}
 		}
 		break;
 		case RS2::EntityEllipse:
@@ -275,13 +268,6 @@ double RS_AlignedText::setArcParams(RS_Vector &_nearestPoint)
 				data.above = true;
 			else
 				data.above = false;
-			if (data.reversed)
-			{
-				// play with reversing text here
-				shapeAngle += M_PI;
-				data.directionMultiplier *= -1;
-				data.above = !data.above;
-			}
 		}
 		break;
 	}
@@ -401,6 +387,13 @@ void RS_AlignedText::update()
 		shapeAngle = RS_Math::correctAngle(shapeEntity->getStartpoint().angleTo(shapeEntity->getEndpoint()));
 		pointangle = RS_Math::correctAngle(shapeEntity->getStartpoint().angleTo(data.insertionPoint) - shapeAngle);
 		data.above = (pointangle >= 0.0 && pointangle <= M_PI);
+	}
+	if (data.reversed)
+	{
+		// play with reversing text here
+		shapeAngle += M_PI;
+		data.directionMultiplier *= -1;
+		data.above = !data.above;
 	}
 	// move text to start at insertionPoint
 	if (tType == RS2::EntityAlignedText)
