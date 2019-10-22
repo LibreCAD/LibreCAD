@@ -63,6 +63,7 @@ void QG_ShapeTextOptions::languageChange()
 void QG_ShapeTextOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Modify");
 	RS_SETTINGS->writeEntry("/ShapeTextOffset", ui->leOffset->text());
+	RS_SETTINGS->writeEntry("/ShapeTextReversed", (int)ui->cbReversed->isChecked());
     RS_SETTINGS->endGroup();
 }
 
@@ -71,15 +72,20 @@ void QG_ShapeTextOptions::setAction(RS_ActionInterface* a, bool update) {
         action = static_cast<RS_ActionModifyShapeText*>(a);
 
         QString sr;
+		bool reversed;
         if (update) {
             sr = QString("%1").arg(action->getOffset());
+			reversed = action->getReversed();
         } else {
             RS_SETTINGS->beginGroup("/Modify");
             sr = RS_SETTINGS->readEntry("/ShapeTextOffset", "0.5");
+			reversed = RS_SETTINGS->readNumEntry("/ShapeTextReversed", 0);
             RS_SETTINGS->endGroup();
             action->setOffset(sr.toDouble());
+			action->setReversed(reversed);
         }
 		ui->leOffset->setText(sr);
+		ui->cbReversed->setChecked(reversed);
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
                         "QG_ShapeTextOptions::setAction: wrong action type");
@@ -94,4 +100,10 @@ void QG_ShapeTextOptions::updateOffset(const QString& r) {
     if (action) {
         action->setOffset(RS_Math::eval(r));
     }
+}
+
+void QG_ShapeTextOptions::updateReversed(const bool reversed) {
+	if (action) {
+		action->setReversed(reversed);
+	}
 }

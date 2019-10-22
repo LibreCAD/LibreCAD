@@ -6,25 +6,25 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>150</width>
+    <width>175</width>
     <height>22</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+   <sizepolicy hsizetype="Fixed" vsizetype="Ignored">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>111</width>
+    <width>175</width>
     <height>22</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>150</width>
+    <width>175</width>
     <height>22</height>
    </size>
   </property>
@@ -46,6 +46,12 @@
    </property>
    <item>
     <widget class="QLabel" name="lOffset">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="text">
       <string>Offset:</string>
      </property>
@@ -55,7 +61,20 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="leOffset"/>
+    <widget class="QLineEdit" name="leOffset">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>22</height>
+      </size>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="Line" name="sep1">
@@ -73,10 +92,41 @@
      </property>
     </widget>
    </item>
+   <item>
+    <widget class="QCheckBox" name="cbReversed">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::RightToLeft</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/reverse.png</normaloff>:/extui/reverse.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+     <property name="autoRepeatDelay">
+      <number>300</number>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../../../res/extui/extui.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>leOffset</sender>
@@ -94,5 +144,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cbReversed</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>Ui_ShapeTextOptions</receiver>
+   <slot>updateReversed(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>170</x>
+     <y>8</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>145</x>
+     <y>6</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>updateReversed(bool)</slot>
+ </slots>
 </ui>

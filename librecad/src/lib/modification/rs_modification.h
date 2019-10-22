@@ -259,7 +259,7 @@ public:
               bool both);
     bool trimAmount(const RS_Vector& trimCoord, RS_AtomicEntity* trimEntity, double dist);
 	bool trimExcess(const RS_Vector& trimCoord, RS_AtomicEntity* trimEntity, RS_Entity ** trimmed = nullptr);
-	bool shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity* shapeEntity, RS_Entity *textEntity, double offset, RS_Entity ** previewEntity = nullptr);
+	bool shapeText(const RS_Vector& insertionPoint, RS_AtomicEntity* shapeEntity, RS_Entity *textEntity, double offset, bool reversed, RS_Entity ** previewEntity = nullptr);
     bool offset(const RS_OffsetData& data);
     bool cut(const RS_Vector& cutCoord, RS_AtomicEntity* cutEntity, QList<RS_AtomicEntity*>* pieces = nullptr);
 	bool cut2(const RS_Vector& cutCoord1, const RS_Vector& cutCoord2, RS_AtomicEntity* cutEntity, QList<RS_AtomicEntity*>* pieces = nullptr);

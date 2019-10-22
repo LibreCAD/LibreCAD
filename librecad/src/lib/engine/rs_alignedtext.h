@@ -63,6 +63,7 @@ struct RS_AlignedTextData {
 				 RS_Vector _insertionPoint,
 				 double _offset,
 				 bool _above,
+				 bool _reversed,
 				 RS2::UpdateMode updateMode = RS2::Update,
 				 int _directionMultiplier = 1);
 
@@ -80,6 +81,8 @@ struct RS_AlignedTextData {
 	RS2::UpdateMode updateMode;
 	/** Default ("forward") direction multiplier */
 	int directionMultiplier;
+	/** Is text direction reversed */
+	bool reversed;
 };
 
 std::ostream& operator << (std::ostream& os, const RS_AlignedTextData& td);

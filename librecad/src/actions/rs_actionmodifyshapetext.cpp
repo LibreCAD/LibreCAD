@@ -46,6 +46,7 @@ RS_ActionModifyShapeText::RS_ActionModifyShapeText(RS_EntityContainer& container
 	, shapePreview{ nullptr }
 {
 	offset = 0.5;
+	reversed = false;
 	actionType=RS2::ActionModifyShapeText;
 }
 
@@ -76,7 +77,7 @@ void RS_ActionModifyShapeText::trigger() {
 			shapeEntity = catchEntity(insertionPoint, RS2::ResolveNone);
 		}
 		if (shapeEntity->isAtomic())
-			m.shapeText(insertionPoint, reinterpret_cast<RS_AtomicEntity*>(shapeEntity), textEntity, offset);
+			m.shapeText(insertionPoint, reinterpret_cast<RS_AtomicEntity*>(shapeEntity), textEntity, offset, reversed);		
 
 		this->document->getTelemetryData().textShapingClicks++;
 
@@ -179,7 +180,7 @@ void RS_ActionModifyShapeText::setShapeTextPreviewEntity(RS_Entity * entity, con
 
 	if (entity && entity->isAtomic()) {
 		RS_Modification modify(*container, graphicView);
-		modify.shapeText(point, reinterpret_cast<RS_AtomicEntity*>(entity), textEntity, offset, &shapePreview);		
+		modify.shapeText(point, reinterpret_cast<RS_AtomicEntity*>(entity), textEntity, offset, reversed, &shapePreview);		
 	}
 	drawShapeTextPreview();
 }
@@ -218,4 +219,14 @@ double RS_ActionModifyShapeText::getOffset() const
 void RS_ActionModifyShapeText::setOffset(double _offset)
 {
 	offset = _offset;
+}
+
+bool RS_ActionModifyShapeText::getReversed() const
+{
+	return (reversed);
+}
+
+void RS_ActionModifyShapeText::setReversed(bool _reversed)
+{
+	reversed = _reversed;
 }

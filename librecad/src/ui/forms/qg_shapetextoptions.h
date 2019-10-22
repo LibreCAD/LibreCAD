@@ -46,6 +46,7 @@ public:
 public slots:
 	virtual void setAction(RS_ActionInterface * a, bool update );
     virtual void updateOffset( const QString & r );
+    virtual void updateReversed( const bool  reversed );
 
 protected:
     RS_ActionModifyShapeText* action;
