@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="User Guides">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Using the Command Line</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/ExampleGrid.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="TopicContent">
+            <h1 class="TOC4"><a name="kanchor55"></a>Using the Command Line</h1>
+            <p>LibreCAD’s command line offers users an alternative to using the mouse to select tools and draw. Using the keyboard to select tools and enter coordinates can provide greater speed and accuracy when creating drawings. The command line provides other useful features not available using the mouse:</p>
+            <ul>
+                <li value="1">Multi-command input</li>
+                <li value="2">A calculator</li>
+            </ul>
+            <p>The command line is displayed in its own dock widget and consists of three components</p>
+            <ol>
+                <li value="1">Command prompt.</li>
+                <li value="2">Command output window.</li>
+                <li value="3">A&#160;button ( <img src="../../Images/button.png" /> ) that displays a drop-down menu that includes:<ul><li value="1">Keycode Mode on/off.</li><li value="2">Load a Command file.</li><li value="3">Paste multiple commands.</li></ul></li>
+            </ol>
+            <p class="Procedure">Entering functions into the Command Line</p>
+            <p>The commands available to use are shown on the reference pages for each tool category. The command line is activated by in a variety of ways:</p>
+            <ul>
+                <li value="1">Start typing any command (for example, <span class="CodeSnippet">rect</span>) and then press ENTER or the Space bar.</li>
+                <li value="2">Press the Space bar, type any command and then press ENTER or the Space bar.</li>
+                <li value="3">Press CTRL + M, any command and then press ENTER or the Space bar.</li>
+                <li value="4">Press SHIFT, any command and then press ENTER or the Space bar.</li>
+                <li value="5">With the Keycode Mode on, type a two letter command (for example, <span class="CodeSnippet">ci</span>). Pressing ENTER or the Space bar is not required.</li>
+                <li value="6">Tab completion can be used in the command line when entering commands. Enter a partial command, such as <span class="CodeSnippet">cir</span>, then press the TAB key. If only one command is possible from the partial command, the full command will display in the text entry field. If more than one command is possible, a list of possible commands will display in the command window.</li>
+            </ul>
+            <p>Depending on the command you're using, additional input may be required in the Command Line or Toolbar.</p>
+            <div class="Tip">
+                <ul>
+                    <li value="1">In addition to the comma separated coordinates, coordinates can also be entered using the numeric keypad using the X..Y format. For example,. typing <span class="CodeSnippet">10..20</span> is equivalent to <span class="CodeSnippet">@10,20</span>. Using the two decimals may be faster than typing the comma.</li>
+                </ul>
+                <ul>
+                    <li value="1">The Keycode Mode permits the use of two letter commands and eliminates the need to press [Enter] after typing the command.</li>
+                </ul>
+                <ul>
+                    <li value="1">Pressing the Space bar is an alternative to pressing ENTER after each command.</li>
+                </ul>
+                <ul>
+                    <li value="1">Pressing <span class="CodeSnippet">c</span> or <span class="CodeSnippet">u</span> followed by ENTER can be used instead of typing <span class="CodeSnippet">close </span>or <span class="CodeSnippet">undo</span>.</li>
+                </ul>
+            </div>
+            <p class="Procedure">Using the Command Line Calculator</p>
+            <ol>
+                <li value="1">Enter <span class="CodeSnippet">Cal</span> in the Command Line to enable Calculator Mode.</li>
+                <li value="2">Enter equations as needed. Calculator Mode can also be used to retrieve values, such as pi. Results will display in the command window.</li>
+                <li value="3">Exit Calculator Mode by again entering <span class="CodeSnippet">Cal</span> in the Command Line.</li>
+            </ol>
+            <p>See the list of <a href="../Appendices/append_calculator.htm">Calculator Operators and Functions</a>.</p>
+            <div class="Note">
+                <ul>
+                    <li value="1">The constant pi is defined in LibreCAD as 3.14159265359.</li>
+                    <li value="2">Trigonometric functions use radians (radians = degrees*pi/180).</li>
+                </ul>
+            </div>
+            <h2>Multi-Command Input</h2>
+            <p>Command input can be combined and entered on a single line by separating the commands and other input with semicolons. Entering <span class="CodeSnippet">li;0,0;10..0;0..10;-10..0;c;k</span> on the command line will draw a 10 x 10 square. A list of commands, separated by a newline (return), can be copied and pasted using Paste multiple commands from the command line button (lower right corner of the Command Line dock).</p>
+            <p>&#160;</p>
+            <p>Command input can also be loaded from text files. Enter the commands and other input into a text file separating each with a newline. For example, create a text file and enter the following commands:</p>
+            <table style="border-spacing: 1px 1px;border-left-style: solid;border-left-width: 1px;border-right-style: solid;border-right-width: 1px;border-top-style: solid;border-top-width: 1px;border-bottom-style: solid;border-bottom-width: 1px;margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/ExampleGrid.css');" class="TableStyle-ExampleGrid" cellspacing="0">
+                <col style="width: 2in;" class="TableStyle-ExampleGrid-Column-Column1" />
+                <tbody>
+                    <tr class="TableStyle-ExampleGrid-Body-Body1">
+                        <td class="TableStyle-ExampleGrid-BodyA-Column1-Body1">
+                            <p class="CodeSnippet">li
+</p>
+                            <p class="CodeSnippet">0,0
+</p>
+                            <p class="CodeSnippet">@10,0
+</p>
+                            <p class="CodeSnippet">@0,10
+</p>
+                            <p class="CodeSnippet">@-10,0
+</p>
+                            <p class="CodeSnippet">c
+</p>
+                            <p class="CodeSnippet">k</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>The above commands will draw a 10x10 square.</p>
+            <p class="Procedure">Using multi-command input</p>
+            <ol>
+                <li value="1">Create a text file containing the command input.</li>
+                <li value="2">In LibreCAD, select “<b>Load Command File</b>” from the dropdown menu by selecting the Command Line button ( <img src="../../Images/button.png" /> ). </li>
+                <li value="3">Locate the file, and select <b>Open</b>.</li>
+            </ol>
+            <p>The geometry you specified in the text file will appear in the current drawing.</p>
+            <p>&#160;</p>
+            <p style="font-weight: bold;">Variables in multi-command input</p>
+            <p>Multi-command input can be assigned to a variable and variables can also contain other variables, which are read recursively:</p>
+            <table style="border-left-style: solid;border-left-width: 1px;border-left-color: ;border-right-style: solid;border-right-width: 1px;border-right-color: ;border-top-style: solid;border-top-width: 1px;border-top-color: ;border-bottom-style: solid;border-bottom-width: 1px;border-bottom-color: ;margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/ExampleGrid.css');" class="TableStyle-ExampleGrid" cellspacing="0">
+                <col style="width: 2in;" class="TableStyle-ExampleGrid-Column-Column1" />
+                <tbody>
+                    <tr class="TableStyle-ExampleGrid-Body-Body1">
+                        <td class="TableStyle-ExampleGrid-BodyA-Column1-Body1">
+                            <p class="CodeSnippet">a=ci;0,0;10</p>
+                            <p class="CodeSnippet">b=ci;10,0;10</p>
+                            <p class="CodeSnippet">c=\a;\b;kill</p>
+                            <p class="CodeSnippet">\c</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Enter each line of the text above on the command line. When <span class="CodeSnippet">\c</span> is entered, two overlapping circles with a radius of 10 are drawn. The <span class="CodeSnippet">\</span> character is an escape character that allows the command line to interpret the variable name as an action. In the above example <span class="CodeSnippet">\c</span> expands to <span class="CodeSnippet">ci;0,0;10;ci;10,0;10;kill</span>.</p>
+            <p class="Procedure">Using variables with multi-command input</p>
+            <ol>
+                <li value="1">Create a variable multi-command input text file.</li>
+                <li value="2">Load the file by selecting <b>Options</b>.</li>
+                <li value="3">Select <b>Application Preferences</b>.</li>
+                <li value="4">Select the <b>Paths</b> tab.</li>
+                <li value="5">Select the <b>Browse</b> button ( <img src="../../Images/open.svg" /> ), and locate the variable file.</li>
+                <li value="6">Select <b>OK</b>.</li>
+                <li value="7">Select <b>OK</b> again to save the Application Preferences.</li>
+                <li value="8">Restart LibreCAD.</li>
+                <li value="9">Enter <span class="CodeSnippet">\c</span> in the Command Line.</li>
+            </ol>
+            <p>The file will be loaded.</p>
+            <h2>Command Aliases</h2>
+            <p>In LibreCAD, some commands have multiple forms. The long form is the native, untranslated command, and the short form is the alias. For example, the long, native command for Shape Text is "shapetext," but the short, alias form is "st." Aliases for any command can be defined in the <span class="CodeSnippet">librecad.alias</span> configuration file.</p>
+            <blockquote>
+                <p>Format:&#160;<span class="CodeSnippet">&lt;alias&gt;[TAB]&lt;command-untranslated&gt;</span></p>
+                <p>&#160;</p>
+                <p>Example:&#160;<span class="CodeSnippet">l &#160;&#160;&#160;&#160;&#160;&#160;line</span></p>
+            </blockquote>
+            <p>The alias file can be edited using any text editor, such as Notepad. The file can be found here:&#160;<span class="CodeSnippet">C:\Users\{UserName}\AppData\Local\LibreCAD\librecad.alias</span>.</p>
+            <div class="ImportantDiv">
+                <ul>
+                    <li value="1">Only change the alias, not the long untranslated form.</li>
+                    <li value="2">You may need to restart LibreCAD for alias changes to take effect.</li>
+                </ul>
+            </div>
+            <div class="TopicFooter">
+                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
+                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_container.htm">About Draw and Modify Tools</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Appendices/append_calculator.htm">Calculator Operators and Functions</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Appendices/append_commandline.htm">Command Line Shortcuts</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 6pt;margin-top: 0;margin-bottom: 0;">&#160;</p>
+    </body>
+</html>

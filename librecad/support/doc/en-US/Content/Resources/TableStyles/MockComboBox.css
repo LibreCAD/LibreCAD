@@ -1,0 +1,360 @@
+/* MadCap Table Style: */
+
+/*<meta Version="9" />*/
+
+mcTableStyle
+{
+	name: MockComboBox;
+	border-collapse: collapse;
+	border-left-style: solid;
+	border-left-width: 1px;
+	border-left-color: #b3b9c1;
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-right-color: #b3b9c1;
+	border-top-style: solid;
+	border-top-width: 1px;
+	border-top-color: #b3b9c1;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #b3b9c1;
+	max-id: 3;
+}
+
+mcTableColumnStyle
+{
+	span: 1;
+	name: Column1;
+	id: 0;
+}
+
+mcTableHeadStyle
+{
+	span: 1;
+	separator-style: solid;
+	separator-width: 1px;
+	separator-color: #b3b9c1;
+	name: Header1;
+	id: 2;
+}
+
+mcTableBodyStyle
+{
+	span: 1;
+	name: Body1;
+	id: 1;
+}
+
+
+/* Cell Styles: */
+ 
+.TableStyle-MockComboBox
+{
+	border-collapse: collapse;
+	border-left-style: solid;
+	border-left-color: #b3b9c1;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-right-color: #b3b9c1;
+	border-right-width: 1px;
+	border-top-style: solid;
+	border-top-color: #b3b9c1;
+	border-top-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #b3b9c1;
+	border-bottom-width: 1px;
+	border-spacing: 0px 0px;
+}
+
+.TableStyle-MockComboBox-Column-Column1
+{
+	
+}
+
+.TableStyle-MockComboBox-Head-Header1
+{
+	
+}
+
+.TableStyle-MockComboBox-HeadI-Column1-Header1
+{
+	
+}
+
+.TableStyle-MockComboBox-HeadI-Column1-Header1 p
+{
+	
+}
+
+.TableStyle-MockComboBox-HeadE-Column1-Header1
+{
+	border-bottom-width: 1px;
+	border-bottom-color: #b3b9c1;
+	border-bottom-style: solid;
+}
+
+.TableStyle-MockComboBox-HeadE-Column1-Header1 p
+{
+	
+}
+
+.TableStyle-MockComboBox-HeadF-Column1-Header1
+{
+	border-bottom-width: 1px;
+	border-bottom-color: #b3b9c1;
+	border-bottom-style: solid;
+}
+
+.TableStyle-MockComboBox-HeadF-Column1-Header1 p
+{
+	
+}
+
+.TableStyle-MockComboBox-HeadH-Column1-Header1
+{
+	
+}
+
+.TableStyle-MockComboBox-HeadH-Column1-Header1 p
+{
+	
+}
+
+.TableStyle-MockComboBox-HeadD-Column1-Header1
+{
+	border-bottom-width: 1px;
+	border-bottom-color: #b3b9c1;
+	border-bottom-style: solid;
+}
+
+.TableStyle-MockComboBox-HeadD-Column1-Header1 p
+{
+	
+}
+
+.TableStyle-MockComboBox-HeadC-Column1-Header1
+{
+	
+}
+
+.TableStyle-MockComboBox-HeadC-Column1-Header1 p
+{
+	
+}
+
+.TableStyle-MockComboBox-HeadB-Column1-Header1
+{
+	
+}
+
+.TableStyle-MockComboBox-HeadB-Column1-Header1 p
+{
+	
+}
+
+.TableStyle-MockComboBox-HeadA-Column1-Header1
+{
+	
+}
+
+.TableStyle-MockComboBox-HeadA-Column1-Header1 p
+{
+	
+}
+
+.TableStyle-MockComboBox-HeadG-Column1-Header1
+{
+	
+}
+
+.TableStyle-MockComboBox-HeadG-Column1-Header1 p
+{
+	
+}
+
+.TableStyle-MockComboBox-FootI-Column1-
+{
+	
+}
+
+.TableStyle-MockComboBox-FootI-Column1- p
+{
+	
+}
+
+.TableStyle-MockComboBox-FootE-Column1-
+{
+	
+}
+
+.TableStyle-MockComboBox-FootE-Column1- p
+{
+	
+}
+
+.TableStyle-MockComboBox-FootF-Column1-
+{
+	
+}
+
+.TableStyle-MockComboBox-FootF-Column1- p
+{
+	
+}
+
+.TableStyle-MockComboBox-FootH-Column1-
+{
+	
+}
+
+.TableStyle-MockComboBox-FootH-Column1- p
+{
+	
+}
+
+.TableStyle-MockComboBox-FootD-Column1-
+{
+	
+}
+
+.TableStyle-MockComboBox-FootD-Column1- p
+{
+	
+}
+
+.TableStyle-MockComboBox-FootC-Column1-
+{
+	
+}
+
+.TableStyle-MockComboBox-FootC-Column1- p
+{
+	
+}
+
+.TableStyle-MockComboBox-FootB-Column1-
+{
+	
+}
+
+.TableStyle-MockComboBox-FootB-Column1- p
+{
+	
+}
+
+.TableStyle-MockComboBox-FootA-Column1-
+{
+	
+}
+
+.TableStyle-MockComboBox-FootA-Column1- p
+{
+	
+}
+
+.TableStyle-MockComboBox-FootG-Column1-
+{
+	
+}
+
+.TableStyle-MockComboBox-FootG-Column1- p
+{
+	
+}
+
+.TableStyle-MockComboBox-Body-Body1
+{
+	
+}
+
+.TableStyle-MockComboBox-BodyI-Column1-Body1
+{
+	
+}
+
+.TableStyle-MockComboBox-BodyI-Column1-Body1 p
+{
+	
+}
+
+.TableStyle-MockComboBox-BodyE-Column1-Body1
+{
+	
+}
+
+.TableStyle-MockComboBox-BodyE-Column1-Body1 p
+{
+	
+}
+
+.TableStyle-MockComboBox-BodyF-Column1-Body1
+{
+	
+}
+
+.TableStyle-MockComboBox-BodyF-Column1-Body1 p
+{
+	
+}
+
+.TableStyle-MockComboBox-BodyH-Column1-Body1
+{
+	
+}
+
+.TableStyle-MockComboBox-BodyH-Column1-Body1 p
+{
+	
+}
+
+.TableStyle-MockComboBox-BodyD-Column1-Body1
+{
+	
+}
+
+.TableStyle-MockComboBox-BodyD-Column1-Body1 p
+{
+	
+}
+
+.TableStyle-MockComboBox-BodyC-Column1-Body1
+{
+	
+}
+
+.TableStyle-MockComboBox-BodyC-Column1-Body1 p
+{
+	
+}
+
+.TableStyle-MockComboBox-BodyB-Column1-Body1
+{
+	
+}
+
+.TableStyle-MockComboBox-BodyB-Column1-Body1 p
+{
+	
+}
+
+.TableStyle-MockComboBox-BodyA-Column1-Body1
+{
+	
+}
+
+.TableStyle-MockComboBox-BodyA-Column1-Body1 p
+{
+	
+}
+
+.TableStyle-MockComboBox-BodyG-Column1-Body1
+{
+	
+}
+
+.TableStyle-MockComboBox-BodyG-Column1-Body1 p
+{
+	
+}
+
+

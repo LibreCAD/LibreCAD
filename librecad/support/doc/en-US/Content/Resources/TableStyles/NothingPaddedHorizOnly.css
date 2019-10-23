@@ -1,0 +1,468 @@
+/* MadCap Table Style: */
+
+/*<meta Version="7" />*/
+
+mcTableStyle
+{
+	name: NothingPaddedVertOnly;
+	border-collapse: collapse;
+	border-left-style: solid;
+	border-left-width: 0px;
+	border-right-style: solid;
+	border-right-width: 0px;
+	border-top-style: solid;
+	border-top-width: 0px;
+	border-bottom-style: solid;
+	border-bottom-width: 0px;
+	cell-padding-left: 4px;
+	cell-padding-right: 4px;
+	cell-padding-top: 0px;
+	cell-padding-bottom: 0px;
+	max-id: 1;
+}
+
+mcTableColumnStyle
+{
+	span: 1;
+	separator-style: solid;
+	separator-width: 0px;
+	separator-color: #000000;
+	name: Column1;
+	id: 0;
+}
+
+mcTableBodyStyle
+{
+	span: 1;
+	font-weight: normal;
+	separator-style: solid;
+	separator-width: 0px;
+	separator-color: #000000;
+	name: Body1;
+	id: 1;
+}
+
+
+/* Cell Styles: */
+ 
+.TableStyle-NothingPaddedVertOnly
+{
+	border-collapse: collapse;
+	border-left-style: solid;
+	border-left-width: 0px;
+	border-right-style: solid;
+	border-right-width: 0px;
+	border-top-style: solid;
+	border-top-width: 0px;
+	border-bottom-style: solid;
+	border-bottom-width: 0px;
+	border-spacing: 0px 0px;
+}
+
+.TableStyle-NothingPaddedVertOnly .Column-Column1
+{
+	
+}
+
+.TableStyle-NothingPaddedVertOnly .HeadI-Column1-
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.TableStyle-NothingPaddedVertOnly .HeadI-Column1- p
+{
+	
+}
+
+.TableStyle-NothingPaddedVertOnly .HeadE-Column1-
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	border-right-width: 0px;
+	border-right-color: #000000;
+	border-right-style: solid;
+}
+
+.TableStyle-NothingPaddedVertOnly .HeadE-Column1- p
+{
+	
+}
+
+.TableStyle-NothingPaddedVertOnly .HeadF-Column1-
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.TableStyle-NothingPaddedVertOnly .HeadF-Column1- p
+{
+	
+}
+
+.TableStyle-NothingPaddedVertOnly .HeadH-Column1-
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	border-right-width: 0px;
+	border-right-color: #000000;
+	border-right-style: solid;
+}
+
+.TableStyle-NothingPaddedVertOnly .HeadH-Column1- p
+{
+	
+}
+
+.TableStyle-NothingPaddedVertOnly .HeadD-Column1-
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.TableStyle-NothingPaddedVertOnly .HeadD-Column1- p
+{
+	
+}
+
+.TableStyle-NothingPaddedVertOnly .HeadC-Column1-
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.TableStyle-NothingPaddedVertOnly .HeadC-Column1- p
+{
+	
+}
+
+.TableStyle-NothingPaddedVertOnly .HeadB-Column1-
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	border-right-width: 0px;
+	border-right-color: #000000;
+	border-right-style: solid;
+}
+
+.TableStyle-NothingPaddedVertOnly .HeadB-Column1- p
+{
+	
+}
+
+.TableStyle-NothingPaddedVertOnly .HeadA-Column1-
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.TableStyle-NothingPaddedVertOnly .HeadA-Column1- p
+{
+	
+}
+
+.TableStyle-NothingPaddedVertOnly .HeadG-Column1-
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.TableStyle-NothingPaddedVertOnly .HeadG-Column1- p
+{
+	
+}
+
+.TableStyle-NothingPaddedVertOnly .FootI-Column1-
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.TableStyle-NothingPaddedVertOnly .FootI-Column1- p
+{
+	
+}
+
+.TableStyle-NothingPaddedVertOnly .FootE-Column1-
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	border-right-width: 0px;
+	border-right-color: #000000;
+	border-right-style: solid;
+}
+
+.TableStyle-NothingPaddedVertOnly .FootE-Column1- p
+{
+	
+}
+
+.TableStyle-NothingPaddedVertOnly .FootF-Column1-
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.TableStyle-NothingPaddedVertOnly .FootF-Column1- p
+{
+	
+}
+
+.TableStyle-NothingPaddedVertOnly .FootH-Column1-
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	border-right-width: 0px;
+	border-right-color: #000000;
+	border-right-style: solid;
+}
+
+.TableStyle-NothingPaddedVertOnly .FootH-Column1- p
+{
+	
+}
+
+.TableStyle-NothingPaddedVertOnly .FootD-Column1-
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.TableStyle-NothingPaddedVertOnly .FootD-Column1- p
+{
+	
+}
+
+.TableStyle-NothingPaddedVertOnly .FootC-Column1-
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.TableStyle-NothingPaddedVertOnly .FootC-Column1- p
+{
+	
+}
+
+.TableStyle-NothingPaddedVertOnly .FootB-Column1-
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	border-right-width: 0px;
+	border-right-color: #000000;
+	border-right-style: solid;
+}
+
+.TableStyle-NothingPaddedVertOnly .FootB-Column1- p
+{
+	
+}
+
+.TableStyle-NothingPaddedVertOnly .FootA-Column1-
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.TableStyle-NothingPaddedVertOnly .FootA-Column1- p
+{
+	
+}
+
+.TableStyle-NothingPaddedVertOnly .FootG-Column1-
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.TableStyle-NothingPaddedVertOnly .FootG-Column1- p
+{
+	
+}
+
+.TableStyle-NothingPaddedVertOnly .Body-Body1
+{
+	
+}
+
+.TableStyle-NothingPaddedVertOnly .BodyI-Column1-Body1
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	font-weight: normal;
+}
+
+.TableStyle-NothingPaddedVertOnly .BodyI-Column1-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-NothingPaddedVertOnly .BodyE-Column1-Body1
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	font-weight: normal;
+	border-bottom-width: 0px;
+	border-bottom-color: #000000;
+	border-bottom-style: solid;
+	border-right-width: 0px;
+	border-right-color: #000000;
+	border-right-style: solid;
+}
+
+.TableStyle-NothingPaddedVertOnly .BodyE-Column1-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-NothingPaddedVertOnly .BodyF-Column1-Body1
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	font-weight: normal;
+	border-bottom-width: 0px;
+	border-bottom-color: #000000;
+	border-bottom-style: solid;
+}
+
+.TableStyle-NothingPaddedVertOnly .BodyF-Column1-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-NothingPaddedVertOnly .BodyH-Column1-Body1
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	font-weight: normal;
+	border-right-width: 0px;
+	border-right-color: #000000;
+	border-right-style: solid;
+}
+
+.TableStyle-NothingPaddedVertOnly .BodyH-Column1-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-NothingPaddedVertOnly .BodyD-Column1-Body1
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	font-weight: normal;
+	border-bottom-width: 0px;
+	border-bottom-color: #000000;
+	border-bottom-style: solid;
+}
+
+.TableStyle-NothingPaddedVertOnly .BodyD-Column1-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-NothingPaddedVertOnly .BodyC-Column1-Body1
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	font-weight: normal;
+}
+
+.TableStyle-NothingPaddedVertOnly .BodyC-Column1-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-NothingPaddedVertOnly .BodyB-Column1-Body1
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	font-weight: normal;
+	border-right-width: 0px;
+	border-right-color: #000000;
+	border-right-style: solid;
+}
+
+.TableStyle-NothingPaddedVertOnly .BodyB-Column1-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-NothingPaddedVertOnly .BodyA-Column1-Body1
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	font-weight: normal;
+}
+
+.TableStyle-NothingPaddedVertOnly .BodyA-Column1-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-NothingPaddedVertOnly .BodyG-Column1-Body1
+{
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	font-weight: normal;
+}
+
+.TableStyle-NothingPaddedVertOnly .BodyG-Column1-Body1 p
+{
+	font-weight: normal;
+}
+
+

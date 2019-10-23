@@ -3,14 +3,15 @@
 REM from librecad/src goto LibreCAD root folder
 REM CAUTION! pushd isn't tolerant for /, use \
 pushd ..
-cd > PWD
-set /p LC_PWD= < PWD
-del PWD
+REM cd > PWD
+REM set /p LC_PWD= %cd%
+REM del PWD
 
-set LC_RESOURCEDIR=%LC_PWD%\windows\resources
-set LC_TSDIRLC=%LC_PWD%\librecad\ts
-set LC_TSDIRPI=%LC_PWD%\plugins\ts
-set LC_NSISDIR=%LC_PWD%\scripts\postprocess-windows
+set LC_RESOURCEDIR=%cd%\windows\resources
+set LC_TSDIRLC=%cd%\librecad\ts
+set LC_TSDIRPI=%cd%\plugins\ts
+set LC_NSISDIR=%cd%\scripts\postprocess-windows
+set LC_DOCS=%cd%\windows\doc
 
 REM Postprocess for windows
 echo " Copying fonts and patterns"
@@ -23,7 +24,7 @@ if not exist "%LC_RESOURCEDIR%\library\algoritm\" (mkdir "%LC_RESOURCEDIR%\libra
 if not exist "%LC_RESOURCEDIR%\library\block\" (mkdir "%LC_RESOURCEDIR%\library\block")
 if not exist "%LC_RESOURCEDIR%\library\kinetics\" (mkdir "%LC_RESOURCEDIR%\library\kinetics")
 if not exist "%LC_RESOURCEDIR%\library\power_station\" (mkdir "%LC_RESOURCEDIR%\library\power_station")
-if not exist "%LC_RESOURCEDIR%\library\sheets\" (mkdir "%LC_RESOURCEDIR%\library\sheets")
+if not exist "%LC_DOCS%" (mkdir "%LC_DOCS%")
 
 copy "librecad\support\patterns\*.dxf" "%LC_RESOURCEDIR%\patterns"
 copy "librecad\support\fonts\*.lff" "%LC_RESOURCEDIR%\fonts"
@@ -34,7 +35,7 @@ copy "librecad\support\library\block\*.dxf" "%LC_RESOURCEDIR%\library\block"
 copy "librecad\support\library\kinetics\*.dxf" "%LC_RESOURCEDIR%\library\kinetics"
 copy "librecad\support\library\power_station\*.dxf" "%LC_RESOURCEDIR%\library\power_station"
 copy "librecad\support\library\sheets\*.dxf" "%LC_RESOURCEDIR%\library\sheets"
-
+xcopy /s /y "librecad\support\doc" "%LC_DOCS%"
 
 REM Generate translations
 echo "Generating Translations"

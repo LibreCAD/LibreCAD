@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="User Guides">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Setting up a drawing</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="TopicContent">
+            <h1 class="TOC4"><a name="kanchor47"></a>Setting up a drawing</h1>
+            <p><a name="kanchor48"></a>When you first get started with LibreCAD, you'll want to make sure your drawing is configured with the correct units, scale, and so forth. This only needs to be done once, and any changes you make will save to the default template that LibreCAD uses when you create a new drawing.</p>
+            <h2><a name="kanchor49"></a>Scale</h2>
+            <p>For best results, drawings should be created full-scale (1:1). The zooming abilities of LibreCAD will make the whole drawing fit in the display window or zoom into the fine detail. </p>
+            <p>&#160;</p>
+            <p style="font-weight: bold;"><a name="kanchor50"></a>Printing</p>
+            <p>When producing output, the drawing will need to be scaled to fit the page. Output can be a printed page, a PDF, or another image format. </p>
+            <p>&#160;</p>
+            <p>Determining dimension text size is addressed by the General Scale on the Dimensions tab of the Current Drawing Preferences. The General Scale is used to adjust the dimension text, arrows and related parameters to the sizes suitable for the required page format.</p>
+            <p>&#160;</p>
+            <p>The value for the General Scale should be the <i>inverse</i> of the scale used for printing. For example, if the print scale is 1:10”, the General Scale should be 10 (10:1). Setting the General Scale to the inverse of the print scale results in the dimension text being the defined size on the printed drawing. The drawing is scaled down to fit the page and the dimension text is scaled up to be legible. The print scale can be determined by using LibreCAD’s print preview feature. See  the <a href="guide_printing.htm">Printing Guide</a> for more information.</p>
+            <p>&#160;</p>
+            <p>Use the following parameters when setting the scale values:</p>
+            <ul>
+                <li value="1"><b>Options</b> &gt;&#160;<b>Current Drawing Preferences</b> &gt;<b>Paper</b> tab&#160;&gt;&#160;<b>Format</b>: Selecting a paper size and orientation will determine the print scale used for final output. The print scale is used to determine the General Scale.</li>
+                <li value="2"><b>Current Drawing Preferences</b> &gt;<b>Dimensions</b> tab &gt;&#160;<b>General Scale</b>: Setting the General Scale will adjust the dimension text and related parameters.</li>
+            </ul>
+            <div class="Tip">
+                <ul>
+                    <li value="1">Setting the paper size after drawing the object but prior to dimensioning a drawing will help determine the print scale, the General Scale, and subsequently the appropriate line spacing for dimensions.</li>
+                    <li value="2">Be sure to allow room on the drawing for dimension lines and text when determining the print scale.</li>
+                    <li value="3">While any scale can be used when printing a drawing there are commonly used scales for different types of drawings. Refer to Scales in the appendix for some examples.</li>
+                </ul>
+            </div>
+            <h2><a name="kanchor51"></a>Layers</h2>
+            <p>ProNest automatically adds layers to LibreCAD that are in your Importing Parts settings under the CAD Import tab. You can still modify or create new layers, but keep in mind that, when importing a part from LibreCAD to ProNest, ProNest will disregard any layers that aren't listed in your Importing Parts settings (ProNest <b>Settings</b> &gt; <b>Importing Parts</b> &gt;&#160;<b>CAD Import</b>).</p>
+            <p>&#160;</p>
+            <p><a name="kanchor52"></a>Layers help organize drawings by allowing users to place and manage related entities. Layers can be thought of as transparent drawing sheets that can be placed on top of one another. Layers have the added advantage in that the pen attributes can be modified for all entities on the layer. Layers are added, removed, hidden and modified using the Layer List Dock.</p>
+            <p>&#160;</p>
+            <p>
+                <img src="../../Images/invisible.svg" /> Hiding layers while drawing reduces the visual complexity and makes it easier to focus on the current drawing efforts.</p>
+            <p>&#160;</p>
+            <p>
+                <img src="../../Images/locked.svg" /> Layers can be locked, which prevents accidental changes and can improve the performance when working with very large complex drawings.</p>
+            <h3><a name="kanchor53"></a>Construction Layers</h3>
+            <p>A Construction Layer ( <img src="../../Images/construction_layer.svg" /> ) is a special layer used to create reference geometry to help align other drawing entities. A construction layer:</p>
+            <ul>
+                <li value="1">contains lines that are an infinite length,</li>
+                <li value="2">won’t appear on printed drawings, and</li>
+                <li value="3">won't appear in ProNest when you import a drawing.</li>
+            </ul>
+            <p>Read more about <a href="guide_layers.htm">using layers</a>.</p>
+            <h2><a name="kanchor54"></a>Templates</h2>
+            <p>Templates are prototype drawings that provide the means to save basic parameters and settings so a drawing does not have to be configured each time a new one is started. The parameters and settings include the settings defined in the Drawing Preferences, such as the paper format, main unit of measure and format, and dimension format. Templates can also include layers and layer configuration, line type and thickness, pen color, and other drawing elements such as a border. </p>
+            <p>&#160;</p>
+            <p>These settings are inherited by the drawings created from the template. Once the template has been prepared, it can be saved to any location where you have read/write permissions.</p>
+            <p>&#160;</p>
+            <p>LibreCAD supports the use of multiple templates. A LibreCAD user that plans on creating similar drawings may require only one or two templates. A user that plans on several different types of drawings may want multiple templates. For example, templates can be setup for each paper size available  or for each paper orientation.</p>
+            <p>&#160;</p>
+            <p>Read more about <a href="guide_templates.htm">using templates</a>.</p>
+            <p>&#160;</p>
+            <p style="font-weight: bold;">Default templates</p>
+            <p>When LibreCAD is first launched it creates a new drawing using a default template and some information from ProNest. Any new drawing created in LibreCAD will use your template, which updates each time you change any of your preferences from the Options menu (Application Preferences, Current Drawing Preferences, Widget Options, and Device Options).</p>
+            <div class="Note">
+                <p>Any layers added to your drawing template will be disregarded if the layers aren't mapped in your ProNest Importing Parts settings.</p>
+            </div>
+            <p>When installing LibreCAD, a resource directory is created and includes  a default template named <span class="CodeSnippet">empty.dxf</span> found in <span class="CodeSnippet">C:\Program Files (x86)\Hypertherm CAM\LibreCAD\resources\library\templates</span>.</p>
+            <p>&#160;</p>
+            <p>As an alternative to the LibreCAD provided template, a user-specified template can be configured in the <b>Application Preferences</b> on the <b>Paths</b> tab. The specified template is used instead of the default LibreCAD template when the application is launched and for new drawings.</p>
+            <div class="TopicFooter" data-mc-conditions="Primary.ExcludeFromPDF">
+                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
+                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Appendices/append_drawingscales.htm">Common Drawing Scales</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Preferences and Customizations/prefs_drawingpreferences.htm">Drawing Preferences</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Getting Started/intro_pronest.htm">LibreCAD integration with ProNest</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_layers.htm">Using Layers</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_templates.htm">Using Templates</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 6pt;margin-top: 0;margin-bottom: 0;">&#160;</p>
+    </body>
+</html>

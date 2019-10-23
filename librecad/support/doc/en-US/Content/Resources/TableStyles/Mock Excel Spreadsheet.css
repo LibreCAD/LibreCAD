@@ -1,0 +1,1000 @@
+/* MadCap Table Style: */
+
+/*<meta Version="7" />*/
+
+mcTableStyle
+{
+	name: Mock Excel Spreadsheet;
+	border-collapse: collapse;
+	border-left-style: solid;
+	border-left-width: 1px;
+	border-left-color: #a2a2a2;
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-right-color: #a2a2a2;
+	border-top-style: solid;
+	border-top-width: 1px;
+	border-top-color: #a2a2a2;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #a2a2a2;
+	cell-padding-left: 2px;
+	cell-padding-right: 2px;
+	cell-padding-top: 2px;
+	cell-padding-bottom: 2px;
+	border-spacing-y: 0;
+	border-spacing-x: 0;
+	max-id: 3;
+}
+
+mcTableColumnStyle
+{
+	span: 1;
+	separator-style: solid;
+	separator-width: 1px;
+	separator-color: #a2a2a2;
+	name: Column1;
+	id: 0;
+	background-color: #e4ecf7;
+}
+
+mcTableColumnStyle
+{
+	span: 20;
+	id: 3;
+	name: Column2;
+	separator-style: solid;
+	separator-width: 1px;
+	separator-color: #696969;
+	ruler-style: solid;
+	ruler-width: 1px;
+	ruler-color: #a2a2a2;
+}
+
+mcTableHeadStyle
+{
+	span: 1;
+	separator-style: solid;
+	separator-width: 1px;
+	separator-color: #a2a2a2;
+	background-color: #e4ecf7;
+	name: Header1;
+	id: 2;
+}
+
+mcTableBodyStyle
+{
+	span: 1;
+	font-weight: normal;
+	separator-style: solid;
+	separator-width: 1px;
+	separator-color: #a2a2a2;
+	name: Body1;
+	id: 1;
+	background-color: #ffffff;
+}
+
+
+/* Cell Styles: */
+ 
+.TableStyle-Mock_Excel_Spreadsheet
+{
+	border-collapse: collapse;
+	border-left-style: solid;
+	border-left-color: #a2a2a2;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-right-color: #a2a2a2;
+	border-right-width: 1px;
+	border-top-style: solid;
+	border-top-color: #a2a2a2;
+	border-top-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #a2a2a2;
+	border-bottom-width: 1px;
+	border-spacing: 0px 0px;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .Column-Column1
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .Column-Column2
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .Head-Header1
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadI-Column1-Header1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadI-Column1-Header1 p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadE-Column1-Header1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-right-width: 1px;
+	border-right-color: #a2a2a2;
+	border-right-style: solid;
+	background-color: #e4ecf7;
+	border-bottom-width: 1px;
+	border-bottom-color: #a2a2a2;
+	border-bottom-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadE-Column1-Header1 p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadF-Column1-Header1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #e4ecf7;
+	border-bottom-width: 1px;
+	border-bottom-color: #a2a2a2;
+	border-bottom-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadF-Column1-Header1 p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadH-Column1-Header1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-right-width: 1px;
+	border-right-color: #a2a2a2;
+	border-right-style: solid;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadH-Column1-Header1 p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadD-Column1-Header1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #e4ecf7;
+	border-bottom-width: 1px;
+	border-bottom-color: #a2a2a2;
+	border-bottom-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadD-Column1-Header1 p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadC-Column1-Header1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadC-Column1-Header1 p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadB-Column1-Header1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-right-width: 1px;
+	border-right-color: #a2a2a2;
+	border-right-style: solid;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadB-Column1-Header1 p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadA-Column1-Header1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadA-Column1-Header1 p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadG-Column1-Header1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadG-Column1-Header1 p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadI-Column2-Header1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-right-width: 1px;
+	border-right-color: #a2a2a2;
+	border-right-style: solid;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadI-Column2-Header1 p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadE-Column2-Header1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-right-width: 1px;
+	border-right-color: #696969;
+	border-right-style: solid;
+	background-color: #e4ecf7;
+	border-bottom-width: 1px;
+	border-bottom-color: #a2a2a2;
+	border-bottom-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadE-Column2-Header1 p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadF-Column2-Header1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-right-width: 1px;
+	border-right-color: #a2a2a2;
+	border-right-style: solid;
+	background-color: #e4ecf7;
+	border-bottom-width: 1px;
+	border-bottom-color: #a2a2a2;
+	border-bottom-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadF-Column2-Header1 p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadH-Column2-Header1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-right-width: 1px;
+	border-right-color: #696969;
+	border-right-style: solid;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadH-Column2-Header1 p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadD-Column2-Header1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #e4ecf7;
+	border-bottom-width: 1px;
+	border-bottom-color: #a2a2a2;
+	border-bottom-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadD-Column2-Header1 p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadC-Column2-Header1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-right-width: 1px;
+	border-right-color: #a2a2a2;
+	border-right-style: solid;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadC-Column2-Header1 p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadB-Column2-Header1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-right-width: 1px;
+	border-right-color: #696969;
+	border-right-style: solid;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadB-Column2-Header1 p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadA-Column2-Header1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadA-Column2-Header1 p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadG-Column2-Header1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .HeadG-Column2-Header1 p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootI-Column1-
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootI-Column1- p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootE-Column1-
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #e4ecf7;
+	border-right-width: 1px;
+	border-right-color: #a2a2a2;
+	border-right-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootE-Column1- p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootF-Column1-
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootF-Column1- p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootH-Column1-
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #e4ecf7;
+	border-right-width: 1px;
+	border-right-color: #a2a2a2;
+	border-right-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootH-Column1- p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootD-Column1-
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootD-Column1- p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootC-Column1-
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootC-Column1- p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootB-Column1-
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #e4ecf7;
+	border-right-width: 1px;
+	border-right-color: #a2a2a2;
+	border-right-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootB-Column1- p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootA-Column1-
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootA-Column1- p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootG-Column1-
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootG-Column1- p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootI-Column2-
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-right-width: 1px;
+	border-right-color: #a2a2a2;
+	border-right-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootI-Column2- p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootE-Column2-
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-right-width: 1px;
+	border-right-color: #696969;
+	border-right-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootE-Column2- p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootF-Column2-
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-right-width: 1px;
+	border-right-color: #a2a2a2;
+	border-right-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootF-Column2- p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootH-Column2-
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-right-width: 1px;
+	border-right-color: #696969;
+	border-right-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootH-Column2- p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootD-Column2-
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootD-Column2- p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootC-Column2-
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-right-width: 1px;
+	border-right-color: #a2a2a2;
+	border-right-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootC-Column2- p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootB-Column2-
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-right-width: 1px;
+	border-right-color: #696969;
+	border-right-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootB-Column2- p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootA-Column2-
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootA-Column2- p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootG-Column2-
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .FootG-Column2- p
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .Body-Body1
+{
+	
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyI-Column1-Body1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: normal;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyI-Column1-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyE-Column1-Body1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: normal;
+	border-bottom-width: 1px;
+	border-bottom-color: #a2a2a2;
+	border-bottom-style: solid;
+	background-color: #e4ecf7;
+	border-right-width: 1px;
+	border-right-color: #a2a2a2;
+	border-right-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyE-Column1-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyF-Column1-Body1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: normal;
+	border-bottom-width: 1px;
+	border-bottom-color: #a2a2a2;
+	border-bottom-style: solid;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyF-Column1-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyH-Column1-Body1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: normal;
+	background-color: #e4ecf7;
+	border-right-width: 1px;
+	border-right-color: #a2a2a2;
+	border-right-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyH-Column1-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyD-Column1-Body1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: normal;
+	border-bottom-width: 1px;
+	border-bottom-color: #a2a2a2;
+	border-bottom-style: solid;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyD-Column1-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyC-Column1-Body1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: normal;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyC-Column1-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyB-Column1-Body1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: normal;
+	background-color: #e4ecf7;
+	border-right-width: 1px;
+	border-right-color: #a2a2a2;
+	border-right-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyB-Column1-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyA-Column1-Body1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: normal;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyA-Column1-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyG-Column1-Body1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: normal;
+	background-color: #e4ecf7;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyG-Column1-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyI-Column2-Body1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: normal;
+	background-color: #ffffff;
+	border-right-width: 1px;
+	border-right-color: #a2a2a2;
+	border-right-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyI-Column2-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyE-Column2-Body1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: normal;
+	background-color: #ffffff;
+	border-bottom-width: 1px;
+	border-bottom-color: #a2a2a2;
+	border-bottom-style: solid;
+	border-right-width: 1px;
+	border-right-color: #696969;
+	border-right-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyE-Column2-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyF-Column2-Body1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: normal;
+	background-color: #ffffff;
+	border-bottom-width: 1px;
+	border-bottom-color: #a2a2a2;
+	border-bottom-style: solid;
+	border-right-width: 1px;
+	border-right-color: #a2a2a2;
+	border-right-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyF-Column2-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyH-Column2-Body1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: normal;
+	background-color: #ffffff;
+	border-right-width: 1px;
+	border-right-color: #696969;
+	border-right-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyH-Column2-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyD-Column2-Body1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: normal;
+	background-color: #ffffff;
+	border-bottom-width: 1px;
+	border-bottom-color: #a2a2a2;
+	border-bottom-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyD-Column2-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyC-Column2-Body1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: normal;
+	background-color: #ffffff;
+	border-right-width: 1px;
+	border-right-color: #a2a2a2;
+	border-right-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyC-Column2-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyB-Column2-Body1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: normal;
+	background-color: #ffffff;
+	border-right-width: 1px;
+	border-right-color: #696969;
+	border-right-style: solid;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyB-Column2-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyA-Column2-Body1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: normal;
+	background-color: #ffffff;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyA-Column2-Body1 p
+{
+	font-weight: normal;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyG-Column2-Body1
+{
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: normal;
+	background-color: #ffffff;
+}
+
+.TableStyle-Mock_Excel_Spreadsheet .BodyG-Column2-Body1 p
+{
+	font-weight: normal;
+}
+
+

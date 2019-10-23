@@ -1,0 +1,223 @@
+/*<meta />*/
+
+/* MadCap Table Style: */
+
+mcTableStyle
+{
+	name: TipTable;
+	border-collapse: collapse;
+	border-left-style: solid;
+	border-left-width: 2px;
+	border-right-style: solid;
+	border-right-width: 2px;
+	border-top-style: solid;
+	border-top-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-width: 2px;
+	cell-padding-left: 2px;
+	cell-padding-right: 2px;
+	cell-padding-top: 2px;
+	cell-padding-bottom: 2px;
+	border-spacing-y: 2;
+	border-spacing-x: 2;
+	border-left-color: #ffffd1;
+	border-right-color: #ffffd1;
+	border-top-color: #ffffd1;
+	border-bottom-color: #ffffd1;
+	margin-top: 12px;
+	margin-bottom: 12px;
+}
+
+mcTableColumnStyle
+{
+	span: 1;
+	separator-style: solid;
+	separator-width: 0px;
+	separator-color: #000000;
+	background-color: #ffffd1;
+	font-size: 8pt;
+	font-family: Tahoma;
+	color: #008000;
+	font-weight: normal;
+	font-style: normal;
+}
+
+mcTableBodyStyle
+{
+	span: 1;
+	font-weight: normal;
+	separator-style: solid;
+	separator-width: 0px;
+	separator-color: #000000;
+	background-color: #ffffd1;
+	font-size: 8pt;
+	font-family: Tahoma;
+	color: #008000;
+	font-style: normal;
+}
+
+/* Cell Styles: */
+
+.TableStyle_TipTable
+{
+	border-left-style: solid;
+	border-left-color: #ffffd1;
+	border-left-width: 2px;
+	border-right-style: solid;
+	border-right-color: #ffffd1;
+	border-right-width: 2px;
+	border-top-style: solid;
+	border-top-color: #ffffd1;
+	border-top-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-color: #ffffd1;
+	border-bottom-width: 2px;
+	border-collapse: collapse;
+	border-spacing: 2px 2px;
+	mc-cell-padding: 2px 2px;
+}
+
+.TableStyle_TipTable_Body_0_0
+{
+	font-family: Tahoma;
+	font-size: 8pt;
+	font-weight: normal;
+	font-style: normal;
+	background-color: #ffffd1;
+	color: #008000;
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.TableStyle_TipTable_Body_0_0_RowSep_ColSep
+{
+	border-bottom-width: 0px;
+	border-bottom-color: #000000;
+	border-bottom-style: solid;
+	font-family: Tahoma;
+	font-size: 8pt;
+	font-weight: normal;
+	font-style: normal;
+	background-color: #ffffd1;
+	color: #008000;
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-right-width: 0px;
+	border-right-color: #000000;
+	border-right-style: solid;
+}
+
+.TableStyle_TipTable_Body_0_0_RowSep
+{
+	border-bottom-width: 0px;
+	border-bottom-color: #000000;
+	border-bottom-style: solid;
+	font-family: Tahoma;
+	font-size: 8pt;
+	font-weight: normal;
+	font-style: normal;
+	background-color: #ffffd1;
+	color: #008000;
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.TableStyle_TipTable_Body_0_0_ColSep
+{
+	font-family: Tahoma;
+	font-size: 8pt;
+	font-weight: normal;
+	font-style: normal;
+	background-color: #ffffd1;
+	color: #008000;
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-right-width: 0px;
+	border-right-color: #000000;
+	border-right-style: solid;
+}
+
+.TableStyle_TipTable_Body_0_0_RowSep_ColEnd
+{
+	border-bottom-width: 0px;
+	border-bottom-color: #000000;
+	border-bottom-style: solid;
+	font-family: Tahoma;
+	font-size: 8pt;
+	font-weight: normal;
+	font-style: normal;
+	background-color: #ffffd1;
+	color: #008000;
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.TableStyle_TipTable_Body_0_0_RowEnd
+{
+	font-family: Tahoma;
+	font-size: 8pt;
+	font-weight: normal;
+	font-style: normal;
+	background-color: #ffffd1;
+	color: #008000;
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.TableStyle_TipTable_Body_0_0_RowEnd_ColSep
+{
+	font-family: Tahoma;
+	font-size: 8pt;
+	font-weight: normal;
+	font-style: normal;
+	background-color: #ffffd1;
+	color: #008000;
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-right-width: 0px;
+	border-right-color: #000000;
+	border-right-style: solid;
+}
+
+.TableStyle_TipTable_Body_0_0_RowEnd_ColEnd
+{
+	font-family: Tahoma;
+	font-size: 8pt;
+	font-weight: normal;
+	font-style: normal;
+	background-color: #ffffd1;
+	color: #008000;
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.TableStyle_TipTable_Body_0_0_ColEnd
+{
+	font-family: Tahoma;
+	font-size: 8pt;
+	font-weight: normal;
+	font-style: normal;
+	background-color: #ffffd1;
+	color: #008000;
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
