@@ -1640,7 +1640,7 @@ void RS_EntityContainer::move(const RS_Vector& offset) {
 	for(auto e: entities){
 
         e->move(offset);
-        if (autoUpdateBorders) {
+        if (autoUpdateBorders && !e->isContainer()) {
             e->moveBorders(offset);
         }
     }
