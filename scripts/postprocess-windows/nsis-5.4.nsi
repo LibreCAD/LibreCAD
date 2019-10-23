@@ -125,15 +125,27 @@ FunctionEnd
 ;Installer Sections
 
 Section "Install Section" SecInstall
+
+  nsExec::ExecToStack '"cmd.exe" /c tasklist /FI $\"IMAGENAME eq LibreCAD.exe$\" | find /I /N $\"LibreCAD.exe$\"' 
+  Pop $0
+  IntCmp $0 1 notRunning
+    MessageBox MB_OK|MB_ICONEXCLAMATION "LibreCAD is running. Please close it first" /SD IDOK
+    Abort
+  notRunning:
+
+  ;Install Visual C++ Redistributable
+  SetOutPath "$INSTDIR"
+  File /r "..\..\redist\*.*"
+  DetailPrint "Installing Visual C++ 2015-2019 Redistributable (x86)"
+  nsExec::Exec '"$INSTDIR\startredist.bat"'
+  Delete "$INSTDIR\vc_redist.x86.exe"
+  Delete "$INSTDIR\startredist.bat"
+
   SetOutPath "$INSTDIR"
   File /r "..\..\windows\*.*"
   SetOutPath "$INSTDIR\resources\qm"
   File /NONFATAL "${TRANSLATIONS_DIR}\qt*.qm"
   SetOutPath "$INSTDIR"
-
-  ;Install Visual C++ Redistributable
-  ExecWait '"$INSTDIR\vcredist_x86.exe"  /quiet /norestart'
-  Delete "$INSTDIR\vcredist_x86.exe"
 
   ;Store installation folder
   WriteRegStr HKCU "Software\LibreCAD" "" $INSTDIR

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="User Guides">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Using Dimensions</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="TopicContent">
+            <h1 class="TOC4"><a name="kanchor8"></a>Using Dimensions</h1>
+            <p>LibreCAD is equipped with several dimensioning tools to help you dimension lines, circles, arcs, and angles.</p>
+            <p class="Procedure">Configuring Dimension preferences</p>
+            <p>Before you begin adding dimensions to your drawing, ensure that your dimension preferences are configured.</p>
+            <ol>
+                <li value="1">Select <b>Options</b>. </li>
+                <li value="2">Select <b>Current Drawing Preferences</b>.</li>
+                <li value="3">Select the <b>Dimensions</b> tab.</li>
+                <li value="4">Ensure all properties listed on this page are appropriate for your drawing.</li>
+                <li value="5">Select <b>OK</b> to save your changes for this drawing only, or select Update Template to use these preferences for future drawings.</li>
+            </ol>
+            <p class="Procedure">Ensuring dimensions are visible in ProNest</p>
+            <p>You can configure your layers and ProNest Settings to ensure that dimension information is visible on display-only layers in ProNest.</p>
+            <ol>
+                <li value="1">In <b>ProNest</b>, ensure that you have a display-only layer mapped in your Importing Parts Settings (<b>Settings</b> &gt; <b>Importing Parts</b> &gt;&#160;<b>CAD Import</b> tab &gt;&#160;<b>Display Only</b>).</li>
+                <li value="2">In <b>LibreCAD</b>, ensure that the Display Only layer is mapped in your drawing <b>Layers</b>. It may be helpful to change the color of this layer so a process layer isn't confused with the display only layer.</li>
+                <li value="3">Draw dimensions on the Display Only layer you've added in LibreCAD.</li>
+                <li value="4">Import the part into ProNest.</li>
+            </ol>
+            <p>Display-only information appears for a part on the nest but isn't visible from the Part List. Additionally, you can view the <b>Part Report</b> for an individual part (right-click on a part from the Part List, and select Part Report), which shows display-only information.</p>
+            <p class="Procedure">Dimensioning horizontal lines (180°)</p>
+            <ul>
+                <li value="1">Use the Horizontal dimension tool ( <img src="../../Images/dim_horizontal.svg" /> ), and select start and end points for the entity you are dimensioning.</li>
+            </ul>
+            <div class="Tip">
+                <p>Enable Snap on Entity ( <img src="../../Images/snap_entity.svg" /> ) or Snap on Endpoints ( <img src="../../Images/snap_endpoints.svg" /> ) to ensure your linear dimensions are accurate.</p>
+            </div>
+            <p class="Procedure">Dimensioning vertical lines (90°)</p>
+            <ul>
+                <li value="1">Use the Vertical dimension tool ( <img src="../../Images/dim_vertical.svg" /> ), and select start and end points for the entity you are dimensioning.</li>
+            </ul>
+            <p class="Procedure">Dimensioning angled lines</p>
+            <ul>
+                <li style="font-weight: normal;" value="1">Use the Aligned dimension tool ( <img src="../../Images/dim_aligned.svg" /> ), and select start and end points for the entity you are dimensioning.</li>
+            </ul>
+            <p class="Procedure">Dimensioning arcs and circles</p>
+            <ul>
+                <li style="font-weight: normal;" value="1">Use the Radial dimension tool ( <img src="../../Images/dim_radial.svg" /> ) or the Diametric dimension tool ( <img src="../../Images/dim_diametric.svg" /> ), and select the circle or arc entity you are dimensioning.</li>
+            </ul>
+            <p class="Procedure">Dimensioning angles</p>
+            <ul>
+                <li value="1">Use the Angular dimension tool ( <img src="../../Images/dim_angular.svg" /> ), and select the two line between which you are dimensioning the angle.</li>
+            </ul>
+            <p class="Procedure">Adding individual leader lines</p>
+            <p>Dimensioning tools automatically insert leaders based on your Current Drawing Preferences. If needed, you can add additional leader lines using the Leader dimension tool ( <img src="../../Images/dim_leader.svg" /> ).</p>
+            <div class="TopicFooter">
+                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
+                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_dimension.htm">Dimensioning tools</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Getting Started/intro_pronest.htm">LibreCAD integration with ProNest</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 6pt;margin-top: 0;margin-bottom: 0;">&#160;</p>
+    </body>
+</html>

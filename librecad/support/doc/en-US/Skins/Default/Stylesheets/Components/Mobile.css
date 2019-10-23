@@ -1,0 +1,10 @@
+/*<meta />*/
+
+@media only screen and (max-width: 400px)
+{
+	.search-bar
+	{
+		width: 100%;
+	}
+}
+

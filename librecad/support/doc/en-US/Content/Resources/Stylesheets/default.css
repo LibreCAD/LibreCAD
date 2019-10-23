@@ -1,0 +1,1691 @@
+/*<meta />*/
+
+@namespace MadCap url(http://www.madcapsoftware.com/Schemas/MadCap.xsd);
+
+body
+{
+	font-family: 'Segoe UI', sans-serif;
+	background-color: #ffffff;
+}
+
+h1
+{
+	font-family: 'Segoe UI';
+	padding: 2px;
+	padding-left: 0px;
+	padding-right: 0px;
+	color: #000000;
+	z: ;
+	font-weight: normal;
+	margin-bottom: 6px;
+	margin-top: 8px;
+	font-size: 24px;
+}
+
+li.mc-H1
+{
+	font-weight: bold;
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 12pt;
+}
+
+h2
+{
+	margin: 6px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-bottom: 6px;
+	sans-serif: ;
+	font-family: 'Segoe UI';
+	font-weight: bold;
+	font-size: 12pt;
+	margin-top: 22px;
+}
+
+h2.Bar
+{
+	color: #ffffff;
+	padding-bottom: 2px;
+	padding-left: 2px;
+	padding: 2px;
+	background-color: #808080;
+}
+
+li.mc-H2
+{
+	font-weight: bold;
+	font-size: 9pt;
+	font-family: 'Segoe UI', sans-serif;
+}
+
+h3
+{
+	margin: 6px;
+	margin-left: 0px;
+	margin-right: 0px;
+	border: solid 0px;
+	font-weight: bold;
+	margin-top: 16px;
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 10pt;
+}
+
+li.mc-H3
+{
+	font-weight: bold;
+	font-size: 14.0pt;
+}
+
+h4
+{
+	margin: 0;
+	margin-bottom: 12px;
+	margin-top: 20px;
+	font-weight: normal;
+	color: #d2691e;
+	font-family: 'Segoe UI';
+	font-size: 10pt;
+}
+
+li.mc-H4
+{
+	font-weight: bold;
+	font-size: 12.0pt;
+}
+
+h5
+{
+	font-weight: bold;
+	font-size: 10.0pt;
+	margin-bottom: 5pt;
+	margin-top: 16px;
+}
+
+li.mc-H5
+{
+	font-weight: bold;
+	font-size: 10.0pt;
+}
+
+h6
+{
+	font-weight: bold;
+	color: #696969;
+	font-family: Arial, ' sans-serif';
+	font-size: 10pt;
+	margin: 0;
+	margin-bottom: 6px;
+	margin-top: 6px;
+}
+
+li.mc-H6
+{
+	font-weight: bold;
+	font-size: 8.0pt;
+}
+
+p
+{
+	margin-left: 0pt;
+	margin-top: 0pt;
+	margin-bottom: 0pt;
+	font-family: 'Segoe UI';
+	sans-serif: ;
+	font-size: 12px;
+}
+
+li
+{
+	font-size: 9pt;
+	font-family: 'Segoe UI', sans-serif;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	padding-bottom: 0;
+}
+
+a.expandspot
+{
+	cursor: hand;
+	font-size: 9pt;
+	font-family: 'Segoe UI', sans-serif;
+	font-weight: bold;
+	font-style: normal;
+	x-on-hover: fontchange(Underline=on);
+	color: #808000;
+	text-decoration: none;
+}
+
+span.expandtext
+{
+	font-weight: normal;
+	font-style: normal;
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 9pt;
+	color: #808000;
+}
+
+a.dropspot
+{
+	cursor: hand;
+	font-size: 9pt;
+	font-weight: bold;
+	font-style: normal;
+	font-family: 'Segoe UI', sans-serif;
+	x-on-hover: fontchange(Underline=on);
+	color: #0000ff;
+	text-decoration: none;
+}
+
+a.glossterm
+{
+	color: #800000;
+	cursor: hand;
+	font-style: italic;
+	text-decoration: none;
+}
+
+a.WelcomePanels
+{
+	text-decoration: none;
+}
+
+p.WelcomePanels
+{
+	text-decoration: none;
+	font-size: 1.5em;
+}
+
+span.glosstext
+{
+	font-style: italic;
+	font-weight: normal;
+	color: #0000ff;
+}
+
+ol,
+ul
+{
+	margin-top: 0px;
+	margin-bottom: 0px;
+	font-size: 9pt;
+	font-family: 'Segoe UI', sans-serif;
+}
+
+p.SettingName
+{
+	font-style: normal;
+	margin-top: 3pt;
+	margin-bottom: 2pt;
+	mc-next-tag: p;
+	font-family: 'Segoe UI', sans-serif;
+	font-weight: normal;
+	font-size: 10pt;
+	color: #000080;
+}
+
+p.SettingNameNoToggle
+{
+	font-style: normal;
+	margin-bottom: 2pt;
+	mc-next-tag: p;
+	font-weight: normal;
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 10pt;
+	color: #00008b;
+	margin-top: 16pt;
+}
+
+li.SettingName
+{
+	font-style: normal;
+	mc-next-tag: p;
+	font-size: 10pt;
+	margin-top: 2pt;
+	margin-bottom: 6pt;
+	color: #000080;
+}
+
+p.SettingHeader
+{
+	font-style: normal;
+	font-size: 10pt;
+	border-bottom-style: none;
+	font-variant: normal;
+	mc-next-tag: p;
+	margin: 0;
+	margin-bottom: 2px;
+	margin-top: 8px;
+	font-weight: normal;
+	font-family: 'Segoe UI Semibold';
+	text-decoration: underline;
+}
+
+span.SettingRangeValue
+{
+	font-style: normal;
+	color: #800000;
+	font-weight: normal;
+}
+
+span.SettingDefaultValue
+{
+	font-style: normal;
+	color: #008000;
+	font-weight: normal;
+}
+
+li.mc-H1-CSettingTitle
+{
+	
+}
+
+p.CellText
+{
+	color: #ffffff;
+}
+
+li.CellText
+{
+	color: #ffffff;
+}
+
+p.StepInstruction
+{
+	margin-top: 4.5pt;
+	margin-bottom: 4.5pt;
+	margin-left: 0pt;
+}
+
+li.StepInstruction
+{
+	margin-top: 4.5pt;
+	margin-bottom: 4.5pt;
+	margin-left: 0pt;
+}
+
+span.SuperScript
+{
+	vertical-align: Super;
+}
+
+span.Formula
+{
+	font-size: 9pt;
+	color: #4a6903;
+	font-family: 'Lucida Sans Unicode';
+}
+
+span.CodeSnippet
+{
+	font-family: "Courier New", monospace;
+}
+
+p.CodeSnippet
+{
+	font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, sans-serif;
+	font-size: 13px;
+}
+
+p.StepIntro
+{
+	font-weight: bold;
+	font-style: normal;
+	margin-top: 1.12em;
+	margin-bottom: 1.12em;
+}
+
+li.StepIntro
+{
+	font-weight: bold;
+	font-style: normal;
+}
+
+p.InstructIntro
+{
+	font-weight: bold;
+	font-style: normal;
+}
+
+li.InstructIntro
+{
+	font-weight: bold;
+	font-style: normal;
+}
+
+p.NoteText
+{
+	color: #000080;
+	mc-next-tag: p;
+}
+
+MadCap|expandingHead.expandspot
+{
+	cursor: hand;
+	font-size: 9pt;
+	font-family: 'Segoe UI', sans-serif;
+	font-style: normal;
+	x-on-hover: fontchange(Underline=on);
+	text-decoration: none;
+	font-weight: bold;
+	color: #808000;
+}
+
+MadCap|dropDownHotspot.dropspot
+{
+	cursor: hand;
+	font-size: 9pt;
+	font-weight: bold;
+	font-style: normal;
+	font-family: 'Segoe UI', sans-serif;
+	x-on-hover: fontchange(Underline=on);
+	color: #0000ff;
+	text-decoration: none;
+}
+
+MadCap|expandingBody.expandtext
+{
+	font-style: normal;
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 9pt;
+	font-weight: normal;
+	color: #808000;
+}
+
+MadCap|glossaryTerm.glossterm
+{
+	color: #800000;
+	cursor: hand;
+	font-style: italic;
+	text-decoration: none;
+}
+
+MadCap|expandingBody.glossterm
+{
+	font-style: italic;
+	font-weight: normal;
+	color: #0000ff;
+}
+
+MadCap|toggler
+{
+	mc-closed-image: url('../../Images/TreeViewPlusSimple.png');
+	mc-open-image: url('../../Images/TreeViewMinusSimple.png');
+	color: #000080;
+	padding: 0px;
+}
+
+MadCap|expanding
+{
+	mc-closed-image: none;
+	mc-open-image: none;
+}
+
+img
+{
+	position: relative;
+}
+
+img.ProductVsPower
+{
+	right: 0px;
+	bottom: 0px;
+	border: none;
+	position: relative;
+}
+
+MadCap|toggler.Toggler_Example
+{
+	mc-image-spacing: 3px;
+	margin: 10px;
+	margin-bottom: 0px;
+	margin-right: 0px;
+	margin-left: 0px;
+	padding: 0px;
+	border: solid 0px;
+	font-family: 'Segoe UI', sans-serif;
+	color: #008000;
+	mc-closed-image: url('../../Images/ExampleImagePlus.png');
+	mc-open-image: url('../../Images/ExampleImageMinus.png');
+}
+
+dl
+{
+	list-style-type: disc;
+	margin-bottom: 0em;
+	margin-top: 0em;
+	margin-left: 20px;
+}
+
+dt
+{
+	list-style-image: none;
+	list-style-type: disc;
+	margin-bottom: 0px;
+	margin-top: 7.5px;
+}
+
+dd
+{
+	margin-left: 0px;
+	margin-bottom: 4.5px;
+}
+
+blockquote
+{
+	margin-bottom: 1.12em;
+	margin-top: 0em;
+}
+
+td
+{
+	vertical-align: top;
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 9pt;
+}
+
+caption
+{
+	
+}
+
+table.Advanced
+{
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 9pt;
+	text-align: left;
+	vertical-align: top;
+	margin-bottom: 1.12em;
+	margin-top: 1.12em;
+	border-left-color: #aeffd7;
+	border-right-color: #aeffd7;
+	border-top-color: #aeffd7;
+	border-right-style: solid;
+	border-top-style: solid;
+	border-left-style: solid;
+	border-bottom-style: solid;
+	border-bottom-width: 2px;
+	border-left-width: 2px;
+	border-right-width: 2px;
+	border-top-width: 2px;
+	width: 100%;
+	border: solid 1px #66cdaa;
+}
+
+table
+{
+	border-spacing: 0px;
+	border-collapse: collapse;
+	font-family: 'Segoe UI', SansSerif;
+}
+
+table.OptionalFeatureTable
+{
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 9pt;
+	color: #191970;
+	background-color: #e0ffff;
+	border-bottom-color: #e0ffff;
+	border-left-color: #e0ffff;
+	border-right-color: #e0ffff;
+	border-top-color: #e0ffff;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-left-width: 2px;
+	border-right-width: 2px;
+	border-top-width: 2px;
+	border-bottom-width: 2px;
+	margin-bottom: 1.12em;
+	margin-top: 1.12em;
+}
+
+table.Important
+{
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 9pt;
+	border-bottom-color: #b0e0e6;
+	border-left-color: #b0e0e6;
+	border-right-color: #b0e0e6;
+	border-top-color: #b0e0e6;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-bottom-style: solid;
+	border-bottom-width: 2px;
+	border-left-width: 2px;
+	border-right-width: 2px;
+	border-top-width: 2px;
+	margin-bottom: 1.12em;
+	margin-top: 1.12em;
+	width: 100%;
+	border: solid 1px #9bc4c9;
+	padding: 0px;
+}
+
+table.ExampleTable
+{
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 9pt;
+	width: 100%;
+}
+
+MadCap|toggler.Toggler_StepIntro
+{
+	mc-closed-image: url('../../Images/TreeViewArrow.png');
+	mc-open-image: url('../../Images/TreeViewArrowOpen.png');
+	font-weight: bold;
+	mc-image-spacing: 3px;
+	color: #1c7893;
+	padding: 0px;
+}
+
+p.MediumHeading
+{
+	font-family: 'Segoe UI', sans-serif;
+	margin-bottom: 2px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 22px;
+	font-weight: bold;
+	font-size: 13px;
+}
+
+p.LocationHeader
+{
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 10pt;
+	background-color: #999999;
+	color: #ffffff;
+	font-weight: bold;
+	padding-left: 2px;
+	padding: 2px;
+	margin: 0px;
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+
+MadCap|expandingHead:hover
+{
+	text-decoration: underline;
+}
+
+li.LinkInternalTopic
+{
+	list-style-image: url('../../Images/ArefDown.png');
+	margin-bottom: 4.5px;
+	margin-top: 4.5px;
+}
+
+td.note
+{
+	background-repeat: no-repeat;
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 9pt;
+	color: #314e63;
+	background-image: url('../../Images/NoteImage.png');
+	border-spacing: 0 px;
+	padding-right: 4px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	table-layout: fixed;
+	background-color: #e6edf2;
+	padding-left: 19px;
+	width: 34px;
+	white-space: nowrap;
+}
+
+td.tip
+{
+	background-repeat: no-repeat;
+	table-layout: auto;
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 9pt;
+	background-image: url('../../Images/TipImage.png');
+	padding-bottom: 4px;
+	padding-right: 4px;
+	padding-top: 4px;
+	padding-left: 17px;
+	width: 28px;
+	color: #8b7701;
+	background-color: #ffffd1;
+}
+
+td.important
+{
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 9pt;
+	background-image: url('../../Images/ImportantImage.png');
+	background-repeat: no-repeat;
+	padding-right: 4px;
+	padding-bottom: 4px;
+	padding: 4px;
+	padding-left: 18px;
+	width: 65px;
+	color: #3178ab;
+	background-color: #e0ffff;
+}
+
+span.NoteIntro
+{
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 9pt;
+	font-weight: bold;
+	border: solid 1px #c0c0c0;
+	border-bottom-style: solid;
+	padding: 1px;
+	margin: 1px;
+	margin-left: 0px;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+
+table.Tip
+{
+	font-family: 'Segoe UI', sans-serif;
+	text-align: left;
+	vertical-align: top;
+	margin-bottom: 1.12em;
+	margin-top: 1.12em;
+	width: 100%;
+	font-size: 9pt;
+	border: solid 1px #ffd691;
+	border-spacing: 0px;
+	border-bottom-color: #ffdead;
+	border-left-color: #ffdead;
+	border-right-color: #ffdead;
+	border-top-color: #ffdead;
+}
+
+table.Note
+{
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 9pt;
+	border-width: 100%;
+	width: 100%;
+	border-bottom-color: #b0e0e6;
+	border: solid 1px #bbc6ce;
+	display: table;
+	border-spacing: 0px;
+	border-collapse: collapse;
+	margin-left: 0px;
+	margin-bottom: 1.12em;
+	margin-top: 1.12em;
+}
+
+td.note_star
+{
+	background-repeat: no-repeat;
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 9pt;
+	margin: 0px;
+	color: #314e63;
+	background-image: url('../../Images/NoteImage.png');
+	border-spacing: 0 px;
+	padding-right: 4px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	table-layout: fixed;
+	width: 37px;
+	background-color: #e6edf2;
+	padding-left: 19px;
+}
+
+td.advanced
+{
+	background-color: #aeffd7;
+	background-image: url('../../Images/AdvancedImage.png');
+	color: #006400;
+	font-size: 9pt;
+	font-family: 'Segoe UI', sans-serif;
+	background-repeat: no-repeat;
+	padding: 4px;
+	padding-left: 18px;
+	width: 62px;
+}
+
+p.ImageCaption
+{
+	font-family: 'Times New Roman';
+	font-style: italic;
+	font-size: 10pt;
+	margin-bottom: 6px;
+}
+
+p.Related
+{
+	font-weight: bold;
+	font-style: normal;
+	color: #696969;
+}
+
+p.GeneralConcept
+{
+	font-style: italic;
+	margin: 0;
+	margin-bottom: 6px;
+	font-family: 'Segoe UI';
+	font-size: 10pt;
+	margin-top: 20px;
+}
+
+td.SecondCell
+{
+	padding: 4px;
+}
+
+MadCap|xref
+{
+	mc-format: '{para}';
+}
+
+ul
+{
+	padding-bottom: 6px;
+}
+
+ol
+{
+	padding-bottom: 6px;
+}
+
+MadCap|relatedTopics
+{
+	color: #696969;
+	font-weight: bold;
+	mc-help-control-display: list;
+	mc-label: 'Related articles';
+	mc-image: none;
+	mc-image-position: none;
+	font-size: 12px;
+}
+
+MadCap|relatedTopicsControlListItem
+{
+	font-weight: normal;
+	list-style-type: square;
+}
+
+MadCap|relatedTopicsControlListItemLink
+{
+	font-weight: normal;
+}
+
+div.WelcomePanels
+{
+	border-radius: 3px;
+	border: solid 1px #000000;
+	padding: 4px;
+	width: 350px;
+	max-width: 350px;
+	text-align: center;
+	vertical-align: middle;
+	margin: 20px;
+}
+
+div.WelcomePanels:hover
+{
+	border: solid 3px #000000;
+}
+
+div.WelcomePanelsContainer
+{
+	max-width: 350px;
+}
+
+.column_small
+{
+	float: left;
+	width: 200px;
+}
+
+.row:after
+{
+	content: "";
+	display: table;
+	clear: both;
+}
+
+@media print
+{
+	table.Advanced
+	{
+		width: 100%;
+		border: solid 1px #000000;
+	}
+
+	table.ExampleTable
+	{
+		width: 100%;
+	}
+
+	table.Important
+	{
+		width: 100%;
+		border: solid 1px #000000;
+	}
+
+	table.Note
+	{
+		width: 100%;
+		border: solid 1px #000000;
+		margin-top: 0.20in;
+		margin-bottom: 0.20in;
+	}
+
+	td.advanced
+	{
+		padding-left: 4px;
+		color: #000000;
+		background-image: none;
+		background-color: #dcdcdc;
+		width: 1.2in;
+	}
+
+	td.important
+	{
+		padding-left: 4px;
+		background-image: none;
+		color: #000000;
+		background-color: #dcdcdc;
+		width: 1.0in;
+	}
+
+	td.note
+	{
+		padding-left: 4px;
+		color: #000000;
+		background-image: none;
+		background-color: #dcdcdc;
+		width: 0.75in;
+	}
+
+	td.note_star
+	{
+		padding-left: 4px;
+		background-image: none;
+		color: #000000;
+		background-color: #dcdcdc;
+		width: 0.75in;
+	}
+
+	td.tip
+	{
+		padding-left: 4px;
+		color: #000000;
+		background-image: none;
+		background-color: #dcdcdc;
+		width: 0.5in;
+	}
+
+	h2
+	{
+		font-size: 12pt;
+		mc-heading-level: 0;
+	}
+
+	MadCap|xref.PageRef
+	{
+		mc-format: '{quote}{para}{quote} on page {page}';
+		text-decoration: none;
+		color: #0000ff;
+	}
+
+	h4
+	{
+		mc-heading-level: 0;
+	}
+
+	h3
+	{
+		mc-heading-level: 0;
+	}
+
+	h1
+	{
+		page-break-before: always;
+		mc-toc-depth: 1;
+		mc-heading-level: 1;
+		color: #696969;
+		font-weight: normal;
+		font-size: 18pt;
+		font-variant: small-caps;
+		border-bottom-color: #696969;
+		border-bottom: solid 2px #696969;
+		border-bottom-width: 1px;
+	}
+
+	MadCap|tocProxy
+	{
+		mc-page-number-format: lower-alpha;
+		border-top-style: none;
+		border-top-color: #ffffff;
+		border-top-width: 0px;
+		mc-output-support: pdf;
+	}
+
+	p.Index1
+	{
+		white-space: pre-wrap;
+	}
+
+	h1.TOC1
+	{
+		mc-toc-depth: 1;
+		mc-heading-level: 1;
+		text-transform: none;
+		border-bottom-width: 0px;
+		color: #000000;
+		font-style: normal;
+		border-bottom: solid 0;
+		border-bottom-color: #ffffff;
+		text-decoration: none;
+		font-variant: normal;
+		text-align: left;
+		background-color: #ffffff;
+	}
+
+	h1.TOC2
+	{
+		mc-heading-level: 2;
+		mc-toc-depth: 2;
+		text-transform: none;
+		border-bottom: solid 0px;
+		border-bottom-color: #ffffff;
+		color: #000000;
+		font-style: normal;
+		page-break-before: always;
+		text-decoration: none;
+		font-variant: normal;
+	}
+
+	h1.TOC2NoBreakBefore
+	{
+		mc-heading-level: 2;
+		page-break-before: avoid;
+		mc-toc-depth: 2;
+		text-transform: none;
+		border-bottom: solid 0px;
+		border-bottom-color: #ffffff;
+		color: #000000;
+		font-style: normal;
+		text-decoration: none;
+		font-variant: normal;
+	}
+
+	h1.TOC3
+	{
+		mc-heading-level: 3;
+		mc-toc-depth: 3;
+		text-transform: none;
+		color: #000000;
+		font-style: normal;
+		border-bottom-width: 0px;
+		border-bottom-color: #ffffff;
+		border-bottom: solid 0px;
+		text-decoration: none;
+		font-variant: normal;
+	}
+
+	h1.TOC4
+	{
+		mc-heading-level: 4;
+		mc-toc-depth: 4;
+		text-transform: none;
+		color: #000000;
+		border-bottom-width: 0px;
+		border-bottom: solid 0px;
+		border-bottom-color: #ffffff;
+		font-style: normal;
+		text-decoration: none;
+		font-variant: normal;
+	}
+
+	h1.TOC5
+	{
+		mc-heading-level: 5;
+		mc-toc-depth: 5;
+		text-transform: none;
+		color: #000000;
+		font-style: normal;
+		border-bottom: solid 0px;
+		border-bottom-color: #ffffff;
+		text-decoration: none;
+		font-variant: normal;
+	}
+
+	h5
+	{
+		mc-heading-level: 0;
+	}
+
+	h6
+	{
+		mc-heading-level: 0;
+	}
+
+	body
+	{
+		background-color: #ffffff;
+	}
+
+	MadCap|bodyProxy
+	{
+		
+	}
+
+	MadCap|bodyProxy.MMKS_A4
+	{
+		mc-printer-page-size: A4;
+	}
+
+	MadCap|bodyProxy.MMKS_Letter
+	{
+		mc-printer-page-size: letter;
+		mc-page-number-format: ;
+	}
+
+	a
+	{
+		text-decoration: none;
+	}
+
+	table.Tip
+	{
+		border-top-color: #000000;
+		border-right-color: #000000;
+		border: solid 1px #000000;
+		margin-bottom: 4px;
+		margin-top: 4px;
+	}
+
+	a:visited
+	{
+		text-decoration: none;
+	}
+
+	a:link
+	{
+		text-decoration: none;
+	}
+
+	table
+	{
+		margin-top: 12pt;
+		margin-bottom: 12pt;
+	}
+
+	MadCap|footnote
+	{
+		font-size: 8pt;
+	}
+
+	p.PageBreak
+	{
+		page-break-after: always;
+	}
+
+	MadCap|indexProxy
+	{
+		border-top-style: none;
+		border-top-width: 0px;
+		border-top-color: #ffffff;
+		mc-column-count: 2;
+		font-family: Tahoma;
+		font-size: 7pt;
+	}
+
+	p.TOC1
+	{
+		text-transform: uppercase;
+		padding-top: 8px;
+		font-weight: bold;
+		font-size: 9pt;
+		mc-leader-align: inherit;
+		mc-leader-offset: 10pt;
+		mc-auto-number-position: inside-head;
+	}
+
+	p.TOC2
+	{
+		
+	}
+
+	p.TOC3
+	{
+		
+	}
+
+	img.ProductVsPower
+	{
+		mc-thumbnail-max-height: auto;
+	}
+
+	p.ImageCaption
+	{
+		font-size: 10pt;
+	}
+
+	MadCap|miniTocProxy
+	{
+		page-break-after: always;
+		border-top-width: 1px;
+		border-top-style: none;
+	}
+
+	p.MiniTOC1
+	{
+		font-weight: normal;
+	}
+
+	p.SettingHeader
+	{
+		font-family: 'Segoe UI Semibold';
+	}
+
+	img
+	{
+		max-width: 7in;
+	}
+
+	div.Example
+	{
+		border: solid 1px #b9b9b9;
+	}
+}
+
+@media non-print
+{
+	h2
+	{
+		font-size: 12pt;
+	}
+
+	MadCap|xref.PageRef
+	{
+		color: #0000ff;
+	}
+
+	MadCap|xref.PageRef:visited
+	{
+		color: #7f007f;
+	}
+
+	MadCap|xref.PageRef:hover
+	{
+		color: #FFD800;
+	}
+
+	MadCap|xref:visited
+	{
+		color: #7f007f;
+	}
+
+	h1.WelcomeLogo_TOC1
+	{
+		padding-top: 2px;
+		margin-top: 5pt;
+	}
+
+	kbd
+	{
+		border-radius: 3px;
+		border: solid 1px #dcdcdc;
+		padding: 4px;
+		background-color: #333;
+		color: #ffffff;
+		font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+	}
+
+	a
+	{
+		color: #0066cc;
+	}
+
+	p.SettingHeader
+	{
+		font-family: 'Segoe UI';
+	}
+
+	h1
+	{
+		font-size: 18pt;
+	}
+
+	p
+	{
+		font-size: 9pt;
+	}
+
+	h5
+	{
+		font-size: 10pt;
+	}
+
+	div.SettingBody
+	{
+		padding-left: 14px;
+	}
+}
+
+MadCap|xref.PageRef
+{
+	mc-format: ;
+	color: #0066cc;
+}
+
+table.BlackGrid
+{
+	border: solid 1px #000000;
+	border-spacing: 1px;
+	table-layout: auto;
+	border-collapse: collapse;
+	border-width: 1px;
+}
+
+tr.BlackGrid
+{
+	background-color: #c0c0c0;
+	border: solid 1px #000000;
+}
+
+td.blackgrid
+{
+	border: solid 1px #000000;
+}
+
+thead.blackgrid
+{
+	border: solid 1px #000000;
+	font-size: 9pt;
+	font-family: 'Segoe UI';
+	font-weight: bold;
+}
+
+th.blackgrid
+{
+	background-repeat: repeat-x;
+	font-family: 'Segoe UI';
+	font-size: 9pt;
+	font-weight: bold;
+	vertical-align: middle;
+	border: solid 1px #000000;
+	background-color: #696969;
+	color: #ffffff;
+	margin-bottom: 4px;
+	margin-top: 4px;
+	padding-bottom: 4px;
+	padding-top: 4px;
+	text-align: left;
+	padding-right: 2px;
+	padding-left: 2px;
+}
+
+a:visited
+{
+	
+}
+
+MadCap|xref.PageRef:visited
+{
+	color: #7f007f;
+}
+
+MadCap|xref:visited
+{
+	color: #7f007f;
+}
+
+td.blackbackground
+{
+	mc-table-style: url('default.css');
+	background-position: top;
+	padding: 0px;
+	background-repeat: repeat-x;
+}
+
+th
+{
+	mc-table-style: url('default.css');
+}
+
+col
+{
+	mc-table-style: url('default.css');
+}
+
+tr
+{
+	mc-table-style: url('default.css');
+}
+
+table.Banner
+{
+	height: 40px;
+	vertical-align: top;
+	padding: 0px;
+}
+
+MadCap|tocProxy
+{
+	page-break-after: avoid;
+}
+
+p.Procedure
+{
+	margin: 0;
+	margin-bottom: 12px;
+	margin-top: 20px;
+	font-weight: normal;
+	color: #d2691e;
+	font-size: 10pt;
+	font-family: 'Segoe UI';
+}
+
+tbody
+{
+	font-family: 'Segoe UI', SansSerif;
+}
+
+span.SettingHighlightRed
+{
+	font-style: normal;
+	font-weight: normal;
+	color: #ff4500;
+}
+
+div.IndentSetting
+{
+	padding-left: 12px;
+}
+
+div.SettingBody
+{
+	padding-left: 12px;
+}
+
+p.SettingChoice
+{
+	color: #800000;
+	font-size: 9pt;
+	margin-top: 14px;
+	margin-bottom: 3px;
+	margin-left: 0px;
+	margin-right: 0px;
+	font-family: 'Segoe UI', sans-serif;
+	font-weight: 600;
+}
+
+div.Example
+{
+	background-color: #efefef;
+	padding: 4px;
+	margin-left: 12px;
+	border: solid 1px #b9b9b9;
+}
+
+span.WarningBox
+{
+	background-color: #ffff00;
+	border: solid 1px #000000;
+}
+
+p.ExampleToggler
+{
+	margin-top: 4px;
+}
+
+li.ReportIconList
+{
+	margin-bottom: 4.5px;
+	margin-top: 4.5px;
+	list-style-image: url('../../Images/IconReport.PNG');
+	list-style-position: inside;
+}
+
+p.ItalicGray
+{
+	font-style: italic;
+	color: #696969;
+}
+
+p.MediumHeadingDivider
+{
+	font-weight: bold;
+	font-size: 10pt;
+	margin-top: 10pt;
+	margin-bottom: 2pt;
+	font-family: 'Segoe UI', sans-serif;
+	border-bottom: dashed 1px #696969;
+	border-bottom-color: #a9a9a9;
+}
+
+li.Formula
+{
+	font-size: 9pt;
+	color: #4a6903;
+	font-family: 'Lucida Sans Unicode';
+}
+
+p.Formula
+{
+	font-size: 9pt;
+	color: #4a6903;
+	font-family: 'Lucida Sans Unicode';
+}
+
+kbd
+{
+	border-bottom-color: #dcdcdc;
+	padding: 0px;
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 2px;
+	box-shadow: 1px 1px 1px;
+	border-radius: 3px;
+	border: solid 1px #a9a9a9;
+	font-size: 8pt;
+}
+
+span
+{
+	height: 24px;
+}
+
+p.ErrorWarningText
+{
+	font-family: Consolas, sans-serif;
+	padding-bottom: 2px;
+	padding-top: 12px;
+}
+
+div.OutputCode
+{
+	margin-left: 18px;
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+
+div.ExampleNoIndent
+{
+	background-color: #efefef;
+	padding: 4px;
+	border: solid 1px #b9b9b9;
+}
+
+div.Columns3
+{
+	column-count: 3;
+	column-width: 200px;
+}
+
+div.TopicFooter
+{
+	border-top-color: #808080;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	border-top: dotted 1px #a9a9a9;
+}
+
+div.Tip
+{
+	background-repeat: no-repeat;
+	border: solid 1px #ffd691;
+	padding: 4px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	padding-left: 22px;
+	background-image: url('../../Images/TipImageLong.png');
+}
+
+div.Note
+{
+	background-repeat: no-repeat;
+	padding-top: 4px;
+	border: solid 1px #bbc6ce;
+	padding: 6px;
+	padding-left: 22px;
+	text-indent: 0px;
+	margin-bottom: 8px;
+	margin-top: 8px;
+	background-image: url('../../Images/NoteImageLong.png');
+}
+
+div.ImportantDiv
+{
+	background-repeat: no-repeat;
+	padding-top: 4px;
+	padding: 6px;
+	border: solid 1px #9bc4c9;
+	background-image: url('../../Images/ImportantImageLong.png');
+	margin-top: 8px;
+	margin-bottom: 8px;
+	padding-left: 22px;
+}
+
+div.AdvancedDiv
+{
+	background-repeat: no-repeat;
+	padding-top: 4px;
+	padding-left: 20px;
+	text-indent: 16px;
+	padding: 6px;
+	background-image: url('../../Images/AdvancedImage.png');
+	border: solid 1px #66cdaa;
+}
+
+div.TopicNav
+{
+	border-top-color: #808080;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	border-bottom: dotted 1px #a9a9a9;
+	border-top: dotted 1px #a9a9a9;
+}
+
+p.MediumHeading1
+{
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 18px;
+	margin-bottom: 2px;
+	margin-top: 20px;
+}
+
+p.ImageHolder
+{
+	margin-bottom: 2px;
+	margin-top: 6px;
+}
+
+div.Footer
+{
+	/*position: fixed;*/
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	background-color: #EAEAEA;
+	padding: 3px;
+}
+
+span.Hash
+{
+	color: #b22222;
+	background-color: #fbf3f4;
+	font-family: 'Lucida Console';
+}
+
+h2
+{
+	font-size: 12pt;
+}
+
+MadCap|xref.PageRef
+{
+	color: #0000ff;
+}
+
+MadCap|xref.PageRef:visited
+{
+	color: #7f007f;
+}
+
+MadCap|xref.PageRef:hover
+{
+	color: #FFD800;
+}
+
+MadCap|xref:visited
+{
+	color: #7f007f;
+}
+
+h1.WelcomeLogo_TOC1
+{
+	padding-top: 2px;
+	margin-top: 5pt;
+}
+
+kbd
+{
+	border-radius: 3px;
+	border: solid 1px #dcdcdc;
+	padding: 4px;
+	background-color: #333;
+	color: #ffffff;
+	font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+a
+{
+	color: #0066cc;
+}
+
+p.SettingHeader
+{
+	font-family: 'Segoe UI';
+}
+
+h1
+{
+	font-size: 18pt;
+}
+
+p
+{
+	font-size: 9pt;
+}
+
+h5
+{
+	font-size: 10pt;
+}
+
+div.SettingBody
+{
+	padding-left: 14px;
+}
+

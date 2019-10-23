@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="User Guides">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Using Text and MText</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="TopicContent">
+            <h1 class="TOC4"><a name="kanchor37"></a>Using Text and MText</h1>
+            <p>Text can be integrated into artistic drawings and signs, and it can be used to provide information and notes, including title blocks. Create single- or multi-line text using the Text or MText tools.</p>
+            <p class="Procedure">Creating single-line text</p>
+            <ol>
+                <li value="1">Select <b>Text</b> (<img src="../../Images/text.svg" />) from the Tools menu.</li>
+                <li value="2">In the <b>Text</b> field, type the text that you want to appear in the drawing.</li>
+                <li value="3">Adjust Font Settings, Alignment, and Symbols, and convert Microsoft fonts, if necessary.</li>
+                <li value="4">Select <b>OK</b>.</li>
+                <li value="5">Select on the drawing to place text, or enter placement coordinates into the Command line (the text Alignment is used as the insertion point when specifying coordinates).</li>
+            </ol>
+            <p class="Procedure">Creating multi-line text</p>
+            <ol>
+                <li value="1">Select <a name="kanchor38"></a><b>MText</b> (<img src="../../Images/text.svg" />) from the Tools menu.</li>
+                <li value="2">In the <b>Text</b> field, type the text that you want to appear in the drawing. Use the Insert Symbol dropdown menu to insert special characters into your text, such as degree symbols and copyright symbols.</li>
+                <li value="3">Convert Microsoft fonts and set spacing values, if necessary.</li>
+                <li value="4">Set the Alignment and insertion Angle (the Angle may be left blank to insert text at 180°).</li>
+                <li value="5">Select <b>OK</b>.</li>
+                <li value="6">Select on the drawing to place text, or enter placement coordinates into the Command line (the text Alignment is used as the insertion point when specifying coordinates).</li>
+            </ol>
+            <p class="Procedure">Modifying text</p>
+            <ol>
+                <li value="1">Select the <a name="kanchor39"></a><b>Properties</b> button ( <img src="../../Images/properties.svg" /> )&#160;from the Modify tools menu. The text dialog will appear again, allowing you to modify the text as well as layer and color information.</li>
+                <li value="2">Modify any relevant properties.</li>
+                <li value="3">Select <b>OK</b> to save your changes and update text, or Cancel to discard changes.</li>
+            </ol>
+            <p class="Procedure">Shaping text around an entity</p>
+            <p>With the Hypertherm-exclusive Shape Text feature in LibreCAD, you can shape text around any line, polyline, arc, or circle entity. </p>
+            <ol>
+                <li value="1">Draw a shape. </li>
+                <li value="2">Place text using the <b>Text</b> or <b>MText</b> tools. When in the Text or MText dialog, be sure to specify an Alignment. If you are unsure of what Alignment to use, try using the lower left option.</li>
+                <li value="3">Enter Shape Text mode by selecting the <b>Shape Text</b> button ( <img src="../../Images/shape2.svg" /> ) from the Modify tools, or by entering <span class="CodeSnippet">st</span> into the Command Line.</li>
+                <li value="4">Select the text that you want to shape.</li>
+                <li value="5">Move your cursor around a shape. When the text is in the desired location, select to place the text.</li>
+            </ol>
+            <div class="Note">
+                <p>Text can't be shaped around a spline.</p>
+            </div>
+            <p class="Procedure">Aligning shaped text through the entity perimeter</p>
+            <ol>
+                <li value="1">Draw a shape.</li>
+                <li value="2">Place text using the <b>Text</b> or <b>MText</b> tools. When in the Text or MText dialog, be sure to specify a middle center Alignment.</li>
+                <li value="3">Enter Shape Text mode by selecting the <b>Shape Text</b> button ( <img src="../../Images/shape2.svg" /> ) from the Modify tools, or by entering <span class="CodeSnippet">st</span> into the Command Line.</li>
+                <li value="4">Adjust the Shape Text mode Offset on the toolbar. <ul><li value="1">&#160;For single-line text, the Offset should be the negative value of half of the text Height. For example, when using a text height of 1, the offset value should be -0.5.</li><li value="2">The Offset can be adjusted and updated by entering a value and pressing the <b>ENTER</b> key.</li></ul></li>
+                <li value="5">Select the text that you want to shape.</li>
+                <li value="6">Move your cursor around a shape. When the text is in the desired location, select to place the text.</li>
+            </ol>
+            <p>&#160;</p>
+            <blockquote>
+                <p>
+                    <img src="../../Images/st_example.png" />
+                </p>
+            </blockquote>
+            <div class="Tip">
+                <p>Use the Trim Excess modify tool ( <img src="../../Images/trim_excess.svg" /> ) to easily remove any unwanted geometry in one click.</p>
+            </div>
+            <h2>Fonts</h2>
+            <p>Many font options are available in LibreCAD, including ProNest fonts. To use <a href="#Converti">Microsoft® fonts</a> or <a href="#Converti2">AutoCAD® fonts</a>, you'll need to follow steps below to first convert those fonts into a readable format for LibreCAD.</p>
+            <div class="Note">
+                <p>If you are opening AutoCAD .dwg drawings that use AutoCAD fonts, you'll need to convert the font to ensure it comes into LibreCAD properly. The font conversion process will convert all AutoCAD fonts and only needs to be done once.</p>
+            </div>
+            <h3>ProNest fonts</h3>
+            <p>LibreCAD includes ProNest fonts in the font list. These are the same fonts listed on the ProNest CAD Font Preferences page, such as the no lift font. </p>
+            <ul>
+                <li value="1">To use ProNest fonts, simply locate the font from the Font dropdown menu in the Text and MText dialog.</li>
+            </ul>
+            <h3>Microsoft fonts</h3>
+            <p>Use default fonts from Microsoft and customize letter, word, and line spacing for these fonts using the Convert Font dialog from the Text and MText dialog.</p>
+            <p class="Procedure"><a name="Converti"></a>Converting Microsoft fonts</p>
+            <ol>
+                <li value="1">Select either <b>Text</b> or <b>MText</b>.</li>
+                <li value="2">Select the <b>Convert Text</b> button (<img src="../../Images/add_font.svg" />) in the upper right-hand corner.</li>
+                <li value="3">Select a font you want to convert from the dropdown menu.</li>
+                <li value="4">Adjust Letter, Word, and Line Spacing, if needed.<ol><li value="1">If you adjusted spacing, you can save the spacing in the current default font, or you can adjust the name of the file in the Save as field, allowing you to save a copy of the adjusted font without overwriting the default converted font.</li></ol></li>
+                <li value="5">Select <b>OK</b>.</li>
+            </ol>
+            <p>Be sure to select the converted font from the Font dropdown menu in the Text or MText dialog to use the font after it has been converted.</p>
+            <h3>AutoCAD fonts</h3>
+            <p class="Procedure"><a name="Converti2"></a>Converting AutoCAD fonts</p>
+            <p>If you'll be using LibreCAD to open/modify AutoCAD drawings (.dwg) that have text, you'll need to complete the following steps to ensure that LibreCAD can present the text appropriately. These steps only need to be completed once and will have no impact on any existing fonts or AutoCAD.</p>
+            <ol>
+                <li value="1">Open LibreCAD.</li>
+                <li value="2">Select <b>Options</b>.</li>
+                <li value="3">Select <b>Application Preferences</b>.</li>
+                <li style="font-style: normal;" value="4">On the <b>Paths</b> tab, in the <b>Fonts</b> field, specify a new folder on your PC that will be used to store converted fonts. <i>This folder must be different than where your LibreCAD fonts are stored.</i></li>
+                <li value="5">Open a file explorer on your PC.</li>
+                <li value="6">Navigate to the following file path: <span class="CodeSnippet">C:\Program Files (x86)\Hypertherm CAM\LibreCAD</span></li>
+                <li value="7">Locate the file <b>dumpshp.bat</b>. Right-click and select <b>Copy</b>.</li>
+                <li value="8">Navigate to the new font folder you specified in step 3.</li>
+                <li value="9">Right-click and select Paste to put a copy of <b>dumpshp.bat</b> into your new font folder.</li>
+                <li value="10">Double-click on <span class="CodeSnippet">dumpshp.bat</span>. A&#160;command window will appear. </li>
+                <li value="11">When prompted, press any key.</li>
+            </ol>
+            <p>Now, any AutoCAD fonts used in your drawings will automatically convert into a readable format for LibreCAD, and you can use any AutoCAD font in a new LibreCAD drawing.</p>
+            <div class="TopicFooter">
+                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
+                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_other.htm">Additional tools: Text, Hatch, Point</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_dimension.htm">Dimensioning tools</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_modify.htm">Modify tools</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 6pt;margin-top: 0;margin-bottom: 0;">&#160;</p>
+    </body>
+</html>

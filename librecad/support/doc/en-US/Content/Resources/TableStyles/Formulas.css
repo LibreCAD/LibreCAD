@@ -1,0 +1,37 @@
+/* MadCap Table Style: */
+
+mcTableStyle {
+	name: Formulas; 
+	border-collapse: collapse; 
+	border-left-style: solid; 
+	border-left-width: 0px; 
+	border-right-style: solid; 
+	border-right-width: 0px; 
+	border-top-style: solid; 
+	border-top-width: 0px; 
+	border-bottom-style: solid; 
+	border-bottom-width: 0px; 
+}
+
+ 
+ 
+/* Cell Styles: */
+ 
+/*<meta />*/
+
+.TableStyle_Formulas
+{
+	border-left-style: solid;
+	border-left-width: 0px;
+	border-right-style: solid;
+	border-right-width: 0px;
+	border-top-style: solid;
+	border-top-width: 0px;
+	border-bottom-style: solid;
+	border-bottom-width: 0px;
+	border-collapse: collapse;
+	border-spacing: 0px 0px;
+	mc-cell-padding: 0px 0px;
+}
+
+

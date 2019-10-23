@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Drawing and Modifying">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Modify tools</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/Basic.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="TopicContent">
+            <h1 class="TOC4"><a name="kanchor25"></a>Modify tools</h1>
+            <p>Use these tools to modify existing geometry in your drawing, including moving, scaling, trimming excess geometry, shaping text around entities, and viewing and modifying properties and attributes. Most of the tools described below work on multiple selected entities or a single entity.</p>
+            <table style="mc-table-style: url('../../Resources/TableStyles/Basic.css');border-left-style: solid;border-left-width: 1px;border-left-color: #000000;border-right-style: solid;border-right-width: 1px;border-right-color: #000000;border-top-style: solid;border-top-width: 1px;border-top-color: #000000;border-bottom-style: solid;border-bottom-width: 1px;border-bottom-color: #000000;margin-left: 0;margin-right: auto;width: 100%;" class="TableStyle-Basic" cellspacing="0">
+                <col class="Column-Column1" />
+                <col class="Column-Column1" style="width: 35px;" />
+                <col class="Column-Column1" style="width: 67px;" />
+                <col class="Column-Column1" />
+                <tbody>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1" style="font-weight: bold;text-align: center;">Tool</td>
+                        <td class="BodyE-Column1-Body1" style="font-weight: bold;text-align: center;">Icon</td>
+                        <td class="BodyE-Column1-Body1" style="font-weight: bold;text-align: center;">Command</td>
+                        <td class="BodyD-Column1-Body1" style="font-weight: bold;text-align: center;">Description</td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1">Order</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">&#160;</td>
+                        <td class="BodyE-Column1-Body1" style="font-style: italic;">none</td>
+                        <td class="BodyD-Column1-Body1">Order entities within a layer. Selected entities can be moved to top, bottom, raised (moved forward) over another entity, or lowered (moved backwards) behind an entity.</td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1">Move/Copy</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/move_copy.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1" style="font-style: normal;">mv</td>
+                        <td class="BodyD-Column1-Body1">Move a selected entity by defining a reference point and a relative target point. Optionally keep the original entity (Copy), create multiple copies and / or alter attributes and layer.</td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1">Rotate</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/move_rotate.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1">ro</td>
+                        <td class="BodyD-Column1-Body1">Rotate a selected entity around a rotation point, moving the entity from a reference point to a target point. Optionally keep the original entity, create multiple copies and / or alter attributes and layer.</td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1"><a name="kanchor26"></a>Scale</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/scale.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1">sz</td>
+                        <td class="BodyD-Column1-Body1">Increase or decrease the size of a selected entity from a reference point by a defined factor for both axes. Optionally keep the original entity, create multiple copies and / or alter attributes and layer.</td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1">Mirror</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/mirror.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1">mi</td>
+                        <td class="BodyD-Column1-Body1">Create a mirror image of a selected entity around an axis defined by two points. Optionally keep the original entity and / or alter attributes and layer.</td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1">Move and Rotate</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/move_rotate.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1" style="font-style: italic;">none</td>
+                        <td class="BodyD-Column1-Body1">Move a selected entity by defining a reference point and a relative target point and rotating the entity at a given angle. Optionally keep the original entity, create multiple copies and / or alter attributes and layer.</td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1">Rotate Two</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/rotate2.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1" style="font-style: italic;">none</td>
+                        <td class="BodyD-Column1-Body1">Rotate a selected entity around an absolute rotation point, while rotating the entity around a relative reference point to a target point. Optionally keep the original entity, create multiple copies and / or alter attributes and layer.</td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1">Revert Direction</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/revert_direction.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1">revert</td>
+                        <td class="BodyD-Column1-Body1">Swap start and end points of one or more selected entities.</td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1">Trim</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/trim.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1">tm, trim</td>
+                        <td class="BodyD-Column1-Body1">Cut the length of a line entity to an intersecting entity.</td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1">Trim Two</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/trim2.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1" style="font-style: normal;">t2, tm2</td>
+                        <td class="BodyD-Column1-Body1">Cut the lengths of two intersecting entities to the point of intersection.</td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1">Trim Excess</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/trim_excess.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1" style="font-style: normal;">tx, tmx, trimex</td>
+                        <td class="BodyD-Column1-Body1">Cut an entity that intersects with another entity. A hover preview displays showing the entity that will be cut.</td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1">Lengthen</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/trim_value.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1">le</td>
+                        <td class="BodyD-Column1-Body1">
+                            <p>Extend the length of a line entity to an intersecting line entity.</p>
+                            <p>&#160;</p>
+                            <p>Tool options:</p>
+                            <p>
+                                <img src="../../Images/lengthen_toolbar.PNG" />
+                            </p>
+                        </td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1">Offset</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/offset.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1" style="font-style: normal;">o, pa, offset, parallel</td>
+                        <td class="BodyD-Column1-Body1">Copy a selected entity to a defined distance in the specified direction.</td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1">Bevel&#160;(chamfer)</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/bevel.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1">ch, bevel</td>
+                        <td class="BodyD-Column1-Body1">
+                            <p>Create a sloping edge between two intersecting line segments defined by a setback on each segment.
+</p>
+                            <p style="font-style: italic;">Note: This command is different than beveling in ProNest and is more like a chamfer! Do not use if you are attempting to add beveling to a part's CNC code.</p>
+                            <p>&#160;</p>
+                            <p>Tool options:</p>
+                            <p>
+                                <img src="../../Images/bevel_toolbar.PNG" />
+                            </p>
+                        </td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1">Fillet</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/fillet.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1" style="font-style: normal;">fi, fillet</td>
+                        <td class="BodyD-Column1-Body1">
+                            <p>Create a corner radius between two intersecting line segments with defined radius.</p>
+                            <p>&#160;</p>
+                            <p>Tool options:</p>
+                            <p>
+                                <img src="../../Images/fillet_toolbar.png" />
+                            </p>
+                        </td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1">Divide</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/divide.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1">di, div, cut</td>
+                        <td class="BodyD-Column1-Body1">Divide, or break, all lines at the selected cutting point.</td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1">Stretch</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/stretch.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1">ss</td>
+                        <td class="BodyD-Column1-Body1">Move a selected portion of a drawing by defining a reference point and a relative target point.</td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1"><a name="kanchor27"></a>Properties</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/properties.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1">mp, prop</td>
+                        <td class="BodyD-Column1-Body1">Modify the attributes of one or more selected entities, including Layer, Pen color, Pen width, and Pen Line type.</td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1"><a name="kanchor28"></a>Attributes</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/attributes.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1">ma, attr</td>
+                        <td class="BodyD-Column1-Body1">Modify the common attributes of one or more selected entities, including Layer, Pen color, Pen width, and Pen Line type.</td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1">Explode Text into Letters</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/explode_text_to_letters.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1" style="font-style: italic;">none</td>
+                        <td class="BodyD-Column1-Body1">Separate a string of text into individual character entities.</td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1">Shape Text</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/shape2.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1" style="font-style: normal;">st, stxt, shapetext</td>
+                        <td class="BodyD-Column1-Body1">
+                            <p>Shape text around an arc or line.</p>
+                            <p style="font-style: italic;">Note:&#160;Text can't be shaped around a spline.</p>
+                        </td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1">Unlink Text from Geometry</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/unlink_shaped_text.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1" style="font-style: normal;">ut, utxt, unlinktxt</td>
+                        <td class="BodyD-Column1-Body1">Dissociates shaped text from the shaping entity. If text is shaped around an arc, the text will automatically explode into individual letters; if text is shaped along a line, the text will remain a text string and will not explode into individual letters.</td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyE-Column1-Body1">Explode</td>
+                        <td class="BodyE-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/explode.svg" />
+                        </td>
+                        <td class="BodyE-Column1-Body1">xp</td>
+                        <td class="BodyD-Column1-Body1">Separate one or more selected blocks or compound entities into individual entities.</td>
+                    </tr>
+                    <tr class="Body-Body1">
+                        <td class="BodyB-Column1-Body1">Delete Selected</td>
+                        <td class="BodyB-Column1-Body1" style="text-align: center;">
+                            <img src="../../Images/delete.svg" />
+                        </td>
+                        <td class="BodyB-Column1-Body1"> er</td>
+                        <td class="BodyA-Column1-Body1">
+                            <p>Delete one or more selected entities.</p>
+                            <p>&#160;</p>
+                            <p>Keyboard shortcut: DEL</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="TopicFooter" data-mc-conditions="Primary.ExcludeFromPDF">
+                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
+                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="tool_info.htm">Informational tools</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../User Guides/guide_drawing_attributes.htm">Modifying Attributes of an entity</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../User Guides/guide_drawing_properties.htm">Modifying Properties of an entity</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="tool_select.htm">Select tools</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 6pt;margin-top: 0;margin-bottom: 0;">&#160;</p>
+    </body>
+</html>
