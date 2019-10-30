@@ -30,6 +30,7 @@
 
 #include "lc_actionfactory.h"
 #include "lc_actiongroupmanager.h"
+#include "lc_helpbrowser.h"
 #include <QAction>
 #include <QActionGroup>
 
@@ -61,6 +62,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotSelectSingle()));
     action->setObjectName("SelectSingle");
+	LC_HELP->registerAction(action, "topic_tool_select");
     a_map["SelectSingle"] = action;
 
     action = new QAction(tr("Select Window"), agm->select);
@@ -68,6 +70,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotSelectWindow()));
     action->setObjectName("SelectWindow");
+	LC_HELP->registerAction(action, "topic_tool_select");
     a_map["SelectWindow"] = action;
 
     action = new QAction(tr("Deselect Window"), agm->select);
@@ -75,6 +78,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDeselectWindow()));
     action->setObjectName("DeselectWindow");
+	LC_HELP->registerAction(action, "topic_tool_select");
     a_map["DeselectWindow"] = action;
 
     action = new QAction(tr("(De-)Select &Contour"), agm->select);
@@ -82,6 +86,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotSelectContour()));
     action->setObjectName("SelectContour");
+	LC_HELP->registerAction(action, "topic_tool_select");
     a_map["SelectContour"] = action;
 
     action = new QAction(tr("Select Intersected Entities"), agm->select);
@@ -89,6 +94,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotSelectIntersected()));
     action->setObjectName("SelectIntersected");
+	LC_HELP->registerAction(action, "topic_tool_select");
     a_map["SelectIntersected"] = action;
 
     action = new QAction(tr("Deselect Intersected Entities"), agm->select);
@@ -96,6 +102,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDeselectIntersected()));
     action->setObjectName("DeselectIntersected");
+	LC_HELP->registerAction(action, "topic_tool_select");
     a_map["DeselectIntersected"] = action;
 
     action = new QAction(tr("(De-)Select Layer"), agm->select);
@@ -103,6 +110,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotSelectLayer()));
     action->setObjectName("SelectLayer");
+	LC_HELP->registerAction(action, "topic_tool_select");
     a_map["SelectLayer"] = action;
 
     // <[~ Draw ~]>
@@ -122,6 +130,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLine()));
     action->setObjectName("DrawLine");
+	LC_HELP->registerAction(action, "topic_tool_lines");
     a_map["DrawLine"] = action;
 
     action = new QAction(tr("&Angle"), agm->line);
@@ -129,6 +138,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineAngle()));
     action->setObjectName("DrawLineAngle");
+	LC_HELP->registerAction(action, "topic_tool_lines");
     a_map["DrawLineAngle"] = action;
 
     action = new QAction(tr("&Horizontal"), agm->line);
@@ -136,6 +146,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineHorizontal()));
     action->setObjectName("DrawLineHorizontal");
+	LC_HELP->registerAction(action, "topic_tool_lines");
     a_map["DrawLineHorizontal"] = action;
 
     action = new QAction(tr("Vertical"), agm->line);
@@ -143,6 +154,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineVertical()));
     action->setObjectName("DrawLineVertical");
+	LC_HELP->registerAction(action, "topic_tool_lines");
     a_map["DrawLineVertical"] = action;
 
 //    action = new QAction(tr("Vertical"), agm->line);
@@ -156,6 +168,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineFree()));
     action->setObjectName("DrawLineFree");
+	LC_HELP->registerAction(action, "topic_tool_lines");
     a_map["DrawLineFree"] = action;
 
     action = new QAction(tr("&Parallel"), agm->line);
@@ -163,6 +176,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineParallel()));
     action->setObjectName("DrawLineParallel");
+	LC_HELP->registerAction(action, "topic_tool_lines");
     a_map["DrawLineParallel"] = action;
 
     action = new QAction(tr("Parallel through point"), agm->line);
@@ -170,6 +184,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineParallelThrough()));
     action->setObjectName("DrawLineParallelThrough");
+	LC_HELP->registerAction(action, "topic_tool_lines");
     a_map["DrawLineParallelThrough"] = action;
 
     action = new QAction(tr("Rectangle"), agm->line);
@@ -177,6 +192,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineRectangle()));
     action->setObjectName("DrawLineRectangle");
+	LC_HELP->registerAction(action, "topic_tool_lines");
     a_map["DrawLineRectangle"] = action;
 
     action = new QAction(tr("Bisector"), agm->line);
@@ -184,6 +200,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineBisector()));
     action->setObjectName("DrawLineBisector");
+	LC_HELP->registerAction(action, "topic_tool_lines");
     a_map["DrawLineBisector"] = action;
 
     action = new QAction(tr("Tangent (P,C)"), agm->line);
@@ -191,6 +208,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineTangent1()));
     action->setObjectName("DrawLineTangent1");
+	LC_HELP->registerAction(action, "topic_tool_lines");
     a_map["DrawLineTangent1"] = action;
 
     action = new QAction(tr("Tangent (C,C)"), agm->line);
@@ -198,6 +216,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineTangent2()));
     action->setObjectName("DrawLineTangent2");
+	LC_HELP->registerAction(action, "topic_tool_lines");
     a_map["DrawLineTangent2"] = action;
 
     action = new QAction(tr("Tangent &Orthogonal"), agm->line);
@@ -205,6 +224,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineOrthTan()));
     action->setObjectName("DrawLineOrthTan");
+	LC_HELP->registerAction(action, "topic_tool_lines");
     a_map["DrawLineOrthTan"] = action;
 
     action = new QAction(tr("Orthogonal"), agm->line);
@@ -212,6 +232,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineOrthogonal()));
     action->setObjectName("DrawLineOrthogonal");
+	LC_HELP->registerAction(action, "topic_tool_lines");
     a_map["DrawLineOrthogonal"] = action;
 
     action = new QAction(tr("Relative angle"), agm->line);
@@ -219,6 +240,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineRelAngle()));
     action->setObjectName("DrawLineRelAngle");
+	LC_HELP->registerAction(action, "topic_tool_lines");
     a_map["DrawLineRelAngle"] = action;
 
     action = new QAction(tr("Pol&ygon (Cen,Cor)"), agm->line);
@@ -226,6 +248,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLinePolygon()));
     action->setObjectName("DrawLinePolygonCenCor");
+	LC_HELP->registerAction(action, "topic_tool_lines");
     a_map["DrawLinePolygonCenCor"] = action;
 
     action = new QAction(tr("Pol&ygon (Cen,Tan)"), agm->line);  //20161223 added by txmy
@@ -233,6 +256,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLinePolygon3()));
     action->setObjectName("DrawLinePolygonCenTan");
+	LC_HELP->registerAction(action, "topic_tool_lines");
     a_map["DrawLinePolygonCenTan"] = action;
 
     action = new QAction(tr("Polygo&n (Cor,Cor)"), agm->line);
@@ -240,6 +264,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLinePolygon2()));
     action->setObjectName("DrawLinePolygonCorCor");
+	LC_HELP->registerAction(action, "topic_tool_lines");
     a_map["DrawLinePolygonCorCor"] = action;
 
     // <[~ Circle ~]>
@@ -248,6 +273,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setIcon(QIcon(":/icons/circle_center_point.svg"));
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawCircle()));
     action->setObjectName("DrawCircle");
+	LC_HELP->registerAction(action, "topic_tool_circles");
     a_map["DrawCircle"] = action;
 
     action = new QAction(tr("Center, &Radius"), agm->circle);
@@ -255,6 +281,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircleCR()));
     action->setObjectName("DrawCircleCR");
+	LC_HELP->registerAction(action, "topic_tool_circles");
     a_map["DrawCircleCR"] = action;
 
 	action = new QAction(tr("Center, &Diameter"), agm->circle);
@@ -262,6 +289,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 	connect(action, SIGNAL(triggered()),
 		action_handler, SLOT(slotDrawCircleDiam()));
 	action->setObjectName("DrawCircleDiam");
+	LC_HELP->registerAction(action, "topic_tool_circles");
 	a_map["DrawCircleDiam"] = action;
 
 	action = new QAction(tr("2 Points"), agm->circle);
@@ -269,6 +297,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircle2P()));
     action->setObjectName("DrawCircle2P");
+	LC_HELP->registerAction(action, "topic_tool_circles");
     a_map["DrawCircle2P"] = action;
 
     action = new QAction(tr("2 Points, Radius"), agm->circle);
@@ -276,6 +305,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircle2PR()));
     action->setObjectName("DrawCircle2PR");
+	LC_HELP->registerAction(action, "topic_tool_circles");
     a_map["DrawCircle2PR"] = action;
 
     action = new QAction(tr("3 Points"), agm->circle);
@@ -283,6 +313,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircle3P()));
     action->setObjectName("DrawCircle3P");
+	LC_HELP->registerAction(action, "topic_tool_circles");
     a_map["DrawCircle3P"] = action;
 
     action = new QAction(tr("&Concentric"), agm->circle);
@@ -291,6 +322,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircleParallel()));
     action->setObjectName("DrawCircleParallel");
+	LC_HELP->registerAction(action, "topic_tool_circles");
     a_map["DrawCircleParallel"] = action;
 
     action = new QAction(tr("Circle &Inscribed"), agm->circle);
@@ -298,6 +330,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircleInscribe()));
     action->setObjectName("DrawCircleInscribe");
+	LC_HELP->registerAction(action, "topic_tool_circles");
     a_map["DrawCircleInscribe"] = action;
 
     action = new QAction(tr("Tangential 2 Circles, Radius",  "circle tangential with two circles, and given radius"), agm->circle);
@@ -305,6 +338,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircleTan2()));
     action->setObjectName("DrawCircleTan2");
+	LC_HELP->registerAction(action, "topic_tool_circles");
     a_map["DrawCircleTan2"] = action;
 
     action = new QAction(tr("Tangential 2 Circles, 1 Point"), agm->circle);
@@ -312,6 +346,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircleTan2_1P()));
     action->setObjectName("DrawCircleTan2_1P");
+	LC_HELP->registerAction(action, "topic_tool_circles");
     a_map["DrawCircleTan2_1P"] = action;
 
     action = new QAction(tr("Tangential &3 Circles"), agm->circle);
@@ -319,6 +354,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircleTan3()));
     action->setObjectName("DrawCircleTan3");
+	LC_HELP->registerAction(action, "topic_tool_circles");
     a_map["DrawCircleTan3"] = action;
 
     action = new QAction(tr("Tangential, 2 P&oints"), agm->circle);
@@ -326,6 +362,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircleTan1_2P()));
     action->setObjectName("DrawCircleTan1_2P");
+	LC_HELP->registerAction(action, "topic_tool_circles");
     a_map["DrawCircleTan1_2P"] = action;
 
     // <[~ Arc ~]>
@@ -336,6 +373,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawArc()));
     action->setObjectName("DrawArc");
+	LC_HELP->registerAction(action, "topic_tool_curves");
     a_map["DrawArc"] = action;
 
     action = new QAction(tr("&3 Points"), agm->curve);
@@ -344,6 +382,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawArc3P()));
     action->setObjectName("DrawArc3P");
+	LC_HELP->registerAction(action, "topic_tool_curves");
     a_map["DrawArc3P"] = action;
 
     action = new QAction(tr("&Concentric"), agm->curve);
@@ -352,6 +391,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawArcParallel()));
     action->setObjectName("DrawArcParallel");
+	LC_HELP->registerAction(action, "topic_tool_curves");
     a_map["DrawArcParallel"] = action;
 
     action = new QAction(tr("Arc &Tangential"), agm->curve);
@@ -360,6 +400,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawArcTangential()));
     action->setObjectName("DrawArcTangential");
+	LC_HELP->registerAction(action, "topic_tool_curves");
     a_map["DrawArcTangential"] = action;
 
     // <[~ Ellipse ~]>
@@ -369,6 +410,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawEllipseAxis()));
     action->setObjectName("DrawEllipseAxis");
+	LC_HELP->registerAction(action, "topic_tool_ellipse");
     a_map["DrawEllipseAxis"] = action;
 
     action = new QAction(tr("Ellipse &Arc (Axis)"), agm->ellipse);
@@ -376,6 +418,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawEllipseArcAxis()));
     action->setObjectName("DrawEllipseArcAxis");
+	LC_HELP->registerAction(action, "topic_tool_curves");
     a_map["DrawEllipseArcAxis"] = action;
 
     action = new QAction(tr("Ellipse &Foci Point"), agm->ellipse);
@@ -383,6 +426,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawEllipseFociPoint()));
     action->setObjectName("DrawEllipseFociPoint");
+	LC_HELP->registerAction(action, "topic_tool_ellipse");
     a_map["DrawEllipseFociPoint"] = action;
 
     action = new QAction(tr("Ellipse &4 Point"), agm->ellipse);
@@ -390,6 +434,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawEllipse4Points()));
     action->setObjectName("DrawEllipse4Points");
+	LC_HELP->registerAction(action, "topic_tool_ellipse");
     a_map["DrawEllipse4Points"] = action;
 
     action = new QAction(tr("Ellipse Center and &3 Points"), agm->ellipse);
@@ -397,6 +442,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawEllipseCenter3Points()));
     action->setObjectName("DrawEllipseCenter3Points");
+	LC_HELP->registerAction(action, "topic_tool_ellipse");
     a_map["DrawEllipseCenter3Points"] = action;
 
     action = new QAction(tr("Ellipse &Inscribed"), agm->ellipse);
@@ -404,6 +450,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawEllipseInscribe()));
     action->setObjectName("DrawEllipseInscribe");
+	LC_HELP->registerAction(action, "topic_tool_ellipse");
     a_map["DrawEllipseInscribe"] = action;
 
     // <[~ Spline ~]>
@@ -413,6 +460,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawSpline()));
     action->setObjectName("DrawSpline");
+	LC_HELP->registerAction(action, "topic_tool_curves");
     a_map["DrawSpline"] = action;
 
     action = new QAction(tr("&Spline through points"), agm->curve);
@@ -420,6 +468,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawSplinePoints()));
     action->setObjectName("DrawSplinePoints");
+	LC_HELP->registerAction(action, "topic_tool_curves");
     a_map["DrawSplinePoints"] = action;
 
     // <[~ Polyline ~]>
@@ -429,6 +478,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawPolyline()));
     action->setObjectName("DrawPolyline");
+	LC_HELP->registerAction(action, "topic_tool_polyline");
     a_map["DrawPolyline"] = action;
 
     action = new QAction(tr("&Add node"), agm->polyline);
@@ -437,6 +487,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineAdd()));
     action->setObjectName("PolylineAdd");
+	LC_HELP->registerAction(action, "topic_tool_polyline");
     a_map["PolylineAdd"] = action;
 
     action = new QAction(tr("A&ppend node"), agm->polyline);
@@ -445,6 +496,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineAppend()));
     action->setObjectName("PolylineAppend");
+	LC_HELP->registerAction(action, "topic_tool_polyline");
     a_map["PolylineAppend"] = action;
 
     action = new QAction(tr("&Delete node"), agm->polyline);
@@ -453,6 +505,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineDel()));
     action->setObjectName("PolylineDel");
+	LC_HELP->registerAction(action, "topic_tool_polyline");
     a_map["PolylineDel"] = action;
 
     action = new QAction(tr("Delete &between two nodes"), agm->polyline);
@@ -461,6 +514,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineDelBetween()));
     action->setObjectName("PolylineDelBetween");
+	LC_HELP->registerAction(action, "topic_tool_polyline");
     a_map["PolylineDelBetween"] = action;
 
     action = new QAction(tr("&Trim segments"), agm->polyline);
@@ -469,6 +523,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineTrim()));
     action->setObjectName("PolylineTrim");
+	LC_HELP->registerAction(action, "topic_tool_polyline");
     a_map["PolylineTrim"] = action;
 
     action = new QAction(tr("Create &Equidistant Polylines"), agm->polyline);
@@ -476,6 +531,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineEquidistant()));
     action->setObjectName("PolylineEquidistant");
+	LC_HELP->registerAction(action, "topic_tool_polyline");
     a_map["PolylineEquidistant"] = action;
 
     action = new QAction(tr("Create Polyline from Existing &Segments"), agm->polyline);
@@ -483,6 +539,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineSegment()));
     action->setObjectName("PolylineSegment");
+	LC_HELP->registerAction(action, "topic_tool_polyline");
     a_map["PolylineSegment"] = action;
 
     // <[~ Misc ~]>
@@ -491,6 +548,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawMText()));
     action->setObjectName("DrawMText");
+	LC_HELP->registerAction(action, "topic_guide_text");
     a_map["DrawMText"] = action;
 
     action = new QAction(tr("&Text"), agm->other);
@@ -498,6 +556,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawText()));
     action->setObjectName("DrawText");
+	LC_HELP->registerAction(action, "topic_guide_text");
     a_map["DrawText"] = action;
 
     action = new QAction(tr("&Hatch"), agm->other);
@@ -505,6 +564,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawHatch()));
     action->setObjectName("DrawHatch");
+	LC_HELP->registerAction(action, "topic_append_hatch");
     a_map["DrawHatch"] = action;
 
     action = new QAction(tr("Insert &Image"), agm->other);
@@ -521,6 +581,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimAligned()));
     action->setObjectName("DimAligned");
+	LC_HELP->registerAction(action, "topic_tool_dimension");
     a_map["DimAligned"] = action;
 
     action = new QAction(tr("&Linear"), agm->dimension);
@@ -528,6 +589,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimLinear()));
     action->setObjectName("DimLinear");
+	LC_HELP->registerAction(action, "topic_tool_dimension");
     a_map["DimLinear"] = action;
 
     action = new QAction(tr("&Horizontal"), agm->dimension);
@@ -535,6 +597,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimLinearHor()));
     action->setObjectName("DimLinearHor");
+	LC_HELP->registerAction(action, "topic_tool_dimension");
     a_map["DimLinearHor"] = action;
 
     action = new QAction(tr("&Vertical"), agm->dimension);
@@ -542,6 +605,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimLinearVer()));
     action->setObjectName("DimLinearVer");
+	LC_HELP->registerAction(action, "topic_tool_dimension");
     a_map["DimLinearVer"] = action;
 
     action = new QAction(tr("&Radial"), agm->dimension);
@@ -549,6 +613,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimRadial()));
     action->setObjectName("DimRadial");
+	LC_HELP->registerAction(action, "topic_tool_dimension");
     a_map["DimRadial"] = action;
 
     action = new QAction(tr("&Diametric"), agm->dimension);
@@ -556,6 +621,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimDiametric()));
     action->setObjectName("DimDiametric");
+	LC_HELP->registerAction(action, "topic_tool_dimension");
     a_map["DimDiametric"] = action;
 
     action = new QAction(tr("&Angular"), agm->dimension);
@@ -563,6 +629,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimAngular()));
     action->setObjectName("DimAngular");
+	LC_HELP->registerAction(action, "topic_tool_dimension");
     a_map["DimAngular"] = action;
 
     action = new QAction(tr("&Leader"), agm->dimension);
@@ -570,6 +637,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimLeader()));
     action->setObjectName("DimLeader");
+	LC_HELP->registerAction(action, "topic_tool_dimension");
     a_map["DimLeader"] = action;
 
     // <[~ Modify ~]>
@@ -580,6 +648,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action_handler, SLOT(slotModifyAttributes()));
     action->setObjectName("ModifyAttributes");
     action->setData("modifyattr, attr, ma");
+	LC_HELP->registerAction(action, "topic_guide_drawing_attributes");
     a_map["ModifyAttributes"] = action;
 
     action = new QAction(tr("&Delete"), agm->modify);
@@ -587,12 +656,14 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyDelete()));
     action->setObjectName("ModifyDelete");
+	LC_HELP->registerAction(action, "topic_tool_modify");
     a_map["ModifyDelete"] = action;
 
     action = new QAction(tr("Delete Freehand"), agm->modify);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyDeleteFree()));
     action->setObjectName("ModifyDeleteFree");
+	LC_HELP->registerAction(action, "topic_tool_modify");
     a_map["ModifyDeleteFree"] = action;
 
     action = new QAction(tr("&Move / Copy"), agm->modify);
@@ -601,6 +672,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action_handler, SLOT(slotModifyMove()));
     action->setObjectName("ModifyMove");
     action->setData("move, mv");
+	LC_HELP->registerAction(action, "topic_tool_modify");
     a_map["ModifyMove"] = action;
 
     action = new QAction(tr("Re&vert direction"), agm->modify);
@@ -609,6 +681,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotModifyRevertDirection()));
     action->setObjectName("ModifyRevertDirection");
     action->setData("revert, rev");
+	LC_HELP->registerAction(action, "topic_tool_modify");
     a_map["ModifyRevertDirection"] = action;
 
     action = new QAction(tr("&Rotate"), agm->modify);
@@ -617,6 +690,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action_handler, SLOT(slotModifyRotate()));
     action->setObjectName("ModifyRotate");
     action->setData("rotate, ro");
+	LC_HELP->registerAction(action, "topic_tool_modify");
     a_map["ModifyRotate"] = action;
 
     action = new QAction(tr("&Scale"), agm->modify);
@@ -625,6 +699,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action_handler, SLOT(slotModifyScale()));
     action->setObjectName("ModifyScale");
     action->setData("scale, sz");
+	LC_HELP->registerAction(action, "topic_tool_modify");
     a_map["ModifyScale"] = action;
 
     action = new QAction(tr("&Mirror"), agm->modify);
@@ -633,6 +708,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action_handler, SLOT(slotModifyMirror()));
     action->setObjectName("ModifyMirror");
     action->setData("mirror, mi");
+	LC_HELP->registerAction(action, "topic_tool_modify");
     a_map["ModifyMirror"] = action;
 
     action = new QAction(tr("Mo&ve and Rotate"), agm->modify);
@@ -640,6 +716,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyMoveRotate()));
     action->setObjectName("ModifyMoveRotate");
+	LC_HELP->registerAction(action, "topic_tool_modify");
     a_map["ModifyMoveRotate"] = action;
 
     action = new QAction(tr("Rotate T&wo"), agm->modify);
@@ -647,6 +724,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyRotate2()));
     action->setObjectName("ModifyRotate2");
+	LC_HELP->registerAction(action, "topic_tool_modify");
     a_map["ModifyRotate2"] = action;
 
     action = new QAction(tr("&Properties"), agm->modify);
@@ -655,6 +733,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action_handler, SLOT(slotModifyEntity()));
     action->setObjectName("ModifyEntity");
     action->setData("properties, prop");
+	LC_HELP->registerAction(action, "topic_guide_drawing_properties");
     a_map["ModifyEntity"] = action;
 
     action = new QAction(tr("&Trim"), agm->modify);
@@ -663,6 +742,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action_handler, SLOT(slotModifyTrim()));
     action->setObjectName("ModifyTrim");
     action->setData("trim, tm");
+	LC_HELP->registerAction(action, "topic_tool_modify");
     a_map["ModifyTrim"] = action;
 
     action = new QAction(tr("Tr&im Two"), agm->modify);
@@ -671,6 +751,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action_handler, SLOT(slotModifyTrim2()));
     action->setObjectName("ModifyTrim2");
     action->setData("trim2, tm2");
+	LC_HELP->registerAction(action, "topic_tool_modify");
     a_map["ModifyTrim2"] = action;
 
 	action = new QAction(tr("Trim E&xcess"), agm->modify);
@@ -679,6 +760,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 		action_handler, SLOT(slotModifyTrimExcess()));
 	action->setObjectName("ModifyTrimExcess");
 	action->setData("trimex, tmx");
+	LC_HELP->registerAction(action, "topic_tool_modify");
 	a_map["ModifyTrimExcess"] = action;
 
     action = new QAction(tr("&Lengthen"), agm->modify);
@@ -687,6 +769,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action_handler, SLOT(slotModifyTrimAmount()));
     action->setObjectName("ModifyTrimAmount");
     action->setData("lengthen, le");
+	LC_HELP->registerAction(action, "topic_tool_modify");
     a_map["ModifyTrimAmount"] = action;
 
     action = new QAction(tr("O&ffset"),agm->modify);
@@ -695,6 +778,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action_handler, SLOT(slotModifyOffset()));
     action->setObjectName("ModifyOffset");
     action->setData("offset, o");
+	LC_HELP->registerAction(action, "topic_tool_modify");
     a_map["ModifyOffset"] = action;
 
     action = new QAction(tr("&Divide"), agm->modify);
@@ -703,6 +787,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action_handler, SLOT(slotModifyCut()));
     action->setObjectName("ModifyCut");
     action->setData("divide, cut, div");
+	LC_HELP->registerAction(action, "topic_tool_modify");
     a_map["ModifyCut"] = action;
 
     action = new QAction(tr("&Stretch"), agm->modify);
@@ -711,6 +796,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action_handler, SLOT(slotModifyStretch()));
     action->setObjectName("ModifyStretch");
     action->setData("stretch, ss");
+	LC_HELP->registerAction(action, "topic_tool_modify");
     a_map["ModifyStretch"] = action;
 
     action = new QAction(tr("&Bevel"), agm->modify);
@@ -719,6 +805,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action_handler, SLOT(slotModifyBevel()));
     action->setObjectName("ModifyBevel");
     action->setData("bevel, bev, ch");
+	LC_HELP->registerAction(action, "topic_tool_modify");
     a_map["ModifyBevel"] = action;
 
     action = new QAction(tr("&Fillet"), agm->modify);
@@ -727,6 +814,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action_handler, SLOT(slotModifyRound()));
     action->setObjectName("ModifyRound");
     action->setData("fillet, fi");
+	LC_HELP->registerAction(action, "topic_tool_modify");
     a_map["ModifyRound"] = action;
 
     action = new QAction(tr("&Explode Text into Letters"), agm->modify);
@@ -734,6 +822,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyExplodeText()));
     action->setObjectName("ModifyExplodeText");
+	LC_HELP->registerAction(action, "topic_tool_modify");
     a_map["ModifyExplodeText"] = action;
 
 	action = new QAction(tr("S&hape Text"), agm->modify);
@@ -742,6 +831,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 		action_handler, SLOT(slotModifyShapeText()));
 	action->setObjectName("ModifyShapeText");
 	action->setData("shapetxt, stxt");
+	LC_HELP->registerAction(action, "topic_tool_modify");
 	a_map["ModifyShapeText"] = action;
 
      action = new QAction(tr("&Unlink Text from Geometry"), agm->modify);
@@ -749,6 +839,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyUnlinkText()));
     action->setObjectName("ModifyUnlinkText");
+	LC_HELP->registerAction(action, "topic_tool_modify");
     a_map["ModifyUnlinkText"] = action;
 
    action = new QAction(tr("Ex&plode"), agm->modify);
@@ -756,6 +847,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksExplode()));
     action->setObjectName("BlocksExplode");
+	LC_HELP->registerAction(action, "topic_tool_modify");
     a_map["BlocksExplode"] = action;
 
     // <[~ Info ~]>
@@ -764,6 +856,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotInfoInside()));
     action->setObjectName("InfoInside");
+	LC_HELP->registerAction(action, "topic_tool_info");
     a_map["InfoInside"] = action;
 
     action = new QAction(tr("&Distance Point to Point"), agm->info);
@@ -771,6 +864,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotInfoDist()));
     action->setObjectName("InfoDist");
+	LC_HELP->registerAction(action, "topic_tool_info");
     a_map["InfoDist"] = action;
 
     action = new QAction(tr("&Distance Entity to Point"), agm->info);
@@ -778,6 +872,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotInfoDist2()));
     action->setObjectName("InfoDist2");
+	LC_HELP->registerAction(action, "topic_tool_info");
     a_map["InfoDist2"] = action;
 
     action = new QAction(tr("An&gle between two lines"), agm->info);
@@ -785,6 +880,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotInfoAngle()));
     action->setObjectName("InfoAngle");
+	LC_HELP->registerAction(action, "topic_tool_info");
     a_map["InfoAngle"] = action;
 
     action = new QAction(tr("&Total length of selected entities"), agm->info);
@@ -792,6 +888,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotInfoTotalLength()));
     action->setObjectName("InfoTotalLength");
+	LC_HELP->registerAction(action, "topic_tool_info");
     a_map["InfoTotalLength"] = action;
 
     action = new QAction(tr("Polygonal &Area"), agm->info);
@@ -799,6 +896,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotInfoArea()));
     action->setObjectName("InfoArea");
+	LC_HELP->registerAction(action, "topic_tool_info");
     a_map["InfoArea"] = action;
 
     foreach (QAction* value, a_map)
@@ -1111,6 +1209,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 	action->setIcon(QIcon(":/icons/ProNestIcon.svg"));
 	connect(action, SIGNAL(triggered()), main_window, SLOT(slotExportToProNest()));
 	action->setObjectName("FileExportToProNest");
+	LC_HELP->registerAction(action, "topic_intro_pronest");
 	a_map["FileExportToProNest"] = action;
 
     action = new QAction(tr("&Block"), agm->file);
@@ -1142,15 +1241,6 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("ViewGrid");
     a_map["ViewGrid"] = action;
 
-    action = new QAction(tr("&Draft"), agm->view);
-    action->setIcon(QIcon(":/icons/draft.svg"));
-    action->setCheckable(true);
-    action->setShortcut(QKeySequence(tr("Ctrl+D", "Toggle Draft Mode")));
-    connect(action, SIGNAL(toggled(bool)), main_window, SLOT(slotViewDraft(bool)));
-    connect(main_window, SIGNAL(draftChanged(bool)), action, SLOT(setChecked(bool)));
-    action->setObjectName("ViewDraft");
-    a_map["ViewDraft"] = action;
-
     action = new QAction(tr("&Statusbar"), agm->view);
     action->setCheckable(true);
     action->setChecked(true);
@@ -1175,6 +1265,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setCheckable(true);
     action->setChecked(false);
     action->setObjectName("LeftDockAreaToggle");
+	LC_HELP->registerAction(action, "topic_tw_dockwidgets");
     a_map["LeftDockAreaToggle"] = action;
 
     action = new QAction(tr("Right"), agm->widgets);
@@ -1184,6 +1275,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setCheckable(true);
     action->setChecked(true);
     action->setObjectName("RightDockAreaToggle");
+	LC_HELP->registerAction(action, "topic_tw_dockwidgets");
     a_map["RightDockAreaToggle"] = action;
 
     action = new QAction(tr("Top"), agm->widgets);
@@ -1193,6 +1285,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setCheckable(true);
     action->setChecked(false);
     action->setObjectName("TopDockAreaToggle");
+	LC_HELP->registerAction(action, "topic_tw_dockwidgets");
     a_map["TopDockAreaToggle"] = action;
 
     action = new QAction(tr("Bottom"), agm->widgets);
@@ -1202,6 +1295,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setCheckable(true);
     action->setChecked(false);
     action->setObjectName("BottomDockAreaToggle");
+	LC_HELP->registerAction(action, "topic_tw_dockwidgets");
     a_map["BottomDockAreaToggle"] = action;
 
     action = new QAction(tr("Floating"), agm->widgets);
@@ -1211,6 +1305,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setCheckable(true);
     action->setChecked(false);
     action->setObjectName("FloatingDockwidgetsToggle");
+	LC_HELP->registerAction(action, "topic_tw_dockwidgets");
     a_map["FloatingDockwidgetsToggle"] = action;
 
     action = new QAction(tr("Reload Style Sheet"), agm->options);
@@ -1225,6 +1320,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
             main_window, SLOT(invokeMenuCreator()));
     action->setObjectName("InvokeMenuCreator");
+	LC_HELP->registerAction(action, "topic_tw_menucreator");
     a_map["InvokeMenuCreator"] = action;
 
     action = new QAction(tr("Toolbar Creator"), agm->widgets);
@@ -1232,6 +1328,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
             main_window, SLOT(invokeToolbarCreator()));
     action->setObjectName("InvokeToolbarCreator");
+	LC_HELP->registerAction(action, "topic_tw_toolbarcreator");
     a_map["InvokeToolbarCreator"] = action;
 
     commonActions(a_map, agm);
@@ -1284,6 +1381,7 @@ void LC_ActionFactory::commonActions(QMap<QString, QAction*>& a_map, LC_ActionGr
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotEditCut()));
     action->setObjectName("EditCut");
+	LC_HELP->registerAction(action, "topic_intro_overview");
     a_map["EditCut"] = action;
 
     action = new QAction(tr("&Copy"), agm->edit);
@@ -1295,6 +1393,7 @@ void LC_ActionFactory::commonActions(QMap<QString, QAction*>& a_map, LC_ActionGr
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotEditCopy()));
     action->setObjectName("EditCopy");
+	LC_HELP->registerAction(action, "topic_intro_overview");
     a_map["EditCopy"] = action;
 
     action = new QAction(tr("&Paste"), agm->edit);
@@ -1306,6 +1405,7 @@ void LC_ActionFactory::commonActions(QMap<QString, QAction*>& a_map, LC_ActionGr
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotEditPaste()));
     action->setObjectName("EditPaste");
+	LC_HELP->registerAction(action, "topic_intro_overview");
     a_map["EditPaste"] = action;
 
     // <[~ Zoom ~]>
@@ -1381,6 +1481,7 @@ void LC_ActionFactory::commonActions(QMap<QString, QAction*>& a_map, LC_ActionGr
     action->setShortcut(QKeySequence::New);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileNewNew()));
     action->setObjectName("FileNew");
+	LC_HELP->registerAction(action, "topic_intro_overview");
     a_map["FileNew"] = action;
 
     action = new QAction(tr("New From &Template"), agm->file);
@@ -1390,6 +1491,7 @@ void LC_ActionFactory::commonActions(QMap<QString, QAction*>& a_map, LC_ActionGr
         action->setIcon(QIcon(":/icons/new_from_template.svg"));
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileNewTemplate()));
     action->setObjectName("FileNewTemplate");
+	LC_HELP->registerAction(action, "topic_guide_templates");
     a_map["FileNewTemplate"] = action;
 
     action = new QAction(tr("&Open..."), agm->file);
@@ -1400,6 +1502,7 @@ void LC_ActionFactory::commonActions(QMap<QString, QAction*>& a_map, LC_ActionGr
     action->setShortcut(QKeySequence::Open);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileOpen()));
     action->setObjectName("FileOpen");
+	LC_HELP->registerAction(action, "topic_intro_overview");
     a_map["FileOpen"] = action;
 
     action = new QAction(tr("&Save"), agm->file);
@@ -1410,6 +1513,7 @@ void LC_ActionFactory::commonActions(QMap<QString, QAction*>& a_map, LC_ActionGr
     action->setShortcut(QKeySequence::Save);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileSave()));
     action->setObjectName("FileSave");
+	LC_HELP->registerAction(action, "topic_intro_overview");
     a_map["FileSave"] = action;
 
     action = new QAction(tr("Save &as..."), agm->file);
@@ -1420,6 +1524,7 @@ void LC_ActionFactory::commonActions(QMap<QString, QAction*>& a_map, LC_ActionGr
     action->setShortcut(QKeySequence::SaveAs);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileSaveAs()));
     action->setObjectName("FileSaveAs");
+	LC_HELP->registerAction(action, "topic_intro_overview");
     a_map["FileSaveAs"] = action;
 
 	action = new QAction(tr("Save A&ll..."), agm->file);
@@ -1430,6 +1535,7 @@ void LC_ActionFactory::commonActions(QMap<QString, QAction*>& a_map, LC_ActionGr
 		action->setShortcut(shortcut);
 	connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileSaveAll()));
 	action->setObjectName("FileSaveAll");
+	LC_HELP->registerAction(action, "topic_intro_overview");
 	a_map["FileSaveAll"] = action;
 
     action = new QAction(tr("&Print..."), agm->file);
@@ -1441,6 +1547,7 @@ void LC_ActionFactory::commonActions(QMap<QString, QAction*>& a_map, LC_ActionGr
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFilePrint()));
     connect(main_window, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
     action->setObjectName("FilePrint");
+	LC_HELP->registerAction(action, "topic_intro_overview");
     a_map["FilePrint"] = action;
 
     action = new QAction(tr("Print Pre&view"), agm->file);
@@ -1452,6 +1559,7 @@ void LC_ActionFactory::commonActions(QMap<QString, QAction*>& a_map, LC_ActionGr
     connect(action, SIGNAL(triggered(bool)), main_window, SLOT(slotFilePrintPreview(bool)));
     connect(main_window, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
     action->setObjectName("FilePrintPreview");
+	LC_HELP->registerAction(action, "topic_tw_printpreview");
     a_map["FilePrintPreview"] = action;
 
     action = new QAction(tr("&Quit"), agm->file);

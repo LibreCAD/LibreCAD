@@ -1868,11 +1868,11 @@ bool RS_GraphicView::isPrinting() const{
 }
 
 bool RS_GraphicView::isDraftMode() const{
-	return draftMode;
+	return false;
 }
 
 void RS_GraphicView::setDraftMode(bool dm) {
-	draftMode=dm;
+	draftMode=false;
 }
 
 bool RS_GraphicView::isCleanUp(void) const

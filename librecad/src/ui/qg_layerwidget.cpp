@@ -41,6 +41,7 @@
 #include <QContextMenuEvent>
 #include <QKeyEvent>
 #include "rs_debug.h"
+#include "lc_helpbrowser.h"
 
 QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
     layerVisible = QIcon(":/icons/visible.svg");
@@ -191,7 +192,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     layerView->setShowGrid(true);
     layerView->setSelectionMode(QAbstractItemView::SingleSelection);
     layerView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    layerView->setFocusPolicy(Qt::NoFocus);
+    layerView->setFocusPolicy(Qt::StrongFocus);
     layerView->setMinimumHeight(140);
     QHeaderView *pHeader {layerView->horizontalHeader()};
     pHeader->setMinimumSectionSize( QG_LayerModel::ICONWIDTH + 4);
@@ -283,6 +284,8 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
 	this->setLayout(lay);
 
     connect(layerView, SIGNAL(pressed(QModelIndex)), this, SLOT(slotActivated(QModelIndex)));
+
+	LC_HELP->registerObject(this, "topic_guide_layers");
 }
 
 
