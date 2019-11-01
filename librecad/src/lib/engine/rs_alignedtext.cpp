@@ -55,14 +55,14 @@ double min(double _val1, double _val2)
 		return (_val1);
 }
 
-double TextOffset(RS_Entity *_entity, double offset, bool above, bool reversed, double &_rev_offset)
+double TextOffset(RS_Entity *_entity, double offset, bool above)
 {
 	double
 		textOffset(0.0),
 		height(0.0);
 
 	if (_entity->rtti() == RS2::EntityAlignedText)
-		textOffset = TextOffset(dynamic_cast<RS_AlignedText *>(_entity)->getTextEntity(), offset, above, reversed, _rev_offset);
+		textOffset = TextOffset(dynamic_cast<RS_AlignedText *>(_entity)->getTextEntity(), offset, above);
 	else if (_entity->rtti() == RS2::EntityText)
 	{
 		height = dynamic_cast<RS_Text *>(_entity)->getHeight();
@@ -71,33 +71,20 @@ double TextOffset(RS_Entity *_entity, double offset, bool above, bool reversed, 
 		case RS_TextData::VABaseline:
 		case RS_TextData::VABottom:
 			if (above)
-			{
 				textOffset = offset;
-				_rev_offset = offset + height;
-			}
 			else
-			{
 				textOffset = -offset - height;
-				_rev_offset = -offset;
-			}
 			break;
 		case RS_TextData::VAMiddle:
 			textOffset = offset + height / 2.0;
 			if (!above)
 				textOffset = -textOffset;
-			_rev_offset = -textOffset;
 			break;
 		case RS_TextData::VATop:
 			if (above)
-			{
 				textOffset = offset +height;
-				_rev_offset = offset;
-			}
 			else
-			{
 				textOffset = -offset;
-				_rev_offset = -offset - height;
-			}
 			break;
 		}
 
@@ -109,47 +96,32 @@ double TextOffset(RS_Entity *_entity, double offset, bool above, bool reversed, 
 		{
 		case RS_MTextData::VABottom:
 			if (above)
-			{
 				textOffset = offset;
-				_rev_offset = offset + height;
-			}
 			else
-			{
 				textOffset = -offset - height;
-				_rev_offset = -offset;
-			}
 			break;
 		case RS_MTextData::VAMiddle:
 			textOffset = offset + height / 2.0;
 			if (!above)
 				textOffset = -textOffset;
-			_rev_offset = -textOffset;
 			break;
 		case RS_MTextData::VATop:
 			if (above)
-			{
 				textOffset = offset + height;
-				_rev_offset = offset;
-			}
 			else
-			{
 				textOffset = -offset;
-				_rev_offset = -offset - height;
-			}
 			break;
 		}
 	}
-	if (!reversed)
-		_rev_offset = textOffset;
 	return textOffset;
 }
 
-void GetTextAttributes(RS_Entity *textEntity1, bool above, double &offset, RS_Vector &anchorPoint, double &textAngle, int &HAlign, bool reversed, double &_rev_offset)
+void GetTextAttributes(RS_Entity *textEntity1, bool above, double &offset, RS_Vector &anchorPoint, double &textAngle, int &HAlign)
 {
 	if (textEntity1->rtti() == RS2::EntityText)
 	{
 		RS_Text *tent = dynamic_cast<RS_Text *>(textEntity1);
-		offset = TextOffset(tent, offset, above, reversed, _rev_offset);
+		offset = TextOffset(tent, offset, above);
 		anchorPoint = tent->getInsertionPoint();
 		textAngle = tent->getAngle();
 		HAlign = tent->getHAlign();
@@ -159,7 +131,7 @@ void GetTextAttributes(RS_Entity *textEntity1, bool above, double &offset, RS_Ve
 	else
 	{
 		RS_MText *tent = dynamic_cast<RS_MText *>(textEntity1);
-		offset = TextOffset(tent, offset, above, reversed, _rev_offset);
+		offset = TextOffset(tent, offset, above);
 		anchorPoint = tent->getInsertionPoint();
 		textAngle = tent->getAngle();
 		HAlign = tent->getHAlign();
@@ -378,8 +350,7 @@ void RS_AlignedText::update()
 		pointangle,
 		rotateAngle,
 		shapeAngle,
-		offset(data.offset),
-		revOffset(0.0);
+		offset(data.offset);
 	RS2::EntityType
 		eType(shapeEntity->rtti()),
 		tType(textEntity1->rtti());
@@ -424,10 +395,10 @@ void RS_AlignedText::update()
 	{
 		RS_AlignedText
 			*tent = dynamic_cast<RS_AlignedText *>(textEntity1);
-		GetTextAttributes(tent->getTextEntity(), data.above, offset, anchorPoint, textAngle, HAlign, data.reversed, revOffset);
+		GetTextAttributes(tent->getTextEntity(), data.above, offset, anchorPoint, textAngle, HAlign);
 	}
 	else
-		GetTextAttributes(textEntity1, data.above, offset, anchorPoint, textAngle, HAlign, data.reversed, revOffset);
+		GetTextAttributes(textEntity1, data.above, offset, anchorPoint, textAngle, HAlign);
 	offsetVector.x = (nearestPoint.x - anchorPoint.x) + cos(textAngle + M_PI_2) * offset;
 	offsetVector.y = (nearestPoint.y - anchorPoint.y) + sin(textAngle + M_PI_2) * offset;
 	textEntity1->move(offsetVector);
@@ -486,10 +457,14 @@ void RS_AlignedText::update()
 				RS_Vector
 					tempPt;
 				center = ellipse->getCenter();
-				if (data.above)
-					radius += fabs(offset);
+				//if (data.above)
+				//	radius += fabs(offset);
+				//else
+				//	radius -= fabs(offset);
+				if (data.above != data.reversed)
+					radius += data.offset;
 				else
-					radius -= fabs(offset);
+					radius -= data.offset;
 			}
 			else if (eType == RS2::EntityCircle || eType == RS2::EntityArc)
 			{
@@ -505,10 +480,6 @@ void RS_AlignedText::update()
 				}
 				textInsertionAngle = RS_Math::correctAngle(atan2(anchorPoint.y - center.y, anchorPoint.x - center.x));
 				totalAngle = 0.0;
-				//if (data.above != data.reversed)
-				//	radius += fabs(revOffset);
-				//else
-				//	radius -= fabs(revOffset);
 				if (data.above != data.reversed)
 					radius += data.offset;
 				else
@@ -629,7 +600,10 @@ void RS_AlignedText::update()
 
 					// end of center point rotation
 					iLetter->rotate(iLetter->getInsertionPoint(), -iLetter->getAngle());
-					iLetter->rotate(iLetter->getInsertionPoint(), (tempAngle - M_PI));
+					if (data.reversed)
+						iLetter->rotate(iLetter->getInsertionPoint(), tempAngle);
+					else
+						iLetter->rotate(iLetter->getInsertionPoint(), (tempAngle - M_PI));
 					if (direction == 1)
 						letter = ((RS_EntityContainer *)inner_tent)->nextEntity();
 					else
