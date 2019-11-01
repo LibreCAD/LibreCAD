@@ -20,8 +20,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_helpbrowser.h"
 #include "qc_applicationwindow.h"
-#include <QDesktopServices>
-#include <QFileInfo>
 #include <QDir>
 #include <QCoreApplication>
 #include <QEvent>
@@ -29,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QApplication>
 #include <QDockWidget>
 #include <QToolButton>
+#include <QLibrary>
 
 LC_HelpBrowser* LC_HelpBrowser::uniqueInstance = nullptr;
 
@@ -57,8 +56,9 @@ void LC_HelpBrowser::showTableOfContents()
 void LC_HelpBrowser::showHelpTopic(const QString & topic)
 {
 	if (topicMap.contains(topic)) {
-		helpView.load(topicMap[topic]);
-		helpView.showMaximized();
+		QStringList args;
+		args << topicMap[topic].toString();
+		proc.start(getDefaultBrowser(), args);
 	}
 }
 
@@ -68,21 +68,16 @@ void LC_HelpBrowser::showHelpTopic(QObject * w)
 		showHelpTopic(registry[w]);
 }
 
-void LC_HelpBrowser::registerObject(QObject * w, const QString& topicName)
+void LC_HelpBrowser::associateTopic(QObject * w, const QString& topicName)
 {
 	if (!w)	return;
 	registry[w] = topicName;
 }
 
-void LC_HelpBrowser::registerAction(QAction * a, const QString & topicName)
+void LC_HelpBrowser::associateTopic(QAction * a, const QString & topicName)
 {
 	if (a)
 		registeredActions[a] = topicName;
-}
-
-void LC_HelpBrowser::dismiss()
-{
-	helpView.close();
 }
 
 bool LC_HelpBrowser::eventFilter(QObject * obj, QEvent * event)
@@ -189,4 +184,16 @@ QString LC_HelpBrowser::getLocaleName()
 QString LC_HelpBrowser::getRelativeFilePath(const QString & fileName)
 {
 	return QString("doc/%1/%2").arg(getLocaleName(), fileName);
+}
+
+QString LC_HelpBrowser::getDefaultBrowser()
+{
+	QDir dir = QDir::cleanPath(QCoreApplication::applicationDirPath());
+	QLibrary library(QFileInfo(dir, "ProNestUtils.dll").filePath());
+	typedef wchar_t* (*DefaultBrowserFunc)();
+	DefaultBrowserFunc DefaultBrowser = (DefaultBrowserFunc)library.resolve("DefaultBrowserEXEName");
+	if (DefaultBrowser) {
+		return QString::fromStdWString(DefaultBrowser());
+	}
+	return QString();
 }

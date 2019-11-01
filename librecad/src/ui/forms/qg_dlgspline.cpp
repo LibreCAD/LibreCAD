@@ -31,6 +31,7 @@
 #include "qg_widgetpen.h"
 #include "qg_layerbox.h"
 #include "rs_math.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_DlgSpline as a child of 'parent', with the
@@ -44,6 +45,7 @@ QG_DlgSpline::QG_DlgSpline(QWidget* parent, bool modal, Qt::WindowFlags fl)
 {
     setModal(modal);
     setupUi(this);
+	LC_HELP->associateTopic(this, "topic_tool_curves");
 
 }
 

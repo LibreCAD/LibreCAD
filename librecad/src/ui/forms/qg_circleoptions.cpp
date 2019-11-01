@@ -30,6 +30,7 @@
 #include "rs_debug.h"
 #include "rs_actiondrawcirclecr.h"
 #include "ui_qg_circleoptions.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_CircleOptions as a child of 'parent', with the
@@ -40,6 +41,7 @@ QG_CircleOptions::QG_CircleOptions(QWidget* parent, Qt::WindowFlags fl)
 	, ui(new Ui::Ui_CircleOptions{})
 {
 	ui->setupUi(this);
+	LC_HELP->associateTopic(this, "topic_tool_circles");
 }
 
 /*

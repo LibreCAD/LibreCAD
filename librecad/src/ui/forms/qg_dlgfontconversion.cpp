@@ -41,6 +41,7 @@
 #include "qc_applicationwindow.h"
 #include "rs_document.h"
 #include "lc_telemetry.h"
+#include "lc_helpbrowser.h"
 
 QG_DlgFontConversion::QG_DlgFontConversion(QWidget *parent) :
     QDialog(parent),
@@ -62,6 +63,8 @@ QG_DlgFontConversion::QG_DlgFontConversion(QWidget *parent) :
 	RS_Document* doc = QC_ApplicationWindow::getAppWindow()->getDocument();
 	if (doc)
 		doc->getTelemetryData().fontConversionClicks++;
+
+	LC_HELP->associateTopic(this, "topic_guide_text");
 
 	slotFontChanged(QFont());
 }

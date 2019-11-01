@@ -28,6 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_actionpolylineequidistant.h"
 #include "ui_qg_polylineequidistantoptions.h"
 #include "rs_debug.h"
+#include "lc_helpbrowser.h"
 
 /*
   * Create option widget used to draw equidistant polylines
@@ -39,6 +40,7 @@ QG_PolylineEquidistantOptions::QG_PolylineEquidistantOptions(QWidget* parent, Qt
 	, ui{new Ui::PolylineEquidistantOptions{}}
 {
 	ui->setupUi(this);
+	LC_HELP->associateTopic(this, "topic_tool_polyline");
 }
 
 /*

@@ -237,7 +237,7 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
 
     connect(blockView, SIGNAL(clicked(QModelIndex)), this, SLOT(slotActivated(QModelIndex)));
 
-	LC_HELP->registerObject(this, "topic_tw_blocklist");
+	LC_HELP->associateTopic(this, "topic_tw_blocklist");
 }
 
 /**

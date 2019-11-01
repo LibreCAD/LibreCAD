@@ -29,6 +29,7 @@
 #include "rs_settings.h"
 #include "rs_debug.h"
 #include "ui_qg_arcoptions.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_ArcOptions as a child of 'parent', with the
@@ -39,6 +40,7 @@ QG_ArcOptions::QG_ArcOptions(QWidget* parent, Qt::WindowFlags fl)
 	, ui(new Ui::Ui_ArcOptions{})
 {
 	ui->setupUi(this);
+	LC_HELP->associateTopic(this, "topic_tool_curves");
 }
 
 /*

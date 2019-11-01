@@ -285,7 +285,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
 
     connect(layerView, SIGNAL(pressed(QModelIndex)), this, SLOT(slotActivated(QModelIndex)));
 
-	LC_HELP->registerObject(this, "topic_guide_layers");
+	LC_HELP->associateTopic(this, "topic_guide_layers");
 }
 
 

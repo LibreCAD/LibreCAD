@@ -87,7 +87,7 @@ QG_LibraryWidget::QG_LibraryWidget(QWidget* parent, const char* name, Qt::Window
     connect(bRefresh, SIGNAL(clicked()), this, SLOT(refresh()));
     connect(bRebuild, SIGNAL(clicked()), this, SLOT(buildTree()));
 
-	LC_HELP->registerObject(this, "topic_tw_librarybrowserdock");
+	LC_HELP->associateTopic(this, "topic_tw_librarybrowserdock");
 }
 
 /*

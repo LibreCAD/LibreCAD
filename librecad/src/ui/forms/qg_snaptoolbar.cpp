@@ -137,7 +137,7 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
     setSnaps(RS_Snapper::intToSnapMode(RS_SETTINGS->readNumEntry("/SnapMode",0)));
     RS_SETTINGS->endGroup();
 
-	LC_HELP->registerObject(this, "topic_snapping");
+	LC_HELP->associateTopic(this, "topic_snapping");
 }
 
 void QG_SnapToolBar::saveSnapMode()

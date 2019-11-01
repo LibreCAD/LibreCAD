@@ -209,55 +209,55 @@ void LC_WidgetFactory::createLeftSidebar(int columns, int icon_size)
     dock_line->setObjectName("dock_line");
     dock_line->setWindowTitle(QC_ApplicationWindow::tr("Line"));
     dock_line->add_actions(line_actions, columns, icon_size);
-	LC_HELP->registerObject(dock_line, "topic_tool_lines");
+	LC_HELP->associateTopic(dock_line, "topic_tool_lines");
 
     LC_DockWidget* dock_circle = new LC_DockWidget(main_window);
     dock_circle->setObjectName("dock_circle");
     dock_circle->setWindowTitle(QC_ApplicationWindow::tr("Circle"));
     dock_circle->add_actions(circle_actions, columns, icon_size);
-	LC_HELP->registerObject(dock_circle, "topic_tool_circles");
+	LC_HELP->associateTopic(dock_circle, "topic_tool_circles");
 
     LC_DockWidget* dock_curve = new LC_DockWidget(main_window);
     dock_curve->setObjectName("dock_curve");
     dock_curve->setWindowTitle(QC_ApplicationWindow::tr("Curve"));
     dock_curve->add_actions(curve_actions, columns, icon_size);
-	LC_HELP->registerObject(dock_curve, "topic_tool_curves");
+	LC_HELP->associateTopic(dock_curve, "topic_tool_curves");
 
     LC_DockWidget* dock_ellipse = new LC_DockWidget(main_window);
     dock_ellipse->setObjectName("dock_ellipse");
     dock_ellipse->setWindowTitle(QC_ApplicationWindow::tr("Ellipse"));
     dock_ellipse->add_actions(ellipse_actions, columns, icon_size);
-	LC_HELP->registerObject(dock_ellipse, "topic_tool_ellipse");
+	LC_HELP->associateTopic(dock_ellipse, "topic_tool_ellipse");
 
     LC_DockWidget* dock_polyline = new LC_DockWidget(main_window);
     dock_polyline->setObjectName("dock_polyline");
     dock_polyline->setWindowTitle(QC_ApplicationWindow::tr("Polyline"));
     dock_polyline->add_actions(polyline_actions, columns, icon_size);
-	LC_HELP->registerObject(dock_polyline, "topic_tool_polyline");
+	LC_HELP->associateTopic(dock_polyline, "topic_tool_polyline");
 
     LC_DockWidget* dock_select = new LC_DockWidget(main_window);
     dock_select->setObjectName("dock_select");
     dock_select->setWindowTitle(QC_ApplicationWindow::tr("Select"));
     dock_select->add_actions(select_actions, columns, icon_size);
-	LC_HELP->registerObject(dock_select, "topic_tool_select");
+	LC_HELP->associateTopic(dock_select, "topic_tool_select");
 
     LC_DockWidget* dock_dimension = new LC_DockWidget(main_window);
     dock_dimension->setObjectName("dock_dimension");
     dock_dimension->setWindowTitle(QC_ApplicationWindow::tr("Dimension"));
     dock_dimension->add_actions(dimension_actions, columns, icon_size);
-	LC_HELP->registerObject(dock_dimension, "topic_tool_dimension");
+	LC_HELP->associateTopic(dock_dimension, "topic_tool_dimension");
 
     LC_DockWidget* dock_modify = new LC_DockWidget(main_window);
     dock_modify->setObjectName("dock_modify");
     dock_modify->setWindowTitle(QC_ApplicationWindow::tr("Modify"));
     dock_modify->add_actions(modify_actions, columns, icon_size);
-	LC_HELP->registerObject(dock_modify, "topic_tool_modify");
+	LC_HELP->associateTopic(dock_modify, "topic_tool_modify");
 
     LC_DockWidget* dock_info = new LC_DockWidget(main_window);
     dock_info->setObjectName("dock_info");
     dock_info->setWindowTitle(QC_ApplicationWindow::tr("Info"));
     dock_info->add_actions(info_actions, columns, icon_size);
-	LC_HELP->registerObject(dock_info, "topic_tool_info");
+	LC_HELP->associateTopic(dock_info, "topic_tool_info");
 
     main_window->addDockWidget(Qt::LeftDockWidgetArea, dock_line);
     main_window->tabifyDockWidget(dock_line, dock_polyline);
@@ -442,63 +442,63 @@ void LC_WidgetFactory::createCADToolbars()
     line_toolbar->setSizePolicy(toolBarPolicy);
     line_toolbar->setObjectName("line_toolbar");
     line_toolbar->addActions(line_actions);
-	LC_HELP->registerObject(line_toolbar, "topic_tool_lines");
+	LC_HELP->associateTopic(line_toolbar, "topic_tool_lines");
     line_toolbar->hide();
 
     QToolBar* circle_toolbar = new QToolBar(QC_ApplicationWindow::tr("Circle"), main_window);
     circle_toolbar->setSizePolicy(toolBarPolicy);
     circle_toolbar->setObjectName ("circle_toolbar");
     circle_toolbar->addActions(circle_actions);
-	LC_HELP->registerObject(circle_toolbar, "topic_tool_circle");
+	LC_HELP->associateTopic(circle_toolbar, "topic_tool_circle");
     circle_toolbar->hide();
 
     QToolBar* curve_toolbar = new QToolBar(QC_ApplicationWindow::tr("Curve"), main_window);
     curve_toolbar->setSizePolicy(toolBarPolicy);
     curve_toolbar->setObjectName("curve_toolbar");
     curve_toolbar->addActions(curve_actions);
-	LC_HELP->registerObject(curve_toolbar, "topic_tool_curves");
+	LC_HELP->associateTopic(curve_toolbar, "topic_tool_curves");
     curve_toolbar->hide();
 
     QToolBar* ellipse_toolbar = new QToolBar(QC_ApplicationWindow::tr("Ellipse"), main_window);
     ellipse_toolbar->setSizePolicy(toolBarPolicy);
     ellipse_toolbar->setObjectName("ellipse_toolbar");
     ellipse_toolbar->addActions(ellipse_actions);
-	LC_HELP->registerObject(ellipse_toolbar, "topic_tool_ellipse");
+	LC_HELP->associateTopic(ellipse_toolbar, "topic_tool_ellipse");
     ellipse_toolbar->hide();
 
     QToolBar* polyline_toolbar = new QToolBar(QC_ApplicationWindow::tr("Polyline"), main_window);
     polyline_toolbar->setSizePolicy(toolBarPolicy);
     polyline_toolbar->setObjectName("polyline_toolbar");
     polyline_toolbar->addActions(polyline_actions);
-	LC_HELP->registerObject(polyline_toolbar, "topic_tool_polyline");
+	LC_HELP->associateTopic(polyline_toolbar, "topic_tool_polyline");
     polyline_toolbar->hide();
 
     QToolBar* select_toolbar = new QToolBar(QC_ApplicationWindow::tr("Select"), main_window);
     select_toolbar->setSizePolicy(toolBarPolicy);
     select_toolbar->setObjectName("select_toolbar");
     select_toolbar->addActions(select_actions);
-	LC_HELP->registerObject(select_toolbar, "topic_tool_select");
+	LC_HELP->associateTopic(select_toolbar, "topic_tool_select");
     select_toolbar->hide();
 
     QToolBar* dimension_toolbar = new QToolBar(QC_ApplicationWindow::tr("Dimension"), main_window);
     dimension_toolbar->setSizePolicy(toolBarPolicy);
     dimension_toolbar->setObjectName("dimension_toolbar");
     dimension_toolbar->addActions(dimension_actions);
-	LC_HELP->registerObject(dimension_toolbar, "topic_tool_dimension");
+	LC_HELP->associateTopic(dimension_toolbar, "topic_tool_dimension");
     dimension_toolbar->hide();
 
     QToolBar* modify_toolbar = new QToolBar(QC_ApplicationWindow::tr("Modify"), main_window);
     modify_toolbar->setSizePolicy(toolBarPolicy);
     modify_toolbar->setObjectName("modify_toolbar");
     modify_toolbar->addActions(modify_actions);
-	LC_HELP->registerObject(modify_toolbar, "topic_tool_modify");
+	LC_HELP->associateTopic(modify_toolbar, "topic_tool_modify");
     modify_toolbar->hide();
 
     QToolBar* info_toolbar = new QToolBar(QC_ApplicationWindow::tr("Info"), main_window);
     info_toolbar->setSizePolicy(toolBarPolicy);
     info_toolbar->setObjectName("info_toolbar");
     info_toolbar->addActions(info_actions);
-	LC_HELP->registerObject(info_toolbar, "topic_tool_info");
+	LC_HELP->associateTopic(info_toolbar, "topic_tool_info");
     info_toolbar->hide();
 
     main_window->addToolBar(Qt::BottomToolBarArea, line_toolbar);
@@ -527,63 +527,63 @@ QToolBar* LC_WidgetFactory::createCategoriesToolbar()
     tool_button->setIcon(QIcon(":/icons/line.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(line_actions);
-	LC_HELP->registerObject(tool_button, "topic_tool_lines");
+	LC_HELP->associateTopic(tool_button, "topic_tool_lines");
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/icons/circle.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(circle_actions);
-	LC_HELP->registerObject(tool_button, "topic_tool_circles");
+	LC_HELP->associateTopic(tool_button, "topic_tool_circles");
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/icons/line_freehand.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(curve_actions);
-	LC_HELP->registerObject(tool_button, "topic_tool_curves");
+	LC_HELP->associateTopic(tool_button, "topic_tool_curves");
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/icons/ellipses.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(ellipse_actions);
-	LC_HELP->registerObject(tool_button, "topic_tool_ellipse");
+	LC_HELP->associateTopic(tool_button, "topic_tool_ellipse");
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/icons/polylines.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(polyline_actions);
-	LC_HELP->registerObject(tool_button, "topic_tool_polyline");
+	LC_HELP->associateTopic(tool_button, "topic_tool_polyline");
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/icons/select.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(select_actions);
-	LC_HELP->registerObject(tool_button, "topic_tool_select");
+	LC_HELP->associateTopic(tool_button, "topic_tool_select");
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/icons/dim_horizontal.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(dimension_actions);
-	LC_HELP->registerObject(tool_button, "topic_tool_dimension");
+	LC_HELP->associateTopic(tool_button, "topic_tool_dimension");
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/icons/move_rotate.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(modify_actions);
-	LC_HELP->registerObject(tool_button, "topic_tool_modify");
+	LC_HELP->associateTopic(tool_button, "topic_tool_modify");
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/icons/measure.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(info_actions);
-	LC_HELP->registerObject(tool_button, "topic_tool_info");
+	LC_HELP->associateTopic(tool_button, "topic_tool_info");
 
     main_window->addToolBar(Qt::LeftToolBarArea, categories_toolbar);
 

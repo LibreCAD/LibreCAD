@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 #include "qg_dlgattributes.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_DlgAttributes as a child of 'parent', with the
@@ -37,7 +38,7 @@ QG_DlgAttributes::QG_DlgAttributes(QWidget* parent, bool modal, Qt::WindowFlags 
 {
     setModal(modal);
     setupUi(this);
-
+	LC_HELP->associateTopic(this, "topic_guide_drawing_attributes");
 }
 
 /*

@@ -26,8 +26,7 @@ CONFIG += qt \
     verbose \
     depend_includepath
 
-QT += widgets printsupport help
-QT += webenginewidgets
+QT += widgets printsupport
 CONFIG += c++14
 *-g++ {
     QMAKE_CXXFLAGS += -fext-numeric-literals

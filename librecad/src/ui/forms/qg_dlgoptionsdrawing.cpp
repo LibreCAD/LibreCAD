@@ -34,6 +34,7 @@
 #include "rs_math.h"
 #include "rs_font.h"
 #include "rs_debug.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_DlgOptionsDrawing as a child of 'parent', with the
@@ -55,6 +56,7 @@ QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent, bool modal, Qt::Wind
     setModal(modal);
     setupUi(this);
     tabWidget->setCurrentIndex(current_tab);
+	LC_HELP->associateTopic(this, "topic_prefs_drawingpreferences");
     init();
 }
 

@@ -31,6 +31,7 @@
 #include "rs_debug.h"
 #include "rs_actiondrawcirclediam.h"
 #include "ui_qg_circleDiamoptions.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_CircleDiamOptions as a child of 'parent', with the
@@ -41,6 +42,7 @@ QG_CircleDiamOptions::QG_CircleDiamOptions(QWidget* parent, Qt::WindowFlags fl)
 	, ui(new Ui::Ui_CircleDiamOptions{})
 {
 	ui->setupUi(this);
+	LC_HELP->associateTopic(this, "topic_tool_circles");
 }
 
 /*

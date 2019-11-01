@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_debug.h"
 
 #include "ui_qg_circletan2options.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_CircleTan2Options as a child of 'parent', with the
@@ -37,6 +38,7 @@ QG_CircleTan2Options::QG_CircleTan2Options(QWidget* parent, Qt::WindowFlags fl)
 	, ui(new Ui::Ui_CircleTan2Options{})
 {
 	ui->setupUi(this);
+	LC_HELP->associateTopic(this, "topic_tool_circles");
 }
 
 /*

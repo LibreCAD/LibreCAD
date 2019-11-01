@@ -29,6 +29,7 @@
 #include "rs_settings.h"
 #include "ui_qg_lineparallelthroughoptions.h"
 #include "rs_debug.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_LineParallelThroughOptions as a child of 'parent', with the
@@ -39,6 +40,7 @@ QG_LineParallelThroughOptions::QG_LineParallelThroughOptions(QWidget* parent, Qt
 	, ui(new Ui::Ui_LineParallelThroughOptions{})
 {
 	ui->setupUi(this);
+	LC_HELP->associateTopic(this, "topic_tool_lines");
 }
 
 /*

@@ -28,6 +28,7 @@
 #include "rs_settings.h"
 #include "rs_math.h"
 #include "rs_modification.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_DlgRotate2 as a child of 'parent', with the
@@ -41,6 +42,7 @@ QG_DlgRotate2::QG_DlgRotate2(QWidget* parent, bool modal, Qt::WindowFlags fl)
 {
     setModal(modal);
     setupUi(this);
+	LC_HELP->associateTopic(this, "topic_tool_modify");
 
     init();
 }

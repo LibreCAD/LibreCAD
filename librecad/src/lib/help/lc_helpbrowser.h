@@ -25,8 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QString>
 #include <QMap>
 #include <QUrl>
-#include <QWebEngineView>
 #include <QPoint>
+#include <QProcess>
 
 #define LC_HELP LC_HelpBrowser::instance()
 
@@ -40,10 +40,8 @@ public:
 	void showHelpTopic(const QString& topic);
 	void showHelpTopic(QObject* w);
 
-	void registerObject(QObject* w, const QString& topicName);
-	void registerAction(QAction* a, const QString& topicName);
-
-	void dismiss();
+	void associateTopic(QObject* w, const QString& topicName);
+	void associateTopic(QAction* a, const QString& topicName);
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *event) override;
@@ -56,12 +54,13 @@ private:
 	void populateHelpTopics();
 	QString getLocaleName();
 	QString getRelativeFilePath(const QString& fileName);
+	QString getDefaultBrowser();
 
 private:
 	QMap<QString, QUrl> topicMap;
 	QMap<QObject*, QString> registry;
 	QMap<QAction*, QString> registeredActions;
-	QWebEngineView helpView;
+	QProcess proc;
 	static LC_HelpBrowser* uniqueInstance;
 };
 

@@ -34,6 +34,7 @@
 #include "rs_debug.h"
 
 #include "ui_qg_arctangentialoptions.h"
+#include "lc_helpbrowser.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -48,6 +49,7 @@ QG_ArcTangentialOptions::QG_ArcTangentialOptions(QWidget* parent, Qt::WindowFlag
 	, ui(new Ui::Ui_ArcTangentialOptions{})
 {
 	ui->setupUi(this);
+	LC_HELP->associateTopic(this, "topic_tool_curves");
 }
 
 QG_ArcTangentialOptions::~QG_ArcTangentialOptions()

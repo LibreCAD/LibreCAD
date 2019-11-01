@@ -31,6 +31,7 @@
 
 #include "ui_qg_dimlinearoptions.h"
 #include "rs_actiondimlinear.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_DimLinearOptions as a child of 'parent', with the
@@ -41,6 +42,7 @@ QG_DimLinearOptions::QG_DimLinearOptions(QWidget* parent, Qt::WindowFlags fl)
 	, ui(new Ui::Ui_DimLinearOptions{})
 {
 	ui->setupUi(this);
+	LC_HELP->associateTopic(this, "topic_tool_dimension");
 }
 
 /*

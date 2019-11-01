@@ -29,6 +29,7 @@
 #include "rs_settings.h"
 #include "ui_qg_linepolygonoptions.h"
 #include "rs_debug.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_LinePolygonOptions as a child of 'parent', with the
@@ -39,6 +40,7 @@ QG_LinePolygonOptions::QG_LinePolygonOptions(QWidget* parent, Qt::WindowFlags fl
 	, ui(new Ui::Ui_LinePolygonOptions{})
 {
 	ui->setupUi(this);
+	LC_HELP->associateTopic(this, "topic_tool_lines");
 }
 
 /*

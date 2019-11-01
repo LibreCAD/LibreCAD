@@ -729,7 +729,6 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
                     "deleting dialog factory");
 
     delete dialogFactory;
-	LC_HELP->dismiss();
 
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
                     "deleting dialog factory: OK");

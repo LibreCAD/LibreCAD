@@ -28,6 +28,7 @@
 #include "rs_actiondrawline.h"
 #include "ui_qg_lineoptions.h"
 #include "rs_debug.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_LineOptions as a child of 'parent', with the
@@ -38,6 +39,7 @@ QG_LineOptions::QG_LineOptions(QWidget* parent, Qt::WindowFlags fl)
 	, ui(new Ui::Ui_LineOptions{})
 {
 	ui->setupUi(this);
+	LC_HELP->associateTopic(this, "topic_tool_lines");
 }
 
 /*

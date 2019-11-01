@@ -62,7 +62,7 @@ QG_PenToolBar::QG_PenToolBar( const QString & title, QWidget * parent )
 	addWidget(widthBox.get());
 	addWidget(lineTypeBox.get());
 
-	LC_HELP->registerObject(this, "topic_tw_penwizarddock");
+	LC_HELP->associateTopic(this, "topic_tw_penwizarddock");
 }
 
 

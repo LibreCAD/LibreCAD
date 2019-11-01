@@ -28,6 +28,7 @@
 #include "rs_blocklist.h"
 #include "rs_block.h"
 #include "rs_debug.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_BlockDialog as a child of 'parent', with the
@@ -41,6 +42,7 @@ QG_BlockDialog::QG_BlockDialog(QWidget* parent, bool modal, Qt::WindowFlags fl)
 {
     setModal(modal);
     setupUi(this);
+	LC_HELP->associateTopic(this, "topic_guide_blocks");
 }
 
 /*

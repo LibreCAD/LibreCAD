@@ -45,7 +45,7 @@ QG_LayerDialog::QG_LayerDialog(QWidget* parent, QString name, bool modal, Qt::Wi
     setObjectName(name);
     setupUi(this);
 
-	LC_HELP->registerObject(this, "topic_guide_layers");
+	LC_HELP->associateTopic(this, "topic_guide_layers");
 
     init();
 }
