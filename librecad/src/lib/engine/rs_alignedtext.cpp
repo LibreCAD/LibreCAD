@@ -69,11 +69,6 @@ double TextOffset(RS_Entity *_entity, double offset, bool above)
 		switch (dynamic_cast<RS_Text *>(_entity)->getVAlign())
 		{
 		case RS_TextData::VABaseline:
-			if (above)
-				textOffset = offset;
-			else
-				textOffset = -offset - height;
-			break;
 		case RS_TextData::VABottom:
 			if (above)
 				textOffset = offset;
@@ -87,7 +82,7 @@ double TextOffset(RS_Entity *_entity, double offset, bool above)
 			break;
 		case RS_TextData::VATop:
 			if (above)
-				textOffset = offset + height;
+				textOffset = offset +height;
 			else
 				textOffset = -offset;
 			break;
@@ -462,10 +457,14 @@ void RS_AlignedText::update()
 				RS_Vector
 					tempPt;
 				center = ellipse->getCenter();
-				if (data.above)
-					radius += fabs(offset);
+				//if (data.above)
+				//	radius += fabs(offset);
+				//else
+				//	radius -= fabs(offset);
+				if (data.above != data.reversed)
+					radius += data.offset;
 				else
-					radius -= fabs(offset);
+					radius -= data.offset;
 			}
 			else if (eType == RS2::EntityCircle || eType == RS2::EntityArc)
 			{
@@ -481,10 +480,10 @@ void RS_AlignedText::update()
 				}
 				textInsertionAngle = RS_Math::correctAngle(atan2(anchorPoint.y - center.y, anchorPoint.x - center.x));
 				totalAngle = 0.0;
-				if (data.above)
-					radius += fabs(offset);
+				if (data.above != data.reversed)
+					radius += data.offset;
 				else
-					radius -= fabs(offset);
+					radius -= data.offset;
 			}
 			if (eType == RS2::EntityEllipse || eType == RS2::EntityArc || eType == RS2::EntityCircle)
 			{
@@ -601,7 +600,10 @@ void RS_AlignedText::update()
 
 					// end of center point rotation
 					iLetter->rotate(iLetter->getInsertionPoint(), -iLetter->getAngle());
-					iLetter->rotate(iLetter->getInsertionPoint(), (tempAngle - M_PI));
+					if (data.reversed)
+						iLetter->rotate(iLetter->getInsertionPoint(), tempAngle);
+					else
+						iLetter->rotate(iLetter->getInsertionPoint(), (tempAngle - M_PI));
 					if (direction == 1)
 						letter = ((RS_EntityContainer *)inner_tent)->nextEntity();
 					else
