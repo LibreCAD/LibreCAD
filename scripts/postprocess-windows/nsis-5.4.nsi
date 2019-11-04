@@ -126,7 +126,7 @@ FunctionEnd
 
 Section "Install Section" SecInstall
 
-  nsExec::ExecToStack '"cmd.exe" /c tasklist /FI $\"IMAGENAME eq LibreCAD.exe$\" | find /I /N $\"LibreCAD.exe$\"' 
+  nsExec::ExecToStack '"cmd.exe" /c %WINDIR%\system32\tasklist /FI $\"IMAGENAME eq LibreCAD.exe$\" | %WINDIR%\system32\find /I /N $\"LibreCAD.exe$\"' 
   Pop $0
   IntCmp $0 1 notRunning
     MessageBox MB_OK|MB_ICONEXCLAMATION "LibreCAD is running. Please close it first" /SD IDOK

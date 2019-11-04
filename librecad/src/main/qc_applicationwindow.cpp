@@ -376,6 +376,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     //plugin load
     loadPlugins();
 
+	QApplication::setAttribute(Qt::AA_DisableWindowContextHelpButton);
 	setMouseTracking(true);
 	installEventFilter(LC_HELP);
 	LC_Telemetry t;
