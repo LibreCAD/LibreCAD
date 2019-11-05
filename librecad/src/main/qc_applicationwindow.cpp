@@ -909,6 +909,8 @@ void QC_ApplicationWindow::storeSettings() {
         RS_SETTINGS->writeEntry("/TopDockArea", dock_areas.top->isChecked());
         RS_SETTINGS->writeEntry("/BottomDockArea", dock_areas.bottom->isChecked());
         RS_SETTINGS->writeEntry("/FloatingDockwidgets", dock_areas.floating->isChecked());
+		RS_SETTINGS->writeEntry("/CADAreaWidth", mdiAreaCAD->width());
+		RS_SETTINGS->writeEntry("/CADAreaHeight", mdiAreaCAD->height());
         RS_SETTINGS->endGroup();
         //save snapMode
         snapToolBar->saveSnapMode();
