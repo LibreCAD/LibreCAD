@@ -418,19 +418,6 @@ void QG_DlgOptionsDrawing::validate() {
 
 	if (graphic) {
 		updateGraphic(graphic); // update the current drawing
-
-		// also update the drawing template, if any
-		RS_SETTINGS->beginGroup("/Paths");
-		QString drawingTemplate = RS_SETTINGS->readEntry("/Template", "").trimmed();
-		RS_SETTINGS->endGroup();
-		if (!drawingTemplate.isEmpty()) {
-			RS_Graphic* g = new RS_Graphic();
-			if (g->open(drawingTemplate, RS2::FormatDXFRW)) {
-				updateGraphic(g);
-				g->save();
-			}
-			delete g;
-		}
     }
     accept();
 }

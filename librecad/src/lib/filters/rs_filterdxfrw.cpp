@@ -1990,6 +1990,8 @@ void RS_FilterDXFRW::writeTextstyles(){
             }
         }
     }
+	// Font used by dimensions
+	styles.insert(graphic->getVariableString("$DIMTXSTY", "standard"), graphic->getVariableString("$DIMTXSTY", "standard"));
     DRW_Textstyle ts;
     QHash<QString, QString>::const_iterator it = styles.constBegin();
      while (it != styles.constEnd()) {

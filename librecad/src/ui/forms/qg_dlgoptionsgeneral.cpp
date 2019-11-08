@@ -137,9 +137,6 @@ void QG_DlgOptionsGeneral::init()
     checked = RS_SETTINGS->readNumEntry("/ScrollBars");
     scrollbars_check_box->setChecked(checked?true:false);
 
-    // preview:
-	initComboBox(cbMaxPreview, RS_SETTINGS->readEntry("/MaxPreview", "100"));
-
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("Colors");
@@ -194,12 +191,12 @@ void QG_DlgOptionsGeneral::init()
 	RS_SETTINGS->endGroup();
 
 	RS_SETTINGS->beginGroup("/CADPreferences");
-	cbAutoZoomDrawing->setChecked(RS_SETTINGS->readNumEntry("/AutoZoomDrawing"));
+	cbAutoZoomDrawing->setChecked(RS_SETTINGS->readNumEntry("/AutoZoomDrawing", 1));
 	RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("Startup");
     cbSplash->setChecked(RS_SETTINGS->readNumEntry("/ShowSplash",1)==1);
-    tab_mode_check_box->setChecked(RS_SETTINGS->readNumEntry("/TabMode", 0));
+    tab_mode_check_box->setChecked(RS_SETTINGS->readNumEntry("/TabMode", 1));
     maximize_checkbox->setChecked(RS_SETTINGS->readNumEntry("/Maximize", 0));
     left_sidebar_checkbox->setChecked(RS_SETTINGS->readNumEntry("/EnableLeftSidebar", 1));
     cad_toolbars_checkbox->setChecked(RS_SETTINGS->readNumEntry("/EnableCADToolbars", 1));
@@ -247,7 +244,6 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->beginGroup("/Appearance");
         RS_SETTINGS->writeEntry("/ScaleGrid", QString("%1").arg((int)cbScaleGrid->isChecked()));
         RS_SETTINGS->writeEntry("/MinGridSpacing", cbMinGridSpacing->currentText());
-        RS_SETTINGS->writeEntry("/MaxPreview", cbMaxPreview->currentText());
         RS_SETTINGS->writeEntry("/Language",cbLanguage->itemData(cbLanguage->currentIndex()));
         RS_SETTINGS->writeEntry("/LanguageCmd",cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()));
         RS_SETTINGS->writeEntry("/indicator_lines_state", indicator_lines_checkbox->isChecked());

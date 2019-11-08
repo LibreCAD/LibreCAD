@@ -216,7 +216,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 	RS_SETTINGS->endGroup();
 
     settings.beginGroup("Startup");
-	if (settings.value("TabMode", 0).toBool()) {
+	if (settings.value("TabMode", 1).toBool()) {
 		mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
 		QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar*>();
 		QTabBar *tabBar = tabBarList.at(0);
@@ -372,6 +372,13 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     // Disable menu and toolbar items
     emit windowsChanged(false);
 
+	// hide pen wizard by default
+	RS_SETTINGS->beginGroup("/Appearance");
+	bool hidden = RS_SETTINGS->readNumEntry("/PenWizardHidden", 1);
+	RS_SETTINGS->endGroup();
+	if (hidden)
+		pen_wiz->hide();
+
     RS_COMMANDS->updateAlias();
     //plugin load
     loadPlugins();
@@ -385,6 +392,19 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 	t.EndSession();
 
     statusBar()->showMessage(qApp->applicationName() + " Ready", 2000);
+
+	RS_SETTINGS->beginGroup("/Appearance");
+	bool maximized = RS_SETTINGS->readNumEntry("/WindowMaximized", 0);
+	RS_SETTINGS->endGroup();
+	RS_SETTINGS->beginGroup("/Geometry");
+	int x = RS_SETTINGS->readNumEntry("/WindowX", 0);
+	int y = RS_SETTINGS->readNumEntry("/WindowY", 0);
+	RS_SETTINGS->endGroup();
+
+	if (maximized)
+		showMaximized();
+	else
+		move(x, y);
 }
 
 /**
@@ -898,7 +918,7 @@ void QC_ApplicationWindow::storeSettings() {
 
     if (RS_Settings::save_is_allowed)
     {
-        RS_SETTINGS->beginGroup("/Geometry");
+		RS_SETTINGS->beginGroup("/Geometry");
         RS_SETTINGS->writeEntry("/WindowWidth", width());
         RS_SETTINGS->writeEntry("/WindowHeight", height());
         RS_SETTINGS->writeEntry("/WindowX", x());
@@ -912,6 +932,10 @@ void QC_ApplicationWindow::storeSettings() {
 		RS_SETTINGS->writeEntry("/CADAreaWidth", mdiAreaCAD->width());
 		RS_SETTINGS->writeEntry("/CADAreaHeight", mdiAreaCAD->height());
         RS_SETTINGS->endGroup();
+		RS_SETTINGS->beginGroup("/Appearance");
+		RS_SETTINGS->writeEntry("/PenWizardHidden", pen_wiz->isHidden());
+		RS_SETTINGS->writeEntry("/WindowMaximized", this->isMaximized());
+		RS_SETTINGS->endGroup();
         //save snapMode
         snapToolBar->saveSnapMode();
     }
@@ -1871,7 +1895,7 @@ void QC_ApplicationWindow::
 			doArrangeWindows(RS2::CurrentMode);
 
 		RS_SETTINGS->beginGroup("/CADPreferences");
-		if (RS_SETTINGS->readNumEntry("/AutoZoomDrawing"))
+		if (RS_SETTINGS->readNumEntry("/AutoZoomDrawing", 1))
 			w->getGraphicView()->zoomAuto(false);
 		RS_SETTINGS->endGroup();
 

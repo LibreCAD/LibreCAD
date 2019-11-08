@@ -418,6 +418,32 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
     creators_toolbar->addAction(a_map["InvokeMenuCreator"]);
     creators_toolbar->addAction(a_map["InvokeToolbarCreator"]);
 
+	// <[~ ProNest Standard Tools ~]>
+
+	QToolBar* pronest_toolbar = new QToolBar(main_window);
+	pronest_toolbar->setWindowTitle(QObject::tr("Quick Tools"));
+	pronest_toolbar->setSizePolicy(toolBarPolicy);
+	pronest_toolbar->setObjectName("pronest_toolbar");
+	pronest_toolbar->addAction(a_map["DrawText"]);
+	pronest_toolbar->addAction(a_map["ModifyShapeText"]);
+	pronest_toolbar->addAction(a_map["DrawHatch"]);
+	pronest_toolbar->addAction(a_map["DrawImage"]);
+	pronest_toolbar->addAction(a_map["DrawLineRectangle"]);
+	pronest_toolbar->addAction(a_map["DrawCircleDiam"]);
+	pronest_toolbar->addAction(a_map["DrawLine"]);
+	pronest_toolbar->addAction(a_map["DrawLineAngle"]);
+	pronest_toolbar->addAction(a_map["DrawLineParallel"]);
+	pronest_toolbar->addAction(a_map["DrawCircle2P"]);
+	pronest_toolbar->addAction(a_map["ModifyTrimExcess"]);
+	pronest_toolbar->addAction(a_map["ModifyBevel"]);
+	pronest_toolbar->addAction(a_map["BlocksExplode"]);
+	pronest_toolbar->addAction(a_map["ModifyOffset"]);
+	pronest_toolbar->addAction(a_map["ModifyRound"]);
+	pronest_toolbar->addAction(a_map["ModifyStretch"]);
+	pronest_toolbar->addAction(a_map["ModifyMove"]);
+	pronest_toolbar->addAction(a_map["ModifyMoveRotate"]);
+	pronest_toolbar->addAction(a_map["DrawPoint"]);
+
     // <[~ Toolbars Layout~]>
 
     main_window->addToolBar(Qt::TopToolBarArea, file_toolbar);
@@ -426,6 +452,8 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
     main_window->addToolBarBreak();
     main_window->addToolBar(Qt::TopToolBarArea, pen_toolbar);
     main_window->addToolBar(Qt::TopToolBarArea, options_toolbar);
+	main_window->addToolBarBreak();
+	main_window->addToolBar(Qt::TopToolBarArea, pronest_toolbar);
 
     main_window->addToolBar(Qt::LeftToolBarArea, order_toolbar);
 

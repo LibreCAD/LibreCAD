@@ -1811,8 +1811,8 @@
    <slot>updateLengthPrecision()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>187</x>
-     <y>150</y>
+     <x>274</x>
+     <y>143</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1827,8 +1827,8 @@
    <slot>updateDimLengthPrecision()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>494</x>
-     <y>241</y>
+     <x>491</x>
+     <y>215</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1843,8 +1843,8 @@
    <slot>updateAnglePrecision()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>495</x>
-     <y>150</y>
+     <x>582</x>
+     <y>143</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1859,8 +1859,8 @@
    <slot>updateDimAnglePrecision()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>494</x>
-     <y>356</y>
+     <x>491</x>
+     <y>319</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1875,8 +1875,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>161</x>
-     <y>86</y>
+     <x>192</x>
+     <y>82</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1891,8 +1891,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>495</x>
-     <y>150</y>
+     <x>582</x>
+     <y>143</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1907,8 +1907,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>187</x>
-     <y>150</y>
+     <x>274</x>
+     <y>143</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1923,8 +1923,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>495</x>
-     <y>179</y>
+     <x>582</x>
+     <y>169</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1939,8 +1939,8 @@
    <slot>updatePreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>187</x>
-     <y>179</y>
+     <x>274</x>
+     <y>169</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1955,8 +1955,8 @@
    <slot>updatePaperSize()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>46</x>
-     <y>104</y>
+     <x>70</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1971,8 +1971,8 @@
    <slot>updateUnitLabels()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>161</x>
-     <y>86</y>
+     <x>192</x>
+     <y>82</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1987,8 +1987,8 @@
    <slot>updatePaperPreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>250</x>
-     <y>312</y>
+     <x>279</x>
+     <y>278</y>
     </hint>
     <hint type="destinationlabel">
      <x>326</x>
@@ -2003,8 +2003,8 @@
    <slot>updatePaperPreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>144</x>
-     <y>341</y>
+     <x>127</x>
+     <y>278</y>
     </hint>
     <hint type="destinationlabel">
      <x>326</x>
@@ -2019,8 +2019,8 @@
    <slot>updatePaperPreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>174</x>
-     <y>341</y>
+     <x>203</x>
+     <y>304</y>
     </hint>
     <hint type="destinationlabel">
      <x>326</x>
@@ -2035,8 +2035,8 @@
    <slot>updatePaperPreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>144</x>
-     <y>341</y>
+     <x>203</x>
+     <y>252</y>
     </hint>
     <hint type="destinationlabel">
      <x>326</x>
@@ -2051,8 +2051,8 @@
    <slot>updatePaperPreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>144</x>
-     <y>341</y>
+     <x>291</x>
+     <y>86</y>
     </hint>
     <hint type="destinationlabel">
      <x>326</x>
@@ -2067,8 +2067,8 @@
    <slot>updatePaperPreview()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>144</x>
-     <y>341</y>
+     <x>291</x>
+     <y>112</y>
     </hint>
     <hint type="destinationlabel">
      <x>326</x>
@@ -2076,5 +2076,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnUpdateTemplate</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgOptionsDrawing</receiver>
+   <slot>updateTemplate()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>50</x>
+     <y>497</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>7</x>
+     <y>487</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>updateTemplate()</slot>
+ </slots>
 </ui>
