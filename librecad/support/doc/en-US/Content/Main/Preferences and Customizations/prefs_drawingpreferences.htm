@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-browse-sequence-path="Preferences" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Preferences">
     <!-- saved from url=(0016)http://localhost -->
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Drawing Preferences</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Drawing Preferences</title>
         <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -13,6 +19,7 @@
         <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
         <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/ExampleGrid.css" rel="stylesheet" />
         <link href="../../Resources/TableStyles/Basic.css" rel="stylesheet" />
         <script src="../../../Resources/Scripts/custom.modernizr.js">
         </script>
@@ -30,9 +37,11 @@
         </script>
     </head>
     <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/Preferences and Customizations/prefs_drawingpreferences.htm">Open topic with navigation</a>
+        </p>
         <div class="TopicContent">
-            <h1 class="TOC4"><a name="kanchor66"></a>Drawing Preferences</h1>
-            <p>You can specify preferences for paper, units, grid, dimensions, and splines from the Current Drawing Preferences window (<b>Options</b> &gt;&#160;<b>Current Drawing Preferences</b>). These preferences will save to the current drawing and any drawing you create in the future, but they won't effect preferences from any existing drawing that you open in LibreCAD.</p>
+            <h1 class="TOC4"><a name="kanchor65"></a>Drawing Preferences</h1>
+            <p>You can specify preferences for paper, units, grid, dimensions, and splines from the Current Drawing Preferences window (<b>Options</b> &gt;&#160;<b>Current Drawing Preferences</b>). These preferences will save to the current drawing and any drawing you create in the future, but they won't affect preferences from any existing drawing that you open in LibreCAD.</p>
             <h2>Paper</h2>
             <p>Set the paper size format, orientation, margins, and the number of pages.</p>
             <p>
@@ -58,9 +67,11 @@
                     <img src="../../Images/prefs_paper_example1_206x321.png" style="width: 206;height: 321;" />
                 </p>
             </div>
-            <div class="Tip">
-                <p>In the Print Preview (<b>File</b> &gt;&#160;<b>Print Preview</b>) view, you can move the paper around the drawing to lay out how your drawing will be printed. This may be helpful if you have a drawing that spans multiple pages.</p>
-            </div>
+            <blockquote>
+                <div class="Tip">
+                    <p>In the Print Preview (<b>File</b> &gt;&#160;<b>Print Preview</b>) view, you can move the paper around the drawing to lay out how your drawing will be printed. This may be helpful if you have a drawing that spans multiple pages.</p>
+                </div>
+            </blockquote>
             <h2>Units</h2>
             <p>Set the preferred Main Units for your drawing along with Length Format and Precision and Angle Format and Precision.</p>
             <p>
@@ -133,7 +144,7 @@
                     <tr class="Body-Body1">
                         <td class="BodyE-Column1-Body1">Decimal degrees</td>
                         <td class="BodyE-Column1-Body1">30.5°</td>
-                        <td class="BodyE-Column1-Body1">0.00000000</td>
+                        <td class="BodyE-Column1-Body1">0.00000000°</td>
                         <td class="BodyD-Column1-Body1">Integer part separated from the fractional part of a number by a decimal</td>
                     </tr>
                     <tr class="Body-Body1">
@@ -162,25 +173,54 @@
                     </tr>
                 </tbody>
             </table>
-            <h2><a name="kanchor67"></a>Grid</h2>
+            <h2><a name="kanchor66"></a>Grid</h2>
             <p>Set grid preferences for the main drawing, including whether to show the grid, use an orthogonal or isometric grid, and X and Y spacing.</p>
             <h3>Grid Settings</h3>
-            <p class="SettingChoice">Orthogonal Grid</p>
-            <p>Places the grid at right angles to the X and Y&#160;axis</p>
-            <p class="SettingChoice">Isometric Grid</p>
-            <p>Places the grid markets at 30° to the horizontal for guiding isometric drawings. [LINK TO DRAWING TYPES]</p>
-            <blockquote>
-                <p class="SettingChoice"><span style="color: #000000;">Crosshair:&#160;</span>Left, Top, Right</p>
-                <p>When using an Isometric Grid, toggles the orientation of the cross-hairs (right, left, or top) when used with Isometric Snap indicator lines (see Application Preferences).</p>
-            </blockquote>
             <p>
                 <img src="../../Images/prefs_drawing_grid_465x390.png" style="width: 465;height: 390;" />
             </p>
-            <p>&#160;</p>
-            <h2><a name="kanchor68"></a>Dimensions</h2>
-            <p>
-                <img src="../../Images/prefs_drawing_dimensions_471x395.png" style="width: 471;height: 395;" />
-            </p>
+            <blockquote>
+                <p class="SettingChoice">Orthogonal Grid</p>
+                <p>Places the grid at right angles to the X and Y&#160;axis</p>
+                <p class="SettingChoice">Isometric Grid</p>
+                <p>Places the grid markers at 30° to the horizontal for guiding isometric drawings.</p>
+                <blockquote>
+                    <p class="SettingChoice"><span style="color: #000000;">Crosshair:&#160;</span>Left, Top, Right</p>
+                    <p>When using an Isometric Grid, toggles the orientation of the cross-hairs (right, left, or top) when used with Isometric Snap indicator lines (see <a href="prefs_applicationpreferences.htm">Application Preferences</a>).</p>
+                </blockquote>
+            </blockquote>
+            <table style="mc-table-style: url('../../Resources/TableStyles/ExampleGrid.css');margin-left: 0;margin-right: auto;" class="TableStyle-ExampleGrid" cellspacing="0">
+                <col class="TableStyle-ExampleGrid-Column-Column1" />
+                <col class="TableStyle-ExampleGrid-Column-Column1" />
+                <tbody>
+                    <tr class="TableStyle-ExampleGrid-Body-Body1">
+                        <td class="TableStyle-ExampleGrid-BodyE-Column1-Body1" style="text-align: center;">Orthogonal Grid</td>
+                        <td class="TableStyle-ExampleGrid-BodyD-Column1-Body1" style="text-align: center;">Isometric Grid</td>
+                    </tr>
+                    <tr class="TableStyle-ExampleGrid-Body-Body1">
+                        <td class="TableStyle-ExampleGrid-BodyB-Column1-Body1">
+                            <img src="../../Images/orthogrid.png" />
+                        </td>
+                        <td class="TableStyle-ExampleGrid-BodyA-Column1-Body1">
+                            <img src="../../Images/isogrid.png" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2><a name="Dimensio"></a><a name="kanchor67"></a>Dimensions</h2>
+            <table style="margin-left: 0;margin-right: auto;">
+                <col style="width: 473px;" />
+                <col />
+                <tbody>
+                    <tr>
+                        <td>
+                            <img src="../../Images/prefs_drawing_dimensions_471x395.png" style="width: 471;height: 395;" /> </td>
+                        <td>
+                            <img src="../../Images/dim_annotated_525x394.png" style="width: 525;height: 394;" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <p>&#160;</p>
             <table style="mc-table-style: url('../../Resources/TableStyles/Basic.css');margin-left: 0;margin-right: auto;" class="TableStyle-Basic" cellspacing="0">
                 <col class="Column-Column1" />
@@ -254,7 +294,7 @@ towards the dimensioned entity.</td>
                     </tr>
                     <tr class="Body-Body1">
                         <td class="BodyE-Column1-Body1">Arrow size</td>
-                        <td class="BodyD-Column1-Body1">Length of dimension (and leader) arrow.</td>
+                        <td class="BodyD-Column1-Body1">Length of dimension (and leader) arrow. The arrow is only shown if the Tick size is 0.</td>
                     </tr>
                     <tr class="Body-Body1">
                         <td class="BodyE-Column1-Body1">Tick size</td>
@@ -263,7 +303,7 @@ towards the dimensioned entity.</td>
 direction. Any size greater than 0 will result in a tick
 instead of a dimension arrow.</p>
                             <p>For example, a length of 1 will result in a total length of 2
-units. </p>
+units.</p>
                         </td>
                     </tr>
                     <tr class="Body-Body1">
@@ -307,21 +347,26 @@ units. </p>
                     </tr>
                 </tbody>
             </table>
-            <h2><a name="kanchor69"></a>Splines</h2>
-            <p>The Number of line segments per spline patch parameter effects the smoothness of the spline. The greater the number, the smoother the spline will be because it is broken out into smaller segments.</p>
+            <p>&#160;</p>
+            <h2><a name="kanchor68"></a>Splines</h2>
+            <p>The <b>Number of line segments per spline patch</b> parameter affects the smoothness of the spline. The greater the number, the smoother the spline will be because it is broken out into smaller segments.</p>
             <p>
                 <img src="../../Images/prefs_drawing_splines_476x398.png" style="width: 476;height: 398;" />
             </p>
             <div class="TopicFooter" data-mc-conditions="Primary.ExcludeFromPDF">
                 <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
                     <ul class="MCHelpControlList MCRelatedTopicsControlList">
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Toolbars and Widgets/tw_dockwidgets.htm">Dock widgets</a>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Toolbars and Widgets/tw_dockwidgets.htm">About dock widgets</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_dimension.htm">Dimensioning tools</a>
                         </li>
                         <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../User Guides/guide_drawing_attributes.htm">Modifying Attributes of an entity</a>
                         </li>
                         <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../User Guides/guide_drawing_properties.htm">Modifying Properties of an entity</a>
                         </li>
                         <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../User Guides/guide_drawingsetup.htm">Setting up a drawing</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../User Guides/guide_dimensions.htm">Using Dimensions</a>
                         </li>
                         <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../User Guides/guide_templates.htm">Using Templates</a>
                         </li>

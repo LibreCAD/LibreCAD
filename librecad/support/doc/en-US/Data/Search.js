@@ -1,1 +1,1 @@
-define({r:0.5,st:'Stem',n:1,t:[0],u:['../Content/Main/Appendices/append_calculator.htm'],s:['+','perpendicular'],p:[['+',32],['c',20],['entities',23],['line',23],['point',38],['text',30],['you\u0027ll',29]]});
+define({r:0.5,st:'Stem',n:1,t:[0],u:['../Content/Main/Appendices/append_calculator.htm'],s:['+','one'],p:[['+',33],['bisect',39],['drawing',8],['includes',10],['of',4],['rotation',17],['them',11]]});

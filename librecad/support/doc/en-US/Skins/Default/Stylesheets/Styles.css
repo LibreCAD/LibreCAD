@@ -113,18 +113,18 @@ body
 	top: 50%;
 	margin-left: 20px;
 	display: block;
-	background: transparent url('Images/ProNest-X-LibreCAD_1_1.png') no-repeat center center;
-	-pie-background: transparent url('Skins/Default/Stylesheets/Images/ProNest-X-LibreCAD_1_1.png') no-repeat center center;
-	width: 249px;
-	height: 54px;
-	margin-top: -27px;
+	background: transparent url('Images/_645259008.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/_645259008.png') no-repeat center center;
+	width: 157px;
+	height: 43px;
+	margin-top: -21.5px;
 }
 
 #header .logo > img
 {
 	border: none;
-	width: 249px;
-	height: 54px;
+	width: 157px;
+	height: 43px;
 }
 
 #body
@@ -1205,15 +1205,15 @@ iframe.content
 {
 	height: 100%;
 	display: block;
-	width: 249px;
-	background: transparent url('Images/ProNest-X-LibreCAD_1_1.png') no-repeat center center;
-	-pie-background: transparent url('Skins/Default/Stylesheets/Images/ProNest-X-LibreCAD_1_1.png') no-repeat center center;
+	width: 157px;
+	background: transparent url('Images/_645259008.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/_645259008.png') no-repeat center center;
 }
 
 #responsiveHeader .logo > img
 {
-	width: 249px;
-	height: 54px;
+	width: 157px;
+	height: 43px;
 }
 
 #search-field,

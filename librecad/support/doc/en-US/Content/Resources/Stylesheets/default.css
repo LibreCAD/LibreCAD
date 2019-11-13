@@ -38,7 +38,7 @@ h2
 	sans-serif: ;
 	font-family: 'Segoe UI';
 	font-weight: bold;
-	font-size: 12pt;
+	font-size: 16pt;
 	margin-top: 22px;
 }
 
@@ -64,10 +64,9 @@ h3
 	margin-left: 0px;
 	margin-right: 0px;
 	border: solid 0px;
-	font-weight: bold;
 	margin-top: 16px;
 	font-family: 'Segoe UI', sans-serif;
-	font-size: 10pt;
+	font-size: 12pt;
 }
 
 li.mc-H3

@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="User Guides">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-browse-sequence-path="Blocks" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="User Guides">
     <!-- saved from url=(0016)http://localhost -->
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Using Blocks</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Using Blocks</title>
         <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -29,49 +35,49 @@
         </script>
     </head>
     <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/User Guides/guide_blocks.htm">Open topic with navigation</a>
+        </p>
         <div class="TopicContent">
             <h1 class="TOC4">Using Blocks</h1>
-            <p>Blocks are small, reusable drawings of commonly used objects such as bolts,  title blocks, and so forth. Inserted blocks, also called inserts, are composed of geometric shapes (lines, arcs) and can also include text and dimensions. LibreCAD includes several libraries of blocks that can be inserted into a drawing or users can create their own.
-
-</p>
+            <p>Blocks are small, reusable drawings of commonly used objects such as bolts,  title blocks, and so forth. Inserted blocks, also called inserts, are composed of geometric shapes (lines, arcs) and can also include text and dimensions. LibreCAD includes several libraries of blocks that can be inserted into a drawing or you can create your own.</p>
             <p>&#160;</p>
             <p>The are two dock widgets for managing blocks: </p>
             <ul>
-                <li value="1">The <a href="../Toolbars and Widgets/tw_blocklistdock.htm" name="kanchor13">Block List dock</a> for managing blocks within the current drawing, and</li>
+                <li value="1">The <a href="../Toolbars and Widgets/tw_blocklistdock.htm" name="kanchor14">Block List dock</a> for managing blocks within the current drawing, and</li>
                 <li value="2"> Library Browser dock that shows the collection of blocks available and allows users to insert blocks into the current drawing. </li>
             </ul>
             <p>Read more about <a href="../Toolbars and Widgets/tw_dockwidgets.htm">Dock Widgets here</a> and the <a href="../Toolbars and Widgets/tw_librarybrowserdock.htm">Library Browser here</a>.
 
 </p>
             <p>&#160;</p>
-            <p>When inserted into a drawing, a block is treated as a single entity. Blocks can be inserted from the Block List into the same drawing more than once with different locations, scale and rotation angle. Inserted blocks are all linked. Changes to one inserted block will be reflected in all instances of the block.</p>
+            <p>When inserted into a drawing, a block is treated as a single entity. Blocks can be inserted from the Block List into the same drawing more than once with different locations, scales, and rotation angles. Inserted blocks are all linked. Changes to one inserted block will be reflected in all instances of the block.</p>
             <p class="Procedure">Creating a Block from an existing drawing</p>
             <ol>
                 <li value="1">Draw the object that you want to convert into a block.</li>
-                <li value="2">Select all entities that will make up the block. Do so by selecting individual entities or selecting  area.</li>
-                <li value="3">Select the <b>Create Block</b> ( <img src="../../Images/create_block.svg" /> ) button from the Block List dock.</li>
+                <li value="2">Select all entities that will make up the block. Do so by selecting individual entities or selecting multiple entities in an area.</li>
+                <li value="3">Select <b>Create Block</b> ( <img src="../../Images/create_block.svg" /> ) from the Block List dock.</li>
                 <li value="4">Specify a reference point.</li>
                 <li value="5">Name the block, and select <b>OK</b>.</li>
             </ol>
             <p>The block now appears in the Block List and can be inserted into the drawing multiple times or saved to a file or to the Library.</p>
             <p class="Procedure">Creating a Block from an empty Block</p>
             <ol>
-                <li value="1">Select the <b>Add an empty block</b> button ( <img src="../../Images/add.svg" /> ) from the Block List dock.</li>
+                <li value="1">Select <b>Add an empty block</b> ( <img src="../../Images/add.svg" /> ) from the Block List dock.</li>
                 <li value="2">Name the block, and select <b>OK</b>.</li>
-                <li value="3">Select the <b>Edit the active block in a separate window</b> button ( <img src="../../Images/properties.svg" /> ). This will open a blank block drawing document tab.</li>
+                <li value="3">Select <b>Edit the active block in a separate window</b> ( <img src="../../Images/properties.svg" /> ). This will open a blank block drawing document tab.</li>
                 <li value="4">Draw the block. The drawing origin (0,0) will be the reference point for the block.</li>
                 <li value="5">Exit the block drawing tab. The block will be saved and can be inserted into a drawing.</li>
             </ol>
             <p class="Procedure">Inserting Blocks into a drawing</p>
             <ol>
                 <li value="1">Select the block you want to insert from the Block List.</li>
-                <li value="2">Select the <b>Insert the active block</b> button ( <img src="../../Images/insert_active_block.svg" /> ) from the Block List dock.</li>
+                <li value="2">Select <b>Insert the active block</b> ( <img src="../../Images/insert_active_block.svg" /> ) from the Block List dock.</li>
                 <li value="3">Specify the insertion point by selecting somewhere in the drawing, or by specifying coordinates in the Command Line.</li>
             </ol>
             <p class="Procedure">Inserting Blocks into a drawing using the Toolbar (Advanced)</p>
             <ol>
                 <li value="1">Select the block you want to insert from the Block List.</li>
-                <li value="2">Select the <b>Insert the active block</b> button ( <img src="../../Images/insert_active_block.svg" /> ) from the Block List dock.</li>
+                <li value="2">Select <b>Insert the active block</b> ( <img src="../../Images/insert_active_block.svg" /> ) from the Block List dock.</li>
                 <li value="3">Specify parameters that appear on the toolbar.</li>
             </ol>
             <blockquote>
@@ -84,11 +90,23 @@
                 </ul>
             </blockquote>
             <ol start="4">
-                <li value="4">Specify the insertion point by selecting somewhere in the drawing, or by specifying coordinates in the Command Line.</li>&#160;</ol>
+                <li value="4">Specify the insertion point by selecting somewhere in the drawing, or by specifying coordinates in the Command Line.</li>
+            </ol>
+            <p class="Procedure">Removing an instance of a block from a drawing</p>
+            <ol>
+                <li value="1">Select the block on the drawing.</li>
+                <li value="2">Press the DELETE key.</li>
+            </ol>
+            <p class="Procedure">Removing a block and all instances from a drawing</p>
+            <p>Removing an instance of a block from a drawing will only remove the block that was placed on a layer, and the block will still be stored in the DXF file. To completely remove a block from both the drawing layer and the DXF file, do the following:</p>
+            <ol>
+                <li value="1">Select the block on the Block List.</li>
+                <li value="2">Select <b>Remove the active block</b> ( <img src="../../Images/remove.svg" /> ) on the Block List.</li>
+            </ol>
             <p class="Procedure">Exploding Blocks</p>
             <p>You may want to explode blocks to modify some geometry or individual entities. When blocks are first inserted into a drawing, the block is treated as a whole and can't be modified unless it is exploded.</p>
             <ol>
-                <li value="1">Enter <span class="CodeSnippet">explode</span> into the Command Line, or select the <b>Explode</b> button ( <img src="../../Images/explode.svg" /> ) from the Modify options.</li>
+                <li value="1">Enter <span class="CodeSnippet">explode</span> into the Command Line, or select <b>Explode</b> ( <img src="../../Images/explode.svg" /> ) from the Modify options.</li>
                 <li value="2">Select the block you are exploding.</li>
                 <li value="3">Press the ENTER key.</li>
             </ol>
@@ -102,7 +120,7 @@
                 <li value="3">Make any changes to the block.</li>
                 <li value="4">Exit the block drawing.</li>
             </ol>
-            <p>The block is updated. If the block is already inserted into the current drawing and it is not exploded, you'll notice the block update.</p>
+            <p>The block is updated.</p>
             <p class="Procedure">Inserting Blocks from the Library</p>
             <ol>
                 <li value="1">From the Library Browser dock, select the block that you want to insert.</li>
@@ -113,15 +131,15 @@
             <p class="Procedure">Saving Blocks to a file</p>
             <ol>
                 <li value="1">Select the block you want to save from the Block List.</li>
-                <li value="2">Select the <b>Save the active block to a file</b> button ( <img src="../../Images/save.svg" /> ).</li>
+                <li value="2">Select <b>Save the active block to a file</b> ( <img src="../../Images/save.svg" /> ).</li>
                 <li value="3">Specify a name and save location for the file, then select <b>OK</b>.</li>
             </ol>
             <div class="TopicFooter">
                 <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
                     <ul class="MCHelpControlList MCRelatedTopicsControlList">
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Toolbars and Widgets/tw_blocklistdock.htm">Block List dock</a>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Toolbars and Widgets/tw_blocklistdock.htm">Block List dock widget</a>
                         </li>
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Toolbars and Widgets/tw_librarybrowserdock.htm">Library Browser dock</a>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Toolbars and Widgets/tw_librarybrowserdock.htm">Library Browser dock widget</a>
                         </li>
                         <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_templates.htm">Using Templates</a>
                         </li>

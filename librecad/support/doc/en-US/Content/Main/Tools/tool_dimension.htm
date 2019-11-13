@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Drawing and Modifying">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-browse-sequence-path="Dimensions" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Drawing and Modifying">
     <!-- saved from url=(0016)http://localhost -->
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Dimensioning tools</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Dimensioning tools</title>
         <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -30,8 +36,10 @@
         </script>
     </head>
     <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/Tools/tool_dimension.htm">Open topic with navigation</a>
+        </p>
         <div class="TopicContent">
-            <h1 class="TOC4"><a name="kanchor59"></a>Dimensioning tools</h1>
+            <h1 class="TOC4"><a name="kanchor58"></a>Dimensioning tools</h1>
             <table style="mc-table-style: url('../../Resources/TableStyles/Basic.css');margin-left: 0;margin-right: auto;" class="TableStyle-Basic" cellspacing="0">
                 <col class="Column-Column1" />
                 <col class="Column-Column1" style="width: 35px;" />
@@ -66,7 +74,7 @@
                         </td>
                         <td class="BodyE-Column1-Body1" style="font-style: normal;">dr</td>
                         <td class="BodyD-Column1-Body1">
-                            <p>Apply dimension lines and text at an defined angle to an entity by selecting start and end points on a line segment and a placement point for the text.</p>
+                            <p>Apply dimension lines and text at a defined angle to an entity by selecting start and end points on a line segment and a placement point for the text.</p>
                             <p>&#160;</p>
                             <p>Tool options:</p>
                             <p>
@@ -81,7 +89,9 @@
                         </td>
                         <td class="BodyE-Column1-Body1" style="font-style: normal;">dh</td>
                         <td class="BodyD-Column1-Body1">
-                            <p>Apply dimension lines and text aligned to an entity by selecting start and end points on a line segment and a placement point for the text.</p>
+                            <p>Apply dimension lines and text to an entity to label the horizontal length of the entity by selecting start and end points on a line segment and a placement point for the text.</p>
+                            <p>&#160;</p>
+                            <p>For example, a vertical line at 90° will have a dimension of length 0, and any line that is not perfectly vertical at 90° will have a dimension length greater than 0.</p>
                             <p>&#160;</p>
                             <p>Tool options:</p>
                             <p>
@@ -96,7 +106,9 @@
                         </td>
                         <td class="BodyE-Column1-Body1" style="font-style: normal;">dv</td>
                         <td class="BodyD-Column1-Body1">
-                            <p>Apply dimension lines and text aligned to an entity by selecting start and end points on a line segment and a placement point for the text.</p>
+                            <p>Apply dimension lines and text that are aligned to an entity by selecting start and end points on a line segment and a placement point for the text.</p>
+                            <p>&#160;</p>
+                            <p>For example, a horizontal line at 180° will have a dimension of length 0, and any line that is not perfectly horizontal at 180° will have a dimension length greater than 0.</p>
                             <p>&#160;</p>
                             <p>Tool options:</p>
                             <p>
@@ -111,7 +123,7 @@
                         </td>
                         <td class="BodyE-Column1-Body1" style="font-style: normal;">dimradial</td>
                         <td class="BodyD-Column1-Body1">
-                            <p>Apply dimension lines and text a circle’s or arc’s radius by selecting an entity and a placement point for the text.</p>
+                            <p>Apply dimension lines and text to a circle or arc radius by selecting an entity and a placement point for the text.</p>
                             <p>&#160;</p>
                             <p>Tool options:</p>
                             <p>
@@ -159,49 +171,12 @@
                     </tr>
                 </tbody>
             </table>
-            <p class="Procedure">Ensuring dimensions are visible in ProNest</p>
-            <p>You can configure your layers and ProNest Settings to ensure that dimension information is visible on display-only layers in ProNest.</p>
-            <ol>
-                <li value="1">In <b>ProNest</b>, ensure that you have a display-only layer mapped in your Importing Parts Settings (<b>Settings</b> &gt; <b>Importing Parts</b> &gt;&#160;<b>CAD Import</b> tab &gt;&#160;<b>Display Only</b>).</li>
-                <li value="2">In <b>LibreCAD</b>, ensure that the Display Only layer is mapped in your drawing <b>Layers</b>. It may be helpful to change the color of this layer so a process layer isn't confused with the display only layer.</li>
-                <li value="3">Draw dimensions on the Display Only layer you've added in LibreCAD.</li>
-                <li value="4">Import the part into ProNest.</li>
-            </ol>
-            <p>Display-only information appears for a part on the nest but isn't visible from the Part List. Additionally, you can view the <b>Part Report</b> for an individual part (right-click on a part from the Part List, and select Part Report), which shows display-only information.</p>
-            <p class="Procedure">Modifying dimension drawing preferences</p>
-            <p>Modify properties of all dimension text, lines, arrows, and ticks in the drawing.</p>
-            <ol>
-                <li value="1">Select <b>Options</b>&#160;&gt;&#160;<b>Current Drawing Preferences</b> &gt;&#160;<b>Dimensions</b> tab.</li>
-                <li value="2">Modify any parameters.</li>
-                <li value="3">Select <b>OK</b> to save your changes, or Cancel to reject changes.</li>
-            </ol>
-            <div class="Note">
-                <p>Any changes made to Dimensions Drawing Preferences will apply to all existing dimensions in the current drawing and any new drawings created after saving your changes.</p>
-            </div>
-            <p class="Procedure">Moving dimension text</p>
-            <p>Move the dimension number, but not the dimension lines or arrows.</p>
-            <ol>
-                <li value="1">Select the dimension entity.</li>
-                <li value="2">Select and hold the blue handle in the middle of the dimension number, then drag and drop to place the text in a new location.</li>
-            </ol>
-            <p class="Procedure">Moving the placement of dimensions</p>
-            <p>Move the placement of the entire dimension, including the dimension number, lines, and arrows. This may separate the dimension from the shape.</p>
-            <ol>
-                <li value="1">Select the dimension entity.</li>
-                <li value="2">Select and hold the blue handle at the bottom of the dimension line that is closest to the shape, then drag and drop to place the dimension in a new location.</li>
-            </ol>
-            <p class="Procedure">Extending or shortening dimension lines</p>
-            <p>Extend or shorten the length of dimension lines. This will keep the dimension lines attached to the shape.</p>
-            <ol>
-                <li value="1">Select the dimension entity.</li>
-                <li value="2">Select and hold the blue handle beside a dimension arrow, then drag and drop to resize the dimension line.</li>
-            </ol>
             <div class="TopicFooter" data-mc-conditions="Primary.ExcludeFromPDF">
                 <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
                     <ul class="MCHelpControlList MCRelatedTopicsControlList">
                         <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Preferences and Customizations/prefs_drawingpreferences.htm">Drawing Preferences</a>
                         </li>
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Toolbars and Widgets/tw_layerlistdock.htm">Layer List dock</a>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Toolbars and Widgets/tw_layerlistdock.htm">Layer List dock widget</a>
                         </li>
                         <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="tool_modify.htm">Modify tools</a>
                         </li>

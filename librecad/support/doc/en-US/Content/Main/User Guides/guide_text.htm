@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="User Guides">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-browse-sequence-path="Text" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="User Guides">
     <!-- saved from url=(0016)http://localhost -->
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Using Text and MText</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Using text and fonts</title>
         <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -13,6 +19,7 @@
         <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
         <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/ExampleGrid.css" rel="stylesheet" />
         <script src="../../../Resources/Scripts/custom.modernizr.js">
         </script>
         <script src="../../../Resources/Scripts/jquery.min.js">
@@ -29,9 +36,22 @@
         </script>
     </head>
     <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/User Guides/guide_text.htm">Open topic with navigation</a>
+        </p>
         <div class="TopicContent">
-            <h1 class="TOC4"><a name="kanchor37"></a>Using Text and MText</h1>
+            <h1 class="TOC4"><a name="kanchor38"></a>Using text and fonts</h1>
             <p>Text can be integrated into artistic drawings and signs, and it can be used to provide information and notes, including title blocks. Create single- or multi-line text using the Text or MText tools.</p>
+            <div class="ImportantDiv">
+                <ul>
+                    <li value="1">For best results, when using scribe text, it is recommended to explode text into geometry (using the <span class="CodeSnippet">explode</span> command) before sending a drawing to ProNest. Use an alignment of <b>Baseline Left</b> ( <img src="../../Images/text_baselineleft.png" /> )&#160;for Text, or <b>Bottom Left</b> for MText to help prevent any geometry issues when sending a drawing to ProNest.</li>
+                </ul>
+                <ul>
+                    <li value="1">Note that text will always be converted to geometry in ProNest unless it is on a scribe layer, but results will be better if text is exploded in LibreCAD prior to exporting to ProNest.</li>
+                </ul>
+                <ul>
+                    <li value="1">Ensure Smoothing is enabled in ProNest to convert choppy line segments to arcs and smoother profiles before importing a part from LibreCAD (<b>ProNest</b> &gt;&#160;<b>Settings</b> &gt;&#160;<b>Importing Parts</b> &gt;&#160;enable <b>Smooth entities</b>, and try <b>Smooth tolerances</b> between 0.001 and 0.005 to start).</li>
+                </ul>
+            </div>
             <p class="Procedure">Creating single-line text</p>
             <ol>
                 <li value="1">Select <b>Text</b> (<img src="../../Images/text.svg" />) from the Tools menu.</li>
@@ -42,7 +62,7 @@
             </ol>
             <p class="Procedure">Creating multi-line text</p>
             <ol>
-                <li value="1">Select <a name="kanchor38"></a><b>MText</b> (<img src="../../Images/text.svg" />) from the Tools menu.</li>
+                <li value="1">Select <a name="kanchor39"></a><b>MText</b> (<img src="../../Images/text.svg" />) from the Tools menu.</li>
                 <li value="2">In the <b>Text</b> field, type the text that you want to appear in the drawing. Use the Insert Symbol dropdown menu to insert special characters into your text, such as degree symbols and copyright symbols.</li>
                 <li value="3">Convert Microsoft fonts and set spacing values, if necessary.</li>
                 <li value="4">Set the Alignment and insertion Angle (the Angle may be left blank to insert text at 180°).</li>
@@ -51,27 +71,28 @@
             </ol>
             <p class="Procedure">Modifying text</p>
             <ol>
-                <li value="1">Select the <a name="kanchor39"></a><b>Properties</b> button ( <img src="../../Images/properties.svg" /> )&#160;from the Modify tools menu. An extended version of the MText dialog will appear again, allowing you to modify the text as well as layer and color information.</li>
-                <li value="2">Modify any relevant properties.</li>
-                <li value="3">Select <b>OK</b> to save your changes and update text, or Cancel to discard changes.</li>
+                <li value="1">Select <a name="kanchor40"></a><b>Properties</b> ( <img src="../../Images/properties.svg" /> )&#160;from the Modify tools menu. The text dialog will appear again, allowing you to modify the text as well as layer and color information.</li>
+                <li value="2">Select the text you want to modify.</li>
+                <li value="3">Modify any relevant properties.</li>
+                <li value="4">Select <b>OK</b> to save your changes and update text, or Cancel to discard changes.</li>
             </ol>
             <p class="Procedure">Shaping text around an entity</p>
-            <p>With the Hypertherm-exclusive Shape Text feature in LibreCAD, you can shape text around any line, polyline, arc, or circle entity. </p>
+            <p>With the Hypertherm-exclusive <a href="../Tools/tool_modify.htm#Shape">Shape Text</a> feature in LibreCAD, you can shape text around a single line, arc, or circle entity.</p>
             <ol>
                 <li value="1">Draw a shape. </li>
                 <li value="2">Place text using the <b>Text</b> or <b>MText</b> tools. When in the Text or MText dialog, be sure to specify an Alignment. If you are unsure of what Alignment to use, try using the lower left option.</li>
-                <li value="3">Enter Shape Text mode by selecting the <b>Shape Text</b> button ( <img src="../../Images/shape2.svg" /> ) from the Modify tools, or by entering <span class="CodeSnippet">st</span> into the Command Line.</li>
+                <li value="3">Enter Shape Text mode by selecting <b>Shape Text</b> ( <img src="../../Images/shape2.svg" /> ) from the Modify tools, or by entering <span class="CodeSnippet">st</span> into the Command Line.</li>
                 <li value="4">Select the text that you want to shape.</li>
-                <li value="5">Move your cursor around a shape. When the text is in the desired location, select to place the text.</li>
+                <li value="5">Move your cursor around a shape. Modify the Offset value and change the text direction by selecting the checkbox, if needed. When the text is in the desired location, select to place the text.</li>
             </ol>
-            <div class="Note">
-                <p>Text can't be shaped around a spline.</p>
+            <div class="Tip">
+                <p>To achieve fine-grain control over text that you are shaping, it is recommended to explode text strings into individual letters using the Explode Text into Letters ( <img src="../../Images/explode_text_to_letters.svg" /> ) modify tool.</p>
             </div>
             <p class="Procedure">Aligning shaped text through the entity perimeter</p>
             <ol>
                 <li value="1">Draw a shape.</li>
                 <li value="2">Place text using the <b>Text</b> or <b>MText</b> tools. When in the Text or MText dialog, be sure to specify a middle center Alignment.</li>
-                <li value="3">Enter Shape Text mode by selecting the <b>Shape Text</b> button ( <img src="../../Images/shape2.svg" /> ) from the Modify tools, or by entering <span class="CodeSnippet">st</span> into the Command Line.</li>
+                <li value="3">Enter Shape Text mode by selecting <b>Shape Text</b> ( <img src="../../Images/shape2.svg" /> ) from the Modify tools, or by entering <span class="CodeSnippet">st</span> into the Command Line.</li>
                 <li value="4">Adjust the Shape Text mode Offset on the toolbar. <ul><li value="1">&#160;For single-line text, the Offset should be the negative value of half of the text Height. For example, when using a text height of 1, the offset value should be -0.5.</li><li value="2">The Offset can be adjusted and updated by entering a value and pressing the <b>ENTER</b> key.</li></ul></li>
                 <li value="5">Select the text that you want to shape.</li>
                 <li value="6">Move your cursor around a shape. When the text is in the desired location, select to place the text.</li>
@@ -83,30 +104,31 @@
                 </p>
             </blockquote>
             <div class="Tip">
-                <p>Use the Trim Excess modify tool ( <img src="../../Images/trim_excess.svg" /> ) to easily remove any unwanted geometry in one click.</p>
+                <p>Use the <a href="../Tools/tool_modify.htm#Trim">Trim Excess</a> modify tool ( <img src="../../Images/trim_excess.svg" /> ) to quickly remove any unwanted geometry in one click.</p>
             </div>
-            <h2>Fonts</h2>
+            <h2><a name="Fonts"></a>Fonts</h2>
             <p>Many font options are available in LibreCAD, including ProNest fonts. To use <a href="#Converti">Microsoft® fonts</a> or <a href="#Converti2">AutoCAD® fonts</a>, you'll need to follow steps below to first convert those fonts into a readable format for LibreCAD.</p>
             <div class="Note">
                 <p>If you are opening AutoCAD .dwg drawings that use AutoCAD fonts, you'll need to convert the font to ensure it comes into LibreCAD properly. The font conversion process will convert all AutoCAD fonts and only needs to be done once.</p>
             </div>
-            <h3>ProNest fonts</h3>
+            <h3>Converting fonts</h3>
+            <h5>ProNest fonts</h5>
             <p>LibreCAD includes ProNest fonts in the font list. These are the same fonts listed on the ProNest CAD Font Preferences page, such as the no lift font. </p>
             <ul>
                 <li value="1">To use ProNest fonts, simply locate the font from the Font dropdown menu in the Text and MText dialog.</li>
             </ul>
-            <h3>Microsoft fonts</h3>
+            <h5><a name="Microsof"></a>Microsoft fonts</h5>
             <p>Use default fonts from Microsoft and customize letter, word, and line spacing for these fonts using the Convert Font dialog from the Text and MText dialog.</p>
             <p class="Procedure"><a name="Converti"></a>Converting Microsoft fonts</p>
             <ol>
                 <li value="1">Select either <b>Text</b> or <b>MText</b>.</li>
-                <li value="2">Select the <b>Convert Text</b> button (<img src="../../Images/add_font.svg" />) in the upper right-hand corner.</li>
+                <li value="2">Select <b>Convert Text</b> (<img src="../../Images/add_font.svg" />) in the upper right-hand corner.</li>
                 <li value="3">Select a font you want to convert from the dropdown menu.</li>
                 <li value="4">Adjust Letter, Word, and Line Spacing, if needed.<ol><li value="1">If you adjusted spacing, you can save the spacing in the current default font, or you can adjust the name of the file in the Save as field, allowing you to save a copy of the adjusted font without overwriting the default converted font.</li></ol></li>
                 <li value="5">Select <b>OK</b>.</li>
             </ol>
             <p>Be sure to select the converted font from the Font dropdown menu in the Text or MText dialog to use the font after it has been converted.</p>
-            <h3>AutoCAD fonts</h3>
+            <h5>AutoCAD fonts</h5>
             <p class="Procedure"><a name="Converti2"></a>Converting AutoCAD fonts</p>
             <p>If you'll be using LibreCAD to open/modify AutoCAD drawings (.dwg) that have text, you'll need to complete the following steps to ensure that LibreCAD can present the text appropriately. These steps only need to be completed once and will have no impact on any existing fonts or AutoCAD.</p>
             <ol>
@@ -115,14 +137,103 @@
                 <li value="3">Select <b>Application Preferences</b>.</li>
                 <li style="font-style: normal;" value="4">On the <b>Paths</b> tab, in the <b>Fonts</b> field, specify a new folder on your PC that will be used to store converted fonts. <i>This folder must be different than where your LibreCAD fonts are stored.</i></li>
                 <li value="5">Open a file explorer on your PC.</li>
-                <li value="6">Navigate to the following file path: <span class="CodeSnippet">C:\Program Files (x86)\Hypertherm CAM\LibreCAD</span></li>
-                <li value="7">Locate the file <b>dumpshp.bat</b>. Right-click and select <b>Copy</b>.</li>
-                <li value="8">Navigate to the new font folder you specified in step 3.</li>
-                <li value="9">Right-click and select Paste to put a copy of <b>dumpshp.bat</b> into your new font folder.</li>
-                <li value="10">Double-click on <span class="CodeSnippet">dumpshp.bat</span>. A&#160;command window will appear. </li>
-                <li value="11">When prompted, press any key.</li>
+                <li value="6">Navigate to the following file path: </li>
+            </ol>
+            <ul>
+                <li value="1">64-bit OS:&#160;<span class="CodeSnippet">C:\Program Files (x86)\Hypertherm CAM\LibreCAD</span></li>
+                <li value="2">32-bit OS: <span class="CodeSnippet">C:\Program Files\Hypertherm CAM\LibreCAD</span></li>
+            </ul>
+            <ol>
+                <li value="1">Locate the file <b>dumpshp.bat</b>. Right-click and select <b>Copy</b>.</li>
+                <li value="2">Navigate to the new font folder you specified in step 4.</li>
+                <li value="3">Right-click and select Paste to put a copy of <b>dumpshp.bat</b> into your new font folder.</li>
+                <li value="4">Double-click on <b>dumpshp.bat</b>. A&#160;command window will appear. </li>
+                <li value="5">When prompted, press any key.</li>
             </ol>
             <p>Now, any AutoCAD fonts used in your drawings will automatically convert into a readable format for LibreCAD, and you can use any AutoCAD font in a new LibreCAD drawing.</p>
+            <h5>Creating a font</h5>
+            <p>With LibreCAD, you can easily create a new font by using an existing font as a template. In LibreCAD, each font character  is a block, and each block is named after the unicode character code.</p>
+            <p class="Procedure">Creating a font from a template</p>
+            <p style="font-weight: bold;">Step 1</p>
+            <p>Identify an existing font to use as a template for your new font.&#160;Try to find a font that looks similar to what you want to create, or choose a standard font such as Times New Roman.</p>
+            <div class="Tip">
+                <p>If you are unsure of what font to use, you can preview fonts in the <b>Convert Font</b> dialog from <b>Tools</b> &gt;&#160;<b>MText</b> &gt;&#160;<b>Convert Font</b> ( <img src="../../Images/convertfont.png" /> ). </p>
+            </div>
+            <p>&#160;</p>
+            <p style="font-weight: bold;">Step 2</p>
+            <p style="font-weight: normal;">Locate the font using the File Explorer on your PC. </p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: normal;">If you are using a font that you <a href="#Converti2">converted from AutoCAD</a> or <a href="#Converti">Microsoft</a>, the font file will be located in the path you specified in <b>Application Preferences</b> &gt; <b>Paths</b> &gt;&#160;<b>Fonts</b>.</p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: normal;">If you are using a LibreCAD font, the font will be located in this folder: <span class="CodeSnippet">C:\Program Files (x86)\Hypertherm CAM\LibreCAD\resources\fonts</span></p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: bold;">Step 3</p>
+            <p style="font-weight: normal;">Open the font file (*.LFF) in LibreCAD by selecting <b>File</b> &gt; <b>Open</b>, and set the file type to <b>LFF Font (*.lff)</b>. Then, navigate to the appropriate folder, and select the font file you wish to open.</p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: bold;">Step 4</p>
+            <p style="font-weight: normal;">The font file is now opened in LibreCAD. Notice that each character is listed in a row along with the corresponding unicode below each character. Additionally, notice that the Block List lists out each character, by unicode name, as an individual block.</p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: normal;">To edit a character:</p>
+            <ol>
+                <li style="font-weight: normal;" value="1">Locate the block that corresponds with that character in the Block List. </li>
+                <li style="font-weight: normal;" value="2">Select the block in the Block List.</li>
+                <li style="font-weight: normal;" value="3">Select <b>Edit the active block in a separate window</b>( <img src="../../Images/properties.svg" /> ).</li>
+            </ol>
+            <p style="font-weight: normal;">The active block will open in a separate window.</p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: bold;">Step 5</p>
+            <p style="font-weight: normal;">Make changes to the character, as needed. When you have finished editing a character, exit the tab, which will return you to the full font LFF file. There is no need to save the block to an individual file; instead, the block is stored in the LFF file. </p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: normal;">Repeat this process until all characters are modified, as needed.</p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: bold;">Step 6</p>
+            <p style="font-weight: normal;">It is recommended that you save the modified font to a different file, so that you can preserve the state of the original font. </p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: normal;">To save the font as a different file:</p>
+            <ol>
+                <li style="font-weight: normal;" value="1">Select <b>File</b>.</li>
+                <li style="font-weight: normal;" value="2">Select <b>Save As</b>.</li>
+                <li style="font-weight: normal;" value="3">Locate the folder to which you want to save the font file. It is recommended that you use the following: <span class="CodeSnippet">C:\Program Files (x86)\Hypertherm CAM\LibreCAD\resources\fonts</span>.</li>
+                <li style="font-weight: normal;" value="4">From the file type dropdown, select <b>LFF File (*.lff)</b>.</li>
+                <li style="font-weight: normal;" value="5">Provide a name for the file, but do <i>not</i> include a file extension in the name. For example, type "MyFont"&#160;instead of "MyFont.lff".</li>
+                <li style="font-weight: normal;" value="6">Select <b>Save</b>.</li>
+            </ol>
+            <div class="Note">
+                <p>If you are saving the font to the LibreCAD font folder from Step 6.3, you may need to modify the folder permissions so that you are able to save to that folder. if this can't be done, save the font file to the folder you have specified in <b>Application Preferences</b> &gt;&#160;<b>Paths</b> &gt;&#160;<b>Fonts</b>.</p>
+            </div>
+            <p style="font-weight: normal;">&#160;</p>
+            <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/ExampleGrid.css');" class="TableStyle-ExampleGrid" cellspacing="0">
+                <col class="TableStyle-ExampleGrid-Column-Column1" />
+                <tbody>
+                    <tr class="TableStyle-ExampleGrid-Body-Body1">
+                        <td class="TableStyle-ExampleGrid-BodyA-Column1-Body1" style="font-weight: bold;">
+                            <p style="font-weight: bold;">Example</p>
+                            <p>&#160;</p>
+                            <p>Step 1 - <i>Italict.lff</i> is the font I will use as a template.</p>
+                            <p>&#160;</p>
+                            <p>Step 2 - Italict.lff is a default LibreCAD font, which is located here: C:\Program Files (x86)\Hypertherm CAM\LibreCAD\resources\fonts.</p>
+                            <p>&#160;</p>
+                            <p>Step 3 - The font is opened.</p>
+                            <p>&#160;</p>
+                            <p>
+                                <img src="../../Images/createfont_example1.png" />
+                            </p>
+                            <p>&#160;</p>
+                            <p>Step 4 - A character is edited by selecting an individual character block and editing it in a new window/tab. The image below shows the block drawing tab for the 'A' character.</p>
+                            <p>&#160;</p>
+                            <p>
+                                <img src="../../Images/createfont_example2.png" />
+                            </p>
+                            <p>&#160;</p>
+                            <p>Step 5 - Make modifications to the character block, then exit the tab.</p>
+                            <p>&#160;</p>
+                            <p>Step 6 - Save the font to a new file.</p>
+                            <p>&#160;</p>
+                            <p>The font is now available for use in a drawing.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <div class="TopicFooter">
                 <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
                     <ul class="MCHelpControlList MCRelatedTopicsControlList">

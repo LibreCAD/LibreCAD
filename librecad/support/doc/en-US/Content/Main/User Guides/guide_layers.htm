@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="User Guides">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-browse-sequence-path="Layers" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="User Guides">
     <!-- saved from url=(0016)http://localhost -->
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Using Layers</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Using Layers</title>
         <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -30,29 +36,43 @@
         </script>
     </head>
     <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/User Guides/guide_layers.htm">Open topic with navigation</a>
+        </p>
         <div class="TopicContent">
             <h1 class="TOC4">Using Layers</h1>
             <p class="Procedure">Creating layers</p>
             <ol>
-                <li value="1">Select the <b>Add Layer</b> button ( <img src="../../Images/add.svg" /> ) on the Layer List dock.</li>
+                <li value="1">Select <b>Add Layer</b> ( <img src="../../Images/add.svg" /> ) on the Layer List dock.</li>
                 <li value="2">Enter a name for the layer. Additionally, indicate if the layer is a Construction Layer, and adjust the Default Pen options as needed.</li>
                 <li value="3">Select <b>OK</b>.</li>
             </ol>
             <p class="Procedure">Removing layers</p>
+            <p>Removing a layer will remove the layer and all geometry that exists on that layer.</p>
             <ol>
                 <li value="1">Select the layer you want to remove on the Layer List dock.</li>
-                <li value="2">Select the <b>Remove Layer</b> button (&#160;<img src="../../Images/remove.svg" /> ), or right-click and select Remove Layer.</li>
-                <li value="3">Select <b>OK</b> to remove the layer, or select Cancel to keep the layer.</li>
+                <li value="2">Select <b>Remove Layer</b> (&#160;<img src="../../Images/remove.svg" /> ), or right-click and select Remove Layer.</li>
+                <li value="3">Select <b>OK</b>.</li>
             </ol>
+            <p class="Procedure">Making a layer active</p>
+            <ul>
+                <li value="1">Simply select a layer on the Layer List dock to make it active.</li>
+            </ul>
             <p class="Procedure">Modifying the color of a layer and other attributes</p>
             <ol>
                 <li value="1">Select the layer you want to modify.</li>
-                <li value="2">Select the <b>Modify Layer</b> button (&#160;<img src="../../Images/rename_active_block.svg" /> ).</li>
+                <li value="2">Select <b>Modify Layer</b> (&#160;<img src="../../Images/rename_active_block.svg" /> ).</li>
                 <li value="3">Make adjustments to any of the layer settings.</li>
-                <li value="4">Select <b>OK</b> to save your changes.</li>
+                <li value="4">Select <b>OK</b>.</li>
+            </ol>
+            <p class="Procedure">Changing the layer of an entity</p>
+            <ol>
+                <li value="1">Select one or more entities. </li>
+                <li value="2">Select either <b>Attributes</b> ( <img src="../../Images/attributes.svg" /> ) or <b>Properties</b> ( <img src="../../Images/properties.svg" /> )&#160;from the Modify tools.</li>
+                <li value="3">Select a different layer from the <b>Layer</b> dropdown menu.</li>
+                <li value="4">Select <b>OK</b>.</li>
             </ol>
             <p class="Procedure">Ordering layers</p>
-            <p><a name="kanchor34"></a>Layers are displayed in alpha-numeric order in the layer list. However, the order of the layers do not relate to the order that entities appear in the drawing. Each entity can be raised, moved up, lowered, or moved down with respect to other layers.  Use the commands in Modify Tools &gt; <b>Order</b> button ( <img src="../../Images/up.svg" /> ) to move entities up or down.</p>
+            <p><a name="kanchor35"></a>Layers are displayed in alpha-numeric order in the layer list. However, the order of the layers do not relate to the order that entities appear in the drawing.   Use the commands in Modify Tools &gt; <b>Order</b> button ( <img src="../../Images/up.svg" /> ) to move entities up or down.</p>
             <table style="mc-table-style: url('../../Resources/TableStyles/Basic.css');margin-left: 0;margin-right: auto;" class="TableStyle-Basic" cellspacing="0">
                 <col class="Column-Column1" />
                 <col class="Column-Column1" style="width: 74px;" />
@@ -85,15 +105,15 @@
                     </tr>
                 </tbody>
             </table>
-            <p class="Procedure">Creating <a name="kanchor35"></a>construction layers</p>
+            <p class="Procedure"><a name="Creating"></a>Creating <a name="kanchor36"></a>construction layers</p>
             <p>To set an existing layer as a construction layer:</p>
             <ul>
-                <li value="1">Select the <b>Construction Layer</b> button (<img src="../../Images/construction_layer.svg" />) beside the layer name. </li>
+                <li value="1">Select <b>Construction Layer</b> (<img src="../../Images/construction_layer.svg" />) beside the layer name. </li>
             </ul>
             <p>When this button is green, it means that the layer is set as a construction layer. When the button is grayed out, the layer is not a construction layer.</p>
             <div class="ImportantDiv">
-                <p>Create new layers <i>without</i> an assigned process in ProNest to use as construction layers. This will avoid importing into ProNest any unwanted geometry from construction layers.</p>
-                <p>For example, if a cut layer is used as a construction layer to create construction lines, the line entities used to create the construction lines will be recognized as open profile geometry in ProNest. However, if a new layer is used that ProNest doesn't recognize, lines used to create construction lines will be ignored by ProNest.</p>
+                <p>Create new layers that do <i>not</i> have an assigned process in ProNest to use as construction layers. This will avoid importing into ProNest any unwanted geometry from construction layers.</p>
+                <p>For example, if a cut layer is used as a construction layer to create construction lines, the line entities used to create the construction lines will be recognized as geometry in ProNest. However, if a new layer is used that ProNest doesn't recognize, lines used to create construction lines will be ignored by ProNest.</p>
             </div>
             <p class="Procedure">Creating construction lines</p>
             <p>To create construction lines of infinite length:</p>
@@ -101,7 +121,7 @@
                 <li value="1">Ensure your construction layer is active ( <img src="../../Images/construction_layer.svg" />&#160;).</li>
                 <li value="2">Create a line using any of the Line or Polyline Tools. A&#160;new line of infinite length will be drawn as a preview over this line.</li>
                 <p style="font-style: normal;">
-                    <img src="../../Images/ImportantImage.png" /> If you are placing construction lines on a layer with an assigned process in ProNest, you'll need to delete lines entities used to create construction lines before importing the drawing into ProNest. It is recommended that you create new layers without an assigned process in ProNest to use as construction layers to avoid importing into ProNest any unwanted geometry from construction layers.</p>
+                    <img src="../../Images/ImportantImage.png" /> If you are placing construction lines on a layer with an assigned process in ProNest, you'll need to delete line entities used to create construction lines before importing the drawing into ProNest. It is recommended that you create new layers without an assigned process in ProNest to use as construction layers to avoid importing into ProNest any unwanted geometry from construction layers.</p>
                 <li value="3">Adjust your line, then select anywhere in the drawing to place the line. This selection will become the reference point to create another construction line.</li>
                 <li value="4">
                     <p>Place as many construction lines as needed, repeating step 3.</p>
@@ -111,7 +131,7 @@
             <p class="Procedure">Hiding construction lines</p>
             <p>To make construction lines invisible while keeping all other geometry on a layer visible:</p>
             <ul>
-                <li value="1">Select the <b>Construction Layer</b> button (<img src="../../Images/construction_layer.svg" />) beside the layer name.</li>
+                <li value="1">Select <b>Construction Layer</b> (<img src="../../Images/construction_layer.svg" />) beside the layer name.</li>
             </ul>
             <p>The construction layer button will gray-out, hiding all construction lines. </p>
             <div class="Note">
@@ -120,13 +140,13 @@
             <p class="Procedure">Removing construction lines</p>
             <ol>
                 <li value="1">Select one or more construction lines.</li>
-                <li value="2">Press the <b>DELETE</b> key.</li>
+                <li value="2">Press the DELETE key.</li>
             </ol>
             <p>Following these steps will delete any infinite construction lines but not any geometry that was used to create construction lines (lines and polylines).</p>
             <div class="TopicFooter">
                 <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
                     <ul class="MCHelpControlList MCRelatedTopicsControlList">
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Toolbars and Widgets/tw_layerlistdock.htm">Layer List dock</a>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Toolbars and Widgets/tw_layerlistdock.htm">Layer List dock widget</a>
                         </li>
                         <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Getting Started/intro_pronest.htm">LibreCAD integration with ProNest</a>
                         </li>

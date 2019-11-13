@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-browse-sequence-path="Snap/restrict" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="">
     <!-- saved from url=(0016)http://localhost -->
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>Snapping</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Snapping</title>
         <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -30,8 +36,11 @@
         </script>
     </head>
     <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/Snapping/snapping.htm">Open topic with navigation</a>
+        </p>
         <div class="TopicContent">
-            <h1 class="TOC4"><a name="kanchor23"></a>Snapping</h1>
+            <h1 class="TOC4"><a name="kanchor24"></a>Snapping</h1>
+            <p>Use different snap/restrict tools to control some precision aspects of your drawing, such as snapping on endpoints or entities, to achieve contiguity or tangency. Snap tools are available in the bar in the bottom left area of the application.</p>
             <table style="mc-table-style: url('../../Resources/TableStyles/Basic.css');margin-left: 0;margin-right: auto;" class="TableStyle-Basic" cellspacing="0">
                 <col class="Column-Column1" style="width: 118px;" />
                 <col class="Column-Column1" style="width: 35px;" />
@@ -102,7 +111,7 @@
                             <p>Snap to the middle of a path. </p>
                             <p>If the Middle Points value is 2, you can snap to the trisection points of a line segment.</p>
                             <p>&#160;</p>
-                            <p>Tool options:</p>
+                            <p>Tool options (in the toolbar above the drawing area):</p>
                             <p>
                                 <img src="../../Images/tool_snap_snapmiddle.png" />
                             </p>
@@ -119,7 +128,7 @@
                             <p>&#160;</p>
                             <p>Example:&#160;If you snap to the endpoint of a line segment and then activate Snap Distance with a Distance input of 50, then it will snap to a point 50 units from the endpoint on the line segment. However, it will also snap to a point that is 50 units from the other endpoint.</p>
                             <p>&#160;</p>
-                            <p>Tool options:</p>
+                            <p>Tool options (in the toolbar above the drawing area):</p>
                             <p>
                                 <img src="../../Images/tool_snap_snapdistance.png" />
                             </p>
@@ -139,7 +148,7 @@
                             <img src="../../Images/restr_hor.svg" />
                         </td>
                         <td class="BodyE-Column1-Body1">rh</td>
-                        <td class="BodyD-Column1-Body1">Restricts the crosshairs to the x-axis (horizontal movement).</td>
+                        <td class="BodyD-Column1-Body1">Restricts the placement crosshairs to the x-axis (horizontal movement).</td>
                     </tr>
                     <tr class="Body-Body1">
                         <td class="BodyE-Column1-Body1">Restrict Vertical</td>
@@ -147,7 +156,7 @@
                             <img src="../../Images/restr_ver.svg" />
                         </td>
                         <td class="BodyE-Column1-Body1" style="font-style: normal;">rv</td>
-                        <td class="BodyD-Column1-Body1">Restricts the crosshairs to the y-axis (vertical movement).</td>
+                        <td class="BodyD-Column1-Body1">Restricts the placement crosshairs to the y-axis (vertical movement).</td>
                     </tr>
                     <tr class="Body-Body1">
                         <td class="BodyE-Column1-Body1">Restrict Orthogonal</td>
@@ -155,7 +164,7 @@
                             <img src="../../Images/restr_ortho.svg" />
                         </td>
                         <td class="BodyE-Column1-Body1" style="font-style: normal;">rr</td>
-                        <td class="BodyD-Column1-Body1">Restricts the crosshairs to the x or y-axis. (either horizontal or vertical movement).</td>
+                        <td class="BodyD-Column1-Body1">Restricts the placement crosshairs to the x or y-axis. (horizontal or vertical movement).</td>
                     </tr>
                     <tr class="Body-Body1">
                         <td class="BodyE-Column1-Body1">Restrict Nothing</td>
@@ -163,11 +172,12 @@
                         <td class="BodyE-Column1-Body1">rn</td>
                         <td class="BodyD-Column1-Body1">
                             <p>Turns off all restricted cursor movements (horizontal, vertical, and orthogonal).</p>
+                            <p>&#160;</p>
                             <p>This command is only available via Command line.</p>
                         </td>
                     </tr>
                     <tr class="Body-Body1">
-                        <td class="BodyE-Column1-Body1">Set <a name="kanchor24"></a>Relative Zero Position</td>
+                        <td class="BodyE-Column1-Body1">Set <a name="kanchor25"></a>Relative Zero Position</td>
                         <td class="BodyE-Column1-Body1" style="text-align: center;">
                             <img src="../../Images/set_rel_zero.svg" />
                         </td>
