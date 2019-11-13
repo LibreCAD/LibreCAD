@@ -18,9 +18,9 @@ echo     BEGIN
 echo         BLOCK "040904E4"
 echo         BEGIN
 echo             VALUE "CompanyName",        "Hypertherm"
-echo             VALUE "FileDescription",    "LibreCAD by Hypertherm"
+echo             VALUE "FileDescription",    "LibreCAD for ProNest"
 echo             VALUE "FileVersion",        "2.2.0.%DAILY_BUILD%"
-echo             VALUE "InternalName",       "LibreCAD by Hypertherm"
+echo             VALUE "InternalName",       "LibreCAD for ProNest"
 echo             VALUE "LegalCopyright",     "GPL v2.0"
 echo             VALUE "OriginalFilename",   "LibreCAD.exe"
 echo             VALUE "ProductName",        "LibreCAD"

@@ -26,6 +26,7 @@
 
 #include "rs_polyline.h"
 #include "rs_graphic.h"
+#include "lc_helpbrowser.h"
 /*#include "rs_layer.h"
 #include "qg_widgetpen.h"
 #include "qg_layerbox.h"*/
@@ -42,6 +43,7 @@ QG_DlgPolyline::QG_DlgPolyline(QWidget* parent, bool modal, Qt::WindowFlags fl)
 {
     setModal(modal);
     setupUi(this);
+	LC_HELP->associateTopic(this, "topic_tool_polyline");
 
 }
 

@@ -38,6 +38,7 @@
 #include "rs_blocklist.h"
 #include "qg_actionhandler.h"
 #include "rs_debug.h"
+#include "lc_helpbrowser.h"
 
 QG_BlockModel::QG_BlockModel(QObject * parent) : QAbstractTableModel(parent) {
     blockVisible = QIcon(":/icons/visible.svg");
@@ -235,6 +236,8 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     lay->addWidget(blockView);
 
     connect(blockView, SIGNAL(clicked(QModelIndex)), this, SLOT(slotActivated(QModelIndex)));
+
+	LC_HELP->associateTopic(this, "topic_tw_blocklist");
 }
 
 /**

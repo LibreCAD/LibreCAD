@@ -30,6 +30,7 @@
 #include "rs_math.h"
 #include "ui_qg_polylineoptions.h"
 #include "rs_debug.h"
+#include "lc_helpbrowser.h"
 
 using wLists = std::initializer_list<QWidget*>;
 /*
@@ -41,6 +42,7 @@ QG_PolylineOptions::QG_PolylineOptions(QWidget* parent, Qt::WindowFlags fl)
 	, ui(new Ui::Ui_PolylineOptions{})
 {
 	ui->setupUi(this);
+	LC_HELP->associateTopic(this, "topic_tool_polyline");
 }
 
 /*

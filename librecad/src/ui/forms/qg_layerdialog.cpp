@@ -29,6 +29,7 @@
 #include <QMessageBox>
 #include "rs_layer.h"
 #include "rs_layerlist.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_LayerDialog as a child of 'parent', with the
@@ -44,6 +45,7 @@ QG_LayerDialog::QG_LayerDialog(QWidget* parent, QString name, bool modal, Qt::Wi
     setObjectName(name);
     setupUi(this);
 
+	LC_HELP->associateTopic(this, "topic_guide_layers");
 
     init();
 }

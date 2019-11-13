@@ -38,6 +38,9 @@
 #include "qc_applicationwindow.h"
 #include "rs_document.h"
 #include "lc_telemetry.h"
+#include "rs_dialogfactory.h"
+#include "qc_dialogfactory.h"
+#include "qg_commandwidget.h"
 
 LC_FontCreation::LC_FontCreation()
 {
@@ -65,6 +68,9 @@ bool LC_FontCreation::createFont(const QString & fontFamily)
 		RS_FONTLIST->addFont(new RS_Font(lff, true));
 		return true;
 	}
+	QG_CommandWidget *cw = static_cast<QG_DialogFactory*>(QG_DIALOGFACTORY)->getCommandWidget();
+	if (cw)
+		cw->appendHistory(QObject::tr("Could not convert requested font: %1").arg(fontFamily));
 	invalidFonts.push_back(fontFamily);
 	return false;
 }

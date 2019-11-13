@@ -53,6 +53,7 @@ private:
 	QString GetProductName();
 	QString GetProductVersion();
 	QString GetAssociate();
+	QString GetLocale();
 
 private:
 	QLibrary *library;

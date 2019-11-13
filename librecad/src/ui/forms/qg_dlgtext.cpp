@@ -34,6 +34,7 @@
 #include "rs_graphic.h"
 #include "rs_math.h"
 #include "rs_dialogfactory.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_DlgText as a child of 'parent', with the
@@ -47,6 +48,7 @@ QG_DlgText::QG_DlgText(QWidget* parent, bool modal, Qt::WindowFlags fl)
 {
     setModal(modal);
     setupUi(this);
+	LC_HELP->associateTopic(this, "topic_guide_text");
 
     init();
 }

@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QFileinfo>
 #include <QDir>
 #include <QCoreApplication>
+#include <QLocale>
 #include <cstdlib>
 #include <string>
 #include <algorithm>
@@ -51,6 +52,7 @@ void LC_Telemetry::BeginSession()
 			GetProductVersion().toStdWString().c_str()
 		);
 		addProperty(L"Associate", GetAssociate().toStdWString().c_str());
+		addProperty(L"Locale", GetLocale().toStdWString().c_str());
 		open = true;
 	}
 }
@@ -142,4 +144,10 @@ QString LC_Telemetry::GetAssociate()
 	if (dns.find("HYPERTHERM", 0) != std::string::npos)
 		return QString("-1");
 	return QString("0");
+}
+
+QString LC_Telemetry::GetLocale()
+{
+	QLocale l;
+	return l.name().replace('_', '-');
 }

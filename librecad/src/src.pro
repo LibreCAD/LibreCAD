@@ -26,7 +26,7 @@ CONFIG += qt \
     verbose \
     depend_includepath
 
-QT += widgets printsupport help
+QT += widgets printsupport
 CONFIG += c++14
 *-g++ {
     QMAKE_CXXFLAGS += -fext-numeric-literals
@@ -107,6 +107,7 @@ INCLUDEPATH += \
     lib/modification \
     lib/printing \
     lib/telemetry \
+    lib/help \
     actions \
     main \
     main/console_dxf2pdf \
@@ -216,6 +217,7 @@ HEADERS += \
     lib/gui/rs_painter.h \
     lib/gui/rs_painterqt.h \
     lib/gui/rs_staticgraphicview.h \
+    lib/help/lc_helpbrowser.h \
     lib/information/rs_locale.h \
     lib/information/rs_information.h \
     lib/information/rs_infoarea.h \
@@ -313,6 +315,7 @@ SOURCES += \
     lib/gui/rs_painter.cpp \
     lib/gui/rs_painterqt.cpp \
     lib/gui/rs_staticgraphicview.cpp \
+    lib/help/lc_helpbrowser.cpp \
     lib/information/rs_locale.cpp \
     lib/information/rs_information.cpp \
     lib/information/rs_infoarea.cpp \

@@ -30,6 +30,7 @@
 #include "rs_settings.h"
 #include "rs_math.h"
 #include "rs_debug.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_BevelOptions as a child of 'parent', with the
@@ -40,6 +41,7 @@ QG_BevelOptions::QG_BevelOptions(QWidget* parent, Qt::WindowFlags fl)
 	, ui(new Ui::Ui_BevelOptions{})
 {
 	ui->setupUi(this);
+	LC_HELP->associateTopic(this, "topic_tool_modify");
 }
 
 /*

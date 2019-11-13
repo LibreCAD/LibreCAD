@@ -30,6 +30,7 @@
 #include "rs_math.h"
 #include "rs_debug.h"
 #include "ui_qg_linebisectoroptions.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_LineBisectorOptions as a child of 'parent', with the
@@ -40,6 +41,7 @@ QG_LineBisectorOptions::QG_LineBisectorOptions(QWidget* parent, Qt::WindowFlags 
 	, ui(new Ui::Ui_LineBisectorOptions{})
 {
 	ui->setupUi(this);
+	LC_HELP->associateTopic(this, "topic_tool_lines");
 }
 
 /*

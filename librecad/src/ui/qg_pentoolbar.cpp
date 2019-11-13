@@ -30,6 +30,7 @@
 #include "qg_widthbox.h"
 #include "qg_linetypebox.h"
 #include "rs_pen.h"
+#include "lc_helpbrowser.h"
 
 /**
  * Constructor.
@@ -60,6 +61,8 @@ QG_PenToolBar::QG_PenToolBar( const QString & title, QWidget * parent )
 	addWidget(colorBox.get());
 	addWidget(widthBox.get());
 	addWidget(lineTypeBox.get());
+
+	LC_HELP->associateTopic(this, "topic_tw_penwizarddock");
 }
 
 

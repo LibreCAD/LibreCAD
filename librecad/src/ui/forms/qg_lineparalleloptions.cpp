@@ -30,6 +30,7 @@
 #include "rs_math.h"
 #include "ui_qg_lineparalleloptions.h"
 #include "rs_debug.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_LineParallelOptions as a child of 'parent', with the
@@ -40,6 +41,7 @@ QG_LineParallelOptions::QG_LineParallelOptions(QWidget* parent, Qt::WindowFlags 
 	, ui(new Ui::Ui_LineParallelOptions{})
 {
 	ui->setupUi(this);
+	LC_HELP->associateTopic(this, "topic_tool_lines");
 }
 
 /*

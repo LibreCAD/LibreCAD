@@ -38,7 +38,7 @@ RS_Preview::RS_Preview(RS_EntityContainer* parent)
 		: RS_EntityContainer(parent, true) {
 
     RS_SETTINGS->beginGroup("/Appearance");
-    maxEntities = RS_SETTINGS->readNumEntry("/MaxPreview", 100);
+    maxEntities = RS_SETTINGS->readNumEntry("/MaxPreview", INT_MAX);
     RS_SETTINGS->endGroup();
 }
 

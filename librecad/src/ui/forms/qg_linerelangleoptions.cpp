@@ -30,6 +30,7 @@
 #include "rs_math.h"
 #include "ui_qg_linerelangleoptions.h"
 #include "rs_debug.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_LineRelAngleOptions as a child of 'parent', with the
@@ -40,6 +41,7 @@ QG_LineRelAngleOptions::QG_LineRelAngleOptions(QWidget* parent, Qt::WindowFlags 
 	, ui(new Ui::Ui_LineRelAngleOptions{})
 {
 	ui->setupUi(this);
+	LC_HELP->associateTopic(this, "topic_tool_lines");
 }
 
 /*

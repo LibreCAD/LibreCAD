@@ -28,6 +28,7 @@
 #include "rs_settings.h"
 #include "rs_modification.h"
 #include "rs_math.h"
+#include "lc_helpbrowser.h"
 
 #include <QDoubleValidator>
 
@@ -44,6 +45,7 @@ QG_DlgScale::QG_DlgScale(QWidget* parent, bool modal, Qt::WindowFlags fl)
 {
    setModal(modal);
    setupUi(this);
+   LC_HELP->associateTopic(this, "topic_tool_modify");
 
    init();
 }

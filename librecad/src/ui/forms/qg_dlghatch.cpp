@@ -32,6 +32,7 @@
 #include "rs_pattern.h"
 #include "rs_math.h"
 #include "rs_math.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_DlgHatch as a child of 'parent', with the
@@ -45,6 +46,7 @@ QG_DlgHatch::QG_DlgHatch(QWidget* parent, bool modal, Qt::WindowFlags fl)
 {
     setModal(modal);
     setupUi(this);
+	LC_HELP->associateTopic(this, "topic_append_hatch");
 
     init();
 }

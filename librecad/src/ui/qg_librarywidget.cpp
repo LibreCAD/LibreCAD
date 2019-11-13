@@ -44,6 +44,7 @@
 #include "rs_actionlibraryinsert.h"
 #include "qg_actionhandler.h"
 #include "rs_debug.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_LibraryWidget as a child of 'parent', with the
@@ -85,6 +86,8 @@ QG_LibraryWidget::QG_LibraryWidget(QWidget* parent, const char* name, Qt::Window
     connect(bInsert, SIGNAL(clicked()), this, SLOT(insert()));
     connect(bRefresh, SIGNAL(clicked()), this, SLOT(refresh()));
     connect(bRebuild, SIGNAL(clicked()), this, SLOT(buildTree()));
+
+	LC_HELP->associateTopic(this, "topic_tw_librarybrowserdock");
 }
 
 /*

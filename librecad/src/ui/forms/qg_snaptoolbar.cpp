@@ -30,6 +30,7 @@
 #include "rs_settings.h"
 #include "qg_actionhandler.h"
 #include "lc_actiongroupmanager.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_CadToolBarSnap as a child of 'parent', with the
@@ -135,6 +136,8 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
     RS_SETTINGS->beginGroup("/Snap");
     setSnaps(RS_Snapper::intToSnapMode(RS_SETTINGS->readNumEntry("/SnapMode",0)));
     RS_SETTINGS->endGroup();
+
+	LC_HELP->associateTopic(this, "topic_snapping");
 }
 
 void QG_SnapToolBar::saveSnapMode()

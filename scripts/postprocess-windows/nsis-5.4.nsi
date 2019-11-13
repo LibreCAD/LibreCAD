@@ -126,7 +126,7 @@ FunctionEnd
 
 Section "Install Section" SecInstall
 
-  nsExec::ExecToStack '"cmd.exe" /c tasklist /FI $\"IMAGENAME eq LibreCAD.exe$\" | find /I /N $\"LibreCAD.exe$\"' 
+  nsExec::ExecToStack '"cmd.exe" /c %WINDIR%\system32\tasklist /FI $\"IMAGENAME eq LibreCAD.exe$\" | %WINDIR%\system32\find /I /N $\"LibreCAD.exe$\"' 
   Pop $0
   IntCmp $0 1 notRunning
     MessageBox MB_OK|MB_ICONEXCLAMATION "LibreCAD is running. Please close it first" /SD IDOK
@@ -154,25 +154,25 @@ Section "Install Section" SecInstall
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
   ; create shortcuts
-  createShortCut "$DESKTOP\LibreCAD.lnk" "$INSTDIR\LibreCAD.exe"
+  createShortCut "$DESKTOP\LibreCAD for ProNest.lnk" "$INSTDIR\LibreCAD.exe"
 
   ; Startmenu shortcuts
   createDirectory "$SMPROGRAMS\LibreCAD\"
-  createShortCut "$SMPROGRAMS\LibreCAD\LibreCAD.lnk" "$INSTDIR\LibreCAD.exe"
+  createShortCut "$SMPROGRAMS\LibreCAD\LibreCAD for ProNest.lnk" "$INSTDIR\LibreCAD.exe"
   createShortCut "$SMPROGRAMS\LibreCAD\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
 
   ; create add/remove software entries
-  WriteRegStr HKLM "${UNINSTKEY}" "DisplayName" "${APPNAME}"
+  WriteRegStr HKLM "${UNINSTKEY}" "DisplayName" "${APPNAME} for ProNest"
   WriteRegStr HKLM "${UNINSTKEY}" "DisplayIcon" "$INSTDIR\LibreCAD.exe"
   WriteRegStr HKLM "${UNINSTKEY}" "DisplayVersion" "${SCMREVISION}"
-  WriteRegStr HKLM "${UNINSTKEY}" "Publisher" "LibreCAD Team"
-  WriteRegStr HKLM "${UNINSTKEY}" "Version" "2.0"
-  WriteRegStr HKLM "${UNINSTKEY}" "HelpLink" "https://librecad.org/"
+  WriteRegStr HKLM "${UNINSTKEY}" "Publisher" "Hypertherm"
+  WriteRegStr HKLM "${UNINSTKEY}" "Version" "2.2"
+  WriteRegStr HKLM "${UNINSTKEY}" "HelpLink" "https://www.hypertherm.com/"
   WriteRegStr HKLM "${UNINSTKEY}" "InstallLocation" "$INSTDIR"
-  WriteRegStr HKLM "${UNINSTKEY}" "URLInfoAbout" "http://librecad.org/"
+  WriteRegStr HKLM "${UNINSTKEY}" "URLInfoAbout" "https://www.hypertherm.com/en-US/our-company/about-us/"
   WriteRegStr HKLM "${UNINSTKEY}" "Comments" "LibreCAD - Open Source 2D-CAD"
   WriteRegStr HKLM "${UNINSTKEY}" "UninstallString" "$INSTDIR\Uninstall.exe"
-  WriteRegDWORD HKLM "${UNINSTKEY}" "VersionMinor" "0"
+  WriteRegDWORD HKLM "${UNINSTKEY}" "VersionMinor" "2"
   WriteRegDWORD HKLM "${UNINSTKEY}" "VersionMajor" "2"
   WriteRegDWORD HKLM "${UNINSTKEY}" "NoModify" "1"
   WriteRegDWORD HKLM "${UNINSTKEY}" "NoRepair" "1"
@@ -196,7 +196,7 @@ Section "Uninstall"
   ;ADD YOUR OWN FILES HERE...
 
   Delete "$INSTDIR\Uninstall.exe"
-  Delete "$DESKTOP\LibreCAD.lnk"
+  Delete "$DESKTOP\LibreCAD for ProNest.lnk"
   RMDir /r "$SMPROGRAMS\LibreCAD\"
   RMDir /r $INSTDIR
 

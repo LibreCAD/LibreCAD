@@ -29,6 +29,7 @@
 #include "rs_debug.h"
 #include "ui_qg_dimoptions.h"
 #include "rs_actiondimension.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_DimOptions as a child of 'parent', with the
@@ -39,6 +40,7 @@ QG_DimOptions::QG_DimOptions(QWidget* parent, Qt::WindowFlags fl)
 	, ui(new Ui::Ui_DimOptions{})
 {
 	ui->setupUi(this);
+	LC_HELP->associateTopic(this, "topic_tool_dimension");
 }
 
 /*

@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include "qg_commandedit.h"
+#include "lc_helpbrowser.h"
 
 #include <QKeyEvent>
 #include <QRegularExpression>
@@ -51,6 +52,7 @@ QG_CommandEdit::QG_CommandEdit(QWidget* parent)
     setStyleSheet("selection-color: white; selection-background-color: green;");
     setFrame(false);
     setFocusPolicy(Qt::StrongFocus);
+	LC_HELP->associateTopic(this, "topic_append_commandline");
 }
 
 /**

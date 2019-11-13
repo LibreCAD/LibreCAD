@@ -424,6 +424,7 @@ RS_Block* RS_Font::generateLffFont(const QString& ch){
             RS_Polyline* pline = new RS_Polyline(letter, RS_PolylineData());
             pline->setPen(RS_Pen(RS2::FlagInvalid));
 			pline->setLayer(nullptr);
+			double prevX = -RS_MAXDOUBLE, prevY = -RS_MAXDOUBLE;
             for (int i = 0; i < vertex.size(); ++i) {
                 double x1, y1;
                 double bulge = 0;
@@ -439,8 +440,14 @@ RS_Block* RS_Font::generateLffFont(const QString& ch){
                     QString bulgeStr = coords.at(2);
                     bulge = bulgeStr.remove(0,1).toDouble();
                 }
-                pline->setNextBulge(bulge);
-                pline->addVertex(RS_Vector(x1, y1), bulge);
+				RS_Vector v(x1, y1);
+				if (v.distanceTo(RS_Vector(prevX, prevY)) > RS_TOLERANCE_TRIM) {
+					pline->setNextBulge(bulge);
+					pline->addVertex(RS_Vector(x1, y1), bulge);
+				}                
+
+				prevX = x1;
+				prevY = y1;
             }
             letter->addEntity(pline);
         }

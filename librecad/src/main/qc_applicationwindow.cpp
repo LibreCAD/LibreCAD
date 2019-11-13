@@ -47,6 +47,7 @@
 #include <QPagedPaintDevice>
 #include <QRegExp>
 #include <QSysInfo>
+#include <QObject>
 
 #include "main.h"
 
@@ -107,6 +108,7 @@
 #include "textfileviewer.h"
 #include "lc_undosection.h"
 #include "lc_telemetry.h"
+#include "lc_helpbrowser.h"
 
 #include <boost/version.hpp>
 
@@ -209,8 +211,12 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 		static_cast<RS2::TabPosition>(RS_SETTINGS->readNumEntry("/TabPosition", RS2::West)));
 	RS_SETTINGS->endGroup();
 
+	RS_SETTINGS->beginGroup("/Appearance");
+	RS_SETTINGS->writeEntry("/DraftMode", 0); // sleeps with the fishes
+	RS_SETTINGS->endGroup();
+
     settings.beginGroup("Startup");
-	if (settings.value("TabMode", 0).toBool()) {
+	if (settings.value("TabMode", 1).toBool()) {
 		mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
 		QList<QTabBar *> tabBarList = mdiAreaCAD->findChildren<QTabBar*>();
 		QTabBar *tabBar = tabBarList.at(0);
@@ -366,16 +372,39 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     // Disable menu and toolbar items
     emit windowsChanged(false);
 
+	// hide pen wizard by default
+	RS_SETTINGS->beginGroup("/Appearance");
+	bool hidden = RS_SETTINGS->readNumEntry("/PenWizardHidden", 1);
+	RS_SETTINGS->endGroup();
+	if (hidden)
+		pen_wiz->hide();
+
     RS_COMMANDS->updateAlias();
     //plugin load
     loadPlugins();
 
+	QApplication::setAttribute(Qt::AA_DisableWindowContextHelpButton);
+	setMouseTracking(true);
+	installEventFilter(LC_HELP);
 	LC_Telemetry t;
 	t.BeginSession();
 	t.TrackEvent("ApplicationStarted");
 	t.EndSession();
 
     statusBar()->showMessage(qApp->applicationName() + " Ready", 2000);
+
+	RS_SETTINGS->beginGroup("/Appearance");
+	bool maximized = RS_SETTINGS->readNumEntry("/WindowMaximized", 0);
+	RS_SETTINGS->endGroup();
+	RS_SETTINGS->beginGroup("/Geometry");
+	int x = RS_SETTINGS->readNumEntry("/WindowX", 0);
+	int y = RS_SETTINGS->readNumEntry("/WindowY", 0);
+	RS_SETTINGS->endGroup();
+
+	if (maximized)
+		showMaximized();
+	else
+		move(x, y);
 }
 
 /**
@@ -488,8 +517,6 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs)
 			if (!recentFiles->indexOf(name))
 				recentFiles->add(name);
 			w->setWindowTitle(format_filename_caption(name) + "[*]");
-			if (w->getGraphicView()->isDraftMode())
-				w->setWindowTitle(w->windowTitle() + " [" + tr("Draft Mode") + "]");
 
 			if (autosaveTimer && !autosaveTimer->isActive())
 			{
@@ -880,8 +907,6 @@ void QC_ApplicationWindow::initSettings()
     if (loadStyleSheet(sheet_path))
         style_sheet_path = sheet_path;
     settings.endGroup();
-
-    a_map["ViewDraft"]->setChecked(settings.value("Appearance/DraftMode", 0).toBool());
 }
 
 
@@ -893,7 +918,7 @@ void QC_ApplicationWindow::storeSettings() {
 
     if (RS_Settings::save_is_allowed)
     {
-        RS_SETTINGS->beginGroup("/Geometry");
+		RS_SETTINGS->beginGroup("/Geometry");
         RS_SETTINGS->writeEntry("/WindowWidth", width());
         RS_SETTINGS->writeEntry("/WindowHeight", height());
         RS_SETTINGS->writeEntry("/WindowX", x());
@@ -904,7 +929,13 @@ void QC_ApplicationWindow::storeSettings() {
         RS_SETTINGS->writeEntry("/TopDockArea", dock_areas.top->isChecked());
         RS_SETTINGS->writeEntry("/BottomDockArea", dock_areas.bottom->isChecked());
         RS_SETTINGS->writeEntry("/FloatingDockwidgets", dock_areas.floating->isChecked());
+		RS_SETTINGS->writeEntry("/CADAreaWidth", mdiAreaCAD->width());
+		RS_SETTINGS->writeEntry("/CADAreaHeight", mdiAreaCAD->height());
         RS_SETTINGS->endGroup();
+		RS_SETTINGS->beginGroup("/Appearance");
+		RS_SETTINGS->writeEntry("/PenWizardHidden", pen_wiz->isHidden());
+		RS_SETTINGS->writeEntry("/WindowMaximized", this->isMaximized());
+		RS_SETTINGS->endGroup();
         //save snapMode
         snapToolBar->saveSnapMode();
     }
@@ -1500,16 +1531,6 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
         w->setWindowTitle(tr("unnamed document %1").arg(id) + "[*]");
     }
 
-    //check for draft mode
-
-    if (settings.value("Appearance/DraftMode", 0).toBool())
-    {
-        QString draft_string = " ["+tr("Draft Mode")+"]";
-        w->getGraphicView()->setDraftMode(true);
-        QString title = w->windowTitle();
-        w->setWindowTitle(title + draft_string);
-    }
-
     w->setWindowIcon(QIcon(":/main/document.png"));
 
     // only graphics offer block lists, blocks don't
@@ -1874,18 +1895,9 @@ void QC_ApplicationWindow::
 			doArrangeWindows(RS2::CurrentMode);
 
 		RS_SETTINGS->beginGroup("/CADPreferences");
-		if (RS_SETTINGS->readNumEntry("/AutoZoomDrawing"))
+		if (RS_SETTINGS->readNumEntry("/AutoZoomDrawing", 1))
 			w->getGraphicView()->zoomAuto(false);
 		RS_SETTINGS->endGroup();
-
-        if (settings.value("Appearance/DraftMode", 0).toBool())
-        {
-            QString draft_string = " ["+tr("Draft Mode")+"]";
-            w->getGraphicView()->setDraftMode(true);
-            w->getGraphicView()->redraw();
-            QString title = w->windowTitle();
-            w->setWindowTitle(title + draft_string);
-        }
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: set caption: OK");
 
@@ -2701,40 +2713,6 @@ void QC_ApplicationWindow::slotViewGrid(bool toggle) {
 }
 
 /**
- * Enables / disables the draft mode.
- *
- * @param toggle true: enable, false: disable.
- */
-void QC_ApplicationWindow::slotViewDraft(bool toggle)
-{
-    RS_DEBUG->print("QC_ApplicationWindow::slotViewDraft()");
-
-    RS_SETTINGS->beginGroup("/Appearance");
-    RS_SETTINGS->writeEntry("/DraftMode", (int)toggle);
-    RS_SETTINGS->endGroup();
-
-    //handle "Draft Mode" in window titles
-    QString draft_string = " ["+tr("Draft Mode")+"]";
-
-    foreach (QC_MDIWindow* win, window_list)
-    {
-        win->getGraphicView()->setDraftMode(toggle);
-        QString title = win->windowTitle();
-
-        if (toggle && !title.contains(draft_string))
-        {
-            win->setWindowTitle(title + draft_string);
-        }
-        else if (!toggle && title.contains(draft_string))
-        {
-            title.remove(draft_string);
-            win->setWindowTitle(title);
-        }
-    }
-    redrawAll();
-}
-
-/**
  * Redraws all mdi windows.
  */
 void QC_ApplicationWindow::redrawAll()
@@ -2878,7 +2856,8 @@ void QC_ApplicationWindow::showAboutWindow()
     auto layout = new QVBoxLayout;
     dlg.setLayout(layout);
 
-    auto frame = new QGroupBox(qApp->applicationName());
+    //auto frame = new QGroupBox(qApp->applicationName());
+	auto frame = new QGroupBox("LibreCAD for ProNest");
     layout->addWidget(frame);
 
     auto f_layout = new QVBoxLayout;
@@ -3047,18 +3026,7 @@ void QC_ApplicationWindow::createNewDocument(
 
 void QC_ApplicationWindow::updateWindowTitle(QWidget *w)
 {
-    RS_DEBUG->print("QC_ApplicationWindow::slotViewDraft()");
-
-    RS_SETTINGS->beginGroup("/Appearance");
-    bool draftMode = RS_SETTINGS->readNumEntry("/DraftMode", 0);
-    RS_SETTINGS->endGroup();
-
-    if (draftMode)
-    {
-        QString draft_string = " ["+tr("Draft Mode")+"]";
-        if (!w->windowTitle().contains(draft_string))
-            w->setWindowTitle(w->windowTitle() + draft_string);
-    }
+    
 }
 
 void QC_ApplicationWindow::relayAction(QAction* q_action)
@@ -3083,24 +3051,9 @@ void QC_ApplicationWindow::relayAction(QAction* q_action)
     }
 }
 
-void QC_ApplicationWindow::invokeLinkList()
+void QC_ApplicationWindow::showHelpTOC()
 {
-    // author: ravas
-
-    QDialog dlg;
-    dlg.setWindowTitle(tr("Help Links"));
-    auto layout = new QVBoxLayout;
-    auto list = new LinkList(&dlg);
-    list->addLink(QObject::tr("Wiki"), "http://wiki.librecad.org/");
-    list->addLink(QObject::tr("User's Manual"), "http://wiki.librecad.org/index.php/LibreCAD_users_Manual");
-    list->addLink(QObject::tr("Commands"), "http://wiki.librecad.org/index.php/Commands");
-    list->addLink(QObject::tr("Style Sheets"), "https://github.com/LibreCAD/LibreCAD/wiki/Style-Sheets");
-    list->addLink(QObject::tr("Widgets"), "https://github.com/LibreCAD/LibreCAD/wiki/Widgets");
-    list->addLink(QObject::tr("Forum"), "http://forum.librecad.org/");
-    list->addLink(QObject::tr("Release Information"), "https://github.com/LibreCAD/LibreCAD/releases");
-    layout->addWidget(list);
-    dlg.setLayout(layout);
-    dlg.exec();
+	LC_HELP->showTableOfContents();
 }
 
 /**

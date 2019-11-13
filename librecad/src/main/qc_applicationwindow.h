@@ -175,8 +175,6 @@ public slots:
 
     /** toggle the grid */
     void slotViewGrid(bool toggle);
-    /** toggle the draft mode */
-    void slotViewDraft(bool toggle);
     /** toggle the statusbar */
     void slotViewStatusBar(bool toggle);
 
@@ -194,7 +192,7 @@ public slots:
     void slotUpdateActiveLayer();
 	void execPlug();
 
-    void invokeLinkList();
+    void showHelpTOC();
 
     void toggleFullscreen(bool checked);
 
