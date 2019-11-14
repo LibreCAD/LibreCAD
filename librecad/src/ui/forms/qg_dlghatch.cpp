@@ -46,7 +46,8 @@ QG_DlgHatch::QG_DlgHatch(QWidget* parent, bool modal, Qt::WindowFlags fl)
 {
     setModal(modal);
     setupUi(this);
-	LC_HELP->associateTopic(this, "topic_append_hatch");
+	installEventFilter(LC_HELP);
+	LC_HELP->associateTopic(this, "topic_tool_other");
 
     init();
 }

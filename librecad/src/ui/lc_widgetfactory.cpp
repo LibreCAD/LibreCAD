@@ -245,7 +245,7 @@ void LC_WidgetFactory::createLeftSidebar(int columns, int icon_size)
     dock_dimension->setObjectName("dock_dimension");
     dock_dimension->setWindowTitle(QC_ApplicationWindow::tr("Dimension"));
     dock_dimension->add_actions(dimension_actions, columns, icon_size);
-	LC_HELP->associateTopic(dock_dimension, "topic_tool_dimension");
+	LC_HELP->associateTopic(dock_dimension, "topic_guide_dimensions");
 
     LC_DockWidget* dock_modify = new LC_DockWidget(main_window);
     dock_modify->setObjectName("dock_modify");
@@ -512,7 +512,7 @@ void LC_WidgetFactory::createCADToolbars()
     dimension_toolbar->setSizePolicy(toolBarPolicy);
     dimension_toolbar->setObjectName("dimension_toolbar");
     dimension_toolbar->addActions(dimension_actions);
-	LC_HELP->associateTopic(dimension_toolbar, "topic_tool_dimension");
+	LC_HELP->associateTopic(dimension_toolbar, "topic_guide_dimensions");
     dimension_toolbar->hide();
 
     QToolBar* modify_toolbar = new QToolBar(QC_ApplicationWindow::tr("Modify"), main_window);
@@ -597,7 +597,7 @@ QToolBar* LC_WidgetFactory::createCategoriesToolbar()
     tool_button->setIcon(QIcon(":/icons/dim_horizontal.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(dimension_actions);
-	LC_HELP->associateTopic(tool_button, "topic_tool_dimension");
+	LC_HELP->associateTopic(tool_button, "topic_guide_dimensions");
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);

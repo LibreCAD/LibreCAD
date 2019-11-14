@@ -164,7 +164,7 @@ void LC_HelpBrowser::populateHelpTopics()
 	topicMap["topic_tool_other"] = base.resolved(QUrl(getRelativeFilePath("Default.htm#Main/Tools/tool_other.htm")));
 	topicMap["topic_tool_polyline"] = base.resolved(QUrl(getRelativeFilePath("Default.htm#Main/Tools/tool_polyline.htm")));
 	topicMap["topic_tool_select"] = base.resolved(QUrl(getRelativeFilePath("Default.htm#Main/Tools/tool_select.htm")));
-	topicMap["topic_tw_blocklist"] = base.resolved(QUrl(getRelativeFilePath("Default.htm#Main/Toolbars and Widgets/tw_blocklistdock.htm")));
+	topicMap["topic_tw_blocklistdock"] = base.resolved(QUrl(getRelativeFilePath("Default.htm#Main/Toolbars and Widgets/tw_blocklistdock.htm")));
 	topicMap["topic_tw_dockwidgets"] = base.resolved(QUrl(getRelativeFilePath("Default.htm#Main/Toolbars and Widgets/tw_dockwidgets.htm")));
 	topicMap["topic_tw_general"] = base.resolved(QUrl(getRelativeFilePath("Default.htm#Main/Toolbars and Widgets/tw_general.htm")));
 	topicMap["topic_tw_layerlistdock"] = base.resolved(QUrl(getRelativeFilePath("Default.htm#Main/Toolbars and Widgets/tw_layerlistdock.htm")));
@@ -174,6 +174,7 @@ void LC_HelpBrowser::populateHelpTopics()
 	topicMap["topic_tw_printpreview"] = base.resolved(QUrl(getRelativeFilePath("Default.htm#Main/Toolbars and Widgets/tw_printpreview.htm")));
 	topicMap["topic_tw_toolbarcreator"] = base.resolved(QUrl(getRelativeFilePath("Default.htm#Main/Toolbars and Widgets/tw_toolbarcreator.htm")));
 	topicMap["topic_Welcome"] = base.resolved(QUrl(getRelativeFilePath("Default.htm#Main/Welcome.htm")));
+	topicMap["topic_prefs_applicationpreferences"] = base.resolved(QUrl(getRelativeFilePath("Default.htm#Main/Preferences and Customizations/prefs_applicationpreferences.htm")));
 }
 
 QString LC_HelpBrowser::getLocaleName()

@@ -40,7 +40,7 @@ QG_DimOptions::QG_DimOptions(QWidget* parent, Qt::WindowFlags fl)
 	, ui(new Ui::Ui_DimOptions{})
 {
 	ui->setupUi(this);
-	LC_HELP->associateTopic(this, "topic_tool_dimension");
+	LC_HELP->associateTopic(this, "topic_guide_dimension");
 }
 
 /*
