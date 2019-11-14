@@ -129,26 +129,16 @@
             </ol>
             <p>Be sure to select the converted font from the Font dropdown menu in the Text or MText dialog to use the font after it has been converted.</p>
             <h5>AutoCAD fonts</h5>
-            <p class="Procedure"><a name="Converti2"></a>Converting AutoCAD fonts</p>
-            <p>If you'll be using LibreCAD to open/modify AutoCAD drawings (.dwg) that have text, you'll need to complete the following steps to ensure that LibreCAD can present the text appropriately. These steps only need to be completed once and will have no impact on any existing fonts or AutoCAD.</p>
+            <p>LibreCAD for ProNest supports AutoCAD fonts (.shx). If your AutoCAD fonts are stored in the default font folder for AutoCAD &lt;<span class="CodeSnippet">C:\Program Files\AutoDesk\AutoCAD 2019\Fonts</span>&gt;, no action is needed (note that this file path is for AutoCAD 2019 and may differ slightly depending on your version of AutoCAD). </p>
+            <p class="Procedure"><a name="Converti2"></a>Converting AutoCAD fonts manually</p>
+            <p>If you have AutoCAD (.shx) fonts stored outside of this location, the following needs to be done only once:</p>
             <ol>
-                <li value="1">Open LibreCAD.</li>
-                <li value="2">Select <b>Options</b>.</li>
-                <li value="3">Select <b>Application Preferences</b>.</li>
-                <li style="font-style: normal;" value="4">On the <b>Paths</b> tab, in the <b>Fonts</b> field, specify a new folder on your PC that will be used to store converted fonts. <i>This folder must be different than where your LibreCAD fonts are stored.</i></li>
-                <li value="5">Open a file explorer on your PC.</li>
-                <li value="6">Navigate to the following file path: </li>
-            </ol>
-            <ul>
-                <li value="1">64-bit OS:&#160;<span class="CodeSnippet">C:\Program Files (x86)\Hypertherm CAM\LibreCAD</span></li>
-                <li value="2">32-bit OS: <span class="CodeSnippet">C:\Program Files\Hypertherm CAM\LibreCAD</span></li>
-            </ul>
-            <ol>
-                <li value="1">Locate the file <b>dumpshp.bat</b>. Right-click and select <b>Copy</b>.</li>
-                <li value="2">Navigate to the new font folder you specified in step 4.</li>
-                <li value="3">Right-click and select Paste to put a copy of <b>dumpshp.bat</b> into your new font folder.</li>
-                <li value="4">Double-click on <b>dumpshp.bat</b>. A&#160;command window will appear. </li>
-                <li value="5">When prompted, press any key.</li>
+                <li value="1">Open a file explorer on your PC.</li>
+                <li value="2">Navigate to the folder <span class="CodeSnippet">C:\Program Files (x86)\Hypertherm CAM\LibreCAD</span> and locate the file <b>dumpshp.bat</b>. </li>
+                <li value="3">Right-click on <b>dumpshp.bat</b> and select <b>Copy</b>.</li>
+                <li value="4">Navigate to the folder containing your AutoCAD fonts.</li>
+                <li value="5">Right-click and select Paste to put a copy of <b>dumpshp.bat</b> into the folder containing your AutoCAD fonts.</li>
+                <li value="6">Double-click on <b>dumpshp.bat</b> to run the file. A&#160;command window will appear and then automatically close when finished. </li>
             </ol>
             <p>Now, any AutoCAD fonts used in your drawings will automatically convert into a readable format for LibreCAD, and you can use any AutoCAD font in a new LibreCAD drawing.</p>
             <h5>Creating a font</h5>
@@ -209,9 +199,9 @@
                         <td class="TableStyle-ExampleGrid-BodyA-Column1-Body1" style="font-weight: bold;">
                             <p style="font-weight: bold;">Example</p>
                             <p>&#160;</p>
-                            <p>Step 1 - <i>Italict.lff</i> is the font I will use as a template.</p>
+                            <p>Step 1 - <i>Italict.lff</i> is the font to be used as a template.</p>
                             <p>&#160;</p>
-                            <p>Step 2 - Italict.lff is a default LibreCAD font, which is located here: C:\Program Files (x86)\Hypertherm CAM\LibreCAD\resources\fonts.</p>
+                            <p>Step 2 - Italict.lff is a default LibreCAD font, which is located in: C:\Program Files (x86)\Hypertherm CAM\LibreCAD\resources\fonts.</p>
                             <p>&#160;</p>
                             <p>Step 3 - The font is opened.</p>
                             <p>&#160;</p>
@@ -227,7 +217,7 @@
                             <p>&#160;</p>
                             <p>Step 5 - Make modifications to the character block, then exit the tab.</p>
                             <p>&#160;</p>
-                            <p>Step 6 - Save the font to a new file.</p>
+                            <p>Step 6 - Save the font to a new file. (Remember:&#160;Do not include the file extension (.lff) at the end of the file name; instead, simply select LFF&#160;from the file type dropdown.)</p>
                             <p>&#160;</p>
                             <p>The font is now available for use in a drawing.</p>
                         </td>

@@ -1,1 +1,1 @@
-define({r:0.5,st:'Stem',n:1,t:[0],u:['../Content/Main/Appendices/append_calculator.htm'],s:['+','one'],p:[['+',33],['bisect',39],['drawing',8],['includes',10],['of',4],['rotation',17],['them',11]]});
+define({r:0.5,st:'Stem',n:1,t:[0],u:['../Content/Main/Appendices/append_calculator.htm'],s:['+','onc'],p:[['+',33],['bi',21],['drawing',4],['in',38],['objects',39],['roman',31],['the',37]]});
