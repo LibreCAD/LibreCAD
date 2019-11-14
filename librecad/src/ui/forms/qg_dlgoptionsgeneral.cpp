@@ -33,6 +33,7 @@
 #include "qg_filedialog.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "lc_helpbrowser.h"
 
 /*
  *  Constructs a QG_DlgOptionsGeneral as a child of 'parent', with the
@@ -55,6 +56,9 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent, bool modal, Qt::Wind
             this, &QG_DlgOptionsGeneral::setVariableFile);
     connect(fonts_button, &QToolButton::clicked,
             this, &QG_DlgOptionsGeneral::setFontsFolder);
+
+	installEventFilter(LC_HELP);
+	LC_HELP->associateTopic(this, "topic_prefs_applicationpreferences");
 }
 
 /*

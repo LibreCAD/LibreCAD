@@ -121,6 +121,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawPoint()));
     action->setObjectName("DrawPoint");
+	LC_HELP->associateTopic(action, "topic_tool_other");
     a_map["DrawPoint"] = action;
 
     // <[~ Line ~]>
@@ -564,7 +565,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawHatch()));
     action->setObjectName("DrawHatch");
-	LC_HELP->associateTopic(action, "topic_append_hatch");
+	LC_HELP->associateTopic(action, "topic_tool_other");
     a_map["DrawHatch"] = action;
 
     action = new QAction(tr("Insert &Image"), agm->other);
@@ -581,7 +582,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimAligned()));
     action->setObjectName("DimAligned");
-	LC_HELP->associateTopic(action, "topic_tool_dimension");
+	LC_HELP->associateTopic(action, "topic_guide_dimensions");
     a_map["DimAligned"] = action;
 
     action = new QAction(tr("&Linear"), agm->dimension);
@@ -589,7 +590,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimLinear()));
     action->setObjectName("DimLinear");
-	LC_HELP->associateTopic(action, "topic_tool_dimension");
+	LC_HELP->associateTopic(action, "topic_guide_dimensions");
     a_map["DimLinear"] = action;
 
     action = new QAction(tr("&Horizontal"), agm->dimension);
@@ -597,7 +598,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimLinearHor()));
     action->setObjectName("DimLinearHor");
-	LC_HELP->associateTopic(action, "topic_tool_dimension");
+	LC_HELP->associateTopic(action, "topic_guide_dimensions");
     a_map["DimLinearHor"] = action;
 
     action = new QAction(tr("&Vertical"), agm->dimension);
@@ -605,7 +606,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimLinearVer()));
     action->setObjectName("DimLinearVer");
-	LC_HELP->associateTopic(action, "topic_tool_dimension");
+	LC_HELP->associateTopic(action, "topic_guide_dimensions");
     a_map["DimLinearVer"] = action;
 
     action = new QAction(tr("&Radial"), agm->dimension);
@@ -613,7 +614,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimRadial()));
     action->setObjectName("DimRadial");
-	LC_HELP->associateTopic(action, "topic_tool_dimension");
+	LC_HELP->associateTopic(action, "topic_guide_dimensions");
     a_map["DimRadial"] = action;
 
     action = new QAction(tr("&Diametric"), agm->dimension);
@@ -621,7 +622,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimDiametric()));
     action->setObjectName("DimDiametric");
-	LC_HELP->associateTopic(action, "topic_tool_dimension");
+	LC_HELP->associateTopic(action, "topic_guide_dimensions");
     a_map["DimDiametric"] = action;
 
     action = new QAction(tr("&Angular"), agm->dimension);
@@ -629,7 +630,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimAngular()));
     action->setObjectName("DimAngular");
-	LC_HELP->associateTopic(action, "topic_tool_dimension");
+	LC_HELP->associateTopic(action, "topic_guide_dimensions");
     a_map["DimAngular"] = action;
 
     action = new QAction(tr("&Leader"), agm->dimension);
@@ -637,7 +638,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimLeader()));
     action->setObjectName("DimLeader");
-	LC_HELP->associateTopic(action, "topic_tool_dimension");
+	LC_HELP->associateTopic(action, "topic_guide_dimensions");
     a_map["DimLeader"] = action;
 
     // <[~ Modify ~]>
@@ -1092,6 +1093,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksCreate()));
     action->setObjectName("BlocksCreate");
+	LC_HELP->associateTopic(action, "topic_tw_blocklistdock");
     a_map["BlocksCreate"] = action;
 
     // <[~ Options ~]>

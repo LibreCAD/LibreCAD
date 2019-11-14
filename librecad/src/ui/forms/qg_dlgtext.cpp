@@ -48,6 +48,8 @@ QG_DlgText::QG_DlgText(QWidget* parent, bool modal, Qt::WindowFlags fl)
 {
     setModal(modal);
     setupUi(this);
+
+	installEventFilter(LC_HELP);
 	LC_HELP->associateTopic(this, "topic_guide_text");
 
     init();

@@ -171,6 +171,7 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     but->setToolTip(tr("Create Block"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotBlocksCreate()));
+	LC_HELP->associateTopic(but, "topic_tw_blocklistdock");
     layButtons->addWidget(but);
     // add block:
     but = new QToolButton(this);
@@ -237,7 +238,7 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
 
     connect(blockView, SIGNAL(clicked(QModelIndex)), this, SLOT(slotActivated(QModelIndex)));
 
-	LC_HELP->associateTopic(this, "topic_tw_blocklist");
+	LC_HELP->associateTopic(this, "topic_guide_blocks");
 }
 
 /**

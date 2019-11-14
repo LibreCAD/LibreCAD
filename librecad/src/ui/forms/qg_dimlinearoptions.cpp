@@ -42,7 +42,7 @@ QG_DimLinearOptions::QG_DimLinearOptions(QWidget* parent, Qt::WindowFlags fl)
 	, ui(new Ui::Ui_DimLinearOptions{})
 {
 	ui->setupUi(this);
-	LC_HELP->associateTopic(this, "topic_tool_dimension");
+	LC_HELP->associateTopic(this, "topic_guide_dimension");
 }
 
 /*

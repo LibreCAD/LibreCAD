@@ -147,6 +147,10 @@ Section "Install Section" SecInstall
   File /NONFATAL "${TRANSLATIONS_DIR}\qt*.qm"
   SetOutPath "$INSTDIR"
 
+  ;Convert SHX fonts
+  DetailPrint "Converting AutoCAD fonts for use with LibreCAD"
+  nsExec::Exec '"$INSTDIR\dumpshp.bat"'
+
   ;Store installation folder
   WriteRegStr HKCU "Software\LibreCAD" "" $INSTDIR
 

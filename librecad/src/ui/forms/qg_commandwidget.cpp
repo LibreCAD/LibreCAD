@@ -80,7 +80,7 @@ QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::Window
     options_button->addAction(a3);
 
     options_button->setStyleSheet("QToolButton::menu-indicator { image: none; }");
-	LC_HELP->associateTopic(this, "topic_append_commandline");
+	LC_HELP->associateTopic(this, "topic_guide_commandline");
 }
 
 /*

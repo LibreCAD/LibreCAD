@@ -48,6 +48,7 @@
 #include "qg_graphicview.h"
 #include "rs_debug.h"
 #include "rs_system.h"
+#include "lc_helpbrowser.h"
 
 int QC_MDIWindow::idCounter = 0;
 
@@ -97,6 +98,8 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, Qt::WindowFlags wf
             document->getBlockList()->addListener(this);
         }
     }
+
+	LC_HELP->associateTopic(this, "topic_intro_overview");
 }
 
 /**
