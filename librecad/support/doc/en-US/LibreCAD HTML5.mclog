@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MadCapLog Protocol="2" Description="MadCap Flare 2018 Generated LibreCAD HTML5.fltar" Date="2019-11-14T13:26:34.0209522-05:00">
+<MadCapLog Protocol="2" Description="MadCap Flare 2018 Generated LibreCAD HTML5.fltar" Date="2019-11-14T15:50:06.5198715-05:00">
     <Messages>Compiling target LibreCAD HTML5...
 Removing previously generated content...
 Error validating conditional expression: Unrecognized tag: Primary.EXCLUDE ALL
@@ -197,7 +197,7 @@ Generating final output...
 Generated Default.htm
 Saving result set...
 Ignored Compiler Warnings: 440
-Output generated in 2 minute(s) and 14 second(s).
+Output generated in 2 minute(s) and 17 second(s).
 
 Done
 Saving log to "C:\Users\Angelia.Giannone\Documents\VAULT\LibreCAD\LibreCAD\Output\Angelia_Giannone\LibreCAD HTML5\LibreCAD HTML5.mclog"
