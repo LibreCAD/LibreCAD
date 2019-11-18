@@ -56,6 +56,7 @@ QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent, bool modal, Qt::Wind
     setModal(modal);
     setupUi(this);
     tabWidget->setCurrentIndex(current_tab);
+	installEventFilter(LC_HELP);
 	LC_HELP->associateTopic(this, "topic_prefs_drawingpreferences");
     init();
 }
@@ -936,11 +937,7 @@ void QG_DlgOptionsDrawing::on_rbLandscape_toggled(bool /*checked*/)
 
 void QG_DlgOptionsDrawing::on_cbDimFxLon_toggled(bool checked)
 {
-    if (checked > 0){
-        cbDimFxL->setEnabled(true);
-    } else {
-        cbDimFxL->setEnabled(false);
-    }
+	cbDimFxL->setEnabled(checked);
 }
 
 
