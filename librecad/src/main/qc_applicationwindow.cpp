@@ -3609,3 +3609,51 @@ void QC_ApplicationWindow::invokeLicenseWindow()
 
     dlg.exec();
 }
+
+void QC_ApplicationWindow::toggleLeftDockArea(bool state)
+{
+	foreach(QDockWidget* dw, findChildren<QDockWidget*>())
+	{
+		if (dockWidgetArea(dw) == Qt::LeftDockWidgetArea && !dw->isFloating())
+			dw->setVisible(state);
+	}
+}
+
+void QC_ApplicationWindow::toggleRightDockArea(bool state)
+{
+	bool hidden = pen_wiz->isHidden();
+	foreach(QDockWidget* dw, findChildren<QDockWidget*>())
+	{
+		if (dockWidgetArea(dw) == Qt::RightDockWidgetArea && !dw->isFloating())
+			dw->setVisible(state);
+	}
+	if (hidden)
+		pen_wiz->hide();
+}
+
+void QC_ApplicationWindow::toggleTopDockArea(bool state)
+{
+	foreach(QDockWidget* dw, findChildren<QDockWidget*>())
+	{
+		if (dockWidgetArea(dw) == Qt::TopDockWidgetArea && !dw->isFloating())
+			dw->setVisible(state);
+	}
+}
+
+void QC_ApplicationWindow::toggleBottomDockArea(bool state)
+{
+	foreach(QDockWidget* dw, findChildren<QDockWidget*>())
+	{
+		if (dockWidgetArea(dw) == Qt::BottomDockWidgetArea && !dw->isFloating())
+			dw->setVisible(state);
+	}
+}
+
+void QC_ApplicationWindow::toggleFloatingDockwidgets(bool state)
+{
+	foreach(QDockWidget* dw, findChildren<QDockWidget*>())
+	{
+		if (dw->isFloating())
+			dw->setVisible(state);
+	}
+}

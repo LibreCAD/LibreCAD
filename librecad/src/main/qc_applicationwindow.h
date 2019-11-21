@@ -223,6 +223,13 @@ public slots:
 
     void invokeLicenseWindow();
 
+public slots:
+	void toggleRightDockArea(bool state);
+	void toggleLeftDockArea(bool state);
+	void toggleTopDockArea(bool state);
+	void toggleBottomDockArea(bool state);
+	void toggleFloatingDockwidgets(bool state);
+
 
 signals:
     void gridChanged(bool on);

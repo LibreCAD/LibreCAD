@@ -17,13 +17,6 @@ public:
 
     void sortWidgetsByTitle(QList<QDockWidget*>& list);
     void sortWidgetsByTitle(QList<QToolBar*>& list);
-
-public slots:
-    void toggleRightDockArea(bool state);
-    void toggleLeftDockArea(bool state);
-    void toggleTopDockArea(bool state);
-    void toggleBottomDockArea(bool state);
-    void toggleFloatingDockwidgets(bool state);
 };
 
 #endif // MAINWINDOWX_H
