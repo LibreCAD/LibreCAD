@@ -19,7 +19,6 @@ The 2.1 branch will be the last to support Qt4.
 The 2.0 branch will be the last to support the QCAD toolbar. [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=2.0)](https://travis-ci.org/LibreCAD/LibreCAD) 
 
 - [Releases](https://github.com/LibreCAD/LibreCAD/releases)
-
 - [Milestones](https://github.com/LibreCAD/LibreCAD/milestones)
 
 [libdxfrw](https://sourceforge.net/projects/libdxfrw/) is an associated project that allows LibreCAD to read DWG files.
@@ -29,15 +28,15 @@ The 2.0 branch will be the last to support the QCAD toolbar. [![Build Status](ht
 - [GitHub issues (preferred)](https://github.com/LibreCAD/LibreCAD/issues)
 - [SourceForge tickets (disabled)](https://sourceforge.net/p/librecad/_list/tickets?source=navbar)
 
+**Users Documentation**
+
+- [Users Manual](https://librecad.readthedocs.io/en/latest/index.html)
+- [Wiki Main Page](http://wiki.librecad.org/index.php/Main_Page)
+
 **Questions or Comments**
 
 - [LibreCAD's Forum](http://forum.librecad.org/)
 - IRC: [#librecad](http://webchat.freenode.net/?channels=librecad) at freenode.net
-
-**Wiki**
-
-- [Main Page](http://wiki.librecad.org/index.php/Main_Page)
-- [Users Manual](http://wiki.librecad.org/index.php/LibreCAD_users_Manual)
 
 **Building**
 
