@@ -1,4 +1,4 @@
-## LibreCAD and the GPLv2 ##
+﻿## LibreCAD and the GPLv2 ##
 
 LibreCAD is free software; you can redistribute it and/or modify  
 it under the terms of the GNU General Public License version 2 (GPLv2)  
@@ -47,6 +47,8 @@ Copyright (C):
 - 2014-2015 Christian Luginbühl (dinkel@pimprecords.com)
 - 2015 A. Stebich (librecad@mail.lordofbikes.de)
 - 2015-2016 ravas (github.com/r-a-v-a-s)
+- 2019 Shawn Curry
+- 2019 Douglas B. Geiger
 
 ### Rights holders of the fonts ###
 
