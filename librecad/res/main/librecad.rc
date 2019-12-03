@@ -4,7 +4,7 @@
 LANGUAGE 0x409, 1252
 IDI_ICON1               ICON    DISCARDABLE     "librecad.ico"
 VS_VERSION_INFO VERSIONINFO
-FILEVERSION 2,2,0,7264
+FILEVERSION 2,2,0,7276
 PRODUCTVERSION 2,2,0
 BEGIN
     BLOCK "StringFileInfo"
@@ -13,14 +13,14 @@ BEGIN
         BEGIN
             VALUE "CompanyName",        "Hypertherm"
             VALUE "FileDescription",    "LibreCAD for ProNest"
-            VALUE "FileVersion",        "2.2.0.7264"
+            VALUE "FileVersion",        "2.2.0.7276"
             VALUE "InternalName",       "LibreCAD for ProNest"
             VALUE "LegalCopyright",     "GPL v2.0"
             VALUE "OriginalFilename",   "LibreCAD.exe"
             VALUE "ProductName",        "LibreCAD"
             VALUE "ProductVersion",     "2.2.0"
-            VALUE "Rev",     7264
-            VALUE "Date",     11/21/2019
+            VALUE "Rev",     7276
+            VALUE "Date",     12/03/2019
         END
     END
     BLOCK "VarFileInfo"

@@ -139,10 +139,13 @@ QString LC_Telemetry::GetProductVersion()
 
 QString LC_Telemetry::GetAssociate()
 {
-	std::string dns = std::getenv("USERDNSDOMAIN");
-	std::transform(dns.begin(), dns.end(), dns.begin(), toupper);
-	if (dns.find("HYPERTHERM", 0) != std::string::npos)
-		return QString("-1");
+	auto ptr = std::getenv("USERDNSDOMAIN");
+	if (ptr != nullptr) {
+		std::string dns = ptr;
+		std::transform(dns.begin(), dns.end(), dns.begin(), toupper);
+		if (dns.find("HYPERTHERM", 0) != std::string::npos)
+			return QString("-1");
+	}
 	return QString("0");
 }
 
