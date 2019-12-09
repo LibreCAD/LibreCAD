@@ -50,7 +50,6 @@ RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
     :RS_ActionInterface("Print Preview",
 						container, graphicView)
 	, hasOptions(false)
-	, scaleFixed(false)
 	, m_bPaperOffset(false)
 	, pPoints(new Points{})
 {
@@ -301,6 +300,11 @@ double RS_ActionPrintPreview::getScale() const{
     return ret;
 }
 
+
+void RS_ActionPrintPreview::setLineWidthScaling(bool state) {
+    graphicView->setLineWidthScaling(state);
+    graphicView->redraw();
+}
 
 
 void RS_ActionPrintPreview::setBlackWhite(bool bw) {

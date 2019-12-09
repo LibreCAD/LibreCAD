@@ -47,6 +47,7 @@ public slots:
     virtual void setAction( RS_ActionInterface * a, bool update );
     virtual void updateData();
     virtual void center();
+    virtual void setLineWidthScaling( bool state );
     virtual void setBlackWhite( bool on );
     virtual void fit();
     virtual void scale( const QString & s );
@@ -70,6 +71,7 @@ private:
 	QStringList imperialScales;
     QStringList metricScales;
     bool updateDisabled{false};
+    bool scaleLineWidth;
     bool blackWhiteDisabled;
     int defaultScales;
 	std::unique_ptr<Ui::Ui_PrintPreviewOptions> ui;
