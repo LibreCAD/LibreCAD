@@ -64,7 +64,6 @@ public:
 	void showOptions() override;
 	void hideOptions() override;
 
-	void finish(bool /*updateTB*/ = true ) override{}
 	void updateMouseCursor() override;
 
     void center();

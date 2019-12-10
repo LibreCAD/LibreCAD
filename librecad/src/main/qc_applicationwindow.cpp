@@ -973,8 +973,6 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
 
     RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated begin");
 
-	enableFileActions(qobject_cast<QC_MDIWindow*>(w));
-
     if(w==nullptr) {
         emit windowsChanged(false);
         activedMdiSubWindow=w;
@@ -983,7 +981,9 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
 
     if(w==activedMdiSubWindow) return;
     activedMdiSubWindow=w;
+
     QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(w);
+    enableFileActions(m);
 
     if (m && m->getDocument()) {
 
@@ -1035,6 +1035,18 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
         }else {
             RS_DEBUG->print(RS_Debug::D_ERROR,"snapToolBar is nullptr\n");
         }
+    }
+
+    // show action options for active window only
+    foreach (QMdiSubWindow* sw, mdiAreaCAD->subWindowList()) {
+        QC_MDIWindow* sm = qobject_cast<QC_MDIWindow*>(sw);
+        RS_ActionInterface* ai = sm->getGraphicView()->getCurrentAction();
+        if (ai) {
+            ai->hideOptions();
+        }
+    }
+    if (m->getGraphicView()->getCurrentAction()) {
+        m->getGraphicView()->getCurrentAction()->showOptions();
     }
 
     // Disable/Enable menu and toolbar items
@@ -2572,8 +2584,6 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                 parent->addChildWindow(w);
                 connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
                         this, SLOT(slotFileClosing(QC_MDIWindow*)));
-                connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
-                        this, SLOT(hideOptions(QC_MDIWindow*)));
 
                 w->setWindowTitle(tr("Print preview for %1").arg(parent->windowTitle()));
                 w->setWindowIcon(QIcon(":/main/document.png"));
@@ -2636,7 +2646,6 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                         gv->zoomPage();
                     }
                 }
-                w->getGraphicView()->getDefaultAction()->showOptions();
 
                 slotWindowActivated(subWindow);
 
