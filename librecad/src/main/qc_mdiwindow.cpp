@@ -151,8 +151,13 @@ RS_EventHandler* QC_MDIWindow::getEventHandler() const{
 }
 
 void QC_MDIWindow::setParentWindow(QC_MDIWindow* p) {
-	RS_DEBUG->print("setParentWindow");
+	RS_DEBUG->print("QC_MDIWindow::setParentWindow");
 	parentWindow = p;
+}
+
+QC_MDIWindow* QC_MDIWindow::getParentWindow() const {
+	RS_DEBUG->print("QC_MDIWindow::getParentWindow");
+	return parentWindow;
 }
 
 RS_Graphic* QC_MDIWindow::getGraphic() const {
@@ -216,63 +221,18 @@ QC_MDIWindow* QC_MDIWindow::getPrintPreview() {
 }
 
 
-
-/**
- * closes this MDI window.
- *
- */
-void QC_MDIWindow::slotWindowClosing()
-{
-    RS_DEBUG->print("QC_MDIWindow::slotWindowClosing begin");
-    // should never happen:
-    if (document==NULL) {
-        return;
-    }
-
-	getGraphicView()->killAllActions();
-
-    // This is a block and we don't need to ask the user for closing
-    //   since it's still available in the parent drawing after closing.
-    if (parentWindow)
-    {
-        RS_DEBUG->print("  closing block");
-        parentWindow->removeChildWindow(this);
-    }
-
-    // This is a graphic document.
-    else {
-        RS_DEBUG->print("  closing graphic");
-
-        if (childWindows.length() > 0)
-        { // should never get here; QC_Application will manage the block sub-windows now
-            for(auto p: childWindows)
-            {
-                cadMdiArea->removeSubWindow(p);
-                p->close(); // this would show save/close if we did
-            }
-		childWindows.clear();
-        }
-    }
-}
-
-
 /**
  * Called by Qt when the user closes this MDI window.
  */
 void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
-
     RS_DEBUG->print("QC_MDIWindow::closeEvent begin");
 
-	if (!parentWindow) {
-		ce->ignore(); // handling delegated to QApplication
-		emit(signalClosing(this));
-	} else {
-		slotWindowClosing();
-		ce->accept();
-	}		
-		
+    emit(signalClosing(this));
+    ce->accept(); // handling delegated to QApplication
+
     RS_DEBUG->print("QC_MDIWindow::closeEvent end");
 }
+
 
 /**
  * Called when the current pen (color, style, width) has changed.

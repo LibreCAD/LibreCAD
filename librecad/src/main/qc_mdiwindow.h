@@ -68,7 +68,6 @@ public slots:
     bool slotFileSaveAs(bool &cancelled);
     void slotFilePrint();
     void slotZoomAuto();
-	void slotWindowClosing();
 
 public:
     /** @return Pointer to graphic view */
@@ -100,9 +99,12 @@ public:
     }
 
     /**
-     * Sets the parent window that will be notified if this 
+     * Sets the parent window that will be notified if this window
+     * is closed or NULL.
      */
-	void setParentWindow(QC_MDIWindow* p);
+    void setParentWindow(QC_MDIWindow* p);
+    QC_MDIWindow* getParentWindow() const;
+
     /**
      * @return The MDI window id.
      */
