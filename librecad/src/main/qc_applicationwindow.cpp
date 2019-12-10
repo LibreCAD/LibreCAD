@@ -2551,9 +2551,9 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
         if (parent->getGraphicView()->isPrintPreview())
         {
             RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): close");
-            mdiAreaCAD->closeActiveSubWindow();
-            getMDIWindow()->showMaximized();
             emit(printPreviewChanged(false));
+            doClose(parent);
+            doArrangeWindows(RS2::CurrentMode);
             return;
         }
     }
@@ -2566,8 +2566,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
         {
             RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): show existing");
 
-            ppv->showMaximized();
-            mdiAreaCAD->setActiveSubWindow(qobject_cast<QMdiSubWindow*>(ppv));
+            doActivate(ppv);
+            doArrangeWindows(RS2::CurrentMode);
             emit(printPreviewChanged(true));
         }
         else
@@ -2580,7 +2580,6 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
 
                 QC_MDIWindow* w = new QC_MDIWindow(parent->getDocument(), mdiAreaCAD, 0);
                 QMdiSubWindow* subWindow=mdiAreaCAD->addSubWindow(w);
-                subWindow->showMaximized();
                 parent->addChildWindow(w);
                 connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
                         this, SLOT(slotFileClosing(QC_MDIWindow*)));
@@ -2620,11 +2619,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
 
                 RS_DEBUG->print("  showing MDI window");
 
-                if (mdiAreaCAD->subWindowList().size() <= 1 ) {
-                    w->showMaximized();
-                } else {
-                    w->show();
-                }
+                doActivate(w);
+                doArrangeWindows(RS2::CurrentMode);
 
                 if(graphic){
                     bool bigger = graphic->isBiggerThanPaper();
@@ -2646,8 +2642,6 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                         gv->zoomPage();
                     }
                 }
-
-                slotWindowActivated(subWindow);
 
                 emit(printPreviewChanged(true));
             }
