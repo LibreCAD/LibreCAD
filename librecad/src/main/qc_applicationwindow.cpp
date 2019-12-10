@@ -510,10 +510,21 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs)
  */
 void QC_ApplicationWindow::doClose(QC_MDIWindow * w, bool activateNext)
 {
-	for (auto child : w->getChildWindows()) // block editors; just force these closed
+	RS_DEBUG->print("QC_ApplicationWindow::doClose begin");
+	w->getGraphicView()->killAllActions();
+	QC_MDIWindow* parentWindow = w->getParentWindow();
+	if (parentWindow)
+	{
+		RS_DEBUG->print("QC_ApplicationWindow::doClose closing block or print preview");
+		parentWindow->removeChildWindow(w);
+	}
+	else
+	{
+		RS_DEBUG->print("QC_ApplicationWindow::doClose closing graphic");
+	}
+	for (auto child : w->getChildWindows()) // block editors and print previews; just force these closed
 		doClose(child, false); // they belong to the document (changes already saved there)
 	w->getChildWindows().clear();
-	w->slotWindowClosing();
 	mdiAreaCAD->removeSubWindow(w);
 	window_list.removeOne(w);
 
@@ -532,6 +543,7 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow * w, bool activateNext)
 
 	if (activateNext && window_list.count() > 0)
 		doActivate(window_list.front());
+	RS_DEBUG->print("QC_ApplicationWindow::doClose end");
 }
 
 /**
@@ -2183,7 +2195,8 @@ void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
 {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClosing()");
 	bool cancel = false;
-	if (win && win->getDocument()->isModified()) {
+	bool hasParent = win->getParentWindow() != nullptr;
+	if (win && win->getDocument()->isModified() && !hasParent) {
 		switch (showCloseDialog(win)) {
 		case QG_ExitDialog::Save:
 			cancel = !doSave(win);
@@ -2193,7 +2206,11 @@ void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
 			break;
 		}
 	}
-	if (!cancel) doClose(win);
+	if (!cancel)
+	{
+		doClose(win);
+		doArrangeWindows(RS2::CurrentMode);
+	}
 }
 
 /**
@@ -2206,10 +2223,12 @@ void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
  */
 bool QC_ApplicationWindow::slotFileCloseAll()
 {
-	bool cancel(false), closeAll(false);
+	bool cancel(false), closeAll(false), hasParent(false);
 	for (auto w : window_list) if (w) {
 
-		if (w->getDocument()->isModified() && !closeAll) {
+		hasParent = w->getParentWindow() != nullptr;
+
+		if (w->getDocument()->isModified() && !hasParent && !closeAll) {
 			doActivate(w);
 			switch (showCloseDialog(w, window_list.count() > 1)) {
 			case QG_ExitDialog::Close:
@@ -2232,6 +2251,7 @@ bool QC_ApplicationWindow::slotFileCloseAll()
 		}
 
 		doClose(w);
+		doArrangeWindows(RS2::CurrentMode);
 	}
 	return true;
 }
@@ -2550,6 +2570,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                 QMdiSubWindow* subWindow=mdiAreaCAD->addSubWindow(w);
                 subWindow->showMaximized();
                 parent->addChildWindow(w);
+                connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
+                        this, SLOT(slotFileClosing(QC_MDIWindow*)));
                 connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
                         this, SLOT(hideOptions(QC_MDIWindow*)));
 
