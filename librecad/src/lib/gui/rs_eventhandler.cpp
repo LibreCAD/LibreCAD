@@ -504,6 +504,11 @@ void RS_EventHandler::killAllActions()
 		}
 	}
 
+    if (!defaultAction->isFinished())
+    {
+        defaultAction->finish();
+    }
+
 	RS_DEBUG->print(__FILE__ ": %s: line %d: begin\n", __func__, __LINE__);
 	defaultAction->init(0);
 }
