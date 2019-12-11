@@ -1779,9 +1779,12 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
         painter->drawLine(view->toGui(minV),view->toGui(maxV));
         return;
     }
+
+    bool drawAsSelected = isSelected() && !(view->isPrinting() || view->isPrintPreview());
+
     double mAngle=getAngle();
     RS_Vector cp(view->toGui(getCenter()));
-	if (!isSelected() && (
+	if (!drawAsSelected && (
              getPen().getLineType()==RS2::SolidLine ||
              view->getDrawingMode()==RS2::ModePreview)) {
         painter->drawEllipse(cp,
@@ -1793,9 +1796,13 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
     }
 
     // Pattern:
-	const RS_LineTypePattern* pat = isSelected() ?
-				&RS_LineTypePattern::patternSelected :
-				view->getPattern(getPen().getLineType());
+	const RS_LineTypePattern* pat = nullptr;
+	if (drawAsSelected) {
+		pat = &RS_LineTypePattern::patternSelected;
+	}
+	else {
+		pat = view->getPattern(getPen().getLineType());
+	}
 
 	if (!pat) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "Invalid pattern for Ellipse");

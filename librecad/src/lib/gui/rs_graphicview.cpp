@@ -1042,15 +1042,18 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 		pen.setColor(foreground);
 	}
 
-	// this entity is selected:
-	if (e->isSelected()) {
-		pen.setLineType(RS2::DotLine);
-		pen.setColor(selectedColor);
-	}
+	if (!isPrinting() && !isPrintPreview())
+	{
+		// this entity is selected:
+		if (e->isSelected()) {
+			pen.setLineType(RS2::DotLine);
+			pen.setColor(selectedColor);
+		}
 
-	// this entity is highlighted:
-	if (e->isHighlighted()) {
-		pen.setColor(highlightedColor);
+		// this entity is highlighted:
+		if (e->isHighlighted()) {
+			pen.setColor(highlightedColor);
+		}
 	}
 
 	// deleting not drawing:
@@ -1146,7 +1149,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
 	}
 
 	// draw reference points:
-	if (e->isSelected()) {
+	if (e->isSelected() && !(isPrinting() || isPrintPreview())) {
 		if (!e->isParentSelected()) {
 			RS_VectorSolutions const& s = e->getRefPoints();
 

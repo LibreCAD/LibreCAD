@@ -1908,7 +1908,7 @@ void LC_SplinePoints::draw(RS_Painter* painter, RS_GraphicView* view, double& pa
 
 	// Pattern:
 	const RS_LineTypePattern* pat = nullptr;
-	if(isSelected())
+	if(isSelected() && !(view->isPrinting() || view->isPrintPreview()))
 	{
 //		styleFactor=1.;
         pat = &RS_LineTypePattern::patternSelected;
