@@ -36,7 +36,7 @@ The 2.0 branch will be the last to support the QCAD toolbar. [![Build Status](ht
 
 **Wiki**
 
-- [Main Page](http://wiki.librecad.org/index.php/Main_Page)
+- [Main Page](http://wiki.librecad.org/index.php/Main_Page/)
 - [Users Manual](http://wiki.librecad.org/index.php/LibreCAD_users_Manual)
 
 **Building**
