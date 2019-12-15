@@ -498,7 +498,7 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs)
 				+ tr(" , please check the filename and permissions.");
 			statusBar()->showMessage(msg, 2000);
 			commandWidget->appendHistory(msg);
-			return doSave(w);
+			return doSave(w, forceSaveAs);
 		}
 	}
 	return true;
