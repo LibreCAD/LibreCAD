@@ -1465,6 +1465,8 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
         w->setWindowTitle(tr("Block '%1'").arg(((RS_Block*)(w->getDocument()))->getName()) + "[*]");
     } else {
         w->setWindowTitle(tr("unnamed document %1").arg(id) + "[*]");
+        // document has been created but never saved
+        w->getDocument()->setModified(true);
     }
 
     //check for draft mode
