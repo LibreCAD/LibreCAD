@@ -2185,7 +2185,8 @@ void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
 {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClosing()");
 	bool cancel = false;
-	if (win && win->getDocument()->isModified()) {
+	bool hasParent = win->getParentWindow() != nullptr;
+	if (win && win->getDocument()->isModified() && !hasParent) {
 		switch (showCloseDialog(win)) {
 		case QG_ExitDialog::Save:
 			cancel = !doSave(win);

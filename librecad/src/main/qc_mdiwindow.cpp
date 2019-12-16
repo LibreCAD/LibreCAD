@@ -155,6 +155,11 @@ void QC_MDIWindow::setParentWindow(QC_MDIWindow* p) {
 	parentWindow = p;
 }
 
+QC_MDIWindow* QC_MDIWindow::getParentWindow() const {
+	RS_DEBUG->print("QC_MDIWindow::getParentWindow");
+	return parentWindow;
+}
+
 RS_Graphic* QC_MDIWindow::getGraphic() const {
 	return document->getGraphic();
 }
