@@ -2586,7 +2586,6 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
 
                 w->setWindowTitle(tr("Print preview for %1").arg(parent->windowTitle()));
                 w->setWindowIcon(QIcon(":/main/document.png"));
-                w->slotZoomAuto();
                 QG_GraphicView* gv = w->getGraphicView();
                 gv->device = settings.value("Hardware/Device", "Mouse").toString();
                 gv->setPrintPreview(true);
@@ -2621,6 +2620,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
 
                 doActivate(w);
                 doArrangeWindows(RS2::CurrentMode);
+
+                gv->zoomAuto(false);
 
                 if(graphic){
                     bool bigger = graphic->isBiggerThanPaper();
