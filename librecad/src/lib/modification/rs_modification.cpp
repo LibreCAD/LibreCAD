@@ -506,7 +506,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
 
     // create block to paste entities as a whole
     QString name_old = "paste-block";
-    if (data.blockName != NULL) {
+    if (data.blockName != nullptr) {
         name_old = data.blockName;
     }
     QString name_new = name_old;
@@ -524,11 +524,11 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
 
     // create insert object for the paste block
     RS_InsertData di = RS_InsertData(b->getName(), ip, vfactor, data.angle, 1, 1, RS_Vector(0.0,0.0));
-    RS_Insert* i = new RS_Insert(graphic, di);
+    RS_Insert* i = new RS_Insert(document, di);
     i->setLayerToActive();
     i->setPenToActive();
-    i->reparent(graphic);
-    graphic->addEntity(i);
+    i->reparent(document);
+    document->addEntity(i);
 
     // copy sub- blocks, inserts and entities from source to the paste block
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: copy content to the paste block");
@@ -563,13 +563,13 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     i->setSelected(false);
 
     // unblock all entities if not pasting as a new block by demand
-    LC_UndoSection undo( document, handleUndo);
+    LC_UndoSection undo(document, handleUndo);
     if (!data.asInsert) {
         // no inserts should be selected except from paste block and insert
-        container->setSelected( false);
+        container->setSelected(false);
         i->setSelected(true);
-        explode( false);
-        graphic->removeEntity(i);
+        explode(false);
+        document->removeEntity(i);
         b->clear();
         // if this call a destructor for the block?
         graphic->removeBlock(b);
