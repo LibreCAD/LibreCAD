@@ -177,11 +177,13 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     cbPaperFormat->setCurrentIndex((int)format);
 
     // paper orientation:
+    rbLandscape->blockSignals(true);
     if (landscape) {
         rbLandscape->setChecked(true);
     } else {
         rbPortrait->setChecked(true);
     }
+    rbLandscape->blockSignals(false);
 	if(format==RS2::Custom){
         RS_Vector s=graphic->getPaperSize();
         lePaperWidth->setText(QString("%1").setNum(s.x,'g',5));
