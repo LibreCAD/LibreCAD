@@ -195,6 +195,17 @@ public:
      */
     bool isVisibleInBlockList() const;
 
+    /**
+     * Block may contain inserts of other blocks.
+     * Find name of the nested block that contain the insert
+     * of specified block.
+     *
+     * @param bName name of the block the nested insert references to
+     *
+     * @return block name chain to the block that contain searched insert
+     */
+    QStringList findNestedInsert(const QString& bName);
+
 protected:
 	//! Block data
 	RS_BlockData data;
