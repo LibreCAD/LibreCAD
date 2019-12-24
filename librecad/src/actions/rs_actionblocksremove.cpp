@@ -91,6 +91,7 @@ void RS_ActionBlocksRemove::trigger() {
 	graphic->addBlockNotification();
 	graphic->updateInserts();
 	graphicView->redraw(RS2::RedrawDrawing);
+	blkLst->activate(nullptr);
 
 	finish(false);
 	RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
