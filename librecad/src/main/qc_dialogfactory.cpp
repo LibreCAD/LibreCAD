@@ -57,6 +57,13 @@ void QC_DialogFactory::requestEditBlockWindow(RS_BlockList* blockList) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "QC_DialogFactory::requestEditBlockWindow(): nullptr ApplicationWindow or MDIWindow");
         return;
     }
+
+    // If block is opened from another block the parent must be set
+    // to graphic that contain all these blocks.
+    if (parent->getDocument()->rtti() == RS2::EntityBlock) {
+        parent = parent->getParentWindow();
+    }
+
     //get blocklist from block widget, bug#3497154
     if (!blockList ) {
         RS_DEBUG->print(RS_Debug::D_NOTICE, "QC_DialogFactory::requestEditBlockWindow(): get blockList from appWindow");

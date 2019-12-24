@@ -47,6 +47,10 @@ void RS_ActionBlocksRemove::trigger() {
 	}
 	RS_Block* block =
 			RS_DIALOGFACTORY->requestBlockRemovalDialog(graphic->getBlockList());
+	if (!block) {
+		finish(false);
+		return;
+	}
 
 	// list of containers that might refer to the block via inserts:
 	std::vector<RS_EntityContainer*> containerList;
@@ -56,10 +60,6 @@ void RS_ActionBlocksRemove::trigger() {
 		containerList.push_back(blkLst->at(bi));
 	}
 
-	if (!block) {
-		finish(false);
-		return;
-	}
 	document->startUndoCycle();
 	for(auto cont: containerList){
 		// remove all inserts from the graphic:
