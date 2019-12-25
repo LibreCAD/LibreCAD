@@ -292,6 +292,7 @@ QString RS_Math::derationalize(const QString& expr) {
 		double total = 0.0;
 		int sign = (match.captured("sign").isNull() || match.captured("sign") == "") ? 1 : -1;
 
+        // convert_unit(<match obj ref>, <regex group name>, <unit->base conversion factor>, <default value>)
         total += convert_unit(match, "meters", 100.0, 0.0);
         total += convert_unit(match, "yards", 36.0, 0.0);
         total += convert_unit(match, "feet", 12.0, 0.0);
