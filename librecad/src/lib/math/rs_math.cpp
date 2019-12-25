@@ -257,6 +257,13 @@ double RS_Math::eval(const QString& expr, double def) {
     return res;
 }
 
+/**
+ * Convert a string containing rational numbers (fractions) and / or
+ * various unit symbols into the current user unit (cm or inch)
+ */
+QString RS_Math::derationalize(const QString& expr) {
+	return expr;
+}
 
 /**
  * Evaluates a mathematical expression and returns the result.
@@ -269,14 +276,15 @@ double RS_Math::eval(const QString& expr, bool* ok) {
         *ok = false;
         return 0.0;
     }
+    QString derationalized = derationalize(expr)
     double ret(0.);
     try{
         mu::Parser p;
         p.DefineConst(_T("pi"),M_PI);
 #ifdef _UNICODE
-        p.SetExpr(expr.toStdWString());
+        p.SetExpr(derationalized.toStdWString());
 #else
-        p.SetExpr(expr.toStdString());
+        p.SetExpr(derationalized.toStdString());
 #endif
         ret=p.Eval();
         *ok=true;
