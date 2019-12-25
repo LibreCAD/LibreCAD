@@ -73,6 +73,9 @@ public:
     static bool isAngleReadable(double angle);
     static bool isSameDirection(double dir1, double dir2, double tol);
 
+    //! \convert measurement strings with rationals or unit symbols to current unit
+    static QString derationalize(const QString& expr);
+
 	//! \{ \brief evaluate a math string
     static double eval(const QString& expr, double def=0.0);
     static double eval(const QString& expr, bool* ok);

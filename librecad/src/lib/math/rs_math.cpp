@@ -276,7 +276,9 @@ double RS_Math::eval(const QString& expr, bool* ok) {
         *ok = false;
         return 0.0;
     }
-    QString derationalized = derationalize(expr)
+
+    QString derationalized = derationalize(expr);
+
     double ret(0.);
     try{
         mu::Parser p;
