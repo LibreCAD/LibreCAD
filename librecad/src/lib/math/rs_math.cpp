@@ -48,7 +48,7 @@ namespace {
 constexpr double m_piX2 = M_PI*2; //2*PI
 const QRegularExpression unitreg(
 		R"((?P<sign>^-?))"
-		R"((?:(?P<meters>\d+\.?\d*)(?:meters|meter|m))?)"
+		R"((?:(?P<meters>\d+\.?\d*)(?:meters|meter|m(?![m])))?)" // negative look-behind for "mm"
 		R"((?:(?P<yards>\d+\.?\d*)(?:yards|yard|yd))?)"
 		R"((?:(?P<feet>\d+\.?\d*)(?:feet|foot|ft|'))?)"
 		R"((?:(?P<base>\d+\.?\d*)[-+]?)"
