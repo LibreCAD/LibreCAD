@@ -27,8 +27,6 @@
 #include "rs_actionblocksattributes.h"
 
 #include <QAction>
-#include <QMdiArea>
-#include <QMdiSubWindow>
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
 #include "rs_graphic.h"
@@ -62,16 +60,13 @@ void RS_ActionBlocksAttributes::trigger() {
 
                 // update window title of opened block
                 QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
-                QMdiArea* mdiArea = appWindow->getMdiArea();
-                foreach (QMdiSubWindow* sw, mdiArea->subWindowList()) {
-                    QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(sw);
-                    if (m && m->getDocument() == block) {
-                        QString title = m->windowTitle();
-                        title = title.replace(
-                                "'" + oldName + "'",
-                                "'" + newName + "'");
-                        m->setWindowTitle(title);
-                    }
+                QC_MDIWindow* blockWindow = appWindow->getWindowWithDoc(block);
+                if (blockWindow) {
+                    QString title = blockWindow->windowTitle();
+                    title = title.replace(
+                            "'" + oldName + "'",
+                            "'" + newName + "'");
+                    blockWindow->setWindowTitle(title);
                 }
 
                 blockList->rename(block, newName);

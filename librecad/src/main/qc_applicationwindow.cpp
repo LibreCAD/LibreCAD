@@ -3615,3 +3615,20 @@ void QC_ApplicationWindow::invokeLicenseWindow()
 
     dlg.exec();
 }
+
+
+QC_MDIWindow* QC_ApplicationWindow::getWindowWithDoc(const RS_Document* doc)
+{
+    QC_MDIWindow* wwd = nullptr;
+
+    if (doc) {
+        foreach (QC_MDIWindow* w, window_list) {
+            if (w && w->getDocument() == doc) {
+                wwd = w;
+                break;
+            }
+        }
+    }
+
+    return wwd;
+}
