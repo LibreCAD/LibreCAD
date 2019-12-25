@@ -274,8 +274,15 @@ QString RS_Math::derationalize(const QString& expr) {
 	QRegularExpressionMatch match = qreg.match(expr);
 	if (match.hasMatch()){
 		double total = 0.0;
-		double inches = (match.captured("inches") != "") ? match.captured("inches") : 0.0;
-		total += inches;
+		QString num = (match.captured("numerator") != "") ? match.captured("numerator") : "0.0";
+		QString denom = (match.captured("denominator") != "") ? match.captured("denominator") : "0.0";
+		QString inches = (match.captured("inches") != "") ? match.captured("inches") : "0.0";
+		QString feet = (match.captured("feet") != "") ? match.captured("feet") : "0.0";
+		QString yards = (match.captured("yards") != "") ? match.captured("yards") : "0.0";
+		total += num.toDouble() / denom.toDouble();
+		total += inches.toDouble();
+		total += feet.toDouble() * 12;
+		total += yards.toDouble() * 36;
 		RS_DEBUG->print("RS_Math::derationalize: '%f'", total);
 		return QString("%1").arg(total);		
 	}
