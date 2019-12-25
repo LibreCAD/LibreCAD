@@ -80,14 +80,16 @@ void RS_ActionBlocksRemove::trigger() {
 			}
 		} while (!done);
 	}
+	document->endUndoCycle();
 
 	// close all windows that are editing this block:
 	RS_DIALOGFACTORY->closeEditBlockWindow(block);
 
 	// Now remove the block from the block list, but do not delete:
+	graphic->startUndoCycle();
 	block->setUndoState(true);
-	document->addUndoable(block);
-	document->endUndoCycle();
+	graphic->addUndoable(block);
+	graphic->endUndoCycle();
 	graphic->addBlockNotification();
 	graphic->updateInserts();
 	graphicView->redraw(RS2::RedrawDrawing);
