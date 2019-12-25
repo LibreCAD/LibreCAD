@@ -228,12 +228,14 @@ void RS_Insert::update() {
 
                 ne->setPen(tmpPen);
 
-                                ne->setUpdateEnabled(true);
+                ne->setUpdateEnabled(true);
 
-                                if (data.updateMode!=RS2::PreviewUpdate) {
-//                                        RS_DEBUG->print("RS_Insert::update: updating new entity");
-                                        ne->update();
-                                }
+                // insert must be updated even in preview mode
+                if (data.updateMode != RS2::PreviewUpdate
+                        || ne->rtti() == RS2::EntityInsert) {
+                    //RS_DEBUG->print("RS_Insert::update: updating new entity");
+                    ne->update();
+                }
 
 //                                RS_DEBUG->print("RS_Insert::update: adding new entity");
                 appendEntity(ne);
