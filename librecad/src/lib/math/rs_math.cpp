@@ -46,6 +46,16 @@
 
 namespace {
 constexpr double m_piX2 = M_PI*2; //2*PI
+constexpr QRegularExpression unitreg(
+		R"((?P<sign>^-?))"
+		R"((?:(?P<meters>\d+\.?\d*)(?:meters|meter|m))?)"
+		R"((?:(?P<yards>\d+\.?\d*)(?:yards|yard|yd))?)"
+		R"((?:(?P<feet>\d+\.?\d*)(?:feet|foot|ft|'))?)"
+		R"((?:(?P<base>\d+\.?\d*)[-+]?)"
+            R"((?:(?P<numer>\d+)\/(?P<denom>\d+))?)"
+        R"((?:inches|inch|in|cm|"|))?)"
+		R"((?:(?P<milis>\d+\.?\d*)(?:|foot|ft|'))?)"
+	);
 }
 
 /**
@@ -261,37 +271,35 @@ double RS_Math::eval(const QString& expr, double def) {
 
 /**
  * Convert a string containing rational numbers (fractions) and / or
- * various unit symbols into the current user unit (cm or inch)
+ * various unit symbols into the current user unit (cm or inch).
+ * Note: only the gui cares about units, so all matched symbols are used naively.
  */
 QString RS_Math::derationalize(const QString& expr) {
-	std::cout << "RS_Math::derationalize: " << expr.toStdString() << std::endl; 
-	QRegularExpression qreg(
-		R"(^(?P<sign>-?))"
-		R"((?:(?P<yards>\d+\.?\d*)(?:yards|yard|yd))?)"
-		R"((?:(?P<feet>\d+\.?\d*)(?:feet|foot|ft|'))?)"
-		R"((?:(?P<inches>\d+\.?\d*)[-+]?)"
-		R"((?P<fraction>(?P<numerator>\d+)\/(?P<denominator>\d+))?(?:inches|inch|in|"|))?)"
-	);
-	QRegularExpressionMatch match = qreg.match(expr);
+	RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Math::derationalize: '%s'", expr.toStdString());
+
+	QRegularExpressionMatch match = unitreg.match(expr);
 	if (match.hasMatch()){
-		std::cout << "RS_Math:derationalize: matches: " << match.capturedTexts().join(", ").toStdString() << std::endl;
+		RS_DEBUG->print(RS_Debug::D_DEBUGGING,
+			"RS_Math::derationalize: '%s'", match.capturedTexts().join(", ").toStdString());
 		double total = 0.0;
 		int sign = (match.captured("sign").isNull() || match.captured("sign") == "") ? 1 : -1;
-		std::cout << "RS_Math:derationalize: matches: sign = " << sign <<std::endl;
-		QString num = (!match.captured("numerator").isNull()) ? match.captured("numerator") : "0.0";
-		QString denom = (!match.captured("denominator").isNull()) ? match.captured("denominator") : "1.0";
-		QString inches = (!match.captured("inches").isNull()) ? match.captured("inches") : "0.0";
-		QString feet = (!match.captured("feet").isNull()) ? match.captured("feet") : "0.0";
+		QString meters = (!match.captured("meters").isNull()) ? match.captured("meters") : "0.0";
 		QString yards = (!match.captured("yards").isNull()) ? match.captured("yards") : "0.0";
-		std::cout << "RS_Math::derationalize: numerator: " << num.toStdString() << std::endl;
-		std::cout << "RS_Math::derationalize: denominator: " << denom.toStdString() << std::endl;
-		total += num.toDouble() / denom.toDouble();
-		std::cout << "RS_Math::derationalize: total after rationals: " << total << std::endl;
-		total += inches.toDouble();
-		total += feet.toDouble() * 12.0;
+		QString feet = (!match.captured("feet").isNull()) ? match.captured("feet") : "0.0";
+		QString base = (!match.captured("base").isNull()) ? match.captured("base") : "0.0";
+		QString num = (!match.captured("numer").isNull()) ? match.captured("numer") : "0.0";
+		QString denom = (!match.captured("denom").isNull()) ? match.captured("denom") : "1.0";
+        QString milis = (!match.captured("milis").isNull()) ? match.captured("milis") : "0.0";
+
+		total += meter.toDouble() * 100.0;
 		total += yards.toDouble() * 36.0;
+		total += feet.toDouble() * 12.0;
+		total += base.toDouble();
+		total += num.toDouble() / denom.toDouble();
+        total += milis.toDouble() * 0.1;
 		total *= sign;
-		RS_DEBUG->print("RS_Math::derationalize: '%f'", total);
+
+		RS_DEBUG->print("RS_Math::derationalize: total is '%f'", total);
 		return QString("%1").arg(total);		
 	}
 	else {
