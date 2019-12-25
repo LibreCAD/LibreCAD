@@ -264,25 +264,33 @@ double RS_Math::eval(const QString& expr, double def) {
  * various unit symbols into the current user unit (cm or inch)
  */
 QString RS_Math::derationalize(const QString& expr) {
-	RS_DEBUG->print("RS_Math::derationalize: '%s'", expr);
+	std::cout << "RS_Math::derationalize: " << expr.toStdString() << std::endl; 
 	QRegularExpression qreg(
-		R"(^(?:(?P<yards>\d+\.?\d*)(?:yards|yard|yd))?)"
+		R"(^(?P<sign>-?))"
+		R"((?:(?P<yards>\d+\.?\d*)(?:yards|yard|yd))?)"
 		R"((?:(?P<feet>\d+\.?\d*)(?:feet|foot|ft|'))?)"
 		R"((?:(?P<inches>\d+\.?\d*)[-+]?)"
 		R"((?P<fraction>(?P<numerator>\d+)\/(?P<denominator>\d+))?(?:inches|inch|in|"|))?)"
 	);
 	QRegularExpressionMatch match = qreg.match(expr);
 	if (match.hasMatch()){
+		std::cout << "RS_Math:derationalize: matches: " << match.capturedTexts().join(", ").toStdString() << std::endl;
 		double total = 0.0;
-		QString num = (match.captured("numerator") != "") ? match.captured("numerator") : "0.0";
-		QString denom = (match.captured("denominator") != "") ? match.captured("denominator") : "0.0";
-		QString inches = (match.captured("inches") != "") ? match.captured("inches") : "0.0";
-		QString feet = (match.captured("feet") != "") ? match.captured("feet") : "0.0";
-		QString yards = (match.captured("yards") != "") ? match.captured("yards") : "0.0";
+		int sign = (match.captured("sign").isNull() || match.captured("sign") == "") ? 1 : -1;
+		std::cout << "RS_Math:derationalize: matches: sign = " << sign <<std::endl;
+		QString num = (!match.captured("numerator").isNull()) ? match.captured("numerator") : "0.0";
+		QString denom = (!match.captured("denominator").isNull()) ? match.captured("denominator") : "1.0";
+		QString inches = (!match.captured("inches").isNull()) ? match.captured("inches") : "0.0";
+		QString feet = (!match.captured("feet").isNull()) ? match.captured("feet") : "0.0";
+		QString yards = (!match.captured("yards").isNull()) ? match.captured("yards") : "0.0";
+		std::cout << "RS_Math::derationalize: numerator: " << num.toStdString() << std::endl;
+		std::cout << "RS_Math::derationalize: denominator: " << denom.toStdString() << std::endl;
 		total += num.toDouble() / denom.toDouble();
+		std::cout << "RS_Math::derationalize: total after rationals: " << total << std::endl;
 		total += inches.toDouble();
-		total += feet.toDouble() * 12;
-		total += yards.toDouble() * 36;
+		total += feet.toDouble() * 12.0;
+		total += yards.toDouble() * 36.0;
+		total *= sign;
 		RS_DEBUG->print("RS_Math::derationalize: '%f'", total);
 		return QString("%1").arg(total);		
 	}
