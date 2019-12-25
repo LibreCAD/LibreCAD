@@ -46,7 +46,7 @@
 
 namespace {
 constexpr double m_piX2 = M_PI*2; //2*PI
-constexpr QRegularExpression unitreg(
+const QRegularExpression unitreg(
 		R"((?P<sign>^-?))"
 		R"((?:(?P<meters>\d+\.?\d*)(?:meters|meter|m))?)"
 		R"((?:(?P<yards>\d+\.?\d*)(?:yards|yard|yd))?)"
@@ -268,6 +268,14 @@ double RS_Math::eval(const QString& expr, double def) {
 
     return res;
 }
+/**
+ * Helper function for derationalize; convert one unit to base unit using
+ * provided regex match, named group, conversion factor, and default value.
+ */
+double RS_Math::convert_unit(const QRegularExpressionMatch& match, const QString& name, double factor, double defval) {
+    QString input = (!match.captured(name).isNull()) ? match.captured(name) : QString("%1").arg(defval);
+    return input.toDouble() * factor;
+}
 
 /**
  * Convert a string containing rational numbers (fractions) and / or
@@ -275,28 +283,21 @@ double RS_Math::eval(const QString& expr, double def) {
  * Note: only the gui cares about units, so all matched symbols are used naively.
  */
 QString RS_Math::derationalize(const QString& expr) {
-	RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Math::derationalize: '%s'", expr.toStdString());
+	RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Math::derationalize: '%s'", expr.toLatin1().data());
 
 	QRegularExpressionMatch match = unitreg.match(expr);
 	if (match.hasMatch()){
 		RS_DEBUG->print(RS_Debug::D_DEBUGGING,
-			"RS_Math::derationalize: '%s'", match.capturedTexts().join(", ").toStdString());
+			"RS_Math::derationalize: '%s'", match.capturedTexts().join(", ").toLatin1().data());
 		double total = 0.0;
 		int sign = (match.captured("sign").isNull() || match.captured("sign") == "") ? 1 : -1;
-		QString meters = (!match.captured("meters").isNull()) ? match.captured("meters") : "0.0";
-		QString yards = (!match.captured("yards").isNull()) ? match.captured("yards") : "0.0";
-		QString feet = (!match.captured("feet").isNull()) ? match.captured("feet") : "0.0";
-		QString base = (!match.captured("base").isNull()) ? match.captured("base") : "0.0";
-		QString num = (!match.captured("numer").isNull()) ? match.captured("numer") : "0.0";
-		QString denom = (!match.captured("denom").isNull()) ? match.captured("denom") : "1.0";
-        QString milis = (!match.captured("milis").isNull()) ? match.captured("milis") : "0.0";
 
-		total += meter.toDouble() * 100.0;
-		total += yards.toDouble() * 36.0;
-		total += feet.toDouble() * 12.0;
-		total += base.toDouble();
-		total += num.toDouble() / denom.toDouble();
-        total += milis.toDouble() * 0.1;
+        total += convert_unit(match, "meters", 100.0, 0.0);
+        total += convert_unit(match, "yards", 36.0, 0.0);
+        total += convert_unit(match, "feet", 12.0, 0.0);
+        total += convert_unit(match, "base", 1.0, 0.0);
+        total += convert_unit(match, "numer", 1.0, 0.0) / convert_unit(match, "denom", 1.0, 1.0);
+        total += convert_unit(match, "milis", 0.1, 0.0);
 		total *= sign;
 
 		RS_DEBUG->print("RS_Math::derationalize: total is '%f'", total);

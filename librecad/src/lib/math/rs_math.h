@@ -32,6 +32,7 @@
 class RS_Vector;
 class RS_VectorSolutions;
 class QString;
+class QRegularExpressionMatch;
 
 /**
  * Math functions.
@@ -74,6 +75,7 @@ public:
     static bool isSameDirection(double dir1, double dir2, double tol);
 
     //! \convert measurement strings with rationals or unit symbols to current unit
+    static double convert_unit(const QRegularExpressionMatch&, const QString&, double, double);
     static QString derationalize(const QString& expr);
 
 	//! \{ \brief evaluate a math string
