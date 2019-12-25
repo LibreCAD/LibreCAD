@@ -31,6 +31,8 @@
 #include <cmath>
 #include <muParser.h>
 #include <QString>
+#include <QRegularExpression>
+#include <QRegularExpressionMatch>
 #include <QDebug>
 
 #include "rs_math.h"
@@ -262,7 +264,24 @@ double RS_Math::eval(const QString& expr, double def) {
  * various unit symbols into the current user unit (cm or inch)
  */
 QString RS_Math::derationalize(const QString& expr) {
-	return expr;
+	RS_DEBUG->print("RS_Math::derationalize: '%s'", expr);
+	QRegularExpression qreg(
+		R"(^(?:(?P<yards>\d+\.?\d*)(?:yards|yard|yd))?)"
+		R"((?:(?P<feet>\d+\.?\d*)(?:feet|foot|ft|'))?)"
+		R"((?:(?P<inches>\d+\.?\d*)[-+]?)"
+		R"((?P<fraction>(?P<numerator>\d+)\/(?P<denominator>\d+))?(?:inches|inch|in|"|))?)"
+	);
+	QRegularExpressionMatch match = qreg.match(expr);
+	if (match.hasMatch()){
+		double total = 0.0;
+		double inches = (match.captured("inches") != "") ? match.captured("inches") : 0.0;
+		total += inches;
+		RS_DEBUG->print("RS_Math::derationalize: '%f'", total);
+		return QString("%1").arg(total);		
+	}
+	else {
+		return expr;
+	}
 }
 
 /**
