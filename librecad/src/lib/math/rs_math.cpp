@@ -47,14 +47,19 @@
 namespace {
 constexpr double m_piX2 = M_PI*2; //2*PI
 const QRegularExpression unitreg(
-		R"((?P<sign>^-?))"
+		/*R"((?P<sign>^-?))"
+        R"((?:(?:(?P<degrees>\d+\.?\d*)(?:degree[s]?|deg|[Dd]|°)))"
+            R"((?:(?P<minutes>\d+\.?\d*)(?:minute[s]?|min|[Mm]|'))?)"
+            R"((?:(?P<seconds>\d+\.?\d*)(?:second[s]?|sec|[Ss]|"))?))"
 		R"((?:(?P<meters>\d+\.?\d*)(?:meters|meter|m(?![m])))?)" // negative look-behind for "mm"
 		R"((?:(?P<yards>\d+\.?\d*)(?:yards|yard|yd))?)"
-		R"((?:(?P<feet>\d+\.?\d*)(?:feet|foot|ft|'))?)"
+		R"((?:(?P<feet>\d+\.?\d*)(?:feet|foot|ft|')))"
 		R"((?:(?P<base>\d+\.?\d*)[-+]?)"
             R"((?:(?P<numer>\d+)\/(?P<denom>\d+))?)"
-        R"((?:inches|inch|in|cm|"|))?)"
+        R"((?:inches|inch|in|cm|"))?)"
 		R"((?:(?P<milis>\d+\.?\d*)(?:|foot|ft|'))?)"
+        */
+        R"((?P<sign>^-?)(?:(?:(?:(?P<degrees>\d+\.?\d*)(?:degree[s]?|deg|[Dd]|°))(?:(?P<minutes>\d+\.?\d*)(?:minute[s]?|min|[Mm]|'))?(?:(?P<seconds>\d+\.?\d*)(?:second[s]?|sec|[Ss]|"))?$)|(?:(?:(?P<meters>\d+\.?\d*)(?:meter[s]?|m(?![m])))?(?:(?P<centis>\d+\.?\d*)(?:centimeter[s]?|centi|cm))?(?:(?P<millis>\d+\.?\d*)(?:millimeter[s]?|mm))?$)|(?:(?:(?P<yards>\d+\.?\d*)(?:yards|yard|yd))?(?:(?P<feet>\d+\.?\d*)(?:feet|foot|ft|'))?(?:(?P<inches>\d+\.?\d*)[-+]?(?:(?P<numer>\d+)\/(?P<denom>\d+))?(?:inches|inch|in|"))?$)))"
 	);
 }
 
@@ -293,12 +298,16 @@ QString RS_Math::derationalize(const QString& expr) {
 		int sign = (match.captured("sign").isNull() || match.captured("sign") == "") ? 1 : -1;
 
         // convert_unit(<match obj ref>, <regex group name>, <unit->base conversion factor>, <default value>)
+        total += convert_unit(match, "degrees", 1.0, 0.0);
+        total += convert_unit(match, "minutes", 1/60.0, 0.0);
+        total += convert_unit(match, "seconds", 1/3600.0, 0.0);
         total += convert_unit(match, "meters", 100.0, 0.0);
+        total += convert_unit(match, "centis", 1.0, 0.0);
+        total += convert_unit(match, "millis", 0.1, 0.0);
         total += convert_unit(match, "yards", 36.0, 0.0);
         total += convert_unit(match, "feet", 12.0, 0.0);
-        total += convert_unit(match, "base", 1.0, 0.0);
+        total += convert_unit(match, "inches", 1.0, 0.0);
         total += convert_unit(match, "numer", 1.0, 0.0) / convert_unit(match, "denom", 1.0, 1.0);
-        total += convert_unit(match, "milis", 0.1, 0.0);
 		total *= sign;
 
 		RS_DEBUG->print("RS_Math::derationalize: total is '%f'", total);
