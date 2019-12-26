@@ -45,21 +45,20 @@
 
 
 namespace {
-constexpr double m_piX2 = M_PI*2; //2*PI
-const QRegularExpression unitreg(
-		/*R"((?P<sign>^-?))"
-        R"((?:(?:(?P<degrees>\d+\.?\d*)(?:degree[s]?|deg|[Dd]|°)))"
+    constexpr double m_piX2 = M_PI*2; //2*PI
+    const QRegularExpression unitreg(
+        R"((?P<sign>^-?))"
+        R"((?:(?:(?:(?P<degrees>\d+\.?\d*)(?:degree[s]?|deg|[Dd]|°)))"  // DMS
             R"((?:(?P<minutes>\d+\.?\d*)(?:minute[s]?|min|[Mm]|'))?)"
-            R"((?:(?P<seconds>\d+\.?\d*)(?:second[s]?|sec|[Ss]|"))?))"
-		R"((?:(?P<meters>\d+\.?\d*)(?:meters|meter|m(?![m])))?)" // negative look-behind for "mm"
-		R"((?:(?P<yards>\d+\.?\d*)(?:yards|yard|yd))?)"
-		R"((?:(?P<feet>\d+\.?\d*)(?:feet|foot|ft|')))"
-		R"((?:(?P<base>\d+\.?\d*)[-+]?)"
-            R"((?:(?P<numer>\d+)\/(?P<denom>\d+))?)"
-        R"((?:inches|inch|in|cm|"))?)"
-		R"((?:(?P<milis>\d+\.?\d*)(?:|foot|ft|'))?)"
-        */
-        R"((?P<sign>^-?)(?:(?:(?:(?P<degrees>\d+\.?\d*)(?:degree[s]?|deg|[Dd]|°))(?:(?P<minutes>\d+\.?\d*)(?:minute[s]?|min|[Mm]|'))?(?:(?P<seconds>\d+\.?\d*)(?:second[s]?|sec|[Ss]|"))?$)|(?:(?:(?P<meters>\d+\.?\d*)(?:meter[s]?|m(?![m])))?(?:(?P<centis>\d+\.?\d*)(?:centimeter[s]?|centi|cm))?(?:(?P<millis>\d+\.?\d*)(?:millimeter[s]?|mm))?$)|(?:(?:(?P<yards>\d+\.?\d*)(?:yards|yard|yd))?(?:(?P<feet>\d+\.?\d*)(?:feet|foot|ft|'))?(?:(?P<inches>\d+\.?\d*)[-+]?(?:(?P<numer>\d+)\/(?P<denom>\d+))?(?:inches|inch|in|"))?$)))"
+            R"((?:(?P<seconds>\d+\.?\d*)(?:second[s]?|sec|[Ss]|"))?$)|)"
+        R"((?:(?:(?P<meters>\d+\.?\d*)(?:meter[s]?|m(?![m])))?)"        // Metric
+            R"((?:(?P<centis>\d+\.?\d*)(?:centimeter[s]?|centi|cm))?)"
+            R"((?:(?P<millis>\d+\.?\d*)(?:millimeter[s]?|mm))?$)|)"
+        R"((?:(?:(?P<yards>\d+\.?\d*)(?:yards|yard|yd))?)"              // Imperial
+            R"((?:(?P<feet>\d+\.?\d*)(?:feet|foot|ft|'))?)"
+            R"((?:(?P<inches>\d+\.?\d*)[-+]?)"
+                R"((?:(?P<numer>\d+)\/(?P<denom>\d+))?)"                // rational inches
+            R"((?:inches|inch|in|"))?$)))"
 	);
 }
 
