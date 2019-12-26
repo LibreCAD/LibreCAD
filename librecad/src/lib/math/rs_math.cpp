@@ -288,12 +288,12 @@ double RS_Math::convert_unit(const QRegularExpressionMatch& match, const QString
  * Note: only the gui cares about units, so all matched symbols are used naively.
  */
 QString RS_Math::derationalize(const QString& expr) {
-	RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Math::derationalize: '%s'", expr.toLatin1().data());
+	RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Math::derationalize: expr = '%s'", expr.toLatin1().data());
 
 	QRegularExpressionMatch match = unitreg.match(expr);
 	if (match.hasMatch()){
 		RS_DEBUG->print(RS_Debug::D_DEBUGGING,
-			"RS_Math::derationalize: '%s'", match.capturedTexts().join(", ").toLatin1().data());
+			"RS_Math::derationalize: matches = '%s'", match.capturedTexts().join(", ").toLatin1().data());
 		double total = 0.0;
 		int sign = (match.captured("sign").isNull() || match.captured("sign") == "") ? 1 : -1;
 
@@ -310,7 +310,7 @@ QString RS_Math::derationalize(const QString& expr) {
         total += convert_unit(match, "numer", 1.0, 0.0) / convert_unit(match, "denom", 1.0, 1.0);
 		total *= sign;
 
-		RS_DEBUG->print("RS_Math::derationalize: total is '%f'", total);
+		RS_DEBUG->print("RS_Math::derationalize: total = '%f'", total);
 		return QString("%1").arg(total);		
 	}
 	else {
