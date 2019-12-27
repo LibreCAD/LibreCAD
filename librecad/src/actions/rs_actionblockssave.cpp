@@ -63,6 +63,7 @@ void RS_ActionBlocksSave::trigger() {
         if(b) {
 			RS_Graphic g(nullptr);
             g.setOwner(false);
+            g.getBlockList()->setOwner(false);
 
            g.clearLayers();
 //           g.addLayer(b->getLayer());

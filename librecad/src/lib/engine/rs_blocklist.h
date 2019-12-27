@@ -84,6 +84,9 @@ public:
     void addListener(RS_BlockListListener* listener);
     void removeListener(RS_BlockListListener* listener);
 
+    bool isOwner() const {return owner;}
+    void setOwner(bool ow) {owner = ow;}
+
     /**
      * Sets the block list modified status to 'm'.
      */
