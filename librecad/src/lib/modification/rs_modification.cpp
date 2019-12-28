@@ -2028,6 +2028,8 @@ void RS_Modification::addNewEntities(std::vector<RS_Entity*>& addList)
         }
     }
 
+    container->calculateBorders();
+
     if (graphicView) {
         graphicView->redraw(RS2::RedrawDrawing);
     }
