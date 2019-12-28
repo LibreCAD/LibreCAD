@@ -214,23 +214,9 @@ RS_Block* RS_BlockList::find(const QString& name) {
     }
 	// Todo : reduce this from O(N) to O(log(N)) complexity based on sorted list or hash
 	//DFS
-	std::vector<RS_BlockList const*> nodes;
-	std::set<RS_BlockList const*> searched;
-	searched.insert(nullptr);
-	nodes.push_back(this);
-	while (nodes.size()) {
-		auto list = nodes.back();
-		nodes.pop_back();
-        for (RS_Block* blk: *list) {
-            if (blk->getName() == name) {
-                RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_BlockList::find(): OK");
-                return blk;
-            }
-            auto node = blk->getBlockList();
-			if (!searched.count(node)) {
-				searched.insert(list);
-                nodes.push_back(blk->getBlockList());
-			}
+	for(RS_Block* b: blocks) {
+		if (b->getName()==name) {
+			return b;
 		}
 	}
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_BlockList::find(): bad");
@@ -255,17 +241,15 @@ QString RS_BlockList::newName(const QString& suggestion) {
 		i=name.mid(index+1).toInt();
 		name=name.mid(0, index);
 	}
-	QString ret = QString("%1-%2").arg(name).arg(i+1);
-	RS_Block* b;
-	while((b = find(ret))){
+	for(RS_Block* b: blocks){
 		index=b->getName().lastIndexOf(rx);
 		if(index<0) continue;
 		QString const part1= b->getName().mid(0, index);
 		if(part1 != name) continue;
 		i=std::max(b->getName().mid(index+1).toInt(),i);
-		ret = QString("%1-%2").arg(name).arg(i+1);
 	}
-	return ret;
+//	qDebug()<<QString("%1-%2").arg(name).arg(i+1);
+	return QString("%1-%2").arg(name).arg(i+1);
 }
 
 /**
