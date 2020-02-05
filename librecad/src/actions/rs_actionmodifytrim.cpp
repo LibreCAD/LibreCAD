@@ -55,14 +55,7 @@ RS_ActionModifyTrim::RS_ActionModifyTrim(RS_EntityContainer& container,
 }
 
 RS_ActionModifyTrim::~RS_ActionModifyTrim(){
-	if (graphicView != nullptr && graphicView->isCleanUp()==false){
-		if (limitEntity!= nullptr){
-            if(limitEntity->isHighlighted()){
-                limitEntity->setHighlighted(false);
-                graphicView->drawEntity(limitEntity);
-            }
-        }
-    }
+    unhighlightLimitingEntity();
 }
 
 void RS_ActionModifyTrim::init(int status) {
@@ -73,7 +66,10 @@ void RS_ActionModifyTrim::init(int status) {
 
 }
 
-
+void RS_ActionModifyTrim::finish(bool updateTB) {
+    RS_PreviewActionInterface::finish(updateTB);
+    unhighlightLimitingEntity();
+}
 
 void RS_ActionModifyTrim::trigger() {
 
@@ -204,5 +200,16 @@ void RS_ActionModifyTrim::updateMouseButtonHints() {
 
 void RS_ActionModifyTrim::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::SelectCursor);
+}
+
+void RS_ActionModifyTrim::unhighlightLimitingEntity() {
+    if (graphicView != nullptr && graphicView->isCleanUp()==false){
+        if (limitEntity!= nullptr){
+            if(limitEntity->isHighlighted()){
+                limitEntity->setHighlighted(false);
+                graphicView->drawEntity(limitEntity);
+            }
+        }
+    }
 }
 
