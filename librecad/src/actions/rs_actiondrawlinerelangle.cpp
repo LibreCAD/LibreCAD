@@ -64,6 +64,11 @@ RS2::ActionType RS_ActionDrawLineRelAngle::rtti() const{
 		return RS2::ActionDrawLineRelAngle;
 }
 
+void RS_ActionDrawLineRelAngle::finish(bool updateTB) {
+    unhighlightEntity();
+    RS_PreviewActionInterface::finish(updateTB);
+}
+
 void RS_ActionDrawLineRelAngle::trigger() {
     RS_PreviewActionInterface::trigger();
 
@@ -336,6 +341,14 @@ void RS_ActionDrawLineRelAngle::updateMouseCursor()
             break;
         default:
             break;
+    }
+}
+
+void RS_ActionDrawLineRelAngle::unhighlightEntity()
+{
+    if (entity) {
+        entity->setHighlighted(false);
+        graphicView->drawEntity(entity);
     }
 }
 
