@@ -40,7 +40,10 @@ pipeline
 	{
 	    failure 
 		{
-			
+			emailext(subject: "${env.PRODUCT_NAME} ${env.VERSION_FULL} - Failure!",
+				body: """<p>Check the results for <a href='${currentBuild.absoluteUrl}'>Build #${currentBuild.number}</a>.</p>""",
+				mimeType: 'text/html',
+				recipientProviders: [[$class: 'DevelopersRecipientProvider']])   
 		}
 	}
 	environment 
