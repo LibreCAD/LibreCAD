@@ -1,1 +1,1 @@
-define({r:0.5,st:'Stem',n:1,t:[0],u:['../Content/Main/Appendices/append_calculator.htm'],s:['+','onc'],p:[['+',33],['bi',21],['drawing',4],['in',38],['objects',39],['roman',31],['the',38]]});
+define({r:0.5,st:'Stem',n:1,t:[0],u:['../Content/Main/Appendices/append_calculator.htm'],s:['+','node'],p:[['+',51],['be',47],['dimradius',43],['help',49],['modifying',34],['program',32],['that',38],['will',13]]});

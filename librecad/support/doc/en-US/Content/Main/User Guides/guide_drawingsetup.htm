@@ -37,13 +37,13 @@
     <body>
         <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/User Guides/guide_drawingsetup.htm">Open topic with navigation</a>
         </p>
-        <div class="TopicContent">
-            <h1 class="TOC4"><a name="kanchor48"></a>Setting up a drawing</h1>
-            <p><a name="kanchor49"></a>When you first get started with LibreCAD, you'll want to make sure your drawing is configured with the correct units, scale, and so forth. This only needs to be done once, and any changes you make will save to the default template that LibreCAD uses when you create a new drawing.</p>
-            <h2><a name="kanchor50"></a>Scale</h2>
+        <div>
+            <h1 class="TOC4"><a name="kanchor54"></a>Setting up a drawing</h1>
+            <p><a name="kanchor55"></a>When you first get started with LibreCAD, you'll want to make sure your drawing is configured with the correct units, scale, and so forth. This only needs to be done once, and any changes you make will save to the default template that LibreCAD uses when you create a new drawing.</p>
+            <h2><a name="kanchor56"></a>Scale</h2>
             <p>For best results, drawings should be created full-scale (1:1). The zooming abilities of LibreCAD will make the whole drawing fit in the display window or zoom into the fine detail. </p>
             <p>&#160;</p>
-            <p style="font-weight: bold;"><a name="kanchor51"></a>Printing</p>
+            <p style="font-weight: bold;"><a name="kanchor57"></a>Printing</p>
             <p>When producing output, the drawing will need to be scaled to fit the page. Output can be a printed page, a PDF, or another image format. </p>
             <p>&#160;</p>
             <p>Determining dimension text size is addressed by the General Scale on the Dimensions tab of the Current Drawing Preferences. The General Scale is used to adjust the dimension text, arrows and related parameters to the sizes suitable for the required page format.</p>
@@ -62,7 +62,7 @@
                     <li value="3">While any scale can be used when printing a drawing there are commonly used scales for different types of drawings. Refer to <a href="../Appendices/append_drawingscales.htm">Drawing Scales in the appendix</a> for some examples.</li>
                 </ul>
             </div>
-            <h2><a name="kanchor52"></a>Layers</h2>
+            <h2><a name="kanchor58"></a>Layers</h2>
             <p>ProNest automatically adds layers to LibreCAD that are in your Importing Parts settings under the CAD Import tab. You can still modify or create new layers, but keep in mind that, when importing a part from LibreCAD to ProNest, ProNest will disregard any layers that aren't listed in your Importing Parts settings (ProNest <b>Settings</b> &gt; <b>Importing Parts</b> &gt;&#160;<b>CAD Import</b>).</p>
             <p>&#160;</p>
             <p>Layers help organize drawings by allowing users to place and manage related entities. Layers can be thought of as transparent drawing sheets that can be placed on top of one another. Layers have the added advantage in that the pen attributes can be modified for all entities on the layer. Layers are added, removed, hidden and modified using the Layer List Dock.</p>
@@ -72,7 +72,7 @@
             <p>&#160;</p>
             <p>
                 <img src="../../Images/locked.svg" /> Layers can be locked, which prevents accidental changes and can improve the performance when working with very large complex drawings.</p>
-            <h3><a name="kanchor53"></a>Construction Layers</h3>
+            <h3><a name="kanchor59"></a>Construction Layers</h3>
             <p>A Construction Layer ( <img src="../../Images/construction_layer.svg" /> ) is a special layer used to create reference geometry to help align other drawing entities. A construction layer:</p>
             <ul>
                 <li value="1">contains lines that are an infinite length,</li>
@@ -80,7 +80,7 @@
                 <li value="3">won't appear in ProNest when you import a drawing.</li>
             </ul>
             <p>Read more about <a href="guide_layers.htm">using layers</a>.</p>
-            <h2><a name="kanchor54"></a>Templates</h2>
+            <h2><a name="kanchor60"></a>Templates</h2>
             <p>Templates are prototype drawings that provide the means to save basic parameters and settings so a drawing does not have to be configured each time a new one is started. The parameters and settings include the settings defined in the Drawing Preferences, such as the paper format, main unit of measure and format, and dimension format. Templates can also include layers and layer configuration, line type and thickness, pen color, and other drawing elements such as a border. </p>
             <p>&#160;</p>
             <p>These settings are inherited by the drawings created from the template. Once the template has been prepared, it can be saved to any location where you have read/write permissions.</p>
@@ -97,7 +97,7 @@
             <p>When installing LibreCAD, a resource directory is created and includes  a default template named <span class="CodeSnippet">empty.dxf</span> found in <span class="CodeSnippet">C:\Program Files (x86)\Hypertherm CAM\LibreCAD\resources\library\templates</span> for 64-bit operating systems, and <span class="CodeSnippet">C:\Program Files\Hypertherm CAM\LibreCAD\resources\library\templates</span> for 32-bit operating systems..</p>
             <p>&#160;</p>
             <p>As an alternative to the LibreCAD provided template, a user-specified template can be configured in <b>Application Preferences</b> &gt; <b>Paths</b>. The specified template is used instead of the default LibreCAD template when the application is launched and for new drawings.</p>
-            <div class="TopicFooter" data-mc-conditions="Primary.ExcludeFromPDF">
+            <div class="TopicFooter">
                 <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
                     <ul class="MCHelpControlList MCRelatedTopicsControlList">
                         <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Appendices/append_drawingscales.htm">Common Drawing Scales</a>

@@ -22,13 +22,6 @@ h1
 	font-size: 24px;
 }
 
-li.mc-H1
-{
-	font-weight: bold;
-	font-family: 'Segoe UI', sans-serif;
-	font-size: 12pt;
-}
-
 h2
 {
 	margin: 6px;
@@ -37,25 +30,8 @@ h2
 	margin-bottom: 6px;
 	sans-serif: ;
 	font-family: 'Segoe UI';
-	font-weight: bold;
 	font-size: 16pt;
-	margin-top: 22px;
-}
-
-h2.Bar
-{
-	color: #ffffff;
-	padding-bottom: 2px;
-	padding-left: 2px;
-	padding: 2px;
-	background-color: #808080;
-}
-
-li.mc-H2
-{
-	font-weight: bold;
-	font-size: 9pt;
-	font-family: 'Segoe UI', sans-serif;
+	margin-top: 18px;
 }
 
 h3
@@ -69,12 +45,6 @@ h3
 	font-size: 12pt;
 }
 
-li.mc-H3
-{
-	font-weight: bold;
-	font-size: 14.0pt;
-}
-
 h4
 {
 	margin: 0;
@@ -86,24 +56,12 @@ h4
 	font-size: 10pt;
 }
 
-li.mc-H4
-{
-	font-weight: bold;
-	font-size: 12.0pt;
-}
-
 h5
 {
 	font-weight: bold;
 	font-size: 10.0pt;
 	margin-bottom: 5pt;
 	margin-top: 16px;
-}
-
-li.mc-H5
-{
-	font-weight: bold;
-	font-size: 10.0pt;
 }
 
 h6
@@ -115,12 +73,6 @@ h6
 	margin: 0;
 	margin-bottom: 6px;
 	margin-top: 6px;
-}
-
-li.mc-H6
-{
-	font-weight: bold;
-	font-size: 8.0pt;
 }
 
 p
@@ -142,47 +94,6 @@ li
 	padding-bottom: 0;
 }
 
-a.expandspot
-{
-	cursor: hand;
-	font-size: 9pt;
-	font-family: 'Segoe UI', sans-serif;
-	font-weight: bold;
-	font-style: normal;
-	x-on-hover: fontchange(Underline=on);
-	color: #808000;
-	text-decoration: none;
-}
-
-span.expandtext
-{
-	font-weight: normal;
-	font-style: normal;
-	font-family: 'Segoe UI', sans-serif;
-	font-size: 9pt;
-	color: #808000;
-}
-
-a.dropspot
-{
-	cursor: hand;
-	font-size: 9pt;
-	font-weight: bold;
-	font-style: normal;
-	font-family: 'Segoe UI', sans-serif;
-	x-on-hover: fontchange(Underline=on);
-	color: #0000ff;
-	text-decoration: none;
-}
-
-a.glossterm
-{
-	color: #800000;
-	cursor: hand;
-	font-style: italic;
-	text-decoration: none;
-}
-
 a.WelcomePanels
 {
 	text-decoration: none;
@@ -192,13 +103,6 @@ p.WelcomePanels
 {
 	text-decoration: none;
 	font-size: 1.5em;
-}
-
-span.glosstext
-{
-	font-style: italic;
-	font-weight: normal;
-	color: #0000ff;
 }
 
 ol,
@@ -222,96 +126,11 @@ p.SettingName
 	color: #000080;
 }
 
-p.SettingNameNoToggle
-{
-	font-style: normal;
-	margin-bottom: 2pt;
-	mc-next-tag: p;
-	font-weight: normal;
-	font-family: 'Segoe UI', sans-serif;
-	font-size: 10pt;
-	color: #00008b;
-	margin-top: 16pt;
-}
-
-li.SettingName
-{
-	font-style: normal;
-	mc-next-tag: p;
-	font-size: 10pt;
-	margin-top: 2pt;
-	margin-bottom: 6pt;
-	color: #000080;
-}
-
-p.SettingHeader
-{
-	font-style: normal;
-	font-size: 10pt;
-	border-bottom-style: none;
-	font-variant: normal;
-	mc-next-tag: p;
-	margin: 0;
-	margin-bottom: 2px;
-	margin-top: 8px;
-	font-weight: normal;
-	font-family: 'Segoe UI Semibold';
-	text-decoration: underline;
-}
-
-span.SettingRangeValue
-{
-	font-style: normal;
-	color: #800000;
-	font-weight: normal;
-}
-
-span.SettingDefaultValue
-{
-	font-style: normal;
-	color: #008000;
-	font-weight: normal;
-}
-
-li.mc-H1-CSettingTitle
-{
-	
-}
-
-p.CellText
-{
-	color: #ffffff;
-}
-
-li.CellText
-{
-	color: #ffffff;
-}
-
-p.StepInstruction
-{
-	margin-top: 4.5pt;
-	margin-bottom: 4.5pt;
-	margin-left: 0pt;
-}
-
 li.StepInstruction
 {
 	margin-top: 4.5pt;
 	margin-bottom: 4.5pt;
 	margin-left: 0pt;
-}
-
-span.SuperScript
-{
-	vertical-align: Super;
-}
-
-span.Formula
-{
-	font-size: 9pt;
-	color: #4a6903;
-	font-family: 'Lucida Sans Unicode';
 }
 
 span.CodeSnippet
@@ -325,94 +144,6 @@ p.CodeSnippet
 	font-size: 13px;
 }
 
-p.StepIntro
-{
-	font-weight: bold;
-	font-style: normal;
-	margin-top: 1.12em;
-	margin-bottom: 1.12em;
-}
-
-li.StepIntro
-{
-	font-weight: bold;
-	font-style: normal;
-}
-
-p.InstructIntro
-{
-	font-weight: bold;
-	font-style: normal;
-}
-
-li.InstructIntro
-{
-	font-weight: bold;
-	font-style: normal;
-}
-
-p.NoteText
-{
-	color: #000080;
-	mc-next-tag: p;
-}
-
-MadCap|expandingHead.expandspot
-{
-	cursor: hand;
-	font-size: 9pt;
-	font-family: 'Segoe UI', sans-serif;
-	font-style: normal;
-	x-on-hover: fontchange(Underline=on);
-	text-decoration: none;
-	font-weight: bold;
-	color: #808000;
-}
-
-MadCap|dropDownHotspot.dropspot
-{
-	cursor: hand;
-	font-size: 9pt;
-	font-weight: bold;
-	font-style: normal;
-	font-family: 'Segoe UI', sans-serif;
-	x-on-hover: fontchange(Underline=on);
-	color: #0000ff;
-	text-decoration: none;
-}
-
-MadCap|expandingBody.expandtext
-{
-	font-style: normal;
-	font-family: 'Segoe UI', sans-serif;
-	font-size: 9pt;
-	font-weight: normal;
-	color: #808000;
-}
-
-MadCap|glossaryTerm.glossterm
-{
-	color: #800000;
-	cursor: hand;
-	font-style: italic;
-	text-decoration: none;
-}
-
-MadCap|expandingBody.glossterm
-{
-	font-style: italic;
-	font-weight: normal;
-	color: #0000ff;
-}
-
-MadCap|toggler
-{
-	mc-closed-image: url('../../Images/TreeViewPlusSimple.png');
-	mc-open-image: url('../../Images/TreeViewMinusSimple.png');
-	color: #000080;
-	padding: 0px;
-}
-
 MadCap|expanding
 {
 	mc-closed-image: none;
@@ -422,29 +153,6 @@ MadCap|expanding
 img
 {
 	position: relative;
-}
-
-img.ProductVsPower
-{
-	right: 0px;
-	bottom: 0px;
-	border: none;
-	position: relative;
-}
-
-MadCap|toggler.Toggler_Example
-{
-	mc-image-spacing: 3px;
-	margin: 10px;
-	margin-bottom: 0px;
-	margin-right: 0px;
-	margin-left: 0px;
-	padding: 0px;
-	border: solid 0px;
-	font-family: 'Segoe UI', sans-serif;
-	color: #008000;
-	mc-closed-image: url('../../Images/ExampleImagePlus.png');
-	mc-open-image: url('../../Images/ExampleImageMinus.png');
 }
 
 dl
@@ -562,58 +270,9 @@ table.Important
 	padding: 0px;
 }
 
-table.ExampleTable
-{
-	font-family: 'Segoe UI', sans-serif;
-	font-size: 9pt;
-	width: 100%;
-}
-
-MadCap|toggler.Toggler_StepIntro
-{
-	mc-closed-image: url('../../Images/TreeViewArrow.png');
-	mc-open-image: url('../../Images/TreeViewArrowOpen.png');
-	font-weight: bold;
-	mc-image-spacing: 3px;
-	color: #1c7893;
-	padding: 0px;
-}
-
-p.MediumHeading
-{
-	font-family: 'Segoe UI', sans-serif;
-	margin-bottom: 2px;
-	margin-left: 0px;
-	margin-right: 0px;
-	margin-top: 22px;
-	font-weight: bold;
-	font-size: 13px;
-}
-
-p.LocationHeader
-{
-	font-family: 'Segoe UI', sans-serif;
-	font-size: 10pt;
-	background-color: #999999;
-	color: #ffffff;
-	font-weight: bold;
-	padding-left: 2px;
-	padding: 2px;
-	margin: 0px;
-	margin-bottom: 5px;
-	margin-top: 5px;
-}
-
 MadCap|expandingHead:hover
 {
 	text-decoration: underline;
-}
-
-li.LinkInternalTopic
-{
-	list-style-image: url('../../Images/ArefDown.png');
-	margin-bottom: 4.5px;
-	margin-top: 4.5px;
 }
 
 td.note
@@ -665,20 +324,6 @@ td.important
 	background-color: #e0ffff;
 }
 
-span.NoteIntro
-{
-	font-family: 'Segoe UI', sans-serif;
-	font-size: 9pt;
-	font-weight: bold;
-	border: solid 1px #c0c0c0;
-	border-bottom-style: solid;
-	padding: 1px;
-	margin: 1px;
-	margin-left: 0px;
-	margin-bottom: 0px;
-	padding-bottom: 0px;
-}
-
 table.Tip
 {
 	font-family: 'Segoe UI', sans-serif;
@@ -712,24 +357,6 @@ table.Note
 	margin-top: 1.12em;
 }
 
-td.note_star
-{
-	background-repeat: no-repeat;
-	font-family: 'Segoe UI', sans-serif;
-	font-size: 9pt;
-	margin: 0px;
-	color: #314e63;
-	background-image: url('../../Images/NoteImage.png');
-	border-spacing: 0 px;
-	padding-right: 4px;
-	padding-top: 4px;
-	padding-bottom: 4px;
-	table-layout: fixed;
-	width: 37px;
-	background-color: #e6edf2;
-	padding-left: 19px;
-}
-
 td.advanced
 {
 	background-color: #aeffd7;
@@ -743,29 +370,11 @@ td.advanced
 	width: 62px;
 }
 
-p.ImageCaption
-{
-	font-family: 'Times New Roman';
-	font-style: italic;
-	font-size: 10pt;
-	margin-bottom: 6px;
-}
-
 p.Related
 {
 	font-weight: bold;
 	font-style: normal;
 	color: #696969;
-}
-
-p.GeneralConcept
-{
-	font-style: italic;
-	margin: 0;
-	margin-bottom: 6px;
-	font-family: 'Segoe UI';
-	font-size: 10pt;
-	margin-top: 20px;
 }
 
 td.SecondCell
@@ -1267,80 +876,14 @@ div.WelcomePanelsContainer
 	}
 }
 
-MadCap|xref.PageRef
-{
-	mc-format: ;
-	color: #0066cc;
-}
-
-table.BlackGrid
-{
-	border: solid 1px #000000;
-	border-spacing: 1px;
-	table-layout: auto;
-	border-collapse: collapse;
-	border-width: 1px;
-}
-
-tr.BlackGrid
-{
-	background-color: #c0c0c0;
-	border: solid 1px #000000;
-}
-
-td.blackgrid
-{
-	border: solid 1px #000000;
-}
-
-thead.blackgrid
-{
-	border: solid 1px #000000;
-	font-size: 9pt;
-	font-family: 'Segoe UI';
-	font-weight: bold;
-}
-
-th.blackgrid
-{
-	background-repeat: repeat-x;
-	font-family: 'Segoe UI';
-	font-size: 9pt;
-	font-weight: bold;
-	vertical-align: middle;
-	border: solid 1px #000000;
-	background-color: #696969;
-	color: #ffffff;
-	margin-bottom: 4px;
-	margin-top: 4px;
-	padding-bottom: 4px;
-	padding-top: 4px;
-	text-align: left;
-	padding-right: 2px;
-	padding-left: 2px;
-}
-
 a:visited
 {
 	
 }
 
-MadCap|xref.PageRef:visited
-{
-	color: #7f007f;
-}
-
 MadCap|xref:visited
 {
 	color: #7f007f;
-}
-
-td.blackbackground
-{
-	mc-table-style: url('default.css');
-	background-position: top;
-	padding: 0px;
-	background-repeat: repeat-x;
 }
 
 th
@@ -1356,13 +899,6 @@ col
 tr
 {
 	mc-table-style: url('default.css');
-}
-
-table.Banner
-{
-	height: 40px;
-	vertical-align: top;
-	padding: 0px;
 }
 
 MadCap|tocProxy
@@ -1386,23 +922,6 @@ tbody
 	font-family: 'Segoe UI', SansSerif;
 }
 
-span.SettingHighlightRed
-{
-	font-style: normal;
-	font-weight: normal;
-	color: #ff4500;
-}
-
-div.IndentSetting
-{
-	padding-left: 12px;
-}
-
-div.SettingBody
-{
-	padding-left: 12px;
-}
-
 p.SettingChoice
 {
 	color: #800000;
@@ -1423,56 +942,6 @@ div.Example
 	border: solid 1px #b9b9b9;
 }
 
-span.WarningBox
-{
-	background-color: #ffff00;
-	border: solid 1px #000000;
-}
-
-p.ExampleToggler
-{
-	margin-top: 4px;
-}
-
-li.ReportIconList
-{
-	margin-bottom: 4.5px;
-	margin-top: 4.5px;
-	list-style-image: url('../../Images/IconReport.PNG');
-	list-style-position: inside;
-}
-
-p.ItalicGray
-{
-	font-style: italic;
-	color: #696969;
-}
-
-p.MediumHeadingDivider
-{
-	font-weight: bold;
-	font-size: 10pt;
-	margin-top: 10pt;
-	margin-bottom: 2pt;
-	font-family: 'Segoe UI', sans-serif;
-	border-bottom: dashed 1px #696969;
-	border-bottom-color: #a9a9a9;
-}
-
-li.Formula
-{
-	font-size: 9pt;
-	color: #4a6903;
-	font-family: 'Lucida Sans Unicode';
-}
-
-p.Formula
-{
-	font-size: 9pt;
-	color: #4a6903;
-	font-family: 'Lucida Sans Unicode';
-}
-
 kbd
 {
 	border-bottom-color: #dcdcdc;
@@ -1489,33 +958,6 @@ kbd
 span
 {
 	height: 24px;
-}
-
-p.ErrorWarningText
-{
-	font-family: Consolas, sans-serif;
-	padding-bottom: 2px;
-	padding-top: 12px;
-}
-
-div.OutputCode
-{
-	margin-left: 18px;
-	margin-top: 16px;
-	margin-bottom: 16px;
-}
-
-div.ExampleNoIndent
-{
-	background-color: #efefef;
-	padding: 4px;
-	border: solid 1px #b9b9b9;
-}
-
-div.Columns3
-{
-	column-count: 3;
-	column-width: 200px;
 }
 
 div.TopicFooter
@@ -1564,17 +1006,6 @@ div.ImportantDiv
 	padding-left: 22px;
 }
 
-div.AdvancedDiv
-{
-	background-repeat: no-repeat;
-	padding-top: 4px;
-	padding-left: 20px;
-	text-indent: 16px;
-	padding: 6px;
-	background-image: url('../../Images/AdvancedImage.png');
-	border: solid 1px #66cdaa;
-}
-
 div.TopicNav
 {
 	border-top-color: #808080;
@@ -1584,37 +1015,6 @@ div.TopicNav
 	margin-bottom: 8px;
 	border-bottom: dotted 1px #a9a9a9;
 	border-top: dotted 1px #a9a9a9;
-}
-
-p.MediumHeading1
-{
-	font-family: 'Segoe UI', sans-serif;
-	font-size: 18px;
-	margin-bottom: 2px;
-	margin-top: 20px;
-}
-
-p.ImageHolder
-{
-	margin-bottom: 2px;
-	margin-top: 6px;
-}
-
-div.Footer
-{
-	/*position: fixed;*/
-	left: 0;
-	bottom: 0;
-	width: 100%;
-	background-color: #EAEAEA;
-	padding: 3px;
-}
-
-span.Hash
-{
-	color: #b22222;
-	background-color: #fbf3f4;
-	font-family: 'Lucida Console';
 }
 
 h2

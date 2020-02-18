@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="User Guides|[%=System.LinkedTitle%]">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Creating new fonts</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/ExampleGrid.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/User Guides/guide_createNewFont.htm">Open topic with navigation</a>
+        </p>
+        <div>
+            <h1 class="TOC4"><a name="kanchor47"></a>Creating new fonts</h1>
+            <p>With LibreCAD, you can easily create a new font by using an existing font as a template. In LibreCAD, each font character  is a block, and each block is named after the unicode character code.</p>
+            <p class="Procedure">Creating a font from a template</p>
+            <p style="font-weight: bold;">Step 1</p>
+            <p>Identify an existing font to use as a template for your new font.&#160;Try to find a font that looks similar to what you want to create, or choose a standard font such as Times New Roman.</p>
+            <div class="Tip">
+                <p>If you are unsure of what font to use, you can preview fonts in the <b>Convert Font</b> dialog from <b>Tools</b> &gt;&#160;<b>MText</b> &gt;&#160;<b>Convert Font</b> ( <img src="../../Images/convertfont.png" /> ). </p>
+            </div>
+            <p>&#160;</p>
+            <p style="font-weight: bold;">Step 2</p>
+            <p style="font-weight: normal;">Locate the font using the File Explorer on your PC. </p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: normal;">If you are using a font that you <a href="guide_convertFonts.htm#Microsof">converted from AutoCAD or Microsoft</a>, the font file will be located in the path you specified in <b>Application Preferences</b> &gt; <b>Paths</b> &gt;&#160;<b>Fonts</b>.</p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: normal;">If you are using a LibreCAD font, the font will be located in this folder: <span class="CodeSnippet">C:\Program Files (x86)\Hypertherm CAM\LibreCAD\resources\fonts</span></p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: bold;">Step 3</p>
+            <p style="font-weight: normal;">Open the font file (*.LFF) in LibreCAD by selecting <b>File</b> &gt; <b>Open</b>, and set the file type to <b>LFF Font (*.lff)</b>. Then, navigate to the appropriate folder, and click the font file you wish to open.</p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: bold;">Step 4</p>
+            <p style="font-weight: normal;">The font file is now opened in LibreCAD. Notice that each character is listed in a row along with the corresponding unicode below each character. Additionally, notice that the Block List lists out each character, by unicode name, as an individual block.</p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: normal;">To edit a character:</p>
+            <ol>
+                <li style="font-weight: normal;" value="1">Locate the block that corresponds with that character in the Block List. </li>
+                <li style="font-weight: normal;" value="2">Click the block in the Block List.</li>
+                <li style="font-weight: normal;" value="3">Click <b>Edit the active block in a separate window</b>( <img src="../../Images/properties.svg" /> ).</li>
+            </ol>
+            <p style="font-weight: normal;">The active block will open in a separate window.</p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: bold;">Step 5</p>
+            <p style="font-weight: normal;">Make changes to the character, as needed. When you have finished editing a character, exit the tab, which will return you to the full font LFF file. There is no need to save the block to an individual file; instead, the block is stored in the LFF file. </p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: normal;">Repeat this process until all characters are modified, as needed.</p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: bold;">Step 6</p>
+            <p style="font-weight: normal;">It is recommended that you save the modified font to a different file, so that you can preserve the state of the original font. </p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: normal;">To save the font as a different file:</p>
+            <ol>
+                <li style="font-weight: normal;" value="1">Click <b>File</b>.</li>
+                <li style="font-weight: normal;" value="2">Click <b>Save As</b>.</li>
+                <li style="font-weight: normal;" value="3">Locate the folder to which you want to save the font file. It is recommended that you use the following: <span class="CodeSnippet">C:\Program Files (x86)\Hypertherm CAM\LibreCAD\resources\fonts</span>.</li>
+                <li style="font-weight: normal;" value="4">From the file type dropdown, select <b>LFF File (*.lff)</b>.</li>
+                <li style="font-weight: normal;" value="5">Provide a name for the file, but do <i>not</i> include a file extension in the name. For example, type "MyFont"&#160;instead of "MyFont.lff".</li>
+                <li style="font-weight: normal;" value="6">Click <b>Save</b>.</li>
+            </ol>
+            <div class="Note">
+                <p>If you are saving the font to the LibreCAD font folder from Step 6.3, you may need to modify the folder permissions so that you are able to save to that folder. if this can't be done, save the font file to the folder you have specified in <b>Application Preferences</b> &gt;&#160;<b>Paths</b> &gt;&#160;<b>Fonts</b>.</p>
+            </div>
+            <p style="font-weight: normal;">&#160;</p>
+            <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/ExampleGrid.css');" class="TableStyle-ExampleGrid" cellspacing="0">
+                <col class="TableStyle-ExampleGrid-Column-Column1" />
+                <tbody>
+                    <tr class="TableStyle-ExampleGrid-Body-Body1">
+                        <td class="TableStyle-ExampleGrid-BodyA-Column1-Body1" style="font-weight: bold;">
+                            <p style="font-weight: bold;">Example</p>
+                            <p>&#160;</p>
+                            <p>Step 1 - <i>Italict.lff</i> is the font to be used as a template.</p>
+                            <p>&#160;</p>
+                            <p>Step 2 - Italict.lff is a default LibreCAD font, which is located in: C:\Program Files (x86)\Hypertherm CAM\LibreCAD\resources\fonts.</p>
+                            <p>&#160;</p>
+                            <p>Step 3 - The font is opened.</p>
+                            <p>&#160;</p>
+                            <p>
+                                <img src="../../Images/createfont_example1.png" />
+                            </p>
+                            <p>&#160;</p>
+                            <p>Step 4 - A character is edited by selecting an individual character block and editing it in a new window/tab. The image below shows the block drawing tab for the 'A' character.</p>
+                            <p>&#160;</p>
+                            <p>
+                                <img src="../../Images/createfont_example2.png" />
+                            </p>
+                            <p>&#160;</p>
+                            <p>Step 5 - Make modifications to the character block, then exit the tab.</p>
+                            <p>&#160;</p>
+                            <p>Step 6 - Save the font to a new file. (Remember:&#160;Do not include the file extension (.lff) at the end of the file name; instead, simply select LFF&#160;from the file type dropdown.)</p>
+                            <p>&#160;</p>
+                            <p>The font is now available for use in a drawing.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="TopicFooter">
+                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
+                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_other.htm">Additional tools: Text, Hatch, Point</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_convertFonts.htm">Converting Microsoft and AutoCAD fonts to LibreCAD fonts</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_dimension.htm">Dimensioning tools</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_modify.htm">Modify tools</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_text.htm">Using Text</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 6pt;margin-top: 0;margin-bottom: 0;">&#160;</p>
+    </body>
+</html>
