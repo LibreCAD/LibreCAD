@@ -379,7 +379,7 @@ int QG_DlgMText::getAlignment() {
 }
 
 void QG_DlgMText::setFont(const QString& f) {
-    cbFont->setCurrentIndex( cbFont->findText(f) );
+    cbFont->setCurrentIndex( cbFont->findText(f, Qt::MatchFixedString) );
     font = cbFont->getFont();
     defaultChanged(false);
 }
