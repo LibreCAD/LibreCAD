@@ -15,16 +15,25 @@ pipeline
 		}
 		stage('Build') 
 		{
-		 
+		 steps 
+		  {
+			bat 'SET'
+		  }
 		}
 	
 		stage('Deploy') 
 		{
-		
+		steps 
+		  {
+			bat 'SET'
+		  }
 		}
 		stage('Email') 
 		{
-			
+			steps 
+		  {
+			bat 'SET'
+		  }
         }
 	}
 	post 
