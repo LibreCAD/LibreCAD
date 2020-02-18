@@ -2894,9 +2894,9 @@ void QC_ApplicationWindow::showAboutWindow()
     (
         QString("<a href=\"https://github.com/LibreCAD/LibreCAD/graphs/contributors\">%1</a>").arg(tr("Contributors"))
         + "<br/>" +
-        QString("<a href=\"https://github.com/LibreCAD/LibreCAD/blob/master/LICENSE\">%1</a>").arg(tr("License"))
+        QString("<a href=\"https://github.com/shawncurry/LibreCAD/blob/master/LICENSE\">%1</a>").arg(tr("License"))
         + "<br/>" +
-        QString("<a href=\"https://github.com/LibreCAD/LibreCAD/tree/%1\">%2</a>").arg(XSTR(LC_VERSION)).arg("The Code")
+        QString("<a href=\"https://github.com/shawncurry/LibreCAD\">%1</a>").arg(tr("The Code"))
     );
 
     auto links_label = new QLabel(links);
