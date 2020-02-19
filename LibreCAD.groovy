@@ -12,6 +12,7 @@ def GetBuiltFiles()
 }
 def BuildInstaller()
 {
+	bat "mkdir %WORKSPACE%\\generated\\"
 	writeFile file: GetInstallerPath(), text: "something"
 }
 def GetInstallerPath()
