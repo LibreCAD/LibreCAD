@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="lv">
+<TS version="2.1" language="lv">
 <context>
     <name>AsciiFile</name>
     <message>
@@ -593,41 +593,160 @@
     </message>
 </context>
 <context>
-    <name>lc_Geardlg</name>
+    <name>divide</name>
     <message>
-        <source>Draw a gear</source>
+        <source>Divide</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Select a line, circle or arc and press return</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>n</source>
+        <translation type="unfinished">n</translation>
+    </message>
+    <message>
+        <source>Empty Entity</source>
+        <translation type="unfinished">Tukšs objekts</translation>
+    </message>
+    <message>
+        <source>X</source>
+        <translation type="unfinished">X</translation>
+    </message>
+    <message>
+        <source>Y</source>
+        <translation type="unfinished">
+            </translation>
+    </message>
+    <message>
+        <source>Layer</source>
+        <translation type="unfinished">Slānis</translation>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation type="unfinished">Krāsa</translation>
+    </message>
+    <message>
+        <source>Line type</source>
+        <translation type="unfinished">Līnijas tips</translation>
+    </message>
+    <message>
+        <source>Line thickness</source>
+        <translation type="unfinished">Līnijas biezums</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation type="unfinished">ID</translation>
+    </message>
+    <message>
+        <source>LINE</source>
+        <translation type="unfinished">LĪNIJA</translation>
+    </message>
+    <message>
+        <source>from point</source>
+        <translation type="unfinished">no punkta</translation>
+    </message>
+    <message>
+        <source>to point</source>
+        <translation type="unfinished">uz punktu</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <translation type="unfinished">garums</translation>
+    </message>
+    <message>
+        <source>Angle in XY plane</source>
+        <translation type="unfinished">Leņķis XY plaknē</translation>
+    </message>
+    <message>
+        <source>Inc.</source>
+        <translation type="unfinished">SIA</translation>
+    </message>
+    <message>
+        <source>ARC</source>
+        <translation type="unfinished">LOKS</translation>
+    </message>
+    <message>
+        <source>center point</source>
+        <translation type="unfinished">centra punkts</translation>
+    </message>
+    <message>
+        <source>radius</source>
+        <translation type="unfinished">rādiuss</translation>
+    </message>
+    <message>
+        <source>initial angle</source>
+        <translation type="unfinished">sākotnējais leņķis</translation>
+    </message>
+    <message>
+        <source>final angle</source>
+        <translation type="unfinished">beigu leņķis</translation>
+    </message>
+    <message>
+        <source>CIRCLE</source>
+        <translation type="unfinished">RIŅĶIS</translation>
+    </message>
+    <message>
+        <source>circumference</source>
+        <translation type="unfinished">perimetrs</translation>
+    </message>
+    <message>
+        <source>area</source>
+        <translation type="unfinished">laukums</translation>
+    </message>
+    <message>
+        <source>POLYLINE</source>
+        <translation type="unfinished">LAUZTALĪNIJA</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Aizvērts</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished">Nē</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished">Jā</translation>
+    </message>
+    <message>
+        <source>Vertices</source>
+        <translation type="unfinished">Virsotnes</translation>
+    </message>
+    <message>
+        <source>in point</source>
+        <translation type="unfinished">punktā</translation>
+    </message>
+    <message>
+        <source>MUST be a line, circle or arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>dividedlg</name>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Atcelt</translation>
+    </message>
+</context>
+<context>
+    <name>lc_Geardlg</name>
     <message>
         <source>Number of teeth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Circular pitch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pressure angle (deg)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Addendum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dedendum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Spur</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ring</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -637,6 +756,74 @@
     <message>
         <source>Cancel</source>
         <translation type="unfinished">Atcelt</translation>
+    </message>
+    <message>
+        <source>Rotation angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modulus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Addendum (rel. to modulus)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dedendum (rel. to modulus)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of segments to draw (dedendum)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of segments to draw (addendum)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw all teeth?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw symmetric face?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use layers?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw addendum circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw pitch circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw base circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw root circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw pressure line?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw pressure limits?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Calculate interference?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of segments to draw (interference)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

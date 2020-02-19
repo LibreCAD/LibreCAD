@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ro_RO">
+<TS version="2.1" language="ro_RO">
 <context>
     <name>ColorWizard</name>
     <message>
@@ -92,6 +92,29 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Select circle center</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawLinePolygonCenTan</name>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished">Specificati centrul</translation>
+    </message>
+    <message>
+        <source>Specify a tangent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="unfinished">Numar incorect. Incercati un numar intre 1 si 9999</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Expresie incorecta</translation>
     </message>
 </context>
 <context>
@@ -685,10 +708,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export as &amp;MakerCAM SVG...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Regenerate Dimension Entities</source>
         <translation type="obsolete">Regenerarea Cotarii Entitatilor</translation>
     </message>
@@ -775,7 +794,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Draft</source>
-        <translation type="unfinished">&amp;Schita</translation>
+        <translation type="obsolete">&amp;Schita</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
@@ -843,8 +862,47 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ctrl+D</source>
-        <comment>Toggle Draft Mode</comment>
+        <source>Pol&amp;ygon (Cen,Tan)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center, &amp;Diameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trim E&amp;xcess</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S&amp;hape Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Unlink Text from Geometry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Unlock all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Lock all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as CA&amp;M/plain SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export to ProNest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save A&amp;ll...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1207,7 +1265,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Saving drawing under new filename...</source>
-        <translation>Salvarea desenului cu un nou nume...</translation>
+        <translation type="vanished">Salvarea desenului cu un nou nume...</translation>
     </message>
     <message>
         <source>Exporting drawing...</source>
@@ -1253,7 +1311,7 @@ Va rog verificati permisiunile.</translation>
         <source>Cannot save the file
 %1
 Please check the permissions.</source>
-        <translation>Nu pot salva fisierul 
+        <translation type="vanished">Nu pot salva fisierul 
 %1 
 Va rog verificati permisiunile.</translation>
     </message>
@@ -1427,7 +1485,7 @@ Autosalvare dezactivata.</translation>
     </message>
     <message>
         <source>Su&amp;b-Window mode</source>
-        <translation>Modul su&amp;b-fereastra</translation>
+        <translation type="vanished">Modul su&amp;b-fereastra</translation>
     </message>
     <message>
         <source>Tile &amp;Vertically</source>
@@ -1471,10 +1529,6 @@ Autosalvare dezactivata.</translation>
     </message>
     <message>
         <source>Qt Version: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Draft Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1596,10 +1650,6 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Compiler: Microsoft Visual C++</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Boost Version: %1.%2.%3</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1640,11 +1690,96 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Help Links</source>
+        <source>Saving drawing: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Online</source>
+        <source>Save cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing Drawing</source>
+        <translation type="unfinished">Inchiderea desenului</translation>
+    </message>
+    <message>
+        <source>Save changes to the following item?
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation type="unfinished">&amp;Salvare</translation>
+    </message>
+    <message>
+        <source>Save &amp;as...</source>
+        <translation type="unfinished">&amp;Salvare ca...</translation>
+    </message>
+    <message>
+        <source>&amp;Save %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save %1 &amp;as...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Window mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rounded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Triangular</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>North</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>South</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>East</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>West</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Arrange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Maximized</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save All cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close All cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiler: Microsoft C/C++ %1.%2.%3.%4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The Code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LibreCAD Help</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1653,15 +1788,27 @@ Please check its existence and permissions.</source>
     <message>
         <source>Do you really want to close the file
 %1?</source>
-        <translation>Doriti inchiderea fisierului %1 ?</translation>
+        <translation type="vanished">Doriti inchiderea fisierului %1 ?</translation>
     </message>
     <message>
         <source>Do you really want to close the drawing?</source>
-        <translation>Doriti inchiderea desenului?</translation>
+        <translation type="vanished">Doriti inchiderea desenului?</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation>Inchiderea desenului</translation>
+        <translation type="vanished">Inchiderea desenului</translation>
+    </message>
+    <message>
+        <source>Save Drawing</source>
+        <translation type="unfinished">Salvare desen</translation>
+    </message>
+    <message>
+        <source>This file is set to read-only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try again with a different file name.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2174,6 +2321,10 @@ intr-o fereastra noua</translation>
     </message>
     <message>
         <source>save the active block to a file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Looking for matching block names</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3085,27 +3236,27 @@ p, li { white-space: pre-wrap; }
         <source>Label:</source>
         <translation type="obsolete">Eticheta:</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>ø</source>
         <translation type="obsolete">ø</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <translation type="obsolete">°</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>±</source>
         <translation type="obsolete">±</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>¶</source>
         <translation type="obsolete">¶</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>×</source>
         <translation type="obsolete">×</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>÷</source>
         <translation type="obsolete">÷</translation>
     </message>
@@ -3132,35 +3283,35 @@ p, li { white-space: pre-wrap; }
         <source>Insert:</source>
         <translation>Inserare:</translation>
     </message>
-    <message utf8="both">
+    <message>
         <source>ø (Diameter)</source>
         <translation type="obsolete">ø (Diametru)</translation>
     </message>
-    <message utf8="both">
+    <message>
         <source>° (Degree)</source>
         <translation>° (Grade)</translation>
     </message>
-    <message utf8="both">
+    <message>
         <source>± (Plus / Minus)</source>
         <translation>± (Plus / Minus)</translation>
     </message>
-    <message utf8="both">
+    <message>
         <source>× (Times)</source>
         <translation>× (Ori)</translation>
     </message>
-    <message utf8="both">
+    <message>
         <source>÷ (Division)</source>
         <translation>÷ (Impartire)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>¶ (Pi)</source>
         <translation type="obsolete">¶ (Pi)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>⌀ (Diameter)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>π (Pi)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3245,6 +3396,15 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Esc</source>
         <translation type="obsolete">Escape</translation>
+    </message>
+    <message>
+        <source>Apply attributes also to all sub-entities of selected INSERT.
+This recursively modifies all entities of the Block itself.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply attributes Block-deep</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3417,6 +3577,73 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Esc</source>
         <translation type="obsolete">Escape</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgFontConversion</name>
+    <message>
+        <source>Convert Fonts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font family:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Save as:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Letter spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Author:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Word spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>License:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Writing System:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished">Previzualizare</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> - Searching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LibreCAD Font Files(*.lff)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> - Rendering</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3776,15 +4003,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Insert Symbol</source>
         <translation type="unfinished">Inserare Simbol</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Diameter (ø)</source>
         <translation type="obsolete">Diametru (ø)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Degree (°)</source>
         <translation type="unfinished">Grade (°)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Plus / Minus (±)</source>
         <translation type="unfinished">Plus / Minus (±)</translation>
     </message>
@@ -3800,35 +4027,35 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Dollar ($)</source>
         <translation type="unfinished">Dolar ($)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Copyright (©)</source>
         <translation type="unfinished">Copyright (©)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Registered (®)</source>
         <translation type="unfinished">Inregistrat (®)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Paragraph (§)</source>
         <translation type="unfinished">Paragraf (§)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Pi (π)</source>
         <translation type="unfinished">Pi (π)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Pound (£)</source>
         <translation type="unfinished">Lira (£)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Yen (¥)</source>
         <translation type="unfinished">Yen (¥)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Times (×)</source>
         <translation type="unfinished">Ori (×)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Division (÷)</source>
         <translation type="unfinished">Impartire (÷)</translation>
     </message>
@@ -4276,13 +4503,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
         <translation type="unfinished">[100000-10FFFD] Zona suplimentara B pentru folosire privata</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Diameter (⌀)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Line spacing:</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
     </message>
 </context>
 <context>
@@ -4385,6 +4616,18 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Number of copies. Maximum 100</source>
         <translation>Numar de copii. Maxim 100</translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset Y</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4502,7 +4745,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Paper Format</source>
-        <translation>Format hartie</translation>
+        <translation type="vanished">Format hartie</translation>
     </message>
     <message>
         <source>Text Height:</source>
@@ -4578,11 +4821,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Paper &amp;Height:</source>
-        <translation>&amp;Inaltime pagina:</translation>
+        <translation type="vanished">&amp;Inaltime pagina:</translation>
     </message>
     <message>
         <source>Paper &amp;Width:</source>
-        <translation>L&amp;atime pagina:</translation>
+        <translation type="vanished">L&amp;atime pagina:</translation>
     </message>
     <message>
         <source>&amp;Units</source>
@@ -4914,6 +5157,54 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>fixed extension line legth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Height:</source>
+        <translation type="unfinished">&amp;Inaltime:</translation>
+    </message>
+    <message>
+        <source>&amp;Width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orientation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Margins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of pages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Horizontally:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vertically:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update Template</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Architectural (metric)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5340,26 +5631,66 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>N&amp;umber of preview entities:</source>
+        <source>Don&apos;t use native OS file open dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Don&apos;t use native OS file open dialog</source>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert horizontal scrolling direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert vertical scrolling direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inverts zoom direction when using mouse wheel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert zoom direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keyboard Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Evaluate commands when SPACE BAR is pressed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle free snap mode when SPACE BAR is pressed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CAD Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically zoom drawing when opening</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_DlgOptionsMakerCam</name>
     <message>
-        <source>Export as MakerCAM SVG</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Layers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5375,10 +5706,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>MakerCAM as of November 2014 cannot correctly deal with blocks, because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Convert blocks to safe inline SVG content</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5387,11 +5714,71 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
         <translation type="unfinished"></translation>
     </message>
-    <message utf8="true">
-        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
+    <message>
+        <source>Export as CAM/plain SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default width of elements, mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Raster Image export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dash/Dot Lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of the pattern, mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bake dash/dot lines to SVG path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content 
+that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
+because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
+when they are created using the &lt;ellipse&gt; tag  with a rotation in 
+the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exported images can be useful in SVG editors (Inkscape, etc), 
+but avoided in some CAM&apos;s.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+which can be useful in lasercut of plywood or for papercraft. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+but ignored by other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of line pattern related to zoom, 
+so default step value required for baking</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5814,15 +6201,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Insert Symbol</source>
         <translation>Inserare Simbol</translation>
     </message>
-    <message utf8="both">
+    <message>
         <source>Diameter (ø)</source>
         <translation type="obsolete">Diametru (ø)</translation>
     </message>
-    <message utf8="both">
+    <message>
         <source>Degree (°)</source>
         <translation>Grade (°)</translation>
     </message>
-    <message utf8="both">
+    <message>
         <source>Plus / Minus (±)</source>
         <translation>Plus / Minus (±)</translation>
     </message>
@@ -5838,19 +6225,19 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Dollar ($)</source>
         <translation>Dolar ($)</translation>
     </message>
-    <message utf8="both">
+    <message>
         <source>Paragraph (§)</source>
         <translation>Paragraf (§)</translation>
     </message>
-    <message utf8="both">
+    <message>
         <source>Pound (£)</source>
         <translation>Lira (£)</translation>
     </message>
-    <message utf8="both">
+    <message>
         <source>Times (×)</source>
         <translation>Ori (×)</translation>
     </message>
-    <message utf8="both">
+    <message>
         <source>Division (÷)</source>
         <translation>Impartire (÷)</translation>
     </message>
@@ -6322,19 +6709,19 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Alt+D</source>
         <translation type="obsolete">Alt+D</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Copyright (©)</source>
         <translation>Copyright (©)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Registered (®)</source>
         <translation>Inregistrat (®)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Pi (π)</source>
         <translation>Pi (π)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Yen (¥)</source>
         <translation>Yen (¥)</translation>
     </message>
@@ -6348,10 +6735,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Oblique:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6390,7 +6773,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Middle</source>
         <translation type="obsolete">Mijloc</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Diameter (⌀)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6434,8 +6817,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Nu ati specificat niciun text.</translation>
     </message>
     <message>
-        <source>Save As...</source>
+        <source>Close All</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Inchidere</translation>
     </message>
 </context>
 <context>
@@ -6879,6 +7266,22 @@ The contents of a Construction Layer should not appear in printout.</source>
         <source>Toggle &amp;Construction Layer</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unlock all layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lock all layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Unlock all Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Lock all Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_LibraryInsertOptions</name>
@@ -6916,6 +7319,14 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <source>Insert</source>
         <translation>Inserare</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rebuild</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7289,15 +7700,15 @@ p, li { white-space: pre-wrap; }
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
-        <translation type="obsolete">Culoare linie</translation>
+        <translation type="unfinished">Culoare linie</translation>
     </message>
     <message>
         <source>Line width</source>
-        <translation type="obsolete">Grosime linie</translation>
+        <translation type="unfinished">Grosime linie</translation>
     </message>
     <message>
         <source>Line type</source>
-        <translation type="obsolete">Tip linie</translation>
+        <translation type="unfinished">Tip linie</translation>
     </message>
 </context>
 <context>
@@ -8204,12 +8615,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Atentie</translation>
-    </message>
-    <message>
-        <source>experimental, save your work first.
-Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Atentie</translation>
     </message>
     <message>
         <source>error reading blocks in dwg file</source>
@@ -9098,12 +9504,12 @@ Continue?</source>
     <message>
         <source>length1</source>
         <comment>bevel/fillet lenght1</comment>
-        <translation type="unfinished">lungime1</translation>
+        <translation type="obsolete">lungime1</translation>
     </message>
     <message>
         <source>length2</source>
         <comment>bevel/fillet lenght2</comment>
-        <translation type="unfinished">lungime2</translation>
+        <translation type="obsolete">lungime2</translation>
     </message>
     <message>
         <source>number</source>
@@ -9501,26 +9907,6 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Wiki</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>User&apos;s Manual</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Commands</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Style Sheets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Forum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9530,14 +9916,6 @@ Continue?</source>
     </message>
     <message>
         <source>Pen Wizard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Release Information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load Command File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9569,15 +9947,105 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Keycode Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Paste Multiple Commands</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>License</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>circlediam</source>
+        <comment>circle with center and diameter</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cd</source>
+        <comment>circle with center and diameter</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>trimex</source>
+        <comment>modify - trim excess (extend)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tmx</source>
+        <comment>modify - trim excess (extend)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tx</source>
+        <comment>modify - trim excess (extend)</comment>
+        <translation type="unfinished">tx</translation>
+    </message>
+    <message>
+        <source>shapetxt</source>
+        <comment>modify - shape text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>stxt</source>
+        <comment>modify - shape text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>st</source>
+        <comment>modify - shape text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unlinktxt</source>
+        <comment>modify - unlink shaped text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>utxt</source>
+        <comment>modify - unlink shaped text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ut</source>
+        <comment>modify - unlink shaped text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>length1</source>
+        <comment>bevel/fillet length1</comment>
+        <translation type="unfinished">lungime1</translation>
+    </message>
+    <message>
+        <source>length2</source>
+        <comment>bevel/fillet length2</comment>
+        <translation type="unfinished">lungime2</translation>
+    </message>
+    <message>
+        <source>Could not convert requested font: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 entity exploded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 entities exploded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keycode mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load command file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste multiple commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quick Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>noname</source>
+        <comment>default layer name</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10193,7 +10661,7 @@ Continue?</source>
     </message>
     <message>
         <source>Specify radius</source>
-        <translation>Specificati raza</translation>
+        <translation type="vanished">Specificati raza</translation>
     </message>
     <message>
         <source>Back</source>
@@ -10210,6 +10678,10 @@ Continue?</source>
     <message>
         <source>Draw circles with center and point</source>
         <translation type="obsolete">Desenare cercuri cu centru si punct</translation>
+    </message>
+    <message>
+        <source>Specify point on circle</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10322,6 +10794,33 @@ Continue?</source>
     </message>
     <message>
         <source>radius=%1 is invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleDiam</name>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Expresie incorecta</translation>
+    </message>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished">Specificati centrul</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Renuntare</translation>
+    </message>
+    <message>
+        <source>Specify circle radius</source>
+        <translation type="unfinished">Specificati raza cercului</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Inapoi</translation>
+    </message>
+    <message>
+        <source>diameter=%1 is invalid</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12382,6 +12881,14 @@ Continue?</source>
         <source>Modify Entity Properties</source>
         <translation type="obsolete">Modificarea Proprietatilor Entitatii</translation>
     </message>
+    <message>
+        <source>Click on entity to modify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Renuntare</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionModifyExplodeText</name>
@@ -12480,7 +12987,7 @@ Continue?</source>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresie incorecta</translation>
+        <translation type="vanished">Expresie incorecta</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -12500,7 +13007,7 @@ Continue?</source>
     </message>
     <message>
         <source>Enter rotation angle:</source>
-        <translation>Introduceti unghiul de rotire:</translation>
+        <translation type="vanished">Introduceti unghiul de rotire:</translation>
     </message>
 </context>
 <context>
@@ -12643,6 +13150,21 @@ Continue?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionModifyShapeText</name>
+    <message>
+        <source>Select text entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Inapoi</translation>
+    </message>
+    <message>
+        <source>Select entity to shape text to</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionModifyStretch</name>
     <message>
         <source>Stretch</source>
@@ -12769,6 +13291,17 @@ Continue?</source>
     <message>
         <source>Back</source>
         <translation>Inapoi</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyTrimExcess</name>
+    <message>
+        <source>Select entity to trim</source>
+        <translation type="unfinished">Selectati entitatea pentru taiere</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Inapoi</translation>
     </message>
 </context>
 <context>
@@ -13172,6 +13705,10 @@ Continue?</source>
         <source>Printout in color</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionSelect</name>
@@ -13249,6 +13786,10 @@ Continue?</source>
     </message>
     <message>
         <source>Select to revert direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to unlink shaped text</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -14595,6 +15136,17 @@ Continue?</source>
     </message>
 </context>
 <context>
+    <name>Ui_CircleDiamOptions</name>
+    <message>
+        <source>Circle Options</source>
+        <translation type="unfinished">Optiuni pentru cerc</translation>
+    </message>
+    <message>
+        <source>Diameter:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Ui_CircleOptions</name>
     <message>
         <source>Circle Options</source>
@@ -14645,27 +15197,27 @@ Continue?</source>
         <source>Label:</source>
         <translation type="unfinished">Eticheta:</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>⌀</source>
         <translation type="unfinished"></translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <translation type="unfinished">°</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>±</source>
         <translation type="unfinished">±</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>π</source>
         <translation type="unfinished"></translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>×</source>
         <translation type="unfinished">×</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>÷</source>
         <translation type="unfinished">÷</translation>
     </message>
@@ -15073,6 +15625,10 @@ Continue?</source>
         <source>Fit to page</source>
         <translation type="unfinished">Ajustare la marimea paginii</translation>
     </message>
+    <message>
+        <source>Calculate number of pages needed to contain the drawing.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Ui_RoundOptions</name>
@@ -15091,6 +15647,17 @@ Continue?</source>
     <message>
         <source>Radius:</source>
         <translation type="unfinished">Raza:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ShapeTextOptions</name>
+    <message>
+        <source>Shape Text Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

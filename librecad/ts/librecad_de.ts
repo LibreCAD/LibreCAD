@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="de">
+<TS version="2.1" language="de">
 <context>
     <name></name>
     <message>
@@ -146,6 +146,29 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     <message>
         <source>Select circle center</source>
         <translation>Mittelpunkt auswählen</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawLinePolygonCenTan</name>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify a tangent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="unfinished">Keine gültige Anzahl. Versuchen Sie 1..9999</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Ungültiger Ausdruck</translation>
     </message>
 </context>
 <context>
@@ -752,7 +775,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Export as &amp;MakerCAM SVG...</source>
-        <translation>als &amp;MakerCAM SVG exportieren...</translation>
+        <translation type="vanished">als &amp;MakerCAM SVG exportieren...</translation>
     </message>
     <message>
         <source>Regenerate Dimension Entities</source>
@@ -853,7 +876,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>&amp;Draft</source>
-        <translation>&amp;Entwurf</translation>
+        <translation type="vanished">&amp;Entwurf</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
@@ -927,7 +950,51 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     <message>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
-        <translation>Strg+D</translation>
+        <translation type="vanished">Strg+D</translation>
+    </message>
+    <message>
+        <source>Pol&amp;ygon (Cen,Tan)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center, &amp;Diameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trim E&amp;xcess</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S&amp;hape Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Unlink Text from Geometry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Unlock all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Lock all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as CA&amp;M/plain SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export to ProNest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save A&amp;ll...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1357,7 +1424,7 @@ Datum: %1</translation>
     </message>
     <message>
         <source>Saving drawing under new filename...</source>
-        <translation>Speichere Zeichnung unter neuem Namen...</translation>
+        <translation type="vanished">Speichere Zeichnung unter neuem Namen...</translation>
     </message>
     <message>
         <source>Exporting drawing...</source>
@@ -1397,13 +1464,13 @@ Datum: %1</translation>
 Please check the permissions.</source>
         <translation>Kann Datei
 %1
-nicht  öffnen, bitte Berechtigungen prüfen.</translation>
+nicht &#xa0;öffnen, bitte Berechtigungen prüfen.</translation>
     </message>
     <message>
         <source>Cannot save the file
 %1
 Please check the permissions.</source>
-        <translation>Kann Datei
+        <translation type="vanished">Kann Datei
 %1
 nicht speichern, bitte Berechtigung prüfen.</translation>
     </message>
@@ -1579,7 +1646,7 @@ Automatisches speichern wurde deaktiviert.</translation>
     </message>
     <message>
         <source>Su&amp;b-Window mode</source>
-        <translation>&amp;Mehrfach-Fenster-Modus</translation>
+        <translation type="vanished">&amp;Mehrfach-Fenster-Modus</translation>
     </message>
     <message>
         <source>Tile &amp;Vertically</source>
@@ -1643,7 +1710,7 @@ Automatisches speichern wurde deaktiviert.</translation>
     </message>
     <message>
         <source>Draft Mode</source>
-        <translation>Entwurfsmodus</translation>
+        <translation type="vanished">Entwurfsmodus</translation>
     </message>
     <message>
         <source>Export as PDF</source>
@@ -1783,7 +1850,7 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Compiler: Microsoft Visual C++</source>
-        <translation>Kompiler: Microsoft Visual C++</translation>
+        <translation type="vanished">Kompiler: Microsoft Visual C++</translation>
     </message>
     <message>
         <source>Boost Version: %1.%2.%3</source>
@@ -1827,11 +1894,104 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Help Links</source>
-        <translation>Hilfe Links</translation>
+        <translation type="vanished">Hilfe Links</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation>Online</translation>
+        <translation type="vanished">Online</translation>
+    </message>
+    <message>
+        <source>Saving drawing: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing Drawing</source>
+        <translation type="unfinished">Zeichnung schließen</translation>
+    </message>
+    <message>
+        <source>Save changes to the following item?
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation type="unfinished">&amp;Speichern</translation>
+    </message>
+    <message>
+        <source>Save &amp;as...</source>
+        <translation type="unfinished">Speichern &amp;unter...</translation>
+    </message>
+    <message>
+        <source>&amp;Save %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save %1 &amp;as...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Window mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rounded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Triangular</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>North</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>South</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>East</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>West</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Arrange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Maximized</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save All cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close All cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiler: Microsoft C/C++ %1.%2.%3.%4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The Code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LibreCAD Help</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1847,17 +2007,29 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     <message>
         <source>Do you really want to close the file
 %1?</source>
-        <translation>Wollen Sie die Datei
+        <translation type="vanished">Wollen Sie die Datei
 %1
 wirklich schließen?</translation>
     </message>
     <message>
         <source>Do you really want to close the drawing?</source>
-        <translation>Wollen Sie die Zeichnung wirklich schließen?</translation>
+        <translation type="vanished">Wollen Sie die Zeichnung wirklich schließen?</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation>Zeichnung schließen</translation>
+        <translation type="vanished">Zeichnung schließen</translation>
+    </message>
+    <message>
+        <source>Save Drawing</source>
+        <translation type="unfinished">Zeichnung speichern</translation>
+    </message>
+    <message>
+        <source>This file is set to read-only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try again with a different file name.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3764,6 +3936,10 @@ Fenster editieren</translation>
         <source>save the active block to a file</source>
         <translation>aktiven Block in einer Datei speichern</translation>
     </message>
+    <message>
+        <source>Looking for matching block names</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_CadToolBar</name>
@@ -4766,27 +4942,27 @@ p, li { white-space: pre-wrap; }
         <source>Label:</source>
         <translation type="obsolete">Text:</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>ø</source>
         <translation type="obsolete">ø</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <translation type="obsolete">°</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>±</source>
         <translation type="obsolete">±</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>¶</source>
         <translation type="obsolete">¶</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>×</source>
         <translation type="obsolete">×</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>÷</source>
         <translation type="obsolete">÷</translation>
     </message>
@@ -4794,11 +4970,11 @@ p, li { white-space: pre-wrap; }
         <source>...</source>
         <translation type="obsolete">...</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>⌀</source>
         <translation type="obsolete">⌀</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>π</source>
         <translation type="obsolete">π</translation>
     </message>
@@ -4821,35 +4997,35 @@ p, li { white-space: pre-wrap; }
         <source>Insert:</source>
         <translation>Einfügen:</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>ø (Diameter)</source>
         <translation type="obsolete">ø (Durchmesser)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>° (Degree)</source>
         <translation>° (Grad)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>± (Plus / Minus)</source>
         <translation>± (Plus / Minus)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>¶ (Pi)</source>
         <translation type="obsolete">¶ (Pi)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>× (Times)</source>
         <translation>× (Mal)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>÷ (Division)</source>
         <translation>÷ (Geteilt)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>⌀ (Diameter)</source>
         <translation>⌀ (Durchmesser)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>π (Pi)</source>
         <translation>π (Pi)</translation>
     </message>
@@ -4926,6 +5102,15 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>&amp;OK</source>
         <translation type="obsolete">&amp;OK</translation>
+    </message>
+    <message>
+        <source>Apply attributes also to all sub-entities of selected INSERT.
+This recursively modifies all entities of the Block itself.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply attributes Block-deep</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5090,6 +5275,73 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>&amp;OK</source>
         <translation type="obsolete">&amp;OK</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgFontConversion</name>
+    <message>
+        <source>Convert Fonts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font family:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Save as:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Letter spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Author:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Word spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>License:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line spacing:</source>
+        <translation type="unfinished">Linienabstand:</translation>
+    </message>
+    <message>
+        <source>Writing System:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished">Vorschau</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">Erstellen</translation>
+    </message>
+    <message>
+        <source> - Searching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LibreCAD Font Files(*.lff)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> - Rendering</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5469,15 +5721,15 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
         <source>Insert Symbol</source>
         <translation>Symbol einfügen</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Diameter (ø)</source>
         <translation type="obsolete">Durchmesser (ø)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Degree (°)</source>
         <translation>Grad (°)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Plus / Minus (±)</source>
         <translation>Plus / Minus (±)</translation>
     </message>
@@ -5493,35 +5745,35 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
         <source>Dollar ($)</source>
         <translation>Dollar ($)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Copyright (©)</source>
         <translation>Copyright (©)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Registered (®)</source>
         <translation>Registriert (®)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Paragraph (§)</source>
         <translation>Paragraph (§)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Pi (π)</source>
         <translation>Pi (π)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Pound (£)</source>
         <translation>Pfund (£)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Yen (¥)</source>
         <translation>Yen (¥)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Times (×)</source>
         <translation>Mal (×)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Division (÷)</source>
         <translation>Geteilt (÷)</translation>
     </message>
@@ -5969,13 +6221,17 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
         <translation>[100000-10FFFD] private Nutzung, Ergänzung-B</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Diameter (⌀)</source>
         <translation>Durchmesser (⌀)</translation>
     </message>
     <message>
         <source>&amp;Line spacing:</source>
         <translation>&amp;Zeilenabstand:</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
     </message>
 </context>
 <context>
@@ -6110,6 +6366,18 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     <message>
         <source>Number of copies. Maximum 100</source>
         <translation>Anzahl Kopien. Maximal 100</translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset Y</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6291,7 +6559,7 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Paper Format</source>
-        <translation>Papier Format</translation>
+        <translation type="vanished">Papier Format</translation>
     </message>
     <message>
         <source>Paper Height:</source>
@@ -6383,11 +6651,11 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Paper &amp;Height:</source>
-        <translation>Papier&amp;höhe:</translation>
+        <translation type="vanished">Papier&amp;höhe:</translation>
     </message>
     <message>
         <source>Paper &amp;Width:</source>
-        <translation>Papier&amp;breite:</translation>
+        <translation type="vanished">Papier&amp;breite:</translation>
     </message>
     <message>
         <source>&amp;Units</source>
@@ -6732,6 +7000,54 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     <message>
         <source>fixed extension line legth</source>
         <translation>Feste Länge von Begrenzungslinien</translation>
+    </message>
+    <message>
+        <source>Format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Height:</source>
+        <translation type="unfinished">&amp;Höhe:</translation>
+    </message>
+    <message>
+        <source>&amp;Width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orientation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Margins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom</source>
+        <translation type="unfinished">Unten</translation>
+    </message>
+    <message>
+        <source>Number of pages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Horizontally:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vertically:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update Template</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Architectural (metric)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7306,18 +7622,70 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>N&amp;umber of preview entities:</source>
-        <translation>Anzahl Vorscha&amp;uobjekte:</translation>
+        <translation type="vanished">Anzahl Vorscha&amp;uobjekte:</translation>
     </message>
     <message>
         <source>Don&apos;t use native OS file open dialog</source>
         <translation>Nicht den Standard-Öffnen-Dialog verwenden</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert horizontal scrolling direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert vertical scrolling direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inverts zoom direction when using mouse wheel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert zoom direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keyboard Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Evaluate commands when SPACE BAR is pressed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle free snap mode when SPACE BAR is pressed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CAD Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically zoom drawing when opening</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_DlgOptionsMakerCam</name>
     <message>
         <source>Export as MakerCAM SVG</source>
-        <translation>Als MakerCAM SVG exportieren</translation>
+        <translation type="vanished">Als MakerCAM SVG exportieren</translation>
     </message>
     <message>
         <source>Layers</source>
@@ -7325,7 +7693,7 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
-        <translation>MakerCAM, Stand November 2014, versteckt keine SVG Elemente, die unsichtbar gesetzt sind (&quot;display: none;&quot; oder &quot;visibility: hidden;&quot;).</translation>
+        <translation type="vanished">MakerCAM, Stand November 2014, versteckt keine SVG Elemente, die unsichtbar gesetzt sind (&quot;display: none;&quot; oder &quot;visibility: hidden;&quot;).</translation>
     </message>
     <message>
         <source>Export invisible layers</source>
@@ -7341,7 +7709,7 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks, because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation>MakerCAM, Stand November 2014, kann nicht korrekt mit Blöcken umgehen, weil es den Referenzpunkt in &lt;use&gt; nicht beachtet.</translation>
+        <translation type="vanished">MakerCAM, Stand November 2014, kann nicht korrekt mit Blöcken umgehen, weil es den Referenzpunkt in &lt;use&gt; nicht beachtet.</translation>
     </message>
     <message>
         <source>Convert blocks to safe inline SVG content</source>
@@ -7353,11 +7721,75 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>MakerCAM, Stand März 2015, kann Ellipsen und Ellipsenbögen nicht korrekt darstellen, wenn der &lt;ellipse&gt; Tag benutzt wird und einer Verdrehung im &quot;transform&quot; Attribut oder als &lt;path&gt; der Ellipsenbögen enthält.</translation>
+        <translation type="vanished">MakerCAM, Stand März 2015, kann Ellipsen und Ellipsenbögen nicht korrekt darstellen, wenn der &lt;ellipse&gt; Tag benutzt wird und einer Verdrehung im &quot;transform&quot; Attribut oder als &lt;path&gt; der Ellipsenbögen enthält.</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
         <translation>Ellipsen und Ellipsenbögen durch quadratische Bézierkurven annähern</translation>
+    </message>
+    <message>
+        <source>Export as CAM/plain SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default width of elements, mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Images</source>
+        <translation type="unfinished">Bilder</translation>
+    </message>
+    <message>
+        <source>Raster Image export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dash/Dot Lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of the pattern, mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bake dash/dot lines to SVG path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content 
+that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
+because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
+when they are created using the &lt;ellipse&gt; tag  with a rotation in 
+the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exported images can be useful in SVG editors (Inkscape, etc), 
+but avoided in some CAM&apos;s.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+which can be useful in lasercut of plywood or for papercraft. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+but ignored by other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of line pattern related to zoom, 
+so default step value required for baking</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7867,15 +8299,15 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
         <source>Insert Symbol</source>
         <translation>Symbol einfügen</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Diameter (ø)</source>
         <translation type="obsolete">Durchmesser (ø)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Degree (°)</source>
         <translation>Grad (°)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Plus / Minus (±)</source>
         <translation>Plus / Minus (±)</translation>
     </message>
@@ -7891,35 +8323,35 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
         <source>Dollar ($)</source>
         <translation>Dollar ($)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Copyright (©)</source>
         <translation>Copyright (©)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Registered (®)</source>
         <translation>Registriert (®)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Paragraph (§)</source>
         <translation>Paragraph (§)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Pi (π)</source>
         <translation>Pi (π)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Pound (£)</source>
         <translation>Pfund (£)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Yen (¥)</source>
         <translation>Yen (¥)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Times (×)</source>
         <translation>Mal (×)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Division (÷)</source>
         <translation>Division (÷)</translation>
     </message>
@@ -8401,7 +8833,7 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Oblique:</source>
-        <translation>Schrägstellen:</translation>
+        <translation type="vanished">Schrägstellen:</translation>
     </message>
     <message>
         <source>Width factor:</source>
@@ -8439,7 +8871,7 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
         <source>Middle</source>
         <translation type="obsolete">Zentriert</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Diameter (⌀)</source>
         <translation>Durchmesser (⌀)</translation>
     </message>
@@ -8508,7 +8940,15 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Save As...</source>
-        <translation>Speichern unter...</translation>
+        <translation type="vanished">Speichern unter...</translation>
+    </message>
+    <message>
+        <source>Close All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8949,6 +9389,22 @@ Der Inhalt von Entwurfsebenen wird nicht ausgedruckt.</translation>
         <source>Toggle &amp;Construction Layer</source>
         <translation>&amp;Konstruktionsebene umschalten</translation>
     </message>
+    <message>
+        <source>Unlock all layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lock all layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Unlock all Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Lock all Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_LibraryInsertOptions</name>
@@ -8998,6 +9454,14 @@ Der Inhalt von Entwurfsebenen wird nicht ausgedruckt.</translation>
     <message>
         <source>Insert</source>
         <translation>Einfügen</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rebuild</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9379,15 +9843,15 @@ p, li { white-space: pre-wrap; }
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
-        <translation type="obsolete">Linienfarbe</translation>
+        <translation type="unfinished">Linienfarbe</translation>
     </message>
     <message>
         <source>Line width</source>
-        <translation type="obsolete">Linienstärke</translation>
+        <translation type="unfinished">Linienstärke</translation>
     </message>
     <message>
         <source>Line type</source>
-        <translation type="obsolete">Linientyp</translation>
+        <translation type="unfinished">Linientyp</translation>
     </message>
 </context>
 <context>
@@ -10287,12 +10751,12 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>Warnung</translation>
+        <translation type="vanished">Warnung</translation>
     </message>
     <message>
         <source>experimental, save your work first.
 Continue?</source>
-        <translation>Experimentell, bitte zuerst speichern.
+        <translation type="vanished">Experimentell, bitte zuerst speichern.
 Fortfahren?</translation>
     </message>
     <message>
@@ -11182,12 +11646,12 @@ Fortfahren?</translation>
     <message>
         <source>length1</source>
         <comment>bevel/fillet lenght1</comment>
-        <translation>länge1</translation>
+        <translation type="vanished">länge1</translation>
     </message>
     <message>
         <source>length2</source>
         <comment>bevel/fillet lenght2</comment>
-        <translation>länge2</translation>
+        <translation type="vanished">länge2</translation>
     </message>
     <message>
         <source>number</source>
@@ -11586,19 +12050,19 @@ Fortfahren?</translation>
     </message>
     <message>
         <source>Wiki</source>
-        <translation>Wiki</translation>
+        <translation type="vanished">Wiki</translation>
     </message>
     <message>
         <source>User&apos;s Manual</source>
-        <translation>Benutzerhandbuch</translation>
+        <translation type="vanished">Benutzerhandbuch</translation>
     </message>
     <message>
         <source>Commands</source>
-        <translation>Kommandos</translation>
+        <translation type="vanished">Kommandos</translation>
     </message>
     <message>
         <source>Style Sheets</source>
-        <translation>Stylesheets</translation>
+        <translation type="vanished">Stylesheets</translation>
     </message>
     <message>
         <source>Custom Widgets</source>
@@ -11606,7 +12070,7 @@ Fortfahren?</translation>
     </message>
     <message>
         <source>Forum</source>
-        <translation>Forum</translation>
+        <translation type="vanished">Forum</translation>
     </message>
     <message>
         <source>All</source>
@@ -11622,11 +12086,11 @@ Fortfahren?</translation>
     </message>
     <message>
         <source>Release Information</source>
-        <translation>Releaseinformationen</translation>
+        <translation type="vanished">Releaseinformationen</translation>
     </message>
     <message>
         <source>Load Command File</source>
-        <translation>Befehlsdatei öffnen</translation>
+        <translation type="vanished">Befehlsdatei öffnen</translation>
     </message>
     <message>
         <source>Select objects</source>
@@ -11658,15 +12122,113 @@ Fortfahren?</translation>
     </message>
     <message>
         <source>Keycode Mode</source>
-        <translation>Tastaturcodes Modus</translation>
+        <translation type="vanished">Tastaturcodes Modus</translation>
     </message>
     <message>
         <source>Paste Multiple Commands</source>
-        <translation>Mehrzeilige Kommandos einfügen</translation>
+        <translation type="vanished">Mehrzeilige Kommandos einfügen</translation>
     </message>
     <message>
         <source>License</source>
         <translation>Lizenz</translation>
+    </message>
+    <message>
+        <source>circlediam</source>
+        <comment>circle with center and diameter</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cd</source>
+        <comment>circle with center and diameter</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>trimex</source>
+        <comment>modify - trim excess (extend)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tmx</source>
+        <comment>modify - trim excess (extend)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tx</source>
+        <comment>modify - trim excess (extend)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>shapetxt</source>
+        <comment>modify - shape text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>stxt</source>
+        <comment>modify - shape text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>st</source>
+        <comment>modify - shape text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unlinktxt</source>
+        <comment>modify - unlink shaped text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>utxt</source>
+        <comment>modify - unlink shaped text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ut</source>
+        <comment>modify - unlink shaped text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>length1</source>
+        <comment>bevel/fillet length1</comment>
+        <translation type="unfinished">länge1</translation>
+    </message>
+    <message>
+        <source>length2</source>
+        <comment>bevel/fillet length2</comment>
+        <translation type="unfinished">länge2</translation>
+    </message>
+    <message>
+        <source>Could not convert requested font: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 entity exploded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 entities exploded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keycode mode</source>
+        <translation type="unfinished">Tastaturcode Modus</translation>
+    </message>
+    <message>
+        <source>Load command file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste multiple commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quick Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>noname</source>
+        <comment>default layer name</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12383,7 +12945,7 @@ Fortfahren?</translation>
     </message>
     <message>
         <source>Specify radius</source>
-        <translation>Radius angeben</translation>
+        <translation type="vanished">Radius angeben</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -12400,6 +12962,10 @@ Fortfahren?</translation>
     <message>
         <source>Draw circles with center and point</source>
         <translation type="obsolete">Kreise mit Zentrum und Kreispunkt zeichnen</translation>
+    </message>
+    <message>
+        <source>Specify point on circle</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12513,6 +13079,33 @@ Fortfahren?</translation>
     <message>
         <source>radius=%1 is invalid</source>
         <translation>Radius=%1 ist unzulässig</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleDiam</name>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Ungültiger Ausdruck</translation>
+    </message>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
+    <message>
+        <source>Specify circle radius</source>
+        <translation type="unfinished">Kreisradius angeben</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diameter=%1 is invalid</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -14694,6 +15287,14 @@ Fortfahren?</translation>
         <source>Modify Entity Properties</source>
         <translation type="obsolete">Objekt Eigenschaften bearbeiten</translation>
     </message>
+    <message>
+        <source>Click on entity to modify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionModifyExplodeText</name>
@@ -14817,11 +15418,11 @@ Fortfahren?</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
-        <translation>Rotationswinkel eingeben:</translation>
+        <translation type="vanished">Rotationswinkel eingeben:</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Ungültiger Ausdruck</translation>
+        <translation type="vanished">Ungültiger Ausdruck</translation>
     </message>
     <message>
         <source>Move and Rotate</source>
@@ -14991,6 +15592,21 @@ Fortfahren?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionModifyShapeText</name>
+    <message>
+        <source>Select text entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select entity to shape text to</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionModifyStretch</name>
     <message>
         <source>Back</source>
@@ -15117,6 +15733,17 @@ Fortfahren?</translation>
     <message>
         <source>Lengthen by a given amount</source>
         <translation type="obsolete">Um einen gegebenen Betrag verlängern</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyTrimExcess</name>
+    <message>
+        <source>Select entity to trim</source>
+        <translation type="unfinished">Zu trimmendes Objekt wählen</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -15692,6 +16319,10 @@ Fortfahren?</translation>
         <source>Printout in color</source>
         <translation>Ausdruck in Farbe</translation>
     </message>
+    <message>
+        <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionSelect</name>
@@ -15770,6 +16401,10 @@ Fortfahren?</translation>
     <message>
         <source>Select to revert direction</source>
         <translation>Auswahl zum Umkehren der Richtung</translation>
+    </message>
+    <message>
+        <source>Select to unlink shaped text</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -17201,6 +17836,17 @@ Fortfahren?</translation>
     </message>
 </context>
 <context>
+    <name>Ui_CircleDiamOptions</name>
+    <message>
+        <source>Circle Options</source>
+        <translation type="unfinished">Kreis Optionen</translation>
+    </message>
+    <message>
+        <source>Diameter:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Ui_CircleOptions</name>
     <message>
         <source>Circle Options</source>
@@ -17251,27 +17897,27 @@ Fortfahren?</translation>
         <source>Label:</source>
         <translation>Text:</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>⌀</source>
         <translation>⌀</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <translation>°</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>±</source>
         <translation>±</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>π</source>
         <translation>π</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>×</source>
         <translation>×</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>÷</source>
         <translation>÷</translation>
     </message>
@@ -17679,6 +18325,10 @@ Fortfahren?</translation>
         <source>Fit to page</source>
         <translation>Auf Seite einpassen</translation>
     </message>
+    <message>
+        <source>Calculate number of pages needed to contain the drawing.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Ui_RoundOptions</name>
@@ -17697,6 +18347,17 @@ Fortfahren?</translation>
     <message>
         <source>Radius:</source>
         <translation>Radius:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ShapeTextOptions</name>
+    <message>
+        <source>Shape Text Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset:</source>
+        <translation type="unfinished">Abstand:</translation>
     </message>
 </context>
 <context>

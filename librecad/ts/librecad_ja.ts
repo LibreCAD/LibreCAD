@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ja">
+<TS version="2.1" language="ja">
 <context>
     <name>ColorWizard</name>
     <message>
@@ -93,6 +93,29 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Select circle center</source>
         <translation>円の中心を選択</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawLinePolygonCenTan</name>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished">中心指定</translation>
+    </message>
+    <message>
+        <source>Specify a tangent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter number:</source>
+        <translation type="unfinished">数値入力:</translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="unfinished">有効な数値ではありません。1..9999まで</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -713,7 +736,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Export as &amp;MakerCAM SVG...</source>
-        <translation>MakerCAM SVGでエクスポート(&amp;M)...</translation>
+        <translation type="vanished">MakerCAM SVGでエクスポート(&amp;M)...</translation>
     </message>
     <message>
         <source>Regenerate Dimension Entities</source>
@@ -819,7 +842,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Draft</source>
-        <translation>作図(&amp;D)</translation>
+        <translation type="vanished">作図(&amp;D)</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
@@ -894,7 +917,51 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
-        <translation>Ctrl+D</translation>
+        <translation type="vanished">Ctrl+D</translation>
+    </message>
+    <message>
+        <source>Pol&amp;ygon (Cen,Tan)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center, &amp;Diameter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trim E&amp;xcess</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>S&amp;hape Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Unlink Text from Geometry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Unlock all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Lock all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as CA&amp;M/plain SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export to ProNest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save A&amp;ll...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1438,11 +1505,11 @@ Please check the permissions.</source>
         <source>Cannot save the file
 %1
 Please check the permissions.</source>
-        <translation>ファイル %1 は保存できません、権限をチェックしてください.</translation>
+        <translation type="vanished">ファイル %1 は保存できません、権限をチェックしてください.</translation>
     </message>
     <message>
         <source>Saving drawing under new filename...</source>
-        <translation>新しい名前で図面を保存...</translation>
+        <translation type="vanished">新しい名前で図面を保存...</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
@@ -1557,7 +1624,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Su&amp;b-Window mode</source>
-        <translation>サブ・ウィンドウモード(&amp;b)</translation>
+        <translation type="vanished">サブ・ウィンドウモード(&amp;b)</translation>
     </message>
     <message>
         <source>Tile &amp;Vertically</source>
@@ -1625,7 +1692,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Draft Mode</source>
-        <translation>作図モード</translation>
+        <translation type="vanished">作図モード</translation>
     </message>
     <message>
         <source>Export as PDF</source>
@@ -1784,7 +1851,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Compiler: Microsoft Visual C++</source>
-        <translation>コンパイラ: Microsoft Visual C++</translation>
+        <translation type="vanished">コンパイラ: Microsoft Visual C++</translation>
     </message>
     <message>
         <source>Boost Version: %1.%2.%3</source>
@@ -1828,27 +1895,132 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Help Links</source>
-        <translation>ヘルプへのリンク</translation>
+        <translation type="vanished">ヘルプへのリンク</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation>オンライン</translation>
+        <translation type="vanished">オンライン</translation>
+    </message>
+    <message>
+        <source>Saving drawing: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing Drawing</source>
+        <translation type="unfinished">図面を閉じる</translation>
+    </message>
+    <message>
+        <source>Save changes to the following item?
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation type="unfinished">保存(&amp;S)</translation>
+    </message>
+    <message>
+        <source>Save &amp;as...</source>
+        <translation type="unfinished">別名で保存(&amp;a)...</translation>
+    </message>
+    <message>
+        <source>&amp;Save %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save %1 &amp;as...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Window mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rounded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Triangular</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>North</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>South</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>East</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>West</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Arrange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Maximized</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save All cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close All cancelled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compiler: Microsoft C/C++ %1.%2.%3.%4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The Code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LibreCAD Help</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
     <message>
         <source>Do you really want to close the drawing?</source>
-        <translation>図面を閉じますか？</translation>
+        <translation type="vanished">図面を閉じますか？</translation>
     </message>
     <message>
         <source>Do you really want to close the file
 %1?</source>
-        <translation>ファイル %1 を閉じますか？</translation>
+        <translation type="vanished">ファイル %1 を閉じますか？</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation>図面を閉じる</translation>
+        <translation type="vanished">図面を閉じる</translation>
+    </message>
+    <message>
+        <source>Save Drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This file is set to read-only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try again with a different file name.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2071,6 +2243,10 @@ in a separate window</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
         <translation>アクティブなブロックをファイルに保存</translation>
     </message>
+    <message>
+        <source>Looking for matching block names</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_CircleOptions</name>
@@ -2272,19 +2448,19 @@ in a separate window</source>
         <source>Label:</source>
         <translation type="obsolete">ラベル:</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <translation type="obsolete">°</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>±</source>
         <translation type="obsolete">±</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>×</source>
         <translation type="obsolete">×</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>÷</source>
         <translation type="obsolete">÷</translation>
     </message>
@@ -2292,11 +2468,11 @@ in a separate window</source>
         <source>...</source>
         <translation type="obsolete">...</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>⌀</source>
         <translation type="obsolete">⌀</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>π</source>
         <translation type="obsolete">π</translation>
     </message>
@@ -2319,27 +2495,27 @@ in a separate window</source>
         <source>Insert:</source>
         <translation>挿入:</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>° (Degree)</source>
         <translation>° (角度)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>± (Plus / Minus)</source>
         <translation>± (プラス/マイナス)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>× (Times)</source>
         <translation>× (乗算)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>÷ (Division)</source>
         <translation>÷ (除算)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>⌀ (Diameter)</source>
         <translation>⌀ (直径)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>π (Pi)</source>
         <translation>π (円周率)</translation>
     </message>
@@ -2392,6 +2568,15 @@ in a separate window</source>
     <message>
         <source>Layer:</source>
         <translation>レイヤー:</translation>
+    </message>
+    <message>
+        <source>Apply attributes also to all sub-entities of selected INSERT.
+This recursively modifies all entities of the Block itself.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply attributes Block-deep</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2496,6 +2681,73 @@ in a separate window</source>
     <message>
         <source>Reversed</source>
         <translation>反転</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgFontConversion</name>
+    <message>
+        <source>Convert Fonts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font family:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Save as:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Letter spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Author:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Word spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>License:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Writing System:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished">プレビュー</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">新規作成</translation>
+    </message>
+    <message>
+        <source> - Searching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LibreCAD Font Files(*.lff)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> - Rendering</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2812,11 +3064,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Insert Symbol</source>
         <translation>シンボル挿入</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Degree (°)</source>
         <translation>角度 (°)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Plus / Minus (±)</source>
         <translation>プラス/マイナス (±)</translation>
     </message>
@@ -2832,35 +3084,35 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Dollar ($)</source>
         <translation>ドル ($)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Copyright (©)</source>
         <translation>商標 (©)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Registered (®)</source>
         <translation>登録 (®)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Paragraph (§)</source>
         <translation>段落 (§)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Pi (π)</source>
         <translation>円周率 (π)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Pound (£)</source>
         <translation>ポンド (£)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Yen (¥)</source>
         <translation>日本円 (¥)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Times (×)</source>
         <translation>乗算 (×)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Division (÷)</source>
         <translation>除算 (÷)</translation>
     </message>
@@ -3308,13 +3560,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
         <translation>[100000-10FFFD] 補助私用領域B</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Diameter (⌀)</source>
         <translation>直径 (⌀)</translation>
     </message>
     <message>
         <source>&amp;Line spacing:</source>
         <translation>行間(&amp;L):</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
     </message>
 </context>
 <context>
@@ -3385,6 +3641,18 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Number of copies. Maximum 100</source>
         <translation>コピー数（最大100）</translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset Y</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3486,7 +3754,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Paper Format</source>
-        <translation>用紙</translation>
+        <translation type="vanished">用紙</translation>
     </message>
     <message>
         <source>Text Height:</source>
@@ -3542,11 +3810,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Paper &amp;Height:</source>
-        <translation>用紙の高さ(&amp;H):</translation>
+        <translation type="vanished">用紙の高さ(&amp;H):</translation>
     </message>
     <message>
         <source>Paper &amp;Width:</source>
-        <translation>用紙の幅(&amp;W):</translation>
+        <translation type="vanished">用紙の幅(&amp;W):</translation>
     </message>
     <message>
         <source>&amp;Units</source>
@@ -3787,6 +4055,54 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>fixed extension line legth</source>
         <translation>固定された延長線の長さ</translation>
+    </message>
+    <message>
+        <source>Format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Height:</source>
+        <translation type="unfinished">高さ(&amp;H):</translation>
+    </message>
+    <message>
+        <source>&amp;Width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orientation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Margins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom</source>
+        <translation type="unfinished">下</translation>
+    </message>
+    <message>
+        <source>Number of pages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Horizontally:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vertically:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update Template</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Architectural (metric)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4190,18 +4506,70 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>N&amp;umber of preview entities:</source>
-        <translation>表示要素数(&amp;u)：</translation>
+        <translation type="vanished">表示要素数(&amp;u)：</translation>
     </message>
     <message>
         <source>Don&apos;t use native OS file open dialog</source>
         <translation>ネイティブOSのファイルを開くダイアログは使用しない</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert horizontal scrolling direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert vertical scrolling direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inverts zoom direction when using mouse wheel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert zoom direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keyboard Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Evaluate commands when SPACE BAR is pressed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle free snap mode when SPACE BAR is pressed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CAD Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically zoom drawing when opening</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_DlgOptionsMakerCam</name>
     <message>
         <source>Export as MakerCAM SVG</source>
-        <translation>MakerCAM SVG でエクスポート</translation>
+        <translation type="vanished">MakerCAM SVG でエクスポート</translation>
     </message>
     <message>
         <source>Layers</source>
@@ -4209,7 +4577,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
-        <translation>2014/11現在、MarkerCAMは、不可視に設定されたSVGであっても隠さない (&quot;display: none;&quot; か &quot;visibility: hidden;&quot;).</translation>
+        <translation type="vanished">2014/11現在、MarkerCAMは、不可視に設定されたSVGであっても隠さない (&quot;display: none;&quot; か &quot;visibility: hidden;&quot;).</translation>
     </message>
     <message>
         <source>Export invisible layers</source>
@@ -4227,7 +4595,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks, because it does not take into account the reference point in the &lt;use&gt;.</source>
         <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation>2014年11月現在のMakerCAMは&lt;use&gt;内で参照ポイントを考慮しないため、ブロックを正しく扱うことができない.</translation>
+        <translation type="vanished">2014年11月現在のMakerCAMは&lt;use&gt;内で参照ポイントを考慮しないため、ブロックを正しく扱うことができない.</translation>
     </message>
     <message>
         <source>Convert blocks to safe inline SVG content</source>
@@ -4240,11 +4608,75 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>2015年3月現在、MakerCAMは楕円と楕円の弧を正しく表示できない、&lt;ellipse&gt; タグを使って作成される時には &quot;transform&quot; 属性での回転か楕円の弧セグメントを使っている &lt;path&gt; として作成される.</translation>
+        <translation type="vanished">2015年3月現在、MakerCAMは楕円と楕円の弧を正しく表示できない、&lt;ellipse&gt; タグを使って作成される時には &quot;transform&quot; 属性での回転か楕円の弧セグメントを使っている &lt;path&gt; として作成される.</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
         <translation>おおよそ楕円と方形のベジエによる楕円の弧</translation>
+    </message>
+    <message>
+        <source>Export as CAM/plain SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default width of elements, mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Raster Image export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dash/Dot Lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of the pattern, mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bake dash/dot lines to SVG path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content 
+that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
+because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
+when they are created using the &lt;ellipse&gt; tag  with a rotation in 
+the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exported images can be useful in SVG editors (Inkscape, etc), 
+but avoided in some CAM&apos;s.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+which can be useful in lasercut of plywood or for papercraft. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+but ignored by other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of line pattern related to zoom, 
+so default step value required for baking</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4999,43 +5431,43 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>&amp;Height:</source>
         <translation>高さ(&amp;H):</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Degree (°)</source>
         <translation>角度 (°)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Plus / Minus (±)</source>
         <translation>プラス/マイナス (±)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Copyright (©)</source>
         <translation>商標 (©)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Registered (®)</source>
         <translation>登録 (®)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Paragraph (§)</source>
         <translation>段落 (§)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Pi (π)</source>
         <translation>円周率 (π)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Pound (£)</source>
         <translation>ポンド (£)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Yen (¥)</source>
         <translation>日本円 (¥)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Times (×)</source>
         <translation>乗算 (×)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Division (÷)</source>
         <translation>除算 (÷)</translation>
     </message>
@@ -5053,7 +5485,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Oblique:</source>
-        <translation>傾き:</translation>
+        <translation type="vanished">傾き:</translation>
     </message>
     <message>
         <source>Width factor:</source>
@@ -5091,7 +5523,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Middle</source>
         <translation type="obsolete">中点</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Diameter (⌀)</source>
         <translation>直径 (⌀)</translation>
     </message>
@@ -5116,7 +5548,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Save As...</source>
-        <translation>別名で保存...</translation>
+        <translation type="vanished">別名で保存...</translation>
+    </message>
+    <message>
+        <source>Close All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">閉じる</translation>
     </message>
 </context>
 <context>
@@ -5431,6 +5871,22 @@ The contents of a Construction Layer should not appear in printout.</source>
         <source>Toggle &amp;Construction Layer</source>
         <translation>作図補助レイヤーの切り替え(&amp;C)</translation>
     </message>
+    <message>
+        <source>Unlock all layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lock all layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Unlock all Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Lock all Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_LibraryInsertOptions</name>
@@ -5464,6 +5920,14 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <source>Insert</source>
         <translation>挿入</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rebuild</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5842,15 +6306,15 @@ p, li { white-space: pre-wrap; }
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
-        <translation type="obsolete">線の色</translation>
+        <translation type="unfinished">線の色</translation>
     </message>
     <message>
         <source>Line width</source>
-        <translation type="obsolete">線幅</translation>
+        <translation type="unfinished">線幅</translation>
     </message>
     <message>
         <source>Line type</source>
-        <translation type="obsolete">線種</translation>
+        <translation type="unfinished">線種</translation>
     </message>
 </context>
 <context>
@@ -6716,12 +7180,12 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Warning</source>
-        <translation>警告</translation>
+        <translation type="vanished">警告</translation>
     </message>
     <message>
         <source>experimental, save your work first.
 Continue?</source>
-        <translation>あなたの作業を保存してください.
+        <translation type="vanished">あなたの作業を保存してください.
 続けますか?</translation>
     </message>
     <message>
@@ -7602,12 +8066,12 @@ Continue?</source>
     <message>
         <source>length1</source>
         <comment>bevel/fillet lenght1</comment>
-        <translation>length1</translation>
+        <translation type="vanished">length1</translation>
     </message>
     <message>
         <source>length2</source>
         <comment>bevel/fillet lenght2</comment>
-        <translation>length2</translation>
+        <translation type="vanished">length2</translation>
     </message>
     <message>
         <source>number</source>
@@ -8021,19 +8485,19 @@ Continue?</source>
     </message>
     <message>
         <source>Wiki</source>
-        <translation>Wiki</translation>
+        <translation type="vanished">Wiki</translation>
     </message>
     <message>
         <source>User&apos;s Manual</source>
-        <translation>ユーザーマニュアル</translation>
+        <translation type="vanished">ユーザーマニュアル</translation>
     </message>
     <message>
         <source>Commands</source>
-        <translation>コマンド</translation>
+        <translation type="vanished">コマンド</translation>
     </message>
     <message>
         <source>Style Sheets</source>
-        <translation>スタイルシート</translation>
+        <translation type="vanished">スタイルシート</translation>
     </message>
     <message>
         <source>Custom Widgets</source>
@@ -8041,7 +8505,7 @@ Continue?</source>
     </message>
     <message>
         <source>Forum</source>
-        <translation>フォーラム</translation>
+        <translation type="vanished">フォーラム</translation>
     </message>
     <message>
         <source>All</source>
@@ -8057,11 +8521,11 @@ Continue?</source>
     </message>
     <message>
         <source>Release Information</source>
-        <translation>リリース情報</translation>
+        <translation type="vanished">リリース情報</translation>
     </message>
     <message>
         <source>Load Command File</source>
-        <translation>コマンドファイルをロード</translation>
+        <translation type="vanished">コマンドファイルをロード</translation>
     </message>
     <message>
         <source>Select objects</source>
@@ -8093,15 +8557,113 @@ Continue?</source>
     </message>
     <message>
         <source>Keycode Mode</source>
-        <translation>キーコード・モード</translation>
+        <translation type="vanished">キーコード・モード</translation>
     </message>
     <message>
         <source>Paste Multiple Commands</source>
-        <translation>複数コマンドの貼り付け</translation>
+        <translation type="vanished">複数コマンドの貼り付け</translation>
     </message>
     <message>
         <source>License</source>
         <translation>ライセンス</translation>
+    </message>
+    <message>
+        <source>circlediam</source>
+        <comment>circle with center and diameter</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cd</source>
+        <comment>circle with center and diameter</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>trimex</source>
+        <comment>modify - trim excess (extend)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tmx</source>
+        <comment>modify - trim excess (extend)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tx</source>
+        <comment>modify - trim excess (extend)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>shapetxt</source>
+        <comment>modify - shape text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>stxt</source>
+        <comment>modify - shape text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>st</source>
+        <comment>modify - shape text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unlinktxt</source>
+        <comment>modify - unlink shaped text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>utxt</source>
+        <comment>modify - unlink shaped text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ut</source>
+        <comment>modify - unlink shaped text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>length1</source>
+        <comment>bevel/fillet length1</comment>
+        <translation type="unfinished">length1</translation>
+    </message>
+    <message>
+        <source>length2</source>
+        <comment>bevel/fillet length2</comment>
+        <translation type="unfinished">length2</translation>
+    </message>
+    <message>
+        <source>Could not convert requested font: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 entity exploded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 entities exploded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keycode mode</source>
+        <translation type="unfinished">キーコード・モード</translation>
+    </message>
+    <message>
+        <source>Load command file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste multiple commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quick Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>noname</source>
+        <comment>default layer name</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8444,11 +9006,15 @@ Continue?</source>
     </message>
     <message>
         <source>Specify radius</source>
-        <translation>半径指示</translation>
+        <translation type="vanished">半径指示</translation>
     </message>
     <message>
         <source>Back</source>
         <translation>戻る</translation>
+    </message>
+    <message>
+        <source>Specify point on circle</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8526,6 +9092,33 @@ Continue?</source>
     <message>
         <source>radius=%1 is invalid</source>
         <translation>半径=%1 は有効でない</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleDiam</name>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished">中心指定</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">中止</translation>
+    </message>
+    <message>
+        <source>Specify circle radius</source>
+        <translation type="unfinished">半径指示</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">戻る</translation>
+    </message>
+    <message>
+        <source>diameter=%1 is invalid</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9675,6 +10268,17 @@ Continue?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionModifyEntity</name>
+    <message>
+        <source>Click on entity to modify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">中止</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionModifyMirror</name>
     <message>
         <source>Specify first point of mirror line</source>
@@ -9720,7 +10324,7 @@ Continue?</source>
     <name>RS_ActionModifyMoveRotate</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>表記に誤り</translation>
+        <translation type="vanished">表記に誤り</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -9740,7 +10344,7 @@ Continue?</source>
     </message>
     <message>
         <source>Enter rotation angle:</source>
-        <translation>回転角度入力:</translation>
+        <translation type="vanished">回転角度入力:</translation>
     </message>
 </context>
 <context>
@@ -9831,6 +10435,21 @@ Continue?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionModifyShapeText</name>
+    <message>
+        <source>Select text entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">戻る</translation>
+    </message>
+    <message>
+        <source>Select entity to shape text to</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionModifyStretch</name>
     <message>
         <source>Specify first corner</source>
@@ -9910,6 +10529,17 @@ Continue?</source>
     <message>
         <source>Back</source>
         <translation>戻る</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyTrimExcess</name>
+    <message>
+        <source>Select entity to trim</source>
+        <translation type="unfinished">トリムのための要素を選択</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">戻る</translation>
     </message>
 </context>
 <context>
@@ -10214,6 +10844,10 @@ Continue?</source>
         <source>Printout in color</source>
         <translation>カラー印刷</translation>
     </message>
+    <message>
+        <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionSelect</name>
@@ -10294,6 +10928,10 @@ Continue?</source>
     <message>
         <source>Select to revert direction</source>
         <translation>基準点を入れ替えるため選択</translation>
+    </message>
+    <message>
+        <source>Select to unlink shaped text</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10379,7 +11017,7 @@ Continue?</source>
     <name>RS_ActionToolRegenerateDimensions</name>
     <message>
         <source>Regenerated %1 dimension entities</source>
-        <translation>%1　s寸法図形を再生成</translation>
+        <translation>%1&#x3000;s寸法図形を再生成</translation>
     </message>
     <message>
         <source>No dimension entities found</source>
@@ -10491,6 +11129,17 @@ Continue?</source>
     </message>
 </context>
 <context>
+    <name>Ui_CircleDiamOptions</name>
+    <message>
+        <source>Circle Options</source>
+        <translation type="unfinished">円オプション</translation>
+    </message>
+    <message>
+        <source>Diameter:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Ui_CircleOptions</name>
     <message>
         <source>Circle Options</source>
@@ -10541,27 +11190,27 @@ Continue?</source>
         <source>Label:</source>
         <translation>ラベル:</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>⌀</source>
         <translation>⌀</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <translation>°</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>±</source>
         <translation>±</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>π</source>
         <translation>π</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>×</source>
         <translation>×</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>÷</source>
         <translation>÷</translation>
     </message>
@@ -10988,6 +11637,10 @@ Continue?</source>
         <source>Fit to page</source>
         <translation>ページの大きさに合わせる</translation>
     </message>
+    <message>
+        <source>Calculate number of pages needed to contain the drawing.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Ui_RoundOptions</name>
@@ -11006,6 +11659,17 @@ Continue?</source>
     <message>
         <source>Radius:</source>
         <translation>半径:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ShapeTextOptions</name>
+    <message>
+        <source>Shape Text Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset:</source>
+        <translation type="unfinished">オフセット:</translation>
     </message>
 </context>
 <context>
