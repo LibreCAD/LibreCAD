@@ -31,7 +31,7 @@ pipeline
 			{
 				always
 				{
-					archiveArtifacts allowEmptyArchive: true, artifacts: 'LibreCad.exe'
+					archiveArtifacts allowEmptyArchive: true, artifacts: '/**/*.exe'
 				}
 			}
 		}
