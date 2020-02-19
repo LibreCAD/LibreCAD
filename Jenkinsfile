@@ -42,13 +42,13 @@ pipeline
 				bat 'SET'
 				// build installer
 				unstash 'build_files'
-				// copy installer to prod rel
-				def LibreCAD = load 'LibreCAD.groovy'
-				LibreCAD.BuildInstaller()
-				bat script: 'copy "' +LibreCAD.GetInstallerPath()+ '" "\\\\cam-issvr\\prodrel\\WIN_Prod\\CAD\\LibreCAD" -y'
-				
 				script
 				{
+					// copy installer to prod rel
+					def LibreCAD = load 'LibreCAD.groovy'
+					LibreCAD.BuildInstaller()
+					bat script: 'copy "' +LibreCAD.GetInstallerPath()+ '" "\\\\cam-issvr\\prodrel\\WIN_Prod\\CAD\\LibreCAD" -y'
+							
 					// create installer link file
 					CreateInstallerLinksFile("InstallerLinksLibreCAD.txt", "\\\\cam-issvr\\prodrel\\WIN_Prod\\CAD\\LibreCAD\\LibreCAD-Installer.exe")
 				}
