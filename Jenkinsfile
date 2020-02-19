@@ -18,6 +18,7 @@ pipeline
 			steps 
 			{
 				bat 'SET'
+				unstash 'source'
 				script
 				{
 					def LibreCAD = load 'LibreCAD.groovy'
