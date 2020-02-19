@@ -5,7 +5,6 @@ def LibreCadExePath()
 def Build()
 {
 	writefile(LibreCadExePath(),"")
-	return this
 }
 def GetBuiltFiles()
 {
@@ -13,8 +12,11 @@ def GetBuiltFiles()
 }
 def BuildInstaller()
 {
+	writefile(GetInstallerPath(), "")
 }
 def GetInstallerPath()
 {
 	return "%WORKSPACE%\\generated\\LibreCAD-Installer.exe"
 }
+
+return this
