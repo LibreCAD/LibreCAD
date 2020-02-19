@@ -4,7 +4,7 @@ def LibreCadExePath()
 }
 def Build()
 {
-	writeFile(LibreCadExePath(),"")
+	writeFile file: LibreCadExePath(), text: ""
 }
 def GetBuiltFiles()
 {
@@ -12,7 +12,7 @@ def GetBuiltFiles()
 }
 def BuildInstaller()
 {
-	writeFile file: GetInstallerPath(), text:""
+	writeFile file: GetInstallerPath(), text: ""
 }
 def GetInstallerPath()
 {
