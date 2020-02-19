@@ -12,7 +12,7 @@ def GetBuiltFiles()
 }
 def BuildInstaller()
 {
-	writeFile(GetInstallerPath(), "")
+	writeFile file: GetInstallerPath(), text:""
 }
 def GetInstallerPath()
 {

@@ -132,5 +132,5 @@ def getInstallerType()
 def CreateInstallerLinksFile(linksFileName, pathToInstaller, version)
 {
 	def body = "<p><a href='" + pathToInstaller + "'>LibreCAD" +  version + "</a>"
-	writefile(linksFileName, body);
+	writeFile file: linksFileName, text: body
 }
