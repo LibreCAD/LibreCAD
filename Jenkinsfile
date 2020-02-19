@@ -23,17 +23,57 @@ pipeline
 	
 		stage('Deploy') 
 		{
-		steps 
-		  {
-			bat 'SET'
-		  }
+			steps 
+			{
+				bat 'SET'
+				// build installer
+		  
+				// copy installer to prod rel
+		  
+				bat script: 'copy "%WORKSPACE%\\generated\\LibreCAD-Installer.exe" \\cam-issvr\prodrel\WIN_Prod\CAD\LibreCAD -y'
+				
+				script
+				{
+					// create installer link file
+					CreateInstallerLinksFile("InstallerLinksLibreCAD.txt", "\\cam-issvr\prodrel\WIN_Prod\CAD\LibreCAD\LibreCAD-Installer.exe")
+				}
+			}
 		}
 		stage('Email') 
 		{
 			steps 
-		  {
-			bat 'SET'
-		  }
+			{
+				bat 'SET'
+				deleteDir()
+				unstash 'source'
+				script 
+				{
+					def notify = load 'notify.groovy'
+					if (!env.INSTALLER_TYPE || (env.INSTALLER_TYPE == '')) 
+					{
+						notify.sendSuccessEmail(false)
+					} 
+					else 
+					{
+						unstash 'installer'
+						notify.sendSuccessEmail(true)
+					}          
+				}
+			}
+			post 
+			{	
+				always 
+				{
+					script 
+					{
+						if (mustCleanWorkspace()) 
+						{
+							deleteDir()
+						}
+					}
+				}
+		  
+			}
         }
 	}
 	post 
@@ -52,6 +92,7 @@ pipeline
 		VERSION_BUILD = getVersionBuild()
 		INSTALLER_TYPE = getInstallerType()
 		RECIPIENTS = 'mtcprogramming, steven.bertken, chris.pollard'
+		VERSION_FULL = ''
 	}
 	options 
 	{
@@ -71,4 +112,9 @@ def getVersionBuild()
 def getInstallerType() 
 {
 	return "Release"
+}
+def CreateInstallerLinksFile(linksFileName, pathToInstaller, version)
+{
+	def body = "<p><a href='" + pathToInstaller + "'>LibreCAD" +  version + "</a>"
+	writefile(linksFileName, body);
 }
