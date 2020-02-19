@@ -53,6 +53,7 @@ pipeline
 							
 					// create installer link file
 					CreateInstallerLinksFile("InstallerLinksLibreCAD.txt", "\\\\cam-issvr\\prodrel\\WIN_Prod\\CAD\\LibreCAD\\LibreCAD-Installer.exe")
+					stash includes: '/**/InstallerLinks*.txt', name: 'installer'
 				}
 			}
 		}
