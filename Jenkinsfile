@@ -30,12 +30,12 @@ pipeline
 		  
 				// copy installer to prod rel
 		  
-				bat script: 'copy "%WORKSPACE%\\generated\\LibreCAD-Installer.exe" \\cam-issvr\prodrel\WIN_Prod\CAD\LibreCAD -y'
+				bat script: 'copy "%WORKSPACE%\\generated\\LibreCAD-Installer.exe" \\\\cam-issvr\\prodrel\\WIN_Prod\\CAD\\LibreCAD -y'
 				
 				script
 				{
 					// create installer link file
-					CreateInstallerLinksFile("InstallerLinksLibreCAD.txt", "\\cam-issvr\prodrel\WIN_Prod\CAD\LibreCAD\LibreCAD-Installer.exe")
+					CreateInstallerLinksFile("InstallerLinksLibreCAD.txt", "\\\\cam-issvr\\prodrel\\WIN_Prod\\CAD\\LibreCAD\\LibreCAD-Installer.exe")
 				}
 			}
 		}
