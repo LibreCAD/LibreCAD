@@ -18,10 +18,13 @@ pipeline
 			steps 
 			{
 				bat 'SET'
-				def LibreCAD = load 'LibreCAD.groovy'
-				LibreCAD.Build()
-				def builtFiles = LibreCAD.GetBuiltFiles()
-				stash name: 'build_files'
+				script
+				{
+					def LibreCAD = load 'LibreCAD.groovy'
+					LibreCAD.Build()
+					def builtFiles = LibreCAD.GetBuiltFiles()
+					stash name: 'build_files'
+				}
 			}
 			post
 			{
@@ -42,7 +45,7 @@ pipeline
 				// copy installer to prod rel
 				def LibreCAD = load 'LibreCAD.groovy'
 				LibreCAD.BuildInstaller()
-				bat script: 'copy "' +LibreCAD.GetBuiltInstallerPath()+ '" "\\\\cam-issvr\\prodrel\\WIN_Prod\\CAD\\LibreCAD" -y'
+				bat script: 'copy "' +LibreCAD.GetInstallerPath()+ '" "\\\\cam-issvr\\prodrel\\WIN_Prod\\CAD\\LibreCAD" -y'
 				
 				script
 				{
