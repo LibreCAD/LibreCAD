@@ -24,7 +24,7 @@ pipeline
 					def LibreCAD = load 'LibreCAD.groovy'
 					LibreCAD.Build()
 					def builtFiles = LibreCAD.GetBuiltFiles()
-					stash includes: '/**/*.exe' name: 'build_files'
+					stash includes: '/**/*.exe', name: 'build_files'
 				}
 			}
 			post
