@@ -17,7 +17,7 @@ def BuildInstaller()
 }
 def GetInstallerPath()
 {
-	return "%WORKSPACE%\\generated\\LibreCAD-Installer.exe"
+	return "$WORKSPACE\\generated\\LibreCAD-Installer.exe"
 }
 
 return this
