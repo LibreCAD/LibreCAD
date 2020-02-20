@@ -147,6 +147,10 @@ Section "Install Section" SecInstall
   File /NONFATAL "${TRANSLATIONS_DIR}\qt*.qm"
   SetOutPath "$INSTDIR"
 
+  ;Register Telemetry.dll
+  nsExec::Exec '%WinDir%\Microsoft.NET\Framework\v4.0.30319\RegAsm /nologo /unregister Telemetry.dll'
+  nsExec::Exec '%WinDir%\Microsoft.NET\Framework\v4.0.30319\RegAsm /nologo Telemetry.dll'
+
   ;Convert SHX fonts
   DetailPrint "Converting AutoCAD fonts for use with LibreCAD"
   nsExec::Exec '"$INSTDIR\dumpshp.bat"'
@@ -196,6 +200,9 @@ SectionEnd
 ;Uninstaller Section
 
 Section "Uninstall"
+
+  ;unRegister Telemetry.dll
+  nsExec::Exec '%WinDir%\Microsoft.NET\Framework\v4.0.30319\RegAsm /nologo /unregister Telemetry.dll'
 
   ;ADD YOUR OWN FILES HERE...
 
