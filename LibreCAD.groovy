@@ -6,7 +6,7 @@ def Build()
 {
 	def
 		existingPath = env.PATH;
-	bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Auxiliary\\Build\\vcvars32.bat" && SET PATH=%PATH%;${existingPath} "qmake libreCAD.pro -tp vc -r" && "msbuild librecad.sln  /p:Platform=Win32 /p:Configuration=Release"'
+	bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Auxiliary\\Build\\vcvars32.bat" && SET PATH="%PATH%;${existingPath}" && "qmake libreCAD.pro -tp vc -r" && "msbuild librecad.sln  /p:Platform=Win32 /p:Configuration=Release"'
 }
 def GetBuiltFiles()
 {
