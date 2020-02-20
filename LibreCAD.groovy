@@ -4,7 +4,7 @@ def LibreCadExePath()
 }
 def Build()
 {
-	bat "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Auxiliary\\Build\\vcvars32.bat"
+	bat '"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Auxiliary\\Build\\vcvars32.bat"'
 	bat "qmake libreCAD.pro -tp vc -r"
 	bat "msbuild librecad.sln  /p:Platform=Win32 /p:Configuration=Release"
 }
