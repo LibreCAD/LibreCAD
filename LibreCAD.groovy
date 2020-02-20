@@ -9,7 +9,7 @@ def Build()
 }
 def GetBuiltFiles()
 {
-	File myObj = new File(""$WORKSPACE\\windows\\"); 
+	File myObj = new File("$WORKSPACE\\windows\\"); 
 	String[] files = myObj.list();
 	String fileNames = ""
 	int size = files.length;
