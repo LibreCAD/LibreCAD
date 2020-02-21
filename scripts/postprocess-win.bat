@@ -52,8 +52,8 @@ ECHO %cd%
 
 REM Generate translations
 echo "Generating Translations"
-lrelease librecad\src\src.pro
-lrelease plugins\plugins.pro
+lrelease %~dp0\..\librecad\src\src.pro
+lrelease %~dp0\..\plugins\plugins.pro
 if not exist "%LC_RESOURCEDIR%\qm\" (mkdir "%LC_RESOURCEDIR%\qm")
 
 REM translations for LibreCAD
