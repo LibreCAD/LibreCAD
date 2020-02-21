@@ -1,4 +1,7 @@
 call %comspec% /k "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Auxiliary\\Build\\vcvars32.bat"
-call "set"
+call "set BOOST_DIR=c:/boost/boost_1_72_0/"
+call "set BOOST_LIBDIR=c:/boost/boost_1_72_0/libs/"
+call "set FREETYPE_DIR=C:\Qt\freetype\"
+call "set PATH=%PATH%;C:\Qt\5.14.1\msvc2017\bin\"
 call "qmake libreCAD.pro -tp vc -r"
 call "msbuild librecad.sln  /p:Platform=Win32 /p:Configuration=Release"
