@@ -119,10 +119,6 @@ pipeline
 		INSTALLER_TYPE = getInstallerType()
 		RECIPIENTS = 'mtcprogramming, steven.bertken, chris.pollard'
 		VERSION_FULL = ''
-		FREETYPE_DIR = 'c:/qt/freetype/'
-		BOOST_DIR = 'c:/boost/boost_1_72_0/'
-		BOOST_LIBDIR = 'c:/boost/boost_1_72_0/libs/'
-		PATH = "${PATH};C:\\QT\\5.14.1\\msvc2017\\bin"
 	}
 	options 
 	{
