@@ -1,4 +1,4 @@
-call %comspec% /k "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Auxiliary\\Build\\vcvars32.bat"
+call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Auxiliary\\Build\\vcvars32.bat"
 set BOOST_DIR=c:/boost/boost_1_72_0/
 set BOOST_LIBDIR=c:/boost/boost_1_72_0/libs/
 set FREETYPE_DIR=C:\Qt\freetype\
