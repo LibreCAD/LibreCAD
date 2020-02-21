@@ -119,6 +119,7 @@ pipeline
 		INSTALLER_TYPE = getInstallerType()
 		RECIPIENTS = 'mtcprogramming, steven.bertken, chris.pollard'
 		VERSION_FULL = ''
+		
 	}
 	options 
 	{
