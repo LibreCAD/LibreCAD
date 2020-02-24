@@ -196,8 +196,6 @@ void set(size_t i, const RS_Vector& v);
     /** switch x,y for all vectors */
     RS_VectorSolutions flipXY(void) const;
 
-    RS_VectorSolutions operator = (const RS_VectorSolutions& s);
-
     friend std::ostream& operator << (std::ostream& os,
                                       const RS_VectorSolutions& s);
 
