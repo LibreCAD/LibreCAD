@@ -841,13 +841,6 @@ RS_VectorSolutions RS_VectorSolutions::flipXY(void) const
         return ret;
 }
 
-RS_VectorSolutions RS_VectorSolutions::operator = (const RS_VectorSolutions& s) {
-    setTangent(s.isTangent());
-    vector=s.vector;
-
-    return *this;
-}
-
 std::ostream& operator << (std::ostream& os,
                            const RS_VectorSolutions& s) {
 	for (const RS_Vector& vp: s){
