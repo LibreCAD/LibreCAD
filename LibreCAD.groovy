@@ -8,7 +8,7 @@ def Build()
 }
 def CopyProNestFileToWindowsFolder(fileName)
 {
-	def proNestVersion = 13.1.4
+	def proNestVersion = "13.1.4"
 	def proNestFileDirectory = "\\\\cam-file\\devcommon\\Jenkins\\LibreCad\\Built by ProNest\\" + proNestVersionb + "\\"
 	bat 'copy "' + proNestFileDirectory + fileName + '" ' + '"%WORKSPACE%\\windows\\"'
 }
