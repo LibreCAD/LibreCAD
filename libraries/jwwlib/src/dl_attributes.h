@@ -156,20 +156,6 @@ public:
         }
     }
 
-
-
-    /**
-     * Copies attributes (deep copies) from another attribute object.
-     */
-    DL_Attributes operator = (const DL_Attributes& attrib) {
-        setLayer(attrib.layer);
-        setColor(attrib.color);
-        setWidth(attrib.width);
-        setLineType(attrib.lineType);
-
-        return *this;
-    }
-
 private:
     string layer;
     int color;
