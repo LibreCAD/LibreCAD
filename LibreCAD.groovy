@@ -21,7 +21,8 @@ def PreBuild()
 def BuildInstaller()
 {
 	PreBuild()
-	bat "cd scripts && %WORKSPACE%\\scripts\\build-windows.bat"
+	bat "%WORKSPACE%\\BuildLibreCADInstaller.bat"
+	
 }
 def GetInstallerPath()
 {
