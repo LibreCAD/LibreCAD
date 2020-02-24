@@ -55,7 +55,7 @@ pipeline
 				{
 					// copy installer to prod rel
 					def LibreCAD = load 'LibreCAD.groovy'
-					bat script: 'xcopy "\\\\cam-file\\devcommon\\Jenkins\\Binary Management\\VisualC++\\vc_redist_x86.exe" "%WORKSPACE%/redist" /y'
+					bat script: 'xcopy "\\\\cam-file\\devcommon\\Jenkins\\Binary Management\\VisualC++\\vc_redist.x86.exe" "%WORKSPACE%/redist" /y'
 					LibreCAD.BuildInstaller()
 					bat script: 'xcopy "' +LibreCAD.GetInstallerPath()+ '" "\\\\cam-issvr\\installations\\built by jenkins\\LibreCAD\\' + env.BRANCH_NAME + '" /y'
 							
