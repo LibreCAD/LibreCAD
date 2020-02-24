@@ -1646,7 +1646,7 @@ QString RS_FilterDXF1::getBufLine() {
     QString str;
 
     if (fBufP >= (int)fSize)
-        return QString::null;
+        return QString();
 
     ret = &fBuf[fBufP];
 
@@ -1655,7 +1655,7 @@ QString RS_FilterDXF1::getBufLine() {
         while (++fBufP < (int)fSize && fBuf[fBufP] == '\0')
             ;
         if (fBufP >= (int)fSize)
-            return QString::null;
+            return QString();
         ret = &fBuf[fBufP];
 }*/
 

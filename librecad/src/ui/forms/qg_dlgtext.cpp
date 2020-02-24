@@ -393,7 +393,7 @@ void QG_DlgText::setFont(const QString& f) {
 }*/
 
 void QG_DlgText::loadText() {
-    QString fn = QFileDialog::getOpenFileName( this, QString::null, QString::null);
+    QString fn = QFileDialog::getOpenFileName( this, QString(), QString());
     if (!fn.isEmpty()) {
         load(fn);
     }
@@ -410,7 +410,7 @@ void QG_DlgText::load(const QString& fn) {
 }
 
 void QG_DlgText::saveText() {
-    QString fn = QFileDialog::getSaveFileName(this, QString::null, QString::null);
+    QString fn = QFileDialog::getSaveFileName(this, QString(), QString());
     if (!fn.isEmpty()) {
         save(fn);
     }

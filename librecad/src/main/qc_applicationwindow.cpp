@@ -3005,7 +3005,7 @@ void QC_ApplicationWindow::createNewDocument(
         const QString& fileName, RS_Document* doc) {
 
     slotFileNew(doc);
-    if (fileName!=QString::null && getDocument()) {
+    if (fileName!=QString() && getDocument()) {
         getDocument()->setFilename(fileName);
     }
 }

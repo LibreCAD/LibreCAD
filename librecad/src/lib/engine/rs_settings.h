@@ -87,10 +87,10 @@ public:
     bool writeEntry(const QString& key, const QVariant& value);
     bool writeEntry(const QString& key, const QString& value);
     QString readEntry(const QString& key,
-                        const QString& def = QString::null,
+                        const QString& def = QString(),
                         bool* ok = 0);
     QByteArray readByteArrayEntry(const QString& key,
-                        const QString& def = QString::null,
+                        const QString& def = QString(),
                         bool* ok = 0);
 	int readNumEntry(const QString& key, int def=0);
     void clear_all();

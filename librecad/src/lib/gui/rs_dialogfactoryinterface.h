@@ -86,7 +86,7 @@ public:
          * window for the given document or for a new document isf no document
          * is given.
          */
-//    virtual RS_GraphicView* requestNewDocument(const QString& fileName = QString::null,
+//    virtual RS_GraphicView* requestNewDocument(const QString& fileName = QString(),
 //                        RS_Document* doc=NULL) = 0;
 
     /**
@@ -386,8 +386,8 @@ public:
      * @param left Help text for the left mouse button.
      * @param right Help text for the right mouse button.
 	 */
-	virtual void updateMouseWidget(const QString& = QString::null,
-								   const QString& = QString::null)=0;
+	virtual void updateMouseWidget(const QString& = QString(),
+								   const QString& = QString())=0;
     virtual void updateArcTangentialOptions(const double& d, bool byRadius)=0;
 
     /**
