@@ -232,8 +232,8 @@ public:
 	 * \param left mouse hint for left button
 	 * \param right mouse hint for right button
 	 */
-	void updateMouseWidget(const QString& left=QString::null,
-								   const QString& right=QString::null) override;
+	void updateMouseWidget(const QString& left=QString(),
+								   const QString& right=QString()) override;
 	void updateSelectionWidget(int num, double length) override;//updated for total number of selected, and total length of selected
 	void commandMessage(const QString& message) override;
 

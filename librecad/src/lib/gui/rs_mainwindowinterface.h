@@ -45,7 +45,7 @@ public:
 	virtual RS_GraphicView* getGraphicView() = 0;
 	virtual RS_Document* getDocument() = 0;
 
-	virtual void createNewDocument(const QString& fileName = QString::null, RS_Document* doc=nullptr) = 0;
+	virtual void createNewDocument(const QString& fileName = QString(), RS_Document* doc=nullptr) = 0;
 
 };
 

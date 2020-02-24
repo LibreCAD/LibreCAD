@@ -272,7 +272,7 @@ public:
     /**
      * Creates a new document. Implementation from RS_MainWindowInterface.
      */
-	void createNewDocument(const QString& fileName = QString::null, RS_Document* doc=nullptr);
+	void createNewDocument(const QString& fileName = QString(), RS_Document* doc=nullptr);
 
     void redrawAll();
     void updateGrids();
