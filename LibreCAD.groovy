@@ -9,7 +9,7 @@ def Build()
 
 def BuildInstaller()
 {
-	bat "%WORKSPACE%\\scripts\\build-windows.bat"
+	bat "cd scripts && %WORKSPACE%\\scripts\\build-windows.bat"
 }
 def GetInstallerPath()
 {
