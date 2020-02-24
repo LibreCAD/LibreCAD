@@ -56,7 +56,7 @@ pipeline
 					// copy installer to prod rel
 					def LibreCAD = load 'LibreCAD.groovy'
 					LibreCAD.BuildInstaller()
-					bat script: 'xcopy "' +LibreCAD.GetInstallerPath()+ '" \\\\cam-issvr\\installations\\built by jenkins\\LibreCAD\\' + env.BRANCH_NAME + '"'
+					bat script: 'xcopy "' +LibreCAD.GetInstallerPath()+ '" "\\\\cam-issvr\\installations\\built by jenkins\\LibreCAD\\' + env.BRANCH_NAME + '" /y'
 							
 					// create installer link file
 					CreateInstallerLinksFile("InstallerLinksLibreCAD.txt", "\\\\cam-issvr\\prodrel\\WIN_Prod\\CAD\\LibreCAD\\LibreCAD-Installer.exe","")
