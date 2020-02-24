@@ -34,6 +34,8 @@
 #include <QLineEdit>
 #include <QContextMenuEvent>
 
+#include <algorithm>
+
 #include "qg_blockwidget.h"
 #include "rs_blocklist.h"
 #include "qg_actionhandler.h"
@@ -76,7 +78,7 @@ void QG_BlockModel::setBlockList(RS_BlockList* bl) {
         if ( !bl->at(i)->isUndone() )
             listBlock.append(bl->at(i));
     }
-    qSort ( listBlock.begin(), listBlock.end(), blockLessThan );
+    std::sort(listBlock.begin(), listBlock.end(), blockLessThan);
 //called to force redraw
     endResetModel();
 }
