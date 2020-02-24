@@ -17,7 +17,7 @@ pipeline
 		{
 			agent 
 			{
-				label 'master'
+				label 'librecad'
 			}
 			steps 
 			{
@@ -43,7 +43,7 @@ pipeline
 		{
 			agent 
 			{
-				label 'master'
+				label 'librecad'
 			}
 			steps 
 			{
