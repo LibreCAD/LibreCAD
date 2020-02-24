@@ -9,8 +9,7 @@ def Build()
 
 def BuildInstaller()
 {
-	bat "mkdir %WORKSPACE%\\generated\\"
-	writeFile file: GetInstallerPath(), text: "something"
+	bat "%WORKSPACE%\\scripts\\build-windows.bat"
 }
 def GetInstallerPath()
 {
