@@ -37,10 +37,9 @@ def sendSuccessEmail(includeInstallerLinks) {
     body = body + """
       <h3>64-bit Installers</h3>"""
 
-    if (fileExists("InstallerLinksPN64.txt")) {
-      body = body + readFile("InstallerLinksPN64.txt")
-    }
-
+	body = body + """
+      <p>NONE</p>"""
+    
     // Create section for 32-bit installer links...
 
     body = body + """
