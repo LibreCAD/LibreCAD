@@ -170,7 +170,7 @@ def CreateNetworkPathForInstaller()
 		installerType = getInstallerType() 
 	if( installerType == 'Release')
 		installerType = ''
-	else if( installerType == '')
+	else if( installerType == '' || installerType == null)
 		installerType = ' NR '
 	else
 		installerType = ' ' + installerType + ' '
