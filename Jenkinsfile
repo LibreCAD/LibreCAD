@@ -143,26 +143,11 @@ def getInstallerType()
 {
 	def 
 		branchName = env.BRANCH_NAME.toLowerCase()
+		
 	if (branchName == "master") 
 	{
 		return "Release"
 	} 
-	else if (branchName.startsWith("nr/")) 
-	{
-		return "NR"
-	} 
-	else if (branchName.startsWith("jenkins/")) 
-	{
-		return "NR"
-	} 
-	else if (branchName.startsWith("beta/")) 
-	{
-		return "BETA"
-	} 
-	else 
-	{
-		return ""
-	}
 }
 def CreateInstallerLinksFile(linksFileName, pathToInstaller, version)
 {
