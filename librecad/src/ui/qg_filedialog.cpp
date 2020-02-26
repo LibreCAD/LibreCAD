@@ -60,7 +60,7 @@ void QG_FileDialog::getType(const QString filter)
     } else if (filter == fJww) {
         ftype = RS2::FormatJWW;
     } else if (filter == fDxf1) {
-        ftype = RS2::FormatDXF1;
+        ftype = RS2::FormatDXFRW;
     }
 }
 
@@ -141,9 +141,9 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type){
     QString fn = "";
     QStringList filters;
 #ifdef DWGSUPPORT
-    filters << fDxfrw  << fDxf1 << fDwg << fLff << fCxf << fJww;
+    filters << fDxfrw  << fDwg << fLff << fCxf << fJww;
 #else
-    filters << fDxfrw  << fDxf1 << fLff << fCxf << fJww;
+    filters << fDxfrw  << fLff << fCxf << fJww;
 #endif
 
     setWindowTitle(tr("Open %1").arg(name));
@@ -454,7 +454,6 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
 #ifdef DWGSUPPORT
     filters.append(fDwg);
 #endif
-    filters.append(fDxf1);
     filters.append(fLff);
     filters.append(fCxf);
     filters.append(fJww);
@@ -481,7 +480,7 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
         fn = QDir::toNativeSeparators( QFileInfo(fn).absoluteFilePath() );
         if (type) {
             if (fileDlg->selectedNameFilter()==fDxf1) {
-                *type = RS2::FormatDXF1;
+                *type = RS2::FormatDXFRW;
             } else if (fileDlg->selectedNameFilter()==fDxfrw) {
                 *type = RS2::FormatDXFRW;
 #ifdef DWGSUPPORT
