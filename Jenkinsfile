@@ -121,7 +121,7 @@ pipeline
 		VERSION_BUILD = getVersionBuild()
 		INSTALLER_TYPE = getInstallerType()
 		RECIPIENTS = 'mtcprogramming, steven.bertken, chris.pollard'
-		VERSION_FULL = '2.2.0'
+		VERSION_FULL = "2.2.0.$(VERSION_BUILD)"
 		TARGET_PLATFORM = '32-bit'
 	}
 	options 
