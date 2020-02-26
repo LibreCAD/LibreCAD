@@ -57,10 +57,12 @@ pipeline
 					def LibreCAD = load 'LibreCAD.groovy'
 					bat script: 'xcopy "\\\\cam-file\\devcommon\\Jenkins\\Binary Management\\VisualC++\\vc_redist.x86.exe" "%WORKSPACE%/redist" /y'
 					LibreCAD.BuildInstaller()
-					bat script: 'xcopy "' +LibreCAD.GetInstallerPath()+ '" "\\\\cam-issvr\\installations\\built by jenkins\\LibreCAD\\' + env.BRANCH_NAME + '\\" /y'
+					def
+					  builtByJenkinsFolderPath = '\\\\cam-issvr\\installations\\built by jenkins\\LibreCAD\\' + env.BRANCH_NAME + '\\'
+					bat script: 'xcopy "' +LibreCAD.GetInstallerPath()+ '" "' + builtByJenkinsFolderPath + '" /y'
 							
 					// create installer link file
-					CreateInstallerLinksFile("InstallerLinksLibreCAD.txt", "\\\\cam-issvr\\prodrel\\WIN_Prod\\CAD\\LibreCAD\\LibreCAD-Installer.exe","")
+					CreateInstallerLinksFile("InstallerLinksLibreCAD.txt", builtByJenkinsFolderPath + "LibreCAD-Installer.exe","")
 					stash includes: '/**/InstallerLinks*.txt', name: 'installer'
 				}
 			}
