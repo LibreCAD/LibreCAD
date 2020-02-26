@@ -123,6 +123,7 @@ pipeline
 		RECIPIENTS = 'mtcprogramming, steven.bertken, chris.pollard'
 		VERSION_FULL = "2.2.0.${VERSION_BUILD}"
 		TARGET_PLATFORM = '32-bit'
+		BUILD_DISPLAY_NAME = getDisplayName()
 	}
 	options 
 	{
@@ -139,6 +140,15 @@ def getVersionBuild()
   return new Date() - new Date("1/1/2000")
 }
 
+def getDisplayName()
+{
+	def
+		displayName = getInstallerType()
+	if(displayName != "")
+		return displayName
+		
+	return "(bootleg)"
+}
 def getInstallerType() 
 {
 	def 
