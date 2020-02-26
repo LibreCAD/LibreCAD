@@ -63,7 +63,7 @@ pipeline
 					bat script: 'xcopy "' +LibreCAD.GetInstallerPath()+ '" "' + networkPath + '" /y'
 							
 					// create installer link file
-					CreateInstallerLinksFile("InstallerLinksLibreCAD.txt", builtByJenkinsFolderPath + "LibreCAD-Installer.exe","")
+					CreateInstallerLinksFile("InstallerLinksLibreCAD.txt", networkPath + "LibreCAD-Installer.exe","")
 					stash includes: '/**/InstallerLinks*.txt', name: 'installer'
 				}
 			}
