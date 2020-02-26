@@ -58,8 +58,9 @@ pipeline
 					bat script: 'xcopy "\\\\cam-file\\devcommon\\Jenkins\\Binary Management\\VisualC++\\vc_redist.x86.exe" "%WORKSPACE%/redist" /y'
 					LibreCAD.BuildInstaller()
 					def
-					  builtByJenkinsFolderPath = '\\\\cam-issvr\\installations\\built by jenkins\\LibreCAD\\' + env.BRANCH_NAME + '\\'
-					bat script: 'xcopy "' +LibreCAD.GetInstallerPath()+ '" "' + builtByJenkinsFolderPath + '" /y'
+					    networkPath = CreateNetworkPathForInstaller()
+					
+					bat script: 'xcopy "' +LibreCAD.GetInstallerPath()+ '" "' + networkPath + '" /y'
 							
 					// create installer link file
 					CreateInstallerLinksFile("InstallerLinksLibreCAD.txt", builtByJenkinsFolderPath + "LibreCAD-Installer.exe","")
@@ -121,7 +122,7 @@ pipeline
 		INSTALLER_TYPE = getInstallerType()
 		RECIPIENTS = 'mtcprogramming, steven.bertken, chris.pollard'
 		VERSION_FULL = ''
-		
+		TARGET_PLATFORM = '32-bit'
 	}
 	options 
 	{
@@ -140,10 +141,44 @@ def getVersionBuild()
 
 def getInstallerType() 
 {
-	return "Release"
+	def 
+		branchName = env.BRANCH_NAME.toLowerCase()
+	if (branchName == "master") 
+	{
+		return "Release"
+	} 
+	else if (branchName.startsWith("nr/")) 
+	{
+		return "NR"
+	} 
+	else if (branchName.startsWith("jenkins/")) 
+	{
+		return "NR"
+	} 
+	else if (branchName.startsWith("beta/")) 
+	{
+		return "BETA"
+	} 
+	else 
+	{
+		return ""
+	}
 }
 def CreateInstallerLinksFile(linksFileName, pathToInstaller, version)
 {
 	def body = "<p><a href='" + pathToInstaller + "'>LibreCAD" +  version + "</a>"
 	writeFile file: linksFileName, text: body
+}
+def CreateNetworkPathForInstaller()
+{
+	def 
+		installerType = getInstallerType() 
+	if( installerType == 'Release')
+		installerType = ''
+	else if( installerType == '')
+		installerType = ' NR '
+	else
+		installerType = ' ' + installerType + ' '
+	
+	return  '\\\\cam-issvr\\installations\\built by jenkins\\LibreCAD' + installerType +'(' + env.TARGET_PLATFORM + ')\\' + env.BRANCH_NAME + '\\'
 }
