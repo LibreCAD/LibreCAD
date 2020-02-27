@@ -155,9 +155,9 @@ def getInstallerType()
 		branchName = env.BRANCH_NAME.toLowerCase()
 		
 	if (branchName == "master") 
-	{
 		return "Release"
-	} 
+	else 
+		return "NR"
 }
 def CreateInstallerLinksFile(linksFileName, pathToInstaller, version)
 {
