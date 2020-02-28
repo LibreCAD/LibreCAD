@@ -1,11 +1,17 @@
 @ECHO OFF
 
+ECHO "CWD"
+ECHO %cd%
+
 REM from librecad/src goto LibreCAD root folder
 REM CAUTION! pushd isn't tolerant for /, use \
 pushd ..
 REM cd > PWD
 REM set /p LC_PWD= %cd%
 REM del PWD
+
+ECHO "CWD"
+ECHO %cd%
 
 set LC_RESOURCEDIR=%cd%\windows\resources
 set LC_TSDIRLC=%cd%\librecad\ts
@@ -26,6 +32,10 @@ if not exist "%LC_RESOURCEDIR%\library\kinetics\" (mkdir "%LC_RESOURCEDIR%\libra
 if not exist "%LC_RESOURCEDIR%\library\power_station\" (mkdir "%LC_RESOURCEDIR%\library\power_station")
 if not exist "%LC_DOCS%" (mkdir "%LC_DOCS%")
 
+
+ECHO "CWD"
+ECHO %cd%
+
 copy "librecad\support\patterns\*.dxf" "%LC_RESOURCEDIR%\patterns"
 copy "librecad\support\fonts\*.lff" "%LC_RESOURCEDIR%\fonts"
 copy "librecad\support\library\misc\*.dxf" "%LC_RESOURCEDIR%\library\misc"
@@ -37,10 +47,13 @@ copy "librecad\support\library\power_station\*.dxf" "%LC_RESOURCEDIR%\library\po
 copy "librecad\support\library\sheets\*.dxf" "%LC_RESOURCEDIR%\library\sheets"
 xcopy /s /y "librecad\support\doc" "%LC_DOCS%"
 
+ECHO "CWD"
+ECHO %cd%
+
 REM Generate translations
 echo "Generating Translations"
-lrelease librecad\src\src.pro
-lrelease plugins\plugins.pro
+lrelease %~dp0\..\librecad\src\src.pro
+lrelease %~dp0\..\plugins\plugins.pro
 if not exist "%LC_RESOURCEDIR%\qm\" (mkdir "%LC_RESOURCEDIR%\qm")
 
 REM translations for LibreCAD
