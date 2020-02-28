@@ -20,7 +20,7 @@ def PreBuild()
 	CopyBinaryManagementFile("Win32\\SHP2LFF\\S2FDLL.dll")
 	CopyBinaryManagementFile("Win32\\SHP2LFF\\shp2lff.exe")
 	CopyBinaryManagementFile("Win32\\SHP2LFF\\s2f.exe")
-	CopyProNestFileToWindowsFolder("ProNestCADUtils.dll")
+	CopyProNestFileToWindowsFolder("ProNestUtils.dll")
 }
 def CopyBinaryManagementFile(pathInBinaryManagement)
 {
