@@ -65,7 +65,8 @@ QG_DlgFontConversion::QG_DlgFontConversion(QWidget *parent) :
 		doc->getTelemetryData().fontConversionClicks++;
 
 	installEventFilter(LC_HELP);
-	LC_HELP->associateTopic(this, "topic_guide_text");
+
+	LC_HELP->associateTopic(this, "topic_guide_convertFonts");
 
 	slotFontChanged(QFont());
 }

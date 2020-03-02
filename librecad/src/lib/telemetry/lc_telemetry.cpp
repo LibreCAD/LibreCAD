@@ -119,7 +119,6 @@ QString LC_Telemetry::GetHaspId()
 	if (RegOpenKeyExW(HKEY_CURRENT_USER, L"SOFTWARE\\LibreCAD\\LibreCAD\\Telemetry", 0, KEY_READ, &hKey) == ERROR_SUCCESS) {
 		WCHAR szBuffer[512];
 		DWORD dwBufferSize = sizeof(szBuffer);
-		ULONG nError;
 		if (RegQueryValueExW(hKey, L"HaspId", 0, NULL, (LPBYTE)szBuffer, &dwBufferSize) == ERROR_SUCCESS) {
 			return QString::fromStdWString(szBuffer);
 		}

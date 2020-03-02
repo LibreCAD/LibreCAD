@@ -27,8 +27,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QUrl>
 #include <QPoint>
 #include <QProcess>
+#include "rs.h"
 
 #define LC_HELP LC_HelpBrowser::instance()
+
+class QG_ActionHandler;
 
 class LC_HelpBrowser : public QObject
 {
@@ -39,9 +42,13 @@ public:
 	void showTableOfContents();
 	void showHelpTopic(const QString& topic);
 	void showHelpTopic(QObject* w);
+	void showHelpTopic(RS2::ActionType a);
 
 	void associateTopic(QObject* w, const QString& topicName);
 	void associateTopic(QAction* a, const QString& topicName);
+	void associateTopic(RS2::ActionType a, const QString& topicName);
+
+	void setActionHandler(QG_ActionHandler* h);
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *event) override;
@@ -60,7 +67,9 @@ private:
 	QMap<QString, QUrl> topicMap;
 	QMap<QObject*, QString> registry;
 	QMap<QAction*, QString> registeredActions;
+	QMap<RS2::ActionType, QString> registeredUserModes;
 	QProcess proc;
+	QG_ActionHandler* actionHandler;
 	static LC_HelpBrowser* uniqueInstance;
 };
 

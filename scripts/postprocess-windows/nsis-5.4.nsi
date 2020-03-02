@@ -140,6 +140,11 @@ Section "Install Section" SecInstall
   nsExec::Exec '"$INSTDIR\startredist.bat"'
   Delete "$INSTDIR\vc_redist.x86.exe"
   Delete "$INSTDIR\startredist.bat"
+  ;Install .NET Framework 4.6.2
+  DetailPrint "Installing .NET Framework 4.6.2"
+  nsExec::Exec '"$INSTDIR\startdotnet.bat"'
+  Delete "$INSTDIR\NDP462-KB3151802-Web.exe"
+  Delete "$INSTDIR\startdotnet.bat"
 
   SetOutPath "$INSTDIR"
   File /r "..\..\windows\*.*"
@@ -148,8 +153,7 @@ Section "Install Section" SecInstall
   SetOutPath "$INSTDIR"
 
   ;Register Telemetry.dll
-  nsExec::Exec '%WinDir%\Microsoft.NET\Framework\v4.0.30319\RegAsm /nologo /unregister Telemetry.dll'
-  nsExec::Exec '%WinDir%\Microsoft.NET\Framework\v4.0.30319\RegAsm /nologo Telemetry.dll'
+  nsExec::Exec '"$INSTDIR\RegisterCOMObjects.bat"'
 
   ;Convert SHX fonts
   DetailPrint "Converting AutoCAD fonts for use with LibreCAD"

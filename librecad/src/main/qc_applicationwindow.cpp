@@ -385,6 +385,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
 	QApplication::setAttribute(Qt::AA_DisableWindowContextHelpButton);
 	setMouseTracking(true);
+	LC_HELP->setActionHandler(actionHandler);
 	installEventFilter(LC_HELP);
 	LC_Telemetry t;
 	t.BeginSession();

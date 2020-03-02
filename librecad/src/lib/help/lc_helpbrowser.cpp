@@ -28,6 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QDockWidget>
 #include <QToolButton>
 #include <QLibrary>
+#include "qg_actionhandler.h"
 
 LC_HelpBrowser* LC_HelpBrowser::uniqueInstance = nullptr;
 
@@ -68,6 +69,12 @@ void LC_HelpBrowser::showHelpTopic(QObject * w)
 		showHelpTopic(registry[w]);
 }
 
+void LC_HelpBrowser::showHelpTopic(RS2::ActionType a)
+{
+	if (a != RS2::ActionNone && registeredUserModes.contains(a))
+		showHelpTopic(registeredUserModes[a]);
+}
+
 void LC_HelpBrowser::associateTopic(QObject * w, const QString& topicName)
 {
 	if (!w)	return;
@@ -80,13 +87,26 @@ void LC_HelpBrowser::associateTopic(QAction * a, const QString & topicName)
 		registeredActions[a] = topicName;
 }
 
+void LC_HelpBrowser::associateTopic(RS2::ActionType a, const QString & topicName)
+{
+	if (a != RS2::ActionNone)
+		registeredUserModes[a] = topicName;
+}
+
+void LC_HelpBrowser::setActionHandler(QG_ActionHandler * h)
+{
+	actionHandler = h;
+}
+
 bool LC_HelpBrowser::eventFilter(QObject * obj, QEvent * event)
 {
 	if (event && event->type() == QEvent::KeyPress) {
 		QKeyEvent *ke = static_cast<QKeyEvent *>(event);
 		if (ke->key() == Qt::Key_F1 || ke->key() == Qt::Key_Help) {
 			QString topic = "TableOfContents";
-			if (obj && obj->isWidgetType()) {
+			if (actionHandler && actionHandler->getCurrentAction() && registeredUserModes.contains(actionHandler->getCurrentAction()->rtti()))
+				showHelpTopic(actionHandler->getCurrentAction()->rtti());
+			else if (obj && obj->isWidgetType()) {
 				QWidget *widget = qobject_cast<QWidget*>(obj);
 				QPoint point = widget->mapFromGlobal(QCursor::pos());
 				QWidget* w = widget->childAt(point);
@@ -175,6 +195,8 @@ void LC_HelpBrowser::populateHelpTopics()
 	topicMap["topic_tw_toolbarcreator"] = base.resolved(QUrl(getRelativeFilePath("Default.htm#Main/Toolbars and Widgets/tw_toolbarcreator.htm")));
 	topicMap["topic_Welcome"] = base.resolved(QUrl(getRelativeFilePath("Default.htm#Main/Welcome.htm")));
 	topicMap["topic_prefs_applicationpreferences"] = base.resolved(QUrl(getRelativeFilePath("Default.htm#Main/Preferences and Customizations/prefs_applicationpreferences.htm")));
+	topicMap["topic_guide_convertFonts"] = base.resolved(QUrl(getRelativeFilePath("Default.htm#Main/User Guides/guide_convertFonts.htm")));
+	topicMap["topic_intro_exportProNest"] = base.resolved(QUrl(getRelativeFilePath("Default.htm#Main/Getting Started/intro_exportProNest.htm")));
 }
 
 QString LC_HelpBrowser::getLocaleName()
