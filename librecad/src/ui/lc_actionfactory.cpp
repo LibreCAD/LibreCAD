@@ -1307,7 +1307,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 	action->setIcon(QIcon(":/icons/ProNestIcon.svg"));
 	connect(action, SIGNAL(triggered()), main_window, SLOT(slotExportToProNest()));
 	action->setObjectName("FileExportToProNest");
-	LC_HELP->associateTopic(action, "topic_intro_exportPronest");
+	LC_HELP->associateTopic(action, "topic_intro_exportProNest");
 	a_map["FileExportToProNest"] = action;
 
     action = new QAction(tr("&Block"), agm->file);

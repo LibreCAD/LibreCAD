@@ -860,7 +860,7 @@ void QC_ApplicationWindow::slotExportToProNest()
 		ExportFunc Export = (ExportFunc)library.resolve("AddPart");
 		if (Export) {
 			QApplication::setOverrideCursor(Qt::WaitCursor);
-			Export(QFileInfo(w->getDocument()->getFilename()).filePath().toStdWString().c_str());
+			Export(QDir::toNativeSeparators(QFileInfo(w->getDocument()->getFilename()).filePath()).toStdWString().c_str());
 			LC_Telemetry t;
 			t.BeginSession();
 			t.TrackEvent("ExportToProNest");
