@@ -375,11 +375,13 @@ void QG_BlockWidget::slotSelectionChanged(
     const QItemSelection &deselected)
 {
     QModelIndex index;
+    QItemSelectionModel *selectionModel {blockView->selectionModel()};
 
     foreach (index, selected.indexes()) {
         auto block = blockModel->getBlock(index.row());
         if (block) {
             block->selectedInBlockList(true);
+            selectionModel->select(QItemSelection(index, index), QItemSelectionModel::Select);
         }
     }
 
@@ -387,6 +389,7 @@ void QG_BlockWidget::slotSelectionChanged(
         auto block = blockModel->getBlock(index.row());
         if (block && block->isVisibleInBlockList()) {
             block->selectedInBlockList(false);
+            selectionModel->select(QItemSelection(index, index), QItemSelectionModel::Deselect);
         }
     }
 }

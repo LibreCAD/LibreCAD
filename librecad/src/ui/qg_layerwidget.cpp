@@ -507,11 +507,13 @@ void QG_LayerWidget::slotSelectionChanged(
     const QItemSelection &deselected)
 {
     QModelIndex index;
+    QItemSelectionModel *selectionModel {layerView->selectionModel()};
 
     foreach (index, selected.indexes()) {
         auto layer = layerModel->getLayer(index.row());
         if (layer) {
             layer->selectedInLayerList(true);
+            selectionModel->select(QItemSelection(index, index), QItemSelectionModel::Select);
         }
     }
 
@@ -519,6 +521,7 @@ void QG_LayerWidget::slotSelectionChanged(
         auto layer = layerModel->getLayer(index.row());
         if (layer && layer->isVisibleInLayerList()) {
             layer->selectedInLayerList(false);
+            selectionModel->select(QItemSelection(index, index), QItemSelectionModel::Deselect);
         }
     }
 }
