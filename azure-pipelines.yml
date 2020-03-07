@@ -47,6 +47,7 @@ stages:
     steps:
 
     - bash: |
+        sudo apt-get update
         sudo apt-get -qq install \
             qt5-default \
             qtbase5-dev \
@@ -78,17 +79,21 @@ stages:
     - task: PublishBuildArtifacts@1
       inputs:
         pathToPublish: $(Build.ArtifactStagingDirectory)
-        artifactName: AppImage
+        artifactName: LibreCAD_Linux
 
 
   - job: WindowsBuild
     displayName: 'Windows build'
-    #condition: False  # disable this job for now
+    condition: False  # disable this job for now
 
     pool:
       vmImage: 'windows-2019'
 
     steps:
+
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.8'
 
     - bash: |
         set -e
@@ -101,7 +106,7 @@ stages:
         BOOST_URL="https://sourceforge.net/projects/boost/files/boost"
         BOOST_URL="$BOOST_URL/$BOOST_VERSION/$BOOST_ZIP/download"
 
-        echo "set Qt_DIR=C:\Qt\Qt$QT_VERSION\\$QT_VERSION" > ./scripts/custom-windows.bat
+        echo "set Qt_DIR=C:\Qt\\$QT_VERSION"               > ./scripts/custom-windows.bat
         echo 'set NSIS_DIR=C:\Program Files (x86)\NSIS'   >> ./scripts/custom-windows.bat
         echo 'set MINGW_VER=mingw73_64'                   >> ./scripts/custom-windows.bat
 
@@ -116,7 +121,7 @@ stages:
 
         mkdir /c/Qt /c/boost
 
-        pip install 'aqtinstall==0.4.1'
+        pip install 'aqtinstall==0.7'
         python -m aqt install -O /c/Qt $QT_VERSION windows desktop win64_mingw73
 
         cd /c/boost
@@ -141,7 +146,7 @@ stages:
     - task: PublishBuildArtifacts@1
       inputs:
         pathToPublish: $(Build.ArtifactStagingDirectory)
-        artifactName: WindowsPackage
+        artifactName: LibreCAD_Windows
 
 
   - job: MacOSBuild
@@ -218,7 +223,7 @@ stages:
     - task: PublishBuildArtifacts@1
       inputs:
         pathToPublish: $(Build.ArtifactStagingDirectory)
-        artifactName: MacOSPackage
+        artifactName: LibreCAD_MacOS
 
 
 #- stage: TestStage
