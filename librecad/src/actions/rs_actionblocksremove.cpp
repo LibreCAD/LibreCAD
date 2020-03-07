@@ -45,8 +45,6 @@ void RS_ActionBlocksRemove::trigger() {
 		finish(false);
 		return;
 	}
-	// RS_Block* block =
-	// 		RS_DIALOGFACTORY->requestBlockRemovalDialog(graphic->getBlockList());
 
 	RS_BlockList* bl = graphic->getBlockList();
 	QList<RS_Block*> blocks =
@@ -60,7 +58,6 @@ void RS_ActionBlocksRemove::trigger() {
 		containerList.push_back(blkLst->at(bi));
 	}
 
-	// if (!block) {
 	if (blocks.isEmpty()) {
 		finish(false);
 		return;
