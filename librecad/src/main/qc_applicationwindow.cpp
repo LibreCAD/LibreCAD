@@ -467,7 +467,7 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs)
 	QString name, msg;
 	bool cancelled;
 	if (!w) return false;
-	if (w->getDocument()->isModified()) {
+    if (w->getDocument()->isModified() || forceSaveAs) {
 		name = w->getDocument()->getFilename();
 		if (name.isEmpty())
 			doActivate(w); // show the user the drawing for save as
