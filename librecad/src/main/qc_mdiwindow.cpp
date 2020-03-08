@@ -457,10 +457,7 @@ bool QC_MDIWindow::slotFileSaveAs(bool &cancelled) {
 
     QG_FileDialog dlg(this);
     QString fn = dlg.getSaveFile(&t);
-	if (document && !fn.isEmpty()) {
-		QFileInfo info(fn);
-		if (!info.isWritable())
-			return false;
+    if (document && !fn.isEmpty()) {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
         document->setGraphicView(graphicView);
         ret = document->saveAs(fn, t, true);
