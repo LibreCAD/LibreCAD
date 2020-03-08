@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>653</width>
-    <height>519</height>
+    <width>668</width>
+    <height>609</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,7 +27,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tab1">
       <attribute name="title">
@@ -1596,6 +1596,9 @@
         <widget class="QDoubleSpinBox" name="cbDimFxL">
          <property name="toolTip">
           <string>fixed extension line legth</string>
+         </property>
+         <property name="decimals">
+          <number>4</number>
          </property>
         </widget>
        </item>
