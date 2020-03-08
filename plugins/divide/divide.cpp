@@ -72,19 +72,23 @@ void divide::execComm( Document_Interface *doc,
         msgBox.setText( text );
         msgBox.setIcon( QMessageBox::Warning );
 
-        msgBox.show(); //need show to get msgBox size
-        QPoint centerXY = findWindowCentre();
-        int x = centerXY.rx() - ( msgBox.width() / 2 );
-        int y = centerXY.ry() - ( msgBox.height() / 2 );
-
-        QRect screenGeometry = QApplication::desktop()->availableGeometry();
-        //in case msgBox is wholly or partially offscreen
-        if ( x >= ( screenGeometry.width() - msgBox.width() ) )
-            x = QApplication::desktop()->width() - msgBox.width() - 10;
-        if ( y >= ( screenGeometry.height() - msgBox.height() ) )
-            y = QApplication::desktop()->height() - msgBox.height() - 60;
-
-        msgBox.move( x, y );
+/*  Why are we messing with screen geometry just to show an error message?
+ *    Assume Qt will just take care of it!
+ *
+ *        msgBox.show(); //need show to get msgBox size
+ *        QPoint centerXY = findWindowCentre();
+ *        int x = centerXY.rx() - ( msgBox.width() / 2 );
+ *        int y = centerXY.ry() - ( msgBox.height() / 2 );
+ *
+ *        QRect screenGeometry = QApplication::desktop()->availableGeometry();
+ *        //in case msgBox is wholly or partially offscreen
+ *        if ( x >= ( screenGeometry.width() - msgBox.width() ) )
+ *            x = QApplication::desktop()->width() - msgBox.width() - 10;
+ *        if ( y >= ( screenGeometry.height() - msgBox.height() ) )
+ *            y = QApplication::desktop()->height() - msgBox.height() - 60;
+ *
+ *        msgBox.move( x, y );
+ *********************************/
         msgBox.exec();
 
         while ( ! obj.isEmpty() )

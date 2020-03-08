@@ -47,7 +47,8 @@ signals:
     void returnData( QString );
 
 private:
-    void choice( int, int, QFont );
+    enum ElementKind { STRAIGHT, CURVED };
+    QFrame* choice(ElementKind ek, QFont font);
     Document_Interface *d;
     QRadioButton *R1; //on/off ticks
     QRadioButton *R2; //on/off breaks
