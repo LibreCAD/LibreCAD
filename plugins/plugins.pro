@@ -30,25 +30,7 @@ TRANSLATIONS = ./ts/plugins_ar.ts \
     ./ts/plugins_de.ts \
     ./ts/plugins_el.ts \
     ./ts/plugins_es.ts \
-    ./ts/plugins_es_ar.ts \
-    ./ts/plugins_es_bo.ts \
-    ./ts/plugins_es_cl.ts \
-    ./ts/plugins_es_co.ts \
-    ./ts/plugins_es_cr.ts \
-    ./ts/plugins_es_do.ts \
-    ./ts/plugins_es_ec.ts \
-    ./ts/plugins_es_gt.ts \
-    ./ts/plugins_es_hn.ts \
     ./ts/plugins_es_mx.ts \
-    ./ts/plugins_es_ni.ts \
-    ./ts/plugins_es_pa.ts \
-    ./ts/plugins_es_pe.ts \
-    ./ts/plugins_es_pr.ts \
-    ./ts/plugins_es_py.ts \
-    ./ts/plugins_es_sv.ts \
-    ./ts/plugins_es_us.ts \
-    ./ts/plugins_es_uy.ts \
-    ./ts/plugins_es_ve.ts \
     ./ts/plugins_et.ts \
     ./ts/plugins_eu.ts \
     ./ts/plugins_fi.ts \

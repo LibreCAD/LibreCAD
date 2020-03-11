@@ -18,6 +18,7 @@ set LC_TSDIRLC=%cd%\librecad\ts
 set LC_TSDIRPI=%cd%\plugins\ts
 set LC_NSISDIR=%cd%\scripts\postprocess-windows
 set LC_DOCS=%cd%\windows\doc
+set QT_TRANSLATIONS=%cd%\windows\translations
 
 REM Postprocess for windows
 echo " Copying fonts and patterns"
@@ -26,10 +27,11 @@ if not exist "%LC_RESOURCEDIR%\patterns\" (mkdir "%LC_RESOURCEDIR%\patterns")
 if not exist "%LC_RESOURCEDIR%\library\" (mkdir "%LC_RESOURCEDIR%\library")
 if not exist "%LC_RESOURCEDIR%\library\misc\" (mkdir "%LC_RESOURCEDIR%\library\misc")
 if not exist "%LC_RESOURCEDIR%\library\templates\" (mkdir "%LC_RESOURCEDIR%\library\templates")
-if not exist "%LC_RESOURCEDIR%\library\algoritm\" (mkdir "%LC_RESOURCEDIR%\library\algoritm")
+if not exist "%LC_RESOURCEDIR%\library\algorithm\" (mkdir "%LC_RESOURCEDIR%\library\algorithm")
 if not exist "%LC_RESOURCEDIR%\library\block\" (mkdir "%LC_RESOURCEDIR%\library\block")
 if not exist "%LC_RESOURCEDIR%\library\kinetics\" (mkdir "%LC_RESOURCEDIR%\library\kinetics")
 if not exist "%LC_RESOURCEDIR%\library\power_station\" (mkdir "%LC_RESOURCEDIR%\library\power_station")
+if not exist "%LC_RESOURCEDIR%\library\sheets\" (mkdir "%LC_RESOURCEDIR%\library\sheets")
 if not exist "%LC_DOCS%" (mkdir "%LC_DOCS%")
 
 
@@ -64,6 +66,12 @@ for /f %%F in ('dir /b *.qm') do (
 
 REM translations for PlugIns
 cd "%LC_TSDIRPI%"
+for /f %%F in ('dir /b *.qm') do (
+        copy "%%F" "%LC_RESOURCEDIR%\qm\%%F"
+)
+
+REM translations for Qt
+cd "%QT_TRANSLATIONS%"
 for /f %%F in ('dir /b *.qm') do (
         copy "%%F" "%LC_RESOURCEDIR%\qm\%%F"
 )

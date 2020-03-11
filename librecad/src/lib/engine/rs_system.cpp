@@ -97,7 +97,7 @@ void RS_System::initLanguageList() {
         QString l = (*it).mid(i1+1, i2-i1-1);
 //        std::cout<<"RS_System::initLanguageList: l: "<<qPrintable(l)<<std::endl;
 
-        if ( !(languageList.contains(l)) ) {
+        if ( !(languageList.contains(l, Qt::CaseInsensitive)) ) {
             RS_DEBUG->print("RS_System::initLanguageList: append language: %s",
                             l.toLatin1().data());
             languageList.append(l);

@@ -58,6 +58,7 @@ private:
 	virtual ~LC_HelpBrowser();
 	LC_HelpBrowser(LC_HelpBrowser const&) = delete;
 	LC_HelpBrowser& operator = (LC_HelpBrowser const&) = delete;
+	void initLocale();
 	void populateHelpTopics();
 	QString getLocaleName();
 	QString getRelativeFilePath(const QString& fileName);
@@ -71,6 +72,7 @@ private:
 	QProcess proc;
 	QG_ActionHandler* actionHandler;
 	static LC_HelpBrowser* uniqueInstance;
+	QString localeName;
 };
 
 #endif // LC_HELPBROWSER_H

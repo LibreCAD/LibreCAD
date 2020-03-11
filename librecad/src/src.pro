@@ -960,25 +960,7 @@ TRANSLATIONS = ../ts/librecad_ar.ts \
     ../ts/librecad_de.ts \
     ../ts/librecad_el.ts \
     ../ts/librecad_es.ts \
-    ../ts/librecad_es_ar.ts \
-    ../ts/librecad_es_bo.ts \
-    ../ts/librecad_es_cl.ts \
-    ../ts/librecad_es_co.ts \
-    ../ts/librecad_es_cr.ts \
-    ../ts/librecad_es_do.ts \
-    ../ts/librecad_es_ec.ts \
-    ../ts/librecad_es_gt.ts \
-    ../ts/librecad_es_hn.ts \
     ../ts/librecad_es_mx.ts \
-    ../ts/librecad_es_ni.ts \
-    ../ts/librecad_es_pa.ts \
-    ../ts/librecad_es_pe.ts \
-    ../ts/librecad_es_pr.ts \
-    ../ts/librecad_es_py.ts \
-    ../ts/librecad_es_sv.ts \
-    ../ts/librecad_es_us.ts \
-    ../ts/librecad_es_uy.ts \
-    ../ts/librecad_es_ve.ts \
     ../ts/librecad_et.ts \
     ../ts/librecad_eu.ts \
     ../ts/librecad_fi.ts \

@@ -856,8 +856,14 @@ void QC_ApplicationWindow::slotExportToProNest()
 	if (w && doSave(w)) {
 		QDir dir = QDir::cleanPath(QCoreApplication::applicationDirPath());
 		QLibrary library(QFileInfo(dir, "ProNestUtils.dll").filePath());
+		typedef bool (*ProNestOpenFunc)();
 		typedef bool (*ExportFunc)(const wchar_t*);
+		ProNestOpenFunc ProNestOpen = (ProNestOpenFunc)library.resolve("ProNestOpen");
 		ExportFunc Export = (ExportFunc)library.resolve("AddPart");
+		if (ProNestOpen && !ProNestOpen()) {
+			QMessageBox::warning(this, QObject::tr("Export to ProNest"), QObject::tr("Open ProNest before exporting the drawing."), QMessageBox::Ok);
+			return;
+		}
 		if (Export) {
 			QApplication::setOverrideCursor(Qt::WaitCursor);
 			Export(QDir::toNativeSeparators(QFileInfo(w->getDocument()->getFilename()).filePath()).toStdWString().c_str());
@@ -2396,18 +2402,19 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
                     || paperMargins.right != printerMargins.right
                     || paperMargins.bottom != printerMargins.bottom)) {
             QMessageBox msgBox(this);
-            msgBox.setWindowTitle("Paper settings");
-            msgBox.setText("Paper size and/or margins have been changed!");
-            msgBox.setInformativeText("Do you want to apply changes to current drawing?");
+            msgBox.setWindowTitle(tr("Paper settings"));
+            msgBox.setText(tr("Paper size and/or margins have been changed!"));
+            msgBox.setInformativeText(tr("Do you want to apply changes to current drawing?"));
             msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
             msgBox.setDefaultButton(QMessageBox::Cancel);
-            QString detailedText = QString("Drawing settings:\n"
-                "\tsize: %1 x %2 (%3)\n"
-                "\tmargins: %4, %5, %6, %7\n"
-                "\n"
-                "Printer settings:\n"
-                "\tsize: %8 x %9 (%10)\n"
-                "\tmargins: %11, %12, %13, %14\n")
+			QString formatText = QString(tr("Drawing settings:\n"
+				"\tsize: %1 x %2 (%3)\n"
+				"\tmargins: %4, %5, %6, %7\n"
+				"\n"
+				"Printer settings:\n"
+				"\tsize: %8 x %9 (%10)\n"
+				"\tmargins: %11, %12, %13, %14\n"));
+            QString detailedText = QString(formatText)
                 .arg(paperSize.x)
                 .arg(paperSize.y)
                 .arg(RS_Units::paperFormatToString(pf))

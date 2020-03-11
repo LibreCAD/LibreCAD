@@ -867,6 +867,22 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Mouse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tablet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trackpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Touchscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_SimpleTests</name>
@@ -1507,6 +1523,29 @@ Please check its existence and permissions.</source>
         <source>LibreCAD Help</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Paper settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paper size and/or margins have been changed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to apply changes to current drawing?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawing settings:
+	size: %1 x %2 (%3)
+	margins: %4, %5, %6, %7
+
+Printer settings:
+	size: %8 x %9 (%10)
+	margins: %11, %12, %13, %14
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -1654,6 +1693,10 @@ in a separate window</source>
     </message>
     <message>
         <source>Looking for matching block names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3686,6 +3729,34 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Automatically zoom drawing when opening</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spiderweb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgOptionsMakerCam</name>
@@ -4873,6 +4944,10 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>&amp;Lock all Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7104,6 +7179,122 @@ Do you want to replace it?</source>
     <message>
         <source>noname</source>
         <comment>default layer name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Letter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Legal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Executive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ledger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tabloid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NPageSize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spiderweb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export to ProNest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open ProNest before exporting the drawing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dock Areas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mouse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tablet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trackpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Touchscreen</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

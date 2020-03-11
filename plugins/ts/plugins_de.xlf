@@ -1,0 +1,1438 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:trolltech="urn:trolltech:names:ts:document:1.0">
+  <file original="../asciifile/asciifile.cpp" datatype="cpp" source-language="en" target-language="de"><body>
+    <group restype="x-trolltech-linguist-context" resname="AsciiFile">
+      <trans-unit id="_msg1" approved="yes">
+        <source xml:space="preserve">Read ascii points</source>
+        <target xml:space="preserve">Punkte aus ASCII-Datei</target>
+        <context-group purpose="location"><context context-type="linenumber">35</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">41</context></context-group>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="dibPunto">
+      <trans-unit id="_msg2" approved="yes">
+        <source xml:space="preserve">Read ascii points</source>
+        <target xml:space="preserve">Punkte aus ASCII-Datei</target>
+        <context-group purpose="location"><context context-type="linenumber">229</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg3" approved="yes">
+        <source xml:space="preserve">File...</source>
+        <target xml:space="preserve">Datei...</target>
+        <context-group purpose="location"><context context-type="linenumber">235</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg4" approved="yes">
+        <source xml:space="preserve">Format:</source>
+        <target xml:space="preserve">Format:</target>
+        <context-group purpose="location"><context context-type="linenumber">242</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg5" approved="yes">
+        <source xml:space="preserve">Space Separator</source>
+        <target xml:space="preserve">Leerzeichen getrennt</target>
+        <context-group purpose="location"><context context-type="linenumber">244</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg6" approved="yes">
+        <source xml:space="preserve">Tab Separator</source>
+        <target xml:space="preserve">Tabulator getrennt</target>
+        <context-group purpose="location"><context context-type="linenumber">244</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg7" approved="yes">
+        <source xml:space="preserve">Comma Separator</source>
+        <target xml:space="preserve">Komma getrennt</target>
+        <context-group purpose="location"><context context-type="linenumber">244</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg8" approved="yes">
+        <source xml:space="preserve">Space in Columns</source>
+        <target xml:space="preserve">Feste Spaltenbreite</target>
+        <context-group purpose="location"><context context-type="linenumber">244</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg9" approved="yes">
+        <source xml:space="preserve">*.odb for Psion 2</source>
+        <target xml:space="preserve">*.odb für Psion 2</target>
+        <context-group purpose="location"><context context-type="linenumber">244</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg10" approved="yes">
+        <source xml:space="preserve">Connect points</source>
+        <target xml:space="preserve">Punkte verbinden</target>
+        <context-group purpose="location"><context context-type="linenumber">246</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg11" approved="yes">
+        <source xml:space="preserve">2D Point</source>
+        <target xml:space="preserve">2D Punkt</target>
+        <context-group purpose="location"><context context-type="linenumber">254</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg12" approved="yes">
+        <source xml:space="preserve">Draw 2D Point</source>
+        <target xml:space="preserve">Zeichne 2D Punkt</target>
+        <context-group purpose="location"><context context-type="linenumber">254</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg13" approved="yes">
+        <source xml:space="preserve">3D Point</source>
+        <target xml:space="preserve">3D Punkt</target>
+        <context-group purpose="location"><context context-type="linenumber">255</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg14" approved="yes">
+        <source xml:space="preserve">Draw 3D Point</source>
+        <target xml:space="preserve">Zeichne 3D Punkt</target>
+        <context-group purpose="location"><context context-type="linenumber">255</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg15" approved="yes">
+        <source xml:space="preserve">Point Number</source>
+        <target xml:space="preserve">Punkt Nummer</target>
+        <context-group purpose="location"><context context-type="linenumber">256</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg16" approved="yes">
+        <source xml:space="preserve">Draw point number</source>
+        <target xml:space="preserve">Zeichne Punkt Nummer</target>
+        <context-group purpose="location"><context context-type="linenumber">256</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg17" approved="yes">
+        <source xml:space="preserve">Point Elevation</source>
+        <target xml:space="preserve">Höhenpunkt</target>
+        <context-group purpose="location"><context context-type="linenumber">257</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg18" approved="yes">
+        <source xml:space="preserve">Draw point elevation</source>
+        <target xml:space="preserve">Zeichne Höhenpunkt</target>
+        <context-group purpose="location"><context context-type="linenumber">257</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg19" approved="yes">
+        <source xml:space="preserve">Point Code</source>
+        <target xml:space="preserve">Punkt Code</target>
+        <context-group purpose="location"><context context-type="linenumber">258</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg20" approved="yes">
+        <source xml:space="preserve">Draw point code</source>
+        <target xml:space="preserve">Zeichne Punkt Code</target>
+        <context-group purpose="location"><context context-type="linenumber">258</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg21" approved="yes">
+        <source xml:space="preserve">Accept</source>
+        <target xml:space="preserve">Übernehmen</target>
+        <context-group purpose="location"><context context-type="linenumber">272</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg22" approved="yes">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve">Abbrechen</target>
+        <context-group purpose="location"><context context-type="linenumber">277</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg23" approved="yes">
+        <source xml:space="preserve">Select file</source>
+        <target xml:space="preserve">Datei auswählen</target>
+        <context-group purpose="location"><context context-type="linenumber">307</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg24" approved="yes">
+        <source xml:space="preserve">Point 2D layer is empty</source>
+        <target xml:space="preserve">Layer 2D Punkt ist leer</target>
+        <context-group purpose="location"><context context-type="linenumber">314</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg25" approved="yes">
+        <source xml:space="preserve">Point 3D layer is empty</source>
+        <target xml:space="preserve">Layer 3D Punkt ist leer</target>
+        <context-group purpose="location"><context context-type="linenumber">317</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg26" approved="yes">
+        <source xml:space="preserve">Point elevation layer is empty</source>
+        <target xml:space="preserve">Layer Höhenpunkt ist leer</target>
+        <context-group purpose="location"><context context-type="linenumber">320</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg27" approved="yes">
+        <source xml:space="preserve">Point elevation height is empty</source>
+        <target xml:space="preserve">Höhe Höhenpunkt ist leer</target>
+        <context-group purpose="location"><context context-type="linenumber">321</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg28" approved="yes">
+        <source xml:space="preserve">Point elevation separation is empty</source>
+        <target xml:space="preserve">Abstand Höhenpunkt ist leer</target>
+        <context-group purpose="location"><context context-type="linenumber">322</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg29" approved="yes">
+        <source xml:space="preserve">Point number layer is empty</source>
+        <target xml:space="preserve">Layer Punkt Nummer ist leer</target>
+        <context-group purpose="location"><context context-type="linenumber">325</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg30" approved="yes">
+        <source xml:space="preserve">Point number height is empty</source>
+        <target xml:space="preserve">Höhe Punkt Nummer ist leer</target>
+        <context-group purpose="location"><context context-type="linenumber">326</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg31" approved="yes">
+        <source xml:space="preserve">Point number separation is empty</source>
+        <target xml:space="preserve">Abstand Punkt Nummer ist leer</target>
+        <context-group purpose="location"><context context-type="linenumber">327</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg32" approved="yes">
+        <source xml:space="preserve">Point code layer is empty</source>
+        <target xml:space="preserve">Layer Punkt Code ist leer</target>
+        <context-group purpose="location"><context context-type="linenumber">330</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg33" approved="yes">
+        <source xml:space="preserve">Point code height is empty</source>
+        <target xml:space="preserve">Höhe Punkt Code ist leer</target>
+        <context-group purpose="location"><context context-type="linenumber">331</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg34" approved="yes">
+        <source xml:space="preserve">Point code separation is empty</source>
+        <target xml:space="preserve">Abstand Punkt Code ist leer</target>
+        <context-group purpose="location"><context context-type="linenumber">332</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg35" approved="yes">
+        <source xml:space="preserve">The file %1 not exist</source>
+        <target xml:space="preserve">Die Datei %1 existiert nicht</target>
+        <context-group purpose="location"><context context-type="linenumber">360</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg36" approved="yes">
+        <source xml:space="preserve">Can&apos;t open the file %1</source>
+        <target xml:space="preserve">Kann Datei %1 nicht öffnen</target>
+        <context-group purpose="location"><context context-type="linenumber">365</context></context-group>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="pointBox">
+      <trans-unit id="_msg37" approved="yes">
+        <source xml:space="preserve">Layer:</source>
+        <target xml:space="preserve">Layer:</target>
+        <context-group purpose="location"><context context-type="linenumber">175</context></context-group>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="textBox">
+      <trans-unit id="_msg38" approved="yes">
+        <source xml:space="preserve">Style:</source>
+        <target xml:space="preserve">Stil:</target>
+        <context-group purpose="location"><context context-type="linenumber">207</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg39" approved="yes">
+        <source xml:space="preserve">Height:</source>
+        <target xml:space="preserve">Höhe:</target>
+        <context-group purpose="location"><context context-type="linenumber">208</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg40" approved="yes">
+        <source xml:space="preserve">Separation</source>
+        <target xml:space="preserve">Teilung</target>
+        <context-group purpose="location"><context context-type="linenumber">209</context></context-group>
+      </trans-unit>
+    </group>
+  </body></file>
+  <file original="Obsolete_PO_entries" datatype="plaintext" source-language="en" target-language="de"><body>
+    <group restype="x-trolltech-linguist-context" resname="ImportShp">
+      <trans-unit id="_msg41" translate="no">
+        <source xml:space="preserve">shape file</source>
+        <target xml:space="preserve">Schablonendatei</target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="LC_List">
+      <trans-unit id="_msg42" translate="no">
+        <source xml:space="preserve">curvature</source>
+        <target xml:space="preserve">Krümmung</target>
+      </trans-unit>
+      <trans-unit id="_msg43" translate="no">
+        <source xml:space="preserve">n %1: 
+</source>
+        <target xml:space="preserve">n %1: 
+</target>
+      </trans-unit>
+      <trans-unit id="_msg44" translate="no">
+        <source xml:space="preserve">Empty Entity
+
+</source>
+        <target xml:space="preserve">Leeres Objekt
+
+</target>
+      </trans-unit>
+      <trans-unit id="_msg45" translate="no">
+        <source xml:space="preserve">Layer: </source>
+        <target xml:space="preserve">Layer: </target>
+      </trans-unit>
+      <trans-unit id="_msg46" translate="no">
+        <source xml:space="preserve">
+ Color: </source>
+        <target xml:space="preserve">
+ Farbe: </target>
+      </trans-unit>
+      <trans-unit id="_msg47" translate="no">
+        <source xml:space="preserve"> Line type: </source>
+        <target xml:space="preserve"> Linentyp: </target>
+      </trans-unit>
+      <trans-unit id="_msg48" translate="no">
+        <source xml:space="preserve">
+ Line thickness: </source>
+        <target xml:space="preserve">
+ Linenstärke: </target>
+      </trans-unit>
+      <trans-unit id="_msg49" translate="no">
+        <source xml:space="preserve">
+ ID: %1
+</source>
+        <target xml:space="preserve">
+ ID: %1
+</target>
+      </trans-unit>
+      <trans-unit id="_msg50" translate="no">
+        <source xml:space="preserve">     in point: X=%1 Y=%2
+
+</source>
+        <target xml:space="preserve">     Position: X=%1 Y=%2
+
+</target>
+      </trans-unit>
+      <trans-unit id="_msg51" translate="no">
+        <source xml:space="preserve">POINT: </source>
+        <target xml:space="preserve">PUNKT: </target>
+      </trans-unit>
+      <trans-unit id="_msg52" translate="no">
+        <source xml:space="preserve">     from point: X=%1 Y=%2
+     to point: X=%3 Y=%4
+</source>
+        <target xml:space="preserve">     von Position: X=%1 Y=%2
+     zu Position: X=%3 Y=%4
+</target>
+      </trans-unit>
+      <trans-unit id="_msg53" translate="no">
+        <source xml:space="preserve">   length: %1,</source>
+        <target xml:space="preserve">   Länge: %1,</target>
+      </trans-unit>
+      <trans-unit id="_msg54" translate="no">
+        <source xml:space="preserve">  Angle in XY plane: %1
+</source>
+        <target xml:space="preserve">  Winkel in XY Ebene: %1
+</target>
+      </trans-unit>
+      <trans-unit id="_msg55" translate="no">
+        <source xml:space="preserve">  Inc. X = %1,  Inc. Y = %2
+
+</source>
+        <target xml:space="preserve">  X-Neigung = %1,  Y-Neigung = %2
+
+</target>
+      </trans-unit>
+      <trans-unit id="_msg56" translate="no">
+        <source xml:space="preserve">LINE: </source>
+        <target xml:space="preserve">LINIE: </target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="dibSHP">
+      <trans-unit id="_msg57" translate="no">
+        <source xml:space="preserve">Unknoun</source>
+        <target xml:space="preserve">Unbekannt</target>
+      </trans-unit>
+      <trans-unit id="_msg58" translate="no">
+        <source xml:space="preserve">Poligon</source>
+        <target xml:space="preserve">Polygon</target>
+      </trans-unit>
+      <trans-unit id="_msg59" translate="no">
+        <source xml:space="preserve">Poligon+Measure</source>
+        <target xml:space="preserve">Polygon und Maße</target>
+      </trans-unit>
+      <trans-unit id="_msg60" translate="no">
+        <source xml:space="preserve">3D Poligon</source>
+        <target xml:space="preserve">3D Polygon</target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="plot">
+      <trans-unit id="_msg61" translate="no">
+        <source xml:space="preserve">plugins_menu</source>
+        <target xml:space="preserve">plugins_menu</target>
+      </trans-unit>
+      <trans-unit id="_msg62" translate="no">
+        <source xml:space="preserve">Draw</source>
+        <target xml:space="preserve">Zeichnen</target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="textBox">
+      <trans-unit id="_msg63" translate="no">
+        <source xml:space="preserve">Heigth:</source>
+        <target xml:space="preserve">Höhe:</target>
+      </trans-unit>
+    </group>
+  </body></file>
+  <file original="../importshp/importshp.cpp" datatype="cpp" source-language="en" target-language="de"><body>
+    <group restype="x-trolltech-linguist-context" resname="ImportShp">
+      <trans-unit id="_msg64" approved="yes">
+        <source xml:space="preserve">Import ESRI Shapefile</source>
+        <target xml:space="preserve">ESRI Shapedaten importieren</target>
+        <context-group purpose="location"><context context-type="linenumber">40</context></context-group>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="dibSHP">
+      <trans-unit id="_msg65" approved="yes">
+        <source xml:space="preserve">File...</source>
+        <target xml:space="preserve">Datei...</target>
+        <context-group purpose="location"><context context-type="linenumber">59</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg66" approved="yes">
+        <source xml:space="preserve">File type:</source>
+        <target xml:space="preserve">Dateityp:</target>
+        <context-group purpose="location"><context context-type="linenumber">67</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg67" approved="yes">
+        <source xml:space="preserve">Layer</source>
+        <target xml:space="preserve">Layer</target>
+        <context-group purpose="location"><context context-type="linenumber">75</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg68" approved="yes">
+        <source xml:space="preserve">Import ESRI Shapefile</source>
+        <target xml:space="preserve">ESRI Shapedaten importieren</target>
+        <context-group purpose="location"><context context-type="linenumber">56</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg69" approved="yes">
+        <source xml:space="preserve">Unknown</source>
+        <target xml:space="preserve">Unbekannt</target>
+        <context-group purpose="location"><context context-type="linenumber">68</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">266</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg70" approved="yes">
+        <source xml:space="preserve">Current</source>
+        <target xml:space="preserve">Aktuelles</target>
+        <context-group purpose="location"><context context-type="linenumber">76</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">89</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">102</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">115</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg71" approved="yes">
+        <source xml:space="preserve">From data:</source>
+        <target xml:space="preserve">Aus Daten:</target>
+        <context-group purpose="location"><context context-type="linenumber">77</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">90</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">103</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">116</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg72" approved="yes">
+        <source xml:space="preserve">Color</source>
+        <target xml:space="preserve">Farbe</target>
+        <context-group purpose="location"><context context-type="linenumber">88</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg73" approved="yes">
+        <source xml:space="preserve">Line type</source>
+        <target xml:space="preserve">Linientyp</target>
+        <context-group purpose="location"><context context-type="linenumber">101</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg74" approved="yes">
+        <source xml:space="preserve">Width</source>
+        <target xml:space="preserve">Breite</target>
+        <context-group purpose="location"><context context-type="linenumber">114</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg75" approved="yes">
+        <source xml:space="preserve">Point</source>
+        <target xml:space="preserve">Punkt</target>
+        <context-group purpose="location"><context context-type="linenumber">127</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">213</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg76" approved="yes">
+        <source xml:space="preserve">as Point</source>
+        <target xml:space="preserve">als Punkt</target>
+        <context-group purpose="location"><context context-type="linenumber">128</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg77" approved="yes">
+        <source xml:space="preserve">as Label:</source>
+        <target xml:space="preserve">als Bezeichner:</target>
+        <context-group purpose="location"><context context-type="linenumber">129</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg78" approved="yes">
+        <source xml:space="preserve">Accept</source>
+        <target xml:space="preserve">Übernehmen</target>
+        <context-group purpose="location"><context context-type="linenumber">141</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg79" approved="yes">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve">Abbrechen</target>
+        <context-group purpose="location"><context context-type="linenumber">142</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg80" approved="yes">
+        <source xml:space="preserve">Select file</source>
+        <target xml:space="preserve">Datei auswählen</target>
+        <context-group purpose="location"><context context-type="linenumber">167</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg81" approved="yes">
+        <source xml:space="preserve">Point+Measure</source>
+        <target xml:space="preserve">Punkt und Maße</target>
+        <context-group purpose="location"><context context-type="linenumber">217</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg82" approved="yes">
+        <source xml:space="preserve">3D Point</source>
+        <target xml:space="preserve">3D Punkt</target>
+        <context-group purpose="location"><context context-type="linenumber">221</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg83" approved="yes">
+        <source xml:space="preserve">Multi Point</source>
+        <target xml:space="preserve">Mehrfachpunkte</target>
+        <context-group purpose="location"><context context-type="linenumber">225</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg84" approved="yes">
+        <source xml:space="preserve">Multi Point+Measure</source>
+        <target xml:space="preserve">Mehrfachpunkte und Maße</target>
+        <context-group purpose="location"><context context-type="linenumber">229</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg85" approved="yes">
+        <source xml:space="preserve">3D Multi Point</source>
+        <target xml:space="preserve">3D Mehrfachpunkte</target>
+        <context-group purpose="location"><context context-type="linenumber">233</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg86" approved="yes">
+        <source xml:space="preserve">Arc</source>
+        <target xml:space="preserve">Bogen</target>
+        <context-group purpose="location"><context context-type="linenumber">237</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg87" approved="yes">
+        <source xml:space="preserve">Arc+Measure</source>
+        <target xml:space="preserve">Bogen und Maße</target>
+        <context-group purpose="location"><context context-type="linenumber">241</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg88" approved="yes">
+        <source xml:space="preserve">3D Arc</source>
+        <target xml:space="preserve">3D Bogen</target>
+        <context-group purpose="location"><context context-type="linenumber">245</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg89" approved="yes">
+        <source xml:space="preserve">Polygon</source>
+        <target xml:space="preserve">Polygon</target>
+        <context-group purpose="location"><context context-type="linenumber">249</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg90" approved="yes">
+        <source xml:space="preserve">Polygon+Measure</source>
+        <target xml:space="preserve">Polygon+Abmessung</target>
+        <context-group purpose="location"><context context-type="linenumber">253</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg91" approved="yes">
+        <source xml:space="preserve">3D Polygon</source>
+        <target xml:space="preserve">3D Polygon</target>
+        <context-group purpose="location"><context context-type="linenumber">257</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg92" approved="yes">
+        <source xml:space="preserve">Multipatch</source>
+        <target xml:space="preserve">Mehrfachmuster</target>
+        <context-group purpose="location"><context context-type="linenumber">261</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg93" approved="yes">
+        <source xml:space="preserve">The file %1 not have extension .shp</source>
+        <target xml:space="preserve">Die Datei %1 hat keine .shp Erweiterung</target>
+        <context-group purpose="location"><context context-type="linenumber">281</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg94" approved="yes">
+        <source xml:space="preserve">The file %1 not exist</source>
+        <target xml:space="preserve">Die Datei %1 existiert nicht</target>
+        <context-group purpose="location"><context context-type="linenumber">286</context></context-group>
+      </trans-unit>
+    </group>
+  </body></file>
+  <file original="../align/align.cpp" datatype="cpp" source-language="en" target-language="de"><body>
+    <group restype="x-trolltech-linguist-context" resname="LC_Align">
+      <trans-unit id="_msg95" approved="yes">
+        <source xml:space="preserve">Align</source>
+        <target xml:space="preserve">Ausrichtung</target>
+        <context-group purpose="location"><context context-type="linenumber">20</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">27</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg96" approved="yes">
+        <source xml:space="preserve">first base point:</source>
+        <target xml:space="preserve">Erster Basispunkt:</target>
+        <context-group purpose="location"><context context-type="linenumber">40</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg97" approved="yes">
+        <source xml:space="preserve">first target point:</source>
+        <target xml:space="preserve">Erster Zielpunkt:</target>
+        <context-group purpose="location"><context context-type="linenumber">42</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg98" approved="yes">
+        <source xml:space="preserve">second base point:</source>
+        <target xml:space="preserve">Zweiter Basispunkt:</target>
+        <context-group purpose="location"><context context-type="linenumber">44</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg99" approved="yes">
+        <source xml:space="preserve">second target point:</source>
+        <target xml:space="preserve">Zweiter Zielpunkt:</target>
+        <context-group purpose="location"><context context-type="linenumber">46</context></context-group>
+      </trans-unit>
+    </group>
+  </body></file>
+  <file original="../gear/gear.cpp" datatype="cpp" source-language="en" target-language="de"><body>
+    <group restype="x-trolltech-linguist-context" resname="LC_Gear">
+      <trans-unit id="_msg100" approved="yes">
+        <source xml:space="preserve">Gear creation plugin</source>
+        <target xml:space="preserve">Zahnrad Plugin</target>
+        <context-group purpose="location"><context context-type="linenumber">33</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg101" approved="yes">
+        <source xml:space="preserve">Gear plugin</source>
+        <target xml:space="preserve">Zahnrad Plugin</target>
+        <context-group purpose="location"><context context-type="linenumber">40</context></context-group>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="lc_Geardlg">
+      <trans-unit id="_msg102" approved="yes">
+        <source xml:space="preserve">Number of teeth</source>
+        <target xml:space="preserve">Anzahl Zähne</target>
+        <context-group purpose="location"><context context-type="linenumber">122</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg103" approved="yes">
+        <source xml:space="preserve">Pressure angle (deg)</source>
+        <target xml:space="preserve">Eingriffswinkel (Grad)</target>
+        <context-group purpose="location"><context context-type="linenumber">124</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg104">
+        <source xml:space="preserve">Rotation angle</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">121</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg105">
+        <source xml:space="preserve">Modulus</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">123</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg106">
+        <source xml:space="preserve">Addendum (rel. to modulus)</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">125</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg107">
+        <source xml:space="preserve">Dedendum (rel. to modulus)</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">126</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg108">
+        <source xml:space="preserve">Number of segments to draw (dedendum)</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">127</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg109">
+        <source xml:space="preserve">Number of segments to draw (addendum)</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">128</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg110">
+        <source xml:space="preserve">Draw all teeth?</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">129</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg111">
+        <source xml:space="preserve">Draw symmetric face?</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">130</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg112">
+        <source xml:space="preserve">Use layers?</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">132</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg113">
+        <source xml:space="preserve">Draw addendum circle?</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">133</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg114">
+        <source xml:space="preserve">Draw pitch circle?</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">134</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg115">
+        <source xml:space="preserve">Draw base circle?</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">135</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg116">
+        <source xml:space="preserve">Draw root circle?</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">136</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg117">
+        <source xml:space="preserve">Draw pressure line?</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">137</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg118">
+        <source xml:space="preserve">Draw pressure limits?</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">138</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg119">
+        <source xml:space="preserve">Calculate interference?</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">140</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg120">
+        <source xml:space="preserve">Number of segments to draw (interference)</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">141</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg121" approved="yes">
+        <source xml:space="preserve">Accept</source>
+        <target xml:space="preserve">Übernehmen</target>
+        <context-group purpose="location"><context context-type="linenumber">143</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg122" approved="yes">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve">Abbrechen</target>
+        <context-group purpose="location"><context context-type="linenumber">144</context></context-group>
+      </trans-unit>
+    </group>
+  </body></file>
+  <file original="../list/list.cpp" datatype="cpp" source-language="en" target-language="de"><body>
+    <group restype="x-trolltech-linguist-context" resname="LC_List">
+      <trans-unit id="_msg123" approved="yes">
+        <source xml:space="preserve">List entities</source>
+        <target xml:space="preserve">Objekte auflisten</target>
+        <context-group purpose="location"><context context-type="linenumber">23</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">30</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg124" approved="yes">
+        <source xml:space="preserve">n</source>
+        <target xml:space="preserve">n</target>
+        <context-group purpose="location"><context context-type="linenumber">46</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg125" approved="yes">
+        <source xml:space="preserve">Empty Entity</source>
+        <target xml:space="preserve">Leeres Objekt</target>
+        <context-group purpose="location"><context context-type="linenumber">60</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg126" approved="yes">
+        <source xml:space="preserve">X</source>
+        <target xml:space="preserve">X</target>
+        <context-group purpose="location"><context context-type="linenumber">67</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg127" approved="yes">
+        <source xml:space="preserve">Y</source>
+        <target xml:space="preserve">Y</target>
+        <context-group purpose="location"><context context-type="linenumber">67</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg128" approved="yes">
+        <source xml:space="preserve">Layer</source>
+        <target xml:space="preserve">Layer</target>
+        <context-group purpose="location"><context context-type="linenumber">77</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg129" approved="yes">
+        <source xml:space="preserve">Color</source>
+        <target xml:space="preserve">Farbe</target>
+        <context-group purpose="location"><context context-type="linenumber">79</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg130" approved="yes">
+        <source xml:space="preserve">Line type</source>
+        <target xml:space="preserve">Linientyp</target>
+        <context-group purpose="location"><context context-type="linenumber">80</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg131" approved="yes">
+        <source xml:space="preserve">Line thickness</source>
+        <target xml:space="preserve">Linienstärke</target>
+        <context-group purpose="location"><context context-type="linenumber">81</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg132" approved="yes">
+        <source xml:space="preserve">ID</source>
+        <target xml:space="preserve">ID</target>
+        <context-group purpose="location"><context context-type="linenumber">82</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg133" approved="yes">
+        <source xml:space="preserve">POINT</source>
+        <target xml:space="preserve">PUNKT</target>
+        <context-group purpose="location"><context context-type="linenumber">88</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg134" approved="yes">
+        <source xml:space="preserve">in point</source>
+        <target xml:space="preserve">im Punkt</target>
+        <context-group purpose="location"><context context-type="linenumber">89</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">218</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg135" approved="yes">
+        <source xml:space="preserve">LINE</source>
+        <target xml:space="preserve">LINIE</target>
+        <context-group purpose="location"><context context-type="linenumber">94</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg136" approved="yes">
+        <source xml:space="preserve">from point</source>
+        <target xml:space="preserve">von Punkt</target>
+        <context-group purpose="location"><context context-type="linenumber">99</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg137" approved="yes">
+        <source xml:space="preserve">to point</source>
+        <target xml:space="preserve">zu Punkt</target>
+        <context-group purpose="location"><context context-type="linenumber">102</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg138" approved="yes">
+        <source xml:space="preserve">length</source>
+        <target xml:space="preserve">Länge</target>
+        <context-group purpose="location"><context context-type="linenumber">107</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">131</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg139" approved="yes">
+        <source xml:space="preserve">Angle in XY plane</source>
+        <target xml:space="preserve">Winkel in XY Ebene</target>
+        <context-group purpose="location"><context context-type="linenumber">112</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg140" approved="yes">
+        <source xml:space="preserve">Inc.</source>
+        <target xml:space="preserve">Ausdehnung</target>
+        <context-group purpose="location"><context context-type="linenumber">113</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg141" approved="yes">
+        <source xml:space="preserve">ARC</source>
+        <target xml:space="preserve">KREISBOGEN</target>
+        <context-group purpose="location"><context context-type="linenumber">118</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg142" approved="yes">
+        <source xml:space="preserve">center point</source>
+        <target xml:space="preserve">Mittelpunkt</target>
+        <context-group purpose="location"><context context-type="linenumber">119</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">135</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">145</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg143" approved="yes">
+        <source xml:space="preserve">radius</source>
+        <target xml:space="preserve">Radius</target>
+        <context-group purpose="location"><context context-type="linenumber">125</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">139</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">222</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg144" approved="yes">
+        <source xml:space="preserve">initial angle</source>
+        <target xml:space="preserve">Startwinkel</target>
+        <context-group purpose="location"><context context-type="linenumber">126</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg145" approved="yes">
+        <source xml:space="preserve">final angle</source>
+        <target xml:space="preserve">Endwinkel</target>
+        <context-group purpose="location"><context context-type="linenumber">127</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg146" approved="yes">
+        <source xml:space="preserve">CIRCLE</source>
+        <target xml:space="preserve">KREIS</target>
+        <context-group purpose="location"><context context-type="linenumber">134</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg147" approved="yes">
+        <source xml:space="preserve">circumference</source>
+        <target xml:space="preserve">Umfang</target>
+        <context-group purpose="location"><context context-type="linenumber">140</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg148" approved="yes">
+        <source xml:space="preserve">area</source>
+        <target xml:space="preserve">Fläche</target>
+        <context-group purpose="location"><context context-type="linenumber">141</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg149" approved="yes">
+        <source xml:space="preserve">ELLIPSE</source>
+        <target xml:space="preserve">ELLIPSE</target>
+        <context-group purpose="location"><context context-type="linenumber">144</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg150" approved="yes">
+        <source xml:space="preserve">major axis</source>
+        <target xml:space="preserve">Hauptachse</target>
+        <context-group purpose="location"><context context-type="linenumber">148</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg151" approved="yes">
+        <source xml:space="preserve">CONSTRUCTIONLINE</source>
+        <target xml:space="preserve">HILFSLINIE</target>
+        <context-group purpose="location"><context context-type="linenumber">166</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg152" approved="yes">
+        <source xml:space="preserve">OVERLAYBOX</source>
+        <target xml:space="preserve">OVERLAYBOX</target>
+        <context-group purpose="location"><context context-type="linenumber">169</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg153" approved="yes">
+        <source xml:space="preserve">SOLID</source>
+        <target xml:space="preserve">KÖRPER</target>
+        <context-group purpose="location"><context context-type="linenumber">172</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg154" approved="yes">
+        <source xml:space="preserve">MTEXT</source>
+        <target xml:space="preserve">MTEXT</target>
+        <context-group purpose="location"><context context-type="linenumber">176</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg155" approved="yes">
+        <source xml:space="preserve">TEXT</source>
+        <target xml:space="preserve">TEXT</target>
+        <context-group purpose="location"><context context-type="linenumber">179</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg156" approved="yes">
+        <source xml:space="preserve">INSERT</source>
+        <target xml:space="preserve">BLOCK</target>
+        <context-group purpose="location"><context context-type="linenumber">182</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg157" approved="yes">
+        <source xml:space="preserve">Name</source>
+        <target xml:space="preserve">Name</target>
+        <context-group purpose="location"><context context-type="linenumber">185</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg158" approved="yes">
+        <source xml:space="preserve">Insertion point</source>
+        <target xml:space="preserve">Einfügepunkt</target>
+        <context-group purpose="location"><context context-type="linenumber">187</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg159" approved="yes">
+        <source xml:space="preserve">Scale</source>
+        <target xml:space="preserve">Skalierung</target>
+        <context-group purpose="location"><context context-type="linenumber">190</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg160" approved="yes">
+        <source xml:space="preserve">Rotation</source>
+        <target xml:space="preserve">Rotation</target>
+        <context-group purpose="location"><context context-type="linenumber">193</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg161" approved="yes">
+        <source xml:space="preserve">Columns/Rows</source>
+        <target xml:space="preserve">Spalten/Reihen</target>
+        <context-group purpose="location"><context context-type="linenumber">199</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg162" approved="yes">
+        <source xml:space="preserve">Column/Row Spacing</source>
+        <target xml:space="preserve">Spalten/Reihen Abstand</target>
+        <context-group purpose="location"><context context-type="linenumber">203</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg163" approved="yes">
+        <source xml:space="preserve">POLYLINE</source>
+        <target xml:space="preserve">POLYLINIE</target>
+        <context-group purpose="location"><context context-type="linenumber">210</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg164" approved="yes">
+        <source xml:space="preserve">Closed</source>
+        <target xml:space="preserve">Geschlossen</target>
+        <context-group purpose="location"><context context-type="linenumber">211</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg165" approved="yes">
+        <source xml:space="preserve">No</source>
+        <target xml:space="preserve">Nein</target>
+        <context-group purpose="location"><context context-type="linenumber">212</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg166" approved="yes">
+        <source xml:space="preserve">Yes</source>
+        <target xml:space="preserve">Ja</target>
+        <context-group purpose="location"><context context-type="linenumber">212</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg167" approved="yes">
+        <source xml:space="preserve">Vertices</source>
+        <target xml:space="preserve">Eckpunkte</target>
+        <context-group purpose="location"><context context-type="linenumber">213</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg168" approved="yes">
+        <source xml:space="preserve">IMAGE</source>
+        <target xml:space="preserve">BILD</target>
+        <context-group purpose="location"><context context-type="linenumber">227</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg169" approved="yes">
+        <source xml:space="preserve">SPLINE</source>
+        <target xml:space="preserve">SPLINE</target>
+        <context-group purpose="location"><context context-type="linenumber">230</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg170" approved="yes">
+        <source xml:space="preserve">SPLINEPOINTS</source>
+        <target xml:space="preserve">SPLINEPUNKTE</target>
+        <context-group purpose="location"><context context-type="linenumber">233</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg171" approved="yes">
+        <source xml:space="preserve">HATCH</source>
+        <target xml:space="preserve">SCHRAFFUR</target>
+        <context-group purpose="location"><context context-type="linenumber">236</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg172" approved="yes">
+        <source xml:space="preserve">DIMLEADER</source>
+        <target xml:space="preserve">BEMASSUNGSFÜHRUNG</target>
+        <context-group purpose="location"><context context-type="linenumber">239</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg173" approved="yes">
+        <source xml:space="preserve">DIMALIGNED</source>
+        <target xml:space="preserve">BEMASSUNGAUSGERICHTET</target>
+        <context-group purpose="location"><context context-type="linenumber">242</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg174" approved="yes">
+        <source xml:space="preserve">DIMLINEAR</source>
+        <target xml:space="preserve">BEMASSUNGLINEAR</target>
+        <context-group purpose="location"><context context-type="linenumber">245</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg175" approved="yes">
+        <source xml:space="preserve">DIMRADIAL</source>
+        <target xml:space="preserve">BEMASSUNGRADIAL</target>
+        <context-group purpose="location"><context context-type="linenumber">248</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg176" approved="yes">
+        <source xml:space="preserve">DIMDIAMETRIC</source>
+        <target xml:space="preserve">BEMASSUNGDURCHMESSER</target>
+        <context-group purpose="location"><context context-type="linenumber">251</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg177" approved="yes">
+        <source xml:space="preserve">DIMANGULAR</source>
+        <target xml:space="preserve">BEMASSUNGWINKEL</target>
+        <context-group purpose="location"><context context-type="linenumber">254</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg178" approved="yes">
+        <source xml:space="preserve">UNKNOWN</source>
+        <target xml:space="preserve">UNBEKANNT</target>
+        <context-group purpose="location"><context context-type="linenumber">257</context></context-group>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="lc_Listdlg">
+      <trans-unit id="_msg179" approved="yes">
+        <source xml:space="preserve">List entities</source>
+        <target xml:space="preserve">Objekte auflisten</target>
+        <context-group purpose="location"><context context-type="linenumber">274</context></context-group>
+      </trans-unit>
+    </group>
+  </body></file>
+  <file original="../sameprop/sameprop.cpp" datatype="cpp" source-language="en" target-language="de"><body>
+    <group restype="x-trolltech-linguist-context" resname="LC_SameProp">
+      <trans-unit id="_msg180" approved="yes">
+        <source xml:space="preserve">Same properties</source>
+        <target xml:space="preserve">Gleiche Eigenschaften</target>
+        <context-group purpose="location"><context context-type="linenumber">21</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">28</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg181" approved="yes">
+        <source xml:space="preserve">select original entity:</source>
+        <target xml:space="preserve">Originalobjekt auswählen:</target>
+        <context-group purpose="location"><context context-type="linenumber">41</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg182" approved="yes">
+        <source xml:space="preserve">select entities to change</source>
+        <target xml:space="preserve">Objekte zum Ändern auswählen:</target>
+        <context-group purpose="location"><context context-type="linenumber">43</context></context-group>
+      </trans-unit>
+    </group>
+  </body></file>
+  <file original="../sample/sample.cpp" datatype="cpp" source-language="en" target-language="de"><body>
+    <group restype="x-trolltech-linguist-context" resname="LC_Sample">
+      <trans-unit id="_msg183" approved="yes">
+        <source xml:space="preserve">Sample plugin</source>
+        <target xml:space="preserve">Beispiel Plugin</target>
+        <context-group purpose="location"><context context-type="linenumber">26</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">33</context></context-group>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="lc_Sampledlg">
+      <trans-unit id="_msg184" approved="yes">
+        <source xml:space="preserve">Draw line</source>
+        <target xml:space="preserve">Zeichne Linie</target>
+        <context-group purpose="location"><context context-type="linenumber">54</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg185" approved="yes">
+        <source xml:space="preserve">Start X:</source>
+        <target xml:space="preserve">Anfang X:</target>
+        <context-group purpose="location"><context context-type="linenumber">60</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg186" approved="yes">
+        <source xml:space="preserve">Start Y:</source>
+        <target xml:space="preserve">Anfang Y:</target>
+        <context-group purpose="location"><context context-type="linenumber">66</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg187" approved="yes">
+        <source xml:space="preserve">End X:</source>
+        <target xml:space="preserve">Ende X:</target>
+        <context-group purpose="location"><context context-type="linenumber">72</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg188" approved="yes">
+        <source xml:space="preserve">End Y:</source>
+        <target xml:space="preserve">Ende Y:</target>
+        <context-group purpose="location"><context context-type="linenumber">78</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg189" approved="yes">
+        <source xml:space="preserve">Accept</source>
+        <target xml:space="preserve">Übernehmen</target>
+        <context-group purpose="location"><context context-type="linenumber">86</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg190" approved="yes">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve">Abbrechen</target>
+        <context-group purpose="location"><context context-type="linenumber">91</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg191" approved="yes">
+        <source xml:space="preserve">Start X is empty</source>
+        <target xml:space="preserve">Anfang X ist leer</target>
+        <context-group purpose="location"><context context-type="linenumber">107</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg192" approved="yes">
+        <source xml:space="preserve">Start Y is empty</source>
+        <target xml:space="preserve">Anfang Y ist leer</target>
+        <context-group purpose="location"><context context-type="linenumber">108</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg193" approved="yes">
+        <source xml:space="preserve">End X is empty</source>
+        <target xml:space="preserve">Ende X ist leer</target>
+        <context-group purpose="location"><context context-type="linenumber">109</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg194" approved="yes">
+        <source xml:space="preserve">End Y is empty</source>
+        <target xml:space="preserve">Ende Y ist leer</target>
+        <context-group purpose="location"><context context-type="linenumber">110</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg195" approved="yes">
+        <source xml:space="preserve">Sample plugin</source>
+        <target xml:space="preserve">Beispiel Plugin</target>
+        <context-group purpose="location"><context context-type="linenumber">132</context></context-group>
+      </trans-unit>
+    </group>
+  </body></file>
+  <file original="../picfile/picfile.cpp" datatype="cpp" source-language="en" target-language="de"><body>
+    <group restype="x-trolltech-linguist-context" resname="PicFile">
+      <trans-unit id="_msg196" approved="yes">
+        <source xml:space="preserve">Read PIC file</source>
+        <target xml:space="preserve">PIC Datei einlesen</target>
+        <context-group purpose="location"><context context-type="linenumber">36</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg197" approved="yes">
+        <source xml:space="preserve">import PIC file</source>
+        <target xml:space="preserve">PIC Datei importieren</target>
+        <context-group purpose="location"><context context-type="linenumber">42</context></context-group>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="picPunto">
+      <trans-unit id="_msg198" approved="yes">
+        <source xml:space="preserve">File...</source>
+        <target xml:space="preserve">Datei...</target>
+        <context-group purpose="location"><context context-type="linenumber">65</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg199" approved="yes">
+        <source xml:space="preserve">Scale:</source>
+        <target xml:space="preserve">Skalierung:</target>
+        <context-group purpose="location"><context context-type="linenumber">75</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg200" approved="yes">
+        <source xml:space="preserve">Accept</source>
+        <target xml:space="preserve">Übernehmen</target>
+        <context-group purpose="location"><context context-type="linenumber">79</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg201" approved="yes">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve">Abbrechen</target>
+        <context-group purpose="location"><context context-type="linenumber">83</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg202" approved="yes">
+        <source xml:space="preserve">Select file</source>
+        <target xml:space="preserve">Datei auswählen</target>
+        <context-group purpose="location"><context context-type="linenumber">111</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg203" approved="yes">
+        <source xml:space="preserve">Scale Factor is empty or invalid</source>
+        <target xml:space="preserve">Skalierungsfaktor ist leer oder ungültig</target>
+        <context-group purpose="location"><context context-type="linenumber">119</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg204" approved="yes">
+        <source xml:space="preserve">The file %1 not exist</source>
+        <target xml:space="preserve">Die Datei %1 existiert nicht</target>
+        <context-group purpose="location"><context context-type="linenumber">132</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg205" approved="yes">
+        <source xml:space="preserve">Can&apos;t open the file %1</source>
+        <target xml:space="preserve">Kann Datei %1 nicht öffnen</target>
+        <context-group purpose="location"><context context-type="linenumber">137</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg206" approved="yes">
+        <source xml:space="preserve">%1 objects imported</source>
+        <target xml:space="preserve">%1 Objekte importiert</target>
+        <context-group purpose="location"><context context-type="linenumber">144</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg207" approved="yes">
+        <source xml:space="preserve">picPunto drawLine: first point is empty %1</source>
+        <target xml:space="preserve">PIC Import: Erster Punkt ist leer %1</target>
+        <context-group purpose="location"><context context-type="linenumber">166</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg208" approved="yes">
+        <source xml:space="preserve">picPunto drawLine: next point is empty %1</source>
+        <target xml:space="preserve">PIC Import: Endpunkt ist leer %1</target>
+        <context-group purpose="location"><context context-type="linenumber">179</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg209" approved="yes">
+        <source xml:space="preserve">format error in %1</source>
+        <target xml:space="preserve">Formatfehler in %1</target>
+        <context-group purpose="location"><context context-type="linenumber">258</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">267</context></context-group>
+      </trans-unit>
+    </group>
+  </body></file>
+  <file original="../divide/divide.cpp" datatype="cpp" source-language="en" target-language="de"><body>
+    <group restype="x-trolltech-linguist-context" resname="divide">
+      <trans-unit id="_msg210">
+        <source xml:space="preserve">Divide</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">34</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">41</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg211">
+        <source xml:space="preserve">Select a line, circle or arc and press return</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">55</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg212">
+        <source xml:space="preserve">Error</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">66</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg213">
+        <source xml:space="preserve">n</source>
+        <target xml:space="preserve" state="needs-review-translation">n</target>
+        <context-group purpose="location"><context context-type="linenumber">99</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg214">
+        <source xml:space="preserve">Empty Entity</source>
+        <target xml:space="preserve" state="needs-review-translation">Leeres Objekt</target>
+        <context-group purpose="location"><context context-type="linenumber">439</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg215">
+        <source xml:space="preserve">X</source>
+        <target xml:space="preserve" state="needs-review-translation">X</target>
+        <context-group purpose="location"><context context-type="linenumber">447</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg216">
+        <source xml:space="preserve">Y</source>
+        <target xml:space="preserve" state="needs-review-translation">Y</target>
+        <context-group purpose="location"><context context-type="linenumber">447</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg217">
+        <source xml:space="preserve">Layer</source>
+        <target xml:space="preserve" state="needs-review-translation">Layer</target>
+        <context-group purpose="location"><context context-type="linenumber">455</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg218">
+        <source xml:space="preserve">Color</source>
+        <target xml:space="preserve" state="needs-review-translation">Farbe</target>
+        <context-group purpose="location"><context context-type="linenumber">457</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg219">
+        <source xml:space="preserve">Line type</source>
+        <target xml:space="preserve" state="needs-review-translation">Linientyp</target>
+        <context-group purpose="location"><context context-type="linenumber">458</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg220">
+        <source xml:space="preserve">Line thickness</source>
+        <target xml:space="preserve" state="needs-review-translation">Linienstärke</target>
+        <context-group purpose="location"><context context-type="linenumber">460</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg221">
+        <source xml:space="preserve">ID</source>
+        <target xml:space="preserve" state="needs-review-translation">ID</target>
+        <context-group purpose="location"><context context-type="linenumber">462</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg222">
+        <source xml:space="preserve">LINE</source>
+        <target xml:space="preserve" state="needs-review-translation">LINIE</target>
+        <context-group purpose="location"><context context-type="linenumber">469</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg223">
+        <source xml:space="preserve">from point</source>
+        <target xml:space="preserve" state="needs-review-translation">von Punkt</target>
+        <context-group purpose="location"><context context-type="linenumber">474</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg224">
+        <source xml:space="preserve">to point</source>
+        <target xml:space="preserve" state="needs-review-translation">zu Punkt</target>
+        <context-group purpose="location"><context context-type="linenumber">477</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg225">
+        <source xml:space="preserve">length</source>
+        <target xml:space="preserve" state="needs-review-translation">Länge</target>
+        <context-group purpose="location"><context context-type="linenumber">482</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">509</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg226">
+        <source xml:space="preserve">Angle in XY plane</source>
+        <target xml:space="preserve" state="needs-review-translation">Winkel in XY Ebene</target>
+        <context-group purpose="location"><context context-type="linenumber">487</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg227">
+        <source xml:space="preserve">Inc.</source>
+        <target xml:space="preserve" state="needs-review-translation">Ausdehnung</target>
+        <context-group purpose="location"><context context-type="linenumber">489</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg228">
+        <source xml:space="preserve">ARC</source>
+        <target xml:space="preserve" state="needs-review-translation">KREISBOGEN</target>
+        <context-group purpose="location"><context context-type="linenumber">494</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg229">
+        <source xml:space="preserve">center point</source>
+        <target xml:space="preserve" state="needs-review-translation">Mittelpunkt</target>
+        <context-group purpose="location"><context context-type="linenumber">495</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">514</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg230">
+        <source xml:space="preserve">radius</source>
+        <target xml:space="preserve" state="needs-review-translation">Radius</target>
+        <context-group purpose="location"><context context-type="linenumber">501</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">518</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">540</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg231">
+        <source xml:space="preserve">initial angle</source>
+        <target xml:space="preserve" state="needs-review-translation">Startwinkel</target>
+        <context-group purpose="location"><context context-type="linenumber">502</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg232">
+        <source xml:space="preserve">final angle</source>
+        <target xml:space="preserve" state="needs-review-translation">Endwinkel</target>
+        <context-group purpose="location"><context context-type="linenumber">504</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg233">
+        <source xml:space="preserve">CIRCLE</source>
+        <target xml:space="preserve" state="needs-review-translation">KREIS</target>
+        <context-group purpose="location"><context context-type="linenumber">513</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg234">
+        <source xml:space="preserve">circumference</source>
+        <target xml:space="preserve" state="needs-review-translation">Umfang</target>
+        <context-group purpose="location"><context context-type="linenumber">519</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg235">
+        <source xml:space="preserve">area</source>
+        <target xml:space="preserve" state="needs-review-translation">Fläche</target>
+        <context-group purpose="location"><context context-type="linenumber">521</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg236">
+        <source xml:space="preserve">POLYLINE</source>
+        <target xml:space="preserve" state="needs-review-translation">POLYLINIE</target>
+        <context-group purpose="location"><context context-type="linenumber">525</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg237">
+        <source xml:space="preserve">Closed</source>
+        <target xml:space="preserve" state="needs-review-translation">Geschlossen</target>
+        <context-group purpose="location"><context context-type="linenumber">526</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg238">
+        <source xml:space="preserve">No</source>
+        <target xml:space="preserve" state="needs-review-translation">Nein</target>
+        <context-group purpose="location"><context context-type="linenumber">528</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg239">
+        <source xml:space="preserve">Yes</source>
+        <target xml:space="preserve" state="needs-review-translation">Ja</target>
+        <context-group purpose="location"><context context-type="linenumber">528</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg240">
+        <source xml:space="preserve">Vertices</source>
+        <target xml:space="preserve" state="needs-review-translation">Eckpunkte</target>
+        <context-group purpose="location"><context context-type="linenumber">529</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg241">
+        <source xml:space="preserve">in point</source>
+        <target xml:space="preserve" state="needs-review-translation">im Punkt</target>
+        <context-group purpose="location"><context context-type="linenumber">534</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg242">
+        <source xml:space="preserve">MUST be a line, circle or arc</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">550</context></context-group>
+      </trans-unit>
+    </group>
+  </body></file>
+  <file original="../divide/dividedlg.cpp" datatype="cpp" source-language="en" target-language="de"><body>
+    <group restype="x-trolltech-linguist-context" resname="dividedlg">
+      <trans-unit id="_msg243">
+        <source xml:space="preserve">OK</source>
+        <target xml:space="preserve"></target>
+        <context-group purpose="location"><context context-type="linenumber">71</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg244">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve" state="needs-review-translation">Abbrechen</target>
+        <context-group purpose="location"><context context-type="linenumber">72</context></context-group>
+      </trans-unit>
+    </group>
+  </body></file>
+  <file original="" datatype="plaintext" source-language="en" target-language="de"><body>
+    <group restype="x-trolltech-linguist-context" resname="lc_Geardlg">
+      <trans-unit id="_msg245" translate="no" approved="yes">
+        <source xml:space="preserve">Draw a gear</source>
+        <target xml:space="preserve">Ein Zahnrad erstellen</target>
+      </trans-unit>
+      <trans-unit id="_msg246" translate="no" approved="yes">
+        <source xml:space="preserve">Circular pitch</source>
+        <target xml:space="preserve">Teilkreisdurchmesser</target>
+      </trans-unit>
+      <trans-unit id="_msg247" translate="no" approved="yes">
+        <source xml:space="preserve">Addendum</source>
+        <target xml:space="preserve">Zahnkopfhöhe</target>
+      </trans-unit>
+      <trans-unit id="_msg248" translate="no" approved="yes">
+        <source xml:space="preserve">Dedendum</source>
+        <target xml:space="preserve">Zahnfusshöhe</target>
+      </trans-unit>
+      <trans-unit id="_msg249" translate="no" approved="yes">
+        <source xml:space="preserve">Type</source>
+        <target xml:space="preserve">Typ</target>
+      </trans-unit>
+      <trans-unit id="_msg250" translate="no" approved="yes">
+        <source xml:space="preserve">Spur</source>
+        <target xml:space="preserve">Stirnrad</target>
+      </trans-unit>
+      <trans-unit id="_msg251" translate="no" approved="yes">
+        <source xml:space="preserve">Ring</source>
+        <target xml:space="preserve">Hohlrad</target>
+      </trans-unit>
+    </group>
+  </body></file>
+  <file original="../plotequation/plot.cpp" datatype="cpp" source-language="en" target-language="de"><body>
+    <group restype="x-trolltech-linguist-context" resname="plot">
+      <trans-unit id="_msg252" approved="yes">
+        <source xml:space="preserve">Plot plugin</source>
+        <target xml:space="preserve">Plot Plugin</target>
+        <context-group purpose="location"><context context-type="linenumber">30</context></context-group>
+        <context-group purpose="location"><context context-type="linenumber">37</context></context-group>
+      </trans-unit>
+    </group>
+  </body></file>
+  <file original="../plotequation/plotdialog.cpp" datatype="cpp" source-language="en" target-language="de"><body>
+    <group restype="x-trolltech-linguist-context" resname="plotDialog">
+      <trans-unit id="_msg253" approved="yes">
+        <source xml:space="preserve">Plot equation</source>
+        <target xml:space="preserve">Gleichung plotten</target>
+        <context-group purpose="location"><context context-type="linenumber">15</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg254" approved="yes">
+        <source xml:space="preserve">This plugin allows you to plot mathematical equations.
+If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
+You can use pi when you need the value of pi (i.e. (3*pi)).
+Use t or x in your equation as a variable/parameter.
+</source>
+        <target xml:space="preserve">Dieses Plugin ermöglicht es mathematische Gleichungen zu plotten.
+Wenn man nicht die parametrische Form verwenden möchte, lässt man einfach &quot;Gleichung 2&quot; weg.
+Man kann pi verwenden, wenn der Wert von Pi (d. h. (3*pi)) benötigt wird.
+Als Variable/Parameter der Gleichung kann t oder x verwendet werden.
+</target>
+        <context-group purpose="location"><context context-type="linenumber">18</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg255" approved="yes">
+        <source xml:space="preserve">Equation 1:</source>
+        <target xml:space="preserve">Gleichung 1:</target>
+        <context-group purpose="location"><context context-type="linenumber">22</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg256" approved="yes">
+        <source xml:space="preserve">Equation 2:</source>
+        <target xml:space="preserve">Gleichung 2:</target>
+        <context-group purpose="location"><context context-type="linenumber">23</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg257" approved="yes">
+        <source xml:space="preserve">start value:</source>
+        <target xml:space="preserve">Anfangswert:</target>
+        <context-group purpose="location"><context context-type="linenumber">26</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg258" approved="yes">
+        <source xml:space="preserve">end value:</source>
+        <target xml:space="preserve">Endwert:</target>
+        <context-group purpose="location"><context context-type="linenumber">27</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg259" approved="yes">
+        <source xml:space="preserve">step size:</source>
+        <target xml:space="preserve">Schrittweite:</target>
+        <context-group purpose="location"><context context-type="linenumber">28</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg260" approved="yes">
+        <source xml:space="preserve">Draw</source>
+        <target xml:space="preserve">Zeichnen</target>
+        <context-group purpose="location"><context context-type="linenumber">32</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg261" approved="yes">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve">Abbrechen</target>
+        <context-group purpose="location"><context context-type="linenumber">33</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg262" approved="yes">
+        <source xml:space="preserve">Line Segments</source>
+        <target xml:space="preserve">Liniensegmente</target>
+        <context-group purpose="location"><context context-type="linenumber">59</context></context-group>
+        <context-group><context context-type="x-gettext-msgctxt">Plot Equation to generate RS_Line segments</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg263" approved="yes">
+        <source xml:space="preserve">Polyline</source>
+        <target xml:space="preserve">Polylinie</target>
+        <context-group purpose="location"><context context-type="linenumber">60</context></context-group>
+        <context-group><context context-type="x-gettext-msgctxt">Plot Equation to generate RS_Polyline</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg264" approved="yes">
+        <source xml:space="preserve">SplinePoints</source>
+        <target xml:space="preserve">Splinepunkte</target>
+        <context-group purpose="location"><context context-type="linenumber">61</context></context-group>
+        <context-group><context context-type="x-gettext-msgctxt">Plot Equation to generate 2nd spline by LC_SplinePoints</context></context-group>
+      </trans-unit>
+    </group>
+  </body></file>
+</xliff>

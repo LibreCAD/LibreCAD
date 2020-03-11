@@ -24,22 +24,22 @@
        <widget class="QComboBox" name="device_combobox">
         <item>
          <property name="text">
-          <string notr="true">Mouse</string>
+          <string>Mouse</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string notr="true">Tablet</string>
+          <string>Tablet</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string notr="true">Trackpad</string>
+          <string>Trackpad</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string notr="true">Touchscreen</string>
+          <string>Touchscreen</string>
          </property>
         </item>
        </widget>

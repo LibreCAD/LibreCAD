@@ -89,6 +89,15 @@ public:
     static double dpiToScale(double dpi, RS2::Unit unit);
     static double scaleToDpi(double scale, RS2::Unit unit);
 
+	static QString snapIndicatorLineTypeToString(RS2::SnapIndicatorLineType t);
+	static RS2::SnapIndicatorLineType stringToSnapIndicatorLineType(const QString &s);
+
+	static QString snapIndicatorShapeTypeToString(RS2::SnapIndicatorShapeType t);
+	static RS2::SnapIndicatorShapeType stringToSnapIndicatorShapeType(const QString &s);
+
+	static QString inputDeviceTypeToString(RS2::InputDeviceType t);
+	static RS2::InputDeviceType stringToInputDeviceType(const QString& s);
+
 };
 
 

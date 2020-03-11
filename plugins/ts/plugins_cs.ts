@@ -11,11 +11,376 @@
     </message>
 </context>
 <context>
+    <name>dibPunto</name>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="229"/>
+        <source>Read ascii points</source>
+        <translation>Načíst body ASCII</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="235"/>
+        <source>File...</source>
+        <translation>Soubor...</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="242"/>
+        <source>Format:</source>
+        <translation>Formát:</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="244"/>
+        <source>Space Separator</source>
+        <translation>Oddělovač mezera</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="244"/>
+        <source>Tab Separator</source>
+        <translation>Oddělovač tabulátor</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="244"/>
+        <source>Comma Separator</source>
+        <translation>Oddělovač čárka</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="244"/>
+        <source>Space in Columns</source>
+        <translation>Mezery ve sloupcích</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="244"/>
+        <source>*.odb for Psion 2</source>
+        <translation>*.odb pro Psion 2</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="246"/>
+        <source>Connect points</source>
+        <translation>Spojit body</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="254"/>
+        <source>2D Point</source>
+        <translation>2D bod</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="254"/>
+        <source>Draw 2D Point</source>
+        <translation>Vykreslit 2D body</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="255"/>
+        <source>3D Point</source>
+        <translation>3D bod</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="255"/>
+        <source>Draw 3D Point</source>
+        <translation>Vykreslit 3D body</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="256"/>
+        <source>Point Number</source>
+        <translation>Číslo bodu</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="256"/>
+        <source>Draw point number</source>
+        <translation>Vykreslit čísla bodů</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="257"/>
+        <source>Point Elevation</source>
+        <translation>Nadmořská výška bodu</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="257"/>
+        <source>Draw point elevation</source>
+        <translation>Vykreslit nadmořské výšky bodů</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="258"/>
+        <source>Point Code</source>
+        <translation>Kód bodu</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="258"/>
+        <source>Draw point code</source>
+        <translation>Vykreslit kódy bodů</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="272"/>
+        <source>Accept</source>
+        <translation>Přijmout</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="277"/>
+        <source>Cancel</source>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="307"/>
+        <source>Select file</source>
+        <translation>Vyberte soubor</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="314"/>
+        <source>Point 2D layer is empty</source>
+        <translation>Hladina pro 2D body není zadána</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="317"/>
+        <source>Point 3D layer is empty</source>
+        <translation>Hladina pro 3D body není zadána</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="320"/>
+        <source>Point elevation layer is empty</source>
+        <translation>Hladina pro nadmořské výšky bodů není zadána</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="321"/>
+        <source>Point elevation height is empty</source>
+        <translation>Šířka pro nadmořské výšky bodů není zadána</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="322"/>
+        <source>Point elevation separation is empty</source>
+        <translation>Mezera pro nadmořské výšky bodů není zadána</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="325"/>
+        <source>Point number layer is empty</source>
+        <translation>Hladina pro čísla bodů není zadána</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="326"/>
+        <source>Point number height is empty</source>
+        <translation>Šířka pro čísla bodů není zadána</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="327"/>
+        <source>Point number separation is empty</source>
+        <translation>Mezera pro čísla bodů není zadána</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="330"/>
+        <source>Point code layer is empty</source>
+        <translation>Hladina pro kódy bodů není zadána</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="331"/>
+        <source>Point code height is empty</source>
+        <translation>Šířka pro kódy bodů není zadána</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="332"/>
+        <source>Point code separation is empty</source>
+        <translation>Mezera pro kódy bodů není zadána</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="360"/>
+        <source>The file %1 not exist</source>
+        <translation>Soubor %1 neexistuje</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="365"/>
+        <source>Can&apos;t open the file %1</source>
+        <translation>Nelze otevřít soubor %1</translation>
+    </message>
+</context>
+<context>
+    <name>pointBox</name>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="175"/>
+        <source>Layer:</source>
+        <translation>Hladina:</translation>
+    </message>
+</context>
+<context>
+    <name>textBox</name>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="207"/>
+        <source>Style:</source>
+        <translation>Styl:</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="208"/>
+        <source>Height:</source>
+        <translation>Šířka:</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="209"/>
+        <source>Separation</source>
+        <translation>Mezera:</translation>
+    </message>
+</context>
+<context>
     <name>ImportShp</name>
     <message>
         <location filename="../importshp/importshp.cpp" line="40"/>
         <source>Import ESRI Shapefile</source>
         <translation>Importovat ESRI shapefile</translation>
+    </message>
+</context>
+<context>
+    <name>dibSHP</name>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="59"/>
+        <source>File...</source>
+        <translation>Soubor...</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="67"/>
+        <source>File type:</source>
+        <translation>Typ souboru:</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="75"/>
+        <source>Layer</source>
+        <translation>Hladina</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="56"/>
+        <source>Import ESRI Shapefile</source>
+        <translation>Importovat ESRI shapefile</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="68"/>
+        <location filename="../importshp/importshp.cpp" line="266"/>
+        <source>Unknown</source>
+        <translation>Neznámý</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="76"/>
+        <location filename="../importshp/importshp.cpp" line="89"/>
+        <location filename="../importshp/importshp.cpp" line="102"/>
+        <location filename="../importshp/importshp.cpp" line="115"/>
+        <source>Current</source>
+        <translation>Aktuální</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="77"/>
+        <location filename="../importshp/importshp.cpp" line="90"/>
+        <location filename="../importshp/importshp.cpp" line="103"/>
+        <location filename="../importshp/importshp.cpp" line="116"/>
+        <source>From data:</source>
+        <translation>Z dat:</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="88"/>
+        <source>Color</source>
+        <translation>Barva</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="101"/>
+        <source>Line type</source>
+        <translation>Druh čáry</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="114"/>
+        <source>Width</source>
+        <translation>Šířka</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="127"/>
+        <location filename="../importshp/importshp.cpp" line="213"/>
+        <source>Point</source>
+        <translation>Bod</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="128"/>
+        <source>as Point</source>
+        <translation>Jako bod</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="129"/>
+        <source>as Label:</source>
+        <translation>Jako popisek:</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="141"/>
+        <source>Accept</source>
+        <translation>Přijmout</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="142"/>
+        <source>Cancel</source>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="167"/>
+        <source>Select file</source>
+        <translation>Vyberte soubor</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="217"/>
+        <source>Point+Measure</source>
+        <translation>Bod+měřítko</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="221"/>
+        <source>3D Point</source>
+        <translation>3D bod</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="225"/>
+        <source>Multi Point</source>
+        <translation>Více bodů</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="229"/>
+        <source>Multi Point+Measure</source>
+        <translation>Více bodů+měřítko</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="233"/>
+        <source>3D Multi Point</source>
+        <translation>Více 3D bodů</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="237"/>
+        <source>Arc</source>
+        <translation>Oblouk</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="241"/>
+        <source>Arc+Measure</source>
+        <translation>Oblouk+měřítko</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="245"/>
+        <source>3D Arc</source>
+        <translation>3D oblouk</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="249"/>
+        <source>Polygon</source>
+        <translation>Mnohoúhelník</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="253"/>
+        <source>Polygon+Measure</source>
+        <translation>Mnohoúhleník+měřítko</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="257"/>
+        <source>3D Polygon</source>
+        <translation>3D mnohoúhelník</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="261"/>
+        <source>Multipatch</source>
+        <translation>Multipatch</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="281"/>
+        <source>The file %1 not have extension .shp</source>
+        <translation>Soubor %1 nemá příponu .shp</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="286"/>
+        <source>The file %1 not exist</source>
+        <translation>Soubor %1 neexistuje</translation>
     </message>
 </context>
 <context>
@@ -58,6 +423,114 @@
         <location filename="../gear/gear.cpp" line="40"/>
         <source>Gear plugin</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>lc_Geardlg</name>
+    <message>
+        <location filename="../gear/gear.cpp" line="122"/>
+        <source>Number of teeth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="124"/>
+        <source>Pressure angle (deg)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="121"/>
+        <source>Rotation angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="123"/>
+        <source>Modulus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="125"/>
+        <source>Addendum (rel. to modulus)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="126"/>
+        <source>Dedendum (rel. to modulus)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="127"/>
+        <source>Number of segments to draw (dedendum)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="128"/>
+        <source>Number of segments to draw (addendum)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="129"/>
+        <source>Draw all teeth?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="130"/>
+        <source>Draw symmetric face?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="132"/>
+        <source>Use layers?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="133"/>
+        <source>Draw addendum circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="134"/>
+        <source>Draw pitch circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="135"/>
+        <source>Draw base circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="136"/>
+        <source>Draw root circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="137"/>
+        <source>Draw pressure line?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="138"/>
+        <source>Draw pressure limits?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="140"/>
+        <source>Calculate interference?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="141"/>
+        <source>Number of segments to draw (interference)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="143"/>
+        <source>Accept</source>
+        <translation type="unfinished">Přijmout</translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="144"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušit</translation>
     </message>
 </context>
 <context>
@@ -295,10 +768,6 @@
         <translation>Uzly</translation>
     </message>
     <message>
-        <source>curvature</source>
-        <translation type="obsolete">křivost</translation>
-    </message>
-    <message>
         <location filename="../list/list.cpp" line="227"/>
         <source>IMAGE</source>
         <translation>OBRÁZEK</translation>
@@ -353,6 +822,31 @@
         <source>UNKNOWN</source>
         <translation>NEZNÁMÉ</translation>
     </message>
+    <message>
+        <source>curvature</source>
+        <translation type="obsolete">křivost</translation>
+    </message>
+</context>
+<context>
+    <name>lc_Listdlg</name>
+    <message>
+        <location filename="../list/list.cpp" line="274"/>
+        <source>List entities</source>
+        <translation>Seznam prvků</translation>
+    </message>
+</context>
+<context>
+    <name>plot</name>
+    <message>
+        <source>Draw</source>
+        <translation type="obsolete">Vykreslit</translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plot.cpp" line="30"/>
+        <location filename="../plotequation/plot.cpp" line="37"/>
+        <source>Plot plugin</source>
+        <translation>Zásuvný modul Vykreslit</translation>
+    </message>
 </context>
 <context>
     <name>LC_SameProp</name>
@@ -383,6 +877,69 @@
     </message>
 </context>
 <context>
+    <name>lc_Sampledlg</name>
+    <message>
+        <location filename="../sample/sample.cpp" line="54"/>
+        <source>Draw line</source>
+        <translation>Kreslit úsečku</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="60"/>
+        <source>Start X:</source>
+        <translation>Počátek X:</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="66"/>
+        <source>Start Y:</source>
+        <translation>Počátek Y:</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="72"/>
+        <source>End X:</source>
+        <translation>Konec X:</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="78"/>
+        <source>End Y:</source>
+        <translation>Konec Y:</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="86"/>
+        <source>Accept</source>
+        <translation>Přijmout</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="91"/>
+        <source>Cancel</source>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="107"/>
+        <source>Start X is empty</source>
+        <translation>Počátek X není zadán</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="108"/>
+        <source>Start Y is empty</source>
+        <translation>Počátek Y není zadán</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="109"/>
+        <source>End X is empty</source>
+        <translation>Konec X není zadán</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="110"/>
+        <source>End Y is empty</source>
+        <translation>Konec Y není zadán</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="132"/>
+        <source>Sample plugin</source>
+        <translation>Ukázkový zásuvný modul</translation>
+    </message>
+</context>
+<context>
     <name>PicFile</name>
     <message>
         <location filename="../picfile/picfile.cpp" line="36"/>
@@ -396,342 +953,67 @@
     </message>
 </context>
 <context>
-    <name>dibPunto</name>
+    <name>picPunto</name>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="229"/>
-        <source>Read ascii points</source>
-        <translation>Načíst body ASCII</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="235"/>
+        <location filename="../picfile/picfile.cpp" line="65"/>
         <source>File...</source>
-        <translation>Soubor...</translation>
+        <translation type="unfinished">Soubor...</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="242"/>
-        <source>Format:</source>
-        <translation>Formát:</translation>
+        <location filename="../picfile/picfile.cpp" line="75"/>
+        <source>Scale:</source>
+        <translation>Měřítko:</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="244"/>
-        <source>Space Separator</source>
-        <translation>Oddělovač mezera</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="244"/>
-        <source>Tab Separator</source>
-        <translation>Oddělovač tabulátor</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="244"/>
-        <source>Comma Separator</source>
-        <translation>Oddělovač čárka</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="244"/>
-        <source>Space in Columns</source>
-        <translation>Mezery ve sloupcích</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="244"/>
-        <source>*.odb for Psion 2</source>
-        <translation>*.odb pro Psion 2</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="246"/>
-        <source>Connect points</source>
-        <translation>Spojit body</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="254"/>
-        <source>2D Point</source>
-        <translation>2D bod</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="254"/>
-        <source>Draw 2D Point</source>
-        <translation>Vykreslit 2D body</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="255"/>
-        <source>3D Point</source>
-        <translation>3D bod</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="255"/>
-        <source>Draw 3D Point</source>
-        <translation>Vykreslit 3D body</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="256"/>
-        <source>Point Number</source>
-        <translation>Číslo bodu</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="256"/>
-        <source>Draw point number</source>
-        <translation>Vykreslit čísla bodů</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="257"/>
-        <source>Point Elevation</source>
-        <translation>Nadmořská výška bodu</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="257"/>
-        <source>Draw point elevation</source>
-        <translation>Vykreslit nadmořské výšky bodů</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="258"/>
-        <source>Point Code</source>
-        <translation>Kód bodu</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="258"/>
-        <source>Draw point code</source>
-        <translation>Vykreslit kódy bodů</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="272"/>
+        <location filename="../picfile/picfile.cpp" line="79"/>
         <source>Accept</source>
-        <translation>Přijmout</translation>
+        <translation type="unfinished">Přijmout</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="277"/>
+        <location filename="../picfile/picfile.cpp" line="83"/>
         <source>Cancel</source>
-        <translation>Zrušit</translation>
+        <translation type="unfinished">Zrušit</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="307"/>
+        <location filename="../picfile/picfile.cpp" line="111"/>
         <source>Select file</source>
-        <translation>Vyberte soubor</translation>
+        <translation type="unfinished">Vyberte soubor</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="314"/>
-        <source>Point 2D layer is empty</source>
-        <translation>Hladina pro 2D body není zadána</translation>
+        <location filename="../picfile/picfile.cpp" line="119"/>
+        <source>Scale Factor is empty or invalid</source>
+        <translation>Měřítko není zadáno nebo je neplatné</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="317"/>
-        <source>Point 3D layer is empty</source>
-        <translation>Hladina pro 3D body není zadána</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="320"/>
-        <source>Point elevation layer is empty</source>
-        <translation>Hladina pro nadmořské výšky bodů není zadána</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="321"/>
-        <source>Point elevation height is empty</source>
-        <translation>Šířka pro nadmořské výšky bodů není zadána</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="322"/>
-        <source>Point elevation separation is empty</source>
-        <translation>Mezera pro nadmořské výšky bodů není zadána</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="325"/>
-        <source>Point number layer is empty</source>
-        <translation>Hladina pro čísla bodů není zadána</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="326"/>
-        <source>Point number height is empty</source>
-        <translation>Šířka pro čísla bodů není zadána</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="327"/>
-        <source>Point number separation is empty</source>
-        <translation>Mezera pro čísla bodů není zadána</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="330"/>
-        <source>Point code layer is empty</source>
-        <translation>Hladina pro kódy bodů není zadána</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="331"/>
-        <source>Point code height is empty</source>
-        <translation>Šířka pro kódy bodů není zadána</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="332"/>
-        <source>Point code separation is empty</source>
-        <translation>Mezera pro kódy bodů není zadána</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="360"/>
+        <location filename="../picfile/picfile.cpp" line="132"/>
         <source>The file %1 not exist</source>
-        <translation>Soubor %1 neexistuje</translation>
+        <translation type="unfinished">Soubor %1 neexistuje</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="365"/>
+        <location filename="../picfile/picfile.cpp" line="137"/>
         <source>Can&apos;t open the file %1</source>
-        <translation>Nelze otevřít soubor %1</translation>
-    </message>
-</context>
-<context>
-    <name>dibSHP</name>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="59"/>
-        <source>File...</source>
-        <translation>Soubor...</translation>
+        <translation type="unfinished">Nelze otevřít soubor %1</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="67"/>
-        <source>File type:</source>
-        <translation>Typ souboru:</translation>
+        <location filename="../picfile/picfile.cpp" line="144"/>
+        <source>%1 objects imported</source>
+        <translation>importováno %1 objektů</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="75"/>
-        <source>Layer</source>
-        <translation>Hladina</translation>
+        <location filename="../picfile/picfile.cpp" line="166"/>
+        <source>picPunto drawLine: first point is empty %1</source>
+        <translation>picPunto drawLine: první bod nezadán %1</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="56"/>
-        <source>Import ESRI Shapefile</source>
-        <translation>Importovat ESRI shapefile</translation>
+        <location filename="../picfile/picfile.cpp" line="179"/>
+        <source>picPunto drawLine: next point is empty %1</source>
+        <translation>picPunto drawLine: následující bod nezadán %1</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="68"/>
-        <location filename="../importshp/importshp.cpp" line="266"/>
-        <source>Unknown</source>
-        <translation>Neznámý</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="76"/>
-        <location filename="../importshp/importshp.cpp" line="89"/>
-        <location filename="../importshp/importshp.cpp" line="102"/>
-        <location filename="../importshp/importshp.cpp" line="115"/>
-        <source>Current</source>
-        <translation>Aktuální</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="77"/>
-        <location filename="../importshp/importshp.cpp" line="90"/>
-        <location filename="../importshp/importshp.cpp" line="103"/>
-        <location filename="../importshp/importshp.cpp" line="116"/>
-        <source>From data:</source>
-        <translation>Z dat:</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="88"/>
-        <source>Color</source>
-        <translation>Barva</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="101"/>
-        <source>Line type</source>
-        <translation>Druh čáry</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="114"/>
-        <source>Width</source>
-        <translation>Šířka</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="127"/>
-        <location filename="../importshp/importshp.cpp" line="213"/>
-        <source>Point</source>
-        <translation>Bod</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="128"/>
-        <source>as Point</source>
-        <translation>Jako bod</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="129"/>
-        <source>as Label:</source>
-        <translation>Jako popisek:</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="141"/>
-        <source>Accept</source>
-        <translation>Přijmout</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="142"/>
-        <source>Cancel</source>
-        <translation>Zrušit</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="167"/>
-        <source>Select file</source>
-        <translation>Vyberte soubor</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="217"/>
-        <source>Point+Measure</source>
-        <translation>Bod+měřítko</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="221"/>
-        <source>3D Point</source>
-        <translation>3D bod</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="225"/>
-        <source>Multi Point</source>
-        <translation>Více bodů</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="229"/>
-        <source>Multi Point+Measure</source>
-        <translation>Více bodů+měřítko</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="233"/>
-        <source>3D Multi Point</source>
-        <translation>Více 3D bodů</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="237"/>
-        <source>Arc</source>
-        <translation>Oblouk</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="241"/>
-        <source>Arc+Measure</source>
-        <translation>Oblouk+měřítko</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="245"/>
-        <source>3D Arc</source>
-        <translation>3D oblouk</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="249"/>
-        <source>Polygon</source>
-        <translation>Mnohoúhelník</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="253"/>
-        <source>Polygon+Measure</source>
-        <translation>Mnohoúhleník+měřítko</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="257"/>
-        <source>3D Polygon</source>
-        <translation>3D mnohoúhelník</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="261"/>
-        <source>Multipatch</source>
-        <translation>Multipatch</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="281"/>
-        <source>The file %1 not have extension .shp</source>
-        <translation>Soubor %1 nemá příponu .shp</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="286"/>
-        <source>The file %1 not exist</source>
-        <translation>Soubor %1 neexistuje</translation>
+        <location filename="../picfile/picfile.cpp" line="258"/>
+        <location filename="../picfile/picfile.cpp" line="267"/>
+        <source>format error in %1</source>
+        <translation>chyba formátu u %1</translation>
     </message>
 </context>
 <context>
@@ -921,262 +1203,6 @@
     </message>
 </context>
 <context>
-    <name>lc_Geardlg</name>
-    <message>
-        <location filename="../gear/gear.cpp" line="122"/>
-        <source>Number of teeth</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="124"/>
-        <source>Pressure angle (deg)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="121"/>
-        <source>Rotation angle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="123"/>
-        <source>Modulus</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="125"/>
-        <source>Addendum (rel. to modulus)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="126"/>
-        <source>Dedendum (rel. to modulus)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="127"/>
-        <source>Number of segments to draw (dedendum)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="128"/>
-        <source>Number of segments to draw (addendum)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="129"/>
-        <source>Draw all teeth?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="130"/>
-        <source>Draw symmetric face?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="132"/>
-        <source>Use layers?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="133"/>
-        <source>Draw addendum circle?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="134"/>
-        <source>Draw pitch circle?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="135"/>
-        <source>Draw base circle?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="136"/>
-        <source>Draw root circle?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="137"/>
-        <source>Draw pressure line?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="138"/>
-        <source>Draw pressure limits?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="140"/>
-        <source>Calculate interference?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="141"/>
-        <source>Number of segments to draw (interference)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="143"/>
-        <source>Accept</source>
-        <translation type="unfinished">Přijmout</translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="144"/>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Listdlg</name>
-    <message>
-        <location filename="../list/list.cpp" line="274"/>
-        <source>List entities</source>
-        <translation>Seznam prvků</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Sampledlg</name>
-    <message>
-        <location filename="../sample/sample.cpp" line="54"/>
-        <source>Draw line</source>
-        <translation>Kreslit úsečku</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="60"/>
-        <source>Start X:</source>
-        <translation>Počátek X:</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="66"/>
-        <source>Start Y:</source>
-        <translation>Počátek Y:</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="72"/>
-        <source>End X:</source>
-        <translation>Konec X:</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="78"/>
-        <source>End Y:</source>
-        <translation>Konec Y:</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="86"/>
-        <source>Accept</source>
-        <translation>Přijmout</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="91"/>
-        <source>Cancel</source>
-        <translation>Zrušit</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="107"/>
-        <source>Start X is empty</source>
-        <translation>Počátek X není zadán</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="108"/>
-        <source>Start Y is empty</source>
-        <translation>Počátek Y není zadán</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="109"/>
-        <source>End X is empty</source>
-        <translation>Konec X není zadán</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="110"/>
-        <source>End Y is empty</source>
-        <translation>Konec Y není zadán</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="132"/>
-        <source>Sample plugin</source>
-        <translation>Ukázkový zásuvný modul</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="65"/>
-        <source>File...</source>
-        <translation type="unfinished">Soubor...</translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="75"/>
-        <source>Scale:</source>
-        <translation>Měřítko:</translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="79"/>
-        <source>Accept</source>
-        <translation type="unfinished">Přijmout</translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="83"/>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="111"/>
-        <source>Select file</source>
-        <translation type="unfinished">Vyberte soubor</translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="119"/>
-        <source>Scale Factor is empty or invalid</source>
-        <translation>Měřítko není zadáno nebo je neplatné</translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="132"/>
-        <source>The file %1 not exist</source>
-        <translation type="unfinished">Soubor %1 neexistuje</translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="137"/>
-        <source>Can&apos;t open the file %1</source>
-        <translation type="unfinished">Nelze otevřít soubor %1</translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="144"/>
-        <source>%1 objects imported</source>
-        <translation>importováno %1 objektů</translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="166"/>
-        <source>picPunto drawLine: first point is empty %1</source>
-        <translation>picPunto drawLine: první bod nezadán %1</translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="179"/>
-        <source>picPunto drawLine: next point is empty %1</source>
-        <translation>picPunto drawLine: následující bod nezadán %1</translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="258"/>
-        <location filename="../picfile/picfile.cpp" line="267"/>
-        <source>format error in %1</source>
-        <translation>chyba formátu u %1</translation>
-    </message>
-</context>
-<context>
-    <name>plot</name>
-    <message>
-        <location filename="../plotequation/plot.cpp" line="30"/>
-        <location filename="../plotequation/plot.cpp" line="37"/>
-        <source>Plot plugin</source>
-        <translation>Zásuvný modul Vykreslit</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="obsolete">Vykreslit</translation>
-    </message>
-</context>
-<context>
     <name>plotDialog</name>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
@@ -1248,32 +1274,6 @@ Jako proměnnou (parametr) rovnice použijte t nebo x.
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
         <translation>Body splajny</translation>
-    </message>
-</context>
-<context>
-    <name>pointBox</name>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="175"/>
-        <source>Layer:</source>
-        <translation>Hladina:</translation>
-    </message>
-</context>
-<context>
-    <name>textBox</name>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="207"/>
-        <source>Style:</source>
-        <translation>Styl:</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="208"/>
-        <source>Height:</source>
-        <translation>Šířka:</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="209"/>
-        <source>Separation</source>
-        <translation>Mezera:</translation>
     </message>
 </context>
 </TS>

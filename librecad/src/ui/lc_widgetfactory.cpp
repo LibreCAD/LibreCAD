@@ -862,12 +862,12 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
 
     // <[~ Widgets Menu ~]>
 
-    QMenu* widgets_menu = new QMenu("Widgets", menu_bar);
+    QMenu* widgets_menu = new QMenu(QObject::tr("Widgets"), menu_bar);
     widgets_menu->setTearOffEnabled(true);
 
     // <[~ Dock Areas Menu ~]>
 
-    QMenu* dockareas_menu = new QMenu("Dock Areas", widgets_menu);
+    QMenu* dockareas_menu = new QMenu(QObject::tr("Dock Areas"), widgets_menu);
 
     dockareas_menu->addAction(a_map["LeftDockAreaToggle"]);
     dockareas_menu->addAction(a_map["RightDockAreaToggle"]);

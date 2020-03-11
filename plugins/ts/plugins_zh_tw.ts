@@ -11,11 +11,376 @@
     </message>
 </context>
 <context>
+    <name>dibPunto</name>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="229"/>
+        <source>Read ascii points</source>
+        <translation>讀取ASCII點</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="235"/>
+        <source>File...</source>
+        <translation>文檔...</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="242"/>
+        <source>Format:</source>
+        <translation>格式：</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="244"/>
+        <source>Space Separator</source>
+        <translation>空格分隔符</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="244"/>
+        <source>Tab Separator</source>
+        <translation>Tab鍵分隔符</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="244"/>
+        <source>Comma Separator</source>
+        <translation>逗號分隔符</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="244"/>
+        <source>Space in Columns</source>
+        <translation>列包含空格</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="244"/>
+        <source>*.odb for Psion 2</source>
+        <translation> *.odb Psion 2 格式</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="246"/>
+        <source>Connect points</source>
+        <translation>連接點</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="254"/>
+        <source>2D Point</source>
+        <translation>2維點</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="254"/>
+        <source>Draw 2D Point</source>
+        <translation>繪製2維點</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="255"/>
+        <source>3D Point</source>
+        <translation>繪製3維點</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="255"/>
+        <source>Draw 3D Point</source>
+        <translation>點編號</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="256"/>
+        <source>Point Number</source>
+        <translation>點編號</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="256"/>
+        <source>Draw point number</source>
+        <translation>繪製點編號</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="257"/>
+        <source>Point Elevation</source>
+        <translation>點抬高</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="257"/>
+        <source>Draw point elevation</source>
+        <translation>繪製點抬高</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="258"/>
+        <source>Point Code</source>
+        <translation>點編碼</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="258"/>
+        <source>Draw point code</source>
+        <translation>繪製點編碼</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="272"/>
+        <source>Accept</source>
+        <translation>接受</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="277"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="307"/>
+        <source>Select file</source>
+        <translation>選擇文檔</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="314"/>
+        <source>Point 2D layer is empty</source>
+        <translation>點2D層為空</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="317"/>
+        <source>Point 3D layer is empty</source>
+        <translation>點3D層為空</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="320"/>
+        <source>Point elevation layer is empty</source>
+        <translation>點抬高層為空</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="321"/>
+        <source>Point elevation height is empty</source>
+        <translation>點抬高為空</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="322"/>
+        <source>Point elevation separation is empty</source>
+        <translation>點抬高分隔為空</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="325"/>
+        <source>Point number layer is empty</source>
+        <translation>點編號層為空</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="326"/>
+        <source>Point number height is empty</source>
+        <translation>點編號高度為空</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="327"/>
+        <source>Point number separation is empty</source>
+        <translation>點編號分隔為空</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="330"/>
+        <source>Point code layer is empty</source>
+        <translation>點代碼層為空</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="331"/>
+        <source>Point code height is empty</source>
+        <translation>點代碼高度為空</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="332"/>
+        <source>Point code separation is empty</source>
+        <translation>點代碼分隔為空</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="360"/>
+        <source>The file %1 not exist</source>
+        <translation>文檔%1不存在</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="365"/>
+        <source>Can&apos;t open the file %1</source>
+        <translation>無法打開文檔 %1</translation>
+    </message>
+</context>
+<context>
+    <name>pointBox</name>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="175"/>
+        <source>Layer:</source>
+        <translation>層:</translation>
+    </message>
+</context>
+<context>
+    <name>textBox</name>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="207"/>
+        <source>Style:</source>
+        <translation>類型:</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="208"/>
+        <source>Height:</source>
+        <translation>高度：</translation>
+    </message>
+    <message>
+        <location filename="../asciifile/asciifile.cpp" line="209"/>
+        <source>Separation</source>
+        <translation>分隔</translation>
+    </message>
+</context>
+<context>
     <name>ImportShp</name>
     <message>
         <location filename="../importshp/importshp.cpp" line="40"/>
         <source>Import ESRI Shapefile</source>
         <translation>導入ESRI外形文件</translation>
+    </message>
+</context>
+<context>
+    <name>dibSHP</name>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="59"/>
+        <source>File...</source>
+        <translation>文檔...</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="67"/>
+        <source>File type:</source>
+        <translation>文檔類型</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="75"/>
+        <source>Layer</source>
+        <translation>圖層</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="56"/>
+        <source>Import ESRI Shapefile</source>
+        <translation>導入ESRI形狀文檔</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="68"/>
+        <location filename="../importshp/importshp.cpp" line="266"/>
+        <source>Unknown</source>
+        <translation>未知</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="76"/>
+        <location filename="../importshp/importshp.cpp" line="89"/>
+        <location filename="../importshp/importshp.cpp" line="102"/>
+        <location filename="../importshp/importshp.cpp" line="115"/>
+        <source>Current</source>
+        <translation>當前</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="77"/>
+        <location filename="../importshp/importshp.cpp" line="90"/>
+        <location filename="../importshp/importshp.cpp" line="103"/>
+        <location filename="../importshp/importshp.cpp" line="116"/>
+        <source>From data:</source>
+        <translation>從數據：</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="88"/>
+        <source>Color</source>
+        <translation>顏色</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="101"/>
+        <source>Line type</source>
+        <translation>線條類型</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="114"/>
+        <source>Width</source>
+        <translation>寬度</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="127"/>
+        <location filename="../importshp/importshp.cpp" line="213"/>
+        <source>Point</source>
+        <translation>點</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="128"/>
+        <source>as Point</source>
+        <translation>為點</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="129"/>
+        <source>as Label:</source>
+        <translation>為標籤：</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="141"/>
+        <source>Accept</source>
+        <translation>接受</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="142"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="167"/>
+        <source>Select file</source>
+        <translation>選擇文檔</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="217"/>
+        <source>Point+Measure</source>
+        <translation>點和測量</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="221"/>
+        <source>3D Point</source>
+        <translation>三維點</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="225"/>
+        <source>Multi Point</source>
+        <translation>多點</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="229"/>
+        <source>Multi Point+Measure</source>
+        <translation>多點和測量</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="233"/>
+        <source>3D Multi Point</source>
+        <translation>三維多點</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="237"/>
+        <source>Arc</source>
+        <translation>弧</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="241"/>
+        <source>Arc+Measure</source>
+        <translation>弧和測量</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="245"/>
+        <source>3D Arc</source>
+        <translation>三維弧</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="249"/>
+        <source>Polygon</source>
+        <translation>多邊形</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="253"/>
+        <source>Polygon+Measure</source>
+        <translation>多邊形及測量</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="257"/>
+        <source>3D Polygon</source>
+        <translation>三維多邊形</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="261"/>
+        <source>Multipatch</source>
+        <translation>多貼片</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="281"/>
+        <source>The file %1 not have extension .shp</source>
+        <translation>檔案％1並無擴展名: .shp</translation>
+    </message>
+    <message>
+        <location filename="../importshp/importshp.cpp" line="286"/>
+        <source>The file %1 not exist</source>
+        <translation>檔案％1不存在</translation>
     </message>
 </context>
 <context>
@@ -58,6 +423,114 @@
         <location filename="../gear/gear.cpp" line="40"/>
         <source>Gear plugin</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>lc_Geardlg</name>
+    <message>
+        <location filename="../gear/gear.cpp" line="122"/>
+        <source>Number of teeth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="124"/>
+        <source>Pressure angle (deg)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="121"/>
+        <source>Rotation angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="123"/>
+        <source>Modulus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="125"/>
+        <source>Addendum (rel. to modulus)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="126"/>
+        <source>Dedendum (rel. to modulus)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="127"/>
+        <source>Number of segments to draw (dedendum)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="128"/>
+        <source>Number of segments to draw (addendum)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="129"/>
+        <source>Draw all teeth?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="130"/>
+        <source>Draw symmetric face?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="132"/>
+        <source>Use layers?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="133"/>
+        <source>Draw addendum circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="134"/>
+        <source>Draw pitch circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="135"/>
+        <source>Draw base circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="136"/>
+        <source>Draw root circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="137"/>
+        <source>Draw pressure line?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="138"/>
+        <source>Draw pressure limits?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="140"/>
+        <source>Calculate interference?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="141"/>
+        <source>Number of segments to draw (interference)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="143"/>
+        <source>Accept</source>
+        <translation type="unfinished">接受</translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="144"/>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
     </message>
 </context>
 <context>
@@ -295,10 +768,6 @@
         <translation>節點</translation>
     </message>
     <message>
-        <source>curvature</source>
-        <translation type="obsolete">曲率</translation>
-    </message>
-    <message>
         <location filename="../list/list.cpp" line="227"/>
         <source>IMAGE</source>
         <translation>圖片</translation>
@@ -353,6 +822,18 @@
         <source>UNKNOWN</source>
         <translation>未知</translation>
     </message>
+    <message>
+        <source>curvature</source>
+        <translation type="obsolete">曲率</translation>
+    </message>
+</context>
+<context>
+    <name>lc_Listdlg</name>
+    <message>
+        <location filename="../list/list.cpp" line="274"/>
+        <source>List entities</source>
+        <translation>實體列表</translation>
+    </message>
 </context>
 <context>
     <name>LC_SameProp</name>
@@ -383,6 +864,69 @@
     </message>
 </context>
 <context>
+    <name>lc_Sampledlg</name>
+    <message>
+        <location filename="../sample/sample.cpp" line="54"/>
+        <source>Draw line</source>
+        <translation>畫線</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="60"/>
+        <source>Start X:</source>
+        <translation>起始 X:</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="66"/>
+        <source>Start Y:</source>
+        <translation>起始 Y:</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="72"/>
+        <source>End X:</source>
+        <translation>終點 X:</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="78"/>
+        <source>End Y:</source>
+        <translation>終點 Y:</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="86"/>
+        <source>Accept</source>
+        <translation>接受</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="91"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="107"/>
+        <source>Start X is empty</source>
+        <translation>起點X為空</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="108"/>
+        <source>Start Y is empty</source>
+        <translation>起點Y為空</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="109"/>
+        <source>End X is empty</source>
+        <translation>終點X為空</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="110"/>
+        <source>End Y is empty</source>
+        <translation>終點Y為空</translation>
+    </message>
+    <message>
+        <location filename="../sample/sample.cpp" line="132"/>
+        <source>Sample plugin</source>
+        <translation>示例插件</translation>
+    </message>
+</context>
+<context>
     <name>PicFile</name>
     <message>
         <location filename="../picfile/picfile.cpp" line="36"/>
@@ -396,342 +940,67 @@
     </message>
 </context>
 <context>
-    <name>dibPunto</name>
+    <name>picPunto</name>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="229"/>
-        <source>Read ascii points</source>
-        <translation>讀取ASCII點</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="235"/>
+        <location filename="../picfile/picfile.cpp" line="65"/>
         <source>File...</source>
-        <translation>文檔...</translation>
+        <translation type="unfinished">文檔...</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="242"/>
-        <source>Format:</source>
-        <translation>格式：</translation>
+        <location filename="../picfile/picfile.cpp" line="75"/>
+        <source>Scale:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="244"/>
-        <source>Space Separator</source>
-        <translation>空格分隔符</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="244"/>
-        <source>Tab Separator</source>
-        <translation>Tab鍵分隔符</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="244"/>
-        <source>Comma Separator</source>
-        <translation>逗號分隔符</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="244"/>
-        <source>Space in Columns</source>
-        <translation>列包含空格</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="244"/>
-        <source>*.odb for Psion 2</source>
-        <translation> *.odb Psion 2 格式</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="246"/>
-        <source>Connect points</source>
-        <translation>連接點</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="254"/>
-        <source>2D Point</source>
-        <translation>2維點</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="254"/>
-        <source>Draw 2D Point</source>
-        <translation>繪製2維點</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="255"/>
-        <source>3D Point</source>
-        <translation>繪製3維點</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="255"/>
-        <source>Draw 3D Point</source>
-        <translation>點編號</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="256"/>
-        <source>Point Number</source>
-        <translation>點編號</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="256"/>
-        <source>Draw point number</source>
-        <translation>繪製點編號</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="257"/>
-        <source>Point Elevation</source>
-        <translation>點抬高</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="257"/>
-        <source>Draw point elevation</source>
-        <translation>繪製點抬高</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="258"/>
-        <source>Point Code</source>
-        <translation>點編碼</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="258"/>
-        <source>Draw point code</source>
-        <translation>繪製點編碼</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="272"/>
+        <location filename="../picfile/picfile.cpp" line="79"/>
         <source>Accept</source>
-        <translation>接受</translation>
+        <translation type="unfinished">接受</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="277"/>
+        <location filename="../picfile/picfile.cpp" line="83"/>
         <source>Cancel</source>
-        <translation>取消</translation>
+        <translation type="unfinished">取消</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="307"/>
+        <location filename="../picfile/picfile.cpp" line="111"/>
         <source>Select file</source>
-        <translation>選擇文檔</translation>
+        <translation type="unfinished">選擇文檔</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="314"/>
-        <source>Point 2D layer is empty</source>
-        <translation>點2D層為空</translation>
+        <location filename="../picfile/picfile.cpp" line="119"/>
+        <source>Scale Factor is empty or invalid</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="317"/>
-        <source>Point 3D layer is empty</source>
-        <translation>點3D層為空</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="320"/>
-        <source>Point elevation layer is empty</source>
-        <translation>點抬高層為空</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="321"/>
-        <source>Point elevation height is empty</source>
-        <translation>點抬高為空</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="322"/>
-        <source>Point elevation separation is empty</source>
-        <translation>點抬高分隔為空</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="325"/>
-        <source>Point number layer is empty</source>
-        <translation>點編號層為空</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="326"/>
-        <source>Point number height is empty</source>
-        <translation>點編號高度為空</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="327"/>
-        <source>Point number separation is empty</source>
-        <translation>點編號分隔為空</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="330"/>
-        <source>Point code layer is empty</source>
-        <translation>點代碼層為空</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="331"/>
-        <source>Point code height is empty</source>
-        <translation>點代碼高度為空</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="332"/>
-        <source>Point code separation is empty</source>
-        <translation>點代碼分隔為空</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="360"/>
+        <location filename="../picfile/picfile.cpp" line="132"/>
         <source>The file %1 not exist</source>
-        <translation>文檔%1不存在</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="365"/>
+        <location filename="../picfile/picfile.cpp" line="137"/>
         <source>Can&apos;t open the file %1</source>
-        <translation>無法打開文檔 %1</translation>
-    </message>
-</context>
-<context>
-    <name>dibSHP</name>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="59"/>
-        <source>File...</source>
-        <translation>文檔...</translation>
+        <translation type="unfinished">無法打開文檔 %1</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="67"/>
-        <source>File type:</source>
-        <translation>文檔類型</translation>
+        <location filename="../picfile/picfile.cpp" line="144"/>
+        <source>%1 objects imported</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="75"/>
-        <source>Layer</source>
-        <translation>圖層</translation>
+        <location filename="../picfile/picfile.cpp" line="166"/>
+        <source>picPunto drawLine: first point is empty %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="56"/>
-        <source>Import ESRI Shapefile</source>
-        <translation>導入ESRI形狀文檔</translation>
+        <location filename="../picfile/picfile.cpp" line="179"/>
+        <source>picPunto drawLine: next point is empty %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="68"/>
-        <location filename="../importshp/importshp.cpp" line="266"/>
-        <source>Unknown</source>
-        <translation>未知</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="76"/>
-        <location filename="../importshp/importshp.cpp" line="89"/>
-        <location filename="../importshp/importshp.cpp" line="102"/>
-        <location filename="../importshp/importshp.cpp" line="115"/>
-        <source>Current</source>
-        <translation>當前</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="77"/>
-        <location filename="../importshp/importshp.cpp" line="90"/>
-        <location filename="../importshp/importshp.cpp" line="103"/>
-        <location filename="../importshp/importshp.cpp" line="116"/>
-        <source>From data:</source>
-        <translation>從數據：</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="88"/>
-        <source>Color</source>
-        <translation>顏色</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="101"/>
-        <source>Line type</source>
-        <translation>線條類型</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="114"/>
-        <source>Width</source>
-        <translation>寬度</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="127"/>
-        <location filename="../importshp/importshp.cpp" line="213"/>
-        <source>Point</source>
-        <translation>點</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="128"/>
-        <source>as Point</source>
-        <translation>為點</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="129"/>
-        <source>as Label:</source>
-        <translation>為標籤：</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="141"/>
-        <source>Accept</source>
-        <translation>接受</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="142"/>
-        <source>Cancel</source>
-        <translation>取消</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="167"/>
-        <source>Select file</source>
-        <translation>選擇文檔</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="217"/>
-        <source>Point+Measure</source>
-        <translation>點和測量</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="221"/>
-        <source>3D Point</source>
-        <translation>三維點</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="225"/>
-        <source>Multi Point</source>
-        <translation>多點</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="229"/>
-        <source>Multi Point+Measure</source>
-        <translation>多點和測量</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="233"/>
-        <source>3D Multi Point</source>
-        <translation>三維多點</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="237"/>
-        <source>Arc</source>
-        <translation>弧</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="241"/>
-        <source>Arc+Measure</source>
-        <translation>弧和測量</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="245"/>
-        <source>3D Arc</source>
-        <translation>三維弧</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="249"/>
-        <source>Polygon</source>
-        <translation>多邊形</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="253"/>
-        <source>Polygon+Measure</source>
-        <translation>多邊形及測量</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="257"/>
-        <source>3D Polygon</source>
-        <translation>三維多邊形</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="261"/>
-        <source>Multipatch</source>
-        <translation>多貼片</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="281"/>
-        <source>The file %1 not have extension .shp</source>
-        <translation>檔案％1並無擴展名: .shp</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="286"/>
-        <source>The file %1 not exist</source>
-        <translation>檔案％1不存在</translation>
+        <location filename="../picfile/picfile.cpp" line="258"/>
+        <location filename="../picfile/picfile.cpp" line="267"/>
+        <source>format error in %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -921,249 +1190,6 @@
     </message>
 </context>
 <context>
-    <name>lc_Geardlg</name>
-    <message>
-        <location filename="../gear/gear.cpp" line="122"/>
-        <source>Number of teeth</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="124"/>
-        <source>Pressure angle (deg)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="121"/>
-        <source>Rotation angle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="123"/>
-        <source>Modulus</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="125"/>
-        <source>Addendum (rel. to modulus)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="126"/>
-        <source>Dedendum (rel. to modulus)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="127"/>
-        <source>Number of segments to draw (dedendum)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="128"/>
-        <source>Number of segments to draw (addendum)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="129"/>
-        <source>Draw all teeth?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="130"/>
-        <source>Draw symmetric face?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="132"/>
-        <source>Use layers?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="133"/>
-        <source>Draw addendum circle?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="134"/>
-        <source>Draw pitch circle?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="135"/>
-        <source>Draw base circle?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="136"/>
-        <source>Draw root circle?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="137"/>
-        <source>Draw pressure line?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="138"/>
-        <source>Draw pressure limits?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="140"/>
-        <source>Calculate interference?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="141"/>
-        <source>Number of segments to draw (interference)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="143"/>
-        <source>Accept</source>
-        <translation type="unfinished">接受</translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="144"/>
-        <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Listdlg</name>
-    <message>
-        <location filename="../list/list.cpp" line="274"/>
-        <source>List entities</source>
-        <translation>實體列表</translation>
-    </message>
-</context>
-<context>
-    <name>lc_Sampledlg</name>
-    <message>
-        <location filename="../sample/sample.cpp" line="54"/>
-        <source>Draw line</source>
-        <translation>畫線</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="60"/>
-        <source>Start X:</source>
-        <translation>起始 X:</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="66"/>
-        <source>Start Y:</source>
-        <translation>起始 Y:</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="72"/>
-        <source>End X:</source>
-        <translation>終點 X:</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="78"/>
-        <source>End Y:</source>
-        <translation>終點 Y:</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="86"/>
-        <source>Accept</source>
-        <translation>接受</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="91"/>
-        <source>Cancel</source>
-        <translation>取消</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="107"/>
-        <source>Start X is empty</source>
-        <translation>起點X為空</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="108"/>
-        <source>Start Y is empty</source>
-        <translation>起點Y為空</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="109"/>
-        <source>End X is empty</source>
-        <translation>終點X為空</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="110"/>
-        <source>End Y is empty</source>
-        <translation>終點Y為空</translation>
-    </message>
-    <message>
-        <location filename="../sample/sample.cpp" line="132"/>
-        <source>Sample plugin</source>
-        <translation>示例插件</translation>
-    </message>
-</context>
-<context>
-    <name>picPunto</name>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="65"/>
-        <source>File...</source>
-        <translation type="unfinished">文檔...</translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="75"/>
-        <source>Scale:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="79"/>
-        <source>Accept</source>
-        <translation type="unfinished">接受</translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="83"/>
-        <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="111"/>
-        <source>Select file</source>
-        <translation type="unfinished">選擇文檔</translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="119"/>
-        <source>Scale Factor is empty or invalid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="132"/>
-        <source>The file %1 not exist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="137"/>
-        <source>Can&apos;t open the file %1</source>
-        <translation type="unfinished">無法打開文檔 %1</translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="144"/>
-        <source>%1 objects imported</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="166"/>
-        <source>picPunto drawLine: first point is empty %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="179"/>
-        <source>picPunto drawLine: next point is empty %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../picfile/picfile.cpp" line="258"/>
-        <location filename="../picfile/picfile.cpp" line="267"/>
-        <source>format error in %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>plot</name>
     <message>
         <location filename="../plotequation/plot.cpp" line="30"/>
@@ -1240,32 +1266,6 @@ Use t or x in your equation as a variable/parameter.
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>pointBox</name>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="175"/>
-        <source>Layer:</source>
-        <translation>層:</translation>
-    </message>
-</context>
-<context>
-    <name>textBox</name>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="207"/>
-        <source>Style:</source>
-        <translation>類型:</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="208"/>
-        <source>Height:</source>
-        <translation>高度：</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="209"/>
-        <source>Separation</source>
-        <translation>分隔</translation>
     </message>
 </context>
 </TS>

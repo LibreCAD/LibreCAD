@@ -5,216 +5,125 @@
     <name></name>
     <message>
         <source>Loading..</source>
-        <translation type="obsolete">Bezig met laden...</translation>
+        <translation type="obsolete">Wordt geladen...</translation>
     </message>
     <message>
         <source>Loading Library Paths..</source>
-        <translation type="obsolete">Bibliotheek paden worden geladen...</translation>
+        <translation type="obsolete">Bibliotheekpaden worden geladen...</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
-        <translation type="obsolete">Bezig met laden van bestand %1..</translation>
+        <translation type="obsolete">Bestand %1 wordt geladen...</translation>
     </message>
 </context>
 <context>
     <name>@default</name>
     <message>
         <source>Loading..</source>
-        <translation type="obsolete">Bezig met laden..</translation>
+        <translation type="obsolete">Wordt geladen...</translation>
     </message>
     <message>
         <source>Loading Library Paths..</source>
-        <translation type="obsolete">Bibliotheek paden worden geladen..</translation>
+        <translation type="obsolete">Bibliotheekpaden worden geladen...</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
-        <translation type="obsolete">Bezig met laden van bestand %1..</translation>
-    </message>
-</context>
-<context>
-    <name>ColorWizard</name>
-    <message>
-        <source>Frame</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ComboBoxOption</name>
-    <message>
-        <source>Frame</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>GroupBox</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>SplinePoints</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="unfinished">Laag:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="unfinished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="unfinished">Gesloten</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="unfinished">Specificeer tweede punt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify center</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="unfinished">Geef een aantal op:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished">Geen geldig aantal. Probeer 1..9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawSplinePoints</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="unfinished">Geef eerste controlepunt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="unfinished">Specificeer volgende controle punt of [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="unfinished">Geef volgende controlepunt</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot undo: Nothing could be redone.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Bestand %1 wordt geladen...</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionFactory</name>
     <message>
+        <source>Add polyline&apos;s node</source>
+        <translation type="obsolete">Knooppunt van polylijn toevoegen</translation>
+    </message>
+    <message>
+        <source>Append polyline&apos;s node</source>
+        <translation type="obsolete">Knooppunt polylijn bijvoegen</translation>
+    </message>
+    <message>
+        <source>Delete polyline&apos;s node</source>
+        <translation type="obsolete">Knooppunt van polylijn verwijderen</translation>
+    </message>
+    <message>
+        <source>Delete between two nodes</source>
+        <translation type="obsolete">Verwijderen tussen twee knooppunten</translation>
+    </message>
+    <message>
+        <source>Trim polyline&apos;s segments</source>
+        <translation type="obsolete">Polylijnsegmenten bijsnijden</translation>
+    </message>
+    <message>
+        <source>Create Equidistant Polylines</source>
+        <translation type="obsolete">Polylijnen op gelijke afstand maken</translation>
+    </message>
+    <message>
+        <source>Create Polyline from Existing Segments</source>
+        <translation type="obsolete">Polylijn van bestaande segmenten maken</translation>
+    </message>
+    <message>
+        <source>M&amp;ove and Rotate</source>
+        <translation type="obsolete">V&amp;erplaats en roteer</translation>
+    </message>
+    <message>
+        <source>&amp;Trim Two</source>
+        <translation type="obsolete">&amp;Twee bijsnijden</translation>
+    </message>
+    <message>
+        <source>&amp;Preferences</source>
+        <translation type="obsolete">&amp;Voorkeursinstellingen</translation>
+    </message>
+    <message>
+        <source>Open IDE</source>
+        <translation type="obsolete">IDE openen</translation>
+    </message>
+    <message>
+        <source>Run Script..</source>
+        <translation type="obsolete">Script uitvoeren...</translation>
+    </message>
+    <message>
+        <source>Regenerate Dimension Entities</source>
+        <translation type="obsolete">Maatelementen regenereren</translation>
+    </message>
+    <message>
+        <source>&amp;Draft</source>
+        <translation type="obsolete">&amp;Schets</translation>
+    </message>
+    <message>
         <source>&amp;Window Zoom</source>
-        <translation type="unfinished">&amp;Venster Zoom</translation>
+        <translation type="unfinished">&amp;Zoomen venster</translation>
     </message>
     <message>
         <source>Zoom &amp;Panning</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zoom &amp;panning</translation>
     </message>
     <message>
         <source>Select Entity</source>
-        <translation type="unfinished">Selecteer Element</translation>
+        <translation type="unfinished">Element selecteren</translation>
     </message>
     <message>
         <source>Select Window</source>
-        <translation type="unfinished">Selecteer Venster</translation>
+        <translation type="unfinished">Venster selecteren</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation type="unfinished">Deselecteer Venster</translation>
+        <translation type="unfinished">Venster deselecteren</translation>
     </message>
     <message>
         <source>(De-)Select &amp;Contour</source>
-        <translation type="unfinished">(De-)Selecteer &amp;Contour</translation>
+        <translation type="unfinished">&amp;Omtrek (de)selecteren</translation>
     </message>
     <message>
         <source>Select Intersected Entities</source>
-        <translation type="unfinished">Selecteer kruisende Elementen</translation>
+        <translation type="unfinished">Kruisende elementen selecteren</translation>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
-        <translation type="unfinished">Deselecteer kruisende Elementen</translation>
+        <translation type="unfinished">Kruisende elementen deselecteren</translation>
     </message>
     <message>
         <source>(De-)Select Layer</source>
-        <translation type="unfinished">(De-)Selecteer Laag</translation>
+        <translation type="unfinished">Laag (de)selecteren</translation>
     </message>
     <message>
         <source>&amp;Points</source>
@@ -222,7 +131,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;2 Points</source>
-        <translation type="unfinished">&amp;2 Punten</translation>
+        <translation type="unfinished">&amp;2 punten</translation>
     </message>
     <message>
         <source>&amp;Angle</source>
@@ -234,19 +143,19 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Vertical</source>
-        <translation type="unfinished">Vertikaal</translation>
+        <translation type="unfinished">Verticaal</translation>
     </message>
     <message>
         <source>&amp;Freehand Line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Vrije lijn</translation>
     </message>
     <message>
         <source>&amp;Parallel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Parallel</translation>
     </message>
     <message>
         <source>Parallel through point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Parallel door punt</translation>
     </message>
     <message>
         <source>Rectangle</source>
@@ -254,19 +163,19 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Bisector</source>
-        <translation type="unfinished">Bissectice</translation>
+        <translation type="unfinished">Middelloodlijn</translation>
     </message>
     <message>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">Tangent (P,C)</translation>
+        <translation type="unfinished">Raaklijn (p, c)</translation>
     </message>
     <message>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">Tangent (C,C)</translation>
+        <translation type="unfinished">Raaklijn (c, c)</translation>
     </message>
     <message>
         <source>Tangent &amp;Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Raaklijn &amp;orthogonaal</translation>
     </message>
     <message>
         <source>Orthogonal</source>
@@ -274,35 +183,35 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Relative angle</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Relatieve hoek</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation type="unfinished">Pol&amp;ygoon (Cen,Hkp)</translation>
+        <translation type="unfinished">Pol&amp;ygoon (mid, hkp)</translation>
     </message>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Polygoo&amp;n (hkp, hkp)</translation>
     </message>
     <message>
         <source>Center, &amp;Point</source>
-        <translation type="unfinished">Center, &amp;Punt</translation>
+        <translation type="unfinished">Middelpunt, &amp;punt</translation>
     </message>
     <message>
         <source>Center, &amp;Radius</source>
-        <translation type="unfinished">Center, &amp;Radius</translation>
+        <translation type="unfinished">Middelpunt, &amp;radius</translation>
     </message>
     <message>
         <source>2 Points</source>
-        <translation type="unfinished">2 Punten</translation>
+        <translation type="unfinished">2 punten</translation>
     </message>
     <message>
         <source>2 Points, Radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">2 punten, radius</translation>
     </message>
     <message>
         <source>3 Points</source>
-        <translation type="unfinished">3 Punten</translation>
+        <translation type="unfinished">3 punten</translation>
     </message>
     <message>
         <source>&amp;Concentric</source>
@@ -310,132 +219,104 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Circle &amp;Inscribed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cirkel &amp;ingeschreven</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tangentieel 2 cirkels, radius</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tangentieel 2 cirkels, 1 punt</translation>
     </message>
     <message>
         <source>Tangential &amp;3 Circles</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tangentieel &amp;3 cirkels</translation>
     </message>
     <message>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tangentieel, 2 p&amp;unten</translation>
     </message>
     <message>
         <source>&amp;Center, Point, Angles</source>
-        <translation type="unfinished">&amp;Center, Punt, Hoeken</translation>
+        <translation type="unfinished">&amp;Middelpunt, punt, hoeken</translation>
     </message>
     <message>
         <source>&amp;3 Points</source>
-        <translation type="unfinished">&amp;3 Punten</translation>
+        <translation type="unfinished">&amp;3 punten</translation>
     </message>
     <message>
         <source>Arc &amp;Tangential</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Boog &amp;tangentieel</translation>
     </message>
     <message>
         <source>&amp;Ellipse (Axis)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Ellips (as)</translation>
     </message>
     <message>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ellips&amp;boog (as)</translation>
     </message>
     <message>
         <source>Ellipse &amp;Foci Point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ellips &amp;brandpunten</translation>
     </message>
     <message>
         <source>Ellipse &amp;4 Point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ellips &amp;4 punten</translation>
     </message>
     <message>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Middelpunt ellips en &amp;3 punten</translation>
     </message>
     <message>
         <source>Ellipse &amp;Inscribed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ellips &amp;ingeschreven</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation type="unfinished">&amp;Spline</translation>
+        <translation type="unfinished">&amp;Spie</translation>
     </message>
     <message>
         <source>&amp;Spline through points</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Spie door punten</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Polylijn</translation>
     </message>
     <message>
         <source>&amp;Add node</source>
-        <translation type="unfinished">&amp;Voeg node toe</translation>
-    </message>
-    <message>
-        <source>Add polyline&apos;s node</source>
-        <translation type="obsolete">Voeg knooppunt toe aan vrije vorm</translation>
+        <translation type="unfinished">&amp;Knooppunt toevoegen</translation>
     </message>
     <message>
         <source>A&amp;ppend node</source>
-        <translation type="unfinished">Knoo&amp;ppunt toevoegen</translation>
-    </message>
-    <message>
-        <source>Append polyline&apos;s node</source>
-        <translation type="obsolete">Voeg vrije vorm knooppunt</translation>
+        <translation type="unfinished">Knoop&amp;punt bijvoegen</translation>
     </message>
     <message>
         <source>&amp;Delete node</source>
-        <translation type="unfinished">&amp;Verwijder knooppunt</translation>
-    </message>
-    <message>
-        <source>Delete polyline&apos;s node</source>
-        <translation type="obsolete">Verwijderen knooppunt uit vrije vorm</translation>
+        <translation type="unfinished">&amp;Knooppunt verwijderen</translation>
     </message>
     <message>
         <source>Delete &amp;between two nodes</source>
-        <translation type="unfinished">Verwijder &amp;tussen twee knooppunten</translation>
-    </message>
-    <message>
-        <source>Delete between two nodes</source>
-        <translation type="obsolete">Verwijderen tussen twee knooppunten</translation>
+        <translation type="unfinished">Verwijderen &amp;tussen twee knooppunten</translation>
     </message>
     <message>
         <source>&amp;Trim segments</source>
-        <translation type="unfinished">&amp;Knip Segmenten</translation>
-    </message>
-    <message>
-        <source>Trim polyline&apos;s segments</source>
-        <translation type="obsolete">Knip uit vrije vorm segmenten</translation>
+        <translation type="unfinished">&amp;Segmenten bijsnijden</translation>
     </message>
     <message>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation type="unfinished">Maak &amp;Equidistant vrije vormen</translation>
-    </message>
-    <message>
-        <source>Create Equidistant Polylines</source>
-        <translation type="obsolete">Maak Equidistant vrije vormen</translation>
+        <translation type="unfinished">&amp;Polylijnen op gelijke afstand maken</translation>
     </message>
     <message>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="unfinished">Maak vrije vorm van bestaande &amp;Segmenten</translation>
-    </message>
-    <message>
-        <source>Create Polyline from Existing Segments</source>
-        <translation type="obsolete">Maak vrije vorm van bestaande &amp;Segmenten</translation>
+        <translation type="unfinished">Polylijn van bestaande &amp;segmenten maken</translation>
     </message>
     <message>
         <source>&amp;MText</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;MTekst</translation>
     </message>
     <message>
         <source>&amp;Text</source>
@@ -443,11 +324,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Hatch</source>
-        <translation type="unfinished">&amp;Arcering</translation>
+        <translation type="unfinished">&amp;Arceren</translation>
     </message>
     <message>
         <source>Insert &amp;Image</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Afbeelding invoegen</translation>
     </message>
     <message>
         <source>&amp;Aligned</source>
@@ -455,11 +336,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Linear</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Lineair</translation>
     </message>
     <message>
         <source>&amp;Vertical</source>
-        <translation type="unfinished">&amp;Vertikaal</translation>
+        <translation type="unfinished">&amp;Verticaal</translation>
     </message>
     <message>
         <source>&amp;Radial</source>
@@ -471,11 +352,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Angular</source>
-        <translation type="unfinished">&amp;Hoek</translation>
+        <translation type="unfinished">&amp;Hoekig</translation>
     </message>
     <message>
         <source>&amp;Leader</source>
-        <translation type="unfinished">Aan&amp;haling</translation>
+        <translation type="unfinished">&amp;Verbindingslijn</translation>
     </message>
     <message>
         <source>&amp;Attributes</source>
@@ -483,23 +364,23 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished">&amp;Wissen</translation>
+        <translation type="unfinished">&amp;Verwijderen</translation>
     </message>
     <message>
         <source>Delete Freehand</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vrije vorm verwijderen</translation>
     </message>
     <message>
         <source>&amp;Move / Copy</source>
-        <translation type="unfinished">&amp;Verplaats / Copieer</translation>
+        <translation type="unfinished">&amp;Verplaatsen/Kopiëren</translation>
     </message>
     <message>
         <source>Re&amp;vert direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Draai richting om</translation>
     </message>
     <message>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+R</translation>
     </message>
     <message>
         <source>&amp;Rotate</source>
@@ -507,19 +388,15 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Scale</source>
-        <translation type="unfinished">Ver&amp;schaal</translation>
+        <translation type="unfinished">&amp;Verschalen</translation>
     </message>
     <message>
         <source>&amp;Mirror</source>
-        <translation type="unfinished">S&amp;piegelen</translation>
-    </message>
-    <message>
-        <source>M&amp;ove and Rotate</source>
-        <translation type="obsolete">Ve&amp;rplaats en Roteer</translation>
+        <translation type="unfinished">&amp;Spiegelen</translation>
     </message>
     <message>
         <source>Rotate T&amp;wo</source>
-        <translation type="unfinished">Roteer T&amp;wee</translation>
+        <translation type="unfinished">Roteer t&amp;wee</translation>
     </message>
     <message>
         <source>&amp;Properties</source>
@@ -527,11 +404,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Trim</source>
-        <translation type="unfinished">&amp;Trim</translation>
-    </message>
-    <message>
-        <source>&amp;Trim Two</source>
-        <translation type="obsolete">&amp;Trim Twee</translation>
+        <translation type="unfinished">&amp;Bijsnijden</translation>
     </message>
     <message>
         <source>&amp;Lengthen</source>
@@ -543,51 +416,51 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Stretch</source>
-        <translation type="unfinished">&amp;Uitrekken</translation>
+        <translation type="unfinished">&amp;Rekken</translation>
     </message>
     <message>
         <source>&amp;Bevel</source>
-        <translation type="unfinished">&amp;Afschuining</translation>
+        <translation type="unfinished">&amp;Afschuinen</translation>
     </message>
     <message>
         <source>&amp;Fillet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Afronden</translation>
     </message>
     <message>
         <source>&amp;Explode Text into Letters</source>
-        <translation type="unfinished">&amp;Explodeer Tekst in Letters</translation>
+        <translation type="unfinished">&amp;Tekst in letters splitsen</translation>
     </message>
     <message>
         <source>Point inside contour</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Punt binnen omtrek</translation>
     </message>
     <message>
         <source>&amp;Distance Point to Point</source>
-        <translation type="unfinished">&amp;Afstand Punt tot Punt</translation>
+        <translation type="unfinished">&amp;Afstand punt tot punt</translation>
     </message>
     <message>
         <source>&amp;Distance Entity to Point</source>
-        <translation type="unfinished">Afstand &amp;Element tot Punt</translation>
+        <translation type="unfinished">&amp;Afstand element tot punt</translation>
     </message>
     <message>
         <source>An&amp;gle between two lines</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ho&amp;ek tussen twee lijnen</translation>
     </message>
     <message>
         <source>&amp;Total length of selected entities</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Totale lengte van geselecteerde elementen</translation>
     </message>
     <message>
         <source>Polygonal &amp;Area</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Polygonaal &amp;gebied</translation>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
-        <translation type="unfinished">&amp;Selectie cursor</translation>
+        <translation type="unfinished">&amp;Selectiecursor</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished">&amp;Herstel</translation>
+        <translation type="unfinished">&amp;Ongedaan maken</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -595,167 +468,151 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished">&amp;Knip</translation>
+        <translation type="unfinished">&amp;Knippen</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Kopieer</translation>
+        <translation type="unfinished">&amp;Kopiëren</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished">&amp;Plak</translation>
+        <translation type="unfinished">&amp;Plakken</translation>
     </message>
     <message>
         <source>move to bottom</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">verplaatsen naar onderkant</translation>
     </message>
     <message>
         <source>lower after entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">omlaag na element</translation>
     </message>
     <message>
         <source>raise over entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">omhoog boven element</translation>
     </message>
     <message>
         <source>move to top</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">verplaatsen naar bovenkant</translation>
     </message>
     <message>
         <source>&amp;Show all</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Alles weergeven</translation>
     </message>
     <message>
         <source>&amp;Hide all</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Alles verbergen</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Voeg laag toe</translation>
+        <translation type="unfinished">&amp;Laag toevoegen</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">&amp;Wis Laag</translation>
+        <translation type="unfinished">&amp;Laag weghalen</translation>
     </message>
     <message>
         <source>&amp;Edit Layer</source>
-        <translation type="unfinished">&amp;Bewerk Laag</translation>
+        <translation type="unfinished">&amp;Laag bewerken</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Laagver&amp;grendeling aan/uit zetten</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Zichtbaarheid laag aan/uit zetten</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Print</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Laag &amp;afdrukken aan/uit zetten</translation>
     </message>
     <message>
         <source>Toggle &amp;Construction Layer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Bouwlaag aan/uit zetten</translation>
     </message>
     <message>
         <source>&amp;Add Block</source>
-        <translation type="unfinished">&amp;Voeg Blok toe</translation>
+        <translation type="unfinished">&amp;Blok toevoegen</translation>
     </message>
     <message>
         <source>&amp;Remove Block</source>
-        <translation type="unfinished">&amp;Wis Blok</translation>
+        <translation type="unfinished">&amp;Blok weghalen</translation>
     </message>
     <message>
         <source>&amp;Rename Block</source>
-        <translation type="unfinished">&amp;Hernoem Blok</translation>
+        <translation type="unfinished">&amp;Blok hernoemen</translation>
     </message>
     <message>
         <source>&amp;Edit Block</source>
-        <translation type="unfinished">&amp;Bewerk Blok</translation>
+        <translation type="unfinished">&amp;Blok bewerken</translation>
     </message>
     <message>
         <source>&amp;Save Block</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Blok opslaan</translation>
     </message>
     <message>
         <source>&amp;Insert Block</source>
-        <translation type="unfinished">&amp;Plaats Blok</translation>
+        <translation type="unfinished">&amp;Blok invoegen</translation>
     </message>
     <message>
         <source>Toggle Block &amp;Visibility</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Zichtbaarheid blok aan/uit zetten</translation>
     </message>
     <message>
         <source>&amp;Create Block</source>
-        <translation type="unfinished">&amp;Nieuwe Blok</translation>
+        <translation type="unfinished">&amp;Blok aanmaken</translation>
     </message>
     <message>
         <source>Ex&amp;plode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Preferences</source>
-        <translation type="obsolete">&amp;Voorkeursinstellingen</translation>
+        <translation type="unfinished">Spl&amp;itsen</translation>
     </message>
     <message>
         <source>&amp;Application Preferences</source>
-        <translation type="unfinished">&amp;Programma Voorkeursinstellingen</translation>
+        <translation type="unfinished">&amp;Voorkeursinstellingen toepassing</translation>
     </message>
     <message>
         <source>Current &amp;Drawing Preferences</source>
-        <translation type="unfinished">Huidige &amp;Teken Voorkeursinstellingen</translation>
-    </message>
-    <message>
-        <source>Open IDE</source>
-        <translation type="obsolete">Open IDE</translation>
-    </message>
-    <message>
-        <source>Run Script..</source>
-        <translation type="obsolete">Voer Script uit..</translation>
+        <translation type="unfinished">&amp;Voorkeursinstellingen huidige tekening</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Selecite verwijderen</translation>
     </message>
     <message>
         <source>Select &amp;All</source>
-        <translation type="unfinished">Selecteer &amp;Alles</translation>
+        <translation type="unfinished">&amp;Alles selecteren</translation>
     </message>
     <message>
         <source>Deselect &amp;all</source>
-        <translation type="unfinished">Deselecteer &amp;alles</translation>
+        <translation type="unfinished">&amp;Alles deselecteren</translation>
     </message>
     <message>
         <source>Ctrl+K</source>
-        <translation type="unfinished">ctrl+k</translation>
+        <translation type="unfinished">Ctrl+K</translation>
     </message>
     <message>
         <source>Invert Selection</source>
-        <translation type="unfinished">Inverteer Selectie</translation>
-    </message>
-    <message>
-        <source>Regenerate Dimension Entities</source>
-        <translation type="obsolete">Regenereer Maat Elementen</translation>
+        <translation type="unfinished">Selectie omkeren</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
-        <translation type="unfinished">Zoom &amp;In</translation>
+        <translation type="unfinished">&amp;Inzoomen</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation type="unfinished">Zoom &amp;Uit</translation>
+        <translation type="unfinished">&amp;Uitzoomen</translation>
     </message>
     <message>
         <source>&amp;Auto Zoom</source>
-        <translation type="unfinished">&amp;Auto Zoom</translation>
+        <translation type="unfinished">&amp;Autozoom</translation>
     </message>
     <message>
         <source>Previous &amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vorige &amp;weergave</translation>
     </message>
     <message>
         <source>&amp;Redraw</source>
-        <translation type="unfinished">Her&amp;teken</translation>
+        <translation type="unfinished">&amp;Opnieuw tekenen</translation>
     </message>
     <message>
         <source>&amp;New</source>
@@ -763,23 +620,23 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>New From &amp;Template</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nieuw van &amp;sjabloon</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished">&amp;Open...</translation>
+        <translation type="unfinished">&amp;Openen...</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished">O&amp;pslaan</translation>
+        <translation type="unfinished">&amp;Opslaan</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished">Bewaar &amp;als...</translation>
+        <translation type="unfinished">Opslaan &amp;als...</translation>
     </message>
     <message>
         <source>&amp;Export as image</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Exporteren als afbeelding</translation>
     </message>
     <message>
         <source>&amp;Close</source>
@@ -787,15 +644,15 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished">&amp;Druk af...</translation>
+        <translation type="unfinished">&amp;Afdrukken...</translation>
     </message>
     <message>
         <source>Export as PDF</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exporteren als pdf</translation>
     </message>
     <message>
         <source>Print Pre&amp;view</source>
-        <translation type="unfinished">Afdruk voor&amp;beeld</translation>
+        <translation type="unfinished">Afdrukvoor&amp;beeld</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
@@ -807,20 +664,16 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Fullscreen</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Volledig scherm</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
-        <translation type="unfinished">R&amp;aster</translation>
+        <translation type="unfinished">&amp;Raster</translation>
     </message>
     <message>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Draft</source>
-        <translation type="obsolete">&amp;Schets</translation>
+        <translation type="unfinished">Ctrl+G</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
@@ -829,19 +682,19 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+I</translation>
     </message>
     <message>
         <source>Focus on &amp;Command Line</source>
-        <translation type="unfinished">Focus op &amp;Commando Regel</translation>
+        <translation type="unfinished">Brandpunt op &amp;opdrachtregel</translation>
     </message>
     <message>
         <source>Widget Options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Widgetopties</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished">Links</translation>
+        <translation type="unfinished">Linker</translation>
     </message>
     <message>
         <source>Right</source>
@@ -849,297 +702,117 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bovenkant</translation>
     </message>
     <message>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Onderkant</translation>
     </message>
     <message>
         <source>Floating</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zwevend</translation>
     </message>
     <message>
         <source>Reload Style Sheet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Laad stijlblad opnieuw</translation>
     </message>
     <message>
         <source>Device Options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Apparaatopties</translation>
     </message>
     <message>
         <source>Mo&amp;ve and Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ver&amp;plaats en roteer</translation>
     </message>
     <message>
         <source>Tr&amp;im Two</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tw&amp;ee bijsnijden</translation>
     </message>
     <message>
         <source>O&amp;ffset</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">O&amp;ffset</translation>
     </message>
     <message>
         <source>Menu Creator</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Menumaker</translation>
     </message>
     <message>
         <source>Toolbar Creator</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Werkbalkmaker</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pol&amp;ygoon (cen, rkl)</translation>
     </message>
     <message>
         <source>Center, &amp;Diameter</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Middelpunt, &amp;diameter</translation>
     </message>
     <message>
         <source>Trim E&amp;xcess</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">O&amp;verschot bijsnijden</translation>
     </message>
     <message>
         <source>S&amp;hape Text</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">T&amp;ekst vormgeven</translation>
     </message>
     <message>
         <source>&amp;Unlink Text from Geometry</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Tekst loskoppelen van geometrie</translation>
     </message>
     <message>
         <source>&amp;Unlock all</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Alles ontgrendelen</translation>
     </message>
     <message>
         <source>&amp;Lock all</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Alles vergrendelen</translation>
     </message>
     <message>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exporteren als CA&amp;M/gewone svg...</translation>
     </message>
     <message>
         <source>Close All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alles sluiten</translation>
     </message>
     <message>
         <source>Export to ProNest</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exporteren naar ProNest</translation>
     </message>
     <message>
         <source>Save A&amp;ll...</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionFileExportMakerCam</name>
-    <message>
-        <source>Export as</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_DeviceOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mouse</source>
-        <translation type="obsolete">Muis</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_SimpleTests</name>
-    <message>
-        <source>De&amp;bugging</source>
-        <translation type="unfinished">&amp;Foutzoeken</translation>
-    </message>
-    <message>
-        <source>Insert Image</source>
-        <translation type="unfinished">Afbeelding toevoegen</translation>
-    </message>
-</context>
-<context>
-    <name>LC_WidgetOptionsDialog</name>
-    <message>
-        <source>Widget Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toolbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Icon Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Style</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Style Sheet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Statusbar</source>
-        <translation type="unfinished">Statusbalk</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Font Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Input the path of a Qt style sheet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>side length in pixels</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Use themed icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LG_DimzerosBox</name>
-    <message>
-        <source>select:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>remove left</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>remove right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>remove 0&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>remove 0&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="unfinished">Lijn Relatieve Hoek Opties</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="unfinished">Tussenafstand:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QC_ActionGetEnt</name>
-    <message>
-        <source>Select object:</source>
-        <translation>Kies object</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Stop</translation>
+        <translation type="unfinished">Alle &amp;opslaan...</translation>
     </message>
 </context>
 <context>
     <name>QC_ActionGetPoint</name>
     <message>
         <source>Specify a point</source>
-        <translation type="obsolete">Kies een punt</translation>
+        <translation type="obsolete">Specificeer een punt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Stop</translation>
-    </message>
-</context>
-<context>
-    <name>QC_ActionGetSelect</name>
-    <message>
-        <source>Select objects:</source>
-        <translation>Selecteer objecten</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Stop</translation>
+        <translation>Annuleren</translation>
     </message>
 </context>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <source>&amp;File</source>
-        <translation>&amp;Bestand</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation>&amp;Be&amp;werken</translation>
-    </message>
-    <message>
         <source>Focus on Command Line</source>
-        <translation type="obsolete">Focus op Commando Regel</translation>
+        <translation type="obsolete">Brandpunt op opdrachtregel</translation>
     </message>
     <message>
         <source>Focus on &amp;Command Line</source>
-        <translation type="obsolete">Focus op &amp;Commando Regel</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation>&amp;Beeld</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation>&amp;Selecteer</translation>
+        <translation type="obsolete">Brandpunt op &amp;opdrachtregel</translation>
     </message>
     <message>
         <source>&amp;Point</source>
         <translation type="obsolete">&amp;Punt</translation>
     </message>
     <message>
-        <source>&amp;Line</source>
-        <translation>&amp;Lijn</translation>
-    </message>
-    <message>
         <source>&amp;Arc</source>
         <translation type="obsolete">&amp;Boog</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation>&amp;Cirkel</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation>&amp;Ovaal</translation>
     </message>
     <message>
         <source>&amp;Draw</source>
@@ -1147,19 +820,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Dimension</source>
-        <translation type="obsolete">&amp;Bematen</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation>&amp;Wijzigen</translation>
+        <translation type="obsolete">&amp;Maat</translation>
     </message>
     <message>
         <source>&amp;Snap</source>
-        <translation type="obsolete">&amp;Uitlijnen</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation>&amp;Informatie</translation>
+        <translation type="obsolete">&amp;Snappen</translation>
     </message>
     <message>
         <source>&amp;Layer</source>
@@ -1170,16 +835,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">&amp;Blok</translation>
     </message>
     <message>
-        <source>About</source>
-        <translation>Over</translation>
-    </message>
-    <message>
         <source>&amp;About...</source>
-        <translation type="obsolete">&amp;Over ...</translation>
+        <translation type="obsolete">&amp;Over...</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="obsolete">Over de Applicatie</translation>
+        <translation type="obsolete">Over de toepassing</translation>
     </message>
     <message>
         <source>&amp;Scripts</source>
@@ -1190,52 +851,8 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">&amp;Vensters</translation>
     </message>
     <message>
-        <source>&amp;Help</source>
-        <translation>&amp;Help</translation>
-    </message>
-    <message>
         <source>De&amp;bugging</source>
-        <translation type="obsolete">&amp;Foutzoeken</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation>&amp;Achter elkaar</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation>&amp;Naast elkaar</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation>&amp;Onder elkaar</translation>
-    </message>
-    <message>
-        <source>Creating new file...</source>
-        <translation>Nieuw Bestand wordt aangemaakt...</translation>
-    </message>
-    <message>
-        <source>unnamed document %1</source>
-        <translation>Naamloos bestand %1</translation>
-    </message>
-    <message>
-        <source>Opening recent file...</source>
-        <translation>Bezig laatst geopend bestand te openen...</translation>
-    </message>
-    <message>
-        <source>Loaded document: </source>
-        <translation>Geopend bestand:</translation>
-    </message>
-    <message>
-        <source>Opening aborted</source>
-        <translation>Het openen is afgebroken</translation>
-    </message>
-    <message>
-        <source>Printing...</source>
-        <translation>Er wordt afgedrukt...</translation>
-    </message>
-    <message>
-        <source>Exiting application...</source>
-        <translation>Het Programma wordt afgesloten...</translation>
+        <translation type="obsolete">Fout&amp;zoeken</translation>
     </message>
     <message>
         <source>About...</source>
@@ -1246,118 +863,18 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">Versie:</translation>
     </message>
     <message>
-        <source>File</source>
-        <translation type="unfinished">Bestand</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="unfinished">Bewerken</translation>
-    </message>
-    <message>
         <source>Vie&amp;ws</source>
         <translation type="obsolete">Bee&amp;ld</translation>
     </message>
     <message>
         <source>Tool&amp;bars</source>
-        <translation type="obsolete">&amp;Werkbalken</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="unfinished">Beeld</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="unfinished">Pen</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="unfinished">Opties</translation>
-    </message>
-    <message>
-        <source>Layer List</source>
-        <translation>LageLijst</translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation>Blok Lijst</translation>
+        <translation type="obsolete">Werk&amp;balken</translation>
     </message>
     <message>
         <source>
 Date: %1</source>
         <translation type="obsolete">
 Datum: %1</translation>
-    </message>
-    <message>
-        <source>Library Browser</source>
-        <translation>In Bibliotheek zoeken</translation>
-    </message>
-    <message>
-        <source>Print preview for %1</source>
-        <translation>Afdruk Voorbeeld voor %1</translation>
-    </message>
-    <message>
-        <source>New Drawing created.</source>
-        <translation>Nieuwe Tekening opgestart.</translation>
-    </message>
-    <message>
-        <source>Saving drawing...</source>
-        <translation>Tekening wordt opgeslagen...</translation>
-    </message>
-    <message>
-        <source>Saved drawing: %1</source>
-        <translation>Opgeslagen Tekening: %1</translation>
-    </message>
-    <message>
-        <source>Saving drawing under new filename...</source>
-        <translation type="vanished">Tekening wordt onder een nieuw Bestandsnaam opgeslagen...</translation>
-    </message>
-    <message>
-        <source>Exporting drawing...</source>
-        <translation>Bezig met exporteren van de Tekening...</translation>
-    </message>
-    <message>
-        <source>Exported: %1</source>
-        <translation>Geëxporteerd: %1</translation>
-    </message>
-    <message>
-        <source>Exporting...</source>
-        <translation>Bezig met exporteren...</translation>
-    </message>
-    <message>
-        <source>Export complete</source>
-        <translation>Exporteren geslaagd</translation>
-    </message>
-    <message>
-        <source>Export failed!</source>
-        <translation>Exporteren mislukt !</translation>
-    </message>
-    <message>
-        <source>Printing complete</source>
-        <translation>Het Afdrukken is voltooid</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation>Comando Regel</translation>
-    </message>
-    <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Blok &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Cannot open the file
-%1
-Please check the permissions.</source>
-        <translation>Kan het volgend bestand niet openen
-%1
-Controleer de toegangsrechten.</translation>
-    </message>
-    <message>
-        <source>Cannot save the file
-%1
-Please check the permissions.</source>
-        <translation type="vanished">Kan het volgend bestand niet bewaren
-%1
-Controleer de toegangsrechten.</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -1369,7 +886,7 @@ Controleer de toegangsrechten.</translation>
     </message>
     <message>
         <source>Launch the online manual</source>
-        <translation type="obsolete">Start de Online Handleiding</translation>
+        <translation type="obsolete">Start de online handleiding</translation>
     </message>
     <message>
         <source>&amp;CAM</source>
@@ -1377,7 +894,7 @@ Controleer de toegangsrechten.</translation>
     </message>
     <message>
         <source>Simulation Controls</source>
-        <translation type="obsolete">Simulatie Middellen</translation>
+        <translation type="obsolete">Simulatiemiddelen</translation>
     </message>
     <message>
         <source>None</source>
@@ -1407,11 +924,11 @@ a full version of the application from
 %2.
 You can save your work now.</source>
         <translation type="obsolete">Deze %1 versie beëindigt automatisch
-na 10min. Deze sofware is niet voor
-produktie bedoeld.  U kunt een
-volledige versie kopen van
+na 10 min. Deze software is niet voor
+productie bedoeld. U kunt een
+volledige toepassingsversie kopen van
 %2.
-U kunt nu uw werk bewaren.</translation>
+U kunt uw werk nu opslaan.</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -1419,31 +936,267 @@ U kunt nu uw werk bewaren.</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation type="obsolete">&amp;Spline</translation>
+        <translation type="obsolete">&amp;Spie</translation>
     </message>
     <message>
         <source>Running script &apos;%1&apos;</source>
-        <translation type="obsolete">Huidige script %1</translation>
+        <translation type="obsolete">Script &apos;%1&apos; wordt uitgevoerd</translation>
     </message>
     <message>
         <source>Inserting block &apos;%1&apos;</source>
-        <translation type="obsolete">Blok &apos;%1&apos; wordt toegevoegd</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation>&amp;Vrije vorm</translation>
+        <translation type="obsolete">Blok &apos;%1&apos; wordt ingevoegd</translation>
     </message>
     <message>
         <source>CTRL+M</source>
-        <translation type="obsolete">ctrl+m</translation>
+        <translation type="obsolete">CTRL+M</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="obsolete">Afbeelding toevoegen</translation>
+        <translation type="obsolete">Afbeelding invoegen</translation>
+    </message>
+    <message>
+        <source>SVN Revision: %1</source>
+        <translation type="obsolete">SVN-revisie: %1</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation type="obsolete">Help</translation>
+    </message>
+    <message>
+        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
+        <translation type="obsolete">Helaas, ik kon de helpbestanden niet vinden in het bestandssysteem.</translation>
+    </message>
+    <message>
+        <source>&amp;Plugins</source>
+        <translation type="obsolete">&amp;Plugins</translation>
+    </message>
+    <message>
+        <source>Program Icons Supplied by</source>
+        <translation type="obsolete">Programma-iconen geleverd door</translation>
+    </message>
+    <message>
+        <source>Splash and Logo supplied by</source>
+        <translation type="obsolete">Splash en logo geleverd door</translation>
+    </message>
+    <message>
+        <source>Main Website : </source>
+        <translation type="obsolete">Hoofdwebsite:</translation>
+    </message>
+    <message>
+        <source>SCM Revision: %1</source>
+        <translation type="obsolete">SCM-revisie: %1</translation>
+    </message>
+    <message>
+        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
+        <translation type="obsolete">Doneer aan LibreCAD voor het onderhoud van de sourcecode en de website. </translation>
+    </message>
+    <message>
+        <source>&amp;%1 %2</source>
+        <translation type="obsolete">&amp;%1 %2</translation>
+    </message>
+    <message>
+        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
+        <translation type="obsolete">Doneer alstublieft aan LibreCAD en help mee met het onderhouden van de broncode en de website.</translation>
+    </message>
+    <message>
+        <source>CAD Tools</source>
+        <translation type="obsolete">CAD-gereedschappen</translation>
+    </message>
+    <message>
+        <source>&amp;Text</source>
+        <translation type="obsolete">&amp;Tekst</translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation>&amp;Bestand</translation>
+    </message>
+    <message>
+        <source>&amp;Edit</source>
+        <translation>&amp;Bewerken</translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation>&amp;Bekijken</translation>
+    </message>
+    <message>
+        <source>&amp;Select</source>
+        <translation>&amp;Selecteren</translation>
+    </message>
+    <message>
+        <source>&amp;Line</source>
+        <translation>&amp;Lijn</translation>
+    </message>
+    <message>
+        <source>&amp;Circle</source>
+        <translation>&amp;Cirkel</translation>
+    </message>
+    <message>
+        <source>&amp;Ellipse</source>
+        <translation>&amp;Ellips</translation>
+    </message>
+    <message>
+        <source>&amp;Modify</source>
+        <translation>&amp;Wijzigen</translation>
+    </message>
+    <message>
+        <source>&amp;Info</source>
+        <translation>&amp;Informatie</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation>Over</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation>&amp;Help</translation>
+    </message>
+    <message>
+        <source>&amp;Cascade</source>
+        <translation>&amp;Achter elkaar</translation>
+    </message>
+    <message>
+        <source>&amp;Tile</source>
+        <translation>&amp;Meerdere weergeven</translation>
+    </message>
+    <message>
+        <source>Tile &amp;Horizontally</source>
+        <translation>&amp;Onder elkaar weergeven</translation>
+    </message>
+    <message>
+        <source>Creating new file...</source>
+        <translation>Nieuw bestand wordt aangemaakt...</translation>
+    </message>
+    <message>
+        <source>unnamed document %1</source>
+        <translation>naamloos bestand %1</translation>
+    </message>
+    <message>
+        <source>Opening recent file...</source>
+        <translation>Bezig met openen laatste bestand...</translation>
+    </message>
+    <message>
+        <source>Loaded document: </source>
+        <translation>Geladen document:</translation>
+    </message>
+    <message>
+        <source>Opening aborted</source>
+        <translation>Openen afgebroken</translation>
+    </message>
+    <message>
+        <source>Printing...</source>
+        <translation>Er wordt afgedrukt...</translation>
+    </message>
+    <message>
+        <source>Exiting application...</source>
+        <translation>De toepassing wordt afgesloten...</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation type="unfinished">Bestand</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">Bewerken</translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translation type="unfinished">Bekijken</translation>
+    </message>
+    <message>
+        <source>Pen</source>
+        <translation type="unfinished">Pen</translation>
+    </message>
+    <message>
+        <source>Tool Options</source>
+        <translation type="unfinished">Gereedschapsopties</translation>
+    </message>
+    <message>
+        <source>Layer List</source>
+        <translation>Laaglijst</translation>
+    </message>
+    <message>
+        <source>Block List</source>
+        <translation>Bloklijst</translation>
+    </message>
+    <message>
+        <source>Library Browser</source>
+        <translation>Bibliotheekbrowser</translation>
+    </message>
+    <message>
+        <source>Print preview for %1</source>
+        <translation>Afdrukvoorbeeld voor %1</translation>
+    </message>
+    <message>
+        <source>New Drawing created.</source>
+        <translation>Nieuwe tekening aangemaakt.</translation>
+    </message>
+    <message>
+        <source>Saving drawing...</source>
+        <translation>Tekening wordt opgeslagen...</translation>
+    </message>
+    <message>
+        <source>Saved drawing: %1</source>
+        <translation>Opgeslagen tekening: %1</translation>
+    </message>
+    <message>
+        <source>Saving drawing under new filename...</source>
+        <translation type="vanished">Tekening wordt onder een nieuw bestandsnaam opgeslagen...</translation>
+    </message>
+    <message>
+        <source>Exporting drawing...</source>
+        <translation>Tekening wordt geëxporteerd...</translation>
+    </message>
+    <message>
+        <source>Exported: %1</source>
+        <translation>Geëxporteerd: %1</translation>
+    </message>
+    <message>
+        <source>Exporting...</source>
+        <translation>Bezig met exporteren...</translation>
+    </message>
+    <message>
+        <source>Export complete</source>
+        <translation>Exporteren geslaagd</translation>
+    </message>
+    <message>
+        <source>Export failed!</source>
+        <translation>Exporteren mislukt!</translation>
+    </message>
+    <message>
+        <source>Printing complete</source>
+        <translation>Afdrukken is voltooid</translation>
+    </message>
+    <message>
+        <source>Command line</source>
+        <translation>Opdrachtregel</translation>
+    </message>
+    <message>
+        <source>Block &apos;%1&apos;</source>
+        <translation>Blok &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Cannot open the file
+%1
+Please check the permissions.</source>
+        <translation>Kan het bestand niet openen
+%1
+Controleer de toegangsrechten.</translation>
+    </message>
+    <message>
+        <source>Cannot save the file
+%1
+Please check the permissions.</source>
+        <translation type="vanished">Kan het bestand niet opslaan
+%1
+Controleer de toegangsrechten.</translation>
+    </message>
+    <message>
+        <source>&amp;Polyline</source>
+        <translation>&amp;Polylijn</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
-        <translation>Automatisch opslaan tekening ...</translation>
+        <translation>Automatisch opslaan tekening...</translation>
     </message>
     <message>
         <source>Auto-saved drawing</source>
@@ -1454,67 +1207,30 @@ U kunt nu uw werk bewaren.</translation>
 %1
 Please check the permissions.
 Auto-save disabled.</source>
-        <translation>Kan bestand %1 niet automatisch opslaan.Automatisch opslaan is uitgeschakeld</translation>
-    </message>
-    <message>
-        <source>SVN Revision: %1</source>
-        <translation type="obsolete">SVN Revision: %1</translation>
-    </message>
-    <message>
-        <source>Help</source>
-        <translation type="obsolete">Help</translation>
-    </message>
-    <message>
-        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
-        <translation type="obsolete">Help bestanden konden niet worden gevonden.</translation>
-    </message>
-    <message>
-        <source>&amp;Plugins</source>
-        <translation type="obsolete">&amp;Plugins</translation>
+        <translation>Kan het bestand niet automatisch opslaan
+%1
+Controleer de toegangsrechten.
+Automatisch opslaan is uitgeschakeld.</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation>Importeer</translation>
+        <translation>Importeren</translation>
     </message>
     <message>
         <source>&amp;Toolbars</source>
-        <translation>&amp;Gereedschappen</translation>
+        <translation>&amp;Werkbalken</translation>
     </message>
     <message>
         <source>Compiled on: %1</source>
-        <translation>Gecompileerd op: %1</translation>
-    </message>
-    <message>
-        <source>Program Icons Supplied by</source>
-        <translation type="obsolete">Programma icoonen Geleverd door</translation>
-    </message>
-    <message>
-        <source>Splash and Logo supplied by</source>
-        <translation type="obsolete">Splash en Logo Geleverd door</translation>
-    </message>
-    <message>
-        <source>Main Website : </source>
-        <translation type="obsolete">LibreCAD Website</translation>
+        <translation>Samengesteld op: %1</translation>
     </message>
     <message>
         <source>Version: %1</source>
         <translation>Versie: %1</translation>
     </message>
     <message>
-        <source>SCM Revision: %1</source>
-        <translation type="obsolete">SCM revisie: %1</translation>
-    </message>
-    <message>
-        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
-        <translation type="obsolete">Ondersteun LibreCAD financieel voor het onderhoud van sourcecode en website. </translation>
-    </message>
-    <message>
-        <source>&amp;%1 %2</source>
-        <translation type="obsolete">&amp;%1 %2</translation>
-    </message>
-    <message>
         <source>Warning: File already opened : </source>
-        <translation>Waarschuwing: Deze file is al geopend.</translation>
+        <translation>Waarschuwing: dit bestand is al geopend :</translation>
     </message>
     <message>
         <source>Cannot save the file </source>
@@ -1522,97 +1238,87 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
-        <translation> , controleer de bestandsnaam en rechten.</translation>
-    </message>
-    <message>
-        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
-        <translation type="obsolete">Doneer alstublieft aan LibreCAD en help mee met het onderhouden van de broncode en de website.</translation>
+        <translation> , controleer de bestandsnaam en toegangsrechten.</translation>
     </message>
     <message>
         <source>Su&amp;b-Window mode</source>
-        <translation type="vanished">su&amp;b-Window mode</translation>
+        <translation type="vanished">Su&amp;b-Window-modus</translation>
     </message>
     <message>
         <source>Tile &amp;Vertically</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Naast elkaar weergeven</translation>
     </message>
     <message>
         <source>Ta&amp;b mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ta&amp;bmodus</translation>
     </message>
     <message>
         <source>New document from template: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nieuw document van sjabloon: </translation>
     </message>
     <message>
         <source>Select Template aborted</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sjabloon selecteren afgebroken</translation>
     </message>
     <message>
         <source>Auto-saving failed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Automatisch opslaan mislukt</translation>
     </message>
     <message>
         <source>Snap Selection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>CAD Tools</source>
-        <translation type="obsolete">CAD Gereedschappen</translation>
+        <translation type="unfinished">Selectie snappen</translation>
     </message>
     <message>
         <source>Export as</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exporteren als</translation>
     </message>
     <message>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Samensteller: Clang %1.%2.%3</translation>
     </message>
     <message>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Samensteller: GNU GCC %1.%2.%3</translation>
     </message>
     <message>
         <source>Qt Version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Qt-versie: %1</translation>
     </message>
     <message>
         <source>Export as PDF</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Text</source>
-        <translation type="obsolete">&amp;Tekst</translation>
+        <translation type="unfinished">Exporteren als pdf</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exporteren</translation>
     </message>
     <message>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kan het bestand
+%1
+niet openen. Controleer of het bestaat en wat de toegangsrechten zijn.</translation>
     </message>
     <message>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Het bestand &apos;%1&apos; bestaat niet. Openen afgebroken.</translation>
     </message>
     <message>
         <source>Categories</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Categorieën</translation>
     </message>
     <message>
         <source>&amp;Order</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Opdracht</translation>
     </message>
     <message>
         <source>Order</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Opdracht</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">Selecteer</translation>
+        <translation type="unfinished">Selecteren</translation>
     </message>
     <message>
         <source>Line</source>
@@ -1624,15 +1330,15 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>&amp;Curve</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Curve</translation>
     </message>
     <message>
         <source>Curve</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Curve</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation type="unfinished">Ovaal</translation>
+        <translation type="unfinished">Ellips</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -1640,11 +1346,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Dimension</source>
-        <translation type="unfinished">maatgeving</translation>
+        <translation type="unfinished">Maat</translation>
     </message>
     <message>
         <source>Modify</source>
-        <translation type="unfinished">Bewerken</translation>
+        <translation type="unfinished">Wijzigen</translation>
     </message>
     <message>
         <source>Info</source>
@@ -1652,179 +1358,203 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Dock Areas</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dockgebieden</translation>
     </message>
     <message>
         <source>Grid Status</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rasterstatus</translation>
     </message>
     <message>
         <source>Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Werkbalken</translation>
     </message>
     <message>
         <source>Dockwidgets</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dockwidgets</translation>
     </message>
     <message>
         <source>Device Options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Apparaatopties</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Apparaat</translation>
     </message>
     <message>
         <source>&amp;Options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Opties</translation>
     </message>
     <message>
         <source>Pl&amp;ugins</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pl&amp;ugins</translation>
     </message>
     <message>
         <source>Dime&amp;nsion</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Af&amp;meting</translation>
     </message>
     <message>
         <source>Dock Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dockwid&amp;gets</translation>
     </message>
     <message>
         <source>Recent Files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Recente bestanden</translation>
     </message>
     <message>
         <source>Boost Version: %1.%2.%3</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Boostversie: %1.%2.%3</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Kopieer</translation>
+        <translation type="unfinished">Kopiëren</translation>
     </message>
     <message>
         <source>Contributors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bijdragers</translation>
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Licentie</translation>
     </message>
     <message>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Systeem</translation>
     </message>
     <message>
         <source>Toolbar Creator</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Werkbalkmaker</translation>
     </message>
     <message>
         <source>Menu Creator</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Menumaker</translation>
     </message>
     <message>
         <source>Menu Assigner</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Toewijzer menu</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Gereedschappen</translation>
     </message>
     <message>
         <source>&amp;Drawings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Tekeningen</translation>
     </message>
     <message>
         <source>Saving drawing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tekening opslaan: %1</translation>
     </message>
     <message>
         <source>Save cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Opslaan geannuleerd</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation type="unfinished">Bezig de tekening te sluiten</translation>
+        <translation type="unfinished">Tekening wordt gesloten</translation>
     </message>
     <message>
         <source>Save changes to the following item?
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Wijzigingen voor het volgende item opslaan?
+%1</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished">O&amp;pslaan</translation>
+        <translation type="unfinished">&amp;Opslaan</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished">Bewaar &amp;als...</translation>
+        <translation type="unfinished">Opslaan &amp;als...</translation>
     </message>
     <message>
         <source>&amp;Save %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 &amp;opslaan</translation>
     </message>
     <message>
         <source>Save %1 &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 opslaan &amp;als... </translation>
     </message>
     <message>
         <source>&amp;Window mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Window-modus</translation>
     </message>
     <message>
         <source>&amp;Layout</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Lay-out</translation>
     </message>
     <message>
         <source>Rounded</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Afgerond</translation>
     </message>
     <message>
         <source>Triangular</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Driehoekig</translation>
     </message>
     <message>
         <source>North</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Noord</translation>
     </message>
     <message>
         <source>South</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zuid</translation>
     </message>
     <message>
         <source>East</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Oost</translation>
     </message>
     <message>
         <source>West</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">West</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Rangschikken</translation>
     </message>
     <message>
         <source>&amp;Maximized</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Gemaximaliseerd</translation>
     </message>
     <message>
         <source>Save All cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alles opslaan geannuleerd</translation>
     </message>
     <message>
         <source>Close All cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alles sluiten geannuleerd</translation>
     </message>
     <message>
         <source>Compiler: Microsoft C/C++ %1.%2.%3.%4</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Samensteller: Microsoft C/C++ %1.%2.%3.%4</translation>
     </message>
     <message>
         <source>The Code</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">De code</translation>
     </message>
     <message>
         <source>LibreCAD Help</source>
+        <translation type="unfinished">LibreCAD Help</translation>
+    </message>
+    <message>
+        <source>Paper settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paper size and/or margins have been changed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to apply changes to current drawing?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawing settings:
+	size: %1 x %2 (%3)
+	margins: %4, %5, %6, %7
+
+Printer settings:
+	size: %8 x %9 (%10)
+	margins: %11, %12, %13, %14
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1832,33 +1562,33 @@ Please check its existence and permissions.</source>
     <name>QC_MDIWindow</name>
     <message>
         <source>Loaded document: </source>
-        <translation type="obsolete">Geopend bestand:</translation>
+        <translation type="obsolete">Geladen document:</translation>
     </message>
     <message>
         <source>Do you really want to close the file
 %1?</source>
-        <translation type="vanished">Wilt u het volgende bestand echt afsluiten
+        <translation type="vanished">Wilt u het bestand echt sluiten
 %1?</translation>
     </message>
     <message>
         <source>Do you really want to close the drawing?</source>
-        <translation type="vanished">Wilt U de Tekening echt afsluiten?</translation>
+        <translation type="vanished">Wilt u de tekening echt sluiten?</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation type="vanished">Bezig de tekening te sluiten</translation>
+        <translation type="vanished">Tekening wordt gesloten</translation>
     </message>
     <message>
         <source>Save Drawing</source>
-        <translation type="unfinished">Bewaar Tekening</translation>
+        <translation type="unfinished">Tekening opslaan</translation>
     </message>
     <message>
         <source>This file is set to read-only.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dit bestand in ingesteld op &apos;alleen lezen&apos;.</translation>
     </message>
     <message>
         <source>Try again with a different file name.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Probeer het opnieuw met een andere bestandsnaam.</translation>
     </message>
 </context>
 <context>
@@ -1869,15 +1599,15 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="obsolete">&amp;Open...</translation>
+        <translation type="obsolete">&amp;Openen...</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="obsolete">O&amp;pslaan</translation>
+        <translation type="obsolete">&amp;Opslaan</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="obsolete">Bewaar &amp;als...</translation>
+        <translation type="obsolete">Opslaan &amp;als...</translation>
     </message>
     <message>
         <source>&amp;Close</source>
@@ -1885,7 +1615,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>&amp;Print</source>
-        <translation type="obsolete">Af&amp;drukken</translation>
+        <translation type="obsolete">&amp;Afdrukken</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -1897,15 +1627,15 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Quits the application</source>
-        <translation type="obsolete">Sluit het programma af</translation>
+        <translation type="obsolete">Sluit de toepassing af</translation>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation type="obsolete">Zoom in</translation>
+        <translation type="obsolete">Inzoomen</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
-        <translation type="obsolete">Zoom &amp;In</translation>
+        <translation type="obsolete">&amp;Inzoomen</translation>
     </message>
     <message>
         <source>Zooms in</source>
@@ -1913,11 +1643,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation type="obsolete">Zoom uit</translation>
+        <translation type="obsolete">Uitzoomen</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation type="obsolete">Zoom &amp;Uit</translation>
+        <translation type="obsolete">&amp;Uitzoomen</translation>
     </message>
     <message>
         <source>Zooms out</source>
@@ -1925,11 +1655,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Auto Zoom</source>
-        <translation type="obsolete">Auto Zoom</translation>
+        <translation type="obsolete">Autozoom</translation>
     </message>
     <message>
         <source>&amp;Auto Zoom</source>
-        <translation type="obsolete">&amp;Auto Zoom</translation>
+        <translation type="obsolete">&amp;Autozoom</translation>
     </message>
     <message>
         <source>Zooms automatic</source>
@@ -1937,11 +1667,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Window Zoom</source>
-        <translation type="obsolete">Venster Zoom</translation>
+        <translation type="obsolete">Zoomen venster</translation>
     </message>
     <message>
         <source>&amp;Window Zoom</source>
-        <translation type="obsolete">&amp;Venster Zoom</translation>
+        <translation type="obsolete">&amp;Zoomen venster</translation>
     </message>
     <message>
         <source>Zooms in a window</source>
@@ -1949,35 +1679,35 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Pan Zoom</source>
-        <translation type="obsolete">Pan Zoom</translation>
+        <translation type="obsolete">Pan/zoom</translation>
     </message>
     <message>
         <source>&amp;Pan Zoom</source>
-        <translation type="obsolete">&amp;Pan Zoom</translation>
+        <translation type="obsolete">&amp;Pan/zoom</translation>
     </message>
     <message>
         <source>Realtime Panning</source>
-        <translation type="obsolete">Pannen</translation>
+        <translation type="obsolete">Realtime pannen</translation>
     </message>
     <message>
         <source>Redraw</source>
-        <translation type="obsolete">Herteken</translation>
+        <translation type="obsolete">Opnieuw tekenen</translation>
     </message>
     <message>
         <source>&amp;Redraw</source>
-        <translation type="obsolete">Her&amp;teken</translation>
+        <translation type="obsolete">&amp;Opnieuw tekenen</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">Herstel</translation>
+        <translation type="obsolete">Ongedaan maken</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="obsolete">&amp;Herstel</translation>
+        <translation type="obsolete">&amp;Ongedaan maken</translation>
     </message>
     <message>
         <source>Undoes last action</source>
-        <translation type="obsolete">Herstelt laatste actie</translation>
+        <translation type="obsolete">Laatste actie ongedaan maken</translation>
     </message>
     <message>
         <source>Redo</source>
@@ -1993,135 +1723,135 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="obsolete">Knip</translation>
+        <translation type="obsolete">Knippen</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="obsolete">&amp;Knip</translation>
+        <translation type="obsolete">&amp;Knippen</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="obsolete">Kopieer</translation>
+        <translation type="obsolete">Kopiëren</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="obsolete">&amp;Kopieer</translation>
+        <translation type="obsolete">&amp;Kopiëren</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="obsolete">Plak</translation>
+        <translation type="obsolete">Plakken</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="obsolete">&amp;Plak</translation>
+        <translation type="obsolete">&amp;Plakken</translation>
     </message>
     <message>
         <source>Select Entity</source>
-        <translation type="obsolete">Selecteer Element</translation>
+        <translation type="obsolete">Element selecteren</translation>
     </message>
     <message>
         <source>Selects single Entities</source>
-        <translation type="obsolete">Selecteert enkele Elementen</translation>
+        <translation type="obsolete">Selecteert enkele elementen</translation>
     </message>
     <message>
         <source>Select Window</source>
-        <translation type="obsolete">Selecteer Venster</translation>
+        <translation type="obsolete">Venster selecteren</translation>
     </message>
     <message>
         <source>Select &amp;Window</source>
-        <translation type="obsolete">Selecteer &amp;Venster</translation>
+        <translation type="obsolete">&amp;Venster selecteren</translation>
     </message>
     <message>
         <source>Selects all Entities in a given Window</source>
-        <translation type="obsolete">Selecteer alle Elementen in bepaalde Venster</translation>
+        <translation type="obsolete">Selecteert alle elementen in een bepaald venster</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation type="obsolete">Deselecteer Venster</translation>
+        <translation type="obsolete">Venster deselecteren</translation>
     </message>
     <message>
         <source>Deselect &amp;Window</source>
-        <translation type="obsolete">Deselecteer &amp;Venster</translation>
+        <translation type="obsolete">&amp;Venster deselecteren</translation>
     </message>
     <message>
         <source>Deselects all Entities in a given Window</source>
-        <translation type="obsolete">Deselecteer alle Elementen in bepaalde Venster</translation>
+        <translation type="obsolete">Deselecteert alle elementen in een bepaald venster</translation>
     </message>
     <message>
         <source>(De-)Select Contour</source>
-        <translation type="obsolete">(De-)Selecteer Contour</translation>
+        <translation type="obsolete">Omtrek (de)selecteren</translation>
     </message>
     <message>
         <source>(De-)Selects connected entities</source>
-        <translation type="obsolete">(De-)Selecteer verbonden Elementen</translation>
+        <translation type="obsolete">(De)selecteert verbonden elementen</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="obsolete">Selecteer alles</translation>
+        <translation type="obsolete">Alles selecteren</translation>
     </message>
     <message>
         <source>Select &amp;All</source>
-        <translation type="obsolete">Selecteer &amp;Alles</translation>
+        <translation type="obsolete">&amp;Alles selecteren</translation>
     </message>
     <message>
         <source>Selects all Entities</source>
-        <translation type="obsolete">Selecteert alle Elementen</translation>
+        <translation type="obsolete">Selecteert alle elementen</translation>
     </message>
     <message>
         <source>Deselect all</source>
-        <translation type="obsolete">Deselecteer alles</translation>
+        <translation type="obsolete">Alles deselecteren</translation>
     </message>
     <message>
         <source>Deselect &amp;all</source>
-        <translation type="obsolete">Deselecteer &amp;alles</translation>
+        <translation type="obsolete">&amp;Alles deselecteren</translation>
     </message>
     <message>
         <source>Deselects all Entities</source>
-        <translation type="obsolete">Deselecteer alle Elementen</translation>
+        <translation type="obsolete">Deselecteert alle elementen</translation>
     </message>
     <message>
         <source>Invert Selection</source>
-        <translation type="obsolete">Inverteer Selectie</translation>
+        <translation type="obsolete">Selectie omkeren</translation>
     </message>
     <message>
         <source>&amp;Invert Selection</source>
-        <translation type="obsolete">&amp;Inverteer Selectie</translation>
+        <translation type="obsolete">&amp;Selectie omkeren</translation>
     </message>
     <message>
         <source>Inverts the current selection</source>
-        <translation type="obsolete">Inverteert de huidige Selectie</translation>
+        <translation type="obsolete">De huidige selectie omkeren</translation>
     </message>
     <message>
         <source>Select Intersected Entities</source>
-        <translation type="obsolete">Selecteer kruisende Elementen</translation>
+        <translation type="obsolete">Kruisende elementen selecteren</translation>
     </message>
     <message>
         <source>In&amp;tersected Entities</source>
-        <translation type="obsolete">&amp;Kruisende Elementen</translation>
+        <translation type="obsolete">Kr&amp;uisende elementen</translation>
     </message>
     <message>
         <source>Selects all entities intersected by a line</source>
-        <translation type="obsolete">Selecteert alle Elementen die door een lijn gekruist worden</translation>
+        <translation type="obsolete">Selecteert alle elementen doorkruist door een lijn</translation>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
-        <translation type="obsolete">Deselecteer kruisende Elementen</translation>
+        <translation type="obsolete">Kruisende elementen deselecteren</translation>
     </message>
     <message>
         <source>Deselect Inte&amp;rsected Entities</source>
-        <translation type="obsolete">Deselecteer k&amp;ruisende Elementen</translation>
+        <translation type="obsolete">Kr&amp;uisende elementen deselecteren</translation>
     </message>
     <message>
         <source>Deselects all entities intersected by a line</source>
-        <translation type="obsolete">Deselecteert alle Elementen die door een lijn gekruist worden</translation>
+        <translation type="obsolete">Deselecteert alle elementen doorkruist door een lijn</translation>
     </message>
     <message>
         <source>(De-)Select Layer</source>
-        <translation type="obsolete">(De-)Selecteer Laag</translation>
+        <translation type="obsolete">Laag (de)selecteren</translation>
     </message>
     <message>
         <source>(De-)Selects layers</source>
-        <translation type="obsolete">(De-)Selecteert Lagen</translation>
+        <translation type="obsolete">(De)selecteert lagen</translation>
     </message>
     <message>
         <source>Points</source>
@@ -2133,23 +1863,23 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Draw Points</source>
-        <translation type="obsolete">Teken Punten</translation>
+        <translation type="obsolete">Punten tekenen</translation>
     </message>
     <message>
         <source>Line: 2 Points</source>
-        <translation type="obsolete">Lijn: 2 Punten</translation>
+        <translation type="obsolete">Lijn: 2 punten</translation>
     </message>
     <message>
         <source>&amp;2 Points</source>
-        <translation type="obsolete">&amp;2 Punten</translation>
+        <translation type="obsolete">&amp;2 punten</translation>
     </message>
     <message>
         <source>Draw lines</source>
-        <translation type="obsolete">Teken Lijnen</translation>
+        <translation type="obsolete">Lijnen tekenen</translation>
     </message>
     <message>
         <source>Line: Angle</source>
-        <translation type="obsolete">Lijn: Hoek</translation>
+        <translation type="obsolete">Lijn: hoek</translation>
     </message>
     <message>
         <source>&amp;Angle</source>
@@ -2157,11 +1887,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Draw lines with a given angle</source>
-        <translation type="obsolete">Teken lijnen gegeven een hoek</translation>
+        <translation type="obsolete">Lijnen tekenen met opgegeven hoek</translation>
     </message>
     <message>
         <source>Line: Horizontal</source>
-        <translation type="obsolete">Lijn: Horizontaal</translation>
+        <translation type="obsolete">Lijn: horizontaal</translation>
     </message>
     <message>
         <source>&amp;Horizontal</source>
@@ -2169,7 +1899,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Draw horizontal lines</source>
-        <translation type="obsolete">Teken horizontale lijnen</translation>
+        <translation type="obsolete">Horizontale lijnen tekenen</translation>
     </message>
     <message>
         <source>hor./vert. line</source>
@@ -2177,35 +1907,35 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>H&amp;orizontal / Vertical</source>
-        <translation type="obsolete">H&amp;orizontaal / Vertikaal</translation>
+        <translation type="obsolete">H&amp;orizontaal/Verticaal</translation>
     </message>
     <message>
         <source>Draw horizontal/vertical lines</source>
-        <translation type="obsolete">Teken horizontale/vertikale lijnen</translation>
+        <translation type="obsolete">Horizontale/verticale lijnen tekenen</translation>
     </message>
     <message>
         <source>Line: Vertical</source>
-        <translation type="obsolete">Lijn: Vertikaal</translation>
+        <translation type="obsolete">Lijn: verticaal</translation>
     </message>
     <message>
         <source>&amp;Vertical</source>
-        <translation type="obsolete">&amp;Vertikaal</translation>
+        <translation type="obsolete">&amp;Verticaal</translation>
     </message>
     <message>
         <source>Draw vertical lines</source>
-        <translation type="obsolete">Teken vertikale lijnen</translation>
+        <translation type="obsolete">Verticale lijnen tekenen</translation>
     </message>
     <message>
         <source>Line: Freehand</source>
-        <translation type="obsolete">Lijn: Losse Pols</translation>
+        <translation type="obsolete">Lijn: vrije vorm</translation>
     </message>
     <message>
         <source>&amp;Freehand Line</source>
-        <translation type="obsolete">Lo&amp;sse Pols Lijn</translation>
+        <translation type="obsolete">&amp;Vrije lijn</translation>
     </message>
     <message>
         <source>Draw freehand lines</source>
-        <translation type="obsolete">Teken lijnen uit de losse pols</translation>
+        <translation type="obsolete">Vrije lijnen tekenen</translation>
     </message>
     <message>
         <source>Parallel</source>
@@ -2225,43 +1955,43 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Draw rectangles</source>
-        <translation type="obsolete">Teken Rechthoeken</translation>
+        <translation type="obsolete">Rechthoeken tekenen</translation>
     </message>
     <message>
         <source>Bisector</source>
-        <translation type="obsolete">Bissectice</translation>
+        <translation type="obsolete">Middelloodlijn</translation>
     </message>
     <message>
         <source>&amp;Bisector</source>
-        <translation type="obsolete">&amp;Bissectice</translation>
+        <translation type="obsolete">&amp;Middelloodlijn</translation>
     </message>
     <message>
         <source>Draw bisectors</source>
-        <translation type="obsolete">Teken Bissectice</translation>
+        <translation type="obsolete">Teken middelloodlijnen</translation>
     </message>
     <message>
         <source>Tangent (P,C)</source>
-        <translation type="obsolete">Tangent (P,C)</translation>
+        <translation type="obsolete">Raaklijn (p, c)</translation>
     </message>
     <message>
         <source>&amp;Tangent (P,C)</source>
-        <translation type="obsolete">&amp;Tangent (P,C)</translation>
+        <translation type="obsolete">&amp;Raaklijn (p, c)</translation>
     </message>
     <message>
         <source>Draw tangent (point, circle)</source>
-        <translation type="obsolete">Teken tangent (punt, cirkel)</translation>
+        <translation type="obsolete">Teken raaklijn (punt, cirkel)</translation>
     </message>
     <message>
         <source>Tangent (C,C)</source>
-        <translation type="obsolete">Tangent (C,C)</translation>
+        <translation type="obsolete">Raaklijn (c, c)</translation>
     </message>
     <message>
         <source>Tan&amp;gent (C,C)</source>
-        <translation type="obsolete">Tan&amp;gent (C,C)</translation>
+        <translation type="obsolete">Raak&amp;lijn (c, c)</translation>
     </message>
     <message>
         <source>Draw tangent (circle, circle)</source>
-        <translation type="obsolete">Teken tangent (cirkel, cirkel)</translation>
+        <translation type="obsolete">Teken raaklijn (cirkel, cirkel)</translation>
     </message>
     <message>
         <source>Orthogonal</source>
@@ -2273,19 +2003,19 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Draw orthogonal line</source>
-        <translation type="obsolete">Teken orthogonale lijn</translation>
+        <translation type="obsolete">Orthogonale lijn tekenen</translation>
     </message>
     <message>
         <source>Relative angle</source>
-        <translation type="obsolete">Relatieve Hoek</translation>
+        <translation type="obsolete">Relatieve hoek</translation>
     </message>
     <message>
         <source>R&amp;elative angle</source>
-        <translation type="obsolete">R&amp;elatieve Hoek</translation>
+        <translation type="obsolete">R&amp;elatieve hoek</translation>
     </message>
     <message>
         <source>Draw line with relative angle</source>
-        <translation type="obsolete">Teken lijn met relatieve Hoek</translation>
+        <translation type="obsolete">Lijn met relatieve hoek tekenen</translation>
     </message>
     <message>
         <source>Polygon</source>
@@ -2293,15 +2023,15 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation type="obsolete">Pol&amp;ygoon (Cen,Hkp)</translation>
+        <translation type="obsolete">Pol&amp;ygoon (mid, hkp)</translation>
     </message>
     <message>
         <source>Draw polygon with center and corner</source>
-        <translation type="obsolete">Teken polygoon met center en hoekpunt</translation>
+        <translation type="obsolete">Teken polygoon met middelpunt en hoekpunt</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cor,Cor)</source>
-        <translation type="obsolete">Pol&amp;ygoon (Hkp,Hkp)</translation>
+        <translation type="obsolete">Pol&amp;ygoon (hkp, hkp)</translation>
     </message>
     <message>
         <source>Draw polygon with two corners</source>
@@ -2309,99 +2039,99 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Circle: Center, Point</source>
-        <translation type="obsolete">Cirkel: Center, Punt</translation>
+        <translation type="obsolete">Cirkel: middelpunt, punt</translation>
     </message>
     <message>
         <source>Center, &amp;Point</source>
-        <translation type="obsolete">Center, &amp;Punt</translation>
+        <translation type="obsolete">Middelpunt, &amp;punt</translation>
     </message>
     <message>
         <source>Draw circles with center and point</source>
-        <translation type="obsolete">Teken cirkels met center en punt</translation>
+        <translation type="obsolete">Teken cirkels met middelpunt en punt</translation>
     </message>
     <message>
         <source>Circle: Center, Radius</source>
-        <translation type="obsolete">Cirkel: Center, Radius</translation>
+        <translation type="obsolete">Cirkel: middelpunt, radius</translation>
     </message>
     <message>
         <source>Center, &amp;Radius</source>
-        <translation type="obsolete">Center, &amp;Radius</translation>
+        <translation type="obsolete">Middelpunt, &amp;radius</translation>
     </message>
     <message>
         <source>Draw circles with center and radius</source>
-        <translation type="obsolete">Teken cirkels met center en radius</translation>
+        <translation type="obsolete">Teken cirkels met middelpunt en radius</translation>
     </message>
     <message>
         <source>Circle: 2 Points</source>
-        <translation type="obsolete">Cirkel: 2 Punten</translation>
+        <translation type="obsolete">Cirkel: 2 punten</translation>
     </message>
     <message>
         <source>2 Points</source>
-        <translation type="obsolete">2 Punten</translation>
+        <translation type="obsolete">2 punten</translation>
     </message>
     <message>
         <source>Draw circles with 2 points</source>
-        <translation type="obsolete">Teken cirkels met 2 punten</translation>
+        <translation type="obsolete">Cirkels met 2 punten tekenen</translation>
     </message>
     <message>
         <source>Circle: 3 Points</source>
-        <translation type="obsolete">Cirkel: 3 Punten</translation>
+        <translation type="obsolete">Cirkel: 3 punten</translation>
     </message>
     <message>
         <source>3 Points</source>
-        <translation type="obsolete">3 Punten</translation>
+        <translation type="obsolete">3 punten</translation>
     </message>
     <message>
         <source>Draw circles with 3 points</source>
-        <translation type="obsolete">Teken cirkels met 3 punten</translation>
+        <translation type="obsolete">Cirkels met 3 punten tekenen</translation>
     </message>
     <message>
         <source>Arc: Center, Point, Angles</source>
-        <translation type="obsolete">Boog: Center, Punt, Hoeken</translation>
+        <translation type="obsolete">Boog: middelpunt, punt, hoeken</translation>
     </message>
     <message>
         <source>&amp;Center, Point, Angles</source>
-        <translation type="obsolete">&amp;Center, Punt, Hoeken</translation>
+        <translation type="obsolete">&amp;Middelpunt, punt, hoeken</translation>
     </message>
     <message>
         <source>Draw arcs</source>
-        <translation type="obsolete">Teken bogen</translation>
+        <translation type="obsolete">Bogen tekenen</translation>
     </message>
     <message>
         <source>Arc: 3 Points</source>
-        <translation type="obsolete">Boog: 3 Punten</translation>
+        <translation type="obsolete">Boog: 3 punten</translation>
     </message>
     <message>
         <source>&amp;3 Points</source>
-        <translation type="obsolete">&amp;3 Punten</translation>
+        <translation type="obsolete">&amp;3 punten</translation>
     </message>
     <message>
         <source>Draw arcs with 3 points</source>
-        <translation type="obsolete">Teken bogen met 3 punten</translation>
+        <translation type="obsolete">Bogen met 3 punten tekenen</translation>
     </message>
     <message>
         <source>Ellipse with Axis</source>
-        <translation type="obsolete">Ellips met Assen</translation>
+        <translation type="obsolete">Ellips met as</translation>
     </message>
     <message>
         <source>&amp;Ellipse (Axis)</source>
-        <translation type="obsolete">&amp;Ellips (Assen)</translation>
+        <translation type="obsolete">&amp;Ellips (as)</translation>
     </message>
     <message>
         <source>Draw Ellipses</source>
-        <translation type="obsolete">Teken Ellipsen</translation>
+        <translation type="obsolete">Ellipsen tekenen</translation>
     </message>
     <message>
         <source>Ellipse Arc with Axis</source>
-        <translation type="obsolete">Ellips Boog met Assen</translation>
+        <translation type="obsolete">Ellipsboog met as</translation>
     </message>
     <message>
         <source>&amp;Ellipse Arc (Axis)</source>
-        <translation type="obsolete">&amp;Ellips Boog (Assen)</translation>
+        <translation type="obsolete">&amp;Ellipsboog (as)</translation>
     </message>
     <message>
         <source>Draw Ellipse Arcs</source>
-        <translation type="obsolete">Teken Ellips Boog</translation>
+        <translation type="obsolete">Ellipsbogen tekenen</translation>
     </message>
     <message>
         <source>Text</source>
@@ -2413,11 +2143,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Draw Text Entities</source>
-        <translation type="obsolete">Teken tekst Elementen</translation>
+        <translation type="obsolete">Teken tekst elementen</translation>
     </message>
     <message>
         <source>Draw Hatches and Solid Fills</source>
-        <translation type="obsolete">Teken Arceringen en Inkleuringen</translation>
+        <translation type="obsolete">Teken arceringen en inkleuringen</translation>
     </message>
     <message>
         <source>Aligned</source>
@@ -2429,35 +2159,35 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Aligned Dimension</source>
-        <translation type="obsolete">Uitgelijnde Maat</translation>
+        <translation type="obsolete">Uitgelijnde maat</translation>
     </message>
     <message>
         <source>Linear</source>
-        <translation type="obsolete">Liniair</translation>
+        <translation type="obsolete">Lineair</translation>
     </message>
     <message>
         <source>&amp;Linear</source>
-        <translation type="obsolete">&amp;Liniair</translation>
+        <translation type="obsolete">&amp;Lineair</translation>
     </message>
     <message>
         <source>Linear Dimension</source>
-        <translation type="obsolete">Liniaire Maat</translation>
+        <translation type="obsolete">Lineaire maat</translation>
     </message>
     <message>
         <source>Horizontal</source>
-        <translation type="obsolete">Horizontaal</translation>
+        <translation type="obsolete">Horizontale</translation>
     </message>
     <message>
         <source>Horizontal Dimension</source>
-        <translation type="obsolete">Horizontale Maat</translation>
+        <translation type="obsolete">Horizontale maat</translation>
     </message>
     <message>
         <source>Vertical</source>
-        <translation type="obsolete">Vertikaal</translation>
+        <translation type="obsolete">Verticaal</translation>
     </message>
     <message>
         <source>Vertical Dimension</source>
-        <translation type="obsolete">Vertikale Maat</translation>
+        <translation type="obsolete">Verticale maat</translation>
     </message>
     <message>
         <source>Radial</source>
@@ -2469,7 +2199,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Radial Dimension</source>
-        <translation type="obsolete">Radiale Maat</translation>
+        <translation type="obsolete">Radiale maat</translation>
     </message>
     <message>
         <source>Diametric</source>
@@ -2481,67 +2211,67 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Diametric Dimension</source>
-        <translation type="obsolete">Diametrische Maat</translation>
+        <translation type="obsolete">Diametrische maat</translation>
     </message>
     <message>
         <source>Angular</source>
-        <translation type="obsolete">Hoek</translation>
+        <translation type="obsolete">Hoekig</translation>
     </message>
     <message>
         <source>&amp;Angular</source>
-        <translation type="obsolete">&amp;Hoek</translation>
+        <translation type="obsolete">&amp;Hoekig</translation>
     </message>
     <message>
         <source>Angular Dimension</source>
-        <translation type="obsolete">Hoek Maat</translation>
+        <translation type="obsolete">Hoekmaat</translation>
     </message>
     <message>
         <source>Leader</source>
-        <translation type="obsolete">Aanhaling</translation>
+        <translation type="obsolete">Verbindingslijn</translation>
     </message>
     <message>
         <source>&amp;Leader</source>
-        <translation type="obsolete">Aan&amp;haling</translation>
+        <translation type="obsolete">&amp;Verbindingslijn</translation>
     </message>
     <message>
         <source>Leader Dimension</source>
-        <translation type="obsolete">Aanhaal Maat</translation>
+        <translation type="obsolete">Maat verbindingslijn</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="obsolete">Wissen</translation>
+        <translation type="obsolete">Verwijderen</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="obsolete">&amp;Wissen</translation>
+        <translation type="obsolete">&amp;Verwijderen</translation>
     </message>
     <message>
         <source>Delete Entities</source>
-        <translation type="obsolete">Wis Elementen</translation>
+        <translation type="obsolete">Elementen verwijderen</translation>
     </message>
     <message>
         <source>Delete Freehand</source>
-        <translation type="obsolete">Wis Losse Pols</translation>
+        <translation type="obsolete">Vrije vorm verwijderen</translation>
     </message>
     <message>
         <source>&amp;Delete Freehand</source>
-        <translation type="obsolete">&amp;Wis Losse Pols</translation>
+        <translation type="obsolete">&amp;Vrije vorm verwijderen</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation type="obsolete">Verplaats</translation>
+        <translation type="obsolete">Verplaatsen</translation>
     </message>
     <message>
         <source>&amp;Move</source>
-        <translation type="obsolete">&amp;Verplaats</translation>
+        <translation type="obsolete">&amp;Verplaatsen</translation>
     </message>
     <message>
         <source>Move Entities</source>
-        <translation type="obsolete">Verplaats Elementen</translation>
+        <translation type="obsolete">Verplaats elementen</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation type="obsolete">Roteer</translation>
+        <translation type="obsolete">Roteren</translation>
     </message>
     <message>
         <source>&amp;Rotate</source>
@@ -2549,19 +2279,19 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Rotate Entities</source>
-        <translation type="obsolete">Roteer Elementen</translation>
+        <translation type="obsolete">Roteer elementen</translation>
     </message>
     <message>
         <source>Scale</source>
-        <translation type="obsolete">Verschaal</translation>
+        <translation type="obsolete">Verschalen</translation>
     </message>
     <message>
         <source>&amp;Scale</source>
-        <translation type="obsolete">Ver&amp;schaal</translation>
+        <translation type="obsolete">&amp;Verschalen</translation>
     </message>
     <message>
         <source>Scale Entities</source>
-        <translation type="obsolete">Verschaal Elementen</translation>
+        <translation type="obsolete">Elementen verschalen</translation>
     </message>
     <message>
         <source>Mirror</source>
@@ -2569,59 +2299,59 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>&amp;Mirror</source>
-        <translation type="obsolete">S&amp;piegelen</translation>
+        <translation type="obsolete">&amp;Spiegelen</translation>
     </message>
     <message>
         <source>Mirror Entities</source>
-        <translation type="obsolete">Spiegel Elementen</translation>
+        <translation type="obsolete">Spiegel elementen</translation>
     </message>
     <message>
         <source>Move and Rotate</source>
-        <translation type="obsolete">Verplaats en Roteer</translation>
+        <translation type="obsolete">Verplaats en roteer</translation>
     </message>
     <message>
         <source>M&amp;ove and Rotate</source>
-        <translation type="obsolete">Ve&amp;rplaats en Roteer</translation>
+        <translation type="obsolete">V&amp;erplaats en roteer</translation>
     </message>
     <message>
         <source>Move and Rotate Entities</source>
-        <translation type="obsolete">Verplaats en Roteer Elementen</translation>
+        <translation type="obsolete">Verplaats en roteer elementen</translation>
     </message>
     <message>
         <source>Rotate Two</source>
-        <translation type="obsolete">Roteer Twee</translation>
+        <translation type="obsolete">Twee roteren</translation>
     </message>
     <message>
         <source>Rotate T&amp;wo</source>
-        <translation type="obsolete">Roteer T&amp;wee</translation>
+        <translation type="obsolete">Roteer t&amp;wee</translation>
     </message>
     <message>
         <source>Rotate Entities around two centers</source>
-        <translation type="obsolete">Roteer Elementen om twee centers</translation>
+        <translation type="obsolete">Roteer elementen om twee middelpunten</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation type="obsolete">Trim</translation>
+        <translation type="obsolete">Bijsnijden</translation>
     </message>
     <message>
         <source>&amp;Trim</source>
-        <translation type="obsolete">&amp;Trim</translation>
+        <translation type="obsolete">&amp;Bijsnijden</translation>
     </message>
     <message>
         <source>Trim Entities</source>
-        <translation type="obsolete">Trim Elementen</translation>
+        <translation type="obsolete">Elementen bijsnijden</translation>
     </message>
     <message>
         <source>Trim Two</source>
-        <translation type="obsolete">Trim Twee</translation>
+        <translation type="obsolete">Twee bijsnijden</translation>
     </message>
     <message>
         <source>&amp;Trim Two</source>
-        <translation type="obsolete">&amp;Trim Twee</translation>
+        <translation type="obsolete">&amp;Twee bijsnijden</translation>
     </message>
     <message>
         <source>Trim two Entities</source>
-        <translation type="obsolete">Trim Twee Elementen</translation>
+        <translation type="obsolete">Twee elementen bijsnijden</translation>
     </message>
     <message>
         <source>Lengthen</source>
@@ -2633,51 +2363,51 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Lengthen by a given amount</source>
-        <translation type="obsolete">Verleng een bepaalde hoeveelheid</translation>
+        <translation type="obsolete">Verlengen met een bepaalde hoeveelheid</translation>
     </message>
     <message>
         <source>&amp;Cut</source>
-        <translation type="obsolete">&amp;Knip</translation>
+        <translation type="obsolete">&amp;Knippen</translation>
     </message>
     <message>
         <source>Cut Entities</source>
-        <translation type="obsolete">Trim Elementen</translation>
+        <translation type="obsolete">Elementen knippen</translation>
     </message>
     <message>
         <source>Stretch</source>
-        <translation type="obsolete">Uitrekken</translation>
+        <translation type="obsolete">Rekken</translation>
     </message>
     <message>
         <source>&amp;Stretch</source>
-        <translation type="obsolete">&amp;Uitrekken</translation>
+        <translation type="obsolete">&amp;Rekken</translation>
     </message>
     <message>
         <source>Stretch Entities</source>
-        <translation type="obsolete">Rek Elementen</translation>
+        <translation type="obsolete">Rek elementen</translation>
     </message>
     <message>
         <source>Bevel</source>
-        <translation type="obsolete">Afschuining</translation>
+        <translation type="obsolete">Afschuinen</translation>
     </message>
     <message>
         <source>&amp;Bevel</source>
-        <translation type="obsolete">&amp;Afschuining</translation>
+        <translation type="obsolete">&amp;Afschuinen</translation>
     </message>
     <message>
         <source>Bevel Entities</source>
-        <translation type="obsolete">Afschuin Elementen</translation>
+        <translation type="obsolete">Schuin elementen af</translation>
     </message>
     <message>
         <source>Round</source>
-        <translation type="obsolete">Afronding</translation>
+        <translation type="obsolete">Afronden</translation>
     </message>
     <message>
         <source>&amp;Round</source>
-        <translation type="obsolete">Af&amp;ronding</translation>
+        <translation type="obsolete">&amp;Afronden</translation>
     </message>
     <message>
         <source>Round Entities</source>
-        <translation type="obsolete">Rond Elementen af</translation>
+        <translation type="obsolete">Rond elementen af</translation>
     </message>
     <message>
         <source>Free</source>
@@ -2697,11 +2427,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>&amp;Grid</source>
-        <translation type="obsolete">R&amp;aster</translation>
+        <translation type="obsolete">&amp;Raster</translation>
     </message>
     <message>
         <source>Grid positioning</source>
-        <translation type="obsolete">Positioneren op het Grid</translation>
+        <translation type="obsolete">Positioneren op raster</translation>
     </message>
     <message>
         <source>Endpoints</source>
@@ -2713,99 +2443,99 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Snap to endpoints</source>
-        <translation type="obsolete">Snap naar eindpunten</translation>
+        <translation type="obsolete">Snappen naar eindpunten</translation>
     </message>
     <message>
         <source>On Entity</source>
-        <translation type="obsolete">Op Element</translation>
+        <translation type="obsolete">Op element</translation>
     </message>
     <message>
         <source>&amp;On Entity</source>
-        <translation type="obsolete">&amp;Op Element</translation>
+        <translation type="obsolete">&amp;Op element</translation>
     </message>
     <message>
         <source>Snap to nearest point on entity</source>
-        <translation type="obsolete">Snap naar dichtstbijzijnde Element</translation>
+        <translation type="obsolete">Snappen naar dichtstbijzijnde element</translation>
     </message>
     <message>
         <source>Center</source>
-        <translation type="obsolete">Center</translation>
+        <translation type="obsolete">Middelpunt</translation>
     </message>
     <message>
         <source>&amp;Center</source>
-        <translation type="obsolete">&amp;Center</translation>
+        <translation type="obsolete">&amp;Middelpunt</translation>
     </message>
     <message>
         <source>Snap to centers</source>
-        <translation type="obsolete">Snap naar Centers</translation>
+        <translation type="obsolete">Snappen naar middelpunten</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation type="obsolete">Middel</translation>
+        <translation type="obsolete">Midden</translation>
     </message>
     <message>
         <source>&amp;Middle</source>
-        <translation type="obsolete">&amp;Middel</translation>
+        <translation type="obsolete">&amp;Midden</translation>
     </message>
     <message>
         <source>Snap to middle points</source>
-        <translation type="obsolete">Snap naar Middelpunten</translation>
+        <translation type="obsolete">Snappen naar middenpunten</translation>
     </message>
     <message>
         <source>Distance from Endpoint</source>
-        <translation type="obsolete">Afstand vanaf Eindpunt</translation>
+        <translation type="obsolete">Afstand vanaf eindpunt</translation>
     </message>
     <message>
         <source>&amp;Distance from Endpoint</source>
-        <translation type="obsolete">&amp;Afstand vanaf Eindpunt</translation>
+        <translation type="obsolete">&amp;Afstand vanaf eindpunt</translation>
     </message>
     <message>
         <source>Snap to points with a given distance to an endpoint</source>
-        <translation type="obsolete">Snap naar punten op afstand vanaf Eindpunt</translation>
+        <translation type="obsolete">Snappen naar punten met een opgegeven afstand naar een eindpunt</translation>
     </message>
     <message>
         <source>Intersection</source>
-        <translation type="obsolete">Intersectie</translation>
+        <translation type="obsolete">Snijpunt</translation>
     </message>
     <message>
         <source>&amp;Intersection</source>
-        <translation type="obsolete">&amp;Intersectie</translation>
+        <translation type="obsolete">&amp;Snijpunt</translation>
     </message>
     <message>
         <source>Snap to intersection points</source>
-        <translation type="obsolete">Snap naar intersectie punten</translation>
+        <translation type="obsolete">Snappen naar snijpunten</translation>
     </message>
     <message>
         <source>Intersection Manually</source>
-        <translation type="obsolete">Handmatige Intersectie</translation>
+        <translation type="obsolete">Handmatig snijpunt</translation>
     </message>
     <message>
         <source>I&amp;ntersection Manually</source>
-        <translation type="obsolete">Ha&amp;ndmatige Intersectie</translation>
+        <translation type="obsolete">Ha&amp;ndmatig snijpunt</translation>
     </message>
     <message>
         <source>Snap to intersection points manually</source>
-        <translation type="obsolete">Snap handmatig naar Intersectie Punten</translation>
+        <translation type="obsolete">Handmatig snappen naar snijpunten</translation>
     </message>
     <message>
         <source>Restrict Nothing</source>
-        <translation type="obsolete">Beperk Niets</translation>
+        <translation type="obsolete">Niets beperken</translation>
     </message>
     <message>
         <source>Restrict &amp;Nothing</source>
-        <translation type="obsolete">Beperk &amp;Niets</translation>
+        <translation type="obsolete">&amp;Niets beperken</translation>
     </message>
     <message>
         <source>No snap restriction</source>
-        <translation type="obsolete">Geen Snap Beperking</translation>
+        <translation type="obsolete">Geen snapbeperking</translation>
     </message>
     <message>
         <source>Restrict Orthogonally</source>
-        <translation type="obsolete">Beperk Orthogonaal</translation>
+        <translation type="obsolete">Orthogonaal beperken</translation>
     </message>
     <message>
         <source>Restrict &amp;Orthogonally</source>
-        <translation type="obsolete">Beperk &amp;Orthogonaal</translation>
+        <translation type="obsolete">&amp;Orthogonaal beperken</translation>
     </message>
     <message>
         <source>Restrict snapping orthogonally</source>
@@ -2813,11 +2543,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Restrict Horizontally</source>
-        <translation type="obsolete">Beperk Horizontaal</translation>
+        <translation type="obsolete">Horizontaal beperken</translation>
     </message>
     <message>
         <source>Restrict &amp;Horizontally</source>
-        <translation type="obsolete">Beperk &amp;Horizontaal</translation>
+        <translation type="obsolete">&amp;Horizontaal beperken</translation>
     </message>
     <message>
         <source>Restrict snapping horizontally</source>
@@ -2825,195 +2555,195 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Restrict Vertically</source>
-        <translation type="obsolete">Beperk Vertikaal</translation>
+        <translation type="obsolete">Verticaal beperken</translation>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
-        <translation type="obsolete">Beperk &amp;Vertikaal</translation>
+        <translation type="obsolete">&amp;Verticaal beperken</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
-        <translation type="obsolete">Beperk het snappen in vertikale richting</translation>
+        <translation type="obsolete">Beperk het snappen in verticale richting</translation>
     </message>
     <message>
         <source>Set Relative Zero</source>
-        <translation type="obsolete">Plaats relatieve Oorsprong</translation>
+        <translation type="obsolete">Relatieve nulwaarde instellen</translation>
     </message>
     <message>
         <source>&amp;Set Relative Zero</source>
-        <translation type="obsolete">&amp;Plaats relatieve Oorsprong</translation>
+        <translation type="obsolete">&amp;Relatieve nulwaarde instellen</translation>
     </message>
     <message>
         <source>Set position of the Relative Zero point</source>
-        <translation type="obsolete">Bepaal Plaats van de Relatieve Oorsprong</translation>
+        <translation type="obsolete">Positie van het relatieve nulpunt instellen</translation>
     </message>
     <message>
         <source>(Un-)Lock Relative Zero</source>
-        <translation type="obsolete">(Ont-)Vergrendel Relatieve Oorsprong</translation>
+        <translation type="obsolete">Relatieve nulwaarde (ont-/)vergrendelen</translation>
     </message>
     <message>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation type="obsolete">(Ont-)&amp;Vergrendel Relatieve Oorsprong</translation>
+        <translation type="obsolete">Relatieve nulwaarde (ont-/)&amp;vergrendelen</translation>
     </message>
     <message>
         <source>(Un-)Lock relative Zero</source>
-        <translation type="obsolete">(Ont-)Vergrendel Relatieve Oorsprong</translation>
+        <translation type="obsolete">Relatieve nulwaarde (ont-/)vergrendelen</translation>
     </message>
     <message>
         <source>Point inside contour</source>
-        <translation type="obsolete">Punt Binnen Contour</translation>
+        <translation type="obsolete">Punt binnen omtrek</translation>
     </message>
     <message>
         <source>&amp;Point inside contour</source>
-        <translation type="obsolete">&amp;Punt Binnen Contour</translation>
+        <translation type="obsolete">&amp;Punt binnen omtrek</translation>
     </message>
     <message>
         <source>Checks if a given point is inside the selected contour</source>
-        <translation type="obsolete">Contoleer of gegeven Punt zich in een Contour bevind</translation>
+        <translation type="obsolete">Controleert of gegeven punt zich binnen de geselecteerde omtrek bevindt</translation>
     </message>
     <message>
         <source>Defreeze all</source>
-        <translation type="obsolete">Ontgrendel</translation>
+        <translation type="obsolete">Alles ontgrendelen</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation type="obsolete">&amp;Ontgrendel</translation>
+        <translation type="obsolete">&amp;Alles ontgrendelen</translation>
     </message>
     <message>
         <source>Defreeze all layers</source>
-        <translation type="obsolete">Ontgrendel alle Lagen</translation>
+        <translation type="obsolete">Alle lagen ontgrendelen</translation>
     </message>
     <message>
         <source>Freeze all</source>
-        <translation type="obsolete">Vergrendel alles</translation>
+        <translation type="obsolete">Alles vergrendelen</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation type="obsolete">Ver&amp;grendel alles</translation>
+        <translation type="obsolete">&amp;Alles vergrendelen</translation>
     </message>
     <message>
         <source>Freeze all layers</source>
-        <translation type="obsolete">Vergrendel alle Lagen</translation>
+        <translation type="obsolete">Alle lagen vergrendelen</translation>
     </message>
     <message>
         <source>Add Layer</source>
-        <translation type="obsolete">Voeg laag toe</translation>
+        <translation type="obsolete">Laag toevoegen</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="obsolete">&amp;Voeg laag toe</translation>
+        <translation type="obsolete">&amp;Laag toevoegen</translation>
     </message>
     <message>
         <source>Remove Layer</source>
-        <translation type="obsolete">Wis Laag</translation>
+        <translation type="obsolete">Laag weghalen</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="obsolete">&amp;Wis Laag</translation>
+        <translation type="obsolete">&amp;Laag weghalen</translation>
     </message>
     <message>
         <source>Edit Layer</source>
-        <translation type="obsolete">Bewerk Laag</translation>
+        <translation type="obsolete">Laag bewerken</translation>
     </message>
     <message>
         <source>&amp;Edit Layer</source>
-        <translation type="obsolete">&amp;Bewerk Laag</translation>
+        <translation type="obsolete">&amp;Laag bewerken</translation>
     </message>
     <message>
         <source>Toggle Layer Visibility</source>
-        <translation type="obsolete">Schakel Laag Zichtbaarheid</translation>
+        <translation type="obsolete">Zichtbaarheid laag aan/uit zetten</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer</source>
-        <translation type="obsolete">&amp;Schakel Laag Zichtbaarheid</translation>
+        <translation type="obsolete">&amp;Laag aan/uit zetten</translation>
     </message>
     <message>
         <source>Defreeze all blocks</source>
-        <translation type="obsolete">Ontgrendel alle Blokken</translation>
+        <translation type="obsolete">Alle blokken ontgrendelen</translation>
     </message>
     <message>
         <source>Freeze all blocks</source>
-        <translation type="obsolete">Vergrendel alle Blokken</translation>
+        <translation type="obsolete">Alle blokken vergrendelen</translation>
     </message>
     <message>
         <source>Add Block</source>
-        <translation type="obsolete">Voeg Blok toe</translation>
+        <translation type="obsolete">Blok toevoegen</translation>
     </message>
     <message>
         <source>&amp;Add Block</source>
-        <translation type="obsolete">&amp;Voeg Blok toe</translation>
+        <translation type="obsolete">&amp;Blok toevoegen</translation>
     </message>
     <message>
         <source>Remove Block</source>
-        <translation type="obsolete">Wis Blok</translation>
+        <translation type="obsolete">Blok weghalen</translation>
     </message>
     <message>
         <source>&amp;Remove Block</source>
-        <translation type="obsolete">&amp;Wis Blok</translation>
+        <translation type="obsolete">&amp;Blok weghalen</translation>
     </message>
     <message>
         <source>Rename Block</source>
-        <translation type="obsolete">Hernoem Blok</translation>
+        <translation type="obsolete">Blok hernoemen</translation>
     </message>
     <message>
         <source>&amp;Rename Block</source>
-        <translation type="obsolete">&amp;Hernoem Blok</translation>
+        <translation type="obsolete">&amp;Blok hernoemen</translation>
     </message>
     <message>
         <source>Rename Block and all Inserts</source>
-        <translation type="obsolete">Hernoem Blok en alle Plaatsingen</translation>
+        <translation type="obsolete">Hernoem blok en alle invoegingen</translation>
     </message>
     <message>
         <source>Edit Block</source>
-        <translation type="obsolete">Bewerk Blok</translation>
+        <translation type="obsolete">Blok bewerken</translation>
     </message>
     <message>
         <source>&amp;Edit Block</source>
-        <translation type="obsolete">&amp;Bewerk Blok</translation>
+        <translation type="obsolete">&amp;Blok bewerken</translation>
     </message>
     <message>
         <source>Insert Block</source>
-        <translation type="obsolete">Plaats Blok</translation>
+        <translation type="obsolete">Blok invoegen</translation>
     </message>
     <message>
         <source>&amp;Insert Block</source>
-        <translation type="obsolete">&amp;Plaats Blok</translation>
+        <translation type="obsolete">&amp;Blok invoegen</translation>
     </message>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation type="obsolete">Schakel Blok Zichtbaarheid</translation>
+        <translation type="obsolete">Zichtbaarheid blok aan/uit zetten</translation>
     </message>
     <message>
         <source>&amp;Toggle Block</source>
-        <translation type="obsolete">&amp;Schakel Blok</translation>
+        <translation type="obsolete">&amp;Blok aan/uit zetten</translation>
     </message>
     <message>
         <source>Toggle Block</source>
-        <translation type="obsolete">Schakel Blok</translation>
+        <translation type="obsolete">Blok aan/uit zetten</translation>
     </message>
     <message>
         <source>Create Block</source>
-        <translation type="obsolete">Nieuwe Blok</translation>
+        <translation type="obsolete">Blok aanmaken</translation>
     </message>
     <message>
         <source>&amp;Create Block</source>
-        <translation type="obsolete">&amp;Nieuwe Blok</translation>
+        <translation type="obsolete">&amp;Blok aanmaken</translation>
     </message>
     <message>
         <source>Explode</source>
-        <translation type="obsolete">Explodeer</translation>
+        <translation type="obsolete">Splitsen</translation>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation type="obsolete">&amp;Explodeer</translation>
+        <translation type="obsolete">&amp;Splitsen</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
-        <translation type="obsolete">Explodeer Blokken en andere Elementen Groupen</translation>
+        <translation type="obsolete">Blokken en andere elementgroepen splitsen</translation>
     </message>
     <message>
         <source>General Application Preferences</source>
-        <translation type="obsolete">Programma Instellingen</translation>
+        <translation type="obsolete">Algemene toepassingsvoorkeuren</translation>
     </message>
     <message>
         <source>Drawing</source>
@@ -3021,87 +2751,87 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Creates a new drawing</source>
-        <translation type="obsolete">Nieuwe Tekening</translation>
+        <translation type="obsolete">Maakt een nieuwe tekening</translation>
     </message>
     <message>
         <source>Opens an existing drawing</source>
-        <translation type="obsolete">Open Bestaande tekening</translation>
+        <translation type="obsolete">Opent een bestaande tekening</translation>
     </message>
     <message>
         <source>Saves the current drawing</source>
-        <translation type="obsolete">Bewaar huidige Tekening</translation>
+        <translation type="obsolete">Bewaart de huidige tekening</translation>
     </message>
     <message>
         <source>Saves the current drawing under a new filename</source>
-        <translation type="obsolete">Bewaar huidige Tekening onder andere Naam</translation>
+        <translation type="obsolete">Bewaart de huidige tekening onder een nieuwe bestandsnaam</translation>
     </message>
     <message>
         <source>Closes the current drawing</source>
-        <translation type="obsolete">Sluit huidige tekening</translation>
+        <translation type="obsolete">Sluit de huidige tekening</translation>
     </message>
     <message>
         <source>Prints out the current drawing</source>
-        <translation type="obsolete">Druk huidige tekening af</translation>
+        <translation type="obsolete">Drukt de huidige tekening af</translation>
     </message>
     <message>
         <source>New Drawing</source>
-        <translation type="obsolete">Nieuwe Tekening</translation>
+        <translation type="obsolete">Nieuwe tekening</translation>
     </message>
     <message>
         <source>Open Drawing</source>
-        <translation type="obsolete">Open Tekening</translation>
+        <translation type="obsolete">Tekening openen</translation>
     </message>
     <message>
         <source>Save Drawing</source>
-        <translation type="obsolete">Bewaar Tekening</translation>
+        <translation type="obsolete">Tekening opslaan</translation>
     </message>
     <message>
         <source>Save Drawing As</source>
-        <translation type="obsolete">Bewaar Tekening Als</translation>
+        <translation type="obsolete">Tekening opslaan als</translation>
     </message>
     <message>
         <source>Close Drawing</source>
-        <translation type="obsolete">Sluit Tekening</translation>
+        <translation type="obsolete">Tekening sluiten</translation>
     </message>
     <message>
         <source>Print Drawing</source>
-        <translation type="obsolete">Druk Tekening Af</translation>
+        <translation type="obsolete">Tekening afdrukken</translation>
     </message>
     <message>
         <source>Cuts entities  to the clipboard</source>
-        <translation type="obsolete">Knip Elementen naar Klembord</translation>
+        <translation type="obsolete">Knipt elementen naar het klembord</translation>
     </message>
     <message>
         <source>Copies entities to the clipboard</source>
-        <translation type="obsolete">Kopieër Elementen naar Klembord</translation>
+        <translation type="obsolete">Kopieert elementen naar het klembord</translation>
     </message>
     <message>
         <source>Pastes the clipboard contents</source>
-        <translation type="obsolete">Plak  Elementen van Klembord</translation>
+        <translation type="obsolete">Plakt de inhoud van het klembord</translation>
     </message>
     <message>
         <source>(De-)&amp;Select Entity</source>
-        <translation type="obsolete">(De-)&amp;Selecteer Element</translation>
+        <translation type="obsolete">Element (de)&amp;selecteren</translation>
     </message>
     <message>
         <source>(De-)Select &amp;Contour</source>
-        <translation type="obsolete">(De-)Selecteer &amp;Contour</translation>
+        <translation type="obsolete">&amp;Omtrek (de)selecteren</translation>
     </message>
     <message>
         <source>Draw parallels to existing lines, arcs, circles</source>
-        <translation type="obsolete">Teken Parallellen aan bestaande lijnen, bogen, cirkels</translation>
+        <translation type="obsolete">Teken parallellen aan bestaande lijnen, bogen, cirkels</translation>
     </message>
     <message>
         <source>Parallel through point</source>
-        <translation type="obsolete">Parallel door Punt</translation>
+        <translation type="obsolete">Parallel door punt</translation>
     </message>
     <message>
         <source>Par&amp;allel through point</source>
-        <translation type="obsolete">Par&amp;allel door Punt</translation>
+        <translation type="obsolete">Par&amp;allel door punt</translation>
     </message>
     <message>
         <source>Draw parallel through a given point</source>
-        <translation type="obsolete">Teken Parallel door een bepaalde Punt</translation>
+        <translation type="obsolete">Teken parallel door een bepaald punt</translation>
     </message>
     <message>
         <source>Attributes</source>
@@ -3113,79 +2843,79 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Modify Entity Attributes</source>
-        <translation type="obsolete">Wijzig de Attibuten van Elementen</translation>
+        <translation type="obsolete">Attributen element wijzigen</translation>
     </message>
     <message>
         <source>Delete selected</source>
-        <translation type="obsolete">Wis Selectie</translation>
+        <translation type="obsolete">Selectie verwijderen</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
-        <translation type="obsolete">&amp;Wis Selectie</translation>
+        <translation type="obsolete">&amp;Selecite verwijderen</translation>
     </message>
     <message>
         <source>Delete selected entities</source>
-        <translation type="obsolete">Wis geselecteerde Elementen</translation>
+        <translation type="obsolete">Geselecteerde elementen verwijderen</translation>
     </message>
     <message>
         <source>Print Preview</source>
-        <translation type="obsolete">Afdruk voorbeeld</translation>
+        <translation type="obsolete">Afdrukvoorbeeld</translation>
     </message>
     <message>
         <source>Print Pre&amp;view</source>
-        <translation type="obsolete">Afdruk voor&amp;beeld</translation>
+        <translation type="obsolete">Afdrukvoor&amp;beeld</translation>
     </message>
     <message>
         <source>Shows a preview of a print</source>
-        <translation type="obsolete">Laat Afdruk Voorbeeld zien</translation>
+        <translation type="obsolete">Toont een afdrukvoorbeeld</translation>
     </message>
     <message>
         <source>Distance Point to Point</source>
-        <translation type="obsolete">Afstand Punt tot Punt</translation>
+        <translation type="obsolete">Afstand punt tot punt</translation>
     </message>
     <message>
         <source>&amp;Distance Point to Point</source>
-        <translation type="obsolete">&amp;Afstand Punt tot Punt</translation>
+        <translation type="obsolete">&amp;Afstand punt tot punt</translation>
     </message>
     <message>
         <source>Measures the distance between two points</source>
-        <translation type="obsolete">Meet afstand tussen twee Punten</translation>
+        <translation type="obsolete">Meet de afstand tussen twee punten</translation>
     </message>
     <message>
         <source>Distance Entity to Point</source>
-        <translation type="obsolete">Afstand Element tot Punt</translation>
+        <translation type="obsolete">Afstand element tot punt</translation>
     </message>
     <message>
         <source>&amp;Distance Entity to Point</source>
-        <translation type="obsolete">Afstand &amp;Element tot Punt</translation>
+        <translation type="obsolete">&amp;Afstand element tot punt</translation>
     </message>
     <message>
         <source>Measures the distance between an entity and a point</source>
-        <translation type="obsolete">Meet de afstand tussen een Element en een Punt</translation>
+        <translation type="obsolete">Meet de afstand tussen een element en een punt</translation>
     </message>
     <message>
         <source>Angle between two lines</source>
-        <translation type="obsolete">Hoek tussen twee Lijnen</translation>
+        <translation type="obsolete">Hoek tussen twee lijnen</translation>
     </message>
     <message>
         <source>&amp;Angle between two lines</source>
-        <translation type="obsolete">&amp;Hoek tussen twee Lijnen</translation>
+        <translation type="obsolete">&amp;Hoek tussen twee lijnen</translation>
     </message>
     <message>
         <source>Measures the angle between two lines</source>
-        <translation type="obsolete">Meet de afstand tussen twee Lijnen</translation>
+        <translation type="obsolete">Meet de hoek tussen twee lijnen</translation>
     </message>
     <message>
         <source>Export Drawing</source>
-        <translation type="obsolete">Exporteer Tekening</translation>
+        <translation type="obsolete">Tekening exporteren</translation>
     </message>
     <message>
         <source>&amp;Export..</source>
-        <translation type="obsolete">&amp;Exporteer..</translation>
+        <translation type="obsolete">&amp;Exporteren...</translation>
     </message>
     <message>
         <source>Exports the current drawing as bitmap</source>
-        <translation type="obsolete">Exporteer huidige tekening als rasterbestand</translation>
+        <translation type="obsolete">Exporteert de huidige tekening als bitmap</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -3193,7 +2923,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Modify Entity Properties</source>
-        <translation type="obsolete">Wijzig Eigenschappen Element</translation>
+        <translation type="obsolete">Eigenschappen element wijzigen</translation>
     </message>
     <message>
         <source>&amp;Properties</source>
@@ -3201,27 +2931,27 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Application</source>
-        <translation type="obsolete">Programma</translation>
+        <translation type="obsolete">Toepassing</translation>
     </message>
     <message>
         <source>&amp;Application Preferences</source>
-        <translation type="obsolete">&amp;Programma Voorkeursinstellingen</translation>
+        <translation type="obsolete">&amp;Voorkeursinstellingen toepassing</translation>
     </message>
     <message>
         <source>Current &amp;Drawing Preferences</source>
-        <translation type="obsolete">Huidige &amp;Teken Voorkeursinstellingen</translation>
+        <translation type="obsolete">&amp;Voorkeursinstellingen huidige tekening</translation>
     </message>
     <message>
         <source>Settings for the current Drawing</source>
-        <translation type="obsolete">Instellingen voor huidige Tekening</translation>
+        <translation type="obsolete">Instellingen voor de huidige tekening</translation>
     </message>
     <message>
         <source>Enables/disables the grid</source>
-        <translation type="obsolete">Grid Aan/Uit</translation>
+        <translation type="obsolete">Schakelt raster in/uit</translation>
     </message>
     <message>
         <source>Circle: Concentric</source>
-        <translation type="obsolete">Cikel: Concentrisch</translation>
+        <translation type="obsolete">Cirkel: concentrisch</translation>
     </message>
     <message>
         <source>&amp;Concentric</source>
@@ -3229,23 +2959,23 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Draw circles concentric to existing circles</source>
-        <translation type="obsolete">Teken cirkels concentrisch aan bestaande circkels</translation>
+        <translation type="obsolete">Cirkels concentrisch aan bestaande cirkels tekenen</translation>
     </message>
     <message>
         <source>Arc: Concentric</source>
-        <translation type="obsolete">Boog: Concentrisch</translation>
+        <translation type="obsolete">Boog: concentrisch</translation>
     </message>
     <message>
         <source>Draw arcs concentric to existing arcs</source>
-        <translation type="obsolete">Teken Bogen concentrisch aan bestaande Bogen</translation>
+        <translation type="obsolete">Bogen concentrisch aan bestaande bogen tekenen</translation>
     </message>
     <message>
         <source>Hatch</source>
-        <translation type="obsolete">Arcering</translation>
+        <translation type="obsolete">Arceren</translation>
     </message>
     <message>
         <source>&amp;Hatch</source>
-        <translation type="obsolete">&amp;Arcering</translation>
+        <translation type="obsolete">&amp;Arceren</translation>
     </message>
     <message>
         <source>Image</source>
@@ -3253,7 +2983,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>&amp;Image</source>
-        <translation type="obsolete">Af&amp;beelding</translation>
+        <translation type="obsolete">&amp;Afbeelding</translation>
     </message>
     <message>
         <source>Statusbar</source>
@@ -3265,23 +2995,23 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Enables/disables the statusbar</source>
-        <translation type="obsolete">Statusbalk aan/uit</translation>
+        <translation type="obsolete">Schakelt statusbalk in/uit</translation>
     </message>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation type="obsolete">Polygoo&amp;n (Hkp,Hkp)</translation>
+        <translation type="obsolete">Polygoo&amp;n (hkp, hkp)</translation>
     </message>
     <message>
         <source>Total length of selected entities</source>
-        <translation type="obsolete">Totale Lengte van geselecteerde Elementen</translation>
+        <translation type="obsolete">Totale lengte van geselecteerde elementen</translation>
     </message>
     <message>
         <source>&amp;Total length of selected entities</source>
-        <translation type="obsolete">&amp;Totale Lengte van geselecteerde Elementen</translation>
+        <translation type="obsolete">&amp;Totale lengte van geselecteerde elementen</translation>
     </message>
     <message>
         <source>Measures the total length of all selected entities</source>
-        <translation type="obsolete">Meet de Totale Lengte van geselecteerde Elementen</translation>
+        <translation type="obsolete">Meet de totale lengte van geselecteerde elementen</translation>
     </message>
     <message>
         <source>Draft</source>
@@ -3293,27 +3023,27 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Enables/disables the draft mode</source>
-        <translation type="obsolete">Schets mode Aan/Uit</translation>
+        <translation type="obsolete">Schakelt schetsmodus in/uit</translation>
     </message>
     <message>
         <source>Open IDE</source>
-        <translation type="obsolete">Open IDE</translation>
+        <translation type="obsolete">IDE openen</translation>
     </message>
     <message>
         <source>&amp;Open IDE</source>
-        <translation type="obsolete">&amp;Open IDE</translation>
+        <translation type="obsolete">&amp;IDE openen</translation>
     </message>
     <message>
         <source>Opens the integrated development environment for scripting</source>
-        <translation type="obsolete">Opent de geintegreerde ontwikkel omgeving voor scripten</translation>
+        <translation type="obsolete">Opent de geïntegreerde ontwikkelomgeving voor scripten</translation>
     </message>
     <message>
         <source>Run Script..</source>
-        <translation type="obsolete">Voer Script uit..</translation>
+        <translation type="obsolete">Script uitvoeren...</translation>
     </message>
     <message>
         <source>&amp;Run Script..</source>
-        <translation type="obsolete">&amp;Voer Script uit..</translation>
+        <translation type="obsolete">&amp;Script uitvoeren...</translation>
     </message>
     <message>
         <source>Runs a script</source>
@@ -3325,11 +3055,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>&amp;Export...</source>
-        <translation type="obsolete">&amp;Exporteer...</translation>
+        <translation type="obsolete">&amp;Exporteren...</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="obsolete">&amp;Druk af...</translation>
+        <translation type="obsolete">&amp;Afdrukken...</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -3341,11 +3071,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>CTRL-G</source>
-        <translation type="obsolete">ctrl+g</translation>
+        <translation type="obsolete">CTRL-G</translation>
     </message>
     <message>
         <source>Restrict&amp;Vertically</source>
-        <translation type="obsolete">Beperken &amp;Verticaal</translation>
+        <translation type="obsolete">&amp;Verticaal beperken</translation>
     </message>
     <message>
         <source>&amp;back</source>
@@ -3353,7 +3083,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
-        <translation type="obsolete">&amp;Selectie cursor</translation>
+        <translation type="obsolete">&amp;Selectiecursor</translation>
     </message>
     <message>
         <source>&amp;Block</source>
@@ -3361,41 +3091,10 @@ Please check its existence and permissions.</source>
     </message>
 </context>
 <context>
-    <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_ActiveLayerName</name>
-    <message>
-        <source>Selection</source>
-        <translation type="unfinished">Selectie</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current Layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QG_ArcOptions</name>
     <message>
         <source>Arc Options</source>
-        <translation type="obsolete">Boog Opties</translation>
+        <translation type="obsolete">Boogopties</translation>
     </message>
     <message>
         <source>Clockwise</source>
@@ -3410,11 +3109,11 @@ p, li { white-space: pre-wrap; }
     <name>QG_ArcTangentialOptions</name>
     <message>
         <source>Tangential Arc Options</source>
-        <translation type="obsolete">Tangentiële Boog Opties</translation>
+        <translation type="obsolete">Tangentiële boogopties</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="obsolete">Straal:</translation>
+        <translation type="obsolete">Radius:</translation>
     </message>
     <message>
         <source>Angle</source>
@@ -3426,15 +3125,15 @@ p, li { white-space: pre-wrap; }
     <name>QG_BevelOptions</name>
     <message>
         <source>Bevel Options</source>
-        <translation type="obsolete">Afschuin Opties</translation>
+        <translation type="obsolete">Afschuinopties</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation type="obsolete">Trim</translation>
+        <translation type="obsolete">Bijsnijden</translation>
     </message>
     <message>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="obsolete">Vink af om beide Elementen tot een Afschuining te trimmen</translation>
+        <translation type="obsolete">Vink aan om beide elementen tot de afschuining bij te snijden</translation>
     </message>
     <message>
         <source>Length 1:</source>
@@ -3448,24 +3147,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_BlockDialog</name>
     <message>
-        <source>Block Settings</source>
-        <translation>Blok Instellingen</translation>
-    </message>
-    <message>
-        <source>Block Name:</source>
-        <translation>Blok Naam:</translation>
-    </message>
-    <message>
         <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
-    </message>
-    <message>
-        <source>Renaming Block</source>
-        <translation>Blok aan het herbenoemen</translation>
-    </message>
-    <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Kon blok niet benoemen. Er bestaat al een blok genaamd &quot;%1&quot;.</translation>
+        <translation type="obsolete">Annuleren</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -3479,93 +3162,113 @@ p, li { white-space: pre-wrap; }
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
     </message>
+    <message>
+        <source>Block Settings</source>
+        <translation>Blokinstellingen</translation>
+    </message>
+    <message>
+        <source>Block Name:</source>
+        <translation>Bloknaam:</translation>
+    </message>
+    <message>
+        <source>Renaming Block</source>
+        <translation>Blok hernoemen</translation>
+    </message>
+    <message>
+        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
+        <translation>Kon blok geen naam geven. Er bestaat al een blok genaamd &quot;%1&quot;.</translation>
+    </message>
 </context>
 <context>
     <name>QG_BlockWidget</name>
     <message>
         <source>Add a block</source>
-        <translation type="obsolete">Voeg een Blok toe</translation>
+        <translation type="obsolete">Voeg een blok toe</translation>
     </message>
     <message>
         <source>Remove the active block</source>
-        <translation>Wis actieve Blok</translation>
+        <translation>Het actieve blok weghalen</translation>
     </message>
     <message>
         <source>Rename the active block</source>
-        <translation>Hernoem de actieve Blok</translation>
+        <translation>Hernoem het actieve blok</translation>
     </message>
     <message>
         <source>Edit the active block
 in a separate window</source>
-        <translation>Bewerk de actieve Blok
-in een separate Venster</translation>
+        <translation>Het actieve blok
+in een afzonderlijk venster bewerken</translation>
     </message>
     <message>
         <source>Insert the active block</source>
-        <translation>Plaats de actieve Blok</translation>
+        <translation>Het actieve blok invoegen</translation>
     </message>
     <message>
         <source>Block Menu</source>
-        <translation>Blok Menu</translation>
+        <translation>Blokmenu</translation>
     </message>
     <message>
         <source>&amp;Defreeze all Blocks</source>
-        <translation>&amp;Ontgrendel alle Blokken</translation>
+        <translation>&amp;Alle blokken ontgrendelen</translation>
     </message>
     <message>
         <source>&amp;Freeze all Blocks</source>
-        <translation>Ver&amp;grendel alle Blokken</translation>
+        <translation>&amp;Alle blokken vergrendelen</translation>
     </message>
     <message>
         <source>&amp;Add Block</source>
-        <translation>&amp;Voeg Blok toe</translation>
+        <translation>&amp;Blok toevoegen</translation>
     </message>
     <message>
         <source>&amp;Remove Block</source>
-        <translation>&amp;Wis Blok</translation>
+        <translation>&amp;Blok weghalen</translation>
     </message>
     <message>
         <source>&amp;Edit Block</source>
-        <translation>&amp;Bewerk Blok</translation>
+        <translation>&amp;Blok bewerken</translation>
     </message>
     <message>
         <source>&amp;Toggle Visibility</source>
-        <translation>&amp;Schakel zichtbaarheid</translation>
+        <translation>&amp;Zichtbaarheid aan/uit zetten</translation>
     </message>
     <message>
         <source>Show all blocks</source>
-        <translation>Laat alle blokken zien</translation>
+        <translation>Alle blokken weergeven</translation>
     </message>
     <message>
         <source>Hide all blocks</source>
-        <translation>Verberg alle blokken</translation>
+        <translation>Alle blokken verbergen</translation>
     </message>
     <message>
         <source>&amp;Rename Block</source>
-        <translation>&amp;Hernoem Blok</translation>
+        <translation>&amp;Blok hernoemen</translation>
     </message>
     <message>
         <source>&amp;Insert Block</source>
-        <translation>&amp;Plaats Blok</translation>
+        <translation>&amp;Blok invoegen</translation>
     </message>
     <message>
         <source>&amp;Create New Block</source>
-        <translation>&amp;Nieuwe Blok</translation>
+        <translation>&amp;Nieuw blok aanmaken</translation>
     </message>
     <message>
         <source>Create Block</source>
-        <translation type="unfinished">Nieuwe Blok</translation>
+        <translation type="unfinished">Blok aanmaken</translation>
     </message>
     <message>
         <source>Add an empty block</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Voeg een leeg blok toe</translation>
     </message>
     <message>
         <source>save the active block to a file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">sla het actieve blok op in een bestand</translation>
     </message>
     <message>
         <source>Looking for matching block names</source>
+        <translation type="unfinished">Bezig met zoeken naar bijbehorende bloknamen</translation>
+    </message>
+    <message>
+        <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3573,7 +3276,7 @@ in een separate Venster</translation>
     <name>QG_CadToolBar</name>
     <message>
         <source>CAD Tools</source>
-        <translation type="obsolete">CAD Gereedschappen</translation>
+        <translation type="obsolete">CAD-gereedschappen</translation>
     </message>
 </context>
 <context>
@@ -3584,15 +3287,15 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Arc with three points</source>
-        <translation type="obsolete">Boog met 3 punten</translation>
+        <translation type="obsolete">Boog met drie punten</translation>
     </message>
     <message>
         <source>Arc with Center, Point, Angles</source>
-        <translation type="obsolete">Boog met Center, Punt, Hoeken</translation>
+        <translation type="obsolete">Boog met middelpunt, punt, hoeken</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation type="obsolete">Terug naar Hoofdmenu</translation>
+        <translation type="obsolete">Terug naar hoofdmenu</translation>
     </message>
     <message>
         <source>Concentric</source>
@@ -3600,7 +3303,7 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Arc tangential to base entity with radius</source>
-        <translation type="obsolete">Arc rakend aan element basis met een straal</translation>
+        <translation type="obsolete">Boog rakend aan basiselement met radius</translation>
     </message>
 </context>
 <context>
@@ -3611,23 +3314,23 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Circle with two opposite points</source>
-        <translation type="obsolete">Cirkel met 2 Punten</translation>
+        <translation type="obsolete">Cirkel met twee tegenovergestelde punten</translation>
     </message>
     <message>
         <source>Circle with center and radius</source>
-        <translation type="obsolete">Cirkel met Center en Radius</translation>
+        <translation type="obsolete">Cirkel met middelpunt en radius</translation>
     </message>
     <message>
         <source>Circle with center and point</source>
-        <translation type="obsolete">Cirkel met Center en Punt</translation>
+        <translation type="obsolete">Cirkel met middelpunt en punt</translation>
     </message>
     <message>
         <source>Circle with three points</source>
-        <translation type="obsolete">Cirkels met 3 punten</translation>
+        <translation type="obsolete">Cirkels met drie punten</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation type="obsolete">Terug naar Hoofdmenu</translation>
+        <translation type="obsolete">Terug naar hoofdmenu</translation>
     </message>
     <message>
         <source>Concentric</source>
@@ -3638,43 +3341,43 @@ in een separate Venster</translation>
     <name>QG_CadToolBarDim</name>
     <message>
         <source>Dimensions</source>
-        <translation type="obsolete">Bemating</translation>
+        <translation type="obsolete">Maten</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation type="obsolete">Terug naar Hoofdmenu</translation>
+        <translation type="obsolete">Terug naar hoofdmenu</translation>
     </message>
     <message>
         <source>Diametric Dimension</source>
-        <translation type="obsolete">Diametrische Maat</translation>
+        <translation type="obsolete">Diametrische maat</translation>
     </message>
     <message>
         <source>Radial Dimension</source>
-        <translation type="obsolete">Radiale Maat</translation>
+        <translation type="obsolete">Radiale maat</translation>
     </message>
     <message>
         <source>Vertical Dimension</source>
-        <translation type="obsolete">Vertikale Maat</translation>
+        <translation type="obsolete">Verticale maat</translation>
     </message>
     <message>
         <source>Horizontal Dimension</source>
-        <translation type="obsolete">Horizontale Maat</translation>
+        <translation type="obsolete">Horizontale maat</translation>
     </message>
     <message>
         <source>Linear Dimension</source>
-        <translation type="obsolete">Liniaire Maat</translation>
+        <translation type="obsolete">Lineaire maat</translation>
     </message>
     <message>
         <source>Aligned Dimension</source>
-        <translation type="obsolete">Uitgelijnde Maat</translation>
+        <translation type="obsolete">Uitgelijnde maat</translation>
     </message>
     <message>
         <source>Angular Dimension</source>
-        <translation type="obsolete">Hoek Maat</translation>
+        <translation type="obsolete">Hoekmaat</translation>
     </message>
     <message>
         <source>Leader</source>
-        <translation type="obsolete">Aanhaling</translation>
+        <translation type="obsolete">Verbindingslijn</translation>
     </message>
     <message>
         <source>Concentric</source>
@@ -3685,19 +3388,19 @@ in een separate Venster</translation>
     <name>QG_CadToolBarEllipses</name>
     <message>
         <source>Ellipses</source>
-        <translation type="obsolete">Ovaalen</translation>
+        <translation type="obsolete">Ellipsen</translation>
     </message>
     <message>
         <source>Ellipse arc with center, two points and angles</source>
-        <translation type="obsolete">Ovaal Boog met center, twee punten en hoeken</translation>
+        <translation type="obsolete">Ellips boog met middelpunt, twee punten en hoeken</translation>
     </message>
     <message>
         <source>Ellipse with Center and two points</source>
-        <translation type="obsolete">Ovaal met Center en twee punten</translation>
+        <translation type="obsolete">Ellips met middelpunt en twee punten</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation type="obsolete">Terug naar Hoofdmenu</translation>
+        <translation type="obsolete">Terug naar hoofdmenu</translation>
     </message>
     <message>
         <source>Concentric</source>
@@ -3712,15 +3415,15 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation type="obsolete">Terug naar Hoofdmenu</translation>
+        <translation type="obsolete">Terug naar hoofdmenu</translation>
     </message>
     <message>
         <source>Distance (Point, Point)</source>
-        <translation type="obsolete">Afstand (Punt, Punt)</translation>
+        <translation type="obsolete">Afstand (punt, punt)</translation>
     </message>
     <message>
         <source>Distance (Entity, Point)</source>
-        <translation type="obsolete">Afstand (Element, Punt)</translation>
+        <translation type="obsolete">Afstand (element, punt)</translation>
     </message>
     <message>
         <source>Angle</source>
@@ -3728,7 +3431,7 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Total length of selected entities</source>
-        <translation type="obsolete">Totale Lengte van geselecteerde Elementen</translation>
+        <translation type="obsolete">Totale lengte van geselecteerde elementen</translation>
     </message>
     <message>
         <source>Area of polygon</source>
@@ -3747,39 +3450,39 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Freehand lines</source>
-        <translation type="obsolete">Losse Pols Lijnen</translation>
+        <translation type="obsolete">Vrije lijnen</translation>
     </message>
     <message>
         <source>Orthogonal lines</source>
-        <translation type="obsolete">Teken orthogonale Lijnen</translation>
+        <translation type="obsolete">Orthogonale lijnen</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation type="obsolete">Terug naar Hoofdmenu</translation>
+        <translation type="obsolete">Terug naar hoofdmenu</translation>
     </message>
     <message>
         <source>Bisectors</source>
-        <translation type="obsolete">Bissectices</translation>
+        <translation type="obsolete">Middelloodlijnen</translation>
     </message>
     <message>
         <source>Tangents from circle to circle</source>
-        <translation type="obsolete">Tangenten van Cirkel naar Cirkel</translation>
+        <translation type="obsolete">Raaklijnen van cirkel naar cirkel</translation>
     </message>
     <message>
         <source>Tangents from point to circle</source>
-        <translation type="obsolete">Tangenten van Punt naar Cirkel</translation>
+        <translation type="obsolete">Raaklijn van punt naar cirkel</translation>
     </message>
     <message>
         <source>Line with two points</source>
-        <translation type="obsolete">Lijn met twee Punten</translation>
+        <translation type="obsolete">Lijn met twee punten</translation>
     </message>
     <message>
         <source>Lines with relative angles</source>
-        <translation type="obsolete">Lijnen met relatieve Hoek</translation>
+        <translation type="obsolete">Lijnen met relatieve hoeken</translation>
     </message>
     <message>
         <source>Line with given angle</source>
-        <translation type="obsolete">Lijn met gegeven Hoek</translation>
+        <translation type="obsolete">Lijn met opgegeven hoek</translation>
     </message>
     <message>
         <source>Horizontal lines</source>
@@ -3787,7 +3490,7 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Vertical lines</source>
-        <translation type="obsolete">Vertikale lijnen</translation>
+        <translation type="obsolete">Verticale lijnen</translation>
     </message>
     <message>
         <source>Rectangles</source>
@@ -3795,7 +3498,7 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Polygons with Center and Corner</source>
-        <translation type="obsolete">Polygonen met center en hoekpunt</translation>
+        <translation type="obsolete">Polygonen met middelpunt en hoekpunt</translation>
     </message>
     <message>
         <source>Polygons with two Corners</source>
@@ -3803,11 +3506,11 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Parallels with distance</source>
-        <translation type="obsolete">Parallellen met Afstand</translation>
+        <translation type="obsolete">Parallellen met afstand</translation>
     </message>
     <message>
         <source>Parallels through point</source>
-        <translation type="obsolete">Parallellen door Punt</translation>
+        <translation type="obsolete">Parallellen door punt</translation>
     </message>
 </context>
 <context>
@@ -3818,55 +3521,55 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Show menu &quot;Lines&quot;</source>
-        <translation type="obsolete">Toon menu &quot;Lijnen&quot;</translation>
+        <translation type="obsolete">Menu “Lijnen” weergeven</translation>
     </message>
     <message>
         <source>Show menu &quot;Arcs&quot;</source>
-        <translation type="obsolete">Toon menu &quot;Bogen&quot;</translation>
+        <translation type="obsolete">Menu “Bogen” weergeven</translation>
     </message>
     <message>
         <source>Show menu &quot;Circles&quot;</source>
-        <translation type="obsolete">Toon menu &quot;Cirkels&quot;</translation>
+        <translation type="obsolete">Menu “Cirkels” weergeven</translation>
     </message>
     <message>
         <source>Show menu &quot;Points&quot;</source>
-        <translation type="obsolete">Toon menu &quot;Punten&quot;</translation>
+        <translation type="obsolete">Menu “Punten” weergeven</translation>
     </message>
     <message>
         <source>Show menu &quot;Measure&quot;</source>
-        <translation type="obsolete">Toon menu &quot;Meten&quot;</translation>
+        <translation type="obsolete">Menu “Meten” weergeven</translation>
     </message>
     <message>
         <source>Show menu &quot;Ellipses&quot;</source>
-        <translation type="obsolete">Toon menu &quot;Ovalen&quot;</translation>
+        <translation type="obsolete">Menu “Ellipsen” weergeven</translation>
     </message>
     <message>
         <source>Hatches / Solid Fills</source>
-        <translation type="obsolete">Arceringen / Inkleuringen</translation>
+        <translation type="obsolete">Arceringen/Inkleuringen</translation>
     </message>
     <message>
         <source>Show menu &quot;Edit&quot;</source>
-        <translation type="obsolete">Toon menu &quot;Bewerken&quot;</translation>
+        <translation type="obsolete">Menu “Bewerken” weergeven</translation>
     </message>
     <message>
         <source>Show menu &quot;Dimensions&quot;</source>
-        <translation type="obsolete">Toon menu &quot;Bematen&quot;</translation>
+        <translation type="obsolete">Menu “Maten” weergeven</translation>
     </message>
     <message>
         <source>Texts</source>
-        <translation type="obsolete">Tekst</translation>
+        <translation type="obsolete">Teksten</translation>
     </message>
     <message>
         <source>Show menu &quot;Select&quot;</source>
-        <translation type="obsolete">Toon menu &quot;Selecteer&quot;</translation>
+        <translation type="obsolete">Menu “Selecteren” weergeven</translation>
     </message>
     <message>
         <source>Create Block</source>
-        <translation type="obsolete">Nieuwe Blok</translation>
+        <translation type="obsolete">Blok aanmaken</translation>
     </message>
     <message>
         <source>Raster Image</source>
-        <translation type="obsolete">Raster Afbeelding</translation>
+        <translation type="obsolete">Rasterafbeelding</translation>
     </message>
     <message>
         <source>Points</source>
@@ -3874,62 +3577,62 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Splines</source>
-        <translation type="obsolete">Splines</translation>
+        <translation type="obsolete">Spieën</translation>
     </message>
     <message>
         <source>Polylines</source>
-        <translation type="obsolete">Vrije vormen</translation>
+        <translation type="obsolete">Polylijnen</translation>
     </message>
     <message>
         <source>Draw Points</source>
-        <translation type="obsolete">Teken Punten</translation>
+        <translation type="obsolete">Punten tekenen</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="obsolete">Afbeelding toevoegen</translation>
+        <translation type="obsolete">Afbeelding invoegen</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarModify</name>
     <message>
         <source>Modify</source>
-        <translation type="obsolete">Bewerken</translation>
+        <translation type="obsolete">Wijzigen</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation type="obsolete">Terug naar Hoofdmenu</translation>
+        <translation type="obsolete">Terug naar hoofdmenu</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation type="obsolete">Roteer</translation>
+        <translation type="obsolete">Roteren</translation>
     </message>
     <message>
         <source>Scale</source>
-        <translation type="obsolete">Verschaal</translation>
+        <translation type="obsolete">Verschalen</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation type="obsolete">Verplaats</translation>
+        <translation type="obsolete">Verplaatsen</translation>
     </message>
     <message>
         <source>Move and Rotate</source>
-        <translation type="obsolete">Verplaats en Roteer</translation>
+        <translation type="obsolete">Verplaats en roteer</translation>
     </message>
     <message>
         <source>Explode</source>
-        <translation type="obsolete">Explodeer</translation>
+        <translation type="obsolete">Splitsen</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="obsolete">Wissen</translation>
+        <translation type="obsolete">Verwijderen</translation>
     </message>
     <message>
         <source>Stretch</source>
-        <translation type="obsolete">Uitrekken</translation>
+        <translation type="obsolete">Rekken</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="obsolete">Knip</translation>
+        <translation type="obsolete">Knippen</translation>
     </message>
     <message>
         <source>Round</source>
@@ -3941,27 +3644,27 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Trim by amount</source>
-        <translation type="obsolete">Trim met hoeveelheid</translation>
+        <translation type="obsolete">Bijsnijden per hoeveelheid</translation>
     </message>
     <message>
         <source>Trim / Extend two</source>
-        <translation type="obsolete">Trim / Verleng twee</translation>
+        <translation type="obsolete">Bijsnijden/twee uitbreiden</translation>
     </message>
     <message>
         <source>Trim / Extend</source>
-        <translation type="obsolete">Trim / Verleng</translation>
+        <translation type="obsolete">Bijsnijden/uitbreiden</translation>
     </message>
     <message>
         <source>Rotate around two centers</source>
-        <translation type="obsolete">Roteer om twee centers</translation>
+        <translation type="obsolete">Roteer om twee middelpunten</translation>
     </message>
     <message>
         <source>Edit Entity Attributes</source>
-        <translation type="obsolete">Wijzig de Attibuten van Elementen</translation>
+        <translation type="obsolete">Attributen element bewerken</translation>
     </message>
     <message>
         <source>Edit Entity Geometry</source>
-        <translation type="obsolete">Wijzig de Geometrie van Elementen</translation>
+        <translation type="obsolete">Geometrie element bewerken</translation>
     </message>
     <message>
         <source>Mirror</source>
@@ -3969,23 +3672,23 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Divide</source>
-        <translation type="obsolete">Verdeel</translation>
+        <translation type="obsolete">Verdelen</translation>
     </message>
     <message>
         <source>Explode Text into Letters</source>
-        <translation type="obsolete">Explodeer Tekst in Letters</translation>
+        <translation type="obsolete">Tekst in letters splitsen</translation>
     </message>
     <message>
         <source>Edit Text</source>
-        <translation type="obsolete">Bewerk Tekst</translation>
+        <translation type="obsolete">Tekst bewerken</translation>
     </message>
     <message>
         <source>Move / Copy</source>
-        <translation type="obsolete">Verplaats / Copieer</translation>
+        <translation type="obsolete">Verplaatsen/Kopiëren</translation>
     </message>
     <message>
         <source>Rotate Two</source>
-        <translation type="obsolete">Roteer Twee</translation>
+        <translation type="obsolete">Twee roteren</translation>
     </message>
     <message>
         <source>Lengthen</source>
@@ -4000,18 +3703,18 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation type="obsolete">Terug naar Hoofdmenu</translation>
+        <translation type="obsolete">Terug naar hoofdmenu</translation>
     </message>
     <message>
         <source>Single points</source>
-        <translation type="obsolete">Enkele Punten</translation>
+        <translation type="obsolete">Enkele punten</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarPolylines</name>
     <message>
         <source>Polylines</source>
-        <translation type="obsolete">Vrijevormen</translation>
+        <translation type="obsolete">Polylijnen</translation>
     </message>
     <message>
         <source>Back to main menu</source>
@@ -4019,7 +3722,7 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Create Polyline</source>
-        <translation type="obsolete">Maak vrije vorm</translation>
+        <translation type="obsolete">Polylijn maken</translation>
     </message>
     <message>
         <source>Delete between two nodes</source>
@@ -4027,23 +3730,23 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Add node</source>
-        <translation type="obsolete">Toevoeging knooppunt</translation>
-    </message>
-    <message>
-        <source>Delete node</source>
-        <translation type="obsolete">Verwijder knooppunt</translation>
-    </message>
-    <message>
-        <source>Trim segments</source>
-        <translation type="obsolete">Trim segmenten</translation>
-    </message>
-    <message>
-        <source>Append node</source>
         <translation type="obsolete">Knooppunt toevoegen</translation>
     </message>
     <message>
+        <source>Delete node</source>
+        <translation type="obsolete">Knooppunt verwijderen</translation>
+    </message>
+    <message>
+        <source>Trim segments</source>
+        <translation type="obsolete">Segmenten bijsnijden</translation>
+    </message>
+    <message>
+        <source>Append node</source>
+        <translation type="obsolete">Knooppunt bijvoegen</translation>
+    </message>
+    <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation type="obsolete">Maak vrije vorm van bestaande &amp;Segmenten</translation>
+        <translation type="obsolete">Polylijn van bestaande segmenten maken</translation>
     </message>
     <message>
         <source>Concentric</source>
@@ -4054,70 +3757,70 @@ in een separate Venster</translation>
     <name>QG_CadToolBarSelect</name>
     <message>
         <source>Select</source>
-        <translation type="obsolete">Selecteer</translation>
+        <translation type="obsolete">Selecteren</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="obsolete">Selecteer alles</translation>
+        <translation type="obsolete">Alles selecteren</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation type="obsolete">Terug naar Hoofdmenu</translation>
+        <translation type="obsolete">Terug naar hoofdmenu</translation>
     </message>
     <message>
         <source>Select intersected entities</source>
-        <translation type="obsolete">Selecteer kruisende Elementen</translation>
+        <translation type="obsolete">Kruisende elementen selecteren</translation>
     </message>
     <message>
         <source>Deselect intersected entities</source>
-        <translation type="obsolete">Deselecteer kruisende Elementen</translation>
+        <translation type="obsolete">Kruisende elementen deselecteren</translation>
     </message>
     <message>
         <source>Deselect all</source>
-        <translation type="obsolete">Deselecteer alles</translation>
+        <translation type="obsolete">Alles deselecteren</translation>
     </message>
     <message>
         <source>Invert Selection</source>
-        <translation type="obsolete">Inverteer Selectie</translation>
+        <translation type="obsolete">Selectie omkeren</translation>
     </message>
     <message>
         <source>Select layer</source>
-        <translation type="obsolete">Selecteer Laag</translation>
+        <translation type="obsolete">Laag selecteren</translation>
     </message>
     <message>
         <source>(De-)Select contour</source>
-        <translation type="obsolete">(De-)Selecteer Contour</translation>
+        <translation type="obsolete">Omtrek (de)selecteren</translation>
     </message>
     <message>
         <source>(De-)Select entity</source>
-        <translation type="obsolete">(De-)Selecteer Element</translation>
+        <translation type="obsolete">Element (de)selecteren</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation type="obsolete">Deselecteer Venster</translation>
+        <translation type="obsolete">Venster deselecteren</translation>
     </message>
     <message>
         <source>Select Window</source>
-        <translation type="obsolete">Selecteer Venster</translation>
+        <translation type="obsolete">Venster selecteren</translation>
     </message>
     <message>
         <source>Continue action</source>
-        <translation type="obsolete">Vervolg Actie</translation>
+        <translation type="obsolete">Actie vervolgen</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarSnap</name>
     <message>
         <source>Snap</source>
-        <translation type="obsolete">Snap</translation>
+        <translation type="obsolete">Snappen</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation type="obsolete">Terug naar Hoofdmenu</translation>
+        <translation type="obsolete">Terug naar hoofdmenu</translation>
     </message>
     <message>
         <source>Snap to grid</source>
-        <translation type="obsolete">Snap naar Grid</translation>
+        <translation type="obsolete">Snappen naar raster</translation>
     </message>
     <message>
         <source>Free positioning</source>
@@ -4125,62 +3828,62 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
-        <translation type="obsolete">Snap naar Eindpunten</translation>
+        <translation type="obsolete">Snappen naar eindpunten</translation>
     </message>
     <message>
         <source>Snap to closest point on entity</source>
-        <translation type="obsolete">Snap naar dichtstbijzijnde Punt op Element</translation>
+        <translation type="obsolete">Snappen naar dichtstbijzijnde punt op element</translation>
     </message>
     <message>
         <source>Snap to center points</source>
-        <translation type="obsolete">Snap naar Centerpunten</translation>
+        <translation type="obsolete">Snappen naar middelpunten</translation>
     </message>
     <message>
         <source>Snap to middle points</source>
-        <translation type="obsolete">Snap naar Middelpunten</translation>
+        <translation type="obsolete">Snappen naar middenpunten</translation>
     </message>
     <message>
         <source>Snap to point with given distance to endpoint</source>
-        <translation type="obsolete">Snap naar punt op gegeven afstand vanaf Eindpunt</translation>
+        <translation type="obsolete">Snappen naar punt met opgegeven afstand naar eindpunt</translation>
     </message>
     <message>
         <source>Snap to intersections automatically</source>
-        <translation type="obsolete">Snap Automatisch naar Intersectie Punten</translation>
+        <translation type="obsolete">Automatisch snappen naar snijpunten</translation>
     </message>
     <message>
         <source>No Restriction</source>
-        <translation type="obsolete">Geen Snap Beperking</translation>
+        <translation type="obsolete">Geen beperking</translation>
     </message>
     <message>
         <source>Orthogonal Restriction</source>
-        <translation type="obsolete">Orthogonale Snap beperking</translation>
+        <translation type="obsolete">Orthogonale beperking</translation>
     </message>
     <message>
         <source>Horizontal Restriction</source>
-        <translation type="obsolete">Horizontale Snap beperking</translation>
+        <translation type="obsolete">Horizontale beperking</translation>
     </message>
     <message>
         <source>Vertical Restriction</source>
-        <translation type="obsolete">Vertikale Snap beperking</translation>
+        <translation type="obsolete">Verticale beperking</translation>
     </message>
     <message>
         <source>Move relative Zero</source>
-        <translation type="obsolete">Plaats relatieve Oorsprong</translation>
+        <translation type="obsolete">Relatieve nulwaarde verplaatsen</translation>
     </message>
     <message>
         <source>Lock relative Zero</source>
-        <translation type="obsolete">Vergrendel relatieve Oorsprong</translation>
+        <translation type="obsolete">Relatieve nulwaarde vergrendelen</translation>
     </message>
     <message>
         <source>Snap to intersections manually</source>
-        <translation type="obsolete">Snap handmatig naar Intersectie Punten</translation>
+        <translation type="obsolete">Handmatig snappen naar snijpunten</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarSplines</name>
     <message>
         <source>Splines</source>
-        <translation type="obsolete">Splines</translation>
+        <translation type="obsolete">Spieën</translation>
     </message>
     <message>
         <source>Back to main menu</source>
@@ -4188,14 +3891,14 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Spline</source>
-        <translation type="obsolete">Spline</translation>
+        <translation type="obsolete">Spie</translation>
     </message>
 </context>
 <context>
     <name>QG_CircleOptions</name>
     <message>
         <source>Circle Options</source>
-        <translation type="obsolete">Cirkel Opties</translation>
+        <translation type="obsolete">Cirkelopties</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -4205,12 +3908,16 @@ in een separate Venster</translation>
 <context>
     <name>QG_ColorBox</name>
     <message>
+        <source>Others..</source>
+        <translation type="obsolete">Overige...</translation>
+    </message>
+    <message>
         <source>By Layer</source>
-        <translation>Door Laag bepaald</translation>
+        <translation>Per laag</translation>
     </message>
     <message>
         <source>By Block</source>
-        <translation>Door Blok bepaald</translation>
+        <translation>Per blok</translation>
     </message>
     <message>
         <source>Red</source>
@@ -4238,7 +3945,7 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Black / White</source>
-        <translation>Zwart / Wit</translation>
+        <translation>Zwart/wit</translation>
     </message>
     <message>
         <source>Gray</source>
@@ -4246,11 +3953,7 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Light Gray</source>
-        <translation>Licht Grijs</translation>
-    </message>
-    <message>
-        <source>Others..</source>
-        <translation type="obsolete">Andere..</translation>
+        <translation>Lichtgrijs</translation>
     </message>
     <message>
         <source>Unchanged</source>
@@ -4258,103 +3961,74 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Dark Red</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Donkerrood</translation>
     </message>
     <message>
         <source>Dark Yellow</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Donkergeel</translation>
     </message>
     <message>
         <source>Dark Green</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Donkergroen</translation>
     </message>
     <message>
         <source>Dark Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Donkercyaan</translation>
     </message>
     <message>
         <source>Dark Blue</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Donkerblauw</translation>
     </message>
     <message>
         <source>Dark Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Donkermagenta</translation>
     </message>
     <message>
         <source>Dark Gray</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Donkergrijs</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_CommandEdit</name>
-    <message>
-        <source>clear</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_CommandHistory</name>
-    <message>
-        <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Kopieer</translation>
-    </message>
-    <message>
-        <source>Select &amp;All</source>
-        <translation type="unfinished">Selecteer &amp;Alles</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aangepast</translation>
     </message>
 </context>
 <context>
     <name>QG_CommandWidget</name>
     <message>
+        <source>&amp;Copy</source>
+        <translation type="obsolete">&amp;Kopiëren</translation>
+    </message>
+    <message>
         <source>Command Line</source>
-        <translation>Commando Regel</translation>
+        <translation>Opdrachtregel</translation>
     </message>
     <message>
         <source>Command:</source>
-        <translation>Commando:</translation>
+        <translation>Opdracht:</translation>
     </message>
     <message>
         <source>Unknown command: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Onbekende opdracht: %1</translation>
     </message>
     <message>
         <source>Command history and output</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Copy</source>
-        <translation type="obsolete">&amp;Kopieer</translation>
+        <translation type="unfinished">Opdrachtgeschiedenis en -output</translation>
     </message>
     <message>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">escape</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_CoordinateWidget</name>
-    <message>
-        <source>Coordinates</source>
-        <translation>Coordinaten</translation>
+        <translation type="unfinished">...</translation>
     </message>
 </context>
 <context>
     <name>QG_DimLinearOptions</name>
     <message>
         <source>Linear Dimension Options</source>
-        <translation type="obsolete">Liniaire Maat Opties</translation>
+        <translation type="obsolete">Lineaire maatopties</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -4365,7 +4039,7 @@ in een separate Venster</translation>
     <name>QG_DimOptions</name>
     <message>
         <source>Dimension Options</source>
-        <translation type="obsolete">Maat Opties</translation>
+        <translation type="obsolete">Maatopties</translation>
     </message>
     <message>
         <source>Label:</source>
@@ -4397,7 +4071,7 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="obsolete">....</translation>
+        <translation type="obsolete">...</translation>
     </message>
     <message>
         <source>⌀</source>
@@ -4411,12 +4085,20 @@ in een separate Venster</translation>
 <context>
     <name>QG_DimensionLabelEditor</name>
     <message>
+        <source>ø (Diameter)</source>
+        <translation type="obsolete">ø (diameter)</translation>
+    </message>
+    <message>
+        <source>¶ (Pi)</source>
+        <translation type="obsolete">¶ (Pi)</translation>
+    </message>
+    <message>
         <source>Dimension Label Editor</source>
-        <translation>Maat Label Editor</translation>
+        <translation>Maat labeleditor</translation>
     </message>
     <message>
         <source>Dimension Label:</source>
-        <translation>Maat Label:</translation>
+        <translation>Labelmaat:</translation>
     </message>
     <message>
         <source>Label:</source>
@@ -4427,32 +4109,24 @@ in een separate Venster</translation>
         <translation>Invoegen:</translation>
     </message>
     <message>
-        <source>ø (Diameter)</source>
-        <translation type="obsolete">ø (Diameter)</translation>
-    </message>
-    <message>
         <source>° (Degree)</source>
-        <translation>° (Graden)</translation>
+        <translation>° (graden)</translation>
     </message>
     <message>
         <source>± (Plus / Minus)</source>
-        <translation>± (Plus / Minus)</translation>
-    </message>
-    <message>
-        <source>¶ (Pi)</source>
-        <translation type="obsolete">¶ (Pi)</translation>
+        <translation>± (plus/min)</translation>
     </message>
     <message>
         <source>× (Times)</source>
-        <translation>x (Vermenigvuldigen)</translation>
+        <translation>x (vermenigvuldigen)</translation>
     </message>
     <message>
         <source>÷ (Division)</source>
-        <translation>÷ (Delen)</translation>
+        <translation>÷ (delen)</translation>
     </message>
     <message>
         <source>⌀ (Diameter)</source>
-        <translation type="unfinished">⌀ (Diameter)</translation>
+        <translation type="unfinished">⌀ (diameter)</translation>
     </message>
     <message>
         <source>π (Pi)</source>
@@ -4461,6 +4135,22 @@ in een separate Venster</translation>
 </context>
 <context>
     <name>QG_DlgArc</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Annuleren</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="obsolete">&amp;OK</translation>
+    </message>
+    <message>
+        <source>Alt+O</source>
+        <translation type="obsolete">Alt+O</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="obsolete">Esc</translation>
+    </message>
     <message>
         <source>Arc</source>
         <translation>Boog</translation>
@@ -4479,7 +4169,7 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Center (y):</source>
-        <translation>Center (y):</translation>
+        <translation>Middelpunt (y):</translation>
     </message>
     <message>
         <source>Center (x):</source>
@@ -4487,19 +4177,22 @@ in een separate Venster</translation>
     </message>
     <message>
         <source>Start Angle:</source>
-        <translation>Start Hoek:</translation>
+        <translation>Begin hoek:</translation>
     </message>
     <message>
         <source>End Angle:</source>
-        <translation>Eind Hoek:</translation>
+        <translation>Einde hoek:</translation>
     </message>
     <message>
         <source>Reversed</source>
         <translation>Omgekeerd</translation>
     </message>
+</context>
+<context>
+    <name>QG_DlgAttributes</name>
     <message>
         <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
+        <translation type="obsolete">Annuleren</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -4513,9 +4206,6 @@ in een separate Venster</translation>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
     </message>
-</context>
-<context>
-    <name>QG_DlgAttributes</name>
     <message>
         <source>Attributes</source>
         <translation>Attributen</translation>
@@ -4525,8 +4215,21 @@ in een separate Venster</translation>
         <translation>Laag:</translation>
     </message>
     <message>
+        <source>Apply attributes also to all sub-entities of selected INSERT.
+This recursively modifies all entities of the Block itself.</source>
+        <translation type="unfinished">Pas de attributen ook toe op alle subelementen van de geselecteerde INVOEGING.
+Hierdoor worden alle elementen van het blok zelf recursief gewijzigd.</translation>
+    </message>
+    <message>
+        <source>Apply attributes Block-deep</source>
+        <translation type="unfinished">Pas attributen blok-diep toe</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgCircle</name>
+    <message>
         <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
+        <translation type="obsolete">Annuleren</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -4540,18 +4243,6 @@ in een separate Venster</translation>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
     </message>
-    <message>
-        <source>Apply attributes also to all sub-entities of selected INSERT.
-This recursively modifies all entities of the Block itself.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Apply attributes Block-deep</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgCircle</name>
     <message>
         <source>Circle</source>
         <translation>Cirkel</translation>
@@ -4570,16 +4261,15 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Center (y):</source>
-        <translation>Center (y):</translation>
+        <translation>Middelpunt (y):</translation>
     </message>
     <message>
         <source>Center (x):</source>
-        <translation>Center (x):</translation>
+        <translation>Middelpunt (x):</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
-    </message>
+</context>
+<context>
+    <name>QG_DlgDimLinear</name>
     <message>
         <source>&amp;OK</source>
         <translation type="obsolete">&amp;OK</translation>
@@ -4589,15 +4279,16 @@ This recursively modifies all entities of the Block itself.</source>
         <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Annuleren</translation>
+    </message>
+    <message>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
     </message>
-</context>
-<context>
-    <name>QG_DlgDimLinear</name>
     <message>
         <source>Linear Dimension</source>
-        <translation>Liniaire Maat</translation>
+        <translation>Lineaire maat</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4611,6 +4302,13 @@ This recursively modifies all entities of the Block itself.</source>
         <source>Angle:</source>
         <translation>Hoek:</translation>
     </message>
+</context>
+<context>
+    <name>QG_DlgDimension</name>
+    <message>
+        <source>Aligned Dimension</source>
+        <translation type="obsolete">Uitgelijnde maat</translation>
+    </message>
     <message>
         <source>&amp;OK</source>
         <translation type="obsolete">&amp;OK</translation>
@@ -4621,24 +4319,28 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
+        <translation type="obsolete">Annuleren</translation>
     </message>
     <message>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Aligned Dimension</source>
-        <translation type="obsolete">Uitgelijnde Maat</translation>
     </message>
     <message>
         <source>Layer:</source>
         <translation>Laag:</translation>
     </message>
     <message>
+        <source>Dimension</source>
+        <translation>Maat</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgEllipse</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Annuleren</translation>
+    </message>
+    <message>
         <source>&amp;OK</source>
         <translation type="obsolete">&amp;OK</translation>
     </message>
@@ -4647,23 +4349,12 @@ This recursively modifies all entities of the Block itself.</source>
         <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
-    </message>
-    <message>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
     </message>
     <message>
-        <source>Dimension</source>
-        <translation>maatgeving</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgEllipse</name>
-    <message>
         <source>Ellipse</source>
-        <translation>Ovaal</translation>
+        <translation>Ellips</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4675,19 +4366,19 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Center (y):</source>
-        <translation>Center (y):</translation>
+        <translation>Middelpunt (y):</translation>
     </message>
     <message>
         <source>Center (x):</source>
-        <translation>Center (x):</translation>
+        <translation>Middelpunt (x):</translation>
     </message>
     <message>
         <source>End Angle:</source>
-        <translation>Eind Hoek:</translation>
+        <translation>Einde hoek:</translation>
     </message>
     <message>
         <source>Start Angle:</source>
-        <translation>Start Hoek:</translation>
+        <translation>Begin hoek:</translation>
     </message>
     <message>
         <source>Rotation:</source>
@@ -4695,20 +4386,62 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Minor:</source>
-        <translation>Korte As:</translation>
+        <translation>Klein:</translation>
     </message>
     <message>
         <source>Major:</source>
-        <translation>Lange As:</translation>
+        <translation>Groot:</translation>
     </message>
     <message>
         <source>Reversed</source>
         <translation>Omgekeerd</translation>
     </message>
+</context>
+<context>
+    <name>QG_DlgHatch</name>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="obsolete">&amp;OK</translation>
+    </message>
+    <message>
+        <source>Alt+O</source>
+        <translation type="obsolete">Alt+O</translation>
+    </message>
     <message>
         <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
+        <translation type="obsolete">Annuleren</translation>
     </message>
+    <message>
+        <source>Choose Hatch Attributes</source>
+        <translation>Kies arceerattributen</translation>
+    </message>
+    <message>
+        <source>Pattern</source>
+        <translation>Patroon</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation>Hoek:</translation>
+    </message>
+    <message>
+        <source>Scale:</source>
+        <translation>Verschalen:</translation>
+    </message>
+    <message>
+        <source>Solid Fill</source>
+        <translation>Inkleuring</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation>Voorbeeld</translation>
+    </message>
+    <message>
+        <source>Enable Preview</source>
+        <translation>Voorbeeld inschakelen</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgImage</name>
     <message>
         <source>&amp;OK</source>
         <translation type="obsolete">&amp;OK</translation>
@@ -4721,119 +4454,6 @@ This recursively modifies all entities of the Block itself.</source>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
     </message>
-</context>
-<context>
-    <name>QG_DlgFontConversion</name>
-    <message>
-        <source>Convert Fonts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Font family:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Font file:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save as:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Letter spacing:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Author:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Word spacing:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>License:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line spacing:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Writing System:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Preview</source>
-        <translation type="unfinished">Voorbeeld</translation>
-    </message>
-    <message>
-        <source>Create</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> - Searching</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LibreCAD Font Files(*.lff)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> - Rendering</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgHatch</name>
-    <message>
-        <source>Choose Hatch Attributes</source>
-        <translation>Bepaal Arceer Attributen</translation>
-    </message>
-    <message>
-        <source>Pattern</source>
-        <translation>Patroon</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation>Hoek:</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation>Schaal:</translation>
-    </message>
-    <message>
-        <source>Solid Fill</source>
-        <translation>Inkleuring</translation>
-    </message>
-    <message>
-        <source>Preview</source>
-        <translation>Voorbeeld</translation>
-    </message>
-    <message>
-        <source>Enable Preview</source>
-        <translation>Voorbeeld Aan</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgImage</name>
     <message>
         <source>Image</source>
         <translation type="unfinished">Afbeelding</translation>
@@ -4856,74 +4476,46 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>insert (x):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">(x) invoegen:</translation>
     </message>
     <message>
         <source>Scale:</source>
-        <translation type="unfinished">Schaal:</translation>
+        <translation type="unfinished">Verschalen:</translation>
     </message>
     <message>
         <source>Size (px):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Grootte (px):</translation>
     </message>
     <message>
         <source>path:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">pad:</translation>
     </message>
     <message>
         <source>insert (y):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">(y) invoegen:</translation>
     </message>
     <message>
         <source>Angle:</source>
         <translation type="unfinished">Hoek:</translation>
     </message>
     <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+O</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
-    <message>
         <source>DPI</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">DPI</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgInitial</name>
-    <message>
-        <source>Welcome</source>
-        <translation>Welcom</translation>
-    </message>
     <message>
         <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation type="obsolete">&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcom by QCad&lt;/b&gt;
+        <translation type="obsolete">&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welkom bij QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
-U kunt nu de eenheid kiezen voor nieuwe tekeningen en uw voorkeurstaal &lt;br&gt;
-U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translation>
-    </message>
-    <message>
-        <source>Default Unit:</source>
-        <translation>Eenheid bij verstek:</translation>
-    </message>
-    <message>
-        <source>GUI Language:</source>
-        <translation>GUI Taal:</translation>
-    </message>
-    <message>
-        <source>Command Language:</source>
-        <translation>Commando Taal:</translation>
+Selecteer de eenheid die u wilt gebruiken voor nieuwe tekeningen en uw voorkeurstaal.&lt;br&gt;
+U kunt deze instellingen later wijzigen in het dialoogvenster Opties van QCad.</translation>
     </message>
     <message>
         <source>OK</source>
@@ -4931,7 +4523,23 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
     </message>
     <message>
         <source>Enter</source>
-        <translation type="obsolete">Enter</translation>
+        <translation type="obsolete">Invoeren</translation>
+    </message>
+    <message>
+        <source>Welcome</source>
+        <translation>Welkom</translation>
+    </message>
+    <message>
+        <source>Default Unit:</source>
+        <translation>Standaard eenheid:</translation>
+    </message>
+    <message>
+        <source>GUI Language:</source>
+        <translation>GUI-taal:</translation>
+    </message>
+    <message>
+        <source>Command Language:</source>
+        <translation>Opdrachttaal:</translation>
     </message>
     <message>
         <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
@@ -4939,11 +4547,31 @@ U kunt deze instellingen later wijzigen in de Opties Dialog van QCad.</translati
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welkom bij LibreCAD&lt;/b&gt;
+&lt;/font&gt;
+&lt;br&gt;
+Selecteer de eenheid die u wilt gebruiken voor nieuwe tekeningen en uw voorkeurstaal.&lt;br&gt;
+(U kunt deze instellingen later wijzigen.)</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgInsert</name>
+    <message>
+        <source>Scale:</source>
+        <translation type="obsolete">Verschalen:</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Annuleren</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="obsolete">&amp;OK</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="obsolete">Esc</translation>
+    </message>
     <message>
         <source>Insert</source>
         <translation>Invoegen</translation>
@@ -4958,15 +4586,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Insertion point (x):</source>
-        <translation>Invoeg punt (x):</translation>
+        <translation>Invoegpunt (x):</translation>
     </message>
     <message>
         <source>Insertion point (y):</source>
-        <translation>Invoeg punt (y):</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="obsolete">Schaal:</translation>
+        <translation>Invoegpunt (y):</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -4982,15 +4606,26 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Row Spacing:</source>
-        <translation>Rij Tussenafstend:</translation>
+        <translation>Rijafstand:</translation>
     </message>
     <message>
         <source>Column Spacing:</source>
-        <translation>Kolom Tussenafstand:</translation>
+        <translation>Kolomafstand:</translation>
     </message>
     <message>
+        <source>Scale X:</source>
+        <translation type="unfinished">Schaal X:</translation>
+    </message>
+    <message>
+        <source>Scale Y:</source>
+        <translation type="unfinished">Schaal Y:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgLine</name>
+    <message>
         <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
+        <translation type="obsolete">Annuleren</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -5000,17 +4635,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
     </message>
-    <message>
-        <source>Scale X:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Scale Y:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgLine</name>
     <message>
         <source>Line</source>
         <translation>Lijn</translation>
@@ -5025,38 +4649,34 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>End point (x):</source>
-        <translation>Eind Punt (x):</translation>
+        <translation>Eindpunt (x):</translation>
     </message>
     <message>
         <source>End point (y):</source>
-        <translation>Eind Punt (y):</translation>
+        <translation>Eindpunt (y):</translation>
     </message>
     <message>
         <source>Start point (y):</source>
-        <translation>Start Punt (y):</translation>
+        <translation>Beginpunt (y):</translation>
     </message>
     <message>
         <source>Start point (x):</source>
-        <translation>Start Punt (x):</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
+        <translation>Beginpunt (x):</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgMText</name>
     <message>
+        <source>Line &amp;spacing:</source>
+        <translation type="obsolete">Lijn&amp;afstand:</translation>
+    </message>
+    <message>
+        <source>Diameter (ø)</source>
+        <translation type="obsolete">Diameter (ø)</translation>
+    </message>
+    <message>
         <source>MText</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">MTekst</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -5071,12 +4691,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished">&amp;Hoogte:</translation>
     </message>
     <message>
-        <source>Line &amp;spacing:</source>
-        <translation type="obsolete">Lijn &amp;Tussenafstand:</translation>
-    </message>
-    <message>
         <source>&amp;Default line spacing</source>
-        <translation type="unfinished">&amp;Standaard regelafstand</translation>
+        <translation type="unfinished">&amp;Standaard lijnafstand</translation>
     </message>
     <message>
         <source>Alt+D</source>
@@ -5084,43 +4700,43 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Alignment</source>
-        <translation type="unfinished">Uitlijnen</translation>
+        <translation type="unfinished">Uitlijning</translation>
     </message>
     <message>
         <source>Top Right</source>
-        <translation type="unfinished">Boven Rechts</translation>
+        <translation type="unfinished">Rechtsboven</translation>
     </message>
     <message>
         <source>Top Left</source>
-        <translation type="unfinished">Boven Links</translation>
+        <translation type="unfinished">Linksboven</translation>
     </message>
     <message>
         <source>Middle Left</source>
-        <translation type="unfinished">Midden Links</translation>
+        <translation type="unfinished">Linksmidden</translation>
     </message>
     <message>
         <source>Middle Center</source>
-        <translation type="unfinished">Midden Center</translation>
+        <translation type="unfinished">Middelpunt midden</translation>
     </message>
     <message>
         <source>Middle Right</source>
-        <translation type="unfinished">Midden Rechts</translation>
+        <translation type="unfinished">Rechtsmidden</translation>
     </message>
     <message>
         <source>Bottom Left</source>
-        <translation type="unfinished">Onder Links</translation>
+        <translation type="unfinished">Linksonder</translation>
     </message>
     <message>
         <source>Bottom Right</source>
-        <translation type="unfinished">Onder Rechts</translation>
+        <translation type="unfinished">Rechtsonder</translation>
     </message>
     <message>
         <source>Bottom Center</source>
-        <translation type="unfinished">Onder Center</translation>
+        <translation type="unfinished">Middelpunt onder</translation>
     </message>
     <message>
         <source>Top Center</source>
-        <translation type="unfinished">Boven Center</translation>
+        <translation type="unfinished">Middelpunt boven</translation>
     </message>
     <message>
         <source>Angle</source>
@@ -5132,35 +4748,31 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Clear Text</source>
-        <translation type="unfinished">Wis Tekst</translation>
+        <translation type="unfinished">Tekst wissen</translation>
     </message>
     <message>
         <source>Load Text From File</source>
-        <translation type="unfinished">Laad tekst van Bestand</translation>
+        <translation type="unfinished">Laad tekst van bestand</translation>
     </message>
     <message>
         <source>Save Text To File</source>
-        <translation type="unfinished">Bewaar tekst naar Bestand</translation>
+        <translation type="unfinished">Sla tekst op in bestand</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">Knip</translation>
+        <translation type="unfinished">Knippen</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Kopieer</translation>
+        <translation type="unfinished">Kopiëren</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished">Plak</translation>
+        <translation type="unfinished">Plakken</translation>
     </message>
     <message>
         <source>Insert Symbol</source>
-        <translation type="unfinished">Voeg Symbool in</translation>
-    </message>
-    <message>
-        <source>Diameter (ø)</source>
-        <translation type="obsolete">Diameter (ø)</translation>
+        <translation type="unfinished">Symbool invoegen</translation>
     </message>
     <message>
         <source>Degree (°)</source>
@@ -5168,11 +4780,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Plus / Minus (±)</source>
-        <translation type="unfinished">Plus / Minus (±)</translation>
+        <translation type="unfinished">Plus/min (±)</translation>
     </message>
     <message>
         <source>At (@)</source>
-        <translation type="unfinished">Aapje (@)</translation>
+        <translation type="unfinished">Apenstaartje (@)</translation>
     </message>
     <message>
         <source>Hash (#)</source>
@@ -5188,7 +4800,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Registered (®)</source>
-        <translation type="unfinished">Registered (®)</translation>
+        <translation type="unfinished">Geregistreerd (®)</translation>
     </message>
     <message>
         <source>Paragraph (§)</source>
@@ -5216,7 +4828,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Insert Unicode</source>
-        <translation>Voer Unicode in</translation>
+        <translation>Unicode invoegen</translation>
     </message>
     <message>
         <source>Page:</source>
@@ -5244,7 +4856,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation type="unfinished">[0250-02AF] IPA Extensies</translation>
+        <translation type="unfinished">[0250-02AF] IPA Extensions</translation>
     </message>
     <message>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
@@ -5664,42 +5276,18 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&amp;Line spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Lijnafstand:</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">...</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgMirror</name>
     <message>
-        <source>Mirroring Options</source>
-        <translation>Spiegel Opties</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation>Aantal Kopieën</translation>
-    </message>
-    <message>
         <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation>&amp;Wis Origineel</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation>&amp;Bewaar Origineel</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation>Gebruik huidige &amp;attributen</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation>Gebruik huidige &amp;laag</translation>
+        <translation type="obsolete">Annuleren</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -5710,35 +5298,20 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="obsolete">Esc</translation>
     </message>
     <message>
-        <source>...</source>
-        <translation>....</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMove</name>
-    <message>
-        <source>Moving Options</source>
-        <translation type="obsolete">Verplaatsings Opties</translation>
+        <source>Mirroring Options</source>
+        <translation>Spiegelopties</translation>
     </message>
     <message>
         <source>Number of copies</source>
-        <translation>Aantal Kopieën</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
+        <translation>Aantal kopieën</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Wis Origineel</translation>
+        <translation>&amp;Origineel verwijderen</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Bewaar Origineel</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation>&amp;Meerdere Kopieën</translation>
+        <translation>&amp;Origineel bewaren</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
@@ -5747,6 +5320,21 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Use current &amp;layer</source>
         <translation>Gebruik huidige &amp;laag</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgMove</name>
+    <message>
+        <source>Moving Options</source>
+        <translation type="obsolete">Verplaatsingsopties</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Annuleren</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -5761,43 +5349,59 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="obsolete">Esc</translation>
     </message>
     <message>
+        <source>Number of copies</source>
+        <translation>Aantal kopieën</translation>
+    </message>
+    <message>
+        <source>&amp;Delete Original</source>
+        <translation>&amp;Origineel verwijderen</translation>
+    </message>
+    <message>
+        <source>&amp;Keep Original</source>
+        <translation>&amp;Origineel bewaren</translation>
+    </message>
+    <message>
+        <source>&amp;Multiple Copies</source>
+        <translation>&amp;Meerdere kopieën</translation>
+    </message>
+    <message>
+        <source>Use current &amp;attributes</source>
+        <translation>Gebruik huidige &amp;attributen</translation>
+    </message>
+    <message>
+        <source>Use current &amp;layer</source>
+        <translation>Gebruik huidige &amp;laag</translation>
+    </message>
+    <message>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
         <source>Move/Copy Options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Opties verplaatsen/kopiëren</translation>
     </message>
     <message>
         <source>Number of copies. Maximum 100</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aantal kopieën. Maximaal 100</translation>
     </message>
     <message>
         <source>Quantity</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aantal</translation>
     </message>
     <message>
         <source>Offset X</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">X-offset</translation>
     </message>
     <message>
         <source>Offset Y</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Y-offset</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgMoveRotate</name>
     <message>
-        <source>Move/Rotate Options</source>
-        <translation>Verplaats/Roteer Opties</translation>
-    </message>
-    <message>
         <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation>Aantal Kopieën</translation>
+        <translation type="obsolete">Annuleren</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -5806,6 +5410,14 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
+    </message>
+    <message>
+        <source>Move/Rotate Options</source>
+        <translation>Verplaats-/roteeropties</translation>
+    </message>
+    <message>
+        <source>Number of copies</source>
+        <translation>Aantal kopieën</translation>
     </message>
     <message>
         <source>&amp;Angle (a):</source>
@@ -5821,15 +5433,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Wis Origineel</translation>
+        <translation>&amp;Origineel verwijderen</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Bewaar Origineel</translation>
+        <translation>&amp;Origineel bewaren</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies</source>
-        <translation>&amp;Meerdere Kopieën</translation>
+        <translation>&amp;Meerdere kopieën</translation>
     </message>
     <message>
         <source>...</source>
@@ -5843,8 +5455,128 @@ Please choose the unit you want to use for new drawings and your preferred langu
 <context>
     <name>QG_DlgOptionsDrawing</name>
     <message>
+        <source>&amp;OK</source>
+        <translation type="obsolete">&amp;OK</translation>
+    </message>
+    <message>
+        <source>1</source>
+        <translation type="obsolete">1</translation>
+    </message>
+    <message>
+        <source>2</source>
+        <translation type="obsolete">2</translation>
+    </message>
+    <message>
+        <source>5</source>
+        <translation type="obsolete">5</translation>
+    </message>
+    <message>
+        <source>Extension line extension:</source>
+        <translation type="obsolete">Verlenging verlenglijn:</translation>
+    </message>
+    <message>
+        <source>Extension line offset:</source>
+        <translation type="obsolete">Offset verlenglijn:</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Annuleren</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="obsolete">Esc</translation>
+    </message>
+    <message>
+        <source>Alt+O</source>
+        <translation type="obsolete">Alt+O</translation>
+    </message>
+    <message>
+        <source>Grid</source>
+        <translation type="obsolete">Raster</translation>
+    </message>
+    <message>
+        <source>4</source>
+        <translation type="obsolete">4</translation>
+    </message>
+    <message>
+        <source>8</source>
+        <translation type="obsolete">8</translation>
+    </message>
+    <message>
+        <source>16</source>
+        <translation type="obsolete">16</translation>
+    </message>
+    <message>
+        <source>32</source>
+        <translation type="obsolete">32</translation>
+    </message>
+    <message>
+        <source>64</source>
+        <translation type="obsolete">64</translation>
+    </message>
+    <message>
+        <source>0.01</source>
+        <translation type="obsolete">0,01</translation>
+    </message>
+    <message>
+        <source>0.1</source>
+        <translation type="obsolete">0,1</translation>
+    </message>
+    <message>
+        <source>10</source>
+        <translation type="obsolete">10</translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation type="obsolete">0</translation>
+    </message>
+    <message>
+        <source>0.5</source>
+        <translation type="obsolete">0,5</translation>
+    </message>
+    <message>
+        <source>1.0</source>
+        <translation type="obsolete">1,0</translation>
+    </message>
+    <message>
+        <source>2.0</source>
+        <translation type="obsolete">2,0</translation>
+    </message>
+    <message>
+        <source>5.0</source>
+        <translation type="obsolete">5,0</translation>
+    </message>
+    <message>
+        <source>0.2</source>
+        <translation type="obsolete">0,2</translation>
+    </message>
+    <message>
+        <source>20</source>
+        <translation type="obsolete">20</translation>
+    </message>
+    <message>
+        <source>50</source>
+        <translation type="obsolete">50</translation>
+    </message>
+    <message>
+        <source>100</source>
+        <translation type="obsolete">100</translation>
+    </message>
+    <message>
+        <source>200</source>
+        <translation type="obsolete">200</translation>
+    </message>
+    <message>
+        <source>500</source>
+        <translation type="obsolete">500</translation>
+    </message>
+    <message>
+        <source>1000</source>
+        <translation type="obsolete">1000</translation>
+    </message>
+    <message>
         <source>Main Unit</source>
-        <translation>Hoofd Eenheid</translation>
+        <translation>Hoofdeenheid</translation>
     </message>
     <message>
         <source>Length</source>
@@ -5876,7 +5608,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Decimal Degrees</source>
-        <translation>Decimale Graden</translation>
+        <translation>Decimale graden</translation>
     </message>
     <message>
         <source>Radians</source>
@@ -5888,51 +5620,35 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>linear</source>
-        <translation>liniair</translation>
+        <translation>lineair</translation>
     </message>
     <message>
         <source>angular</source>
-        <translation>onder een hoek</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;OK</translation>
+        <translation>hoekig</translation>
     </message>
     <message>
         <source>Paper Format</source>
-        <translation type="vanished">Papier Formaat</translation>
+        <translation type="vanished">Papierformaat</translation>
     </message>
     <message>
         <source>Text Height:</source>
-        <translation>Tekst Hoogte:</translation>
+        <translation>Teksthoogte:</translation>
     </message>
     <message>
         <source>units</source>
         <translation>eenheden</translation>
     </message>
     <message>
-        <source>1</source>
-        <translation type="obsolete">1</translation>
-    </message>
-    <message>
-        <source>2</source>
-        <translation type="obsolete">2</translation>
-    </message>
-    <message>
-        <source>5</source>
-        <translation type="obsolete">5</translation>
-    </message>
-    <message>
         <source>Deg/min/sec</source>
-        <translation>Deg/min/sec</translation>
+        <translation>Gra/min/sec</translation>
     </message>
     <message>
         <source>Gradians</source>
-        <translation>Graden</translation>
+        <translation>Decimale graden</translation>
     </message>
     <message>
         <source>Surveyor&apos;s units</source>
-        <translation>Te meten eenheid</translation>
+        <translation>Landmeetkundige eenheden</translation>
     </message>
     <message>
         <source>Options</source>
@@ -5940,27 +5656,19 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>Voor de lengte formaten &apos;Werktuigbouw&apos; en &apos;Bouwkunde&apos; moet de eenheid naar Inch worden gezet.</translation>
-    </message>
-    <message>
-        <source>Extension line extension:</source>
-        <translation type="obsolete">Hulplijn extentie:</translation>
+        <translation>Voor de lengteformaten &apos;Werktuigbouw&apos; en &apos;Bouwkunde&apos; moet de eenheid naar inch worden gezet.</translation>
     </message>
     <message>
         <source>Arrow size:</source>
-        <translation>Pijl grootte:</translation>
-    </message>
-    <message>
-        <source>Extension line offset:</source>
-        <translation type="obsolete">Hulplijn afzet:</translation>
+        <translation>Pijlgrootte:</translation>
     </message>
     <message>
         <source>Dimension line gap:</source>
-        <translation>Maat lijn uitsparing:</translation>
+        <translation>Gat bematingslijn:</translation>
     </message>
     <message>
         <source>Drawing Preferences</source>
-        <translation>Tekenings Voorkeursinstellingen</translation>
+        <translation>Voorkeuren voor tekenen</translation>
     </message>
     <message>
         <source>&amp;Paper</source>
@@ -5972,15 +5680,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>P&amp;ortrait</source>
-        <translation>&amp;Staand</translation>
+        <translation>S&amp;taand</translation>
     </message>
     <message>
         <source>Paper &amp;Height:</source>
-        <translation type="vanished">Papier &amp;Hoogte:</translation>
+        <translation type="vanished">Papier&amp;hoogte:</translation>
     </message>
     <message>
         <source>Paper &amp;Width:</source>
-        <translation type="vanished">Papier &amp;Breedte:</translation>
+        <translation type="vanished">Papier&amp;breedte:</translation>
     </message>
     <message>
         <source>&amp;Units</source>
@@ -5988,7 +5696,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&amp;Main drawing unit:</source>
-        <translation>&amp;Hoofdeenheid tekenen:</translation>
+        <translation>&amp;Hoofdtekeneenheid:</translation>
     </message>
     <message>
         <source>&amp;Format:</source>
@@ -6011,36 +5719,20 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>&amp;Maten</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+O</translation>
-    </message>
-    <message>
-        <source>Grid</source>
-        <translation type="obsolete">Raster</translation>
-    </message>
-    <message>
         <source>Grid Settings</source>
-        <translation>Raster Instellingen</translation>
+        <translation>Rasterinstellingen</translation>
     </message>
     <message>
         <source>Show Grid</source>
-        <translation>Raster Zichtbaar</translation>
+        <translation>Raster weergeven</translation>
     </message>
     <message>
         <source>X Spacing:</source>
-        <translation>X Tussenafstand:</translation>
+        <translation>X-afstand:</translation>
     </message>
     <message>
         <source>Y Spacing:</source>
-        <translation>Y Tussenafstand:</translation>
+        <translation>Y-afstand:</translation>
     </message>
     <message>
         <source>auto</source>
@@ -6048,71 +5740,39 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&amp;Grid</source>
-        <translation>R&amp;aster</translation>
+        <translation>&amp;Raster</translation>
     </message>
     <message>
         <source>Splines</source>
-        <translation>Splines</translation>
+        <translation>Spieën</translation>
     </message>
     <message>
         <source>Number of line segments per spline patch:</source>
-        <translation>Aantal lijnsegmenten per spline patch:</translation>
-    </message>
-    <message>
-        <source>4</source>
-        <translation type="obsolete">4</translation>
-    </message>
-    <message>
-        <source>8</source>
-        <translation type="obsolete">8</translation>
-    </message>
-    <message>
-        <source>16</source>
-        <translation type="obsolete">16</translation>
-    </message>
-    <message>
-        <source>32</source>
-        <translation type="obsolete">32</translation>
-    </message>
-    <message>
-        <source>64</source>
-        <translation type="obsolete">64</translation>
-    </message>
-    <message>
-        <source>0.01</source>
-        <translation type="obsolete">0.01</translation>
-    </message>
-    <message>
-        <source>0.1</source>
-        <translation type="obsolete">0.1</translation>
-    </message>
-    <message>
-        <source>10</source>
-        <translation type="obsolete">10</translation>
+        <translation>Aantal lijnsegmenten per spiepatch:</translation>
     </message>
     <message>
         <source>Crosshair</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dradenkruis</translation>
     </message>
     <message>
         <source>Left crosshair with isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Linker dradenkruis met isometrisch raster</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished">Links</translation>
+        <translation type="unfinished">Linker</translation>
     </message>
     <message>
         <source>Top crosshair with isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bovenste dradenkruis met isometrisch raster</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bovenkant</translation>
     </message>
     <message>
         <source>Right crosshair with isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rechter dradenkruis met isometrisch raster</translation>
     </message>
     <message>
         <source>Right</source>
@@ -6120,111 +5780,63 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Use orthogonal grid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gebruik een orthogonaal raster</translation>
     </message>
     <message>
         <source>Orthogonal Grid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Orthogonaal raster</translation>
     </message>
     <message>
         <source>Use isometric grid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gebruik een isometrisch raster</translation>
     </message>
     <message>
         <source>Isometric Grid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Isometrisch raster</translation>
     </message>
     <message>
         <source>Tick size:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bematingsvinkje:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>0</source>
-        <translation type="obsolete">0</translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Grootte bematingsvinkje. Als dit op 0 wordt ingesteld, wordt het bematingsvinkje uitgeschakeld. De bematingspijl wordt niet getekend als het bematingsvinkje ingeschakeld is.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Horizontal</source>
-        <translation type="unfinished">Horizontaal</translation>
+        <translation type="unfinished">Horizontale</translation>
     </message>
     <message>
         <source>General Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Algemene schaal:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>0.5</source>
-        <translation type="obsolete">0.5</translation>
-    </message>
-    <message>
-        <source>1.0</source>
-        <translation type="obsolete">1.0</translation>
-    </message>
-    <message>
-        <source>2.0</source>
-        <translation type="obsolete">2.0</translation>
-    </message>
-    <message>
-        <source>5.0</source>
-        <translation type="obsolete">5.0</translation>
-    </message>
-    <message>
-        <source>0.2</source>
-        <translation type="obsolete">0.2</translation>
-    </message>
-    <message>
-        <source>20</source>
-        <translation type="obsolete">20</translation>
-    </message>
-    <message>
-        <source>50</source>
-        <translation type="obsolete">50</translation>
-    </message>
-    <message>
-        <source>100</source>
-        <translation type="obsolete">100</translation>
-    </message>
-    <message>
-        <source>200</source>
-        <translation type="obsolete">200</translation>
-    </message>
-    <message>
-        <source>500</source>
-        <translation type="obsolete">500</translation>
-    </message>
-    <message>
-        <source>1000</source>
-        <translation type="obsolete">1000</translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Verschalen om alle afmetingswaarden te vermenigvuldigen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Verschalen om alle afmetingsgeometrieën te vermenigvuldigen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Text style:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tekststijl:</translation>
     </message>
     <message>
         <source>&apos;.&apos; (Period)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&apos;.&apos; (punt)</translation>
     </message>
     <message>
         <source>&apos;,&apos; (Comma)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&apos;,&apos; (komma)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Decimaalscheidingsteken:</translation>
     </message>
     <message>
         <source>Linear units:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lineaire eenheden:</translation>
     </message>
     <message>
         <source>Color:</source>
@@ -6232,35 +5844,35 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Length Factor:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lengtefactor:</translation>
     </message>
     <message>
         <source>Angular units:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hoekeenheden:</translation>
     </message>
     <message>
         <source>Linear zeros:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lineaire nullen:</translation>
     </message>
     <message>
         <source>Format units</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Opmaakeenheden</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Afstand ruimte rond tekst&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Text size &amp; position</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Grootte en positie van tekst</translation>
     </message>
     <message>
         <source>Length to enlarge over dimension line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lengte om over de bematingslijn te vergroten</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Grootte bematingspijl. &lt;a name=&quot;result_box&quot;/&gt;heeft geen effect als de grootte van het vinkje &lt;a name=&quot;result_box&quot;/&gt;anders is dan 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width:</source>
@@ -6268,31 +5880,31 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bematingslijnen, pijlen en vinkjes</translation>
     </message>
     <message>
         <source>Angular zeros:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hoeknullen:</translation>
     </message>
     <message>
         <source>Angular precision:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Precisie onder een hoek:</translation>
     </message>
     <message>
         <source>Enlarge:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vergroten:</translation>
     </message>
     <message>
         <source>Offset:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Offset:</translation>
     </message>
     <message>
         <source>Linear precision:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lineaire precisie:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tekstuitlijning &lt;a name=&quot;result_box&quot;/&gt;gerelateerd aan de bematingslijn.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Aligned</source>
@@ -6300,27 +5912,27 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset vanaf het uitgangspunt.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Text alignment:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tekstuitlijning:</translation>
     </message>
     <message>
         <source>Extension lines</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verlenglijnen</translation>
     </message>
     <message>
         <source>Fixed length:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vaste lengte:</translation>
     </message>
     <message>
         <source>fixed extension line legth</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">lengte vaste verlenglijnen</translation>
     </message>
     <message>
         <source>Format</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Formaat</translation>
     </message>
     <message>
         <source>&amp;Height:</source>
@@ -6328,82 +5940,54 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&amp;Width:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Breedte:</translation>
     </message>
     <message>
         <source>Orientation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Stand</translation>
     </message>
     <message>
         <source>Margins</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Marges</translation>
     </message>
     <message>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Onderkant</translation>
     </message>
     <message>
         <source>Number of pages</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aantal pagina&apos;s</translation>
     </message>
     <message>
         <source>Horizontally:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Horizontaal:</translation>
     </message>
     <message>
         <source>Vertically:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verticaal:</translation>
     </message>
     <message>
         <source>Update Template</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sjabloon updaten</translation>
     </message>
     <message>
         <source>Architectural (metric)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bouwkunde (metrisch)</translation>
     </message>
     <message>
         <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Voor de lengte-instelling “Bouwkunde (metrisch)”, moet de eenheid ingesteld zijn op “meter”.</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgOptionsGeneral</name>
     <message>
-        <source>Preferences</source>
-        <translation>Voorkeursinstellingen</translation>
-    </message>
-    <message>
-        <source>Translations:</source>
-        <translation>Vertalingen:</translation>
-    </message>
-    <message>
-        <source>Hatch Patterns:</source>
-        <translation>Arceer Patronen:</translation>
-    </message>
-    <message>
-        <source>Fonts:</source>
-        <translation>Lettertypen:</translation>
-    </message>
-    <message>
         <source>Scripts:</source>
         <translation type="obsolete">Scripts:</translation>
     </message>
     <message>
-        <source>Part Libraries:</source>
-        <translation>Onderdeel Bibliotheken:</translation>
-    </message>
-    <message>
         <source>&amp;OK</source>
         <translation type="obsolete">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Language</source>
-        <translation>Taal</translation>
-    </message>
-    <message>
-        <source>Graphic View</source>
-        <translation>Grafisch Venster</translation>
     </message>
     <message>
         <source>0</source>
@@ -6426,44 +6010,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="obsolete">U zult QCad moeten herstarten om de veranderingen door te voeren.</translation>
     </message>
     <message>
-        <source>Application Preferences</source>
-        <translation>Programma Voorkeursinstellingen</translation>
-    </message>
-    <message>
-        <source>Defaults for new drawings</source>
-        <translation>Bij verstek voor nieuwe tekeningen</translation>
-    </message>
-    <message>
-        <source>&amp;Appearance</source>
-        <translation>&amp;Uiterlijk</translation>
-    </message>
-    <message>
-        <source>&amp;GUI Language:</source>
-        <translation>&amp;GUI taal:</translation>
-    </message>
-    <message>
-        <source>&amp;Command Language:</source>
-        <translation>&amp;Commando Taal:</translation>
-    </message>
-    <message>
         <source>&amp;Show large crosshairs</source>
-        <translation type="obsolete">&amp;Toon groot cursor kruis</translation>
+        <translation type="obsolete">&amp;Groot dradenkruis weergeven</translation>
     </message>
     <message>
         <source>Number of p&amp;review entities:</source>
-        <translation type="obsolete">Aantal &amp;voorbeeld elementen:</translation>
-    </message>
-    <message>
-        <source>&amp;Paths</source>
-        <translation>&amp;Paden</translation>
-    </message>
-    <message>
-        <source>&amp;Defaults</source>
-        <translation>&amp;Bij Verstek</translation>
-    </message>
-    <message>
-        <source>&amp;Unit:</source>
-        <translation>&amp;Eenheid:</translation>
+        <translation type="obsolete">Aantal v&amp;oorbeeldelementen:</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -6471,7 +6023,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
+        <translation type="obsolete">Annuleren</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -6480,18 +6032,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Colors</source>
         <translation type="obsolete">Kleuren</translation>
-    </message>
-    <message>
-        <source>Backgr&amp;ound:</source>
-        <translation>&amp;Achtergrond:</translation>
-    </message>
-    <message>
-        <source>G&amp;rid Color:</source>
-        <translation>&amp;Grid Kleur:</translation>
-    </message>
-    <message>
-        <source>&amp;Meta Grid Color:</source>
-        <translation>&amp;Meta Grid Kleur:</translation>
     </message>
     <message>
         <source>Black</source>
@@ -6507,7 +6047,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Darkgray</source>
-        <translation type="obsolete">Donker Grijs</translation>
+        <translation type="obsolete">Donkergrijs</translation>
     </message>
     <message>
         <source>#404040</source>
@@ -6555,7 +6095,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>14</source>
-        <translation type="obsolete">1414</translation>
+        <translation type="obsolete">14</translation>
     </message>
     <message>
         <source>#000000</source>
@@ -6574,14 +6114,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="obsolete">#808080</translation>
     </message>
     <message>
-        <source>A&amp;utomatically scale grid</source>
-        <translation>Verschaal Raster A&amp;utomatisch</translation>
-    </message>
-    <message>
-        <source>S&amp;elected Color:</source>
-        <translation>Ges&amp;electeerde Kleur:</translation>
-    </message>
-    <message>
         <source>#a54747</source>
         <translation type="obsolete">#a54747</translation>
     </message>
@@ -6590,12 +6122,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="obsolete">#739373</translation>
     </message>
     <message>
-        <source>&amp;Highlighted Color:</source>
-        <translation>Ge&amp;markeerde Kleur:</translation>
-    </message>
-    <message>
         <source>Minimal Grid Spacing:</source>
-        <translation type="obsolete">Minimale Grid Tussenafstand:</translation>
+        <translation type="obsolete">Minimale tussenafstand raster:</translation>
     </message>
     <message>
         <source>4</source>
@@ -6610,32 +6138,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="obsolete">20</translation>
     </message>
     <message>
-        <source>Please restart the application to apply all changes.</source>
-        <translation>Herstart de applicatie om wijzigingen door te voeren.</translation>
-    </message>
-    <message>
-        <source>Alt+S</source>
-        <translation>Alt+S</translation>
-    </message>
-    <message>
-        <source>Alt+U</source>
-        <translation>Alt+U</translation>
-    </message>
-    <message>
         <source>Minimal Grid Spacing (px):</source>
-        <translation type="obsolete">Minimale Rastergrootte (px):</translation>
-    </message>
-    <message>
-        <source>Program Defaults</source>
-        <translation>Programma Standaardwaarden</translation>
+        <translation type="obsolete">Minimale tussenafstand raster (px):</translation>
     </message>
     <message>
         <source>Time between automatc saving of thedocument in minutes.</source>
-        <translation type="obsolete">Tijd tussen automatische opslag in minuten.</translation>
-    </message>
-    <message>
-        <source>Auto save time:</source>
-        <translation>Tussentijdse bewaar tijd:</translation>
+        <translation type="obsolete">Tijd tussen automatisch opslaan van het document in minuten.</translation>
     </message>
     <message>
         <source>400</source>
@@ -6646,294 +6154,323 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="obsolete">800</translation>
     </message>
     <message>
-        <source>Drawing unit.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Time between automatic saving of the document in minutes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto backup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Template:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>St&amp;art Handle Color:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Handle Color:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;End Handle Color:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Graphic Colors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap indicator:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Anti-aliasing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modify layer of selected entities, at  layer activation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>restores program geometry/layout to original state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Layout</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>restores the program to its original state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Scrollbars</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap indicator lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap indicator shape</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Circle</source>
-        <translation type="obsolete">Cirkel</translation>
+        <translation type="unfinished">Cirkel</translation>
     </message>
     <message>
         <source>Point</source>
-        <translation type="obsolete">Punt</translation>
+        <translation type="unfinished">Punt</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Voorkeuren</translation>
+    </message>
+    <message>
+        <source>Translations:</source>
+        <translation>Vertalingen:</translation>
+    </message>
+    <message>
+        <source>Hatch Patterns:</source>
+        <translation>Patronen arceren:</translation>
+    </message>
+    <message>
+        <source>Fonts:</source>
+        <translation>Lettertypen:</translation>
+    </message>
+    <message>
+        <source>Part Libraries:</source>
+        <translation>Onderdeelbibliotheken:</translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation>Taal</translation>
+    </message>
+    <message>
+        <source>Graphic View</source>
+        <translation>Grafisch venster</translation>
+    </message>
+    <message>
+        <source>Application Preferences</source>
+        <translation>Voorkeursinstellingen toepassing</translation>
+    </message>
+    <message>
+        <source>Defaults for new drawings</source>
+        <translation>Standaarden voor nieuwe tekeningen</translation>
+    </message>
+    <message>
+        <source>&amp;Appearance</source>
+        <translation>&amp;Uiterlijk</translation>
+    </message>
+    <message>
+        <source>&amp;GUI Language:</source>
+        <translation>&amp;GUI-taal:</translation>
+    </message>
+    <message>
+        <source>&amp;Command Language:</source>
+        <translation>&amp;Opdrachttaal:</translation>
+    </message>
+    <message>
+        <source>&amp;Paths</source>
+        <translation>&amp;Paden</translation>
+    </message>
+    <message>
+        <source>&amp;Defaults</source>
+        <translation>&amp;Standaarden</translation>
+    </message>
+    <message>
+        <source>&amp;Unit:</source>
+        <translation>&amp;Eenheid:</translation>
+    </message>
+    <message>
+        <source>Backgr&amp;ound:</source>
+        <translation>&amp;Achtergrond:</translation>
+    </message>
+    <message>
+        <source>G&amp;rid Color:</source>
+        <translation>&amp;Rasterkleur:</translation>
+    </message>
+    <message>
+        <source>&amp;Meta Grid Color:</source>
+        <translation>&amp;Metarasterkleur:</translation>
+    </message>
+    <message>
+        <source>A&amp;utomatically scale grid</source>
+        <translation>Raster a&amp;utomatisch verschalen</translation>
+    </message>
+    <message>
+        <source>S&amp;elected Color:</source>
+        <translation>Ges&amp;electeerde kleur:</translation>
+    </message>
+    <message>
+        <source>&amp;Highlighted Color:</source>
+        <translation>&amp;Gemarkeerde kleur:</translation>
+    </message>
+    <message>
+        <source>Please restart the application to apply all changes.</source>
+        <translation>Herstart de toepassing om alle wijzigingen door te voeren.</translation>
+    </message>
+    <message>
+        <source>Alt+S</source>
+        <translation>Alt+S</translation>
+    </message>
+    <message>
+        <source>Alt+U</source>
+        <translation>Alt+U</translation>
+    </message>
+    <message>
+        <source>Program Defaults</source>
+        <translation>Programmastandaarden</translation>
+    </message>
+    <message>
+        <source>Auto save time:</source>
+        <translation>Tijd automatisch opslaan:</translation>
+    </message>
+    <message>
+        <source>Drawing unit.</source>
+        <translation type="unfinished">Tekeneenheid.</translation>
+    </message>
+    <message>
+        <source>Time between automatic saving of the document in minutes.</source>
+        <translation type="unfinished">Tijd tussen automatisch opslaan van het documenten in minuten.</translation>
+    </message>
+    <message>
+        <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
+        <translation type="unfinished">Indien dit is ingesteld, zal LibreCad automatisch een back-up maken van uw huidige tekening.</translation>
+    </message>
+    <message>
+        <source>Auto backup</source>
+        <translation type="unfinished">Automatische back-up</translation>
+    </message>
+    <message>
+        <source>Template:</source>
+        <translation type="unfinished">Sjabloon:</translation>
+    </message>
+    <message>
+        <source>St&amp;art Handle Color:</source>
+        <translation type="unfinished">St&amp;art kleur handgreep:</translation>
+    </message>
+    <message>
+        <source>&amp;Handle Color:</source>
+        <translation type="unfinished">&amp;Kleur handgreep:</translation>
+    </message>
+    <message>
+        <source>&amp;End Handle Color:</source>
+        <translation type="unfinished">&amp;Einde kleur handgreep:</translation>
+    </message>
+    <message>
+        <source>Graphic Colors</source>
+        <translation type="unfinished">Grafische kleuren</translation>
+    </message>
+    <message>
+        <source>Snap indicator:</source>
+        <translation type="unfinished">Snap-indicator:</translation>
+    </message>
+    <message>
+        <source>Anti-aliasing</source>
+        <translation type="unfinished">Anti-aliasing</translation>
+    </message>
+    <message>
+        <source>Modify layer of selected entities, at  layer activation</source>
+        <translation type="unfinished">Wijzig de laag van de geselecteerde elementen bij de laagactivering</translation>
+    </message>
+    <message>
+        <source>Clear Settings</source>
+        <translation type="unfinished">Instellingen wissen</translation>
+    </message>
+    <message>
+        <source>restores program geometry/layout to original state</source>
+        <translation type="unfinished">zet de programmageometrie/-lay-out terug naar de oorspronkelijke staat</translation>
+    </message>
+    <message>
+        <source>Layout</source>
+        <translation type="unfinished">Lay-out</translation>
+    </message>
+    <message>
+        <source>restores the program to its original state</source>
+        <translation type="unfinished">zet het programma terug naar zijn oorspronkelijke staat</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation type="unfinished">Alles</translation>
+    </message>
+    <message>
+        <source>Scrollbars</source>
+        <translation type="unfinished">Schuifbalken</translation>
+    </message>
+    <message>
+        <source>Snap indicator lines</source>
+        <translation type="unfinished">Snap-indicatorlijnen</translation>
+    </message>
+    <message>
+        <source>Snap indicator shape</source>
+        <translation type="unfinished">Snap-indicatorvorm</translation>
     </message>
     <message>
         <source>Hide cursor when snapping</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verberg cursor bij snappen</translation>
     </message>
     <message>
         <source>Start in tab mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Start in tab-modus</translation>
     </message>
     <message>
         <source>Startup</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Opstarten</translation>
     </message>
     <message>
         <source>Display loading screen</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Laadscherm weergeven</translation>
     </message>
     <message>
         <source>Start with main window maximized</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Beginnen met het hoofdvenster op maximale grootte</translation>
     </message>
     <message>
         <source>Enable CAD dockwidgets</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">CAD-dockwidgets inschakelen</translation>
     </message>
     <message>
         <source>Enable CAD toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">CAD-werkbalken inschakelen</translation>
     </message>
     <message>
         <source>#1E90FF</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">#1E90FF</translation>
     </message>
     <message>
         <source>Clear settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Instellingen wissen</translation>
     </message>
     <message>
         <source>This will also include custom menus and toolbars. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aangepaste menu&apos;s en werkbalken worden hier ook bij inbegrepen. Doorgaan?</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wanneer dit is ingeschakeld, zou het activeren van een laag alle geselecteerde elementen wijzigen naar die nieuwe laag. Om een laag van meerdere elementen te veranderen doet u het volgende: selecteer eerst de benodigde elementen; activeer een laag in de laagwidget. Hierdoor worden alle gewijzigde geselecteerde elementen ondergebracht bij de nieuwe laag.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Variable File:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Variabel bestand:</translation>
     </message>
     <message>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Minimale rasterafstand (p&amp;x):</translation>
     </message>
     <message>
         <source>Don&apos;t use native OS file open dialog</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gebruik niet een dialoogvenster “bestand openen” in native OS</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">...</translation>
     </message>
     <message>
         <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Keert de scrolrichting om als het muiswieltje tegelijk met de Shift-toets wordt gebruikt.</translation>
     </message>
     <message>
         <source>Invert horizontal scrolling direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Horizontale scrolrichting omkeren</translation>
     </message>
     <message>
         <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Keert de scrolrichting om als het muiswieltje tegelijk met de Ctrl-toets wordt gebruikt.</translation>
     </message>
     <message>
         <source>Invert vertical scrolling direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verticale scrolrichting omkeren</translation>
     </message>
     <message>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Keert de zoomrichting om als het muiswieltje wordt gebruikt.</translation>
     </message>
     <message>
         <source>Invert zoom direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zoomrichting omkeren</translation>
     </message>
     <message>
         <source>Keyboard Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Toetsenbordinstellingen</translation>
     </message>
     <message>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Evalueer opdrachten als SPATIEBALK wordt ingedrukt</translation>
     </message>
     <message>
         <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Schakelen naar snapmodus uit vrije hand als de SPATIEBALK is ingedrukt en het opdrachtvenster leeg is</translation>
     </message>
     <message>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Schakelen naar snapmodus uit vrije hand als SPATIEBALK is ingedrukt</translation>
     </message>
     <message>
         <source>CAD Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">CAD-voorkeuren</translation>
     </message>
     <message>
         <source>Automatically zoom drawing when opening</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgOptionsMakerCam</name>
-    <message>
-        <source>Layers</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tekening automatisch inzoomen bij openen</translation>
     </message>
     <message>
-        <source>Export invisible layers</source>
+        <source>Crosshair</source>
+        <translation type="unfinished">Dradenkruis</translation>
+    </message>
+    <message>
+        <source>Crosshair2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export visible construction layers</source>
+        <source>Isometric</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Blocks</source>
+        <source>Spiderweb</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Convert blocks to safe inline SVG content</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ellipses / Ellipse arcs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export as CAM/plain SVG</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Default width of elements, mm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Raster Image export</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dash/Dot Lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Length of the pattern, mm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bake dash/dot lines to SVG path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
-because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
-when they are created using the &lt;ellipse&gt; tag  with a rotation in 
-the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
-which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
-but ignored by other</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Length of line pattern related to zoom, 
-so default step value required for baking</source>
+        <source>Square</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6941,7 +6478,7 @@ so default step value required for baking</source>
     <name>QG_DlgOptionsVariables</name>
     <message>
         <source>Drawing Variables</source>
-        <translation type="obsolete">Tekening Variabelen</translation>
+        <translation type="obsolete">Variabelen tekenen</translation>
     </message>
     <message>
         <source>Variable</source>
@@ -6975,6 +6512,18 @@ so default step value required for baking</source>
 <context>
     <name>QG_DlgPoint</name>
     <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Annuleren</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="obsolete">&amp;OK</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="obsolete">Esc</translation>
+    </message>
+    <message>
         <source>Point</source>
         <translation>Punt</translation>
     </message>
@@ -6994,21 +6543,21 @@ so default step value required for baking</source>
         <source>Position (x):</source>
         <translation>Positie (x):</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
-    </message>
+</context>
+<context>
+    <name>QG_DlgPolyline</name>
     <message>
         <source>&amp;OK</source>
         <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
+        <source>Alt+O</source>
+        <translation type="obsolete">Alt+O</translation>
+    </message>
+    <message>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
     </message>
-</context>
-<context>
-    <name>QG_DlgPolyline</name>
     <message>
         <source>Polyline</source>
         <translation type="unfinished">Polylijn</translation>
@@ -7025,52 +6574,40 @@ so default step value required for baking</source>
         <source>Closed</source>
         <translation type="unfinished">Gesloten</translation>
     </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+O</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgRotate</name>
-    <message>
-        <source>Rotation Options</source>
-        <translation>Rotatie Opties</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation>Aantal kopieën</translation>
-    </message>
     <message>
         <source>&amp;OK</source>
         <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="obsolete">&amp;Annuleer</translation>
+        <translation type="obsolete">&amp;Annuleren</translation>
     </message>
     <message>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
     </message>
     <message>
+        <source>Rotation Options</source>
+        <translation>Rotatieopties</translation>
+    </message>
+    <message>
+        <source>Number of copies</source>
+        <translation>Aantal kopieën</translation>
+    </message>
+    <message>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Wis Origineel</translation>
+        <translation>&amp;Origineel verwijderen</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Bewaar Origineel</translation>
+        <translation>&amp;Origineel bewaren</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies:</source>
-        <translation>&amp;Meerdere Kopieën:</translation>
+        <translation>&amp;Meerdere kopieën:</translation>
     </message>
     <message>
         <source>&amp;Angle (a):</source>
@@ -7092,32 +6629,32 @@ so default step value required for baking</source>
 <context>
     <name>QG_DlgRotate2</name>
     <message>
-        <source>Rotate Two Options</source>
-        <translation>Rotatie Twee Opties</translation>
-    </message>
-    <message>
         <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation>Aantal kopieën</translation>
+        <translation type="obsolete">Annuleren</translation>
     </message>
     <message>
         <source>&amp;OK</source>
         <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
+        <source>Rotate Two Options</source>
+        <translation>Roteer twee opties</translation>
+    </message>
+    <message>
+        <source>Number of copies</source>
+        <translation>Aantal kopieën</translation>
+    </message>
+    <message>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Wis Origineel</translation>
+        <translation>&amp;Origineel verwijderen</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Bewaar Origineel</translation>
+        <translation>&amp;Origineel bewaren</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies</source>
-        <translation>&amp;Meerdere Kopieën</translation>
+        <translation>&amp;Meerdere kopieën</translation>
     </message>
     <message>
         <source>Angle (&amp;a):</source>
@@ -7143,20 +6680,12 @@ so default step value required for baking</source>
 <context>
     <name>QG_DlgScale</name>
     <message>
-        <source>Scaling Options</source>
-        <translation>Schaal Opties</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation>Aantal kopieën</translation>
-    </message>
-    <message>
         <source>&amp;OK</source>
         <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="obsolete">&amp;Annuleer</translation>
+        <translation type="obsolete">&amp;Annuleren</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -7165,6 +6694,18 @@ so default step value required for baking</source>
     <message>
         <source>&amp;Factor (f):</source>
         <translation type="obsolete">&amp;Factor (f):</translation>
+    </message>
+    <message>
+        <source>1.0</source>
+        <translation type="obsolete">1,0</translation>
+    </message>
+    <message>
+        <source>Scaling Options</source>
+        <translation>Schaalopties</translation>
+    </message>
+    <message>
+        <source>Number of copies</source>
+        <translation>Aantal kopieën</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
@@ -7176,11 +6717,11 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Wis Origineel</translation>
+        <translation>&amp;Origineel verwijderen</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Bewaar Origineel</translation>
+        <translation>&amp;Origineel bewaren</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies</source>
@@ -7192,47 +6733,23 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verschalen met dezelfde factor voor zowel de x- als de y-richting</translation>
     </message>
     <message>
         <source>Isotropic Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Isotroop verschalen</translation>
     </message>
     <message>
         <source>X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>1.0</source>
-        <translation type="obsolete">1.0</translation>
+        <translation type="unfinished">X</translation>
     </message>
     <message>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Y</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgSpline</name>
-    <message>
-        <source>Spline</source>
-        <translation>Spline</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation>Laag:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation>Geometrie</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation>Graad:</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation>Gesloten</translation>
-    </message>
     <message>
         <source>1</source>
         <translation type="obsolete">1</translation>
@@ -7261,84 +6778,32 @@ so default step value required for baking</source>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
     </message>
+    <message>
+        <source>Spline</source>
+        <translation>Spie</translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation>Laag:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation>Geometrie</translation>
+    </message>
+    <message>
+        <source>Degree:</source>
+        <translation>Graad:</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation>Gesloten</translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgText</name>
     <message>
-        <source>Text</source>
-        <translation>Tekst</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation>Tekst:</translation>
-    </message>
-    <message>
-        <source>Clear Text</source>
-        <translation>Wis Tekst</translation>
-    </message>
-    <message>
-        <source>Load Text From File</source>
-        <translation>Laad tekst van Bestand</translation>
-    </message>
-    <message>
-        <source>Save Text To File</source>
-        <translation>Bewaar tekst naar Bestand</translation>
-    </message>
-    <message>
-        <source>Cut</source>
-        <translation>Knip</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Kopieer</translation>
-    </message>
-    <message>
-        <source>Paste</source>
-        <translation>Plak</translation>
-    </message>
-    <message>
         <source>Font</source>
         <translation type="obsolete">Lettertype</translation>
-    </message>
-    <message>
-        <source>Alignment</source>
-        <translation>Uitlijnen</translation>
-    </message>
-    <message>
-        <source>Top Right</source>
-        <translation>Boven Rechts</translation>
-    </message>
-    <message>
-        <source>Top Left</source>
-        <translation>Boven Links</translation>
-    </message>
-    <message>
-        <source>Middle Left</source>
-        <translation>Midden Links</translation>
-    </message>
-    <message>
-        <source>Middle Center</source>
-        <translation>Midden Center</translation>
-    </message>
-    <message>
-        <source>Middle Right</source>
-        <translation>Midden Rechts</translation>
-    </message>
-    <message>
-        <source>Bottom Left</source>
-        <translation>Onder Links</translation>
-    </message>
-    <message>
-        <source>Bottom Right</source>
-        <translation>Onder Rechts</translation>
-    </message>
-    <message>
-        <source>Bottom Center</source>
-        <translation>Onder Center</translation>
-    </message>
-    <message>
-        <source>Top Center</source>
-        <translation>Boven Center</translation>
     </message>
     <message>
         <source>Angle</source>
@@ -7349,12 +6814,116 @@ so default step value required for baking</source>
         <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
-        <source>Insert Symbol</source>
-        <translation>Voeg Symbool in</translation>
-    </message>
-    <message>
         <source>Diameter (ø)</source>
         <translation type="obsolete">Diameter (ø)</translation>
+    </message>
+    <message>
+        <source>Line &amp;spacing:</source>
+        <translation type="obsolete">Lijn&amp;afstand:</translation>
+    </message>
+    <message>
+        <source>&amp;Default line spacing</source>
+        <translation type="obsolete">&amp;Standaard lijnafstand</translation>
+    </message>
+    <message>
+        <source>Alt+O</source>
+        <translation type="obsolete">Alt+O</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Annuleren</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="obsolete">Esc</translation>
+    </message>
+    <message>
+        <source>Alt+D</source>
+        <translation type="obsolete">Alt+D</translation>
+    </message>
+    <message>
+        <source>Aligned</source>
+        <translation type="obsolete">Uitgelijnd</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="obsolete">Midden</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation>Tekst</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation>Tekst:</translation>
+    </message>
+    <message>
+        <source>Clear Text</source>
+        <translation>Tekst wissen</translation>
+    </message>
+    <message>
+        <source>Load Text From File</source>
+        <translation>Laad tekst van bestand</translation>
+    </message>
+    <message>
+        <source>Save Text To File</source>
+        <translation>Sla tekst op in bestand</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation>Knippen</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopiëren</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation>Plakken</translation>
+    </message>
+    <message>
+        <source>Alignment</source>
+        <translation>Uitlijning</translation>
+    </message>
+    <message>
+        <source>Top Right</source>
+        <translation>Rechtsboven</translation>
+    </message>
+    <message>
+        <source>Top Left</source>
+        <translation>Linksboven</translation>
+    </message>
+    <message>
+        <source>Middle Left</source>
+        <translation>Linksmidden</translation>
+    </message>
+    <message>
+        <source>Middle Center</source>
+        <translation>Middelpunt midden</translation>
+    </message>
+    <message>
+        <source>Middle Right</source>
+        <translation>Rechtsmidden</translation>
+    </message>
+    <message>
+        <source>Bottom Left</source>
+        <translation>Linksonder</translation>
+    </message>
+    <message>
+        <source>Bottom Right</source>
+        <translation>Rechtsonder</translation>
+    </message>
+    <message>
+        <source>Bottom Center</source>
+        <translation>Middelpunt onder</translation>
+    </message>
+    <message>
+        <source>Top Center</source>
+        <translation>Middelpunt boven</translation>
+    </message>
+    <message>
+        <source>Insert Symbol</source>
+        <translation>Symbool invoegen</translation>
     </message>
     <message>
         <source>Degree (°)</source>
@@ -7362,11 +6931,11 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Plus / Minus (±)</source>
-        <translation>Plus / Minus (±)</translation>
+        <translation>Plus/min (±)</translation>
     </message>
     <message>
         <source>At (@)</source>
-        <translation>Aapje (@)</translation>
+        <translation>Apenstaartje (@)</translation>
     </message>
     <message>
         <source>Hash (#)</source>
@@ -7382,7 +6951,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Registered (®)</source>
-        <translation>Registered (®)</translation>
+        <translation>Geregistreerd (®)</translation>
     </message>
     <message>
         <source>Paragraph (§)</source>
@@ -7410,7 +6979,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Insert Unicode</source>
-        <translation>Voer Unicode in</translation>
+        <translation>Unicode invoegen</translation>
     </message>
     <message>
         <source>Page:</source>
@@ -7438,7 +7007,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation>[0250-02AF] IPA Extensies</translation>
+        <translation>[0250-02AF] IPA Extensions</translation>
     </message>
     <message>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
@@ -7857,36 +7426,12 @@ so default step value required for baking</source>
         <translation>&amp;Hoogte:</translation>
     </message>
     <message>
-        <source>Line &amp;spacing:</source>
-        <translation type="obsolete">Lijn &amp;Tussenafstend:</translation>
-    </message>
-    <message>
-        <source>&amp;Default line spacing</source>
-        <translation type="obsolete">&amp;Standaard regelafstand</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
-    <message>
-        <source>Alt+D</source>
-        <translation type="obsolete">Alt+D</translation>
-    </message>
-    <message>
         <source>Layer:</source>
         <translation type="unfinished">Laag:</translation>
     </message>
     <message>
         <source>Font settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lettertype-instellingen</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -7894,15 +7439,15 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Width factor:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Breedtefactor:</translation>
     </message>
     <message>
         <source>Font:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lettertype:</translation>
     </message>
     <message>
         <source>Baseline Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Basislijn links</translation>
     </message>
     <message>
         <source>...</source>
@@ -7910,23 +7455,15 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Baseline Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Basislijn rechts</translation>
     </message>
     <message>
         <source>Baseline Center</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Basislijn middelpunt </translation>
     </message>
     <message>
         <source>Fit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Aligned</source>
-        <translation type="obsolete">Uitgelijnd</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="obsolete">Middel</translation>
+        <translation type="unfinished">Pasvorm</translation>
     </message>
     <message>
         <source>Diameter (⌀)</source>
@@ -7934,34 +7471,30 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>A&amp;ligned</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">U&amp;itgelijnd</translation>
     </message>
     <message>
         <source>&amp;Middle</source>
-        <translation type="unfinished">&amp;Middel</translation>
+        <translation type="unfinished">&amp;Midden</translation>
     </message>
 </context>
 <context>
     <name>QG_ExitDialog</name>
     <message>
         <source>&amp;Save</source>
-        <translation type="obsolete">O&amp;pslaan</translation>
+        <translation type="obsolete">&amp;Opslaan</translation>
     </message>
     <message>
         <source>Save &amp;As..</source>
-        <translation type="obsolete">Bewaar &amp;als..</translation>
+        <translation type="obsolete">Opslaan &amp;als...</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="obsolete">&amp;Annuleer</translation>
+        <translation type="obsolete">&amp;Annuleren</translation>
     </message>
     <message>
         <source>No Text supplied.</source>
         <translation type="obsolete">Geen tekst opgegeven.</translation>
-    </message>
-    <message>
-        <source>QCad</source>
-        <translation>QCad</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -7969,11 +7502,15 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>C&amp;lose</source>
-        <translation type="obsolete">&amp;Sluiten</translation>
+        <translation type="obsolete">S&amp;luiten</translation>
     </message>
     <message>
         <source>Alt+L</source>
         <translation type="obsolete">Alt+L</translation>
+    </message>
+    <message>
+        <source>QCad</source>
+        <translation>QCad</translation>
     </message>
     <message>
         <source>again Still No Text supplied.</source>
@@ -7981,7 +7518,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Close All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alles sluiten</translation>
     </message>
     <message>
         <source>Close</source>
@@ -7991,57 +7528,57 @@ so default step value required for baking</source>
 <context>
     <name>QG_FileDialog</name>
     <message>
-        <source>Drawing Exchange DXF 2000 %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Drawing Exchange DXF R12 %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LFF Font %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>QCad Font %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Jww Drawing %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Drawing Exchange %1</source>
-        <translation type="unfinished">Tekening Uitwisseling %1</translation>
-    </message>
-    <message>
-        <source>QCad 1.x file %1</source>
-        <translation type="unfinished">QCad 1.x bestand %1</translation>
-    </message>
-    <message>
         <source>Open Drawing</source>
-        <translation type="obsolete">Open Tekening</translation>
+        <translation type="obsolete">Tekening openen</translation>
     </message>
     <message>
         <source>Save Drawing As</source>
-        <translation type="obsolete">Bewaar Tekening Als</translation>
+        <translation type="obsolete">Tekening opslaan als</translation>
+    </message>
+    <message>
+        <source>Drawing Exchange DXF 2000 %1</source>
+        <translation type="unfinished">Tekeninguitwisseling DXF 2000 %1</translation>
+    </message>
+    <message>
+        <source>Drawing Exchange DXF R12 %1</source>
+        <translation type="unfinished">Tekeninguitwisseling DXF R12 %1</translation>
+    </message>
+    <message>
+        <source>LFF Font %1</source>
+        <translation type="unfinished">LFF-lettertype %1</translation>
+    </message>
+    <message>
+        <source>QCad Font %1</source>
+        <translation type="unfinished">QCad-lettertype %1</translation>
+    </message>
+    <message>
+        <source>Jww Drawing %1</source>
+        <translation type="unfinished">Jww-tekening %1</translation>
+    </message>
+    <message>
+        <source>Drawing Exchange %1</source>
+        <translation type="unfinished">Tekeninguitwisseling %1</translation>
+    </message>
+    <message>
+        <source>QCad 1.x file %1</source>
+        <translation type="unfinished">QCad 1.x-bestand %1</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF 2007 %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tekeninguitwisseling DXF 2007 %1</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF 2004 %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tekeninguitwisseling DXF 2004 %1</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF R14 %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tekeninguitwisseling DXF R14 %1</translation>
     </message>
     <message>
         <source>Block</source>
         <comment>block file</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Blok</translation>
     </message>
     <message>
         <source>Drawing</source>
@@ -8050,26 +7587,26 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Open %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Openen %1</translation>
     </message>
     <message>
         <source>Save %1 As</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 opslaan als</translation>
     </message>
     <message>
         <source>dwg Drawing %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">tek Tekening %1</translation>
     </message>
     <message>
         <source>Untitled</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Geen titel</translation>
     </message>
 </context>
 <context>
     <name>QG_ImageOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation type="obsolete">Invoeg Opties</translation>
+        <translation type="obsolete">Invoegopties</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -8077,7 +7614,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation type="obsolete">Rotatie Hoek</translation>
+        <translation type="obsolete">Rotatiehoek</translation>
     </message>
     <message>
         <source>Factor:</source>
@@ -8085,19 +7622,11 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation type="obsolete">Schaal Factor</translation>
+        <translation type="obsolete">Schaalfactor</translation>
     </message>
 </context>
 <context>
     <name>QG_ImageOptionsDialog</name>
-    <message>
-        <source>Image Export Options</source>
-        <translation>Exorteer Opties Afbeelding</translation>
-    </message>
-    <message>
-        <source>Bitmap Size</source>
-        <translation>Bitmap afmetingen</translation>
-    </message>
     <message>
         <source>640</source>
         <translation type="obsolete">640</translation>
@@ -8105,22 +7634,6 @@ so default step value required for baking</source>
     <message>
         <source>480</source>
         <translation type="obsolete">480</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation>Breedte:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation>Hoogte:</translation>
-    </message>
-    <message>
-        <source>Background</source>
-        <translation>Achtergrond</translation>
-    </message>
-    <message>
-        <source>White</source>
-        <translation>Wit</translation>
     </message>
     <message>
         <source>Black</source>
@@ -8136,19 +7649,11 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
+        <translation type="obsolete">Annuleren</translation>
     </message>
     <message>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
-    </message>
-    <message>
-        <source>Resolution:</source>
-        <translation>Resolutie:</translation>
-    </message>
-    <message>
-        <source>auto</source>
-        <translation>auto</translation>
     </message>
     <message>
         <source>1</source>
@@ -8215,43 +7720,75 @@ so default step value required for baking</source>
         <translation type="obsolete">1200</translation>
     </message>
     <message>
+        <source>Image Export Options</source>
+        <translation>Opties afbeeldingenexport</translation>
+    </message>
+    <message>
+        <source>Bitmap Size</source>
+        <translation>Bitmapgrootte</translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation>Breedte:</translation>
+    </message>
+    <message>
+        <source>Height:</source>
+        <translation>Hoogte:</translation>
+    </message>
+    <message>
+        <source>Background</source>
+        <translation>Achtergrond</translation>
+    </message>
+    <message>
+        <source>White</source>
+        <translation>Wit</translation>
+    </message>
+    <message>
+        <source>Resolution:</source>
+        <translation>Resolutie:</translation>
+    </message>
+    <message>
+        <source>auto</source>
+        <translation>auto</translation>
+    </message>
+    <message>
         <source>Colouring</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kleuren</translation>
     </message>
     <message>
         <source>Black / White</source>
-        <translation type="unfinished">Zwart / Wit</translation>
+        <translation type="unfinished">Zwart/wit</translation>
     </message>
     <message>
         <source>Coloured</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gekleurd</translation>
     </message>
     <message>
         <source>Borders</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Randen</translation>
     </message>
     <message>
         <source>Top / Bottom - Border:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Boven/onder - rand:</translation>
     </message>
     <message>
         <source>Left / Right - Border:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Linker/rechter - rand:</translation>
     </message>
     <message>
         <source>set same size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">dezelfde grootte instellen</translation>
     </message>
     <message>
         <source>B&amp;lack</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Z&amp;wart</translation>
     </message>
 </context>
 <context>
     <name>QG_InsertOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation type="obsolete">Invoeg Opties</translation>
+        <translation type="obsolete">Invoegopties</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -8259,7 +7796,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation type="obsolete">Rotatie Hoek</translation>
+        <translation type="obsolete">Rotatiehoek</translation>
     </message>
     <message>
         <source>Factor:</source>
@@ -8267,19 +7804,19 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation type="obsolete">Schaal Factor</translation>
+        <translation type="obsolete">Schaalfactor</translation>
     </message>
     <message>
         <source>Array:</source>
-        <translation type="obsolete">Opstelling:</translation>
+        <translation type="obsolete">Array:</translation>
     </message>
     <message>
         <source>Number of Columns</source>
-        <translation type="obsolete">Aantal Kolommen</translation>
+        <translation type="obsolete">Aantal kolommen</translation>
     </message>
     <message>
         <source>Number of Rows</source>
-        <translation type="obsolete">Aantal Rijen</translation>
+        <translation type="obsolete">Aantal rijen</translation>
     </message>
     <message>
         <source>Spacing:</source>
@@ -8287,37 +7824,18 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Column Spacing</source>
-        <translation type="obsolete">Kolom Tussenafstand</translation>
+        <translation type="obsolete">Kolomafstand</translation>
     </message>
     <message>
         <source>Row Spacing</source>
-        <translation type="obsolete">Rij Tussenafstend</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LayerBox</name>
-    <message>
-        <source>- Unchanged -</source>
-        <translation>- Ongewijzigd -</translation>
+        <translation type="obsolete">Rijafstand</translation>
     </message>
 </context>
 <context>
     <name>QG_LayerDialog</name>
     <message>
-        <source>Layer Settings</source>
-        <translation>Laag Instellingen</translation>
-    </message>
-    <message>
-        <source>Layer Name:</source>
-        <translation>Laag Naam:</translation>
-    </message>
-    <message>
         <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
-    </message>
-    <message>
-        <source>Default Pen</source>
-        <translation>Pen bij verstek</translation>
+        <translation type="obsolete">Annuleren</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -8332,99 +7850,116 @@ so default step value required for baking</source>
         <translation type="obsolete">Esc</translation>
     </message>
     <message>
+        <source>Layer Settings</source>
+        <translation>Instellingen laag</translation>
+    </message>
+    <message>
+        <source>Layer Name:</source>
+        <translation>Naam laag:</translation>
+    </message>
+    <message>
+        <source>Default Pen</source>
+        <translation>Standaardpen</translation>
+    </message>
+    <message>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Een bouwlaag heeft elementen met oneindige rechte lijnen die gebruikt worden voor de geometrische opbouw.
+De inhoud van een bouwlaag mag niet op de afdruk verschijnen.</translation>
     </message>
     <message>
         <source>Construction Layer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bouwlaag</translation>
     </message>
 </context>
 <context>
     <name>QG_LayerWidget</name>
     <message>
-        <source>Show all layers</source>
-        <translation>Toon alle Lagen</translation>
-    </message>
-    <message>
-        <source>Hide all layers</source>
-        <translation>Verberg alle Lagen</translation>
-    </message>
-    <message>
-        <source>Add a layer</source>
-        <translation>Voeg Laag toe</translation>
-    </message>
-    <message>
-        <source>Remove the current layer</source>
-        <translation>Wis huidige Laag</translation>
-    </message>
-    <message>
-        <source>Modify layer attributes / rename</source>
-        <translation>Wijzig de Laag  Attibuten / hernoem</translation>
-    </message>
-    <message>
-        <source>Layer Menu</source>
-        <translation>Laag Menu</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all Layers</source>
-        <translation>&amp;Ontgrendel alle Lagen</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all Layers</source>
-        <translation>Ver&amp;grendel alle Lagen</translation>
-    </message>
-    <message>
-        <source>&amp;Add Layer</source>
-        <translation>&amp;Voeg laag toe</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Layer</source>
-        <translation>&amp;Wis Laag</translation>
-    </message>
-    <message>
         <source>&amp;Edit Layer</source>
-        <translation type="obsolete">&amp;Bewerk Laag</translation>
+        <translation type="obsolete">&amp;Laag bewerken</translation>
     </message>
     <message>
         <source>&amp;Toggle Visibility</source>
-        <translation type="obsolete">&amp;Schakel Zichtbaarheid</translation>
+        <translation type="obsolete">&amp;Zichtbaarheid aan/uit zetten</translation>
+    </message>
+    <message>
+        <source>Show all layers</source>
+        <translation>Alle lagen weergeven</translation>
+    </message>
+    <message>
+        <source>Hide all layers</source>
+        <translation>Alle lagen verbergen</translation>
+    </message>
+    <message>
+        <source>Add a layer</source>
+        <translation>Een laag toevoegen</translation>
+    </message>
+    <message>
+        <source>Remove the current layer</source>
+        <translation>De huidige laag weghalen</translation>
+    </message>
+    <message>
+        <source>Modify layer attributes / rename</source>
+        <translation>Laagattributen aanpassen/hernoemen</translation>
+    </message>
+    <message>
+        <source>Layer Menu</source>
+        <translation>Laagmenu</translation>
+    </message>
+    <message>
+        <source>&amp;Defreeze all Layers</source>
+        <translation>&amp;Alle lagen ontgrendelen</translation>
+    </message>
+    <message>
+        <source>&amp;Freeze all Layers</source>
+        <translation>&amp;Alle lagen vergrendelen</translation>
+    </message>
+    <message>
+        <source>&amp;Add Layer</source>
+        <translation>&amp;Laag toevoegen</translation>
+    </message>
+    <message>
+        <source>&amp;Remove Layer</source>
+        <translation>&amp;Laag weghalen</translation>
     </message>
     <message>
         <source>Looking for matching layer names</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bezig met zoeken naar bijbehorende laagnamen</translation>
     </message>
     <message>
         <source>Edit Layer &amp;Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Laag&amp;attributen bewerken</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Visibility</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zichtbaarheid van laag aan/uit zetten</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Printing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Laag &amp;afdrukken aan/uit zetten</translation>
     </message>
     <message>
         <source>Toggle &amp;Construction Layer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Bouwlaag aan/uit zetten</translation>
     </message>
     <message>
         <source>Unlock all layers</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alle lagen ontgrendelen</translation>
     </message>
     <message>
         <source>Lock all layers</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alle lagen vergrendelen</translation>
     </message>
     <message>
         <source>&amp;Unlock all Layers</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Alle lagen ontgrendelen</translation>
     </message>
     <message>
         <source>&amp;Lock all Layers</source>
+        <translation type="unfinished">&amp;Alle lagen vergrendelen</translation>
+    </message>
+    <message>
+        <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8432,7 +7967,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LibraryInsertOptions</name>
     <message>
         <source>Library Insert Options</source>
-        <translation type="obsolete">Invoeg Opties Bibliotheek</translation>
+        <translation type="obsolete">Bibliotheek invoegopties</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -8440,7 +7975,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation type="obsolete">Rotatie Hoek</translation>
+        <translation type="obsolete">Rotatiehoek</translation>
     </message>
     <message>
         <source>Factor:</source>
@@ -8448,14 +7983,14 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation type="obsolete">Schaal Factor</translation>
+        <translation type="obsolete">Schaalfactor</translation>
     </message>
 </context>
 <context>
     <name>QG_LibraryWidget</name>
     <message>
         <source>Library Browser</source>
-        <translation type="obsolete">Bibliotheek Brouwser</translation>
+        <translation type="obsolete">Bibliotheekbrowser</translation>
     </message>
     <message>
         <source>Directories</source>
@@ -8467,18 +8002,18 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vernieuwen</translation>
     </message>
     <message>
         <source>Rebuild</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Versie</translation>
     </message>
 </context>
 <context>
     <name>QG_LineAngleOptions</name>
     <message>
         <source>Line Angle Options</source>
-        <translation type="obsolete">Lijn Hoek Opties</translation>
+        <translation type="obsolete">Lijnhoekopties</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -8486,7 +8021,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Line angle</source>
-        <translation type="obsolete">Lijn Hoek</translation>
+        <translation type="obsolete">Lijnhoek</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -8494,19 +8029,19 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Length of line</source>
-        <translation type="obsolete">Lijn Lente</translation>
+        <translation type="obsolete">Lijnlengte</translation>
     </message>
     <message>
         <source>Snap Point:</source>
-        <translation type="obsolete">Snap Punt:</translation>
+        <translation type="obsolete">Punt snappen:</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="obsolete">Start</translation>
+        <translation type="obsolete">Starten</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation type="obsolete">Middel</translation>
+        <translation type="obsolete">Midden</translation>
     </message>
     <message>
         <source>End</source>
@@ -8517,7 +8052,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LineBisectorOptions</name>
     <message>
         <source>Line Bisector Options</source>
-        <translation type="obsolete">Lijn Bisectice Opties</translation>
+        <translation type="obsolete">Opties middelloodlijn</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -8525,7 +8060,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Length of bisector</source>
-        <translation type="obsolete">Lente van Bisectrice</translation>
+        <translation type="obsolete">Lengte van middelloodlijn</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -8533,14 +8068,14 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Number of bisectors to create</source>
-        <translation type="obsolete">Aantal nieuwe Bisectoren</translation>
+        <translation type="obsolete">Aantal te maken middelloodlijnen</translation>
     </message>
 </context>
 <context>
     <name>QG_LineOptions</name>
     <message>
         <source>Line Options</source>
-        <translation type="obsolete">Lijn Opties</translation>
+        <translation type="obsolete">Lijnopties</translation>
     </message>
     <message>
         <source>Close</source>
@@ -8548,7 +8083,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">Herstel</translation>
+        <translation type="obsolete">Ongedaan maken</translation>
     </message>
     <message>
         <source>Redo</source>
@@ -8559,7 +8094,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LineParallelOptions</name>
     <message>
         <source>Line Parallel Options</source>
-        <translation type="obsolete">Lijn Parallel Opties</translation>
+        <translation type="obsolete">Opties lijnparallel</translation>
     </message>
     <message>
         <source>Distance:</source>
@@ -8567,7 +8102,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Distance to original entity</source>
-        <translation type="obsolete">Afstan tot origineel Element</translation>
+        <translation type="obsolete">Afstand tot oorspronkelijk element</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -8575,14 +8110,14 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation type="obsolete">Aantal nieuwe Paralellen</translation>
+        <translation type="obsolete">Aantal aan te maken parallellen</translation>
     </message>
 </context>
 <context>
     <name>QG_LineParallelThroughOptions</name>
     <message>
         <source>Line Parallel Through Options</source>
-        <translation type="obsolete">Lijn Parallel Door Opties</translation>
+        <translation type="obsolete">Opties lijnparallel door</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -8590,14 +8125,14 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation type="obsolete">Aantal nieuwe Parallellen</translation>
+        <translation type="obsolete">Aantal aan te maken parallellen</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygon2Options</name>
     <message>
         <source>Polygon Options</source>
-        <translation type="obsolete">Polygoon Opties</translation>
+        <translation type="obsolete">Polygoonopties</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -8605,14 +8140,14 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation type="obsolete">Aantal Kanten</translation>
+        <translation type="obsolete">Aantal randen</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygonOptions</name>
     <message>
         <source>Polygon Options</source>
-        <translation type="obsolete">Polygoon Opties</translation>
+        <translation type="obsolete">Polygoonopties</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -8620,14 +8155,14 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation type="obsolete">Aantal Kanten</translation>
+        <translation type="obsolete">Aantal randen</translation>
     </message>
 </context>
 <context>
     <name>QG_LineRelAngleOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation type="obsolete">Lijn Relatieve Hoek Opties</translation>
+        <translation type="obsolete">Relatieve hoekopties lijn</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -8635,7 +8170,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Line angle</source>
-        <translation type="obsolete">Lijn Hoek</translation>
+        <translation type="obsolete">Lijnhoek</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -8643,133 +8178,14 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Length of line</source>
-        <translation type="obsolete">Lijn Lengte</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineTypeBox</name>
-    <message>
-        <source>By Layer</source>
-        <translation>Door Laag bepaald</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation>Door Blok bepaald</translation>
-    </message>
-    <message>
-        <source>No Pen</source>
-        <translation>Geen Pen</translation>
-    </message>
-    <message>
-        <source>Continuous</source>
-        <translation>Doorlopend</translation>
-    </message>
-    <message>
-        <source>Dot</source>
-        <translation>Punt</translation>
-    </message>
-    <message>
-        <source>Dot (small)</source>
-        <translation>Punt (smal)</translation>
-    </message>
-    <message>
-        <source>Dot (large)</source>
-        <translation>Punt (breed)</translation>
-    </message>
-    <message>
-        <source>Dash</source>
-        <translation>Streep</translation>
-    </message>
-    <message>
-        <source>Dash (small)</source>
-        <translation>Streep (breed)</translation>
-    </message>
-    <message>
-        <source>Dash (large)</source>
-        <translation>Streep (groot)</translation>
-    </message>
-    <message>
-        <source>Dash Dot</source>
-        <translation>Streep Punt</translation>
-    </message>
-    <message>
-        <source>Dash Dot (small)</source>
-        <translation>Streep Punt (smal)</translation>
-    </message>
-    <message>
-        <source>Dash Dot (large)</source>
-        <translation>Streep Punt (groot)</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation>Verdeel</translation>
-    </message>
-    <message>
-        <source>Divide (small)</source>
-        <translation>Verdeel (smal)</translation>
-    </message>
-    <message>
-        <source>Divide (large)</source>
-        <translation>Verdeel (groot)</translation>
-    </message>
-    <message>
-        <source>Center</source>
-        <translation>Center</translation>
-    </message>
-    <message>
-        <source>Center (small)</source>
-        <translation>Center (smal)</translation>
-    </message>
-    <message>
-        <source>Center (large)</source>
-        <translation>Center (groot)</translation>
-    </message>
-    <message>
-        <source>Border</source>
-        <translation>Rand</translation>
-    </message>
-    <message>
-        <source>Border (small)</source>
-        <translation>Rand (smal)</translation>
-    </message>
-    <message>
-        <source>Border (large)</source>
-        <translation>Rand (groot)</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation>- Ongewijzigd -</translation>
-    </message>
-    <message>
-        <source>Dot (tiny)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dash (tiny)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dash Dot (tiny)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Divide (tiny)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Center (tiny)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Border (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Lijnlengte</translation>
     </message>
 </context>
 <context>
     <name>QG_MTextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation type="obsolete">Tekst Opties</translation>
+        <translation type="obsolete">Tekstopties</translation>
     </message>
     <message>
         <source>Text:</source>
@@ -8790,6 +8206,10 @@ The contents of a Construction Layer should not appear in printout.</source>
 <context>
     <name>QG_MouseWidget</name>
     <message>
+        <source>...</source>
+        <translation type="obsolete">...</translation>
+    </message>
+    <message>
         <source>Mouse</source>
         <translation>Muis</translation>
     </message>
@@ -8799,11 +8219,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Left</source>
-        <translation>Links</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="obsolete">...</translation>
+        <translation>Linker</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -8811,14 +8227,18 @@ The contents of a Construction Layer should not appear in printout.</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Aanwijzing over muisknopactiviteit naar links/rechts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_MoveRotateOptions</name>
     <message>
         <source>Move Rotate Options</source>
-        <translation type="obsolete">Verplaats Roteer Opties</translation>
+        <translation type="obsolete">Verplaats-/roteeropties</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -8826,25 +8246,10 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QG_PenToolBar</name>
-    <message>
-        <source>Line color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation type="obsolete">Lijn Relatieve Hoek Opties</translation>
+        <translation type="obsolete">Relatieve hoekopties lijn</translation>
     </message>
     <message>
         <source>Spacing:</source>
@@ -8855,7 +8260,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_PolylineOptions</name>
     <message>
         <source>Polyline Options</source>
-        <translation type="obsolete">Vrije vorm Opties</translation>
+        <translation type="obsolete">Polylijnopties</translation>
     </message>
     <message>
         <source>Close</source>
@@ -8863,7 +8268,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">Herstel</translation>
+        <translation type="obsolete">Ongedaan maken</translation>
     </message>
     <message>
         <source>Arc</source>
@@ -8883,7 +8288,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Tan Radius</source>
-        <translation type="obsolete">Tan Radius</translation>
+        <translation type="obsolete">Raaklijnradius</translation>
     </message>
     <message>
         <source>Angle</source>
@@ -8903,18 +8308,18 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>wrong action type</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">type onjuiste actie</translation>
     </message>
 </context>
 <context>
     <name>QG_PrintPreviewOptions</name>
     <message>
         <source>Print Preview Options</source>
-        <translation type="obsolete">Afdruk Voorbeeld Opties</translation>
+        <translation type="obsolete">Opties afdrukvoorbeeld</translation>
     </message>
     <message>
         <source>Toggle Black / White mode</source>
-        <translation type="obsolete">Wissel Zwart / Wit-modus</translation>
+        <translation type="obsolete">Zwart-witmodus aan/uit zetten</translation>
     </message>
     <message>
         <source>Center to page</source>
@@ -8922,60 +8327,60 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Fit to page</source>
-        <translation type="obsolete">Passend op pagina</translation>
+        <translation type="obsolete">Aanpassen aan pagina</translation>
     </message>
 </context>
 <context>
     <name>QG_RecentFiles</name>
     <message>
-        <source>&amp;%1 %2</source>
-        <translation type="unfinished">&amp;%1 %2</translation>
+        <source>Opening recent file...</source>
+        <translation type="obsolete">Bezig met openen laatste bestand...</translation>
     </message>
     <message>
-        <source>Opening recent file...</source>
-        <translation type="obsolete">Bezig laatst geopend bestand te openen...</translation>
+        <source>&amp;%1 %2</source>
+        <translation type="unfinished">&amp;%1 %2</translation>
     </message>
 </context>
 <context>
     <name>QG_RoundOptions</name>
     <message>
         <source>Round Options</source>
-        <translation type="obsolete">Afrond Opties</translation>
+        <translation type="obsolete">Afrondopties</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation type="obsolete">Trim</translation>
+        <translation type="obsolete">Bijsnijden</translation>
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
-        <translation type="obsolete">Vink af om beide elementen tot een afronding te trimmen</translation>
+        <translation type="obsolete">Vink aan om beide randen tot de afronding bij te snijden</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="obsolete">Straal:</translation>
+        <translation type="obsolete">Radius:</translation>
     </message>
 </context>
 <context>
     <name>QG_SelectionWidget</name>
     <message>
-        <source>Selection</source>
-        <translation>Selectie</translation>
-    </message>
-    <message>
         <source>Selected Entities:</source>
-        <translation type="obsolete">Geselecteerde Elementen:</translation>
+        <translation type="obsolete">Geselecteerde elementen:</translation>
     </message>
     <message>
         <source>0</source>
         <translation type="obsolete">0</translation>
     </message>
     <message>
+        <source>Selection</source>
+        <translation>Selectie</translation>
+    </message>
+    <message>
         <source>Selected</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Geselecteerd</translation>
     </message>
     <message>
         <source>Total Length</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Totale lengte</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -8983,7 +8388,11 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aantal geselecteerde elementen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -8991,14 +8400,18 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Totale lengte van de geselecteerde elementen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_SnapDistOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation type="obsolete">Snap Afstand Opties</translation>
+        <translation type="obsolete">Opties snapafstand</translation>
     </message>
     <message>
         <source>Distance:</source>
@@ -9009,129 +8422,14 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapMiddleOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation type="obsolete">Snap Afstand Opties</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SnapToolBar</name>
-    <message>
-        <source>Snap</source>
-        <translation type="unfinished">Snap</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="unfinished">Snap naar Eindpunten</translation>
-    </message>
-    <message>
-        <source>Snap to equidistant points of entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="unfinished">Snap naar Centerpunten</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation type="unfinished">Snap Automatisch naar Intersectie Punten</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="unfinished">Snap naar dichtstbijzijnde Punt op Element</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="unfinished">Snap naar punt op gegeven afstand vanaf Eindpunt</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation type="unfinished">Snap handmatig naar Intersectie Punten</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="unfinished">Snap naar Grid</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation type="unfinished">Beperk Horizontaal</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation type="unfinished">Beperk Vertikaal</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation type="unfinished">Plaats relatieve Oorsprong</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation type="unfinished">Vergrendel relatieve Oorsprong</translation>
-    </message>
-    <message>
-        <source>Free Snap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap on grid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap on Endpoints</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap on Entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap Center</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap Middle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap Distance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap Intersection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Restrict Horizontal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Restrict Vertical</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Restrict Orthogonal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Restrict Nothing</source>
-        <translation type="unfinished">Beperk Niets</translation>
-    </message>
-    <message>
-        <source>Set relative zero position</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lock relative zero position</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exclusive Snap Mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Opties snapafstand</translation>
     </message>
 </context>
 <context>
     <name>QG_SplineOptions</name>
     <message>
         <source>Spline Options</source>
-        <translation type="obsolete">Spline Opties</translation>
+        <translation type="obsolete">Spieopties</translation>
     </message>
     <message>
         <source>Degree:</source>
@@ -9155,14 +8453,14 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">Herstel</translation>
+        <translation type="obsolete">Ongedaan maken</translation>
     </message>
 </context>
 <context>
     <name>QG_TextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation type="obsolete">Tekst Opties</translation>
+        <translation type="obsolete">Tekstopties</translation>
     </message>
     <message>
         <source>Text:</source>
@@ -9177,15 +8475,15 @@ p, li { white-space: pre-wrap; }
     <name>QG_TrimAmountOptions</name>
     <message>
         <source>Trim Amount Options</source>
-        <translation type="obsolete">Trim Hoeveelheid Opties</translation>
+        <translation type="obsolete">Opties bijsnijdhoeveelheid</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="obsolete">Afstand. Negatieve waarden trimmen, positieve verlengen.</translation>
+        <translation type="obsolete">Afstand. Negatieve waarden voor bijsnijden, positieve waarden voor uitbreiden.</translation>
     </message>
     <message>
         <source>Amount:</source>
-        <translation type="obsolete">Hoeveelheid:</translation>
+        <translation type="obsolete">Aantal:</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -9193,172 +8491,38 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QG_WidgetPen</name>
-    <message>
-        <source>Pen</source>
-        <translation>Pen</translation>
-    </message>
-    <message>
-        <source>Line type:</source>
-        <translation>Lijntype:</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation>Breedte:</translation>
-    </message>
-    <message>
-        <source>Color:</source>
-        <translation>Kleur:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_WidthBox</name>
-    <message>
-        <source>By Layer</source>
-        <translation>Door Laag bepaald</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation>Door Blok</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation>Standaard</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation>0.00mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation>0.05mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation>0.09mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation>0.13mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation>0.15mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation>0.18mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation>0.20mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation>0.25mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation>0.30mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation>0.35mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation>0.40mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation>0.50mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation>0.53mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation>0.60mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation>0.70mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation>0.80mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation>0.90mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation>1.00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation>1.06mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation>1.20mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation>1.40mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation>1.58mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation>2.00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation>2.11mm</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation>- Ongewijzigd -</translation>
-    </message>
-</context>
-<context>
     <name>QMessageBox</name>
+    <message>
+        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
+        <translation type="obsolete">Laag &quot;%1&quot; en alle elementen daarop worden weggehaald.</translation>
+    </message>
     <message>
         <source>Warning</source>
         <translation>Waarschuwing</translation>
     </message>
     <message>
         <source>Remove Layer</source>
-        <translation>Wis Laag</translation>
-    </message>
-    <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
-        <translation type="obsolete">Laag &quot;%1&quot; en alle elementen daarop worden verwijderd.</translation>
+        <translation>Laag weghalen</translation>
     </message>
     <message>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Laag &quot;%1&quot; kan niet worden verwijderd.</translation>
+        <translation>Laag &quot;%1&quot; kan niet worden weggehaald.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
-        <translation>Laag Dialoog</translation>
+        <translation>Dialoogvenster laag</translation>
     </message>
     <message>
         <source>Remove Block</source>
-        <translation>Wis Blok</translation>
+        <translation>Blok weghalen</translation>
     </message>
     <message>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>Blok &quot;%1&quot; en alle elementen daarop worden verwijderd.</translation>
+        <translation>Blok &quot;%1&quot; en alle elementen daarop worden weggehaald.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
-        <translation>Laag Eigenschappen</translation>
+        <translation>Eigenschappen laag</translation>
     </message>
     <message>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
@@ -9367,14 +8531,53 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Laag &quot;%1&quot; wordt weggehaald, tezamen met alle elementen daarop.
+Deze actie kan NIET ongedaan worden gemaakt.</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
+        <source>Yes</source>
+        <translation type="obsolete">Ja</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="obsolete">No</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Annuleren</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="obsolete">Geen</translation>
+    </message>
+    <message>
+        <source>Export Image</source>
+        <translation type="obsolete">Afbeelding exporteren</translation>
+    </message>
+    <message>
+        <source>Loading Library Paths..</source>
+        <translation type="obsolete">Bibliotheekpaden worden geladen...</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="obsolete">Waarschuwing</translation>
+    </message>
+    <message>
+        <source>length1</source>
+        <comment>bevel/fillet lenght1</comment>
+        <translation type="obsolete">lengte1</translation>
+    </message>
+    <message>
+        <source>length2</source>
+        <comment>bevel/fillet lenght2</comment>
+        <translation type="obsolete">lengte2</translation>
+    </message>
+    <message>
         <source>Save Drawing As</source>
-        <translation>Bewaar Tekening Als</translation>
+        <translation>Tekening opslaan als</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -9383,28 +8586,16 @@ Do you want to replace it?</source>
 Wilt u het vervangen?</translation>
     </message>
     <message>
-        <source>Yes</source>
-        <translation type="obsolete">Ja</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translation type="obsolete">Nee</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
-    </message>
-    <message>
         <source>Open Drawing</source>
-        <translation>Open Tekening</translation>
+        <translation>Tekening openen</translation>
     </message>
     <message>
         <source>Open Image</source>
-        <translation>Open Afbeelding</translation>
+        <translation>Afbeelding openen</translation>
     </message>
     <message>
         <source>Windows Bitmap</source>
-        <translation>Windows Bitmap</translation>
+        <translation>Windows-bitmap</translation>
     </message>
     <message>
         <source>Joint Photographic Experts Group</source>
@@ -9416,11 +8607,11 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Portable Bit Map</source>
-        <translation>Portable Bit Map</translation>
+        <translation>Portable bitmap</translation>
     </message>
     <message>
         <source>Portable Grey Map</source>
-        <translation>Portable Grey Map</translation>
+        <translation>Portable graymap</translation>
     </message>
     <message>
         <source>Portable Network Graphic</source>
@@ -9440,7 +8631,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>All Image Files (%1)</source>
-        <translation>Alle Afbeelding Bestanden (%1)</translation>
+        <translation>Alle afbeeldingsbestanden (%1)</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
@@ -9448,11 +8639,11 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Drawing Exchange %1</source>
-        <translation>Tekening Uitwisseling %1</translation>
+        <translation>Tekeninguitwisseling %1</translation>
     </message>
     <message>
         <source>QCad 1.x file %1</source>
-        <translation>QCad 1.x bestand %1</translation>
+        <translation>QCad 1.x-bestand %1</translation>
     </message>
     <message>
         <source>Font %1</source>
@@ -9460,11 +8651,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>All Files (*.*)</source>
-        <translation>Alle Bestanden (*.*)</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="obsolete">Geen</translation>
+        <translation>Alle bestanden (*.*)</translation>
     </message>
     <message>
         <source>Inch</source>
@@ -9472,7 +8659,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Foot</source>
-        <translation>Voet</translation>
+        <translation>Foot</translation>
     </message>
     <message>
         <source>Mile</source>
@@ -9496,7 +8683,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Microinch</source>
-        <translation>Microinch</translation>
+        <translation>Micro-inch</translation>
     </message>
     <message>
         <source>Mil</source>
@@ -9547,32 +8734,24 @@ Wilt u het vervangen?</translation>
         <translation>Parsec</translation>
     </message>
     <message>
-        <source>Export Image</source>
-        <translation type="obsolete">Exporteer een Afbeelding</translation>
-    </message>
-    <message>
         <source>Loading..</source>
-        <translation>Laden..</translation>
-    </message>
-    <message>
-        <source>Loading Library Paths..</source>
-        <translation type="obsolete">Bibliotheek paden worden geladen..</translation>
+        <translation>Wordt geladen...</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
-        <translation>Bezig met laden van bestand %1..</translation>
+        <translation>Bestand %1 wordt geladen...</translation>
     </message>
     <message>
         <source>Loading...</source>
-        <translation>Laden....</translation>
+        <translation>Wordt geladen...</translation>
     </message>
     <message>
         <source>enter an integer number</source>
-        <translation>Vul een geheel getal in</translation>
+        <translation>voer een geheel getal in</translation>
     </message>
     <message>
         <source>LibreCAD query</source>
-        <translation>LibreCAD query</translation>
+        <translation>LibreCAD-query</translation>
     </message>
     <message>
         <source>enter a number</source>
@@ -9584,131 +8763,127 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>LFF Font %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">LFF-lettertype %1</translation>
     </message>
     <message>
         <source>Jww %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jww %1</translation>
     </message>
     <message>
         <source>Scalable Vector Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Schaalbare vectorafbeeldingen</translation>
     </message>
     <message>
         <source>SGI Black &amp; White</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zwart-wit SGI</translation>
     </message>
     <message>
         <source>Encapsulated PostScript</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Encapsulated PostScript</translation>
     </message>
     <message>
         <source>Encapsulated PostScript Format</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Encapsulated PostScript-formaat</translation>
     </message>
     <message>
         <source>Encapsulated PostScript Interchange</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Encapsulated PostScript-uitwisseling</translation>
     </message>
     <message>
         <source>Windows Icon</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Windows-pictogram</translation>
     </message>
     <message>
         <source>JPEG 2000</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">JPEG 2000</translation>
     </message>
     <message>
         <source>ZSoft Paintbrush</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ZSoft Paintbrush</translation>
     </message>
     <message>
         <source>PC Paint</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">PC Paint</translation>
     </message>
     <message>
         <source>SGI-Bilddatei</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">SGI-afbeeldingsgegevens</translation>
     </message>
     <message>
         <source>Targa Image File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Targa-afbeeldingsbestand</translation>
     </message>
     <message>
         <source>Tagged Image File Format</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tagged Image File Format</translation>
     </message>
     <message>
         <source>Old Drawing Exchange %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Oude tekeninguitwisseling %1</translation>
     </message>
     <message>
         <source>Opened dwg file version %1.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dwg-bestandversie %1 geopend.</translation>
     </message>
     <message>
         <source>unknown error opening dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">onbekende fout bij het openen van dwg-bestand</translation>
     </message>
     <message>
         <source>can&apos;t open this dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">kan dit dwg-bestand niet openen</translation>
     </message>
     <message>
         <source>unsupported dwg version</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">niet-ondersteunde dwg-versie</translation>
     </message>
     <message>
         <source>error reading file header in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">fout bij het lezen van de bestandsheader in het dwg-bestand</translation>
     </message>
     <message>
         <source>error reading header vars in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">fout bij het lezen van header-vars in het dwg-bestand</translation>
     </message>
     <message>
         <source>error reading classes in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">fout bij het lezen van klassen in het dwg-bestand</translation>
     </message>
     <message>
         <source>error reading offsets in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">fout bij het lezen van offsets in het dwg-bestand</translation>
     </message>
     <message>
         <source>error reading tables in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">fout bij het lezen van tabellen in het dwg-bestand</translation>
     </message>
     <message>
         <source>error reading entities in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">fout bij het lezen van elementen in het dwg-bestand</translation>
     </message>
     <message>
         <source>dwg Drawing %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">tek Tekening %1</translation>
     </message>
     <message>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bestand op schijf gewijzigd. Sla op in een ander bestand om gegevensverlies te voorkomen! Bestand gewijzigd: %1</translation>
     </message>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation type="obsolete">Waarschuwing</translation>
+        <translation type="unfinished">Arceren mislukt vanwege ruimte=%1 tussen (%2, %3) en (%4, %5)</translation>
     </message>
     <message>
         <source>error reading blocks in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">fout bij het lezen van blokken in het dwg-bestand</translation>
     </message>
     <message>
         <source>error reading objects in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">fout bij het lezen van objecten in het dwg-bestand</translation>
     </message>
     <message>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">: gedupliceerde opdracht: %1 is al ingenomen door %2</translation>
     </message>
     <message>
         <source>point</source>
@@ -9718,7 +8893,7 @@ Wilt u het vervangen?</translation>
     <message>
         <source>po</source>
         <comment>draw point</comment>
-        <translation type="unfinished">pu</translation>
+        <translation type="unfinished">po</translation>
     </message>
     <message>
         <source>line</source>
@@ -9738,47 +8913,47 @@ Wilt u het vervangen?</translation>
     <message>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation type="unfinished">vrije vorm</translation>
+        <translation type="unfinished">polylijn</translation>
     </message>
     <message>
         <source>pl</source>
         <comment>draw polyline</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">pl</translation>
     </message>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">vrij</translation>
     </message>
     <message>
         <source>fhl</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">fhl</translation>
     </message>
     <message>
         <source>spline</source>
         <comment>draw spline</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">spie</translation>
     </message>
     <message>
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">sp</translation>
     </message>
     <message>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">spie2</translation>
     </message>
     <message>
         <source>stp</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">stp</translation>
     </message>
     <message>
         <source>offset</source>
         <comment>create offset</comment>
-        <translation type="unfinished">afzet</translation>
+        <translation type="unfinished">offset</translation>
     </message>
     <message>
         <source>parallel</source>
@@ -9788,72 +8963,72 @@ Wilt u het vervangen?</translation>
     <message>
         <source>o</source>
         <comment>create offset</comment>
-        <translation type="unfinished">a</translation>
+        <translation type="unfinished">o</translation>
     </message>
     <message>
         <source>pa</source>
         <comment>create offset</comment>
-        <translation type="unfinished">zp</translation>
+        <translation type="unfinished">pa</translation>
     </message>
     <message>
         <source>ptp</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ptp</translation>
     </message>
     <message>
         <source>pp</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">pp</translation>
     </message>
     <message>
         <source>bisect</source>
         <comment>angle bisector</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mdll</translation>
     </message>
     <message>
         <source>bi</source>
         <comment>angle bisector</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ml</translation>
     </message>
     <message>
         <source>tangentpc</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">raaklijnpc</translation>
     </message>
     <message>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">rkpc</translation>
     </message>
     <message>
         <source>perp</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">perp</translation>
     </message>
     <message>
         <source>ortho</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ortho</translation>
     </message>
     <message>
         <source>vertical</source>
         <comment>vertical line</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">verticaal</translation>
     </message>
     <message>
         <source>ver</source>
         <comment>vertical line</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ver</translation>
     </message>
     <message>
         <source>horizontal</source>
         <comment>horizontal line</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">horizontaal</translation>
     </message>
     <message>
         <source>hor</source>
         <comment>horizontal line</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">hor</translation>
     </message>
     <message>
         <source>rectangle</source>
@@ -9868,7 +9043,7 @@ Wilt u het vervangen?</translation>
     <message>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">reho</translation>
     </message>
     <message>
         <source>rec</source>
@@ -9878,22 +9053,22 @@ Wilt u het vervangen?</translation>
     <message>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">polygoon2v</translation>
     </message>
     <message>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">poly2</translation>
     </message>
     <message>
         <source>arc</source>
         <comment>draw arc</comment>
-        <translation type="unfinished">boog</translation>
+        <translation type="unfinished">arc</translation>
     </message>
     <message>
         <source>a</source>
         <comment>draw arc</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">b</translation>
     </message>
     <message>
         <source>circle</source>
@@ -9908,7 +9083,7 @@ Wilt u het vervangen?</translation>
     <message>
         <source>circle2</source>
         <comment>circle 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">cirkel2</translation>
     </message>
     <message>
         <source>c2</source>
@@ -9918,7 +9093,7 @@ Wilt u het vervangen?</translation>
     <message>
         <source>circle3</source>
         <comment>circle 3 points</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">cirkel3</translation>
     </message>
     <message>
         <source>c3</source>
@@ -9928,57 +9103,57 @@ Wilt u het vervangen?</translation>
     <message>
         <source>circlecr</source>
         <comment>circle with center and radius</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">cirkelmkr</translation>
     </message>
     <message>
         <source>cc</source>
         <comment>circle with center and radius</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">cc</translation>
     </message>
     <message>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">rl3</translation>
     </message>
     <message>
         <source>ct3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ct3</translation>
     </message>
     <message>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ingeschrevenellips</translation>
     </message>
     <message>
         <source>ei</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ei</translation>
     </message>
     <message>
         <source>ie</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ie</translation>
     </message>
     <message>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">arceren</translation>
     </message>
     <message>
         <source>ha</source>
         <comment>draw hatch</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ha</translation>
     </message>
     <message>
         <source>mtext</source>
         <comment>draw mtext</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mtekst</translation>
     </message>
     <message>
         <source>mtxt</source>
         <comment>draw mtext</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mtkst</translation>
     </message>
     <message>
         <source>text</source>
@@ -9988,7 +9163,7 @@ Wilt u het vervangen?</translation>
     <message>
         <source>txt</source>
         <comment>draw text</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">tkst</translation>
     </message>
     <message>
         <source>regen</source>
@@ -9998,32 +9173,32 @@ Wilt u het vervangen?</translation>
     <message>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">opnieuw tekenen</translation>
     </message>
     <message>
         <source>rg</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished">bv</translation>
+        <translation type="unfinished">rg</translation>
     </message>
     <message>
         <source>zr</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished">ht</translation>
+        <translation type="unfinished">zr</translation>
     </message>
     <message>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">zoomenvenster</translation>
     </message>
     <message>
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation type="unfinished">zv</translation>
+        <translation type="unfinished">zw</translation>
     </message>
     <message>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">zoomauto</translation>
     </message>
     <message>
         <source>za</source>
@@ -10033,7 +9208,7 @@ Wilt u het vervangen?</translation>
     <message>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">zoompan</translation>
     </message>
     <message>
         <source>zp</source>
@@ -10043,7 +9218,7 @@ Wilt u het vervangen?</translation>
     <message>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">zoomenvorige</translation>
     </message>
     <message>
         <source>zv</source>
@@ -10063,232 +9238,232 @@ Wilt u het vervangen?</translation>
     <message>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation type="unfinished">herstel</translation>
+        <translation type="unfinished">ongedaan maken</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo cycle</comment>
-        <translation type="unfinished">h</translation>
+        <translation type="unfinished">u</translation>
     </message>
     <message>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation type="unfinished">terughalen</translation>
+        <translation type="unfinished">opnieuw</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo cycle</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">r</translation>
     </message>
     <message>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mt.uitgelijnd</translation>
     </message>
     <message>
         <source>da</source>
         <comment>dimension - aligned</comment>
-        <translation type="unfinished">mu</translation>
+        <translation type="unfinished">da</translation>
     </message>
     <message>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mt.horizontaal</translation>
     </message>
     <message>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation type="unfinished">mh</translation>
+        <translation type="unfinished">dh</translation>
     </message>
     <message>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mt.verticaal</translation>
     </message>
     <message>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation type="unfinished">mv</translation>
+        <translation type="unfinished">dv</translation>
     </message>
     <message>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mt.lineair</translation>
     </message>
     <message>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">dl</translation>
     </message>
     <message>
         <source>dr</source>
         <comment>dimension - linear</comment>
-        <translation type="unfinished">mr</translation>
+        <translation type="unfinished">dr</translation>
     </message>
     <message>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mt.hoek</translation>
     </message>
     <message>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">dan</translation>
     </message>
     <message>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mt.radiaal</translation>
     </message>
     <message>
         <source>dimradius</source>
         <comment>dimension - radius</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mt.radius</translation>
     </message>
     <message>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mt.diametrisch</translation>
     </message>
     <message>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mt.diameter</translation>
     </message>
     <message>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">dd</translation>
     </message>
     <message>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mt.verbindingslijn</translation>
     </message>
     <message>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation type="unfinished">ml</translation>
+        <translation type="unfinished">ld</translation>
     </message>
     <message>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
-        <translation type="unfinished">maatregen</translation>
+        <translation type="unfinished">mt.regen</translation>
     </message>
     <message>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">nietsbeperken</translation>
     </message>
     <message>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">rn</translation>
     </message>
     <message>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">orthogonaalbeperken</translation>
     </message>
     <message>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">rr</translation>
     </message>
     <message>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">horizontaalbeperken</translation>
     </message>
     <message>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">rh</translation>
     </message>
     <message>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">verticaalbeperken</translation>
     </message>
     <message>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">rv</translation>
     </message>
     <message>
         <source>move</source>
         <comment>modify - move (copy)</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">verplaatsen</translation>
     </message>
     <message>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
-        <translation type="unfinished">vp</translation>
+        <translation type="unfinished">mv</translation>
     </message>
     <message>
         <source>bevel</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">afschuinen</translation>
     </message>
     <message>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">bev</translation>
     </message>
     <message>
         <source>ch</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished">af</translation>
+        <translation type="unfinished">ch</translation>
     </message>
     <message>
         <source>fillet</source>
         <comment>modify - fillet</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">overgang</translation>
     </message>
     <message>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">fi</translation>
     </message>
     <message>
         <source>divide</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">scheiding</translation>
     </message>
     <message>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">knippen</translation>
     </message>
     <message>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">div</translation>
     </message>
     <message>
         <source>mirror</source>
         <comment>modify -  mirror</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">spiegelen</translation>
     </message>
     <message>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation type="unfinished">sp</translation>
+        <translation type="unfinished">mi</translation>
     </message>
     <message>
         <source>revert</source>
         <comment>modify -  revert direction</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">omdraaien</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation type="unfinished">omg</translation>
+        <translation type="unfinished">rev</translation>
     </message>
     <message>
         <source>rotate</source>
         <comment>modify - rotate</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">roteren</translation>
     </message>
     <message>
         <source>ro</source>
@@ -10298,17 +9473,17 @@ Wilt u het vervangen?</translation>
     <message>
         <source>scale</source>
         <comment>modify - scale</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">verschalen</translation>
     </message>
     <message>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation type="unfinished">sc</translation>
+        <translation type="unfinished">sz</translation>
     </message>
     <message>
         <source>trim</source>
         <comment>modify - trim (extend)</comment>
-        <translation type="unfinished">trim</translation>
+        <translation type="unfinished">bijsnijden</translation>
     </message>
     <message>
         <source>tm</source>
@@ -10318,52 +9493,52 @@ Wilt u het vervangen?</translation>
     <message>
         <source>trim2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">bijsnijden2</translation>
     </message>
     <message>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">tm2</translation>
     </message>
     <message>
         <source>lengthen</source>
         <comment>modify - lengthen</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">verlengen</translation>
     </message>
     <message>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">le</translation>
     </message>
     <message>
         <source>stretch</source>
         <comment>modify - stretch</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">rekken</translation>
     </message>
     <message>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation type="unfinished">ur</translation>
+        <translation type="unfinished">ss</translation>
     </message>
     <message>
         <source>delete</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">verwijderen</translation>
     </message>
     <message>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished">vw</translation>
+        <translation type="unfinished">er</translation>
     </message>
     <message>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">del</translation>
     </message>
     <message>
         <source>explode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">splitsen</translation>
     </message>
     <message>
         <source>xp</source>
@@ -10373,42 +9548,42 @@ Wilt u het vervangen?</translation>
     <message>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">snapvrij</translation>
     </message>
     <message>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation type="unfinished">sn</translation>
+        <translation type="unfinished">os</translation>
     </message>
     <message>
         <source>sf</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">sf</translation>
     </message>
     <message>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">snapmiddelpunt</translation>
     </message>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">sc</translation>
     </message>
     <message>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">snapafstand</translation>
     </message>
     <message>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">sd</translation>
     </message>
     <message>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">snapeinde</translation>
     </message>
     <message>
         <source>se</source>
@@ -10418,7 +9593,7 @@ Wilt u het vervangen?</translation>
     <message>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">snapraster</translation>
     </message>
     <message>
         <source>sg</source>
@@ -10428,7 +9603,7 @@ Wilt u het vervangen?</translation>
     <message>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">snapsnijpunt</translation>
     </message>
     <message>
         <source>si</source>
@@ -10438,7 +9613,7 @@ Wilt u het vervangen?</translation>
     <message>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">snapmidden</translation>
     </message>
     <message>
         <source>sm</source>
@@ -10448,87 +9623,87 @@ Wilt u het vervangen?</translation>
     <message>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">snapopelement</translation>
     </message>
     <message>
         <source>sn</source>
         <comment>snap - on entity</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">sn</translation>
     </message>
     <message>
         <source>np</source>
         <comment>snap - on entity</comment>
-        <translation type="unfinished">sp</translation>
+        <translation type="unfinished">np</translation>
     </message>
     <message>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">relatievenulinstellen</translation>
     </message>
     <message>
         <source>rz</source>
         <comment>set relative zero position</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">rz</translation>
     </message>
     <message>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">allesselecteren</translation>
     </message>
     <message>
         <source>sa</source>
         <comment>Select all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">sa</translation>
     </message>
     <message>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">allesdeselecteren</translation>
     </message>
     <message>
         <source>tn</source>
         <comment>deselect all entities</comment>
-        <translation type="unfinished">da</translation>
+        <translation type="unfinished">tn</translation>
     </message>
     <message>
         <source>modifyattr</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">attrwijzigen</translation>
     </message>
     <message>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">attr</translation>
     </message>
     <message>
         <source>ma</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ma</translation>
     </message>
     <message>
         <source>properties</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">eigenschappen</translation>
     </message>
     <message>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">prop</translation>
     </message>
     <message>
         <source>distance</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">afstand</translation>
     </message>
     <message>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">dist</translation>
     </message>
     <message>
         <source>dpp</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">dpp</translation>
     </message>
     <message>
         <source>angle</source>
@@ -10538,17 +9713,17 @@ Wilt u het vervangen?</translation>
     <message>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation type="unfinished">hoek</translation>
+        <translation type="unfinished">ang</translation>
     </message>
     <message>
         <source>area</source>
         <comment>measure area</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">gebied</translation>
     </message>
     <message>
         <source>ar</source>
         <comment>measure area</comment>
-        <translation type="unfinished">bo</translation>
+        <translation type="unfinished">ar</translation>
     </message>
     <message>
         <source>angle</source>
@@ -10556,7 +9731,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>dpi</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">dpi</translation>
     </message>
     <message>
         <source>close</source>
@@ -10564,7 +9739,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>chord length</source>
-        <translation type="unfinished">booglengte</translation>
+        <translation type="unfinished">koordlengte</translation>
     </message>
     <message>
         <source>columns</source>
@@ -10572,25 +9747,15 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>columnspacing</source>
-        <translation type="unfinished">kolomtussenafstand</translation>
+        <translation type="unfinished">kolomafstand</translation>
     </message>
     <message>
         <source>factor</source>
-        <translation type="unfinished">waarde</translation>
+        <translation type="unfinished">factor</translation>
     </message>
     <message>
         <source>length</source>
         <translation type="unfinished">lengte</translation>
-    </message>
-    <message>
-        <source>length1</source>
-        <comment>bevel/fillet lenght1</comment>
-        <translation type="obsolete">lengte1</translation>
-    </message>
-    <message>
-        <source>length2</source>
-        <comment>bevel/fillet lenght2</comment>
-        <translation type="obsolete">lengte2</translation>
     </message>
     <message>
         <source>number</source>
@@ -10606,7 +9771,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>rowspacing</source>
-        <translation type="unfinished">rijtussenafstand</translation>
+        <translation type="unfinished">rijafstand</translation>
     </message>
     <message>
         <source>through</source>
@@ -10614,21 +9779,21 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>trim</source>
-        <translation type="unfinished">trim</translation>
+        <translation type="unfinished">bijsnijden</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>angle</comment>
-        <translation type="unfinished">hoek</translation>
+        <translation type="unfinished">ang</translation>
     </message>
     <message>
         <source>an</source>
         <comment>angle</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">an</translation>
     </message>
     <message>
         <source>center</source>
-        <translation type="unfinished">center</translation>
+        <translation type="unfinished">middelpunt</translation>
     </message>
     <message>
         <source>cen</source>
@@ -10638,32 +9803,32 @@ Wilt u het vervangen?</translation>
     <message>
         <source>ce</source>
         <comment>center</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ce</translation>
     </message>
     <message>
         <source>cl</source>
         <comment>chord length</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">cl</translation>
     </message>
     <message>
         <source>c</source>
         <comment>close</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">c</translation>
     </message>
     <message>
         <source>cols</source>
         <comment>columns</comment>
-        <translation type="unfinished">koln</translation>
+        <translation type="unfinished">cols</translation>
     </message>
     <message>
         <source>co</source>
         <comment>columns</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">co</translation>
     </message>
     <message>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation type="unfinished">kolomtussenafstand</translation>
+        <translation type="unfinished">kolomafstand</translation>
     </message>
     <message>
         <source>colspacing</source>
@@ -10673,17 +9838,17 @@ Wilt u het vervangen?</translation>
     <message>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation type="unfinished">ka</translation>
+        <translation type="unfinished">cs</translation>
     </message>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation type="unfinished">waarde</translation>
+        <translation type="unfinished">fact</translation>
     </message>
     <message>
         <source>f</source>
         <comment>factor</comment>
-        <translation type="unfinished">w</translation>
+        <translation type="unfinished">f</translation>
     </message>
     <message>
         <source>help</source>
@@ -10757,7 +9922,7 @@ Wilt u het vervangen?</translation>
     <message>
         <source>ra</source>
         <comment>radius</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ra</translation>
     </message>
     <message>
         <source>reversed</source>
@@ -10767,22 +9932,22 @@ Wilt u het vervangen?</translation>
     <message>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation type="unfinished">omg</translation>
+        <translation type="unfinished">rev</translation>
     </message>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">rij</translation>
     </message>
     <message>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation type="unfinished">rijtussenafstand</translation>
+        <translation type="unfinished">rijafstand</translation>
     </message>
     <message>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation type="unfinished">ra</translation>
+        <translation type="unfinished">rs</translation>
     </message>
     <message>
         <source>text</source>
@@ -10791,30 +9956,30 @@ Wilt u het vervangen?</translation>
     <message>
         <source>t</source>
         <comment>text</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">t</translation>
     </message>
     <message>
         <source>t</source>
         <comment>through</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">t</translation>
     </message>
     <message>
         <source>undo</source>
-        <translation type="unfinished">herstel</translation>
+        <translation type="unfinished">ongedaan maken</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo</comment>
-        <translation type="unfinished">h</translation>
+        <translation type="unfinished">u</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation type="unfinished">terughalen</translation>
+        <translation type="unfinished">opnieuw</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">r</translation>
     </message>
     <message>
         <source>back</source>
@@ -10827,41 +9992,41 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>paperoffset</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">papieroffset</translation>
     </message>
     <message>
         <source>graphoffset</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">afbeeldingoffset</translation>
     </message>
     <message>
         <source>Command: %1 (%2)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Opdracht: %1 (%2)</translation>
     </message>
     <message>
         <source>RS_Commands:: command not found: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">RS_Commands:: opdracht niet gevonden: %1</translation>
     </message>
     <message>
         <source>Command not found: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Opdracht niet gevonden: %1</translation>
     </message>
     <message>
         <source>Accepted keycode: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Geaccepteerde sleutelcode: %1</translation>
     </message>
     <message>
         <source>Available commands:</source>
-        <translation type="unfinished">Beschikbare commando&apos;s:</translation>
+        <translation type="unfinished">Beschikbare opdrachten:</translation>
     </message>
     <message>
         <source>cal</source>
         <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">cal</translation>
     </message>
     <message>
         <source>calculate</source>
         <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">berekenen</translation>
     </message>
     <message>
         <source>None</source>
@@ -10870,42 +10035,42 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>error reading file metadata in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">fout bij het lezen van bestandsmetadata in dwg-bestand</translation>
     </message>
     <message>
         <source>Calculator error for input: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Berekeningsfout voor input: </translation>
     </message>
     <message>
         <source>bw</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">bw</translation>
     </message>
     <message>
         <source>blackwhite</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">zwartwit</translation>
     </message>
     <message>
         <source>color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">kleur</translation>
     </message>
     <message>
         <source>di</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">di</translation>
     </message>
     <message>
         <source>t2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">t2</translation>
     </message>
     <message>
         <source>mp</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mp</translation>
     </message>
     <message>
         <source>Block</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Blok</translation>
     </message>
     <message>
         <source>Circle</source>
@@ -10913,7 +10078,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Curve</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Curve</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -10921,7 +10086,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation type="unfinished">Ovaal</translation>
+        <translation type="unfinished">Ellips</translation>
     </message>
     <message>
         <source>File</source>
@@ -10929,7 +10094,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Dimension</source>
-        <translation type="unfinished">maatgeving</translation>
+        <translation type="unfinished">Maat</translation>
     </message>
     <message>
         <source>Info</source>
@@ -10937,7 +10102,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Layer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Laag</translation>
     </message>
     <message>
         <source>Line</source>
@@ -10945,7 +10110,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Modify</source>
-        <translation type="unfinished">Bewerken</translation>
+        <translation type="unfinished">Wijzigen</translation>
     </message>
     <message>
         <source>Options</source>
@@ -10953,7 +10118,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Andere</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -10961,130 +10126,130 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Restriction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Beperking</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">Selecteer</translation>
+        <translation type="unfinished">Selecteren</translation>
     </message>
     <message>
         <source>Snap</source>
-        <translation type="unfinished">Snap</translation>
+        <translation type="unfinished">Snappen</translation>
     </message>
     <message>
         <source>Snap Extras</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Snappen - extra functies</translation>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished">Beeld</translation>
+        <translation type="unfinished">Bekijken</translation>
     </message>
     <message>
         <source>Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Widgets</translation>
     </message>
     <message>
         <source>Creators</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Makers</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alles</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ongeldige objecten weggehaald:</translation>
     </message>
     <message>
         <source>Pen Wizard</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pen Wizard</translation>
     </message>
     <message>
         <source>Select objects</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Objecten selecteren</translation>
     </message>
     <message>
         <source>Apply to selected</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Toepassen op selectie</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Weghalen</translation>
     </message>
     <message>
         <source>You must input a distance first.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">U moet eerst een afstand invoeren.</translation>
     </message>
     <message>
         <source>cal</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">cal</translation>
     </message>
     <message>
         <source>Calculator mode: On</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Calculatormodus: aan</translation>
     </message>
     <message>
         <source>Calculator mode: Off</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Calculatormodus: uit</translation>
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Licentie</translation>
     </message>
     <message>
         <source>circlediam</source>
         <comment>circle with center and diameter</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">cirkeldiam</translation>
     </message>
     <message>
         <source>cd</source>
         <comment>circle with center and diameter</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">cd</translation>
     </message>
     <message>
         <source>trimex</source>
         <comment>modify - trim excess (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">trimex</translation>
     </message>
     <message>
         <source>tmx</source>
         <comment>modify - trim excess (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">tmx</translation>
     </message>
     <message>
         <source>tx</source>
         <comment>modify - trim excess (extend)</comment>
-        <translation type="unfinished">te</translation>
+        <translation type="unfinished">tx</translation>
     </message>
     <message>
         <source>shapetxt</source>
         <comment>modify - shape text</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">vormtkst</translation>
     </message>
     <message>
         <source>stxt</source>
         <comment>modify - shape text</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">stxt</translation>
     </message>
     <message>
         <source>st</source>
         <comment>modify - shape text</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">st</translation>
     </message>
     <message>
         <source>unlinktxt</source>
         <comment>modify - unlink shaped text</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">nt-gek.tkst</translation>
     </message>
     <message>
         <source>utxt</source>
         <comment>modify - unlink shaped text</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">utxt</translation>
     </message>
     <message>
         <source>ut</source>
         <comment>modify - unlink shaped text</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ut</translation>
     </message>
     <message>
         <source>length1</source>
@@ -11098,181 +10263,297 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Could not convert requested font: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kon het gevraagde lettertype niet converteren: %1</translation>
     </message>
     <message>
         <source>1 entity exploded</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">1 element gesplitst</translation>
     </message>
     <message>
         <source>%1 entities exploded</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 elementen gesplitst</translation>
     </message>
     <message>
         <source>Keycode mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sleutelcodemodus</translation>
     </message>
     <message>
         <source>Load command file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Opdrachtbestand laden</translation>
     </message>
     <message>
         <source>Paste multiple commands</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Meerdere opdrachten plakken</translation>
     </message>
     <message>
         <source>Quick Tools</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Snelle gereedschappen</translation>
     </message>
     <message>
         <source>noname</source>
         <comment>default layer name</comment>
+        <translation type="unfinished">geennaam</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished">Aangepast</translation>
+    </message>
+    <message>
+        <source>Letter</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Legal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Executive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ledger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tabloid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NPageSize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished">Dradenkruis</translation>
+    </message>
+    <message>
+        <source>Crosshair2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spiderweb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished">Punt</translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mouse</source>
+        <translation type="unfinished">Muis</translation>
+    </message>
+    <message>
+        <source>Tablet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trackpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Touchscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export to ProNest</source>
+        <translation type="unfinished">Exporteren naar ProNest</translation>
+    </message>
+    <message>
+        <source>Open ProNest before exporting the drawing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dock Areas</source>
+        <translation type="unfinished">Dockgebieden</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
     <message>
         <source>Add Block</source>
-        <translation type="obsolete">Voeg Blok toe</translation>
+        <translation type="obsolete">Blok toevoegen</translation>
     </message>
     <message>
         <source>&amp;Add Block</source>
-        <translation type="obsolete">&amp;Voeg Blok toe</translation>
+        <translation type="obsolete">&amp;Blok toevoegen</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksAttributes</name>
     <message>
         <source>Rename Block</source>
-        <translation type="obsolete">Hernoem Blok</translation>
+        <translation type="obsolete">Blok hernoemen</translation>
     </message>
     <message>
         <source>&amp;Rename Block</source>
-        <translation type="obsolete">&amp;Hernoem Blok</translation>
+        <translation type="obsolete">&amp;Blok hernoemen</translation>
     </message>
     <message>
         <source>Rename Block and all Inserts</source>
-        <translation type="obsolete">Hernoem Blok en alle Plaatsingen</translation>
+        <translation type="obsolete">Hernoem blok en alle invoegingen</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
     <message>
-        <source>Specify reference point</source>
-        <translation>Specificeer een referentiepunt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
         <source>Create Block</source>
-        <translation type="obsolete">Nieuwe Blok</translation>
+        <translation type="obsolete">Blok aanmaken</translation>
     </message>
     <message>
         <source>&amp;Create Block</source>
-        <translation type="obsolete">&amp;Nieuwe Blok</translation>
+        <translation type="obsolete">&amp;Blok aanmaken</translation>
+    </message>
+    <message>
+        <source>Specify reference point</source>
+        <translation>Specificeer referentiepunt</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksEdit</name>
     <message>
         <source>Edit Block</source>
-        <translation type="obsolete">Bewerk Blok</translation>
+        <translation type="obsolete">Blok bewerken</translation>
     </message>
     <message>
         <source>&amp;Edit Block</source>
-        <translation type="obsolete">&amp;Bewerk Blok</translation>
+        <translation type="obsolete">&amp;Blok bewerken</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksExplode</name>
     <message>
         <source>Explode</source>
-        <translation type="obsolete">Explodeer</translation>
+        <translation type="obsolete">Splitsen</translation>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation type="obsolete">&amp;Explodeer</translation>
+        <translation type="obsolete">&amp;Splitsen</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
-        <translation type="obsolete">Explodeer Blokken en andere Elementen Groupen</translation>
+        <translation type="obsolete">Blokken en andere elementgroepen splitsen</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksFreezeAll</name>
     <message>
         <source>Freeze all</source>
-        <translation type="obsolete">Vergrendel alles</translation>
+        <translation type="obsolete">Alles vergrendelen</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation type="obsolete">Ver&amp;grendel alles</translation>
+        <translation type="obsolete">&amp;Alles vergrendelen</translation>
     </message>
     <message>
         <source>Freeze all blocks</source>
-        <translation type="obsolete">Vergrendel alle blokken</translation>
+        <translation type="obsolete">Alle blokken vergrendelen</translation>
     </message>
     <message>
         <source>Defreeze all</source>
-        <translation type="obsolete">Ontgrendel alles</translation>
+        <translation type="obsolete">Alles ontgrendelen</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation type="obsolete">&amp;Ontgrendel alles</translation>
+        <translation type="obsolete">&amp;Alles ontgrendelen</translation>
     </message>
     <message>
         <source>Defreeze all blocks</source>
-        <translation type="obsolete">Ontgrendel alle blokken</translation>
+        <translation type="obsolete">Alle blokken ontgrendelen</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksInsert</name>
+    <message>
+        <source>Insert Block</source>
+        <translation type="obsolete">Blok invoegen</translation>
+    </message>
+    <message>
+        <source>&amp;Insert Block</source>
+        <translation type="obsolete">&amp;Blok invoegen</translation>
+    </message>
     <message>
         <source>Not a valid expression</source>
         <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Specificeer een referentiepunt</translation>
+        <translation>Specificeer referentiepunt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation>Geef een hoek op:</translation>
+        <translation>Voer een hoek in:</translation>
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation>Geef een waarde op:</translation>
+        <translation>Voer een factor in:</translation>
     </message>
     <message>
         <source>Enter columns:</source>
-        <translation>Geef het aantal kolommen op:</translation>
+        <translation>Voer het aantal kolommen in:</translation>
     </message>
     <message>
         <source>Enter rows:</source>
-        <translation>Geef het aantal rijen op:</translation>
+        <translation>Voer het aantal rijen in:</translation>
     </message>
     <message>
         <source>Enter column spacing:</source>
-        <translation>Geef kolomafstand in:</translation>
+        <translation>Voer kolomafstand in:</translation>
     </message>
     <message>
         <source>Enter row spacing:</source>
-        <translation>Geef de ruimte tussen de rijen op:</translation>
-    </message>
-    <message>
-        <source>Insert Block</source>
-        <translation type="obsolete">Plaats Blok</translation>
-    </message>
-    <message>
-        <source>&amp;Insert Block</source>
-        <translation type="obsolete">&amp;Plaats Blok</translation>
+        <translation>Voer rijafstand in:</translation>
     </message>
     <message>
         <source></source>
@@ -11283,72 +10564,30 @@ Wilt u het vervangen?</translation>
     <name>RS_ActionBlocksRemove</name>
     <message>
         <source>Remove Block</source>
-        <translation type="obsolete">Wis Blok</translation>
+        <translation type="obsolete">Blok weghalen</translation>
     </message>
     <message>
         <source>&amp;Remove Block</source>
-        <translation type="obsolete">&amp;Wis Blok</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksSave</name>
-    <message>
-        <source>No block activated to save</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">&amp;Blok weghalen</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation type="obsolete">Schakel Blok Zichtbaarheid</translation>
+        <translation type="obsolete">Zichtbaarheid blok aan/uit zetten</translation>
     </message>
     <message>
         <source>&amp;Toggle Block</source>
-        <translation type="obsolete">&amp;Schakel Blok</translation>
+        <translation type="obsolete">&amp;Blok aan/uit zetten</translation>
     </message>
     <message>
         <source>Toggle Block</source>
-        <translation type="obsolete">Schakel Blok</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDefault</name>
-    <message>
-        <source>Choose second edge</source>
-        <translation>Kies tweede rand</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Terug</translation>
+        <translation type="obsolete">Blok aan/uit zetten</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimAligned</name>
-    <message>
-        <source>Specify first extension line origin</source>
-        <translation>Specificeer de eerste oorsprong van de extentielijn</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
-        <source>Specify second extension line origin</source>
-        <translation>Specificeer de tweede oorsprong van de extentielijn</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Terug</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation>Specificeer maatlijn locatie</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation>Geef een tekst op bij de maat:</translation>
-    </message>
     <message>
         <source>Aligned</source>
         <translation type="obsolete">Uitgelijnd</translation>
@@ -11359,70 +10598,70 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Aligned Dimension</source>
-        <translation type="obsolete">Uitgelijnde Maat</translation>
+        <translation type="obsolete">Uitgelijnde maat</translation>
+    </message>
+    <message>
+        <source>Specify first extension line origin</source>
+        <translation>Specificeer eerste oorsprong extensielijn</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify second extension line origin</source>
+        <translation>Specificeer tweede oorsprong extensielijn</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Terug</translation>
+    </message>
+    <message>
+        <source>Specify dimension line location</source>
+        <translation>Specificeer locatie bematingslijn</translation>
+    </message>
+    <message>
+        <source>Enter dimension text:</source>
+        <translation>Voer tekst in bij de maat:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimAngular</name>
     <message>
-        <source>Select first line</source>
-        <translation>Selecteer eerste lijn</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
-        <source>Select second line</source>
-        <translation>Selecteer tweede lijn</translation>
-    </message>
-    <message>
-        <source>Specify dimension arc line location</source>
-        <translation>Specificeer boogmaat locatie</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation>Geef een tekst op bij de maat:</translation>
-    </message>
-    <message>
         <source>Angular</source>
-        <translation type="obsolete">Hoek</translation>
+        <translation type="obsolete">Hoekig</translation>
     </message>
     <message>
         <source>&amp;Angular</source>
-        <translation type="obsolete">&amp;Hoek</translation>
+        <translation type="obsolete">&amp;Hoekig</translation>
     </message>
     <message>
         <source>Angular Dimension</source>
-        <translation type="obsolete">Hoek Maat</translation>
+        <translation type="obsolete">Hoekmaat</translation>
+    </message>
+    <message>
+        <source>Select first line</source>
+        <translation>Eerste lijn selecteren</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Select second line</source>
+        <translation>Tweede lijn selecteren</translation>
+    </message>
+    <message>
+        <source>Specify dimension arc line location</source>
+        <translation>Specificeer locatie boogbematingslijn</translation>
+    </message>
+    <message>
+        <source>Enter dimension text:</source>
+        <translation>Voer tekst in bij de maat:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimDiametric</name>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation>Geen cirkel of boog element</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation>Geen geldige uitdrukking</translation>
-    </message>
-    <message>
-        <source>Select arc or circle entity</source>
-        <translation>Selecteer cirkel of boog element</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation>Geef maatlijn locatie</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation>Voer dimensie tekst:</translation>
-    </message>
     <message>
         <source>Diametric</source>
         <translation type="obsolete">Diametrisch</translation>
@@ -11433,18 +10672,54 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Diametric Dimension</source>
-        <translation type="obsolete">Diametrische Maat</translation>
+        <translation type="obsolete">Diametrische maat</translation>
+    </message>
+    <message>
+        <source>Not a circle or arc entity</source>
+        <translation>Geen cirkel- of boogelement</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation>Geen geldige expressie</translation>
+    </message>
+    <message>
+        <source>Select arc or circle entity</source>
+        <translation>Boog- of cirkelelement selecteren</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify dimension line location</source>
+        <translation>Specificeer locatie bematingslijn</translation>
+    </message>
+    <message>
+        <source>Enter dimension text:</source>
+        <translation>Voer tekst in bij de maat:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDimLeader</name>
     <message>
+        <source>Leader</source>
+        <translation type="obsolete">Verbindingslijn</translation>
+    </message>
+    <message>
+        <source>&amp;Leader</source>
+        <translation type="obsolete">&amp;Verbindingslijn</translation>
+    </message>
+    <message>
+        <source>Leader Dimension</source>
+        <translation type="obsolete">Maat verbindingslijn</translation>
+    </message>
+    <message>
         <source>Specify target point</source>
-        <translation>Geef doel punt</translation>
+        <translation>Specificeer richtpunt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -11454,68 +10729,24 @@ Wilt u het vervangen?</translation>
         <source>Finish</source>
         <translation>Beëindigen</translation>
     </message>
-    <message>
-        <source>Leader</source>
-        <translation type="obsolete">Aanhaling</translation>
-    </message>
-    <message>
-        <source>&amp;Leader</source>
-        <translation type="obsolete">Aan&amp;haling</translation>
-    </message>
-    <message>
-        <source>Leader Dimension</source>
-        <translation type="obsolete">Aanhaal Maat</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDimLinear</name>
     <message>
-        <source>Not a valid expression</source>
-        <translation>Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Specify first extension line origin</source>
-        <translation>Specificeer de eerste oorsprong van de extentielijn</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
-        <source>Specify second extension line origin</source>
-        <translation>Specificeer de tweede oorsprong van de extentielijn</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Terug</translation>
-    </message>
-    <message>
-        <source>Specify dimension line location</source>
-        <translation>Specificeer maatlijn locatie</translation>
-    </message>
-    <message>
-        <source>Enter dimension text:</source>
-        <translation>Geef een tekst op bij de maat:</translation>
-    </message>
-    <message>
-        <source>Enter dimension line angle:</source>
-        <translation>Geef de hoek op van de maatlijn:</translation>
-    </message>
-    <message>
         <source>Linear</source>
-        <translation type="obsolete">Lineaire</translation>
+        <translation type="obsolete">Lineair</translation>
     </message>
     <message>
         <source>&amp;Linear</source>
-        <translation type="obsolete">&amp;Lineare</translation>
+        <translation type="obsolete">&amp;Lineair</translation>
     </message>
     <message>
         <source>Linear Dimension</source>
-        <translation type="obsolete">Liniaire Maat</translation>
+        <translation type="obsolete">Lineaire maat</translation>
     </message>
     <message>
         <source>Horizontal</source>
-        <translation type="obsolete">Horizontaal</translation>
+        <translation type="obsolete">Horizontale</translation>
     </message>
     <message>
         <source>&amp;Horizontal</source>
@@ -11523,47 +10754,55 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Horizontal Dimension</source>
-        <translation type="obsolete">Horizontale Maat</translation>
+        <translation type="obsolete">Horizontale maat</translation>
     </message>
     <message>
         <source>Vertical</source>
-        <translation type="obsolete">Vertikaal</translation>
+        <translation type="obsolete">Verticaal</translation>
     </message>
     <message>
         <source>&amp;Vertical</source>
-        <translation type="obsolete">&amp;Vertikaal</translation>
+        <translation type="obsolete">&amp;Verticaal</translation>
     </message>
     <message>
         <source>Vertical Dimension</source>
-        <translation type="obsolete">Vertikale Maat</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDimRadial</name>
-    <message>
-        <source>Not a circle or arc entity</source>
-        <translation>Geen cirkel of boog element</translation>
+        <translation type="obsolete">Verticale maat</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
         <translation>Geen geldige expressie</translation>
     </message>
     <message>
-        <source>Select arc or circle entity</source>
-        <translation>Selecteer cirkel of boog element</translation>
+        <source>Specify first extension line origin</source>
+        <translation>Specificeer eerste oorsprong extensielijn</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
-        <source>Specify dimension line position or enter angle:</source>
-        <translation>Specificeer positie van de maatlijn of geef hoek op:</translation>
+        <source>Specify second extension line origin</source>
+        <translation>Specificeer tweede oorsprong extensielijn</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Terug</translation>
+    </message>
+    <message>
+        <source>Specify dimension line location</source>
+        <translation>Specificeer locatie bematingslijn</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
-        <translation>Geef een tekst op bij de maat:</translation>
+        <translation>Voer tekst in bij de maat:</translation>
     </message>
+    <message>
+        <source>Enter dimension line angle:</source>
+        <translation>Voer hoek bematingslijn in:</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDimRadial</name>
     <message>
         <source>Radial</source>
         <translation type="obsolete">Radiaal</translation>
@@ -11574,30 +10813,70 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Radial Dimension</source>
-        <translation type="obsolete">Radiale Maat</translation>
+        <translation type="obsolete">Radiale maat</translation>
+    </message>
+    <message>
+        <source>Not a circle or arc entity</source>
+        <translation>Geen cirkel- of boogelement</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation>Geen geldige expressie</translation>
+    </message>
+    <message>
+        <source>Select arc or circle entity</source>
+        <translation>Boog- of cirkelelement selecteren</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify dimension line position or enter angle:</source>
+        <translation>Specificeer de bematingslijnpositie of voer een hoek in:</translation>
+    </message>
+    <message>
+        <source>Enter dimension text:</source>
+        <translation>Voer tekst in bij de maat:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArc</name>
+    <message>
+        <source>Specify end angle or [Angle/chord Length]</source>
+        <translation type="obsolete">Specificeer einde hoek of [hoek/koordlengte]</translation>
+    </message>
+    <message>
+        <source>Arc: Center, Point, Angles</source>
+        <translation type="obsolete">Boog: middelpunt, punt, hoeken</translation>
+    </message>
+    <message>
+        <source>&amp;Center, Point, Angles</source>
+        <translation type="obsolete">&amp;Middelpunt, punt, hoeken</translation>
+    </message>
+    <message>
+        <source>Draw arcs</source>
+        <translation type="obsolete">Bogen tekenen</translation>
+    </message>
     <message>
         <source>Not a valid expression</source>
         <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Not a valid chord length</source>
-        <translation>Geen geldige booglengte</translation>
+        <translation>Geen geldige koordlengte</translation>
     </message>
     <message>
         <source>Specify center</source>
-        <translation>Specificeer centerpunt</translation>
+        <translation>Specificeer middelpunt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify radius</source>
-        <translation>Specificeer straal</translation>
+        <translation>Specificeer radius</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11608,47 +10887,43 @@ Wilt u het vervangen?</translation>
         <translation>Specificeer begin hoek:</translation>
     </message>
     <message>
-        <source>Specify end angle or [Angle/chord Length]</source>
-        <translation type="obsolete">Specificeer eind Hoek of [Hoek/Booglengte]</translation>
-    </message>
-    <message>
         <source>Specify included angle:</source>
-        <translation>Specificeer ingesloten hoek:</translation>
+        <translation>Specificeer opgenomen hoek:</translation>
     </message>
     <message>
         <source>Specify chord length:</source>
-        <translation>Specificeer booglengte:</translation>
-    </message>
-    <message>
-        <source>Arc: Center, Point, Angles</source>
-        <translation type="obsolete">Boog: Center, Punt, Hoeken</translation>
-    </message>
-    <message>
-        <source>&amp;Center, Point, Angles</source>
-        <translation type="obsolete">&amp;Center, Punt, Hoeken</translation>
-    </message>
-    <message>
-        <source>Draw arcs</source>
-        <translation type="obsolete">Teken bogen</translation>
+        <translation>Specificeer koordlengte:</translation>
     </message>
     <message>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Specificeer einde hoek of [hoek/koordlengte]</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArc3P</name>
     <message>
-        <source>Invalid arc data.</source>
-        <translation>Boog gegevens ongeldig.</translation>
+        <source>Specify startpoint or [Center]</source>
+        <translation type="obsolete">Specificeer startpunt of [middelpunt]</translation>
     </message>
     <message>
-        <source>Specify startpoint or [Center]</source>
-        <translation type="obsolete">Specificeer Startpunt of (Centerpunt)</translation>
+        <source>Arc: 3 Points</source>
+        <translation type="obsolete">Boog: 3 punten</translation>
+    </message>
+    <message>
+        <source>&amp;3 Points</source>
+        <translation type="obsolete">&amp;3 punten</translation>
+    </message>
+    <message>
+        <source>Draw arcs with 3 points</source>
+        <translation type="obsolete">Bogen met 3 punten tekenen</translation>
+    </message>
+    <message>
+        <source>Invalid arc data.</source>
+        <translation>Booggegevens ongeldig.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -11663,47 +10938,35 @@ Wilt u het vervangen?</translation>
         <translation>Specificeer eindpunt</translation>
     </message>
     <message>
-        <source>Arc: 3 Points</source>
-        <translation type="obsolete">Boog: 3 Punten</translation>
-    </message>
-    <message>
-        <source>&amp;3 Points</source>
-        <translation type="obsolete">&amp;3 Punten</translation>
-    </message>
-    <message>
-        <source>Draw arcs with 3 points</source>
-        <translation type="obsolete">Teken bogen met 3 punten</translation>
-    </message>
-    <message>
         <source>Specify startpoint or [center]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Specificeer startpunt of [middelpunt]</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArcTangential</name>
     <message>
         <source>Arc: Tangential</source>
-        <translation type="obsolete">Boog: Tangentiële</translation>
+        <translation type="obsolete">Boog: tangentieel</translation>
     </message>
     <message>
         <source>&amp;Tangential</source>
-        <translation type="obsolete">&amp;Tangentiële</translation>
+        <translation type="obsolete">&amp;Tangentieel</translation>
     </message>
     <message>
         <source>Draw arcs tangential to base entity</source>
-        <translation type="obsolete">Teken bogen tangentieel rakend aan basis entiteit</translation>
+        <translation type="obsolete">Bogen rakend aan basiselement tekenen</translation>
     </message>
     <message>
         <source>Specify base entity</source>
-        <translation>Specificeer basis element</translation>
+        <translation>Specificeer basiselement</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation>Specificeer eind hoek</translation>
+        <translation>Specificeer einde hoek</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11711,53 +10974,65 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Specify end point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Specificeer eindpunt</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle</name>
+    <message>
+        <source>Circle: Center, Point</source>
+        <translation type="obsolete">Cirkel: middelpunt, punt</translation>
+    </message>
+    <message>
+        <source>Center, &amp;Point</source>
+        <translation type="obsolete">Middelpunt, &amp;punt</translation>
+    </message>
+    <message>
+        <source>Draw circles with center and point</source>
+        <translation type="obsolete">Teken cirkels met middelpunt en punt</translation>
+    </message>
     <message>
         <source>Not a valid expression</source>
         <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Specify center</source>
-        <translation>Specificeer middenpunt</translation>
+        <translation>Specificeer middelpunt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify radius</source>
-        <translation type="vanished">Specificeer straal</translation>
+        <translation type="vanished">Specificeer radius</translation>
     </message>
     <message>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
     <message>
-        <source>Circle: Center, Point</source>
-        <translation type="obsolete">Cirkel: Center, Punt</translation>
-    </message>
-    <message>
-        <source>Center, &amp;Point</source>
-        <translation type="obsolete">Center, &amp;Punt</translation>
-    </message>
-    <message>
-        <source>Draw circles with center and point</source>
-        <translation type="obsolete">Teken cirkels met center en punt</translation>
-    </message>
-    <message>
         <source>Specify point on circle</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Specificeer punt op cirkel</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle2P</name>
     <message>
+        <source>Circle: 2 Points</source>
+        <translation type="obsolete">Cirkel: 2 punten</translation>
+    </message>
+    <message>
+        <source>2 Points</source>
+        <translation type="obsolete">2 punten</translation>
+    </message>
+    <message>
+        <source>Draw circles with 2 points</source>
+        <translation type="obsolete">Cirkels met 2 punten tekenen</translation>
+    </message>
+    <message>
         <source>Invalid Circle data.</source>
-        <translation>Geen geldige Boog gegevens.</translation>
+        <translation>Ongeldige cirkelgegevens.</translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -11765,7 +11040,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -11775,24 +11050,24 @@ Wilt u het vervangen?</translation>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
-    <message>
-        <source>Circle: 2 Points</source>
-        <translation type="obsolete">Cirkel: 2 Punten</translation>
-    </message>
-    <message>
-        <source>2 Points</source>
-        <translation type="obsolete">2 Punten</translation>
-    </message>
-    <message>
-        <source>Draw circles with 2 points</source>
-        <translation type="obsolete">Teken cirkels met 2 punten</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle3P</name>
     <message>
+        <source>Circle: 3 Points</source>
+        <translation type="obsolete">Cirkel: 3 punten</translation>
+    </message>
+    <message>
+        <source>3 Points</source>
+        <translation type="obsolete">3 punten</translation>
+    </message>
+    <message>
+        <source>Draw circles with 3 points</source>
+        <translation type="obsolete">Cirkels met 3 punten tekenen</translation>
+    </message>
+    <message>
         <source>Invalid circle data.</source>
-        <translation>Ongeldige boog gegevens</translation>
+        <translation>Ongeldige cirkelgegevens.</translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -11800,7 +11075,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -11814,256 +11089,83 @@ Wilt u het vervangen?</translation>
         <source>Specify third point</source>
         <translation>Specificeer derde punt</translation>
     </message>
-    <message>
-        <source>Circle: 3 Points</source>
-        <translation type="obsolete">Cirkel: 3 Punten</translation>
-    </message>
-    <message>
-        <source>3 Points</source>
-        <translation type="obsolete">3 Punten</translation>
-    </message>
-    <message>
-        <source>Draw circles with 3 points</source>
-        <translation type="obsolete">Teken cirkels met 3 punten</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleCR</name>
+    <message>
+        <source>Circle: Center, Radius</source>
+        <translation type="obsolete">Cirkel: middelpunt, radius</translation>
+    </message>
+    <message>
+        <source>Center, &amp;Radius</source>
+        <translation type="obsolete">Middelpunt, &amp;radius</translation>
+    </message>
+    <message>
+        <source>Draw circles with center and radius</source>
+        <translation type="obsolete">Teken cirkels met middelpunt en radius</translation>
+    </message>
     <message>
         <source>Not a valid expression</source>
         <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Specify circle center</source>
-        <translation>Specificeer middenpunt cirkel</translation>
+        <translation>Specificeer middelpunt cirkel</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify circle radius</source>
-        <translation>Specificeer straal cirkel</translation>
+        <translation>Specificeer radius cirkel</translation>
     </message>
     <message>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
     <message>
-        <source>Circle: Center, Radius</source>
-        <translation type="obsolete">Cirkel: Center, Radius</translation>
-    </message>
-    <message>
-        <source>Center, &amp;Radius</source>
-        <translation type="obsolete">Center, &amp;Radius</translation>
-    </message>
-    <message>
-        <source>Draw circles with center and radius</source>
-        <translation type="obsolete">Teken cirkels met center en radius</translation>
-    </message>
-    <message>
         <source>radius=%1 is invalid</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleDiam</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="unfinished">Specificeer straal cirkel</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>diameter=%1 is invalid</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify the another arc/circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawEllipse4Points</name>
-    <message>
-        <source>Specify the first point on ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify the second point on ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Specify the third point on ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify the fourth point on ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can not determine uniquely an ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">radius =%1 is ongeldig</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseAxis</name>
+    <message>
+        <source>Ellipse Arc with Axis</source>
+        <translation type="obsolete">Ellipsboog met as</translation>
+    </message>
+    <message>
+        <source>&amp;Ellipse Arc (Axis)</source>
+        <translation type="obsolete">&amp;Ellipsboog (as)</translation>
+    </message>
+    <message>
+        <source>Draw Ellipse Arcs</source>
+        <translation type="obsolete">Ellipsbogen tekenen</translation>
+    </message>
+    <message>
+        <source>Ellipse with Axis</source>
+        <translation type="obsolete">Ellips met as</translation>
+    </message>
+    <message>
+        <source>&amp;Ellipse (Axis)</source>
+        <translation type="obsolete">&amp;Ellips (as)</translation>
+    </message>
+    <message>
+        <source>Draw Ellipses</source>
+        <translation type="obsolete">Ellipsen tekenen</translation>
+    </message>
     <message>
         <source>Not a valid expression</source>
         <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Specify ellipse center</source>
-        <translation>Specificeer midden punt ovaal</translation>
+        <translation>Specificeer middelpunt ellips</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify endpoint of major axis</source>
@@ -12083,206 +11185,89 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation>Specificeer eind hoek</translation>
-    </message>
-    <message>
-        <source>Ellipse Arc with Axis</source>
-        <translation type="obsolete">Ellips Boog met Assen</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse Arc (Axis)</source>
-        <translation type="obsolete">&amp;Ovaal Boog (Assen)</translation>
-    </message>
-    <message>
-        <source>Draw Ellipse Arcs</source>
-        <translation type="obsolete">Teken Ellips Boog</translation>
-    </message>
-    <message>
-        <source>Ellipse with Axis</source>
-        <translation type="obsolete">Ellips met Assen</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse (Axis)</source>
-        <translation type="obsolete">&amp;Ovaal (Assen)</translation>
-    </message>
-    <message>
-        <source>Draw Ellipses</source>
-        <translation type="obsolete">Teken Ellipsen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawEllipseCenter3Points</name>
-    <message>
-        <source>Specify the center of ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify the first point on ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify the second point on ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Specify the third point on ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawEllipseFociPoint</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="unfinished">Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Specify first focus of ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify second focus of ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Specify a point on ellipse or total distance to foci</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>specify a point on ellipse, or total distance to foci</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Total distance %1 is smaller than distance between foci</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawEllipseInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify the fourth line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can not determine uniquely an ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Specificeer einde hoek</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawHatch</name>
     <message>
         <source>Hatch</source>
-        <translation type="obsolete">Arcering</translation>
+        <translation type="obsolete">Arceren</translation>
     </message>
     <message>
         <source>&amp;Hatch</source>
-        <translation type="obsolete">&amp;Arcering</translation>
+        <translation type="obsolete">&amp;Arceren</translation>
     </message>
     <message>
         <source>Draw Hatches and Solid Fills</source>
-        <translation type="obsolete">Teken Arceringen en Inkleuringen</translation>
+        <translation type="obsolete">Teken arceringen en inkleuringen</translation>
     </message>
     <message>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>Ongeldige invul gebied. Controleer of de elementen gekozen vorm is van een of meer gesloten contouren.</translation>
+        <translation>Ongeldig arceringsgebied. Controleer of de gekozen elementen een of meer gesloten omtrekken vormen.</translation>
     </message>
     <message>
         <source>Hatch created successfully.</source>
-        <translation>Invulling succesvol aangemaakt.</translation>
+        <translation>Arcering succesvol aangemaakt.</translation>
     </message>
     <message>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arceerfout: ongeldige omtrek gevonden!</translation>
     </message>
     <message>
         <source>Hatch Error: Pattern not found!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arceerfout: patroon niet gevonden!</translation>
     </message>
     <message>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arceerfout: omtrek of patroon te klein!</translation>
     </message>
     <message>
         <source>Hatch Error: Contour too big!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arceerfout: omtrek te groot!</translation>
     </message>
     <message>
         <source>Hatch Error: Undefined Error!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arceerfout: niet-gedefinieerde fout!</translation>
     </message>
     <message>
         <source>Total hatch area = %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Totaal arceringsgebied = %1</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawImage</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation>Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation>Specificeer een referentiepunt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation>Geef een hoek op:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation>Geef een waarde op:</translation>
-    </message>
     <message>
         <source>Image</source>
         <translation type="obsolete">Afbeelding</translation>
     </message>
     <message>
         <source>&amp;Image</source>
-        <translation type="obsolete">Af&amp;beelding</translation>
+        <translation type="obsolete">&amp;Afbeelding</translation>
     </message>
     <message>
         <source>Insert Image (Bitmap)</source>
-        <translation type="obsolete">Voeg Afbeelding (Bitmap) in</translation>
+        <translation type="obsolete">Afbeelding (bitmap) invoegen</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation>Geen geldige expressie</translation>
+    </message>
+    <message>
+        <source>Specify reference point</source>
+        <translation>Specificeer referentiepunt</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Enter angle:</source>
+        <translation>Voer een hoek in:</translation>
+    </message>
+    <message>
+        <source>Enter factor:</source>
+        <translation>Voer een factor in:</translation>
     </message>
     <message>
         <source></source>
@@ -12290,18 +11275,34 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Enter dpi:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Voer dpi in:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLine</name>
+    <message>
+        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
+        <translation type="obsolete">Kan reeks lijnen niet sluiten: nog niet voldoende elementen gedefinieerd.</translation>
+    </message>
+    <message>
+        <source>Line: 2 Points</source>
+        <translation type="obsolete">Lijn: 2 punten</translation>
+    </message>
+    <message>
+        <source>&amp;2 Points</source>
+        <translation type="obsolete">&amp;2 punten</translation>
+    </message>
+    <message>
+        <source>Draw lines</source>
+        <translation type="obsolete">Lijnen tekenen</translation>
+    </message>
     <message>
         <source>Specify first point</source>
         <translation>Specificeer eerste punt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
@@ -12316,63 +11317,23 @@ Wilt u het vervangen?</translation>
         <translation>Specificeer volgend punt</translation>
     </message>
     <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="obsolete">Kan Lijnen niet sluiten: Onvoldoende geplaatst.</translation>
-    </message>
-    <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Kan niet ongedaan maken.</translation>
-    </message>
-    <message>
-        <source>Line: 2 Points</source>
-        <translation type="obsolete">Lijn: 2 Punten</translation>
-    </message>
-    <message>
-        <source>&amp;2 Points</source>
-        <translation type="obsolete">&amp;2 Punten</translation>
-    </message>
-    <message>
-        <source>Draw lines</source>
-        <translation type="obsolete">Teken lijnen</translation>
+        <translation>Kan niet ongedaan maken: nog niet voldoende elementen gedefinieerd.</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kan de reeks lijnen niet sluiten: nog niet voldoende elementen gedefinieerd of de reeks is al gesloten.</translation>
     </message>
     <message>
         <source>Cannot redo: Not previous line segment defined.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kan niet opnieuw uitvoeren: er is geen vorig lijnsegment gedefinieerd.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineAngle</name>
     <message>
-        <source>Not a valid expression</source>
-        <translation>Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation>Specificeer een positie</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation>Geef een hoek op:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Terug</translation>
-    </message>
-    <message>
-        <source>Enter length:</source>
-        <translation>Geef een lengte op:</translation>
-    </message>
-    <message>
         <source>Line: Angle</source>
-        <translation type="obsolete">Lijn: Hoek</translation>
+        <translation type="obsolete">Lijn: hoek</translation>
     </message>
     <message>
         <source>&amp;Angle</source>
@@ -12380,11 +11341,11 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Draw lines with a given angle</source>
-        <translation type="obsolete">Teken lijnen gegeven een hoek</translation>
+        <translation type="obsolete">Lijnen tekenen met opgegeven hoek</translation>
     </message>
     <message>
         <source>Line: Horizontal</source>
-        <translation type="obsolete">Lijn: Horizontaal</translation>
+        <translation type="obsolete">Lijn: horizontaal</translation>
     </message>
     <message>
         <source>&amp;Horizontal</source>
@@ -12392,7 +11353,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Draw horizontal lines</source>
-        <translation type="obsolete">Teken horizontale lijnen</translation>
+        <translation type="obsolete">Horizontale lijnen tekenen</translation>
     </message>
     <message>
         <source>hor./vert. line</source>
@@ -12400,34 +11361,70 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>H&amp;orizontal / Vertical</source>
-        <translation type="obsolete">H&amp;orizontaal / Vertikaal</translation>
+        <translation type="obsolete">H&amp;orizontaal/Verticaal</translation>
     </message>
     <message>
         <source>Draw horizontal/vertical lines</source>
-        <translation type="obsolete">Teken horizontale/vertikale lijnen</translation>
+        <translation type="obsolete">Horizontale/verticale lijnen tekenen</translation>
     </message>
     <message>
         <source>Vertical</source>
-        <translation type="obsolete">Vertikaal</translation>
+        <translation type="obsolete">Verticaal</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation>Geen geldige expressie</translation>
+    </message>
+    <message>
+        <source>Specify position</source>
+        <translation>Specificeer positie</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Enter angle:</source>
+        <translation>Voer een hoek in:</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Terug</translation>
+    </message>
+    <message>
+        <source>Enter length:</source>
+        <translation>Voer lengte in:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineBisector</name>
+    <message>
+        <source>Bisector</source>
+        <translation type="obsolete">Middelloodlijn</translation>
+    </message>
+    <message>
+        <source>&amp;Bisector</source>
+        <translation type="obsolete">&amp;Middelloodlijn</translation>
+    </message>
+    <message>
+        <source>Draw bisectors</source>
+        <translation type="obsolete">Teken middelloodlijnen</translation>
+    </message>
     <message>
         <source>Not a valid expression</source>
         <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Select first line</source>
-        <translation>Selecteer eerste lijn</translation>
+        <translation>Eerste lijn selecteren</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Select second line</source>
-        <translation>Selecteer tweede lijn</translation>
+        <translation>Tweede lijn selecteren</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12435,62 +11432,66 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Enter bisector length:</source>
-        <translation>Geef lengte op van de bissectrice:</translation>
+        <translation>Voer lengte middelloodlijn in:</translation>
     </message>
     <message>
         <source>Enter number of bisectors:</source>
-        <translation>Geef het aantal bissectrices:</translation>
-    </message>
-    <message>
-        <source>Bisector</source>
-        <translation type="obsolete">Bissectice</translation>
-    </message>
-    <message>
-        <source>&amp;Bisector</source>
-        <translation type="obsolete">&amp;Bissectice</translation>
-    </message>
-    <message>
-        <source>Draw bisectors</source>
-        <translation type="obsolete">Teken bissectice</translation>
+        <translation>Voer aantal middelloodlijnen in:</translation>
     </message>
     <message>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aantal sectorlijnen niet in bereik: </translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineFree</name>
-    <message>
-        <source>Click and drag to draw a line</source>
-        <translation>Klik en sleep om Lijn te tekenen</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
     <message>
         <source>Line: Freehand</source>
         <translation type="obsolete">Lijn: vrije vorm</translation>
     </message>
     <message>
         <source>&amp;Freehand Line</source>
-        <translation type="obsolete">&amp;Vrije vorm</translation>
+        <translation type="obsolete">&amp;Vrije lijn</translation>
     </message>
     <message>
         <source>Draw freehand lines</source>
-        <translation type="obsolete">Teken vrije vorm lijnen</translation>
+        <translation type="obsolete">Vrije lijnen tekenen</translation>
+    </message>
+    <message>
+        <source>Click and drag to draw a line</source>
+        <translation>Klik en sleep om een lijn te tekenen</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
+    <message>
+        <source>hor./vert. line</source>
+        <translation type="obsolete">hor./vert. lijn</translation>
+    </message>
+    <message>
+        <source>H&amp;orizontal / Vertical</source>
+        <translation type="obsolete">H&amp;orizontaal/Verticaal</translation>
+    </message>
+    <message>
+        <source>Draw horizontal/vertical lines</source>
+        <translation type="obsolete">Horizontale/verticale lijnen tekenen</translation>
+    </message>
+    <message>
+        <source>Vertical</source>
+        <translation type="obsolete">Verticaal</translation>
+    </message>
     <message>
         <source>Specify first point</source>
         <translation>Specificeer eerste punt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -12500,67 +11501,12 @@ Wilt u het vervangen?</translation>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
-    <message>
-        <source>hor./vert. line</source>
-        <translation type="obsolete">hor./vert. lijn</translation>
-    </message>
-    <message>
-        <source>H&amp;orizontal / Vertical</source>
-        <translation type="obsolete">H&amp;orizontaal / Vertikaal</translation>
-    </message>
-    <message>
-        <source>Draw horizontal/vertical lines</source>
-        <translation type="obsolete">Teken horizontale/vertikale lijnen</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="obsolete">Vertikaal</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineOrthTan</name>
-    <message>
-        <source>Select a line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="unfinished">Selecteer cirkel, boog of ovaal</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineParallel</name>
     <message>
         <source>Specify Distance &lt;%1&gt; or select entity or [Through]</source>
-        <translation type="obsolete">Specificeer Afstand &lt;%1&gt; of selecteer Element of [Door]</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation>Geef een aantal op:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation>Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation>Specificeer Afstand &lt;%1&gt; of selecteer Element</translation>
-    </message>
-    <message>
-        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation>Specificeer Afstand &lt;%1&gt; of Selecteer Element of [%2]</translation>
+        <translation type="obsolete">Specificeer afstand &lt;%1&gt; of selecteer element of [door]</translation>
     </message>
     <message>
         <source>Parallel</source>
@@ -12582,20 +11528,52 @@ Wilt u het vervangen?</translation>
         <source>&amp;Concentric</source>
         <translation type="obsolete">&amp;Concentrisch</translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Enter number:</source>
+        <translation>Voer een aantal in:</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation>Geen geldige expressie</translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..99</source>
+        <translation>Ongeldig nummer. Probeer 1...99</translation>
+    </message>
+    <message>
+        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
+        <translation>Specificeer afstand &lt;%1&gt; of selecteer element of [%2]</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineParallelThrough</name>
     <message>
+        <source>Parallel through point</source>
+        <translation type="obsolete">Parallel door punt</translation>
+    </message>
+    <message>
+        <source>Par&amp;allel through point</source>
+        <translation type="obsolete">Par&amp;allel door punt</translation>
+    </message>
+    <message>
+        <source>Draw parallel through a given point</source>
+        <translation type="obsolete">Teken parallel door een bepaald punt</translation>
+    </message>
+    <message>
         <source>Select entity</source>
-        <translation>Selecteer element</translation>
+        <translation>Element selecteren</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify through point</source>
-        <translation>Geef door punt</translation>
+        <translation>Specificeer door punt</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12607,42 +11585,30 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..99</source>
-        <translation>Geen geldig aantal. Probeer 1..99</translation>
+        <translation>Ongeldig nummer. Probeer 1...99</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
         <translation>Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Parallel through point</source>
-        <translation type="obsolete">Parallel door punt</translation>
-    </message>
-    <message>
-        <source>Par&amp;allel through point</source>
-        <translation type="obsolete">Par&amp;allel door punt</translation>
-    </message>
-    <message>
-        <source>Draw parallel through a given point</source>
-        <translation type="obsolete">Teken parallel door een bepaalde punt</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
         <source>Specify center</source>
-        <translation type="obsolete">Specificeer midden punt</translation>
+        <translation type="obsolete">Specificeer middelpunt</translation>
     </message>
     <message>
         <source>Specify a corner</source>
-        <translation type="obsolete">Specificeer een hoek</translation>
+        <translation type="obsolete">Specificeer een hoekpunt</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation type="obsolete">Geef een aantal op:</translation>
+        <translation type="obsolete">Voer een aantal in:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="obsolete">Geen geldig aantal. Probeer 1..9999</translation>
+        <translation type="obsolete">Geen geldig aantal. Probeer 1...9999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -12650,15 +11616,15 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Polygon</source>
-        <translation type="obsolete">Veelhoek</translation>
+        <translation type="obsolete">Polygoon</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation type="obsolete">Pol&amp;ygoon (Cen,Hkp)</translation>
+        <translation type="obsolete">Pol&amp;ygoon (mid, hkp)</translation>
     </message>
     <message>
         <source>Draw polygon with center and corner</source>
-        <translation type="obsolete">Teken veelhoek met center en hoekpunt</translation>
+        <translation type="obsolete">Teken polygoon met middelpunt en hoekpunt</translation>
     </message>
     <message>
         <source></source>
@@ -12669,11 +11635,11 @@ Wilt u het vervangen?</translation>
     <name>RS_ActionDrawLinePolygon2</name>
     <message>
         <source>Specify first corner</source>
-        <translation type="obsolete">Specificeer eerste hoek</translation>
+        <translation type="obsolete">Specificeer eerste hoekpunt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
+        <translation type="obsolete">Annuleren</translation>
     </message>
     <message>
         <source>Specify second corner</source>
@@ -12689,7 +11655,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="obsolete">Geen geldig aantal. Probeer 1..9999</translation>
+        <translation type="obsolete">Geen geldig aantal. Probeer 1...9999</translation>
     </message>
     <message>
         <source>Not a valid expression.</source>
@@ -12697,73 +11663,42 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Polygon</source>
-        <translation type="obsolete">Veelhoek</translation>
+        <translation type="obsolete">Polygoon</translation>
     </message>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation type="obsolete">Pol&amp;ygoon (Hkp,Hkp)</translation>
+        <translation type="obsolete">Polygoo&amp;n (hkp, hkp)</translation>
     </message>
     <message>
         <source>Draw polygon with two corners</source>
-        <translation type="obsolete">Teken veelhoek met twee hoekpunten</translation>
+        <translation type="obsolete">Teken polygoon met twee hoekpunten</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygonCenCor</name>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation type="obsolete">Pol&amp;ygoon (Cen,Hkp)</translation>
+        <translation type="obsolete">Pol&amp;ygoon (mid, hkp)</translation>
     </message>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Specificeer middelpunt</translation>
     </message>
     <message>
         <source>Specify a corner</source>
-        <translation type="unfinished">Specificeer een hoek</translation>
+        <translation type="unfinished">Specificeer een hoekpunt</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation type="unfinished">Geef een aantal op:</translation>
+        <translation type="unfinished">Voer een aantal in:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished">Geen geldig aantal. Probeer 1..9999</translation>
+        <translation type="unfinished">Geen geldig aantal. Probeer 1...9999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
         <translation type="unfinished">Geen geldige expressie</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCorCor</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="unfinished">Aantal:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished">Geen geldig aantal. Probeer 1..9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression.</source>
-        <translation type="unfinished">Geen geldige expressie.</translation>
     </message>
 </context>
 <context>
@@ -12778,19 +11713,19 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation type="obsolete">Teken polylijnen</translation>
+        <translation type="obsolete">Polylijnen tekenen</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="obsolete">Specificeer eerste Punt</translation>
+        <translation type="obsolete">Specificeer eerste punt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="obsolete">Annuleer</translation>
+        <translation type="obsolete">Annuleren</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation type="obsolete">Specificeer volgend Punt of [%1]</translation>
+        <translation type="obsolete">Specificeer volgend punt of [%1]</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12798,35 +11733,19 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="obsolete">Specificeer volgend Punt</translation>
+        <translation type="obsolete">Specificeer volgend punt</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="obsolete">Kan Lijnen niet sluiten: Onvoldoende Elementen geplaatst.</translation>
+        <translation type="obsolete">Kan reeks lijnen niet sluiten: nog niet voldoende elementen gedefinieerd.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="obsolete">Kan niet ongedaan maken: Onvoldoende Elementen geplaatst.</translation>
+        <translation type="obsolete">Kan niet ongedaan maken: nog niet voldoende elementen gedefinieerd.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineRectangle</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation>Specificeer eerste hoek</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation>Specificeer tweede hoek</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Terug</translation>
-    </message>
     <message>
         <source>Rectangle</source>
         <translation type="obsolete">Rechthoek</translation>
@@ -12837,31 +11756,27 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Draw rectangles</source>
-        <translation type="obsolete">Teken rechthoeken</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineRelAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation>Geen geldige expressie</translation>
+        <translation type="obsolete">Rechthoeken tekenen</translation>
     </message>
     <message>
-        <source>Select base entity</source>
-        <translation>Selecteer basis element</translation>
+        <source>Specify first corner</source>
+        <translation>Specificeer eerste hoekpunt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
-        <source>Specify position</source>
-        <translation>Specificeer een positie</translation>
+        <source>Specify second corner</source>
+        <translation>Specificeer tweede hoekpunt</translation>
     </message>
     <message>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
+</context>
+<context>
+    <name>RS_ActionDrawLineRelAngle</name>
     <message>
         <source>Relative angle</source>
         <translation type="obsolete">Relatieve hoek</translation>
@@ -12872,7 +11787,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Draw line with relative angle</source>
-        <translation type="obsolete">Teken lijn met relatieve hoek</translation>
+        <translation type="obsolete">Lijn met relatieve hoek tekenen</translation>
     </message>
     <message>
         <source>Orthogonal</source>
@@ -12884,112 +11799,105 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Draw orthogonal line</source>
-        <translation type="obsolete">Teken orthogonale lijnen</translation>
+        <translation type="obsolete">Orthogonale lijn tekenen</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation>Geen geldige expressie</translation>
+    </message>
+    <message>
+        <source>Select base entity</source>
+        <translation>Basiselement selecteren</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify position</source>
+        <translation>Specificeer positie</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Terug</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
+        <source>Select circle or arc</source>
+        <translation type="obsolete">Cirkel of boog selecteren</translation>
+    </message>
+    <message>
+        <source>Tangent (P,C)</source>
+        <translation type="obsolete">Raaklijn (p, c)</translation>
+    </message>
+    <message>
+        <source>&amp;Tangent (P,C)</source>
+        <translation type="obsolete">&amp;Raaklijn (p, c)</translation>
+    </message>
+    <message>
+        <source>Draw tangent (point, circle)</source>
+        <translation type="obsolete">Teken raaklijn (punt, cirkel)</translation>
+    </message>
+    <message>
         <source>Specify point</source>
-        <translation>Specificeer eindpunt</translation>
+        <translation>Specificeer punt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
-        <source>Select circle or arc</source>
-        <translation type="obsolete">Selecteer Cirkel of Boog Element</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
     <message>
-        <source>Tangent (P,C)</source>
-        <translation type="obsolete">Tangent (P,C)</translation>
-    </message>
-    <message>
-        <source>&amp;Tangent (P,C)</source>
-        <translation type="obsolete">&amp;Tangent (P,C)</translation>
-    </message>
-    <message>
-        <source>Draw tangent (point, circle)</source>
-        <translation type="obsolete">Teken tangent (punt, cirkel)</translation>
-    </message>
-    <message>
         <source>Select circle, arc or ellipse</source>
-        <translation>Selecteer cirkel, boog of ovaal</translation>
+        <translation>Cirkel, boog of ellips selecteren</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent2</name>
     <message>
         <source>Select first circle or arc</source>
-        <translation type="obsolete">Selecteer eerste cirkel of boog</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation type="obsolete">Eerste cirkel of boog selecteren</translation>
     </message>
     <message>
         <source>Select second circle or arc</source>
-        <translation type="obsolete">Selecteer tweede cirkel of boog</translation>
+        <translation type="obsolete">Tweede cirkel of boog selecteren</translation>
+    </message>
+    <message>
+        <source>Tangent (C,C)</source>
+        <translation type="obsolete">Raaklijn (c, c)</translation>
+    </message>
+    <message>
+        <source>Tan&amp;gent (C,C)</source>
+        <translation type="obsolete">Raak&amp;lijn (c, c)</translation>
+    </message>
+    <message>
+        <source>Draw tangent (circle, circle)</source>
+        <translation type="obsolete">Teken raaklijn (cirkel, cirkel)</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
     <message>
-        <source>Tangent (C,C)</source>
-        <translation type="obsolete">Tangent (C,C)</translation>
-    </message>
-    <message>
-        <source>Tan&amp;gent (C,C)</source>
-        <translation type="obsolete">Tan&amp;gent (C,C)</translation>
-    </message>
-    <message>
-        <source>Draw tangent (circle, circle)</source>
-        <translation type="obsolete">Teken tangent (cirkel, cirkel)</translation>
-    </message>
-    <message>
         <source>Select first circle or ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Eerste cirkel of ellips selecteren</translation>
     </message>
     <message>
         <source>Select second circle or ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="unfinished">Specificeer invoerpunt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="unfinished">Voer tekst in:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
+        <translation type="unfinished">Tweede cirkel of ellips selecteren</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawPoint</name>
-    <message>
-        <source>Specify location</source>
-        <translation>Specificeer een locatie</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
     <message>
         <source>Points</source>
         <translation type="obsolete">Punten</translation>
@@ -13000,7 +11908,15 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Draw Points</source>
-        <translation type="obsolete">Teken Punten</translation>
+        <translation type="obsolete">Punten tekenen</translation>
+    </message>
+    <message>
+        <source>Specify location</source>
+        <translation>Specificeer locatie</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
     </message>
 </context>
 <context>
@@ -13011,11 +11927,15 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation type="obsolete">&amp;Vrije vorm</translation>
+        <translation type="obsolete">&amp;Polylijn</translation>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation type="obsolete">Teken vrije vormen</translation>
+        <translation type="obsolete">Polylijnen tekenen</translation>
+    </message>
+    <message>
+        <source>Undo disallowed due a fatal bug somewhere. Sorry.</source>
+        <translation type="obsolete">Ongedaan maken is niet gelukt vanwege een fout. Sorry.</translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -13023,11 +11943,11 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation>Specificeer volgend Punt of [%1]</translation>
+        <translation>Specificeer volgend punt of [%1]</translation>
     </message>
     <message>
         <source>Back</source>
@@ -13035,46 +11955,42 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation>Specificeer volgend Punt</translation>
+        <translation>Specificeer volgend punt</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>Kan lijn niet sluiten: Onvoldoende elementen opgegeven.</translation>
-    </message>
-    <message>
-        <source>Undo disallowed due a fatal bug somewhere. Sorry.</source>
-        <translation type="obsolete">Ongedaan maken is niet gelukt vanwege een fout. Sorry.</translation>
+        <translation>Kan reeks lijnen niet sluiten: nog niet voldoende elementen gedefinieerd.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Kan niet ongedaan maken: Onvoldoende elementen gedefinieerd.</translation>
+        <translation>Kan niet ongedaan maken: nog niet voldoende elementen gedefinieerd.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawSpline</name>
     <message>
         <source>Spline</source>
-        <translation type="obsolete">Spline</translation>
+        <translation type="obsolete">Spie</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation type="obsolete">&amp;Spline</translation>
+        <translation type="obsolete">&amp;Spie</translation>
     </message>
     <message>
         <source>Draw splines</source>
-        <translation type="obsolete">Teken splines</translation>
+        <translation type="obsolete">Spieën tekenen</translation>
     </message>
     <message>
         <source>Specify first control point</source>
-        <translation>Geef eerste controlepunt</translation>
+        <translation>Specificeer eerste controlepunt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
-        <translation>Specificeer volgende controle punt of [%1]</translation>
+        <translation>Specificeer volgend controlepunt of [%1]</translation>
     </message>
     <message>
         <source>Back</source>
@@ -13082,31 +11998,15 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Specify next control point</source>
-        <translation>Geef volgende controlepunt</translation>
+        <translation>Specificeer volgend controlepunt</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Kan niet ongedaan maken: onvoldoende elementen gedefinieerd.</translation>
+        <translation>Kan niet ongedaan maken: nog niet voldoende elementen gedefinieerd.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation>Specificeer invoerpunt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation>Voer tekst in:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Terug</translation>
-    </message>
     <message>
         <source>Text</source>
         <translation type="obsolete">Tekst</translation>
@@ -13117,7 +12017,23 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Draw Text Entities</source>
-        <translation type="obsolete">Teken tekst Elementen</translation>
+        <translation type="obsolete">Teken tekst elementen</translation>
+    </message>
+    <message>
+        <source>Specify insertion point</source>
+        <translation>Specificeer invoegpunt</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Enter text:</source>
+        <translation>Voer tekst in:</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Terug</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -13127,74 +12043,74 @@ Wilt u het vervangen?</translation>
 <context>
     <name>RS_ActionEditCopy</name>
     <message>
-        <source>Specify reference point</source>
-        <translation>Specificeer een referentiepunt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
         <source>Copy</source>
-        <translation type="obsolete">Kopieer</translation>
+        <translation type="obsolete">Kopiëren</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="obsolete">&amp;Kopieer</translation>
+        <translation type="obsolete">&amp;Kopiëren</translation>
     </message>
     <message>
         <source>Copies entities to the clipboard</source>
-        <translation type="obsolete">Kopieër elementen naar klembord</translation>
+        <translation type="obsolete">Kopieert elementen naar het klembord</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="obsolete">Knip</translation>
+        <translation type="obsolete">Knippen</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="obsolete">&amp;Knip</translation>
+        <translation type="obsolete">&amp;Knippen</translation>
     </message>
     <message>
         <source>Cuts entities  to the clipboard</source>
-        <translation type="obsolete">Knip elementen naar klembord</translation>
+        <translation type="obsolete">Knipt elementen naar het klembord</translation>
+    </message>
+    <message>
+        <source>Specify reference point</source>
+        <translation>Specificeer referentiepunt</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionEditPaste</name>
+    <message>
+        <source>Paste</source>
+        <translation type="obsolete">Plakken</translation>
+    </message>
+    <message>
+        <source>&amp;Paste</source>
+        <translation type="obsolete">&amp;Plakken</translation>
+    </message>
+    <message>
+        <source>Pastes the clipboard contents</source>
+        <translation type="obsolete">Plakt de inhoud van het klembord</translation>
+    </message>
     <message>
         <source>Set reference point</source>
         <translation>Plaats een referentiepunt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
-        <source>Paste</source>
-        <translation type="obsolete">Plak</translation>
-    </message>
-    <message>
-        <source>&amp;Paste</source>
-        <translation type="obsolete">&amp;Plak</translation>
-    </message>
-    <message>
-        <source>Pastes the clipboard contents</source>
-        <translation type="obsolete">Plak elementen van klembord</translation>
+        <translation>Annuleren</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionEditUndo</name>
     <message>
         <source>Undo</source>
-        <translation type="obsolete">Herstel</translation>
+        <translation type="obsolete">Ongedaan maken</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="obsolete">&amp;Herstel</translation>
+        <translation type="obsolete">&amp;Ongedaan maken</translation>
     </message>
     <message>
         <source>Undoes last action</source>
-        <translation type="obsolete">Herstelt laatste actie</translation>
+        <translation type="obsolete">Laatste actie ongedaan maken</translation>
     </message>
     <message>
         <source>Redo</source>
@@ -13210,18 +12126,18 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Nothing to undo!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Er is niets om ongedaan te maken!</translation>
     </message>
     <message>
         <source>Nothing to redo!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Er is niets om opnieuw uit te voeren!</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileNew</name>
     <message>
         <source>New Drawing</source>
-        <translation type="obsolete">Nieuwe Tekening</translation>
+        <translation type="obsolete">Nieuwe tekening</translation>
     </message>
     <message>
         <source>&amp;New</source>
@@ -13229,7 +12145,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Creates a new drawing</source>
-        <translation type="obsolete">Maak nieuwe tekening</translation>
+        <translation type="obsolete">Maakt een nieuwe tekening</translation>
     </message>
     <message>
         <source>&amp;New...</source>
@@ -13240,45 +12156,45 @@ Wilt u het vervangen?</translation>
     <name>RS_ActionFileOpen</name>
     <message>
         <source>Open Drawing</source>
-        <translation type="obsolete">Open Tekening</translation>
+        <translation type="obsolete">Tekening openen</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="obsolete">&amp;Open...</translation>
+        <translation type="obsolete">&amp;Openen...</translation>
     </message>
     <message>
         <source>Opens an existing drawing</source>
-        <translation type="obsolete">Open bestaande tekening</translation>
+        <translation type="obsolete">Opent een bestaande tekening</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileSave</name>
     <message>
         <source>Save Drawing</source>
-        <translation type="obsolete">Bewaar Tekening</translation>
+        <translation type="obsolete">Tekening opslaan</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="obsolete">O&amp;pslaan</translation>
+        <translation type="obsolete">&amp;Opslaan</translation>
     </message>
     <message>
         <source>Saves the current drawing</source>
-        <translation type="obsolete">Bewaar huidige tekening</translation>
+        <translation type="obsolete">Bewaart de huidige tekening</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileSaveAs</name>
     <message>
         <source>Save Drawing As</source>
-        <translation type="obsolete">Bewaar Tekening Als</translation>
+        <translation type="obsolete">Tekening opslaan als</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="obsolete">Bewaar &amp;als...</translation>
+        <translation type="obsolete">Opslaan &amp;als...</translation>
     </message>
     <message>
         <source>Saves the current drawing under a new filename</source>
-        <translation type="obsolete">Bewaar huidige tekening onder andere naam</translation>
+        <translation type="obsolete">Bewaart de huidige tekening onder een nieuwe bestandsnaam</translation>
     </message>
 </context>
 <context>
@@ -13286,26 +12202,6 @@ Wilt u het vervangen?</translation>
     <message>
         <source>Angle: %1%2</source>
         <translation type="obsolete">Hoek: %1%2</translation>
-    </message>
-    <message>
-        <source>Lines are parallel</source>
-        <translation>Lijnen zijn parallel</translation>
-    </message>
-    <message>
-        <source>Specify first line</source>
-        <translation>Specificeer eerste lijn</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
-        <source>Specify second line</source>
-        <translation>Specificeer tweede lijn</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Terug</translation>
     </message>
     <message>
         <source>Angle between two lines</source>
@@ -13317,7 +12213,27 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Measures the angle between two lines</source>
-        <translation type="obsolete">Meet de afstand tussen twee lijnen</translation>
+        <translation type="obsolete">Meet de hoek tussen twee lijnen</translation>
+    </message>
+    <message>
+        <source>Lines are parallel</source>
+        <translation>Lijnen zijn parallel</translation>
+    </message>
+    <message>
+        <source>Specify first line</source>
+        <translation>Specificeer eerste lijn</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify second line</source>
+        <translation>Specificeer tweede lijn</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Terug</translation>
     </message>
     <message>
         <source>Angle: %1</source>
@@ -13328,19 +12244,23 @@ Wilt u het vervangen?</translation>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Polygonal Area</source>
-        <translation type="obsolete">Veelhoekig gebied</translation>
+        <translation type="obsolete">Polygonaal gebied</translation>
     </message>
     <message>
         <source>&amp;Polygonal Area</source>
-        <translation type="obsolete">&amp;Veelhoekig gebied</translation>
+        <translation type="obsolete">&amp;Polygonaal gebied</translation>
     </message>
     <message>
         <source>Measures the area of a polygon</source>
-        <translation type="obsolete">Bereken oppervlakte van een veelhoek</translation>
+        <translation type="obsolete">Berekent het oppervlakte van een polygoon</translation>
     </message>
     <message>
         <source>Area: %1</source>
         <translation type="obsolete">Oppervlak: %1</translation>
+    </message>
+    <message>
+        <source>Terminate</source>
+        <translation type="obsolete">Beëindigen</translation>
     </message>
     <message>
         <source>Circumference: %1</source>
@@ -13352,27 +12272,23 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Specify first point of polygon</source>
-        <translation>Geef eerste punt van veelhoek</translation>
+        <translation>Specificeer eerste punt van polygoon</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify next point of polygon</source>
-        <translation>Geef volgende punt van de veelhoek</translation>
-    </message>
-    <message>
-        <source>Terminate</source>
-        <translation type="obsolete">Beëindig</translation>
+        <translation>Specificeer volgend punt van polygoon</translation>
     </message>
     <message>
         <source>Closing Point: %1/%2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sluitpunt: %1/%2</translation>
     </message>
     <message>
         <source>Area: %1 %2^2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gebied: %1 %2^2</translation>
     </message>
 </context>
 <context>
@@ -13382,82 +12298,94 @@ Wilt u het vervangen?</translation>
         <translation type="obsolete">Afstand: %1</translation>
     </message>
     <message>
+        <source>Distance Point to Point</source>
+        <translation type="obsolete">Afstand punt tot punt</translation>
+    </message>
+    <message>
+        <source>&amp;Distance Point to Point</source>
+        <translation type="obsolete">&amp;Afstand punt tot punt</translation>
+    </message>
+    <message>
+        <source>Measures the distance between two points</source>
+        <translation type="obsolete">Meet de afstand tussen twee punten</translation>
+    </message>
+    <message>
         <source>Specify first point of distance</source>
-        <translation>Specificeer eerste punt van de afstand</translation>
+        <translation>Specificeer eerste punt van afstand</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify second point of distance</source>
-        <translation>Specificeer tweede punt van de afstand</translation>
+        <translation>Specificeer tweede punt van afstand</translation>
     </message>
     <message>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
     <message>
-        <source>Distance Point to Point</source>
-        <translation type="obsolete">Afstand Punt tot Punt</translation>
-    </message>
-    <message>
-        <source>&amp;Distance Point to Point</source>
-        <translation type="obsolete">&amp;Afstand Punt tot Punt</translation>
-    </message>
-    <message>
-        <source>Measures the distance between two points</source>
-        <translation type="obsolete">Meet afstand tussen twee punten</translation>
-    </message>
-    <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Afstand: %1 cartesiaans: (%2 , %3), pool: (%4&lt;%5)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
+    <message>
+        <source>Distance Entity to Point</source>
+        <translation type="obsolete">Afstand element tot punt</translation>
+    </message>
+    <message>
+        <source>&amp;Distance Entity to Point</source>
+        <translation type="obsolete">&amp;Afstand element tot punt</translation>
+    </message>
+    <message>
+        <source>Measures the distance between an entity and a point</source>
+        <translation type="obsolete">Meet de afstand tussen een element en een punt</translation>
+    </message>
     <message>
         <source>Distance: %1</source>
         <translation>Afstand: %1</translation>
     </message>
     <message>
         <source>Specify entity</source>
-        <translation>Specificeer een element</translation>
+        <translation>Specificeer element</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify point</source>
-        <translation>Specificeer een afstandpunt</translation>
+        <translation>Specificeer punt</translation>
     </message>
     <message>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
-    <message>
-        <source>Distance Entity to Point</source>
-        <translation type="obsolete">Afstand Element tot Punt</translation>
-    </message>
-    <message>
-        <source>&amp;Distance Entity to Point</source>
-        <translation type="obsolete">Afstand &amp;Element tot Punt</translation>
-    </message>
-    <message>
-        <source>Measures the distance between an entity and a point</source>
-        <translation type="obsolete">Meet de afstand tussen een element en een punt</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionInfoInside</name>
     <message>
+        <source>Point inside contour</source>
+        <translation type="obsolete">Punt binnen omtrek</translation>
+    </message>
+    <message>
+        <source>&amp;Point inside contour</source>
+        <translation type="obsolete">&amp;Punt binnen omtrek</translation>
+    </message>
+    <message>
+        <source>Checks if a given point is inside the selected contour</source>
+        <translation type="obsolete">Controleert of gegeven punt zich binnen de geselecteerde omtrek bevindt</translation>
+    </message>
+    <message>
         <source>Point is inside selected contour.</source>
-        <translation>Het punt bevindt zich binnen het geselecteerde contour.</translation>
+        <translation>Het punt bevindt zich binnen de geselecteerde omtrek.</translation>
     </message>
     <message>
         <source>Point is outside selected contour.</source>
-        <translation>Het punt bevindt zich buiten het geselecteerde contour.</translation>
+        <translation>Het punt bevindt zich buiten de geselecteerde omtrek.</translation>
     </message>
     <message>
         <source>Specify point</source>
@@ -13465,31 +12393,11 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
-        <source>Point inside contour</source>
-        <translation type="obsolete">Punt binnen contour</translation>
-    </message>
-    <message>
-        <source>&amp;Point inside contour</source>
-        <translation type="obsolete">&amp;Punt binnen contour</translation>
-    </message>
-    <message>
-        <source>Checks if a given point is inside the selected contour</source>
-        <translation type="obsolete">Controleer of gegeven punt zich in een contour bevind</translation>
+        <translation>Annuleren</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoTotalLength</name>
-    <message>
-        <source>Total Length of selected entities: %1</source>
-        <translation>Totale Lengte van geselecteerde Elementen: %1</translation>
-    </message>
-    <message>
-        <source>At least one of the selected entities cannot be measured.</source>
-        <translation>Ten minste één van de geselecteerde elementen kan niet gemeten worden.</translation>
-    </message>
     <message>
         <source>Total length of selected entities</source>
         <translation type="obsolete">Totale lengte van geselecteerde elementen</translation>
@@ -13502,130 +12410,138 @@ Wilt u het vervangen?</translation>
         <source>Measures the total length of all selected entities</source>
         <translation type="obsolete">Meet de totale lengte van geselecteerde elementen</translation>
     </message>
+    <message>
+        <source>Total Length of selected entities: %1</source>
+        <translation>Totale lengte van geselecteerde elementen: %1</translation>
+    </message>
+    <message>
+        <source>At least one of the selected entities cannot be measured.</source>
+        <translation>Ten minste een van de geselecteerde elementen kan niet gemeten worden.</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionLayersAdd</name>
     <message>
         <source>Add Layer</source>
-        <translation type="obsolete">Voeg laag toe</translation>
+        <translation type="obsolete">Laag toevoegen</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="obsolete">&amp;Voeg laag toe</translation>
+        <translation type="obsolete">&amp;Laag toevoegen</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersEdit</name>
     <message>
         <source>Edit Layer</source>
-        <translation type="obsolete">Bewerk Laag</translation>
+        <translation type="obsolete">Laag bewerken</translation>
     </message>
     <message>
         <source>&amp;Edit Layer</source>
-        <translation type="obsolete">&amp;Bewerk Laag</translation>
+        <translation type="obsolete">&amp;Laag bewerken</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersFreezeAll</name>
     <message>
         <source>Freeze all</source>
-        <translation type="obsolete">Vergrendel alles</translation>
+        <translation type="obsolete">Alles vergrendelen</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation type="obsolete">Ver&amp;grendel alles</translation>
+        <translation type="obsolete">&amp;Alles vergrendelen</translation>
     </message>
     <message>
         <source>Freeze all layers</source>
-        <translation type="obsolete">Vergrendel alle lagen</translation>
+        <translation type="obsolete">Alle lagen vergrendelen</translation>
     </message>
     <message>
         <source>Defreeze all</source>
-        <translation type="obsolete">Ontgrendel alles</translation>
+        <translation type="obsolete">Alles ontgrendelen</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation type="obsolete">&amp;Ontgrendel alles</translation>
+        <translation type="obsolete">&amp;Alles ontgrendelen</translation>
     </message>
     <message>
         <source>Defreeze all layers</source>
-        <translation type="obsolete">Ontgrendel alle lagen</translation>
+        <translation type="obsolete">Alle lagen ontgrendelen</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersRemove</name>
     <message>
         <source>Remove Layer</source>
-        <translation type="obsolete">Wis Laag</translation>
+        <translation type="obsolete">Laag weghalen</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="obsolete">&amp;Wis Laag</translation>
+        <translation type="obsolete">&amp;Laag weghalen</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleLock</name>
     <message>
         <source>Toggle Layer Lock</source>
-        <translation type="obsolete">Schakel Laag Zichtbaarheids Slot</translation>
+        <translation type="obsolete">Laagvergrendeling aan/uit zetten</translation>
     </message>
     <message>
         <source>&amp;Toggle Lock</source>
-        <translation type="obsolete">&amp;Schakel Slot</translation>
+        <translation type="obsolete">&amp;Vergrendeling aan/uit zetten</translation>
     </message>
     <message>
         <source>Toggle Lock</source>
-        <translation type="obsolete">Schakel Slot</translation>
+        <translation type="obsolete"> Vergrendeling aan/uit zetten</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleView</name>
     <message>
         <source>Toggle Layer Visibility</source>
-        <translation type="obsolete">Schakel Laag Zichtbaarheid</translation>
+        <translation type="obsolete">Zichtbaarheid laag aan/uit zetten</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer</source>
-        <translation type="obsolete">&amp;Schakel Laag Zichtbaarheid</translation>
+        <translation type="obsolete">&amp;Laag aan/uit zetten</translation>
     </message>
     <message>
         <source>Toggle Layer</source>
-        <translation type="obsolete">Schakel Laag Zichtbaarheid</translation>
+        <translation type="obsolete">Laag aan/uit zetten</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLibraryInsert</name>
+    <message>
+        <source>&amp;Insert Library Object</source>
+        <translation type="obsolete">Bibliotheekobject &amp;invoegen</translation>
+    </message>
+    <message>
+        <source>Inserts an Object from the part library.</source>
+        <translation type="obsolete">Voegt een object uit de onderdelenbibliotheek in.</translation>
+    </message>
     <message>
         <source>Not a valid expression</source>
         <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Specificeer een referentiepunt</translation>
+        <translation>Specificeer referentiepunt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation>Geef een hoek op:</translation>
+        <translation>Voer een hoek in:</translation>
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation>Geef een waarde op:</translation>
+        <translation>Voer een factor in:</translation>
     </message>
     <message>
         <source>Insert Library Object</source>
-        <translation>Voeg Bibliotheek Object in</translation>
-    </message>
-    <message>
-        <source>&amp;Insert Library Object</source>
-        <translation type="obsolete">Voeg Bibliotheek Object &amp;in</translation>
-    </message>
-    <message>
-        <source>Inserts an Object from the part library.</source>
-        <translation type="obsolete">Voegt een Object uit de Onderdeel Bibliotheek in.</translation>
+        <translation>Bibliotheekobject invoegen</translation>
     </message>
     <message>
         <source></source>
@@ -13640,15 +12556,15 @@ Wilt u het vervangen?</translation>
     <name>RS_ActionLockRelativeZero</name>
     <message>
         <source>(Un-)Lock Relative Zero</source>
-        <translation type="obsolete">(Ont-)Vergrendel Relatieve Oorsprong</translation>
-    </message>
-    <message>
-        <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation>(Ont-)&amp;Vergrendel Relatieve Oorsprong</translation>
+        <translation type="obsolete">Relatieve nulwaarde (ont-/)vergrendelen</translation>
     </message>
     <message>
         <source>(Un-)Lock relative Zero</source>
-        <translation type="obsolete">(Ont-)Vergrendel Relatieve Oorsprong</translation>
+        <translation type="obsolete">Relatieve nulwaarde (ont-/)vergrendelen</translation>
+    </message>
+    <message>
+        <source>(Un-)&amp;Lock Relative Zero</source>
+        <translation>Relatieve nulwaarde (ont-/)&amp;vergrendelen</translation>
     </message>
 </context>
 <context>
@@ -13663,26 +12579,38 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Modify Entity Attributes</source>
-        <translation type="obsolete">Wijzig de Attibuten van Elementen</translation>
+        <translation type="obsolete">Attributen element wijzigen</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyBevel</name>
+    <message>
+        <source>Bevel</source>
+        <translation type="obsolete">Afschuinen</translation>
+    </message>
+    <message>
+        <source>&amp;Bevel</source>
+        <translation type="obsolete">&amp;Afschuinen</translation>
+    </message>
+    <message>
+        <source>Bevel Entities</source>
+        <translation type="obsolete">Schuin elementen af</translation>
+    </message>
     <message>
         <source>Not a valid expression</source>
         <translation>Geen geldige expressie</translation>
     </message>
     <message>
         <source>Select first entity</source>
-        <translation>Selecteer eerste element</translation>
+        <translation>Eerste element selecteren</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Select second entity</source>
-        <translation>Selecteer tweede eement</translation>
+        <translation>Tweede element selecteren</translation>
     </message>
     <message>
         <source>Back</source>
@@ -13690,38 +12618,50 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Enter length 1:</source>
-        <translation>Geef lengte 1 op:</translation>
+        <translation>Voer lengte 1 in:</translation>
     </message>
     <message>
         <source>Enter length 2:</source>
-        <translation>Geef lengte 2 op:</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="obsolete">Afschuinen</translation>
-    </message>
-    <message>
-        <source>&amp;Bevel</source>
-        <translation type="obsolete">&amp;Afschuining</translation>
-    </message>
-    <message>
-        <source>Bevel Entities</source>
-        <translation type="obsolete">Afschuin Elementen</translation>
+        <translation>Voer lengte 2 in:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyCut</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation>Geen Element gevonden.</translation>
-    </message>
     <message>
         <source>Cut point is invalid.</source>
         <translation type="obsolete">Snijpunt is niet geldig.</translation>
     </message>
     <message>
         <source>Cut point is not on entity.</source>
-        <translation type="obsolete">Snijpunt bevind zich niet op Element.</translation>
+        <translation type="obsolete">Snijpunt bevindt zich niet op element.</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="obsolete">Knippen</translation>
+    </message>
+    <message>
+        <source>&amp;Cut</source>
+        <translation type="obsolete">&amp;Knippen</translation>
+    </message>
+    <message>
+        <source>Cut Entities</source>
+        <translation type="obsolete">Elementen knippen</translation>
+    </message>
+    <message>
+        <source>Entity must be a line, arc or circle.</source>
+        <translation type="obsolete">Element moet een lijn, boog of cirkel zijn.</translation>
+    </message>
+    <message>
+        <source>&amp;Divide</source>
+        <translation type="obsolete">&amp;Verdelen</translation>
+    </message>
+    <message>
+        <source>Entity must be a line, arc, circle or ellipse.</source>
+        <translation type="obsolete">Element moet een lijn, boog, cirkel of ellips zijn.</translation>
+    </message>
+    <message>
+        <source>No Entity found.</source>
+        <translation>Geen element gevonden.</translation>
     </message>
     <message>
         <source>Specify entity to cut</source>
@@ -13729,7 +12669,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify cutting point</source>
@@ -13740,157 +12680,133 @@ Wilt u het vervangen?</translation>
         <translation>Terug</translation>
     </message>
     <message>
-        <source>Cut</source>
-        <translation type="obsolete">Knip</translation>
-    </message>
-    <message>
-        <source>&amp;Cut</source>
-        <translation type="obsolete">&amp;Knip</translation>
-    </message>
-    <message>
-        <source>Cut Entities</source>
-        <translation type="obsolete">Trim Elementen</translation>
-    </message>
-    <message>
-        <source>Entity must be a line, arc or circle.</source>
-        <translation type="obsolete">Element dient een lijn, boog of cirkel te zijn.</translation>
-    </message>
-    <message>
         <source>Cutting point is invalid.</source>
-        <translation>Snijpunt is niet geldig.</translation>
+        <translation>Snijpunt is ongeldig.</translation>
     </message>
     <message>
         <source>Cutting point is not on entity.</source>
         <translation>Snijpunt bevindt zich niet op element.</translation>
     </message>
     <message>
-        <source>&amp;Divide</source>
-        <translation type="obsolete">&amp;Verdelen</translation>
-    </message>
-    <message>
-        <source>Entity must be a line, arc, circle or ellipse.</source>
-        <translation type="obsolete">Element moet een lijn, boog, cirkel of ovaal zijn.</translation>
-    </message>
-    <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Element moet een lijn, boog, cirkel, ellips of interpolatiespie zijn.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyDelete</name>
     <message>
         <source>Delete</source>
-        <translation type="obsolete">Wissen</translation>
+        <translation type="obsolete">Verwijderen</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="obsolete">&amp;Wissen</translation>
+        <translation type="obsolete">&amp;Verwijderen</translation>
     </message>
     <message>
         <source>Delete Entities</source>
-        <translation type="obsolete">Wis Elementen</translation>
+        <translation type="obsolete">Elementen verwijderen</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyDeleteFree</name>
     <message>
+        <source>Delete Freehand</source>
+        <translation type="obsolete">Vrije vorm verwijderen</translation>
+    </message>
+    <message>
+        <source>&amp;Delete Freehand</source>
+        <translation type="obsolete">&amp;Vrije vorm verwijderen</translation>
+    </message>
+    <message>
+        <source>Parent of second entity is NULL</source>
+        <translation type="obsolete">Ouder van de tweede element is ONGELDIG</translation>
+    </message>
+    <message>
+        <source>One of the chosen entities is NULL</source>
+        <translation type="obsolete">Een van de gekozen elementen is ONGELDIG</translation>
+    </message>
+    <message>
+        <source>Parent of first entity is NULL</source>
+        <translation type="obsolete">Ouder van de eerste element is ONGELDIG</translation>
+    </message>
+    <message>
+        <source>First entity is NULL</source>
+        <translation type="obsolete">Eerste element is ONGELDIG</translation>
+    </message>
+    <message>
+        <source>Second entity is NULL</source>
+        <translation type="obsolete">Tweede element is ONGELDIG</translation>
+    </message>
+    <message>
         <source>Specify first break point on a polyline</source>
-        <translation>Specificeer eerste breekpunt op een vrije vorm</translation>
+        <translation>Specificeer eerste breekpunt op een polylijn</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify second break point on the same polyline</source>
-        <translation>Specificeer tweede breekpunt op dezelfde vrije vorm</translation>
+        <translation>Specificeer tweede breekpunt op dezelfde polylijn</translation>
     </message>
     <message>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
     <message>
-        <source>Delete Freehand</source>
-        <translation type="obsolete">Wis vrije vorm</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Freehand</source>
-        <translation type="obsolete">&amp;Wis vrije vorm</translation>
-    </message>
-    <message>
         <source>Entities not in the same polyline.</source>
-        <translation>Elementen bevinden zich niet in dezelfde vrije vorm.</translation>
+        <translation>Elementen niet in dezelfde polylijn.</translation>
     </message>
     <message>
         <source>Parent of second entity is not a polyline</source>
-        <translation>Ouder van de tweede element is geen polylijn</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is NULL</source>
-        <translation type="obsolete">Ouder van de tweede entiteit is NULL</translation>
-    </message>
-    <message>
-        <source>One of the chosen entities is NULL</source>
-        <translation type="obsolete">Een van de gekozen entiteiten is NULL</translation>
+        <translation>Ouder van tweede element is geen polylijn</translation>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
-        <translation>Ouder van de eerste instantie is geen vrije vorm</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is NULL</source>
-        <translation type="obsolete">Ouder van de eerste entiteit is NULL</translation>
-    </message>
-    <message>
-        <source>First entity is NULL</source>
-        <translation type="obsolete">Eerste entiteit is NULL</translation>
-    </message>
-    <message>
-        <source>Second entity is NULL</source>
-        <translation type="obsolete">Tweede entiteit is NULL</translation>
+        <translation>Ouder van eerste element is geen polylijn</translation>
     </message>
     <message>
         <source>Parent of second entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ouder van tweede element is nullptr</translation>
     </message>
     <message>
         <source>One of the chosen entities is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Een van de gekozen elementen is nullptr</translation>
     </message>
     <message>
         <source>Parent of first entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ouder van eerste element is nullptr</translation>
     </message>
     <message>
         <source>First entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Eerste element is nullptr</translation>
     </message>
     <message>
         <source>Second entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tweede element is nullptr</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyDeleteQuick</name>
     <message>
-        <source>Pick entity to delete</source>
-        <translation>Kies een element om te verwijderen</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
         <source>Delete selected</source>
-        <translation type="obsolete">Wis selectie</translation>
+        <translation type="obsolete">Selectie verwijderen</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
-        <translation type="obsolete">&amp;Wis selectie</translation>
+        <translation type="obsolete">&amp;Selecite verwijderen</translation>
     </message>
     <message>
         <source>Delete selected entities</source>
-        <translation type="obsolete">Wis geselecteerde elementen</translation>
+        <translation type="obsolete">Geselecteerde elementen verwijderen</translation>
+    </message>
+    <message>
+        <source>Pick entity to delete</source>
+        <translation>Kies element om te verwijderen</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
     </message>
 </context>
 <context>
@@ -13905,127 +12821,139 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Modify Entity Properties</source>
-        <translation type="obsolete">Wijzig Eigenschappen Element</translation>
+        <translation type="obsolete">Eigenschappen element wijzigen</translation>
     </message>
     <message>
         <source>Click on entity to modify</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Klik op het element om deze te wijzigen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Annuleren</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyExplodeText</name>
     <message>
         <source>Explode Text</source>
-        <translation type="obsolete">Explodeer Tekst</translation>
+        <translation type="obsolete">Tekst splitsen</translation>
     </message>
     <message>
         <source>&amp;Explode Text into Letters</source>
-        <translation type="obsolete">&amp;Explodeer Tekst in Letters</translation>
+        <translation type="obsolete">&amp;Tekst in letters splitsen</translation>
     </message>
     <message>
         <source>Explodes Text Entities into single Letters</source>
-        <translation type="obsolete">Explodeer Tekst Elementen in onafhankelijke Letters</translation>
+        <translation type="obsolete">Splitst tekstelementen in onafhankelijke letters</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Specify first point of mirror line</source>
-        <translation>Specificeer de eerste punt van de spiegellijn</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
-        <source>Specify second point of mirror line</source>
-        <translation>Specificeer de tweede punt van de spiegellijn</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Terug</translation>
-    </message>
     <message>
         <source>Mirror</source>
         <translation type="obsolete">Spiegelen</translation>
     </message>
     <message>
         <source>&amp;Mirror</source>
-        <translation type="obsolete">S&amp;piegelen</translation>
+        <translation type="obsolete">&amp;Spiegelen</translation>
     </message>
     <message>
         <source>Mirror Entities</source>
-        <translation type="obsolete">Spiegel Elementen</translation>
+        <translation type="obsolete">Spiegel elementen</translation>
     </message>
-</context>
-<context>
-    <name>RS_ActionModifyMove</name>
     <message>
-        <source>Specify reference point</source>
-        <translation>Specificeer een referentiepunt</translation>
+        <source>Specify first point of mirror line</source>
+        <translation>Specificeer eerste punt van spiegellijn</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
-        <source>Specify target point</source>
-        <translation>Specificeer doel punt</translation>
+        <source>Specify second point of mirror line</source>
+        <translation>Specificeer tweede punt van spiegellijn</translation>
     </message>
     <message>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
+</context>
+<context>
+    <name>RS_ActionModifyMove</name>
     <message>
         <source>Move</source>
-        <translation type="obsolete">Verplaats</translation>
+        <translation type="obsolete">Verplaatsen</translation>
     </message>
     <message>
         <source>&amp;Move</source>
-        <translation type="obsolete">&amp;Verplaats</translation>
+        <translation type="obsolete">&amp;Verplaatsen</translation>
     </message>
     <message>
         <source>Move Entities</source>
-        <translation type="obsolete">Verplaats Elementen</translation>
+        <translation type="obsolete">Verplaats elementen</translation>
     </message>
     <message>
         <source>Move / Copy</source>
-        <translation type="obsolete">Verplaats / Copieer</translation>
+        <translation type="obsolete">Verplaatsen/Kopiëren</translation>
     </message>
     <message>
         <source>&amp;Move / Copy</source>
-        <translation type="obsolete">&amp;Verplaats / Copieer</translation>
+        <translation type="obsolete">&amp;Verplaatsen/Kopiëren</translation>
     </message>
     <message>
         <source>Move or copy entities one or multiple times</source>
         <translation type="obsolete">Verplaats of kopieer elementen één of meerdere keren</translation>
     </message>
     <message>
+        <source>Specify reference point</source>
+        <translation>Specificeer referentiepunt</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify target point</source>
+        <translation>Specificeer richtpunt</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Terug</translation>
+    </message>
+    <message>
         <source>Invalid number of copies, use %1 </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ongeldig aantal kopieën, gebruik %1 </translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMoveRotate</name>
+    <message>
+        <source>Move and Rotate</source>
+        <translation type="obsolete">Verplaats en roteer</translation>
+    </message>
+    <message>
+        <source>M&amp;ove and Rotate</source>
+        <translation type="obsolete">V&amp;erplaats en roteer</translation>
+    </message>
+    <message>
+        <source>Move and Rotate Entities</source>
+        <translation type="obsolete">Verplaats en roteer elementen</translation>
+    </message>
     <message>
         <source>Not a valid expression</source>
         <translation type="vanished">Geen geldige expressie</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Specificeer een referentiepunt</translation>
+        <translation>Specificeer referentiepunt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Specificeer doel punt</translation>
+        <translation>Specificeer richtpunt</translation>
     </message>
     <message>
         <source>Back</source>
@@ -14033,45 +12961,14 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
-        <translation type="vanished">Geef de rotatiehoek op:</translation>
-    </message>
-    <message>
-        <source>Move and Rotate</source>
-        <translation type="obsolete">Verplaats en Roteer</translation>
-    </message>
-    <message>
-        <source>M&amp;ove and Rotate</source>
-        <translation type="obsolete">Ve&amp;rplaats en Roteer</translation>
-    </message>
-    <message>
-        <source>Move and Rotate Entities</source>
-        <translation type="obsolete">Verplaats en Roteer Elementen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
+        <translation type="vanished">Voer de rotatiehoek in:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate</name>
     <message>
-        <source>Specify reference point</source>
-        <translation>Specificeer een referentiepunt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Terug</translation>
-    </message>
-    <message>
         <source>Rotate</source>
-        <translation type="obsolete">Roteer</translation>
+        <translation type="obsolete">Roteren</translation>
     </message>
     <message>
         <source>&amp;Rotate</source>
@@ -14079,50 +12976,70 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Rotate Entities</source>
-        <translation type="obsolete">Roteer Elementen</translation>
+        <translation type="obsolete">Roteer elementen</translation>
     </message>
     <message>
-        <source>Specify rotation center</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify target point to rotate to</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate2</name>
-    <message>
-        <source>Specify absolute reference point</source>
-        <translation>Specificeer een absolute referentiepunt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
-        <source>Specify relative reference point</source>
-        <translation>Specificeer een relatief referentiepunt</translation>
+        <source>Specify reference point</source>
+        <translation>Specificeer referentiepunt</translation>
     </message>
     <message>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
     <message>
+        <source>Specify rotation center</source>
+        <translation type="unfinished">Specificeer rotatiemiddelpunt</translation>
+    </message>
+    <message>
+        <source>Specify target point to rotate to</source>
+        <translation type="unfinished">Specificeer richtpunt waarnaar geroteerd moet worden</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyRotate2</name>
+    <message>
         <source>Rotate Two</source>
-        <translation type="obsolete">Roteer Twee</translation>
+        <translation type="obsolete">Twee roteren</translation>
     </message>
     <message>
         <source>Rotate T&amp;wo</source>
-        <translation type="obsolete">Roteer T&amp;wee</translation>
+        <translation type="obsolete">Roteer t&amp;wee</translation>
     </message>
     <message>
         <source>Rotate Entities around two centers</source>
-        <translation type="obsolete">Roteer Elementen om twee centers</translation>
+        <translation type="obsolete">Roteer elementen om twee middelpunten</translation>
+    </message>
+    <message>
+        <source>Specify absolute reference point</source>
+        <translation>Specificeer absoluut referentiepunt</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify relative reference point</source>
+        <translation>Specificeer relatief referentiepunt</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Terug</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRound</name>
+    <message>
+        <source>Round</source>
+        <translation type="obsolete">Afronden</translation>
+    </message>
+    <message>
+        <source>&amp;Round</source>
+        <translation type="obsolete">&amp;Afronden</translation>
+    </message>
+    <message>
+        <source>Round Entities</source>
+        <translation type="obsolete">Rond elementen af</translation>
+    </message>
     <message>
         <source>Not a valid expression</source>
         <translation>Geen geldige expressie</translation>
@@ -14141,72 +13058,57 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Enter radius:</source>
-        <translation>Geef een straal:</translation>
+        <translation>Voer een radius in:</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="obsolete">Afronden</translation>
-    </message>
-    <message>
-        <source>&amp;Round</source>
-        <translation type="obsolete">Af&amp;ronding</translation>
-    </message>
-    <message>
-        <source>Round Entities</source>
-        <translation type="obsolete">Rond Elementen af</translation>
+        <translation>Annuleren</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyScale</name>
     <message>
-        <source>Specify reference point</source>
-        <translation>Specificeer een referentiepunt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
         <source>Scale</source>
-        <translation type="obsolete">Verschaal</translation>
+        <translation type="obsolete">Verschalen</translation>
     </message>
     <message>
         <source>&amp;Scale</source>
-        <translation type="obsolete">Ver&amp;schaal</translation>
+        <translation type="obsolete">&amp;Verschalen</translation>
     </message>
     <message>
         <source>Scale Entities</source>
-        <translation type="obsolete">Verschaal Elementen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyShapeText</name>
-    <message>
-        <source>Select text entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Elementen verschalen</translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
+        <source>Specify reference point</source>
+        <translation>Specificeer referentiepunt</translation>
     </message>
     <message>
-        <source>Select entity to shape text to</source>
-        <translation type="unfinished"></translation>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyStretch</name>
+    <message>
+        <source>Stretch</source>
+        <translation type="obsolete">Rekken</translation>
+    </message>
+    <message>
+        <source>&amp;Stretch</source>
+        <translation type="obsolete">&amp;Rekken</translation>
+    </message>
+    <message>
+        <source>Stretch Entities</source>
+        <translation type="obsolete">Rek elementen</translation>
+    </message>
     <message>
         <source>Specify first corner</source>
         <translation>Specificeer eerste hoekpunt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Specify second corner</source>
@@ -14218,38 +13120,50 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Specificeer een referentiepunt</translation>
+        <translation>Specificeer referentiepunt</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Specificeer doel punt</translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="obsolete">Uitrekken</translation>
-    </message>
-    <message>
-        <source>&amp;Stretch</source>
-        <translation type="obsolete">&amp;Uitrekken</translation>
-    </message>
-    <message>
-        <source>Stretch Entities</source>
-        <translation type="obsolete">Rek Elementen</translation>
+        <translation>Specificeer richtpunt</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyTrim</name>
     <message>
+        <source>Trim</source>
+        <translation type="obsolete">Bijsnijden</translation>
+    </message>
+    <message>
+        <source>&amp;Trim</source>
+        <translation type="obsolete">&amp;Bijsnijden</translation>
+    </message>
+    <message>
+        <source>Trim Entities</source>
+        <translation type="obsolete">Elementen bijsnijden</translation>
+    </message>
+    <message>
+        <source>Trim Two</source>
+        <translation type="obsolete">Twee bijsnijden</translation>
+    </message>
+    <message>
+        <source>&amp;Trim Two</source>
+        <translation type="obsolete">&amp;Twee bijsnijden</translation>
+    </message>
+    <message>
+        <source>Trim two Entities</source>
+        <translation type="obsolete">Twee elementen bijsnijden</translation>
+    </message>
+    <message>
         <source>Select first trim entity</source>
-        <translation>Selecteer eerste element om te trimmen</translation>
+        <translation>Eerste element om bij te snijden selecteren</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Select limiting entity</source>
-        <translation>Selecteer begrenzende element</translation>
+        <translation>Begrenzend element selecteren</translation>
     </message>
     <message>
         <source>Back</source>
@@ -14257,63 +13171,15 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
-        <translation>Selecteer tweede element om te trimmen</translation>
+        <translation>Tweede element om bij te snijden selecteren</translation>
     </message>
     <message>
         <source>Select entity to trim</source>
-        <translation>Selecteer element om te trimmen</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="obsolete">Trim</translation>
-    </message>
-    <message>
-        <source>&amp;Trim</source>
-        <translation type="obsolete">&amp;Trim</translation>
-    </message>
-    <message>
-        <source>Trim Entities</source>
-        <translation type="obsolete">Trim Elementen</translation>
-    </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="obsolete">Trim Twee</translation>
-    </message>
-    <message>
-        <source>&amp;Trim Two</source>
-        <translation type="obsolete">&amp;Trim Twee</translation>
-    </message>
-    <message>
-        <source>Trim two Entities</source>
-        <translation type="obsolete">Trim Twee Elementen</translation>
+        <translation>Element om bij te snijden selecteren</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyTrimAmount</name>
-    <message>
-        <source>No entity found. </source>
-        <translation>Geen Element gevonden.</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation>Het gekozen Element bevindt zich in een Blok. Bewerk het Blok.</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation>Het gekozen Element kan niet getrimd worden.</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation>Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Select entity to trim or enter distance:</source>
-        <translation>Selecteer element om te trimmen of geef een afstand op:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Terug</translation>
-    </message>
     <message>
         <source>Lengthen</source>
         <translation type="obsolete">Verlengen</translation>
@@ -14324,18 +13190,31 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Lengthen by a given amount</source>
-        <translation type="obsolete">Verleng een bepaalde hoeveelheid</translation>
+        <translation type="obsolete">Verlengen met een bepaalde hoeveelheid</translation>
     </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrimExcess</name>
     <message>
-        <source>Select entity to trim</source>
-        <translation type="unfinished">Selecteer element om te trimmen</translation>
+        <source>No entity found. </source>
+        <translation>Geen element gevonden.</translation>
+    </message>
+    <message>
+        <source>The chosen Entity is in a block. Please edit the block.</source>
+        <translation>Het gekozen element bevindt zich in een blok. Bewerk het blok.</translation>
+    </message>
+    <message>
+        <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
+        <translation>Het gekozen element is geen atomisch element of kan niet bijgesneden worden.</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation>Geen geldige expressie</translation>
+    </message>
+    <message>
+        <source>Select entity to trim or enter distance:</source>
+        <translation>Element om bij te snijden selecteren of afstand invoeren:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Terug</translation>
+        <translation>Terug</translation>
     </message>
 </context>
 <context>
@@ -14346,53 +13225,38 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Current &amp;Drawing Preferences</source>
-        <translation type="obsolete">Huidige &amp;Teken Voorkeursinstellingen</translation>
+        <translation type="obsolete">&amp;Voorkeursinstellingen huidige tekening</translation>
     </message>
     <message>
         <source>Settings for the current Drawing</source>
-        <translation type="obsolete">Instellingen voor huidige Tekening</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">Geen Element gevonden.</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Instellingen voor de huidige tekening</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineAdd</name>
     <message>
+        <source>&amp;Add node</source>
+        <translation type="obsolete">&amp;Knooppunt toevoegen</translation>
+    </message>
+    <message>
+        <source>Add polyline&apos;s node</source>
+        <translation type="obsolete">Knooppunt van polylijn toevoegen</translation>
+    </message>
+    <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
     <message>
-        <source>&amp;Add node</source>
-        <translation type="obsolete">&amp;Voeg node toe</translation>
-    </message>
-    <message>
-        <source>Add polyline&apos;s node</source>
-        <translation type="obsolete">Voeg knooppunt toe aan vrije vorm</translation>
-    </message>
-    <message>
         <source>No Entity found.</source>
-        <translation>Geen Element gevonden.</translation>
+        <translation>Geen element gevonden.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>Element moet een vrije vorm zijn.</translation>
+        <translation>Element moet een polylijn zijn.</translation>
     </message>
     <message>
         <source>Adding point is invalid.</source>
@@ -14400,50 +13264,50 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
-        <translation>Toe te voegen punt is niet op entiteit.</translation>
+        <translation>Toe te voegen punt is niet op element.</translation>
     </message>
     <message>
         <source>Specify polyline to add nodes</source>
-        <translation>Geef aan vrije vorm om knooppunten toe te voegen</translation>
+        <translation>Specificeer polylijn om knooppunten toe te voegen</translation>
     </message>
     <message>
         <source>Specify adding node&apos;s point</source>
-        <translation>Geef toe te voegen knooppunt</translation>
+        <translation>Specificeer punt toe te voegen knooppunt</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineAppend</name>
     <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
         <source>A&amp;ppend node</source>
-        <translation type="obsolete">Knoo&amp;ppunt toevoegen</translation>
+        <translation type="obsolete">Knoop&amp;punt bijvoegen</translation>
     </message>
     <message>
         <source>Append polyline&apos;s node</source>
-        <translation type="obsolete">Voeg vrije vorm knooppunt</translation>
+        <translation type="obsolete">Knooppunt polylijn bijvoegen</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation>Geen Element gevonden.</translation>
+        <translation>Geen element gevonden.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>Element moet een vrije vorm zijn.</translation>
+        <translation>Element moet een polylijn zijn.</translation>
     </message>
     <message>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation>Klik ergens in de buurt van het begin of het einde van de bestaande vrije vorm.</translation>
+        <translation>Klik ergens in de buurt van het begin of het einde van de bestaande polylijn.</translation>
     </message>
     <message>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation>Geef de vrije vorm ergens in de buurt het begin-of eindpunt</translation>
+        <translation>Specificeer de polylijn ergens in de buurt van het begin- of eindpunt</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation>Geef volgende punt [%1]</translation>
+        <translation>Specificeer volgend punt of [%1]</translation>
     </message>
     <message>
         <source>Back</source>
@@ -14451,42 +13315,26 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation>Geef volgende punt</translation>
+        <translation>Specificeer volgend punt</translation>
     </message>
     <message>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kan geen knooppunten bijvoegen in een gesloten polylijn.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kan niet ongedaan maken: nog niet voldoende elementen gedefinieerd.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineDel</name>
     <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Terug</translation>
-    </message>
-    <message>
         <source>&amp;Delete node</source>
-        <translation type="obsolete">&amp;Verwijder knooppunt</translation>
+        <translation type="obsolete">&amp;Knooppunt verwijderen</translation>
     </message>
     <message>
         <source>Delete polyline&apos;s node</source>
-        <translation type="obsolete">Verwijderen knooppunt uit vrije vorm</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation>Geen Element gevonden.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation>Entiteit moet een vrij vorm zijn.</translation>
+        <translation type="obsolete">Knooppunt van polylijn verwijderen</translation>
     </message>
     <message>
         <source>Adding point is invalid.</source>
@@ -14497,98 +13345,114 @@ Wilt u het vervangen?</translation>
         <translation type="obsolete">Toe te voegen punt is niet op element.</translation>
     </message>
     <message>
-        <source>Specify polyline to delete node</source>
-        <translation>Geef vrije vorm om knooppunt te verwijderen</translation>
-    </message>
-    <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation>Geef de te verwijderen knoop punt</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="unfinished">De te verwijderen punt is niet op een element.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDelBetween</name>
-    <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
     <message>
+        <source>No Entity found.</source>
+        <translation>Geen element gevonden.</translation>
+    </message>
+    <message>
+        <source>Entity must be a polyline.</source>
+        <translation>Element moet een polylijn zijn.</translation>
+    </message>
+    <message>
+        <source>Specify polyline to delete node</source>
+        <translation>Specificeer polylijn om knooppunt te verwijderen</translation>
+    </message>
+    <message>
+        <source>Specify deleting node&apos;s point</source>
+        <translation>Specificeer punt te verwijderen knooppunt</translation>
+    </message>
+    <message>
+        <source>Deleting point is invalid.</source>
+        <translation type="unfinished">Te verwijderen punt is ongeldig.</translation>
+    </message>
+    <message>
+        <source>Deleting point is not on entity.</source>
+        <translation type="unfinished">Te verwijderen punt bevindt zich niet op element.</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionPolylineDelBetween</name>
+    <message>
         <source>Delete &amp;between two nodes</source>
-        <translation type="obsolete">Verwijder &amp;tussen twee knooppunten</translation>
+        <translation type="obsolete">Verwijderen &amp;tussen twee knooppunten</translation>
     </message>
     <message>
         <source>Delete between two nodes</source>
         <translation type="obsolete">Verwijderen tussen twee knooppunten</translation>
     </message>
     <message>
-        <source>No Entity found.</source>
-        <translation>Geen Element gevonden.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation>Entiteit moet een vrij vorm zijn</translation>
-    </message>
-    <message>
         <source>Deletinging point is invalid.</source>
-        <translation type="obsolete">De te verwijderen punt is ongeldig.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation>De te verwijderen punt is niet op een element.</translation>
+        <translation type="obsolete">Te verwijderen punt is ongeldig.</translation>
     </message>
     <message>
         <source>Deleteinging point is not on entity.</source>
-        <translation type="obsolete">De te verwijderen punt is niet op element</translation>
+        <translation type="obsolete">Te verwijderen punt is niet op element.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Terug</translation>
+    </message>
+    <message>
+        <source>No Entity found.</source>
+        <translation>Geen element gevonden.</translation>
+    </message>
+    <message>
+        <source>Entity must be a polyline.</source>
+        <translation>Element moet een polylijn zijn.</translation>
+    </message>
+    <message>
+        <source>Deleting point is not on entity.</source>
+        <translation>Te verwijderen punt bevindt zich niet op element.</translation>
     </message>
     <message>
         <source>Specify polyline to delete between two nodes</source>
-        <translation>Geef vrije vorm  dat verwijderd moet worden tussen knooppunten</translation>
+        <translation>Specificeer polylijn die verwijderd moet worden tussen twee knooppunten</translation>
     </message>
     <message>
         <source>Specify first node</source>
-        <translation>Geef eerste knooppunt</translation>
+        <translation>Specificeer eerste knooppunt</translation>
     </message>
     <message>
         <source>Specify second node</source>
-        <translation>Geef tweede knooppunt</translation>
+        <translation>Specificeer tweede knooppunt</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Te verwijderen punt is ongeldig.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineEquidistant</name>
     <message>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation type="obsolete">Maak &amp;Equidistant vrije vormen</translation>
+        <translation type="obsolete">&amp;Polylijnen op gelijke afstand maken</translation>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation type="obsolete">Maak Equidistant vrije vormen</translation>
+        <translation type="obsolete">Polylijnen op gelijke afstand maken</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation>Geen Element gevonden.</translation>
+        <translation>Geen element gevonden.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>Element moet een vrij vorm zijn</translation>
+        <translation>Element moet een polylijn zijn.</translation>
     </message>
     <message>
         <source>Choose the original polyline</source>
-        <translation>Kies de originele vrije vorm</translation>
+        <translation>Kies de oorspronkelijke polylijn</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -14599,317 +13463,234 @@ Wilt u het vervangen?</translation>
     <name>RS_ActionPolylineSegment</name>
     <message>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="obsolete">Maak vrije vorm van bestaande &amp;Segmenten</translation>
+        <translation type="obsolete">Polylijn van bestaande &amp;segmenten maken</translation>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation type="obsolete">Maak vrije vorm van bestaande &amp;Segmenten</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation>Geen Element gevonden.</translation>
+        <translation type="obsolete">Polylijn van bestaande segmenten maken</translation>
     </message>
     <message>
         <source>Entity must be a line or arc.</source>
         <translation type="obsolete">Element moet een lijn of boog zijn.</translation>
     </message>
     <message>
+        <source>No Entity found.</source>
+        <translation>Geen element gevonden.</translation>
+    </message>
+    <message>
         <source>Choose one of the segments on the original polyline</source>
-        <translation>Kies een element op de oorspronkelijke vrije vorm</translation>
+        <translation>Kies een van de segmenten op de oorspronkelijke polylijn</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Entity can not be a closed polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Element mag geen gesloten polylijn zijn.</translation>
     </message>
     <message>
         <source>Polyline created</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Polylijn aangemaakt</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineTrim</name>
     <message>
+        <source>&amp;Trim segments</source>
+        <translation type="obsolete">&amp;Segmenten bijsnijden</translation>
+    </message>
+    <message>
+        <source>Trim polyline&apos;s segments</source>
+        <translation type="obsolete">Polylijnsegmenten bijsnijden</translation>
+    </message>
+    <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
     <message>
-        <source>&amp;Trim segments</source>
-        <translation type="obsolete">&amp;Knip Segmenten</translation>
-    </message>
-    <message>
-        <source>Trim polyline&apos;s segments</source>
-        <translation type="obsolete">Knip uit vrije vorm segmenten</translation>
-    </message>
-    <message>
         <source>No Entity found.</source>
-        <translation>Geen Element gevonden.</translation>
+        <translation>Geen element gevonden.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>Element dient een vrije vorm te zijn</translation>
+        <translation>Element moet een polylijn zijn.</translation>
     </message>
     <message>
         <source>Specifying point is invalid.</source>
-        <translation>Gegeven punt is ongeldig.</translation>
+        <translation>Specificeren punt is ongeldig.</translation>
     </message>
     <message>
         <source>No Segment found on entity.</source>
-        <translation>Geen element op entiteit.</translation>
+        <translation>Geen segment op element gevonden.</translation>
     </message>
     <message>
         <source>Specify polyline to trim</source>
-        <translation>Geen vrij vorm om te knippen</translation>
+        <translation>Specificeer polylijn om bij te snijden</translation>
     </message>
     <message>
         <source>Specify first segment</source>
-        <translation>Geef eerste segment</translation>
+        <translation>Specificeer eerste segment</translation>
     </message>
     <message>
         <source>Specify second segment</source>
-        <translation>Geef tweede segment</translation>
+        <translation>Specificeer tweede segment</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPrintPreview</name>
     <message>
         <source>Print Preview</source>
-        <translation type="obsolete">Afdruk voorbeeld</translation>
+        <translation type="obsolete">Afdrukvoorbeeld</translation>
     </message>
     <message>
         <source>Print Pre&amp;view</source>
-        <translation type="obsolete">Afdruk voor&amp;beeld</translation>
+        <translation type="obsolete">Afdrukvoor&amp;beeld</translation>
     </message>
     <message>
         <source>Shows a preview of a print</source>
-        <translation type="obsolete">Laat afdruk voorbeeld zien</translation>
+        <translation type="obsolete">Toont een afdrukvoorbeeld</translation>
     </message>
     <message>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">RS_ActionPrintPreview::fit(): Ongeldig papierformaat</translation>
     </message>
     <message>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Afdruk offset in papiercoördinaten van (%1, %2)</translation>
     </message>
     <message>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Afdruk offset in grafiekcoördinaten van (%1, %2)</translation>
     </message>
     <message>
         <source>Printout offset in graph coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Afdruk offset in grafiekcoördinaten</translation>
     </message>
     <message>
         <source>Printout offset in paper coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Afdruk offset in papiercoördinaten</translation>
     </message>
     <message>
         <source>: select printout offset coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">: coördinaten afdruk offset selecteren</translation>
     </message>
     <message>
         <source>type in offset from command line to offset printout</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">typ de offset van de opdrachtregel tot de offset-afdruk in</translation>
     </message>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Afdruk offset negeert relatieve nul. “@” negeren</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Afdrukken in zwart-wit</translation>
     </message>
     <message>
         <source>Printout in color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Afdrukken in kleur</translation>
     </message>
     <message>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>Select to modify attributes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to delete immediately</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to move</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to rotate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to scale</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to mirror</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to move and rotate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to explode text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to create block</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to cut</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to create offset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select entities to order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to explode block</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to revert direction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to unlink shaped text</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">RS_ActionPrintPreview::calcPagesNum(): Het maximale aantal pagina&apos;s is overschreden.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectAll</name>
     <message>
         <source>Select All</source>
-        <translation type="obsolete">Selecteer alles</translation>
+        <translation type="obsolete">Alles selecteren</translation>
     </message>
     <message>
         <source>Select &amp;All</source>
-        <translation type="obsolete">Selecteer &amp;Alles</translation>
+        <translation type="obsolete">&amp;Alles selecteren</translation>
     </message>
     <message>
         <source>Selects all Entities</source>
-        <translation type="obsolete">Selecteert alle Elementen</translation>
+        <translation type="obsolete">Selecteert alle elementen</translation>
     </message>
     <message>
         <source>Deselect all</source>
-        <translation type="obsolete">Deselecteer alles</translation>
+        <translation type="obsolete">Alles deselecteren</translation>
     </message>
     <message>
         <source>Deselect &amp;all</source>
-        <translation type="obsolete">Deselecteer &amp;alles</translation>
+        <translation type="obsolete">&amp;Alles deselecteren</translation>
     </message>
     <message>
         <source>Deselects all Entities</source>
-        <translation type="obsolete">Deselecteer alle Elementen</translation>
+        <translation type="obsolete">Deselecteert alle elementen</translation>
     </message>
     <message>
         <source>Ctrl+K</source>
-        <translation type="obsolete">ctrl+k</translation>
+        <translation type="obsolete">Ctrl+K</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectContour</name>
     <message>
-        <source>Entity must be an Atomic Entity.</source>
-        <translation>Element is niet enkelvoudig.</translation>
-    </message>
-    <message>
         <source>(De-)Select Contour</source>
-        <translation type="obsolete">(De-)Selecteer Contour</translation>
+        <translation type="obsolete">Omtrek (de)selecteren</translation>
     </message>
     <message>
         <source>(De-)Select &amp;Contour</source>
-        <translation type="obsolete">(De-)Selecteer &amp;Contour</translation>
+        <translation type="obsolete">&amp;Omtrek (de)selecteren</translation>
     </message>
     <message>
         <source>(De-)Selects connected entities</source>
-        <translation type="obsolete">(De-)Selecteer verbonden Elementen</translation>
+        <translation type="obsolete">(De)selecteert verbonden elementen</translation>
+    </message>
+    <message>
+        <source>Entity must be an Atomic Entity.</source>
+        <translation>Element moet een atomisch element zijn.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectIntersected</name>
     <message>
         <source>Choose first edge</source>
-        <translation type="obsolete">Kies de eerste Kant</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation type="obsolete">Kies de eerste rand</translation>
     </message>
     <message>
         <source>Choose second edge</source>
-        <translation type="obsolete">Kies de tweede Kant</translation>
+        <translation type="obsolete">Kies de tweede rand</translation>
+    </message>
+    <message>
+        <source>Select Intersected Entities</source>
+        <translation type="obsolete">Kruisende elementen selecteren</translation>
+    </message>
+    <message>
+        <source>In&amp;tersected Entities</source>
+        <translation type="obsolete">Kr&amp;uisende elementen</translation>
+    </message>
+    <message>
+        <source>Selects all entities intersected by a line</source>
+        <translation type="obsolete">Selecteert alle elementen doorkruist door een lijn</translation>
+    </message>
+    <message>
+        <source>Deselect Intersected Entities</source>
+        <translation type="obsolete">Kruisende elementen deselecteren</translation>
+    </message>
+    <message>
+        <source>Deselect Inte&amp;rsected Entities</source>
+        <translation type="obsolete">Kr&amp;uisende elementen deselecteren</translation>
+    </message>
+    <message>
+        <source>Deselects all entities intersected by a line</source>
+        <translation type="obsolete">Deselecteert alle elementen doorkruist door een lijn</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Back</source>
         <translation>Terug</translation>
-    </message>
-    <message>
-        <source>Select Intersected Entities</source>
-        <translation type="obsolete">Selecteer kruisende Elementen</translation>
-    </message>
-    <message>
-        <source>In&amp;tersected Entities</source>
-        <translation type="obsolete">&amp;Kruisende Elementen</translation>
-    </message>
-    <message>
-        <source>Selects all entities intersected by a line</source>
-        <translation type="obsolete">Selecteert alle elementen die door een lijn gekruist worden</translation>
-    </message>
-    <message>
-        <source>Deselect Intersected Entities</source>
-        <translation type="obsolete">Deselecteer kruisende Elementen</translation>
-    </message>
-    <message>
-        <source>Deselect Inte&amp;rsected Entities</source>
-        <translation type="obsolete">Deselecteer k&amp;ruisende Elementen</translation>
-    </message>
-    <message>
-        <source>Deselects all entities intersected by a line</source>
-        <translation type="obsolete">Deselecteert alle elementen die door een lijn gekruist worden</translation>
     </message>
     <message>
         <source>Choose first point of intersection line</source>
@@ -14924,122 +13705,130 @@ Wilt u het vervangen?</translation>
     <name>RS_ActionSelectInvert</name>
     <message>
         <source>Invert Selection</source>
-        <translation type="obsolete">Inverteer Selectie</translation>
+        <translation type="obsolete">Selectie omkeren</translation>
     </message>
     <message>
         <source>&amp;Invert Selection</source>
-        <translation type="obsolete">&amp;Inverteer Selectie</translation>
+        <translation type="obsolete">&amp;Selectie omkeren</translation>
     </message>
     <message>
         <source>Inverts the current selection</source>
-        <translation type="obsolete">Inverteert de huidige selectie</translation>
+        <translation type="obsolete">De huidige selectie omkeren</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectLayer</name>
     <message>
         <source>(De-)Select Layer</source>
-        <translation type="obsolete">(De-)Selecteer Laag</translation>
+        <translation type="obsolete">Laag (de)selecteren</translation>
     </message>
     <message>
         <source>(De-)Selects layers</source>
-        <translation type="obsolete">(De-)Selecteert Lagen</translation>
+        <translation type="obsolete">(De)selecteert lagen</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectSingle</name>
     <message>
         <source>Select Entity</source>
-        <translation type="obsolete">Selecteer Element</translation>
+        <translation type="obsolete">Element selecteren</translation>
     </message>
     <message>
         <source>(De-)&amp;Select Entity</source>
-        <translation type="obsolete">(De-)&amp;Selecteer Element</translation>
+        <translation type="obsolete">Element (de)&amp;selecteren</translation>
     </message>
     <message>
         <source>Selects single Entities</source>
-        <translation type="obsolete">Selecteert enkele Elementen</translation>
+        <translation type="obsolete">Selecteert enkele elementen</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectWindow</name>
     <message>
         <source>Choose first edge</source>
-        <translation type="obsolete">Kies de eerste kant</translation>
+        <translation type="obsolete">Kies de eerste rand</translation>
+    </message>
+    <message>
+        <source>Select Window</source>
+        <translation type="obsolete">Venster selecteren</translation>
+    </message>
+    <message>
+        <source>Select &amp;Window</source>
+        <translation type="obsolete">&amp;Venster selecteren</translation>
+    </message>
+    <message>
+        <source>Selects all Entities in a given Window</source>
+        <translation type="obsolete">Selecteert alle elementen in een bepaald venster</translation>
+    </message>
+    <message>
+        <source>Deselect Window</source>
+        <translation type="obsolete">Venster deselecteren</translation>
+    </message>
+    <message>
+        <source>Deselect &amp;Window</source>
+        <translation type="obsolete">&amp;Venster deselecteren</translation>
+    </message>
+    <message>
+        <source>Deselects all Entities in a given Window</source>
+        <translation type="obsolete">Deselecteert alle elementen in een bepaald venster</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleer</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Choose second edge</source>
-        <translation>Kies de tweede kant</translation>
+        <translation>Kies de tweede rand</translation>
     </message>
     <message>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
     <message>
-        <source>Select Window</source>
-        <translation type="obsolete">Selecteer Venster</translation>
-    </message>
-    <message>
-        <source>Select &amp;Window</source>
-        <translation type="obsolete">Selecteer &amp;Venster</translation>
-    </message>
-    <message>
-        <source>Selects all Entities in a given Window</source>
-        <translation type="obsolete">Selecteer alle Elementen in bepaalde Venster</translation>
-    </message>
-    <message>
-        <source>Deselect Window</source>
-        <translation type="obsolete">Deselecteer Venster</translation>
-    </message>
-    <message>
-        <source>Deselect &amp;Window</source>
-        <translation type="obsolete">Deselecteer &amp;Venster</translation>
-    </message>
-    <message>
-        <source>Deselects all Entities in a given Window</source>
-        <translation type="obsolete">Deselecteer alle Elementen in bepaalde Venster</translation>
-    </message>
-    <message>
         <source>Click and drag for the selection window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Klik en sleep voor het selectievenster</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSetRelativeZero</name>
     <message>
-        <source>Set relative Zero</source>
-        <translation>Plaats relatieve Oorsprong</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
         <source>Set Relative Zero</source>
-        <translation type="obsolete">Plaats relatieve Oorsprong</translation>
+        <translation type="obsolete">Relatieve nulwaarde instellen</translation>
     </message>
     <message>
         <source>&amp;Set Relative Zero</source>
-        <translation type="obsolete">&amp;Plaats relatieve Oorsprong</translation>
+        <translation type="obsolete">&amp;Relatieve nulwaarde instellen</translation>
     </message>
     <message>
         <source>Set position of the Relative Zero point</source>
-        <translation type="obsolete">Bepaal Plaats van de Relatieve Oorsprong</translation>
+        <translation type="obsolete">Positie van het relatieve nulpunt instellen</translation>
+    </message>
+    <message>
+        <source>Set relative Zero</source>
+        <translation>Relatieve nulwaarde instellen</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Set &amp;Relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Relatieve nulwaarde instellen</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
     <message>
+        <source>Intersection Manually</source>
+        <translation type="obsolete">Handmatig snijpunt</translation>
+    </message>
+    <message>
+        <source>Snap to intersection points manually</source>
+        <translation type="obsolete">Handmatig snappen naar snijpunten</translation>
+    </message>
+    <message>
         <source>Select first entity</source>
-        <translation>Selecteer eerste element</translation>
+        <translation>Eerste element selecteren</translation>
     </message>
     <message>
         <source>Back</source>
@@ -15047,53 +13836,45 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Select second entity</source>
-        <translation>Selecteer tweede element</translation>
-    </message>
-    <message>
-        <source>Intersection Manually</source>
-        <translation type="obsolete">Handmatige Intersectie</translation>
+        <translation>Tweede element selecteren</translation>
     </message>
     <message>
         <source>I&amp;ntersection Manually</source>
-        <translation>Ha&amp;ndmatige Intersectie</translation>
-    </message>
-    <message>
-        <source>Snap to intersection points manually</source>
-        <translation type="obsolete">Snap handmatig naar intersectie punten</translation>
+        <translation>Ha&amp;ndmatig snijpunt</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionToolRegenerateDimensions</name>
     <message>
         <source>Regenerate Dimension Entities</source>
-        <translation type="obsolete">Regenereer Maat Elementen</translation>
+        <translation type="obsolete">Maatelementen regenereren</translation>
     </message>
     <message>
         <source>&amp;Regenerate Dimension Entities</source>
-        <translation type="obsolete">&amp;Regenereer Maat Elementen</translation>
+        <translation type="obsolete">&amp;Regenereer maatelementen</translation>
     </message>
     <message>
         <source>Regenerates all Dimension Entities</source>
-        <translation type="obsolete">Regenereer alle Maat Elementen</translation>
+        <translation type="obsolete">Regenereer alle maatelementen</translation>
     </message>
     <message>
         <source>Regenerated %1 dimension entities</source>
-        <translation>Gegenereerd, %1 elementen</translation>
+        <translation>Gegenereerde %1 maatelementen</translation>
     </message>
     <message>
         <source>No dimension entities found</source>
-        <translation>Geen maat elementen gevonden</translation>
+        <translation>Geen maatelementen gevonden</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomAuto</name>
     <message>
         <source>Auto Zoom</source>
-        <translation type="obsolete">Auto zoom</translation>
+        <translation type="obsolete">Autozoom</translation>
     </message>
     <message>
         <source>&amp;Auto Zoom</source>
-        <translation type="obsolete">&amp;Auto Zoom</translation>
+        <translation type="obsolete">&amp;Autozoom</translation>
     </message>
     <message>
         <source>Zooms automatic</source>
@@ -15104,11 +13885,11 @@ Wilt u het vervangen?</translation>
     <name>RS_ActionZoomIn</name>
     <message>
         <source>Zoom in</source>
-        <translation type="obsolete">Zoom in</translation>
+        <translation type="obsolete">Inzoomen</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
-        <translation type="obsolete">Zoom &amp;In</translation>
+        <translation type="obsolete">&amp;Inzoomen</translation>
     </message>
     <message>
         <source>Zooms in</source>
@@ -15116,11 +13897,11 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation type="obsolete">Zoom uit</translation>
+        <translation type="obsolete">Uitzoomen</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation type="obsolete">Zoom &amp;Uit</translation>
+        <translation type="obsolete">&amp;Uitzoomen</translation>
     </message>
     <message>
         <source>Zooms out</source>
@@ -15131,27 +13912,27 @@ Wilt u het vervangen?</translation>
     <name>RS_ActionZoomPan</name>
     <message>
         <source>Pan Zoom</source>
-        <translation type="obsolete">Pan Zoom</translation>
+        <translation type="obsolete">Pan/zoom</translation>
     </message>
     <message>
         <source>&amp;Pan Zoom</source>
-        <translation type="obsolete">&amp;Pan Zoom</translation>
+        <translation type="obsolete">&amp;Pan/zoom</translation>
     </message>
     <message>
         <source>Realtime Panning</source>
-        <translation type="obsolete">Pannen</translation>
+        <translation type="obsolete">Realtime pannen</translation>
     </message>
     <message>
         <source>Click and drag to pan zoom</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Klik en sleep om te pannen/zoomen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Annuleren</translation>
     </message>
     <message>
         <source>Zoom panning</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zoom/panning</translation>
     </message>
 </context>
 <context>
@@ -15166,49 +13947,49 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Shows previous view</source>
-        <translation type="obsolete">Laat vorige weergave zien</translation>
+        <translation type="obsolete">Toont vorige weergave</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomRedraw</name>
     <message>
         <source>Redraw</source>
-        <translation type="obsolete">Herteken</translation>
+        <translation type="obsolete">Opnieuw tekenen</translation>
     </message>
     <message>
         <source>&amp;Redraw</source>
-        <translation type="obsolete">Her&amp;teken</translation>
+        <translation type="obsolete">&amp;Opnieuw tekenen</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomWindow</name>
     <message>
-        <source>Specify first edge</source>
-        <translation>Specificeer eerste kant</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleer</translation>
-    </message>
-    <message>
-        <source>Specify second edge</source>
-        <translation>Specificeer tweede Kant</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Terug</translation>
-    </message>
-    <message>
         <source>Window Zoom</source>
-        <translation type="obsolete">Venster Zoom</translation>
+        <translation type="obsolete">Zoomen venster</translation>
     </message>
     <message>
         <source>&amp;Window Zoom</source>
-        <translation type="obsolete">&amp;Venster Zoom</translation>
+        <translation type="obsolete">&amp;Zoomen venster</translation>
     </message>
     <message>
         <source>Zooms in a window</source>
         <translation type="obsolete">Zoomt in een venster</translation>
+    </message>
+    <message>
+        <source>Specify first edge</source>
+        <translation>Specificeer eerste rand</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify second edge</source>
+        <translation>Specificeer tweede rand</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Terug</translation>
     </message>
 </context>
 <context>
@@ -15246,25 +14027,25 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>undo</source>
-        <translation type="obsolete">herstel</translation>
+        <translation type="obsolete">ongedaan maken</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo</comment>
-        <translation type="obsolete">h</translation>
+        <translation type="obsolete">u</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation type="obsolete">terughalen</translation>
+        <translation type="obsolete">opnieuw</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo</comment>
-        <translation type="obsolete">o</translation>
+        <translation type="obsolete">r</translation>
     </message>
     <message>
         <source>arc</source>
-        <translation type="obsolete">boog</translation>
+        <translation type="obsolete">arc</translation>
     </message>
     <message>
         <source>a</source>
@@ -15277,7 +14058,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>factor</source>
-        <translation type="obsolete">waarde</translation>
+        <translation type="obsolete">factor</translation>
     </message>
     <message>
         <source>columns</source>
@@ -15289,41 +14070,41 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>columnspacing</source>
-        <translation type="obsolete">kolomtussenafstand</translation>
+        <translation type="obsolete">kolomafstand</translation>
     </message>
     <message>
         <source>rowspacing</source>
-        <translation type="obsolete">rijtussenafstand</translation>
+        <translation type="obsolete">rijafstand</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>angle</comment>
-        <translation type="obsolete">hoek</translation>
+        <translation type="obsolete">ang</translation>
     </message>
     <message>
         <source>a</source>
         <comment>angle</comment>
-        <translation type="obsolete">h</translation>
+        <translation type="obsolete">b</translation>
     </message>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation type="obsolete">waarde</translation>
+        <translation type="obsolete">fact</translation>
     </message>
     <message>
         <source>f</source>
         <comment>factor</comment>
-        <translation type="obsolete">w</translation>
+        <translation type="obsolete">f</translation>
     </message>
     <message>
         <source>cols</source>
         <comment>columns</comment>
-        <translation type="obsolete">koln</translation>
+        <translation type="obsolete">cols</translation>
     </message>
     <message>
         <source>c</source>
         <comment>columns</comment>
-        <translation type="obsolete">k</translation>
+        <translation type="obsolete">c</translation>
     </message>
     <message>
         <source>r</source>
@@ -15333,7 +14114,7 @@ Wilt u het vervangen?</translation>
     <message>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation type="obsolete">kolomtussenafstand</translation>
+        <translation type="obsolete">kolomafstand</translation>
     </message>
     <message>
         <source>colspacing</source>
@@ -15343,21 +14124,21 @@ Wilt u het vervangen?</translation>
     <message>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation type="obsolete">ka</translation>
+        <translation type="obsolete">cs</translation>
     </message>
     <message>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation type="obsolete">rijtussenafstand</translation>
+        <translation type="obsolete">rijafstand</translation>
     </message>
     <message>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation type="obsolete">ra</translation>
+        <translation type="obsolete">rs</translation>
     </message>
     <message>
         <source>center</source>
-        <translation type="obsolete">center</translation>
+        <translation type="obsolete">middelpunt</translation>
     </message>
     <message>
         <source>cen</source>
@@ -15377,12 +14158,12 @@ Wilt u het vervangen?</translation>
     <message>
         <source>rev</source>
         <comment>reversed arc</comment>
-        <translation type="obsolete">omg</translation>
+        <translation type="obsolete">rev</translation>
     </message>
     <message>
         <source>r</source>
         <comment>reversed arc</comment>
-        <translation type="obsolete">o</translation>
+        <translation type="obsolete">r</translation>
     </message>
     <message>
         <source>point</source>
@@ -15391,16 +14172,16 @@ Wilt u het vervangen?</translation>
     <message>
         <source>po</source>
         <comment>point</comment>
-        <translation type="obsolete">pu</translation>
+        <translation type="obsolete">po</translation>
     </message>
     <message>
         <source>offset</source>
-        <translation type="obsolete">afzet</translation>
+        <translation type="obsolete">offset</translation>
     </message>
     <message>
         <source>o</source>
         <comment>offset</comment>
-        <translation type="obsolete">a</translation>
+        <translation type="obsolete">o</translation>
     </message>
     <message>
         <source>parallel</source>
@@ -15449,7 +14230,7 @@ Wilt u het vervangen?</translation>
     <message>
         <source>c</source>
         <comment>close</comment>
-        <translation type="obsolete">s</translation>
+        <translation type="obsolete">c</translation>
     </message>
     <message>
         <source>num</source>
@@ -15464,7 +14245,7 @@ Wilt u het vervangen?</translation>
     <message>
         <source>t</source>
         <comment>through</comment>
-        <translation type="obsolete">d</translation>
+        <translation type="obsolete">t</translation>
     </message>
     <message>
         <source>par</source>
@@ -15485,7 +14266,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>trim</source>
-        <translation type="obsolete">trim</translation>
+        <translation type="obsolete">bijsnijden</translation>
     </message>
     <message>
         <source>length1</source>
@@ -15529,7 +14310,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>chord length</source>
-        <translation type="obsolete">booglengte</translation>
+        <translation type="obsolete">koordlengte</translation>
     </message>
     <message>
         <source>length</source>
@@ -15543,11 +14324,11 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Command: %1</source>
-        <translation type="obsolete">Commando: %1</translation>
+        <translation type="obsolete">Opdracht: %1</translation>
     </message>
     <message>
         <source>Available commands:</source>
-        <translation type="obsolete">Beschikbare commando&apos;s:</translation>
+        <translation type="obsolete">Beschikbare opdrachten:</translation>
     </message>
     <message>
         <source>ln</source>
@@ -15566,21 +14347,21 @@ Wilt u het vervangen?</translation>
     <message>
         <source>rg</source>
         <comment>redraw</comment>
-        <translation type="obsolete">bv</translation>
+        <translation type="obsolete">rg</translation>
     </message>
     <message>
         <source>zr</source>
         <comment>redraw</comment>
-        <translation type="obsolete">ht</translation>
+        <translation type="obsolete">zr</translation>
     </message>
     <message>
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation type="obsolete">zv</translation>
+        <translation type="obsolete">zw</translation>
     </message>
     <message>
         <source>zoom - window</source>
-        <translation type="obsolete">zoom - venster</translation>
+        <translation type="obsolete">zoomen - venster</translation>
     </message>
     <message>
         <source>za</source>
@@ -15628,12 +14409,12 @@ Wilt u het vervangen?</translation>
     <message>
         <source>ar</source>
         <comment>arc</comment>
-        <translation type="obsolete">bo</translation>
+        <translation type="obsolete">ar</translation>
     </message>
     <message>
         <source>a3</source>
         <comment>3 point arc</comment>
-        <translation type="obsolete">b3</translation>
+        <translation type="obsolete">a3</translation>
     </message>
     <message>
         <source>ep</source>
@@ -15643,7 +14424,7 @@ Wilt u het vervangen?</translation>
     <message>
         <source>tx</source>
         <comment>text</comment>
-        <translation type="obsolete">te</translation>
+        <translation type="obsolete">tx</translation>
     </message>
     <message>
         <source>mt</source>
@@ -15653,32 +14434,32 @@ Wilt u het vervangen?</translation>
     <message>
         <source>da</source>
         <comment>dimension - aligned</comment>
-        <translation type="obsolete">mu</translation>
+        <translation type="obsolete">da</translation>
     </message>
     <message>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation type="obsolete">mh</translation>
+        <translation type="obsolete">dh</translation>
     </message>
     <message>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation type="obsolete">mv</translation>
+        <translation type="obsolete">dv</translation>
     </message>
     <message>
         <source>dr</source>
         <comment>dimension - linear</comment>
-        <translation type="obsolete">mr</translation>
+        <translation type="obsolete">dr</translation>
     </message>
     <message>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation type="obsolete">ml</translation>
+        <translation type="obsolete">ld</translation>
     </message>
     <message>
         <source>rd</source>
         <comment>redraw</comment>
-        <translation type="obsolete">vv</translation>
+        <translation type="obsolete">rd</translation>
     </message>
     <message>
         <source>zi</source>
@@ -15693,12 +14474,12 @@ Wilt u het vervangen?</translation>
     <message>
         <source>pa</source>
         <comment>zoom - pan</comment>
-        <translation type="obsolete">zp</translation>
+        <translation type="obsolete">pa</translation>
     </message>
     <message>
         <source>os</source>
         <comment>snap - none</comment>
-        <translation type="obsolete">sn</translation>
+        <translation type="obsolete">os</translation>
     </message>
     <message>
         <source>sg</source>
@@ -15718,7 +14499,7 @@ Wilt u het vervangen?</translation>
     <message>
         <source>sn</source>
         <comment>snap - center</comment>
-        <translation type="obsolete">sc</translation>
+        <translation type="obsolete">sn</translation>
     </message>
     <message>
         <source>sm</source>
@@ -15728,32 +14509,32 @@ Wilt u het vervangen?</translation>
     <message>
         <source>sn</source>
         <comment>snap - nearest</comment>
-        <translation type="obsolete">sd</translation>
+        <translation type="obsolete">sn</translation>
     </message>
     <message>
         <source>np</source>
         <comment>snap - nearest point</comment>
-        <translation type="obsolete">sp</translation>
+        <translation type="obsolete">np</translation>
     </message>
     <message>
         <source>fr*</source>
         <comment>layers - freeze all</comment>
-        <translation type="obsolete">bv*</translation>
+        <translation type="obsolete">fr*</translation>
     </message>
     <message>
         <source>th*</source>
         <comment>layers - defreeze all</comment>
-        <translation type="obsolete">od*</translation>
+        <translation type="obsolete">th*</translation>
     </message>
     <message>
         <source>tn</source>
         <comment>Deselect all</comment>
-        <translation type="obsolete">da</translation>
+        <translation type="obsolete">tn</translation>
     </message>
     <message>
         <source>ch</source>
         <comment>modify - bevel (chamfer)</comment>
-        <translation type="obsolete">af</translation>
+        <translation type="obsolete">ch</translation>
     </message>
     <message>
         <source>mt</source>
@@ -15768,17 +14549,17 @@ Wilt u het vervangen?</translation>
     <message>
         <source>rm</source>
         <comment>modify - trim</comment>
-        <translation type="obsolete">tr</translation>
+        <translation type="obsolete">rm</translation>
     </message>
     <message>
         <source>mv</source>
         <comment>modify - move</comment>
-        <translation type="obsolete">vp</translation>
+        <translation type="obsolete">mv</translation>
     </message>
     <message>
         <source>mi</source>
         <comment>modify - mirror</comment>
-        <translation type="obsolete">sp</translation>
+        <translation type="obsolete">mi</translation>
     </message>
     <message>
         <source>ro</source>
@@ -15788,17 +14569,17 @@ Wilt u het vervangen?</translation>
     <message>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation type="obsolete">sc</translation>
+        <translation type="obsolete">sz</translation>
     </message>
     <message>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation type="obsolete">ur</translation>
+        <translation type="obsolete">ss</translation>
     </message>
     <message>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="obsolete">vw</translation>
+        <translation type="obsolete">er</translation>
     </message>
     <message>
         <source>oo</source>
@@ -15808,7 +14589,7 @@ Wilt u het vervangen?</translation>
     <message>
         <source>uu</source>
         <comment>modify - redo</comment>
-        <translation type="obsolete">hh</translation>
+        <translation type="obsolete">uu</translation>
     </message>
     <message>
         <source>xp</source>
@@ -15822,11 +14603,11 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>dimregen</source>
-        <translation type="obsolete">maatregen</translation>
+        <translation type="obsolete">mt.regen</translation>
     </message>
     <message>
         <source>po</source>
-        <translation type="obsolete">pu</translation>
+        <translation type="obsolete">po</translation>
     </message>
     <message>
         <source>ln</source>
@@ -15838,7 +14619,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>a</source>
-        <translation type="obsolete">a</translation>
+        <translation type="obsolete">b</translation>
     </message>
     <message>
         <source>ci</source>
@@ -15855,12 +14636,12 @@ Wilt u het vervangen?</translation>
     <message>
         <source>rg</source>
         <comment>zoom - redraw</comment>
-        <translation type="obsolete">bv</translation>
+        <translation type="obsolete">rg</translation>
     </message>
     <message>
         <source>zr</source>
         <comment>zoom - redraw</comment>
-        <translation type="obsolete">ht</translation>
+        <translation type="obsolete">zr</translation>
     </message>
     <message>
         <source>zv</source>
@@ -15873,12 +14654,12 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>polyline</source>
-        <translation type="obsolete">vrije vorm</translation>
+        <translation type="obsolete">polylijn</translation>
     </message>
     <message>
         <source>pa</source>
         <comment>parallel</comment>
-        <translation type="obsolete">zp</translation>
+        <translation type="obsolete">pa</translation>
     </message>
     <message>
         <source>tm</source>
@@ -15887,23 +14668,23 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>da</source>
-        <translation type="obsolete">mu</translation>
+        <translation type="obsolete">da</translation>
     </message>
     <message>
         <source>dh</source>
-        <translation type="obsolete">mh</translation>
+        <translation type="obsolete">dh</translation>
     </message>
     <message>
         <source>dr</source>
-        <translation type="obsolete">mr</translation>
+        <translation type="obsolete">dr</translation>
     </message>
     <message>
         <source>dv</source>
-        <translation type="obsolete">mv</translation>
+        <translation type="obsolete">dv</translation>
     </message>
     <message>
         <source>ld</source>
-        <translation type="obsolete">ml</translation>
+        <translation type="obsolete">ld</translation>
     </message>
     <message>
         <source>tm</source>
@@ -15915,19 +14696,19 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>rm</source>
-        <translation type="obsolete">tr</translation>
+        <translation type="obsolete">rm</translation>
     </message>
     <message>
         <source>mv</source>
-        <translation type="obsolete">vp</translation>
+        <translation type="obsolete">mv</translation>
     </message>
     <message>
         <source>ch</source>
-        <translation type="obsolete">af</translation>
+        <translation type="obsolete">ch</translation>
     </message>
     <message>
         <source>mi</source>
-        <translation type="obsolete">sp</translation>
+        <translation type="obsolete">mi</translation>
     </message>
     <message>
         <source>ro</source>
@@ -15935,15 +14716,15 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>sz</source>
-        <translation type="obsolete">sc</translation>
+        <translation type="obsolete">sz</translation>
     </message>
     <message>
         <source>ss</source>
-        <translation type="obsolete">ur</translation>
+        <translation type="obsolete">ss</translation>
     </message>
     <message>
         <source>er</source>
-        <translation type="obsolete">vw</translation>
+        <translation type="obsolete">er</translation>
     </message>
     <message>
         <source>oo</source>
@@ -15951,7 +14732,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>uu</source>
-        <translation type="obsolete">hh</translation>
+        <translation type="obsolete">uu</translation>
     </message>
     <message>
         <source>xp</source>
@@ -15959,7 +14740,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>os</source>
-        <translation type="obsolete">sn</translation>
+        <translation type="obsolete">os</translation>
     </message>
     <message>
         <source>sg</source>
@@ -15983,11 +14764,11 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>np</source>
-        <translation type="obsolete">sp</translation>
+        <translation type="obsolete">np</translation>
     </message>
     <message>
         <source>tn</source>
-        <translation type="obsolete">da</translation>
+        <translation type="obsolete">tn</translation>
     </message>
     <message>
         <source>kill</source>
@@ -16012,19 +14793,19 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>pa</source>
-        <translation type="obsolete">zp</translation>
+        <translation type="obsolete">pa</translation>
     </message>
     <message>
         <source>ar</source>
-        <translation type="obsolete">bo</translation>
+        <translation type="obsolete">ar</translation>
     </message>
     <message>
         <source>zr</source>
-        <translation type="obsolete">ht</translation>
+        <translation type="obsolete">zr</translation>
     </message>
     <message>
         <source>zw</source>
-        <translation type="obsolete">zv</translation>
+        <translation type="obsolete">zw</translation>
     </message>
     <message>
         <source>za</source>
@@ -16040,12 +14821,12 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>u</source>
-        <translation type="obsolete">h</translation>
+        <translation type="obsolete">u</translation>
     </message>
     <message>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation type="obsolete">sn</translation>
+        <translation type="obsolete">os</translation>
     </message>
     <message>
         <source>number</source>
@@ -16060,7 +14841,7 @@ Wilt u het vervangen?</translation>
     <message>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation type="obsolete">omg</translation>
+        <translation type="obsolete">rev</translation>
     </message>
     <message>
         <source>re</source>
@@ -16073,21 +14854,1457 @@ Wilt u het vervangen?</translation>
     </message>
 </context>
 <context>
+    <name>ColorWizard</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished">Kader</translation>
+    </message>
+    <message>
+        <source>Add to favorites</source>
+        <translation type="unfinished">Voeg toe aan favorieten</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+</context>
+<context>
+    <name>ComboBoxOption</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished">Kader</translation>
+    </message>
+    <message>
+        <source>GroupBox</source>
+        <translation type="unfinished">Groepsvak</translation>
+    </message>
+    <message>
+        <source>Set</source>
+        <translation type="unfinished">Instellen</translation>
+    </message>
+</context>
+<context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished">Spiepunten</translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Laag:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Geometrie</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Gesloten</translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished">Spiepunten</translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished">Controlepunten</translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished">Punten op spie</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawCircle2PR</name>
+    <message>
+        <source>radius=%1 is too small for points selected
+distance between points=%2 is larger than diameter=%3</source>
+        <translation type="unfinished">radius=%1 is te klein voor de geselecteerde punten
+afstand tussen punten=%2 is groter dan diameter=%3</translation>
+    </message>
+    <message>
+        <source>Select from two possible circle centers</source>
+        <translation type="unfinished">Selecteer uit twee mogelijke cirkelmiddelpunten</translation>
+    </message>
+    <message>
+        <source>Specify first point</source>
+        <translation type="unfinished">Specificeer eerste punt</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify second point</source>
+        <translation type="unfinished">Specificeer tweede punt</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Select circle center</source>
+        <translation type="unfinished">Cirkelmiddelpunt selecteren</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawLinePolygonCenTan</name>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished">Specificeer middelpunt</translation>
+    </message>
+    <message>
+        <source>Specify a tangent</source>
+        <translation type="unfinished">Specificeer een raaklijn</translation>
+    </message>
+    <message>
+        <source>Enter number:</source>
+        <translation type="unfinished">Voer een aantal in:</translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="unfinished">Geen geldig aantal. Probeer 1...9999</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Geen geldige expressie</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawSplinePoints</name>
+    <message>
+        <source>Specify first control point</source>
+        <translation type="unfinished">Specificeer eerste controlepunt</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify next control point or [%1]</source>
+        <translation type="unfinished">Specificeer volgend controlepunt of [%1]</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Specify next control point</source>
+        <translation type="unfinished">Specificeer volgend controlepunt</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="unfinished">Kan niet ongedaan maken: nog niet voldoende elementen gedefinieerd.</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Nothing could be redone.</source>
+        <translation type="unfinished">Kan niet ongedaan gemaakt worden: er kon niets opnieuw uitgevoerd worden.</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionFileExportMakerCam</name>
+    <message>
+        <source>Export as</source>
+        <translation type="unfinished">Exporteren als</translation>
+    </message>
+</context>
+<context>
+    <name>LC_DeviceOptions</name>
+    <message>
+        <source>Mouse</source>
+        <translation type="unfinished">Muis</translation>
+    </message>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">Formaat</translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation type="unfinished">Apparaat</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Opslaan</translation>
+    </message>
+    <message>
+        <source>Tablet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trackpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Touchscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_SimpleTests</name>
+    <message>
+        <source>De&amp;bugging</source>
+        <translation type="unfinished">Fout&amp;zoeken</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="unfinished">Afbeelding invoegen</translation>
+    </message>
+</context>
+<context>
+    <name>LC_WidgetOptionsDialog</name>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished">Widgetopties</translation>
+    </message>
+    <message>
+        <source>Toolbar</source>
+        <translation type="unfinished">Werkbalk</translation>
+    </message>
+    <message>
+        <source>Icon Size</source>
+        <translation type="unfinished">Pictogramgrootte</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished">Algemeen</translation>
+    </message>
+    <message>
+        <source>Style</source>
+        <translation type="unfinished">Stijl</translation>
+    </message>
+    <message>
+        <source>Style Sheet</source>
+        <translation type="unfinished">Stijlblad</translation>
+    </message>
+    <message>
+        <source>Statusbar</source>
+        <translation type="unfinished">Statusbalk</translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished">Hoogte</translation>
+    </message>
+    <message>
+        <source>Font Size</source>
+        <translation type="unfinished">Lettergrootte</translation>
+    </message>
+    <message>
+        <source>Input the path of a Qt style sheet.</source>
+        <translation type="unfinished">Voer het pad van een Qt-stijlblad in.</translation>
+    </message>
+    <message>
+        <source>side length in pixels</source>
+        <translation type="unfinished">zijlengte in pixels</translation>
+    </message>
+    <message>
+        <source>Use themed icons</source>
+        <translation type="unfinished">Gebruik themapictogrammen</translation>
+    </message>
+</context>
+<context>
+    <name>LG_DimzerosBox</name>
+    <message>
+        <source>select:</source>
+        <translation type="unfinished">selecteren:</translation>
+    </message>
+    <message>
+        <source>remove left</source>
+        <translation type="unfinished">links weghalen</translation>
+    </message>
+    <message>
+        <source>remove right</source>
+        <translation type="unfinished">rechts weghalen</translation>
+    </message>
+    <message>
+        <source>remove 0&apos;</source>
+        <translation type="unfinished">0&apos; weghalen</translation>
+    </message>
+    <message>
+        <source>remove 0&quot;</source>
+        <translation type="unfinished">0&quot; weghalen</translation>
+    </message>
+</context>
+<context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Relatieve hoekopties lijn</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Tussenafstand:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished">Afstand vanaf oorspronkelijke polylijn</translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished">Kopieën:</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetEnt</name>
+    <message>
+        <source>Select object:</source>
+        <translation>Object selecteren:</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetSelect</name>
+    <message>
+        <source>Select objects:</source>
+        <translation>Objecten selecteren:</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ActionHandler</name>
+    <message>
+        <source>escape</source>
+        <comment>escape, go back from action steps</comment>
+        <translation type="unfinished">escape</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ActiveLayerName</name>
+    <message>
+        <source>Selection</source>
+        <translation type="unfinished">Selectie</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Current Layer</source>
+        <translation type="unfinished">Huidige laag</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Naam van huidige actieve laag&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CommandEdit</name>
+    <message>
+        <source>clear</source>
+        <translation type="unfinished">wissen</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CommandHistory</name>
+    <message>
+        <source>&amp;Copy</source>
+        <translation type="unfinished">&amp;Kopiëren</translation>
+    </message>
+    <message>
+        <source>Select &amp;All</source>
+        <translation type="unfinished">&amp;Alles selecteren</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished">Wissen</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CoordinateWidget</name>
+    <message>
+        <source>Coordinates</source>
+        <translation>Coördinaten</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgFontConversion</name>
+    <message>
+        <source>Convert Fonts</source>
+        <translation type="unfinished">Converteer lettertypes</translation>
+    </message>
+    <message>
+        <source>Font family:</source>
+        <translation type="unfinished">Lettertypefamilie:</translation>
+    </message>
+    <message>
+        <source>Font file:</source>
+        <translation type="unfinished">Lettertypebestand:</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Save as:</source>
+        <translation type="unfinished">Opslaan als:</translation>
+    </message>
+    <message>
+        <source>Letter spacing:</source>
+        <translation type="unfinished">Tekenafstand:</translation>
+    </message>
+    <message>
+        <source>Author:</source>
+        <translation type="unfinished">Auteur:</translation>
+    </message>
+    <message>
+        <source>Word spacing:</source>
+        <translation type="unfinished">Woordafstand:</translation>
+    </message>
+    <message>
+        <source>License:</source>
+        <translation type="unfinished">Licentie:</translation>
+    </message>
+    <message>
+        <source>Line spacing:</source>
+        <translation type="unfinished">Lijnafstand:</translation>
+    </message>
+    <message>
+        <source>Writing System:</source>
+        <translation type="unfinished">Schrijfsysteem:</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished">Voorbeeld</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">Aanmaken</translation>
+    </message>
+    <message>
+        <source> - Searching</source>
+        <translation type="unfinished"> - Wordt gezocht</translation>
+    </message>
+    <message>
+        <source>LibreCAD Font Files(*.lff)</source>
+        <translation type="unfinished">LibreCAD-lettertypebestanden(*.lff)</translation>
+    </message>
+    <message>
+        <source> - Rendering</source>
+        <translation type="unfinished"> - Weergave</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgOptionsMakerCam</name>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished">Lagen</translation>
+    </message>
+    <message>
+        <source>Export invisible layers</source>
+        <translation type="unfinished">Onzichtbare lagen exporteren</translation>
+    </message>
+    <message>
+        <source>Export visible construction layers</source>
+        <translation type="unfinished">Zichtbare bouwlagen exporteren</translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished">Blokken</translation>
+    </message>
+    <message>
+        <source>Convert blocks to safe inline SVG content</source>
+        <translation type="unfinished">Converteer blokken naar &apos;safe inline&apos; svg-content (veilig binnen de lijnen)</translation>
+    </message>
+    <message>
+        <source>Ellipses / Ellipse arcs</source>
+        <translation type="unfinished">Ellipsen/Ellipsbogen</translation>
+    </message>
+    <message>
+        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
+        <translation type="unfinished">Geef de approximatieve kubieke bézierwaarden aan voor ellipsen en ellipsbogen</translation>
+    </message>
+    <message>
+        <source>Export as CAM/plain SVG</source>
+        <translation type="unfinished">Exporteren als CAM/gewone svg</translation>
+    </message>
+    <message>
+        <source>Default width of elements, mm</source>
+        <translation type="unfinished">Standaardbreedte van elementen, mm</translation>
+    </message>
+    <message>
+        <source>Images</source>
+        <translation type="unfinished">Afbeeldingen</translation>
+    </message>
+    <message>
+        <source>Raster Image export</source>
+        <translation type="unfinished">Export van rasterafbeeldingexport</translation>
+    </message>
+    <message>
+        <source>Dash/Dot Lines</source>
+        <translation type="unfinished">Streep-punt-lijnen</translation>
+    </message>
+    <message>
+        <source>Length of the pattern, mm</source>
+        <translation type="unfinished">Lengte van het patroon, mm</translation>
+    </message>
+    <message>
+        <source>Bake dash/dot lines to SVG path</source>
+        <translation type="unfinished">Streep-punt-lijnen toewijzen aan svg-pad</translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content 
+that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
+        <translation type="unfinished">Sinds november 2014 verbergt MakerCAM geen svg-content meer 
+die op onzichtbaar is ingesteld (“weergeven: geen” of “zichtbaarheid: verborgen”).</translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
+because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="unfinished">Sinds november 2014 kan MakerCAM niet meer correct met blokken omgaan,
+omdat het programma geen rekening houdt met het referentiepunt in de &lt;use&gt;.</translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
+when they are created using the &lt;ellipse&gt; tag  with a rotation in 
+the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished">Sinds maart 2015 kan MakerCAM ellipsen en ellipsbogen niet meer correct weergeven 
+als deze aangemaakt worden met behulp van de &lt;ellipse&gt;-tag met een rotatie in 
+het &lt;transform&gt;-attribuut of als &lt;path&gt; dat elliptische boogsegmenten gebruikt.</translation>
+    </message>
+    <message>
+        <source>Exported images can be useful in SVG editors (Inkscape, etc), 
+but avoided in some CAM&apos;s.</source>
+        <translation type="unfinished">Geëxporteerde afbeeldingen kunnen nuttig zijn in svg-editorprogramma&apos;s (Inkscape, enz.), 
+maar worden vermeden in sommige CAM&apos;s.</translation>
+    </message>
+    <message>
+        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+which can be useful in lasercut of plywood or for papercraft. </source>
+        <translation type="unfinished">Veel CAM&apos;s (MakerCAM, EleskCAM, LaserWeb) negeren de streep-punt-lijnstijl, 
+wat handig kan zijn voor lasersnijden van multiplex materiaal of voor bouwplaten. </translation>
+    </message>
+    <message>
+        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+but ignored by other</source>
+        <translation type="unfinished">De standaardbreedte van elementen kan sommige CAM&apos;s/svg-editorprogramma&apos;s beïnvloeden 
+maar wordt door andere genegeerd</translation>
+    </message>
+    <message>
+        <source>Length of line pattern related to zoom, 
+so default step value required for baking</source>
+        <translation type="unfinished">De lengte van het lijnpatroon hangt samen met het zoomen, 
+dus de standaard stapwaarde is vereist voor baking</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LayerBox</name>
+    <message>
+        <source>- Unchanged -</source>
+        <translation>- Ongewijzigd -</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineTypeBox</name>
+    <message>
+        <source>By Layer</source>
+        <translation>Per laag</translation>
+    </message>
+    <message>
+        <source>By Block</source>
+        <translation>Per blok</translation>
+    </message>
+    <message>
+        <source>No Pen</source>
+        <translation>Geen pen</translation>
+    </message>
+    <message>
+        <source>Continuous</source>
+        <translation>Doorlopend</translation>
+    </message>
+    <message>
+        <source>Dot</source>
+        <translation>Punt</translation>
+    </message>
+    <message>
+        <source>Dot (small)</source>
+        <translation>Punt (klein)</translation>
+    </message>
+    <message>
+        <source>Dot (large)</source>
+        <translation>Punt (breed)</translation>
+    </message>
+    <message>
+        <source>Dash</source>
+        <translation>Streep</translation>
+    </message>
+    <message>
+        <source>Dash (small)</source>
+        <translation>Streep (klein)</translation>
+    </message>
+    <message>
+        <source>Dash (large)</source>
+        <translation>Streep (groot)</translation>
+    </message>
+    <message>
+        <source>Dash Dot</source>
+        <translation>Streep-punt</translation>
+    </message>
+    <message>
+        <source>Dash Dot (small)</source>
+        <translation>Streep-punt (klein)</translation>
+    </message>
+    <message>
+        <source>Dash Dot (large)</source>
+        <translation>Streep-punt (groot)</translation>
+    </message>
+    <message>
+        <source>Divide</source>
+        <translation>Verdelen</translation>
+    </message>
+    <message>
+        <source>Divide (small)</source>
+        <translation>Scheiding (klein)</translation>
+    </message>
+    <message>
+        <source>Divide (large)</source>
+        <translation>Scheiding (groot)</translation>
+    </message>
+    <message>
+        <source>Center</source>
+        <translation>Middelpunt</translation>
+    </message>
+    <message>
+        <source>Center (small)</source>
+        <translation>Middelpunt (smal)</translation>
+    </message>
+    <message>
+        <source>Center (large)</source>
+        <translation>Middelpunt (groot)</translation>
+    </message>
+    <message>
+        <source>Border</source>
+        <translation>Rand</translation>
+    </message>
+    <message>
+        <source>Border (small)</source>
+        <translation>Rand (klein)</translation>
+    </message>
+    <message>
+        <source>Border (large)</source>
+        <translation>Rand (groot)</translation>
+    </message>
+    <message>
+        <source>- Unchanged -</source>
+        <translation>- Ongewijzigd -</translation>
+    </message>
+    <message>
+        <source>Dot (tiny)</source>
+        <translation type="unfinished">Punt (minuscuul)</translation>
+    </message>
+    <message>
+        <source>Dash (tiny)</source>
+        <translation type="unfinished">Streep (minuscuul)</translation>
+    </message>
+    <message>
+        <source>Dash Dot (tiny)</source>
+        <translation type="unfinished">Streep-punt (minuscuul)</translation>
+    </message>
+    <message>
+        <source>Divide (tiny)</source>
+        <translation type="unfinished">Scheiding (minuscuul)</translation>
+    </message>
+    <message>
+        <source>Center (tiny)</source>
+        <translation type="unfinished">Middelpunt (minuscuul)</translation>
+    </message>
+    <message>
+        <source>Border (tiny)</source>
+        <translation type="unfinished">Rand (minuscuul)</translation>
+    </message>
+</context>
+<context>
+    <name>QG_PenToolBar</name>
+    <message>
+        <source>Line color</source>
+        <translation type="unfinished">Lijnkleur</translation>
+    </message>
+    <message>
+        <source>Line width</source>
+        <translation type="unfinished">Lijnbreedte</translation>
+    </message>
+    <message>
+        <source>Line type</source>
+        <translation type="unfinished">Lijntype</translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapToolBar</name>
+    <message>
+        <source>Snap</source>
+        <translation type="unfinished">Snappen</translation>
+    </message>
+    <message>
+        <source>Snap to Endpoints</source>
+        <translation type="unfinished">Snappen naar eindpunten</translation>
+    </message>
+    <message>
+        <source>Snap to equidistant points of entity</source>
+        <translation type="unfinished">Snappen naar punten van het element die op gelijke afstand van elkaar zijn</translation>
+    </message>
+    <message>
+        <source>Snap to center points</source>
+        <translation type="unfinished">Snappen naar middelpunten</translation>
+    </message>
+    <message>
+        <source>Snap to intersections automatically</source>
+        <translation type="unfinished">Automatisch snappen naar snijpunten</translation>
+    </message>
+    <message>
+        <source>Snap to closest point on entity</source>
+        <translation type="unfinished">Snappen naar dichtstbijzijnde punt op element</translation>
+    </message>
+    <message>
+        <source>Snap to point with given distance to endpoint</source>
+        <translation type="unfinished">Snappen naar punt met opgegeven afstand naar eindpunt</translation>
+    </message>
+    <message>
+        <source>Snap to intersections manually</source>
+        <translation type="unfinished">Handmatig snappen naar snijpunten</translation>
+    </message>
+    <message>
+        <source>Snap to grid</source>
+        <translation type="unfinished">Snappen naar raster</translation>
+    </message>
+    <message>
+        <source>Restrict Horizontally</source>
+        <translation type="unfinished">Horizontaal beperken</translation>
+    </message>
+    <message>
+        <source>Restrict Vertically</source>
+        <translation type="unfinished">Verticaal beperken</translation>
+    </message>
+    <message>
+        <source>Move relative Zero</source>
+        <translation type="unfinished">Relatieve nulwaarde verplaatsen</translation>
+    </message>
+    <message>
+        <source>Lock relative Zero</source>
+        <translation type="unfinished">Relatieve nulwaarde vergrendelen</translation>
+    </message>
+    <message>
+        <source>Free Snap</source>
+        <translation type="unfinished">Snappen uit vrije hand</translation>
+    </message>
+    <message>
+        <source>Snap on grid</source>
+        <translation type="unfinished">Snappen op raster</translation>
+    </message>
+    <message>
+        <source>Snap on Endpoints</source>
+        <translation type="unfinished">Snappen op eindpunten</translation>
+    </message>
+    <message>
+        <source>Snap on Entity</source>
+        <translation type="unfinished">Snappen op element</translation>
+    </message>
+    <message>
+        <source>Snap Center</source>
+        <translation type="unfinished">Middelpunt snappen</translation>
+    </message>
+    <message>
+        <source>Snap Middle</source>
+        <translation type="unfinished">Midden snappen</translation>
+    </message>
+    <message>
+        <source>Snap Distance</source>
+        <translation type="unfinished">Afstand snappen</translation>
+    </message>
+    <message>
+        <source>Snap Intersection</source>
+        <translation type="unfinished">Snijpunt snappen</translation>
+    </message>
+    <message>
+        <source>Restrict Horizontal</source>
+        <translation type="unfinished">Beperk horizontaal</translation>
+    </message>
+    <message>
+        <source>Restrict Vertical</source>
+        <translation type="unfinished">Beperk verticaal</translation>
+    </message>
+    <message>
+        <source>Restrict Orthogonal</source>
+        <translation type="unfinished">Beperk orthogonaal</translation>
+    </message>
+    <message>
+        <source>Restrict Nothing</source>
+        <translation type="unfinished">Niets beperken</translation>
+    </message>
+    <message>
+        <source>Set relative zero position</source>
+        <translation type="unfinished">Relatieve nulpositie instellen</translation>
+    </message>
+    <message>
+        <source>Lock relative zero position</source>
+        <translation type="unfinished">Relatieve nulpositie vergrendelen</translation>
+    </message>
+    <message>
+        <source>Exclusive Snap Mode</source>
+        <translation type="unfinished">Exclusieve snapmodus</translation>
+    </message>
+</context>
+<context>
+    <name>QG_WidgetPen</name>
+    <message>
+        <source>Pen</source>
+        <translation>Pen</translation>
+    </message>
+    <message>
+        <source>Line type:</source>
+        <translation>Lijntype:</translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation>Breedte:</translation>
+    </message>
+    <message>
+        <source>Color:</source>
+        <translation>Kleur:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_WidthBox</name>
+    <message>
+        <source>By Layer</source>
+        <translation>Per laag</translation>
+    </message>
+    <message>
+        <source>By Block</source>
+        <translation>Per blok</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation>Standaard</translation>
+    </message>
+    <message>
+        <source>0.00mm</source>
+        <translation>0,00 mm</translation>
+    </message>
+    <message>
+        <source>0.05mm</source>
+        <translation>0,05 mm</translation>
+    </message>
+    <message>
+        <source>0.09mm</source>
+        <translation>0,09 mm</translation>
+    </message>
+    <message>
+        <source>0.13mm (ISO)</source>
+        <translation>0,13 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.15mm</source>
+        <translation>0,15 mm</translation>
+    </message>
+    <message>
+        <source>0.18mm (ISO)</source>
+        <translation>0,18 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.20mm</source>
+        <translation>0,20 mm</translation>
+    </message>
+    <message>
+        <source>0.25mm (ISO)</source>
+        <translation>0,25 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.30mm</source>
+        <translation>0,30 mm</translation>
+    </message>
+    <message>
+        <source>0.35mm (ISO)</source>
+        <translation>0,35 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.40mm</source>
+        <translation>0,40 mm</translation>
+    </message>
+    <message>
+        <source>0.50mm (ISO)</source>
+        <translation>0,50 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.53mm</source>
+        <translation>0,53 mm</translation>
+    </message>
+    <message>
+        <source>0.60mm</source>
+        <translation>0,60 mm</translation>
+    </message>
+    <message>
+        <source>0.70mm (ISO)</source>
+        <translation>0,70 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.80mm</source>
+        <translation>0,80 mm</translation>
+    </message>
+    <message>
+        <source>0.90mm</source>
+        <translation>0,90 mm</translation>
+    </message>
+    <message>
+        <source>1.00mm (ISO)</source>
+        <translation>1,00 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>1.06mm</source>
+        <translation>1,06 mm</translation>
+    </message>
+    <message>
+        <source>1.20mm</source>
+        <translation>1,20 mm</translation>
+    </message>
+    <message>
+        <source>1.40mm (ISO)</source>
+        <translation>1,40 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>1.58mm</source>
+        <translation>1,58 mm</translation>
+    </message>
+    <message>
+        <source>2.00mm (ISO)</source>
+        <translation>2,00 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>2.11mm</source>
+        <translation>2,11 mm</translation>
+    </message>
+    <message>
+        <source>- Unchanged -</source>
+        <translation>- Ongewijzigd -</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksSave</name>
+    <message>
+        <source>No block activated to save</source>
+        <translation type="unfinished">Geen blok geactiveerd om op te slaan</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDefault</name>
+    <message>
+        <source>Choose second edge</source>
+        <translation>Kies de tweede rand</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Terug</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleDiam</name>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Geen geldige expressie</translation>
+    </message>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished">Specificeer middelpunt</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify circle radius</source>
+        <translation type="unfinished">Specificeer radius cirkel</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>diameter=%1 is invalid</source>
+        <translation type="unfinished">diameter=%1 is ongeldig</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleInscribe</name>
+    <message>
+        <source>Specify the first line</source>
+        <translation type="unfinished">Specificeer de eerste lijn</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify the second line</source>
+        <translation type="unfinished">Specificeer de tweede lijn</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Specify the third line</source>
+        <translation type="unfinished">Specificeer de derde lijn</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan1_2P</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify the first point on the tangent circle</source>
+        <translation type="unfinished">Specificeer het eerste punt op de raakcirkel</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Specify the second point on the tangent circle</source>
+        <translation type="unfinished">Specificeer het tweede punt op de raakcirkel</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished">Selecteer het middelpunt van de raakcirkel</translation>
+    </message>
+    <message>
+        <source>Specify a line/arc/circle</source>
+        <translation type="unfinished">Specificeer een lijn/boog/cirkel</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan2</name>
+    <message>
+        <source>Specify the first line/arc/circle</source>
+        <translation type="unfinished">Specificeer de eerste lijn/boog/cirkel</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify the second line/arc/circle</source>
+        <translation type="unfinished">Specificeer de tweede lijn/boog/cirkel</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished">Selecteer het middelpunt van de raakcirkel</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan2_1P</name>
+    <message>
+        <source>Specify a line/arc/circle</source>
+        <translation type="unfinished">Specificeer een lijn/boog/cirkel</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify the another arc/circle</source>
+        <translation type="unfinished">Specificeer een andere boog/cirkel</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Specify a point on the tangent circle</source>
+        <translation type="unfinished">Specificeer een punt op de raakcirkel</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished">Selecteer het middelpunt van de raakcirkel</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan3</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished">Selecteer het middelpunt van de raakcirkel</translation>
+    </message>
+    <message>
+        <source>Specify the first line/arc/circle</source>
+        <translation type="unfinished">Specificeer de eerste lijn/boog/cirkel</translation>
+    </message>
+    <message>
+        <source>Specify the second line/arc/circle</source>
+        <translation type="unfinished">Specificeer de tweede lijn/boog/cirkel</translation>
+    </message>
+    <message>
+        <source>Specify the third line/arc/circle</source>
+        <translation type="unfinished">Specificeer derde lijn/boog/cirkel</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipse4Points</name>
+    <message>
+        <source>Specify the first point on ellipse</source>
+        <translation type="unfinished">Specificeer het eerste punt op de ellips</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify the second point on ellipse</source>
+        <translation type="unfinished">Specificeer het tweede punt op de ellips</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Specify the third point on ellipse</source>
+        <translation type="unfinished">Specificeer het derde punt op de ellips</translation>
+    </message>
+    <message>
+        <source>Specify the fourth point on ellipse</source>
+        <translation type="unfinished">Specificeer het vierde punt op de ellips</translation>
+    </message>
+    <message>
+        <source>Can not determine uniquely an ellipse</source>
+        <translation type="unfinished">Kan niet slechts een ellips bepalen</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseCenter3Points</name>
+    <message>
+        <source>Specify the center of ellipse</source>
+        <translation type="unfinished">Specificeer het middelpunt van de ellips</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify the first point on ellipse</source>
+        <translation type="unfinished">Specificeer het eerste punt op de ellips</translation>
+    </message>
+    <message>
+        <source>Specify the second point on ellipse</source>
+        <translation type="unfinished">Specificeer het tweede punt op de ellips</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Specify the third point on ellipse</source>
+        <translation type="unfinished">Specificeer het derde punt op de ellips</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseFociPoint</name>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Geen geldige expressie</translation>
+    </message>
+    <message>
+        <source>Specify first focus of ellipse</source>
+        <translation type="unfinished">Specificeer eerste brandpunt van ellips</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify second focus of ellipse</source>
+        <translation type="unfinished">Specificeer tweede brandpunt van ellips</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Specify a point on ellipse or total distance to foci</source>
+        <translation type="unfinished">Specificeer een punt op de ellips, of de totale afstand tot de brandpunten</translation>
+    </message>
+    <message>
+        <source>specify a point on ellipse, or total distance to foci</source>
+        <translation type="unfinished">specificeer een punt op de ellips, of de totale afstand tot de brandpunten</translation>
+    </message>
+    <message>
+        <source>Total distance %1 is smaller than distance between foci</source>
+        <translation type="unfinished">Totale afstand %1 is kleiner dan afstand tussen brandpunten</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseInscribe</name>
+    <message>
+        <source>Specify the first line</source>
+        <translation type="unfinished">Specificeer de eerste lijn</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify the second line</source>
+        <translation type="unfinished">Specificeer de tweede lijn</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Specify the third line</source>
+        <translation type="unfinished">Specificeer de derde lijn</translation>
+    </message>
+    <message>
+        <source>Specify the fourth line</source>
+        <translation type="unfinished">Specificeer de vierde lijn</translation>
+    </message>
+    <message>
+        <source>Can not determine uniquely an ellipse</source>
+        <translation type="unfinished">Kan niet slechts een ellips bepalen</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawLineOrthTan</name>
+    <message>
+        <source>Select a line</source>
+        <translation type="unfinished">Selecteer een lijn</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Select circle, arc or ellipse</source>
+        <translation type="unfinished">Cirkel, boog of ellips selecteren</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawLinePolygonCorCor</name>
+    <message>
+        <source>Specify first corner</source>
+        <translation type="unfinished">Specificeer eerste hoekpunt</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify second corner</source>
+        <translation type="unfinished">Specificeer tweede hoekpunt</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Aantal:</translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="unfinished">Geen geldig aantal. Probeer 1...9999</translation>
+    </message>
+    <message>
+        <source>Not a valid expression.</source>
+        <translation type="unfinished">Geen geldige expressie.</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawMText</name>
+    <message>
+        <source>Specify insertion point</source>
+        <translation type="unfinished">Specificeer invoegpunt</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Enter text:</source>
+        <translation type="unfinished">Voer tekst in:</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyOffset</name>
+    <message>
+        <source>Specify direction of offset</source>
+        <translation type="unfinished">Specificeer richting van offset</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyShapeText</name>
+    <message>
+        <source>Select text entity</source>
+        <translation type="unfinished">Tekstelement selecteren</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Select entity to shape text to</source>
+        <translation type="unfinished">Element om tekst naar vorm te geven selecteren</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyTrimExcess</name>
+    <message>
+        <source>Select entity to trim</source>
+        <translation type="unfinished">Element om bij te snijden selecteren</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionOrder</name>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">Geen element gevonden.</translation>
+    </message>
+    <message>
+        <source>Choose entity for order</source>
+        <translation type="unfinished">Kies een element voor de opdracht</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionSelect</name>
+    <message>
+        <source>Select to modify attributes</source>
+        <translation type="unfinished">Selecteren om attributen te wijzigen</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Select to delete</source>
+        <translation type="unfinished">Selecteren om te verwijderen</translation>
+    </message>
+    <message>
+        <source>Select to delete immediately</source>
+        <translation type="unfinished">Selecteer om onmiddellijk te verwijderen</translation>
+    </message>
+    <message>
+        <source>Select to move</source>
+        <translation type="unfinished">Selecteren om te verplaatsen</translation>
+    </message>
+    <message>
+        <source>Select to rotate</source>
+        <translation type="unfinished">Selecteren om te roteren</translation>
+    </message>
+    <message>
+        <source>Select to scale</source>
+        <translation type="unfinished">Selecteren om te verschalen</translation>
+    </message>
+    <message>
+        <source>Select to mirror</source>
+        <translation type="unfinished">Selecteren om te spiegelen</translation>
+    </message>
+    <message>
+        <source>Select to move and rotate</source>
+        <translation type="unfinished">Selecteren om te verplaatsen en roteren</translation>
+    </message>
+    <message>
+        <source>Select for two axis rotation</source>
+        <translation type="unfinished">Selecteren voor rotatie met twee assen</translation>
+    </message>
+    <message>
+        <source>Select to explode text</source>
+        <translation type="unfinished">Selecteer om tekst te splitsen</translation>
+    </message>
+    <message>
+        <source>Select to create block</source>
+        <translation type="unfinished">Selecteren om blok aan te maken</translation>
+    </message>
+    <message>
+        <source>Select to copy</source>
+        <translation type="unfinished">Selecteren om te kopiëren</translation>
+    </message>
+    <message>
+        <source>Select to cut</source>
+        <translation type="unfinished">Selecteren om te knippen</translation>
+    </message>
+    <message>
+        <source>No entity selected!</source>
+        <translation type="unfinished">Geen element geselecteerd!</translation>
+    </message>
+    <message>
+        <source>Select to create offset</source>
+        <translation type="unfinished">Selecteren om offset aan te maken</translation>
+    </message>
+    <message>
+        <source>Select entities to order</source>
+        <translation type="unfinished">Selecteer elementen om opdracht te geven</translation>
+    </message>
+    <message>
+        <source>Select to explode block</source>
+        <translation type="unfinished">Selecteren om blok te splitsen</translation>
+    </message>
+    <message>
+        <source>Select to revert direction</source>
+        <translation type="unfinished">Selecteren om richting om te draaien</translation>
+    </message>
+    <message>
+        <source>Select to unlink shaped text</source>
+        <translation type="unfinished">Selecteren om vormgegeven tekst te ontkoppelen</translation>
+    </message>
+</context>
+<context>
     <name>TextFileViewer</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kader</translation>
     </message>
 </context>
 <context>
     <name>Ui_ArcOptions</name>
     <message>
         <source>Arc Options</source>
-        <translation type="unfinished">Boog Opties</translation>
+        <translation type="unfinished">Boogopties</translation>
     </message>
     <message>
         <source>Counterclockwise</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Linksom</translation>
     </message>
     <message>
         <source>Clockwise</source>
@@ -16098,20 +16315,20 @@ Wilt u het vervangen?</translation>
     <name>Ui_ArcTangentialOptions</name>
     <message>
         <source>Tangential Arc Options</source>
-        <translation type="unfinished">Tangentiële Boog Opties</translation>
+        <translation type="unfinished">Tangentiële boogopties</translation>
     </message>
     <message>
         <source>Radius of the tangential arc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Radius van de tangentiële boog</translation>
     </message>
     <message>
         <source>Total subtending angle of the tangential arc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Totale onderspannen hoek van de tangentiële boog</translation>
     </message>
     <message>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Radius</translation>
     </message>
     <message>
         <source>Angle</source>
@@ -16123,15 +16340,15 @@ Wilt u het vervangen?</translation>
     <name>Ui_BevelOptions</name>
     <message>
         <source>Bevel Options</source>
-        <translation type="unfinished">Afschuin Opties</translation>
+        <translation type="unfinished">Afschuinopties</translation>
     </message>
     <message>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">Vink af om beide Elementen tot een Afschuining te trimmen</translation>
+        <translation type="unfinished">Vink aan om beide elementen tot de afschuining bij te snijden</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Bijsnijden</translation>
     </message>
     <message>
         <source>Length 1:</source>
@@ -16146,48 +16363,48 @@ Wilt u het vervangen?</translation>
     <name>Ui_CircleDiamOptions</name>
     <message>
         <source>Circle Options</source>
-        <translation type="unfinished">Cirkel Opties</translation>
+        <translation type="unfinished">Cirkelopties</translation>
     </message>
     <message>
         <source>Diameter:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Diameter:</translation>
     </message>
 </context>
 <context>
     <name>Ui_CircleOptions</name>
     <message>
         <source>Circle Options</source>
-        <translation type="unfinished">Cirkel Opties</translation>
+        <translation type="unfinished">Cirkelopties</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Radius:</translation>
     </message>
 </context>
 <context>
     <name>Ui_CircleTan2Options</name>
     <message>
         <source>Circle Tangential2 Options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Opties cirkel tangentieel2</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius van de te tekenen tangentiële cirkel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Radius:</translation>
     </message>
     <message>
         <source>Radius of tangential circle</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Radius van de tangentiële cirkel</translation>
     </message>
 </context>
 <context>
     <name>Ui_DimLinearOptions</name>
     <message>
         <source>Linear Dimension Options</source>
-        <translation type="unfinished">Liniaire Maat Opties</translation>
+        <translation type="unfinished">Lineaire maatopties</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -16198,7 +16415,7 @@ Wilt u het vervangen?</translation>
     <name>Ui_DimOptions</name>
     <message>
         <source>Dimension Options</source>
-        <translation type="unfinished">Maat Opties</translation>
+        <translation type="unfinished">Maatopties</translation>
     </message>
     <message>
         <source>Label:</source>
@@ -16230,14 +16447,14 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">...</translation>
     </message>
 </context>
 <context>
     <name>Ui_ImageOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation type="unfinished">Invoeg Opties</translation>
+        <translation type="unfinished">Invoegopties</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -16245,7 +16462,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation type="unfinished">Rotatie Hoek</translation>
+        <translation type="unfinished">Rotatiehoek</translation>
     </message>
     <message>
         <source>Factor:</source>
@@ -16253,22 +16470,22 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation type="unfinished">Schaal Factor</translation>
+        <translation type="unfinished">Schaalfactor</translation>
     </message>
     <message>
         <source>DPI</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">DPI</translation>
     </message>
     <message>
         <source>DPI of Image</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">DPI van de afbeelding</translation>
     </message>
 </context>
 <context>
     <name>Ui_InsertOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation type="unfinished">Invoeg Opties</translation>
+        <translation type="unfinished">Invoegopties</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -16276,7 +16493,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation type="unfinished">Rotatie Hoek</translation>
+        <translation type="unfinished">Rotatiehoek</translation>
     </message>
     <message>
         <source>Factor:</source>
@@ -16284,19 +16501,19 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation type="unfinished">Schaal Factor</translation>
+        <translation type="unfinished">Schaalfactor</translation>
     </message>
     <message>
         <source>Array:</source>
-        <translation type="unfinished">Opstelling:</translation>
+        <translation type="unfinished">Array:</translation>
     </message>
     <message>
         <source>Number of Columns</source>
-        <translation type="unfinished">Aantal Kolommen</translation>
+        <translation type="unfinished">Aantal kolommen</translation>
     </message>
     <message>
         <source>Number of Rows</source>
-        <translation type="unfinished">Aantal Rijen</translation>
+        <translation type="unfinished">Aantal rijen</translation>
     </message>
     <message>
         <source>Spacing:</source>
@@ -16304,18 +16521,18 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Column Spacing</source>
-        <translation type="unfinished">Kolom Tussenafstand</translation>
+        <translation type="unfinished">Kolomafstand</translation>
     </message>
     <message>
         <source>Row Spacing</source>
-        <translation type="unfinished">Rij Tussenafstend</translation>
+        <translation type="unfinished">Rijafstand</translation>
     </message>
 </context>
 <context>
     <name>Ui_LibraryInsertOptions</name>
     <message>
         <source>Library Insert Options</source>
-        <translation type="unfinished">Invoeg Opties Bibliotheek</translation>
+        <translation type="unfinished">Bibliotheek invoegopties</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -16323,7 +16540,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation type="unfinished">Rotatie Hoek</translation>
+        <translation type="unfinished">Rotatiehoek</translation>
     </message>
     <message>
         <source>Factor:</source>
@@ -16331,14 +16548,14 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation type="unfinished">Schaal Factor</translation>
+        <translation type="unfinished">Schaalfactor</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineAngleOptions</name>
     <message>
         <source>Line Angle Options</source>
-        <translation type="unfinished">Lijn Hoek Opties</translation>
+        <translation type="unfinished">Lijnhoekopties</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -16346,7 +16563,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation type="unfinished">Lijn Hoek</translation>
+        <translation type="unfinished">Lijnhoek</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -16354,19 +16571,19 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lijnlengte</translation>
     </message>
     <message>
         <source>Snap Point:</source>
-        <translation type="unfinished">Snap Punt:</translation>
+        <translation type="unfinished">Punt snappen:</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished">Start</translation>
+        <translation type="unfinished">Starten</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation type="unfinished">Middel</translation>
+        <translation type="unfinished">Midden</translation>
     </message>
     <message>
         <source>End</source>
@@ -16377,7 +16594,7 @@ Wilt u het vervangen?</translation>
     <name>Ui_LineBisectorOptions</name>
     <message>
         <source>Line Bisector Options</source>
-        <translation type="unfinished">Lijn Bisectice Opties</translation>
+        <translation type="unfinished">Opties middelloodlijn</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -16385,7 +16602,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Length of bisector</source>
-        <translation type="unfinished">Lente van Bisectrice</translation>
+        <translation type="unfinished">Lengte van middelloodlijn</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -16393,18 +16610,18 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Number of bisectors to create</source>
-        <translation type="unfinished">Aantal nieuwe Bisectoren</translation>
+        <translation type="unfinished">Aantal te maken middelloodlijnen</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineOptions</name>
     <message>
         <source>Line Options</source>
-        <translation type="unfinished">Lijn Opties</translation>
+        <translation type="unfinished">Lijnopties</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gesloten omtrek van de getekende lijnen maken</translation>
     </message>
     <message>
         <source>Close</source>
@@ -16412,15 +16629,15 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Laatste getekende lijn ongedaan maken</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Herstel</translation>
+        <translation type="unfinished">Ongedaan maken</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Laatste getekende lijn opnieuw uitvoeren</translation>
     </message>
     <message>
         <source>Redo</source>
@@ -16431,7 +16648,7 @@ Wilt u het vervangen?</translation>
     <name>Ui_LineParallelOptions</name>
     <message>
         <source>Line Parallel Options</source>
-        <translation type="unfinished">Lijn Parallel Opties</translation>
+        <translation type="unfinished">Opties lijnparallel</translation>
     </message>
     <message>
         <source>Distance:</source>
@@ -16439,7 +16656,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Distance to original entity</source>
-        <translation type="unfinished">Afstan tot origineel Element</translation>
+        <translation type="unfinished">Afstand tot oorspronkelijk element</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -16447,14 +16664,14 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aantal aan te maken parallellen</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineParallelThroughOptions</name>
     <message>
         <source>Line Parallel Through Options</source>
-        <translation type="unfinished">Lijn Parallel Door Opties</translation>
+        <translation type="unfinished">Opties lijnparallel door</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -16462,14 +16679,14 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aantal aan te maken parallellen</translation>
     </message>
 </context>
 <context>
     <name>Ui_LinePolygon2Options</name>
     <message>
         <source>Polygon Options</source>
-        <translation type="unfinished">Polygoon Opties</translation>
+        <translation type="unfinished">Polygoonopties</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -16477,14 +16694,14 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation type="unfinished">Aantal Kanten</translation>
+        <translation type="unfinished">Aantal randen</translation>
     </message>
 </context>
 <context>
     <name>Ui_LinePolygonOptions</name>
     <message>
         <source>Polygon Options</source>
-        <translation type="unfinished">Polygoon Opties</translation>
+        <translation type="unfinished">Polygoonopties</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -16492,14 +16709,14 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation type="unfinished">Aantal Kanten</translation>
+        <translation type="unfinished">Aantal randen</translation>
     </message>
 </context>
 <context>
     <name>Ui_LineRelAngleOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished">Lijn Relatieve Hoek Opties</translation>
+        <translation type="unfinished">Relatieve hoekopties lijn</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -16507,7 +16724,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation type="unfinished">Lijn Hoek</translation>
+        <translation type="unfinished">Lijnhoek</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -16515,14 +16732,14 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lijnlengte</translation>
     </message>
 </context>
 <context>
     <name>Ui_MTextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation type="unfinished">Tekst Opties</translation>
+        <translation type="unfinished">Tekstopties</translation>
     </message>
     <message>
         <source>Text:</source>
@@ -16537,7 +16754,7 @@ Wilt u het vervangen?</translation>
     <name>Ui_ModifyOffsetOptions</name>
     <message>
         <source>Modify Offset Options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Offset-opties wijzigen</translation>
     </message>
     <message>
         <source>Distance:</source>
@@ -16545,14 +16762,14 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Offset from original entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Offset van oorspronkelijke element</translation>
     </message>
 </context>
 <context>
     <name>Ui_MoveRotateOptions</name>
     <message>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">Verplaats Roteer Opties</translation>
+        <translation type="unfinished">Verplaats-/roteeropties</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -16563,7 +16780,7 @@ Wilt u het vervangen?</translation>
     <name>Ui_PolylineOptions</name>
     <message>
         <source>Polyline Options</source>
-        <translation type="unfinished">Vrije vorm Opties</translation>
+        <translation type="unfinished">Polylijnopties</translation>
     </message>
     <message>
         <source>Close</source>
@@ -16571,7 +16788,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Herstel</translation>
+        <translation type="unfinished">Ongedaan maken</translation>
     </message>
     <message>
         <source>Line</source>
@@ -16583,7 +16800,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Tan Radius</source>
-        <translation type="unfinished">Tan Radius</translation>
+        <translation type="unfinished">Raaklijnradius</translation>
     </message>
     <message>
         <source>Angle</source>
@@ -16591,7 +16808,7 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Radius:</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -16610,19 +16827,19 @@ Wilt u het vervangen?</translation>
     <name>Ui_PrintPreviewOptions</name>
     <message>
         <source>Print Preview Options</source>
-        <translation type="unfinished">Afdruk Voorbeeld Opties</translation>
+        <translation type="unfinished">Opties afdrukvoorbeeld</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Afdrukschaal is vergrendeld op de huidige waarde&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>fixed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">vast</translation>
     </message>
     <message>
         <source>Toggle Black / White mode</source>
-        <translation type="unfinished">Wissel Zwart / Wit-modus</translation>
+        <translation type="unfinished">Zwart-witmodus aan/uit zetten</translation>
     </message>
     <message>
         <source>Center to page</source>
@@ -16630,48 +16847,48 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Fit to page</source>
-        <translation type="unfinished">Passend op pagina</translation>
+        <translation type="unfinished">Aanpassen aan pagina</translation>
     </message>
     <message>
         <source>Calculate number of pages needed to contain the drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bereken het aantal benodigde pagina&apos;s voor de tekening.</translation>
     </message>
 </context>
 <context>
     <name>Ui_RoundOptions</name>
     <message>
         <source>Round Options</source>
-        <translation type="unfinished">Afrond Opties</translation>
+        <translation type="unfinished">Afrondopties</translation>
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
-        <translation type="unfinished">Vink af om beide elementen tot een afronding te trimmen</translation>
+        <translation type="unfinished">Vink aan om beide randen tot de afronding bij te snijden</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Bijsnijden</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Radius:</translation>
     </message>
 </context>
 <context>
     <name>Ui_ShapeTextOptions</name>
     <message>
         <source>Shape Text Options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Opties tekstvormgeving</translation>
     </message>
     <message>
         <source>Offset:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Offset:</translation>
     </message>
 </context>
 <context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation type="unfinished">Snap Afstand Opties</translation>
+        <translation type="unfinished">Opties snapafstand</translation>
     </message>
     <message>
         <source>Distance:</source>
@@ -16682,22 +16899,22 @@ Wilt u het vervangen?</translation>
     <name>Ui_SnapMiddleOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation type="unfinished">Snap Afstand Opties</translation>
+        <translation type="unfinished">Opties snapafstand</translation>
     </message>
     <message>
         <source>Middle Points:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Middenpunten:</translation>
     </message>
     <message>
         <source>Number of equidistant division points</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aantal verdeelpunten op gelijke afstand</translation>
     </message>
 </context>
 <context>
     <name>Ui_SplineOptions</name>
     <message>
         <source>Spline Options</source>
-        <translation type="unfinished">Spline Opties</translation>
+        <translation type="unfinished">Spieopties</translation>
     </message>
     <message>
         <source>Degree:</source>
@@ -16709,14 +16926,14 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Herstel</translation>
+        <translation type="unfinished">Ongedaan maken</translation>
     </message>
 </context>
 <context>
     <name>Ui_TextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation type="unfinished">Tekst Opties</translation>
+        <translation type="unfinished">Tekstopties</translation>
     </message>
     <message>
         <source>Text:</source>
@@ -16731,11 +16948,11 @@ Wilt u het vervangen?</translation>
     <name>Ui_TrimAmountOptions</name>
     <message>
         <source>Trim Amount Options</source>
-        <translation type="unfinished">Trim Hoeveelheid Opties</translation>
+        <translation type="unfinished">Opties bijsnijdhoeveelheid</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="unfinished">Afstand. Negatieve waarden trimmen, positieve verlengen.</translation>
+        <translation type="unfinished">Afstand. Negatieve waarden voor bijsnijden, positieve waarden voor uitbreiden.</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -16743,46 +16960,46 @@ Wilt u het vervangen?</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Afstand. Negatieve waarden voor bijsnijden, positieve waarden voor uitbreiden. De negatieve melding wordt genegeerd bij bijsnijden tot de uiteindelijke totale lengte.</translation>
     </message>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">De invoerlengte wordt gebruikt als de totale lengte na bijwerken en niet als toename in lengte</translation>
     </message>
 </context>
 <context>
     <name>WidgetCreator</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kader</translation>
     </message>
     <message>
         <source>&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&gt;</translation>
     </message>
     <message>
         <source>&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Naam</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aanmaken</translation>
     </message>
     <message>
         <source>Destroy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vernietigen</translation>
     </message>
     <message>
         <source>Assign</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Toekennen</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Updaten</translation>
     </message>
 </context>
 </TS>

@@ -32,25 +32,6 @@
     </message>
 </context>
 <context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Markoa</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="obsolete">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="obsolete">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Gorde</translation>
-    </message>
-</context>
-<context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
@@ -475,10 +456,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>&amp;Ispilua</translation>
     </message>
     <message>
-        <source>M&amp;ove and Rotate</source>
-        <translation type="obsolete">M&amp;ugitu eta Biratu</translation>
-    </message>
-    <message>
         <source>Rotate T&amp;wo</source>
         <translation>Biratu Bi&amp;</translation>
     </message>
@@ -491,16 +468,8 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>&amp;Moztu</translation>
     </message>
     <message>
-        <source>&amp;Trim Two</source>
-        <translation type="obsolete">&amp; Moztu Bi</translation>
-    </message>
-    <message>
         <source>&amp;Lengthen</source>
         <translation>&amp;Luzatu</translation>
-    </message>
-    <message>
-        <source>&amp;Offset</source>
-        <translation type="obsolete">&amp;Offset</translation>
     </message>
     <message>
         <source>&amp;Divide</source>
@@ -691,10 +660,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="vanished">Export as &amp;MakerCAM SVG...</translation>
     </message>
     <message>
-        <source>Regenerate Dimension Entities</source>
-        <translation type="obsolete">Entitateen Neurriak Birsortu</translation>
-    </message>
-    <message>
         <source>Zoom &amp;In</source>
         <translation>Zoom &amp;In</translation>
     </message>
@@ -767,18 +732,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>&amp;Pantalla osoa</translation>
     </message>
     <message>
-        <source>Ctrl+Meta+F</source>
-        <translation type="obsolete">Ctrl+Meta+F</translation>
-    </message>
-    <message>
-        <source>F11</source>
-        <translation type="obsolete">F11</translation>
-    </message>
-    <message>
-        <source>Ctrl+F11</source>
-        <translation type="obsolete">Ctrl+F11</translation>
-    </message>
-    <message>
         <source>&amp;Grid</source>
         <translation>&amp;Sarea</translation>
     </message>
@@ -849,10 +802,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>O&amp;ffset</translation>
     </message>
     <message>
-        <source>Create Double-click Menu</source>
-        <translation type="obsolete">Klik Bikoitza Menua Sortu</translation>
-    </message>
-    <message>
         <source>Menu Creator</source>
         <translation>Menu Sortzailea</translation>
     </message>
@@ -904,19 +853,44 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Save A&amp;ll...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>M&amp;ove and Rotate</source>
+        <translation type="obsolete">M&amp;ugitu eta Biratu</translation>
+    </message>
+    <message>
+        <source>&amp;Trim Two</source>
+        <translation type="obsolete">&amp; Moztu Bi</translation>
+    </message>
+    <message>
+        <source>&amp;Offset</source>
+        <translation type="obsolete">&amp;Offset</translation>
+    </message>
+    <message>
+        <source>Regenerate Dimension Entities</source>
+        <translation type="obsolete">Entitateen Neurriak Birsortu</translation>
+    </message>
+    <message>
+        <source>Ctrl+Meta+F</source>
+        <translation type="obsolete">Ctrl+Meta+F</translation>
+    </message>
+    <message>
+        <source>F11</source>
+        <translation type="obsolete">F11</translation>
+    </message>
+    <message>
+        <source>Ctrl+F11</source>
+        <translation type="obsolete">Ctrl+F11</translation>
+    </message>
+    <message>
+        <source>Create Double-click Menu</source>
+        <translation type="obsolete">Klik Bikoitza Menua Sortu</translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
     <message>
         <source>Export as</source>
         <translation>Esportatu honela</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="obsolete">Gaineratu edo Kendu Akzioa</translation>
     </message>
 </context>
 <context>
@@ -931,19 +905,19 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Mouse</source>
-        <translation type="obsolete">Sagua</translation>
+        <translation type="unfinished">Sagua</translation>
     </message>
     <message>
         <source>Tablet</source>
-        <translation type="obsolete">Tableta</translation>
+        <translation type="unfinished">Tableta</translation>
     </message>
     <message>
         <source>Trackpad</source>
-        <translation type="obsolete">Trackpad</translation>
+        <translation type="unfinished">Trackpad</translation>
     </message>
     <message>
         <source>Touchscreen</source>
-        <translation type="obsolete">Pantaila</translation>
+        <translation type="unfinished">Pantaila</translation>
     </message>
     <message>
         <source>Save</source>
@@ -1114,32 +1088,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>&amp;Elipsea</translation>
     </message>
     <message>
-        <source>&amp;Draw</source>
-        <translation type="obsolete">&amp;Marraztu</translation>
-    </message>
-    <message>
-        <source>&amp;Dimension</source>
-        <translation type="obsolete">&amp;Kotatu</translation>
-    </message>
-    <message>
         <source>&amp;Modify</source>
         <translation>&amp;Eraldatu</translation>
     </message>
     <message>
-        <source>&amp;Snap</source>
-        <translation type="obsolete">&amp;Bortxatu</translation>
-    </message>
-    <message>
         <source>&amp;Info</source>
         <translation>&amp;Argibideak</translation>
-    </message>
-    <message>
-        <source>&amp;Layer</source>
-        <translation type="obsolete">&amp;Geruza</translation>
-    </message>
-    <message>
-        <source>&amp;Block</source>
-        <translation type="obsolete">&amp;Blokea</translation>
     </message>
     <message>
         <source>About</source>
@@ -1184,10 +1138,6 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Exiting application...</source>
         <translation>Aplikaziotik aterazen...</translation>
-    </message>
-    <message>
-        <source>About...</source>
-        <translation type="obsolete">Honi buruz...</translation>
     </message>
     <message>
         <source>Layer List</source>
@@ -1270,18 +1220,6 @@ Please check the permissions.</source>
 Baimenak ikusi</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation type="obsolete">Bat ere ez</translation>
-    </message>
-    <message>
-        <source>Modules: %1</source>
-        <translation type="obsolete">Moduluak: %1</translation>
-    </message>
-    <message>
-        <source>&amp;Window</source>
-        <translation type="obsolete">&amp;Leihoa</translation>
-    </message>
-    <message>
         <source>&amp;Polyline</source>
         <translation>&amp;Polilinea</translation>
     </message>
@@ -1316,24 +1254,8 @@ Baimenak ikusi.
         <translation>Konpilatzen: %1</translation>
     </message>
     <message>
-        <source>Program Icons Supplied by</source>
-        <translation type="obsolete">Programaren ikonoen egilea </translation>
-    </message>
-    <message>
-        <source>Splash and Logo supplied by</source>
-        <translation type="obsolete">Ongi etorri eta Logoaren egilea </translation>
-    </message>
-    <message>
-        <source>Main Website : </source>
-        <translation type="obsolete">Webgune Nagusia</translation>
-    </message>
-    <message>
         <source>Version: %1</source>
         <translation>Bertsioa: %1</translation>
-    </message>
-    <message>
-        <source>SCM Revision: %1</source>
-        <translation type="obsolete">SCM Berrikuspena: %1</translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
@@ -1346,10 +1268,6 @@ Baimenak ikusi.
     <message>
         <source> , please check the filename and permissions.</source>
         <translation>    , mesedez, izena eta baimenak ikusi.</translation>
-    </message>
-    <message>
-        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
-        <translation type="obsolete">LibreCAD eta webgunea mantentzeko, diru laguntza eskertuko genuke.</translation>
     </message>
     <message>
         <source>Su&amp;b-Window mode</source>
@@ -1406,10 +1324,6 @@ Baimenak ikusi.
     <message>
         <source>Compiler: GNU GCC %1.%2.%3</source>
         <translation>Konpilatzailea: GNU GCC %1.%2.%3</translation>
-    </message>
-    <message>
-        <source>Compiler: Microsoft Visual C++&lt;br&gt;</source>
-        <translation type="obsolete">Konpilatzailea: Microsoft Visual C++&lt;br&gt;</translation>
     </message>
     <message>
         <source>Qt Version: %1</source>
@@ -1480,10 +1394,6 @@ Ikus ea dagoen eta baimenak.</translation>
         <translation>Polilinea</translation>
     </message>
     <message>
-        <source>Misc</source>
-        <translation type="obsolete">Misc</translation>
-    </message>
-    <message>
         <source>Dimension</source>
         <translation>Neurria</translation>
     </message>
@@ -1498,14 +1408,6 @@ Ikus ea dagoen eta baimenak.</translation>
     <message>
         <source>Pen</source>
         <translation>Arkatza</translation>
-    </message>
-    <message>
-        <source>Custom</source>
-        <translation type="obsolete">Custom</translation>
-    </message>
-    <message>
-        <source>Online (Wiki)</source>
-        <translation type="obsolete">Online (Wiki)</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
@@ -1540,20 +1442,12 @@ Ikus ea dagoen eta baimenak.</translation>
         <translation>&amp;Aukerak</translation>
     </message>
     <message>
-        <source>Double-click Menu Creator</source>
-        <translation type="obsolete">Double-click Menu Creator</translation>
-    </message>
-    <message>
         <source>Pl&amp;ugins</source>
         <translation>Pl&amp;uginak</translation>
     </message>
     <message>
         <source>Dime&amp;nsion</source>
         <translation>Neurr&amp;iak</translation>
-    </message>
-    <message>
-        <source>Sna&amp;p</source>
-        <translation type="obsolete">Sna&amp;p</translation>
     </message>
     <message>
         <source>Dock Wid&amp;gets</source>
@@ -1707,6 +1601,109 @@ Ikus ea dagoen eta baimenak.</translation>
     <message>
         <source>LibreCAD Help</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paper settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paper size and/or margins have been changed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to apply changes to current drawing?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawing settings:
+	size: %1 x %2 (%3)
+	margins: %4, %5, %6, %7
+
+Printer settings:
+	size: %8 x %9 (%10)
+	margins: %11, %12, %13, %14
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Draw</source>
+        <translation type="obsolete">&amp;Marraztu</translation>
+    </message>
+    <message>
+        <source>&amp;Dimension</source>
+        <translation type="obsolete">&amp;Kotatu</translation>
+    </message>
+    <message>
+        <source>&amp;Snap</source>
+        <translation type="obsolete">&amp;Bortxatu</translation>
+    </message>
+    <message>
+        <source>&amp;Layer</source>
+        <translation type="obsolete">&amp;Geruza</translation>
+    </message>
+    <message>
+        <source>&amp;Block</source>
+        <translation type="obsolete">&amp;Blokea</translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation type="obsolete">Honi buruz...</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="obsolete">Bat ere ez</translation>
+    </message>
+    <message>
+        <source>Modules: %1</source>
+        <translation type="obsolete">Moduluak: %1</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <translation type="obsolete">&amp;Leihoa</translation>
+    </message>
+    <message>
+        <source>Program Icons Supplied by</source>
+        <translation type="obsolete">Programaren ikonoen egilea </translation>
+    </message>
+    <message>
+        <source>Splash and Logo supplied by</source>
+        <translation type="obsolete">Ongi etorri eta Logoaren egilea </translation>
+    </message>
+    <message>
+        <source>Main Website : </source>
+        <translation type="obsolete">Webgune Nagusia</translation>
+    </message>
+    <message>
+        <source>SCM Revision: %1</source>
+        <translation type="obsolete">SCM Berrikuspena: %1</translation>
+    </message>
+    <message>
+        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
+        <translation type="obsolete">LibreCAD eta webgunea mantentzeko, diru laguntza eskertuko genuke.</translation>
+    </message>
+    <message>
+        <source>Compiler: Microsoft Visual C++&lt;br&gt;</source>
+        <translation type="obsolete">Konpilatzailea: Microsoft Visual C++&lt;br&gt;</translation>
+    </message>
+    <message>
+        <source>Misc</source>
+        <translation type="obsolete">Misc</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="obsolete">Custom</translation>
+    </message>
+    <message>
+        <source>Online (Wiki)</source>
+        <translation type="obsolete">Online (Wiki)</translation>
+    </message>
+    <message>
+        <source>Double-click Menu Creator</source>
+        <translation type="obsolete">Double-click Menu Creator</translation>
+    </message>
+    <message>
+        <source>Sna&amp;p</source>
+        <translation type="obsolete">Sna&amp;p</translation>
     </message>
 </context>
 <context>
@@ -1876,6 +1873,10 @@ beste lehio batean</translation>
         <source>Looking for matching block names</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ColorBox</name>
@@ -2001,10 +2002,6 @@ beste lehio batean</translation>
         <translation>Erabilitako komanduen zerrenda eta irteerak</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;type in coordinates or commands&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;koordenatuak edo komanduak tekleatu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation>atzera</translation>
@@ -2012,6 +2009,10 @@ beste lehio batean</translation>
     <message>
         <source>...</source>
         <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;type in coordinates or commands&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;koordenatuak edo komanduak tekleatu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -2506,10 +2507,6 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
     <message>
         <source>&amp;Height:</source>
         <translation>&amp;Altuera:</translation>
-    </message>
-    <message>
-        <source>Line &amp;spacing:</source>
-        <translation type="obsolete">&amp;Lerroen tartea:</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
@@ -3102,6 +3099,10 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
     <message>
         <source>...</source>
         <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Line &amp;spacing:</source>
+        <translation type="obsolete">&amp;Lerroen tartea:</translation>
     </message>
 </context>
 <context>
@@ -3928,6 +3929,34 @@ Mesedez, aukeratu irudian erabili nahi dituzun unitateak eta hizkuntza.&lt;br&gt
     </message>
     <message>
         <source>Automatically zoom drawing when opening</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spiderweb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished">Zirkulua</translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Square</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5117,6 +5146,10 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>&amp;Lock all Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7349,6 +7382,122 @@ Do you want to replace it?</source>
         <source>noname</source>
         <comment>default layer name</comment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished">Custom</translation>
+    </message>
+    <message>
+        <source>Letter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Legal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Executive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ledger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tabloid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NPageSize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spiderweb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export to ProNest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open ProNest before exporting the drawing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dock Areas</source>
+        <translation type="unfinished">Dock Areas</translation>
+    </message>
+    <message>
+        <source>Mouse</source>
+        <translation type="unfinished">Sagua</translation>
+    </message>
+    <message>
+        <source>Tablet</source>
+        <translation type="unfinished">Tableta</translation>
+    </message>
+    <message>
+        <source>Trackpad</source>
+        <translation type="unfinished">Trackpad</translation>
+    </message>
+    <message>
+        <source>Touchscreen</source>
+        <translation type="unfinished">Pantaila</translation>
     </message>
 </context>
 <context>
@@ -10422,6 +10571,32 @@ Do you want to replace it?</source>
     <message>
         <source>Update</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CustomWidgetCreator</name>
+    <message>
+        <source>Frame</source>
+        <translation type="obsolete">Markoa</translation>
+    </message>
+    <message>
+        <source>-&gt;</source>
+        <translation type="obsolete">-&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;-</source>
+        <translation type="obsolete">&lt;-</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="obsolete">Gorde</translation>
+    </message>
+</context>
+<context>
+    <name>LC_CustomToolbar</name>
+    <message>
+        <source>Add or Remove Action</source>
+        <translation type="obsolete">Gaineratu edo Kendu Akzioa</translation>
     </message>
 </context>
 </TS>

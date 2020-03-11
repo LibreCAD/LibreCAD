@@ -24,8 +24,14 @@
 
 #include "lc_deviceoptions.h"
 #include "ui_lc_deviceoptions.h"
+#include "rs.h"
+#include "rs_units.h"
 
 #include <QSettings>
+
+static const RS2::InputDeviceType InputDeviceTypes[] = {
+	RS2::InputDeviceMouse, RS2::InputDeviceTablet, RS2::InputDeviceTrackpad, RS2::InputDeviceTouchscreen
+};
 
 LC_DeviceOptions::LC_DeviceOptions(QWidget* parent) :
     QFrame(parent),
@@ -33,10 +39,16 @@ LC_DeviceOptions::LC_DeviceOptions(QWidget* parent) :
 {
     ui->setupUi(this);
 
-    QSettings settings;
-    const QString device = settings.value("Hardware/Device", "Mouse").toString();
-    int index = ui->device_combobox->findText(device);
-    ui->device_combobox->setCurrentIndex(index);
+	QSettings settings;
+    ui->device_combobox->clear();
+	for (const auto e : InputDeviceTypes)
+		ui->device_combobox->addItem(RS_Units::inputDeviceTypeToString(e));
+	int device_type = settings.value("Hardware/DeviceType", -1).toInt();
+	QString device = settings.value("Hardware/Device", "Mouse").toString();
+	if (device_type != -1)
+		device = RS_Units::inputDeviceTypeToString(static_cast<RS2::InputDeviceType>(device_type));
+	int index = ui->device_combobox->findText(device);
+	ui->device_combobox->setCurrentIndex(index == -1 ? 0 : index);
 
     connect(ui->save_button, SIGNAL(pressed()), this, SLOT(save()));
     connect(ui->save_button, SIGNAL(released()), parent, SLOT(close()));
@@ -55,4 +67,5 @@ void LC_DeviceOptions::save()
 
     QSettings settings;
     settings.setValue("Hardware/Device", device);
+	settings.setValue("Hardware/DeviceType", RS_Units::stringToInputDeviceType(device));
 }

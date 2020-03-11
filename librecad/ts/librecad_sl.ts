@@ -628,24 +628,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Preferences</source>
-        <translation type="obsolete">&amp;Nastavitve</translation>
-    </message>
-    <message>
         <source>&amp;Application Preferences</source>
         <translation type="unfinished">&amp;Nastavitve programa</translation>
     </message>
     <message>
         <source>Current &amp;Drawing Preferences</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open IDE</source>
-        <translation type="obsolete">Open IDE</translation>
-    </message>
-    <message>
-        <source>Run Script..</source>
-        <translation type="obsolete">Zaženi skript...</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
@@ -747,10 +735,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Draft</source>
-        <translation type="obsolete">&amp;Draft</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
@@ -861,6 +845,22 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Save A&amp;ll...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;Preferences</source>
+        <translation type="obsolete">&amp;Nastavitve</translation>
+    </message>
+    <message>
+        <source>Open IDE</source>
+        <translation type="obsolete">Open IDE</translation>
+    </message>
+    <message>
+        <source>Run Script..</source>
+        <translation type="obsolete">Zaženi skript...</translation>
+    </message>
+    <message>
+        <source>&amp;Draft</source>
+        <translation type="obsolete">&amp;Draft</translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -881,6 +881,22 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mouse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tablet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trackpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Touchscreen</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1002,12 +1018,12 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>QC_ActionGetPoint</name>
     <message>
-        <source>Specify a point</source>
-        <translation type="obsolete">Določi točko</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation>Prekliči</translation>
+    </message>
+    <message>
+        <source>Specify a point</source>
+        <translation type="obsolete">Določi točko</translation>
     </message>
 </context>
 <context>
@@ -1032,10 +1048,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>&amp;Urejanje</translation>
     </message>
     <message>
-        <source>Focus on &amp;Command Line</source>
-        <translation type="obsolete">Osredotoči na komandno vrsti&amp;co</translation>
-    </message>
-    <message>
         <source>&amp;View</source>
         <translation>&amp;Pogled</translation>
     </message>
@@ -1048,10 +1060,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>&amp;Črta</translation>
     </message>
     <message>
-        <source>&amp;Arc</source>
-        <translation type="obsolete">&amp;Lok</translation>
-    </message>
-    <message>
         <source>&amp;Circle</source>
         <translation>&amp;Krog</translation>
     </message>
@@ -1060,48 +1068,20 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>&amp;Elipsa</translation>
     </message>
     <message>
-        <source>&amp;Draw</source>
-        <translation type="obsolete">&amp;Risanje</translation>
-    </message>
-    <message>
-        <source>&amp;Dimension</source>
-        <translation type="obsolete">&amp;Dimenzija</translation>
-    </message>
-    <message>
         <source>&amp;Modify</source>
         <translation>&amp;Uredi</translation>
-    </message>
-    <message>
-        <source>&amp;Snap</source>
-        <translation type="obsolete">&amp;Pritrdi</translation>
     </message>
     <message>
         <source>&amp;Info</source>
         <translation>&amp;Info</translation>
     </message>
     <message>
-        <source>&amp;Layer</source>
-        <translation type="obsolete">P&amp;last</translation>
-    </message>
-    <message>
-        <source>&amp;Block</source>
-        <translation type="obsolete">&amp;Blok</translation>
-    </message>
-    <message>
         <source>About</source>
         <translation>O...</translation>
     </message>
     <message>
-        <source>&amp;Scripts</source>
-        <translation type="obsolete">&amp;Skripte</translation>
-    </message>
-    <message>
         <source>&amp;Help</source>
         <translation>Po&amp;moč</translation>
-    </message>
-    <message>
-        <source>De&amp;bugging</source>
-        <translation type="obsolete">De&amp;bugging</translation>
     </message>
     <message>
         <source>&amp;Cascade</source>
@@ -1142,10 +1122,6 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Exiting application...</source>
         <translation>Zapiram program...</translation>
-    </message>
-    <message>
-        <source>About...</source>
-        <translation type="obsolete">O...</translation>
     </message>
     <message>
         <source>Layer List</source>
@@ -1228,36 +1204,8 @@ Please check the permissions.</source>
 Prosim, preverite dovoljenja.</translation>
     </message>
     <message>
-        <source>&amp;Manual</source>
-        <translation type="obsolete">&amp;Navodila</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="obsolete">Brez</translation>
-    </message>
-    <message>
-        <source>Modules: %1</source>
-        <translation type="obsolete">Moduli: %1</translation>
-    </message>
-    <message>
-        <source>&amp;Window</source>
-        <translation type="obsolete">&amp;Okno</translation>
-    </message>
-    <message>
-        <source>Running script &apos;%1&apos;</source>
-        <translation type="obsolete">Poganjam skript &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Inserting block &apos;%1&apos;</source>
-        <translation type="obsolete">Vstavljam blok &apos;%1&apos;</translation>
-    </message>
-    <message>
         <source>&amp;Polyline</source>
         <translation>&amp;Lomljenka</translation>
-    </message>
-    <message>
-        <source>Insert Image</source>
-        <translation type="obsolete">Vstavi sliko</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
@@ -1278,14 +1226,6 @@ Prosim,preverite dovoljenja.
 Samodejno shranjevanje zaustalvjeno.</translation>
     </message>
     <message>
-        <source>Help</source>
-        <translation type="obsolete">Pomoč</translation>
-    </message>
-    <message>
-        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
-        <translation type="obsolete">Težave, ni bilo mogoče najti datotek s pomočjo.</translation>
-    </message>
-    <message>
         <source>Import</source>
         <translation>Uvoz</translation>
     </message>
@@ -1298,28 +1238,8 @@ Samodejno shranjevanje zaustalvjeno.</translation>
         <translation>Prevedeno na: %1</translation>
     </message>
     <message>
-        <source>Program Icons Supplied by</source>
-        <translation type="obsolete">Programske ikone uredili pri</translation>
-    </message>
-    <message>
-        <source>Splash and Logo supplied by</source>
-        <translation type="obsolete">Zagonska slika in logo uredili pri </translation>
-    </message>
-    <message>
-        <source>Main Website : </source>
-        <translation type="obsolete">Glavna spletna stran :</translation>
-    </message>
-    <message>
         <source>Version: %1</source>
         <translation>Verzija: %1</translation>
-    </message>
-    <message>
-        <source>SCM Revision: %1</source>
-        <translation type="obsolete">SCM Revizija: %1</translation>
-    </message>
-    <message>
-        <source>&amp;%1 %2</source>
-        <translation type="obsolete">&amp;%1 %2</translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
@@ -1334,10 +1254,6 @@ Samodejno shranjevanje zaustalvjeno.</translation>
         <translation> , prosim preverite ime datoteke in dovoljenja.</translation>
     </message>
     <message>
-        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
-        <translation type="obsolete">Prosim razmislite o donaciji za LibreCAD kot pomoč pri vzdrževanju kode in spletne strani.</translation>
-    </message>
-    <message>
         <source>Su&amp;b-Window mode</source>
         <translation type="vanished">Način Po&amp;d-Okno</translation>
     </message>
@@ -1348,10 +1264,6 @@ Samodejno shranjevanje zaustalvjeno.</translation>
     <message>
         <source>Ta&amp;b mode</source>
         <translation>Način z zavi&amp;hki</translation>
-    </message>
-    <message>
-        <source>Draw &amp;Order</source>
-        <translation type="obsolete">Vrstni red &amp;risanja</translation>
     </message>
     <message>
         <source>New document from template: </source>
@@ -1378,20 +1290,12 @@ Samodejno shranjevanje zaustalvjeno.</translation>
         <translation>Pogled</translation>
     </message>
     <message>
-        <source>Pen Selection</source>
-        <translation type="obsolete">Izbira peresa</translation>
-    </message>
-    <message>
         <source>Snap Selection</source>
         <translation>Izbira pripenjanja</translation>
     </message>
     <message>
         <source>Tool Options</source>
         <translation>Možnosti orodij</translation>
-    </message>
-    <message>
-        <source>CAD Tools</source>
-        <translation type="obsolete">CAD orodja</translation>
     </message>
     <message>
         <source>Export as</source>
@@ -1406,16 +1310,8 @@ Samodejno shranjevanje zaustalvjeno.</translation>
         <translation>Prevajalnik: GNU GCC %1.%2.%3</translation>
     </message>
     <message>
-        <source>Compiler: Microsoft Visual C++&lt;br&gt;</source>
-        <translation type="obsolete">Prevajalnik: microsoft Visual C++&lt;br&gt;</translation>
-    </message>
-    <message>
         <source>Qt Version: %1</source>
         <translation>Qt verzija: %1</translation>
-    </message>
-    <message>
-        <source>Help files not found</source>
-        <translation type="obsolete">Datotek s pomočjo ni mogoče najti</translation>
     </message>
     <message>
         <source>Export as PDF</source>
@@ -1668,6 +1564,149 @@ Please check its existence and permissions.</source>
         <source>LibreCAD Help</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Paper settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paper size and/or margins have been changed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to apply changes to current drawing?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawing settings:
+	size: %1 x %2 (%3)
+	margins: %4, %5, %6, %7
+
+Printer settings:
+	size: %8 x %9 (%10)
+	margins: %11, %12, %13, %14
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Focus on &amp;Command Line</source>
+        <translation type="obsolete">Osredotoči na komandno vrsti&amp;co</translation>
+    </message>
+    <message>
+        <source>&amp;Arc</source>
+        <translation type="obsolete">&amp;Lok</translation>
+    </message>
+    <message>
+        <source>&amp;Draw</source>
+        <translation type="obsolete">&amp;Risanje</translation>
+    </message>
+    <message>
+        <source>&amp;Dimension</source>
+        <translation type="obsolete">&amp;Dimenzija</translation>
+    </message>
+    <message>
+        <source>&amp;Snap</source>
+        <translation type="obsolete">&amp;Pritrdi</translation>
+    </message>
+    <message>
+        <source>&amp;Layer</source>
+        <translation type="obsolete">P&amp;last</translation>
+    </message>
+    <message>
+        <source>&amp;Block</source>
+        <translation type="obsolete">&amp;Blok</translation>
+    </message>
+    <message>
+        <source>&amp;Scripts</source>
+        <translation type="obsolete">&amp;Skripte</translation>
+    </message>
+    <message>
+        <source>De&amp;bugging</source>
+        <translation type="obsolete">De&amp;bugging</translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation type="obsolete">O...</translation>
+    </message>
+    <message>
+        <source>&amp;Manual</source>
+        <translation type="obsolete">&amp;Navodila</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="obsolete">Brez</translation>
+    </message>
+    <message>
+        <source>Modules: %1</source>
+        <translation type="obsolete">Moduli: %1</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <translation type="obsolete">&amp;Okno</translation>
+    </message>
+    <message>
+        <source>Running script &apos;%1&apos;</source>
+        <translation type="obsolete">Poganjam skript &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Inserting block &apos;%1&apos;</source>
+        <translation type="obsolete">Vstavljam blok &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="obsolete">Vstavi sliko</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation type="obsolete">Pomoč</translation>
+    </message>
+    <message>
+        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
+        <translation type="obsolete">Težave, ni bilo mogoče najti datotek s pomočjo.</translation>
+    </message>
+    <message>
+        <source>Program Icons Supplied by</source>
+        <translation type="obsolete">Programske ikone uredili pri</translation>
+    </message>
+    <message>
+        <source>Splash and Logo supplied by</source>
+        <translation type="obsolete">Zagonska slika in logo uredili pri </translation>
+    </message>
+    <message>
+        <source>Main Website : </source>
+        <translation type="obsolete">Glavna spletna stran :</translation>
+    </message>
+    <message>
+        <source>SCM Revision: %1</source>
+        <translation type="obsolete">SCM Revizija: %1</translation>
+    </message>
+    <message>
+        <source>&amp;%1 %2</source>
+        <translation type="obsolete">&amp;%1 %2</translation>
+    </message>
+    <message>
+        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
+        <translation type="obsolete">Prosim razmislite o donaciji za LibreCAD kot pomoč pri vzdrževanju kode in spletne strani.</translation>
+    </message>
+    <message>
+        <source>Draw &amp;Order</source>
+        <translation type="obsolete">Vrstni red &amp;risanja</translation>
+    </message>
+    <message>
+        <source>Pen Selection</source>
+        <translation type="obsolete">Izbira peresa</translation>
+    </message>
+    <message>
+        <source>CAD Tools</source>
+        <translation type="obsolete">CAD orodja</translation>
+    </message>
+    <message>
+        <source>Compiler: Microsoft Visual C++&lt;br&gt;</source>
+        <translation type="obsolete">Prevajalnik: microsoft Visual C++&lt;br&gt;</translation>
+    </message>
+    <message>
+        <source>Help files not found</source>
+        <translation type="obsolete">Datotek s pomočjo ni mogoče najti</translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -1699,65 +1738,6 @@ Please check its existence and permissions.</source>
     </message>
 </context>
 <context>
-    <name>QG_ActionFactory</name>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="obsolete">&amp;Zapri</translation>
-    </message>
-    <message>
-        <source>&amp;Grid</source>
-        <translation type="obsolete">&amp;Mreža</translation>
-    </message>
-    <message>
-        <source>&amp;Application Preferences</source>
-        <translation type="obsolete">&amp;Nastavitve programa</translation>
-    </message>
-    <message>
-        <source>&amp;Statusbar</source>
-        <translation type="obsolete">&amp;Statusna vrstica</translation>
-    </message>
-    <message>
-        <source>&amp;Draft</source>
-        <translation type="obsolete">&amp;Draft</translation>
-    </message>
-    <message>
-        <source>Open IDE</source>
-        <translation type="obsolete">Open IDE</translation>
-    </message>
-    <message>
-        <source>Run Script..</source>
-        <translation type="obsolete">Zaženi skript...</translation>
-    </message>
-    <message>
-        <source>&amp;Preferences</source>
-        <translation type="obsolete">&amp;Nastavitve</translation>
-    </message>
-    <message>
-        <source>&amp;Export...</source>
-        <translation type="obsolete">&amp;Izvoz</translation>
-    </message>
-    <message>
-        <source>&amp;Print...</source>
-        <translation type="obsolete">&amp;Tiskaj</translation>
-    </message>
-    <message>
-        <source>CTRL-G</source>
-        <translation type="obsolete">CTRL-G</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation type="obsolete">&amp;Konec</translation>
-    </message>
-    <message>
-        <source>&amp;Selection pointer</source>
-        <translation type="obsolete">&amp;Kazalec izbire</translation>
-    </message>
-    <message>
-        <source>&amp;Block</source>
-        <translation type="obsolete">&amp;Blok</translation>
-    </message>
-</context>
-<context>
     <name>QG_ActionHandler</name>
     <message>
         <source>escape</source>
@@ -1786,69 +1766,6 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="obsolete">Možnosti loka</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="obsolete">V smeri urnih kazalcev</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="obsolete">V smeri obratno urnih kazalcev</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="obsolete">Možnosti tangencialnega loka</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="obsolete">Polmer tangencialnega loka</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="obsolete">Skupni notranji kot tangencialnega loka</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="obsolete">Polmer</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="obsolete">Kot</translation>
-    </message>
-</context>
-<context>
-    <name>QG_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="obsolete">Možnosti prirezovanja</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="obsolete">Obreži</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="obsolete">izberi za izrez obeh predmetov pri prirezovanju</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="obsolete">Dolžina 1:</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="obsolete">Dolžina 2:</translation>
     </message>
 </context>
 <context>
@@ -1954,173 +1871,9 @@ v ločenem oknu</translation>
         <source>Looking for matching block names</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QG_CadToolBar</name>
     <message>
-        <source>CAD Tools</source>
-        <translation type="obsolete">CAD orodja</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarArcs</name>
-    <message>
-        <source>Arcs</source>
-        <translation type="obsolete">Loki</translation>
-    </message>
-    <message>
-        <source>Arc with three points</source>
-        <translation type="obsolete">Lok s tremi točkami</translation>
-    </message>
-    <message>
-        <source>Arc with Center, Point, Angles</source>
-        <translation type="obsolete">Lok s središčem, točko in kotom</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Nazaj v glavni meni</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Koncentrično</translation>
-    </message>
-    <message>
-        <source>Arc tangential to base entity with radius</source>
-        <translation type="obsolete">Lok tangencialen na začetni predmet s polmerom</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarCircles</name>
-    <message>
-        <source>Circles</source>
-        <translation type="obsolete">Krožnice</translation>
-    </message>
-    <message>
-        <source>Circle with two opposite points</source>
-        <translation type="obsolete">Krožnica z dvema nasprotnima točkama</translation>
-    </message>
-    <message>
-        <source>Circle with center and radius</source>
-        <translation type="obsolete">Krožnica s središčem in polmerom</translation>
-    </message>
-    <message>
-        <source>Circle with center and point</source>
-        <translation type="obsolete">Krožnica s tremi točkami</translation>
-    </message>
-    <message>
-        <source>Circle with three points</source>
-        <translation type="obsolete">Nazaj v glavni meni</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Nazaj na glavni meni</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Koncentrično</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarDim</name>
-    <message>
-        <source>Dimensions</source>
-        <translation type="obsolete">Dimenzije</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Nazaj v glavni meni</translation>
-    </message>
-    <message>
-        <source>Diametric Dimension</source>
-        <translation type="obsolete">Diametrične dimenzije</translation>
-    </message>
-    <message>
-        <source>Radial Dimension</source>
-        <translation type="obsolete">Radialne dimenzije</translation>
-    </message>
-    <message>
-        <source>Vertical Dimension</source>
-        <translation type="obsolete">Vertikalne dimenzije</translation>
-    </message>
-    <message>
-        <source>Horizontal Dimension</source>
-        <translation type="obsolete">Vodoravne dimenzije</translation>
-    </message>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="obsolete">Linearne dimenzije</translation>
-    </message>
-    <message>
-        <source>Aligned Dimension</source>
-        <translation type="obsolete">Poravnane dimenzije</translation>
-    </message>
-    <message>
-        <source>Angular Dimension</source>
-        <translation type="obsolete">Kotne dimenzije</translation>
-    </message>
-    <message>
-        <source>Leader</source>
-        <translation type="obsolete">Vodilo</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Koncentrično</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarEllipses</name>
-    <message>
-        <source>Ellipses</source>
-        <translation type="obsolete">Elipse</translation>
-    </message>
-    <message>
-        <source>Ellipse arc with center, two points and angles</source>
-        <translation type="obsolete">Eliptični lok s središčem, dvema točkama in kotom</translation>
-    </message>
-    <message>
-        <source>Ellipse with Center and two points</source>
-        <translation type="obsolete">Elipsa s središčem in dvema točkama</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Nazaj v glavni meni</translation>
-    </message>
-    <message>
-        <source>Draw Ellipse by foci and a point on ellipse</source>
-        <translation type="obsolete">Nariši elipso z goriščema in točko na elipsi</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Koncentrično</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarInfo</name>
-    <message>
-        <source>Angle</source>
-        <translation type="obsolete">Kot</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Koncentrično</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarMain</name>
-    <message>
-        <source>Create Block</source>
-        <translation type="obsolete">Izdelaj blok</translation>
-    </message>
-    <message>
-        <source>Insert Image</source>
-        <translation type="obsolete">Vstavi sliko</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarPolylines</name>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Koncentrično</translation>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4152,6 +3905,34 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Automatically zoom drawing when opening</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spiderweb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgOptionsMakerCam</name>
@@ -5310,10 +5091,6 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Toggle Visibility</source>
-        <translation type="obsolete">&amp;Spremeni vidljivost</translation>
-    </message>
-    <message>
         <source>Looking for matching layer names</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5348,6 +5125,14 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <source>&amp;Lock all Layers</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Visibility</source>
+        <translation type="obsolete">&amp;Spremeni vidljivost</translation>
     </message>
 </context>
 <context>
@@ -5529,16 +5314,16 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_PolylineOptions</name>
     <message>
+        <source>wrong action type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Angle</source>
         <translation type="obsolete">Kot</translation>
     </message>
     <message>
         <source>Clockwise</source>
         <translation type="obsolete">V smeri urnih kazalcev</translation>
-    </message>
-    <message>
-        <source>wrong action type</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5550,13 +5335,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Opening recent file...</source>
         <translation type="obsolete">Odpiram zadnjo datoteko...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_RoundOptions</name>
-    <message>
-        <source>Trim</source>
-        <translation type="obsolete">Obreži</translation>
     </message>
 </context>
 <context>
@@ -5953,10 +5731,6 @@ Do you want to replace it?</source>
     <message>
         <source>All Files (*.*)</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="obsolete">Brez</translation>
     </message>
     <message>
         <source>Inch</source>
@@ -7603,19 +7377,125 @@ Do you want to replace it?</source>
         <comment>default layer name</comment>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>RS_ActionBlocksAdd</name>
     <message>
-        <source>&amp;Add Block</source>
-        <translation type="obsolete">&amp;Dodaj blok</translation>
+        <source>Custom</source>
+        <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>RS_ActionBlocksAttributes</name>
     <message>
-        <source>&amp;Rename Block</source>
-        <translation type="obsolete">P&amp;reimenuj blok</translation>
+        <source>Letter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Legal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Executive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ledger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tabloid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NPageSize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spiderweb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export to ProNest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open ProNest before exporting the drawing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dock Areas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mouse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tablet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trackpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Touchscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="obsolete">Brez</translation>
     </message>
 </context>
 <context>
@@ -7630,18 +7510,7 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionBlocksEdit</name>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translation type="obsolete">&amp;Uredi blok</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionBlocksInsert</name>
-    <message>
-        <source>&amp;Insert Block</source>
-        <translation type="obsolete">Vstav%i blok</translation>
-    </message>
     <message>
         <source>Not a valid expression</source>
         <translation type="unfinished"></translation>
@@ -7682,12 +7551,9 @@ Do you want to replace it?</source>
         <source>Enter row spacing:</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>RS_ActionBlocksRemove</name>
     <message>
-        <source>&amp;Remove Block</source>
-        <translation type="obsolete">&amp;Odstrani blok</translation>
+        <source>&amp;Insert Block</source>
+        <translation type="obsolete">Vstav%i blok</translation>
     </message>
 </context>
 <context>
@@ -8813,10 +8679,6 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionDrawPolyline</name>
     <message>
-        <source>&amp;Polyline</source>
-        <translation type="obsolete">&amp;Lomljenka</translation>
-    </message>
-    <message>
         <source>Specify first point</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8843,6 +8705,10 @@ Do you want to replace it?</source>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Polyline</source>
+        <translation type="obsolete">&amp;Lomljenka</translation>
     </message>
 </context>
 <context>
@@ -10711,6 +10577,331 @@ Do you want to replace it?</source>
     <message>
         <source>Update</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_ActionFactory</name>
+    <message>
+        <source>&amp;Close</source>
+        <translation type="obsolete">&amp;Zapri</translation>
+    </message>
+    <message>
+        <source>&amp;Grid</source>
+        <translation type="obsolete">&amp;Mreža</translation>
+    </message>
+    <message>
+        <source>&amp;Application Preferences</source>
+        <translation type="obsolete">&amp;Nastavitve programa</translation>
+    </message>
+    <message>
+        <source>&amp;Statusbar</source>
+        <translation type="obsolete">&amp;Statusna vrstica</translation>
+    </message>
+    <message>
+        <source>&amp;Draft</source>
+        <translation type="obsolete">&amp;Draft</translation>
+    </message>
+    <message>
+        <source>Open IDE</source>
+        <translation type="obsolete">Open IDE</translation>
+    </message>
+    <message>
+        <source>Run Script..</source>
+        <translation type="obsolete">Zaženi skript...</translation>
+    </message>
+    <message>
+        <source>&amp;Preferences</source>
+        <translation type="obsolete">&amp;Nastavitve</translation>
+    </message>
+    <message>
+        <source>&amp;Export...</source>
+        <translation type="obsolete">&amp;Izvoz</translation>
+    </message>
+    <message>
+        <source>&amp;Print...</source>
+        <translation type="obsolete">&amp;Tiskaj</translation>
+    </message>
+    <message>
+        <source>CTRL-G</source>
+        <translation type="obsolete">CTRL-G</translation>
+    </message>
+    <message>
+        <source>&amp;Quit</source>
+        <translation type="obsolete">&amp;Konec</translation>
+    </message>
+    <message>
+        <source>&amp;Selection pointer</source>
+        <translation type="obsolete">&amp;Kazalec izbire</translation>
+    </message>
+    <message>
+        <source>&amp;Block</source>
+        <translation type="obsolete">&amp;Blok</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ArcOptions</name>
+    <message>
+        <source>Arc Options</source>
+        <translation type="obsolete">Možnosti loka</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="obsolete">V smeri urnih kazalcev</translation>
+    </message>
+    <message>
+        <source>Counterclockwise</source>
+        <translation type="obsolete">V smeri obratno urnih kazalcev</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ArcTangentialOptions</name>
+    <message>
+        <source>Tangential Arc Options</source>
+        <translation type="obsolete">Možnosti tangencialnega loka</translation>
+    </message>
+    <message>
+        <source>Radius of the tangential arc</source>
+        <translation type="obsolete">Polmer tangencialnega loka</translation>
+    </message>
+    <message>
+        <source>Total subtending angle of the tangential arc</source>
+        <translation type="obsolete">Skupni notranji kot tangencialnega loka</translation>
+    </message>
+    <message>
+        <source>Radius</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="obsolete">Polmer</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="obsolete">Kot</translation>
+    </message>
+</context>
+<context>
+    <name>QG_BevelOptions</name>
+    <message>
+        <source>Bevel Options</source>
+        <translation type="obsolete">Možnosti prirezovanja</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="obsolete">Obreži</translation>
+    </message>
+    <message>
+        <source>Check to trim both entities to the bevel</source>
+        <translation type="obsolete">izberi za izrez obeh predmetov pri prirezovanju</translation>
+    </message>
+    <message>
+        <source>Length 1:</source>
+        <translation type="obsolete">Dolžina 1:</translation>
+    </message>
+    <message>
+        <source>Length 2:</source>
+        <translation type="obsolete">Dolžina 2:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBar</name>
+    <message>
+        <source>CAD Tools</source>
+        <translation type="obsolete">CAD orodja</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarArcs</name>
+    <message>
+        <source>Arcs</source>
+        <translation type="obsolete">Loki</translation>
+    </message>
+    <message>
+        <source>Arc with three points</source>
+        <translation type="obsolete">Lok s tremi točkami</translation>
+    </message>
+    <message>
+        <source>Arc with Center, Point, Angles</source>
+        <translation type="obsolete">Lok s središčem, točko in kotom</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Nazaj v glavni meni</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">Koncentrično</translation>
+    </message>
+    <message>
+        <source>Arc tangential to base entity with radius</source>
+        <translation type="obsolete">Lok tangencialen na začetni predmet s polmerom</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarCircles</name>
+    <message>
+        <source>Circles</source>
+        <translation type="obsolete">Krožnice</translation>
+    </message>
+    <message>
+        <source>Circle with two opposite points</source>
+        <translation type="obsolete">Krožnica z dvema nasprotnima točkama</translation>
+    </message>
+    <message>
+        <source>Circle with center and radius</source>
+        <translation type="obsolete">Krožnica s središčem in polmerom</translation>
+    </message>
+    <message>
+        <source>Circle with center and point</source>
+        <translation type="obsolete">Krožnica s tremi točkami</translation>
+    </message>
+    <message>
+        <source>Circle with three points</source>
+        <translation type="obsolete">Nazaj v glavni meni</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Nazaj na glavni meni</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">Koncentrično</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarDim</name>
+    <message>
+        <source>Dimensions</source>
+        <translation type="obsolete">Dimenzije</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Nazaj v glavni meni</translation>
+    </message>
+    <message>
+        <source>Diametric Dimension</source>
+        <translation type="obsolete">Diametrične dimenzije</translation>
+    </message>
+    <message>
+        <source>Radial Dimension</source>
+        <translation type="obsolete">Radialne dimenzije</translation>
+    </message>
+    <message>
+        <source>Vertical Dimension</source>
+        <translation type="obsolete">Vertikalne dimenzije</translation>
+    </message>
+    <message>
+        <source>Horizontal Dimension</source>
+        <translation type="obsolete">Vodoravne dimenzije</translation>
+    </message>
+    <message>
+        <source>Linear Dimension</source>
+        <translation type="obsolete">Linearne dimenzije</translation>
+    </message>
+    <message>
+        <source>Aligned Dimension</source>
+        <translation type="obsolete">Poravnane dimenzije</translation>
+    </message>
+    <message>
+        <source>Angular Dimension</source>
+        <translation type="obsolete">Kotne dimenzije</translation>
+    </message>
+    <message>
+        <source>Leader</source>
+        <translation type="obsolete">Vodilo</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">Koncentrično</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarEllipses</name>
+    <message>
+        <source>Ellipses</source>
+        <translation type="obsolete">Elipse</translation>
+    </message>
+    <message>
+        <source>Ellipse arc with center, two points and angles</source>
+        <translation type="obsolete">Eliptični lok s središčem, dvema točkama in kotom</translation>
+    </message>
+    <message>
+        <source>Ellipse with Center and two points</source>
+        <translation type="obsolete">Elipsa s središčem in dvema točkama</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Nazaj v glavni meni</translation>
+    </message>
+    <message>
+        <source>Draw Ellipse by foci and a point on ellipse</source>
+        <translation type="obsolete">Nariši elipso z goriščema in točko na elipsi</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">Koncentrično</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarInfo</name>
+    <message>
+        <source>Angle</source>
+        <translation type="obsolete">Kot</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">Koncentrično</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarMain</name>
+    <message>
+        <source>Create Block</source>
+        <translation type="obsolete">Izdelaj blok</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="obsolete">Vstavi sliko</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarPolylines</name>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">Koncentrično</translation>
+    </message>
+</context>
+<context>
+    <name>QG_RoundOptions</name>
+    <message>
+        <source>Trim</source>
+        <translation type="obsolete">Obreži</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksAdd</name>
+    <message>
+        <source>&amp;Add Block</source>
+        <translation type="obsolete">&amp;Dodaj blok</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksAttributes</name>
+    <message>
+        <source>&amp;Rename Block</source>
+        <translation type="obsolete">P&amp;reimenuj blok</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksEdit</name>
+    <message>
+        <source>&amp;Edit Block</source>
+        <translation type="obsolete">&amp;Uredi blok</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksRemove</name>
+    <message>
+        <source>&amp;Remove Block</source>
+        <translation type="obsolete">&amp;Odstrani blok</translation>
     </message>
 </context>
 </TS>

@@ -155,22 +155,22 @@
             </property>
             <item>
              <property name="text">
-              <string notr="true">Crosshair</string>
+              <string>Crosshair</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string notr="true">Crosshair2</string>
+              <string>Crosshair2</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string notr="true">Isometric</string>
+              <string>Isometric</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string notr="true">Spiderweb</string>
+              <string>Spiderweb</string>
              </property>
             </item>
            </widget>
@@ -189,17 +189,17 @@
             </property>
             <item>
              <property name="text">
-              <string notr="true">Circle</string>
+              <string>Circle</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string notr="true">Point</string>
+              <string>Point</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string notr="true">Square</string>
+              <string>Square</string>
              </property>
             </item>
            </widget>
@@ -1187,8 +1187,8 @@
    <slot>ok()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>355</x>
-     <y>591</y>
+     <x>366</x>
+     <y>555</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1203,8 +1203,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>355</x>
-     <y>591</y>
+     <x>366</x>
+     <y>555</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1219,8 +1219,8 @@
    <slot>setRestartNeeded()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>744</x>
-     <y>529</y>
+     <x>748</x>
+     <y>503</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1235,8 +1235,8 @@
    <slot>setRestartNeeded()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>744</x>
-     <y>500</y>
+     <x>748</x>
+     <y>477</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1251,8 +1251,8 @@
    <slot>setTemplateFile()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>722</x>
-     <y>198</y>
+     <x>729</x>
+     <y>169</y>
     </hint>
     <hint type="destinationlabel">
      <x>322</x>
@@ -1267,8 +1267,8 @@
    <slot>showFontConversionDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>749</x>
-     <y>123</y>
+     <x>758</x>
+     <y>115</y>
     </hint>
     <hint type="destinationlabel">
      <x>588</x>

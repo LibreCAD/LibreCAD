@@ -1,0 +1,1028 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:trolltech="urn:trolltech:names:ts:document:1.0">
+  <file original="" datatype="plaintext" source-language="en" target-language="lv"><body>
+    <group restype="x-trolltech-linguist-context" resname="AsciiFile">
+      <trans-unit id="_msg1" approved="yes">
+        <source xml:space="preserve">Read ascii points</source>
+        <target xml:space="preserve">Lasīt ascii punktus</target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="ImportShp">
+      <trans-unit id="_msg2" approved="yes">
+        <source xml:space="preserve">Import ESRI Shapefile</source>
+        <target xml:space="preserve">Importēt ESRI figūru datni</target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="LC_Align">
+      <trans-unit id="_msg3" approved="yes">
+        <source xml:space="preserve">Align</source>
+        <target xml:space="preserve">Līdzināt</target>
+      </trans-unit>
+      <trans-unit id="_msg4" approved="yes">
+        <source xml:space="preserve">first base point:</source>
+        <target xml:space="preserve">pirmais bāzes punkts:</target>
+      </trans-unit>
+      <trans-unit id="_msg5" approved="yes">
+        <source xml:space="preserve">first target point:</source>
+        <target xml:space="preserve">pirmais mērķa punkts:</target>
+      </trans-unit>
+      <trans-unit id="_msg6" approved="yes">
+        <source xml:space="preserve">second base point:</source>
+        <target xml:space="preserve">otrais bāzes punkts:</target>
+      </trans-unit>
+      <trans-unit id="_msg7" approved="yes">
+        <source xml:space="preserve">second target point:</source>
+        <target xml:space="preserve">otrais mērķa punkts:</target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="LC_Gear">
+      <trans-unit id="_msg8">
+        <source xml:space="preserve">Gear creation plugin</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg9">
+        <source xml:space="preserve">Gear plugin</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="LC_List">
+      <trans-unit id="_msg10" approved="yes">
+        <source xml:space="preserve">List entities</source>
+        <target xml:space="preserve">Objektu saraksts</target>
+      </trans-unit>
+      <trans-unit id="_msg11" approved="yes">
+        <source xml:space="preserve">n</source>
+        <target xml:space="preserve">n</target>
+      </trans-unit>
+      <trans-unit id="_msg12" approved="yes">
+        <source xml:space="preserve">Empty Entity</source>
+        <target xml:space="preserve">Tukšs objekts</target>
+      </trans-unit>
+      <trans-unit id="_msg13" approved="yes">
+        <source xml:space="preserve">X</source>
+        <target xml:space="preserve">X</target>
+      </trans-unit>
+      <trans-unit id="_msg14" approved="yes">
+        <source xml:space="preserve">Y</source>
+        <target xml:space="preserve">
+            </target>
+      </trans-unit>
+      <trans-unit id="_msg15" approved="yes">
+        <source xml:space="preserve">Layer</source>
+        <target xml:space="preserve">Slānis</target>
+      </trans-unit>
+      <trans-unit id="_msg16" approved="yes">
+        <source xml:space="preserve">Color</source>
+        <target xml:space="preserve">Krāsa</target>
+      </trans-unit>
+      <trans-unit id="_msg17" approved="yes">
+        <source xml:space="preserve">Line type</source>
+        <target xml:space="preserve">Līnijas tips</target>
+      </trans-unit>
+      <trans-unit id="_msg18" approved="yes">
+        <source xml:space="preserve">Line thickness</source>
+        <target xml:space="preserve">Līnijas biezums</target>
+      </trans-unit>
+      <trans-unit id="_msg19" approved="yes">
+        <source xml:space="preserve">ID</source>
+        <target xml:space="preserve">ID</target>
+      </trans-unit>
+      <trans-unit id="_msg20" approved="yes">
+        <source xml:space="preserve">POINT</source>
+        <target xml:space="preserve">PUNKTS</target>
+      </trans-unit>
+      <trans-unit id="_msg21" approved="yes">
+        <source xml:space="preserve">in point</source>
+        <target xml:space="preserve">punktā</target>
+      </trans-unit>
+      <trans-unit id="_msg22" approved="yes">
+        <source xml:space="preserve">LINE</source>
+        <target xml:space="preserve">LĪNIJA</target>
+      </trans-unit>
+      <trans-unit id="_msg23" approved="yes">
+        <source xml:space="preserve">from point</source>
+        <target xml:space="preserve">no punkta</target>
+      </trans-unit>
+      <trans-unit id="_msg24" approved="yes">
+        <source xml:space="preserve">to point</source>
+        <target xml:space="preserve">uz punktu</target>
+      </trans-unit>
+      <trans-unit id="_msg25" approved="yes">
+        <source xml:space="preserve">length</source>
+        <target xml:space="preserve">garums</target>
+      </trans-unit>
+      <trans-unit id="_msg26" approved="yes">
+        <source xml:space="preserve">Angle in XY plane</source>
+        <target xml:space="preserve">Leņķis XY plaknē</target>
+      </trans-unit>
+      <trans-unit id="_msg27" approved="yes">
+        <source xml:space="preserve">Inc.</source>
+        <target xml:space="preserve">SIA</target>
+      </trans-unit>
+      <trans-unit id="_msg28" approved="yes">
+        <source xml:space="preserve">ARC</source>
+        <target xml:space="preserve">LOKS</target>
+      </trans-unit>
+      <trans-unit id="_msg29" approved="yes">
+        <source xml:space="preserve">center point</source>
+        <target xml:space="preserve">centra punkts</target>
+      </trans-unit>
+      <trans-unit id="_msg30" approved="yes">
+        <source xml:space="preserve">radius</source>
+        <target xml:space="preserve">rādiuss</target>
+      </trans-unit>
+      <trans-unit id="_msg31" approved="yes">
+        <source xml:space="preserve">initial angle</source>
+        <target xml:space="preserve">sākotnējais leņķis</target>
+      </trans-unit>
+      <trans-unit id="_msg32" approved="yes">
+        <source xml:space="preserve">final angle</source>
+        <target xml:space="preserve">beigu leņķis</target>
+      </trans-unit>
+      <trans-unit id="_msg33" approved="yes">
+        <source xml:space="preserve">CIRCLE</source>
+        <target xml:space="preserve">RIŅĶIS</target>
+      </trans-unit>
+      <trans-unit id="_msg34" approved="yes">
+        <source xml:space="preserve">circumference</source>
+        <target xml:space="preserve">perimetrs</target>
+      </trans-unit>
+      <trans-unit id="_msg35" approved="yes">
+        <source xml:space="preserve">area</source>
+        <target xml:space="preserve">laukums</target>
+      </trans-unit>
+      <trans-unit id="_msg36" approved="yes">
+        <source xml:space="preserve">ELLIPSE</source>
+        <target xml:space="preserve">ELIPSE</target>
+      </trans-unit>
+      <trans-unit id="_msg37" approved="yes">
+        <source xml:space="preserve">major axis</source>
+        <target xml:space="preserve">primārā ass</target>
+      </trans-unit>
+      <trans-unit id="_msg38" approved="yes">
+        <source xml:space="preserve">CONSTRUCTIONLINE</source>
+        <target xml:space="preserve">KONSTRUKCIJASLĪNIJA</target>
+      </trans-unit>
+      <trans-unit id="_msg39" approved="yes">
+        <source xml:space="preserve">OVERLAYBOX</source>
+        <target xml:space="preserve">PĀRKLĀJUMAKASTE</target>
+      </trans-unit>
+      <trans-unit id="_msg40" approved="yes">
+        <source xml:space="preserve">SOLID</source>
+        <target xml:space="preserve">VIENLAIDUS</target>
+      </trans-unit>
+      <trans-unit id="_msg41" approved="yes">
+        <source xml:space="preserve">MTEXT</source>
+        <target xml:space="preserve">VTEKSTS</target>
+      </trans-unit>
+      <trans-unit id="_msg42" approved="yes">
+        <source xml:space="preserve">TEXT</source>
+        <target xml:space="preserve">TEKSTS</target>
+      </trans-unit>
+      <trans-unit id="_msg43" approved="yes">
+        <source xml:space="preserve">INSERT</source>
+        <target xml:space="preserve">IEVIETOT</target>
+      </trans-unit>
+      <trans-unit id="_msg44" approved="yes">
+        <source xml:space="preserve">Name</source>
+        <target xml:space="preserve">Nosaukums</target>
+      </trans-unit>
+      <trans-unit id="_msg45" approved="yes">
+        <source xml:space="preserve">Insertion point</source>
+        <target xml:space="preserve">Ievietošanas punkts</target>
+      </trans-unit>
+      <trans-unit id="_msg46" approved="yes">
+        <source xml:space="preserve">POLYLINE</source>
+        <target xml:space="preserve">LAUZTALĪNIJA</target>
+      </trans-unit>
+      <trans-unit id="_msg47" approved="yes">
+        <source xml:space="preserve">Closed</source>
+        <target xml:space="preserve">Aizvērts</target>
+      </trans-unit>
+      <trans-unit id="_msg48" approved="yes">
+        <source xml:space="preserve">No</source>
+        <target xml:space="preserve">Nē</target>
+      </trans-unit>
+      <trans-unit id="_msg49" approved="yes">
+        <source xml:space="preserve">Yes</source>
+        <target xml:space="preserve">Jā</target>
+      </trans-unit>
+      <trans-unit id="_msg50" approved="yes">
+        <source xml:space="preserve">Vertices</source>
+        <target xml:space="preserve">Virsotnes</target>
+      </trans-unit>
+      <trans-unit id="_msg51" approved="yes">
+        <source xml:space="preserve">IMAGE</source>
+        <target xml:space="preserve">ATTĒLS</target>
+      </trans-unit>
+      <trans-unit id="_msg52" approved="yes">
+        <source xml:space="preserve">SPLINE</source>
+        <target xml:space="preserve">SPLAINS</target>
+      </trans-unit>
+      <trans-unit id="_msg53" approved="yes">
+        <source xml:space="preserve">HATCH</source>
+        <target xml:space="preserve">SVĪTROJUMS</target>
+      </trans-unit>
+      <trans-unit id="_msg54" approved="yes">
+        <source xml:space="preserve">DIMLEADER</source>
+        <target xml:space="preserve">DIMNORĀDE</target>
+      </trans-unit>
+      <trans-unit id="_msg55" approved="yes">
+        <source xml:space="preserve">DIMALIGNED</source>
+        <target xml:space="preserve">DIMLĪDZINĀTS</target>
+      </trans-unit>
+      <trans-unit id="_msg56" approved="yes">
+        <source xml:space="preserve">DIMLINEAR</source>
+        <target xml:space="preserve">DIMLINEĀRS</target>
+      </trans-unit>
+      <trans-unit id="_msg57" approved="yes">
+        <source xml:space="preserve">DIMRADIAL</source>
+        <target xml:space="preserve">DIMRADIĀLS</target>
+      </trans-unit>
+      <trans-unit id="_msg58" approved="yes">
+        <source xml:space="preserve">DIMDIAMETRIC</source>
+        <target xml:space="preserve">DIMDIAMETRISKS</target>
+      </trans-unit>
+      <trans-unit id="_msg59" approved="yes">
+        <source xml:space="preserve">DIMANGULAR</source>
+        <target xml:space="preserve">DIMLEŅĶISKS</target>
+      </trans-unit>
+      <trans-unit id="_msg60" approved="yes">
+        <source xml:space="preserve">UNKNOWN</source>
+        <target xml:space="preserve">NEZINĀMS</target>
+      </trans-unit>
+      <trans-unit id="_msg61">
+        <source xml:space="preserve">SPLINEPOINTS</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg62">
+        <source xml:space="preserve">Scale</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg63">
+        <source xml:space="preserve">Rotation</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg64">
+        <source xml:space="preserve">Columns/Rows</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg65">
+        <source xml:space="preserve">Column/Row Spacing</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="LC_SameProp">
+      <trans-unit id="_msg66" approved="yes">
+        <source xml:space="preserve">Same properties</source>
+        <target xml:space="preserve">Tās pašas īpašības</target>
+      </trans-unit>
+      <trans-unit id="_msg67" approved="yes">
+        <source xml:space="preserve">select original entity:</source>
+        <target xml:space="preserve">izvēlieties sākotnējo objektu:</target>
+      </trans-unit>
+      <trans-unit id="_msg68" approved="yes">
+        <source xml:space="preserve">select entities to change</source>
+        <target xml:space="preserve">izvēlieties maināmos objektus</target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="LC_Sample">
+      <trans-unit id="_msg69" approved="yes">
+        <source xml:space="preserve">Sample plugin</source>
+        <target xml:space="preserve">Parauga spraudnis</target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="PicFile">
+      <trans-unit id="_msg70">
+        <source xml:space="preserve">Read PIC file</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg71">
+        <source xml:space="preserve">import PIC file</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="dibPunto">
+      <trans-unit id="_msg72" approved="yes">
+        <source xml:space="preserve">Read ascii points</source>
+        <target xml:space="preserve">Lasīt ascii punktus</target>
+      </trans-unit>
+      <trans-unit id="_msg73" approved="yes">
+        <source xml:space="preserve">File...</source>
+        <target xml:space="preserve">Datne...</target>
+      </trans-unit>
+      <trans-unit id="_msg74" approved="yes">
+        <source xml:space="preserve">Format:</source>
+        <target xml:space="preserve">Formāts:</target>
+      </trans-unit>
+      <trans-unit id="_msg75" approved="yes">
+        <source xml:space="preserve">Space Separator</source>
+        <target xml:space="preserve">Atstarpes atdalītājs</target>
+      </trans-unit>
+      <trans-unit id="_msg76" approved="yes">
+        <source xml:space="preserve">Tab Separator</source>
+        <target xml:space="preserve">Tabulācijas atdalītājs</target>
+      </trans-unit>
+      <trans-unit id="_msg77" approved="yes">
+        <source xml:space="preserve">Comma Separator</source>
+        <target xml:space="preserve">Komata atdalītājs</target>
+      </trans-unit>
+      <trans-unit id="_msg78" approved="yes">
+        <source xml:space="preserve">Space in Columns</source>
+        <target xml:space="preserve">Atstarpe kolonnās</target>
+      </trans-unit>
+      <trans-unit id="_msg79" approved="yes">
+        <source xml:space="preserve">*.odb for Psion 2</source>
+        <target xml:space="preserve">*.odb Psion 2</target>
+      </trans-unit>
+      <trans-unit id="_msg80" approved="yes">
+        <source xml:space="preserve">Connect points</source>
+        <target xml:space="preserve">Savienot punktus</target>
+      </trans-unit>
+      <trans-unit id="_msg81" approved="yes">
+        <source xml:space="preserve">2D Point</source>
+        <target xml:space="preserve">2D punkts</target>
+      </trans-unit>
+      <trans-unit id="_msg82" approved="yes">
+        <source xml:space="preserve">Draw 2D Point</source>
+        <target xml:space="preserve">Zīmēt 2D punktu</target>
+      </trans-unit>
+      <trans-unit id="_msg83" approved="yes">
+        <source xml:space="preserve">3D Point</source>
+        <target xml:space="preserve">3D punkts</target>
+      </trans-unit>
+      <trans-unit id="_msg84" approved="yes">
+        <source xml:space="preserve">Draw 3D Point</source>
+        <target xml:space="preserve">Zīmēt 3D punktu</target>
+      </trans-unit>
+      <trans-unit id="_msg85" approved="yes">
+        <source xml:space="preserve">Point Number</source>
+        <target xml:space="preserve">Punkta numurs</target>
+      </trans-unit>
+      <trans-unit id="_msg86" approved="yes">
+        <source xml:space="preserve">Draw point number</source>
+        <target xml:space="preserve">Zīmēt punkta numuru</target>
+      </trans-unit>
+      <trans-unit id="_msg87" approved="yes">
+        <source xml:space="preserve">Point Elevation</source>
+        <target xml:space="preserve">Punkta pacēlums</target>
+      </trans-unit>
+      <trans-unit id="_msg88" approved="yes">
+        <source xml:space="preserve">Draw point elevation</source>
+        <target xml:space="preserve">Zīmēt punkta pacēlumu</target>
+      </trans-unit>
+      <trans-unit id="_msg89" approved="yes">
+        <source xml:space="preserve">Point Code</source>
+        <target xml:space="preserve">Punkta kods</target>
+      </trans-unit>
+      <trans-unit id="_msg90" approved="yes">
+        <source xml:space="preserve">Draw point code</source>
+        <target xml:space="preserve">Zīmēt punkta kodu</target>
+      </trans-unit>
+      <trans-unit id="_msg91" approved="yes">
+        <source xml:space="preserve">Accept</source>
+        <target xml:space="preserve">Pieņemt</target>
+      </trans-unit>
+      <trans-unit id="_msg92" approved="yes">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve">Atcelt</target>
+      </trans-unit>
+      <trans-unit id="_msg93" approved="yes">
+        <source xml:space="preserve">Select file</source>
+        <target xml:space="preserve">Izvēlieties datni</target>
+      </trans-unit>
+      <trans-unit id="_msg94" approved="yes">
+        <source xml:space="preserve">Point 2D layer is empty</source>
+        <target xml:space="preserve">Punkta 2D slānis ir tukšs</target>
+      </trans-unit>
+      <trans-unit id="_msg95" approved="yes">
+        <source xml:space="preserve">Point 3D layer is empty</source>
+        <target xml:space="preserve">Punkta 3D slānis ir tukšs</target>
+      </trans-unit>
+      <trans-unit id="_msg96" approved="yes">
+        <source xml:space="preserve">Point elevation layer is empty</source>
+        <target xml:space="preserve">Punkta pacēluma slānis ir tukšs</target>
+      </trans-unit>
+      <trans-unit id="_msg97" approved="yes">
+        <source xml:space="preserve">Point elevation height is empty</source>
+        <target xml:space="preserve">Punkta pacēluma augstums ir tukšs</target>
+      </trans-unit>
+      <trans-unit id="_msg98" approved="yes">
+        <source xml:space="preserve">Point elevation separation is empty</source>
+        <target xml:space="preserve">Punkta pacēluma atdalīšana ir tukša</target>
+      </trans-unit>
+      <trans-unit id="_msg99" approved="yes">
+        <source xml:space="preserve">Point number layer is empty</source>
+        <target xml:space="preserve">Punkta numura slānis ir tukšs</target>
+      </trans-unit>
+      <trans-unit id="_msg100" approved="yes">
+        <source xml:space="preserve">Point number height is empty</source>
+        <target xml:space="preserve">Punkta numura augstums ir tukšs</target>
+      </trans-unit>
+      <trans-unit id="_msg101" approved="yes">
+        <source xml:space="preserve">Point number separation is empty</source>
+        <target xml:space="preserve">Punkta skaitļa atdalīšana ir tukša</target>
+      </trans-unit>
+      <trans-unit id="_msg102" approved="yes">
+        <source xml:space="preserve">Point code layer is empty</source>
+        <target xml:space="preserve">Punkta koda slānis ir tukšs</target>
+      </trans-unit>
+      <trans-unit id="_msg103" approved="yes">
+        <source xml:space="preserve">Point code height is empty</source>
+        <target xml:space="preserve">Punkta koda augstums ir tukšs</target>
+      </trans-unit>
+      <trans-unit id="_msg104" approved="yes">
+        <source xml:space="preserve">Point code separation is empty</source>
+        <target xml:space="preserve">Punkta koda atdalīšana ir tukša</target>
+      </trans-unit>
+      <trans-unit id="_msg105" approved="yes">
+        <source xml:space="preserve">The file %1 not exist</source>
+        <target xml:space="preserve">Datne %1 neeksistē</target>
+      </trans-unit>
+      <trans-unit id="_msg106" approved="yes">
+        <source xml:space="preserve">Can&apos;t open the file %1</source>
+        <target xml:space="preserve">Nevar atvērt datni %1</target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="dibSHP">
+      <trans-unit id="_msg107" approved="yes">
+        <source xml:space="preserve">File...</source>
+        <target xml:space="preserve">Datne...</target>
+      </trans-unit>
+      <trans-unit id="_msg108" approved="yes">
+        <source xml:space="preserve">File type:</source>
+        <target xml:space="preserve">Datnes tips:</target>
+      </trans-unit>
+      <trans-unit id="_msg109" approved="yes">
+        <source xml:space="preserve">Layer</source>
+        <target xml:space="preserve">Slānis</target>
+      </trans-unit>
+      <trans-unit id="_msg110" approved="yes">
+        <source xml:space="preserve">Import ESRI Shapefile</source>
+        <target xml:space="preserve">Importēt ESRI figūru datni</target>
+      </trans-unit>
+      <trans-unit id="_msg111" approved="yes">
+        <source xml:space="preserve">Unknown</source>
+        <target xml:space="preserve">Nezināms</target>
+      </trans-unit>
+      <trans-unit id="_msg112" approved="yes">
+        <source xml:space="preserve">Current</source>
+        <target xml:space="preserve">Pašreizējais</target>
+      </trans-unit>
+      <trans-unit id="_msg113" approved="yes">
+        <source xml:space="preserve">From data:</source>
+        <target xml:space="preserve">No datiem:</target>
+      </trans-unit>
+      <trans-unit id="_msg114" approved="yes">
+        <source xml:space="preserve">Color</source>
+        <target xml:space="preserve">Krāsa</target>
+      </trans-unit>
+      <trans-unit id="_msg115" approved="yes">
+        <source xml:space="preserve">Line type</source>
+        <target xml:space="preserve">Līnijas tips</target>
+      </trans-unit>
+      <trans-unit id="_msg116" approved="yes">
+        <source xml:space="preserve">Width</source>
+        <target xml:space="preserve">Platums</target>
+      </trans-unit>
+      <trans-unit id="_msg117" approved="yes">
+        <source xml:space="preserve">Point</source>
+        <target xml:space="preserve">Punkts</target>
+      </trans-unit>
+      <trans-unit id="_msg118" approved="yes">
+        <source xml:space="preserve">as Point</source>
+        <target xml:space="preserve">kā punkts</target>
+      </trans-unit>
+      <trans-unit id="_msg119" approved="yes">
+        <source xml:space="preserve">as Label:</source>
+        <target xml:space="preserve">kā etiķete:</target>
+      </trans-unit>
+      <trans-unit id="_msg120" approved="yes">
+        <source xml:space="preserve">Accept</source>
+        <target xml:space="preserve">Pieņemt</target>
+      </trans-unit>
+      <trans-unit id="_msg121" approved="yes">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve">Atcelt</target>
+      </trans-unit>
+      <trans-unit id="_msg122" approved="yes">
+        <source xml:space="preserve">Select file</source>
+        <target xml:space="preserve">Izvēlieties datni</target>
+      </trans-unit>
+      <trans-unit id="_msg123" approved="yes">
+        <source xml:space="preserve">Point+Measure</source>
+        <target xml:space="preserve">Punkts + mērs</target>
+      </trans-unit>
+      <trans-unit id="_msg124" approved="yes">
+        <source xml:space="preserve">3D Point</source>
+        <target xml:space="preserve">3D punkts</target>
+      </trans-unit>
+      <trans-unit id="_msg125" approved="yes">
+        <source xml:space="preserve">Multi Point</source>
+        <target xml:space="preserve">Vairāki punkti</target>
+      </trans-unit>
+      <trans-unit id="_msg126" approved="yes">
+        <source xml:space="preserve">Multi Point+Measure</source>
+        <target xml:space="preserve">Vairāki punkti + mērs</target>
+      </trans-unit>
+      <trans-unit id="_msg127" approved="yes">
+        <source xml:space="preserve">3D Multi Point</source>
+        <target xml:space="preserve">3D vairāki punkti</target>
+      </trans-unit>
+      <trans-unit id="_msg128" approved="yes">
+        <source xml:space="preserve">Arc</source>
+        <target xml:space="preserve">Loks</target>
+      </trans-unit>
+      <trans-unit id="_msg129" approved="yes">
+        <source xml:space="preserve">Arc+Measure</source>
+        <target xml:space="preserve">Loks + mērs</target>
+      </trans-unit>
+      <trans-unit id="_msg130" approved="yes">
+        <source xml:space="preserve">3D Arc</source>
+        <target xml:space="preserve">3D loks</target>
+      </trans-unit>
+      <trans-unit id="_msg131" approved="yes">
+        <source xml:space="preserve">Multipatch</source>
+        <target xml:space="preserve">Vairāku posmu</target>
+      </trans-unit>
+      <trans-unit id="_msg132" approved="yes">
+        <source xml:space="preserve">The file %1 not have extension .shp</source>
+        <target xml:space="preserve">Datnei %1 nav paplašinājuma .shp</target>
+      </trans-unit>
+      <trans-unit id="_msg133" approved="yes">
+        <source xml:space="preserve">The file %1 not exist</source>
+        <target xml:space="preserve">Datne %1 neeksistē</target>
+      </trans-unit>
+      <trans-unit id="_msg134" approved="yes">
+        <source xml:space="preserve">Polygon</source>
+        <target xml:space="preserve">Daudzstūris</target>
+      </trans-unit>
+      <trans-unit id="_msg135" approved="yes">
+        <source xml:space="preserve">Polygon+Measure</source>
+        <target xml:space="preserve">Daudzstūris + mērs</target>
+      </trans-unit>
+      <trans-unit id="_msg136" approved="yes">
+        <source xml:space="preserve">3D Polygon</source>
+        <target xml:space="preserve">3D daudzstūris</target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="divide">
+      <trans-unit id="_msg137">
+        <source xml:space="preserve">Divide</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg138">
+        <source xml:space="preserve">Select a line, circle or arc and press return</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg139">
+        <source xml:space="preserve">Error</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg140">
+        <source xml:space="preserve">n</source>
+        <target xml:space="preserve" state="needs-review-translation">n</target>
+      </trans-unit>
+      <trans-unit id="_msg141">
+        <source xml:space="preserve">Empty Entity</source>
+        <target xml:space="preserve" state="needs-review-translation">Tukšs objekts</target>
+      </trans-unit>
+      <trans-unit id="_msg142">
+        <source xml:space="preserve">X</source>
+        <target xml:space="preserve" state="needs-review-translation">X</target>
+      </trans-unit>
+      <trans-unit id="_msg143">
+        <source xml:space="preserve">Y</source>
+        <target xml:space="preserve" state="needs-review-translation">
+            </target>
+      </trans-unit>
+      <trans-unit id="_msg144">
+        <source xml:space="preserve">Layer</source>
+        <target xml:space="preserve" state="needs-review-translation">Slānis</target>
+      </trans-unit>
+      <trans-unit id="_msg145">
+        <source xml:space="preserve">Color</source>
+        <target xml:space="preserve" state="needs-review-translation">Krāsa</target>
+      </trans-unit>
+      <trans-unit id="_msg146">
+        <source xml:space="preserve">Line type</source>
+        <target xml:space="preserve" state="needs-review-translation">Līnijas tips</target>
+      </trans-unit>
+      <trans-unit id="_msg147">
+        <source xml:space="preserve">Line thickness</source>
+        <target xml:space="preserve" state="needs-review-translation">Līnijas biezums</target>
+      </trans-unit>
+      <trans-unit id="_msg148">
+        <source xml:space="preserve">ID</source>
+        <target xml:space="preserve" state="needs-review-translation">ID</target>
+      </trans-unit>
+      <trans-unit id="_msg149">
+        <source xml:space="preserve">LINE</source>
+        <target xml:space="preserve" state="needs-review-translation">LĪNIJA</target>
+      </trans-unit>
+      <trans-unit id="_msg150">
+        <source xml:space="preserve">from point</source>
+        <target xml:space="preserve" state="needs-review-translation">no punkta</target>
+      </trans-unit>
+      <trans-unit id="_msg151">
+        <source xml:space="preserve">to point</source>
+        <target xml:space="preserve" state="needs-review-translation">uz punktu</target>
+      </trans-unit>
+      <trans-unit id="_msg152">
+        <source xml:space="preserve">length</source>
+        <target xml:space="preserve" state="needs-review-translation">garums</target>
+      </trans-unit>
+      <trans-unit id="_msg153">
+        <source xml:space="preserve">Angle in XY plane</source>
+        <target xml:space="preserve" state="needs-review-translation">Leņķis XY plaknē</target>
+      </trans-unit>
+      <trans-unit id="_msg154">
+        <source xml:space="preserve">Inc.</source>
+        <target xml:space="preserve" state="needs-review-translation">SIA</target>
+      </trans-unit>
+      <trans-unit id="_msg155">
+        <source xml:space="preserve">ARC</source>
+        <target xml:space="preserve" state="needs-review-translation">LOKS</target>
+      </trans-unit>
+      <trans-unit id="_msg156">
+        <source xml:space="preserve">center point</source>
+        <target xml:space="preserve" state="needs-review-translation">centra punkts</target>
+      </trans-unit>
+      <trans-unit id="_msg157">
+        <source xml:space="preserve">radius</source>
+        <target xml:space="preserve" state="needs-review-translation">rādiuss</target>
+      </trans-unit>
+      <trans-unit id="_msg158">
+        <source xml:space="preserve">initial angle</source>
+        <target xml:space="preserve" state="needs-review-translation">sākotnējais leņķis</target>
+      </trans-unit>
+      <trans-unit id="_msg159">
+        <source xml:space="preserve">final angle</source>
+        <target xml:space="preserve" state="needs-review-translation">beigu leņķis</target>
+      </trans-unit>
+      <trans-unit id="_msg160">
+        <source xml:space="preserve">CIRCLE</source>
+        <target xml:space="preserve" state="needs-review-translation">RIŅĶIS</target>
+      </trans-unit>
+      <trans-unit id="_msg161">
+        <source xml:space="preserve">circumference</source>
+        <target xml:space="preserve" state="needs-review-translation">perimetrs</target>
+      </trans-unit>
+      <trans-unit id="_msg162">
+        <source xml:space="preserve">area</source>
+        <target xml:space="preserve" state="needs-review-translation">laukums</target>
+      </trans-unit>
+      <trans-unit id="_msg163">
+        <source xml:space="preserve">POLYLINE</source>
+        <target xml:space="preserve" state="needs-review-translation">LAUZTALĪNIJA</target>
+      </trans-unit>
+      <trans-unit id="_msg164">
+        <source xml:space="preserve">Closed</source>
+        <target xml:space="preserve" state="needs-review-translation">Aizvērts</target>
+      </trans-unit>
+      <trans-unit id="_msg165">
+        <source xml:space="preserve">No</source>
+        <target xml:space="preserve" state="needs-review-translation">Nē</target>
+      </trans-unit>
+      <trans-unit id="_msg166">
+        <source xml:space="preserve">Yes</source>
+        <target xml:space="preserve" state="needs-review-translation">Jā</target>
+      </trans-unit>
+      <trans-unit id="_msg167">
+        <source xml:space="preserve">Vertices</source>
+        <target xml:space="preserve" state="needs-review-translation">Virsotnes</target>
+      </trans-unit>
+      <trans-unit id="_msg168">
+        <source xml:space="preserve">in point</source>
+        <target xml:space="preserve" state="needs-review-translation">punktā</target>
+      </trans-unit>
+      <trans-unit id="_msg169">
+        <source xml:space="preserve">MUST be a line, circle or arc</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="dividedlg">
+      <trans-unit id="_msg170">
+        <source xml:space="preserve">OK</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg171">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve" state="needs-review-translation">Atcelt</target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="lc_Geardlg">
+      <trans-unit id="_msg172">
+        <source xml:space="preserve">Number of teeth</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg173">
+        <source xml:space="preserve">Pressure angle (deg)</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg174">
+        <source xml:space="preserve">Accept</source>
+        <target xml:space="preserve" state="needs-review-translation">Pieņemt</target>
+      </trans-unit>
+      <trans-unit id="_msg175">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve" state="needs-review-translation">Atcelt</target>
+      </trans-unit>
+      <trans-unit id="_msg176">
+        <source xml:space="preserve">Rotation angle</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg177">
+        <source xml:space="preserve">Modulus</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg178">
+        <source xml:space="preserve">Addendum (rel. to modulus)</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg179">
+        <source xml:space="preserve">Dedendum (rel. to modulus)</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg180">
+        <source xml:space="preserve">Number of segments to draw (dedendum)</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg181">
+        <source xml:space="preserve">Number of segments to draw (addendum)</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg182">
+        <source xml:space="preserve">Draw all teeth?</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg183">
+        <source xml:space="preserve">Draw symmetric face?</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg184">
+        <source xml:space="preserve">Use layers?</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg185">
+        <source xml:space="preserve">Draw addendum circle?</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg186">
+        <source xml:space="preserve">Draw pitch circle?</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg187">
+        <source xml:space="preserve">Draw base circle?</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg188">
+        <source xml:space="preserve">Draw root circle?</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg189">
+        <source xml:space="preserve">Draw pressure line?</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg190">
+        <source xml:space="preserve">Draw pressure limits?</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg191">
+        <source xml:space="preserve">Calculate interference?</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg192">
+        <source xml:space="preserve">Number of segments to draw (interference)</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="lc_Listdlg">
+      <trans-unit id="_msg193" approved="yes">
+        <source xml:space="preserve">List entities</source>
+        <target xml:space="preserve">Objektu saraksts</target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="lc_Sampledlg">
+      <trans-unit id="_msg194" approved="yes">
+        <source xml:space="preserve">Draw line</source>
+        <target xml:space="preserve">Zīmēt līniju</target>
+      </trans-unit>
+      <trans-unit id="_msg195" approved="yes">
+        <source xml:space="preserve">Start X:</source>
+        <target xml:space="preserve">Sākuma X:</target>
+      </trans-unit>
+      <trans-unit id="_msg196" approved="yes">
+        <source xml:space="preserve">Start Y:</source>
+        <target xml:space="preserve">Sākuma Y:</target>
+      </trans-unit>
+      <trans-unit id="_msg197" approved="yes">
+        <source xml:space="preserve">End X:</source>
+        <target xml:space="preserve">Beigu X:</target>
+      </trans-unit>
+      <trans-unit id="_msg198" approved="yes">
+        <source xml:space="preserve">End Y:</source>
+        <target xml:space="preserve">Beigu Y:</target>
+      </trans-unit>
+      <trans-unit id="_msg199" approved="yes">
+        <source xml:space="preserve">Accept</source>
+        <target xml:space="preserve">Pieņemt</target>
+      </trans-unit>
+      <trans-unit id="_msg200" approved="yes">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve">Atcelt</target>
+      </trans-unit>
+      <trans-unit id="_msg201" approved="yes">
+        <source xml:space="preserve">Start X is empty</source>
+        <target xml:space="preserve">Sākuma X ir tukšs</target>
+      </trans-unit>
+      <trans-unit id="_msg202" approved="yes">
+        <source xml:space="preserve">Start Y is empty</source>
+        <target xml:space="preserve">Sākuma Y ir tukšs</target>
+      </trans-unit>
+      <trans-unit id="_msg203" approved="yes">
+        <source xml:space="preserve">End X is empty</source>
+        <target xml:space="preserve">Beigu X ir tukšs</target>
+      </trans-unit>
+      <trans-unit id="_msg204" approved="yes">
+        <source xml:space="preserve">End Y is empty</source>
+        <target xml:space="preserve">Beigu Y ir tukšs</target>
+      </trans-unit>
+      <trans-unit id="_msg205" approved="yes">
+        <source xml:space="preserve">Sample plugin</source>
+        <target xml:space="preserve">Parauga spraudnis</target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="picPunto">
+      <trans-unit id="_msg206">
+        <source xml:space="preserve">File...</source>
+        <target xml:space="preserve" state="needs-review-translation">Datne...</target>
+      </trans-unit>
+      <trans-unit id="_msg207">
+        <source xml:space="preserve">Scale:</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg208">
+        <source xml:space="preserve">Accept</source>
+        <target xml:space="preserve" state="needs-review-translation">Pieņemt</target>
+      </trans-unit>
+      <trans-unit id="_msg209">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve" state="needs-review-translation">Atcelt</target>
+      </trans-unit>
+      <trans-unit id="_msg210">
+        <source xml:space="preserve">Select file</source>
+        <target xml:space="preserve" state="needs-review-translation">Izvēlieties datni</target>
+      </trans-unit>
+      <trans-unit id="_msg211">
+        <source xml:space="preserve">Scale Factor is empty or invalid</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg212">
+        <source xml:space="preserve">The file %1 not exist</source>
+        <target xml:space="preserve" state="needs-review-translation">Datne %1 neeksistē</target>
+      </trans-unit>
+      <trans-unit id="_msg213">
+        <source xml:space="preserve">Can&apos;t open the file %1</source>
+        <target xml:space="preserve" state="needs-review-translation">Nevar atvērt datni %1</target>
+      </trans-unit>
+      <trans-unit id="_msg214">
+        <source xml:space="preserve">%1 objects imported</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg215">
+        <source xml:space="preserve">picPunto drawLine: first point is empty %1</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg216">
+        <source xml:space="preserve">picPunto drawLine: next point is empty %1</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg217">
+        <source xml:space="preserve">format error in %1</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="plot">
+      <trans-unit id="_msg218" approved="yes">
+        <source xml:space="preserve">Plot plugin</source>
+        <target xml:space="preserve">Grafiku spraudnis</target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="plotDialog">
+      <trans-unit id="_msg219" approved="yes">
+        <source xml:space="preserve">Plot equation</source>
+        <target xml:space="preserve">Grafika vienādojums</target>
+      </trans-unit>
+      <trans-unit id="_msg220" approved="yes">
+        <source xml:space="preserve">This plugin allows you to plot mathematical equations.
+If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
+You can use pi when you need the value of pi (i.e. (3*pi)).
+Use t or x in your equation as a variable/parameter.
+</source>
+        <target xml:space="preserve">Šis spraudnis ļauj attēlot matemātiskos vienādojumus.
+Ja nevēlaties izmantot parametrisko formu, vienkārši izlaidiet “Vienādojums 2”.
+Varat izmanto “pi”, ja ir vajadzīga π vērtība (piemēram, 3*pi).
+Izmantojiet savos vienādojums t vai x kā mainīgos/parametrus.
+</target>
+      </trans-unit>
+      <trans-unit id="_msg221" approved="yes">
+        <source xml:space="preserve">Equation 1:</source>
+        <target xml:space="preserve">Vienādojums 1:</target>
+      </trans-unit>
+      <trans-unit id="_msg222" approved="yes">
+        <source xml:space="preserve">Equation 2:</source>
+        <target xml:space="preserve">Vienādojums 2:</target>
+      </trans-unit>
+      <trans-unit id="_msg223" approved="yes">
+        <source xml:space="preserve">start value:</source>
+        <target xml:space="preserve">sākuma vērtība:</target>
+      </trans-unit>
+      <trans-unit id="_msg224" approved="yes">
+        <source xml:space="preserve">end value:</source>
+        <target xml:space="preserve">beigu vērtība:</target>
+      </trans-unit>
+      <trans-unit id="_msg225" approved="yes">
+        <source xml:space="preserve">step size:</source>
+        <target xml:space="preserve">soļa vērtība:</target>
+      </trans-unit>
+      <trans-unit id="_msg226" approved="yes">
+        <source xml:space="preserve">Draw</source>
+        <target xml:space="preserve">Zīmēt</target>
+      </trans-unit>
+      <trans-unit id="_msg227" approved="yes">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve">Atcelt</target>
+      </trans-unit>
+      <trans-unit id="_msg228">
+        <source xml:space="preserve">Line Segments</source>
+        <target xml:space="preserve"></target>
+        <context-group><context context-type="x-gettext-msgctxt">Plot Equation to generate RS_Line segments</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg229">
+        <source xml:space="preserve">Polyline</source>
+        <target xml:space="preserve"></target>
+        <context-group><context context-type="x-gettext-msgctxt">Plot Equation to generate RS_Polyline</context></context-group>
+      </trans-unit>
+      <trans-unit id="_msg230">
+        <source xml:space="preserve">SplinePoints</source>
+        <target xml:space="preserve"></target>
+        <context-group><context context-type="x-gettext-msgctxt">Plot Equation to generate 2nd spline by LC_SplinePoints</context></context-group>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="pointBox">
+      <trans-unit id="_msg231" approved="yes">
+        <source xml:space="preserve">Layer:</source>
+        <target xml:space="preserve">Slānis:</target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="textBox">
+      <trans-unit id="_msg232" approved="yes">
+        <source xml:space="preserve">Style:</source>
+        <target xml:space="preserve">Stils:</target>
+      </trans-unit>
+      <trans-unit id="_msg233" approved="yes">
+        <source xml:space="preserve">Separation</source>
+        <target xml:space="preserve">Atdalīšana</target>
+      </trans-unit>
+      <trans-unit id="_msg234" approved="yes">
+        <source xml:space="preserve">Height:</source>
+        <target xml:space="preserve">Augstums:</target>
+      </trans-unit>
+    </group>
+  </body></file>
+  <file original="Obsolete_PO_entries" datatype="plaintext" source-language="en" target-language="lv"><body>
+    <group restype="x-trolltech-linguist-context" resname="LC_List">
+      <trans-unit id="_msg235" translate="no">
+        <source xml:space="preserve">curvature</source>
+        <target xml:space="preserve">izliekums</target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="dibSHP">
+      <trans-unit id="_msg236" translate="no">
+        <source xml:space="preserve">Poligon</source>
+        <target xml:space="preserve">Daudzstūris</target>
+      </trans-unit>
+      <trans-unit id="_msg237" translate="no">
+        <source xml:space="preserve">Poligon+Measure</source>
+        <target xml:space="preserve">Daudzstūris + mērs</target>
+      </trans-unit>
+      <trans-unit id="_msg238" translate="no">
+        <source xml:space="preserve">3D Poligon</source>
+        <target xml:space="preserve">3D daudzstūris</target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="plot">
+      <trans-unit id="_msg239" translate="no">
+        <source xml:space="preserve">Draw</source>
+        <target xml:space="preserve">Zīmēt</target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="textBox">
+      <trans-unit id="_msg240" translate="no">
+        <source xml:space="preserve">Heigth:</source>
+        <target xml:space="preserve">Augstums:</target>
+      </trans-unit>
+    </group>
+  </body></file>
+</xliff>

@@ -79,6 +79,14 @@ void QG_DlgOptionsGeneral::languageChange()
     retranslateUi(this);
 }
 
+static const RS2::SnapIndicatorLineType SnapIndicatorLineTypes[] = {
+	RS2::SnapIndicatorLineCrosshair, RS2::SnapIndicatorLineCrosshair2, RS2::SnapIndicatorLineIsometric, RS2::SnapIndicatorLineSpiderweb
+};
+
+static const RS2::SnapIndicatorShapeType SnapIndicatorShapeTypes[] = {
+	RS2::SnapIndicatorShapeCircle, RS2::SnapIndicatorShapePoint, RS2::SnapIndicatorShapeSquare
+};
+
 void QG_DlgOptionsGeneral::init()
 {
     // Fill combobox with languages:
@@ -115,16 +123,28 @@ void QG_DlgOptionsGeneral::init()
     bool indicator_lines_state = RS_SETTINGS->readNumEntry("/indicator_lines_state", 1);
     indicator_lines_checkbox->setChecked(indicator_lines_state);
 
+	indicator_lines_combobox->clear();
+	for (const auto e : SnapIndicatorLineTypes)
+		indicator_lines_combobox->addItem(RS_Units::snapIndicatorLineTypeToString(e));
+	int snap_lines_type = RS_SETTINGS->readNumEntry("/indicator_lines_type_value", -1);
     QString indicator_lines_type = RS_SETTINGS->readEntry("/indicator_lines_type", "Crosshair");
+	if (snap_lines_type != -1)
+		indicator_lines_type = RS_Units::snapIndicatorLineTypeToString(static_cast<RS2::SnapIndicatorLineType>(snap_lines_type));
     int index = indicator_lines_combobox->findText(indicator_lines_type);
-    indicator_lines_combobox->setCurrentIndex(index);
+    indicator_lines_combobox->setCurrentIndex(index == -1 ? 0 : index);
 
     bool indicator_shape_state = RS_SETTINGS->readNumEntry("/indicator_shape_state", 1);
     indicator_shape_checkbox->setChecked(indicator_shape_state);
 
+	indicator_shape_combobox->clear();
+	for (const auto s : SnapIndicatorShapeTypes)
+		indicator_shape_combobox->addItem(RS_Units::snapIndicatorShapeTypeToString(s));
+	int snap_shape_type = RS_SETTINGS->readNumEntry("/indicator_shape_type_value", -1);
     QString indicator_shape_type = RS_SETTINGS->readEntry("/indicator_shape_type", "Circle");
+	if (snap_shape_type != -1)
+		indicator_shape_type = RS_Units::snapIndicatorShapeTypeToString(static_cast<RS2::SnapIndicatorShapeType>(snap_shape_type));
     index = indicator_shape_combobox->findText(indicator_shape_type);
-    indicator_shape_combobox->setCurrentIndex(index);
+    indicator_shape_combobox->setCurrentIndex(index == -1 ? 0 : index);
 
     bool cursor_hiding = RS_SETTINGS->readNumEntry("/cursor_hiding", 0);
     cursor_hiding_checkbox->setChecked(cursor_hiding);
@@ -252,8 +272,10 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/LanguageCmd",cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()));
         RS_SETTINGS->writeEntry("/indicator_lines_state", indicator_lines_checkbox->isChecked());
         RS_SETTINGS->writeEntry("/indicator_lines_type", indicator_lines_combobox->currentText());
+		RS_SETTINGS->writeEntry("/indicator_lines_type_value", RS_Units::stringToSnapIndicatorLineType(indicator_lines_combobox->currentText()));
         RS_SETTINGS->writeEntry("/indicator_shape_state", indicator_shape_checkbox->isChecked());      
         RS_SETTINGS->writeEntry("/indicator_shape_type", indicator_shape_combobox->currentText());
+		RS_SETTINGS->writeEntry("/indicator_shape_type_value", RS_Units::stringToSnapIndicatorShapeType(indicator_shape_combobox->currentText()));
         RS_SETTINGS->writeEntry("/cursor_hiding", cursor_hiding_checkbox->isChecked());
         RS_SETTINGS->writeEntry("/Antialiasing", cb_antialiasing->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/ScrollBars", scrollbars_check_box->isChecked()?1:0);

@@ -73,7 +73,7 @@ bool LC_SearchGraph::findShortestPath(RS_AtomicEntity * start, RS_AtomicEntity *
 	if (!dest || !start)
 		return false;
 
-	const int MAX_PATHS = 100;
+	const int MAX_PATHS = 30;
 	QList<LC_SearchNode*> open, closed, created;
 	LC_SearchNode* root = new LC_SearchNode(start, RS_Vector(false));
 	root->calcF(dest);

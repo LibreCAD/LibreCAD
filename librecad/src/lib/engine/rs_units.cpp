@@ -1019,79 +1019,79 @@ QString RS_Units::paperFormatToString(RS2::PaperFormat p) {
 
     switch (p) {
     case RS2::Custom:
-        ret = "Custom";
+        ret = QObject::tr("Custom");
         break;
     case RS2::Letter:
-        ret = "Letter";
+        ret = QObject::tr("Letter");
         break;
     case RS2::Legal:
-        ret = "Legal";
+        ret = QObject::tr("Legal");
         break;
     case RS2::Executive:
-        ret = "Executive";
+        ret = QObject::tr("Executive");
         break;
     case RS2::A0:
-        ret = "A0";
+        ret = QObject::tr("A0");
         break;
     case RS2::A1:
-        ret = "A1";
+        ret = QObject::tr("A1");
         break;
     case RS2::A2:
-        ret = "A2";
+        ret = QObject::tr("A2");
         break;
     case RS2::A3:
-        ret = "A3";
+        ret = QObject::tr("A3");
         break;
     case RS2::A4:
-        ret = "A4";
+        ret = QObject::tr("A4");
         break;
     case RS2::A5:
-        ret = "A5";
+        ret = QObject::tr("A5");
         break;
     case RS2::A6:
-        ret = "A6";
+        ret = QObject::tr("A6");
         break;
     case RS2::A7:
-        ret = "A7";
+        ret = QObject::tr("A7");
         break;
     case RS2::A8:
-        ret = "A8";
+        ret = QObject::tr("A8");
         break;
     case RS2::A9:
-        ret = "A9";
+        ret = QObject::tr("A9");
         break;
     case RS2::B0:
-        ret = "B0";
+        ret = QObject::tr("B0");
         break;
     case RS2::B1:
-        ret = "B1";
+        ret = QObject::tr("B1");
         break;
     case RS2::B2:
-        ret = "B2";
+        ret = QObject::tr("B2");
         break;
     case RS2::B3:
-        ret = "B3";
+        ret = QObject::tr("B3");
         break;
     case RS2::B4:
-        ret = "B4";
+        ret = QObject::tr("B4");
         break;
     case RS2::B5:
-        ret = "B5";
+        ret = QObject::tr("B5");
         break;
     case RS2::B6:
-        ret = "B6";
+        ret = QObject::tr("B6");
         break;
     case RS2::B7:
-        ret = "B7";
+        ret = QObject::tr("B7");
         break;
     case RS2::B8:
-        ret = "B8";
+        ret = QObject::tr("B8");
         break;
     case RS2::B9:
-        ret = "B9";
+        ret = QObject::tr("B9");
         break;
     case RS2::B10:
-        ret = "B10";
+        ret = QObject::tr("B10");
         break;
         /*
            case RS2::C0:
@@ -1129,42 +1129,42 @@ QString RS_Units::paperFormatToString(RS2::PaperFormat p) {
                break;
         */
     case RS2::C5E:
-        ret = "C5E";
+        ret = QObject::tr("C5E");
         break;
     case RS2::Comm10E:
-        ret = "Comm10E";
+        ret = QObject::tr("Comm10E");
         break;
     case RS2::DLE:
-        ret = "DLE";
+        ret = QObject::tr("DLE");
         break;
     case RS2::Folio:
-        ret = "Folio";
+        ret = QObject::tr("Folio");
         break;
     case RS2::Ledger:
-        ret = "Ledger";
+        ret = QObject::tr("Ledger");
         break;
     case RS2::Tabloid:
-        ret = "Tabloid";
+        ret = QObject::tr("Tabloid");
         break;
     case RS2::Arch_A:
-    return QString("Arch A");
+    return QString(QObject::tr("Arch A"));
     case RS2::Arch_B:
-    return QString("Arch B");
+    return QString(QObject::tr("Arch B"));
     case RS2::Arch_C:
-    return QString("Arch C");
+    return QString(QObject::tr("Arch C"));
     case RS2::Arch_D:
-    return QString("Arch D");
+    return QString(QObject::tr("Arch D"));
     case RS2::Arch_E:
-    return QString("Arch E");
+    return QString(QObject::tr("Arch E"));
     case RS2::Arch_E1:
-    return QString("Arch E1");
+    return QString(QObject::tr("Arch E1"));
     case RS2::Arch_E2:
-    return QString("Arch E2");
+    return QString(QObject::tr("Arch E2"));
     case RS2::Arch_E3:
-    return QString("Arch E3");
+    return QString(QObject::tr("Arch E3"));
 
     case RS2::NPageSize:
-        ret = "NPageSize";
+        ret = QObject::tr("NPageSize");
         break;
     default:
         break;
@@ -1297,6 +1297,86 @@ double RS_Units::dpiToScale(double dpi, RS2::Unit unit) {
 double RS_Units::scaleToDpi(double scale, RS2::Unit unit) {
     double dpi = RS_Units::convert(1.0, RS2::Inch, unit) / scale;
     return dpi;
+}
+
+QString RS_Units::snapIndicatorLineTypeToString(RS2::SnapIndicatorLineType t)
+{
+	switch (t) {
+	case RS2::SnapIndicatorLineCrosshair:
+		return QObject::tr("Crosshair");
+	case RS2::SnapIndicatorLineCrosshair2:
+		return QObject::tr("Crosshair2");
+	case RS2::SnapIndicatorLineIsometric:
+		return QObject::tr("Isometric");
+	case RS2::SnapIndicatorLineSpiderweb:
+		return QObject::tr("Spiderweb");
+	}
+	return QString();
+}
+
+RS2::SnapIndicatorLineType RS_Units::stringToSnapIndicatorLineType(const QString & s)
+{
+	if (s == "Crosshair" || s == QObject::tr("Crosshair"))
+		return RS2::SnapIndicatorLineCrosshair;
+	else if (s == "Crosshair2" || s == QObject::tr("Crosshair2"))
+		return RS2::SnapIndicatorLineCrosshair2;
+	else if (s == "Isometric" || s == QObject::tr("Isometric"))
+		return RS2::SnapIndicatorLineIsometric;
+	else if (s == "Spiderweb" || s == QObject::tr("Spiderweb"))
+		return RS2::SnapIndicatorLineSpiderweb;
+	return RS2::SnapIndicatorLineType();
+}
+
+QString RS_Units::snapIndicatorShapeTypeToString(RS2::SnapIndicatorShapeType t)
+{
+	switch (t) {
+	case RS2::SnapIndicatorShapeCircle:
+		return QObject::tr("Circle");
+	case RS2::SnapIndicatorShapePoint:
+		return QObject::tr("Point");
+	case RS2::SnapIndicatorShapeSquare:
+		return QObject::tr("Square");
+	}
+	return QString();
+}
+
+RS2::SnapIndicatorShapeType RS_Units::stringToSnapIndicatorShapeType(const QString & s)
+{
+	if (s == "Circle" || s == QObject::tr("Circle"))
+		return RS2::SnapIndicatorShapeCircle;
+	else if (s == "Point" || s == QObject::tr("Point"))
+		return RS2::SnapIndicatorShapePoint;
+	else if (s == "Square" || s == QObject::tr("Square"))
+		return RS2::SnapIndicatorShapeSquare;
+	return RS2::SnapIndicatorShapeType();
+}
+
+QString RS_Units::inputDeviceTypeToString(RS2::InputDeviceType t)
+{
+	switch (t) {
+	case RS2::InputDeviceMouse:
+		return QObject::tr("Mouse");
+	case RS2::InputDeviceTablet:
+		return QObject::tr("Tablet");
+	case RS2::InputDeviceTrackpad:
+		return QObject::tr("Trackpad");
+	case RS2::InputDeviceTouchscreen:
+		return QObject::tr("Touchscreen");
+	}
+	return QString();
+}
+
+RS2::InputDeviceType RS_Units::stringToInputDeviceType(const QString & s)
+{
+	if (s == "Mouse" || s == QObject::tr("Mouse"))
+		return RS2::InputDeviceMouse;
+	if (s == "Tablet" || s == QObject::tr("Tablet"))
+		return RS2::InputDeviceTablet;
+	if (s == "Trackpad" || s == QObject::tr("Trackpad"))
+		return RS2::InputDeviceTrackpad;
+	if (s == "Touchscreen" || s == QObject::tr("Touchscreen"))
+		return RS2::InputDeviceTouchscreen;
+	return RS2::InputDeviceType();
 }
 
 /**

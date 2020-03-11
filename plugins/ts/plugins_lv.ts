@@ -217,10 +217,6 @@
         <translation>Virsotnes</translation>
     </message>
     <message>
-        <source>curvature</source>
-        <translation type="obsolete">izliekums</translation>
-    </message>
-    <message>
         <source>IMAGE</source>
         <translation>ATTĒLS</translation>
     </message>
@@ -279,6 +275,10 @@
     <message>
         <source>Column/Row Spacing</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>curvature</source>
+        <translation type="obsolete">izliekums</translation>
     </message>
 </context>
 <context>
@@ -556,18 +556,6 @@
         <translation>3D loks</translation>
     </message>
     <message>
-        <source>Poligon</source>
-        <translation type="obsolete">Daudzstūris</translation>
-    </message>
-    <message>
-        <source>Poligon+Measure</source>
-        <translation type="obsolete">Daudzstūris + mērs</translation>
-    </message>
-    <message>
-        <source>3D Poligon</source>
-        <translation type="obsolete">3D daudzstūris</translation>
-    </message>
-    <message>
         <source>Multipatch</source>
         <translation>Vairāku posmu</translation>
     </message>
@@ -590,6 +578,18 @@
     <message>
         <source>3D Polygon</source>
         <translation>3D daudzstūris</translation>
+    </message>
+    <message>
+        <source>Poligon</source>
+        <translation type="obsolete">Daudzstūris</translation>
+    </message>
+    <message>
+        <source>Poligon+Measure</source>
+        <translation type="obsolete">Daudzstūris + mērs</translation>
+    </message>
+    <message>
+        <source>3D Poligon</source>
+        <translation type="obsolete">3D daudzstūris</translation>
     </message>
 </context>
 <context>
@@ -1022,16 +1022,16 @@ Izmantojiet savos vienādojums t vai x kā mainīgos/parametrus.
         <translation>Stils:</translation>
     </message>
     <message>
-        <source>Heigth:</source>
-        <translation type="obsolete">Augstums:</translation>
-    </message>
-    <message>
         <source>Separation</source>
         <translation>Atdalīšana</translation>
     </message>
     <message>
         <source>Height:</source>
         <translation>Augstums:</translation>
+    </message>
+    <message>
+        <source>Heigth:</source>
+        <translation type="obsolete">Augstums:</translation>
     </message>
 </context>
 </TS>

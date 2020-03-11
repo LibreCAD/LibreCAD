@@ -349,64 +349,32 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>ポリライン(&amp;P)</translation>
     </message>
     <message>
-        <source>Draw polylines</source>
-        <translation type="obsolete">ポリライン作図</translation>
-    </message>
-    <message>
         <source>&amp;Add node</source>
         <translation>ノード追加(&amp;A)</translation>
-    </message>
-    <message>
-        <source>Add polyline&apos;s node</source>
-        <translation type="obsolete">ポリライン・ノードを追加</translation>
     </message>
     <message>
         <source>A&amp;ppend node</source>
         <translation>ノード結合(&amp;p)</translation>
     </message>
     <message>
-        <source>Append polyline&apos;s node</source>
-        <translation type="obsolete">ポリラインノード結合</translation>
-    </message>
-    <message>
         <source>&amp;Delete node</source>
         <translation>ノード削除(&amp;D)</translation>
-    </message>
-    <message>
-        <source>Delete polyline&apos;s node</source>
-        <translation type="obsolete">ポリライン・ノードを削除</translation>
     </message>
     <message>
         <source>Delete &amp;between two nodes</source>
         <translation>２ノード間を削除(&amp;b)</translation>
     </message>
     <message>
-        <source>Delete between two nodes</source>
-        <translation type="obsolete">２ノード間を削除</translation>
-    </message>
-    <message>
         <source>&amp;Trim segments</source>
         <translation>セグメントの部分削除(&amp;T)</translation>
-    </message>
-    <message>
-        <source>Trim polyline&apos;s segments</source>
-        <translation type="obsolete">ポリラインのセグメントをトリム</translation>
     </message>
     <message>
         <source>Create &amp;Equidistant Polylines</source>
         <translation>等間隔でポリラインを作成(&amp;E)</translation>
     </message>
     <message>
-        <source>Create Equidistant Polylines</source>
-        <translation type="obsolete">等間隔でポリラインを作成</translation>
-    </message>
-    <message>
         <source>Create Polyline from Existing &amp;Segments</source>
         <translation>既存セグメントからポリライン作成(&amp;S)</translation>
-    </message>
-    <message>
-        <source>Create Polyline from Existing Segments</source>
-        <translation type="obsolete">既存セグメントからポリライン作成</translation>
     </message>
     <message>
         <source>&amp;MText</source>
@@ -490,10 +458,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>反転(&amp;M)</translation>
     </message>
     <message>
-        <source>M&amp;ove and Rotate</source>
-        <translation type="obsolete">移動と回転(&amp;v)</translation>
-    </message>
-    <message>
         <source>Rotate T&amp;wo</source>
         <translation>二点で回転(&amp;T)</translation>
     </message>
@@ -506,16 +470,8 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>トリム(&amp;T)</translation>
     </message>
     <message>
-        <source>&amp;Trim Two</source>
-        <translation type="obsolete">２つの要素でトリム(&amp;T)</translation>
-    </message>
-    <message>
         <source>&amp;Lengthen</source>
         <translation>延長/短縮(&amp;L)</translation>
-    </message>
-    <message>
-        <source>&amp;Offset</source>
-        <translation type="obsolete">平行線/同心円(&amp;O)</translation>
     </message>
     <message>
         <source>&amp;Divide</source>
@@ -590,16 +546,8 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>最背面に移動</translation>
     </message>
     <message>
-        <source>set to bottom</source>
-        <translation type="obsolete">最背面に設定</translation>
-    </message>
-    <message>
         <source>lower after entity</source>
         <translation>ひとつ背面に移動</translation>
-    </message>
-    <message>
-        <source>lower over entity</source>
-        <translation type="obsolete">下と入れ替え</translation>
     </message>
     <message>
         <source>raise over entity</source>
@@ -608,10 +556,6 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>move to top</source>
         <translation>最前面に移動</translation>
-    </message>
-    <message>
-        <source>set to top</source>
-        <translation type="obsolete">最前面に設定</translation>
     </message>
     <message>
         <source>&amp;Show all</source>
@@ -694,24 +638,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>ポリラインを分解(&amp;p)</translation>
     </message>
     <message>
-        <source>&amp;Preferences</source>
-        <translation type="obsolete">参照(&amp;P)</translation>
-    </message>
-    <message>
         <source>&amp;Application Preferences</source>
         <translation>アプリケーションの設定(&amp;A)</translation>
     </message>
     <message>
         <source>Current &amp;Drawing Preferences</source>
         <translation>図面の設定(&amp;D)</translation>
-    </message>
-    <message>
-        <source>Open IDE</source>
-        <translation type="obsolete">スクリプト用統合環境を開く</translation>
-    </message>
-    <message>
-        <source>Run Script..</source>
-        <translation type="obsolete">スクリプト実行..</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
@@ -737,10 +669,6 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Export as &amp;MakerCAM SVG...</source>
         <translation type="vanished">MakerCAM SVGでエクスポート(&amp;M)...</translation>
-    </message>
-    <message>
-        <source>Regenerate Dimension Entities</source>
-        <translation type="obsolete">寸法図形再生成</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
@@ -816,21 +744,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>全画面表示(&amp;F)</translation>
     </message>
     <message>
-        <source>Ctrl+Meta+F</source>
-        <translatorcomment>キー操作は翻訳しない</translatorcomment>
-        <translation type="obsolete">Ctrl+Meta+F</translation>
-    </message>
-    <message>
-        <source>F11</source>
-        <translatorcomment>キー操作は翻訳しない</translatorcomment>
-        <translation type="obsolete">F11</translation>
-    </message>
-    <message>
-        <source>Ctrl+F11</source>
-        <translatorcomment>キー操作は翻訳しない</translatorcomment>
-        <translation type="obsolete">Ctrl+F11</translation>
-    </message>
-    <message>
         <source>&amp;Grid</source>
         <translation>グリッド(&amp;G)</translation>
     </message>
@@ -857,10 +770,6 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Focus on &amp;Command Line</source>
         <translation>指令枠に焦点を合わせる(&amp;C)</translation>
-    </message>
-    <message>
-        <source>Tool Sidebar</source>
-        <translation type="obsolete">ツール・サイドバー</translation>
     </message>
     <message>
         <source>Left</source>
@@ -963,19 +872,103 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Save A&amp;ll...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Draw polylines</source>
+        <translation type="obsolete">ポリライン作図</translation>
+    </message>
+    <message>
+        <source>Add polyline&apos;s node</source>
+        <translation type="obsolete">ポリライン・ノードを追加</translation>
+    </message>
+    <message>
+        <source>Append polyline&apos;s node</source>
+        <translation type="obsolete">ポリラインノード結合</translation>
+    </message>
+    <message>
+        <source>Delete polyline&apos;s node</source>
+        <translation type="obsolete">ポリライン・ノードを削除</translation>
+    </message>
+    <message>
+        <source>Delete between two nodes</source>
+        <translation type="obsolete">２ノード間を削除</translation>
+    </message>
+    <message>
+        <source>Trim polyline&apos;s segments</source>
+        <translation type="obsolete">ポリラインのセグメントをトリム</translation>
+    </message>
+    <message>
+        <source>Create Equidistant Polylines</source>
+        <translation type="obsolete">等間隔でポリラインを作成</translation>
+    </message>
+    <message>
+        <source>Create Polyline from Existing Segments</source>
+        <translation type="obsolete">既存セグメントからポリライン作成</translation>
+    </message>
+    <message>
+        <source>M&amp;ove and Rotate</source>
+        <translation type="obsolete">移動と回転(&amp;v)</translation>
+    </message>
+    <message>
+        <source>&amp;Trim Two</source>
+        <translation type="obsolete">２つの要素でトリム(&amp;T)</translation>
+    </message>
+    <message>
+        <source>&amp;Offset</source>
+        <translation type="obsolete">平行線/同心円(&amp;O)</translation>
+    </message>
+    <message>
+        <source>set to bottom</source>
+        <translation type="obsolete">最背面に設定</translation>
+    </message>
+    <message>
+        <source>lower over entity</source>
+        <translation type="obsolete">下と入れ替え</translation>
+    </message>
+    <message>
+        <source>set to top</source>
+        <translation type="obsolete">最前面に設定</translation>
+    </message>
+    <message>
+        <source>&amp;Preferences</source>
+        <translation type="obsolete">参照(&amp;P)</translation>
+    </message>
+    <message>
+        <source>Open IDE</source>
+        <translation type="obsolete">スクリプト用統合環境を開く</translation>
+    </message>
+    <message>
+        <source>Run Script..</source>
+        <translation type="obsolete">スクリプト実行..</translation>
+    </message>
+    <message>
+        <source>Regenerate Dimension Entities</source>
+        <translation type="obsolete">寸法図形再生成</translation>
+    </message>
+    <message>
+        <source>Ctrl+Meta+F</source>
+        <translatorcomment>キー操作は翻訳しない</translatorcomment>
+        <translation type="obsolete">Ctrl+Meta+F</translation>
+    </message>
+    <message>
+        <source>F11</source>
+        <translatorcomment>キー操作は翻訳しない</translatorcomment>
+        <translation type="obsolete">F11</translation>
+    </message>
+    <message>
+        <source>Ctrl+F11</source>
+        <translatorcomment>キー操作は翻訳しない</translatorcomment>
+        <translation type="obsolete">Ctrl+F11</translation>
+    </message>
+    <message>
+        <source>Tool Sidebar</source>
+        <translation type="obsolete">ツール・サイドバー</translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
     <message>
         <source>Export as</source>
         <translation>エクスポート</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="obsolete">追加/削除の操作</translation>
     </message>
 </context>
 <context>
@@ -990,11 +983,23 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Mouse</source>
-        <translation type="obsolete">マウス</translation>
+        <translation type="unfinished">マウス</translation>
     </message>
     <message>
         <source>Save</source>
         <translation>保存</translation>
+    </message>
+    <message>
+        <source>Tablet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trackpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Touchscreen</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1006,209 +1011,6 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Insert Image</source>
         <translation>画像を挿入</translation>
-    </message>
-</context>
-<context>
-    <name>LC_WidgetFactory</name>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">円</translation>
-    </message>
-    <message>
-        <source>Curve</source>
-        <translation type="obsolete">曲線</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">楕円</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">ポリライン</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">選択</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">変更・修正</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">図形情報</translation>
-    </message>
-    <message>
-        <source>Layer List</source>
-        <translation type="obsolete">レイヤーの一覧</translation>
-    </message>
-    <message>
-        <source>Block List</source>
-        <translation type="obsolete">ブロックの一覧</translation>
-    </message>
-    <message>
-        <source>Library Browser</source>
-        <translation type="obsolete">ライブラリの一覧</translation>
-    </message>
-    <message>
-        <source>Command line</source>
-        <translation type="obsolete">コマンドライン</translation>
-    </message>
-    <message>
-        <source>File</source>
-        <translation type="obsolete">ファイル</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="obsolete">設定</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="obsolete">編集</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="obsolete">整列</translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="obsolete">表示</translation>
-    </message>
-    <message>
-        <source>Misc</source>
-        <translation type="obsolete">その他</translation>
-    </message>
-    <message>
-        <source>Snap Selection</source>
-        <translation type="obsolete">スナップ選択</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">ペン</translation>
-    </message>
-    <message>
-        <source>Tool Options</source>
-        <translation type="obsolete">ツールオプション</translation>
-    </message>
-    <message>
-        <source>DockWidgets</source>
-        <translation type="obsolete">ドック ウィジット</translation>
-    </message>
-    <message>
-        <source>Categories</source>
-        <translation type="obsolete">CADツール選択</translation>
-    </message>
-    <message>
-        <source>Custom</source>
-        <translation type="obsolete">カスタム</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="obsolete">ファイル(&amp;F)</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="obsolete">インポート</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="obsolete">エクスポート</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="obsolete">編集(&amp;E)</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="obsolete">整列(&amp;O)</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="obsolete">表示(&amp;V)</translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="obsolete">線を引く(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="obsolete">直線(&amp;L)</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="obsolete">円(&amp;C)</translation>
-    </message>
-    <message>
-        <source>&amp;Curve</source>
-        <translation type="obsolete">曲線(&amp;C)</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="obsolete">楕円(&amp;E)</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="obsolete">ポリライン(&amp;P)</translation>
-    </message>
-    <message>
-        <source>&amp;Misc</source>
-        <translation type="obsolete">その他(&amp;M)</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="obsolete">選択(&amp;S)</translation>
-    </message>
-    <message>
-        <source>&amp;Dimension</source>
-        <translation type="obsolete">寸法記入(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="obsolete">変更・修正(&amp;M)</translation>
-    </message>
-    <message>
-        <source>&amp;Snap</source>
-        <translation type="obsolete">スナップ(&amp;S)</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="obsolete">図形情報(&amp;I)</translation>
-    </message>
-    <message>
-        <source>&amp;Layer</source>
-        <translation type="obsolete">レイヤー(&amp;L)</translation>
-    </message>
-    <message>
-        <source>&amp;Block</source>
-        <translation type="obsolete">ブロック(&amp;B)</translation>
-    </message>
-    <message>
-        <source>&amp;Window</source>
-        <translation type="obsolete">画面(&amp;W)</translation>
-    </message>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="obsolete">ヘルプ(&amp;H)</translation>
-    </message>
-    <message>
-        <source>&amp;Manual</source>
-        <translation type="obsolete">マニュアル(&amp;M)</translation>
-    </message>
-    <message>
-        <source>Online (Wiki)</source>
-        <translation type="obsolete">オンライン (Wiki)</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="obsolete">Librecadの情報</translation>
-    </message>
-    <message>
-        <source>&amp;Dockwidgets</source>
-        <translation type="obsolete">ドック ウィジット(&amp;D)</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="obsolete">ツールバー(&amp;T)</translation>
     </message>
 </context>
 <context>
@@ -1318,12 +1120,12 @@ distance between points=%2 is larger than diameter=%3</source>
 <context>
     <name>QC_ActionGetPoint</name>
     <message>
-        <source>Specify a point</source>
-        <translation type="obsolete">点を指定する</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation>中止</translation>
+    </message>
+    <message>
+        <source>Specify a point</source>
+        <translation type="obsolete">点を指定する</translation>
     </message>
 </context>
 <context>
@@ -1339,15 +1141,6 @@ distance between points=%2 is larger than diameter=%3</source>
 </context>
 <context>
     <name>QC_ApplicationWindow</name>
-    <message>
-        <source>Running script &apos;%1&apos;</source>
-        <translation type="obsolete">スクリプト &apos;%1&apos; を実行中</translation>
-    </message>
-    <message>
-        <source>Inserting block &apos;%1&apos;</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="obsolete">ブロック&apos;%1&apos;を挿入中</translation>
-    </message>
     <message>
         <source>&amp;File</source>
         <translation>ファイル(&amp;F)</translation>
@@ -1369,10 +1162,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>選択(&amp;S)</translation>
     </message>
     <message>
-        <source>&amp;Draw</source>
-        <translation type="obsolete">線を引く(&amp;D)</translation>
-    </message>
-    <message>
         <source>&amp;Line</source>
         <translation>直線(&amp;L)</translation>
     </message>
@@ -1389,45 +1178,16 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>ポリライン(&amp;P)</translation>
     </message>
     <message>
-        <source>&amp;Dimension</source>
-        <translation type="obsolete">寸法記入(&amp;D)</translation>
-    </message>
-    <message>
         <source>&amp;Modify</source>
         <translation>変更・修正(&amp;M)</translation>
-    </message>
-    <message>
-        <source>&amp;Snap</source>
-        <translation type="obsolete">スナップ(&amp;S)</translation>
     </message>
     <message>
         <source>&amp;Info</source>
         <translation>図形情報(&amp;I)</translation>
     </message>
     <message>
-        <source>&amp;Layer</source>
-        <translation type="obsolete">レイヤー(&amp;L)</translation>
-    </message>
-    <message>
-        <source>&amp;Block</source>
-        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
-        <translation type="obsolete">ブロック(&amp;B)</translation>
-    </message>
-    <message>
-        <source>&amp;Scripts</source>
-        <translation type="obsolete">スクリプト(&amp;S)</translation>
-    </message>
-    <message>
         <source>About</source>
         <translation>Librecadの情報</translation>
-    </message>
-    <message>
-        <source>&amp;Manual</source>
-        <translation type="obsolete">マニュアル(&amp;M)</translation>
-    </message>
-    <message>
-        <source>&amp;Window</source>
-        <translation type="obsolete">画面(&amp;W)</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -1563,22 +1323,6 @@ Auto-save disabled.</source>
         <translation>アプリケーションを実行...</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation type="obsolete">なし</translation>
-    </message>
-    <message>
-        <source>About...</source>
-        <translation type="obsolete">Librecadの情報...</translation>
-    </message>
-    <message>
-        <source>Modules: %1</source>
-        <translation type="obsolete">モジュール: %1</translation>
-    </message>
-    <message>
-        <source>Help</source>
-        <translation type="obsolete">ヘルプ</translation>
-    </message>
-    <message>
         <source>&amp;Toolbars</source>
         <translation>ツールバー(&amp;T)</translation>
     </message>
@@ -1587,24 +1331,8 @@ Auto-save disabled.</source>
         <translation>コンパイル・オン: %1</translation>
     </message>
     <message>
-        <source>Program Icons Supplied by</source>
-        <translation type="obsolete">供給されたプログラム・アイコン</translation>
-    </message>
-    <message>
-        <source>Splash and Logo supplied by</source>
-        <translation type="obsolete">供給された起動画面とロゴ</translation>
-    </message>
-    <message>
-        <source>Main Website : </source>
-        <translation type="obsolete">メインWEBサイト:</translation>
-    </message>
-    <message>
         <source>Version: %1</source>
         <translation>バージョン: %1</translation>
-    </message>
-    <message>
-        <source>SCM Revision: %1</source>
-        <translation type="obsolete">SCM リビジョン: %1</translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
@@ -1617,10 +1345,6 @@ Auto-save disabled.</source>
     <message>
         <source> , please check the filename and permissions.</source>
         <translation>  , ファイル名、権限をチェックしてください.</translation>
-    </message>
-    <message>
-        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
-        <translation type="obsolete">ソースコードとWEBサイトを管理のため、LibreCADに寄付をお願いします.</translation>
     </message>
     <message>
         <source>Su&amp;b-Window mode</source>
@@ -1679,16 +1403,8 @@ Auto-save disabled.</source>
         <translation>コンパイラ: GNU GCC %1.%2.%3</translation>
     </message>
     <message>
-        <source>Compiler: Microsoft Visual C++&lt;br&gt;</source>
-        <translation type="obsolete">コンパイラ: Microsoft Visual C++&lt;br&gt;</translation>
-    </message>
-    <message>
         <source>Qt Version: %1</source>
         <translation>QTのバージョン: %1</translation>
-    </message>
-    <message>
-        <source>Help files not found</source>
-        <translation type="obsolete">ヘルプファイルが見つかりません</translation>
     </message>
     <message>
         <source>Draft Mode</source>
@@ -1714,20 +1430,8 @@ Please check its existence and permissions.</source>
         <translation>ファイル &apos;%1&apos; は存在しません。ファイルを開くことを中止</translation>
     </message>
     <message>
-        <source>Online (Wiki)</source>
-        <translation type="obsolete">オンライン (Wiki)</translation>
-    </message>
-    <message>
-        <source>The help files were not found.</source>
-        <translation type="obsolete">ヘルプファイルが見つかりません.</translation>
-    </message>
-    <message>
         <source>Categories</source>
         <translation>CADツール選択</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="obsolete">設定</translation>
     </message>
     <message>
         <source>&amp;Order</source>
@@ -1766,14 +1470,6 @@ Please check its existence and permissions.</source>
         <translation>ポリライン</translation>
     </message>
     <message>
-        <source>&amp;Misc</source>
-        <translation type="obsolete">その他(&amp;M)</translation>
-    </message>
-    <message>
-        <source>Misc</source>
-        <translation type="obsolete">その他</translation>
-    </message>
-    <message>
         <source>Dimension</source>
         <translation>寸法記入</translation>
     </message>
@@ -1788,18 +1484,6 @@ Please check its existence and permissions.</source>
     <message>
         <source>Pen</source>
         <translation>ペン</translation>
-    </message>
-    <message>
-        <source>Custom</source>
-        <translation type="obsolete">カスタム</translation>
-    </message>
-    <message>
-        <source>DockWidgets</source>
-        <translation type="obsolete">ドック ウィジット</translation>
-    </message>
-    <message>
-        <source>&amp;Dockwidgets</source>
-        <translation type="obsolete">ドック ウィジット(&amp;D)</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
@@ -1994,6 +1678,147 @@ Please check its existence and permissions.</source>
         <source>LibreCAD Help</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Paper settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paper size and/or margins have been changed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to apply changes to current drawing?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawing settings:
+	size: %1 x %2 (%3)
+	margins: %4, %5, %6, %7
+
+Printer settings:
+	size: %8 x %9 (%10)
+	margins: %11, %12, %13, %14
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running script &apos;%1&apos;</source>
+        <translation type="obsolete">スクリプト &apos;%1&apos; を実行中</translation>
+    </message>
+    <message>
+        <source>Inserting block &apos;%1&apos;</source>
+        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
+        <translation type="obsolete">ブロック&apos;%1&apos;を挿入中</translation>
+    </message>
+    <message>
+        <source>&amp;Draw</source>
+        <translation type="obsolete">線を引く(&amp;D)</translation>
+    </message>
+    <message>
+        <source>&amp;Dimension</source>
+        <translation type="obsolete">寸法記入(&amp;D)</translation>
+    </message>
+    <message>
+        <source>&amp;Snap</source>
+        <translation type="obsolete">スナップ(&amp;S)</translation>
+    </message>
+    <message>
+        <source>&amp;Layer</source>
+        <translation type="obsolete">レイヤー(&amp;L)</translation>
+    </message>
+    <message>
+        <source>&amp;Block</source>
+        <translatorcomment>AutoCADにあわせて「ブロック」と訳すことにした</translatorcomment>
+        <translation type="obsolete">ブロック(&amp;B)</translation>
+    </message>
+    <message>
+        <source>&amp;Scripts</source>
+        <translation type="obsolete">スクリプト(&amp;S)</translation>
+    </message>
+    <message>
+        <source>&amp;Manual</source>
+        <translation type="obsolete">マニュアル(&amp;M)</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <translation type="obsolete">画面(&amp;W)</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="obsolete">なし</translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation type="obsolete">Librecadの情報...</translation>
+    </message>
+    <message>
+        <source>Modules: %1</source>
+        <translation type="obsolete">モジュール: %1</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation type="obsolete">ヘルプ</translation>
+    </message>
+    <message>
+        <source>Program Icons Supplied by</source>
+        <translation type="obsolete">供給されたプログラム・アイコン</translation>
+    </message>
+    <message>
+        <source>Splash and Logo supplied by</source>
+        <translation type="obsolete">供給された起動画面とロゴ</translation>
+    </message>
+    <message>
+        <source>Main Website : </source>
+        <translation type="obsolete">メインWEBサイト:</translation>
+    </message>
+    <message>
+        <source>SCM Revision: %1</source>
+        <translation type="obsolete">SCM リビジョン: %1</translation>
+    </message>
+    <message>
+        <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
+        <translation type="obsolete">ソースコードとWEBサイトを管理のため、LibreCADに寄付をお願いします.</translation>
+    </message>
+    <message>
+        <source>Compiler: Microsoft Visual C++&lt;br&gt;</source>
+        <translation type="obsolete">コンパイラ: Microsoft Visual C++&lt;br&gt;</translation>
+    </message>
+    <message>
+        <source>Help files not found</source>
+        <translation type="obsolete">ヘルプファイルが見つかりません</translation>
+    </message>
+    <message>
+        <source>Online (Wiki)</source>
+        <translation type="obsolete">オンライン (Wiki)</translation>
+    </message>
+    <message>
+        <source>The help files were not found.</source>
+        <translation type="obsolete">ヘルプファイルが見つかりません.</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="obsolete">設定</translation>
+    </message>
+    <message>
+        <source>&amp;Misc</source>
+        <translation type="obsolete">その他(&amp;M)</translation>
+    </message>
+    <message>
+        <source>Misc</source>
+        <translation type="obsolete">その他</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="obsolete">カスタム</translation>
+    </message>
+    <message>
+        <source>DockWidgets</source>
+        <translation type="obsolete">ドック ウィジット</translation>
+    </message>
+    <message>
+        <source>&amp;Dockwidgets</source>
+        <translation type="obsolete">ドック ウィジット(&amp;D)</translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -2056,69 +1881,6 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;現在、編集しているレイヤー名&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="obsolete">円弧オプション</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="obsolete">時計回り</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="obsolete">反時計回り</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="obsolete">接線円弧オプション</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="obsolete">接線の弧の半径</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="obsolete">接する円の全体の角度</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="obsolete">半径</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="obsolete">角度</translation>
-    </message>
-</context>
-<context>
-    <name>QG_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="obsolete">Ｃ面取りオプション</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="obsolete">削除</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="obsolete">Ｃ面取りする両図形をチェック</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="obsolete">長さ 1:</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="obsolete">長さ 2:</translation>
     </message>
 </context>
 <context>
@@ -2247,35 +2009,9 @@ in a separate window</source>
         <source>Looking for matching block names</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QG_CircleOptions</name>
     <message>
-        <source>Circle Options</source>
-        <translation type="obsolete">円オプション</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">半径:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CircleTan2Options</name>
-    <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="obsolete">円の接線は２つのオプション</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;線に接した円の半径&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">半径:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="obsolete">接線の円の半径</translation>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2326,10 +2062,6 @@ in a separate window</source>
         <translation>明るい灰色</translation>
     </message>
     <message>
-        <source>Others..</source>
-        <translation type="obsolete">その他..</translation>
-    </message>
-    <message>
         <source>Unchanged</source>
         <translation>未変更</translation>
     </message>
@@ -2364,6 +2096,10 @@ in a separate window</source>
     <message>
         <source>Custom</source>
         <translation>カスタム</translation>
+    </message>
+    <message>
+        <source>Others..</source>
+        <translation type="obsolete">その他..</translation>
     </message>
 </context>
 <context>
@@ -2407,10 +2143,6 @@ in a separate window</source>
         <translation>コマンドの履歴を出力</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;type in coordinates or commands&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;座標やコマンドを入力&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation>エスケープ</translation>
@@ -2419,62 +2151,16 @@ in a separate window</source>
         <source>...</source>
         <translation>...</translation>
     </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;type in coordinates or commands&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;座標やコマンドを入力&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
 </context>
 <context>
     <name>QG_CoordinateWidget</name>
     <message>
         <source>Coordinates</source>
         <translation>座標</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DimLinearOptions</name>
-    <message>
-        <source>Linear Dimension Options</source>
-        <translation type="obsolete">線分寸法オプション</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">角度:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DimOptions</name>
-    <message>
-        <source>Dimension Options</source>
-        <translation type="obsolete">寸法オプション</translation>
-    </message>
-    <message>
-        <source>Label:</source>
-        <translation type="obsolete">ラベル:</translation>
-    </message>
-    <message>
-        <source>°</source>
-        <translation type="obsolete">°</translation>
-    </message>
-    <message>
-        <source>±</source>
-        <translation type="obsolete">±</translation>
-    </message>
-    <message>
-        <source>×</source>
-        <translation type="obsolete">×</translation>
-    </message>
-    <message>
-        <source>÷</source>
-        <translation type="obsolete">÷</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="obsolete">...</translation>
-    </message>
-    <message>
-        <source>⌀</source>
-        <translation type="obsolete">⌀</translation>
-    </message>
-    <message>
-        <source>π</source>
-        <translation type="obsolete">π</translation>
     </message>
 </context>
 <context>
@@ -2839,19 +2525,6 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>ようこそ</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
-&lt;/font&gt;
-&lt;br&gt;
-Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
-You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation type="obsolete">&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;ようこそLibreCADへ&lt;/b&gt;
-&lt;/font&gt;
-&lt;br&gt;
-新規図面の単位と言語を設定してください。&lt;br&gt;
-オプションダイアログで後からこの設定を変更できます。
-</translation>
-    </message>
-    <message>
         <source>Default Unit:</source>
         <translation>既定単位:</translation>
     </message>
@@ -2874,6 +2547,19 @@ Please choose the unit you want to use for new drawings and your preferred langu
 &lt;br&gt;
 あなたが作図で使用したいユニットと言語を設定してください&lt;br&gt;
 (ここでの設定は後で変更できます。)</translation>
+    </message>
+    <message>
+        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+&lt;/font&gt;
+&lt;br&gt;
+Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
+You can changes these settings later in the Options Dialog of QCad.</source>
+        <translation type="obsolete">&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;ようこそLibreCADへ&lt;/b&gt;
+&lt;/font&gt;
+&lt;br&gt;
+新規図面の単位と言語を設定してください。&lt;br&gt;
+オプションダイアログで後からこの設定を変更できます。
+</translation>
     </message>
 </context>
 <context>
@@ -2975,10 +2661,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>&amp;Height:</source>
         <translation>高さ(&amp;H):</translation>
-    </message>
-    <message>
-        <source>Line &amp;spacing:</source>
-        <translation type="obsolete">行間(&amp;s):</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
@@ -3572,6 +3254,10 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>...</source>
         <translation type="unfinished">...</translation>
     </message>
+    <message>
+        <source>Line &amp;spacing:</source>
+        <translation type="obsolete">行間(&amp;s):</translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgMirror</name>
@@ -4124,10 +3810,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>フォント:</translation>
     </message>
     <message>
-        <source>Scripts:</source>
-        <translation type="obsolete">スクリプト:</translation>
-    </message>
-    <message>
         <source>Part Libraries:</source>
         <translation>部品ライブラリ:</translation>
     </message>
@@ -4160,10 +3842,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>コマンド 言語(&amp;C):</translation>
     </message>
     <message>
-        <source>Number of p&amp;review entities:</source>
-        <translation type="obsolete">プレビューする図形群の数(&amp;r):</translation>
-    </message>
-    <message>
         <source>&amp;Paths</source>
         <translation>パス(&amp;P)</translation>
     </message>
@@ -4188,14 +3866,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>メタグリッド(&amp;M):</translation>
     </message>
     <message>
-        <source>Fontsize</source>
-        <translation type="obsolete">フォント サイズ</translation>
-    </message>
-    <message>
-        <source>Statusbar:</source>
-        <translation type="obsolete">ステータスバー:</translation>
-    </message>
-    <message>
         <source>A&amp;utomatically scale grid</source>
         <translation>グリッドの間隔を自動調整(&amp;u)</translation>
     </message>
@@ -4218,10 +3888,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Alt+U</source>
         <translation>Alt+U</translation>
-    </message>
-    <message>
-        <source>Minimal Grid Spacing (px):</source>
-        <translation type="obsolete">最小グリッド間隔(px):</translation>
     </message>
     <message>
         <source>Program Defaults</source>
@@ -4264,16 +3930,220 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>ハンドルの終了(&amp;E):</translation>
     </message>
     <message>
+        <source>Graphic Colors</source>
+        <translation>画面の色</translation>
+    </message>
+    <message>
+        <source>Modify layer of selected entities, at  layer activation</source>
+        <translation>レイヤーをアクティブにするときに、選択された要素のレイヤーを修正する</translation>
+    </message>
+    <message>
+        <source>Snap indicator:</source>
+        <translation>スナップ位置を明示する線：</translation>
+    </message>
+    <message>
+        <source>Anti-aliasing</source>
+        <translation>アンチエイリアス</translation>
+    </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished">水平線と垂直線の交点</translation>
+    </message>
+    <message>
+        <source>Spiderweb</source>
+        <translation type="unfinished">対角からの線の接点</translation>
+    </message>
+    <message>
+        <source>Clear Settings</source>
+        <translation>設定を元に戻す</translation>
+    </message>
+    <message>
+        <source>restores program geometry/layout to original state</source>
+        <translation>図面/外観の設定を初期設定に戻す</translation>
+    </message>
+    <message>
+        <source>Layout</source>
+        <translation>外観</translation>
+    </message>
+    <message>
+        <source>restores the program to its original state</source>
+        <translation>変更をすべて初期設定に戻す</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>すべて</translation>
+    </message>
+    <message>
+        <source>Start in tab mode</source>
+        <translation>タブモードで開始する</translation>
+    </message>
+    <message>
+        <source>Scrollbars</source>
+        <translation>スクロールバー</translation>
+    </message>
+    <message>
+        <source>Crosshair2</source>
+        <translation type="unfinished">十字線２</translation>
+    </message>
+    <message>
+        <source>Snap indicator lines</source>
+        <translation>スナップ位置を線で示す</translation>
+    </message>
+    <message>
+        <source>Snap indicator shape</source>
+        <translation>スナップ位置をshapeで示す</translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished">円</translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished">点</translation>
+    </message>
+    <message>
+        <source>Isometric</source>
+        <translation type="unfinished">アイソメトリック</translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished">四角</translation>
+    </message>
+    <message>
+        <source>Hide cursor when snapping</source>
+        <translation>スナップときにカーソルを非表示にする</translation>
+    </message>
+    <message>
+        <source>Startup</source>
+        <translation>スタート時の設定</translation>
+    </message>
+    <message>
+        <source>Display loading screen</source>
+        <translation>画面にスクリーンをロードする</translation>
+    </message>
+    <message>
+        <source>Start with main window maximized</source>
+        <translation>メイン画面を最大で開始する</translation>
+    </message>
+    <message>
+        <source>Enable CAD dockwidgets</source>
+        <translation>ドックウィジットを表示する</translation>
+    </message>
+    <message>
+        <source>Enable CAD toolbars</source>
+        <translation>ツールバーを表示する</translation>
+    </message>
+    <message>
+        <source>#1E90FF</source>
+        <translation>明るい藍色</translation>
+    </message>
+    <message>
+        <source>Clear settings</source>
+        <translation>設定を初期化</translation>
+    </message>
+    <message>
+        <source>This will also include custom menus and toolbars. Continue?</source>
+        <translation>カスタムメニュー、ツールバーに含まれます.よろしいですか?</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;有効にすると、作業しているレイヤーの属性は、新しいレイヤーで選択したすべての属性を修正することになります。複数のレイヤーの属性を変更するには：最初に必要とする属性を選択します。レイヤーのウィジェット内のレイヤーを選択します。選択したすべての属性は新しいレイヤーに属するように修正させます&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Variable File:</source>
+        <translation>可変長ファイル：</translation>
+    </message>
+    <message>
+        <source>Minimal Grid Spacing (p&amp;x):</source>
+        <translation>最小のグリッド間隔 (p&amp;x):</translation>
+    </message>
+    <message>
+        <source>N&amp;umber of preview entities:</source>
+        <translation type="vanished">表示要素数(&amp;u)：</translation>
+    </message>
+    <message>
+        <source>Don&apos;t use native OS file open dialog</source>
+        <translation>ネイティブOSのファイルを開くダイアログは使用しない</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert horizontal scrolling direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert vertical scrolling direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inverts zoom direction when using mouse wheel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert zoom direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keyboard Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Evaluate commands when SPACE BAR is pressed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle free snap mode when SPACE BAR is pressed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CAD Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically zoom drawing when opening</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scripts:</source>
+        <translation type="obsolete">スクリプト:</translation>
+    </message>
+    <message>
+        <source>Number of p&amp;review entities:</source>
+        <translation type="obsolete">プレビューする図形群の数(&amp;r):</translation>
+    </message>
+    <message>
+        <source>Fontsize</source>
+        <translation type="obsolete">フォント サイズ</translation>
+    </message>
+    <message>
+        <source>Statusbar:</source>
+        <translation type="obsolete">ステータスバー:</translation>
+    </message>
+    <message>
+        <source>Minimal Grid Spacing (px):</source>
+        <translation type="obsolete">最小グリッド間隔(px):</translation>
+    </message>
+    <message>
         <source>Splash Window</source>
         <translation type="obsolete">起動画面</translation>
     </message>
     <message>
         <source>Display Splash</source>
         <translation type="obsolete">起動時に表示する</translation>
-    </message>
-    <message>
-        <source>Graphic Colors</source>
-        <translation>画面の色</translation>
     </message>
     <message>
         <source>Aquamarine</source>
@@ -4353,28 +4223,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;可能な時には、アクティブ レイヤーは、その新しいレイヤーに、すべての選択された要素を修正する。複数の要素のレイヤーを変更するために：最初に必要な要素を選ぶ；レイヤーウィジットのレイヤーを作動させる.これは、すべての選ばれた要素を作る 新しいレイヤーに属するために修正される.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>Modify layer of selected entities, at  layer activation</source>
-        <translation>レイヤーをアクティブにするときに、選択された要素のレイヤーを修正する</translation>
-    </message>
-    <message>
-        <source>Snap indicator:</source>
-        <translation>スナップ位置を明示する線：</translation>
-    </message>
-    <message>
-        <source>Anti-aliasing</source>
-        <translation>アンチエイリアス</translation>
-    </message>
-    <message>
         <source>Snap indicator</source>
         <translation type="obsolete">スナップ位置を明示する</translation>
-    </message>
-    <message>
-        <source>Crosshair</source>
-        <translation type="obsolete">水平線と垂直線の交点</translation>
-    </message>
-    <message>
-        <source>Spiderweb</source>
-        <translation type="obsolete">対角からの線の接点</translation>
     </message>
     <message>
         <source>Icons</source>
@@ -4389,180 +4239,16 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="obsolete">カスタム ツールバー:</translation>
     </message>
     <message>
-        <source>Clear Settings</source>
-        <translation>設定を元に戻す</translation>
-    </message>
-    <message>
-        <source>restores program geometry/layout to original state</source>
-        <translation>図面/外観の設定を初期設定に戻す</translation>
-    </message>
-    <message>
-        <source>Layout</source>
-        <translation>外観</translation>
-    </message>
-    <message>
-        <source>restores the program to its original state</source>
-        <translation>変更をすべて初期設定に戻す</translation>
-    </message>
-    <message>
-        <source>All</source>
-        <translation>すべて</translation>
-    </message>
-    <message>
-        <source>Start in tab mode</source>
-        <translation>タブモードで開始する</translation>
-    </message>
-    <message>
-        <source>Scrollbars</source>
-        <translation>スクロールバー</translation>
-    </message>
-    <message>
-        <source>Crosshair2</source>
-        <translation type="obsolete">十字線２</translation>
-    </message>
-    <message>
         <source>Orthogonal</source>
         <translation type="obsolete">垂線</translation>
-    </message>
-    <message>
-        <source>Snap indicator lines</source>
-        <translation>スナップ位置を線で示す</translation>
-    </message>
-    <message>
-        <source>Snap indicator shape</source>
-        <translation>スナップ位置をshapeで示す</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">円</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">点</translation>
-    </message>
-    <message>
-        <source>Isometric</source>
-        <translation type="obsolete">アイソメトリック</translation>
-    </message>
-    <message>
-        <source>Square</source>
-        <translation type="obsolete">四角</translation>
-    </message>
-    <message>
-        <source>Hide cursor when snapping</source>
-        <translation>スナップときにカーソルを非表示にする</translation>
-    </message>
-    <message>
-        <source>Startup</source>
-        <translation>スタート時の設定</translation>
-    </message>
-    <message>
-        <source>Display loading screen</source>
-        <translation>画面にスクリーンをロードする</translation>
-    </message>
-    <message>
-        <source>Start with main window maximized</source>
-        <translation>メイン画面を最大で開始する</translation>
-    </message>
-    <message>
-        <source>Enable CAD dockwidgets</source>
-        <translation>ドックウィジットを表示する</translation>
-    </message>
-    <message>
-        <source>Enable CAD toolbars</source>
-        <translation>ツールバーを表示する</translation>
     </message>
     <message>
         <source>Keycode mode</source>
         <translation type="obsolete">キーコード・モード</translation>
     </message>
     <message>
-        <source>#1E90FF</source>
-        <translation>明るい藍色</translation>
-    </message>
-    <message>
-        <source>Clear settings</source>
-        <translation>設定を初期化</translation>
-    </message>
-    <message>
-        <source>This will also include custom menus and toolbars. Continue?</source>
-        <translation>カスタムメニュー、ツールバーに含まれます.よろしいですか?</translation>
-    </message>
-    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Commands 2 characters in length are automatically accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;コマンドは2文字を自動的に受け入れます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;有効にすると、作業しているレイヤーの属性は、新しいレイヤーで選択したすべての属性を修正することになります。複数のレイヤーの属性を変更するには：最初に必要とする属性を選択します。レイヤーのウィジェット内のレイヤーを選択します。選択したすべての属性は新しいレイヤーに属するように修正させます&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Variable File:</source>
-        <translation>可変長ファイル：</translation>
-    </message>
-    <message>
-        <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation>最小のグリッド間隔 (p&amp;x):</translation>
-    </message>
-    <message>
-        <source>N&amp;umber of preview entities:</source>
-        <translation type="vanished">表示要素数(&amp;u)：</translation>
-    </message>
-    <message>
-        <source>Don&apos;t use native OS file open dialog</source>
-        <translation>ネイティブOSのファイルを開くダイアログは使用しない</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-    <message>
-        <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invert horizontal scrolling direction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invert vertical scrolling direction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invert zoom direction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Keyboard Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>CAD Preferences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automatically zoom drawing when opening</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5516,14 +5202,6 @@ so default step value required for baking</source>
         <translation>合わせる</translation>
     </message>
     <message>
-        <source>Aligned</source>
-        <translation type="obsolete">並列</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="obsolete">中点</translation>
-    </message>
-    <message>
         <source>Diameter (⌀)</source>
         <translation>直径 (⌀)</translation>
     </message>
@@ -5534,6 +5212,14 @@ so default step value required for baking</source>
     <message>
         <source>&amp;Middle</source>
         <translation>中間点(&amp;M)</translation>
+    </message>
+    <message>
+        <source>Aligned</source>
+        <translation type="obsolete">並列</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="obsolete">中点</translation>
     </message>
 </context>
 <context>
@@ -5630,37 +5316,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="obsolete">挿入オプション</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">角度:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="obsolete">回転角度</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="obsolete">倍率:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="obsolete">倍率</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="obsolete">DPI</translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="obsolete">画像のDPI</translation>
-    </message>
-</context>
-<context>
     <name>QG_ImageOptionsDialog</name>
     <message>
         <source>Image Export Options</source>
@@ -5685,10 +5340,6 @@ so default step value required for baking</source>
     <message>
         <source>White</source>
         <translation>白</translation>
-    </message>
-    <message>
-        <source>Black</source>
-        <translation type="obsolete">黒</translation>
     </message>
     <message>
         <source>Resolution:</source>
@@ -5730,52 +5381,9 @@ so default step value required for baking</source>
         <source>B&amp;lack</source>
         <translation>黒(&amp;l)</translation>
     </message>
-</context>
-<context>
-    <name>QG_InsertOptions</name>
     <message>
-        <source>Insert Options</source>
-        <translation type="obsolete">挿入オプション</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">角度:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="obsolete">回転角度</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="obsolete">倍率:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="obsolete">倍率</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="obsolete">配列:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="obsolete">列数</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="obsolete">行数</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="obsolete">間隔:</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="obsolete">列間隔</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="obsolete">行間</translation>
+        <source>Black</source>
+        <translation type="obsolete">黒</translation>
     </message>
 </context>
 <context>
@@ -5887,28 +5495,9 @@ The contents of a Construction Layer should not appear in printout.</source>
         <source>&amp;Lock all Layers</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QG_LibraryInsertOptions</name>
     <message>
-        <source>Library Insert Options</source>
-        <translation type="obsolete">ライブラリ挿入オプション</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">角度:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="obsolete">回転角度</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="obsolete">倍率:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="obsolete">倍率</translation>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5928,190 +5517,6 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <source>Rebuild</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="obsolete">線分角度オプション</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">角度:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="obsolete">線分角度</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">長さ:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="obsolete">線分長さ</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="obsolete">点スナップ:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="obsolete">始点</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="obsolete">中点</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="obsolete">終点</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="obsolete">２等分線オプション</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">長さ:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="obsolete">２等分線の周長</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">数:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="obsolete">作成する２等分線の数</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="obsolete">線分オプション</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">閉じる</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="obsolete">取り消し</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="obsolete">引かれた線を閉じる</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="obsolete">最後に書かれた線を取り消す</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="obsolete">取り消した線を再描画</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="obsolete">やり直し</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="obsolete">平行線分オプション</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">距離:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="obsolete">基準図形への距離</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">数:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="obsolete">作成する平行線分の数</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="obsolete">平行線分通過オプション</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">数:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="obsolete">作成する平行線分の数</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">多角形オプション</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">数:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">辺の数</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">多角形オプション</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">数:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">辺の数</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="obsolete">線分相対角度オプション</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">角度:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="obsolete">線分角度</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">長さ:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="obsolete">線分長さ</translation>
     </message>
 </context>
 <context>
@@ -6235,36 +5640,6 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
 </context>
 <context>
-    <name>QG_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="obsolete">テキストオプション</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="obsolete">テキスト:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">角度:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ModifyOffsetOptions</name>
-    <message>
-        <source>Modify Offset Options</source>
-        <translation type="obsolete">オフセットオプションの修正</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">距離:</translation>
-    </message>
-    <message>
-        <source>Offset from original entity</source>
-        <translation type="obsolete">元の要素からオフセットする</translation>
-    </message>
-</context>
-<context>
     <name>QG_MouseWidget</name>
     <message>
         <source>Mouse</source>
@@ -6292,17 +5667,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QG_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="obsolete">移動回転オプション</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">角度:</translation>
-    </message>
-</context>
-<context>
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
@@ -6318,26 +5682,11 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QG_PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="obsolete">線分相対角度オプション</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="obsolete">間隔:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="obsolete">元のポリラインからの距離</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="obsolete">複写:</translation>
-    </message>
-</context>
-<context>
     <name>QG_PolylineOptions</name>
+    <message>
+        <source>wrong action type</source>
+        <translation>間違ったアクションタイプ</translation>
+    </message>
     <message>
         <source>Polyline Options</source>
         <translation type="obsolete">ポリラインオプション</translation>
@@ -6382,37 +5731,6 @@ p, li { white-space: pre-wrap; }
         <source>Counter Clockwise</source>
         <translation type="obsolete">反時計回り</translation>
     </message>
-    <message>
-        <source>wrong action type</source>
-        <translation>間違ったアクションタイプ</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="obsolete">印刷プレビューオプション</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="obsolete">白黒反転切り替え</translation>
-    </message>
-    <message>
-        <source>Center to page</source>
-        <translation type="obsolete">ページの中心へ</translation>
-    </message>
-    <message>
-        <source>Fit to page</source>
-        <translation type="obsolete">ページの大きさに合わせる</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;印刷倍率は現在の値に固定する&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="obsolete">自動合わせ</translation>
-    </message>
 </context>
 <context>
     <name>QG_RecentFiles</name>
@@ -6423,25 +5741,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Opening recent file...</source>
         <translation type="obsolete">最近開いたファイル…</translation>
-    </message>
-</context>
-<context>
-    <name>QG_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation type="obsolete">丸み面取りオプション</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="obsolete">部分削除</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation type="obsolete">丸み面取りするコーナ線分をチェック</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">半径:</translation>
     </message>
 </context>
 <context>
@@ -6481,32 +5780,6 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;選択された要素の長さの合計&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SnapDistOptions</name>
-    <message>
-        <source>Snap Distance Options</source>
-        <translation type="obsolete">スナップ距離オプション</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">距離:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SnapMiddleOptions</name>
-    <message>
-        <source>Snap Distance Options</source>
-        <translation type="obsolete">スナップ距離オプション</translation>
-    </message>
-    <message>
-        <source>Middle Points:</source>
-        <translation type="obsolete">中間点:</translation>
-    </message>
-    <message>
-        <source>Number of equidistant division points</source>
-        <translation type="obsolete">等距離分割点の数</translation>
     </message>
 </context>
 <context>
@@ -6622,63 +5895,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Exclusive Snap Mode</source>
         <translation>独立スナップモード</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="obsolete">スプラインオプション</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="obsolete">度:</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">閉じている</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="obsolete">取り消し</translation>
-    </message>
-</context>
-<context>
-    <name>QG_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="obsolete">テキストオプション</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="obsolete">テキスト:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">角度:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation type="obsolete">調節量オプション</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="obsolete">距離。負の値はトリミング、正の値は伸長。負の符号は最終的な総長さのトリミング時に無視される。</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">長さ:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="obsolete">距離。負の値はトリミング、正の値は伸長。負の符号は最終的な総長さのトリミング時に無視される。</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="obsolete">入力された値を全体の長さとする、増加はしない</translation>
     </message>
 </context>
 <context>
@@ -8500,10 +7716,6 @@ Continue?</source>
         <translation type="vanished">スタイルシート</translation>
     </message>
     <message>
-        <source>Custom Widgets</source>
-        <translation type="obsolete">カスタム ウィジット</translation>
-    </message>
-    <message>
         <source>Forum</source>
         <translation type="vanished">フォーラム</translation>
     </message>
@@ -8664,6 +7876,126 @@ Continue?</source>
         <source>noname</source>
         <comment>default layer name</comment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished">カスタム</translation>
+    </message>
+    <message>
+        <source>Letter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Legal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Executive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ledger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tabloid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NPageSize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair2</source>
+        <translation type="unfinished">十字線２</translation>
+    </message>
+    <message>
+        <source>Isometric</source>
+        <translation type="unfinished">アイソメトリック</translation>
+    </message>
+    <message>
+        <source>Spiderweb</source>
+        <translation type="unfinished">対角からの線の接点</translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished">点</translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished">四角</translation>
+    </message>
+    <message>
+        <source>Export to ProNest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open ProNest before exporting the drawing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dock Areas</source>
+        <translation type="unfinished">ドックエリア</translation>
+    </message>
+    <message>
+        <source>Mouse</source>
+        <translation type="unfinished">マウス</translation>
+    </message>
+    <message>
+        <source>Tablet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trackpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Touchscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Widgets</source>
+        <translation type="obsolete">カスタム ウィジット</translation>
     </message>
 </context>
 <context>
@@ -9989,10 +9321,6 @@ Continue?</source>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
-        <source>Area: %1</source>
-        <translation type="obsolete">面積: %1</translation>
-    </message>
-    <message>
         <source>Circumference: %1</source>
         <translation>周長: %1</translation>
     </message>
@@ -10019,6 +9347,10 @@ Continue?</source>
     <message>
         <source>Area: %1 %2^2</source>
         <translation>面積: %1 %2^2</translation>
+    </message>
+    <message>
+        <source>Area: %1</source>
+        <translation type="obsolete">面積: %1</translation>
     </message>
 </context>
 <context>
@@ -10685,14 +10017,6 @@ Continue?</source>
         <translation>二番目のノードを指示</translation>
     </message>
     <message>
-        <source>Deleteinging point is not on entity.</source>
-        <translation type="obsolete">削除位置が図形上にありません。</translation>
-    </message>
-    <message>
-        <source>Deletinging point is invalid.</source>
-        <translation type="obsolete">削除位置が無効です。</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation>中止</translation>
     </message>
@@ -10715,6 +10039,14 @@ Continue?</source>
     <message>
         <source>Deleting point is invalid.</source>
         <translation>削除位置が無効.</translation>
+    </message>
+    <message>
+        <source>Deleteinging point is not on entity.</source>
+        <translation type="obsolete">削除位置が図形上にありません。</translation>
+    </message>
+    <message>
+        <source>Deletinging point is invalid.</source>
+        <translation type="obsolete">削除位置が無効です。</translation>
     </message>
 </context>
 <context>
@@ -10751,16 +10083,16 @@ Continue?</source>
         <translation>中止</translation>
     </message>
     <message>
-        <source>Entity must be a line, arc or polyline.</source>
-        <translation type="obsolete">要素は、直線、円弧、またはポリライン.</translation>
-    </message>
-    <message>
         <source>Entity can not be a closed polyline.</source>
         <translation>要素は閉じたポリラインではない.</translation>
     </message>
     <message>
         <source>Polyline created</source>
         <translation>新規ポリライン</translation>
+    </message>
+    <message>
+        <source>Entity must be a line, arc or polyline.</source>
+        <translation type="obsolete">要素は、直線、円弧、またはポリライン.</translation>
     </message>
 </context>
 <context>
@@ -11546,25 +10878,6 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>Ui_PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="obsolete">線分相対角度オプション</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="obsolete">間隔:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="obsolete">元のポリラインからの距離</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="obsolete">複写:</translation>
-    </message>
-</context>
-<context>
     <name>Ui_PolylineOptions</name>
     <message>
         <source>Polyline Options</source>
@@ -11788,6 +11101,852 @@ Continue?</source>
     <message>
         <source>Update</source>
         <translation>更新する</translation>
+    </message>
+</context>
+<context>
+    <name>LC_CustomToolbar</name>
+    <message>
+        <source>Add or Remove Action</source>
+        <translation type="obsolete">追加/削除の操作</translation>
+    </message>
+</context>
+<context>
+    <name>LC_WidgetFactory</name>
+    <message>
+        <source>Circle</source>
+        <translation type="obsolete">円</translation>
+    </message>
+    <message>
+        <source>Curve</source>
+        <translation type="obsolete">曲線</translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation type="obsolete">楕円</translation>
+    </message>
+    <message>
+        <source>Polyline</source>
+        <translation type="obsolete">ポリライン</translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation type="obsolete">選択</translation>
+    </message>
+    <message>
+        <source>Modify</source>
+        <translation type="obsolete">変更・修正</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="obsolete">図形情報</translation>
+    </message>
+    <message>
+        <source>Layer List</source>
+        <translation type="obsolete">レイヤーの一覧</translation>
+    </message>
+    <message>
+        <source>Block List</source>
+        <translation type="obsolete">ブロックの一覧</translation>
+    </message>
+    <message>
+        <source>Library Browser</source>
+        <translation type="obsolete">ライブラリの一覧</translation>
+    </message>
+    <message>
+        <source>Command line</source>
+        <translation type="obsolete">コマンドライン</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation type="obsolete">ファイル</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="obsolete">設定</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="obsolete">編集</translation>
+    </message>
+    <message>
+        <source>Order</source>
+        <translation type="obsolete">整列</translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translation type="obsolete">表示</translation>
+    </message>
+    <message>
+        <source>Misc</source>
+        <translation type="obsolete">その他</translation>
+    </message>
+    <message>
+        <source>Snap Selection</source>
+        <translation type="obsolete">スナップ選択</translation>
+    </message>
+    <message>
+        <source>Pen</source>
+        <translation type="obsolete">ペン</translation>
+    </message>
+    <message>
+        <source>Tool Options</source>
+        <translation type="obsolete">ツールオプション</translation>
+    </message>
+    <message>
+        <source>DockWidgets</source>
+        <translation type="obsolete">ドック ウィジット</translation>
+    </message>
+    <message>
+        <source>Categories</source>
+        <translation type="obsolete">CADツール選択</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="obsolete">カスタム</translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation type="obsolete">ファイル(&amp;F)</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="obsolete">インポート</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation type="obsolete">エクスポート</translation>
+    </message>
+    <message>
+        <source>&amp;Edit</source>
+        <translation type="obsolete">編集(&amp;E)</translation>
+    </message>
+    <message>
+        <source>&amp;Order</source>
+        <translation type="obsolete">整列(&amp;O)</translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation type="obsolete">表示(&amp;V)</translation>
+    </message>
+    <message>
+        <source>&amp;Draw</source>
+        <translation type="obsolete">線を引く(&amp;D)</translation>
+    </message>
+    <message>
+        <source>&amp;Line</source>
+        <translation type="obsolete">直線(&amp;L)</translation>
+    </message>
+    <message>
+        <source>&amp;Circle</source>
+        <translation type="obsolete">円(&amp;C)</translation>
+    </message>
+    <message>
+        <source>&amp;Curve</source>
+        <translation type="obsolete">曲線(&amp;C)</translation>
+    </message>
+    <message>
+        <source>&amp;Ellipse</source>
+        <translation type="obsolete">楕円(&amp;E)</translation>
+    </message>
+    <message>
+        <source>&amp;Polyline</source>
+        <translation type="obsolete">ポリライン(&amp;P)</translation>
+    </message>
+    <message>
+        <source>&amp;Misc</source>
+        <translation type="obsolete">その他(&amp;M)</translation>
+    </message>
+    <message>
+        <source>&amp;Select</source>
+        <translation type="obsolete">選択(&amp;S)</translation>
+    </message>
+    <message>
+        <source>&amp;Dimension</source>
+        <translation type="obsolete">寸法記入(&amp;D)</translation>
+    </message>
+    <message>
+        <source>&amp;Modify</source>
+        <translation type="obsolete">変更・修正(&amp;M)</translation>
+    </message>
+    <message>
+        <source>&amp;Snap</source>
+        <translation type="obsolete">スナップ(&amp;S)</translation>
+    </message>
+    <message>
+        <source>&amp;Info</source>
+        <translation type="obsolete">図形情報(&amp;I)</translation>
+    </message>
+    <message>
+        <source>&amp;Layer</source>
+        <translation type="obsolete">レイヤー(&amp;L)</translation>
+    </message>
+    <message>
+        <source>&amp;Block</source>
+        <translation type="obsolete">ブロック(&amp;B)</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <translation type="obsolete">画面(&amp;W)</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation type="obsolete">ヘルプ(&amp;H)</translation>
+    </message>
+    <message>
+        <source>&amp;Manual</source>
+        <translation type="obsolete">マニュアル(&amp;M)</translation>
+    </message>
+    <message>
+        <source>Online (Wiki)</source>
+        <translation type="obsolete">オンライン (Wiki)</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation type="obsolete">Librecadの情報</translation>
+    </message>
+    <message>
+        <source>&amp;Dockwidgets</source>
+        <translation type="obsolete">ドック ウィジット(&amp;D)</translation>
+    </message>
+    <message>
+        <source>&amp;Toolbars</source>
+        <translation type="obsolete">ツールバー(&amp;T)</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ArcOptions</name>
+    <message>
+        <source>Arc Options</source>
+        <translation type="obsolete">円弧オプション</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="obsolete">時計回り</translation>
+    </message>
+    <message>
+        <source>Counterclockwise</source>
+        <translation type="obsolete">反時計回り</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ArcTangentialOptions</name>
+    <message>
+        <source>Tangential Arc Options</source>
+        <translation type="obsolete">接線円弧オプション</translation>
+    </message>
+    <message>
+        <source>Radius of the tangential arc</source>
+        <translation type="obsolete">接線の弧の半径</translation>
+    </message>
+    <message>
+        <source>Total subtending angle of the tangential arc</source>
+        <translation type="obsolete">接する円の全体の角度</translation>
+    </message>
+    <message>
+        <source>Radius</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="obsolete">半径</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="obsolete">角度</translation>
+    </message>
+</context>
+<context>
+    <name>QG_BevelOptions</name>
+    <message>
+        <source>Bevel Options</source>
+        <translation type="obsolete">Ｃ面取りオプション</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="obsolete">削除</translation>
+    </message>
+    <message>
+        <source>Check to trim both entities to the bevel</source>
+        <translation type="obsolete">Ｃ面取りする両図形をチェック</translation>
+    </message>
+    <message>
+        <source>Length 1:</source>
+        <translation type="obsolete">長さ 1:</translation>
+    </message>
+    <message>
+        <source>Length 2:</source>
+        <translation type="obsolete">長さ 2:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CircleOptions</name>
+    <message>
+        <source>Circle Options</source>
+        <translation type="obsolete">円オプション</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="obsolete">半径:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CircleTan2Options</name>
+    <message>
+        <source>Circle Tangential2 Options</source>
+        <translation type="obsolete">円の接線は２つのオプション</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;線に接した円の半径&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="obsolete">半径:</translation>
+    </message>
+    <message>
+        <source>Radius of tangential circle</source>
+        <translation type="obsolete">接線の円の半径</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DimLinearOptions</name>
+    <message>
+        <source>Linear Dimension Options</source>
+        <translation type="obsolete">線分寸法オプション</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">角度:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DimOptions</name>
+    <message>
+        <source>Dimension Options</source>
+        <translation type="obsolete">寸法オプション</translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation type="obsolete">ラベル:</translation>
+    </message>
+    <message>
+        <source>°</source>
+        <translation type="obsolete">°</translation>
+    </message>
+    <message>
+        <source>±</source>
+        <translation type="obsolete">±</translation>
+    </message>
+    <message>
+        <source>×</source>
+        <translation type="obsolete">×</translation>
+    </message>
+    <message>
+        <source>÷</source>
+        <translation type="obsolete">÷</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="obsolete">...</translation>
+    </message>
+    <message>
+        <source>⌀</source>
+        <translation type="obsolete">⌀</translation>
+    </message>
+    <message>
+        <source>π</source>
+        <translation type="obsolete">π</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ImageOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="obsolete">挿入オプション</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">角度:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="obsolete">回転角度</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="obsolete">倍率:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="obsolete">倍率</translation>
+    </message>
+    <message>
+        <source>DPI</source>
+        <translation type="obsolete">DPI</translation>
+    </message>
+    <message>
+        <source>DPI of Image</source>
+        <translation type="obsolete">画像のDPI</translation>
+    </message>
+</context>
+<context>
+    <name>QG_InsertOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="obsolete">挿入オプション</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">角度:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="obsolete">回転角度</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="obsolete">倍率:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="obsolete">倍率</translation>
+    </message>
+    <message>
+        <source>Array:</source>
+        <translation type="obsolete">配列:</translation>
+    </message>
+    <message>
+        <source>Number of Columns</source>
+        <translation type="obsolete">列数</translation>
+    </message>
+    <message>
+        <source>Number of Rows</source>
+        <translation type="obsolete">行数</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="obsolete">間隔:</translation>
+    </message>
+    <message>
+        <source>Column Spacing</source>
+        <translation type="obsolete">列間隔</translation>
+    </message>
+    <message>
+        <source>Row Spacing</source>
+        <translation type="obsolete">行間</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LibraryInsertOptions</name>
+    <message>
+        <source>Library Insert Options</source>
+        <translation type="obsolete">ライブラリ挿入オプション</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">角度:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="obsolete">回転角度</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="obsolete">倍率:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="obsolete">倍率</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineAngleOptions</name>
+    <message>
+        <source>Line Angle Options</source>
+        <translation type="obsolete">線分角度オプション</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">角度:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="obsolete">線分角度</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">長さ:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="obsolete">線分長さ</translation>
+    </message>
+    <message>
+        <source>Snap Point:</source>
+        <translation type="obsolete">点スナップ:</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="obsolete">始点</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="obsolete">中点</translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation type="obsolete">終点</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineBisectorOptions</name>
+    <message>
+        <source>Line Bisector Options</source>
+        <translation type="obsolete">２等分線オプション</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">長さ:</translation>
+    </message>
+    <message>
+        <source>Length of bisector</source>
+        <translation type="obsolete">２等分線の周長</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">数:</translation>
+    </message>
+    <message>
+        <source>Number of bisectors to create</source>
+        <translation type="obsolete">作成する２等分線の数</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineOptions</name>
+    <message>
+        <source>Line Options</source>
+        <translation type="obsolete">線分オプション</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="obsolete">閉じる</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="obsolete">取り消し</translation>
+    </message>
+    <message>
+        <source>Form a closed contour from lines drawn</source>
+        <translation type="obsolete">引かれた線を閉じる</translation>
+    </message>
+    <message>
+        <source>Undo the last line drawing</source>
+        <translation type="obsolete">最後に書かれた線を取り消す</translation>
+    </message>
+    <message>
+        <source>Redo the last line drawing</source>
+        <translation type="obsolete">取り消した線を再描画</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="obsolete">やり直し</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineParallelOptions</name>
+    <message>
+        <source>Line Parallel Options</source>
+        <translation type="obsolete">平行線分オプション</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="obsolete">距離:</translation>
+    </message>
+    <message>
+        <source>Distance to original entity</source>
+        <translation type="obsolete">基準図形への距離</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">数:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="obsolete">作成する平行線分の数</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineParallelThroughOptions</name>
+    <message>
+        <source>Line Parallel Through Options</source>
+        <translation type="obsolete">平行線分通過オプション</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">数:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="obsolete">作成する平行線分の数</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LinePolygon2Options</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="obsolete">多角形オプション</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">数:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="obsolete">辺の数</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LinePolygonOptions</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="obsolete">多角形オプション</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">数:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="obsolete">辺の数</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineRelAngleOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="obsolete">線分相対角度オプション</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">角度:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="obsolete">線分角度</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">長さ:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="obsolete">線分長さ</translation>
+    </message>
+</context>
+<context>
+    <name>QG_MTextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="obsolete">テキストオプション</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="obsolete">テキスト:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">角度:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ModifyOffsetOptions</name>
+    <message>
+        <source>Modify Offset Options</source>
+        <translation type="obsolete">オフセットオプションの修正</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="obsolete">距離:</translation>
+    </message>
+    <message>
+        <source>Offset from original entity</source>
+        <translation type="obsolete">元の要素からオフセットする</translation>
+    </message>
+</context>
+<context>
+    <name>QG_MoveRotateOptions</name>
+    <message>
+        <source>Move Rotate Options</source>
+        <translation type="obsolete">移動回転オプション</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">角度:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="obsolete">線分相対角度オプション</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="obsolete">間隔:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="obsolete">元のポリラインからの距離</translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="obsolete">複写:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_PrintPreviewOptions</name>
+    <message>
+        <source>Print Preview Options</source>
+        <translation type="obsolete">印刷プレビューオプション</translation>
+    </message>
+    <message>
+        <source>Toggle Black / White mode</source>
+        <translation type="obsolete">白黒反転切り替え</translation>
+    </message>
+    <message>
+        <source>Center to page</source>
+        <translation type="obsolete">ページの中心へ</translation>
+    </message>
+    <message>
+        <source>Fit to page</source>
+        <translation type="obsolete">ページの大きさに合わせる</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;印刷倍率は現在の値に固定する&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>fixed</source>
+        <translation type="obsolete">自動合わせ</translation>
+    </message>
+</context>
+<context>
+    <name>QG_RoundOptions</name>
+    <message>
+        <source>Round Options</source>
+        <translation type="obsolete">丸み面取りオプション</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="obsolete">部分削除</translation>
+    </message>
+    <message>
+        <source>Check to trim both edges to the rounding</source>
+        <translation type="obsolete">丸み面取りするコーナ線分をチェック</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="obsolete">半径:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapDistOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="obsolete">スナップ距離オプション</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="obsolete">距離:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapMiddleOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="obsolete">スナップ距離オプション</translation>
+    </message>
+    <message>
+        <source>Middle Points:</source>
+        <translation type="obsolete">中間点:</translation>
+    </message>
+    <message>
+        <source>Number of equidistant division points</source>
+        <translation type="obsolete">等距離分割点の数</translation>
+    </message>
+</context>
+<context>
+    <name>QG_SplineOptions</name>
+    <message>
+        <source>Spline Options</source>
+        <translation type="obsolete">スプラインオプション</translation>
+    </message>
+    <message>
+        <source>Degree:</source>
+        <translation type="obsolete">度:</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="obsolete">閉じている</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="obsolete">取り消し</translation>
+    </message>
+</context>
+<context>
+    <name>QG_TextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="obsolete">テキストオプション</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="obsolete">テキスト:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">角度:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_TrimAmountOptions</name>
+    <message>
+        <source>Trim Amount Options</source>
+        <translation type="obsolete">調節量オプション</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending.</source>
+        <translation type="obsolete">距離。負の値はトリミング、正の値は伸長。負の符号は最終的な総長さのトリミング時に無視される。</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">長さ:</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
+        <translation type="obsolete">距離。負の値はトリミング、正の値は伸長。負の符号は最終的な総長さのトリミング時に無視される。</translation>
+    </message>
+    <message>
+        <source>The input length is used as total length after trimming, instead of length increase</source>
+        <translation type="obsolete">入力された値を全体の長さとする、増加はしない</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="obsolete">線分相対角度オプション</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="obsolete">間隔:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="obsolete">元のポリラインからの距離</translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="obsolete">複写:</translation>
     </message>
 </context>
 </TS>

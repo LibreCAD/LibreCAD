@@ -29,11 +29,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QToolButton>
 #include <QLibrary>
 #include "qg_actionhandler.h"
+#include "rs_settings.h"
 
 LC_HelpBrowser* LC_HelpBrowser::uniqueInstance = nullptr;
 
 LC_HelpBrowser::LC_HelpBrowser() : QObject()
 {
+	initLocale();
 	populateHelpTopics();
 }
 
@@ -147,6 +149,25 @@ bool LC_HelpBrowser::eventFilter(QObject * obj, QEvent * event)
 	return false;
 }
 
+void LC_HelpBrowser::initLocale()
+{
+	localeName = QString("en-US");
+	RS_SETTINGS->beginGroup("/Appearance");
+	QString lang = RS_SETTINGS->readEntry("/Language", "en");
+	QDir dir(QCoreApplication::applicationDirPath());
+	dir.cd("doc");
+	lang.replace("_", "-");
+	for (auto dirInfo : dir.entryInfoList(QDir::AllDirs | QDir::NoDotAndDotDot)) {
+		QString dirName = dirInfo.fileName();
+		if (dirName.contains("-") && dirName.contains(lang, Qt::CaseInsensitive)) {
+			localeName = dirName;
+			if (dirName.compare(lang, Qt::CaseInsensitive) == 0)
+				break;
+		}
+	}	
+	RS_SETTINGS->endGroup();
+}
+
 void LC_HelpBrowser::populateHelpTopics()
 {
 	QUrl base = QUrl::fromLocalFile(QDir::cleanPath(QCoreApplication::applicationDirPath()) + "/");
@@ -201,7 +222,7 @@ void LC_HelpBrowser::populateHelpTopics()
 
 QString LC_HelpBrowser::getLocaleName()
 {
-	return QString("en-US");  //TODO: modify this when translations become available
+	return localeName;
 }
 
 QString LC_HelpBrowser::getRelativeFilePath(const QString & fileName)

@@ -32,154 +32,35 @@
     </message>
 </context>
 <context>
-    <name>ColorWizard</name>
-    <message>
-        <source>Frame</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ComboBoxOption</name>
-    <message>
-        <source>Frame</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>GroupBox</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>SplinePoints</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="unfinished">Hladina:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="unfinished">Rozmery</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="unfinished">Zvoľte prvý bod</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="unfinished">Zvoľte druhý bod</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify center</source>
-        <translation type="unfinished">Zvoľte stred</translation>
-    </message>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="unfinished">Zadajte počet:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished">Nesprávne číslo. Skúste 1..99</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="unfinished">Nesprávny výraz</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawSplinePoints</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">Nemôžem vrátiť akciu späť: Bolo zadaných málo objektov.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Nothing could be redone.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionFactory</name>
+    <message>
+        <source>Draw polylines</source>
+        <translation type="obsolete">Kreslí lomené čiary</translation>
+    </message>
+    <message>
+        <source>M&amp;ove and Rotate</source>
+        <translation type="obsolete">P&amp;osuň a otoč</translation>
+    </message>
+    <message>
+        <source>&amp;Preferences</source>
+        <translation type="obsolete">&amp;Nastavenia</translation>
+    </message>
+    <message>
+        <source>Open IDE</source>
+        <translation type="obsolete">Otvor IDE</translation>
+    </message>
+    <message>
+        <source>Run Script..</source>
+        <translation type="obsolete">Spusť skript..</translation>
+    </message>
+    <message>
+        <source>Regenerate Dimension Entities</source>
+        <translation type="obsolete">Regeneruj kóty</translation>
+    </message>
+    <message>
+        <source>&amp;Draft</source>
+        <translation type="obsolete">&amp;Náčrt</translation>
+    </message>
     <message>
         <source>&amp;Window Zoom</source>
         <translation type="unfinished">&amp;Priblíženie okna</translation>
@@ -378,10 +259,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished">&amp;Lomená čiara</translation>
     </message>
     <message>
-        <source>Draw polylines</source>
-        <translation type="obsolete">Kreslí lomené čiary</translation>
-    </message>
-    <message>
         <source>&amp;Add node</source>
         <translation type="unfinished"></translation>
     </message>
@@ -488,10 +365,6 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>&amp;Mirror</source>
         <translation type="unfinished">&amp;Zrkadli</translation>
-    </message>
-    <message>
-        <source>M&amp;ove and Rotate</source>
-        <translation type="obsolete">P&amp;osuň a otoč</translation>
     </message>
     <message>
         <source>Rotate T&amp;wo</source>
@@ -666,24 +539,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Preferences</source>
-        <translation type="obsolete">&amp;Nastavenia</translation>
-    </message>
-    <message>
         <source>&amp;Application Preferences</source>
         <translation type="unfinished">&amp;Nastavenia</translation>
     </message>
     <message>
         <source>Current &amp;Drawing Preferences</source>
         <translation type="unfinished">Vlastnosi &amp;aktuálneho výkresu</translation>
-    </message>
-    <message>
-        <source>Open IDE</source>
-        <translation type="obsolete">Otvor IDE</translation>
-    </message>
-    <message>
-        <source>Run Script..</source>
-        <translation type="obsolete">Spusť skript..</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
@@ -704,10 +565,6 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Invert Selection</source>
         <translation type="unfinished">Invertuj výber</translation>
-    </message>
-    <message>
-        <source>Regenerate Dimension Entities</source>
-        <translation type="obsolete">Regeneruj kóty</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
@@ -789,10 +646,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Draft</source>
-        <translation type="obsolete">&amp;Náčrt</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
@@ -905,174 +758,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionFileExportMakerCam</name>
-    <message>
-        <source>Export as</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_DeviceOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mouse</source>
-        <translation type="obsolete">Myš</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_SimpleTests</name>
-    <message>
-        <source>De&amp;bugging</source>
-        <translation type="unfinished">&amp;Ladenie</translation>
-    </message>
-    <message>
-        <source>Insert Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_WidgetOptionsDialog</name>
-    <message>
-        <source>Widget Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toolbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Icon Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Style</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Style Sheet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Statusbar</source>
-        <translation type="unfinished">Stavový riadok</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Font Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Input the path of a Qt style sheet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>side length in pixels</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Use themed icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LG_DimzerosBox</name>
-    <message>
-        <source>select:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>remove left</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>remove right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>remove 0&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>remove 0&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="unfinished">Nastavenie čiar pod relatívnym uhlom</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="unfinished">Vzdialenosť:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QC_ActionGetEnt</name>
-    <message>
-        <source>Select object:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-</context>
-<context>
-    <name>QC_ActionGetPoint</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-</context>
-<context>
-    <name>QC_ActionGetSelect</name>
-    <message>
-        <source>Select objects:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-</context>
-<context>
     <name>QC_ApplicationWindow</name>
-    <message>
-        <source>&amp;File</source>
-        <translation>&amp;Súbor</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation>&amp;Úpravy</translation>
-    </message>
     <message>
         <source>Focus on Command Line</source>
         <translation type="obsolete">Focus na príkazový riadok</translation>
@@ -1082,32 +768,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">Focus na &amp;príkazový riadok </translation>
     </message>
     <message>
-        <source>&amp;View</source>
-        <translation>&amp;Zobraziť</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation>&amp;Voľba</translation>
-    </message>
-    <message>
         <source>&amp;Point</source>
         <translation type="obsolete">&amp;Bod</translation>
     </message>
     <message>
-        <source>&amp;Line</source>
-        <translation>Či&amp;ara</translation>
-    </message>
-    <message>
         <source>&amp;Arc</source>
         <translation type="obsolete">&amp;Oblúk</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation>&amp;Kružnica</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation>&amp;Elipsa</translation>
     </message>
     <message>
         <source>&amp;Draw</source>
@@ -1118,16 +784,8 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">&amp;Kóty</translation>
     </message>
     <message>
-        <source>&amp;Modify</source>
-        <translation>&amp;Modifikuj</translation>
-    </message>
-    <message>
         <source>&amp;Snap</source>
         <translation type="obsolete">&amp;Prichytávanie</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation>&amp;Informácie</translation>
     </message>
     <message>
         <source>&amp;Layer</source>
@@ -1136,10 +794,6 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>&amp;Block</source>
         <translation type="obsolete">&amp;Blok</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation>O programe</translation>
     </message>
     <message>
         <source>&amp;About...</source>
@@ -1158,12 +812,136 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">&amp;Okná</translation>
     </message>
     <message>
-        <source>&amp;Help</source>
-        <translation>&amp;Pomocník</translation>
-    </message>
-    <message>
         <source>De&amp;bugging</source>
         <translation type="obsolete">&amp;Ladenie</translation>
+    </message>
+    <message>
+        <source>About...</source>
+        <translation type="obsolete">O programe...</translation>
+    </message>
+    <message>
+        <source>Version: </source>
+        <translation type="obsolete">Verzia:</translation>
+    </message>
+    <message>
+        <source>Vie&amp;ws</source>
+        <translation type="obsolete">Zo&amp;brazenie</translation>
+    </message>
+    <message>
+        <source>Tool&amp;bars</source>
+        <translation type="obsolete">Nástrojové &amp;panely</translation>
+    </message>
+    <message>
+        <source>
+Date: %1</source>
+        <translation type="obsolete">
+Dátum %1</translation>
+    </message>
+    <message>
+        <source>Launch the online manual</source>
+        <translation type="obsolete">Spustí online manuál</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="obsolete">Manuál</translation>
+    </message>
+    <message>
+        <source>&amp;Manual</source>
+        <translation type="obsolete">&amp;Manuál</translation>
+    </message>
+    <message>
+        <source>&amp;CAM</source>
+        <translation type="obsolete">&amp;CAM</translation>
+    </message>
+    <message>
+        <source>Simulation Controls</source>
+        <translation type="obsolete">Kontrola simulácie</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="obsolete">Žiadne</translation>
+    </message>
+    <message>
+        <source>Version: %1 %2</source>
+        <translation type="obsolete">Verzia: %1 %2</translation>
+    </message>
+    <message>
+        <source>Modules: %1</source>
+        <translation type="obsolete">Moduly: %1</translation>
+    </message>
+    <message>
+        <source>&amp;About %1</source>
+        <translation type="obsolete">&amp;O programe %1</translation>
+    </message>
+    <message>
+        <source>Date: %1</source>
+        <translation type="obsolete">Dátum: %1</translation>
+    </message>
+    <message>
+        <source>This is a %1 version which terminates
+automatically after 10min. This software is
+not intended for production use. Please buy
+a full version of the application from
+%2.
+You can save your work now.</source>
+        <translation type="obsolete">Toto je %1 verzia, ktorá sa automaticky
+ukončí po 10 minútach. Tento software
+nie je určený pre používanie. Prosím
+kúpte si plnú verziu programu zo stránky
+%2
+Teraz môžete uložiť svoju prácu.</translation>
+    </message>
+    <message>
+        <source>CAD Tools</source>
+        <translation type="obsolete">CAD nástroje</translation>
+    </message>
+    <message>
+        <source>&amp;Text</source>
+        <translation type="obsolete">&amp;Text</translation>
+    </message>
+    <message>
+        <source>&amp;File</source>
+        <translation>&amp;Súbor</translation>
+    </message>
+    <message>
+        <source>&amp;Edit</source>
+        <translation>&amp;Úpravy</translation>
+    </message>
+    <message>
+        <source>&amp;View</source>
+        <translation>&amp;Zobraziť</translation>
+    </message>
+    <message>
+        <source>&amp;Select</source>
+        <translation>&amp;Voľba</translation>
+    </message>
+    <message>
+        <source>&amp;Line</source>
+        <translation>Či&amp;ara</translation>
+    </message>
+    <message>
+        <source>&amp;Circle</source>
+        <translation>&amp;Kružnica</translation>
+    </message>
+    <message>
+        <source>&amp;Ellipse</source>
+        <translation>&amp;Elipsa</translation>
+    </message>
+    <message>
+        <source>&amp;Modify</source>
+        <translation>&amp;Modifikuj</translation>
+    </message>
+    <message>
+        <source>&amp;Info</source>
+        <translation>&amp;Informácie</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation>O programe</translation>
+    </message>
+    <message>
+        <source>&amp;Help</source>
+        <translation>&amp;Pomocník</translation>
     </message>
     <message>
         <source>&amp;Cascade</source>
@@ -1206,28 +984,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>Ukončujem program...</translation>
     </message>
     <message>
-        <source>About...</source>
-        <translation type="obsolete">O programe...</translation>
-    </message>
-    <message>
-        <source>Version: </source>
-        <translation type="obsolete">Verzia:</translation>
-    </message>
-    <message>
         <source>File</source>
         <translation type="unfinished">Súbor</translation>
     </message>
     <message>
         <source>Edit</source>
         <translation type="unfinished">Úpravy</translation>
-    </message>
-    <message>
-        <source>Vie&amp;ws</source>
-        <translation type="obsolete">Zo&amp;brazenie</translation>
-    </message>
-    <message>
-        <source>Tool&amp;bars</source>
-        <translation type="obsolete">Nástrojové &amp;panely</translation>
     </message>
     <message>
         <source>View</source>
@@ -1248,12 +1010,6 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Block List</source>
         <translation>Zoznam blokov</translation>
-    </message>
-    <message>
-        <source>
-Date: %1</source>
-        <translation type="obsolete">
-Dátum %1</translation>
     </message>
     <message>
         <source>Library Browser</source>
@@ -1328,60 +1084,6 @@ Please check the permissions.</source>
 Prosím skontrolujte prístupové práva.</translation>
     </message>
     <message>
-        <source>Launch the online manual</source>
-        <translation type="obsolete">Spustí online manuál</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation type="obsolete">Manuál</translation>
-    </message>
-    <message>
-        <source>&amp;Manual</source>
-        <translation type="obsolete">&amp;Manuál</translation>
-    </message>
-    <message>
-        <source>&amp;CAM</source>
-        <translation type="obsolete">&amp;CAM</translation>
-    </message>
-    <message>
-        <source>Simulation Controls</source>
-        <translation type="obsolete">Kontrola simulácie</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="obsolete">Žiadne</translation>
-    </message>
-    <message>
-        <source>Version: %1 %2</source>
-        <translation type="obsolete">Verzia: %1 %2</translation>
-    </message>
-    <message>
-        <source>Modules: %1</source>
-        <translation type="obsolete">Moduly: %1</translation>
-    </message>
-    <message>
-        <source>&amp;About %1</source>
-        <translation type="obsolete">&amp;O programe %1</translation>
-    </message>
-    <message>
-        <source>Date: %1</source>
-        <translation type="obsolete">Dátum: %1</translation>
-    </message>
-    <message>
-        <source>This is a %1 version which terminates
-automatically after 10min. This software is
-not intended for production use. Please buy
-a full version of the application from
-%2.
-You can save your work now.</source>
-        <translation type="obsolete">Toto je %1 verzia, ktorá sa automaticky
-ukončí po 10 minútach. Tento software
-nie je určený pre používanie. Prosím
-kúpte si plnú verziu programu zo stránky
-%2
-Teraz môžete uložiť svoju prácu.</translation>
-    </message>
-    <message>
         <source>&amp;Polyline</source>
         <translation type="unfinished">&amp;Lomená čiara</translation>
     </message>
@@ -1453,10 +1155,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>CAD Tools</source>
-        <translation type="obsolete">CAD nástroje</translation>
-    </message>
-    <message>
         <source>Export as</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1475,10 +1173,6 @@ Auto-save disabled.</source>
     <message>
         <source>Export as PDF</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Text</source>
-        <translation type="obsolete">&amp;Text</translation>
     </message>
     <message>
         <source>Export</source>
@@ -1723,33 +1417,27 @@ Please check its existence and permissions.</source>
         <source>LibreCAD Help</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QC_MDIWindow</name>
     <message>
-        <source>Do you really want to close the file
-%1?</source>
-        <translation type="vanished">Skutočne chcete uzavrieť súbor
-%1?</translation>
-    </message>
-    <message>
-        <source>Do you really want to close the drawing?</source>
-        <translation type="vanished">Skutočne chcete uzavirieť výkres?</translation>
-    </message>
-    <message>
-        <source>Closing Drawing</source>
-        <translation type="vanished">Zatváram výkres</translation>
-    </message>
-    <message>
-        <source>Save Drawing</source>
-        <translation type="unfinished">Ulož výkres</translation>
-    </message>
-    <message>
-        <source>This file is set to read-only.</source>
+        <source>Paper settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Try again with a different file name.</source>
+        <source>Paper size and/or margins have been changed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to apply changes to current drawing?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawing settings:
+	size: %1 x %2 (%3)
+	margins: %4, %5, %6, %7
+
+Printer settings:
+	size: %8 x %9 (%10)
+	margins: %11, %12, %13, %14
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2285,37 +1973,6 @@ Please check its existence and permissions.</source>
     </message>
 </context>
 <context>
-    <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_ActiveLayerName</name>
-    <message>
-        <source>Selection</source>
-        <translation type="unfinished">Označenie</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Current Layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QG_ArcOptions</name>
     <message>
         <source>Arc Options</source>
@@ -2368,24 +2025,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_BlockDialog</name>
     <message>
-        <source>Block Settings</source>
-        <translation>Nastavenia bloku</translation>
-    </message>
-    <message>
-        <source>Block Name:</source>
-        <translation>Názov bloku:</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation type="obsolete">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Renaming Block</source>
-        <translation>Premenovanie bloku</translation>
-    </message>
-    <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Nemôžem pomenovať blok. Blok s menom &quot;%1&quot; už existuje.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -2398,6 +2039,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
+    </message>
+    <message>
+        <source>Block Settings</source>
+        <translation>Nastavenia bloku</translation>
+    </message>
+    <message>
+        <source>Block Name:</source>
+        <translation>Názov bloku:</translation>
+    </message>
+    <message>
+        <source>Renaming Block</source>
+        <translation>Premenovanie bloku</translation>
+    </message>
+    <message>
+        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
+        <translation>Nemôžem pomenovať blok. Blok s menom &quot;%1&quot; už existuje.</translation>
     </message>
 </context>
 <context>
@@ -2486,6 +2143,10 @@ v inom okne</translation>
     </message>
     <message>
         <source>Looking for matching block names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3052,6 +2713,10 @@ v inom okne</translation>
 <context>
     <name>QG_ColorBox</name>
     <message>
+        <source>Others..</source>
+        <translation type="obsolete">Iná..</translation>
+    </message>
+    <message>
         <source>By Layer</source>
         <translation>Podľa hladiny</translation>
     </message>
@@ -3096,10 +2761,6 @@ v inom okne</translation>
         <translation>Svetlosivá</translation>
     </message>
     <message>
-        <source>Others..</source>
-        <translation type="obsolete">Iná..</translation>
-    </message>
-    <message>
         <source>Unchanged</source>
         <translation>Nezmenená</translation>
     </message>
@@ -3137,29 +2798,11 @@ v inom okne</translation>
     </message>
 </context>
 <context>
-    <name>QG_CommandEdit</name>
-    <message>
-        <source>clear</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_CommandHistory</name>
+    <name>QG_CommandWidget</name>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Kópíruj</translation>
+        <translation type="obsolete">&amp;Kópíruj</translation>
     </message>
-    <message>
-        <source>Select &amp;All</source>
-        <translation type="unfinished">&amp;Ozanč všetky</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_CommandWidget</name>
     <message>
         <source>Command Line</source>
         <translation>Príkazový riadok</translation>
@@ -3177,10 +2820,6 @@ v inom okne</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Copy</source>
-        <translation type="obsolete">&amp;Kópíruj</translation>
-    </message>
-    <message>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation type="unfinished"></translation>
@@ -3188,13 +2827,6 @@ v inom okne</translation>
     <message>
         <source>...</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_CoordinateWidget</name>
-    <message>
-        <source>Coordinates</source>
-        <translation>Koordináty</translation>
     </message>
 </context>
 <context>
@@ -3246,6 +2878,14 @@ v inom okne</translation>
 <context>
     <name>QG_DimensionLabelEditor</name>
     <message>
+        <source>ø (Diameter)</source>
+        <translation type="obsolete">ø (Polomer)</translation>
+    </message>
+    <message>
+        <source>¶ (Pi)</source>
+        <translation type="obsolete">¶ (Pí)</translation>
+    </message>
+    <message>
         <source>Dimension Label Editor</source>
         <translation>Editor menoviek kót</translation>
     </message>
@@ -3262,20 +2902,12 @@ v inom okne</translation>
         <translation>Vložiť:</translation>
     </message>
     <message>
-        <source>ø (Diameter)</source>
-        <translation type="obsolete">ø (Polomer)</translation>
-    </message>
-    <message>
         <source>° (Degree)</source>
         <translation>° (Stupeň)</translation>
     </message>
     <message>
         <source>± (Plus / Minus)</source>
         <translation>± (Plus / Mínus)</translation>
-    </message>
-    <message>
-        <source>¶ (Pi)</source>
-        <translation type="obsolete">¶ (Pí)</translation>
     </message>
     <message>
         <source>× (Times)</source>
@@ -3296,6 +2928,22 @@ v inom okne</translation>
 </context>
 <context>
     <name>QG_DlgArc</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Zrušiť</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="obsolete">&amp;OK</translation>
+    </message>
+    <message>
+        <source>Alt+O</source>
+        <translation type="obsolete">Alt+O</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="obsolete">Esc</translation>
+    </message>
     <message>
         <source>Arc</source>
         <translation>Oblúk</translation>
@@ -3332,6 +2980,9 @@ v inom okne</translation>
         <source>Reversed</source>
         <translation>Otočiť</translation>
     </message>
+</context>
+<context>
+    <name>QG_DlgAttributes</name>
     <message>
         <source>Cancel</source>
         <translation type="obsolete">Zrušiť</translation>
@@ -3348,9 +2999,6 @@ v inom okne</translation>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
     </message>
-</context>
-<context>
-    <name>QG_DlgAttributes</name>
     <message>
         <source>Attributes</source>
         <translation>Atribúty</translation>
@@ -3358,22 +3006,6 @@ v inom okne</translation>
     <message>
         <source>Layer:</source>
         <translation>Hladina:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Zrušiť</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+O</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>Apply attributes also to all sub-entities of selected INSERT.
@@ -3387,6 +3019,22 @@ This recursively modifies all entities of the Block itself.</source>
 </context>
 <context>
     <name>QG_DlgCircle</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Zrušiť</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="obsolete">&amp;OK</translation>
+    </message>
+    <message>
+        <source>Alt+O</source>
+        <translation type="obsolete">Alt+O</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="obsolete">Esc</translation>
+    </message>
     <message>
         <source>Circle</source>
         <translation>Kružnica</translation>
@@ -3411,10 +3059,9 @@ This recursively modifies all entities of the Block itself.</source>
         <source>Center (x):</source>
         <translation>Stred (x):</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Zrušiť</translation>
-    </message>
+</context>
+<context>
+    <name>QG_DlgDimLinear</name>
     <message>
         <source>&amp;OK</source>
         <translation type="obsolete">&amp;OK</translation>
@@ -3424,12 +3071,13 @@ This recursively modifies all entities of the Block itself.</source>
         <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Zrušiť</translation>
+    </message>
+    <message>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
     </message>
-</context>
-<context>
-    <name>QG_DlgDimLinear</name>
     <message>
         <source>Linear Dimension</source>
         <translation>Lineárna kóta</translation>
@@ -3446,22 +3094,6 @@ This recursively modifies all entities of the Block itself.</source>
         <source>Angle:</source>
         <translation>Uhol:</translation>
     </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgDimension</name>
@@ -3470,10 +3102,6 @@ This recursively modifies all entities of the Block itself.</source>
         <translation type="obsolete">Zarovnaná kóta podľa objektu</translation>
     </message>
     <message>
-        <source>Layer:</source>
-        <translation>Hladina:</translation>
-    </message>
-    <message>
         <source>&amp;OK</source>
         <translation type="obsolete">&amp;OK</translation>
     </message>
@@ -3490,12 +3118,32 @@ This recursively modifies all entities of the Block itself.</source>
         <translation type="obsolete">Esc</translation>
     </message>
     <message>
+        <source>Layer:</source>
+        <translation>Hladina:</translation>
+    </message>
+    <message>
         <source>Dimension</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_DlgEllipse</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Zrušiť</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="obsolete">&amp;OK</translation>
+    </message>
+    <message>
+        <source>Alt+O</source>
+        <translation type="obsolete">Alt+O</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="obsolete">Esc</translation>
+    </message>
     <message>
         <source>Ellipse</source>
         <translation>Elipsa</translation>
@@ -3540,10 +3188,9 @@ This recursively modifies all entities of the Block itself.</source>
         <source>Reversed</source>
         <translation>Otočiť</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Zrušiť</translation>
-    </message>
+</context>
+<context>
+    <name>QG_DlgHatch</name>
     <message>
         <source>&amp;OK</source>
         <translation type="obsolete">&amp;OK</translation>
@@ -3553,79 +3200,9 @@ This recursively modifies all entities of the Block itself.</source>
         <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
+        <source>Cancel</source>
+        <translation type="obsolete">Zrušiť</translation>
     </message>
-</context>
-<context>
-    <name>QG_DlgFontConversion</name>
-    <message>
-        <source>Convert Fonts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Font family:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Font file:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save as:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Letter spacing:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Author:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Word spacing:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>License:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line spacing:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Writing System:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Preview</source>
-        <translation type="unfinished">Náhľad</translation>
-    </message>
-    <message>
-        <source>Create</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> - Searching</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LibreCAD Font Files(*.lff)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> - Rendering</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgHatch</name>
     <message>
         <source>Choose Hatch Attributes</source>
         <translation>Voľba štýlu šráfov</translation>
@@ -3654,6 +3231,9 @@ This recursively modifies all entities of the Block itself.</source>
         <source>Enable Preview</source>
         <translation>Zapni náhľad</translation>
     </message>
+</context>
+<context>
+    <name>QG_DlgImage</name>
     <message>
         <source>&amp;OK</source>
         <translation type="obsolete">&amp;OK</translation>
@@ -3666,9 +3246,10 @@ This recursively modifies all entities of the Block itself.</source>
         <source>Cancel</source>
         <translation type="obsolete">Zrušiť</translation>
     </message>
-</context>
-<context>
-    <name>QG_DlgImage</name>
+    <message>
+        <source>Esc</source>
+        <translation type="obsolete">Esc</translation>
+    </message>
     <message>
         <source>Image</source>
         <translation type="unfinished">Obrázok</translation>
@@ -3714,32 +3295,12 @@ This recursively modifies all entities of the Block itself.</source>
         <translation type="unfinished">Uhol:</translation>
     </message>
     <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
-    <message>
         <source>DPI</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_DlgInitial</name>
-    <message>
-        <source>Welcome</source>
-        <translation>Vitajte</translation>
-    </message>
     <message>
         <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
@@ -3751,6 +3312,18 @@ You can changes these settings later in the Options Dialog of QCad.</source>
 &lt;br&gt;
 Prosím zvoľte jednotky, ktoré chcete používať pri kreslení a preferovaný jazyk.&lt;br&gt;
 Tieto nastavenia môžete neskôr zmeniť v dialógovom okne Nastavenia.</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="obsolete">OK</translation>
+    </message>
+    <message>
+        <source>Enter</source>
+        <translation type="obsolete">Zvoľ</translation>
+    </message>
+    <message>
+        <source>Welcome</source>
+        <translation>Vitajte</translation>
     </message>
     <message>
         <source>Default Unit:</source>
@@ -3765,14 +3338,6 @@ Tieto nastavenia môžete neskôr zmeniť v dialógovom okne Nastavenia.</transl
         <translation>Jazyk pre príkazy:</translation>
     </message>
     <message>
-        <source>OK</source>
-        <translation type="obsolete">OK</translation>
-    </message>
-    <message>
-        <source>Enter</source>
-        <translation type="obsolete">Zvoľ</translation>
-    </message>
-    <message>
         <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
@@ -3783,6 +3348,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
 </context>
 <context>
     <name>QG_DlgInsert</name>
+    <message>
+        <source>Scale:</source>
+        <translation type="obsolete">Mierka:</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Zrušiť</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="obsolete">&amp;OK</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="obsolete">Esc</translation>
+    </message>
     <message>
         <source>Insert</source>
         <translation>Vložiť</translation>
@@ -3802,10 +3383,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Insertion point (y):</source>
         <translation>Bod vloženia (y):</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="obsolete">Mierka:</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -3828,6 +3405,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Vzdialenosť stĺpcov:</translation>
     </message>
     <message>
+        <source>Scale X:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale Y:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgLine</name>
+    <message>
         <source>Cancel</source>
         <translation type="obsolete">Zrušiť</translation>
     </message>
@@ -3839,17 +3427,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
     </message>
-    <message>
-        <source>Scale X:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Scale Y:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgLine</name>
     <message>
         <source>Line</source>
         <translation>Čiara</translation>
@@ -3878,21 +3455,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Start point (x):</source>
         <translation>Začiatočný bod (x):</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Zrušiť</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgMText</name>
+    <message>
+        <source>Line &amp;spacing:</source>
+        <translation type="obsolete">Oddel&amp;enie čiar:</translation>
+    </message>
+    <message>
+        <source>Diameter (ø)</source>
+        <translation type="obsolete">Priemer (ø)</translation>
+    </message>
     <message>
         <source>MText</source>
         <translation type="unfinished"></translation>
@@ -3908,10 +3481,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>&amp;Height:</source>
         <translation type="unfinished">&amp;Výška:</translation>
-    </message>
-    <message>
-        <source>Line &amp;spacing:</source>
-        <translation type="obsolete">Oddel&amp;enie čiar:</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
@@ -3996,10 +3565,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Insert Symbol</source>
         <translation type="unfinished">Vlož symbol</translation>
-    </message>
-    <message>
-        <source>Diameter (ø)</source>
-        <translation type="obsolete">Priemer (ø)</translation>
     </message>
     <message>
         <source>Degree (°)</source>
@@ -4513,16 +4078,24 @@ Please choose the unit you want to use for new drawings and your preferred langu
 <context>
     <name>QG_DlgMirror</name>
     <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Zrušiť</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="obsolete">&amp;OK</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="obsolete">Esc</translation>
+    </message>
+    <message>
         <source>Mirroring Options</source>
         <translation>Nastavenie zrkadlenaia</translation>
     </message>
     <message>
         <source>Number of copies</source>
         <translation>Počet kópií</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Zrušiť</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -4541,14 +4114,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Použi aktuálnu &amp;hladinu</translation>
     </message>
     <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
-    <message>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4560,12 +4125,24 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="obsolete">Nastavenie posunu</translation>
     </message>
     <message>
-        <source>Number of copies</source>
-        <translation>Počet kópií</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation type="obsolete">Zrušiť</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="obsolete">&amp;OK</translation>
+    </message>
+    <message>
+        <source>Alt+O</source>
+        <translation type="obsolete">Alt+O</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="obsolete">Esc</translation>
+    </message>
+    <message>
+        <source>Number of copies</source>
+        <translation>Počet kópií</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -4586,18 +4163,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Use current &amp;layer</source>
         <translation>Použi aktuálnu &amp;hladinu</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+O</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>...</source>
@@ -4627,16 +4192,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
 <context>
     <name>QG_DlgMoveRotate</name>
     <message>
-        <source>Move/Rotate Options</source>
-        <translation>Nastavenie Posunutia/Otočenia</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation type="obsolete">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation>Počet kópií</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -4645,6 +4202,14 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
+    </message>
+    <message>
+        <source>Move/Rotate Options</source>
+        <translation>Nastavenie Posunutia/Otočenia</translation>
+    </message>
+    <message>
+        <source>Number of copies</source>
+        <translation>Počet kópií</translation>
     </message>
     <message>
         <source>&amp;Angle (a):</source>
@@ -4681,6 +4246,126 @@ Please choose the unit you want to use for new drawings and your preferred langu
 </context>
 <context>
     <name>QG_DlgOptionsDrawing</name>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="obsolete">&amp;OK</translation>
+    </message>
+    <message>
+        <source>1</source>
+        <translation type="obsolete">1</translation>
+    </message>
+    <message>
+        <source>2</source>
+        <translation type="obsolete">2</translation>
+    </message>
+    <message>
+        <source>5</source>
+        <translation type="obsolete">5</translation>
+    </message>
+    <message>
+        <source>Extension line extension:</source>
+        <translation type="obsolete">Presahovanie vynášacej čiary:</translation>
+    </message>
+    <message>
+        <source>Extension line offset:</source>
+        <translation type="obsolete">Odstup vynášacej čiary:</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="obsolete">Esc</translation>
+    </message>
+    <message>
+        <source>Alt+O</source>
+        <translation type="obsolete">Alt+O</translation>
+    </message>
+    <message>
+        <source>Grid</source>
+        <translation type="obsolete">Mriežka</translation>
+    </message>
+    <message>
+        <source>4</source>
+        <translation type="obsolete">4</translation>
+    </message>
+    <message>
+        <source>8</source>
+        <translation type="obsolete">8</translation>
+    </message>
+    <message>
+        <source>16</source>
+        <translation type="obsolete">16</translation>
+    </message>
+    <message>
+        <source>32</source>
+        <translation type="obsolete">32</translation>
+    </message>
+    <message>
+        <source>64</source>
+        <translation type="obsolete">64</translation>
+    </message>
+    <message>
+        <source>0.01</source>
+        <translation type="obsolete">0.01</translation>
+    </message>
+    <message>
+        <source>0.1</source>
+        <translation type="obsolete">0.1</translation>
+    </message>
+    <message>
+        <source>10</source>
+        <translation type="obsolete">10</translation>
+    </message>
+    <message>
+        <source>0</source>
+        <translation type="obsolete">0</translation>
+    </message>
+    <message>
+        <source>0.5</source>
+        <translation type="obsolete">0.5</translation>
+    </message>
+    <message>
+        <source>1.0</source>
+        <translation type="obsolete">1.0</translation>
+    </message>
+    <message>
+        <source>2.0</source>
+        <translation type="obsolete">2.0</translation>
+    </message>
+    <message>
+        <source>5.0</source>
+        <translation type="obsolete">5.0</translation>
+    </message>
+    <message>
+        <source>0.2</source>
+        <translation type="obsolete">0.2</translation>
+    </message>
+    <message>
+        <source>20</source>
+        <translation type="obsolete">20</translation>
+    </message>
+    <message>
+        <source>50</source>
+        <translation type="obsolete">50</translation>
+    </message>
+    <message>
+        <source>100</source>
+        <translation type="obsolete">100</translation>
+    </message>
+    <message>
+        <source>200</source>
+        <translation type="obsolete">200</translation>
+    </message>
+    <message>
+        <source>500</source>
+        <translation type="obsolete">500</translation>
+    </message>
+    <message>
+        <source>1000</source>
+        <translation type="obsolete">1000</translation>
+    </message>
     <message>
         <source>Main Unit</source>
         <translation>Hlavné jednotky</translation>
@@ -4734,10 +4419,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>uhlové</translation>
     </message>
     <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;OK</translation>
-    </message>
-    <message>
         <source>Paper Format</source>
         <translation type="vanished">Formát papiera</translation>
     </message>
@@ -4748,18 +4429,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>units</source>
         <translation>jednotky</translation>
-    </message>
-    <message>
-        <source>1</source>
-        <translation type="obsolete">1</translation>
-    </message>
-    <message>
-        <source>2</source>
-        <translation type="obsolete">2</translation>
-    </message>
-    <message>
-        <source>5</source>
-        <translation type="obsolete">5</translation>
     </message>
     <message>
         <source>Deg/min/sec</source>
@@ -4782,16 +4451,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Pre formáty &quot;Inžinierský&quot; a &quot;Stavebný&quot; musí byť formát jednotiek nastavený na palce.</translation>
     </message>
     <message>
-        <source>Extension line extension:</source>
-        <translation type="obsolete">Presahovanie vynášacej čiary:</translation>
-    </message>
-    <message>
         <source>Arrow size:</source>
         <translation>Veľkosť šípky:</translation>
-    </message>
-    <message>
-        <source>Extension line offset:</source>
-        <translation type="obsolete">Odstup vynášacej čiary:</translation>
     </message>
     <message>
         <source>Dimension line gap:</source>
@@ -4850,22 +4511,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>&amp;Kóty</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+O</translation>
-    </message>
-    <message>
-        <source>Grid</source>
-        <translation type="obsolete">Mriežka</translation>
-    </message>
-    <message>
         <source>Grid Settings</source>
         <translation>Nastavenie mriežky</translation>
     </message>
@@ -4896,38 +4541,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Number of line segments per spline patch:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>4</source>
-        <translation type="obsolete">4</translation>
-    </message>
-    <message>
-        <source>8</source>
-        <translation type="obsolete">8</translation>
-    </message>
-    <message>
-        <source>16</source>
-        <translation type="obsolete">16</translation>
-    </message>
-    <message>
-        <source>32</source>
-        <translation type="obsolete">32</translation>
-    </message>
-    <message>
-        <source>64</source>
-        <translation type="obsolete">64</translation>
-    </message>
-    <message>
-        <source>0.01</source>
-        <translation type="obsolete">0.01</translation>
-    </message>
-    <message>
-        <source>0.1</source>
-        <translation type="obsolete">0.1</translation>
-    </message>
-    <message>
-        <source>10</source>
-        <translation type="obsolete">10</translation>
     </message>
     <message>
         <source>Crosshair</source>
@@ -4982,10 +4595,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>0</source>
-        <translation type="obsolete">0</translation>
-    </message>
-    <message>
         <source>Horizontal</source>
         <translation type="unfinished">Horizontálna</translation>
     </message>
@@ -4996,50 +4605,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>0.5</source>
-        <translation type="obsolete">0.5</translation>
-    </message>
-    <message>
-        <source>1.0</source>
-        <translation type="obsolete">1.0</translation>
-    </message>
-    <message>
-        <source>2.0</source>
-        <translation type="obsolete">2.0</translation>
-    </message>
-    <message>
-        <source>5.0</source>
-        <translation type="obsolete">5.0</translation>
-    </message>
-    <message>
-        <source>0.2</source>
-        <translation type="obsolete">0.2</translation>
-    </message>
-    <message>
-        <source>20</source>
-        <translation type="obsolete">20</translation>
-    </message>
-    <message>
-        <source>50</source>
-        <translation type="obsolete">50</translation>
-    </message>
-    <message>
-        <source>100</source>
-        <translation type="obsolete">100</translation>
-    </message>
-    <message>
-        <source>200</source>
-        <translation type="obsolete">200</translation>
-    </message>
-    <message>
-        <source>500</source>
-        <translation type="obsolete">500</translation>
-    </message>
-    <message>
-        <source>1000</source>
-        <translation type="obsolete">1000</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -5209,40 +4774,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
 <context>
     <name>QG_DlgOptionsGeneral</name>
     <message>
-        <source>Preferences</source>
-        <translation>Nastavenia</translation>
-    </message>
-    <message>
-        <source>Translations:</source>
-        <translation>Preklady:</translation>
-    </message>
-    <message>
-        <source>Hatch Patterns:</source>
-        <translation>Šráfovacie vzory:</translation>
-    </message>
-    <message>
-        <source>Fonts:</source>
-        <translation>Písma:</translation>
-    </message>
-    <message>
         <source>Scripts:</source>
         <translation type="obsolete">Skripty:</translation>
     </message>
     <message>
-        <source>Part Libraries:</source>
-        <translation>Knižnice:</translation>
-    </message>
-    <message>
         <source>&amp;OK</source>
         <translation type="obsolete">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Language</source>
-        <translation>Jazyk</translation>
-    </message>
-    <message>
-        <source>Graphic View</source>
-        <translation>Grafické zobrazenie</translation>
     </message>
     <message>
         <source>0</source>
@@ -5265,44 +4802,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="obsolete">Prosím reštartujte QCad pre aplikáciu všetkých zmien.</translation>
     </message>
     <message>
-        <source>Application Preferences</source>
-        <translation>Nastavenia aplikácie</translation>
-    </message>
-    <message>
-        <source>Defaults for new drawings</source>
-        <translation>Predvolené pre nové výkresy</translation>
-    </message>
-    <message>
-        <source>&amp;Appearance</source>
-        <translation>&amp;Vzhľad</translation>
-    </message>
-    <message>
-        <source>&amp;GUI Language:</source>
-        <translation>&amp;Jazyk GUI:</translation>
-    </message>
-    <message>
-        <source>&amp;Command Language:</source>
-        <translation>&amp;Jazyk pre príkazy:</translation>
-    </message>
-    <message>
         <source>&amp;Show large crosshairs</source>
         <translation type="obsolete">&amp;Zobrazuj veľké náhľady</translation>
     </message>
     <message>
         <source>Number of p&amp;review entities:</source>
         <translation type="obsolete">Počet ná&amp;hľadov objektov:</translation>
-    </message>
-    <message>
-        <source>&amp;Paths</source>
-        <translation>&amp;Cesty</translation>
-    </message>
-    <message>
-        <source>&amp;Defaults</source>
-        <translation>&amp;Predvolené</translation>
-    </message>
-    <message>
-        <source>&amp;Unit:</source>
-        <translation>&amp;Jednotka:</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -5319,18 +4824,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Colors</source>
         <translation type="obsolete">Farby</translation>
-    </message>
-    <message>
-        <source>Backgr&amp;ound:</source>
-        <translation>Po&amp;zadie:</translation>
-    </message>
-    <message>
-        <source>G&amp;rid Color:</source>
-        <translation>Body &amp;mriežky:</translation>
-    </message>
-    <message>
-        <source>&amp;Meta Grid Color:</source>
-        <translation>Či&amp;ary mriežky:</translation>
     </message>
     <message>
         <source>#404040</source>
@@ -5397,24 +4890,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="obsolete">#808080</translation>
     </message>
     <message>
-        <source>A&amp;utomatically scale grid</source>
-        <translation>A&amp;utomatická mierka mriežky</translation>
-    </message>
-    <message>
-        <source>S&amp;elected Color:</source>
-        <translation>Z&amp;volená farba:</translation>
-    </message>
-    <message>
         <source>#a54747</source>
         <translation type="obsolete">#a54747</translation>
     </message>
     <message>
         <source>#739373</source>
         <translation type="obsolete">#739373</translation>
-    </message>
-    <message>
-        <source>&amp;Highlighted Color:</source>
-        <translation>&amp;Zvýraznená farba:</translation>
     </message>
     <message>
         <source>Minimal Grid Spacing:</source>
@@ -5431,6 +4912,106 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>20</source>
         <translation type="obsolete">20</translation>
+    </message>
+    <message>
+        <source>400</source>
+        <translation type="obsolete">400</translation>
+    </message>
+    <message>
+        <source>800</source>
+        <translation type="obsolete">800</translation>
+    </message>
+    <message>
+        <source>Gray</source>
+        <translation type="obsolete">Sivá</translation>
+    </message>
+    <message>
+        <source>White</source>
+        <translation type="obsolete">Biela</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation>Nastavenia</translation>
+    </message>
+    <message>
+        <source>Translations:</source>
+        <translation>Preklady:</translation>
+    </message>
+    <message>
+        <source>Hatch Patterns:</source>
+        <translation>Šráfovacie vzory:</translation>
+    </message>
+    <message>
+        <source>Fonts:</source>
+        <translation>Písma:</translation>
+    </message>
+    <message>
+        <source>Part Libraries:</source>
+        <translation>Knižnice:</translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation>Jazyk</translation>
+    </message>
+    <message>
+        <source>Graphic View</source>
+        <translation>Grafické zobrazenie</translation>
+    </message>
+    <message>
+        <source>Application Preferences</source>
+        <translation>Nastavenia aplikácie</translation>
+    </message>
+    <message>
+        <source>Defaults for new drawings</source>
+        <translation>Predvolené pre nové výkresy</translation>
+    </message>
+    <message>
+        <source>&amp;Appearance</source>
+        <translation>&amp;Vzhľad</translation>
+    </message>
+    <message>
+        <source>&amp;GUI Language:</source>
+        <translation>&amp;Jazyk GUI:</translation>
+    </message>
+    <message>
+        <source>&amp;Command Language:</source>
+        <translation>&amp;Jazyk pre príkazy:</translation>
+    </message>
+    <message>
+        <source>&amp;Paths</source>
+        <translation>&amp;Cesty</translation>
+    </message>
+    <message>
+        <source>&amp;Defaults</source>
+        <translation>&amp;Predvolené</translation>
+    </message>
+    <message>
+        <source>&amp;Unit:</source>
+        <translation>&amp;Jednotka:</translation>
+    </message>
+    <message>
+        <source>Backgr&amp;ound:</source>
+        <translation>Po&amp;zadie:</translation>
+    </message>
+    <message>
+        <source>G&amp;rid Color:</source>
+        <translation>Body &amp;mriežky:</translation>
+    </message>
+    <message>
+        <source>&amp;Meta Grid Color:</source>
+        <translation>Či&amp;ary mriežky:</translation>
+    </message>
+    <message>
+        <source>A&amp;utomatically scale grid</source>
+        <translation>A&amp;utomatická mierka mriežky</translation>
+    </message>
+    <message>
+        <source>S&amp;elected Color:</source>
+        <translation>Z&amp;volená farba:</translation>
+    </message>
+    <message>
+        <source>&amp;Highlighted Color:</source>
+        <translation>&amp;Zvýraznená farba:</translation>
     </message>
     <message>
         <source>Please restart the application to apply all changes.</source>
@@ -5451,14 +5032,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Auto save time:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>400</source>
-        <translation type="obsolete">400</translation>
-    </message>
-    <message>
-        <source>800</source>
-        <translation type="obsolete">800</translation>
     </message>
     <message>
         <source>Drawing unit.</source>
@@ -5495,14 +5068,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Graphic Colors</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Gray</source>
-        <translation type="obsolete">Sivá</translation>
-    </message>
-    <message>
-        <source>White</source>
-        <translation type="obsolete">Biela</translation>
     </message>
     <message>
         <source>Snap indicator:</source>
@@ -5550,11 +5115,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Circle</source>
-        <translation type="obsolete">Kružnica</translation>
+        <translation type="unfinished">Kružnica</translation>
     </message>
     <message>
         <source>Point</source>
-        <translation type="obsolete">Bod</translation>
+        <translation type="unfinished">Bod</translation>
     </message>
     <message>
         <source>Hide cursor when snapping</source>
@@ -5664,99 +5229,24 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Automatically zoom drawing when opening</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QG_DlgOptionsMakerCam</name>
     <message>
-        <source>Layers</source>
+        <source>Crosshair</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export invisible layers</source>
+        <source>Crosshair2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export visible construction layers</source>
+        <source>Isometric</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Blocks</source>
+        <source>Spiderweb</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Convert blocks to safe inline SVG content</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ellipses / Ellipse arcs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export as CAM/plain SVG</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Default width of elements, mm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Raster Image export</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dash/Dot Lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Length of the pattern, mm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bake dash/dot lines to SVG path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
-because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
-when they are created using the &lt;ellipse&gt; tag  with a rotation in 
-the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
-which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
-but ignored by other</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Length of line pattern related to zoom, 
-so default step value required for baking</source>
+        <source>Square</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5782,6 +5272,18 @@ so default step value required for baking</source>
 <context>
     <name>QG_DlgPoint</name>
     <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Zrušiť</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="obsolete">&amp;OK</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="obsolete">Esc</translation>
+    </message>
+    <message>
         <source>Point</source>
         <translation>Bod</translation>
     </message>
@@ -5801,37 +5303,9 @@ so default step value required for baking</source>
         <source>Position (x):</source>
         <translation>Pozícia (x):</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Zrušiť</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgPolyline</name>
-    <message>
-        <source>Polyline</source>
-        <translation type="unfinished">Lomená čiara</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="unfinished">Hladina:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="unfinished">Rozmery</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>&amp;OK</source>
         <translation type="obsolete">&amp;OK</translation>
@@ -5848,17 +5322,25 @@ so default step value required for baking</source>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
     </message>
+    <message>
+        <source>Polyline</source>
+        <translation type="unfinished">Lomená čiara</translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Hladina:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Rozmery</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgRotate</name>
-    <message>
-        <source>Rotation Options</source>
-        <translation>Nastavenie rotácie</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation>Počet kópií</translation>
-    </message>
     <message>
         <source>&amp;OK</source>
         <translation type="obsolete">&amp;OK</translation>
@@ -5870,6 +5352,14 @@ so default step value required for baking</source>
     <message>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
+    </message>
+    <message>
+        <source>Rotation Options</source>
+        <translation>Nastavenie rotácie</translation>
+    </message>
+    <message>
+        <source>Number of copies</source>
+        <translation>Počet kópií</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -5903,20 +5393,20 @@ so default step value required for baking</source>
 <context>
     <name>QG_DlgRotate2</name>
     <message>
-        <source>Rotate Two Options</source>
-        <translation>Nastavenie rotácie č.2</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation type="obsolete">Zrušiť</translation>
     </message>
     <message>
-        <source>Number of copies</source>
-        <translation>Počet kópií</translation>
-    </message>
-    <message>
         <source>&amp;OK</source>
         <translation type="obsolete">&amp;OK</translation>
+    </message>
+    <message>
+        <source>Rotate Two Options</source>
+        <translation>Nastavenie rotácie č.2</translation>
+    </message>
+    <message>
+        <source>Number of copies</source>
+        <translation>Počet kópií</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -5954,14 +5444,6 @@ so default step value required for baking</source>
 <context>
     <name>QG_DlgScale</name>
     <message>
-        <source>Scaling Options</source>
-        <translation>Nastavenie mierky</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation>Počet kópií</translation>
-    </message>
-    <message>
         <source>&amp;OK</source>
         <translation type="obsolete">&amp;OK</translation>
     </message>
@@ -5976,6 +5458,18 @@ so default step value required for baking</source>
     <message>
         <source>&amp;Factor (f):</source>
         <translation type="obsolete">&amp;Faktor (f):</translation>
+    </message>
+    <message>
+        <source>1.0</source>
+        <translation type="obsolete">1.0</translation>
+    </message>
+    <message>
+        <source>Scaling Options</source>
+        <translation>Nastavenie mierky</translation>
+    </message>
+    <message>
+        <source>Number of copies</source>
+        <translation>Počet kópií</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
@@ -6014,36 +5508,12 @@ so default step value required for baking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>1.0</source>
-        <translation type="obsolete">1.0</translation>
-    </message>
-    <message>
         <source>Y</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_DlgSpline</name>
-    <message>
-        <source>Spline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="unfinished">Hladina:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="unfinished">Rozmery</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>1</source>
         <translation type="obsolete">1</translation>
@@ -6072,9 +5542,69 @@ so default step value required for baking</source>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
     </message>
+    <message>
+        <source>Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Hladina:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Rozmery</translation>
+    </message>
+    <message>
+        <source>Degree:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgText</name>
+    <message>
+        <source>Font</source>
+        <translation type="obsolete">Písmo</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="obsolete">Uhol</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="obsolete">&amp;OK</translation>
+    </message>
+    <message>
+        <source>Diameter (ø)</source>
+        <translation type="obsolete">Priemer (ø)</translation>
+    </message>
+    <message>
+        <source>Line &amp;spacing:</source>
+        <translation type="obsolete">Oddel&amp;enie čiar:</translation>
+    </message>
+    <message>
+        <source>&amp;Default line spacing</source>
+        <translation type="obsolete">&amp;Predvolené oddelenie čiar</translation>
+    </message>
+    <message>
+        <source>Alt+O</source>
+        <translation type="obsolete">Alt+O</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="obsolete">Esc</translation>
+    </message>
+    <message>
+        <source>Aligned</source>
+        <translation type="obsolete">Zarovnaná</translation>
+    </message>
     <message>
         <source>Text</source>
         <translation>Text</translation>
@@ -6106,10 +5636,6 @@ so default step value required for baking</source>
     <message>
         <source>Paste</source>
         <translation>Vložiť</translation>
-    </message>
-    <message>
-        <source>Font</source>
-        <translation type="obsolete">Písmo</translation>
     </message>
     <message>
         <source>Alignment</source>
@@ -6152,20 +5678,8 @@ so default step value required for baking</source>
         <translation>V strede hore</translation>
     </message>
     <message>
-        <source>Angle</source>
-        <translation type="obsolete">Uhol</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;OK</translation>
-    </message>
-    <message>
         <source>Insert Symbol</source>
         <translation>Vlož symbol</translation>
-    </message>
-    <message>
-        <source>Diameter (ø)</source>
-        <translation type="obsolete">Priemer (ø)</translation>
     </message>
     <message>
         <source>Degree (°)</source>
@@ -6668,26 +6182,6 @@ so default step value required for baking</source>
         <translation>&amp;Výška:</translation>
     </message>
     <message>
-        <source>Line &amp;spacing:</source>
-        <translation type="obsolete">Oddel&amp;enie čiar:</translation>
-    </message>
-    <message>
-        <source>&amp;Default line spacing</source>
-        <translation type="obsolete">&amp;Predvolené oddelenie čiar</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
-    <message>
         <source>Layer:</source>
         <translation type="unfinished">Hladina:</translation>
     </message>
@@ -6728,10 +6222,6 @@ so default step value required for baking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Aligned</source>
-        <translation type="obsolete">Zarovnaná</translation>
-    </message>
-    <message>
         <source>Diameter (⌀)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6763,10 +6253,6 @@ so default step value required for baking</source>
         <translation type="obsolete">Nedodaný žiadny text.</translation>
     </message>
     <message>
-        <source>QCad</source>
-        <translation>QCad</translation>
-    </message>
-    <message>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
     </message>
@@ -6779,6 +6265,10 @@ so default step value required for baking</source>
         <translation type="obsolete">Alt+L</translation>
     </message>
     <message>
+        <source>QCad</source>
+        <translation>QCad</translation>
+    </message>
+    <message>
         <source>again Still No Text supplied.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6789,75 +6279,6 @@ so default step value required for baking</source>
     <message>
         <source>Close</source>
         <translation type="unfinished">Zatvoriť</translation>
-    </message>
-</context>
-<context>
-    <name>QG_FileDialog</name>
-    <message>
-        <source>Drawing Exchange DXF 2000 %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Drawing Exchange DXF R12 %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LFF Font %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>QCad Font %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Jww Drawing %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Drawing Exchange %1</source>
-        <translation type="unfinished">Drawing Exchange %1</translation>
-    </message>
-    <message>
-        <source>QCad 1.x file %1</source>
-        <translation type="unfinished">QCad 1.x súbor %1</translation>
-    </message>
-    <message>
-        <source>Drawing Exchange DXF 2007 %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Drawing Exchange DXF 2004 %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Drawing Exchange DXF R14 %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Block</source>
-        <comment>block file</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Drawing</source>
-        <comment>drawing file</comment>
-        <translation type="unfinished">Výkres</translation>
-    </message>
-    <message>
-        <source>Open %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save %1 As</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dwg Drawing %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Untitled</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6886,36 +6307,12 @@ so default step value required for baking</source>
 <context>
     <name>QG_ImageOptionsDialog</name>
     <message>
-        <source>Image Export Options</source>
-        <translation>Nastavenie exportu obrázku</translation>
-    </message>
-    <message>
-        <source>Bitmap Size</source>
-        <translation>Veľkosť bitovej mapy</translation>
-    </message>
-    <message>
         <source>640</source>
         <translation type="obsolete">640</translation>
     </message>
     <message>
         <source>480</source>
         <translation type="obsolete">480</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation>Šírka:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation>Výška:</translation>
-    </message>
-    <message>
-        <source>Background</source>
-        <translation>Pozadie</translation>
-    </message>
-    <message>
-        <source>White</source>
-        <translation>Biela</translation>
     </message>
     <message>
         <source>Black</source>
@@ -6936,14 +6333,6 @@ so default step value required for baking</source>
     <message>
         <source>Esc</source>
         <translation type="obsolete">Esc</translation>
-    </message>
-    <message>
-        <source>Resolution:</source>
-        <translation>Rozlíšenie:</translation>
-    </message>
-    <message>
-        <source>auto</source>
-        <translation>auto</translation>
     </message>
     <message>
         <source>1</source>
@@ -7008,6 +6397,38 @@ so default step value required for baking</source>
     <message>
         <source>1200</source>
         <translation type="obsolete">1200</translation>
+    </message>
+    <message>
+        <source>Image Export Options</source>
+        <translation>Nastavenie exportu obrázku</translation>
+    </message>
+    <message>
+        <source>Bitmap Size</source>
+        <translation>Veľkosť bitovej mapy</translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation>Šírka:</translation>
+    </message>
+    <message>
+        <source>Height:</source>
+        <translation>Výška:</translation>
+    </message>
+    <message>
+        <source>Background</source>
+        <translation>Pozadie</translation>
+    </message>
+    <message>
+        <source>White</source>
+        <translation>Biela</translation>
+    </message>
+    <message>
+        <source>Resolution:</source>
+        <translation>Rozlíšenie:</translation>
+    </message>
+    <message>
+        <source>auto</source>
+        <translation>auto</translation>
     </message>
     <message>
         <source>Colouring</source>
@@ -7090,29 +6511,10 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_LayerBox</name>
-    <message>
-        <source>- Unchanged -</source>
-        <translation>-Bez zmeny-</translation>
-    </message>
-</context>
-<context>
     <name>QG_LayerDialog</name>
-    <message>
-        <source>Layer Settings</source>
-        <translation>Nastavenie hladín</translation>
-    </message>
-    <message>
-        <source>Layer Name:</source>
-        <translation>Meno hladiny:</translation>
-    </message>
     <message>
         <source>Cancel</source>
         <translation type="obsolete">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Default Pen</source>
-        <translation>Predvolené pero</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -7127,6 +6529,18 @@ so default step value required for baking</source>
         <translation type="obsolete">Esc</translation>
     </message>
     <message>
+        <source>Layer Settings</source>
+        <translation>Nastavenie hladín</translation>
+    </message>
+    <message>
+        <source>Layer Name:</source>
+        <translation>Meno hladiny:</translation>
+    </message>
+    <message>
+        <source>Default Pen</source>
+        <translation>Predvolené pero</translation>
+    </message>
+    <message>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
         <translation type="unfinished"></translation>
@@ -7138,6 +6552,14 @@ The contents of a Construction Layer should not appear in printout.</source>
 </context>
 <context>
     <name>QG_LayerWidget</name>
+    <message>
+        <source>&amp;Edit Layer</source>
+        <translation type="obsolete">&amp;Uprav hladinu</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Visibility</source>
+        <translation type="obsolete">P&amp;repni viditeľnosť</translation>
+    </message>
     <message>
         <source>Show all layers</source>
         <translation>Zobraz všetky hladiny</translation>
@@ -7179,14 +6601,6 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>&amp;Vymaž hladinu</translation>
     </message>
     <message>
-        <source>&amp;Edit Layer</source>
-        <translation type="obsolete">&amp;Uprav hladinu</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Visibility</source>
-        <translation type="obsolete">P&amp;repni viditeľnosť</translation>
-    </message>
-    <message>
         <source>Looking for matching layer names</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7220,6 +6634,10 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>&amp;Lock all Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7442,125 +6860,6 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
 </context>
 <context>
-    <name>QG_LineTypeBox</name>
-    <message>
-        <source>By Layer</source>
-        <translation>Podľa hladiny</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation>Podľa bloku</translation>
-    </message>
-    <message>
-        <source>No Pen</source>
-        <translation>Žiadna</translation>
-    </message>
-    <message>
-        <source>Continuous</source>
-        <translation>Plná</translation>
-    </message>
-    <message>
-        <source>Dot</source>
-        <translation>Bodkovaná</translation>
-    </message>
-    <message>
-        <source>Dot (small)</source>
-        <translation>Bodkovaná (malá)</translation>
-    </message>
-    <message>
-        <source>Dot (large)</source>
-        <translation>Bodkovaná (veľká)</translation>
-    </message>
-    <message>
-        <source>Dash</source>
-        <translation>Čiarkovaná</translation>
-    </message>
-    <message>
-        <source>Dash (small)</source>
-        <translation>Čiarkovaná (malá)</translation>
-    </message>
-    <message>
-        <source>Dash (large)</source>
-        <translation>Čiarkovaná (veľká)</translation>
-    </message>
-    <message>
-        <source>Dash Dot</source>
-        <translation>Bodkočiarkovaná</translation>
-    </message>
-    <message>
-        <source>Dash Dot (small)</source>
-        <translation>Bodkočiarkovaná (malá)</translation>
-    </message>
-    <message>
-        <source>Dash Dot (large)</source>
-        <translation>Bodkočiarkovaná (veľká)</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation>Deliaca</translation>
-    </message>
-    <message>
-        <source>Divide (small)</source>
-        <translation>Deliaca (malá)</translation>
-    </message>
-    <message>
-        <source>Divide (large)</source>
-        <translation>Deliaca (veľká)</translation>
-    </message>
-    <message>
-        <source>Center</source>
-        <translation>Stredová</translation>
-    </message>
-    <message>
-        <source>Center (small)</source>
-        <translation>Stredová (malá)</translation>
-    </message>
-    <message>
-        <source>Center (large)</source>
-        <translation>Stredová (veľká)</translation>
-    </message>
-    <message>
-        <source>Border</source>
-        <translation>Okrajová</translation>
-    </message>
-    <message>
-        <source>Border (small)</source>
-        <translation>Okrajová (malá)</translation>
-    </message>
-    <message>
-        <source>Border (large)</source>
-        <translation>Okrajová (veľká)</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation>-Bez zmeny-</translation>
-    </message>
-    <message>
-        <source>Dot (tiny)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dash (tiny)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dash Dot (tiny)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Divide (tiny)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Center (tiny)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Border (tiny)</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QG_MTextOptions</name>
     <message>
         <source>Text Options</source>
@@ -7583,29 +6882,6 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
 </context>
 <context>
-    <name>QG_MouseWidget</name>
-    <message>
-        <source>Mouse</source>
-        <translation>Myš</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation>Pravé</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation>Ľavé</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QG_MoveRotateOptions</name>
     <message>
         <source>Move Rotate Options</source>
@@ -7614,21 +6890,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Angle:</source>
         <translation type="obsolete">Uhol:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PenToolBar</name>
-    <message>
-        <source>Line color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7699,12 +6960,12 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_RecentFiles</name>
     <message>
-        <source>&amp;%1 %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Opening recent file...</source>
         <translation type="obsolete">Otváram nedávno použitý súbor...</translation>
+    </message>
+    <message>
+        <source>&amp;%1 %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7729,16 +6990,16 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_SelectionWidget</name>
     <message>
-        <source>Selection</source>
-        <translation>Označenie</translation>
-    </message>
-    <message>
         <source>Selected Entities:</source>
         <translation type="obsolete">Označené objekty:</translation>
     </message>
     <message>
         <source>0</source>
         <translation type="obsolete">0</translation>
+    </message>
+    <message>
+        <source>Selection</source>
+        <translation>Označenie</translation>
     </message>
     <message>
         <source>Selected</source>
@@ -7781,121 +7042,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Snap Distance Options</source>
         <translation type="obsolete">Nastavenie vzdialenosti prichitávania</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SnapToolBar</name>
-    <message>
-        <source>Snap</source>
-        <translation type="unfinished">Prichitávanie</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="unfinished">Prichitávanie ku koncovým bodom</translation>
-    </message>
-    <message>
-        <source>Snap to equidistant points of entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="unfinished">Prichitávanie k stredovým bodom</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation type="unfinished">Manuálne prichitávanie k priesečníkom</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="unfinished">Prichitávanie k najbližšiemu bodu objektu</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="unfinished">Prichitávanie v zadanej vzdialenosti od koncových bodov</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation type="unfinished">Manuálne prichitávanie k priesečníkom</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="unfinished">Prichitávanie k mriežke</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation type="unfinished">Horizontálne ohraničenie</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation type="unfinished">Vertikálne ohraničenie</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation type="unfinished">Presunutie relatívnej nuly</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation type="unfinished">Zamkni relatívnu nulu</translation>
-    </message>
-    <message>
-        <source>Free Snap</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap on grid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap on Endpoints</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap on Entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap Center</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap Middle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap Distance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snap Intersection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Restrict Horizontal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Restrict Vertical</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Restrict Orthogonal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Restrict Nothing</source>
-        <translation type="unfinished">Žiadne ohraničenie</translation>
-    </message>
-    <message>
-        <source>Set relative zero position</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lock relative zero position</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exclusive Snap Mode</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7952,141 +7098,11 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QG_WidgetPen</name>
-    <message>
-        <source>Pen</source>
-        <translation>Pero</translation>
-    </message>
-    <message>
-        <source>Line type:</source>
-        <translation>Typ čiary:</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation>Hrúbka:</translation>
-    </message>
-    <message>
-        <source>Color:</source>
-        <translation>Farba:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_WidthBox</name>
-    <message>
-        <source>By Layer</source>
-        <translation>Podľa hladiny</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation>Podľa bloku</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation>Predvolená</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation>0.00mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation>0.05mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation>0.09mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation>0.13mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation>0.15mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation>0.18mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation>0.20mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation>0.25mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation>0.30mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation>0.35mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation>0.40mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation>0.50mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation>0.53mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation>0.60mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation>0.70mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation>0.80mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation>0.90mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation>1.00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation>1.06mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation>1.20mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation>1.40mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation>1.58mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation>2.00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation>2.11mm</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation>-Bez zmeny-</translation>
-    </message>
-</context>
-<context>
     <name>QMessageBox</name>
+    <message>
+        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
+        <translation type="obsolete">Hladina &quot;%1&quot; a všetky objekty na nej budú vymazané.</translation>
+    </message>
     <message>
         <source>Warning</source>
         <translation>Varovanie</translation>
@@ -8094,10 +7110,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Remove Layer</source>
         <translation>Vymazanie hladiny</translation>
-    </message>
-    <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
-        <translation type="obsolete">Hladina &quot;%1&quot; a všetky objekty na nej budú vymazané.</translation>
     </message>
     <message>
         <source>Layer &quot;%1&quot; can never be removed.</source>
@@ -8132,16 +7144,6 @@ This action can NOT be undone.</source>
 <context>
     <name>QObject</name>
     <message>
-        <source>Save Drawing As</source>
-        <translation>Uloženie výkresu ako</translation>
-    </message>
-    <message>
-        <source>%1 already exists.
-Do you want to replace it?</source>
-        <translation>Súbor &quot;%1&quot; už existuje.
-Chcete ho nahradiť?</translation>
-    </message>
-    <message>
         <source>Yes</source>
         <translation type="obsolete">Áno</translation>
     </message>
@@ -8152,6 +7154,42 @@ Chcete ho nahradiť?</translation>
     <message>
         <source>Cancel</source>
         <translation type="obsolete">Zrušiť</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="obsolete">Žiadne</translation>
+    </message>
+    <message>
+        <source>Export Image</source>
+        <translation type="obsolete">Exportuj obrázok</translation>
+    </message>
+    <message>
+        <source>Loading Library Paths..</source>
+        <translation type="obsolete">Nahrávam knižničné súbory..</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="obsolete">Varovanie</translation>
+    </message>
+    <message>
+        <source>length1</source>
+        <comment>bevel/fillet lenght1</comment>
+        <translation type="obsolete">dlzka1</translation>
+    </message>
+    <message>
+        <source>length2</source>
+        <comment>bevel/fillet lenght2</comment>
+        <translation type="obsolete">dlzka2</translation>
+    </message>
+    <message>
+        <source>Save Drawing As</source>
+        <translation>Uloženie výkresu ako</translation>
+    </message>
+    <message>
+        <source>%1 already exists.
+Do you want to replace it?</source>
+        <translation>Súbor &quot;%1&quot; už existuje.
+Chcete ho nahradiť?</translation>
     </message>
     <message>
         <source>Open Drawing</source>
@@ -8220,10 +7258,6 @@ Chcete ho nahradiť?</translation>
     <message>
         <source>All Files (*.*)</source>
         <translation>Všetky súbory (*.*)</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="obsolete">Žiadne</translation>
     </message>
     <message>
         <source>Inch</source>
@@ -8306,16 +7340,8 @@ Chcete ho nahradiť?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export Image</source>
-        <translation type="obsolete">Exportuj obrázok</translation>
-    </message>
-    <message>
         <source>Loading..</source>
         <translation type="unfinished">Nahrávam..</translation>
-    </message>
-    <message>
-        <source>Loading Library Paths..</source>
-        <translation type="obsolete">Nahrávam knižničné súbory..</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
@@ -8452,10 +7478,6 @@ Chcete ho nahradiť?</translation>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation type="obsolete">Varovanie</translation>
     </message>
     <message>
         <source>error reading blocks in dwg file</source>
@@ -9342,16 +8364,6 @@ Chcete ho nahradiť?</translation>
         <translation type="unfinished">dlzka</translation>
     </message>
     <message>
-        <source>length1</source>
-        <comment>bevel/fillet lenght1</comment>
-        <translation type="obsolete">dlzka1</translation>
-    </message>
-    <message>
-        <source>length2</source>
-        <comment>bevel/fillet lenght2</comment>
-        <translation type="obsolete">dlzka2</translation>
-    </message>
-    <message>
         <source>number</source>
         <translation type="unfinished">pocet</translation>
     </message>
@@ -9888,6 +8900,122 @@ Chcete ho nahradiť?</translation>
         <comment>default layer name</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Letter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Legal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Executive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ledger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tabloid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch C</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NPageSize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spiderweb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished">Bod</translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export to ProNest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open ProNest before exporting the drawing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dock Areas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mouse</source>
+        <translation type="unfinished">Myš</translation>
+    </message>
+    <message>
+        <source>Tablet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trackpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Touchscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -10050,13 +9178,6 @@ Chcete ho nahradiť?</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionBlocksSave</name>
-    <message>
-        <source>No block activated to save</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
@@ -10069,17 +9190,6 @@ Chcete ho nahradiť?</translation>
     <message>
         <source>Toggle Block</source>
         <translation type="obsolete">Prepni blok</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDefault</name>
-    <message>
-        <source>Choose second edge</source>
-        <translation>Zvoľte druhý okraj</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Späť</translation>
     </message>
 </context>
 <context>
@@ -10351,6 +9461,10 @@ Chcete ho nahradiť?</translation>
         <translation type="obsolete">Kreslí oblúky</translation>
     </message>
     <message>
+        <source>Specify end angle or [Angle/chord Length]</source>
+        <translation type="obsolete">Zvoľte koncový uhol alebo [Uhol/dĺžka Tetivy]</translation>
+    </message>
+    <message>
         <source>Not a valid expression</source>
         <translation>Nesprávny výraz</translation>
     </message>
@@ -10377,10 +9491,6 @@ Chcete ho nahradiť?</translation>
     <message>
         <source>Specify start angle:</source>
         <translation>Zvoľte začiatočný uhol:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [Angle/chord Length]</source>
-        <translation type="obsolete">Zvoľte koncový uhol alebo [Uhol/dĺžka Tetivy]</translation>
     </message>
     <message>
         <source>Specify included angle:</source>
@@ -10410,12 +9520,12 @@ Chcete ho nahradiť?</translation>
         <translation type="obsolete">Kreslí oblúky pomocou 3 bodov</translation>
     </message>
     <message>
-        <source>Invalid arc data.</source>
-        <translation>Chybné údaje oblúka.</translation>
-    </message>
-    <message>
         <source>Specify startpoint or [Center]</source>
         <translation type="obsolete">Zadajte začiatočný bod alebo [Stred]</translation>
+    </message>
+    <message>
+        <source>Invalid arc data.</source>
+        <translation>Chybné údaje oblúka.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10435,29 +9545,6 @@ Chcete ho nahradiť?</translation>
     </message>
     <message>
         <source>Specify startpoint or [center]</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArcTangential</name>
-    <message>
-        <source>Specify base entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Specify end angle</source>
-        <translation type="unfinished">Zvoľte koncový uhol</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-    <message>
-        <source>Specify end point</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10614,191 +9701,6 @@ Chcete ho nahradiť?</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawCircleDiam</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="unfinished">Nesprávny výraz</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="unfinished">Zvoľte stred</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="unfinished">Zvoľte polomer kružnice</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-    <message>
-        <source>diameter=%1 is invalid</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Specify the another arc/circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawEllipse4Points</name>
-    <message>
-        <source>Specify the first point on ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Specify the second point on ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-    <message>
-        <source>Specify the third point on ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify the fourth point on ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can not determine uniquely an ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawEllipseAxis</name>
     <message>
         <source>Ellipse Arc with Axis</source>
@@ -10855,99 +9757,6 @@ Chcete ho nahradiť?</translation>
     <message>
         <source>Specify end angle</source>
         <translation>Zvoľte koncový uhol</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawEllipseCenter3Points</name>
-    <message>
-        <source>Specify the center of ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Specify the first point on ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify the second point on ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-    <message>
-        <source>Specify the third point on ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawEllipseFociPoint</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="unfinished">Nesprávny výraz</translation>
-    </message>
-    <message>
-        <source>Specify first focus of ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Specify second focus of ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-    <message>
-        <source>Specify a point on ellipse or total distance to foci</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>specify a point on ellipse, or total distance to foci</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Total distance %1 is smaller than distance between foci</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawEllipseInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify the fourth line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can not determine uniquely an ellipse</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11055,6 +9864,10 @@ Chcete ho nahradiť?</translation>
         <translation type="obsolete">Kreslí čiary</translation>
     </message>
     <message>
+        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
+        <translation type="obsolete">Nemôžem uzatvoriť sekvenciu čiar: Bolo zadaných málo objektov.</translation>
+    </message>
+    <message>
         <source>Specify first point</source>
         <translation>Zvoľte prvý bod</translation>
     </message>
@@ -11073,10 +9886,6 @@ Chcete ho nahradiť?</translation>
     <message>
         <source>Specify next point</source>
         <translation>Zvoľte ďalší bod</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="obsolete">Nemôžem uzatvoriť sekvenciu čiar: Bolo zadaných málo objektov.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
@@ -11106,30 +9915,6 @@ Chcete ho nahradiť?</translation>
         <translation type="obsolete">Kreslí čiaru pod zadaným uhlom</translation>
     </message>
     <message>
-        <source>Not a valid expression</source>
-        <translation>Nesprávny výraz</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation>Zvoľte pozíciu</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Zrušiť</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation>Zadajte uhol:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Späť</translation>
-    </message>
-    <message>
-        <source>Enter length:</source>
-        <translation>Zadajte dĺžku:</translation>
-    </message>
-    <message>
         <source>Line: Horizontal</source>
         <translation type="obsolete">Čiara: Horizontálna</translation>
     </message>
@@ -11156,6 +9941,30 @@ Chcete ho nahradiť?</translation>
     <message>
         <source>Vertical</source>
         <translation type="obsolete">Vertikálna</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation>Nesprávny výraz</translation>
+    </message>
+    <message>
+        <source>Specify position</source>
+        <translation>Zvoľte pozíciu</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Zrušiť</translation>
+    </message>
+    <message>
+        <source>Enter angle:</source>
+        <translation>Zadajte uhol:</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Späť</translation>
+    </message>
+    <message>
+        <source>Enter length:</source>
+        <translation>Zadajte dĺžku:</translation>
     </message>
 </context>
 <context>
@@ -11244,6 +10053,10 @@ Chcete ho nahradiť?</translation>
         <translation type="obsolete">Kreslí horizontálne/vertikálne čiary</translation>
     </message>
     <message>
+        <source>Vertical</source>
+        <translation type="obsolete">Vertikálna</translation>
+    </message>
+    <message>
         <source>Specify first point</source>
         <translation>Zvoľte prvý bod</translation>
     </message>
@@ -11259,29 +10072,6 @@ Chcete ho nahradiť?</translation>
         <source>Back</source>
         <translation>Späť</translation>
     </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="obsolete">Vertikálna</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineOrthTan</name>
-    <message>
-        <source>Select a line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="unfinished">Zvoľ kružnicu, oblúk alebo elipsu</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineParallel</name>
@@ -11296,6 +10086,14 @@ Chcete ho nahradiť?</translation>
     <message>
         <source>Draw parallels to existing lines, arcs, circles</source>
         <translation type="obsolete">Kreslí rovnobežky k existujúcim čiaram, oblúkom, kružniciam</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">Sústredná</translation>
+    </message>
+    <message>
+        <source>&amp;Concentric</source>
+        <translation type="obsolete">&amp;Sústredná</translation>
     </message>
     <message>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
@@ -11316,14 +10114,6 @@ Chcete ho nahradiť?</translation>
     <message>
         <source>Not a valid number. Try 1..99</source>
         <translation>Nesprávne číslo. Skúste 1..99</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Sústredná</translation>
-    </message>
-    <message>
-        <source>&amp;Concentric</source>
-        <translation type="obsolete">&amp;Sústredná</translation>
     </message>
 </context>
 <context>
@@ -11602,6 +10392,18 @@ Chcete ho nahradiť?</translation>
         <translation type="obsolete">Kreslí čiaru pod relatívnym uhlom</translation>
     </message>
     <message>
+        <source>Orthogonal</source>
+        <translation type="obsolete">Pravouhlá</translation>
+    </message>
+    <message>
+        <source>&amp;Orthogonal</source>
+        <translation type="obsolete">&amp;Pravouhlá</translation>
+    </message>
+    <message>
+        <source>Draw orthogonal line</source>
+        <translation type="obsolete">Kreslí pravouhlé čiary (vodorovné/zvislé)</translation>
+    </message>
+    <message>
         <source>Not a valid expression</source>
         <translation>Nesprávny výraz</translation>
     </message>
@@ -11620,18 +10422,6 @@ Chcete ho nahradiť?</translation>
     <message>
         <source>Back</source>
         <translation>Späť</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="obsolete">Pravouhlá</translation>
-    </message>
-    <message>
-        <source>&amp;Orthogonal</source>
-        <translation type="obsolete">&amp;Pravouhlá</translation>
-    </message>
-    <message>
-        <source>Draw orthogonal line</source>
-        <translation type="obsolete">Kreslí pravouhlé čiary (vodorovné/zvislé)</translation>
     </message>
 </context>
 <context>
@@ -11684,12 +10474,12 @@ Chcete ho nahradiť?</translation>
         <translation type="obsolete">Zvoľte prvú kružnicu alebo oblúk</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation>Zrušiť</translation>
-    </message>
-    <message>
         <source>Select second circle or arc</source>
         <translation type="obsolete">Zvoľte druhú kružnicu alebo oblúk</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Zrušiť</translation>
     </message>
     <message>
         <source>Back</source>
@@ -11702,25 +10492,6 @@ Chcete ho nahradiť?</translation>
     <message>
         <source>Select second circle or ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="unfinished">Zvoľte bod vloženia</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="unfinished">Zadajte text:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
     </message>
 </context>
 <context>
@@ -11787,33 +10558,6 @@ Chcete ho nahradiť?</translation>
     <message>
         <source>Specify next point</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawSpline</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">Nemôžem vrátiť akciu späť: Bolo zadaných málo objektov.</translation>
     </message>
 </context>
 <context>
@@ -12048,37 +10792,6 @@ Chcete ho nahradiť?</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionInfoArea</name>
-    <message>
-        <source>Circumference: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Point: %1/%2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify first point of polygon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Specify next point of polygon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Closing Point: %1/%2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Area: %1 %2^2</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoDist</name>
     <message>
         <source>Distance Point to Point</source>
@@ -12299,16 +11012,16 @@ Chcete ho nahradiť?</translation>
 <context>
     <name>RS_ActionLibraryInsert</name>
     <message>
-        <source>Insert Library Object</source>
-        <translation>Vlož objekt z knižnice</translation>
-    </message>
-    <message>
         <source>&amp;Insert Library Object</source>
         <translation type="obsolete">&amp;Vlož objekt z knižnice</translation>
     </message>
     <message>
         <source>Inserts an Object from the part library.</source>
         <translation type="obsolete">Vloží objekt z knižnice objektov.</translation>
+    </message>
+    <message>
+        <source>Insert Library Object</source>
+        <translation>Vlož objekt z knižnice</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -12346,12 +11059,12 @@ Chcete ho nahradiť?</translation>
         <translation type="obsolete">Zamkni/Odomkni relatívnu nulu</translation>
     </message>
     <message>
-        <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation>&amp;Zamkni/Odomkni relatívnu nulu</translation>
-    </message>
-    <message>
         <source>(Un-)Lock relative Zero</source>
         <translation type="obsolete">Zamkne/odomkne relatívnu nulu</translation>
+    </message>
+    <message>
+        <source>(Un-)&amp;Lock Relative Zero</source>
+        <translation>&amp;Zamkni/Odomkni relatívnu nulu</translation>
     </message>
 </context>
 <context>
@@ -12427,12 +11140,12 @@ Chcete ho nahradiť?</translation>
         <translation type="obsolete">Vystrihne objekty</translation>
     </message>
     <message>
-        <source>No Entity found.</source>
-        <translation>Nenašiel sa žiaden objekt.</translation>
-    </message>
-    <message>
         <source>Entity must be a line, arc or circle.</source>
         <translation type="obsolete">Objekt musí byť čiara, oblúk alebo kružnica.</translation>
+    </message>
+    <message>
+        <source>No Entity found.</source>
+        <translation>Nenašiel sa žiaden objekt.</translation>
     </message>
     <message>
         <source>Cutting point is invalid.</source>
@@ -12644,6 +11357,18 @@ Chcete ho nahradiť?</translation>
         <translation type="obsolete">Posunie objekty</translation>
     </message>
     <message>
+        <source>Move / Copy</source>
+        <translation type="obsolete">Posuň / Kopíruj</translation>
+    </message>
+    <message>
+        <source>&amp;Move / Copy</source>
+        <translation type="obsolete">&amp;Posuň / Kopíruj</translation>
+    </message>
+    <message>
+        <source>Move or copy entities one or multiple times</source>
+        <translation type="obsolete">Posunie alebo skopíruje objekty raz alebo viackrát</translation>
+    </message>
+    <message>
         <source>Specify reference point</source>
         <translation>Špecifikujte referenčný bod</translation>
     </message>
@@ -12658,18 +11383,6 @@ Chcete ho nahradiť?</translation>
     <message>
         <source>Back</source>
         <translation>Späť</translation>
-    </message>
-    <message>
-        <source>Move / Copy</source>
-        <translation type="obsolete">Posuň / Kopíruj</translation>
-    </message>
-    <message>
-        <source>&amp;Move / Copy</source>
-        <translation type="obsolete">&amp;Posuň / Kopíruj</translation>
-    </message>
-    <message>
-        <source>Move or copy entities one or multiple times</source>
-        <translation type="obsolete">Posunie alebo skopíruje objekty raz alebo viackrát</translation>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
@@ -12713,17 +11426,6 @@ Chcete ho nahradiť?</translation>
     <message>
         <source>Enter rotation angle:</source>
         <translation type="vanished">Zadajte uhol natočenia:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
     </message>
 </context>
 <context>
@@ -12851,21 +11553,6 @@ Chcete ho nahradiť?</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyShapeText</name>
-    <message>
-        <source>Select text entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-    <message>
-        <source>Select entity to shape text to</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionModifyStretch</name>
     <message>
         <source>Stretch</source>
@@ -12919,6 +11606,18 @@ Chcete ho nahradiť?</translation>
         <translation type="obsolete">Oreže objekty</translation>
     </message>
     <message>
+        <source>Trim Two</source>
+        <translation type="obsolete">Orež dva</translation>
+    </message>
+    <message>
+        <source>&amp;Trim Two</source>
+        <translation type="obsolete">&amp;Orež dva</translation>
+    </message>
+    <message>
+        <source>Trim two Entities</source>
+        <translation type="obsolete">Oreže dva objekty</translation>
+    </message>
+    <message>
         <source>Select first trim entity</source>
         <translation>Zvoľte prvý objekt na orezanie</translation>
     </message>
@@ -12941,18 +11640,6 @@ Chcete ho nahradiť?</translation>
     <message>
         <source>Select entity to trim</source>
         <translation>Zvoľte objekt na orezanie</translation>
-    </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="obsolete">Orež dva</translation>
-    </message>
-    <message>
-        <source>&amp;Trim Two</source>
-        <translation type="obsolete">&amp;Orež dva</translation>
-    </message>
-    <message>
-        <source>Trim two Entities</source>
-        <translation type="obsolete">Oreže dva objekty</translation>
     </message>
 </context>
 <context>
@@ -12995,17 +11682,6 @@ Chcete ho nahradiť?</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyTrimExcess</name>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="unfinished">Zvoľte objekt na orezanie</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionOptionsDrawing</name>
     <message>
         <source>Drawing</source>
@@ -13018,254 +11694,6 @@ Chcete ho nahradiť?</translation>
     <message>
         <source>Settings for the current Drawing</source>
         <translation type="obsolete">Nastavenia aktuálneho výkresu</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">Nenašiel sa žiaden objekt.</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">Nenašiel sa žiaden objekt.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Adding point is invalid.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Adding point is not on entity.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify polyline to add nodes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAppend</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">Nenašiel sa žiaden objekt.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="unfinished">Zvoľte ďalší bod alebo [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">Nemôžem vrátiť akciu späť: Bolo zadaných málo objektov.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">Nenašiel sa žiaden objekt.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">Nenašiel sa žiaden objekt.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete between two nodes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify first node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify second node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineEquidistant</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">Nenašiel sa žiaden objekt.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Choose the original polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineSegment</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">Nenašiel sa žiaden objekt.</translation>
-    </message>
-    <message>
-        <source>Choose one of the segments on the original polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Entity can not be a closed polyline.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polyline created</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineTrim</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Späť</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">Nenašiel sa žiaden objekt.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specifying point is invalid.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No Segment found on entity.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify polyline to trim</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify first segment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify second segment</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -13324,89 +11752,6 @@ Chcete ho nahradiť?</translation>
     </message>
     <message>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>Select to modify attributes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
-    </message>
-    <message>
-        <source>Select to delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to delete immediately</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to move</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to rotate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to scale</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to mirror</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to move and rotate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to explode text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to create block</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to cut</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to create offset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select entities to order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to explode block</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to revert direction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select to unlink shaped text</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -13621,12 +11966,12 @@ Chcete ho nahradiť?</translation>
         <translation type="obsolete">Priesečník manuálne</translation>
     </message>
     <message>
-        <source>I&amp;ntersection Manually</source>
-        <translation>P&amp;riesečník manuálne</translation>
-    </message>
-    <message>
         <source>Snap to intersection points manually</source>
         <translation type="obsolete">Manuálne prichitávanie k priesečníkom</translation>
+    </message>
+    <message>
+        <source>I&amp;ntersection Manually</source>
+        <translation>P&amp;riesečník manuálne</translation>
     </message>
     <message>
         <source>Select first entity</source>
@@ -14605,6 +12950,1840 @@ Chcete ho nahradiť?</translation>
         <source>re</source>
         <comment>modify - revert direction</comment>
         <translation type="obsolete">obdlznik</translation>
+    </message>
+</context>
+<context>
+    <name>ColorWizard</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add to favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ComboBoxOption</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GroupBox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Hladina:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Rozmery</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawCircle2PR</name>
+    <message>
+        <source>radius=%1 is too small for points selected
+distance between points=%2 is larger than diameter=%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select from two possible circle centers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify first point</source>
+        <translation type="unfinished">Zvoľte prvý bod</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Specify second point</source>
+        <translation type="unfinished">Zvoľte druhý bod</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>Select circle center</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawLinePolygonCenTan</name>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished">Zvoľte stred</translation>
+    </message>
+    <message>
+        <source>Specify a tangent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter number:</source>
+        <translation type="unfinished">Zadajte počet:</translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="unfinished">Nesprávne číslo. Skúste 1..99</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Nesprávny výraz</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawSplinePoints</name>
+    <message>
+        <source>Specify first control point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Specify next control point or [%1]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>Specify next control point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="unfinished">Nemôžem vrátiť akciu späť: Bolo zadaných málo objektov.</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Nothing could be redone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionFileExportMakerCam</name>
+    <message>
+        <source>Export as</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_DeviceOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mouse</source>
+        <translation type="unfinished">Myš</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tablet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trackpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Touchscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_SimpleTests</name>
+    <message>
+        <source>De&amp;bugging</source>
+        <translation type="unfinished">&amp;Ladenie</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_WidgetOptionsDialog</name>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icon Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Statusbar</source>
+        <translation type="unfinished">Stavový riadok</translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input the path of a Qt style sheet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>side length in pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use themed icons</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LG_DimzerosBox</name>
+    <message>
+        <source>select:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remove left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remove right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remove 0&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remove 0&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Nastavenie čiar pod relatívnym uhlom</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Vzdialenosť:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetEnt</name>
+    <message>
+        <source>Select object:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetPoint</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetSelect</name>
+    <message>
+        <source>Select objects:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+</context>
+<context>
+    <name>QC_MDIWindow</name>
+    <message>
+        <source>Do you really want to close the file
+%1?</source>
+        <translation type="vanished">Skutočne chcete uzavrieť súbor
+%1?</translation>
+    </message>
+    <message>
+        <source>Do you really want to close the drawing?</source>
+        <translation type="vanished">Skutočne chcete uzavirieť výkres?</translation>
+    </message>
+    <message>
+        <source>Closing Drawing</source>
+        <translation type="vanished">Zatváram výkres</translation>
+    </message>
+    <message>
+        <source>Save Drawing</source>
+        <translation type="unfinished">Ulož výkres</translation>
+    </message>
+    <message>
+        <source>This file is set to read-only.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try again with a different file name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_ActionHandler</name>
+    <message>
+        <source>escape</source>
+        <comment>escape, go back from action steps</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_ActiveLayerName</name>
+    <message>
+        <source>Selection</source>
+        <translation type="unfinished">Označenie</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_CommandEdit</name>
+    <message>
+        <source>clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_CommandHistory</name>
+    <message>
+        <source>&amp;Copy</source>
+        <translation type="unfinished">&amp;Kópíruj</translation>
+    </message>
+    <message>
+        <source>Select &amp;All</source>
+        <translation type="unfinished">&amp;Ozanč všetky</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_CoordinateWidget</name>
+    <message>
+        <source>Coordinates</source>
+        <translation>Koordináty</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgFontConversion</name>
+    <message>
+        <source>Convert Fonts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font family:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save as:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Letter spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Author:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Word spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>License:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Writing System:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished">Náhľad</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> - Searching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LibreCAD Font Files(*.lff)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> - Rendering</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgOptionsMakerCam</name>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export invisible layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export visible construction layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert blocks to safe inline SVG content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ellipses / Ellipse arcs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as CAM/plain SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default width of elements, mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Raster Image export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dash/Dot Lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of the pattern, mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bake dash/dot lines to SVG path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content 
+that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
+because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
+when they are created using the &lt;ellipse&gt; tag  with a rotation in 
+the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exported images can be useful in SVG editors (Inkscape, etc), 
+but avoided in some CAM&apos;s.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+which can be useful in lasercut of plywood or for papercraft. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+but ignored by other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of line pattern related to zoom, 
+so default step value required for baking</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_FileDialog</name>
+    <message>
+        <source>Drawing Exchange DXF 2000 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawing Exchange DXF R12 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LFF Font %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>QCad Font %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jww Drawing %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawing Exchange %1</source>
+        <translation type="unfinished">Drawing Exchange %1</translation>
+    </message>
+    <message>
+        <source>QCad 1.x file %1</source>
+        <translation type="unfinished">QCad 1.x súbor %1</translation>
+    </message>
+    <message>
+        <source>Drawing Exchange DXF 2007 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawing Exchange DXF 2004 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawing Exchange DXF R14 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block</source>
+        <comment>block file</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawing</source>
+        <comment>drawing file</comment>
+        <translation type="unfinished">Výkres</translation>
+    </message>
+    <message>
+        <source>Open %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save %1 As</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dwg Drawing %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Untitled</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_LayerBox</name>
+    <message>
+        <source>- Unchanged -</source>
+        <translation>-Bez zmeny-</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineTypeBox</name>
+    <message>
+        <source>By Layer</source>
+        <translation>Podľa hladiny</translation>
+    </message>
+    <message>
+        <source>By Block</source>
+        <translation>Podľa bloku</translation>
+    </message>
+    <message>
+        <source>No Pen</source>
+        <translation>Žiadna</translation>
+    </message>
+    <message>
+        <source>Continuous</source>
+        <translation>Plná</translation>
+    </message>
+    <message>
+        <source>Dot</source>
+        <translation>Bodkovaná</translation>
+    </message>
+    <message>
+        <source>Dot (small)</source>
+        <translation>Bodkovaná (malá)</translation>
+    </message>
+    <message>
+        <source>Dot (large)</source>
+        <translation>Bodkovaná (veľká)</translation>
+    </message>
+    <message>
+        <source>Dash</source>
+        <translation>Čiarkovaná</translation>
+    </message>
+    <message>
+        <source>Dash (small)</source>
+        <translation>Čiarkovaná (malá)</translation>
+    </message>
+    <message>
+        <source>Dash (large)</source>
+        <translation>Čiarkovaná (veľká)</translation>
+    </message>
+    <message>
+        <source>Dash Dot</source>
+        <translation>Bodkočiarkovaná</translation>
+    </message>
+    <message>
+        <source>Dash Dot (small)</source>
+        <translation>Bodkočiarkovaná (malá)</translation>
+    </message>
+    <message>
+        <source>Dash Dot (large)</source>
+        <translation>Bodkočiarkovaná (veľká)</translation>
+    </message>
+    <message>
+        <source>Divide</source>
+        <translation>Deliaca</translation>
+    </message>
+    <message>
+        <source>Divide (small)</source>
+        <translation>Deliaca (malá)</translation>
+    </message>
+    <message>
+        <source>Divide (large)</source>
+        <translation>Deliaca (veľká)</translation>
+    </message>
+    <message>
+        <source>Center</source>
+        <translation>Stredová</translation>
+    </message>
+    <message>
+        <source>Center (small)</source>
+        <translation>Stredová (malá)</translation>
+    </message>
+    <message>
+        <source>Center (large)</source>
+        <translation>Stredová (veľká)</translation>
+    </message>
+    <message>
+        <source>Border</source>
+        <translation>Okrajová</translation>
+    </message>
+    <message>
+        <source>Border (small)</source>
+        <translation>Okrajová (malá)</translation>
+    </message>
+    <message>
+        <source>Border (large)</source>
+        <translation>Okrajová (veľká)</translation>
+    </message>
+    <message>
+        <source>- Unchanged -</source>
+        <translation>-Bez zmeny-</translation>
+    </message>
+    <message>
+        <source>Dot (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dash (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dash Dot (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Divide (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Border (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_MouseWidget</name>
+    <message>
+        <source>Mouse</source>
+        <translation>Myš</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation>Pravé</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation>Ľavé</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_PenToolBar</name>
+    <message>
+        <source>Line color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapToolBar</name>
+    <message>
+        <source>Snap</source>
+        <translation type="unfinished">Prichitávanie</translation>
+    </message>
+    <message>
+        <source>Snap to Endpoints</source>
+        <translation type="unfinished">Prichitávanie ku koncovým bodom</translation>
+    </message>
+    <message>
+        <source>Snap to equidistant points of entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap to center points</source>
+        <translation type="unfinished">Prichitávanie k stredovým bodom</translation>
+    </message>
+    <message>
+        <source>Snap to intersections automatically</source>
+        <translation type="unfinished">Manuálne prichitávanie k priesečníkom</translation>
+    </message>
+    <message>
+        <source>Snap to closest point on entity</source>
+        <translation type="unfinished">Prichitávanie k najbližšiemu bodu objektu</translation>
+    </message>
+    <message>
+        <source>Snap to point with given distance to endpoint</source>
+        <translation type="unfinished">Prichitávanie v zadanej vzdialenosti od koncových bodov</translation>
+    </message>
+    <message>
+        <source>Snap to intersections manually</source>
+        <translation type="unfinished">Manuálne prichitávanie k priesečníkom</translation>
+    </message>
+    <message>
+        <source>Snap to grid</source>
+        <translation type="unfinished">Prichitávanie k mriežke</translation>
+    </message>
+    <message>
+        <source>Restrict Horizontally</source>
+        <translation type="unfinished">Horizontálne ohraničenie</translation>
+    </message>
+    <message>
+        <source>Restrict Vertically</source>
+        <translation type="unfinished">Vertikálne ohraničenie</translation>
+    </message>
+    <message>
+        <source>Move relative Zero</source>
+        <translation type="unfinished">Presunutie relatívnej nuly</translation>
+    </message>
+    <message>
+        <source>Lock relative Zero</source>
+        <translation type="unfinished">Zamkni relatívnu nulu</translation>
+    </message>
+    <message>
+        <source>Free Snap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap on grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap on Endpoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap on Entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap Center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap Middle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap Distance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap Intersection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restrict Horizontal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restrict Vertical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restrict Orthogonal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restrict Nothing</source>
+        <translation type="unfinished">Žiadne ohraničenie</translation>
+    </message>
+    <message>
+        <source>Set relative zero position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lock relative zero position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exclusive Snap Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_WidgetPen</name>
+    <message>
+        <source>Pen</source>
+        <translation>Pero</translation>
+    </message>
+    <message>
+        <source>Line type:</source>
+        <translation>Typ čiary:</translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation>Hrúbka:</translation>
+    </message>
+    <message>
+        <source>Color:</source>
+        <translation>Farba:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_WidthBox</name>
+    <message>
+        <source>By Layer</source>
+        <translation>Podľa hladiny</translation>
+    </message>
+    <message>
+        <source>By Block</source>
+        <translation>Podľa bloku</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation>Predvolená</translation>
+    </message>
+    <message>
+        <source>0.00mm</source>
+        <translation>0.00mm</translation>
+    </message>
+    <message>
+        <source>0.05mm</source>
+        <translation>0.05mm</translation>
+    </message>
+    <message>
+        <source>0.09mm</source>
+        <translation>0.09mm</translation>
+    </message>
+    <message>
+        <source>0.13mm (ISO)</source>
+        <translation>0.13mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.15mm</source>
+        <translation>0.15mm</translation>
+    </message>
+    <message>
+        <source>0.18mm (ISO)</source>
+        <translation>0.18mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.20mm</source>
+        <translation>0.20mm</translation>
+    </message>
+    <message>
+        <source>0.25mm (ISO)</source>
+        <translation>0.25mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.30mm</source>
+        <translation>0.30mm</translation>
+    </message>
+    <message>
+        <source>0.35mm (ISO)</source>
+        <translation>0.35mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.40mm</source>
+        <translation>0.40mm</translation>
+    </message>
+    <message>
+        <source>0.50mm (ISO)</source>
+        <translation>0.50mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.53mm</source>
+        <translation>0.53mm</translation>
+    </message>
+    <message>
+        <source>0.60mm</source>
+        <translation>0.60mm</translation>
+    </message>
+    <message>
+        <source>0.70mm (ISO)</source>
+        <translation>0.70mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.80mm</source>
+        <translation>0.80mm</translation>
+    </message>
+    <message>
+        <source>0.90mm</source>
+        <translation>0.90mm</translation>
+    </message>
+    <message>
+        <source>1.00mm (ISO)</source>
+        <translation>1.00mm (ISO)</translation>
+    </message>
+    <message>
+        <source>1.06mm</source>
+        <translation>1.06mm</translation>
+    </message>
+    <message>
+        <source>1.20mm</source>
+        <translation>1.20mm</translation>
+    </message>
+    <message>
+        <source>1.40mm (ISO)</source>
+        <translation>1.40mm (ISO)</translation>
+    </message>
+    <message>
+        <source>1.58mm</source>
+        <translation>1.58mm</translation>
+    </message>
+    <message>
+        <source>2.00mm (ISO)</source>
+        <translation>2.00mm (ISO)</translation>
+    </message>
+    <message>
+        <source>2.11mm</source>
+        <translation>2.11mm</translation>
+    </message>
+    <message>
+        <source>- Unchanged -</source>
+        <translation>-Bez zmeny-</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksSave</name>
+    <message>
+        <source>No block activated to save</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDefault</name>
+    <message>
+        <source>Choose second edge</source>
+        <translation>Zvoľte druhý okraj</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Späť</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawArcTangential</name>
+    <message>
+        <source>Specify base entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Specify end angle</source>
+        <translation type="unfinished">Zvoľte koncový uhol</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>Specify end point</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleDiam</name>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Nesprávny výraz</translation>
+    </message>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished">Zvoľte stred</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Specify circle radius</source>
+        <translation type="unfinished">Zvoľte polomer kružnice</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>diameter=%1 is invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleInscribe</name>
+    <message>
+        <source>Specify the first line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Specify the second line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>Specify the third line</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan1_2P</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Specify the first point on the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>Specify the second point on the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify a line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan2</name>
+    <message>
+        <source>Specify the first line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Specify the second line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan2_1P</name>
+    <message>
+        <source>Specify a line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Specify the another arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>Specify a point on the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan3</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the first line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the second line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the third line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipse4Points</name>
+    <message>
+        <source>Specify the first point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Specify the second point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>Specify the third point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the fourth point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can not determine uniquely an ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseCenter3Points</name>
+    <message>
+        <source>Specify the center of ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Specify the first point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the second point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>Specify the third point on ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseFociPoint</name>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Nesprávny výraz</translation>
+    </message>
+    <message>
+        <source>Specify first focus of ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Specify second focus of ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>Specify a point on ellipse or total distance to foci</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>specify a point on ellipse, or total distance to foci</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total distance %1 is smaller than distance between foci</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseInscribe</name>
+    <message>
+        <source>Specify the first line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Specify the second line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>Specify the third line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the fourth line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can not determine uniquely an ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawLineOrthTan</name>
+    <message>
+        <source>Select a line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Select circle, arc or ellipse</source>
+        <translation type="unfinished">Zvoľ kružnicu, oblúk alebo elipsu</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawMText</name>
+    <message>
+        <source>Specify insertion point</source>
+        <translation type="unfinished">Zvoľte bod vloženia</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Enter text:</source>
+        <translation type="unfinished">Zadajte text:</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawSpline</name>
+    <message>
+        <source>Specify first control point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Specify next control point or [%1]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>Specify next control point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="unfinished">Nemôžem vrátiť akciu späť: Bolo zadaných málo objektov.</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionInfoArea</name>
+    <message>
+        <source>Circumference: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Point: %1/%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify first point of polygon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Specify next point of polygon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closing Point: %1/%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Area: %1 %2^2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyOffset</name>
+    <message>
+        <source>Specify direction of offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyShapeText</name>
+    <message>
+        <source>Select text entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>Select entity to shape text to</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyTrimExcess</name>
+    <message>
+        <source>Select entity to trim</source>
+        <translation type="unfinished">Zvoľte objekt na orezanie</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionOrder</name>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">Nenašiel sa žiaden objekt.</translation>
+    </message>
+    <message>
+        <source>Choose entity for order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionPolylineAdd</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">Nenašiel sa žiaden objekt.</translation>
+    </message>
+    <message>
+        <source>Entity must be a polyline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Adding point is invalid.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Adding point is not on entity.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify polyline to add nodes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify adding node&apos;s point</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionPolylineAppend</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">Nenašiel sa žiaden objekt.</translation>
+    </message>
+    <message>
+        <source>Entity must be a polyline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click somewhere near the beginning or end of existing polyline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the polyline somewhere near the beginning or end point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify next point or [%1]</source>
+        <translation type="unfinished">Zvoľte ďalší bod alebo [%1]</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>Specify next point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can not append nodes in a closed polyline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="unfinished">Nemôžem vrátiť akciu späť: Bolo zadaných málo objektov.</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionPolylineDel</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">Nenašiel sa žiaden objekt.</translation>
+    </message>
+    <message>
+        <source>Entity must be a polyline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify polyline to delete node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify deleting node&apos;s point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleting point is invalid.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleting point is not on entity.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionPolylineDelBetween</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">Nenašiel sa žiaden objekt.</translation>
+    </message>
+    <message>
+        <source>Entity must be a polyline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleting point is not on entity.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify polyline to delete between two nodes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify first node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify second node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleting point is invalid.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionPolylineEquidistant</name>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">Nenašiel sa žiaden objekt.</translation>
+    </message>
+    <message>
+        <source>Entity must be a polyline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose the original polyline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionPolylineSegment</name>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">Nenašiel sa žiaden objekt.</translation>
+    </message>
+    <message>
+        <source>Choose one of the segments on the original polyline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Entity can not be a closed polyline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polyline created</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionPolylineTrim</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Späť</translation>
+    </message>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">Nenašiel sa žiaden objekt.</translation>
+    </message>
+    <message>
+        <source>Entity must be a polyline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specifying point is invalid.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Segment found on entity.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify polyline to trim</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify first segment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify second segment</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionSelect</name>
+    <message>
+        <source>Select to modify attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Select to delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to delete immediately</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to move</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to scale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to mirror</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to move and rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select for two axis rotation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to explode text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to create block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to cut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No entity selected!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to create offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select entities to order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to explode block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to revert direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to unlink shaped text</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

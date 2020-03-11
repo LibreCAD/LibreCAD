@@ -952,6 +952,26 @@ public:
             locRightToLeft      /** Right to Left **/
         };
 
+		enum SnapIndicatorLineType {
+			SnapIndicatorLineCrosshair,
+			SnapIndicatorLineCrosshair2,
+			SnapIndicatorLineIsometric,
+			SnapIndicatorLineSpiderweb
+		};
+
+		enum SnapIndicatorShapeType {
+			SnapIndicatorShapeCircle,
+			SnapIndicatorShapePoint,
+			SnapIndicatorShapeSquare
+		};
+
+		enum InputDeviceType {
+			InputDeviceMouse,
+			InputDeviceTablet,
+			InputDeviceTrackpad,
+			InputDeviceTouchscreen
+		};
+
 };
 
 #endif

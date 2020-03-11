@@ -226,7 +226,7 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     // lineEdit to filter block list with RegEx
     matchBlockName = new QLineEdit(this);
     matchBlockName->setReadOnly(false);
-    matchBlockName->setPlaceholderText("Filter");
+    matchBlockName->setPlaceholderText(tr("Filter"));
     matchBlockName->setClearButtonEnabled(true);
     matchBlockName->setToolTip(tr("Looking for matching block names"));
     connect(matchBlockName, SIGNAL(textChanged(QString)), this, SLOT(slotUpdateBlockList()));
