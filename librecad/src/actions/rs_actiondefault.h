@@ -79,7 +79,6 @@ protected:
 	struct Points;
 	std::unique_ptr<Points> pPoints;
     RS2::SnapRestriction restrBak;
-private:
 
 };
 

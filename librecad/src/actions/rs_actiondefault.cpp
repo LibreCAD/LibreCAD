@@ -28,6 +28,8 @@
 
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_line.h"
+#include "rs_coordinateevent.h"
 #include "rs_commandevent.h"
 #include "rs_modification.h"
 #include "rs_selection.h"
@@ -35,9 +37,7 @@
 #include "rs_preview.h"
 #include "rs_debug.h"
 
-#include "rs_line.h"
-#include "cmath"
-#include "rs_coordinateevent.h"
+#include <cmath>
 
 struct RS_ActionDefault::Points {
 	RS_Vector v1;
@@ -160,8 +160,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 		pPoints->v2 = snapPoint(e);
 		RS_DIALOGFACTORY->updateCoordinateWidget(pPoints->v2, pPoints->v2 - graphicView->getRelativeZero());
 
-        if(e->modifiers() & Qt::ShiftModifier)
-        {
+        if (e->modifiers() & Qt::ShiftModifier) {
             mouse = snapToAngle(mouse, pPoints->v1, 15.);
             pPoints->v2 = mouse;
         }
@@ -170,9 +169,8 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
         preview->addSelectionFrom(*container);
 		preview->moveRef(pPoints->v1, pPoints->v2 - pPoints->v1);
 
-        if(e->modifiers() & Qt::ShiftModifier)
-        {
-            auto line = new RS_Line(pPoints->v1, mouse);
+        if (e->modifiers() & Qt::ShiftModifier) {
+            RS_Line *line = new RS_Line(pPoints->v1, mouse);
             preview->addEntity(line);
             line->setSelected(true);
         }
@@ -184,8 +182,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 		pPoints->v2 = snapPoint(e);
 		RS_DIALOGFACTORY->updateCoordinateWidget(pPoints->v2, pPoints->v2 - graphicView->getRelativeZero());
 
-        if(e->modifiers() & Qt::ShiftModifier)
-        {
+        if (e->modifiers() & Qt::ShiftModifier) {
             mouse = snapToAngle(mouse, pPoints->v1, 15.);
             pPoints->v2 = mouse;
         }
@@ -194,9 +191,8 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
         preview->addSelectionFrom(*container);
 		preview->move(pPoints->v2 - pPoints->v1);
 
-        if(e->modifiers() & Qt::ShiftModifier)
-        {
-            auto line = new RS_Line(pPoints->v1, mouse);
+        if (e->modifiers() & Qt::ShiftModifier) {
+            RS_Line *line = new RS_Line(pPoints->v1, mouse);
             preview->addEntity(line);
             line->setSelected(true);
         }
@@ -253,8 +249,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
 
         case Moving: {
 			pPoints->v2 = snapPoint(e);
-            if(e->modifiers() & Qt::ShiftModifier)
-            {
+            if (e->modifiers() & Qt::ShiftModifier) {
                 pPoints->v2 = snapToAngle(pPoints->v2, pPoints->v1, 15.);
             }
             deletePreview();
@@ -274,8 +269,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
 
         case MovingRef: {
 			pPoints->v2 = snapPoint(e);
-            if(e->modifiers() & Qt::ShiftModifier)
-            {
+            if (e->modifiers() & Qt::ShiftModifier) {
                 pPoints->v2 = snapToAngle(pPoints->v2, pPoints->v1, 15.);
             }
             deletePreview();
@@ -356,6 +350,7 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
         case Panning:
             setStatus(Neutral);
             break;
+
         default:
             break;
 
@@ -425,7 +420,5 @@ void RS_ActionDefault::updateMouseCursor() {
         break;
     }
 }
-
-
 
 // EOF

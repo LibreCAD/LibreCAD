@@ -323,11 +323,12 @@ RS_Vector RS_Snapper::snapPoint(const RS_Vector& coord, bool setSpot)
 }
 
 
-
 double RS_Snapper::getSnapRange() const
 {
-	if(graphicView )
-    return (graphicView->getGrid()->getCellVector()*0.5).magnitude();
+    if (graphicView) {
+        return (graphicView->getGrid()->getCellVector() * 0.5).magnitude();
+    }
+
     return 20.;
 }
 

@@ -106,8 +106,6 @@ void RS_ActionDrawLine::trigger() {
                     line->getId());
 }
 
-
-
 void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e)
 {
     RS_Vector mouse = snapPoint(e);
@@ -118,7 +116,7 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e)
             mouse = snapToAngle(mouse, pPoints->data.startpoint, 15.);
 
         deletePreview();
-        auto line = new RS_Line(pPoints->data.startpoint, mouse);
+        RS_Line *line = new RS_Line(pPoints->data.startpoint, mouse);
         preview->addEntity(line);
         line->setLayerToActive();
         line->setPenToActive();

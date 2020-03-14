@@ -68,7 +68,6 @@ public:
 private:
 	struct Points;
 	std::unique_ptr<Points> pPoints;
-    //RS_Vector snapToAngle(const RS_Vector &currentCoord);
 };
 
 #endif
