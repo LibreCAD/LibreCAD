@@ -12,14 +12,14 @@ See the GNU General Public License for more details.
 The GPLv2 can be found in the `licenses` folder as `gpl-2.0.txt`.  
 
 - <https://github.com/LibreCAD/LibreCAD/tree/master/licenses>
-- <http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt>
+- <https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt>
 
 ### History ###
 
 QCAD community edition version 2.0.5.0 was released under the GPLv2.  
 > Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 
-- <http://www.ribbonsoft.com>
+- <https://www.ribbonsoft.com>
 
 LibreCAD is a fork of QCAD community edition version 2.0.5.0;  
 therefore, any modifications of or additions to the program   
@@ -27,7 +27,7 @@ are also released under the GPLv2.
 
 The project's first commit on Github was Aug 16, 2010.
 
-- <http://librecad.org/>
+- <https://librecad.org/>
 - <https://github.com/LibreCAD/LibreCAD>
 
 ### Rights holders of the code ###
@@ -94,7 +94,7 @@ libdxfrw was released under GPLv2 "or any later version".
 
 muParser was released under the MIT license.
 
-- <http://beltoforion.de/article.php?a=muparser&hl=en&p=licence>
+- <https://beltoforion.de/article.php?a=muparser&hl=en&p=licence>
 
 Shapelib was released under a "MIT Style" license or LGPLv2.
 
@@ -107,7 +107,7 @@ The AZOmix fonts were released under the KST32B version 2.0 license.
 
 The Amiri font was released under the Open Font License.
 
-- <http://www.amirifont.org/>
+- <https://www.amirifont.org/>
 - <https://github.com/khaledhosny/amiri-font/blob/0.108/OFL.txt>
 
 The Hershey Fonts were originally created by Dr. A. V. Hershey  
