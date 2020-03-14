@@ -44,6 +44,7 @@
 #include "rs_solid.h"
 #include "rs_information.h"
 #include "rs_graphicview.h"
+#include "rs_constructionline.h"
 
 bool RS_EntityContainer::autoUpdateBorders = true;
 
@@ -1342,6 +1343,42 @@ RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord,
     return closestPoint;
 }
 
+RS_Vector RS_EntityContainer::getNearestVirtualIntersection(const RS_Vector& coord,
+                                                            const double& angle,
+                                                            double* dist)
+{
+
+    RS_Vector point;                // endpoint found
+    RS_VectorSolutions sol;
+    RS_Entity* closestEntity;
+    RS_Vector second_coord;
+
+    second_coord.set(angle);
+    closestEntity = getNearestEntity(coord, nullptr, RS2::ResolveAllButTextImage);
+
+    if (closestEntity)
+    {
+            RS_ConstructionLineData data(coord,coord + second_coord);
+            auto line = new RS_ConstructionLine(this,data);
+
+            sol = RS_Information::getIntersection(closestEntity,line,true);
+            if (sol.getVector().empty())
+            {
+                return coord;
+            }
+            else
+            {
+                point=sol.getClosest(coord,dist,nullptr);
+                return point;
+            }
+    }
+    else
+    {
+        return coord;
+    }
+
+
+}
 
 
 RS_Vector RS_EntityContainer::getNearestRef(const RS_Vector& coord,

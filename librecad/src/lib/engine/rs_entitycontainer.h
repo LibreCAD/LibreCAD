@@ -164,6 +164,9 @@ public:
 									 double* dist = nullptr) const override;
 	RS_Vector getNearestIntersection(const RS_Vector& coord,
 			double* dist = nullptr);
+    RS_Vector getNearestVirtualIntersection(const RS_Vector& coord,
+                                            const double& angle,
+                                            double* dist);
 	RS_Vector getNearestRef(const RS_Vector& coord,
 									 double* dist = nullptr) const override;
 	RS_Vector getNearestSelectedRef(const RS_Vector& coord,

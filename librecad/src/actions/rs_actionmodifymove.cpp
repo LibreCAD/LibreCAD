@@ -24,9 +24,12 @@
 **
 **********************************************************************/
 
+
+
+#include<cmath>
+#include <QAction>
 #include "rs_actionmodifymove.h"
 
-#include <QAction>
 #include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
@@ -34,6 +37,9 @@
 #include "rs_modification.h"
 #include "rs_preview.h"
 #include "rs_debug.h"
+#include "rs_line.h"
+
+
 
 struct RS_ActionModifyMove::Points {
 	RS_MoveData data;
@@ -64,27 +70,43 @@ void RS_ActionModifyMove::trigger() {
 }
 
 
-
 void RS_ActionModifyMove::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyMove::mouseMoveEvent begin");
 
-    if (getStatus()==SetReferencePoint ||
-            getStatus()==SetTargetPoint) {
+    if (getStatus()==SetReferencePoint || getStatus()==SetTargetPoint)
+    {
 
         RS_Vector mouse = snapPoint(e);
-        switch (getStatus()) {
+        switch (getStatus())
+        {
         case SetReferencePoint:
 			pPoints->referencePoint = mouse;
             break;
 
         case SetTargetPoint:
-			if (pPoints->referencePoint.valid) {
+            if (pPoints->referencePoint.valid)
+            {
+                if(e->modifiers() & Qt::ShiftModifier)
+                    mouse = snapToAngle(mouse, pPoints->referencePoint, 15.);
+
+
 				pPoints->targetPoint = mouse;
 
                 deletePreview();
                 preview->addSelectionFrom(*container);
 				preview->move(pPoints->targetPoint-pPoints->referencePoint);
+
+                if(e->modifiers() & Qt::ShiftModifier)
+                {
+                    auto line = new RS_Line(pPoints->referencePoint, mouse);
+                    preview->addEntity(line);
+                    line->setSelected(true);
+                    line->setLayerToActive();
+                    line->setPenToActive();
+                }
                 drawPreview();
+
+
             }
             break;
 
@@ -99,14 +121,22 @@ void RS_ActionModifyMove::mouseMoveEvent(QMouseEvent* e) {
 
 
 void RS_ActionModifyMove::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
+    if (e->button()==Qt::LeftButton)
+    {
+        RS_Vector snapped = snapPoint(e);
+        if((e->modifiers() & Qt::ShiftModifier) && getStatus() == SetTargetPoint )
+            snapped = snapToAngle(snapped, pPoints->referencePoint, 15.);
+
+        RS_CoordinateEvent ce(snapped);
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
         deletePreview();
         init(getStatus()-1);
     }
 }
+
+
+
 
 void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent* e) {
 
