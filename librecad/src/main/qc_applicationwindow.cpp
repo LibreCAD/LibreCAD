@@ -1520,7 +1520,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
 	// Link the dialog factory to the command widget:
 	QG_DIALOGFACTORY->setCommandWidget(commandWidget);
 
-    QMdiSubWindow* subWindow=mdiAreaCAD->addSubWindow(w);
+    mdiAreaCAD->addSubWindow(w);
 
     RS_DEBUG->print("  showing MDI window");
 	doActivate(w);
