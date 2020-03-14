@@ -906,9 +906,7 @@ void RS_Graphic::centerToPage() {
  */
 bool RS_Graphic::fitToPage() {
     bool ret(true);
-    double border = RS_Units::convert(25.0, RS2::Millimeter, getUnit());
     RS_Vector ps = getPrintAreaSize();
-    if(ps.x>border && ps.y>border) ps -= RS_Vector(border, border);
     RS_Vector s = getSize();
     /** avoid zero size, bug#3573158 */
     if(fabs(s.x)<RS_TOLERANCE) s.x=10.;
