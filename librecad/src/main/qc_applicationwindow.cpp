@@ -2437,6 +2437,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         RS_StaticGraphicView gv(printer.width(), printer.height(), &painter);
         gv.setPrinting(true);
         gv.setBorders(0,0,0,0);
+        gv.setLineWidthScaling(w->getGraphicView()->getLineWidthScaling());
 
         double fx = printerFx * RS_Units::getFactorToMM(graphic->getUnit());
         double fy = printerFy * RS_Units::getFactorToMM(graphic->getUnit());

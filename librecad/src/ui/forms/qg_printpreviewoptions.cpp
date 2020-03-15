@@ -89,6 +89,7 @@ void QG_PrintPreviewOptions::init() {
             << "25000:1" << "50000:1" << "75000:1" << "100000:1";
     RS_SETTINGS->beginGroup("/PrintPreview");
     updateDisabled= RS_SETTINGS->readNumEntry("/PrintScaleFixed", 0)!=0;
+    scaleLineWidth= RS_SETTINGS->readNumEntry("/ScaleLineWidth", 0)!=0;
     blackWhiteDisabled= RS_SETTINGS->readNumEntry("/BlackWhiteSet", 0)!=0;
     RS_SETTINGS->endGroup();
 	action=nullptr;
@@ -99,6 +100,7 @@ void QG_PrintPreviewOptions::init() {
 void QG_PrintPreviewOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/PrintPreview");
     RS_SETTINGS->writeEntry("/PrintScaleFixed", updateDisabled?1:0);
+    RS_SETTINGS->writeEntry("/ScaleLineWidth", QString(scaleLineWidth?"1":"0"));
     RS_SETTINGS->writeEntry("/BlackWhiteSet", QString(blackWhiteDisabled?"1":"0"));
 	RS_SETTINGS->writeEntry("/PrintScaleValue", ui->cbScale->currentText());
     RS_SETTINGS->endGroup();
@@ -166,6 +168,7 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
             setScaleFixed(updateDisabled);
         }
         setBlackWhite(blackWhiteDisabled);
+        setLineWidthScaling(scaleLineWidth);
 
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
@@ -186,6 +189,16 @@ void QG_PrintPreviewOptions::updateData() {
 void QG_PrintPreviewOptions::center() {
     if (action) {
         action->center();
+    }
+}
+
+void QG_PrintPreviewOptions::setLineWidthScaling(bool state) {
+    if (action) {
+        if(ui->bScaleLineWidth->isChecked() != state) {
+            ui->bScaleLineWidth->setChecked(state);
+        }
+        scaleLineWidth = state;
+        action->setLineWidthScaling(state);
     }
 }
 
