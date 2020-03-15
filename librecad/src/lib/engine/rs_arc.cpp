@@ -961,8 +961,10 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
     //double styleFactor = getStyleFactor();
     patternOffset -= length;
 
+    bool drawAsSelected = isSelected() && !(view->isPrinting() || view->isPrintPreview());
+
     // simple style-less lines
-    if ( !isSelected() && (
+    if ( !drawAsSelected && (
              getPen().getLineType()==RS2::SolidLine ||
              view->getDrawingMode()==RS2::ModePreview)) {
         painter->drawArc(cp,
@@ -982,7 +984,8 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
 
     // Pattern:
     const RS_LineTypePattern* pat;
-    if (isSelected()) {
+    if (drawAsSelected)
+    {
         pat = &RS_LineTypePattern::patternSelected;
     } else {
         pat = view->getPattern(getPen().getLineType());

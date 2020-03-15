@@ -691,9 +691,12 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
 		pEnd=view->toGui(vpIts.get(1));
 		direction=pEnd-pStart;
     }
+
+    bool drawAsSelected = isSelected() && !(view->isPrinting() || view->isPrintPreview());
+
     double  length=direction.magnitude();
     patternOffset -= length;
-    if (( !isSelected() && (
+    if (( !drawAsSelected && (
               getPen().getLineType()==RS2::SolidLine ||
               view->getDrawingMode()==RS2::ModePreview)) ) {
         //if length is too small, attempt to draw the line, could be a potential bug
@@ -705,9 +708,10 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
 
     // Pattern:
     const RS_LineTypePattern* pat;
-    if (isSelected()) {
+    if (drawAsSelected) {
 //        styleFactor=1.;
         pat = &RS_LineTypePattern::patternSelected;
+
     } else {
         pat = view->getPattern(getPen().getLineType());
     }

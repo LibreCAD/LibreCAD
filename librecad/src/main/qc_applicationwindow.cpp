@@ -2501,7 +2501,10 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
                              (int)((baseY - offsetY) * f));
 //fixme, I don't understand the meaning of 'true' here
 //        gv.drawEntity(&painter, graphic, true);
-                gv.drawEntity(&painter, graphic );
+                painter.setDrawSelectedOnly(true);
+                gv.drawEntity(&painter, graphic);
+                painter.setDrawSelectedOnly(false);
+                gv.drawEntity(&painter, graphic);
             }
         }
 
