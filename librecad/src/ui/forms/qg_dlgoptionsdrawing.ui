@@ -1597,6 +1597,9 @@
          <property name="toolTip">
           <string>fixed extension line legth</string>
          </property>
+         <property name="decimals">
+          <number>4</number>
+         </property>
         </widget>
        </item>
       </layout>
