@@ -66,7 +66,15 @@
 
   !insertmacro MUI_LANGUAGE "English"
 
+;Version Information
 
+  VIProductVersion "${SCMREVISION}"
+  VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "LibreCAD"
+  VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductVersion" "2.2.0"
+  VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "Hypertherm"
+  VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "GPL v2.0"
+  VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "LibreCAD for ProNest"
+  VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${SCMREVISION}"
 
 Function .onInit
 
