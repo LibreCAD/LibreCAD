@@ -107,6 +107,7 @@ void RS_ActionDrawImage::trigger() {
     }
 
     graphicView->redraw(RS2::RedrawDrawing);
+    graphicView->zoomAuto();
     finish(false);
 }
 
