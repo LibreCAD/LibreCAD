@@ -1709,6 +1709,73 @@ Du kan spara ditt arbete nu.</translation>
     </message>
 </context>
 <context>
+    <name>QG_ActionFactory</name>
+    <message>
+        <source>&amp;Close</source>
+        <translation type="obsolete">S&amp;täng</translation>
+    </message>
+    <message>
+        <source>Quits the application</source>
+        <translation type="obsolete">Avslutar programmet</translation>
+    </message>
+    <message>
+        <source>Endpoints</source>
+        <translation type="obsolete">Slutpunkter</translation>
+    </message>
+    <message>
+        <source>General Application Preferences</source>
+        <translation type="obsolete">Allmänna programinställningar</translation>
+    </message>
+    <message>
+        <source>&amp;Application Preferences</source>
+        <translation type="obsolete">&amp;Programinställningar</translation>
+    </message>
+    <message>
+        <source>Statusbar</source>
+        <translation type="obsolete">Statusrad</translation>
+    </message>
+    <message>
+        <source>&amp;Statusbar</source>
+        <translation type="obsolete">&amp;Statusrad</translation>
+    </message>
+    <message>
+        <source>Run Script..</source>
+        <translation type="obsolete">Kör skript..</translation>
+    </message>
+    <message>
+        <source>&amp;Run Script..</source>
+        <translation type="obsolete">&amp;Kör skript..</translation>
+    </message>
+    <message>
+        <source>Runs a script</source>
+        <translation type="obsolete">Kör ett skript</translation>
+    </message>
+    <message>
+        <source>&amp;Preferences</source>
+        <translation type="obsolete">&amp;Inställningar</translation>
+    </message>
+    <message>
+        <source>&amp;Export...</source>
+        <translation type="obsolete">&amp;Exportera...</translation>
+    </message>
+    <message>
+        <source>&amp;Print...</source>
+        <translation type="obsolete">Skriv &amp;ut...</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation type="obsolete">Avsluta</translation>
+    </message>
+    <message>
+        <source>&amp;Quit</source>
+        <translation type="obsolete">A&amp;vsluta</translation>
+    </message>
+    <message>
+        <source>&amp;Block</source>
+        <translation type="obsolete">&amp;Block</translation>
+    </message>
+</context>
+<context>
     <name>QG_ActionHandler</name>
     <message>
         <source>escape</source>
@@ -1737,6 +1804,18 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_ArcTangentialOptions</name>
+    <message>
+        <source>Radius:</source>
+        <translation type="obsolete">Radie:</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="obsolete">Vinkel</translation>
     </message>
 </context>
 <context>
@@ -1864,6 +1943,182 @@ in a separate window</source>
     <message>
         <source>Add a block</source>
         <translation type="obsolete">Lägg till ett block</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBar</name>
+    <message>
+        <source>CAD Tools</source>
+        <translation type="obsolete">CAD-verktyg</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarArcs</name>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarCircles</name>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarDim</name>
+    <message>
+        <source>Dimensions</source>
+        <translation type="obsolete">Dimensioner</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarEllipses</name>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarInfo</name>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="obsolete">Vinkel</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarLines</name>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarMain</name>
+    <message>
+        <source>Create Block</source>
+        <translation type="obsolete">Skapa block</translation>
+    </message>
+    <message>
+        <source>Points</source>
+        <translation type="obsolete">Punkter</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarModify</name>
+    <message>
+        <source>Modify</source>
+        <translation type="obsolete">Ändra</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
+    </message>
+    <message>
+        <source>Rotate</source>
+        <translation type="obsolete">Rotera</translation>
+    </message>
+    <message>
+        <source>Scale</source>
+        <translation type="obsolete">Skala</translation>
+    </message>
+    <message>
+        <source>Move</source>
+        <translation type="obsolete">Flytta</translation>
+    </message>
+    <message>
+        <source>Move and Rotate</source>
+        <translation type="obsolete">Flytta och rotera</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="obsolete">Ta bort</translation>
+    </message>
+    <message>
+        <source>Stretch</source>
+        <translation type="obsolete">Sträck ut</translation>
+    </message>
+    <message>
+        <source>Edit Text</source>
+        <translation type="obsolete">Redigera text</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarPoints</name>
+    <message>
+        <source>Points</source>
+        <translation type="obsolete">Punkter</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarPolylines</name>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
+    </message>
+    <message>
+        <source>Add node</source>
+        <translation type="obsolete">Lägg till nod</translation>
+    </message>
+    <message>
+        <source>Delete node</source>
+        <translation type="obsolete">Ta bort nod</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarSelect</name>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
+    </message>
+    <message>
+        <source>Deselect all</source>
+        <translation type="obsolete">Avmarkera allt</translation>
+    </message>
+    <message>
+        <source>Invert Selection</source>
+        <translation type="obsolete">Invertera markering</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarSnap</name>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarSplines</name>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CircleOptions</name>
+    <message>
+        <source>Radius:</source>
+        <translation type="obsolete">Radie:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CircleTan2Options</name>
+    <message>
+        <source>Radius:</source>
+        <translation type="obsolete">Radie:</translation>
     </message>
 </context>
 <context>
@@ -2012,6 +2267,44 @@ in a separate window</source>
     <message>
         <source>Coordinates</source>
         <translation>Koordinater</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DimLinearOptions</name>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Vinkel:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DimOptions</name>
+    <message>
+        <source>Label:</source>
+        <translation type="obsolete">Etikett:</translation>
+    </message>
+    <message>
+        <source>ø</source>
+        <translation type="obsolete">ø</translation>
+    </message>
+    <message>
+        <source>°</source>
+        <translation type="obsolete">°</translation>
+    </message>
+    <message>
+        <source>±</source>
+        <translation type="obsolete">±</translation>
+    </message>
+    <message>
+        <source>¶</source>
+        <translation type="obsolete">¶</translation>
+    </message>
+    <message>
+        <source>×</source>
+        <translation type="obsolete">×</translation>
+    </message>
+    <message>
+        <source>÷</source>
+        <translation type="obsolete">÷</translation>
     </message>
 </context>
 <context>
@@ -4480,6 +4773,21 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
+    <name>QG_DlgOptionsVariables</name>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="obsolete">&amp;OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Avbryt</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="obsolete">Esc</translation>
+    </message>
+</context>
+<context>
     <name>QG_DlgPoint</name>
     <message>
         <source>Point</source>
@@ -5537,6 +5845,13 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
+    <name>QG_ImageOptions</name>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Vinkel:</translation>
+    </message>
+</context>
+<context>
     <name>QG_ImageOptionsDialog</name>
     <message>
         <source>Image Export Options</source>
@@ -5696,6 +6011,13 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
+    <name>QG_InsertOptions</name>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Vinkel:</translation>
+    </message>
+</context>
+<context>
     <name>QG_LayerBox</name>
     <message>
         <source>- Unchanged -</source>
@@ -5834,6 +6156,13 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
 </context>
 <context>
+    <name>QG_LibraryInsertOptions</name>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Vinkel:</translation>
+    </message>
+</context>
+<context>
     <name>QG_LibraryWidget</name>
     <message>
         <source>Directories</source>
@@ -5854,6 +6183,57 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <source>Library Browser</source>
         <translation type="obsolete">Biblioteksvisare</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineAngleOptions</name>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Vinkel:</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">Längd:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineBisectorOptions</name>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">Längd:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineOptions</name>
+    <message>
+        <source>Close</source>
+        <translation type="obsolete">Stäng</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="obsolete">Ångra</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="obsolete">Gör om</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineParallelOptions</name>
+    <message>
+        <source>Distance:</source>
+        <translation type="obsolete">Avstånd:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineRelAngleOptions</name>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Vinkel:</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">Längd:</translation>
     </message>
 </context>
 <context>
@@ -5976,6 +6356,28 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
 </context>
 <context>
+    <name>QG_MTextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="obsolete">Textalternativ</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="obsolete">Text:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Vinkel:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ModifyOffsetOptions</name>
+    <message>
+        <source>Distance:</source>
+        <translation type="obsolete">Avstånd:</translation>
+    </message>
+</context>
+<context>
     <name>QG_MouseWidget</name>
     <message>
         <source>Mouse</source>
@@ -5996,6 +6398,13 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_MoveRotateOptions</name>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Vinkel:</translation>
     </message>
 </context>
 <context>
@@ -6052,6 +6461,13 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QG_RoundOptions</name>
+    <message>
+        <source>Radius:</source>
+        <translation type="obsolete">Radie:</translation>
+    </message>
+</context>
+<context>
     <name>QG_SelectionWidget</name>
     <message>
         <source>Selection</source>
@@ -6084,6 +6500,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>0</source>
         <translation type="obsolete">0</translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapDistOptions</name>
+    <message>
+        <source>Distance:</source>
+        <translation type="obsolete">Avstånd:</translation>
     </message>
 </context>
 <context>
@@ -6199,6 +6622,55 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Exclusive Snap Mode</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_SplineOptions</name>
+    <message>
+        <source>Degree:</source>
+        <translation type="obsolete">Grad:</translation>
+    </message>
+    <message>
+        <source>1</source>
+        <translation type="obsolete">1</translation>
+    </message>
+    <message>
+        <source>2</source>
+        <translation type="obsolete">2</translation>
+    </message>
+    <message>
+        <source>3</source>
+        <translation type="obsolete">3</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="obsolete">Stängd</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="obsolete">Ångra</translation>
+    </message>
+</context>
+<context>
+    <name>QG_TextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="obsolete">Textalternativ</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="obsolete">Text:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Vinkel:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_TrimAmountOptions</name>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">Längd:</translation>
     </message>
 </context>
 <context>
@@ -8240,6 +8712,128 @@ Vill du ersätta den?</translation>
         <source>Warning</source>
         <translation type="obsolete">Varning</translation>
     </message>
+    <message>
+        <source>A0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>C5E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comm10E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DLE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen</source>
+        <translation type="unfinished">Penna</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksAdd</name>
+    <message>
+        <source>Add Block</source>
+        <translation type="obsolete">Lägg till block</translation>
+    </message>
+    <message>
+        <source>&amp;Add Block</source>
+        <translation type="obsolete">&amp;Lägg till block</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksAttributes</name>
+    <message>
+        <source>Rename Block</source>
+        <translation type="obsolete">Byt namn på block</translation>
+    </message>
+    <message>
+        <source>&amp;Rename Block</source>
+        <translation type="obsolete">&amp;Byt namn på block</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
@@ -8258,6 +8852,17 @@ Vill du ersätta den?</translation>
     <message>
         <source>&amp;Create Block</source>
         <translation type="obsolete">&amp;Skapa block</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksEdit</name>
+    <message>
+        <source>Edit Block</source>
+        <translation type="obsolete">Redigera block</translation>
+    </message>
+    <message>
+        <source>&amp;Edit Block</source>
+        <translation type="obsolete">R&amp;edigera block</translation>
     </message>
 </context>
 <context>
@@ -8309,6 +8914,17 @@ Vill du ersätta den?</translation>
     <message>
         <source>&amp;Insert Block</source>
         <translation type="obsolete">&amp;Infoga block</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksRemove</name>
+    <message>
+        <source>Remove Block</source>
+        <translation type="obsolete">Ta bort block</translation>
+    </message>
+    <message>
+        <source>&amp;Remove Block</source>
+        <translation type="obsolete">&amp;Ta bort block</translation>
     </message>
 </context>
 <context>
@@ -9280,6 +9896,13 @@ Vill du ersätta den?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionDrawLinePolygon2</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Avbryt</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionDrawLinePolygonCenCor</name>
     <message>
         <source>Specify center</source>
@@ -9606,6 +10229,66 @@ Vill du ersätta den?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionFileNew</name>
+    <message>
+        <source>New Drawing</source>
+        <translation type="obsolete">Ny ritning</translation>
+    </message>
+    <message>
+        <source>&amp;New</source>
+        <translation type="obsolete">&amp;Ny</translation>
+    </message>
+    <message>
+        <source>Creates a new drawing</source>
+        <translation type="obsolete">Skapar en ny ritning</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionFileOpen</name>
+    <message>
+        <source>Open Drawing</source>
+        <translation type="obsolete">Öppna ritning</translation>
+    </message>
+    <message>
+        <source>&amp;Open...</source>
+        <translation type="obsolete">&amp;Öppna...</translation>
+    </message>
+    <message>
+        <source>Opens an existing drawing</source>
+        <translation type="obsolete">Öppnar en befintlig ritning</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionFileSave</name>
+    <message>
+        <source>Save Drawing</source>
+        <translation type="obsolete">Spara ritning</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation type="obsolete">&amp;Spara</translation>
+    </message>
+    <message>
+        <source>Saves the current drawing</source>
+        <translation type="obsolete">Sparar aktuell ritning</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionFileSaveAs</name>
+    <message>
+        <source>Save Drawing As</source>
+        <translation type="obsolete">Spara ritning som</translation>
+    </message>
+    <message>
+        <source>Save &amp;as...</source>
+        <translation type="obsolete">Spara so&amp;m...</translation>
+    </message>
+    <message>
+        <source>Saves the current drawing under a new filename</source>
+        <translation type="obsolete">Sparar den aktuella ritningen under ett nytt filnamn</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Lines are parallel</source>
@@ -9744,6 +10427,39 @@ Vill du ersätta den?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionLayersAdd</name>
+    <message>
+        <source>Add Layer</source>
+        <translation type="obsolete">Lägg till lager</translation>
+    </message>
+    <message>
+        <source>&amp;Add Layer</source>
+        <translation type="obsolete">&amp;Lägg till lager</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionLayersEdit</name>
+    <message>
+        <source>Edit Layer</source>
+        <translation type="obsolete">Redigera lager</translation>
+    </message>
+    <message>
+        <source>&amp;Edit Layer</source>
+        <translation type="obsolete">R&amp;edigera lager</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionLayersRemove</name>
+    <message>
+        <source>Remove Layer</source>
+        <translation type="obsolete">Ta bort lager</translation>
+    </message>
+    <message>
+        <source>&amp;Remove Layer</source>
+        <translation type="obsolete">&amp;Ta bort lager</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionLibraryInsert</name>
     <message>
         <source>Insert Library Object</source>
@@ -9783,6 +10499,17 @@ Vill du ersätta den?</translation>
     <message>
         <source>(Un-)&amp;Lock Relative Zero</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyAttributes</name>
+    <message>
+        <source>Attributes</source>
+        <translation type="obsolete">Attribut</translation>
+    </message>
+    <message>
+        <source>&amp;Attributes</source>
+        <translation type="obsolete">&amp;Attribut</translation>
     </message>
 </context>
 <context>
@@ -9857,6 +10584,17 @@ Vill du ersätta den?</translation>
     <message>
         <source>&amp;Cut</source>
         <translation type="obsolete">Klipp &amp;ut</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyDelete</name>
+    <message>
+        <source>Delete</source>
+        <translation type="obsolete">Ta bort</translation>
+    </message>
+    <message>
+        <source>&amp;Delete</source>
+        <translation type="obsolete">&amp;Ta bort</translation>
     </message>
 </context>
 <context>
@@ -10586,6 +11324,25 @@ Vill du ersätta den?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionSelectAll</name>
+    <message>
+        <source>Select All</source>
+        <translation type="obsolete">Markera allt</translation>
+    </message>
+    <message>
+        <source>Select &amp;All</source>
+        <translation type="obsolete">Markera &amp;allt</translation>
+    </message>
+    <message>
+        <source>Deselect all</source>
+        <translation type="obsolete">Avmarkera allt</translation>
+    </message>
+    <message>
+        <source>Deselect &amp;all</source>
+        <translation type="obsolete">Avmarkera &amp;allt</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionSelectContour</name>
     <message>
         <source>Entity must be an Atomic Entity.</source>
@@ -10609,6 +11366,17 @@ Vill du ersätta den?</translation>
     <message>
         <source>Back</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionSelectInvert</name>
+    <message>
+        <source>Invert Selection</source>
+        <translation type="obsolete">Invertera markering</translation>
+    </message>
+    <message>
+        <source>&amp;Invert Selection</source>
+        <translation type="obsolete">&amp;Invertera markering</translation>
     </message>
 </context>
 <context>
@@ -10676,6 +11444,33 @@ Vill du ersätta den?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionZoomIn</name>
+    <message>
+        <source>Zoom in</source>
+        <translation type="obsolete">Zooma in</translation>
+    </message>
+    <message>
+        <source>Zoom &amp;In</source>
+        <translation type="obsolete">Zooma &amp;in</translation>
+    </message>
+    <message>
+        <source>Zooms in</source>
+        <translation type="obsolete">Zoomar in</translation>
+    </message>
+    <message>
+        <source>Zoom out</source>
+        <translation type="obsolete">Zooma ut</translation>
+    </message>
+    <message>
+        <source>Zoom &amp;Out</source>
+        <translation type="obsolete">Zooma &amp;ut</translation>
+    </message>
+    <message>
+        <source>Zooms out</source>
+        <translation type="obsolete">Zoomar ut</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionZoomPan</name>
     <message>
         <source>Click and drag to pan zoom</source>
@@ -10707,6 +11502,83 @@ Vill du ersätta den?</translation>
     <message>
         <source>Back</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_Commands</name>
+    <message>
+        <source>rectangle</source>
+        <translation type="obsolete">rektangel</translation>
+    </message>
+    <message>
+        <source>text</source>
+        <translation type="obsolete">text</translation>
+    </message>
+    <message>
+        <source>undo</source>
+        <translation type="obsolete">ångra</translation>
+    </message>
+    <message>
+        <source>redo</source>
+        <translation type="obsolete">gör om</translation>
+    </message>
+    <message>
+        <source>angle</source>
+        <translation type="obsolete">vinkel</translation>
+    </message>
+    <message>
+        <source>columns</source>
+        <translation type="obsolete">kolumner</translation>
+    </message>
+    <message>
+        <source>rows</source>
+        <translation type="obsolete">rader</translation>
+    </message>
+    <message>
+        <source>parallel</source>
+        <translation type="obsolete">parallell</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <translation type="obsolete">längd</translation>
+    </message>
+    <message>
+        <source>close</source>
+        <translation type="obsolete">stäng</translation>
+    </message>
+    <message>
+        <source>through</source>
+        <translation type="obsolete">genom</translation>
+    </message>
+    <message>
+        <source>help</source>
+        <translation type="obsolete">hjälp</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <comment>length</comment>
+        <translation type="obsolete">längd</translation>
+    </message>
+    <message>
+        <source>radius</source>
+        <translation type="obsolete">radie</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <comment>chord length</comment>
+        <translation type="obsolete">längd</translation>
+    </message>
+    <message>
+        <source>Command: %1</source>
+        <translation type="obsolete">Kommando: %1</translation>
+    </message>
+    <message>
+        <source>Available commands:</source>
+        <translation type="obsolete">Tillgängliga kommandon:</translation>
+    </message>
+    <message>
+        <source>circle</source>
+        <translation type="obsolete">cirkel</translation>
     </message>
 </context>
 <context>
@@ -11420,778 +12292,6 @@ Vill du ersätta den?</translation>
     <message>
         <source>Update</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_ActionFactory</name>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="obsolete">S&amp;täng</translation>
-    </message>
-    <message>
-        <source>Quits the application</source>
-        <translation type="obsolete">Avslutar programmet</translation>
-    </message>
-    <message>
-        <source>Endpoints</source>
-        <translation type="obsolete">Slutpunkter</translation>
-    </message>
-    <message>
-        <source>General Application Preferences</source>
-        <translation type="obsolete">Allmänna programinställningar</translation>
-    </message>
-    <message>
-        <source>&amp;Application Preferences</source>
-        <translation type="obsolete">&amp;Programinställningar</translation>
-    </message>
-    <message>
-        <source>Statusbar</source>
-        <translation type="obsolete">Statusrad</translation>
-    </message>
-    <message>
-        <source>&amp;Statusbar</source>
-        <translation type="obsolete">&amp;Statusrad</translation>
-    </message>
-    <message>
-        <source>Run Script..</source>
-        <translation type="obsolete">Kör skript..</translation>
-    </message>
-    <message>
-        <source>&amp;Run Script..</source>
-        <translation type="obsolete">&amp;Kör skript..</translation>
-    </message>
-    <message>
-        <source>Runs a script</source>
-        <translation type="obsolete">Kör ett skript</translation>
-    </message>
-    <message>
-        <source>&amp;Preferences</source>
-        <translation type="obsolete">&amp;Inställningar</translation>
-    </message>
-    <message>
-        <source>&amp;Export...</source>
-        <translation type="obsolete">&amp;Exportera...</translation>
-    </message>
-    <message>
-        <source>&amp;Print...</source>
-        <translation type="obsolete">Skriv &amp;ut...</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation type="obsolete">Avsluta</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation type="obsolete">A&amp;vsluta</translation>
-    </message>
-    <message>
-        <source>&amp;Block</source>
-        <translation type="obsolete">&amp;Block</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ArcTangentialOptions</name>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Radie:</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="obsolete">Vinkel</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBar</name>
-    <message>
-        <source>CAD Tools</source>
-        <translation type="obsolete">CAD-verktyg</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarArcs</name>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarCircles</name>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarDim</name>
-    <message>
-        <source>Dimensions</source>
-        <translation type="obsolete">Dimensioner</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarEllipses</name>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarInfo</name>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="obsolete">Vinkel</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarLines</name>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarMain</name>
-    <message>
-        <source>Create Block</source>
-        <translation type="obsolete">Skapa block</translation>
-    </message>
-    <message>
-        <source>Points</source>
-        <translation type="obsolete">Punkter</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarModify</name>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">Ändra</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
-    </message>
-    <message>
-        <source>Rotate</source>
-        <translation type="obsolete">Rotera</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="obsolete">Skala</translation>
-    </message>
-    <message>
-        <source>Move</source>
-        <translation type="obsolete">Flytta</translation>
-    </message>
-    <message>
-        <source>Move and Rotate</source>
-        <translation type="obsolete">Flytta och rotera</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="obsolete">Ta bort</translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="obsolete">Sträck ut</translation>
-    </message>
-    <message>
-        <source>Edit Text</source>
-        <translation type="obsolete">Redigera text</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarPoints</name>
-    <message>
-        <source>Points</source>
-        <translation type="obsolete">Punkter</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarPolylines</name>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
-    </message>
-    <message>
-        <source>Add node</source>
-        <translation type="obsolete">Lägg till nod</translation>
-    </message>
-    <message>
-        <source>Delete node</source>
-        <translation type="obsolete">Ta bort nod</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarSelect</name>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
-    </message>
-    <message>
-        <source>Deselect all</source>
-        <translation type="obsolete">Avmarkera allt</translation>
-    </message>
-    <message>
-        <source>Invert Selection</source>
-        <translation type="obsolete">Invertera markering</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarSnap</name>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarSplines</name>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Tillbaka till huvudmenyn</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CircleOptions</name>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Radie:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CircleTan2Options</name>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Radie:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DimLinearOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Vinkel:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DimOptions</name>
-    <message>
-        <source>Label:</source>
-        <translation type="obsolete">Etikett:</translation>
-    </message>
-    <message>
-        <source>ø</source>
-        <translation type="obsolete">ø</translation>
-    </message>
-    <message>
-        <source>°</source>
-        <translation type="obsolete">°</translation>
-    </message>
-    <message>
-        <source>±</source>
-        <translation type="obsolete">±</translation>
-    </message>
-    <message>
-        <source>¶</source>
-        <translation type="obsolete">¶</translation>
-    </message>
-    <message>
-        <source>×</source>
-        <translation type="obsolete">×</translation>
-    </message>
-    <message>
-        <source>÷</source>
-        <translation type="obsolete">÷</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Avbryt</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ImageOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Vinkel:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_InsertOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Vinkel:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LibraryInsertOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Vinkel:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineAngleOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">Längd:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineBisectorOptions</name>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">Längd:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineOptions</name>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Stäng</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="obsolete">Ångra</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="obsolete">Gör om</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineParallelOptions</name>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Avstånd:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineRelAngleOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">Längd:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="obsolete">Textalternativ</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="obsolete">Text:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Vinkel:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ModifyOffsetOptions</name>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Avstånd:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_MoveRotateOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Vinkel:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_RoundOptions</name>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Radie:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SnapDistOptions</name>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Avstånd:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SplineOptions</name>
-    <message>
-        <source>Degree:</source>
-        <translation type="obsolete">Grad:</translation>
-    </message>
-    <message>
-        <source>1</source>
-        <translation type="obsolete">1</translation>
-    </message>
-    <message>
-        <source>2</source>
-        <translation type="obsolete">2</translation>
-    </message>
-    <message>
-        <source>3</source>
-        <translation type="obsolete">3</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">Stängd</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="obsolete">Ångra</translation>
-    </message>
-</context>
-<context>
-    <name>QG_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="obsolete">Textalternativ</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="obsolete">Text:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Vinkel:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_TrimAmountOptions</name>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">Längd:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksAdd</name>
-    <message>
-        <source>Add Block</source>
-        <translation type="obsolete">Lägg till block</translation>
-    </message>
-    <message>
-        <source>&amp;Add Block</source>
-        <translation type="obsolete">&amp;Lägg till block</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksAttributes</name>
-    <message>
-        <source>Rename Block</source>
-        <translation type="obsolete">Byt namn på block</translation>
-    </message>
-    <message>
-        <source>&amp;Rename Block</source>
-        <translation type="obsolete">&amp;Byt namn på block</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksEdit</name>
-    <message>
-        <source>Edit Block</source>
-        <translation type="obsolete">Redigera block</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translation type="obsolete">R&amp;edigera block</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksRemove</name>
-    <message>
-        <source>Remove Block</source>
-        <translation type="obsolete">Ta bort block</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Block</source>
-        <translation type="obsolete">&amp;Ta bort block</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygon2</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Avbryt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionFileNew</name>
-    <message>
-        <source>New Drawing</source>
-        <translation type="obsolete">Ny ritning</translation>
-    </message>
-    <message>
-        <source>&amp;New</source>
-        <translation type="obsolete">&amp;Ny</translation>
-    </message>
-    <message>
-        <source>Creates a new drawing</source>
-        <translation type="obsolete">Skapar en ny ritning</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionFileOpen</name>
-    <message>
-        <source>Open Drawing</source>
-        <translation type="obsolete">Öppna ritning</translation>
-    </message>
-    <message>
-        <source>&amp;Open...</source>
-        <translation type="obsolete">&amp;Öppna...</translation>
-    </message>
-    <message>
-        <source>Opens an existing drawing</source>
-        <translation type="obsolete">Öppnar en befintlig ritning</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionFileSave</name>
-    <message>
-        <source>Save Drawing</source>
-        <translation type="obsolete">Spara ritning</translation>
-    </message>
-    <message>
-        <source>&amp;Save</source>
-        <translation type="obsolete">&amp;Spara</translation>
-    </message>
-    <message>
-        <source>Saves the current drawing</source>
-        <translation type="obsolete">Sparar aktuell ritning</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionFileSaveAs</name>
-    <message>
-        <source>Save Drawing As</source>
-        <translation type="obsolete">Spara ritning som</translation>
-    </message>
-    <message>
-        <source>Save &amp;as...</source>
-        <translation type="obsolete">Spara so&amp;m...</translation>
-    </message>
-    <message>
-        <source>Saves the current drawing under a new filename</source>
-        <translation type="obsolete">Sparar den aktuella ritningen under ett nytt filnamn</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersAdd</name>
-    <message>
-        <source>Add Layer</source>
-        <translation type="obsolete">Lägg till lager</translation>
-    </message>
-    <message>
-        <source>&amp;Add Layer</source>
-        <translation type="obsolete">&amp;Lägg till lager</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersEdit</name>
-    <message>
-        <source>Edit Layer</source>
-        <translation type="obsolete">Redigera lager</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Layer</source>
-        <translation type="obsolete">R&amp;edigera lager</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersRemove</name>
-    <message>
-        <source>Remove Layer</source>
-        <translation type="obsolete">Ta bort lager</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Layer</source>
-        <translation type="obsolete">&amp;Ta bort lager</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>Attributes</source>
-        <translation type="obsolete">Attribut</translation>
-    </message>
-    <message>
-        <source>&amp;Attributes</source>
-        <translation type="obsolete">&amp;Attribut</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Delete</source>
-        <translation type="obsolete">Ta bort</translation>
-    </message>
-    <message>
-        <source>&amp;Delete</source>
-        <translation type="obsolete">&amp;Ta bort</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectAll</name>
-    <message>
-        <source>Select All</source>
-        <translation type="obsolete">Markera allt</translation>
-    </message>
-    <message>
-        <source>Select &amp;All</source>
-        <translation type="obsolete">Markera &amp;allt</translation>
-    </message>
-    <message>
-        <source>Deselect all</source>
-        <translation type="obsolete">Avmarkera allt</translation>
-    </message>
-    <message>
-        <source>Deselect &amp;all</source>
-        <translation type="obsolete">Avmarkera &amp;allt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectInvert</name>
-    <message>
-        <source>Invert Selection</source>
-        <translation type="obsolete">Invertera markering</translation>
-    </message>
-    <message>
-        <source>&amp;Invert Selection</source>
-        <translation type="obsolete">&amp;Invertera markering</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionZoomIn</name>
-    <message>
-        <source>Zoom in</source>
-        <translation type="obsolete">Zooma in</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;In</source>
-        <translation type="obsolete">Zooma &amp;in</translation>
-    </message>
-    <message>
-        <source>Zooms in</source>
-        <translation type="obsolete">Zoomar in</translation>
-    </message>
-    <message>
-        <source>Zoom out</source>
-        <translation type="obsolete">Zooma ut</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;Out</source>
-        <translation type="obsolete">Zooma &amp;ut</translation>
-    </message>
-    <message>
-        <source>Zooms out</source>
-        <translation type="obsolete">Zoomar ut</translation>
-    </message>
-</context>
-<context>
-    <name>RS_Commands</name>
-    <message>
-        <source>rectangle</source>
-        <translation type="obsolete">rektangel</translation>
-    </message>
-    <message>
-        <source>text</source>
-        <translation type="obsolete">text</translation>
-    </message>
-    <message>
-        <source>undo</source>
-        <translation type="obsolete">ångra</translation>
-    </message>
-    <message>
-        <source>redo</source>
-        <translation type="obsolete">gör om</translation>
-    </message>
-    <message>
-        <source>angle</source>
-        <translation type="obsolete">vinkel</translation>
-    </message>
-    <message>
-        <source>columns</source>
-        <translation type="obsolete">kolumner</translation>
-    </message>
-    <message>
-        <source>rows</source>
-        <translation type="obsolete">rader</translation>
-    </message>
-    <message>
-        <source>parallel</source>
-        <translation type="obsolete">parallell</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="obsolete">längd</translation>
-    </message>
-    <message>
-        <source>close</source>
-        <translation type="obsolete">stäng</translation>
-    </message>
-    <message>
-        <source>through</source>
-        <translation type="obsolete">genom</translation>
-    </message>
-    <message>
-        <source>help</source>
-        <translation type="obsolete">hjälp</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <comment>length</comment>
-        <translation type="obsolete">längd</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="obsolete">radie</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <comment>chord length</comment>
-        <translation type="obsolete">längd</translation>
-    </message>
-    <message>
-        <source>Command: %1</source>
-        <translation type="obsolete">Kommando: %1</translation>
-    </message>
-    <message>
-        <source>Available commands:</source>
-        <translation type="obsolete">Tillgängliga kommandon:</translation>
-    </message>
-    <message>
-        <source>circle</source>
-        <translation type="obsolete">cirkel</translation>
     </message>
 </context>
 </TS>

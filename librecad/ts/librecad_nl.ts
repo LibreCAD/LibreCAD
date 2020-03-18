@@ -32,6 +32,154 @@
     </message>
 </context>
 <context>
+    <name>ColorWizard</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished">Kader</translation>
+    </message>
+    <message>
+        <source>Add to favorites</source>
+        <translation type="unfinished">Voeg toe aan favorieten</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+</context>
+<context>
+    <name>ComboBoxOption</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished">Kader</translation>
+    </message>
+    <message>
+        <source>GroupBox</source>
+        <translation type="unfinished">Groepsvak</translation>
+    </message>
+    <message>
+        <source>Set</source>
+        <translation type="unfinished">Instellen</translation>
+    </message>
+</context>
+<context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished">Spiepunten</translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Laag:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Geometrie</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Gesloten</translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished">Spiepunten</translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished">Controlepunten</translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished">Punten op spie</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawCircle2PR</name>
+    <message>
+        <source>radius=%1 is too small for points selected
+distance between points=%2 is larger than diameter=%3</source>
+        <translation type="unfinished">radius=%1 is te klein voor de geselecteerde punten
+afstand tussen punten=%2 is groter dan diameter=%3</translation>
+    </message>
+    <message>
+        <source>Select from two possible circle centers</source>
+        <translation type="unfinished">Selecteer uit twee mogelijke cirkelmiddelpunten</translation>
+    </message>
+    <message>
+        <source>Specify first point</source>
+        <translation type="unfinished">Specificeer eerste punt</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify second point</source>
+        <translation type="unfinished">Specificeer tweede punt</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Select circle center</source>
+        <translation type="unfinished">Cirkelmiddelpunt selecteren</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawLinePolygonCenTan</name>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished">Specificeer middelpunt</translation>
+    </message>
+    <message>
+        <source>Specify a tangent</source>
+        <translation type="unfinished">Specificeer een raaklijn</translation>
+    </message>
+    <message>
+        <source>Enter number:</source>
+        <translation type="unfinished">Voer een aantal in:</translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="unfinished">Geen geldig aantal. Probeer 1...9999</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Geen geldige expressie</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawSplinePoints</name>
+    <message>
+        <source>Specify first control point</source>
+        <translation type="unfinished">Specificeer eerste controlepunt</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify next control point or [%1]</source>
+        <translation type="unfinished">Specificeer volgend controlepunt of [%1]</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Specify next control point</source>
+        <translation type="unfinished">Specificeer volgend controlepunt</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="unfinished">Kan niet ongedaan maken: nog niet voldoende elementen gedefinieerd.</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Nothing could be redone.</source>
+        <translation type="unfinished">Kan niet ongedaan gemaakt worden: er kon niets opnieuw uitgevoerd worden.</translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionFactory</name>
     <message>
         <source>Add polyline&apos;s node</source>
@@ -786,10 +934,174 @@
     </message>
 </context>
 <context>
+    <name>LC_ActionFileExportMakerCam</name>
+    <message>
+        <source>Export as</source>
+        <translation type="unfinished">Exporteren als</translation>
+    </message>
+</context>
+<context>
+    <name>LC_DeviceOptions</name>
+    <message>
+        <source>Mouse</source>
+        <translation type="unfinished">Muis</translation>
+    </message>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">Formaat</translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation type="unfinished">Apparaat</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Opslaan</translation>
+    </message>
+    <message>
+        <source>Tablet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trackpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Touchscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_SimpleTests</name>
+    <message>
+        <source>De&amp;bugging</source>
+        <translation type="unfinished">Fout&amp;zoeken</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="unfinished">Afbeelding invoegen</translation>
+    </message>
+</context>
+<context>
+    <name>LC_WidgetOptionsDialog</name>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished">Widgetopties</translation>
+    </message>
+    <message>
+        <source>Toolbar</source>
+        <translation type="unfinished">Werkbalk</translation>
+    </message>
+    <message>
+        <source>Icon Size</source>
+        <translation type="unfinished">Pictogramgrootte</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished">Algemeen</translation>
+    </message>
+    <message>
+        <source>Style</source>
+        <translation type="unfinished">Stijl</translation>
+    </message>
+    <message>
+        <source>Style Sheet</source>
+        <translation type="unfinished">Stijlblad</translation>
+    </message>
+    <message>
+        <source>Statusbar</source>
+        <translation type="unfinished">Statusbalk</translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished">Hoogte</translation>
+    </message>
+    <message>
+        <source>Font Size</source>
+        <translation type="unfinished">Lettergrootte</translation>
+    </message>
+    <message>
+        <source>Input the path of a Qt style sheet.</source>
+        <translation type="unfinished">Voer het pad van een Qt-stijlblad in.</translation>
+    </message>
+    <message>
+        <source>side length in pixels</source>
+        <translation type="unfinished">zijlengte in pixels</translation>
+    </message>
+    <message>
+        <source>Use themed icons</source>
+        <translation type="unfinished">Gebruik themapictogrammen</translation>
+    </message>
+</context>
+<context>
+    <name>LG_DimzerosBox</name>
+    <message>
+        <source>select:</source>
+        <translation type="unfinished">selecteren:</translation>
+    </message>
+    <message>
+        <source>remove left</source>
+        <translation type="unfinished">links weghalen</translation>
+    </message>
+    <message>
+        <source>remove right</source>
+        <translation type="unfinished">rechts weghalen</translation>
+    </message>
+    <message>
+        <source>remove 0&apos;</source>
+        <translation type="unfinished">0&apos; weghalen</translation>
+    </message>
+    <message>
+        <source>remove 0&quot;</source>
+        <translation type="unfinished">0&quot; weghalen</translation>
+    </message>
+</context>
+<context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Relatieve hoekopties lijn</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Tussenafstand:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished">Afstand vanaf oorspronkelijke polylijn</translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished">Kopieën:</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetEnt</name>
+    <message>
+        <source>Select object:</source>
+        <translation>Object selecteren:</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetPoint</name>
     <message>
         <source>Specify a point</source>
         <translation type="obsolete">Specificeer een punt</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetSelect</name>
+    <message>
+        <source>Select objects:</source>
+        <translation>Objecten selecteren:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3091,6 +3403,41 @@ Printer settings:
     </message>
 </context>
 <context>
+    <name>QG_ActionHandler</name>
+    <message>
+        <source>escape</source>
+        <comment>escape, go back from action steps</comment>
+        <translation type="unfinished">escape</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ActiveLayerName</name>
+    <message>
+        <source>Selection</source>
+        <translation type="unfinished">Selectie</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Current Layer</source>
+        <translation type="unfinished">Huidige laag</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Naam van huidige actieve laag&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
     <name>QG_ArcOptions</name>
     <message>
         <source>Arc Options</source>
@@ -3993,6 +4340,28 @@ in een afzonderlijk venster bewerken</translation>
     </message>
 </context>
 <context>
+    <name>QG_CommandEdit</name>
+    <message>
+        <source>clear</source>
+        <translation type="unfinished">wissen</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CommandHistory</name>
+    <message>
+        <source>&amp;Copy</source>
+        <translation type="unfinished">&amp;Kopiëren</translation>
+    </message>
+    <message>
+        <source>Select &amp;All</source>
+        <translation type="unfinished">&amp;Alles selecteren</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished">Wissen</translation>
+    </message>
+</context>
+<context>
     <name>QG_CommandWidget</name>
     <message>
         <source>&amp;Copy</source>
@@ -4022,6 +4391,13 @@ in een afzonderlijk venster bewerken</translation>
     <message>
         <source>...</source>
         <translation type="unfinished">...</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CoordinateWidget</name>
+    <message>
+        <source>Coordinates</source>
+        <translation>Coördinaten</translation>
     </message>
 </context>
 <context>
@@ -4395,6 +4771,73 @@ Hierdoor worden alle elementen van het blok zelf recursief gewijzigd.</translati
     <message>
         <source>Reversed</source>
         <translation>Omgekeerd</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgFontConversion</name>
+    <message>
+        <source>Convert Fonts</source>
+        <translation type="unfinished">Converteer lettertypes</translation>
+    </message>
+    <message>
+        <source>Font family:</source>
+        <translation type="unfinished">Lettertypefamilie:</translation>
+    </message>
+    <message>
+        <source>Font file:</source>
+        <translation type="unfinished">Lettertypebestand:</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Save as:</source>
+        <translation type="unfinished">Opslaan als:</translation>
+    </message>
+    <message>
+        <source>Letter spacing:</source>
+        <translation type="unfinished">Tekenafstand:</translation>
+    </message>
+    <message>
+        <source>Author:</source>
+        <translation type="unfinished">Auteur:</translation>
+    </message>
+    <message>
+        <source>Word spacing:</source>
+        <translation type="unfinished">Woordafstand:</translation>
+    </message>
+    <message>
+        <source>License:</source>
+        <translation type="unfinished">Licentie:</translation>
+    </message>
+    <message>
+        <source>Line spacing:</source>
+        <translation type="unfinished">Lijnafstand:</translation>
+    </message>
+    <message>
+        <source>Writing System:</source>
+        <translation type="unfinished">Schrijfsysteem:</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished">Voorbeeld</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">Aanmaken</translation>
+    </message>
+    <message>
+        <source> - Searching</source>
+        <translation type="unfinished"> - Wordt gezocht</translation>
+    </message>
+    <message>
+        <source>LibreCAD Font Files(*.lff)</source>
+        <translation type="unfinished">LibreCAD-lettertypebestanden(*.lff)</translation>
+    </message>
+    <message>
+        <source> - Rendering</source>
+        <translation type="unfinished"> - Weergave</translation>
     </message>
 </context>
 <context>
@@ -6475,6 +6918,109 @@ Selecteer de eenheid die u wilt gebruiken voor nieuwe tekeningen en uw voorkeurs
     </message>
 </context>
 <context>
+    <name>QG_DlgOptionsMakerCam</name>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished">Lagen</translation>
+    </message>
+    <message>
+        <source>Export invisible layers</source>
+        <translation type="unfinished">Onzichtbare lagen exporteren</translation>
+    </message>
+    <message>
+        <source>Export visible construction layers</source>
+        <translation type="unfinished">Zichtbare bouwlagen exporteren</translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished">Blokken</translation>
+    </message>
+    <message>
+        <source>Convert blocks to safe inline SVG content</source>
+        <translation type="unfinished">Converteer blokken naar &apos;safe inline&apos; svg-content (veilig binnen de lijnen)</translation>
+    </message>
+    <message>
+        <source>Ellipses / Ellipse arcs</source>
+        <translation type="unfinished">Ellipsen/Ellipsbogen</translation>
+    </message>
+    <message>
+        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
+        <translation type="unfinished">Geef de approximatieve kubieke bézierwaarden aan voor ellipsen en ellipsbogen</translation>
+    </message>
+    <message>
+        <source>Export as CAM/plain SVG</source>
+        <translation type="unfinished">Exporteren als CAM/gewone svg</translation>
+    </message>
+    <message>
+        <source>Default width of elements, mm</source>
+        <translation type="unfinished">Standaardbreedte van elementen, mm</translation>
+    </message>
+    <message>
+        <source>Images</source>
+        <translation type="unfinished">Afbeeldingen</translation>
+    </message>
+    <message>
+        <source>Raster Image export</source>
+        <translation type="unfinished">Export van rasterafbeeldingexport</translation>
+    </message>
+    <message>
+        <source>Dash/Dot Lines</source>
+        <translation type="unfinished">Streep-punt-lijnen</translation>
+    </message>
+    <message>
+        <source>Length of the pattern, mm</source>
+        <translation type="unfinished">Lengte van het patroon, mm</translation>
+    </message>
+    <message>
+        <source>Bake dash/dot lines to SVG path</source>
+        <translation type="unfinished">Streep-punt-lijnen toewijzen aan svg-pad</translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content 
+that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
+        <translation type="unfinished">Sinds november 2014 verbergt MakerCAM geen svg-content meer 
+die op onzichtbaar is ingesteld (“weergeven: geen” of “zichtbaarheid: verborgen”).</translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
+because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="unfinished">Sinds november 2014 kan MakerCAM niet meer correct met blokken omgaan,
+omdat het programma geen rekening houdt met het referentiepunt in de &lt;use&gt;.</translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
+when they are created using the &lt;ellipse&gt; tag  with a rotation in 
+the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished">Sinds maart 2015 kan MakerCAM ellipsen en ellipsbogen niet meer correct weergeven 
+als deze aangemaakt worden met behulp van de &lt;ellipse&gt;-tag met een rotatie in 
+het &lt;transform&gt;-attribuut of als &lt;path&gt; dat elliptische boogsegmenten gebruikt.</translation>
+    </message>
+    <message>
+        <source>Exported images can be useful in SVG editors (Inkscape, etc), 
+but avoided in some CAM&apos;s.</source>
+        <translation type="unfinished">Geëxporteerde afbeeldingen kunnen nuttig zijn in svg-editorprogramma&apos;s (Inkscape, enz.), 
+maar worden vermeden in sommige CAM&apos;s.</translation>
+    </message>
+    <message>
+        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+which can be useful in lasercut of plywood or for papercraft. </source>
+        <translation type="unfinished">Veel CAM&apos;s (MakerCAM, EleskCAM, LaserWeb) negeren de streep-punt-lijnstijl, 
+wat handig kan zijn voor lasersnijden van multiplex materiaal of voor bouwplaten. </translation>
+    </message>
+    <message>
+        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+but ignored by other</source>
+        <translation type="unfinished">De standaardbreedte van elementen kan sommige CAM&apos;s/svg-editorprogramma&apos;s beïnvloeden 
+maar wordt door andere genegeerd</translation>
+    </message>
+    <message>
+        <source>Length of line pattern related to zoom, 
+so default step value required for baking</source>
+        <translation type="unfinished">De lengte van het lijnpatroon hangt samen met het zoomen, 
+dus de standaard stapwaarde is vereist voor baking</translation>
+    </message>
+</context>
+<context>
     <name>QG_DlgOptionsVariables</name>
     <message>
         <source>Drawing Variables</source>
@@ -7832,6 +8378,13 @@ Selecteer de eenheid die u wilt gebruiken voor nieuwe tekeningen en uw voorkeurs
     </message>
 </context>
 <context>
+    <name>QG_LayerBox</name>
+    <message>
+        <source>- Unchanged -</source>
+        <translation>- Ongewijzigd -</translation>
+    </message>
+</context>
+<context>
     <name>QG_LayerDialog</name>
     <message>
         <source>Cancel</source>
@@ -8182,6 +8735,125 @@ De inhoud van een bouwlaag mag niet op de afdruk verschijnen.</translation>
     </message>
 </context>
 <context>
+    <name>QG_LineTypeBox</name>
+    <message>
+        <source>By Layer</source>
+        <translation>Per laag</translation>
+    </message>
+    <message>
+        <source>By Block</source>
+        <translation>Per blok</translation>
+    </message>
+    <message>
+        <source>No Pen</source>
+        <translation>Geen pen</translation>
+    </message>
+    <message>
+        <source>Continuous</source>
+        <translation>Doorlopend</translation>
+    </message>
+    <message>
+        <source>Dot</source>
+        <translation>Punt</translation>
+    </message>
+    <message>
+        <source>Dot (small)</source>
+        <translation>Punt (klein)</translation>
+    </message>
+    <message>
+        <source>Dot (large)</source>
+        <translation>Punt (breed)</translation>
+    </message>
+    <message>
+        <source>Dash</source>
+        <translation>Streep</translation>
+    </message>
+    <message>
+        <source>Dash (small)</source>
+        <translation>Streep (klein)</translation>
+    </message>
+    <message>
+        <source>Dash (large)</source>
+        <translation>Streep (groot)</translation>
+    </message>
+    <message>
+        <source>Dash Dot</source>
+        <translation>Streep-punt</translation>
+    </message>
+    <message>
+        <source>Dash Dot (small)</source>
+        <translation>Streep-punt (klein)</translation>
+    </message>
+    <message>
+        <source>Dash Dot (large)</source>
+        <translation>Streep-punt (groot)</translation>
+    </message>
+    <message>
+        <source>Divide</source>
+        <translation>Verdelen</translation>
+    </message>
+    <message>
+        <source>Divide (small)</source>
+        <translation>Scheiding (klein)</translation>
+    </message>
+    <message>
+        <source>Divide (large)</source>
+        <translation>Scheiding (groot)</translation>
+    </message>
+    <message>
+        <source>Center</source>
+        <translation>Middelpunt</translation>
+    </message>
+    <message>
+        <source>Center (small)</source>
+        <translation>Middelpunt (smal)</translation>
+    </message>
+    <message>
+        <source>Center (large)</source>
+        <translation>Middelpunt (groot)</translation>
+    </message>
+    <message>
+        <source>Border</source>
+        <translation>Rand</translation>
+    </message>
+    <message>
+        <source>Border (small)</source>
+        <translation>Rand (klein)</translation>
+    </message>
+    <message>
+        <source>Border (large)</source>
+        <translation>Rand (groot)</translation>
+    </message>
+    <message>
+        <source>- Unchanged -</source>
+        <translation>- Ongewijzigd -</translation>
+    </message>
+    <message>
+        <source>Dot (tiny)</source>
+        <translation type="unfinished">Punt (minuscuul)</translation>
+    </message>
+    <message>
+        <source>Dash (tiny)</source>
+        <translation type="unfinished">Streep (minuscuul)</translation>
+    </message>
+    <message>
+        <source>Dash Dot (tiny)</source>
+        <translation type="unfinished">Streep-punt (minuscuul)</translation>
+    </message>
+    <message>
+        <source>Divide (tiny)</source>
+        <translation type="unfinished">Scheiding (minuscuul)</translation>
+    </message>
+    <message>
+        <source>Center (tiny)</source>
+        <translation type="unfinished">Middelpunt (minuscuul)</translation>
+    </message>
+    <message>
+        <source>Border (tiny)</source>
+        <translation type="unfinished">Rand (minuscuul)</translation>
+    </message>
+</context>
+<context>
     <name>QG_MTextOptions</name>
     <message>
         <source>Text Options</source>
@@ -8243,6 +8915,21 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Angle:</source>
         <translation type="obsolete">Hoek:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_PenToolBar</name>
+    <message>
+        <source>Line color</source>
+        <translation type="unfinished">Lijnkleur</translation>
+    </message>
+    <message>
+        <source>Line width</source>
+        <translation type="unfinished">Lijnbreedte</translation>
+    </message>
+    <message>
+        <source>Line type</source>
+        <translation type="unfinished">Lijntype</translation>
     </message>
 </context>
 <context>
@@ -8426,6 +9113,121 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QG_SnapToolBar</name>
+    <message>
+        <source>Snap</source>
+        <translation type="unfinished">Snappen</translation>
+    </message>
+    <message>
+        <source>Snap to Endpoints</source>
+        <translation type="unfinished">Snappen naar eindpunten</translation>
+    </message>
+    <message>
+        <source>Snap to equidistant points of entity</source>
+        <translation type="unfinished">Snappen naar punten van het element die op gelijke afstand van elkaar zijn</translation>
+    </message>
+    <message>
+        <source>Snap to center points</source>
+        <translation type="unfinished">Snappen naar middelpunten</translation>
+    </message>
+    <message>
+        <source>Snap to intersections automatically</source>
+        <translation type="unfinished">Automatisch snappen naar snijpunten</translation>
+    </message>
+    <message>
+        <source>Snap to closest point on entity</source>
+        <translation type="unfinished">Snappen naar dichtstbijzijnde punt op element</translation>
+    </message>
+    <message>
+        <source>Snap to point with given distance to endpoint</source>
+        <translation type="unfinished">Snappen naar punt met opgegeven afstand naar eindpunt</translation>
+    </message>
+    <message>
+        <source>Snap to intersections manually</source>
+        <translation type="unfinished">Handmatig snappen naar snijpunten</translation>
+    </message>
+    <message>
+        <source>Snap to grid</source>
+        <translation type="unfinished">Snappen naar raster</translation>
+    </message>
+    <message>
+        <source>Restrict Horizontally</source>
+        <translation type="unfinished">Horizontaal beperken</translation>
+    </message>
+    <message>
+        <source>Restrict Vertically</source>
+        <translation type="unfinished">Verticaal beperken</translation>
+    </message>
+    <message>
+        <source>Move relative Zero</source>
+        <translation type="unfinished">Relatieve nulwaarde verplaatsen</translation>
+    </message>
+    <message>
+        <source>Lock relative Zero</source>
+        <translation type="unfinished">Relatieve nulwaarde vergrendelen</translation>
+    </message>
+    <message>
+        <source>Free Snap</source>
+        <translation type="unfinished">Snappen uit vrije hand</translation>
+    </message>
+    <message>
+        <source>Snap on grid</source>
+        <translation type="unfinished">Snappen op raster</translation>
+    </message>
+    <message>
+        <source>Snap on Endpoints</source>
+        <translation type="unfinished">Snappen op eindpunten</translation>
+    </message>
+    <message>
+        <source>Snap on Entity</source>
+        <translation type="unfinished">Snappen op element</translation>
+    </message>
+    <message>
+        <source>Snap Center</source>
+        <translation type="unfinished">Middelpunt snappen</translation>
+    </message>
+    <message>
+        <source>Snap Middle</source>
+        <translation type="unfinished">Midden snappen</translation>
+    </message>
+    <message>
+        <source>Snap Distance</source>
+        <translation type="unfinished">Afstand snappen</translation>
+    </message>
+    <message>
+        <source>Snap Intersection</source>
+        <translation type="unfinished">Snijpunt snappen</translation>
+    </message>
+    <message>
+        <source>Restrict Horizontal</source>
+        <translation type="unfinished">Beperk horizontaal</translation>
+    </message>
+    <message>
+        <source>Restrict Vertical</source>
+        <translation type="unfinished">Beperk verticaal</translation>
+    </message>
+    <message>
+        <source>Restrict Orthogonal</source>
+        <translation type="unfinished">Beperk orthogonaal</translation>
+    </message>
+    <message>
+        <source>Restrict Nothing</source>
+        <translation type="unfinished">Niets beperken</translation>
+    </message>
+    <message>
+        <source>Set relative zero position</source>
+        <translation type="unfinished">Relatieve nulpositie instellen</translation>
+    </message>
+    <message>
+        <source>Lock relative zero position</source>
+        <translation type="unfinished">Relatieve nulpositie vergrendelen</translation>
+    </message>
+    <message>
+        <source>Exclusive Snap Mode</source>
+        <translation type="unfinished">Exclusieve snapmodus</translation>
+    </message>
+</context>
+<context>
     <name>QG_SplineOptions</name>
     <message>
         <source>Spline Options</source>
@@ -8488,6 +9290,140 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Length:</source>
         <translation type="obsolete">Lengte:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_WidgetPen</name>
+    <message>
+        <source>Pen</source>
+        <translation>Pen</translation>
+    </message>
+    <message>
+        <source>Line type:</source>
+        <translation>Lijntype:</translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation>Breedte:</translation>
+    </message>
+    <message>
+        <source>Color:</source>
+        <translation>Kleur:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_WidthBox</name>
+    <message>
+        <source>By Layer</source>
+        <translation>Per laag</translation>
+    </message>
+    <message>
+        <source>By Block</source>
+        <translation>Per blok</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation>Standaard</translation>
+    </message>
+    <message>
+        <source>0.00mm</source>
+        <translation>0,00 mm</translation>
+    </message>
+    <message>
+        <source>0.05mm</source>
+        <translation>0,05 mm</translation>
+    </message>
+    <message>
+        <source>0.09mm</source>
+        <translation>0,09 mm</translation>
+    </message>
+    <message>
+        <source>0.13mm (ISO)</source>
+        <translation>0,13 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.15mm</source>
+        <translation>0,15 mm</translation>
+    </message>
+    <message>
+        <source>0.18mm (ISO)</source>
+        <translation>0,18 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.20mm</source>
+        <translation>0,20 mm</translation>
+    </message>
+    <message>
+        <source>0.25mm (ISO)</source>
+        <translation>0,25 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.30mm</source>
+        <translation>0,30 mm</translation>
+    </message>
+    <message>
+        <source>0.35mm (ISO)</source>
+        <translation>0,35 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.40mm</source>
+        <translation>0,40 mm</translation>
+    </message>
+    <message>
+        <source>0.50mm (ISO)</source>
+        <translation>0,50 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.53mm</source>
+        <translation>0,53 mm</translation>
+    </message>
+    <message>
+        <source>0.60mm</source>
+        <translation>0,60 mm</translation>
+    </message>
+    <message>
+        <source>0.70mm (ISO)</source>
+        <translation>0,70 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.80mm</source>
+        <translation>0,80 mm</translation>
+    </message>
+    <message>
+        <source>0.90mm</source>
+        <translation>0,90 mm</translation>
+    </message>
+    <message>
+        <source>1.00mm (ISO)</source>
+        <translation>1,00 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>1.06mm</source>
+        <translation>1,06 mm</translation>
+    </message>
+    <message>
+        <source>1.20mm</source>
+        <translation>1,20 mm</translation>
+    </message>
+    <message>
+        <source>1.40mm (ISO)</source>
+        <translation>1,40 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>1.58mm</source>
+        <translation>1,58 mm</translation>
+    </message>
+    <message>
+        <source>2.00mm (ISO)</source>
+        <translation>2,00 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>2.11mm</source>
+        <translation>2,11 mm</translation>
+    </message>
+    <message>
+        <source>- Unchanged -</source>
+        <translation>- Ongewijzigd -</translation>
     </message>
 </context>
 <context>
@@ -10410,6 +11346,106 @@ Wilt u het vervangen?</translation>
         <source>Dock Areas</source>
         <translation type="unfinished">Dockgebieden</translation>
     </message>
+    <message>
+        <source>A0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>C5E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comm10E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DLE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen</source>
+        <translation type="unfinished">Pen</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -10572,6 +11608,13 @@ Wilt u het vervangen?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionBlocksSave</name>
+    <message>
+        <source>No block activated to save</source>
+        <translation type="unfinished">Geen blok geactiveerd om op te slaan</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
@@ -10584,6 +11627,17 @@ Wilt u het vervangen?</translation>
     <message>
         <source>Toggle Block</source>
         <translation type="obsolete">Blok aan/uit zetten</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDefault</name>
+    <message>
+        <source>Choose second edge</source>
+        <translation>Kies de tweede rand</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Terug</translation>
     </message>
 </context>
 <context>
@@ -11130,6 +12184,191 @@ Wilt u het vervangen?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionDrawCircleDiam</name>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Geen geldige expressie</translation>
+    </message>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished">Specificeer middelpunt</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify circle radius</source>
+        <translation type="unfinished">Specificeer radius cirkel</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>diameter=%1 is invalid</source>
+        <translation type="unfinished">diameter=%1 is ongeldig</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleInscribe</name>
+    <message>
+        <source>Specify the first line</source>
+        <translation type="unfinished">Specificeer de eerste lijn</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify the second line</source>
+        <translation type="unfinished">Specificeer de tweede lijn</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Specify the third line</source>
+        <translation type="unfinished">Specificeer de derde lijn</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan1_2P</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify the first point on the tangent circle</source>
+        <translation type="unfinished">Specificeer het eerste punt op de raakcirkel</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Specify the second point on the tangent circle</source>
+        <translation type="unfinished">Specificeer het tweede punt op de raakcirkel</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished">Selecteer het middelpunt van de raakcirkel</translation>
+    </message>
+    <message>
+        <source>Specify a line/arc/circle</source>
+        <translation type="unfinished">Specificeer een lijn/boog/cirkel</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan2</name>
+    <message>
+        <source>Specify the first line/arc/circle</source>
+        <translation type="unfinished">Specificeer de eerste lijn/boog/cirkel</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify the second line/arc/circle</source>
+        <translation type="unfinished">Specificeer de tweede lijn/boog/cirkel</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished">Selecteer het middelpunt van de raakcirkel</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan2_1P</name>
+    <message>
+        <source>Specify a line/arc/circle</source>
+        <translation type="unfinished">Specificeer een lijn/boog/cirkel</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify the another arc/circle</source>
+        <translation type="unfinished">Specificeer een andere boog/cirkel</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Specify a point on the tangent circle</source>
+        <translation type="unfinished">Specificeer een punt op de raakcirkel</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished">Selecteer het middelpunt van de raakcirkel</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan3</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished">Selecteer het middelpunt van de raakcirkel</translation>
+    </message>
+    <message>
+        <source>Specify the first line/arc/circle</source>
+        <translation type="unfinished">Specificeer de eerste lijn/boog/cirkel</translation>
+    </message>
+    <message>
+        <source>Specify the second line/arc/circle</source>
+        <translation type="unfinished">Specificeer de tweede lijn/boog/cirkel</translation>
+    </message>
+    <message>
+        <source>Specify the third line/arc/circle</source>
+        <translation type="unfinished">Specificeer derde lijn/boog/cirkel</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipse4Points</name>
+    <message>
+        <source>Specify the first point on ellipse</source>
+        <translation type="unfinished">Specificeer het eerste punt op de ellips</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify the second point on ellipse</source>
+        <translation type="unfinished">Specificeer het tweede punt op de ellips</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Specify the third point on ellipse</source>
+        <translation type="unfinished">Specificeer het derde punt op de ellips</translation>
+    </message>
+    <message>
+        <source>Specify the fourth point on ellipse</source>
+        <translation type="unfinished">Specificeer het vierde punt op de ellips</translation>
+    </message>
+    <message>
+        <source>Can not determine uniquely an ellipse</source>
+        <translation type="unfinished">Kan niet slechts een ellips bepalen</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionDrawEllipseAxis</name>
     <message>
         <source>Ellipse Arc with Axis</source>
@@ -11186,6 +12425,99 @@ Wilt u het vervangen?</translation>
     <message>
         <source>Specify end angle</source>
         <translation>Specificeer einde hoek</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseCenter3Points</name>
+    <message>
+        <source>Specify the center of ellipse</source>
+        <translation type="unfinished">Specificeer het middelpunt van de ellips</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify the first point on ellipse</source>
+        <translation type="unfinished">Specificeer het eerste punt op de ellips</translation>
+    </message>
+    <message>
+        <source>Specify the second point on ellipse</source>
+        <translation type="unfinished">Specificeer het tweede punt op de ellips</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Specify the third point on ellipse</source>
+        <translation type="unfinished">Specificeer het derde punt op de ellips</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseFociPoint</name>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Geen geldige expressie</translation>
+    </message>
+    <message>
+        <source>Specify first focus of ellipse</source>
+        <translation type="unfinished">Specificeer eerste brandpunt van ellips</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify second focus of ellipse</source>
+        <translation type="unfinished">Specificeer tweede brandpunt van ellips</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Specify a point on ellipse or total distance to foci</source>
+        <translation type="unfinished">Specificeer een punt op de ellips, of de totale afstand tot de brandpunten</translation>
+    </message>
+    <message>
+        <source>specify a point on ellipse, or total distance to foci</source>
+        <translation type="unfinished">specificeer een punt op de ellips, of de totale afstand tot de brandpunten</translation>
+    </message>
+    <message>
+        <source>Total distance %1 is smaller than distance between foci</source>
+        <translation type="unfinished">Totale afstand %1 is kleiner dan afstand tussen brandpunten</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseInscribe</name>
+    <message>
+        <source>Specify the first line</source>
+        <translation type="unfinished">Specificeer de eerste lijn</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify the second line</source>
+        <translation type="unfinished">Specificeer de tweede lijn</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Specify the third line</source>
+        <translation type="unfinished">Specificeer de derde lijn</translation>
+    </message>
+    <message>
+        <source>Specify the fourth line</source>
+        <translation type="unfinished">Specificeer de vierde lijn</translation>
+    </message>
+    <message>
+        <source>Can not determine uniquely an ellipse</source>
+        <translation type="unfinished">Kan niet slechts een ellips bepalen</translation>
     </message>
 </context>
 <context>
@@ -11503,6 +12835,25 @@ Wilt u het vervangen?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionDrawLineOrthTan</name>
+    <message>
+        <source>Select a line</source>
+        <translation type="unfinished">Selecteer een lijn</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Select circle, arc or ellipse</source>
+        <translation type="unfinished">Cirkel, boog of ellips selecteren</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionDrawLineParallel</name>
     <message>
         <source>Specify Distance &lt;%1&gt; or select entity or [Through]</source>
@@ -11702,6 +13053,37 @@ Wilt u het vervangen?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionDrawLinePolygonCorCor</name>
+    <message>
+        <source>Specify first corner</source>
+        <translation type="unfinished">Specificeer eerste hoekpunt</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Specify second corner</source>
+        <translation type="unfinished">Specificeer tweede hoekpunt</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Aantal:</translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="unfinished">Geen geldig aantal. Probeer 1...9999</translation>
+    </message>
+    <message>
+        <source>Not a valid expression.</source>
+        <translation type="unfinished">Geen geldige expressie.</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionDrawLinePolyline</name>
     <message>
         <source>Polyline</source>
@@ -11894,6 +13276,25 @@ Wilt u het vervangen?</translation>
     <message>
         <source>Select second circle or ellipse</source>
         <translation type="unfinished">Tweede cirkel of ellips selecteren</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawMText</name>
+    <message>
+        <source>Specify insertion point</source>
+        <translation type="unfinished">Specificeer invoegpunt</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Enter text:</source>
+        <translation type="unfinished">Voer tekst in:</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
     </message>
 </context>
 <context>
@@ -12965,6 +14366,17 @@ Wilt u het vervangen?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionModifyOffset</name>
+    <message>
+        <source>Specify direction of offset</source>
+        <translation type="unfinished">Specificeer richting van offset</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionModifyRotate</name>
     <message>
         <source>Rotate</source>
@@ -13086,6 +14498,21 @@ Wilt u het vervangen?</translation>
     <message>
         <source>Cancel</source>
         <translation>Annuleren</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyShapeText</name>
+    <message>
+        <source>Select text entity</source>
+        <translation type="unfinished">Tekstelement selecteren</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+    <message>
+        <source>Select entity to shape text to</source>
+        <translation type="unfinished">Element om tekst naar vorm te geven selecteren</translation>
     </message>
 </context>
 <context>
@@ -13218,6 +14645,17 @@ Wilt u het vervangen?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionModifyTrimExcess</name>
+    <message>
+        <source>Select entity to trim</source>
+        <translation type="unfinished">Element om bij te snijden selecteren</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Terug</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionOptionsDrawing</name>
     <message>
         <source>Drawing</source>
@@ -13230,6 +14668,21 @@ Wilt u het vervangen?</translation>
     <message>
         <source>Settings for the current Drawing</source>
         <translation type="obsolete">Instellingen voor de huidige tekening</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionOrder</name>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">Geen element gevonden.</translation>
+    </message>
+    <message>
+        <source>Choose entity for order</source>
+        <translation type="unfinished">Kies een element voor de opdracht</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
     </message>
 </context>
 <context>
@@ -13598,6 +15051,89 @@ Wilt u het vervangen?</translation>
     <message>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
         <translation type="unfinished">RS_ActionPrintPreview::calcPagesNum(): Het maximale aantal pagina&apos;s is overschreden.</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionSelect</name>
+    <message>
+        <source>Select to modify attributes</source>
+        <translation type="unfinished">Selecteren om attributen te wijzigen</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleren</translation>
+    </message>
+    <message>
+        <source>Select to delete</source>
+        <translation type="unfinished">Selecteren om te verwijderen</translation>
+    </message>
+    <message>
+        <source>Select to delete immediately</source>
+        <translation type="unfinished">Selecteer om onmiddellijk te verwijderen</translation>
+    </message>
+    <message>
+        <source>Select to move</source>
+        <translation type="unfinished">Selecteren om te verplaatsen</translation>
+    </message>
+    <message>
+        <source>Select to rotate</source>
+        <translation type="unfinished">Selecteren om te roteren</translation>
+    </message>
+    <message>
+        <source>Select to scale</source>
+        <translation type="unfinished">Selecteren om te verschalen</translation>
+    </message>
+    <message>
+        <source>Select to mirror</source>
+        <translation type="unfinished">Selecteren om te spiegelen</translation>
+    </message>
+    <message>
+        <source>Select to move and rotate</source>
+        <translation type="unfinished">Selecteren om te verplaatsen en roteren</translation>
+    </message>
+    <message>
+        <source>Select for two axis rotation</source>
+        <translation type="unfinished">Selecteren voor rotatie met twee assen</translation>
+    </message>
+    <message>
+        <source>Select to explode text</source>
+        <translation type="unfinished">Selecteer om tekst te splitsen</translation>
+    </message>
+    <message>
+        <source>Select to create block</source>
+        <translation type="unfinished">Selecteren om blok aan te maken</translation>
+    </message>
+    <message>
+        <source>Select to copy</source>
+        <translation type="unfinished">Selecteren om te kopiëren</translation>
+    </message>
+    <message>
+        <source>Select to cut</source>
+        <translation type="unfinished">Selecteren om te knippen</translation>
+    </message>
+    <message>
+        <source>No entity selected!</source>
+        <translation type="unfinished">Geen element geselecteerd!</translation>
+    </message>
+    <message>
+        <source>Select to create offset</source>
+        <translation type="unfinished">Selecteren om offset aan te maken</translation>
+    </message>
+    <message>
+        <source>Select entities to order</source>
+        <translation type="unfinished">Selecteer elementen om opdracht te geven</translation>
+    </message>
+    <message>
+        <source>Select to explode block</source>
+        <translation type="unfinished">Selecteren om blok te splitsen</translation>
+    </message>
+    <message>
+        <source>Select to revert direction</source>
+        <translation type="unfinished">Selecteren om richting om te draaien</translation>
+    </message>
+    <message>
+        <source>Select to unlink shaped text</source>
+        <translation type="unfinished">Selecteren om vormgegeven tekst te ontkoppelen</translation>
     </message>
 </context>
 <context>
@@ -14851,1442 +16387,6 @@ Wilt u het vervangen?</translation>
         <source>re</source>
         <comment>modify - revert direction</comment>
         <translation type="obsolete">re</translation>
-    </message>
-</context>
-<context>
-    <name>ColorWizard</name>
-    <message>
-        <source>Frame</source>
-        <translation type="unfinished">Kader</translation>
-    </message>
-    <message>
-        <source>Add to favorites</source>
-        <translation type="unfinished">Voeg toe aan favorieten</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-</context>
-<context>
-    <name>ComboBoxOption</name>
-    <message>
-        <source>Frame</source>
-        <translation type="unfinished">Kader</translation>
-    </message>
-    <message>
-        <source>GroupBox</source>
-        <translation type="unfinished">Groepsvak</translation>
-    </message>
-    <message>
-        <source>Set</source>
-        <translation type="unfinished">Instellen</translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>SplinePoints</source>
-        <translation type="unfinished">Spiepunten</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="unfinished">Laag:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="unfinished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="unfinished">Gesloten</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="unfinished">Spiepunten</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="unfinished">Controlepunten</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="unfinished">Punten op spie</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished">radius=%1 is te klein voor de geselecteerde punten
-afstand tussen punten=%2 is groter dan diameter=%3</translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="unfinished">Selecteer uit twee mogelijke cirkelmiddelpunten</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="unfinished">Specificeer eerste punt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="unfinished">Specificeer tweede punt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="unfinished">Cirkelmiddelpunt selecteren</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify center</source>
-        <translation type="unfinished">Specificeer middelpunt</translation>
-    </message>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="unfinished">Specificeer een raaklijn</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="unfinished">Voer een aantal in:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished">Geen geldig aantal. Probeer 1...9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="unfinished">Geen geldige expressie</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawSplinePoints</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="unfinished">Specificeer eerste controlepunt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="unfinished">Specificeer volgend controlepunt of [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="unfinished">Specificeer volgend controlepunt</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">Kan niet ongedaan maken: nog niet voldoende elementen gedefinieerd.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Nothing could be redone.</source>
-        <translation type="unfinished">Kan niet ongedaan gemaakt worden: er kon niets opnieuw uitgevoerd worden.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionFileExportMakerCam</name>
-    <message>
-        <source>Export as</source>
-        <translation type="unfinished">Exporteren als</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DeviceOptions</name>
-    <message>
-        <source>Mouse</source>
-        <translation type="unfinished">Muis</translation>
-    </message>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished">Formaat</translation>
-    </message>
-    <message>
-        <source>Device</source>
-        <translation type="unfinished">Apparaat</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="unfinished">Opslaan</translation>
-    </message>
-    <message>
-        <source>Tablet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Trackpad</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Touchscreen</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_SimpleTests</name>
-    <message>
-        <source>De&amp;bugging</source>
-        <translation type="unfinished">Fout&amp;zoeken</translation>
-    </message>
-    <message>
-        <source>Insert Image</source>
-        <translation type="unfinished">Afbeelding invoegen</translation>
-    </message>
-</context>
-<context>
-    <name>LC_WidgetOptionsDialog</name>
-    <message>
-        <source>Widget Options</source>
-        <translation type="unfinished">Widgetopties</translation>
-    </message>
-    <message>
-        <source>Toolbar</source>
-        <translation type="unfinished">Werkbalk</translation>
-    </message>
-    <message>
-        <source>Icon Size</source>
-        <translation type="unfinished">Pictogramgrootte</translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="unfinished">Algemeen</translation>
-    </message>
-    <message>
-        <source>Style</source>
-        <translation type="unfinished">Stijl</translation>
-    </message>
-    <message>
-        <source>Style Sheet</source>
-        <translation type="unfinished">Stijlblad</translation>
-    </message>
-    <message>
-        <source>Statusbar</source>
-        <translation type="unfinished">Statusbalk</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="unfinished">Hoogte</translation>
-    </message>
-    <message>
-        <source>Font Size</source>
-        <translation type="unfinished">Lettergrootte</translation>
-    </message>
-    <message>
-        <source>Input the path of a Qt style sheet.</source>
-        <translation type="unfinished">Voer het pad van een Qt-stijlblad in.</translation>
-    </message>
-    <message>
-        <source>side length in pixels</source>
-        <translation type="unfinished">zijlengte in pixels</translation>
-    </message>
-    <message>
-        <source>Use themed icons</source>
-        <translation type="unfinished">Gebruik themapictogrammen</translation>
-    </message>
-</context>
-<context>
-    <name>LG_DimzerosBox</name>
-    <message>
-        <source>select:</source>
-        <translation type="unfinished">selecteren:</translation>
-    </message>
-    <message>
-        <source>remove left</source>
-        <translation type="unfinished">links weghalen</translation>
-    </message>
-    <message>
-        <source>remove right</source>
-        <translation type="unfinished">rechts weghalen</translation>
-    </message>
-    <message>
-        <source>remove 0&apos;</source>
-        <translation type="unfinished">0&apos; weghalen</translation>
-    </message>
-    <message>
-        <source>remove 0&quot;</source>
-        <translation type="unfinished">0&quot; weghalen</translation>
-    </message>
-</context>
-<context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="unfinished">Relatieve hoekopties lijn</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="unfinished">Tussenafstand:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="unfinished">Afstand vanaf oorspronkelijke polylijn</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="unfinished">Kopieën:</translation>
-    </message>
-</context>
-<context>
-    <name>QC_ActionGetEnt</name>
-    <message>
-        <source>Select object:</source>
-        <translation>Object selecteren:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleren</translation>
-    </message>
-</context>
-<context>
-    <name>QC_ActionGetSelect</name>
-    <message>
-        <source>Select objects:</source>
-        <translation>Objecten selecteren:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleren</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="unfinished">escape</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ActiveLayerName</name>
-    <message>
-        <source>Selection</source>
-        <translation type="unfinished">Selectie</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Current Layer</source>
-        <translation type="unfinished">Huidige laag</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Naam van huidige actieve laag&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CommandEdit</name>
-    <message>
-        <source>clear</source>
-        <translation type="unfinished">wissen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CommandHistory</name>
-    <message>
-        <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Kopiëren</translation>
-    </message>
-    <message>
-        <source>Select &amp;All</source>
-        <translation type="unfinished">&amp;Alles selecteren</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation type="unfinished">Wissen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CoordinateWidget</name>
-    <message>
-        <source>Coordinates</source>
-        <translation>Coördinaten</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgFontConversion</name>
-    <message>
-        <source>Convert Fonts</source>
-        <translation type="unfinished">Converteer lettertypes</translation>
-    </message>
-    <message>
-        <source>Font family:</source>
-        <translation type="unfinished">Lettertypefamilie:</translation>
-    </message>
-    <message>
-        <source>Font file:</source>
-        <translation type="unfinished">Lettertypebestand:</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-    <message>
-        <source>Save as:</source>
-        <translation type="unfinished">Opslaan als:</translation>
-    </message>
-    <message>
-        <source>Letter spacing:</source>
-        <translation type="unfinished">Tekenafstand:</translation>
-    </message>
-    <message>
-        <source>Author:</source>
-        <translation type="unfinished">Auteur:</translation>
-    </message>
-    <message>
-        <source>Word spacing:</source>
-        <translation type="unfinished">Woordafstand:</translation>
-    </message>
-    <message>
-        <source>License:</source>
-        <translation type="unfinished">Licentie:</translation>
-    </message>
-    <message>
-        <source>Line spacing:</source>
-        <translation type="unfinished">Lijnafstand:</translation>
-    </message>
-    <message>
-        <source>Writing System:</source>
-        <translation type="unfinished">Schrijfsysteem:</translation>
-    </message>
-    <message>
-        <source>Preview</source>
-        <translation type="unfinished">Voorbeeld</translation>
-    </message>
-    <message>
-        <source>Create</source>
-        <translation type="unfinished">Aanmaken</translation>
-    </message>
-    <message>
-        <source> - Searching</source>
-        <translation type="unfinished"> - Wordt gezocht</translation>
-    </message>
-    <message>
-        <source>LibreCAD Font Files(*.lff)</source>
-        <translation type="unfinished">LibreCAD-lettertypebestanden(*.lff)</translation>
-    </message>
-    <message>
-        <source> - Rendering</source>
-        <translation type="unfinished"> - Weergave</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgOptionsMakerCam</name>
-    <message>
-        <source>Layers</source>
-        <translation type="unfinished">Lagen</translation>
-    </message>
-    <message>
-        <source>Export invisible layers</source>
-        <translation type="unfinished">Onzichtbare lagen exporteren</translation>
-    </message>
-    <message>
-        <source>Export visible construction layers</source>
-        <translation type="unfinished">Zichtbare bouwlagen exporteren</translation>
-    </message>
-    <message>
-        <source>Blocks</source>
-        <translation type="unfinished">Blokken</translation>
-    </message>
-    <message>
-        <source>Convert blocks to safe inline SVG content</source>
-        <translation type="unfinished">Converteer blokken naar &apos;safe inline&apos; svg-content (veilig binnen de lijnen)</translation>
-    </message>
-    <message>
-        <source>Ellipses / Ellipse arcs</source>
-        <translation type="unfinished">Ellipsen/Ellipsbogen</translation>
-    </message>
-    <message>
-        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation type="unfinished">Geef de approximatieve kubieke bézierwaarden aan voor ellipsen en ellipsbogen</translation>
-    </message>
-    <message>
-        <source>Export as CAM/plain SVG</source>
-        <translation type="unfinished">Exporteren als CAM/gewone svg</translation>
-    </message>
-    <message>
-        <source>Default width of elements, mm</source>
-        <translation type="unfinished">Standaardbreedte van elementen, mm</translation>
-    </message>
-    <message>
-        <source>Images</source>
-        <translation type="unfinished">Afbeeldingen</translation>
-    </message>
-    <message>
-        <source>Raster Image export</source>
-        <translation type="unfinished">Export van rasterafbeeldingexport</translation>
-    </message>
-    <message>
-        <source>Dash/Dot Lines</source>
-        <translation type="unfinished">Streep-punt-lijnen</translation>
-    </message>
-    <message>
-        <source>Length of the pattern, mm</source>
-        <translation type="unfinished">Lengte van het patroon, mm</translation>
-    </message>
-    <message>
-        <source>Bake dash/dot lines to SVG path</source>
-        <translation type="unfinished">Streep-punt-lijnen toewijzen aan svg-pad</translation>
-    </message>
-    <message>
-        <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation type="unfinished">Sinds november 2014 verbergt MakerCAM geen svg-content meer 
-die op onzichtbaar is ingesteld (“weergeven: geen” of “zichtbaarheid: verborgen”).</translation>
-    </message>
-    <message>
-        <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
-because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation type="unfinished">Sinds november 2014 kan MakerCAM niet meer correct met blokken omgaan,
-omdat het programma geen rekening houdt met het referentiepunt in de &lt;use&gt;.</translation>
-    </message>
-    <message>
-        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
-when they are created using the &lt;ellipse&gt; tag  with a rotation in 
-the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation type="unfinished">Sinds maart 2015 kan MakerCAM ellipsen en ellipsbogen niet meer correct weergeven 
-als deze aangemaakt worden met behulp van de &lt;ellipse&gt;-tag met een rotatie in 
-het &lt;transform&gt;-attribuut of als &lt;path&gt; dat elliptische boogsegmenten gebruikt.</translation>
-    </message>
-    <message>
-        <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
-        <translation type="unfinished">Geëxporteerde afbeeldingen kunnen nuttig zijn in svg-editorprogramma&apos;s (Inkscape, enz.), 
-maar worden vermeden in sommige CAM&apos;s.</translation>
-    </message>
-    <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
-which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation type="unfinished">Veel CAM&apos;s (MakerCAM, EleskCAM, LaserWeb) negeren de streep-punt-lijnstijl, 
-wat handig kan zijn voor lasersnijden van multiplex materiaal of voor bouwplaten. </translation>
-    </message>
-    <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
-but ignored by other</source>
-        <translation type="unfinished">De standaardbreedte van elementen kan sommige CAM&apos;s/svg-editorprogramma&apos;s beïnvloeden 
-maar wordt door andere genegeerd</translation>
-    </message>
-    <message>
-        <source>Length of line pattern related to zoom, 
-so default step value required for baking</source>
-        <translation type="unfinished">De lengte van het lijnpatroon hangt samen met het zoomen, 
-dus de standaard stapwaarde is vereist voor baking</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LayerBox</name>
-    <message>
-        <source>- Unchanged -</source>
-        <translation>- Ongewijzigd -</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineTypeBox</name>
-    <message>
-        <source>By Layer</source>
-        <translation>Per laag</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation>Per blok</translation>
-    </message>
-    <message>
-        <source>No Pen</source>
-        <translation>Geen pen</translation>
-    </message>
-    <message>
-        <source>Continuous</source>
-        <translation>Doorlopend</translation>
-    </message>
-    <message>
-        <source>Dot</source>
-        <translation>Punt</translation>
-    </message>
-    <message>
-        <source>Dot (small)</source>
-        <translation>Punt (klein)</translation>
-    </message>
-    <message>
-        <source>Dot (large)</source>
-        <translation>Punt (breed)</translation>
-    </message>
-    <message>
-        <source>Dash</source>
-        <translation>Streep</translation>
-    </message>
-    <message>
-        <source>Dash (small)</source>
-        <translation>Streep (klein)</translation>
-    </message>
-    <message>
-        <source>Dash (large)</source>
-        <translation>Streep (groot)</translation>
-    </message>
-    <message>
-        <source>Dash Dot</source>
-        <translation>Streep-punt</translation>
-    </message>
-    <message>
-        <source>Dash Dot (small)</source>
-        <translation>Streep-punt (klein)</translation>
-    </message>
-    <message>
-        <source>Dash Dot (large)</source>
-        <translation>Streep-punt (groot)</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation>Verdelen</translation>
-    </message>
-    <message>
-        <source>Divide (small)</source>
-        <translation>Scheiding (klein)</translation>
-    </message>
-    <message>
-        <source>Divide (large)</source>
-        <translation>Scheiding (groot)</translation>
-    </message>
-    <message>
-        <source>Center</source>
-        <translation>Middelpunt</translation>
-    </message>
-    <message>
-        <source>Center (small)</source>
-        <translation>Middelpunt (smal)</translation>
-    </message>
-    <message>
-        <source>Center (large)</source>
-        <translation>Middelpunt (groot)</translation>
-    </message>
-    <message>
-        <source>Border</source>
-        <translation>Rand</translation>
-    </message>
-    <message>
-        <source>Border (small)</source>
-        <translation>Rand (klein)</translation>
-    </message>
-    <message>
-        <source>Border (large)</source>
-        <translation>Rand (groot)</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation>- Ongewijzigd -</translation>
-    </message>
-    <message>
-        <source>Dot (tiny)</source>
-        <translation type="unfinished">Punt (minuscuul)</translation>
-    </message>
-    <message>
-        <source>Dash (tiny)</source>
-        <translation type="unfinished">Streep (minuscuul)</translation>
-    </message>
-    <message>
-        <source>Dash Dot (tiny)</source>
-        <translation type="unfinished">Streep-punt (minuscuul)</translation>
-    </message>
-    <message>
-        <source>Divide (tiny)</source>
-        <translation type="unfinished">Scheiding (minuscuul)</translation>
-    </message>
-    <message>
-        <source>Center (tiny)</source>
-        <translation type="unfinished">Middelpunt (minuscuul)</translation>
-    </message>
-    <message>
-        <source>Border (tiny)</source>
-        <translation type="unfinished">Rand (minuscuul)</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PenToolBar</name>
-    <message>
-        <source>Line color</source>
-        <translation type="unfinished">Lijnkleur</translation>
-    </message>
-    <message>
-        <source>Line width</source>
-        <translation type="unfinished">Lijnbreedte</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="unfinished">Lijntype</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SnapToolBar</name>
-    <message>
-        <source>Snap</source>
-        <translation type="unfinished">Snappen</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="unfinished">Snappen naar eindpunten</translation>
-    </message>
-    <message>
-        <source>Snap to equidistant points of entity</source>
-        <translation type="unfinished">Snappen naar punten van het element die op gelijke afstand van elkaar zijn</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="unfinished">Snappen naar middelpunten</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation type="unfinished">Automatisch snappen naar snijpunten</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="unfinished">Snappen naar dichtstbijzijnde punt op element</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="unfinished">Snappen naar punt met opgegeven afstand naar eindpunt</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation type="unfinished">Handmatig snappen naar snijpunten</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="unfinished">Snappen naar raster</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation type="unfinished">Horizontaal beperken</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation type="unfinished">Verticaal beperken</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation type="unfinished">Relatieve nulwaarde verplaatsen</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation type="unfinished">Relatieve nulwaarde vergrendelen</translation>
-    </message>
-    <message>
-        <source>Free Snap</source>
-        <translation type="unfinished">Snappen uit vrije hand</translation>
-    </message>
-    <message>
-        <source>Snap on grid</source>
-        <translation type="unfinished">Snappen op raster</translation>
-    </message>
-    <message>
-        <source>Snap on Endpoints</source>
-        <translation type="unfinished">Snappen op eindpunten</translation>
-    </message>
-    <message>
-        <source>Snap on Entity</source>
-        <translation type="unfinished">Snappen op element</translation>
-    </message>
-    <message>
-        <source>Snap Center</source>
-        <translation type="unfinished">Middelpunt snappen</translation>
-    </message>
-    <message>
-        <source>Snap Middle</source>
-        <translation type="unfinished">Midden snappen</translation>
-    </message>
-    <message>
-        <source>Snap Distance</source>
-        <translation type="unfinished">Afstand snappen</translation>
-    </message>
-    <message>
-        <source>Snap Intersection</source>
-        <translation type="unfinished">Snijpunt snappen</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontal</source>
-        <translation type="unfinished">Beperk horizontaal</translation>
-    </message>
-    <message>
-        <source>Restrict Vertical</source>
-        <translation type="unfinished">Beperk verticaal</translation>
-    </message>
-    <message>
-        <source>Restrict Orthogonal</source>
-        <translation type="unfinished">Beperk orthogonaal</translation>
-    </message>
-    <message>
-        <source>Restrict Nothing</source>
-        <translation type="unfinished">Niets beperken</translation>
-    </message>
-    <message>
-        <source>Set relative zero position</source>
-        <translation type="unfinished">Relatieve nulpositie instellen</translation>
-    </message>
-    <message>
-        <source>Lock relative zero position</source>
-        <translation type="unfinished">Relatieve nulpositie vergrendelen</translation>
-    </message>
-    <message>
-        <source>Exclusive Snap Mode</source>
-        <translation type="unfinished">Exclusieve snapmodus</translation>
-    </message>
-</context>
-<context>
-    <name>QG_WidgetPen</name>
-    <message>
-        <source>Pen</source>
-        <translation>Pen</translation>
-    </message>
-    <message>
-        <source>Line type:</source>
-        <translation>Lijntype:</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation>Breedte:</translation>
-    </message>
-    <message>
-        <source>Color:</source>
-        <translation>Kleur:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_WidthBox</name>
-    <message>
-        <source>By Layer</source>
-        <translation>Per laag</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation>Per blok</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation>Standaard</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation>0,00 mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation>0,05 mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation>0,09 mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation>0,13 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation>0,15 mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation>0,18 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation>0,20 mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation>0,25 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation>0,30 mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation>0,35 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation>0,40 mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation>0,50 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation>0,53 mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation>0,60 mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation>0,70 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation>0,80 mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation>0,90 mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation>1,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation>1,06 mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation>1,20 mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation>1,40 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation>1,58 mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation>2,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation>2,11 mm</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation>- Ongewijzigd -</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksSave</name>
-    <message>
-        <source>No block activated to save</source>
-        <translation type="unfinished">Geen blok geactiveerd om op te slaan</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDefault</name>
-    <message>
-        <source>Choose second edge</source>
-        <translation>Kies de tweede rand</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Terug</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleDiam</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="unfinished">Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="unfinished">Specificeer middelpunt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="unfinished">Specificeer radius cirkel</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>diameter=%1 is invalid</source>
-        <translation type="unfinished">diameter=%1 is ongeldig</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="unfinished">Specificeer de eerste lijn</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="unfinished">Specificeer de tweede lijn</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="unfinished">Specificeer de derde lijn</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
-    </message>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="unfinished">Specificeer het eerste punt op de raakcirkel</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="unfinished">Specificeer het tweede punt op de raakcirkel</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Selecteer het middelpunt van de raakcirkel</translation>
-    </message>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">Specificeer een lijn/boog/cirkel</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished">Specificeer de eerste lijn/boog/cirkel</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished">Specificeer de tweede lijn/boog/cirkel</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Selecteer het middelpunt van de raakcirkel</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">Specificeer een lijn/boog/cirkel</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
-    </message>
-    <message>
-        <source>Specify the another arc/circle</source>
-        <translation type="unfinished">Specificeer een andere boog/cirkel</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="unfinished">Specificeer een punt op de raakcirkel</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Selecteer het middelpunt van de raakcirkel</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Selecteer het middelpunt van de raakcirkel</translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished">Specificeer de eerste lijn/boog/cirkel</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished">Specificeer de tweede lijn/boog/cirkel</translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="unfinished">Specificeer derde lijn/boog/cirkel</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawEllipse4Points</name>
-    <message>
-        <source>Specify the first point on ellipse</source>
-        <translation type="unfinished">Specificeer het eerste punt op de ellips</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
-    </message>
-    <message>
-        <source>Specify the second point on ellipse</source>
-        <translation type="unfinished">Specificeer het tweede punt op de ellips</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Specify the third point on ellipse</source>
-        <translation type="unfinished">Specificeer het derde punt op de ellips</translation>
-    </message>
-    <message>
-        <source>Specify the fourth point on ellipse</source>
-        <translation type="unfinished">Specificeer het vierde punt op de ellips</translation>
-    </message>
-    <message>
-        <source>Can not determine uniquely an ellipse</source>
-        <translation type="unfinished">Kan niet slechts een ellips bepalen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawEllipseCenter3Points</name>
-    <message>
-        <source>Specify the center of ellipse</source>
-        <translation type="unfinished">Specificeer het middelpunt van de ellips</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
-    </message>
-    <message>
-        <source>Specify the first point on ellipse</source>
-        <translation type="unfinished">Specificeer het eerste punt op de ellips</translation>
-    </message>
-    <message>
-        <source>Specify the second point on ellipse</source>
-        <translation type="unfinished">Specificeer het tweede punt op de ellips</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Specify the third point on ellipse</source>
-        <translation type="unfinished">Specificeer het derde punt op de ellips</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawEllipseFociPoint</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="unfinished">Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Specify first focus of ellipse</source>
-        <translation type="unfinished">Specificeer eerste brandpunt van ellips</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
-    </message>
-    <message>
-        <source>Specify second focus of ellipse</source>
-        <translation type="unfinished">Specificeer tweede brandpunt van ellips</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Specify a point on ellipse or total distance to foci</source>
-        <translation type="unfinished">Specificeer een punt op de ellips, of de totale afstand tot de brandpunten</translation>
-    </message>
-    <message>
-        <source>specify a point on ellipse, or total distance to foci</source>
-        <translation type="unfinished">specificeer een punt op de ellips, of de totale afstand tot de brandpunten</translation>
-    </message>
-    <message>
-        <source>Total distance %1 is smaller than distance between foci</source>
-        <translation type="unfinished">Totale afstand %1 is kleiner dan afstand tussen brandpunten</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawEllipseInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="unfinished">Specificeer de eerste lijn</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="unfinished">Specificeer de tweede lijn</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="unfinished">Specificeer de derde lijn</translation>
-    </message>
-    <message>
-        <source>Specify the fourth line</source>
-        <translation type="unfinished">Specificeer de vierde lijn</translation>
-    </message>
-    <message>
-        <source>Can not determine uniquely an ellipse</source>
-        <translation type="unfinished">Kan niet slechts een ellips bepalen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineOrthTan</name>
-    <message>
-        <source>Select a line</source>
-        <translation type="unfinished">Selecteer een lijn</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
-    </message>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="unfinished">Cirkel, boog of ellips selecteren</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCorCor</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="unfinished">Specificeer eerste hoekpunt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="unfinished">Specificeer tweede hoekpunt</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="unfinished">Aantal:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished">Geen geldig aantal. Probeer 1...9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression.</source>
-        <translation type="unfinished">Geen geldige expressie.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="unfinished">Specificeer invoegpunt</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="unfinished">Voer tekst in:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="unfinished">Specificeer richting van offset</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyShapeText</name>
-    <message>
-        <source>Select text entity</source>
-        <translation type="unfinished">Tekstelement selecteren</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-    <message>
-        <source>Select entity to shape text to</source>
-        <translation type="unfinished">Element om tekst naar vorm te geven selecteren</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrimExcess</name>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="unfinished">Element om bij te snijden selecteren</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Terug</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">Geen element gevonden.</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="unfinished">Kies een element voor de opdracht</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>Select to modify attributes</source>
-        <translation type="unfinished">Selecteren om attributen te wijzigen</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
-    </message>
-    <message>
-        <source>Select to delete</source>
-        <translation type="unfinished">Selecteren om te verwijderen</translation>
-    </message>
-    <message>
-        <source>Select to delete immediately</source>
-        <translation type="unfinished">Selecteer om onmiddellijk te verwijderen</translation>
-    </message>
-    <message>
-        <source>Select to move</source>
-        <translation type="unfinished">Selecteren om te verplaatsen</translation>
-    </message>
-    <message>
-        <source>Select to rotate</source>
-        <translation type="unfinished">Selecteren om te roteren</translation>
-    </message>
-    <message>
-        <source>Select to scale</source>
-        <translation type="unfinished">Selecteren om te verschalen</translation>
-    </message>
-    <message>
-        <source>Select to mirror</source>
-        <translation type="unfinished">Selecteren om te spiegelen</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate</source>
-        <translation type="unfinished">Selecteren om te verplaatsen en roteren</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation</source>
-        <translation type="unfinished">Selecteren voor rotatie met twee assen</translation>
-    </message>
-    <message>
-        <source>Select to explode text</source>
-        <translation type="unfinished">Selecteer om tekst te splitsen</translation>
-    </message>
-    <message>
-        <source>Select to create block</source>
-        <translation type="unfinished">Selecteren om blok aan te maken</translation>
-    </message>
-    <message>
-        <source>Select to copy</source>
-        <translation type="unfinished">Selecteren om te kopiëren</translation>
-    </message>
-    <message>
-        <source>Select to cut</source>
-        <translation type="unfinished">Selecteren om te knippen</translation>
-    </message>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="unfinished">Geen element geselecteerd!</translation>
-    </message>
-    <message>
-        <source>Select to create offset</source>
-        <translation type="unfinished">Selecteren om offset aan te maken</translation>
-    </message>
-    <message>
-        <source>Select entities to order</source>
-        <translation type="unfinished">Selecteer elementen om opdracht te geven</translation>
-    </message>
-    <message>
-        <source>Select to explode block</source>
-        <translation type="unfinished">Selecteren om blok te splitsen</translation>
-    </message>
-    <message>
-        <source>Select to revert direction</source>
-        <translation type="unfinished">Selecteren om richting om te draaien</translation>
-    </message>
-    <message>
-        <source>Select to unlink shaped text</source>
-        <translation type="unfinished">Selecteren om vormgegeven tekst te ontkoppelen</translation>
     </message>
 </context>
 <context>

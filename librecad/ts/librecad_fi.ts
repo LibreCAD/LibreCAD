@@ -1075,6 +1075,214 @@ pisteiden välinen etäisyys=%2 on suurempi kuin halkaisija=%3</translation>
     </message>
 </context>
 <context>
+    <name>LC_ActionFileExportMakerCam</name>
+    <message>
+        <location filename="../src/actions/lc_actionfileexportmakercam.cpp" line="59"/>
+        <source>Export as</source>
+        <translation>Vie muodossa</translation>
+    </message>
+</context>
+<context>
+    <name>LC_DeviceOptions</name>
+    <message>
+        <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished">Muoto</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_deviceoptions.ui" line="20"/>
+        <source>Device</source>
+        <translation>Laite</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_deviceoptions.ui" line="27"/>
+        <source>Mouse</source>
+        <translation type="unfinished">Hiiri</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_deviceoptions.ui" line="32"/>
+        <source>Tablet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_deviceoptions.ui" line="37"/>
+        <source>Trackpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_deviceoptions.ui" line="42"/>
+        <source>Touchscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lc_deviceoptions.ui" line="53"/>
+        <source>Save</source>
+        <translation>Tallenna</translation>
+    </message>
+</context>
+<context>
+    <name>LC_SimpleTests</name>
+    <message>
+        <location filename="../src/test/lc_simpletests.cpp" line="34"/>
+        <source>De&amp;bugging</source>
+        <translation>Vi&amp;rheenetsintä</translation>
+    </message>
+    <message>
+        <location filename="../src/test/lc_simpletests.cpp" line="78"/>
+        <source>Insert Image</source>
+        <translation>Lisää kuva</translation>
+    </message>
+</context>
+<context>
+    <name>LC_WidgetOptionsDialog</name>
+    <message>
+        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="14"/>
+        <source>Widget Options</source>
+        <translation type="unfinished">Lisäohjelman valinnat</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="38"/>
+        <source>Toolbar</source>
+        <translation>Työkalupalkki</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="50"/>
+        <source>Icon Size</source>
+        <translation>Kuvakkeen koko</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="63"/>
+        <source>side length in pixels</source>
+        <translation>sivupituus pikseleissä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="79"/>
+        <source>Use themed icons</source>
+        <translation>Käytä teemalla varustettuja ikoneita</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="89"/>
+        <source>General</source>
+        <translation type="unfinished">Yleinen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="101"/>
+        <source>Style</source>
+        <translation type="unfinished">Tyyli</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="127"/>
+        <source>Style Sheet</source>
+        <translation>Tyylitiedosto</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="140"/>
+        <source>Input the path of a Qt style sheet.</source>
+        <translation>Anna Qt-tyylitiedoston polku.</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="156"/>
+        <source>Statusbar</source>
+        <translation>Tilapalkki</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="162"/>
+        <source>Height</source>
+        <translation>Korkeus</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="172"/>
+        <source>Font Size</source>
+        <translation>Fonttikoko</translation>
+    </message>
+</context>
+<context>
+    <name>LG_DimzerosBox</name>
+    <message>
+        <location filename="../src/ui/lg_dimzerosbox.cpp" line="9"/>
+        <source>select:</source>
+        <translation>valitse:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lg_dimzerosbox.cpp" line="12"/>
+        <source>remove left</source>
+        <translation>poista vasen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lg_dimzerosbox.cpp" line="16"/>
+        <source>remove right</source>
+        <translation>poista oikea</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lg_dimzerosbox.cpp" line="34"/>
+        <source>remove 0&apos;</source>
+        <translation>poista 0&apos;</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/lg_dimzerosbox.cpp" line="38"/>
+        <source>remove 0&quot;</source>
+        <translation>poista 0&quot;</translation>
+    </message>
+</context>
+<context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="32"/>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Viivan suhteellisen kulman valinnat</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="59"/>
+        <source>Spacing:</source>
+        <translation type="unfinished">Välit:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="84"/>
+        <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="122"/>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished">Etäisyys alkuperäisestä moniviivasta</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="97"/>
+        <source>Copies:</source>
+        <translation>Kopioita:</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetEnt</name>
+    <message>
+        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="42"/>
+        <source>Select object:</source>
+        <translation>Valitse kohde:</translation>
+    </message>
+    <message>
+        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="50"/>
+        <source>Cancel</source>
+        <translation>Peruuta</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetPoint</name>
+    <message>
+        <location filename="../src/plugins/intern/qc_actiongetpoint.cpp" line="119"/>
+        <source>Cancel</source>
+        <translation>Peruuta</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetSelect</name>
+    <message>
+        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="43"/>
+        <source>Select objects:</source>
+        <translation>Valitse kohteet:</translation>
+    </message>
+    <message>
+        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="56"/>
+        <source>Cancel</source>
+        <translation>Peruuta</translation>
+    </message>
+</context>
+<context>
     <name>QC_ApplicationWindow</name>
     <message>
         <source>Draft Mode</source>
@@ -1900,6 +2108,1882 @@ Automaattitallennus otettu pois käytöstä.</translation>
     </message>
 </context>
 <context>
+    <name>QG_ActionFactory</name>
+    <message>
+        <source>&amp;Export...</source>
+        <translation type="obsolete">&amp;Vie...</translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation type="obsolete">&amp;Sulje</translation>
+    </message>
+    <message>
+        <source>&amp;Print...</source>
+        <translation type="obsolete">&amp;Tulosta...</translation>
+    </message>
+    <message>
+        <source>&amp;Quit</source>
+        <translation type="obsolete">&amp;Lopeta</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ActionHandler</name>
+    <message>
+        <location filename="../src/ui/qg_actionhandler.cpp" line="1148"/>
+        <source>escape</source>
+        <comment>escape, go back from action steps</comment>
+        <translation type="unfinished">poistu</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ActiveLayerName</name>
+    <message>
+        <location filename="../src/ui/forms/qg_activelayername.ui" line="32"/>
+        <source>Selection</source>
+        <translation type="unfinished">Valinta</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_activelayername.ui" line="65"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_activelayername.ui" line="74"/>
+        <source>Current Layer</source>
+        <translation>Tämänhetkinen taso</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_activelayername.ui" line="93"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Tämänhetkisen aktiivisen tason nimi&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>QG_BlockDialog</name>
+    <message>
+        <location filename="../src/ui/forms/qg_blockdialog.ui" line="20"/>
+        <source>Block Settings</source>
+        <translation type="unfinished">Symbolin asetukset</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_blockdialog.ui" line="43"/>
+        <source>Block Name:</source>
+        <translation type="unfinished">Symbolin nimi:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_blockdialog.cpp" line="80"/>
+        <source>Renaming Block</source>
+        <translation type="unfinished">Symbolin uudelleennimeäminen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_blockdialog.cpp" line="81"/>
+        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
+        <translation type="unfinished">Symbolia ei voitu nimetä. Symboli nimeltä &quot;%1” on jo olemassa.</translation>
+    </message>
+</context>
+<context>
+    <name>QG_BlockWidget</name>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="155"/>
+        <source>Show all blocks</source>
+        <translation type="unfinished">Näytä kaikki symbolit</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="163"/>
+        <source>Hide all blocks</source>
+        <translation type="unfinished">Piilota kaikki symbolit</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="171"/>
+        <source>Create Block</source>
+        <translation>Luo symboli</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="180"/>
+        <source>Add an empty block</source>
+        <translation>Lisää tyhjä symboli</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="188"/>
+        <source>Remove the active block</source>
+        <translation>Poista valittu symboli</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="196"/>
+        <source>Rename the active block</source>
+        <translation>Nimeä uudelleen aktiivinen symboli</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="204"/>
+        <source>Edit the active block
+in a separate window</source>
+        <translation>Muokkaa aktiivista symbolia
+erillisessä ikkunassa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="213"/>
+        <source>save the active block to a file</source>
+        <translation>tallenna aktiivinen symboli tiedostoon</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="221"/>
+        <source>Insert the active block</source>
+        <translation>Lisää aktiivinen symboli</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="229"/>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="231"/>
+        <source>Looking for matching block names</source>
+        <translation type="unfinished">Etsitään yhteensopivia symbolin nimiä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="336"/>
+        <source>Block Menu</source>
+        <translation>Osavalikko</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="342"/>
+        <source>&amp;Defreeze all Blocks</source>
+        <translation type="unfinished">&amp;Sulata kaikki symbolit</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="344"/>
+        <source>&amp;Freeze all Blocks</source>
+        <translation>&amp;Jäädytä kaikki symbolit</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="346"/>
+        <source>&amp;Add Block</source>
+        <translation>&amp;Lisää symboli</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="348"/>
+        <source>&amp;Remove Block</source>
+        <translation>&amp;Poista symboli</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="350"/>
+        <source>&amp;Rename Block</source>
+        <translation>&amp;Nimeä symboli uudelleen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="352"/>
+        <source>&amp;Edit Block</source>
+        <translation>&amp;Muokkaa symbolia</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="354"/>
+        <source>&amp;Insert Block</source>
+        <translation>L&amp;isää symboli</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="356"/>
+        <source>&amp;Toggle Visibility</source>
+        <translation>&amp;Näytä/Piilota</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_blockwidget.cpp" line="358"/>
+        <source>&amp;Create New Block</source>
+        <translation>&amp;Luo uusi symboli</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarMain</name>
+    <message>
+        <source>Insert Image</source>
+        <translation type="obsolete">Lisää kuva</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ColorBox</name>
+    <message>
+        <location filename="../src/ui/qg_colorbox.cpp" line="80"/>
+        <source>Unchanged</source>
+        <translation type="unfinished">Ei muutoksia</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_colorbox.cpp" line="83"/>
+        <location filename="../src/ui/qg_colorbox.cpp" line="189"/>
+        <source>By Layer</source>
+        <translation>Tason mukaan</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_colorbox.cpp" line="84"/>
+        <source>By Block</source>
+        <translation>Symbolin mukaan</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_colorbox.cpp" line="87"/>
+        <location filename="../src/ui/qg_colorbox.cpp" line="229"/>
+        <source>Custom</source>
+        <translation>Mukautettu</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_colorbox.cpp" line="91"/>
+        <source>Red</source>
+        <translation>Punainen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_colorbox.cpp" line="94"/>
+        <source>Dark Red</source>
+        <translation>Tummanpunainen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_colorbox.cpp" line="95"/>
+        <source>Yellow</source>
+        <translation>Keltainen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_colorbox.cpp" line="96"/>
+        <source>Dark Yellow</source>
+        <translation>Tummankeltainen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_colorbox.cpp" line="97"/>
+        <source>Green</source>
+        <translation>Vihreä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_colorbox.cpp" line="98"/>
+        <source>Dark Green</source>
+        <translation>Tummanvihreä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_colorbox.cpp" line="99"/>
+        <source>Cyan</source>
+        <translation>Syaani</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_colorbox.cpp" line="100"/>
+        <source>Dark Cyan</source>
+        <translation>Tummansyaani</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_colorbox.cpp" line="101"/>
+        <source>Blue</source>
+        <translation>Sininen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_colorbox.cpp" line="102"/>
+        <source>Dark Blue</source>
+        <translation>Tummansininen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_colorbox.cpp" line="103"/>
+        <source>Magenta</source>
+        <translation>Magenta</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_colorbox.cpp" line="104"/>
+        <source>Dark Magenta</source>
+        <translation>Tummanmagenta</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_colorbox.cpp" line="105"/>
+        <source>Black / White</source>
+        <translation>Mustavalkoinen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_colorbox.cpp" line="108"/>
+        <source>Gray</source>
+        <translation>Harmaa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_colorbox.cpp" line="109"/>
+        <source>Dark Gray</source>
+        <translation>Tummanharmaa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_colorbox.cpp" line="110"/>
+        <source>Light Gray</source>
+        <translation>Vaaleanharmaa</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CommandEdit</name>
+    <message>
+        <location filename="../src/ui/qg_commandedit.cpp" line="244"/>
+        <source>clear</source>
+        <translation type="unfinished">tyhjennä</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CommandHistory</name>
+    <message>
+        <location filename="../src/ui/qg_commandhistory.cpp" line="38"/>
+        <source>&amp;Copy</source>
+        <translation>&amp;Kopioi</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_commandhistory.cpp" line="45"/>
+        <source>Select &amp;All</source>
+        <translation>Valitse &amp;kaikki</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_commandhistory.cpp" line="50"/>
+        <source>Clear</source>
+        <translation>Tyhjennä</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CommandWidget</name>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;type in coordinates or commands&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;kirjoita koordinaatit tai komennot&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_commandwidget.ui" line="14"/>
+        <source>Command Line</source>
+        <translation>Komentorivi</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
+        <source>Command history and output</source>
+        <translation>Komentohistoria ja ulostulot</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_commandwidget.ui" line="79"/>
+        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="158"/>
+        <source>Command:</source>
+        <translation>Komento:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_commandwidget.ui" line="116"/>
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="180"/>
+        <source>Unknown command: %1</source>
+        <translation>Tuntematon komento: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="219"/>
+        <source>escape</source>
+        <comment>escape, go back from action steps</comment>
+        <translation type="unfinished">poistu</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CoordinateWidget</name>
+    <message>
+        <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="32"/>
+        <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="76"/>
+        <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="92"/>
+        <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="131"/>
+        <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="141"/>
+        <source>Coordinates</source>
+        <translation>Koordinaatit</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DimensionLabelEditor</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="20"/>
+        <source>Dimension Label Editor</source>
+        <translation type="unfinished">Mittojen nimikkeen muokkaaja</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="32"/>
+        <source>Dimension Label:</source>
+        <translation type="unfinished">Mittojen nimike:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="57"/>
+        <source>Label:</source>
+        <translation type="unfinished">Nimike:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="130"/>
+        <source>Insert:</source>
+        <translation type="unfinished">Lisää:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="147"/>
+        <source>⌀ (Diameter)</source>
+        <translation>⌀ (halkaisija)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="162"/>
+        <source>π (Pi)</source>
+        <translation>π (pii)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="152"/>
+        <source>° (Degree)</source>
+        <translation>° (aste)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="157"/>
+        <source>± (Plus / Minus)</source>
+        <translation>± (plus/miinus)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="167"/>
+        <source>× (Times)</source>
+        <translation type="unfinished">× (kertominen)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="172"/>
+        <source>÷ (Division)</source>
+        <translation type="unfinished">÷ (jakaminen)</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgArc</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
+        <source>Arc</source>
+        <translation>Kaari</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgarc.ui" line="44"/>
+        <source>Layer:</source>
+        <translation>Taso:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgarc.ui" line="71"/>
+        <source>Geometry</source>
+        <translation>Geometria</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgarc.ui" line="77"/>
+        <source>Radius:</source>
+        <translation>Säde:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgarc.ui" line="97"/>
+        <source>Center (y):</source>
+        <translation type="unfinished">Keskikohta (y):</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgarc.ui" line="117"/>
+        <source>Center (x):</source>
+        <translation type="unfinished">Keskikohta (x):</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgarc.ui" line="137"/>
+        <source>Start Angle:</source>
+        <translation type="unfinished">Lähtökulma:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgarc.ui" line="167"/>
+        <source>End Angle:</source>
+        <translation type="unfinished">Päätekulma:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgarc.ui" line="209"/>
+        <source>Reversed</source>
+        <translation type="unfinished">Suunta vaihdettu</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgAttributes</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgattributes.ui" line="26"/>
+        <source>Attributes</source>
+        <translation type="unfinished">Määritteet</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgattributes.ui" line="44"/>
+        <source>Layer:</source>
+        <translation>Taso:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgattributes.ui" line="69"/>
+        <source>Apply attributes also to all sub-entities of selected INSERT.
+This recursively modifies all entities of the Block itself.</source>
+        <translation type="unfinished">Käytä määritteitä myös kaikkiin valitun INSERTIN alaolioihin.
+Tämä vastaavasti muuttaa kaikkia itse symbolin olioita.</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgattributes.ui" line="73"/>
+        <source>Apply attributes Block-deep</source>
+        <translation type="unfinished">Käytä määritteitä symbolin laajuisesti</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgCircle</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgcircle.ui" line="26"/>
+        <source>Circle</source>
+        <translation>Ympyrä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgcircle.ui" line="44"/>
+        <source>Layer:</source>
+        <translation>Taso:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgcircle.ui" line="71"/>
+        <source>Geometry</source>
+        <translation>Geometria</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgcircle.ui" line="77"/>
+        <source>Radius:</source>
+        <translation>Säde:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgcircle.ui" line="97"/>
+        <source>Center (y):</source>
+        <translation type="unfinished">Keskikohta (y):</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgcircle.ui" line="117"/>
+        <source>Center (x):</source>
+        <translation type="unfinished">Keskikohta (x):</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgDimLinear</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="20"/>
+        <source>Linear Dimension</source>
+        <translation type="unfinished">Lineaarinen mitta</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="47"/>
+        <source>Layer:</source>
+        <translation>Taso:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="79"/>
+        <source>Geometry</source>
+        <translation>Geometria</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="103"/>
+        <source>Angle:</source>
+        <translation>Kulma:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgDimension</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgdimension.ui" line="20"/>
+        <source>Dimension</source>
+        <translation type="unfinished">Mitta</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgdimension.ui" line="47"/>
+        <source>Layer:</source>
+        <translation>Taso:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgEllipse</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="26"/>
+        <source>Ellipse</source>
+        <translation>Ellipsi</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="44"/>
+        <source>Layer:</source>
+        <translation>Taso:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="71"/>
+        <source>Geometry</source>
+        <translation>Geometria</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="77"/>
+        <source>Center (y):</source>
+        <translation type="unfinished">Keskikohta (y):</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="97"/>
+        <source>Center (x):</source>
+        <translation type="unfinished">Keskikohta (x):</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="149"/>
+        <source>End Angle:</source>
+        <translation type="unfinished">Päätekulma:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="179"/>
+        <source>Start Angle:</source>
+        <translation type="unfinished">Lähtökulma:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="189"/>
+        <source>Rotation:</source>
+        <translation type="unfinished">Kierto:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="219"/>
+        <source>Minor:</source>
+        <translation type="unfinished">Pieni:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="229"/>
+        <source>Major:</source>
+        <translation type="unfinished">Suuri:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="249"/>
+        <source>Reversed</source>
+        <translation type="unfinished">Suunta vaihdettu</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgFontConversion</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="15"/>
+        <source>Convert Fonts</source>
+        <translation type="unfinished">Muunna fontit</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="21"/>
+        <source>Font family:</source>
+        <translation type="unfinished">Fonttiperhe:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="40"/>
+        <source>Font file:</source>
+        <translation type="unfinished">Fonttitiedosto:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="57"/>
+        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="74"/>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="64"/>
+        <source>Save as:</source>
+        <translation type="unfinished">Tallenna nimellä:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="81"/>
+        <source>Letter spacing:</source>
+        <translation type="unfinished">Merkkiväli:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="95"/>
+        <source>Author:</source>
+        <translation type="unfinished">Tekijä:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="115"/>
+        <source>Word spacing:</source>
+        <translation type="unfinished">Sanojen välit:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="129"/>
+        <source>License:</source>
+        <translation type="unfinished">Lisenssi:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="142"/>
+        <source>Line spacing:</source>
+        <translation type="unfinished">Viivojen välit:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="156"/>
+        <source>Writing System:</source>
+        <translation type="unfinished">Kirjoitusjärjestelmä:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="182"/>
+        <source>Preview</source>
+        <translation type="unfinished">Esikatselu</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgfontconversion.cpp" line="61"/>
+        <source>Create</source>
+        <translation type="unfinished">Luo</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgfontconversion.cpp" line="129"/>
+        <location filename="../src/ui/forms/qg_dlgfontconversion.cpp" line="269"/>
+        <source> - Searching</source>
+        <translation type="unfinished"> - Etsitään</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgfontconversion.cpp" line="192"/>
+        <source>LibreCAD Font Files(*.lff)</source>
+        <translation type="unfinished">LibreCAD-fonttitiedostot(*.lff)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgfontconversion.cpp" line="274"/>
+        <source> - Rendering</source>
+        <translation type="unfinished"> - Muodostetaan kuvaa</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgHatch</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlghatch.ui" line="14"/>
+        <source>Choose Hatch Attributes</source>
+        <translation>Valitse täyttökuvion ominaisuudet</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlghatch.ui" line="22"/>
+        <source>Pattern</source>
+        <translation type="unfinished">Kuvio</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlghatch.ui" line="34"/>
+        <source>Angle:</source>
+        <translation>Kulma:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlghatch.ui" line="44"/>
+        <source>Scale:</source>
+        <translation type="unfinished">Mittakaava:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlghatch.ui" line="57"/>
+        <source>Solid Fill</source>
+        <translation type="unfinished">Kiinteä täyttö</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlghatch.ui" line="67"/>
+        <source>Preview</source>
+        <translation type="unfinished">Esikatselu</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlghatch.ui" line="73"/>
+        <source>Enable Preview</source>
+        <translation>Ota esikatselu käyttöön</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgImage</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimage.ui" line="26"/>
+        <source>Image</source>
+        <translation>Kuva</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimage.ui" line="44"/>
+        <source>Layer:</source>
+        <translation>Taso:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimage.ui" line="80"/>
+        <source>Geometry</source>
+        <translation>Geometria</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimage.ui" line="86"/>
+        <source>Width:</source>
+        <translation>Leveys:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimage.ui" line="116"/>
+        <source>Height:</source>
+        <translation>Korkeus:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimage.ui" line="123"/>
+        <source>insert (x):</source>
+        <translation type="unfinished">lisää (x):</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimage.ui" line="130"/>
+        <source>Scale:</source>
+        <translation type="unfinished">Mittakaava:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimage.ui" line="166"/>
+        <source>Size (px):</source>
+        <translation type="unfinished">Koko (px):</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimage.ui" line="183"/>
+        <source>path:</source>
+        <translation type="unfinished">polku:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimage.ui" line="206"/>
+        <source>insert (y):</source>
+        <translation type="unfinished">lisää (y):</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimage.ui" line="223"/>
+        <source>Angle:</source>
+        <translation>Kulma:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimage.ui" line="260"/>
+        <source>DPI</source>
+        <translation type="unfinished">DPI</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgInitial</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlginitial.ui" line="14"/>
+        <source>Welcome</source>
+        <translation>Tervetuloa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlginitial.ui" line="64"/>
+        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
+&lt;/font&gt;
+&lt;br&gt;
+Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
+(You can changes these settings later.)</source>
+        <translation type="unfinished">&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Tervetuloa LibreCADiin&lt;/b&gt;
+&lt;/font&gt;
+&lt;br&gt;
+Valitse yksikkö, jota haluat käyttää uusille piirustuksille ja haluamallesi kielelle.&lt;br&gt;
+(Voit muuttaa asetuksia myöhemmin.)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlginitial.ui" line="104"/>
+        <source>Default Unit:</source>
+        <translation>Oletusyksikkö:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlginitial.ui" line="114"/>
+        <source>GUI Language:</source>
+        <translation>Käyttöliittymän kieli:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlginitial.ui" line="124"/>
+        <source>Command Language:</source>
+        <translation>Komentokieli:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgInsert</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlginsert.ui" line="26"/>
+        <source>Insert</source>
+        <translation type="unfinished">Lisää</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlginsert.ui" line="44"/>
+        <source>Layer:</source>
+        <translation>Taso:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlginsert.ui" line="71"/>
+        <source>Geometry</source>
+        <translation>Geometria</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlginsert.ui" line="129"/>
+        <source>Insertion point (x):</source>
+        <translation type="unfinished">Lisäyspiste (x):</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlginsert.ui" line="139"/>
+        <source>Insertion point (y):</source>
+        <translation type="unfinished">Lisäyspiste (y):</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlginsert.ui" line="159"/>
+        <source>Scale X:</source>
+        <translation type="unfinished">Mittakaava X:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlginsert.ui" line="179"/>
+        <source>Scale Y:</source>
+        <translation type="unfinished">Mittakaava Y:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlginsert.ui" line="189"/>
+        <source>Angle:</source>
+        <translation>Kulma:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlginsert.ui" line="209"/>
+        <source>Rows:</source>
+        <translation type="unfinished">Rivit:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlginsert.ui" line="239"/>
+        <source>Columns:</source>
+        <translation>Sarakkeet:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlginsert.ui" line="249"/>
+        <source>Row Spacing:</source>
+        <translation type="unfinished">Riviväli:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlginsert.ui" line="279"/>
+        <source>Column Spacing:</source>
+        <translation type="unfinished">Sarakeväli:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgLine</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgline.ui" line="29"/>
+        <source>Line</source>
+        <translation>Viiva</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgline.ui" line="47"/>
+        <source>Layer:</source>
+        <translation>Taso:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgline.ui" line="80"/>
+        <source>Geometry</source>
+        <translation>Geometria</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgline.ui" line="86"/>
+        <source>End point (x):</source>
+        <translation type="unfinished">Päätepiste (x):</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgline.ui" line="116"/>
+        <source>End point (y):</source>
+        <translation type="unfinished">Päätepiste (y):</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgline.ui" line="126"/>
+        <source>Start point (y):</source>
+        <translation type="unfinished">Lähtöpiste (y):</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgline.ui" line="146"/>
+        <source>Start point (x):</source>
+        <translation type="unfinished">Lähtöpiste (x):</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgMText</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="14"/>
+        <source>MText</source>
+        <translation>Mteksti</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="39"/>
+        <source>Layer:</source>
+        <translation>Taso:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="72"/>
+        <source>Font</source>
+        <translation>Fontti</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="91"/>
+        <source>&amp;Height:</source>
+        <translation>&amp;Korkeus:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="146"/>
+        <source>&amp;Line spacing:</source>
+        <translation type="unfinished">&amp;Viivaväli:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="175"/>
+        <source>&amp;Default line spacing</source>
+        <translation type="unfinished">&amp;Oletusviivaväli</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="178"/>
+        <source>Alt+D</source>
+        <translation>Alt+D</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="198"/>
+        <source>Alignment</source>
+        <translation type="unfinished">Kohdistus</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="216"/>
+        <source>Top Right</source>
+        <translation type="unfinished">Yläoikea</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="245"/>
+        <source>Top Left</source>
+        <translation type="unfinished">Ylävasen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="274"/>
+        <source>Middle Left</source>
+        <translation type="unfinished">Keskivasen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="303"/>
+        <source>Middle Center</source>
+        <translation type="unfinished">Keskiosa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="332"/>
+        <source>Middle Right</source>
+        <translation type="unfinished">Keskioikea</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="361"/>
+        <source>Bottom Left</source>
+        <translation type="unfinished">Alavasen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="390"/>
+        <source>Bottom Right</source>
+        <translation type="unfinished">Alaoikea</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="419"/>
+        <source>Bottom Center</source>
+        <translation type="unfinished">Alakeskiosa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="448"/>
+        <source>Top Center</source>
+        <translation type="unfinished">Yläkeskiosa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="480"/>
+        <source>Angle</source>
+        <translation>Kulma</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="523"/>
+        <source>Text:</source>
+        <translation>Teksti:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="549"/>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="560"/>
+        <source>Clear Text</source>
+        <translation type="unfinished">Tyhjennä teksti</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="574"/>
+        <source>Load Text From File</source>
+        <translation>Lataa teksti tiedostosta</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="588"/>
+        <source>Save Text To File</source>
+        <translation>Tallenna teksti tiedostoon</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="602"/>
+        <source>Cut</source>
+        <translation>Leikkaa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="616"/>
+        <source>Copy</source>
+        <translation>Kopioi</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="630"/>
+        <source>Paste</source>
+        <translation>Liitä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="671"/>
+        <source>Insert Symbol</source>
+        <translation type="unfinished">Lisää symboli</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="684"/>
+        <source>Diameter (⌀)</source>
+        <translation type="unfinished">Halkaisija (⌀)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="689"/>
+        <source>Degree (°)</source>
+        <translation type="unfinished">Aste (°)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="694"/>
+        <source>Plus / Minus (±)</source>
+        <translation>Plus/miinus (±)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="699"/>
+        <source>At (@)</source>
+        <translation type="unfinished">Ät-merkki (@)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="704"/>
+        <source>Hash (#)</source>
+        <translation type="unfinished">Ristikkomerkki (#)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="709"/>
+        <source>Dollar ($)</source>
+        <translation>Dollari ($)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="714"/>
+        <source>Copyright (©)</source>
+        <translation>Tekijänoikeus (©)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="719"/>
+        <source>Registered (®)</source>
+        <translation type="unfinished">Rekisteröity (®)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="724"/>
+        <source>Paragraph (§)</source>
+        <translation type="unfinished">Kappale (§)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="729"/>
+        <source>Pi (π)</source>
+        <translation>Pii (π)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="734"/>
+        <source>Pound (£)</source>
+        <translation>Punta (£)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="739"/>
+        <source>Yen (¥)</source>
+        <translation>Jeni (¥)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="744"/>
+        <source>Times (×)</source>
+        <translation>Kertaa (×)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="749"/>
+        <source>Division (÷)</source>
+        <translation type="unfinished">Jako (÷)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="760"/>
+        <source>Insert Unicode</source>
+        <translation type="unfinished">Lisää Unicode</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="766"/>
+        <source>Page:</source>
+        <translation type="unfinished">Sivu:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="776"/>
+        <source>Char:</source>
+        <translation type="unfinished">Merkki:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="799"/>
+        <source>[0000-007F] Basic Latin</source>
+        <translation type="unfinished">[0000-007F] Basic Latin</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="804"/>
+        <source>[0080-00FF] Latin-1 Supplementary</source>
+        <translation type="unfinished">[0080-00FF] Latin-1 Supplementary</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="809"/>
+        <source>[0100-017F] Latin Extended-A</source>
+        <translation type="unfinished">[0100-017F] Latin Extended-A</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="814"/>
+        <source>[0180-024F] Latin Extended-B</source>
+        <translation type="unfinished">[0180-024F] Latin Extended-B</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="819"/>
+        <source>[0250-02AF] IPA Extensions</source>
+        <translation type="unfinished">[0250-02AF] IPA Extensions</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="824"/>
+        <source>[02B0-02FF] Spacing Modifier Letters</source>
+        <translation type="unfinished">[02B0-02FF] Spacing Modifier Letters</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="829"/>
+        <source>[0300-036F] Combining Diacritical Marks</source>
+        <translation type="unfinished">[0300-036F] Combining Diacritical Marks</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="834"/>
+        <source>[0370-03FF] Greek and Coptic</source>
+        <translation type="unfinished">[0370-03FF] Greek and Coptic</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="839"/>
+        <source>[0400-04FF] Cyrillic</source>
+        <translation type="unfinished">[0400-04FF] Cyrillic</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="844"/>
+        <source>[0500-052F] Cyrillic Supplementary</source>
+        <translation type="unfinished">[0500-052F] Cyrillic Supplementary</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="849"/>
+        <source>[0530-058F] Armenian</source>
+        <translation type="unfinished">[0530-058F] Armenian</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="854"/>
+        <source>[0590-05FF] Hebrew</source>
+        <translation type="unfinished">[0590-05FF] Hebrew</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="859"/>
+        <source>[0600-06FF] Arabic</source>
+        <translation>[0600-06FF] Arabic</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="864"/>
+        <source>[0700-074F] Syriac</source>
+        <translation>[0700-074F] Syriac</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="869"/>
+        <source>[0780-07BF] Thaana</source>
+        <translation type="unfinished">[0780-07BF] Thaana</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="874"/>
+        <source>[0900-097F] Devanagari</source>
+        <translation type="unfinished">[0900-097F] Devanagari</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="879"/>
+        <source>[0980-09FF] Bengali</source>
+        <translation type="unfinished">[0980-09FF] Bengali</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="884"/>
+        <source>[0A00-0A7F] Gurmukhi</source>
+        <translation type="unfinished">[0A00-0A7F] Gurmukhi</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="889"/>
+        <source>[0A80-0AFF] Gujarati</source>
+        <translation type="unfinished">[0A80-0AFF] Gujarati</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="894"/>
+        <source>[0B00-0B7F] Oriya</source>
+        <translation type="unfinished">[0B00-0B7F] Oriya</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="899"/>
+        <source>[0B80-0BFF] Tamil</source>
+        <translation type="unfinished">[0B80-0BFF] Tamil</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="904"/>
+        <source>[0C00-0C7F] Telugu</source>
+        <translation type="unfinished">[0C00-0C7F] Telugu</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="909"/>
+        <source>[0C80-0CFF] Kannada</source>
+        <translation type="unfinished">[0C80-0CFF] Kannada</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="914"/>
+        <source>[0D00-0D7F] Malayalam</source>
+        <translation type="unfinished">[0D00-0D7F] Malayalam</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="919"/>
+        <source>[0D80-0DFF] Sinhala</source>
+        <translation type="unfinished">[0D80-0DFF] Sinhala</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="924"/>
+        <source>[0E00-0E7F] Thai</source>
+        <translation type="unfinished">[0E00-0E7F] Thai</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="929"/>
+        <source>[0E80-0EFF] Lao</source>
+        <translation type="unfinished">[0E80-0EFF] Lao</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="934"/>
+        <source>[0F00-0FFF] Tibetan</source>
+        <translation type="unfinished">[0F00-0FFF] Tibetan</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="939"/>
+        <source>[1000-109F] Myanmar</source>
+        <translation type="unfinished">[1000-109F] Myanmar</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="944"/>
+        <source>[10A0-10FF] Georgian</source>
+        <translation type="unfinished">[10A0-10FF] Georgian</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="949"/>
+        <source>[1100-11FF] Hangul Jamo</source>
+        <translation type="unfinished">[1100-11FF] Hangul Jamo</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="954"/>
+        <source>[1200-137F] Ethiopic</source>
+        <translation type="unfinished">[1200-137F] Ethiopic</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="959"/>
+        <source>[13A0-13FF] Cherokee</source>
+        <translation type="unfinished">[13A0-13FF] Cherokee</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="964"/>
+        <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
+        <translation type="unfinished">[1400-167F] Unified Canadian Aboriginal Syllabic</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="969"/>
+        <source>[1680-169F] Ogham</source>
+        <translation type="unfinished">[1680-169F] Ogham</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="974"/>
+        <source>[16A0-16FF] Runic</source>
+        <translation type="unfinished">[16A0-16FF] Runic</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="979"/>
+        <source>[1700-171F] Tagalog</source>
+        <translation type="unfinished">[1700-171F] Tagalog</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="984"/>
+        <source>[1720-173F] Hanunoo</source>
+        <translation type="unfinished">[1720-173F] Hanunoo</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="989"/>
+        <source>[1740-175F] Buhid</source>
+        <translation type="unfinished">[1740-175F] Buhid</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="994"/>
+        <source>[1760-177F] Tagbanwa</source>
+        <translation type="unfinished">[1760-177F] Tagbanwa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="999"/>
+        <source>[1780-17FF] Khmer</source>
+        <translation type="unfinished">[1780-17FF] Khmer</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1004"/>
+        <source>[1800-18AF] Mongolian</source>
+        <translation type="unfinished">[1800-18AF] Mongolian</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1009"/>
+        <source>[1E00-1EFF] Latin Extended Additional</source>
+        <translation type="unfinished">[1E00-1EFF] Latin Extended Additional</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1014"/>
+        <source>[1F00-1FFF] Greek Extended</source>
+        <translation type="unfinished">[1F00-1FFF] Greek Extended</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1019"/>
+        <source>[2000-206F] General Punctuation</source>
+        <translation type="unfinished">[2000-206F] General Punctuation</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1024"/>
+        <source>[2070-209F] Superscripts and Subscripts</source>
+        <translation type="unfinished">[2070-209F] Superscripts and Subscripts</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1029"/>
+        <source>[20A0-20CF] Currency Symbols</source>
+        <translation type="unfinished">[20A0-20CF] Currency Symbols</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1034"/>
+        <source>[20D0-20FF] Combining Marks for Symbols</source>
+        <translation type="unfinished">[20D0-20FF] Combining Marks for Symbols</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1039"/>
+        <source>[2100-214F] Letterlike Symbols</source>
+        <translation type="unfinished">[2100-214F] Letterlike Symbols</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1044"/>
+        <source>[2150-218F] Number Forms</source>
+        <translation type="unfinished">[2150-218F] Number Forms</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1049"/>
+        <source>[2190-21FF] Arrows</source>
+        <translation type="unfinished">[2190-21FF] Arrows</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1054"/>
+        <source>[2200-22FF] Mathematical Operators</source>
+        <translation type="unfinished">[2200-22FF] Mathematical Operators</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1059"/>
+        <source>[2300-23FF] Miscellaneous Technical</source>
+        <translation type="unfinished">[2300-23FF] Miscellaneous Technical</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1064"/>
+        <source>[2400-243F] Control Pictures</source>
+        <translation type="unfinished">[2400-243F] Control Pictures</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1069"/>
+        <source>[2440-245F] Optical Character Recognition</source>
+        <translation type="unfinished">[2440-245F] Optical Character Recognition</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1074"/>
+        <source>[2460-24FF] Enclosed Alphanumerics</source>
+        <translation type="unfinished">[2460-24FF] Enclosed Alphanumerics</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1079"/>
+        <source>[2500-257F] Box Drawing</source>
+        <translation type="unfinished">[2500-257F] Box Drawing</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1084"/>
+        <source>[2580-259F] Block Elements</source>
+        <translation type="unfinished">[2580-259F] Block Elements</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1089"/>
+        <source>[25A0-25FF] Geometric Shapes</source>
+        <translation type="unfinished">[25A0-25FF] Geometric Shapes</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1094"/>
+        <source>[2600-26FF] Miscellaneous Symbols</source>
+        <translation type="unfinished">[2600-26FF] Miscellaneous Symbols</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1099"/>
+        <source>[2700-27BF] Dingbats</source>
+        <translation type="unfinished">[2700-27BF] Dingbats</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1104"/>
+        <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
+        <translation type="unfinished">[27C0-27EF] Miscellaneous Mathematical Symbols-A</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1109"/>
+        <source>[27F0-27FF] Supplemental Arrows-A</source>
+        <translation type="unfinished">[27F0-27FF] Supplemental Arrows-A</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1114"/>
+        <source>[2800-28FF] Braille Patterns</source>
+        <translation type="unfinished">[2800-28FF] Braille Patterns</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1119"/>
+        <source>[2900-297F] Supplemental Arrows-B</source>
+        <translation type="unfinished">[2900-297F] Supplemental Arrows-B</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1124"/>
+        <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
+        <translation type="unfinished">[2980-29FF] Miscellaneous Mathematical Symbols-B</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1129"/>
+        <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
+        <translation type="unfinished">[2A00-2AFF] Supplemental Mathematical Operators</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1134"/>
+        <source>[2E80-2EFF] CJK Radicals Supplement</source>
+        <translation type="unfinished">[2E80-2EFF] CJK Radicals Supplement</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1139"/>
+        <source>[2F00-2FDF] Kangxi Radicals</source>
+        <translation type="unfinished">[2F00-2FDF] Kangxi Radicals</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1144"/>
+        <source>[2FF0-2FFF] Ideographic Description Characters</source>
+        <translation type="unfinished">[2FF0-2FFF] Ideographic Description Characters</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1149"/>
+        <source>[3000-303F] CJK Symbols and Punctuation</source>
+        <translation type="unfinished">[3000-303F] CJK Symbols and Punctuation</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1154"/>
+        <source>[3040-309F] Hiragana</source>
+        <translation type="unfinished">[3040-309F] Hiragana</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1159"/>
+        <source>[30A0-30FF] Katakana</source>
+        <translation type="unfinished">[30A0-30FF] Katakana</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1164"/>
+        <source>[3100-312F] Bopomofo</source>
+        <translation type="unfinished">[3100-312F] Bopomofo</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1169"/>
+        <source>[3130-318F] Hangul Compatibility Jamo</source>
+        <translation type="unfinished">[3130-318F] Hangul Compatibility Jamo</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1174"/>
+        <source>[3190-319F] Kanbun</source>
+        <translation type="unfinished">[3190-319F] Kanbun</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1179"/>
+        <source>[31A0-31BF] Bopomofo Extended</source>
+        <translation type="unfinished">[31A0-31BF] Bopomofo Extended</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1184"/>
+        <source>[3200-32FF] Enclosed CJK Letters and Months</source>
+        <translation type="unfinished">[3200-32FF] Enclosed CJK Letters and Months</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1189"/>
+        <source>[3300-33FF] CJK Compatibility</source>
+        <translation type="unfinished">[3300-33FF] CJK Compatibility</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1194"/>
+        <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
+        <translation type="unfinished">[3400-4DBF] CJK Unified Ideographs Extension A</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1199"/>
+        <source>[4E00-9FAF] CJK Unified Ideographs</source>
+        <translation type="unfinished">[4E00-9FAF] CJK Unified Ideographs</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1204"/>
+        <source>[A000-A48F] Yi Syllables</source>
+        <translation type="unfinished">[A000-A48F] Yi Syllables</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1209"/>
+        <source>[A490-A4CF] Yi Radicals</source>
+        <translation type="unfinished">[A490-A4CF] Yi Radicals</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1214"/>
+        <source>[AC00-D7AF] Hangul Syllables</source>
+        <translation type="unfinished">[AC00-D7AF] Hangul Syllables</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1219"/>
+        <source>[D800-DBFF] High Surrogates</source>
+        <translation type="unfinished">[D800-DBFF] High Surrogates</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1224"/>
+        <source>[DC00-DFFF] Low Surrogate Area</source>
+        <translation type="unfinished">[DC00-DFFF] Low Surrogate Area</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1229"/>
+        <source>[E000-F8FF] Private Use Area</source>
+        <translation type="unfinished">[E000-F8FF] Private Use Area</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1234"/>
+        <source>[F900-FAFF] CJK Compatibility Ideographs</source>
+        <translation type="unfinished">[F900-FAFF] CJK Compatibility Ideographs</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1239"/>
+        <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
+        <translation type="unfinished">[FB00-FB4F] Alphabetic Presentation Forms</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1244"/>
+        <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
+        <translation type="unfinished">[FB50-FDFF] Arabic Presentation Forms-A</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1249"/>
+        <source>[FE00-FE0F] Variation Selectors</source>
+        <translation type="unfinished">[FE00-FE0F] Variation Selectors</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1254"/>
+        <source>[FE20-FE2F] Combining Half Marks</source>
+        <translation type="unfinished">[FE20-FE2F] Combining Half Marks</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1259"/>
+        <source>[FE30-FE4F] CJK Compatibility Forms</source>
+        <translation type="unfinished">[FE30-FE4F] CJK Compatibility Forms</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1264"/>
+        <source>[FE50-FE6F] Small Form Variants</source>
+        <translation type="unfinished">[FE50-FE6F] Small Form Variants</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1269"/>
+        <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
+        <translation type="unfinished">[FE70-FEFF] Arabic Presentation Forms-B</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1274"/>
+        <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
+        <translation type="unfinished">[FF00-FFEF] Halfwidth and Fullwidth Forms</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1279"/>
+        <source>[FFF0-FFFF] Specials</source>
+        <translation type="unfinished">[FFF0-FFFF] Specials</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1284"/>
+        <source>[10300-1032F] Old Italic</source>
+        <translation type="unfinished">[10300-1032F] Old Italic</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1289"/>
+        <source>[10330-1034F] Gothic</source>
+        <translation type="unfinished">[10330-1034F] Gothic</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1294"/>
+        <source>[10400-1044F] Deseret</source>
+        <translation type="unfinished">[10400-1044F] Deseret</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1299"/>
+        <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
+        <translation type="unfinished">[1D000-1D0FF] Byzantine Musical Symbols</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1304"/>
+        <source>[1D100-1D1FF] Musical Symbols</source>
+        <translation type="unfinished">[1D100-1D1FF] Musical Symbols</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1309"/>
+        <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
+        <translation type="unfinished">[1D400-1D7FF] Mathematical Alphanumeric Symbols</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1314"/>
+        <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
+        <translation type="unfinished">[20000-2A6DF] CJK Unified Ideographs Extension B</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1319"/>
+        <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
+        <translation type="unfinished">[2F800-2FA1F] CJK Compatibility Ideographs Supplement</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1324"/>
+        <source>[E0000-E007F] Tags</source>
+        <translation type="unfinished">[E0000-E007F] Tags</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1329"/>
+        <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
+        <translation type="unfinished">[F0000-FFFFD] Supplementary Private Use Area-A</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1334"/>
+        <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
+        <translation type="unfinished">[100000-10FFFD] Supplementary Private Use Area-B</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgMirror</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmirror.ui" line="26"/>
+        <source>Mirroring Options</source>
+        <translation type="unfinished">Peilaamisen valinnat</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmirror.ui" line="70"/>
+        <source>Number of copies</source>
+        <translation type="unfinished">Kopioiden lukumäärä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmirror.ui" line="88"/>
+        <source>&amp;Delete Original</source>
+        <translation type="unfinished">&amp;Poista alkuperäinen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmirror.ui" line="107"/>
+        <source>&amp;Keep Original</source>
+        <translation type="unfinished">&amp;Säilytä alkuperäinen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmirror.ui" line="39"/>
+        <source>Use current &amp;attributes</source>
+        <translation type="unfinished">Käytä nykyisiä &amp;määritteitä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmirror.ui" line="46"/>
+        <source>Use current &amp;layer</source>
+        <translation type="unfinished">Käytä nykyistä &amp;tasoa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmirror.ui" line="53"/>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgMove</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="26"/>
+        <source>Move/Copy Options</source>
+        <translation type="unfinished">Siirto-/kopiovalinnat</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="32"/>
+        <source>Number of copies</source>
+        <translation>Kopioiden lukumäärä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="50"/>
+        <source>&amp;Delete Original</source>
+        <translation>&amp;Poista alkuperäinen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="69"/>
+        <source>&amp;Keep Original</source>
+        <translation>&amp;Säilytä alkuperäinen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="88"/>
+        <source>&amp;Multiple Copies</source>
+        <translation>&amp;Useita kopioita</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="108"/>
+        <source>Quantity</source>
+        <translation type="unfinished">Määrä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="115"/>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="142"/>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="169"/>
+        <source>Number of copies. Maximum 100</source>
+        <translation>Kopioiden määrä. Enintään 100</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="135"/>
+        <source>Offset X</source>
+        <translation type="unfinished">Siirto X</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="162"/>
+        <source>Offset Y</source>
+        <translation type="unfinished">Siirto Y</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="196"/>
+        <source>Use current &amp;attributes</source>
+        <translation type="unfinished">Käytä nykyisiä &amp;määritteitä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="203"/>
+        <source>Use current &amp;layer</source>
+        <translation>Käytä nykyistä &amp;tasoa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmove.ui" line="179"/>
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgMoveRotate</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="26"/>
+        <source>Move/Rotate Options</source>
+        <translation type="unfinished">Siirrä/kierrä valinta</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="41"/>
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="54"/>
+        <source>Ctrl+S</source>
+        <translation>Ctrl+S</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="63"/>
+        <source>&amp;Angle (a):</source>
+        <translation type="unfinished">&amp;Kulma (a):</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="97"/>
+        <source>Use current &amp;attributes</source>
+        <translation type="unfinished">Käytä nykyisiä &amp;määritteitä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="104"/>
+        <source>Use current &amp;layer</source>
+        <translation type="unfinished">Käytä nykyistä &amp;tasoa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="113"/>
+        <source>Number of copies</source>
+        <translation>Kopioiden lukumäärä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="131"/>
+        <source>&amp;Delete Original</source>
+        <translation>&amp;Poista alkuperäinen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="150"/>
+        <source>&amp;Keep Original</source>
+        <translation>&amp;Säilytä alkuperäinen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="169"/>
+        <source>&amp;Multiple Copies</source>
+        <translation>&amp;Useita kopioita</translation>
+    </message>
+</context>
+<context>
     <name>QG_DlgOptionsDrawing</name>
     <message>
         <source>Paper &amp;Height:</source>
@@ -2425,6 +4509,413 @@ Automaattitallennus otettu pois käytöstä.</translation>
     </message>
 </context>
 <context>
+    <name>QG_DlgOptionsGeneral</name>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Commands 2 characters in length are automatically accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kahden kirjaimen pituiset komennot hyväksytään automaattisesti.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="14"/>
+        <source>Application Preferences</source>
+        <translation>Sovelluksen määritykset</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="46"/>
+        <source>&amp;Appearance</source>
+        <translation>&amp;Ulkoasu</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="58"/>
+        <source>Language</source>
+        <translation>Kieli</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="64"/>
+        <source>&amp;GUI Language:</source>
+        <translation>&amp;Käyttöliittymän kieli:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="80"/>
+        <source>&amp;Command Language:</source>
+        <translation type="unfinished">Komentokie&amp;li:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="572"/>
+        <source>Backgr&amp;ound:</source>
+        <translation>&amp;Tausta:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="314"/>
+        <source>G&amp;rid Color:</source>
+        <translation>R&amp;uudukon väri:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="506"/>
+        <source>&amp;Meta Grid Color:</source>
+        <translation type="unfinished">&amp;Metaruudukon väri:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="534"/>
+        <source>S&amp;elected Color:</source>
+        <translation>V&amp;alittu väri:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="478"/>
+        <source>&amp;Highlighted Color:</source>
+        <translation>Ko&amp;rostettu väri:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
+        <source>Graphic View</source>
+        <translation>Graafinen näkymä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="181"/>
+        <source>Scrollbars</source>
+        <translation>Vierityspalkit</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="144"/>
+        <source>Snap indicator lines</source>
+        <translation type="unfinished">Kohdistusavun ilmaisinviivat</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="147"/>
+        <source>Alt+S</source>
+        <translation>Alt+S</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="257"/>
+        <source>Snap indicator shape</source>
+        <translation type="unfinished">Kohdistusavun ilmaisimen muoto</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="127"/>
+        <source>Hide cursor when snapping</source>
+        <translation type="unfinished">Piilota osoitin kohdistusavun käytön aikana</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="134"/>
+        <source>A&amp;utomatically scale grid</source>
+        <translation>S&amp;kaalaa ruudukko automaattisesti</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="137"/>
+        <source>Alt+U</source>
+        <translation>Alt+U</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="562"/>
+        <source>St&amp;art Handle Color:</source>
+        <translation type="unfinished">A&amp;llkukahvan väri:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="646"/>
+        <source>&amp;Handle Color:</source>
+        <translation type="unfinished">&amp;Kahvan väri:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="304"/>
+        <source>&amp;End Handle Color:</source>
+        <translation type="unfinished">&amp;Loppukahvan väri:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="280"/>
+        <source>Graphic Colors</source>
+        <translation type="unfinished">Grafiikkavärit</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="656"/>
+        <source>Snap indicator:</source>
+        <translation type="unfinished">Kohdistusavun ilmaisin:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="264"/>
+        <source>Anti-aliasing</source>
+        <translation type="unfinished">Reunantasoitus</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="678"/>
+        <source>#1E90FF</source>
+        <translation type="unfinished">#1E90FF</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="707"/>
+        <source>&amp;Paths</source>
+        <translation type="unfinished">&amp;Polut</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="713"/>
+        <source>Translations:</source>
+        <translation type="unfinished">Käännökset:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="726"/>
+        <source>Hatch Patterns:</source>
+        <translation>Täyttökuviot:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="739"/>
+        <source>Fonts:</source>
+        <translation type="unfinished">Fontit:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="117"/>
+        <source>Minimal Grid Spacing (p&amp;x):</source>
+        <translation type="unfinished">Minimiruudukkovälit (p&amp;x):</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="805"/>
+        <source>Variable File:</source>
+        <translation type="unfinished">Muuttujatiedosto:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="771"/>
+        <source>Part Libraries:</source>
+        <translation type="unfinished">Osakirjastot:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="158"/>
+        <source>Crosshair</source>
+        <translation type="unfinished">Ristikko</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="163"/>
+        <source>Crosshair2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="168"/>
+        <source>Isometric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="173"/>
+        <source>Spiderweb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="192"/>
+        <source>Circle</source>
+        <translation type="unfinished">Ympyrä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="197"/>
+        <source>Point</source>
+        <translation type="unfinished">Piste</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="202"/>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="760"/>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="784"/>
+        <source>Template:</source>
+        <translation type="unfinished">Malli:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="856"/>
+        <source>&amp;Defaults</source>
+        <translation type="unfinished">&amp;Oletus</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="921"/>
+        <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
+        <translation type="unfinished">Kääntää vierityssuunnan, kun hiiren pyörää käytetään Shift-näppäimen kanssa.</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="924"/>
+        <source>Invert horizontal scrolling direction</source>
+        <translation type="unfinished">Kääntää vaakasuuntaisen vierityssuunnan</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="931"/>
+        <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
+        <translation type="unfinished">Kääntää vierityssuunnan, kun hiiren pyörää käytetään Ctrl-painikkeen kanssa.</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="934"/>
+        <source>Invert vertical scrolling direction</source>
+        <translation type="unfinished">Kääntää pystysuuntaisen vierityssuunnan</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="941"/>
+        <source>Inverts zoom direction when using mouse wheel.</source>
+        <translation type="unfinished">Kääntää zoomaussuunnan, kun käytetään hiiren pyörää.</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="944"/>
+        <source>Invert zoom direction</source>
+        <translation type="unfinished">Kääntää zoomaussuunnan</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1008"/>
+        <source>Startup</source>
+        <translation type="unfinished">Käynnistys</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1014"/>
+        <source>Display loading screen</source>
+        <translation type="unfinished">Näyttää latausnäytön</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1028"/>
+        <source>Start with main window maximized</source>
+        <translation type="unfinished">Käynnistys pääikkuna maksimoituna</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1035"/>
+        <source>Enable CAD dockwidgets</source>
+        <translation type="unfinished">Ota käyttöön CAD-telakan pienoisohjelmat</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1042"/>
+        <source>Enable CAD toolbars</source>
+        <translation type="unfinished">Ota käyttöön CAD-työkalupalkit</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1141"/>
+        <source>Automatically zoom drawing when opening</source>
+        <translation type="unfinished">Zoomaa automaattisesti piirustukseen avatessasi sen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1064"/>
+        <source>Defaults for new drawings</source>
+        <translation type="unfinished">Oletusasetukset uusille piirustuksille</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1076"/>
+        <source>&amp;Unit:</source>
+        <translation type="unfinished">&amp;Yksikkö:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1089"/>
+        <source>Drawing unit.</source>
+        <translation type="unfinished">Piirustusyksikkö.</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="874"/>
+        <source>Program Defaults</source>
+        <translation type="unfinished">Ohjelman oletusasetukset</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="892"/>
+        <source>Auto save time:</source>
+        <translation type="unfinished">Automaattisen tallennuksen aika:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="899"/>
+        <source>Time between automatic saving of the document in minutes.</source>
+        <translation type="unfinished">Aika asiakirjan automaattisten tallennusten välillä minuuteissa.</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="914"/>
+        <source>Don&apos;t use native OS file open dialog</source>
+        <translation type="unfinished">Älä käytä käyttöjärjestemän omaa tiedoston valintaikkunaa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1099"/>
+        <source>Keyboard Settings</source>
+        <translation type="unfinished">Näppäimistön asetukset</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1105"/>
+        <source>Evaluate commands when SPACE BAR is pressed</source>
+        <translation type="unfinished">Suorita komennot VÄLILYÖNTI painettuna</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1112"/>
+        <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
+        <translation type="unfinished">Vaihda vapaa kohdistusaputila VÄLILYÖNTI painettuna, kun komentoikkuna on tyhjä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1115"/>
+        <source>Toggle free snap mode when SPACE BAR is pressed</source>
+        <translation type="unfinished">Vaihda vapaa kohdistusaputila VÄLILYÖNTI painettuna</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1125"/>
+        <source>CAD Preferences</source>
+        <translation type="unfinished">CAD-määritykset</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1131"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Käyttöönotettuna tason aktivointi muuttaisi kaikki valitut oliot uuteen tasoon. Muuttaaksesi useiden olioiden tasoa valitse ensin tarvitut oliot ja aktivoi kerros tasopienoisohjelmassa. Tämä muuttaa kaikki valitut oliot uuteen tasoon.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="880"/>
+        <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
+        <translation type="unfinished">LibreCAD luo automaattisesti tämänhetkisen piirustuksen varmuuskopion, kkun tämä on asetettu.</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="883"/>
+        <source>Auto backup</source>
+        <translation type="unfinished">Automaattinen varmuuskopio</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1134"/>
+        <source>Modify layer of selected entities, at  layer activation</source>
+        <translation type="unfinished">Muokkaa valittujen olioiden tasoa kerrosta aktivoitaessa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1021"/>
+        <source>Start in tab mode</source>
+        <translation>Aloita välilehtitilassa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="967"/>
+        <source>Clear Settings</source>
+        <translation type="unfinished">Poista asetukset</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="979"/>
+        <source>restores program geometry/layout to original state</source>
+        <translation type="unfinished">palauttaa ohjelman geometrian/asettelun alkuperäistilaan</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="982"/>
+        <source>Layout</source>
+        <translation type="unfinished">Asettelu</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="995"/>
+        <source>restores the program to its original state</source>
+        <translation type="unfinished">palauttaa ohjelman alkuperäistilaan</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="998"/>
+        <source>All</source>
+        <translation type="unfinished">Kaikki</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="338"/>
+        <source>Preferences</source>
+        <translation type="unfinished">Määritykset</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="339"/>
+        <source>Please restart the application to apply all changes.</source>
+        <translation type="unfinished">Käynnistä sovellus uudelleen ottaaksesi muutokset käyttöön.</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="415"/>
+        <source>Clear settings</source>
+        <translation type="unfinished">Poista asetukset</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="416"/>
+        <source>This will also include custom menus and toolbars. Continue?</source>
+        <translation type="unfinished">Tähän sisältyvät myös mukautetut valikot ja työkalupalkit. Jatka?</translation>
+    </message>
+</context>
+<context>
     <name>QG_DlgOptionsMakerCam</name>
     <message>
         <source>Export as MakerCAM SVG</source>
@@ -2550,6 +5041,2026 @@ mutta jäädä huomiotta toisissa tapauksissa</translation>
 so default step value required for baking</source>
         <translation type="unfinished">Viivakuvion pituus liittyy zoomaukseen, 
 joten oletusaskelarvoa vaaditaan leipomista varten</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgPoint</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
+        <source>Point</source>
+        <translation type="unfinished">Piste</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgpoint.ui" line="44"/>
+        <source>Layer:</source>
+        <translation type="unfinished">Taso:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgpoint.ui" line="71"/>
+        <source>Geometry</source>
+        <translation type="unfinished">Geometria</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgpoint.ui" line="77"/>
+        <source>Position (y):</source>
+        <translation type="unfinished">Sijainti (y):</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgpoint.ui" line="97"/>
+        <source>Position (x):</source>
+        <translation type="unfinished">Sijainti (x):</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgPolyline</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="26"/>
+        <source>Polyline</source>
+        <translation type="unfinished">&amp;Moniviiva</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="44"/>
+        <source>Layer:</source>
+        <translation type="unfinished">Taso:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="77"/>
+        <source>Geometry</source>
+        <translation type="unfinished">Geometria</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="115"/>
+        <source>Closed</source>
+        <translation type="unfinished">Suljettu</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgRotate</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgrotate.ui" line="26"/>
+        <source>Rotation Options</source>
+        <translation type="unfinished">Kiertovalinnat</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgrotate.ui" line="32"/>
+        <source>Number of copies</source>
+        <translation type="unfinished">Kopioiden lukumäärä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgrotate.ui" line="50"/>
+        <source>&amp;Delete Original</source>
+        <translation type="unfinished">&amp;Poista alkuperäinen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgrotate.ui" line="69"/>
+        <source>&amp;Keep Original</source>
+        <translation type="unfinished">&amp;Säilytä alkuperäinen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgrotate.ui" line="88"/>
+        <source>&amp;Multiple Copies:</source>
+        <translation type="unfinished">&amp;Useita kopioita</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgrotate.ui" line="119"/>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgrotate.ui" line="138"/>
+        <source>&amp;Angle (a):</source>
+        <translation type="unfinished">&amp;Kulma (a):</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgrotate.ui" line="179"/>
+        <source>Use current &amp;attributes</source>
+        <translation type="unfinished">Käytä nykyisiä &amp;määritteitä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgrotate.ui" line="186"/>
+        <source>Use current &amp;layer</source>
+        <translation type="unfinished">Käytä nykyistä &amp;tasoa</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgRotate2</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="26"/>
+        <source>Rotate Two Options</source>
+        <translation type="unfinished">Kierrä kaksi valintaa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="32"/>
+        <source>Number of copies</source>
+        <translation type="unfinished">Kopioiden lukumäärä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="50"/>
+        <source>&amp;Delete Original</source>
+        <translation type="unfinished">&amp;Poista alkuperäinen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="69"/>
+        <source>&amp;Keep Original</source>
+        <translation type="unfinished">&amp;Säilytä alkuperäinen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="88"/>
+        <source>&amp;Multiple Copies</source>
+        <translation type="unfinished">&amp;Useita kopioita</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="119"/>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="138"/>
+        <source>Angle (&amp;a):</source>
+        <translation type="unfinished">Kulma (&amp;a):</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="174"/>
+        <source>Angle (&amp;b):</source>
+        <translation type="unfinished">Kulma (&amp;b):</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="208"/>
+        <source>Use current &amp;attributes</source>
+        <translation type="unfinished">Käytä nykyisiä &amp;määritteitä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="215"/>
+        <source>Use current &amp;layer</source>
+        <translation type="unfinished">Käytä nykyistä &amp;tasoa</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgScale</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgscale.ui" line="26"/>
+        <source>Scaling Options</source>
+        <translation type="unfinished">Skaalauksen valinta</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgscale.ui" line="129"/>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgscale.ui" line="155"/>
+        <source>Scale by the same factor at both x- and y- directions</source>
+        <translation type="unfinished">Skaalaa samalla tekijällä sekä x- että y-suuntaan</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgscale.ui" line="158"/>
+        <source>Isotropic Scaling</source>
+        <translation type="unfinished">Isotrooppiskaalaus</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgscale.ui" line="206"/>
+        <source>X</source>
+        <translation type="unfinished">X</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgscale.ui" line="236"/>
+        <source>Y</source>
+        <translation type="unfinished">Y</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgscale.ui" line="190"/>
+        <source>Use current &amp;attributes</source>
+        <translation type="unfinished">Käytä nykyisiä &amp;määritteitä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgscale.ui" line="177"/>
+        <source>Use current &amp;layer</source>
+        <translation type="unfinished">Käytä nykyistä &amp;tasoa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgscale.ui" line="38"/>
+        <source>Number of copies</source>
+        <translation type="unfinished">Kopioiden lukumäärä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgscale.ui" line="56"/>
+        <source>&amp;Delete Original</source>
+        <translation type="unfinished">&amp;Poista alkuperäinen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgscale.ui" line="75"/>
+        <source>&amp;Keep Original</source>
+        <translation type="unfinished">&amp;Säilytä alkuperäinen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgscale.ui" line="94"/>
+        <source>&amp;Multiple Copies</source>
+        <translation type="unfinished">&amp;Useita kopioita</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgSpline</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Peruuta</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgspline.ui" line="26"/>
+        <source>Spline</source>
+        <translation type="unfinished">Splini</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgspline.ui" line="44"/>
+        <source>Layer:</source>
+        <translation type="unfinished">Taso:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgspline.ui" line="77"/>
+        <source>Geometry</source>
+        <translation type="unfinished">Geometria</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgspline.ui" line="115"/>
+        <source>Degree:</source>
+        <translation type="unfinished">Aste:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgspline.ui" line="125"/>
+        <source>Closed</source>
+        <translation type="unfinished">Suljettu</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgText</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="20"/>
+        <source>Text</source>
+        <translation type="unfinished">Teksti</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="298"/>
+        <source>&amp;Height:</source>
+        <translation type="unfinished">&amp;Korkeus:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="350"/>
+        <source>Alignment</source>
+        <translation>Kohdistus</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="682"/>
+        <source>Top Right</source>
+        <translation type="unfinished">Yläoikea</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="647"/>
+        <source>Top Left</source>
+        <translation type="unfinished">Ylävasen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="508"/>
+        <source>Middle Left</source>
+        <translation type="unfinished">Keskivasen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="717"/>
+        <source>Middle Center</source>
+        <translation type="unfinished">Keskiosa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="438"/>
+        <source>Middle Right</source>
+        <translation type="unfinished">Keskioikea</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="473"/>
+        <source>Bottom Left</source>
+        <translation type="unfinished">Alavasen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="403"/>
+        <source>Bottom Right</source>
+        <translation type="unfinished">Alaoikea</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="368"/>
+        <source>Bottom Center</source>
+        <translation type="unfinished">Alakeskiosa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="566"/>
+        <source>Top Center</source>
+        <translation type="unfinished">Yläkeskiosa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="33"/>
+        <source>Text:</source>
+        <translation type="unfinished">Teksti:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="70"/>
+        <source>Clear Text</source>
+        <translation type="unfinished">Tyhjennä teksti</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="84"/>
+        <source>Load Text From File</source>
+        <translation type="unfinished">Lataa teksti tiedostosta</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="98"/>
+        <source>Save Text To File</source>
+        <translation type="unfinished">Tallenna teksti tiedostoon</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="112"/>
+        <source>Cut</source>
+        <translation type="unfinished">Leikkaa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="126"/>
+        <source>Copy</source>
+        <translation type="unfinished">Kopioi</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="140"/>
+        <source>Paste</source>
+        <translation type="unfinished">Liitä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="180"/>
+        <source>Layer:</source>
+        <translation type="unfinished">Taso:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="213"/>
+        <source>Font settings</source>
+        <translation type="unfinished">Fontin asetukset</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="248"/>
+        <source>Angle:</source>
+        <translation type="unfinished">Kulma:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="238"/>
+        <source>Width factor:</source>
+        <translation type="unfinished">Leveystekijä:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="255"/>
+        <source>Font:</source>
+        <translation type="unfinished">Fontti:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="531"/>
+        <source>Baseline Left</source>
+        <translation type="unfinished">Pohja, vasen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="59"/>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="534"/>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="592"/>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="615"/>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="589"/>
+        <source>Baseline Right</source>
+        <translation type="unfinished">Pohja, oikea</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="612"/>
+        <source>Baseline Center</source>
+        <translation type="unfinished">Pohja, keskiosa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="740"/>
+        <source>Fit</source>
+        <translation type="unfinished">Sopivuus</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="750"/>
+        <source>A&amp;ligned</source>
+        <translation type="unfinished">K&amp;ohdistettu</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="760"/>
+        <source>&amp;Middle</source>
+        <translation type="unfinished">&amp;Keskiosa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="791"/>
+        <source>Insert Symbol</source>
+        <translation type="unfinished">Lisää symboli</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="804"/>
+        <source>Diameter (⌀)</source>
+        <translation type="unfinished">Halkaisija (⌀)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="809"/>
+        <source>Degree (°)</source>
+        <translation type="unfinished">Aste (°)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="814"/>
+        <source>Plus / Minus (±)</source>
+        <translation type="unfinished">Plus/miinus (±)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="819"/>
+        <source>At (@)</source>
+        <translation type="unfinished">Ät-merkki (@)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="824"/>
+        <source>Hash (#)</source>
+        <translation type="unfinished">Ristikkomerkki (#)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="829"/>
+        <source>Dollar ($)</source>
+        <translation type="unfinished">Dollari ($)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="834"/>
+        <source>Copyright (©)</source>
+        <translation type="unfinished">Tekijänoikeus (©)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="839"/>
+        <source>Registered (®)</source>
+        <translation type="unfinished">Rekisteröity (®)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="844"/>
+        <source>Paragraph (§)</source>
+        <translation type="unfinished">Kappale (§)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="849"/>
+        <source>Pi (π)</source>
+        <translation type="unfinished">Pii (π)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="854"/>
+        <source>Pound (£)</source>
+        <translation type="unfinished">Punta (£)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="859"/>
+        <source>Yen (¥)</source>
+        <translation type="unfinished">Jeni (¥)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="864"/>
+        <source>Times (×)</source>
+        <translation type="unfinished">Kertaa (×)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="869"/>
+        <source>Division (÷)</source>
+        <translation type="unfinished">Jako (÷)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="880"/>
+        <source>Insert Unicode</source>
+        <translation type="unfinished">Lisää Unicode</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="886"/>
+        <source>Page:</source>
+        <translation type="unfinished">Sivu:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="896"/>
+        <source>Char:</source>
+        <translation type="unfinished">Merkki:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="919"/>
+        <source>[0000-007F] Basic Latin</source>
+        <translation type="unfinished">[0000-007F] Basic Latin</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="924"/>
+        <source>[0080-00FF] Latin-1 Supplementary</source>
+        <translation type="unfinished">[0080-00FF] Latin-1 Supplementary</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="929"/>
+        <source>[0100-017F] Latin Extended-A</source>
+        <translation type="unfinished">[0100-017F] Latin Extended-A</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="934"/>
+        <source>[0180-024F] Latin Extended-B</source>
+        <translation type="unfinished">[0180-024F] Latin Extended-B</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="939"/>
+        <source>[0250-02AF] IPA Extensions</source>
+        <translation type="unfinished">[0250-02AF] IPA Extensions</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="944"/>
+        <source>[02B0-02FF] Spacing Modifier Letters</source>
+        <translation type="unfinished">[02B0-02FF] Spacing Modifier Letters</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="949"/>
+        <source>[0300-036F] Combining Diacritical Marks</source>
+        <translation type="unfinished">[0300-036F] Combining Diacritical Marks</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="954"/>
+        <source>[0370-03FF] Greek and Coptic</source>
+        <translation type="unfinished">[0370-03FF] Greek and Coptic</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="959"/>
+        <source>[0400-04FF] Cyrillic</source>
+        <translation type="unfinished">[0400-04FF] Cyrillic</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="964"/>
+        <source>[0500-052F] Cyrillic Supplementary</source>
+        <translation type="unfinished">[0500-052F] Cyrillic Supplementary</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="969"/>
+        <source>[0530-058F] Armenian</source>
+        <translation type="unfinished">[0530-058F] Armenian</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="974"/>
+        <source>[0590-05FF] Hebrew</source>
+        <translation type="unfinished">[0590-05FF] Hebrew</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="979"/>
+        <source>[0600-06FF] Arabic</source>
+        <translation type="unfinished">[0600-06FF] Arabic</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="984"/>
+        <source>[0700-074F] Syriac</source>
+        <translation type="unfinished">[0700-074F] Syriac</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="989"/>
+        <source>[0780-07BF] Thaana</source>
+        <translation type="unfinished">[0780-07BF] Thaana</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="994"/>
+        <source>[0900-097F] Devanagari</source>
+        <translation type="unfinished">[0900-097F] Devanagari</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="999"/>
+        <source>[0980-09FF] Bengali</source>
+        <translation type="unfinished">[0980-09FF] Bengali</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1004"/>
+        <source>[0A00-0A7F] Gurmukhi</source>
+        <translation type="unfinished">[0A00-0A7F] Gurmukhi</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1009"/>
+        <source>[0A80-0AFF] Gujarati</source>
+        <translation type="unfinished">[0A80-0AFF] Gujarati</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1014"/>
+        <source>[0B00-0B7F] Oriya</source>
+        <translation type="unfinished">[0B00-0B7F] Oriya</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1019"/>
+        <source>[0B80-0BFF] Tamil</source>
+        <translation type="unfinished">[0B80-0BFF] Tamil</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1024"/>
+        <source>[0C00-0C7F] Telugu</source>
+        <translation type="unfinished">[0C00-0C7F] Telugu</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1029"/>
+        <source>[0C80-0CFF] Kannada</source>
+        <translation type="unfinished">[0C80-0CFF] Kannada</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1034"/>
+        <source>[0D00-0D7F] Malayalam</source>
+        <translation type="unfinished">[0D00-0D7F] Malayalam</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1039"/>
+        <source>[0D80-0DFF] Sinhala</source>
+        <translation type="unfinished">[0D80-0DFF] Sinhala</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1044"/>
+        <source>[0E00-0E7F] Thai</source>
+        <translation type="unfinished">[0E00-0E7F] Thai</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1049"/>
+        <source>[0E80-0EFF] Lao</source>
+        <translation type="unfinished">[0E80-0EFF] Lao</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1054"/>
+        <source>[0F00-0FFF] Tibetan</source>
+        <translation type="unfinished">[0F00-0FFF] Tibetan</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1059"/>
+        <source>[1000-109F] Myanmar</source>
+        <translation type="unfinished">[1000-109F] Myanmar</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1064"/>
+        <source>[10A0-10FF] Georgian</source>
+        <translation type="unfinished">[10A0-10FF] Georgian</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1069"/>
+        <source>[1100-11FF] Hangul Jamo</source>
+        <translation type="unfinished">[1100-11FF] Hangul Jamo</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1074"/>
+        <source>[1200-137F] Ethiopic</source>
+        <translation type="unfinished">[1200-137F] Ethiopic</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1079"/>
+        <source>[13A0-13FF] Cherokee</source>
+        <translation type="unfinished">[13A0-13FF] Cherokee</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1084"/>
+        <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
+        <translation type="unfinished">[1400-167F] Unified Canadian Aboriginal Syllabic</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1089"/>
+        <source>[1680-169F] Ogham</source>
+        <translation type="unfinished">[1680-169F] Ogham</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1094"/>
+        <source>[16A0-16FF] Runic</source>
+        <translation type="unfinished">[16A0-16FF] Runic</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1099"/>
+        <source>[1700-171F] Tagalog</source>
+        <translation type="unfinished">[1700-171F] Tagalog</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1104"/>
+        <source>[1720-173F] Hanunoo</source>
+        <translation type="unfinished">[1720-173F] Hanunoo</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1109"/>
+        <source>[1740-175F] Buhid</source>
+        <translation type="unfinished">[1740-175F] Buhid</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1114"/>
+        <source>[1760-177F] Tagbanwa</source>
+        <translation type="unfinished">[1760-177F] Tagbanwa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1119"/>
+        <source>[1780-17FF] Khmer</source>
+        <translation type="unfinished">[1780-17FF] Khmer</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1124"/>
+        <source>[1800-18AF] Mongolian</source>
+        <translation type="unfinished">[1800-18AF] Mongolian</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1129"/>
+        <source>[1E00-1EFF] Latin Extended Additional</source>
+        <translation type="unfinished">[1E00-1EFF] Latin Extended Additional</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1134"/>
+        <source>[1F00-1FFF] Greek Extended</source>
+        <translation type="unfinished">[1F00-1FFF] Greek Extended</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1139"/>
+        <source>[2000-206F] General Punctuation</source>
+        <translation type="unfinished">[2000-206F] General Punctuation</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1144"/>
+        <source>[2070-209F] Superscripts and Subscripts</source>
+        <translation type="unfinished">[2070-209F] Superscripts and Subscripts</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1149"/>
+        <source>[20A0-20CF] Currency Symbols</source>
+        <translation type="unfinished">[20A0-20CF] Currency Symbols</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1154"/>
+        <source>[20D0-20FF] Combining Marks for Symbols</source>
+        <translation type="unfinished">[20D0-20FF] Combining Marks for Symbols</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1159"/>
+        <source>[2100-214F] Letterlike Symbols</source>
+        <translation type="unfinished">[2100-214F] Letterlike Symbols</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1164"/>
+        <source>[2150-218F] Number Forms</source>
+        <translation type="unfinished">[2150-218F] Number Forms</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1169"/>
+        <source>[2190-21FF] Arrows</source>
+        <translation type="unfinished">[2190-21FF] Arrows</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1174"/>
+        <source>[2200-22FF] Mathematical Operators</source>
+        <translation type="unfinished">[2200-22FF] Mathematical Operators</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1179"/>
+        <source>[2300-23FF] Miscellaneous Technical</source>
+        <translation type="unfinished">[2300-23FF] Miscellaneous Technical</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1184"/>
+        <source>[2400-243F] Control Pictures</source>
+        <translation type="unfinished">[2400-243F] Control Pictures</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1189"/>
+        <source>[2440-245F] Optical Character Recognition</source>
+        <translation type="unfinished">[2440-245F] Optical Character Recognition</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1194"/>
+        <source>[2460-24FF] Enclosed Alphanumerics</source>
+        <translation type="unfinished">[2460-24FF] Enclosed Alphanumerics</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1199"/>
+        <source>[2500-257F] Box Drawing</source>
+        <translation type="unfinished">[2500-257F] Box Drawing</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1204"/>
+        <source>[2580-259F] Block Elements</source>
+        <translation type="unfinished">[2580-259F] Block Elements</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1209"/>
+        <source>[25A0-25FF] Geometric Shapes</source>
+        <translation type="unfinished">[25A0-25FF] Geometric Shapes</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1214"/>
+        <source>[2600-26FF] Miscellaneous Symbols</source>
+        <translation type="unfinished">[2600-26FF] Miscellaneous Symbols</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1219"/>
+        <source>[2700-27BF] Dingbats</source>
+        <translation type="unfinished">[2700-27BF] Dingbats</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1224"/>
+        <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
+        <translation type="unfinished">[27C0-27EF] Miscellaneous Mathematical Symbols-A</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1229"/>
+        <source>[27F0-27FF] Supplemental Arrows-A</source>
+        <translation type="unfinished">[27F0-27FF] Supplemental Arrows-A</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1234"/>
+        <source>[2800-28FF] Braille Patterns</source>
+        <translation type="unfinished">[2800-28FF] Braille Patterns</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1239"/>
+        <source>[2900-297F] Supplemental Arrows-B</source>
+        <translation type="unfinished">[2900-297F] Supplemental Arrows-B</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1244"/>
+        <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
+        <translation type="unfinished">[2980-29FF] Miscellaneous Mathematical Symbols-B</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1249"/>
+        <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
+        <translation type="unfinished">[2A00-2AFF] Supplemental Mathematical Operators</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1254"/>
+        <source>[2E80-2EFF] CJK Radicals Supplement</source>
+        <translation type="unfinished">[2E80-2EFF] CJK Radicals Supplement</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1259"/>
+        <source>[2F00-2FDF] Kangxi Radicals</source>
+        <translation type="unfinished">[2F00-2FDF] Kangxi Radicals</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1264"/>
+        <source>[2FF0-2FFF] Ideographic Description Characters</source>
+        <translation type="unfinished">[2FF0-2FFF] Ideographic Description Characters</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1269"/>
+        <source>[3000-303F] CJK Symbols and Punctuation</source>
+        <translation type="unfinished">[3000-303F] CJK Symbols and Punctuation</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1274"/>
+        <source>[3040-309F] Hiragana</source>
+        <translation type="unfinished">[3040-309F] Hiragana</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1279"/>
+        <source>[30A0-30FF] Katakana</source>
+        <translation type="unfinished">[30A0-30FF] Katakana</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1284"/>
+        <source>[3100-312F] Bopomofo</source>
+        <translation type="unfinished">[3100-312F] Bopomofo</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1289"/>
+        <source>[3130-318F] Hangul Compatibility Jamo</source>
+        <translation type="unfinished">[3130-318F] Hangul Compatibility Jamo</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1294"/>
+        <source>[3190-319F] Kanbun</source>
+        <translation type="unfinished">[3190-319F] Kanbun</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1299"/>
+        <source>[31A0-31BF] Bopomofo Extended</source>
+        <translation type="unfinished">[31A0-31BF] Bopomofo Extended</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1304"/>
+        <source>[3200-32FF] Enclosed CJK Letters and Months</source>
+        <translation type="unfinished">[3200-32FF] Enclosed CJK Letters and Months</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1309"/>
+        <source>[3300-33FF] CJK Compatibility</source>
+        <translation type="unfinished">[3300-33FF] CJK Compatibility</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1314"/>
+        <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
+        <translation type="unfinished">[3400-4DBF] CJK Unified Ideographs Extension A</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1319"/>
+        <source>[4E00-9FAF] CJK Unified Ideographs</source>
+        <translation type="unfinished">[4E00-9FAF] CJK Unified Ideographs</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1324"/>
+        <source>[A000-A48F] Yi Syllables</source>
+        <translation type="unfinished">[A000-A48F] Yi Syllables</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1329"/>
+        <source>[A490-A4CF] Yi Radicals</source>
+        <translation type="unfinished">[A490-A4CF] Yi Radicals</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1334"/>
+        <source>[AC00-D7AF] Hangul Syllables</source>
+        <translation type="unfinished">[AC00-D7AF] Hangul Syllables</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1339"/>
+        <source>[D800-DBFF] High Surrogates</source>
+        <translation type="unfinished">[D800-DBFF] High Surrogates</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1344"/>
+        <source>[DC00-DFFF] Low Surrogate Area</source>
+        <translation type="unfinished">[DC00-DFFF] Low Surrogate Area</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1349"/>
+        <source>[E000-F8FF] Private Use Area</source>
+        <translation type="unfinished">[E000-F8FF] Private Use Area</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1354"/>
+        <source>[F900-FAFF] CJK Compatibility Ideographs</source>
+        <translation type="unfinished">[F900-FAFF] CJK Compatibility Ideographs</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1359"/>
+        <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
+        <translation type="unfinished">[FB00-FB4F] Alphabetic Presentation Forms</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1364"/>
+        <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
+        <translation type="unfinished">[FB50-FDFF] Arabic Presentation Forms-A</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1369"/>
+        <source>[FE00-FE0F] Variation Selectors</source>
+        <translation type="unfinished">[FE00-FE0F] Variation Selectors</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1374"/>
+        <source>[FE20-FE2F] Combining Half Marks</source>
+        <translation type="unfinished">[FE20-FE2F] Combining Half Marks</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1379"/>
+        <source>[FE30-FE4F] CJK Compatibility Forms</source>
+        <translation type="unfinished">[FE30-FE4F] CJK Compatibility Forms</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1384"/>
+        <source>[FE50-FE6F] Small Form Variants</source>
+        <translation type="unfinished">[FE50-FE6F] Small Form Variants</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1389"/>
+        <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
+        <translation type="unfinished">[FE70-FEFF] Arabic Presentation Forms-B</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1394"/>
+        <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
+        <translation type="unfinished">[FF00-FFEF] Halfwidth and Fullwidth Forms</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1399"/>
+        <source>[FFF0-FFFF] Specials</source>
+        <translation type="unfinished">[FFF0-FFFF] Specials</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1404"/>
+        <source>[10300-1032F] Old Italic</source>
+        <translation type="unfinished">[10300-1032F] Old Italic</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1409"/>
+        <source>[10330-1034F] Gothic</source>
+        <translation type="unfinished">[10330-1034F] Gothic</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1414"/>
+        <source>[10400-1044F] Deseret</source>
+        <translation type="unfinished">[10400-1044F] Deseret</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1419"/>
+        <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
+        <translation type="unfinished">[1D000-1D0FF] Byzantine Musical Symbols</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1424"/>
+        <source>[1D100-1D1FF] Musical Symbols</source>
+        <translation type="unfinished">[1D100-1D1FF] Musical Symbols</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1429"/>
+        <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
+        <translation type="unfinished">[1D400-1D7FF] Mathematical Alphanumeric Symbols</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1434"/>
+        <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
+        <translation type="unfinished">[20000-2A6DF] CJK Unified Ideographs Extension B</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1439"/>
+        <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
+        <translation type="unfinished">[2F800-2FA1F] CJK Compatibility Ideographs Supplement</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1444"/>
+        <source>[E0000-E007F] Tags</source>
+        <translation type="unfinished">[E0000-E007F] Tags</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1449"/>
+        <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
+        <translation type="unfinished">[F0000-FFFFD] Supplementary Private Use Area-A</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1454"/>
+        <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
+        <translation type="unfinished">[100000-10FFFD] Supplementary Private Use Area-B</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ExitDialog</name>
+    <message>
+        <location filename="../src/ui/forms/qg_exitdialog.ui" line="26"/>
+        <source>QCad</source>
+        <translation type="unfinished">QCad</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_exitdialog.ui" line="44"/>
+        <source>again Still No Text supplied.</source>
+        <translation type="unfinished">uudestaan Ei vieläkään tekstiä tarjottu.</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_exitdialog.cpp" line="123"/>
+        <source>Close All</source>
+        <translation type="unfinished">Sulje kaikki</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_exitdialog.cpp" line="123"/>
+        <source>Close</source>
+        <translation type="unfinished">Sulje</translation>
+    </message>
+</context>
+<context>
+    <name>QG_FileDialog</name>
+    <message>
+        <location filename="../src/ui/qg_filedialog.cpp" line="89"/>
+        <source>Drawing Exchange DXF 2000 %1</source>
+        <translation type="unfinished">Piirustusvaihto DXF 2000 %1</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_filedialog.cpp" line="91"/>
+        <source>Drawing Exchange DXF R12 %1</source>
+        <translation type="unfinished">Piirustusvaihto DXF R12 %1</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_filedialog.cpp" line="94"/>
+        <source>LFF Font %1</source>
+        <translation type="unfinished">LFF-fontti %1</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_filedialog.cpp" line="98"/>
+        <source>QCad Font %1</source>
+        <translation type="unfinished">QCad-fontti %1</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_filedialog.cpp" line="99"/>
+        <source>Jww Drawing %1</source>
+        <translation type="unfinished">Jww-piirustus %1</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_filedialog.cpp" line="92"/>
+        <source>Drawing Exchange %1</source>
+        <translation type="unfinished">Piirustusvaihto %1</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_filedialog.cpp" line="87"/>
+        <source>Drawing Exchange DXF 2007 %1</source>
+        <translation type="unfinished">Piirustusvaihto DXF 2007 %1</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_filedialog.cpp" line="88"/>
+        <source>Drawing Exchange DXF 2004 %1</source>
+        <translation type="unfinished">Piirustusvaihto DXF 2004 %1</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_filedialog.cpp" line="90"/>
+        <source>Drawing Exchange DXF R14 %1</source>
+        <translation type="unfinished">Piirustusvaihto DXF R14 %1</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_filedialog.cpp" line="96"/>
+        <source>dwg Drawing %1</source>
+        <translation type="unfinished">dwg-Piirustus %1</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_filedialog.cpp" line="100"/>
+        <source>QCad 1.x file %1</source>
+        <translation type="unfinished">QCad 1.x-tiedosto %1</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_filedialog.cpp" line="103"/>
+        <source>Block</source>
+        <comment>block file</comment>
+        <translation type="unfinished">Symboli</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_filedialog.cpp" line="106"/>
+        <source>Drawing</source>
+        <comment>drawing file</comment>
+        <translation type="unfinished">Piirustus</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_filedialog.cpp" line="149"/>
+        <source>Open %1</source>
+        <translation type="unfinished">Avaa %1</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_filedialog.cpp" line="221"/>
+        <source>Untitled</source>
+        <translation type="unfinished">Nimetön</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_filedialog.cpp" line="232"/>
+        <source>Save %1 As</source>
+        <translation type="unfinished">Tallenna %1 nimellä</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ImageOptionsDialog</name>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="14"/>
+        <source>Image Export Options</source>
+        <translation type="unfinished">Kuvan viennin valinnat</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="23"/>
+        <source>Bitmap Size</source>
+        <translation type="unfinished">Bittikartan koko</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="144"/>
+        <source>Width:</source>
+        <translation type="unfinished">Leveys:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="154"/>
+        <source>Height:</source>
+        <translation type="unfinished">Korkeus:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="29"/>
+        <source>Resolution:</source>
+        <translation type="unfinished">Erotuskyky:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="43"/>
+        <source>auto</source>
+        <translation type="unfinished">automaattinen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="203"/>
+        <source>Background</source>
+        <translation type="unfinished">Tausta</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="209"/>
+        <source>White</source>
+        <translation type="unfinished">Valkoinen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="219"/>
+        <source>B&amp;lack</source>
+        <translation type="unfinished">M&amp;usta</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="258"/>
+        <source>Colouring</source>
+        <translation type="unfinished">Väritys</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="264"/>
+        <source>Black / White</source>
+        <translation type="unfinished">Mustavalkoinen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="274"/>
+        <source>Coloured</source>
+        <translation type="unfinished">Värillinen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="310"/>
+        <source>Borders</source>
+        <translation type="unfinished">Reunat</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="326"/>
+        <source>Top / Bottom - Border:</source>
+        <translation type="unfinished">Huippu/pohja -reuna:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="333"/>
+        <source>Left / Right - Border:</source>
+        <translation type="unfinished">Vasen/oikea -reuna:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="353"/>
+        <source>set same size</source>
+        <translation type="unfinished">aseta sama koko</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LayerBox</name>
+    <message>
+        <location filename="../src/ui/qg_layerbox.cpp" line="71"/>
+        <source>- Unchanged -</source>
+        <translation type="unfinished">- Ei muutoksia -</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LayerDialog</name>
+    <message>
+        <location filename="../src/ui/forms/qg_layerdialog.ui" line="20"/>
+        <source>Layer Settings</source>
+        <translation type="unfinished">Tason asetukset</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_layerdialog.ui" line="29"/>
+        <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
+The contents of a Construction Layer should not appear in printout.</source>
+        <translation type="unfinished">Rakennustasossa on loputtomien suorien viivojen muodostamia olioita, joita käytetään geometriseen rakentamiseen.
+Rakennustason sisällön ei tulisi näkyä tulosteessa.</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_layerdialog.ui" line="33"/>
+        <source>Construction Layer</source>
+        <translation type="unfinished">Rakennustaso</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_layerdialog.ui" line="46"/>
+        <source>Layer Name:</source>
+        <translation type="unfinished">Tasonimi:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_layerdialog.cpp" line="67"/>
+        <source>Default Pen</source>
+        <translation type="unfinished">Oletuskynä</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LayerWidget</name>
+    <message>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="219"/>
+        <source>Show all layers</source>
+        <translation type="unfinished">Näytä kaikki tasot</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="227"/>
+        <source>Hide all layers</source>
+        <translation type="unfinished">Piilota kaikki tasot</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="235"/>
+        <source>Unlock all layers</source>
+        <translation type="unfinished">Poista kaikkien tasojen lukitus</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="243"/>
+        <source>Lock all layers</source>
+        <translation type="unfinished">Lukitse kaikki tasot</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="251"/>
+        <source>Add a layer</source>
+        <translation type="unfinished">Lisää taso</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="259"/>
+        <source>Remove the current layer</source>
+        <translation type="unfinished">Poista nykyinen taso</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="267"/>
+        <source>Modify layer attributes / rename</source>
+        <translation type="unfinished">Muokkaa tason ominaisuuksia/nimeä uudelleen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="275"/>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="277"/>
+        <source>Looking for matching layer names</source>
+        <translation type="unfinished">Etsitään yhteensopivia tason nimiä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="490"/>
+        <source>Layer Menu</source>
+        <translation type="unfinished">Tasovalikko</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="496"/>
+        <source>&amp;Defreeze all Layers</source>
+        <translation type="unfinished">&amp;Poista kaikkien tasojen jäädytys</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="498"/>
+        <source>&amp;Freeze all Layers</source>
+        <translation type="unfinished">&amp;Jäädytä kaikki tasot</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="500"/>
+        <source>&amp;Unlock all Layers</source>
+        <translation type="unfinished">&amp;Poista kaikkien tasojen lukitus</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="502"/>
+        <source>&amp;Lock all Layers</source>
+        <translation type="unfinished">&amp;Lukitse kaikki tasot</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="505"/>
+        <source>&amp;Add Layer</source>
+        <translation type="unfinished">&amp;Lisää taso</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="507"/>
+        <source>&amp;Remove Layer</source>
+        <translation type="unfinished">&amp;Poista taso</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="509"/>
+        <source>Edit Layer &amp;Attributes</source>
+        <translation type="unfinished">Muokkaa tason &amp;määritteet</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="511"/>
+        <source>Toggle Layer &amp;Visibility</source>
+        <translation type="unfinished">Vaihda tason &amp;näkyvyys</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="513"/>
+        <source>Toggle Layer &amp;Printing</source>
+        <translation type="unfinished">Vaihda tason &amp;tulostus</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_layerwidget.cpp" line="515"/>
+        <source>Toggle &amp;Construction Layer</source>
+        <translation type="unfinished">Ota käyttöön &amp;rakennustaso</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LibraryWidget</name>
+    <message>
+        <location filename="../src/ui/qg_librarywidget.cpp" line="75"/>
+        <source>Refresh</source>
+        <translation type="unfinished">Päivitä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_librarywidget.cpp" line="77"/>
+        <source>Rebuild</source>
+        <translation type="unfinished">Rakenna uudelleen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_librarywidget.cpp" line="211"/>
+        <source>Directories</source>
+        <translation type="unfinished">Hakemisto</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_librarywidget.cpp" line="71"/>
+        <source>Insert</source>
+        <translation type="unfinished">Lisää</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineTypeBox</name>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="75"/>
+        <source>- Unchanged -</source>
+        <translation type="unfinished">- Ei muutoksia -</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="79"/>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="189"/>
+        <source>By Layer</source>
+        <translation>Tason mukaan</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="80"/>
+        <source>By Block</source>
+        <translation>Symbolin mukaan</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="82"/>
+        <source>No Pen</source>
+        <translation>Ei kynää</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="83"/>
+        <source>Continuous</source>
+        <translation>Jatkuva</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="84"/>
+        <source>Dot</source>
+        <translation>Piste</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="85"/>
+        <source>Dot (tiny)</source>
+        <translation>Piste (hyvin pieni)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="86"/>
+        <source>Dot (small)</source>
+        <translation>Piste (pieni)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="87"/>
+        <source>Dot (large)</source>
+        <translation>Piste (suuri)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="88"/>
+        <source>Dash</source>
+        <translation>Katkoviiva</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="89"/>
+        <source>Dash (tiny)</source>
+        <translation>Katkoviiva (hyvin pieni)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="90"/>
+        <source>Dash (small)</source>
+        <translation>Katkoviiva (pieni)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="91"/>
+        <source>Dash (large)</source>
+        <translation>Katkoviiva (suuri)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="92"/>
+        <source>Dash Dot</source>
+        <translation>Katkopiste</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="93"/>
+        <source>Dash Dot (tiny)</source>
+        <translation>Katkopiste (hyvin pieni)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="94"/>
+        <source>Dash Dot (small)</source>
+        <translation>Katkopiste (pieni)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="95"/>
+        <source>Dash Dot (large)</source>
+        <translation>Katkopiste (suuri)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="96"/>
+        <source>Divide</source>
+        <translation type="unfinished">Jakolinja</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="97"/>
+        <source>Divide (tiny)</source>
+        <translation type="unfinished">Jakolinja (hyvin pieni)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="98"/>
+        <source>Divide (small)</source>
+        <translation type="unfinished">Jakolinja (pieni)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="99"/>
+        <source>Divide (large)</source>
+        <translation type="unfinished">Jakolinja (suuri)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="100"/>
+        <source>Center</source>
+        <translation type="unfinished">Keskiosa</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="101"/>
+        <source>Center (tiny)</source>
+        <translation type="unfinished">Keskiosa (hyvin pieni)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="102"/>
+        <source>Center (small)</source>
+        <translation type="unfinished">Keskiosa (pieni)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="103"/>
+        <source>Center (large)</source>
+        <translation type="unfinished">Keskiosa (suuri)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="104"/>
+        <source>Border</source>
+        <translation type="unfinished">Raja</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="105"/>
+        <source>Border (tiny)</source>
+        <translation type="unfinished">Raja (hyvin pieni)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="106"/>
+        <source>Border (small)</source>
+        <translation type="unfinished">Raja (pieni)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_linetypebox.cpp" line="107"/>
+        <source>Border (large)</source>
+        <translation type="unfinished">Raja (suuri)</translation>
+    </message>
+</context>
+<context>
+    <name>QG_MouseWidget</name>
+    <message>
+        <location filename="../src/ui/forms/qg_mousewidget.ui" line="32"/>
+        <source>Mouse</source>
+        <translation type="unfinished">Hiiri</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_mousewidget.ui" line="71"/>
+        <source>Right</source>
+        <translation type="unfinished">Oikea</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_mousewidget.ui" line="108"/>
+        <source>Left</source>
+        <translation type="unfinished">Vasen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_mousewidget.ui" line="130"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Vinkki vasemman/oikean hiiren painikkeen toimista&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>QG_PenToolBar</name>
+    <message>
+        <location filename="../src/ui/qg_pentoolbar.cpp" line="45"/>
+        <source>Line color</source>
+        <translation type="unfinished">Viivan väri</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_pentoolbar.cpp" line="49"/>
+        <source>Line width</source>
+        <translation type="unfinished">Viivan leveys</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_pentoolbar.cpp" line="53"/>
+        <source>Line type</source>
+        <translation type="unfinished">Viivan tyyppi</translation>
+    </message>
+</context>
+<context>
+    <name>QG_PolylineOptions</name>
+    <message>
+        <location filename="../src/ui/forms/qg_polylineoptions.cpp" line="105"/>
+        <source>wrong action type</source>
+        <translation type="unfinished">väärä toiminnon tyyppi</translation>
+    </message>
+</context>
+<context>
+    <name>QG_RecentFiles</name>
+    <message>
+        <source>Opening recent file...</source>
+        <translation type="obsolete">Avataan viimeaikaista tiedostoa...</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_recentfiles.cpp" line="148"/>
+        <source>&amp;%1 %2</source>
+        <translation type="unfinished">&amp;%1 %2</translation>
+    </message>
+</context>
+<context>
+    <name>QG_SelectionWidget</name>
+    <message>
+        <location filename="../src/ui/forms/qg_selectionwidget.ui" line="32"/>
+        <source>Selection</source>
+        <translation type="unfinished">Valinta</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_selectionwidget.ui" line="74"/>
+        <source>Selected</source>
+        <translation type="unfinished">Valittu</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_selectionwidget.ui" line="102"/>
+        <source>Total Length</source>
+        <translation type="unfinished">Kokonaispituus</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_selectionwidget.ui" line="121"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Valittujen olioiden määrä&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_selectionwidget.ui" line="153"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Valittujen olioiden kokonaispituus&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapToolBar</name>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
+        <source>Snap</source>
+        <translation type="unfinished">Kohdistusapu</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
+        <source>Snap to Endpoints</source>
+        <translation type="unfinished">Kohdistusapu loppupisteisiin</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
+        <source>Snap to equidistant points of entity</source>
+        <translation type="unfinished">Kohdistusapu olion yhtä kaukaisiin pisteisiin</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
+        <source>Snap to center points</source>
+        <translation type="unfinished">Kohdistusapu keskipisteisiin</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
+        <source>Snap to intersections automatically</source>
+        <translation type="unfinished">Kohdistusapu leikkauspisteisiin automaattisesti</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
+        <source>Snap to closest point on entity</source>
+        <translation type="unfinished">Kohdistusapu olion lähimpään pisteeseen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
+        <source>Snap to point with given distance to endpoint</source>
+        <translation type="unfinished">Kohdistusapu pisteeseen, jolla on annettu etäisyys loppupisteeseen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
+        <source>Snap to intersections manually</source>
+        <translation type="unfinished">Kohdistusapu leikkauspisteisiin manuaalisesti</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
+        <source>Snap to grid</source>
+        <translation type="unfinished">Kohdistusapu ristikkoon</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
+        <source>Restrict Horizontally</source>
+        <translation type="unfinished">Rajoita vaakasuuntaisesti</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="200"/>
+        <source>Restrict Vertically</source>
+        <translation type="unfinished">Rajoita Pystysuuntainen</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="217"/>
+        <source>Move relative Zero</source>
+        <translation type="unfinished">Siirrä suhteelliseen nollapisteeseen nähden</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="234"/>
+        <source>Lock relative Zero</source>
+        <translation type="unfinished">Lukitse suhteelliseen nollapisteeseen nähden</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="44"/>
+        <source>Exclusive Snap Mode</source>
+        <translation type="unfinished">Eksklusiivinen kohdistusaputila</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="52"/>
+        <source>Free Snap</source>
+        <translation type="unfinished">Vapaa kohdistusapu</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="57"/>
+        <source>Snap on grid</source>
+        <translation type="unfinished">Kohdistusapu ruudukolla</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="62"/>
+        <source>Snap on Endpoints</source>
+        <translation type="unfinished">Kohdistusapu loppupisteisiin</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="67"/>
+        <source>Snap on Entity</source>
+        <translation type="unfinished">Kohdistusapu olioon</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="72"/>
+        <source>Snap Center</source>
+        <translation type="unfinished">Kohdistusapu keskiosaan</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="77"/>
+        <source>Snap Middle</source>
+        <translation type="unfinished">Kohdistusapu keskelle</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="82"/>
+        <source>Snap Distance</source>
+        <translation type="unfinished">Kohdistusavun etäisyys</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="87"/>
+        <source>Snap Intersection</source>
+        <translation type="unfinished">Kohdistusapu leikkauskohtaan</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="96"/>
+        <source>Restrict Horizontal</source>
+        <translation type="unfinished">Rajoita vaakasuuntaisesti</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="102"/>
+        <source>Restrict Vertical</source>
+        <translation type="unfinished">Rajoita pystysuuntaisesti</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="109"/>
+        <source>Restrict Orthogonal</source>
+        <translation type="unfinished">Rajoita kohtisuoraan</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="117"/>
+        <source>Restrict Nothing</source>
+        <translation type="unfinished">Älä rajoita mitään</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="124"/>
+        <source>Set relative zero position</source>
+        <translation type="unfinished">Aseta suhteellinen nolla-asema</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="130"/>
+        <source>Lock relative zero position</source>
+        <translation type="unfinished">Lukitse suhteellinen nolla-asema</translation>
+    </message>
+</context>
+<context>
+    <name>QG_WidgetPen</name>
+    <message>
+        <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
+        <location filename="../src/ui/forms/qg_widgetpen.ui" line="38"/>
+        <source>Pen</source>
+        <translation type="unfinished">Kynä</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_widgetpen.ui" line="66"/>
+        <source>Line type:</source>
+        <translation type="unfinished">Viivan tyyppi:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_widgetpen.ui" line="98"/>
+        <source>Width:</source>
+        <translation type="unfinished">Leveys:</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_widgetpen.ui" line="120"/>
+        <source>Color:</source>
+        <translation type="unfinished">Väri:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_WidthBox</name>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="75"/>
+        <source>- Unchanged -</source>
+        <translation type="unfinished">- Ei muutoksia -</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="78"/>
+        <location filename="../src/ui/qg_widthbox.cpp" line="286"/>
+        <source>By Layer</source>
+        <translation>Tason mukaan</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="79"/>
+        <source>By Block</source>
+        <translation>Symbolin mukaan</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="81"/>
+        <source>Default</source>
+        <translation>Oletus</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="82"/>
+        <source>0.00mm</source>
+        <translation type="unfinished">0,00 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="83"/>
+        <source>0.05mm</source>
+        <translation type="unfinished">0,05 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="84"/>
+        <source>0.09mm</source>
+        <translation type="unfinished">0,09 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="85"/>
+        <source>0.13mm (ISO)</source>
+        <translation type="unfinished">0,13 mm (ISO)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="86"/>
+        <source>0.15mm</source>
+        <translation type="unfinished">0,15 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="87"/>
+        <source>0.18mm (ISO)</source>
+        <translation type="unfinished">0,18 mm (ISO)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="88"/>
+        <source>0.20mm</source>
+        <translation type="unfinished">0,20 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="89"/>
+        <source>0.25mm (ISO)</source>
+        <translation type="unfinished">0,25 mm (ISO)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="90"/>
+        <source>0.30mm</source>
+        <translation type="unfinished">0,30 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="91"/>
+        <source>0.35mm (ISO)</source>
+        <translation type="unfinished">0,35 mm (ISO)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="92"/>
+        <source>0.40mm</source>
+        <translation type="unfinished">0,40 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="93"/>
+        <source>0.50mm (ISO)</source>
+        <translation type="unfinished">0,50 mm (ISO)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="94"/>
+        <source>0.53mm</source>
+        <translation type="unfinished">0,53 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="95"/>
+        <source>0.60mm</source>
+        <translation type="unfinished">0,60 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="96"/>
+        <source>0.70mm (ISO)</source>
+        <translation type="unfinished">0,70 mm (ISO)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="97"/>
+        <source>0.80mm</source>
+        <translation type="unfinished">0,80 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="98"/>
+        <source>0.90mm</source>
+        <translation type="unfinished">0,90 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="99"/>
+        <source>1.00mm (ISO)</source>
+        <translation type="unfinished">1,00 mm (ISO)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="100"/>
+        <source>1.06mm</source>
+        <translation type="unfinished">1,06 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="101"/>
+        <source>1.20mm</source>
+        <translation type="unfinished">1,20 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="102"/>
+        <source>1.40mm (ISO)</source>
+        <translation type="unfinished">1,40 mm (ISO)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="103"/>
+        <source>1.58mm</source>
+        <translation type="unfinished">1,58 mm</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="104"/>
+        <source>2.00mm (ISO)</source>
+        <translation type="unfinished">2,00 mm (ISO)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_widthbox.cpp" line="105"/>
+        <source>2.11mm</source>
+        <translation type="unfinished">2,11 mm</translation>
+    </message>
+</context>
+<context>
+    <name>QMessageBox</name>
+    <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1703"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1841"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1996"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="173"/>
+        <source>Warning</source>
+        <translation type="unfinished">Varoitus</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_layerdialog.cpp" line="87"/>
+        <source>Layer Properties</source>
+        <translation type="unfinished">Tason ominaisuudet</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_layerdialog.cpp" line="88"/>
+        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
+        <translation type="unfinished">Taso nimellä &quot;%1&quot; on jo olemassa. Anna eri nimi.</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="268"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="280"/>
+        <source>Remove Layer</source>
+        <translation type="unfinished">Poista taso</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="269"/>
+        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+This action can NOT be undone.</source>
+        <translation type="unfinished">Taso &quot;%1&quot; ja kaikki sen oliot poistetaan.
+Tätä toimintoa EI voi peruuttaa.</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="281"/>
+        <source>Layer &quot;%1&quot; can never be removed.</source>
+        <translation type="unfinished">Tasoa &quot;%1&quot; ei voida poistaa koskaan.</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="326"/>
+        <source>Layer Dialog</source>
+        <translation type="unfinished">Tason valintaikkuna</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="441"/>
+        <source>Remove Block</source>
+        <translation type="unfinished">Poista symboli</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="442"/>
+        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
+        <translation type="unfinished">Symbol &quot;%1&quot; ja kaikki sen oliot poistetaan.</translation>
     </message>
 </context>
 <context>
@@ -2970,6 +7481,126 @@ Haluatko korvata sen?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1034"/>
+        <source>A0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1037"/>
+        <source>A1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1040"/>
+        <source>A2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1043"/>
+        <source>A3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1046"/>
+        <source>A4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1049"/>
+        <source>A5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1052"/>
+        <source>A6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1055"/>
+        <source>A7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1058"/>
+        <source>A8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1061"/>
+        <source>A9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1064"/>
+        <source>B0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1067"/>
+        <source>B1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1070"/>
+        <source>B2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1073"/>
+        <source>B3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1076"/>
+        <source>B4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1079"/>
+        <source>B5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1082"/>
+        <source>B6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1085"/>
+        <source>B7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1088"/>
+        <source>B8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1091"/>
+        <source>B9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1094"/>
+        <source>B10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1132"/>
+        <source>C5E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1135"/>
+        <source>Comm10E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1138"/>
+        <source>DLE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1141"/>
         <source>Folio</source>
         <translation type="unfinished"></translation>
@@ -3066,26 +7697,26 @@ Haluatko korvata sen?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1365"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1378"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1358"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1371"/>
         <source>Mouse</source>
         <translation type="unfinished">Hiiri</translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1367"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1380"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1360"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1373"/>
         <source>Tablet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1369"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1382"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1362"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1375"/>
         <source>Trackpad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1371"/>
-        <location filename="../src/lib/engine/rs_units.cpp" line="1384"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1364"/>
+        <location filename="../src/lib/engine/rs_units.cpp" line="1377"/>
         <source>Touchscreen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4843,4533 +9474,10 @@ Haluatko korvata sen?</translation>
         <source>%1 entities exploded</source>
         <translation type="unfinished">%1 oliota paloiteltu</translation>
     </message>
-</context>
-<context>
-    <name>LC_ActionFileExportMakerCam</name>
     <message>
-        <location filename="../src/actions/lc_actionfileexportmakercam.cpp" line="59"/>
-        <source>Export as</source>
-        <translation>Vie muodossa</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DeviceOptions</name>
-    <message>
-        <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished">Muoto</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_deviceoptions.ui" line="20"/>
-        <source>Device</source>
-        <translation>Laite</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_deviceoptions.ui" line="27"/>
-        <source>Mouse</source>
-        <translation type="unfinished">Hiiri</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_deviceoptions.ui" line="32"/>
-        <source>Tablet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_deviceoptions.ui" line="37"/>
-        <source>Trackpad</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_deviceoptions.ui" line="42"/>
-        <source>Touchscreen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lc_deviceoptions.ui" line="53"/>
-        <source>Save</source>
-        <translation>Tallenna</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SimpleTests</name>
-    <message>
-        <location filename="../src/test/lc_simpletests.cpp" line="34"/>
-        <source>De&amp;bugging</source>
-        <translation>Vi&amp;rheenetsintä</translation>
-    </message>
-    <message>
-        <location filename="../src/test/lc_simpletests.cpp" line="78"/>
-        <source>Insert Image</source>
-        <translation>Lisää kuva</translation>
-    </message>
-</context>
-<context>
-    <name>LC_WidgetOptionsDialog</name>
-    <message>
-        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="14"/>
-        <source>Widget Options</source>
-        <translation type="unfinished">Lisäohjelman valinnat</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="38"/>
-        <source>Toolbar</source>
-        <translation>Työkalupalkki</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="50"/>
-        <source>Icon Size</source>
-        <translation>Kuvakkeen koko</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="63"/>
-        <source>side length in pixels</source>
-        <translation>sivupituus pikseleissä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="79"/>
-        <source>Use themed icons</source>
-        <translation>Käytä teemalla varustettuja ikoneita</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="89"/>
-        <source>General</source>
-        <translation type="unfinished">Yleinen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="101"/>
-        <source>Style</source>
-        <translation type="unfinished">Tyyli</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="127"/>
-        <source>Style Sheet</source>
-        <translation>Tyylitiedosto</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="140"/>
-        <source>Input the path of a Qt style sheet.</source>
-        <translation>Anna Qt-tyylitiedoston polku.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="156"/>
-        <source>Statusbar</source>
-        <translation>Tilapalkki</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="162"/>
-        <source>Height</source>
-        <translation>Korkeus</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="172"/>
-        <source>Font Size</source>
-        <translation>Fonttikoko</translation>
-    </message>
-</context>
-<context>
-    <name>LG_DimzerosBox</name>
-    <message>
-        <location filename="../src/ui/lg_dimzerosbox.cpp" line="9"/>
-        <source>select:</source>
-        <translation>valitse:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lg_dimzerosbox.cpp" line="12"/>
-        <source>remove left</source>
-        <translation>poista vasen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lg_dimzerosbox.cpp" line="16"/>
-        <source>remove right</source>
-        <translation>poista oikea</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lg_dimzerosbox.cpp" line="34"/>
-        <source>remove 0&apos;</source>
-        <translation>poista 0&apos;</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/lg_dimzerosbox.cpp" line="38"/>
-        <source>remove 0&quot;</source>
-        <translation>poista 0&quot;</translation>
-    </message>
-</context>
-<context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="32"/>
-        <source>Line Relative Angle Options</source>
-        <translation type="unfinished">Viivan suhteellisen kulman valinnat</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="59"/>
-        <source>Spacing:</source>
-        <translation type="unfinished">Välit:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="84"/>
-        <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="122"/>
-        <source>Distance from original polyline</source>
-        <translation type="unfinished">Etäisyys alkuperäisestä moniviivasta</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="97"/>
-        <source>Copies:</source>
-        <translation>Kopioita:</translation>
-    </message>
-</context>
-<context>
-    <name>QC_ActionGetEnt</name>
-    <message>
-        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="42"/>
-        <source>Select object:</source>
-        <translation>Valitse kohde:</translation>
-    </message>
-    <message>
-        <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="50"/>
-        <source>Cancel</source>
-        <translation>Peruuta</translation>
-    </message>
-</context>
-<context>
-    <name>QC_ActionGetPoint</name>
-    <message>
-        <location filename="../src/plugins/intern/qc_actiongetpoint.cpp" line="119"/>
-        <source>Cancel</source>
-        <translation>Peruuta</translation>
-    </message>
-</context>
-<context>
-    <name>QC_ActionGetSelect</name>
-    <message>
-        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="43"/>
-        <source>Select objects:</source>
-        <translation>Valitse kohteet:</translation>
-    </message>
-    <message>
-        <location filename="../src/plugins/intern/qc_actiongetselect.cpp" line="56"/>
-        <source>Cancel</source>
-        <translation>Peruuta</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ActionFactory</name>
-    <message>
-        <source>&amp;Export...</source>
-        <translation type="obsolete">&amp;Vie...</translation>
-    </message>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="obsolete">&amp;Sulje</translation>
-    </message>
-    <message>
-        <source>&amp;Print...</source>
-        <translation type="obsolete">&amp;Tulosta...</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation type="obsolete">&amp;Lopeta</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarMain</name>
-    <message>
-        <source>Insert Image</source>
-        <translation type="obsolete">Lisää kuva</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CommandWidget</name>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;type in coordinates or commands&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;kirjoita koordinaatit tai komennot&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_commandwidget.ui" line="14"/>
-        <source>Command Line</source>
-        <translation>Komentorivi</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_commandwidget.ui" line="44"/>
-        <source>Command history and output</source>
-        <translation>Komentohistoria ja ulostulot</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_commandwidget.ui" line="79"/>
-        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="158"/>
-        <source>Command:</source>
-        <translation>Komento:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_commandwidget.ui" line="116"/>
-        <source>...</source>
-        <translation>...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="180"/>
-        <source>Unknown command: %1</source>
-        <translation>Tuntematon komento: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_commandwidget.cpp" line="219"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="unfinished">poistu</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgOptionsGeneral</name>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Commands 2 characters in length are automatically accepted.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kahden kirjaimen pituiset komennot hyväksytään automaattisesti.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="14"/>
-        <source>Application Preferences</source>
-        <translation>Sovelluksen määritykset</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="46"/>
-        <source>&amp;Appearance</source>
-        <translation>&amp;Ulkoasu</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="58"/>
-        <source>Language</source>
-        <translation>Kieli</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="64"/>
-        <source>&amp;GUI Language:</source>
-        <translation>&amp;Käyttöliittymän kieli:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="80"/>
-        <source>&amp;Command Language:</source>
-        <translation type="unfinished">Komentokie&amp;li:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="572"/>
-        <source>Backgr&amp;ound:</source>
-        <translation>&amp;Tausta:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="314"/>
-        <source>G&amp;rid Color:</source>
-        <translation>R&amp;uudukon väri:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="506"/>
-        <source>&amp;Meta Grid Color:</source>
-        <translation type="unfinished">&amp;Metaruudukon väri:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="534"/>
-        <source>S&amp;elected Color:</source>
-        <translation>V&amp;alittu väri:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="478"/>
-        <source>&amp;Highlighted Color:</source>
-        <translation>Ko&amp;rostettu väri:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
-        <source>Graphic View</source>
-        <translation>Graafinen näkymä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="181"/>
-        <source>Scrollbars</source>
-        <translation>Vierityspalkit</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="144"/>
-        <source>Snap indicator lines</source>
-        <translation type="unfinished">Kohdistusavun ilmaisinviivat</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="147"/>
-        <source>Alt+S</source>
-        <translation>Alt+S</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="257"/>
-        <source>Snap indicator shape</source>
-        <translation type="unfinished">Kohdistusavun ilmaisimen muoto</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="127"/>
-        <source>Hide cursor when snapping</source>
-        <translation type="unfinished">Piilota osoitin kohdistusavun käytön aikana</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="134"/>
-        <source>A&amp;utomatically scale grid</source>
-        <translation>S&amp;kaalaa ruudukko automaattisesti</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="137"/>
-        <source>Alt+U</source>
-        <translation>Alt+U</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="562"/>
-        <source>St&amp;art Handle Color:</source>
-        <translation type="unfinished">A&amp;llkukahvan väri:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="646"/>
-        <source>&amp;Handle Color:</source>
-        <translation type="unfinished">&amp;Kahvan väri:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="304"/>
-        <source>&amp;End Handle Color:</source>
-        <translation type="unfinished">&amp;Loppukahvan väri:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="280"/>
-        <source>Graphic Colors</source>
-        <translation type="unfinished">Grafiikkavärit</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="656"/>
-        <source>Snap indicator:</source>
-        <translation type="unfinished">Kohdistusavun ilmaisin:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="264"/>
-        <source>Anti-aliasing</source>
-        <translation type="unfinished">Reunantasoitus</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="678"/>
-        <source>#1E90FF</source>
-        <translation type="unfinished">#1E90FF</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="707"/>
-        <source>&amp;Paths</source>
-        <translation type="unfinished">&amp;Polut</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="713"/>
-        <source>Translations:</source>
-        <translation type="unfinished">Käännökset:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="726"/>
-        <source>Hatch Patterns:</source>
-        <translation>Täyttökuviot:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="739"/>
-        <source>Fonts:</source>
-        <translation type="unfinished">Fontit:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="117"/>
-        <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation type="unfinished">Minimiruudukkovälit (p&amp;x):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="805"/>
-        <source>Variable File:</source>
-        <translation type="unfinished">Muuttujatiedosto:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="771"/>
-        <source>Part Libraries:</source>
-        <translation type="unfinished">Osakirjastot:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="158"/>
-        <source>Crosshair</source>
-        <translation type="unfinished">Ristikko</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="163"/>
-        <source>Crosshair2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="168"/>
-        <source>Isometric</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="173"/>
-        <source>Spiderweb</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="192"/>
-        <source>Circle</source>
-        <translation type="unfinished">Ympyrä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="197"/>
-        <source>Point</source>
-        <translation type="unfinished">Piste</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="202"/>
-        <source>Square</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="760"/>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="784"/>
-        <source>Template:</source>
-        <translation type="unfinished">Malli:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="856"/>
-        <source>&amp;Defaults</source>
-        <translation type="unfinished">&amp;Oletus</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="921"/>
-        <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
-        <translation type="unfinished">Kääntää vierityssuunnan, kun hiiren pyörää käytetään Shift-näppäimen kanssa.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="924"/>
-        <source>Invert horizontal scrolling direction</source>
-        <translation type="unfinished">Kääntää vaakasuuntaisen vierityssuunnan</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="931"/>
-        <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
-        <translation type="unfinished">Kääntää vierityssuunnan, kun hiiren pyörää käytetään Ctrl-painikkeen kanssa.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="934"/>
-        <source>Invert vertical scrolling direction</source>
-        <translation type="unfinished">Kääntää pystysuuntaisen vierityssuunnan</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="941"/>
-        <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation type="unfinished">Kääntää zoomaussuunnan, kun käytetään hiiren pyörää.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="944"/>
-        <source>Invert zoom direction</source>
-        <translation type="unfinished">Kääntää zoomaussuunnan</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1008"/>
-        <source>Startup</source>
-        <translation type="unfinished">Käynnistys</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1014"/>
-        <source>Display loading screen</source>
-        <translation type="unfinished">Näyttää latausnäytön</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1028"/>
-        <source>Start with main window maximized</source>
-        <translation type="unfinished">Käynnistys pääikkuna maksimoituna</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1035"/>
-        <source>Enable CAD dockwidgets</source>
-        <translation type="unfinished">Ota käyttöön CAD-telakan pienoisohjelmat</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1042"/>
-        <source>Enable CAD toolbars</source>
-        <translation type="unfinished">Ota käyttöön CAD-työkalupalkit</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1141"/>
-        <source>Automatically zoom drawing when opening</source>
-        <translation type="unfinished">Zoomaa automaattisesti piirustukseen avatessasi sen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1064"/>
-        <source>Defaults for new drawings</source>
-        <translation type="unfinished">Oletusasetukset uusille piirustuksille</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1076"/>
-        <source>&amp;Unit:</source>
-        <translation type="unfinished">&amp;Yksikkö:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1089"/>
-        <source>Drawing unit.</source>
-        <translation type="unfinished">Piirustusyksikkö.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="874"/>
-        <source>Program Defaults</source>
-        <translation type="unfinished">Ohjelman oletusasetukset</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="892"/>
-        <source>Auto save time:</source>
-        <translation type="unfinished">Automaattisen tallennuksen aika:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="899"/>
-        <source>Time between automatic saving of the document in minutes.</source>
-        <translation type="unfinished">Aika asiakirjan automaattisten tallennusten välillä minuuteissa.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="914"/>
-        <source>Don&apos;t use native OS file open dialog</source>
-        <translation type="unfinished">Älä käytä käyttöjärjestemän omaa tiedoston valintaikkunaa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1099"/>
-        <source>Keyboard Settings</source>
-        <translation type="unfinished">Näppäimistön asetukset</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1105"/>
-        <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation type="unfinished">Suorita komennot VÄLILYÖNTI painettuna</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1112"/>
-        <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
-        <translation type="unfinished">Vaihda vapaa kohdistusaputila VÄLILYÖNTI painettuna, kun komentoikkuna on tyhjä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1115"/>
-        <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation type="unfinished">Vaihda vapaa kohdistusaputila VÄLILYÖNTI painettuna</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1125"/>
-        <source>CAD Preferences</source>
-        <translation type="unfinished">CAD-määritykset</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1131"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Käyttöönotettuna tason aktivointi muuttaisi kaikki valitut oliot uuteen tasoon. Muuttaaksesi useiden olioiden tasoa valitse ensin tarvitut oliot ja aktivoi kerros tasopienoisohjelmassa. Tämä muuttaa kaikki valitut oliot uuteen tasoon.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="880"/>
-        <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
-        <translation type="unfinished">LibreCAD luo automaattisesti tämänhetkisen piirustuksen varmuuskopion, kkun tämä on asetettu.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="883"/>
-        <source>Auto backup</source>
-        <translation type="unfinished">Automaattinen varmuuskopio</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1134"/>
-        <source>Modify layer of selected entities, at  layer activation</source>
-        <translation type="unfinished">Muokkaa valittujen olioiden tasoa kerrosta aktivoitaessa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1021"/>
-        <source>Start in tab mode</source>
-        <translation>Aloita välilehtitilassa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="967"/>
-        <source>Clear Settings</source>
-        <translation type="unfinished">Poista asetukset</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="979"/>
-        <source>restores program geometry/layout to original state</source>
-        <translation type="unfinished">palauttaa ohjelman geometrian/asettelun alkuperäistilaan</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="982"/>
-        <source>Layout</source>
-        <translation type="unfinished">Asettelu</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="995"/>
-        <source>restores the program to its original state</source>
-        <translation type="unfinished">palauttaa ohjelman alkuperäistilaan</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="998"/>
-        <source>All</source>
-        <translation type="unfinished">Kaikki</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="338"/>
-        <source>Preferences</source>
-        <translation type="unfinished">Määritykset</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="339"/>
-        <source>Please restart the application to apply all changes.</source>
-        <translation type="unfinished">Käynnistä sovellus uudelleen ottaaksesi muutokset käyttöön.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="415"/>
-        <source>Clear settings</source>
-        <translation type="unfinished">Poista asetukset</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="416"/>
-        <source>This will also include custom menus and toolbars. Continue?</source>
-        <translation type="unfinished">Tähän sisältyvät myös mukautetut valikot ja työkalupalkit. Jatka?</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgSpline</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Peruuta</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgspline.ui" line="26"/>
-        <source>Spline</source>
-        <translation type="unfinished">Splini</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgspline.ui" line="44"/>
-        <source>Layer:</source>
-        <translation type="unfinished">Taso:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgspline.ui" line="77"/>
-        <source>Geometry</source>
-        <translation type="unfinished">Geometria</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgspline.ui" line="115"/>
-        <source>Degree:</source>
-        <translation type="unfinished">Aste:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgspline.ui" line="125"/>
-        <source>Closed</source>
-        <translation type="unfinished">Suljettu</translation>
-    </message>
-</context>
-<context>
-    <name>QG_RecentFiles</name>
-    <message>
-        <source>Opening recent file...</source>
-        <translation type="obsolete">Avataan viimeaikaista tiedostoa...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_recentfiles.cpp" line="148"/>
-        <source>&amp;%1 %2</source>
-        <translation type="unfinished">&amp;%1 %2</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyEntity</name>
-    <message>
-        <source>&amp;Properties</source>
-        <translation type="obsolete">&amp;Ominaisuudet</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/rs_actionmodifyentity.cpp" line="96"/>
-        <source>Click on entity to modify</source>
-        <translation type="unfinished">Napsauta muokattavaa oliota</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/rs_actionmodifyentity.cpp" line="96"/>
-        <source>Cancel</source>
-        <translation type="unfinished">Peruuta</translation>
-    </message>
-</context>
-<context>
-    <name>QMessageBox</name>
-    <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1703"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1841"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1996"/>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="173"/>
-        <source>Warning</source>
-        <translation type="unfinished">Varoitus</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_layerdialog.cpp" line="87"/>
-        <source>Layer Properties</source>
-        <translation type="unfinished">Tason ominaisuudet</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_layerdialog.cpp" line="88"/>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation type="unfinished">Taso nimellä &quot;%1&quot; on jo olemassa. Anna eri nimi.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="268"/>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="280"/>
-        <source>Remove Layer</source>
-        <translation type="unfinished">Poista taso</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="269"/>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
-This action can NOT be undone.</source>
-        <translation type="unfinished">Taso &quot;%1&quot; ja kaikki sen oliot poistetaan.
-Tätä toimintoa EI voi peruuttaa.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="281"/>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation type="unfinished">Tasoa &quot;%1&quot; ei voida poistaa koskaan.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="326"/>
-        <source>Layer Dialog</source>
-        <translation type="unfinished">Tason valintaikkuna</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="441"/>
-        <source>Remove Block</source>
-        <translation type="unfinished">Poista symboli</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="442"/>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation type="unfinished">Symbol &quot;%1&quot; ja kaikki sen oliot poistetaan.</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ActionHandler</name>
-    <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="1148"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="unfinished">poistu</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ActiveLayerName</name>
-    <message>
-        <location filename="../src/ui/forms/qg_activelayername.ui" line="32"/>
-        <source>Selection</source>
-        <translation type="unfinished">Valinta</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_activelayername.ui" line="65"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_activelayername.ui" line="74"/>
-        <source>Current Layer</source>
-        <translation>Tämänhetkinen taso</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_activelayername.ui" line="93"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Tämänhetkisen aktiivisen tason nimi&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>QG_BlockDialog</name>
-    <message>
-        <location filename="../src/ui/forms/qg_blockdialog.ui" line="20"/>
-        <source>Block Settings</source>
-        <translation type="unfinished">Symbolin asetukset</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_blockdialog.ui" line="43"/>
-        <source>Block Name:</source>
-        <translation type="unfinished">Symbolin nimi:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_blockdialog.cpp" line="80"/>
-        <source>Renaming Block</source>
-        <translation type="unfinished">Symbolin uudelleennimeäminen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_blockdialog.cpp" line="81"/>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation type="unfinished">Symbolia ei voitu nimetä. Symboli nimeltä &quot;%1” on jo olemassa.</translation>
-    </message>
-</context>
-<context>
-    <name>QG_BlockWidget</name>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="155"/>
-        <source>Show all blocks</source>
-        <translation type="unfinished">Näytä kaikki symbolit</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="163"/>
-        <source>Hide all blocks</source>
-        <translation type="unfinished">Piilota kaikki symbolit</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="171"/>
-        <source>Create Block</source>
-        <translation>Luo symboli</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="180"/>
-        <source>Add an empty block</source>
-        <translation>Lisää tyhjä symboli</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="188"/>
-        <source>Remove the active block</source>
-        <translation>Poista valittu symboli</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="196"/>
-        <source>Rename the active block</source>
-        <translation>Nimeä uudelleen aktiivinen symboli</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="204"/>
-        <source>Edit the active block
-in a separate window</source>
-        <translation>Muokkaa aktiivista symbolia
-erillisessä ikkunassa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="213"/>
-        <source>save the active block to a file</source>
-        <translation>tallenna aktiivinen symboli tiedostoon</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="221"/>
-        <source>Insert the active block</source>
-        <translation>Lisää aktiivinen symboli</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="229"/>
-        <source>Filter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="231"/>
-        <source>Looking for matching block names</source>
-        <translation type="unfinished">Etsitään yhteensopivia symbolin nimiä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="336"/>
-        <source>Block Menu</source>
-        <translation>Osavalikko</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="342"/>
-        <source>&amp;Defreeze all Blocks</source>
-        <translation type="unfinished">&amp;Sulata kaikki symbolit</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="344"/>
-        <source>&amp;Freeze all Blocks</source>
-        <translation>&amp;Jäädytä kaikki symbolit</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="346"/>
-        <source>&amp;Add Block</source>
-        <translation>&amp;Lisää symboli</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="348"/>
-        <source>&amp;Remove Block</source>
-        <translation>&amp;Poista symboli</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="350"/>
-        <source>&amp;Rename Block</source>
-        <translation>&amp;Nimeä symboli uudelleen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="352"/>
-        <source>&amp;Edit Block</source>
-        <translation>&amp;Muokkaa symbolia</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="354"/>
-        <source>&amp;Insert Block</source>
-        <translation>L&amp;isää symboli</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="356"/>
-        <source>&amp;Toggle Visibility</source>
-        <translation>&amp;Näytä/Piilota</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_blockwidget.cpp" line="358"/>
-        <source>&amp;Create New Block</source>
-        <translation>&amp;Luo uusi symboli</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ColorBox</name>
-    <message>
-        <location filename="../src/ui/qg_colorbox.cpp" line="80"/>
-        <source>Unchanged</source>
-        <translation type="unfinished">Ei muutoksia</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_colorbox.cpp" line="83"/>
-        <location filename="../src/ui/qg_colorbox.cpp" line="189"/>
-        <source>By Layer</source>
-        <translation>Tason mukaan</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_colorbox.cpp" line="84"/>
-        <source>By Block</source>
-        <translation>Symbolin mukaan</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_colorbox.cpp" line="87"/>
-        <location filename="../src/ui/qg_colorbox.cpp" line="229"/>
-        <source>Custom</source>
-        <translation>Mukautettu</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_colorbox.cpp" line="91"/>
-        <source>Red</source>
-        <translation>Punainen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_colorbox.cpp" line="94"/>
-        <source>Dark Red</source>
-        <translation>Tummanpunainen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_colorbox.cpp" line="95"/>
-        <source>Yellow</source>
-        <translation>Keltainen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_colorbox.cpp" line="96"/>
-        <source>Dark Yellow</source>
-        <translation>Tummankeltainen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_colorbox.cpp" line="97"/>
-        <source>Green</source>
-        <translation>Vihreä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_colorbox.cpp" line="98"/>
-        <source>Dark Green</source>
-        <translation>Tummanvihreä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_colorbox.cpp" line="99"/>
-        <source>Cyan</source>
-        <translation>Syaani</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_colorbox.cpp" line="100"/>
-        <source>Dark Cyan</source>
-        <translation>Tummansyaani</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_colorbox.cpp" line="101"/>
-        <source>Blue</source>
-        <translation>Sininen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_colorbox.cpp" line="102"/>
-        <source>Dark Blue</source>
-        <translation>Tummansininen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_colorbox.cpp" line="103"/>
-        <source>Magenta</source>
-        <translation>Magenta</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_colorbox.cpp" line="104"/>
-        <source>Dark Magenta</source>
-        <translation>Tummanmagenta</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_colorbox.cpp" line="105"/>
-        <source>Black / White</source>
-        <translation>Mustavalkoinen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_colorbox.cpp" line="108"/>
-        <source>Gray</source>
-        <translation>Harmaa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_colorbox.cpp" line="109"/>
-        <source>Dark Gray</source>
-        <translation>Tummanharmaa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_colorbox.cpp" line="110"/>
-        <source>Light Gray</source>
-        <translation>Vaaleanharmaa</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CommandEdit</name>
-    <message>
-        <location filename="../src/ui/qg_commandedit.cpp" line="244"/>
-        <source>clear</source>
-        <translation type="unfinished">tyhjennä</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CommandHistory</name>
-    <message>
-        <location filename="../src/ui/qg_commandhistory.cpp" line="38"/>
-        <source>&amp;Copy</source>
-        <translation>&amp;Kopioi</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_commandhistory.cpp" line="45"/>
-        <source>Select &amp;All</source>
-        <translation>Valitse &amp;kaikki</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_commandhistory.cpp" line="50"/>
-        <source>Clear</source>
-        <translation>Tyhjennä</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CoordinateWidget</name>
-    <message>
-        <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="32"/>
-        <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="76"/>
-        <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="92"/>
-        <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="131"/>
-        <location filename="../src/ui/forms/qg_coordinatewidget.ui" line="141"/>
-        <source>Coordinates</source>
-        <translation>Koordinaatit</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DimensionLabelEditor</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="20"/>
-        <source>Dimension Label Editor</source>
-        <translation type="unfinished">Mittojen nimikkeen muokkaaja</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="32"/>
-        <source>Dimension Label:</source>
-        <translation type="unfinished">Mittojen nimike:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="57"/>
-        <source>Label:</source>
-        <translation type="unfinished">Nimike:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="130"/>
-        <source>Insert:</source>
-        <translation type="unfinished">Lisää:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="147"/>
-        <source>⌀ (Diameter)</source>
-        <translation>⌀ (halkaisija)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="162"/>
-        <source>π (Pi)</source>
-        <translation>π (pii)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="152"/>
-        <source>° (Degree)</source>
-        <translation>° (aste)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="157"/>
-        <source>± (Plus / Minus)</source>
-        <translation>± (plus/miinus)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="167"/>
-        <source>× (Times)</source>
-        <translation type="unfinished">× (kertominen)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="172"/>
-        <source>÷ (Division)</source>
-        <translation type="unfinished">÷ (jakaminen)</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgArc</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
-        <source>Arc</source>
-        <translation>Kaari</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgarc.ui" line="44"/>
-        <source>Layer:</source>
-        <translation>Taso:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgarc.ui" line="71"/>
-        <source>Geometry</source>
-        <translation>Geometria</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgarc.ui" line="77"/>
-        <source>Radius:</source>
-        <translation>Säde:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgarc.ui" line="97"/>
-        <source>Center (y):</source>
-        <translation type="unfinished">Keskikohta (y):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgarc.ui" line="117"/>
-        <source>Center (x):</source>
-        <translation type="unfinished">Keskikohta (x):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgarc.ui" line="137"/>
-        <source>Start Angle:</source>
-        <translation type="unfinished">Lähtökulma:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgarc.ui" line="167"/>
-        <source>End Angle:</source>
-        <translation type="unfinished">Päätekulma:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgarc.ui" line="209"/>
-        <source>Reversed</source>
-        <translation type="unfinished">Suunta vaihdettu</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgAttributes</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgattributes.ui" line="26"/>
-        <source>Attributes</source>
-        <translation type="unfinished">Määritteet</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgattributes.ui" line="44"/>
-        <source>Layer:</source>
-        <translation>Taso:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgattributes.ui" line="69"/>
-        <source>Apply attributes also to all sub-entities of selected INSERT.
-This recursively modifies all entities of the Block itself.</source>
-        <translation type="unfinished">Käytä määritteitä myös kaikkiin valitun INSERTIN alaolioihin.
-Tämä vastaavasti muuttaa kaikkia itse symbolin olioita.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgattributes.ui" line="73"/>
-        <source>Apply attributes Block-deep</source>
-        <translation type="unfinished">Käytä määritteitä symbolin laajuisesti</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgCircle</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgcircle.ui" line="26"/>
-        <source>Circle</source>
-        <translation>Ympyrä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgcircle.ui" line="44"/>
-        <source>Layer:</source>
-        <translation>Taso:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgcircle.ui" line="71"/>
-        <source>Geometry</source>
-        <translation>Geometria</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgcircle.ui" line="77"/>
-        <source>Radius:</source>
-        <translation>Säde:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgcircle.ui" line="97"/>
-        <source>Center (y):</source>
-        <translation type="unfinished">Keskikohta (y):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgcircle.ui" line="117"/>
-        <source>Center (x):</source>
-        <translation type="unfinished">Keskikohta (x):</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="20"/>
-        <source>Linear Dimension</source>
-        <translation type="unfinished">Lineaarinen mitta</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="47"/>
-        <source>Layer:</source>
-        <translation>Taso:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="79"/>
-        <source>Geometry</source>
-        <translation>Geometria</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="103"/>
-        <source>Angle:</source>
-        <translation>Kulma:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgdimension.ui" line="20"/>
-        <source>Dimension</source>
-        <translation type="unfinished">Mitta</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgdimension.ui" line="47"/>
-        <source>Layer:</source>
-        <translation>Taso:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgEllipse</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="26"/>
-        <source>Ellipse</source>
-        <translation>Ellipsi</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="44"/>
-        <source>Layer:</source>
-        <translation>Taso:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="71"/>
-        <source>Geometry</source>
-        <translation>Geometria</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="77"/>
-        <source>Center (y):</source>
-        <translation type="unfinished">Keskikohta (y):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="97"/>
-        <source>Center (x):</source>
-        <translation type="unfinished">Keskikohta (x):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="149"/>
-        <source>End Angle:</source>
-        <translation type="unfinished">Päätekulma:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="179"/>
-        <source>Start Angle:</source>
-        <translation type="unfinished">Lähtökulma:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="189"/>
-        <source>Rotation:</source>
-        <translation type="unfinished">Kierto:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="219"/>
-        <source>Minor:</source>
-        <translation type="unfinished">Pieni:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="229"/>
-        <source>Major:</source>
-        <translation type="unfinished">Suuri:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgellipse.ui" line="249"/>
-        <source>Reversed</source>
-        <translation type="unfinished">Suunta vaihdettu</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgFontConversion</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="15"/>
-        <source>Convert Fonts</source>
-        <translation type="unfinished">Muunna fontit</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="21"/>
-        <source>Font family:</source>
-        <translation type="unfinished">Fonttiperhe:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="40"/>
-        <source>Font file:</source>
-        <translation type="unfinished">Fonttitiedosto:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="57"/>
-        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="74"/>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="64"/>
-        <source>Save as:</source>
-        <translation type="unfinished">Tallenna nimellä:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="81"/>
-        <source>Letter spacing:</source>
-        <translation type="unfinished">Merkkiväli:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="95"/>
-        <source>Author:</source>
-        <translation type="unfinished">Tekijä:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="115"/>
-        <source>Word spacing:</source>
-        <translation type="unfinished">Sanojen välit:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="129"/>
-        <source>License:</source>
-        <translation type="unfinished">Lisenssi:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="142"/>
-        <source>Line spacing:</source>
-        <translation type="unfinished">Viivojen välit:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="156"/>
-        <source>Writing System:</source>
-        <translation type="unfinished">Kirjoitusjärjestelmä:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgfontconversion.ui" line="182"/>
-        <source>Preview</source>
-        <translation type="unfinished">Esikatselu</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgfontconversion.cpp" line="61"/>
-        <source>Create</source>
-        <translation type="unfinished">Luo</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgfontconversion.cpp" line="129"/>
-        <location filename="../src/ui/forms/qg_dlgfontconversion.cpp" line="269"/>
-        <source> - Searching</source>
-        <translation type="unfinished"> - Etsitään</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgfontconversion.cpp" line="192"/>
-        <source>LibreCAD Font Files(*.lff)</source>
-        <translation type="unfinished">LibreCAD-fonttitiedostot(*.lff)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgfontconversion.cpp" line="274"/>
-        <source> - Rendering</source>
-        <translation type="unfinished"> - Muodostetaan kuvaa</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgHatch</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlghatch.ui" line="14"/>
-        <source>Choose Hatch Attributes</source>
-        <translation>Valitse täyttökuvion ominaisuudet</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlghatch.ui" line="22"/>
-        <source>Pattern</source>
-        <translation type="unfinished">Kuvio</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlghatch.ui" line="34"/>
-        <source>Angle:</source>
-        <translation>Kulma:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlghatch.ui" line="44"/>
-        <source>Scale:</source>
-        <translation type="unfinished">Mittakaava:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlghatch.ui" line="57"/>
-        <source>Solid Fill</source>
-        <translation type="unfinished">Kiinteä täyttö</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlghatch.ui" line="67"/>
-        <source>Preview</source>
-        <translation type="unfinished">Esikatselu</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlghatch.ui" line="73"/>
-        <source>Enable Preview</source>
-        <translation>Ota esikatselu käyttöön</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgImage</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimage.ui" line="26"/>
-        <source>Image</source>
-        <translation>Kuva</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimage.ui" line="44"/>
-        <source>Layer:</source>
-        <translation>Taso:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimage.ui" line="80"/>
-        <source>Geometry</source>
-        <translation>Geometria</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimage.ui" line="86"/>
-        <source>Width:</source>
-        <translation>Leveys:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimage.ui" line="116"/>
-        <source>Height:</source>
-        <translation>Korkeus:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimage.ui" line="123"/>
-        <source>insert (x):</source>
-        <translation type="unfinished">lisää (x):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimage.ui" line="130"/>
-        <source>Scale:</source>
-        <translation type="unfinished">Mittakaava:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimage.ui" line="166"/>
-        <source>Size (px):</source>
-        <translation type="unfinished">Koko (px):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimage.ui" line="183"/>
-        <source>path:</source>
-        <translation type="unfinished">polku:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimage.ui" line="206"/>
-        <source>insert (y):</source>
-        <translation type="unfinished">lisää (y):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimage.ui" line="223"/>
-        <source>Angle:</source>
-        <translation>Kulma:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimage.ui" line="260"/>
-        <source>DPI</source>
-        <translation type="unfinished">DPI</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgInitial</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlginitial.ui" line="14"/>
-        <source>Welcome</source>
-        <translation>Tervetuloa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlginitial.ui" line="64"/>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
-&lt;/font&gt;
-&lt;br&gt;
-Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
-(You can changes these settings later.)</source>
-        <translation type="unfinished">&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Tervetuloa LibreCADiin&lt;/b&gt;
-&lt;/font&gt;
-&lt;br&gt;
-Valitse yksikkö, jota haluat käyttää uusille piirustuksille ja haluamallesi kielelle.&lt;br&gt;
-(Voit muuttaa asetuksia myöhemmin.)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlginitial.ui" line="104"/>
-        <source>Default Unit:</source>
-        <translation>Oletusyksikkö:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlginitial.ui" line="114"/>
-        <source>GUI Language:</source>
-        <translation>Käyttöliittymän kieli:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlginitial.ui" line="124"/>
-        <source>Command Language:</source>
-        <translation>Komentokieli:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgInsert</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlginsert.ui" line="26"/>
-        <source>Insert</source>
-        <translation type="unfinished">Lisää</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlginsert.ui" line="44"/>
-        <source>Layer:</source>
-        <translation>Taso:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlginsert.ui" line="71"/>
-        <source>Geometry</source>
-        <translation>Geometria</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlginsert.ui" line="129"/>
-        <source>Insertion point (x):</source>
-        <translation type="unfinished">Lisäyspiste (x):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlginsert.ui" line="139"/>
-        <source>Insertion point (y):</source>
-        <translation type="unfinished">Lisäyspiste (y):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlginsert.ui" line="159"/>
-        <source>Scale X:</source>
-        <translation type="unfinished">Mittakaava X:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlginsert.ui" line="179"/>
-        <source>Scale Y:</source>
-        <translation type="unfinished">Mittakaava Y:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlginsert.ui" line="189"/>
-        <source>Angle:</source>
-        <translation>Kulma:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlginsert.ui" line="209"/>
-        <source>Rows:</source>
-        <translation type="unfinished">Rivit:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlginsert.ui" line="239"/>
-        <source>Columns:</source>
-        <translation>Sarakkeet:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlginsert.ui" line="249"/>
-        <source>Row Spacing:</source>
-        <translation type="unfinished">Riviväli:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlginsert.ui" line="279"/>
-        <source>Column Spacing:</source>
-        <translation type="unfinished">Sarakeväli:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgLine</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgline.ui" line="29"/>
-        <source>Line</source>
-        <translation>Viiva</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgline.ui" line="47"/>
-        <source>Layer:</source>
-        <translation>Taso:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgline.ui" line="80"/>
-        <source>Geometry</source>
-        <translation>Geometria</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgline.ui" line="86"/>
-        <source>End point (x):</source>
-        <translation type="unfinished">Päätepiste (x):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgline.ui" line="116"/>
-        <source>End point (y):</source>
-        <translation type="unfinished">Päätepiste (y):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgline.ui" line="126"/>
-        <source>Start point (y):</source>
-        <translation type="unfinished">Lähtöpiste (y):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgline.ui" line="146"/>
-        <source>Start point (x):</source>
-        <translation type="unfinished">Lähtöpiste (x):</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMText</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="14"/>
-        <source>MText</source>
-        <translation>Mteksti</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="39"/>
-        <source>Layer:</source>
-        <translation>Taso:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="72"/>
-        <source>Font</source>
-        <translation>Fontti</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="91"/>
-        <source>&amp;Height:</source>
-        <translation>&amp;Korkeus:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="146"/>
-        <source>&amp;Line spacing:</source>
-        <translation type="unfinished">&amp;Viivaväli:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="175"/>
-        <source>&amp;Default line spacing</source>
-        <translation type="unfinished">&amp;Oletusviivaväli</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="178"/>
-        <source>Alt+D</source>
-        <translation>Alt+D</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="198"/>
-        <source>Alignment</source>
-        <translation type="unfinished">Kohdistus</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="216"/>
-        <source>Top Right</source>
-        <translation type="unfinished">Yläoikea</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="245"/>
-        <source>Top Left</source>
-        <translation type="unfinished">Ylävasen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="274"/>
-        <source>Middle Left</source>
-        <translation type="unfinished">Keskivasen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="303"/>
-        <source>Middle Center</source>
-        <translation type="unfinished">Keskiosa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="332"/>
-        <source>Middle Right</source>
-        <translation type="unfinished">Keskioikea</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="361"/>
-        <source>Bottom Left</source>
-        <translation type="unfinished">Alavasen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="390"/>
-        <source>Bottom Right</source>
-        <translation type="unfinished">Alaoikea</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="419"/>
-        <source>Bottom Center</source>
-        <translation type="unfinished">Alakeskiosa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="448"/>
-        <source>Top Center</source>
-        <translation type="unfinished">Yläkeskiosa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="480"/>
-        <source>Angle</source>
-        <translation>Kulma</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="523"/>
-        <source>Text:</source>
-        <translation>Teksti:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="549"/>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="560"/>
-        <source>Clear Text</source>
-        <translation type="unfinished">Tyhjennä teksti</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="574"/>
-        <source>Load Text From File</source>
-        <translation>Lataa teksti tiedostosta</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="588"/>
-        <source>Save Text To File</source>
-        <translation>Tallenna teksti tiedostoon</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="602"/>
-        <source>Cut</source>
-        <translation>Leikkaa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="616"/>
-        <source>Copy</source>
-        <translation>Kopioi</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="630"/>
-        <source>Paste</source>
-        <translation>Liitä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="671"/>
-        <source>Insert Symbol</source>
-        <translation type="unfinished">Lisää symboli</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="684"/>
-        <source>Diameter (⌀)</source>
-        <translation type="unfinished">Halkaisija (⌀)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="689"/>
-        <source>Degree (°)</source>
-        <translation type="unfinished">Aste (°)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="694"/>
-        <source>Plus / Minus (±)</source>
-        <translation>Plus/miinus (±)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="699"/>
-        <source>At (@)</source>
-        <translation type="unfinished">Ät-merkki (@)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="704"/>
-        <source>Hash (#)</source>
-        <translation type="unfinished">Ristikkomerkki (#)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="709"/>
-        <source>Dollar ($)</source>
-        <translation>Dollari ($)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="714"/>
-        <source>Copyright (©)</source>
-        <translation>Tekijänoikeus (©)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="719"/>
-        <source>Registered (®)</source>
-        <translation type="unfinished">Rekisteröity (®)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="724"/>
-        <source>Paragraph (§)</source>
-        <translation type="unfinished">Kappale (§)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="729"/>
-        <source>Pi (π)</source>
-        <translation>Pii (π)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="734"/>
-        <source>Pound (£)</source>
-        <translation>Punta (£)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="739"/>
-        <source>Yen (¥)</source>
-        <translation>Jeni (¥)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="744"/>
-        <source>Times (×)</source>
-        <translation>Kertaa (×)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="749"/>
-        <source>Division (÷)</source>
-        <translation type="unfinished">Jako (÷)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="760"/>
-        <source>Insert Unicode</source>
-        <translation type="unfinished">Lisää Unicode</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="766"/>
-        <source>Page:</source>
-        <translation type="unfinished">Sivu:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="776"/>
-        <source>Char:</source>
-        <translation type="unfinished">Merkki:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="799"/>
-        <source>[0000-007F] Basic Latin</source>
-        <translation type="unfinished">[0000-007F] Basic Latin</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="804"/>
-        <source>[0080-00FF] Latin-1 Supplementary</source>
-        <translation type="unfinished">[0080-00FF] Latin-1 Supplementary</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="809"/>
-        <source>[0100-017F] Latin Extended-A</source>
-        <translation type="unfinished">[0100-017F] Latin Extended-A</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="814"/>
-        <source>[0180-024F] Latin Extended-B</source>
-        <translation type="unfinished">[0180-024F] Latin Extended-B</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="819"/>
-        <source>[0250-02AF] IPA Extensions</source>
-        <translation type="unfinished">[0250-02AF] IPA Extensions</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="824"/>
-        <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation type="unfinished">[02B0-02FF] Spacing Modifier Letters</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="829"/>
-        <source>[0300-036F] Combining Diacritical Marks</source>
-        <translation type="unfinished">[0300-036F] Combining Diacritical Marks</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="834"/>
-        <source>[0370-03FF] Greek and Coptic</source>
-        <translation type="unfinished">[0370-03FF] Greek and Coptic</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="839"/>
-        <source>[0400-04FF] Cyrillic</source>
-        <translation type="unfinished">[0400-04FF] Cyrillic</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="844"/>
-        <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation type="unfinished">[0500-052F] Cyrillic Supplementary</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="849"/>
-        <source>[0530-058F] Armenian</source>
-        <translation type="unfinished">[0530-058F] Armenian</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="854"/>
-        <source>[0590-05FF] Hebrew</source>
-        <translation type="unfinished">[0590-05FF] Hebrew</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="859"/>
-        <source>[0600-06FF] Arabic</source>
-        <translation>[0600-06FF] Arabic</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="864"/>
-        <source>[0700-074F] Syriac</source>
-        <translation>[0700-074F] Syriac</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="869"/>
-        <source>[0780-07BF] Thaana</source>
-        <translation type="unfinished">[0780-07BF] Thaana</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="874"/>
-        <source>[0900-097F] Devanagari</source>
-        <translation type="unfinished">[0900-097F] Devanagari</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="879"/>
-        <source>[0980-09FF] Bengali</source>
-        <translation type="unfinished">[0980-09FF] Bengali</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="884"/>
-        <source>[0A00-0A7F] Gurmukhi</source>
-        <translation type="unfinished">[0A00-0A7F] Gurmukhi</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="889"/>
-        <source>[0A80-0AFF] Gujarati</source>
-        <translation type="unfinished">[0A80-0AFF] Gujarati</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="894"/>
-        <source>[0B00-0B7F] Oriya</source>
-        <translation type="unfinished">[0B00-0B7F] Oriya</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="899"/>
-        <source>[0B80-0BFF] Tamil</source>
-        <translation type="unfinished">[0B80-0BFF] Tamil</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="904"/>
-        <source>[0C00-0C7F] Telugu</source>
-        <translation type="unfinished">[0C00-0C7F] Telugu</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="909"/>
-        <source>[0C80-0CFF] Kannada</source>
-        <translation type="unfinished">[0C80-0CFF] Kannada</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="914"/>
-        <source>[0D00-0D7F] Malayalam</source>
-        <translation type="unfinished">[0D00-0D7F] Malayalam</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="919"/>
-        <source>[0D80-0DFF] Sinhala</source>
-        <translation type="unfinished">[0D80-0DFF] Sinhala</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="924"/>
-        <source>[0E00-0E7F] Thai</source>
-        <translation type="unfinished">[0E00-0E7F] Thai</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="929"/>
-        <source>[0E80-0EFF] Lao</source>
-        <translation type="unfinished">[0E80-0EFF] Lao</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="934"/>
-        <source>[0F00-0FFF] Tibetan</source>
-        <translation type="unfinished">[0F00-0FFF] Tibetan</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="939"/>
-        <source>[1000-109F] Myanmar</source>
-        <translation type="unfinished">[1000-109F] Myanmar</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="944"/>
-        <source>[10A0-10FF] Georgian</source>
-        <translation type="unfinished">[10A0-10FF] Georgian</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="949"/>
-        <source>[1100-11FF] Hangul Jamo</source>
-        <translation type="unfinished">[1100-11FF] Hangul Jamo</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="954"/>
-        <source>[1200-137F] Ethiopic</source>
-        <translation type="unfinished">[1200-137F] Ethiopic</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="959"/>
-        <source>[13A0-13FF] Cherokee</source>
-        <translation type="unfinished">[13A0-13FF] Cherokee</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="964"/>
-        <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation type="unfinished">[1400-167F] Unified Canadian Aboriginal Syllabic</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="969"/>
-        <source>[1680-169F] Ogham</source>
-        <translation type="unfinished">[1680-169F] Ogham</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="974"/>
-        <source>[16A0-16FF] Runic</source>
-        <translation type="unfinished">[16A0-16FF] Runic</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="979"/>
-        <source>[1700-171F] Tagalog</source>
-        <translation type="unfinished">[1700-171F] Tagalog</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="984"/>
-        <source>[1720-173F] Hanunoo</source>
-        <translation type="unfinished">[1720-173F] Hanunoo</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="989"/>
-        <source>[1740-175F] Buhid</source>
-        <translation type="unfinished">[1740-175F] Buhid</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="994"/>
-        <source>[1760-177F] Tagbanwa</source>
-        <translation type="unfinished">[1760-177F] Tagbanwa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="999"/>
-        <source>[1780-17FF] Khmer</source>
-        <translation type="unfinished">[1780-17FF] Khmer</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1004"/>
-        <source>[1800-18AF] Mongolian</source>
-        <translation type="unfinished">[1800-18AF] Mongolian</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1009"/>
-        <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation type="unfinished">[1E00-1EFF] Latin Extended Additional</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1014"/>
-        <source>[1F00-1FFF] Greek Extended</source>
-        <translation type="unfinished">[1F00-1FFF] Greek Extended</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1019"/>
-        <source>[2000-206F] General Punctuation</source>
-        <translation type="unfinished">[2000-206F] General Punctuation</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1024"/>
-        <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation type="unfinished">[2070-209F] Superscripts and Subscripts</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1029"/>
-        <source>[20A0-20CF] Currency Symbols</source>
-        <translation type="unfinished">[20A0-20CF] Currency Symbols</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1034"/>
-        <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation type="unfinished">[20D0-20FF] Combining Marks for Symbols</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1039"/>
-        <source>[2100-214F] Letterlike Symbols</source>
-        <translation type="unfinished">[2100-214F] Letterlike Symbols</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1044"/>
-        <source>[2150-218F] Number Forms</source>
-        <translation type="unfinished">[2150-218F] Number Forms</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1049"/>
-        <source>[2190-21FF] Arrows</source>
-        <translation type="unfinished">[2190-21FF] Arrows</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1054"/>
-        <source>[2200-22FF] Mathematical Operators</source>
-        <translation type="unfinished">[2200-22FF] Mathematical Operators</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1059"/>
-        <source>[2300-23FF] Miscellaneous Technical</source>
-        <translation type="unfinished">[2300-23FF] Miscellaneous Technical</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1064"/>
-        <source>[2400-243F] Control Pictures</source>
-        <translation type="unfinished">[2400-243F] Control Pictures</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1069"/>
-        <source>[2440-245F] Optical Character Recognition</source>
-        <translation type="unfinished">[2440-245F] Optical Character Recognition</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1074"/>
-        <source>[2460-24FF] Enclosed Alphanumerics</source>
-        <translation type="unfinished">[2460-24FF] Enclosed Alphanumerics</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1079"/>
-        <source>[2500-257F] Box Drawing</source>
-        <translation type="unfinished">[2500-257F] Box Drawing</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1084"/>
-        <source>[2580-259F] Block Elements</source>
-        <translation type="unfinished">[2580-259F] Block Elements</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1089"/>
-        <source>[25A0-25FF] Geometric Shapes</source>
-        <translation type="unfinished">[25A0-25FF] Geometric Shapes</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1094"/>
-        <source>[2600-26FF] Miscellaneous Symbols</source>
-        <translation type="unfinished">[2600-26FF] Miscellaneous Symbols</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1099"/>
-        <source>[2700-27BF] Dingbats</source>
-        <translation type="unfinished">[2700-27BF] Dingbats</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1104"/>
-        <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
-        <translation type="unfinished">[27C0-27EF] Miscellaneous Mathematical Symbols-A</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1109"/>
-        <source>[27F0-27FF] Supplemental Arrows-A</source>
-        <translation type="unfinished">[27F0-27FF] Supplemental Arrows-A</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1114"/>
-        <source>[2800-28FF] Braille Patterns</source>
-        <translation type="unfinished">[2800-28FF] Braille Patterns</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1119"/>
-        <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation type="unfinished">[2900-297F] Supplemental Arrows-B</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1124"/>
-        <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
-        <translation type="unfinished">[2980-29FF] Miscellaneous Mathematical Symbols-B</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1129"/>
-        <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
-        <translation type="unfinished">[2A00-2AFF] Supplemental Mathematical Operators</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1134"/>
-        <source>[2E80-2EFF] CJK Radicals Supplement</source>
-        <translation type="unfinished">[2E80-2EFF] CJK Radicals Supplement</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1139"/>
-        <source>[2F00-2FDF] Kangxi Radicals</source>
-        <translation type="unfinished">[2F00-2FDF] Kangxi Radicals</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1144"/>
-        <source>[2FF0-2FFF] Ideographic Description Characters</source>
-        <translation type="unfinished">[2FF0-2FFF] Ideographic Description Characters</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1149"/>
-        <source>[3000-303F] CJK Symbols and Punctuation</source>
-        <translation type="unfinished">[3000-303F] CJK Symbols and Punctuation</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1154"/>
-        <source>[3040-309F] Hiragana</source>
-        <translation type="unfinished">[3040-309F] Hiragana</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1159"/>
-        <source>[30A0-30FF] Katakana</source>
-        <translation type="unfinished">[30A0-30FF] Katakana</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1164"/>
-        <source>[3100-312F] Bopomofo</source>
-        <translation type="unfinished">[3100-312F] Bopomofo</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1169"/>
-        <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation type="unfinished">[3130-318F] Hangul Compatibility Jamo</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1174"/>
-        <source>[3190-319F] Kanbun</source>
-        <translation type="unfinished">[3190-319F] Kanbun</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1179"/>
-        <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation type="unfinished">[31A0-31BF] Bopomofo Extended</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1184"/>
-        <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation type="unfinished">[3200-32FF] Enclosed CJK Letters and Months</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1189"/>
-        <source>[3300-33FF] CJK Compatibility</source>
-        <translation type="unfinished">[3300-33FF] CJK Compatibility</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1194"/>
-        <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation type="unfinished">[3400-4DBF] CJK Unified Ideographs Extension A</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1199"/>
-        <source>[4E00-9FAF] CJK Unified Ideographs</source>
-        <translation type="unfinished">[4E00-9FAF] CJK Unified Ideographs</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1204"/>
-        <source>[A000-A48F] Yi Syllables</source>
-        <translation type="unfinished">[A000-A48F] Yi Syllables</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1209"/>
-        <source>[A490-A4CF] Yi Radicals</source>
-        <translation type="unfinished">[A490-A4CF] Yi Radicals</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1214"/>
-        <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation type="unfinished">[AC00-D7AF] Hangul Syllables</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1219"/>
-        <source>[D800-DBFF] High Surrogates</source>
-        <translation type="unfinished">[D800-DBFF] High Surrogates</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1224"/>
-        <source>[DC00-DFFF] Low Surrogate Area</source>
-        <translation type="unfinished">[DC00-DFFF] Low Surrogate Area</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1229"/>
-        <source>[E000-F8FF] Private Use Area</source>
-        <translation type="unfinished">[E000-F8FF] Private Use Area</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1234"/>
-        <source>[F900-FAFF] CJK Compatibility Ideographs</source>
-        <translation type="unfinished">[F900-FAFF] CJK Compatibility Ideographs</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1239"/>
-        <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
-        <translation type="unfinished">[FB00-FB4F] Alphabetic Presentation Forms</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1244"/>
-        <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation type="unfinished">[FB50-FDFF] Arabic Presentation Forms-A</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1249"/>
-        <source>[FE00-FE0F] Variation Selectors</source>
-        <translation type="unfinished">[FE00-FE0F] Variation Selectors</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1254"/>
-        <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation type="unfinished">[FE20-FE2F] Combining Half Marks</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1259"/>
-        <source>[FE30-FE4F] CJK Compatibility Forms</source>
-        <translation type="unfinished">[FE30-FE4F] CJK Compatibility Forms</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1264"/>
-        <source>[FE50-FE6F] Small Form Variants</source>
-        <translation type="unfinished">[FE50-FE6F] Small Form Variants</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1269"/>
-        <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
-        <translation type="unfinished">[FE70-FEFF] Arabic Presentation Forms-B</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1274"/>
-        <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation type="unfinished">[FF00-FFEF] Halfwidth and Fullwidth Forms</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1279"/>
-        <source>[FFF0-FFFF] Specials</source>
-        <translation type="unfinished">[FFF0-FFFF] Specials</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1284"/>
-        <source>[10300-1032F] Old Italic</source>
-        <translation type="unfinished">[10300-1032F] Old Italic</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1289"/>
-        <source>[10330-1034F] Gothic</source>
-        <translation type="unfinished">[10330-1034F] Gothic</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1294"/>
-        <source>[10400-1044F] Deseret</source>
-        <translation type="unfinished">[10400-1044F] Deseret</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1299"/>
-        <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
-        <translation type="unfinished">[1D000-1D0FF] Byzantine Musical Symbols</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1304"/>
-        <source>[1D100-1D1FF] Musical Symbols</source>
-        <translation type="unfinished">[1D100-1D1FF] Musical Symbols</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1309"/>
-        <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
-        <translation type="unfinished">[1D400-1D7FF] Mathematical Alphanumeric Symbols</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1314"/>
-        <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation type="unfinished">[20000-2A6DF] CJK Unified Ideographs Extension B</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1319"/>
-        <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
-        <translation type="unfinished">[2F800-2FA1F] CJK Compatibility Ideographs Supplement</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1324"/>
-        <source>[E0000-E007F] Tags</source>
-        <translation type="unfinished">[E0000-E007F] Tags</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1329"/>
-        <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation type="unfinished">[F0000-FFFFD] Supplementary Private Use Area-A</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmtext.ui" line="1334"/>
-        <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation type="unfinished">[100000-10FFFD] Supplementary Private Use Area-B</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMirror</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmirror.ui" line="26"/>
-        <source>Mirroring Options</source>
-        <translation type="unfinished">Peilaamisen valinnat</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmirror.ui" line="70"/>
-        <source>Number of copies</source>
-        <translation type="unfinished">Kopioiden lukumäärä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmirror.ui" line="88"/>
-        <source>&amp;Delete Original</source>
-        <translation type="unfinished">&amp;Poista alkuperäinen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmirror.ui" line="107"/>
-        <source>&amp;Keep Original</source>
-        <translation type="unfinished">&amp;Säilytä alkuperäinen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmirror.ui" line="39"/>
-        <source>Use current &amp;attributes</source>
-        <translation type="unfinished">Käytä nykyisiä &amp;määritteitä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmirror.ui" line="46"/>
-        <source>Use current &amp;layer</source>
-        <translation type="unfinished">Käytä nykyistä &amp;tasoa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmirror.ui" line="53"/>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMove</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="26"/>
-        <source>Move/Copy Options</source>
-        <translation type="unfinished">Siirto-/kopiovalinnat</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="32"/>
-        <source>Number of copies</source>
-        <translation>Kopioiden lukumäärä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="50"/>
-        <source>&amp;Delete Original</source>
-        <translation>&amp;Poista alkuperäinen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="69"/>
-        <source>&amp;Keep Original</source>
-        <translation>&amp;Säilytä alkuperäinen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="88"/>
-        <source>&amp;Multiple Copies</source>
-        <translation>&amp;Useita kopioita</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="108"/>
-        <source>Quantity</source>
-        <translation type="unfinished">Määrä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="115"/>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="142"/>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="169"/>
-        <source>Number of copies. Maximum 100</source>
-        <translation>Kopioiden määrä. Enintään 100</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="135"/>
-        <source>Offset X</source>
-        <translation type="unfinished">Siirto X</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="162"/>
-        <source>Offset Y</source>
-        <translation type="unfinished">Siirto Y</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="196"/>
-        <source>Use current &amp;attributes</source>
-        <translation type="unfinished">Käytä nykyisiä &amp;määritteitä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="203"/>
-        <source>Use current &amp;layer</source>
-        <translation>Käytä nykyistä &amp;tasoa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmove.ui" line="179"/>
-        <source>...</source>
-        <translation>...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMoveRotate</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="26"/>
-        <source>Move/Rotate Options</source>
-        <translation type="unfinished">Siirrä/kierrä valinta</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="41"/>
-        <source>...</source>
-        <translation>...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="54"/>
-        <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="63"/>
-        <source>&amp;Angle (a):</source>
-        <translation type="unfinished">&amp;Kulma (a):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="97"/>
-        <source>Use current &amp;attributes</source>
-        <translation type="unfinished">Käytä nykyisiä &amp;määritteitä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="104"/>
-        <source>Use current &amp;layer</source>
-        <translation type="unfinished">Käytä nykyistä &amp;tasoa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="113"/>
-        <source>Number of copies</source>
-        <translation>Kopioiden lukumäärä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="131"/>
-        <source>&amp;Delete Original</source>
-        <translation>&amp;Poista alkuperäinen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="150"/>
-        <source>&amp;Keep Original</source>
-        <translation>&amp;Säilytä alkuperäinen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="169"/>
-        <source>&amp;Multiple Copies</source>
-        <translation>&amp;Useita kopioita</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPoint</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgpoint.ui" line="26"/>
-        <source>Point</source>
-        <translation type="unfinished">Piste</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgpoint.ui" line="44"/>
-        <source>Layer:</source>
-        <translation type="unfinished">Taso:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgpoint.ui" line="71"/>
-        <source>Geometry</source>
-        <translation type="unfinished">Geometria</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgpoint.ui" line="77"/>
-        <source>Position (y):</source>
-        <translation type="unfinished">Sijainti (y):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgpoint.ui" line="97"/>
-        <source>Position (x):</source>
-        <translation type="unfinished">Sijainti (x):</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPolyline</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="26"/>
-        <source>Polyline</source>
-        <translation type="unfinished">&amp;Moniviiva</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="44"/>
-        <source>Layer:</source>
-        <translation type="unfinished">Taso:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="77"/>
-        <source>Geometry</source>
-        <translation type="unfinished">Geometria</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="115"/>
-        <source>Closed</source>
-        <translation type="unfinished">Suljettu</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgrotate.ui" line="26"/>
-        <source>Rotation Options</source>
-        <translation type="unfinished">Kiertovalinnat</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgrotate.ui" line="32"/>
-        <source>Number of copies</source>
-        <translation type="unfinished">Kopioiden lukumäärä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgrotate.ui" line="50"/>
-        <source>&amp;Delete Original</source>
-        <translation type="unfinished">&amp;Poista alkuperäinen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgrotate.ui" line="69"/>
-        <source>&amp;Keep Original</source>
-        <translation type="unfinished">&amp;Säilytä alkuperäinen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgrotate.ui" line="88"/>
-        <source>&amp;Multiple Copies:</source>
-        <translation type="unfinished">&amp;Useita kopioita</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgrotate.ui" line="119"/>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgrotate.ui" line="138"/>
-        <source>&amp;Angle (a):</source>
-        <translation type="unfinished">&amp;Kulma (a):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgrotate.ui" line="179"/>
-        <source>Use current &amp;attributes</source>
-        <translation type="unfinished">Käytä nykyisiä &amp;määritteitä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgrotate.ui" line="186"/>
-        <source>Use current &amp;layer</source>
-        <translation type="unfinished">Käytä nykyistä &amp;tasoa</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate2</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="26"/>
-        <source>Rotate Two Options</source>
-        <translation type="unfinished">Kierrä kaksi valintaa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="32"/>
-        <source>Number of copies</source>
-        <translation type="unfinished">Kopioiden lukumäärä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="50"/>
-        <source>&amp;Delete Original</source>
-        <translation type="unfinished">&amp;Poista alkuperäinen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="69"/>
-        <source>&amp;Keep Original</source>
-        <translation type="unfinished">&amp;Säilytä alkuperäinen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="88"/>
-        <source>&amp;Multiple Copies</source>
-        <translation type="unfinished">&amp;Useita kopioita</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="119"/>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="138"/>
-        <source>Angle (&amp;a):</source>
-        <translation type="unfinished">Kulma (&amp;a):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="174"/>
-        <source>Angle (&amp;b):</source>
-        <translation type="unfinished">Kulma (&amp;b):</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="208"/>
-        <source>Use current &amp;attributes</source>
-        <translation type="unfinished">Käytä nykyisiä &amp;määritteitä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="215"/>
-        <source>Use current &amp;layer</source>
-        <translation type="unfinished">Käytä nykyistä &amp;tasoa</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgScale</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgscale.ui" line="26"/>
-        <source>Scaling Options</source>
-        <translation type="unfinished">Skaalauksen valinta</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgscale.ui" line="129"/>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgscale.ui" line="155"/>
-        <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="unfinished">Skaalaa samalla tekijällä sekä x- että y-suuntaan</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgscale.ui" line="158"/>
-        <source>Isotropic Scaling</source>
-        <translation type="unfinished">Isotrooppiskaalaus</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgscale.ui" line="206"/>
-        <source>X</source>
-        <translation type="unfinished">X</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgscale.ui" line="236"/>
-        <source>Y</source>
-        <translation type="unfinished">Y</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgscale.ui" line="190"/>
-        <source>Use current &amp;attributes</source>
-        <translation type="unfinished">Käytä nykyisiä &amp;määritteitä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgscale.ui" line="177"/>
-        <source>Use current &amp;layer</source>
-        <translation type="unfinished">Käytä nykyistä &amp;tasoa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgscale.ui" line="38"/>
-        <source>Number of copies</source>
-        <translation type="unfinished">Kopioiden lukumäärä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgscale.ui" line="56"/>
-        <source>&amp;Delete Original</source>
-        <translation type="unfinished">&amp;Poista alkuperäinen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgscale.ui" line="75"/>
-        <source>&amp;Keep Original</source>
-        <translation type="unfinished">&amp;Säilytä alkuperäinen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgscale.ui" line="94"/>
-        <source>&amp;Multiple Copies</source>
-        <translation type="unfinished">&amp;Useita kopioita</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgText</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="20"/>
-        <source>Text</source>
-        <translation type="unfinished">Teksti</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="298"/>
-        <source>&amp;Height:</source>
-        <translation type="unfinished">&amp;Korkeus:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="350"/>
-        <source>Alignment</source>
-        <translation>Kohdistus</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="682"/>
-        <source>Top Right</source>
-        <translation type="unfinished">Yläoikea</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="647"/>
-        <source>Top Left</source>
-        <translation type="unfinished">Ylävasen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="508"/>
-        <source>Middle Left</source>
-        <translation type="unfinished">Keskivasen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="717"/>
-        <source>Middle Center</source>
-        <translation type="unfinished">Keskiosa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="438"/>
-        <source>Middle Right</source>
-        <translation type="unfinished">Keskioikea</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="473"/>
-        <source>Bottom Left</source>
-        <translation type="unfinished">Alavasen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="403"/>
-        <source>Bottom Right</source>
-        <translation type="unfinished">Alaoikea</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="368"/>
-        <source>Bottom Center</source>
-        <translation type="unfinished">Alakeskiosa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="566"/>
-        <source>Top Center</source>
-        <translation type="unfinished">Yläkeskiosa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="33"/>
-        <source>Text:</source>
-        <translation type="unfinished">Teksti:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="70"/>
-        <source>Clear Text</source>
-        <translation type="unfinished">Tyhjennä teksti</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="84"/>
-        <source>Load Text From File</source>
-        <translation type="unfinished">Lataa teksti tiedostosta</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="98"/>
-        <source>Save Text To File</source>
-        <translation type="unfinished">Tallenna teksti tiedostoon</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="112"/>
-        <source>Cut</source>
-        <translation type="unfinished">Leikkaa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="126"/>
-        <source>Copy</source>
-        <translation type="unfinished">Kopioi</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="140"/>
-        <source>Paste</source>
-        <translation type="unfinished">Liitä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="180"/>
-        <source>Layer:</source>
-        <translation type="unfinished">Taso:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="213"/>
-        <source>Font settings</source>
-        <translation type="unfinished">Fontin asetukset</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="248"/>
-        <source>Angle:</source>
-        <translation type="unfinished">Kulma:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="238"/>
-        <source>Width factor:</source>
-        <translation type="unfinished">Leveystekijä:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="255"/>
-        <source>Font:</source>
-        <translation type="unfinished">Fontti:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="531"/>
-        <source>Baseline Left</source>
-        <translation type="unfinished">Pohja, vasen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="59"/>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="534"/>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="592"/>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="615"/>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="589"/>
-        <source>Baseline Right</source>
-        <translation type="unfinished">Pohja, oikea</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="612"/>
-        <source>Baseline Center</source>
-        <translation type="unfinished">Pohja, keskiosa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="740"/>
-        <source>Fit</source>
-        <translation type="unfinished">Sopivuus</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="750"/>
-        <source>A&amp;ligned</source>
-        <translation type="unfinished">K&amp;ohdistettu</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="760"/>
-        <source>&amp;Middle</source>
-        <translation type="unfinished">&amp;Keskiosa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="791"/>
-        <source>Insert Symbol</source>
-        <translation type="unfinished">Lisää symboli</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="804"/>
-        <source>Diameter (⌀)</source>
-        <translation type="unfinished">Halkaisija (⌀)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="809"/>
-        <source>Degree (°)</source>
-        <translation type="unfinished">Aste (°)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="814"/>
-        <source>Plus / Minus (±)</source>
-        <translation type="unfinished">Plus/miinus (±)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="819"/>
-        <source>At (@)</source>
-        <translation type="unfinished">Ät-merkki (@)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="824"/>
-        <source>Hash (#)</source>
-        <translation type="unfinished">Ristikkomerkki (#)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="829"/>
-        <source>Dollar ($)</source>
-        <translation type="unfinished">Dollari ($)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="834"/>
-        <source>Copyright (©)</source>
-        <translation type="unfinished">Tekijänoikeus (©)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="839"/>
-        <source>Registered (®)</source>
-        <translation type="unfinished">Rekisteröity (®)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="844"/>
-        <source>Paragraph (§)</source>
-        <translation type="unfinished">Kappale (§)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="849"/>
-        <source>Pi (π)</source>
-        <translation type="unfinished">Pii (π)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="854"/>
-        <source>Pound (£)</source>
-        <translation type="unfinished">Punta (£)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="859"/>
-        <source>Yen (¥)</source>
-        <translation type="unfinished">Jeni (¥)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="864"/>
-        <source>Times (×)</source>
-        <translation type="unfinished">Kertaa (×)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="869"/>
-        <source>Division (÷)</source>
-        <translation type="unfinished">Jako (÷)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="880"/>
-        <source>Insert Unicode</source>
-        <translation type="unfinished">Lisää Unicode</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="886"/>
-        <source>Page:</source>
-        <translation type="unfinished">Sivu:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="896"/>
-        <source>Char:</source>
-        <translation type="unfinished">Merkki:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="919"/>
-        <source>[0000-007F] Basic Latin</source>
-        <translation type="unfinished">[0000-007F] Basic Latin</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="924"/>
-        <source>[0080-00FF] Latin-1 Supplementary</source>
-        <translation type="unfinished">[0080-00FF] Latin-1 Supplementary</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="929"/>
-        <source>[0100-017F] Latin Extended-A</source>
-        <translation type="unfinished">[0100-017F] Latin Extended-A</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="934"/>
-        <source>[0180-024F] Latin Extended-B</source>
-        <translation type="unfinished">[0180-024F] Latin Extended-B</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="939"/>
-        <source>[0250-02AF] IPA Extensions</source>
-        <translation type="unfinished">[0250-02AF] IPA Extensions</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="944"/>
-        <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation type="unfinished">[02B0-02FF] Spacing Modifier Letters</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="949"/>
-        <source>[0300-036F] Combining Diacritical Marks</source>
-        <translation type="unfinished">[0300-036F] Combining Diacritical Marks</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="954"/>
-        <source>[0370-03FF] Greek and Coptic</source>
-        <translation type="unfinished">[0370-03FF] Greek and Coptic</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="959"/>
-        <source>[0400-04FF] Cyrillic</source>
-        <translation type="unfinished">[0400-04FF] Cyrillic</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="964"/>
-        <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation type="unfinished">[0500-052F] Cyrillic Supplementary</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="969"/>
-        <source>[0530-058F] Armenian</source>
-        <translation type="unfinished">[0530-058F] Armenian</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="974"/>
-        <source>[0590-05FF] Hebrew</source>
-        <translation type="unfinished">[0590-05FF] Hebrew</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="979"/>
-        <source>[0600-06FF] Arabic</source>
-        <translation type="unfinished">[0600-06FF] Arabic</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="984"/>
-        <source>[0700-074F] Syriac</source>
-        <translation type="unfinished">[0700-074F] Syriac</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="989"/>
-        <source>[0780-07BF] Thaana</source>
-        <translation type="unfinished">[0780-07BF] Thaana</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="994"/>
-        <source>[0900-097F] Devanagari</source>
-        <translation type="unfinished">[0900-097F] Devanagari</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="999"/>
-        <source>[0980-09FF] Bengali</source>
-        <translation type="unfinished">[0980-09FF] Bengali</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1004"/>
-        <source>[0A00-0A7F] Gurmukhi</source>
-        <translation type="unfinished">[0A00-0A7F] Gurmukhi</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1009"/>
-        <source>[0A80-0AFF] Gujarati</source>
-        <translation type="unfinished">[0A80-0AFF] Gujarati</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1014"/>
-        <source>[0B00-0B7F] Oriya</source>
-        <translation type="unfinished">[0B00-0B7F] Oriya</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1019"/>
-        <source>[0B80-0BFF] Tamil</source>
-        <translation type="unfinished">[0B80-0BFF] Tamil</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1024"/>
-        <source>[0C00-0C7F] Telugu</source>
-        <translation type="unfinished">[0C00-0C7F] Telugu</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1029"/>
-        <source>[0C80-0CFF] Kannada</source>
-        <translation type="unfinished">[0C80-0CFF] Kannada</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1034"/>
-        <source>[0D00-0D7F] Malayalam</source>
-        <translation type="unfinished">[0D00-0D7F] Malayalam</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1039"/>
-        <source>[0D80-0DFF] Sinhala</source>
-        <translation type="unfinished">[0D80-0DFF] Sinhala</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1044"/>
-        <source>[0E00-0E7F] Thai</source>
-        <translation type="unfinished">[0E00-0E7F] Thai</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1049"/>
-        <source>[0E80-0EFF] Lao</source>
-        <translation type="unfinished">[0E80-0EFF] Lao</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1054"/>
-        <source>[0F00-0FFF] Tibetan</source>
-        <translation type="unfinished">[0F00-0FFF] Tibetan</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1059"/>
-        <source>[1000-109F] Myanmar</source>
-        <translation type="unfinished">[1000-109F] Myanmar</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1064"/>
-        <source>[10A0-10FF] Georgian</source>
-        <translation type="unfinished">[10A0-10FF] Georgian</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1069"/>
-        <source>[1100-11FF] Hangul Jamo</source>
-        <translation type="unfinished">[1100-11FF] Hangul Jamo</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1074"/>
-        <source>[1200-137F] Ethiopic</source>
-        <translation type="unfinished">[1200-137F] Ethiopic</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1079"/>
-        <source>[13A0-13FF] Cherokee</source>
-        <translation type="unfinished">[13A0-13FF] Cherokee</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1084"/>
-        <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation type="unfinished">[1400-167F] Unified Canadian Aboriginal Syllabic</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1089"/>
-        <source>[1680-169F] Ogham</source>
-        <translation type="unfinished">[1680-169F] Ogham</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1094"/>
-        <source>[16A0-16FF] Runic</source>
-        <translation type="unfinished">[16A0-16FF] Runic</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1099"/>
-        <source>[1700-171F] Tagalog</source>
-        <translation type="unfinished">[1700-171F] Tagalog</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1104"/>
-        <source>[1720-173F] Hanunoo</source>
-        <translation type="unfinished">[1720-173F] Hanunoo</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1109"/>
-        <source>[1740-175F] Buhid</source>
-        <translation type="unfinished">[1740-175F] Buhid</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1114"/>
-        <source>[1760-177F] Tagbanwa</source>
-        <translation type="unfinished">[1760-177F] Tagbanwa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1119"/>
-        <source>[1780-17FF] Khmer</source>
-        <translation type="unfinished">[1780-17FF] Khmer</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1124"/>
-        <source>[1800-18AF] Mongolian</source>
-        <translation type="unfinished">[1800-18AF] Mongolian</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1129"/>
-        <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation type="unfinished">[1E00-1EFF] Latin Extended Additional</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1134"/>
-        <source>[1F00-1FFF] Greek Extended</source>
-        <translation type="unfinished">[1F00-1FFF] Greek Extended</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1139"/>
-        <source>[2000-206F] General Punctuation</source>
-        <translation type="unfinished">[2000-206F] General Punctuation</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1144"/>
-        <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation type="unfinished">[2070-209F] Superscripts and Subscripts</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1149"/>
-        <source>[20A0-20CF] Currency Symbols</source>
-        <translation type="unfinished">[20A0-20CF] Currency Symbols</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1154"/>
-        <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation type="unfinished">[20D0-20FF] Combining Marks for Symbols</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1159"/>
-        <source>[2100-214F] Letterlike Symbols</source>
-        <translation type="unfinished">[2100-214F] Letterlike Symbols</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1164"/>
-        <source>[2150-218F] Number Forms</source>
-        <translation type="unfinished">[2150-218F] Number Forms</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1169"/>
-        <source>[2190-21FF] Arrows</source>
-        <translation type="unfinished">[2190-21FF] Arrows</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1174"/>
-        <source>[2200-22FF] Mathematical Operators</source>
-        <translation type="unfinished">[2200-22FF] Mathematical Operators</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1179"/>
-        <source>[2300-23FF] Miscellaneous Technical</source>
-        <translation type="unfinished">[2300-23FF] Miscellaneous Technical</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1184"/>
-        <source>[2400-243F] Control Pictures</source>
-        <translation type="unfinished">[2400-243F] Control Pictures</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1189"/>
-        <source>[2440-245F] Optical Character Recognition</source>
-        <translation type="unfinished">[2440-245F] Optical Character Recognition</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1194"/>
-        <source>[2460-24FF] Enclosed Alphanumerics</source>
-        <translation type="unfinished">[2460-24FF] Enclosed Alphanumerics</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1199"/>
-        <source>[2500-257F] Box Drawing</source>
-        <translation type="unfinished">[2500-257F] Box Drawing</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1204"/>
-        <source>[2580-259F] Block Elements</source>
-        <translation type="unfinished">[2580-259F] Block Elements</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1209"/>
-        <source>[25A0-25FF] Geometric Shapes</source>
-        <translation type="unfinished">[25A0-25FF] Geometric Shapes</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1214"/>
-        <source>[2600-26FF] Miscellaneous Symbols</source>
-        <translation type="unfinished">[2600-26FF] Miscellaneous Symbols</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1219"/>
-        <source>[2700-27BF] Dingbats</source>
-        <translation type="unfinished">[2700-27BF] Dingbats</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1224"/>
-        <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
-        <translation type="unfinished">[27C0-27EF] Miscellaneous Mathematical Symbols-A</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1229"/>
-        <source>[27F0-27FF] Supplemental Arrows-A</source>
-        <translation type="unfinished">[27F0-27FF] Supplemental Arrows-A</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1234"/>
-        <source>[2800-28FF] Braille Patterns</source>
-        <translation type="unfinished">[2800-28FF] Braille Patterns</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1239"/>
-        <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation type="unfinished">[2900-297F] Supplemental Arrows-B</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1244"/>
-        <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
-        <translation type="unfinished">[2980-29FF] Miscellaneous Mathematical Symbols-B</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1249"/>
-        <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
-        <translation type="unfinished">[2A00-2AFF] Supplemental Mathematical Operators</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1254"/>
-        <source>[2E80-2EFF] CJK Radicals Supplement</source>
-        <translation type="unfinished">[2E80-2EFF] CJK Radicals Supplement</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1259"/>
-        <source>[2F00-2FDF] Kangxi Radicals</source>
-        <translation type="unfinished">[2F00-2FDF] Kangxi Radicals</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1264"/>
-        <source>[2FF0-2FFF] Ideographic Description Characters</source>
-        <translation type="unfinished">[2FF0-2FFF] Ideographic Description Characters</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1269"/>
-        <source>[3000-303F] CJK Symbols and Punctuation</source>
-        <translation type="unfinished">[3000-303F] CJK Symbols and Punctuation</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1274"/>
-        <source>[3040-309F] Hiragana</source>
-        <translation type="unfinished">[3040-309F] Hiragana</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1279"/>
-        <source>[30A0-30FF] Katakana</source>
-        <translation type="unfinished">[30A0-30FF] Katakana</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1284"/>
-        <source>[3100-312F] Bopomofo</source>
-        <translation type="unfinished">[3100-312F] Bopomofo</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1289"/>
-        <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation type="unfinished">[3130-318F] Hangul Compatibility Jamo</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1294"/>
-        <source>[3190-319F] Kanbun</source>
-        <translation type="unfinished">[3190-319F] Kanbun</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1299"/>
-        <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation type="unfinished">[31A0-31BF] Bopomofo Extended</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1304"/>
-        <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation type="unfinished">[3200-32FF] Enclosed CJK Letters and Months</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1309"/>
-        <source>[3300-33FF] CJK Compatibility</source>
-        <translation type="unfinished">[3300-33FF] CJK Compatibility</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1314"/>
-        <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation type="unfinished">[3400-4DBF] CJK Unified Ideographs Extension A</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1319"/>
-        <source>[4E00-9FAF] CJK Unified Ideographs</source>
-        <translation type="unfinished">[4E00-9FAF] CJK Unified Ideographs</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1324"/>
-        <source>[A000-A48F] Yi Syllables</source>
-        <translation type="unfinished">[A000-A48F] Yi Syllables</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1329"/>
-        <source>[A490-A4CF] Yi Radicals</source>
-        <translation type="unfinished">[A490-A4CF] Yi Radicals</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1334"/>
-        <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation type="unfinished">[AC00-D7AF] Hangul Syllables</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1339"/>
-        <source>[D800-DBFF] High Surrogates</source>
-        <translation type="unfinished">[D800-DBFF] High Surrogates</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1344"/>
-        <source>[DC00-DFFF] Low Surrogate Area</source>
-        <translation type="unfinished">[DC00-DFFF] Low Surrogate Area</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1349"/>
-        <source>[E000-F8FF] Private Use Area</source>
-        <translation type="unfinished">[E000-F8FF] Private Use Area</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1354"/>
-        <source>[F900-FAFF] CJK Compatibility Ideographs</source>
-        <translation type="unfinished">[F900-FAFF] CJK Compatibility Ideographs</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1359"/>
-        <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
-        <translation type="unfinished">[FB00-FB4F] Alphabetic Presentation Forms</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1364"/>
-        <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation type="unfinished">[FB50-FDFF] Arabic Presentation Forms-A</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1369"/>
-        <source>[FE00-FE0F] Variation Selectors</source>
-        <translation type="unfinished">[FE00-FE0F] Variation Selectors</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1374"/>
-        <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation type="unfinished">[FE20-FE2F] Combining Half Marks</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1379"/>
-        <source>[FE30-FE4F] CJK Compatibility Forms</source>
-        <translation type="unfinished">[FE30-FE4F] CJK Compatibility Forms</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1384"/>
-        <source>[FE50-FE6F] Small Form Variants</source>
-        <translation type="unfinished">[FE50-FE6F] Small Form Variants</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1389"/>
-        <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
-        <translation type="unfinished">[FE70-FEFF] Arabic Presentation Forms-B</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1394"/>
-        <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation type="unfinished">[FF00-FFEF] Halfwidth and Fullwidth Forms</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1399"/>
-        <source>[FFF0-FFFF] Specials</source>
-        <translation type="unfinished">[FFF0-FFFF] Specials</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1404"/>
-        <source>[10300-1032F] Old Italic</source>
-        <translation type="unfinished">[10300-1032F] Old Italic</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1409"/>
-        <source>[10330-1034F] Gothic</source>
-        <translation type="unfinished">[10330-1034F] Gothic</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1414"/>
-        <source>[10400-1044F] Deseret</source>
-        <translation type="unfinished">[10400-1044F] Deseret</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1419"/>
-        <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
-        <translation type="unfinished">[1D000-1D0FF] Byzantine Musical Symbols</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1424"/>
-        <source>[1D100-1D1FF] Musical Symbols</source>
-        <translation type="unfinished">[1D100-1D1FF] Musical Symbols</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1429"/>
-        <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
-        <translation type="unfinished">[1D400-1D7FF] Mathematical Alphanumeric Symbols</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1434"/>
-        <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation type="unfinished">[20000-2A6DF] CJK Unified Ideographs Extension B</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1439"/>
-        <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
-        <translation type="unfinished">[2F800-2FA1F] CJK Compatibility Ideographs Supplement</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1444"/>
-        <source>[E0000-E007F] Tags</source>
-        <translation type="unfinished">[E0000-E007F] Tags</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1449"/>
-        <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation type="unfinished">[F0000-FFFFD] Supplementary Private Use Area-A</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgtext.ui" line="1454"/>
-        <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation type="unfinished">[100000-10FFFD] Supplementary Private Use Area-B</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ExitDialog</name>
-    <message>
-        <location filename="../src/ui/forms/qg_exitdialog.ui" line="26"/>
-        <source>QCad</source>
-        <translation type="unfinished">QCad</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_exitdialog.ui" line="44"/>
-        <source>again Still No Text supplied.</source>
-        <translation type="unfinished">uudestaan Ei vieläkään tekstiä tarjottu.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_exitdialog.cpp" line="123"/>
-        <source>Close All</source>
-        <translation type="unfinished">Sulje kaikki</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_exitdialog.cpp" line="123"/>
-        <source>Close</source>
-        <translation type="unfinished">Sulje</translation>
-    </message>
-</context>
-<context>
-    <name>QG_FileDialog</name>
-    <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="89"/>
-        <source>Drawing Exchange DXF 2000 %1</source>
-        <translation type="unfinished">Piirustusvaihto DXF 2000 %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="91"/>
-        <source>Drawing Exchange DXF R12 %1</source>
-        <translation type="unfinished">Piirustusvaihto DXF R12 %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="94"/>
-        <source>LFF Font %1</source>
-        <translation type="unfinished">LFF-fontti %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="98"/>
-        <source>QCad Font %1</source>
-        <translation type="unfinished">QCad-fontti %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="99"/>
-        <source>Jww Drawing %1</source>
-        <translation type="unfinished">Jww-piirustus %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="92"/>
-        <source>Drawing Exchange %1</source>
-        <translation type="unfinished">Piirustusvaihto %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="87"/>
-        <source>Drawing Exchange DXF 2007 %1</source>
-        <translation type="unfinished">Piirustusvaihto DXF 2007 %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="88"/>
-        <source>Drawing Exchange DXF 2004 %1</source>
-        <translation type="unfinished">Piirustusvaihto DXF 2004 %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="90"/>
-        <source>Drawing Exchange DXF R14 %1</source>
-        <translation type="unfinished">Piirustusvaihto DXF R14 %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="96"/>
-        <source>dwg Drawing %1</source>
-        <translation type="unfinished">dwg-Piirustus %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="100"/>
-        <source>QCad 1.x file %1</source>
-        <translation type="unfinished">QCad 1.x-tiedosto %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="103"/>
-        <source>Block</source>
-        <comment>block file</comment>
-        <translation type="unfinished">Symboli</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="106"/>
-        <source>Drawing</source>
-        <comment>drawing file</comment>
-        <translation type="unfinished">Piirustus</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="149"/>
-        <source>Open %1</source>
-        <translation type="unfinished">Avaa %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="221"/>
-        <source>Untitled</source>
-        <translation type="unfinished">Nimetön</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="232"/>
-        <source>Save %1 As</source>
-        <translation type="unfinished">Tallenna %1 nimellä</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ImageOptionsDialog</name>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="14"/>
-        <source>Image Export Options</source>
-        <translation type="unfinished">Kuvan viennin valinnat</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="23"/>
-        <source>Bitmap Size</source>
-        <translation type="unfinished">Bittikartan koko</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="144"/>
-        <source>Width:</source>
-        <translation type="unfinished">Leveys:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="154"/>
-        <source>Height:</source>
-        <translation type="unfinished">Korkeus:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="29"/>
-        <source>Resolution:</source>
-        <translation type="unfinished">Erotuskyky:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="43"/>
-        <source>auto</source>
-        <translation type="unfinished">automaattinen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="203"/>
-        <source>Background</source>
-        <translation type="unfinished">Tausta</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="209"/>
-        <source>White</source>
-        <translation type="unfinished">Valkoinen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="219"/>
-        <source>B&amp;lack</source>
-        <translation type="unfinished">M&amp;usta</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="258"/>
-        <source>Colouring</source>
-        <translation type="unfinished">Väritys</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="264"/>
-        <source>Black / White</source>
-        <translation type="unfinished">Mustavalkoinen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="274"/>
-        <source>Coloured</source>
-        <translation type="unfinished">Värillinen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="310"/>
-        <source>Borders</source>
-        <translation type="unfinished">Reunat</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="326"/>
-        <source>Top / Bottom - Border:</source>
-        <translation type="unfinished">Huippu/pohja -reuna:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="333"/>
-        <source>Left / Right - Border:</source>
-        <translation type="unfinished">Vasen/oikea -reuna:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="353"/>
-        <source>set same size</source>
-        <translation type="unfinished">aseta sama koko</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LayerBox</name>
-    <message>
-        <location filename="../src/ui/qg_layerbox.cpp" line="71"/>
-        <source>- Unchanged -</source>
-        <translation type="unfinished">- Ei muutoksia -</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LayerDialog</name>
-    <message>
-        <location filename="../src/ui/forms/qg_layerdialog.ui" line="20"/>
-        <source>Layer Settings</source>
-        <translation type="unfinished">Tason asetukset</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_layerdialog.ui" line="29"/>
-        <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
-The contents of a Construction Layer should not appear in printout.</source>
-        <translation type="unfinished">Rakennustasossa on loputtomien suorien viivojen muodostamia olioita, joita käytetään geometriseen rakentamiseen.
-Rakennustason sisällön ei tulisi näkyä tulosteessa.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_layerdialog.ui" line="33"/>
-        <source>Construction Layer</source>
-        <translation type="unfinished">Rakennustaso</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_layerdialog.ui" line="46"/>
-        <source>Layer Name:</source>
-        <translation type="unfinished">Tasonimi:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_layerdialog.cpp" line="67"/>
-        <source>Default Pen</source>
-        <translation type="unfinished">Oletuskynä</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LayerWidget</name>
-    <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="219"/>
-        <source>Show all layers</source>
-        <translation type="unfinished">Näytä kaikki tasot</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="227"/>
-        <source>Hide all layers</source>
-        <translation type="unfinished">Piilota kaikki tasot</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="235"/>
-        <source>Unlock all layers</source>
-        <translation type="unfinished">Poista kaikkien tasojen lukitus</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="243"/>
-        <source>Lock all layers</source>
-        <translation type="unfinished">Lukitse kaikki tasot</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="251"/>
-        <source>Add a layer</source>
-        <translation type="unfinished">Lisää taso</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="259"/>
-        <source>Remove the current layer</source>
-        <translation type="unfinished">Poista nykyinen taso</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="267"/>
-        <source>Modify layer attributes / rename</source>
-        <translation type="unfinished">Muokkaa tason ominaisuuksia/nimeä uudelleen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="275"/>
-        <source>Filter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="277"/>
-        <source>Looking for matching layer names</source>
-        <translation type="unfinished">Etsitään yhteensopivia tason nimiä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="490"/>
-        <source>Layer Menu</source>
-        <translation type="unfinished">Tasovalikko</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="496"/>
-        <source>&amp;Defreeze all Layers</source>
-        <translation type="unfinished">&amp;Poista kaikkien tasojen jäädytys</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="498"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation type="unfinished">&amp;Jäädytä kaikki tasot</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="500"/>
-        <source>&amp;Unlock all Layers</source>
-        <translation type="unfinished">&amp;Poista kaikkien tasojen lukitus</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="502"/>
-        <source>&amp;Lock all Layers</source>
-        <translation type="unfinished">&amp;Lukitse kaikki tasot</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="505"/>
-        <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Lisää taso</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="507"/>
-        <source>&amp;Remove Layer</source>
-        <translation type="unfinished">&amp;Poista taso</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="509"/>
-        <source>Edit Layer &amp;Attributes</source>
-        <translation type="unfinished">Muokkaa tason &amp;määritteet</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="511"/>
-        <source>Toggle Layer &amp;Visibility</source>
-        <translation type="unfinished">Vaihda tason &amp;näkyvyys</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="513"/>
-        <source>Toggle Layer &amp;Printing</source>
-        <translation type="unfinished">Vaihda tason &amp;tulostus</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_layerwidget.cpp" line="515"/>
-        <source>Toggle &amp;Construction Layer</source>
-        <translation type="unfinished">Ota käyttöön &amp;rakennustaso</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LibraryWidget</name>
-    <message>
-        <location filename="../src/ui/qg_librarywidget.cpp" line="75"/>
-        <source>Refresh</source>
-        <translation type="unfinished">Päivitä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_librarywidget.cpp" line="77"/>
-        <source>Rebuild</source>
-        <translation type="unfinished">Rakenna uudelleen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_librarywidget.cpp" line="211"/>
-        <source>Directories</source>
-        <translation type="unfinished">Hakemisto</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_librarywidget.cpp" line="71"/>
-        <source>Insert</source>
-        <translation type="unfinished">Lisää</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineTypeBox</name>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="75"/>
-        <source>- Unchanged -</source>
-        <translation type="unfinished">- Ei muutoksia -</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="79"/>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="189"/>
-        <source>By Layer</source>
-        <translation>Tason mukaan</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="80"/>
-        <source>By Block</source>
-        <translation>Symbolin mukaan</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="82"/>
-        <source>No Pen</source>
-        <translation>Ei kynää</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="83"/>
-        <source>Continuous</source>
-        <translation>Jatkuva</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="84"/>
-        <source>Dot</source>
-        <translation>Piste</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="85"/>
-        <source>Dot (tiny)</source>
-        <translation>Piste (hyvin pieni)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="86"/>
-        <source>Dot (small)</source>
-        <translation>Piste (pieni)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="87"/>
-        <source>Dot (large)</source>
-        <translation>Piste (suuri)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="88"/>
-        <source>Dash</source>
-        <translation>Katkoviiva</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="89"/>
-        <source>Dash (tiny)</source>
-        <translation>Katkoviiva (hyvin pieni)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="90"/>
-        <source>Dash (small)</source>
-        <translation>Katkoviiva (pieni)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="91"/>
-        <source>Dash (large)</source>
-        <translation>Katkoviiva (suuri)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="92"/>
-        <source>Dash Dot</source>
-        <translation>Katkopiste</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="93"/>
-        <source>Dash Dot (tiny)</source>
-        <translation>Katkopiste (hyvin pieni)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="94"/>
-        <source>Dash Dot (small)</source>
-        <translation>Katkopiste (pieni)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="95"/>
-        <source>Dash Dot (large)</source>
-        <translation>Katkopiste (suuri)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="96"/>
-        <source>Divide</source>
-        <translation type="unfinished">Jakolinja</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="97"/>
-        <source>Divide (tiny)</source>
-        <translation type="unfinished">Jakolinja (hyvin pieni)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="98"/>
-        <source>Divide (small)</source>
-        <translation type="unfinished">Jakolinja (pieni)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="99"/>
-        <source>Divide (large)</source>
-        <translation type="unfinished">Jakolinja (suuri)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="100"/>
-        <source>Center</source>
-        <translation type="unfinished">Keskiosa</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="101"/>
-        <source>Center (tiny)</source>
-        <translation type="unfinished">Keskiosa (hyvin pieni)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="102"/>
-        <source>Center (small)</source>
-        <translation type="unfinished">Keskiosa (pieni)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="103"/>
-        <source>Center (large)</source>
-        <translation type="unfinished">Keskiosa (suuri)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="104"/>
-        <source>Border</source>
-        <translation type="unfinished">Raja</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="105"/>
-        <source>Border (tiny)</source>
-        <translation type="unfinished">Raja (hyvin pieni)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="106"/>
-        <source>Border (small)</source>
-        <translation type="unfinished">Raja (pieni)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_linetypebox.cpp" line="107"/>
-        <source>Border (large)</source>
-        <translation type="unfinished">Raja (suuri)</translation>
-    </message>
-</context>
-<context>
-    <name>QG_MouseWidget</name>
-    <message>
-        <location filename="../src/ui/forms/qg_mousewidget.ui" line="32"/>
-        <source>Mouse</source>
-        <translation type="unfinished">Hiiri</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_mousewidget.ui" line="71"/>
-        <source>Right</source>
-        <translation type="unfinished">Oikea</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_mousewidget.ui" line="108"/>
-        <source>Left</source>
-        <translation type="unfinished">Vasen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_mousewidget.ui" line="130"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Vinkki vasemman/oikean hiiren painikkeen toimista&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PenToolBar</name>
-    <message>
-        <location filename="../src/ui/qg_pentoolbar.cpp" line="45"/>
-        <source>Line color</source>
-        <translation type="unfinished">Viivan väri</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_pentoolbar.cpp" line="49"/>
-        <source>Line width</source>
-        <translation type="unfinished">Viivan leveys</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_pentoolbar.cpp" line="53"/>
-        <source>Line type</source>
-        <translation type="unfinished">Viivan tyyppi</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PolylineOptions</name>
-    <message>
-        <location filename="../src/ui/forms/qg_polylineoptions.cpp" line="105"/>
-        <source>wrong action type</source>
-        <translation type="unfinished">väärä toiminnon tyyppi</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SelectionWidget</name>
-    <message>
-        <location filename="../src/ui/forms/qg_selectionwidget.ui" line="32"/>
-        <source>Selection</source>
-        <translation type="unfinished">Valinta</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_selectionwidget.ui" line="74"/>
-        <source>Selected</source>
-        <translation type="unfinished">Valittu</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_selectionwidget.ui" line="102"/>
-        <source>Total Length</source>
-        <translation type="unfinished">Kokonaispituus</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_selectionwidget.ui" line="121"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Valittujen olioiden määrä&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_selectionwidget.ui" line="153"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Valittujen olioiden kokonaispituus&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SnapToolBar</name>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
-        <source>Snap</source>
-        <translation type="unfinished">Kohdistusapu</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
-        <source>Snap to Endpoints</source>
-        <translation type="unfinished">Kohdistusapu loppupisteisiin</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
-        <source>Snap to equidistant points of entity</source>
-        <translation type="unfinished">Kohdistusapu olion yhtä kaukaisiin pisteisiin</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
-        <source>Snap to center points</source>
-        <translation type="unfinished">Kohdistusapu keskipisteisiin</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
-        <source>Snap to intersections automatically</source>
-        <translation type="unfinished">Kohdistusapu leikkauspisteisiin automaattisesti</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
-        <source>Snap to closest point on entity</source>
-        <translation type="unfinished">Kohdistusapu olion lähimpään pisteeseen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="unfinished">Kohdistusapu pisteeseen, jolla on annettu etäisyys loppupisteeseen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
-        <source>Snap to intersections manually</source>
-        <translation type="unfinished">Kohdistusapu leikkauspisteisiin manuaalisesti</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
-        <source>Snap to grid</source>
-        <translation type="unfinished">Kohdistusapu ristikkoon</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
-        <source>Restrict Horizontally</source>
-        <translation type="unfinished">Rajoita vaakasuuntaisesti</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="200"/>
-        <source>Restrict Vertically</source>
-        <translation type="unfinished">Rajoita Pystysuuntainen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="217"/>
-        <source>Move relative Zero</source>
-        <translation type="unfinished">Siirrä suhteelliseen nollapisteeseen nähden</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="234"/>
-        <source>Lock relative Zero</source>
-        <translation type="unfinished">Lukitse suhteelliseen nollapisteeseen nähden</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="44"/>
-        <source>Exclusive Snap Mode</source>
-        <translation type="unfinished">Eksklusiivinen kohdistusaputila</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="52"/>
-        <source>Free Snap</source>
-        <translation type="unfinished">Vapaa kohdistusapu</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="57"/>
-        <source>Snap on grid</source>
-        <translation type="unfinished">Kohdistusapu ruudukolla</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="62"/>
-        <source>Snap on Endpoints</source>
-        <translation type="unfinished">Kohdistusapu loppupisteisiin</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="67"/>
-        <source>Snap on Entity</source>
-        <translation type="unfinished">Kohdistusapu olioon</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="72"/>
-        <source>Snap Center</source>
-        <translation type="unfinished">Kohdistusapu keskiosaan</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="77"/>
-        <source>Snap Middle</source>
-        <translation type="unfinished">Kohdistusapu keskelle</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="82"/>
-        <source>Snap Distance</source>
-        <translation type="unfinished">Kohdistusavun etäisyys</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="87"/>
-        <source>Snap Intersection</source>
-        <translation type="unfinished">Kohdistusapu leikkauskohtaan</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="96"/>
-        <source>Restrict Horizontal</source>
-        <translation type="unfinished">Rajoita vaakasuuntaisesti</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="102"/>
-        <source>Restrict Vertical</source>
-        <translation type="unfinished">Rajoita pystysuuntaisesti</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="109"/>
-        <source>Restrict Orthogonal</source>
-        <translation type="unfinished">Rajoita kohtisuoraan</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="117"/>
-        <source>Restrict Nothing</source>
-        <translation type="unfinished">Älä rajoita mitään</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="124"/>
-        <source>Set relative zero position</source>
-        <translation type="unfinished">Aseta suhteellinen nolla-asema</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="130"/>
-        <source>Lock relative zero position</source>
-        <translation type="unfinished">Lukitse suhteellinen nolla-asema</translation>
-    </message>
-</context>
-<context>
-    <name>QG_WidgetPen</name>
-    <message>
-        <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
-        <location filename="../src/ui/forms/qg_widgetpen.ui" line="38"/>
+        <location filename="../src/ui/forms/qg_dlgattributes.cpp" line="65"/>
         <source>Pen</source>
         <translation type="unfinished">Kynä</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_widgetpen.ui" line="66"/>
-        <source>Line type:</source>
-        <translation type="unfinished">Viivan tyyppi:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_widgetpen.ui" line="98"/>
-        <source>Width:</source>
-        <translation type="unfinished">Leveys:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_widgetpen.ui" line="120"/>
-        <source>Color:</source>
-        <translation type="unfinished">Väri:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_WidthBox</name>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="75"/>
-        <source>- Unchanged -</source>
-        <translation type="unfinished">- Ei muutoksia -</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="78"/>
-        <location filename="../src/ui/qg_widthbox.cpp" line="286"/>
-        <source>By Layer</source>
-        <translation>Tason mukaan</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="79"/>
-        <source>By Block</source>
-        <translation>Symbolin mukaan</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="81"/>
-        <source>Default</source>
-        <translation>Oletus</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="82"/>
-        <source>0.00mm</source>
-        <translation type="unfinished">0,00 mm</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="83"/>
-        <source>0.05mm</source>
-        <translation type="unfinished">0,05 mm</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="84"/>
-        <source>0.09mm</source>
-        <translation type="unfinished">0,09 mm</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="85"/>
-        <source>0.13mm (ISO)</source>
-        <translation type="unfinished">0,13 mm (ISO)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="86"/>
-        <source>0.15mm</source>
-        <translation type="unfinished">0,15 mm</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="87"/>
-        <source>0.18mm (ISO)</source>
-        <translation type="unfinished">0,18 mm (ISO)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="88"/>
-        <source>0.20mm</source>
-        <translation type="unfinished">0,20 mm</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="89"/>
-        <source>0.25mm (ISO)</source>
-        <translation type="unfinished">0,25 mm (ISO)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="90"/>
-        <source>0.30mm</source>
-        <translation type="unfinished">0,30 mm</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="91"/>
-        <source>0.35mm (ISO)</source>
-        <translation type="unfinished">0,35 mm (ISO)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="92"/>
-        <source>0.40mm</source>
-        <translation type="unfinished">0,40 mm</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="93"/>
-        <source>0.50mm (ISO)</source>
-        <translation type="unfinished">0,50 mm (ISO)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="94"/>
-        <source>0.53mm</source>
-        <translation type="unfinished">0,53 mm</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="95"/>
-        <source>0.60mm</source>
-        <translation type="unfinished">0,60 mm</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="96"/>
-        <source>0.70mm (ISO)</source>
-        <translation type="unfinished">0,70 mm (ISO)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="97"/>
-        <source>0.80mm</source>
-        <translation type="unfinished">0,80 mm</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="98"/>
-        <source>0.90mm</source>
-        <translation type="unfinished">0,90 mm</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="99"/>
-        <source>1.00mm (ISO)</source>
-        <translation type="unfinished">1,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="100"/>
-        <source>1.06mm</source>
-        <translation type="unfinished">1,06 mm</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="101"/>
-        <source>1.20mm</source>
-        <translation type="unfinished">1,20 mm</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="102"/>
-        <source>1.40mm (ISO)</source>
-        <translation type="unfinished">1,40 mm (ISO)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="103"/>
-        <source>1.58mm</source>
-        <translation type="unfinished">1,58 mm</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="104"/>
-        <source>2.00mm (ISO)</source>
-        <translation type="unfinished">2,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/qg_widthbox.cpp" line="105"/>
-        <source>2.11mm</source>
-        <translation type="unfinished">2,11 mm</translation>
     </message>
 </context>
 <context>
@@ -11349,6 +11457,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletequick.cpp" line="93"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Peruuta</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyEntity</name>
+    <message>
+        <source>&amp;Properties</source>
+        <translation type="obsolete">&amp;Ominaisuudet</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actionmodifyentity.cpp" line="96"/>
+        <source>Click on entity to modify</source>
+        <translation type="unfinished">Napsauta muokattavaa oliota</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actionmodifyentity.cpp" line="96"/>
         <source>Cancel</source>
         <translation type="unfinished">Peruuta</translation>
     </message>

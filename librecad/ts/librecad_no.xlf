@@ -7229,134 +7229,124 @@ Do you want to replace it?</source>
         <source xml:space="preserve">Touchscreen</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionBlocksCreate">
       <trans-unit id="_msg1702">
-        <source xml:space="preserve">Specify reference point</source>
+        <source xml:space="preserve">A0</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1703">
+        <source xml:space="preserve">A1</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1704">
+        <source xml:space="preserve">A2</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1705">
+        <source xml:space="preserve">A3</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1706">
+        <source xml:space="preserve">A4</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1707">
+        <source xml:space="preserve">A5</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1708">
+        <source xml:space="preserve">A6</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1709">
+        <source xml:space="preserve">A7</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1710">
+        <source xml:space="preserve">A8</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1711">
+        <source xml:space="preserve">A9</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1712">
+        <source xml:space="preserve">B0</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1713">
+        <source xml:space="preserve">B1</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1714">
+        <source xml:space="preserve">B2</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1715">
+        <source xml:space="preserve">B3</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1716">
+        <source xml:space="preserve">B4</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1717">
+        <source xml:space="preserve">B5</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1718">
+        <source xml:space="preserve">B6</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1719">
+        <source xml:space="preserve">B7</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1720">
+        <source xml:space="preserve">B8</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1721">
+        <source xml:space="preserve">B9</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1722">
+        <source xml:space="preserve">B10</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1723">
+        <source xml:space="preserve">C5E</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1724">
+        <source xml:space="preserve">Comm10E</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1725">
+        <source xml:space="preserve">DLE</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1726">
+        <source xml:space="preserve">Pen</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionBlocksCreate">
+      <trans-unit id="_msg1727">
+        <source xml:space="preserve">Specify reference point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1728">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionBlocksInsert">
-      <trans-unit id="_msg1704">
-        <source xml:space="preserve">Not a valid expression</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1705">
-        <source xml:space="preserve">Specify reference point</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1706">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1707">
-        <source xml:space="preserve">Enter angle:</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1708" approved="yes">
-        <source xml:space="preserve"></source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1709">
-        <source xml:space="preserve">Enter factor:</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1710">
-        <source xml:space="preserve">Enter columns:</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1711">
-        <source xml:space="preserve">Enter rows:</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1712">
-        <source xml:space="preserve">Enter column spacing:</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1713">
-        <source xml:space="preserve">Enter row spacing:</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionBlocksSave">
-      <trans-unit id="_msg1714">
-        <source xml:space="preserve">No block activated to save</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDefault">
-      <trans-unit id="_msg1715">
-        <source xml:space="preserve">Choose second edge</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1716">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDimAligned">
-      <trans-unit id="_msg1717">
-        <source xml:space="preserve">Specify first extension line origin</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1718">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1719">
-        <source xml:space="preserve">Specify second extension line origin</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1720">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1721">
-        <source xml:space="preserve">Specify dimension line location</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1722">
-        <source xml:space="preserve">Enter dimension text:</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDimAngular">
-      <trans-unit id="_msg1723">
-        <source xml:space="preserve">Select first line</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1724">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1725">
-        <source xml:space="preserve">Select second line</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1726">
-        <source xml:space="preserve">Specify dimension arc line location</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1727">
-        <source xml:space="preserve">Enter dimension text:</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDimDiametric">
-      <trans-unit id="_msg1728">
-        <source xml:space="preserve">Not a circle or arc entity</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
       <trans-unit id="_msg1729">
         <source xml:space="preserve">Not a valid expression</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1730">
-        <source xml:space="preserve">Select arc or circle entity</source>
+        <source xml:space="preserve">Specify reference point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1731">
@@ -7364,77 +7354,79 @@ Do you want to replace it?</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1732">
-        <source xml:space="preserve">Specify dimension line location</source>
+        <source xml:space="preserve">Enter angle:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1733">
-        <source xml:space="preserve">Enter dimension text:</source>
+      <trans-unit id="_msg1733" approved="yes">
+        <source xml:space="preserve"></source>
         <target xml:space="preserve"></target>
       </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDimLeader">
       <trans-unit id="_msg1734">
-        <source xml:space="preserve">Specify target point</source>
+        <source xml:space="preserve">Enter factor:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1735">
-        <source xml:space="preserve">Cancel</source>
+        <source xml:space="preserve">Enter columns:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1736">
-        <source xml:space="preserve">Specify next point</source>
+        <source xml:space="preserve">Enter rows:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1737">
-        <source xml:space="preserve">Finish</source>
+        <source xml:space="preserve">Enter column spacing:</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1738">
+        <source xml:space="preserve">Enter row spacing:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDimLinear">
-      <trans-unit id="_msg1738">
-        <source xml:space="preserve">Not a valid expression</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionBlocksSave">
       <trans-unit id="_msg1739">
-        <source xml:space="preserve">Specify first extension line origin</source>
+        <source xml:space="preserve">No block activated to save</source>
         <target xml:space="preserve"></target>
       </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDefault">
       <trans-unit id="_msg1740">
-        <source xml:space="preserve">Cancel</source>
+        <source xml:space="preserve">Choose second edge</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1741">
-        <source xml:space="preserve">Specify second extension line origin</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1742">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDimAligned">
+      <trans-unit id="_msg1742">
+        <source xml:space="preserve">Specify first extension line origin</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
       <trans-unit id="_msg1743">
-        <source xml:space="preserve">Specify dimension line location</source>
+        <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1744">
-        <source xml:space="preserve">Enter dimension text:</source>
+        <source xml:space="preserve">Specify second extension line origin</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1745">
-        <source xml:space="preserve">Enter dimension line angle:</source>
+        <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDimRadial">
       <trans-unit id="_msg1746">
-        <source xml:space="preserve">Not a circle or arc entity</source>
+        <source xml:space="preserve">Specify dimension line location</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1747">
-        <source xml:space="preserve">Not a valid expression</source>
+        <source xml:space="preserve">Enter dimension text:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDimAngular">
       <trans-unit id="_msg1748">
-        <source xml:space="preserve">Select arc or circle entity</source>
+        <source xml:space="preserve">Select first line</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1749">
@@ -7442,133 +7434,133 @@ Do you want to replace it?</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1750">
-        <source xml:space="preserve">Specify dimension line position or enter angle:</source>
+        <source xml:space="preserve">Select second line</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1751">
+        <source xml:space="preserve">Specify dimension arc line location</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1752">
+        <source xml:space="preserve">Enter dimension text:</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDimDiametric">
+      <trans-unit id="_msg1753">
+        <source xml:space="preserve">Not a circle or arc entity</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1754">
+        <source xml:space="preserve">Not a valid expression</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1755">
+        <source xml:space="preserve">Select arc or circle entity</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1756">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1757">
+        <source xml:space="preserve">Specify dimension line location</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1758">
+        <source xml:space="preserve">Enter dimension text:</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDimLeader">
+      <trans-unit id="_msg1759">
+        <source xml:space="preserve">Specify target point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1760">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1761">
+        <source xml:space="preserve">Specify next point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1762">
+        <source xml:space="preserve">Finish</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDimLinear">
+      <trans-unit id="_msg1763">
+        <source xml:space="preserve">Not a valid expression</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1764">
+        <source xml:space="preserve">Specify first extension line origin</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1765">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1766">
+        <source xml:space="preserve">Specify second extension line origin</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1767">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1768">
+        <source xml:space="preserve">Specify dimension line location</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1769">
+        <source xml:space="preserve">Enter dimension text:</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1770">
+        <source xml:space="preserve">Enter dimension line angle:</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDimRadial">
+      <trans-unit id="_msg1771">
+        <source xml:space="preserve">Not a circle or arc entity</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1772">
+        <source xml:space="preserve">Not a valid expression</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1773">
+        <source xml:space="preserve">Select arc or circle entity</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1774">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1775">
+        <source xml:space="preserve">Specify dimension line position or enter angle:</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1776">
         <source xml:space="preserve">Enter dimension text:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawArc">
-      <trans-unit id="_msg1752">
+      <trans-unit id="_msg1777">
         <source xml:space="preserve">Not a valid expression</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1753">
+      <trans-unit id="_msg1778">
         <source xml:space="preserve">Not a valid chord length</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1754">
-        <source xml:space="preserve">Specify center</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1755">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1756">
-        <source xml:space="preserve">Specify radius</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1757">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1758">
-        <source xml:space="preserve">Specify start angle:</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1759">
-        <source xml:space="preserve">Specify included angle:</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1760">
-        <source xml:space="preserve">Specify chord length:</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1761">
-        <source xml:space="preserve">Specify end angle or [angle/chord length]</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawArc3P">
-      <trans-unit id="_msg1762">
-        <source xml:space="preserve">Invalid arc data.</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1763">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1764">
-        <source xml:space="preserve">Specify second point</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1765">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1766">
-        <source xml:space="preserve">Specify endpoint</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1767">
-        <source xml:space="preserve">Specify startpoint or [center]</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawArcTangential">
-      <trans-unit id="_msg1768">
-        <source xml:space="preserve">Specify base entity</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1769">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1770">
-        <source xml:space="preserve">Specify end angle</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1771">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1772">
-        <source xml:space="preserve">Specify end point</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawCircle">
-      <trans-unit id="_msg1773">
-        <source xml:space="preserve">Not a valid expression</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1774">
-        <source xml:space="preserve">Specify center</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1775">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1776">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1777">
-        <source xml:space="preserve">Specify point on circle</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawCircle2P">
-      <trans-unit id="_msg1778">
-        <source xml:space="preserve">Invalid Circle data.</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
       <trans-unit id="_msg1779">
-        <source xml:space="preserve">Specify first point</source>
+        <source xml:space="preserve">Specify center</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1780">
@@ -7576,191 +7568,189 @@ Do you want to replace it?</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1781">
-        <source xml:space="preserve">Specify second point</source>
+        <source xml:space="preserve">Specify radius</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1782">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawCircle3P">
       <trans-unit id="_msg1783">
-        <source xml:space="preserve">Invalid circle data.</source>
+        <source xml:space="preserve">Specify start angle:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1784">
-        <source xml:space="preserve">Specify first point</source>
+        <source xml:space="preserve">Specify included angle:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1785">
-        <source xml:space="preserve">Cancel</source>
+        <source xml:space="preserve">Specify chord length:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1786">
-        <source xml:space="preserve">Specify second point</source>
+        <source xml:space="preserve">Specify end angle or [angle/chord length]</source>
         <target xml:space="preserve"></target>
       </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawArc3P">
       <trans-unit id="_msg1787">
-        <source xml:space="preserve">Back</source>
+        <source xml:space="preserve">Invalid arc data.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1788">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1789">
+        <source xml:space="preserve">Specify second point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1790">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1791">
+        <source xml:space="preserve">Specify endpoint</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1792">
+        <source xml:space="preserve">Specify startpoint or [center]</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawArcTangential">
+      <trans-unit id="_msg1793">
+        <source xml:space="preserve">Specify base entity</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1794">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1795">
+        <source xml:space="preserve">Specify end angle</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1796">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1797">
+        <source xml:space="preserve">Specify end point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawCircle">
+      <trans-unit id="_msg1798">
+        <source xml:space="preserve">Not a valid expression</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1799">
+        <source xml:space="preserve">Specify center</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1800">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1801">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1802">
+        <source xml:space="preserve">Specify point on circle</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawCircle2P">
+      <trans-unit id="_msg1803">
+        <source xml:space="preserve">Invalid Circle data.</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1804">
+        <source xml:space="preserve">Specify first point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1805">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1806">
+        <source xml:space="preserve">Specify second point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1807">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawCircle3P">
+      <trans-unit id="_msg1808">
+        <source xml:space="preserve">Invalid circle data.</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1809">
+        <source xml:space="preserve">Specify first point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1810">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1811">
+        <source xml:space="preserve">Specify second point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1812">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1813">
         <source xml:space="preserve">Specify third point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawCircleCR">
-      <trans-unit id="_msg1789">
+      <trans-unit id="_msg1814">
         <source xml:space="preserve">Not a valid expression</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1790">
+      <trans-unit id="_msg1815">
         <source xml:space="preserve">Specify circle center</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1791">
+      <trans-unit id="_msg1816">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1792">
+      <trans-unit id="_msg1817">
         <source xml:space="preserve">Specify circle radius</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1793">
+      <trans-unit id="_msg1818">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1794">
+      <trans-unit id="_msg1819">
         <source xml:space="preserve">radius=%1 is invalid</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawCircleDiam">
-      <trans-unit id="_msg1795">
+      <trans-unit id="_msg1820">
         <source xml:space="preserve">Not a valid expression</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1796">
+      <trans-unit id="_msg1821">
         <source xml:space="preserve">Specify center</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1797">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1798">
-        <source xml:space="preserve">Specify circle radius</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1799">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1800">
-        <source xml:space="preserve">diameter=%1 is invalid</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawCircleInscribe">
-      <trans-unit id="_msg1801">
-        <source xml:space="preserve">Specify the first line</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1802">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1803">
-        <source xml:space="preserve">Specify the second line</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1804">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1805">
-        <source xml:space="preserve">Specify the third line</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawCircleTan1_2P">
-      <trans-unit id="_msg1806">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1807">
-        <source xml:space="preserve">Specify the first point on the tangent circle</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1808">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1809">
-        <source xml:space="preserve">Specify the second point on the tangent circle</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1810">
-        <source xml:space="preserve">Select the center of the tangent circle</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1811">
-        <source xml:space="preserve">Specify a line/arc/circle</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawCircleTan2">
-      <trans-unit id="_msg1812">
-        <source xml:space="preserve">Specify the first line/arc/circle</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1813">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1814">
-        <source xml:space="preserve">Specify the second line/arc/circle</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1815">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1816">
-        <source xml:space="preserve">Select the center of the tangent circle</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawCircleTan2_1P">
-      <trans-unit id="_msg1817">
-        <source xml:space="preserve">Specify a line/arc/circle</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1818">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1819">
-        <source xml:space="preserve">Specify the another arc/circle</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1820">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1821">
-        <source xml:space="preserve">Specify a point on the tangent circle</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
       <trans-unit id="_msg1822">
-        <source xml:space="preserve">Select the center of the tangent circle</source>
+        <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawCircleTan3">
       <trans-unit id="_msg1823">
-        <source xml:space="preserve">Cancel</source>
+        <source xml:space="preserve">Specify circle radius</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1824">
@@ -7768,59 +7758,61 @@ Do you want to replace it?</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1825">
-        <source xml:space="preserve">Select the center of the tangent circle</source>
+        <source xml:space="preserve">diameter=%1 is invalid</source>
         <target xml:space="preserve"></target>
       </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawCircleInscribe">
       <trans-unit id="_msg1826">
-        <source xml:space="preserve">Specify the first line/arc/circle</source>
+        <source xml:space="preserve">Specify the first line</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1827">
-        <source xml:space="preserve">Specify the second line/arc/circle</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1828">
-        <source xml:space="preserve">Specify the third line/arc/circle</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawEllipse4Points">
-      <trans-unit id="_msg1829">
-        <source xml:space="preserve">Specify the first point on ellipse</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1830">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1831">
-        <source xml:space="preserve">Specify the second point on ellipse</source>
+      <trans-unit id="_msg1828">
+        <source xml:space="preserve">Specify the second line</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1832">
+      <trans-unit id="_msg1829">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1833">
-        <source xml:space="preserve">Specify the third point on ellipse</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1834">
-        <source xml:space="preserve">Specify the fourth point on ellipse</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1835">
-        <source xml:space="preserve">Can not determine uniquely an ellipse</source>
+      <trans-unit id="_msg1830">
+        <source xml:space="preserve">Specify the third line</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawEllipseAxis">
-      <trans-unit id="_msg1836">
-        <source xml:space="preserve">Not a valid expression</source>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawCircleTan1_2P">
+      <trans-unit id="_msg1831">
+        <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
+      <trans-unit id="_msg1832">
+        <source xml:space="preserve">Specify the first point on the tangent circle</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1833">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1834">
+        <source xml:space="preserve">Specify the second point on the tangent circle</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1835">
+        <source xml:space="preserve">Select the center of the tangent circle</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1836">
+        <source xml:space="preserve">Specify a line/arc/circle</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawCircleTan2">
       <trans-unit id="_msg1837">
-        <source xml:space="preserve">Specify ellipse center</source>
+        <source xml:space="preserve">Specify the first line/arc/circle</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1838">
@@ -7828,7 +7820,7 @@ Do you want to replace it?</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1839">
-        <source xml:space="preserve">Specify endpoint of major axis</source>
+        <source xml:space="preserve">Specify the second line/arc/circle</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1840">
@@ -7836,426 +7828,424 @@ Do you want to replace it?</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1841">
-        <source xml:space="preserve">Specify endpoint or length of minor axis:</source>
+        <source xml:space="preserve">Select the center of the tangent circle</source>
         <target xml:space="preserve"></target>
       </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawCircleTan2_1P">
       <trans-unit id="_msg1842">
-        <source xml:space="preserve">Specify start angle</source>
+        <source xml:space="preserve">Specify a line/arc/circle</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1843">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1844">
+        <source xml:space="preserve">Specify the another arc/circle</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1845">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1846">
+        <source xml:space="preserve">Specify a point on the tangent circle</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1847">
+        <source xml:space="preserve">Select the center of the tangent circle</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawCircleTan3">
+      <trans-unit id="_msg1848">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1849">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1850">
+        <source xml:space="preserve">Select the center of the tangent circle</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1851">
+        <source xml:space="preserve">Specify the first line/arc/circle</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1852">
+        <source xml:space="preserve">Specify the second line/arc/circle</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1853">
+        <source xml:space="preserve">Specify the third line/arc/circle</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawEllipse4Points">
+      <trans-unit id="_msg1854">
+        <source xml:space="preserve">Specify the first point on ellipse</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1855">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1856">
+        <source xml:space="preserve">Specify the second point on ellipse</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1857">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1858">
+        <source xml:space="preserve">Specify the third point on ellipse</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1859">
+        <source xml:space="preserve">Specify the fourth point on ellipse</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1860">
+        <source xml:space="preserve">Can not determine uniquely an ellipse</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawEllipseAxis">
+      <trans-unit id="_msg1861">
+        <source xml:space="preserve">Not a valid expression</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1862">
+        <source xml:space="preserve">Specify ellipse center</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1863">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1864">
+        <source xml:space="preserve">Specify endpoint of major axis</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1865">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1866">
+        <source xml:space="preserve">Specify endpoint or length of minor axis:</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1867">
+        <source xml:space="preserve">Specify start angle</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1868">
         <source xml:space="preserve">Specify end angle</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawEllipseCenter3Points">
-      <trans-unit id="_msg1844">
+      <trans-unit id="_msg1869">
         <source xml:space="preserve">Specify the center of ellipse</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1845">
+      <trans-unit id="_msg1870">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1846">
+      <trans-unit id="_msg1871">
         <source xml:space="preserve">Specify the first point on ellipse</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1847">
+      <trans-unit id="_msg1872">
         <source xml:space="preserve">Specify the second point on ellipse</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1848">
+      <trans-unit id="_msg1873">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1849">
+      <trans-unit id="_msg1874">
         <source xml:space="preserve">Specify the third point on ellipse</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawEllipseFociPoint">
-      <trans-unit id="_msg1850">
+      <trans-unit id="_msg1875">
         <source xml:space="preserve">Not a valid expression</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1851">
+      <trans-unit id="_msg1876">
         <source xml:space="preserve">Specify first focus of ellipse</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1852">
+      <trans-unit id="_msg1877">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1853">
+      <trans-unit id="_msg1878">
         <source xml:space="preserve">Specify second focus of ellipse</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1854">
+      <trans-unit id="_msg1879">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1855">
+      <trans-unit id="_msg1880">
         <source xml:space="preserve">Specify a point on ellipse or total distance to foci</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1856">
+      <trans-unit id="_msg1881">
         <source xml:space="preserve">specify a point on ellipse, or total distance to foci</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1857">
+      <trans-unit id="_msg1882">
         <source xml:space="preserve">Total distance %1 is smaller than distance between foci</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawEllipseInscribe">
-      <trans-unit id="_msg1858">
+      <trans-unit id="_msg1883">
         <source xml:space="preserve">Specify the first line</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1859">
+      <trans-unit id="_msg1884">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1860">
+      <trans-unit id="_msg1885">
         <source xml:space="preserve">Specify the second line</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1861">
+      <trans-unit id="_msg1886">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1862">
+      <trans-unit id="_msg1887">
         <source xml:space="preserve">Specify the third line</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1863">
+      <trans-unit id="_msg1888">
         <source xml:space="preserve">Specify the fourth line</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1864">
+      <trans-unit id="_msg1889">
         <source xml:space="preserve">Can not determine uniquely an ellipse</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawHatch">
-      <trans-unit id="_msg1865">
+      <trans-unit id="_msg1890">
         <source xml:space="preserve">Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1866">
+      <trans-unit id="_msg1891">
         <source xml:space="preserve">Hatch created successfully.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1867">
+      <trans-unit id="_msg1892">
         <source xml:space="preserve">Hatch Error: Invalid contour found!</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1868">
+      <trans-unit id="_msg1893">
         <source xml:space="preserve">Hatch Error: Pattern not found!</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1869">
+      <trans-unit id="_msg1894">
         <source xml:space="preserve">Hatch Error: Contour or pattern too small!</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1870">
+      <trans-unit id="_msg1895">
         <source xml:space="preserve">Hatch Error: Contour too big!</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1871">
+      <trans-unit id="_msg1896">
         <source xml:space="preserve">Hatch Error: Undefined Error!</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1872">
+      <trans-unit id="_msg1897">
         <source xml:space="preserve">Total hatch area = %1</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawImage">
-      <trans-unit id="_msg1873">
+      <trans-unit id="_msg1898">
         <source xml:space="preserve">Not a valid expression</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1874">
+      <trans-unit id="_msg1899">
         <source xml:space="preserve">Specify reference point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1875">
+      <trans-unit id="_msg1900">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1876">
+      <trans-unit id="_msg1901">
         <source xml:space="preserve">Enter angle:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1877" approved="yes">
+      <trans-unit id="_msg1902" approved="yes">
         <source xml:space="preserve"></source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1878">
+      <trans-unit id="_msg1903">
         <source xml:space="preserve">Enter factor:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1879">
+      <trans-unit id="_msg1904">
         <source xml:space="preserve">Enter dpi:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLine">
-      <trans-unit id="_msg1880">
+      <trans-unit id="_msg1905">
         <source xml:space="preserve">Specify first point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1881">
+      <trans-unit id="_msg1906">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1882">
+      <trans-unit id="_msg1907">
         <source xml:space="preserve">Specify next point or [%1]</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1883">
+      <trans-unit id="_msg1908">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1884">
+      <trans-unit id="_msg1909">
         <source xml:space="preserve">Specify next point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1885">
+      <trans-unit id="_msg1910">
         <source xml:space="preserve">Cannot undo: Not enough entities defined yet.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1886">
+      <trans-unit id="_msg1911">
         <source xml:space="preserve">Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1887">
+      <trans-unit id="_msg1912">
         <source xml:space="preserve">Cannot redo: Not previous line segment defined.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLineAngle">
-      <trans-unit id="_msg1888">
+      <trans-unit id="_msg1913">
         <source xml:space="preserve">Not a valid expression</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1889">
+      <trans-unit id="_msg1914">
         <source xml:space="preserve">Specify position</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1890">
+      <trans-unit id="_msg1915">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1891">
+      <trans-unit id="_msg1916">
         <source xml:space="preserve">Enter angle:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1892">
+      <trans-unit id="_msg1917">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1893">
+      <trans-unit id="_msg1918">
         <source xml:space="preserve">Enter length:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLineBisector">
-      <trans-unit id="_msg1894">
+      <trans-unit id="_msg1919">
         <source xml:space="preserve">Not a valid expression</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1895">
+      <trans-unit id="_msg1920">
         <source xml:space="preserve">Select first line</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1896">
+      <trans-unit id="_msg1921">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1897">
+      <trans-unit id="_msg1922">
         <source xml:space="preserve">Select second line</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1898">
+      <trans-unit id="_msg1923">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1899">
+      <trans-unit id="_msg1924">
         <source xml:space="preserve">Enter bisector length:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1900">
+      <trans-unit id="_msg1925">
         <source xml:space="preserve">Enter number of bisectors:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1901">
+      <trans-unit id="_msg1926">
         <source xml:space="preserve">Number sector lines not in range: </source>
         <target xml:space="preserve"></target>
         <context-group><context context-type="x-gettext-msgctxt">number of bisector to create must be in [1, 200]</context></context-group>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLineFree">
-      <trans-unit id="_msg1902">
+      <trans-unit id="_msg1927">
         <source xml:space="preserve">Click and drag to draw a line</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1903">
+      <trans-unit id="_msg1928">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLineHorVert">
-      <trans-unit id="_msg1904">
+      <trans-unit id="_msg1929">
         <source xml:space="preserve">Specify first point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1905">
+      <trans-unit id="_msg1930">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1906">
+      <trans-unit id="_msg1931">
         <source xml:space="preserve">Specify second point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1907">
+      <trans-unit id="_msg1932">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLineOrthTan">
-      <trans-unit id="_msg1908">
+      <trans-unit id="_msg1933">
         <source xml:space="preserve">Select a line</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1909">
+      <trans-unit id="_msg1934">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1910">
+      <trans-unit id="_msg1935">
         <source xml:space="preserve">Select circle, arc or ellipse</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg1911">
+      <trans-unit id="_msg1936">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLineParallel">
-      <trans-unit id="_msg1912">
-        <source xml:space="preserve">Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1913">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1914">
-        <source xml:space="preserve">Enter number:</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1915">
-        <source xml:space="preserve">Not a valid expression</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1916">
-        <source xml:space="preserve">Not a valid number. Try 1..99</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLineParallelThrough">
-      <trans-unit id="_msg1917">
-        <source xml:space="preserve">Select entity</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1918">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1919">
-        <source xml:space="preserve">Specify through point</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1920">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1921">
-        <source xml:space="preserve">Number:</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1922">
-        <source xml:space="preserve">Not a valid number. Try 1..99</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1923">
-        <source xml:space="preserve">Not a valid expression</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLinePolygon">
-      <trans-unit id="_msg1924" approved="yes">
-        <source xml:space="preserve"></source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLinePolygonCenCor">
-      <trans-unit id="_msg1925">
-        <source xml:space="preserve">Specify center</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1926">
-        <source xml:space="preserve">Specify a corner</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1927">
-        <source xml:space="preserve">Enter number:</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1928">
-        <source xml:space="preserve">Not a valid number. Try 1..9999</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1929">
-        <source xml:space="preserve">Not a valid expression</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLinePolygonCorCor">
-      <trans-unit id="_msg1930">
-        <source xml:space="preserve">Specify first corner</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1931">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1932">
-        <source xml:space="preserve">Specify second corner</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1933">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1934">
-        <source xml:space="preserve">Number:</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1935">
-        <source xml:space="preserve">Not a valid number. Try 1..9999</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1936">
-        <source xml:space="preserve">Not a valid expression.</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLineRectangle">
       <trans-unit id="_msg1937">
-        <source xml:space="preserve">Specify first corner</source>
+        <source xml:space="preserve">Specify Distance &lt;%1&gt; or select entity or [%2]</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1938">
@@ -8263,21 +8253,21 @@ Do you want to replace it?</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1939">
-        <source xml:space="preserve">Specify second corner</source>
+        <source xml:space="preserve">Enter number:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1940">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLineRelAngle">
-      <trans-unit id="_msg1941">
         <source xml:space="preserve">Not a valid expression</source>
         <target xml:space="preserve"></target>
       </trans-unit>
+      <trans-unit id="_msg1941">
+        <source xml:space="preserve">Not a valid number. Try 1..99</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLineParallelThrough">
       <trans-unit id="_msg1942">
-        <source xml:space="preserve">Select base entity</source>
+        <source xml:space="preserve">Select entity</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1943">
@@ -8285,111 +8275,109 @@ Do you want to replace it?</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1944">
-        <source xml:space="preserve">Specify position</source>
+        <source xml:space="preserve">Specify through point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1945">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLineTangent1">
       <trans-unit id="_msg1946">
-        <source xml:space="preserve">Specify point</source>
+        <source xml:space="preserve">Number:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1947">
-        <source xml:space="preserve">Cancel</source>
+        <source xml:space="preserve">Not a valid number. Try 1..99</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1948">
-        <source xml:space="preserve">Select circle, arc or ellipse</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1949">
-        <source xml:space="preserve">Back</source>
+        <source xml:space="preserve">Not a valid expression</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLineTangent2">
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLinePolygon">
+      <trans-unit id="_msg1949" approved="yes">
+        <source xml:space="preserve"></source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLinePolygonCenCor">
       <trans-unit id="_msg1950">
-        <source xml:space="preserve">Cancel</source>
+        <source xml:space="preserve">Specify center</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1951">
-        <source xml:space="preserve">Back</source>
+        <source xml:space="preserve">Specify a corner</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1952">
-        <source xml:space="preserve">Select first circle or ellipse</source>
+        <source xml:space="preserve">Enter number:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1953">
-        <source xml:space="preserve">Select second circle or ellipse</source>
+        <source xml:space="preserve">Not a valid number. Try 1..9999</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1954">
+        <source xml:space="preserve">Not a valid expression</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawMText">
-      <trans-unit id="_msg1954">
-        <source xml:space="preserve">Specify insertion point</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLinePolygonCorCor">
       <trans-unit id="_msg1955">
-        <source xml:space="preserve">Cancel</source>
+        <source xml:space="preserve">Specify first corner</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1956">
-        <source xml:space="preserve">Enter text:</source>
+        <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1957">
-        <source xml:space="preserve">Back</source>
+        <source xml:space="preserve">Specify second corner</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawPoint">
       <trans-unit id="_msg1958">
-        <source xml:space="preserve">Specify location</source>
+        <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1959">
-        <source xml:space="preserve">Cancel</source>
+        <source xml:space="preserve">Number:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawPolyline">
       <trans-unit id="_msg1960">
-        <source xml:space="preserve">Specify first point</source>
+        <source xml:space="preserve">Not a valid number. Try 1..9999</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1961">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1962">
-        <source xml:space="preserve">Specify next point or [%1]</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1963">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1964">
-        <source xml:space="preserve">Specify next point</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1965">
-        <source xml:space="preserve">Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1966">
-        <source xml:space="preserve">Cannot undo: Not enough entities defined yet.</source>
+        <source xml:space="preserve">Not a valid expression.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawSpline">
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLineRectangle">
+      <trans-unit id="_msg1962">
+        <source xml:space="preserve">Specify first corner</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1963">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1964">
+        <source xml:space="preserve">Specify second corner</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1965">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLineRelAngle">
+      <trans-unit id="_msg1966">
+        <source xml:space="preserve">Not a valid expression</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
       <trans-unit id="_msg1967">
-        <source xml:space="preserve">Specify first control point</source>
+        <source xml:space="preserve">Select base entity</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1968">
@@ -8397,33 +8385,35 @@ Do you want to replace it?</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1969">
-        <source xml:space="preserve">Specify next control point or [%1]</source>
+        <source xml:space="preserve">Specify position</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1970">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLineTangent1">
       <trans-unit id="_msg1971">
-        <source xml:space="preserve">Specify next control point</source>
+        <source xml:space="preserve">Specify point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1972">
-        <source xml:space="preserve">Cannot undo: Not enough entities defined yet.</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawText">
-      <trans-unit id="_msg1973">
-        <source xml:space="preserve">Specify insertion point</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1974">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
+      <trans-unit id="_msg1973">
+        <source xml:space="preserve">Select circle, arc or ellipse</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1974">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawLineTangent2">
       <trans-unit id="_msg1975">
-        <source xml:space="preserve">Enter text:</source>
+        <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1976">
@@ -8431,47 +8421,45 @@ Do you want to replace it?</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1977">
-        <source xml:space="preserve">Specify second point</source>
+        <source xml:space="preserve">Select first circle or ellipse</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionEditCopy">
       <trans-unit id="_msg1978">
-        <source xml:space="preserve">Specify reference point</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1979">
-        <source xml:space="preserve">Cancel</source>
+        <source xml:space="preserve">Select second circle or ellipse</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionEditPaste">
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawMText">
+      <trans-unit id="_msg1979">
+        <source xml:space="preserve">Specify insertion point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
       <trans-unit id="_msg1980">
-        <source xml:space="preserve">Set reference point</source>
+        <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1981">
+        <source xml:space="preserve">Enter text:</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1982">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawPoint">
+      <trans-unit id="_msg1983">
+        <source xml:space="preserve">Specify location</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1984">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionEditUndo">
-      <trans-unit id="_msg1982">
-        <source xml:space="preserve">Nothing to undo!</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1983">
-        <source xml:space="preserve">Nothing to redo!</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionInfoAngle">
-      <trans-unit id="_msg1984">
-        <source xml:space="preserve">Lines are parallel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawPolyline">
       <trans-unit id="_msg1985">
-        <source xml:space="preserve">Specify first line</source>
+        <source xml:space="preserve">Specify first point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1986">
@@ -8479,7 +8467,7 @@ Do you want to replace it?</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1987">
-        <source xml:space="preserve">Specify second line</source>
+        <source xml:space="preserve">Specify next point or [%1]</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1988">
@@ -8487,21 +8475,21 @@ Do you want to replace it?</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1989">
-        <source xml:space="preserve">Angle: %1</source>
+        <source xml:space="preserve">Specify next point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionInfoArea">
       <trans-unit id="_msg1990">
-        <source xml:space="preserve">Circumference: %1</source>
+        <source xml:space="preserve">Cannot close sequence of lines: Not enough entities defined yet.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1991">
-        <source xml:space="preserve">Point: %1/%2</source>
+        <source xml:space="preserve">Cannot undo: Not enough entities defined yet.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawSpline">
       <trans-unit id="_msg1992">
-        <source xml:space="preserve">Specify first point of polygon</source>
+        <source xml:space="preserve">Specify first control point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1993">
@@ -8509,285 +8497,287 @@ Do you want to replace it?</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1994">
-        <source xml:space="preserve">Specify next point of polygon</source>
+        <source xml:space="preserve">Specify next control point or [%1]</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg1995">
-        <source xml:space="preserve">Closing Point: %1/%2</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1996">
-        <source xml:space="preserve">Area: %1 %2^2</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionInfoDist">
-      <trans-unit id="_msg1997">
-        <source xml:space="preserve">Specify first point of distance</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1998">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg1999">
-        <source xml:space="preserve">Specify second point of distance</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2000">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2001">
-        <source xml:space="preserve">Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
+      <trans-unit id="_msg1996">
+        <source xml:space="preserve">Specify next control point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg1997">
+        <source xml:space="preserve">Cannot undo: Not enough entities defined yet.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionInfoDist2">
-      <trans-unit id="_msg2002">
-        <source xml:space="preserve">Distance: %1</source>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionDrawText">
+      <trans-unit id="_msg1998">
+        <source xml:space="preserve">Specify insertion point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
+      <trans-unit id="_msg1999">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2000">
+        <source xml:space="preserve">Enter text:</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2001">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2002">
+        <source xml:space="preserve">Specify second point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionEditCopy">
       <trans-unit id="_msg2003">
-        <source xml:space="preserve">Specify entity</source>
+        <source xml:space="preserve">Specify reference point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2004">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionEditPaste">
       <trans-unit id="_msg2005">
-        <source xml:space="preserve">Specify point</source>
+        <source xml:space="preserve">Set reference point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2006">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionEditUndo">
+      <trans-unit id="_msg2007">
+        <source xml:space="preserve">Nothing to undo!</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2008">
+        <source xml:space="preserve">Nothing to redo!</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionInfoAngle">
+      <trans-unit id="_msg2009">
+        <source xml:space="preserve">Lines are parallel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2010">
+        <source xml:space="preserve">Specify first line</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2011">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2012">
+        <source xml:space="preserve">Specify second line</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2013">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2014">
+        <source xml:space="preserve">Angle: %1</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionInfoArea">
+      <trans-unit id="_msg2015">
+        <source xml:space="preserve">Circumference: %1</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2016">
+        <source xml:space="preserve">Point: %1/%2</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2017">
+        <source xml:space="preserve">Specify first point of polygon</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2018">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2019">
+        <source xml:space="preserve">Specify next point of polygon</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2020">
+        <source xml:space="preserve">Closing Point: %1/%2</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2021">
+        <source xml:space="preserve">Area: %1 %2^2</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionInfoDist">
+      <trans-unit id="_msg2022">
+        <source xml:space="preserve">Specify first point of distance</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2023">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2024">
+        <source xml:space="preserve">Specify second point of distance</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2025">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2026">
+        <source xml:space="preserve">Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionInfoDist2">
+      <trans-unit id="_msg2027">
+        <source xml:space="preserve">Distance: %1</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2028">
+        <source xml:space="preserve">Specify entity</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2029">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2030">
+        <source xml:space="preserve">Specify point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2031">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionInfoInside">
-      <trans-unit id="_msg2007">
+      <trans-unit id="_msg2032">
         <source xml:space="preserve">Point is inside selected contour.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2008">
+      <trans-unit id="_msg2033">
         <source xml:space="preserve">Point is outside selected contour.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2009">
+      <trans-unit id="_msg2034">
         <source xml:space="preserve">Specify point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2010">
+      <trans-unit id="_msg2035">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionInfoTotalLength">
-      <trans-unit id="_msg2011">
+      <trans-unit id="_msg2036">
         <source xml:space="preserve">Total Length of selected entities: %1</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2012">
+      <trans-unit id="_msg2037">
         <source xml:space="preserve">At least one of the selected entities cannot be measured.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionLibraryInsert">
-      <trans-unit id="_msg2013">
+      <trans-unit id="_msg2038">
         <source xml:space="preserve">Insert Library Object</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2014">
+      <trans-unit id="_msg2039">
         <source xml:space="preserve">Not a valid expression</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2015">
+      <trans-unit id="_msg2040">
         <source xml:space="preserve">Specify reference point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2016">
+      <trans-unit id="_msg2041">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2017">
+      <trans-unit id="_msg2042">
         <source xml:space="preserve">Enter angle:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2018" approved="yes">
+      <trans-unit id="_msg2043" approved="yes">
         <source xml:space="preserve"></source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2019">
+      <trans-unit id="_msg2044">
         <source xml:space="preserve">Enter factor:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2020">
+      <trans-unit id="_msg2045">
         <source xml:space="preserve">Cannot open file &apos;%1&apos;</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionLockRelativeZero">
-      <trans-unit id="_msg2021">
+      <trans-unit id="_msg2046">
         <source xml:space="preserve">(Un-)&amp;Lock Relative Zero</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyBevel">
-      <trans-unit id="_msg2022">
+      <trans-unit id="_msg2047">
         <source xml:space="preserve">Not a valid expression</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2023">
+      <trans-unit id="_msg2048">
         <source xml:space="preserve">Select first entity</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2024">
+      <trans-unit id="_msg2049">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2025">
+      <trans-unit id="_msg2050">
         <source xml:space="preserve">Select second entity</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2026">
+      <trans-unit id="_msg2051">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2027">
+      <trans-unit id="_msg2052">
         <source xml:space="preserve">Enter length 1:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2028">
+      <trans-unit id="_msg2053">
         <source xml:space="preserve">Enter length 2:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyCut">
-      <trans-unit id="_msg2029">
+      <trans-unit id="_msg2054">
         <source xml:space="preserve">No Entity found.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2030">
+      <trans-unit id="_msg2055">
         <source xml:space="preserve">Cutting point is invalid.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2031">
+      <trans-unit id="_msg2056">
         <source xml:space="preserve">Cutting point is not on entity.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2032">
-        <source xml:space="preserve">Specify entity to cut</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2033">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2034">
-        <source xml:space="preserve">Specify cutting point</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2035">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2036">
-        <source xml:space="preserve">Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyDeleteFree">
-      <trans-unit id="_msg2037">
-        <source xml:space="preserve">Specify first break point on a polyline</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2038">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2039">
-        <source xml:space="preserve">Specify second break point on the same polyline</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2040">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2041">
-        <source xml:space="preserve">Entities not in the same polyline.</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2042">
-        <source xml:space="preserve">Parent of second entity is not a polyline</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2043">
-        <source xml:space="preserve">Parent of first entity is not a polyline</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2044">
-        <source xml:space="preserve">Parent of second entity is nullptr</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2045">
-        <source xml:space="preserve">One of the chosen entities is nullptr</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2046">
-        <source xml:space="preserve">Parent of first entity is nullptr</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2047">
-        <source xml:space="preserve">First entity is nullptr</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2048">
-        <source xml:space="preserve">Second entity is nullptr</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyDeleteQuick">
-      <trans-unit id="_msg2049">
-        <source xml:space="preserve">Pick entity to delete</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2050">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyEntity">
-      <trans-unit id="_msg2051">
-        <source xml:space="preserve">Click on entity to modify</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2052">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyMirror">
-      <trans-unit id="_msg2053">
-        <source xml:space="preserve">Specify first point of mirror line</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2054">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2055">
-        <source xml:space="preserve">Specify second point of mirror line</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2056">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyMove">
       <trans-unit id="_msg2057">
-        <source xml:space="preserve">Specify reference point</source>
+        <source xml:space="preserve">Specify entity to cut</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2058">
@@ -8795,7 +8785,7 @@ Do you want to replace it?</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2059">
-        <source xml:space="preserve">Specify target point</source>
+        <source xml:space="preserve">Specify cutting point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2060">
@@ -8803,13 +8793,13 @@ Do you want to replace it?</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2061">
-        <source xml:space="preserve">Invalid number of copies, use %1 </source>
+        <source xml:space="preserve">Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyMoveRotate">
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyDeleteFree">
       <trans-unit id="_msg2062">
-        <source xml:space="preserve">Specify reference point</source>
+        <source xml:space="preserve">Specify first break point on a polyline</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2063">
@@ -8817,87 +8807,85 @@ Do you want to replace it?</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2064">
-        <source xml:space="preserve">Specify target point</source>
+        <source xml:space="preserve">Specify second break point on the same polyline</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2065">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyOffset">
       <trans-unit id="_msg2066">
-        <source xml:space="preserve">Specify direction of offset</source>
+        <source xml:space="preserve">Entities not in the same polyline.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2067">
-        <source xml:space="preserve">Back</source>
+        <source xml:space="preserve">Parent of second entity is not a polyline</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyRotate">
       <trans-unit id="_msg2068">
-        <source xml:space="preserve">Specify reference point</source>
+        <source xml:space="preserve">Parent of first entity is not a polyline</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2069">
-        <source xml:space="preserve">Back</source>
+        <source xml:space="preserve">Parent of second entity is nullptr</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2070">
-        <source xml:space="preserve">Specify rotation center</source>
+        <source xml:space="preserve">One of the chosen entities is nullptr</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2071">
-        <source xml:space="preserve">Specify target point to rotate to</source>
+        <source xml:space="preserve">Parent of first entity is nullptr</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyRotate2">
       <trans-unit id="_msg2072">
-        <source xml:space="preserve">Specify absolute reference point</source>
+        <source xml:space="preserve">First entity is nullptr</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2073">
-        <source xml:space="preserve">Cancel</source>
+        <source xml:space="preserve">Second entity is nullptr</source>
         <target xml:space="preserve"></target>
       </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyDeleteQuick">
       <trans-unit id="_msg2074">
-        <source xml:space="preserve">Specify relative reference point</source>
+        <source xml:space="preserve">Pick entity to delete</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2075">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyRound">
-      <trans-unit id="_msg2076">
-        <source xml:space="preserve">Not a valid expression</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2077">
-        <source xml:space="preserve">Specify first entity</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2078">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2079">
-        <source xml:space="preserve">Specify second entity</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2080">
-        <source xml:space="preserve">Enter radius:</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2081">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyScale">
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyEntity">
+      <trans-unit id="_msg2076">
+        <source xml:space="preserve">Click on entity to modify</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2077">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyMirror">
+      <trans-unit id="_msg2078">
+        <source xml:space="preserve">Specify first point of mirror line</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2079">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2080">
+        <source xml:space="preserve">Specify second point of mirror line</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2081">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyMove">
       <trans-unit id="_msg2082">
         <source xml:space="preserve">Specify reference point</source>
         <target xml:space="preserve"></target>
@@ -8906,10 +8894,8 @@ Do you want to replace it?</source>
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyShapeText">
       <trans-unit id="_msg2084">
-        <source xml:space="preserve">Select text entity</source>
+        <source xml:space="preserve">Specify target point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2085">
@@ -8917,13 +8903,13 @@ Do you want to replace it?</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2086">
-        <source xml:space="preserve">Select entity to shape text to</source>
+        <source xml:space="preserve">Invalid number of copies, use %1 </source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyStretch">
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyMoveRotate">
       <trans-unit id="_msg2087">
-        <source xml:space="preserve">Specify first corner</source>
+        <source xml:space="preserve">Specify reference point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2088">
@@ -8931,223 +8917,231 @@ Do you want to replace it?</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2089">
-        <source xml:space="preserve">Specify second corner</source>
+        <source xml:space="preserve">Specify target point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2090">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyOffset">
       <trans-unit id="_msg2091">
-        <source xml:space="preserve">Specify reference point</source>
+        <source xml:space="preserve">Specify direction of offset</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2092">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyRotate">
+      <trans-unit id="_msg2093">
+        <source xml:space="preserve">Specify reference point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2094">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2095">
+        <source xml:space="preserve">Specify rotation center</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2096">
+        <source xml:space="preserve">Specify target point to rotate to</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyRotate2">
+      <trans-unit id="_msg2097">
+        <source xml:space="preserve">Specify absolute reference point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2098">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2099">
+        <source xml:space="preserve">Specify relative reference point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2100">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyRound">
+      <trans-unit id="_msg2101">
+        <source xml:space="preserve">Not a valid expression</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2102">
+        <source xml:space="preserve">Specify first entity</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2103">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2104">
+        <source xml:space="preserve">Specify second entity</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2105">
+        <source xml:space="preserve">Enter radius:</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2106">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyScale">
+      <trans-unit id="_msg2107">
+        <source xml:space="preserve">Specify reference point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2108">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyShapeText">
+      <trans-unit id="_msg2109">
+        <source xml:space="preserve">Select text entity</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2110">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2111">
+        <source xml:space="preserve">Select entity to shape text to</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyStretch">
+      <trans-unit id="_msg2112">
+        <source xml:space="preserve">Specify first corner</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2113">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2114">
+        <source xml:space="preserve">Specify second corner</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2115">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2116">
+        <source xml:space="preserve">Specify reference point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2117">
         <source xml:space="preserve">Specify target point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyTrim">
-      <trans-unit id="_msg2093">
+      <trans-unit id="_msg2118">
         <source xml:space="preserve">Select first trim entity</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2094">
+      <trans-unit id="_msg2119">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2095">
+      <trans-unit id="_msg2120">
         <source xml:space="preserve">Select limiting entity</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2096">
+      <trans-unit id="_msg2121">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2097">
+      <trans-unit id="_msg2122">
         <source xml:space="preserve">Select second trim entity</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2098">
+      <trans-unit id="_msg2123">
         <source xml:space="preserve">Select entity to trim</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyTrimAmount">
-      <trans-unit id="_msg2099">
+      <trans-unit id="_msg2124">
         <source xml:space="preserve">No entity found. </source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2100">
+      <trans-unit id="_msg2125">
         <source xml:space="preserve">The chosen Entity is in a block. Please edit the block.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2101">
+      <trans-unit id="_msg2126">
         <source xml:space="preserve">The chosen Entity is not an atomic entity or cannot be trimmed.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2102">
+      <trans-unit id="_msg2127">
         <source xml:space="preserve">Not a valid expression</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2103">
+      <trans-unit id="_msg2128">
         <source xml:space="preserve">Select entity to trim or enter distance:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2104">
+      <trans-unit id="_msg2129">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionModifyTrimExcess">
-      <trans-unit id="_msg2105">
+      <trans-unit id="_msg2130">
         <source xml:space="preserve">Select entity to trim</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2106">
+      <trans-unit id="_msg2131">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionOrder">
-      <trans-unit id="_msg2107">
+      <trans-unit id="_msg2132">
         <source xml:space="preserve">No Entity found.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2108">
+      <trans-unit id="_msg2133">
         <source xml:space="preserve">Choose entity for order</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2109">
+      <trans-unit id="_msg2134">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionPolylineAdd">
-      <trans-unit id="_msg2110">
-        <source xml:space="preserve">No Entity found.</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2111">
-        <source xml:space="preserve">Entity must be a polyline.</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2112">
-        <source xml:space="preserve">Adding point is invalid.</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2113">
-        <source xml:space="preserve">Adding point is not on entity.</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2114">
-        <source xml:space="preserve">Specify polyline to add nodes</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2115">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2116">
-        <source xml:space="preserve">Specify adding node&apos;s point</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2117">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionPolylineAppend">
-      <trans-unit id="_msg2118">
-        <source xml:space="preserve">No Entity found.</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2119">
-        <source xml:space="preserve">Entity must be a polyline.</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2120">
-        <source xml:space="preserve">Click somewhere near the beginning or end of existing polyline.</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2121">
-        <source xml:space="preserve">Specify the polyline somewhere near the beginning or end point</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2122">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2123">
-        <source xml:space="preserve">Specify next point or [%1]</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2124">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2125">
-        <source xml:space="preserve">Specify next point</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2126">
-        <source xml:space="preserve">Can not append nodes in a closed polyline.</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2127">
-        <source xml:space="preserve">Cannot undo: Not enough entities defined yet.</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionPolylineDel">
-      <trans-unit id="_msg2128">
-        <source xml:space="preserve">No Entity found.</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2129">
-        <source xml:space="preserve">Entity must be a polyline.</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2130">
-        <source xml:space="preserve">Specify polyline to delete node</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2131">
-        <source xml:space="preserve">Cancel</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2132">
-        <source xml:space="preserve">Specify deleting node&apos;s point</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2133">
-        <source xml:space="preserve">Back</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
-      <trans-unit id="_msg2134">
-        <source xml:space="preserve">Deleting point is invalid.</source>
-        <target xml:space="preserve"></target>
-      </trans-unit>
       <trans-unit id="_msg2135">
-        <source xml:space="preserve">Deleting point is not on entity.</source>
+        <source xml:space="preserve">No Entity found.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-    </group>
-    <group restype="x-trolltech-linguist-context" resname="RS_ActionPolylineDelBetween">
       <trans-unit id="_msg2136">
-        <source xml:space="preserve">No Entity found.</source>
+        <source xml:space="preserve">Entity must be a polyline.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2137">
-        <source xml:space="preserve">Entity must be a polyline.</source>
+        <source xml:space="preserve">Adding point is invalid.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2138">
-        <source xml:space="preserve">Deleting point is not on entity.</source>
+        <source xml:space="preserve">Adding point is not on entity.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2139">
-        <source xml:space="preserve">Specify polyline to delete between two nodes</source>
+        <source xml:space="preserve">Specify polyline to add nodes</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2140">
@@ -9155,1020 +9149,1126 @@ Do you want to replace it?</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2141">
-        <source xml:space="preserve">Specify first node</source>
+        <source xml:space="preserve">Specify adding node&apos;s point</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2142">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionPolylineAppend">
       <trans-unit id="_msg2143">
-        <source xml:space="preserve">Specify second node</source>
+        <source xml:space="preserve">No Entity found.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
       <trans-unit id="_msg2144">
+        <source xml:space="preserve">Entity must be a polyline.</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2145">
+        <source xml:space="preserve">Click somewhere near the beginning or end of existing polyline.</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2146">
+        <source xml:space="preserve">Specify the polyline somewhere near the beginning or end point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2147">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2148">
+        <source xml:space="preserve">Specify next point or [%1]</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2149">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2150">
+        <source xml:space="preserve">Specify next point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2151">
+        <source xml:space="preserve">Can not append nodes in a closed polyline.</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2152">
+        <source xml:space="preserve">Cannot undo: Not enough entities defined yet.</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionPolylineDel">
+      <trans-unit id="_msg2153">
+        <source xml:space="preserve">No Entity found.</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2154">
+        <source xml:space="preserve">Entity must be a polyline.</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2155">
+        <source xml:space="preserve">Specify polyline to delete node</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2156">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2157">
+        <source xml:space="preserve">Specify deleting node&apos;s point</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2158">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2159">
+        <source xml:space="preserve">Deleting point is invalid.</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2160">
+        <source xml:space="preserve">Deleting point is not on entity.</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+    </group>
+    <group restype="x-trolltech-linguist-context" resname="RS_ActionPolylineDelBetween">
+      <trans-unit id="_msg2161">
+        <source xml:space="preserve">No Entity found.</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2162">
+        <source xml:space="preserve">Entity must be a polyline.</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2163">
+        <source xml:space="preserve">Deleting point is not on entity.</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2164">
+        <source xml:space="preserve">Specify polyline to delete between two nodes</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2165">
+        <source xml:space="preserve">Cancel</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2166">
+        <source xml:space="preserve">Specify first node</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2167">
+        <source xml:space="preserve">Back</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2168">
+        <source xml:space="preserve">Specify second node</source>
+        <target xml:space="preserve"></target>
+      </trans-unit>
+      <trans-unit id="_msg2169">
         <source xml:space="preserve">Deleting point is invalid.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionPolylineEquidistant">
-      <trans-unit id="_msg2145">
+      <trans-unit id="_msg2170">
         <source xml:space="preserve">No Entity found.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2146">
+      <trans-unit id="_msg2171">
         <source xml:space="preserve">Entity must be a polyline.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2147">
+      <trans-unit id="_msg2172">
         <source xml:space="preserve">Choose the original polyline</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2148">
+      <trans-unit id="_msg2173">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionPolylineSegment">
-      <trans-unit id="_msg2149">
+      <trans-unit id="_msg2174">
         <source xml:space="preserve">No Entity found.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2150">
+      <trans-unit id="_msg2175">
         <source xml:space="preserve">Choose one of the segments on the original polyline</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2151">
+      <trans-unit id="_msg2176">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2152">
+      <trans-unit id="_msg2177">
         <source xml:space="preserve">Entity can not be a closed polyline.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2153">
+      <trans-unit id="_msg2178">
         <source xml:space="preserve">Polyline created</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionPolylineTrim">
-      <trans-unit id="_msg2154">
+      <trans-unit id="_msg2179">
         <source xml:space="preserve">No Entity found.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2155">
+      <trans-unit id="_msg2180">
         <source xml:space="preserve">Entity must be a polyline.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2156">
+      <trans-unit id="_msg2181">
         <source xml:space="preserve">Specifying point is invalid.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2157">
+      <trans-unit id="_msg2182">
         <source xml:space="preserve">No Segment found on entity.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2158">
+      <trans-unit id="_msg2183">
         <source xml:space="preserve">Specify polyline to trim</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2159">
+      <trans-unit id="_msg2184">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2160">
+      <trans-unit id="_msg2185">
         <source xml:space="preserve">Specify first segment</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2161">
+      <trans-unit id="_msg2186">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2162">
+      <trans-unit id="_msg2187">
         <source xml:space="preserve">Specify second segment</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionPrintPreview">
-      <trans-unit id="_msg2163">
+      <trans-unit id="_msg2188">
         <source xml:space="preserve">RS_ActionPrintPreview::fit(): Invalid paper size</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2164">
+      <trans-unit id="_msg2189">
         <source xml:space="preserve">Printout offset in paper coordinates by (%1, %2)</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2165">
+      <trans-unit id="_msg2190">
         <source xml:space="preserve">Printout offset in graph coordinates by (%1, %2)</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2166">
+      <trans-unit id="_msg2191">
         <source xml:space="preserve">Printout offset in graph coordinates</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2167">
+      <trans-unit id="_msg2192">
         <source xml:space="preserve">Printout offset in paper coordinates</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2168">
+      <trans-unit id="_msg2193">
         <source xml:space="preserve">: select printout offset coordinates</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2169">
+      <trans-unit id="_msg2194">
         <source xml:space="preserve">type in offset from command line to offset printout</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2170">
+      <trans-unit id="_msg2195">
         <source xml:space="preserve">Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2171">
+      <trans-unit id="_msg2196">
         <source xml:space="preserve">Printout in Black/White</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2172">
+      <trans-unit id="_msg2197">
         <source xml:space="preserve">Printout in color</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2173">
+      <trans-unit id="_msg2198">
         <source xml:space="preserve">RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionSelect">
-      <trans-unit id="_msg2174">
+      <trans-unit id="_msg2199">
         <source xml:space="preserve">Select to modify attributes</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2175">
+      <trans-unit id="_msg2200">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2176">
+      <trans-unit id="_msg2201">
         <source xml:space="preserve">Select to delete</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2177">
+      <trans-unit id="_msg2202">
         <source xml:space="preserve">Select to delete immediately</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2178">
+      <trans-unit id="_msg2203">
         <source xml:space="preserve">Select to move</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2179">
+      <trans-unit id="_msg2204">
         <source xml:space="preserve">Select to rotate</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2180">
+      <trans-unit id="_msg2205">
         <source xml:space="preserve">Select to scale</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2181">
+      <trans-unit id="_msg2206">
         <source xml:space="preserve">Select to mirror</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2182">
+      <trans-unit id="_msg2207">
         <source xml:space="preserve">Select to move and rotate</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2183">
+      <trans-unit id="_msg2208">
         <source xml:space="preserve">Select for two axis rotation</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2184">
+      <trans-unit id="_msg2209">
         <source xml:space="preserve">Select to explode text</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2185">
+      <trans-unit id="_msg2210">
         <source xml:space="preserve">Select to create block</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2186">
+      <trans-unit id="_msg2211">
         <source xml:space="preserve">Select to copy</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2187">
+      <trans-unit id="_msg2212">
         <source xml:space="preserve">Select to cut</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2188">
+      <trans-unit id="_msg2213">
         <source xml:space="preserve">No entity selected!</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2189">
+      <trans-unit id="_msg2214">
         <source xml:space="preserve">Select to create offset</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2190">
+      <trans-unit id="_msg2215">
         <source xml:space="preserve">Select entities to order</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2191">
+      <trans-unit id="_msg2216">
         <source xml:space="preserve">Select to explode block</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2192">
+      <trans-unit id="_msg2217">
         <source xml:space="preserve">Select to revert direction</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2193">
+      <trans-unit id="_msg2218">
         <source xml:space="preserve">Select to unlink shaped text</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionSelectContour">
-      <trans-unit id="_msg2194">
+      <trans-unit id="_msg2219">
         <source xml:space="preserve">Entity must be an Atomic Entity.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionSelectIntersected">
-      <trans-unit id="_msg2195">
+      <trans-unit id="_msg2220">
         <source xml:space="preserve">Choose first point of intersection line</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2196">
+      <trans-unit id="_msg2221">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2197">
+      <trans-unit id="_msg2222">
         <source xml:space="preserve">Choose second point of intersection line</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2198">
+      <trans-unit id="_msg2223">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionSelectWindow">
-      <trans-unit id="_msg2199">
+      <trans-unit id="_msg2224">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2200">
+      <trans-unit id="_msg2225">
         <source xml:space="preserve">Choose second edge</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2201">
+      <trans-unit id="_msg2226">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2202">
+      <trans-unit id="_msg2227">
         <source xml:space="preserve">Click and drag for the selection window</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionSetRelativeZero">
-      <trans-unit id="_msg2203">
+      <trans-unit id="_msg2228">
         <source xml:space="preserve">Set relative Zero</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2204">
+      <trans-unit id="_msg2229">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2205">
+      <trans-unit id="_msg2230">
         <source xml:space="preserve">Set &amp;Relative Zero</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionSnapIntersectionManual">
-      <trans-unit id="_msg2206">
+      <trans-unit id="_msg2231">
         <source xml:space="preserve">I&amp;ntersection Manually</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2207">
+      <trans-unit id="_msg2232">
         <source xml:space="preserve">Select first entity</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2208">
+      <trans-unit id="_msg2233">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2209">
+      <trans-unit id="_msg2234">
         <source xml:space="preserve">Select second entity</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionToolRegenerateDimensions">
-      <trans-unit id="_msg2210">
+      <trans-unit id="_msg2235">
         <source xml:space="preserve">Regenerated %1 dimension entities</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2211">
+      <trans-unit id="_msg2236">
         <source xml:space="preserve">No dimension entities found</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionZoomPan">
-      <trans-unit id="_msg2212">
+      <trans-unit id="_msg2237">
         <source xml:space="preserve">Click and drag to pan zoom</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2213">
+      <trans-unit id="_msg2238">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2214">
+      <trans-unit id="_msg2239">
         <source xml:space="preserve">Zoom panning</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="RS_ActionZoomWindow">
-      <trans-unit id="_msg2215">
+      <trans-unit id="_msg2240">
         <source xml:space="preserve">Specify first edge</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2216">
+      <trans-unit id="_msg2241">
         <source xml:space="preserve">Cancel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2217">
+      <trans-unit id="_msg2242">
         <source xml:space="preserve">Specify second edge</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2218">
+      <trans-unit id="_msg2243">
         <source xml:space="preserve">Back</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="TextFileViewer">
-      <trans-unit id="_msg2219">
+      <trans-unit id="_msg2244">
         <source xml:space="preserve">Frame</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_ArcOptions">
-      <trans-unit id="_msg2220">
+      <trans-unit id="_msg2245">
         <source xml:space="preserve">Arc Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2221">
+      <trans-unit id="_msg2246">
         <source xml:space="preserve">Counterclockwise</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2222">
+      <trans-unit id="_msg2247">
         <source xml:space="preserve">Clockwise</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_ArcTangentialOptions">
-      <trans-unit id="_msg2223">
+      <trans-unit id="_msg2248">
         <source xml:space="preserve">Tangential Arc Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2224">
+      <trans-unit id="_msg2249">
         <source xml:space="preserve">Radius of the tangential arc</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2225">
+      <trans-unit id="_msg2250">
         <source xml:space="preserve">Total subtending angle of the tangential arc</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2226">
+      <trans-unit id="_msg2251">
         <source xml:space="preserve">Radius</source>
         <target xml:space="preserve"></target>
         <note annotates="source" from="developer">Draw Tangential Arc by the given radius</note>
       </trans-unit>
-      <trans-unit id="_msg2227">
+      <trans-unit id="_msg2252">
         <source xml:space="preserve">Angle</source>
         <target xml:space="preserve"></target>
         <note annotates="source" from="developer">Draw Tangential Arc by the given radius</note>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_BevelOptions">
-      <trans-unit id="_msg2228">
+      <trans-unit id="_msg2253">
         <source xml:space="preserve">Bevel Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2229">
+      <trans-unit id="_msg2254">
         <source xml:space="preserve">Check to trim both entities to the bevel</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2230">
+      <trans-unit id="_msg2255">
         <source xml:space="preserve">Trim</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2231">
+      <trans-unit id="_msg2256">
         <source xml:space="preserve">Length 1:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2232">
+      <trans-unit id="_msg2257">
         <source xml:space="preserve">Length 2:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_CircleDiamOptions">
-      <trans-unit id="_msg2233">
+      <trans-unit id="_msg2258">
         <source xml:space="preserve">Circle Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2234">
+      <trans-unit id="_msg2259">
         <source xml:space="preserve">Diameter:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_CircleOptions">
-      <trans-unit id="_msg2235">
+      <trans-unit id="_msg2260">
         <source xml:space="preserve">Circle Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2236">
+      <trans-unit id="_msg2261">
         <source xml:space="preserve">Radius:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_CircleTan2Options">
-      <trans-unit id="_msg2237">
+      <trans-unit id="_msg2262">
         <source xml:space="preserve">Circle Tangential2 Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2238">
+      <trans-unit id="_msg2263">
         <source xml:space="preserve">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2239">
+      <trans-unit id="_msg2264">
         <source xml:space="preserve">Radius:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2240">
+      <trans-unit id="_msg2265">
         <source xml:space="preserve">Radius of tangential circle</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_DimLinearOptions">
-      <trans-unit id="_msg2241">
+      <trans-unit id="_msg2266">
         <source xml:space="preserve">Linear Dimension Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2242">
+      <trans-unit id="_msg2267">
         <source xml:space="preserve">Angle:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_DimOptions">
-      <trans-unit id="_msg2243">
+      <trans-unit id="_msg2268">
         <source xml:space="preserve">Dimension Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2244">
+      <trans-unit id="_msg2269">
         <source xml:space="preserve">Label:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2245">
+      <trans-unit id="_msg2270">
         <source xml:space="preserve">⌀</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2246">
+      <trans-unit id="_msg2271">
         <source xml:space="preserve">°</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2247">
+      <trans-unit id="_msg2272">
         <source xml:space="preserve">±</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2248">
+      <trans-unit id="_msg2273">
         <source xml:space="preserve">π</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2249">
+      <trans-unit id="_msg2274">
         <source xml:space="preserve">×</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2250">
+      <trans-unit id="_msg2275">
         <source xml:space="preserve">÷</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2251">
+      <trans-unit id="_msg2276">
         <source xml:space="preserve">...</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_ImageOptions">
-      <trans-unit id="_msg2252">
+      <trans-unit id="_msg2277">
         <source xml:space="preserve">Insert Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2253">
+      <trans-unit id="_msg2278">
         <source xml:space="preserve">Angle:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2254">
+      <trans-unit id="_msg2279">
         <source xml:space="preserve">Rotation Angle</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2255">
+      <trans-unit id="_msg2280">
         <source xml:space="preserve">Factor:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2256">
+      <trans-unit id="_msg2281">
         <source xml:space="preserve">Scale Factor</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2257">
+      <trans-unit id="_msg2282">
         <source xml:space="preserve">DPI</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2258">
+      <trans-unit id="_msg2283">
         <source xml:space="preserve">DPI of Image</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_InsertOptions">
-      <trans-unit id="_msg2259">
+      <trans-unit id="_msg2284">
         <source xml:space="preserve">Insert Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2260">
+      <trans-unit id="_msg2285">
         <source xml:space="preserve">Angle:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2261">
+      <trans-unit id="_msg2286">
         <source xml:space="preserve">Rotation Angle</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2262">
+      <trans-unit id="_msg2287">
         <source xml:space="preserve">Factor:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2263">
+      <trans-unit id="_msg2288">
         <source xml:space="preserve">Scale Factor</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2264">
+      <trans-unit id="_msg2289">
         <source xml:space="preserve">Array:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2265">
+      <trans-unit id="_msg2290">
         <source xml:space="preserve">Number of Columns</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2266">
+      <trans-unit id="_msg2291">
         <source xml:space="preserve">Number of Rows</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2267">
+      <trans-unit id="_msg2292">
         <source xml:space="preserve">Spacing:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2268">
+      <trans-unit id="_msg2293">
         <source xml:space="preserve">Column Spacing</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2269">
+      <trans-unit id="_msg2294">
         <source xml:space="preserve">Row Spacing</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_LibraryInsertOptions">
-      <trans-unit id="_msg2270">
+      <trans-unit id="_msg2295">
         <source xml:space="preserve">Library Insert Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2271">
+      <trans-unit id="_msg2296">
         <source xml:space="preserve">Angle:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2272">
+      <trans-unit id="_msg2297">
         <source xml:space="preserve">Rotation Angle</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2273">
+      <trans-unit id="_msg2298">
         <source xml:space="preserve">Factor:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2274">
+      <trans-unit id="_msg2299">
         <source xml:space="preserve">Scale Factor</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_LineAngleOptions">
-      <trans-unit id="_msg2275">
+      <trans-unit id="_msg2300">
         <source xml:space="preserve">Line Angle Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2276">
+      <trans-unit id="_msg2301">
         <source xml:space="preserve">Angle:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2277">
+      <trans-unit id="_msg2302">
         <source xml:space="preserve">Line angle</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2278">
+      <trans-unit id="_msg2303">
         <source xml:space="preserve">Length:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2279">
+      <trans-unit id="_msg2304">
         <source xml:space="preserve">Length of line</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2280">
+      <trans-unit id="_msg2305">
         <source xml:space="preserve">Snap Point:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2281">
+      <trans-unit id="_msg2306">
         <source xml:space="preserve">Start</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2282">
+      <trans-unit id="_msg2307">
         <source xml:space="preserve">Middle</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2283">
+      <trans-unit id="_msg2308">
         <source xml:space="preserve">End</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_LineBisectorOptions">
-      <trans-unit id="_msg2284">
+      <trans-unit id="_msg2309">
         <source xml:space="preserve">Line Bisector Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2285">
+      <trans-unit id="_msg2310">
         <source xml:space="preserve">Length:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2286">
+      <trans-unit id="_msg2311">
         <source xml:space="preserve">Length of bisector</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2287">
+      <trans-unit id="_msg2312">
         <source xml:space="preserve">Number:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2288">
+      <trans-unit id="_msg2313">
         <source xml:space="preserve">Number of bisectors to create</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_LineOptions">
-      <trans-unit id="_msg2289">
+      <trans-unit id="_msg2314">
         <source xml:space="preserve">Line Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2290">
+      <trans-unit id="_msg2315">
         <source xml:space="preserve">Form a closed contour from lines drawn</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2291">
+      <trans-unit id="_msg2316">
         <source xml:space="preserve">Close</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2292">
+      <trans-unit id="_msg2317">
         <source xml:space="preserve">Undo the last line drawing</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2293">
+      <trans-unit id="_msg2318">
         <source xml:space="preserve">Undo</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2294">
+      <trans-unit id="_msg2319">
         <source xml:space="preserve">Redo the last line drawing</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2295">
+      <trans-unit id="_msg2320">
         <source xml:space="preserve">Redo</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_LineParallelOptions">
-      <trans-unit id="_msg2296">
+      <trans-unit id="_msg2321">
         <source xml:space="preserve">Line Parallel Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2297">
+      <trans-unit id="_msg2322">
         <source xml:space="preserve">Distance:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2298">
+      <trans-unit id="_msg2323">
         <source xml:space="preserve">Distance to original entity</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2299">
+      <trans-unit id="_msg2324">
         <source xml:space="preserve">Number:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2300">
+      <trans-unit id="_msg2325">
         <source xml:space="preserve">Number of parallels to create</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_LineParallelThroughOptions">
-      <trans-unit id="_msg2301">
+      <trans-unit id="_msg2326">
         <source xml:space="preserve">Line Parallel Through Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2302">
+      <trans-unit id="_msg2327">
         <source xml:space="preserve">Number:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2303">
+      <trans-unit id="_msg2328">
         <source xml:space="preserve">Number of parallels to create</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_LinePolygon2Options">
-      <trans-unit id="_msg2304">
+      <trans-unit id="_msg2329">
         <source xml:space="preserve">Polygon Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2305">
+      <trans-unit id="_msg2330">
         <source xml:space="preserve">Number:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2306">
+      <trans-unit id="_msg2331">
         <source xml:space="preserve">Number of edges</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_LinePolygonOptions">
-      <trans-unit id="_msg2307">
+      <trans-unit id="_msg2332">
         <source xml:space="preserve">Polygon Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2308">
+      <trans-unit id="_msg2333">
         <source xml:space="preserve">Number:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2309">
+      <trans-unit id="_msg2334">
         <source xml:space="preserve">Number of edges</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_LineRelAngleOptions">
-      <trans-unit id="_msg2310">
+      <trans-unit id="_msg2335">
         <source xml:space="preserve">Line Relative Angle Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2311">
+      <trans-unit id="_msg2336">
         <source xml:space="preserve">Angle:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2312">
+      <trans-unit id="_msg2337">
         <source xml:space="preserve">Line angle</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2313">
+      <trans-unit id="_msg2338">
         <source xml:space="preserve">Length:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2314">
+      <trans-unit id="_msg2339">
         <source xml:space="preserve">Length of line</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_MTextOptions">
-      <trans-unit id="_msg2315">
+      <trans-unit id="_msg2340">
         <source xml:space="preserve">Text Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2316">
+      <trans-unit id="_msg2341">
         <source xml:space="preserve">Text:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2317">
+      <trans-unit id="_msg2342">
         <source xml:space="preserve">Angle:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_ModifyOffsetOptions">
-      <trans-unit id="_msg2318">
+      <trans-unit id="_msg2343">
         <source xml:space="preserve">Modify Offset Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2319">
+      <trans-unit id="_msg2344">
         <source xml:space="preserve">Distance:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2320">
+      <trans-unit id="_msg2345">
         <source xml:space="preserve">Offset from original entity</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_MoveRotateOptions">
-      <trans-unit id="_msg2321">
+      <trans-unit id="_msg2346">
         <source xml:space="preserve">Move Rotate Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2322">
+      <trans-unit id="_msg2347">
         <source xml:space="preserve">Angle:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_PolylineOptions">
-      <trans-unit id="_msg2323">
+      <trans-unit id="_msg2348">
         <source xml:space="preserve">Polyline Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2324">
+      <trans-unit id="_msg2349">
         <source xml:space="preserve">Close</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2325">
+      <trans-unit id="_msg2350">
         <source xml:space="preserve">Undo</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2326">
+      <trans-unit id="_msg2351">
         <source xml:space="preserve">Line</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2327">
+      <trans-unit id="_msg2352">
         <source xml:space="preserve">Tangential</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2328">
+      <trans-unit id="_msg2353">
         <source xml:space="preserve">Tan Radius</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2329">
+      <trans-unit id="_msg2354">
         <source xml:space="preserve">Angle</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2330">
+      <trans-unit id="_msg2355">
         <source xml:space="preserve">Radius:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2331">
+      <trans-unit id="_msg2356">
         <source xml:space="preserve">Angle:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2332">
+      <trans-unit id="_msg2357">
         <source xml:space="preserve">Counter Clockwise</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2333">
+      <trans-unit id="_msg2358">
         <source xml:space="preserve">Clockwise</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_PrintPreviewOptions">
-      <trans-unit id="_msg2334">
+      <trans-unit id="_msg2359">
         <source xml:space="preserve">Print Preview Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2335">
+      <trans-unit id="_msg2360">
         <source xml:space="preserve">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2336">
+      <trans-unit id="_msg2361">
         <source xml:space="preserve">fixed</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2337">
+      <trans-unit id="_msg2362">
         <source xml:space="preserve">Toggle Black / White mode</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2338">
+      <trans-unit id="_msg2363">
         <source xml:space="preserve">Center to page</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2339">
+      <trans-unit id="_msg2364">
         <source xml:space="preserve">Fit to page</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2340">
+      <trans-unit id="_msg2365">
         <source xml:space="preserve">Calculate number of pages needed to contain the drawing.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_RoundOptions">
-      <trans-unit id="_msg2341">
+      <trans-unit id="_msg2366">
         <source xml:space="preserve">Round Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2342">
+      <trans-unit id="_msg2367">
         <source xml:space="preserve">Check to trim both edges to the rounding</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2343">
+      <trans-unit id="_msg2368">
         <source xml:space="preserve">Trim</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2344">
+      <trans-unit id="_msg2369">
         <source xml:space="preserve">Radius:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_ShapeTextOptions">
-      <trans-unit id="_msg2345">
+      <trans-unit id="_msg2370">
         <source xml:space="preserve">Shape Text Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2346">
+      <trans-unit id="_msg2371">
         <source xml:space="preserve">Offset:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_SnapDistOptions">
-      <trans-unit id="_msg2347">
+      <trans-unit id="_msg2372">
         <source xml:space="preserve">Snap Distance Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2348">
+      <trans-unit id="_msg2373">
         <source xml:space="preserve">Distance:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_SnapMiddleOptions">
-      <trans-unit id="_msg2349">
+      <trans-unit id="_msg2374">
         <source xml:space="preserve">Snap Distance Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2350">
+      <trans-unit id="_msg2375">
         <source xml:space="preserve">Middle Points:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2351">
+      <trans-unit id="_msg2376">
         <source xml:space="preserve">Number of equidistant division points</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_SplineOptions">
-      <trans-unit id="_msg2352">
+      <trans-unit id="_msg2377">
         <source xml:space="preserve">Spline Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2353">
+      <trans-unit id="_msg2378">
         <source xml:space="preserve">Degree:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2354">
+      <trans-unit id="_msg2379">
         <source xml:space="preserve">Closed</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2355">
+      <trans-unit id="_msg2380">
         <source xml:space="preserve">Undo</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_TextOptions">
-      <trans-unit id="_msg2356">
+      <trans-unit id="_msg2381">
         <source xml:space="preserve">Text Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2357">
+      <trans-unit id="_msg2382">
         <source xml:space="preserve">Text:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2358">
+      <trans-unit id="_msg2383">
         <source xml:space="preserve">Angle:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="Ui_TrimAmountOptions">
-      <trans-unit id="_msg2359">
+      <trans-unit id="_msg2384">
         <source xml:space="preserve">Trim Amount Options</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2360">
+      <trans-unit id="_msg2385">
         <source xml:space="preserve">Distance. Negative values for trimming, positive values for extending.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2361">
+      <trans-unit id="_msg2386">
         <source xml:space="preserve">Length:</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2362">
+      <trans-unit id="_msg2387">
         <source xml:space="preserve">Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2363">
+      <trans-unit id="_msg2388">
         <source xml:space="preserve">The input length is used as total length after trimming, instead of length increase</source>
         <target xml:space="preserve"></target>
       </trans-unit>
     </group>
     <group restype="x-trolltech-linguist-context" resname="WidgetCreator">
-      <trans-unit id="_msg2364">
+      <trans-unit id="_msg2389">
         <source xml:space="preserve">Frame</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2365">
+      <trans-unit id="_msg2390">
         <source xml:space="preserve">&gt;</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2366">
+      <trans-unit id="_msg2391">
         <source xml:space="preserve">&lt;</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2367">
+      <trans-unit id="_msg2392">
         <source xml:space="preserve">Name</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2368">
+      <trans-unit id="_msg2393">
         <source xml:space="preserve">Create</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2369">
+      <trans-unit id="_msg2394">
         <source xml:space="preserve">Destroy</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2370">
+      <trans-unit id="_msg2395">
         <source xml:space="preserve">Assign</source>
         <target xml:space="preserve"></target>
       </trans-unit>
-      <trans-unit id="_msg2371">
+      <trans-unit id="_msg2396">
         <source xml:space="preserve">Update</source>
         <target xml:space="preserve"></target>
       </trans-unit>
@@ -10176,23 +10276,23 @@ Do you want to replace it?</source>
   </body></file>
   <file original="Obsolete_PO_entries" datatype="plaintext" source-language="en" target-language="no"><body>
     <group restype="x-trolltech-linguist-context" resname="QC_ApplicationWindow">
-      <trans-unit id="_msg2372" translate="no">
+      <trans-unit id="_msg2397" translate="no">
         <source xml:space="preserve">&amp;Point</source>
         <target xml:space="preserve">&amp;Punkt</target>
       </trans-unit>
-      <trans-unit id="_msg2373" translate="no">
+      <trans-unit id="_msg2398" translate="no">
         <source xml:space="preserve">&amp;Layer</source>
         <target xml:space="preserve">&amp;Lag</target>
       </trans-unit>
-      <trans-unit id="_msg2374" translate="no">
+      <trans-unit id="_msg2399" translate="no">
         <source xml:space="preserve">Version: %1 %2</source>
         <target xml:space="preserve">Versjon: %1 %2</target>
       </trans-unit>
-      <trans-unit id="_msg2375" translate="no">
+      <trans-unit id="_msg2400" translate="no">
         <source xml:space="preserve">Modules: %1</source>
         <target xml:space="preserve">Moduler: %1</target>
       </trans-unit>
-      <trans-unit id="_msg2376" translate="no">
+      <trans-unit id="_msg2401" translate="no">
         <source xml:space="preserve">Date: %1</source>
         <target xml:space="preserve">Dato: %1</target>
       </trans-unit>

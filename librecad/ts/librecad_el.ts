@@ -32,6 +32,67 @@
     </message>
 </context>
 <context>
+    <name>ColorWizard</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished">Πλαίσιο</translation>
+    </message>
+    <message>
+        <source>Add to favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+</context>
+<context>
+    <name>ComboBoxOption</name>
+    <message>
+        <source>Frame</source>
+        <translation>Πλαίσιο</translation>
+    </message>
+    <message>
+        <source>GroupBox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation>Στρώση:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation>Γεωμετρία</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation>Κλειστό</translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation>Σημεία Ελέγχου</translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <source>2 Points, Radius</source>
@@ -66,6 +127,29 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Select circle center</source>
         <translation>Καθορίστε το κέντρο του κύκλου</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawLinePolygonCenTan</name>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify a tangent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -870,10 +954,174 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_ActionFileExportMakerCam</name>
+    <message>
+        <source>Export as</source>
+        <translation>Εξαγωγή ως</translation>
+    </message>
+</context>
+<context>
+    <name>LC_DeviceOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mouse</source>
+        <translation type="unfinished">Ποντίκι</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Αποθήκευση</translation>
+    </message>
+    <message>
+        <source>Tablet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trackpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Touchscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_SimpleTests</name>
+    <message>
+        <source>De&amp;bugging</source>
+        <translation>Αποσφαλ&amp;μάτωση</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation>Εισαγωγή εικόνας</translation>
+    </message>
+</context>
+<context>
+    <name>LC_WidgetOptionsDialog</name>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icon Size</source>
+        <translation>Μέγεθος Εικόνας</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>Γενικά</translation>
+    </message>
+    <message>
+        <source>Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Statusbar</source>
+        <translation>Πλαίσιο κατάστασης</translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation>Ύψος</translation>
+    </message>
+    <message>
+        <source>Font Size</source>
+        <translation>Μέγεθος Γραμματοσειράς</translation>
+    </message>
+    <message>
+        <source>Input the path of a Qt style sheet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>side length in pixels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use themed icons</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LG_DimzerosBox</name>
+    <message>
+        <source>select:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remove left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remove right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remove 0&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remove 0&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation>Επιλογές γραμμής με σχετική γωνία</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation>Διάκενο:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation>Απόσταση από την αρχική πολυγραμμή</translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation>Αντίγραφα:</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetEnt</name>
+    <message>
+        <source>Select object:</source>
+        <translation>Επιλέξτε αντικείμενο:</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Ακύρωση</translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetPoint</name>
     <message>
         <source>Specify a point</source>
         <translation type="obsolete">Καθορίστε ένα σημείο</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Ακύρωση</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetSelect</name>
+    <message>
+        <source>Select objects:</source>
+        <translation>Επιλέξτε αντικείμενα:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3195,6 +3443,41 @@ Printer settings:
     </message>
 </context>
 <context>
+    <name>QG_ActionHandler</name>
+    <message>
+        <source>escape</source>
+        <comment>escape, go back from action steps</comment>
+        <translation>διαφυγή</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ActiveLayerName</name>
+    <message>
+        <source>Selection</source>
+        <translation>Επιλογή</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Current Layer</source>
+        <translation>Τρέχουσα στρώση</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Όνομα της τρέχουσας ενεργής στρώσης&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
     <name>QG_ArcOptions</name>
     <message>
         <source>Arc Options</source>
@@ -4313,6 +4596,28 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QG_CommandEdit</name>
+    <message>
+        <source>clear</source>
+        <translation>εκκαθάριση</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CommandHistory</name>
+    <message>
+        <source>&amp;Copy</source>
+        <translation>Αντιγραφή</translation>
+    </message>
+    <message>
+        <source>Select &amp;All</source>
+        <translation>Επιλογή Όλων</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Εκκαθάριση</translation>
+    </message>
+</context>
+<context>
     <name>QG_CommandWidget</name>
     <message>
         <source>Clear</source>
@@ -4347,6 +4652,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>...</source>
         <translation type="unfinished">...</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CoordinateWidget</name>
+    <message>
+        <source>Coordinates</source>
+        <translation>Συντεταγμένες</translation>
     </message>
 </context>
 <context>
@@ -4719,6 +5031,73 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <source>Reversed</source>
         <translation>Αντεστραμμένο</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgFontConversion</name>
+    <message>
+        <source>Convert Fonts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font family:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Save as:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Letter spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Author:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Word spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>License:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Writing System:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished">Προεπισκόπηση</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> - Searching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LibreCAD Font Files(*.lff)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> - Rendering</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6855,6 +7234,117 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
 </context>
 <context>
+    <name>QG_DlgOptionsMakerCam</name>
+    <message>
+        <source>Export as MakerCAM SVG</source>
+        <translation type="vanished">Εξαγωγή ως MakerCAM SVG</translation>
+    </message>
+    <message>
+        <source>Layers</source>
+        <translation>Στρώσεις</translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
+        <translation type="vanished">Το MakerCAM από το Νοέμβριο του 2014 δεν αποκρύπτει SVG περιεχόμενο που έχει τεθεί αόρατο (&quot;display: none;&quot; ή &quot;visibility: hidden;&quot;).</translation>
+    </message>
+    <message>
+        <source>Export invisible layers</source>
+        <translation>Εξαγωγή αόρατων στρώσεων</translation>
+    </message>
+    <message>
+        <source>Export visible construction layers</source>
+        <translation>Εξαγωγή ορατών στρώσεων κατασκευής</translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation>Μπλοκς</translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks, because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="vanished">Το MakerCAM από το Νοέμβριο του 2014 δεν μπορεί να αντιμετωπίσει τα μπλοκς σωστά, καθώς δεν λαμβάνει υπόψη το σημείο αναφοράς στο &lt;use&gt;.</translation>
+    </message>
+    <message>
+        <source>Convert blocks to safe inline SVG content</source>
+        <translation>Μετατροπή μπλοκς σε ασφαλές εμβόλιμο SVG περιεχόμενο</translation>
+    </message>
+    <message>
+        <source>Ellipses / Ellipse arcs</source>
+        <translation>Ελλείψεις / Ελλειπτικά τόξα</translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="vanished">Το MakerCAM από το Μάρτιο του 2015 δεν μπορεί να εμφανίσει ελλείψεις και ελλειπτικά τόξα σωστά, όταν αυτά δημιουργούνται με τη χρήση της ετικέτας &lt;ellipse&gt; με περιστροφή στο χαρακτηριστικό &quot;transform&quot; ή ως &lt;path&gt; με τη χρήση τμημάτων ελλειπτικών τόξων.</translation>
+    </message>
+    <message>
+        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
+        <translation>Προσέγγιση ελλείψεων και ελλειπτικών τόξων με κυβικές μπεζιέ</translation>
+    </message>
+    <message>
+        <source>Export as CAM/plain SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default width of elements, mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Raster Image export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dash/Dot Lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of the pattern, mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bake dash/dot lines to SVG path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content 
+that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
+because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
+when they are created using the &lt;ellipse&gt; tag  with a rotation in 
+the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exported images can be useful in SVG editors (Inkscape, etc), 
+but avoided in some CAM&apos;s.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+which can be useful in lasercut of plywood or for papercraft. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+but ignored by other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of line pattern related to zoom, 
+so default step value required for baking</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_DlgOptionsVariables</name>
     <message>
         <source>&amp;OK</source>
@@ -8222,6 +8712,13 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
 </context>
 <context>
+    <name>QG_LayerBox</name>
+    <message>
+        <source>- Unchanged -</source>
+        <translation>- Αμετάβλητο -</translation>
+    </message>
+</context>
+<context>
     <name>QG_LayerDialog</name>
     <message>
         <source>Cancel</source>
@@ -8594,6 +9091,125 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
 </context>
 <context>
+    <name>QG_LineTypeBox</name>
+    <message>
+        <source>By Layer</source>
+        <translation>Κατά στρώση</translation>
+    </message>
+    <message>
+        <source>By Block</source>
+        <translation>Κατά μπλοκ</translation>
+    </message>
+    <message>
+        <source>No Pen</source>
+        <translation>Χωρίς πένα</translation>
+    </message>
+    <message>
+        <source>Continuous</source>
+        <translation>Συνεχής</translation>
+    </message>
+    <message>
+        <source>Dot</source>
+        <translation>Τελεία</translation>
+    </message>
+    <message>
+        <source>Dot (small)</source>
+        <translation>Τελεία (μικρή)</translation>
+    </message>
+    <message>
+        <source>Dot (large)</source>
+        <translation>Τελεία (μεγάλη)</translation>
+    </message>
+    <message>
+        <source>Dash</source>
+        <translation>Παύλα</translation>
+    </message>
+    <message>
+        <source>Dash (small)</source>
+        <translation>Παύλα (μικρή)</translation>
+    </message>
+    <message>
+        <source>Dash (large)</source>
+        <translation>Παύλα (μεγάλη)</translation>
+    </message>
+    <message>
+        <source>Dash Dot</source>
+        <translation>Παύλα Τελεία</translation>
+    </message>
+    <message>
+        <source>Dash Dot (small)</source>
+        <translation>Παύλα Τελεία (μικρή)</translation>
+    </message>
+    <message>
+        <source>Dash Dot (large)</source>
+        <translation>Παύλα Τελεία (μεγάλη)</translation>
+    </message>
+    <message>
+        <source>Divide</source>
+        <translation>Διαίρεση</translation>
+    </message>
+    <message>
+        <source>Divide (small)</source>
+        <translation>Διαίρεση (μικρή)</translation>
+    </message>
+    <message>
+        <source>Divide (large)</source>
+        <translation>Διαίρεση (μεγάλη)</translation>
+    </message>
+    <message>
+        <source>Center</source>
+        <translation>Αξονική</translation>
+    </message>
+    <message>
+        <source>Center (small)</source>
+        <translation>Αξονική (μικρή)</translation>
+    </message>
+    <message>
+        <source>Center (large)</source>
+        <translation>Αξονική (μεγάλη)</translation>
+    </message>
+    <message>
+        <source>Border</source>
+        <translation>Περιθώριο</translation>
+    </message>
+    <message>
+        <source>Border (small)</source>
+        <translation>Περιθώριο (μικρό)</translation>
+    </message>
+    <message>
+        <source>Border (large)</source>
+        <translation>Περιθώριο (μεγάλο)</translation>
+    </message>
+    <message>
+        <source>- Unchanged -</source>
+        <translation>- Αμετάβλητο -</translation>
+    </message>
+    <message>
+        <source>Dot (tiny)</source>
+        <translation>Τελεία (μικροσκοπική)</translation>
+    </message>
+    <message>
+        <source>Dash (tiny)</source>
+        <translation>Παύλα (μικροσκοπική)</translation>
+    </message>
+    <message>
+        <source>Dash Dot (tiny)</source>
+        <translation>Παύλα Τελεία (μικροσκοπική)</translation>
+    </message>
+    <message>
+        <source>Divide (tiny)</source>
+        <translation>Διαίρεση (μικροσκοπική)</translation>
+    </message>
+    <message>
+        <source>Center (tiny)</source>
+        <translation>Αξονική (μικροσκοπική)</translation>
+    </message>
+    <message>
+        <source>Border (tiny)</source>
+        <translation>Περιθώριο (μικροσκοπικό)</translation>
+    </message>
+</context>
+<context>
     <name>QG_MTextOptions</name>
     <message>
         <source>Text Options</source>
@@ -8663,6 +9279,21 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Angle:</source>
         <translation type="obsolete">Γωνία:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_PenToolBar</name>
+    <message>
+        <source>Line color</source>
+        <translation type="unfinished">Χρώμα γραμμής</translation>
+    </message>
+    <message>
+        <source>Line width</source>
+        <translation type="unfinished">Πλάτος γραμμής</translation>
+    </message>
+    <message>
+        <source>Line type</source>
+        <translation type="unfinished">Τύπος γραμμής</translation>
     </message>
 </context>
 <context>
@@ -8870,6 +9501,121 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QG_SnapToolBar</name>
+    <message>
+        <source>Snap</source>
+        <translation>Έλξη</translation>
+    </message>
+    <message>
+        <source>Snap to Endpoints</source>
+        <translation>Έλξη σε άκρα</translation>
+    </message>
+    <message>
+        <source>Snap to equidistant points of entity</source>
+        <translation>Έλξη σε ισαπέχοντα σημεία οντότητας</translation>
+    </message>
+    <message>
+        <source>Snap to center points</source>
+        <translation>Έλξη σε κέντρα</translation>
+    </message>
+    <message>
+        <source>Snap to intersections automatically</source>
+        <translation>Έλξη σε τομές αυτόματα</translation>
+    </message>
+    <message>
+        <source>Snap to closest point on entity</source>
+        <translation>Έλξη στο κοντινότερο σημείο πάνω σε οντότητα</translation>
+    </message>
+    <message>
+        <source>Snap to point with given distance to endpoint</source>
+        <translation>Έλξη σε σημείο με δεδομένη απόσταση από άκρο</translation>
+    </message>
+    <message>
+        <source>Snap to intersections manually</source>
+        <translation>Έλξη σε τομές χειροκίνητα</translation>
+    </message>
+    <message>
+        <source>Snap to grid</source>
+        <translation>Έλξη στον κάνναβο</translation>
+    </message>
+    <message>
+        <source>Restrict Horizontally</source>
+        <translation>Περιορισμός οριζόντια</translation>
+    </message>
+    <message>
+        <source>Restrict Vertically</source>
+        <translation>Περιορισμός κατακόρυφα</translation>
+    </message>
+    <message>
+        <source>Move relative Zero</source>
+        <translation>Μετακίνηση σχετικού μηδέν</translation>
+    </message>
+    <message>
+        <source>Lock relative Zero</source>
+        <translation>Κλείδωμα σχετικού μηδέν</translation>
+    </message>
+    <message>
+        <source>Free Snap</source>
+        <translation>Χωρίς έλξη</translation>
+    </message>
+    <message>
+        <source>Snap on grid</source>
+        <translation>Έλξη στον κάνναβο</translation>
+    </message>
+    <message>
+        <source>Snap on Endpoints</source>
+        <translation>Έλξη σε άκρα</translation>
+    </message>
+    <message>
+        <source>Snap on Entity</source>
+        <translation>Έλξη σε οντότητες</translation>
+    </message>
+    <message>
+        <source>Snap Center</source>
+        <translation>Έλξη σε κέντρα</translation>
+    </message>
+    <message>
+        <source>Snap Middle</source>
+        <translation>Έλξη στη μέση</translation>
+    </message>
+    <message>
+        <source>Snap Distance</source>
+        <translation>Έλξη με απόσταση</translation>
+    </message>
+    <message>
+        <source>Snap Intersection</source>
+        <translation>Έλξη σε διασταύρωση</translation>
+    </message>
+    <message>
+        <source>Restrict Horizontal</source>
+        <translation>Περιορισμός Οριζόντια</translation>
+    </message>
+    <message>
+        <source>Restrict Vertical</source>
+        <translation>Περιορισμός κατακόρυφα</translation>
+    </message>
+    <message>
+        <source>Restrict Orthogonal</source>
+        <translation>Περιορισμός Ορθογώνια</translation>
+    </message>
+    <message>
+        <source>Restrict Nothing</source>
+        <translation>Χωρίς περιορισμό</translation>
+    </message>
+    <message>
+        <source>Set relative zero position</source>
+        <translation>Καθορισμός θέσης του σχετικού σημείου μηδέν</translation>
+    </message>
+    <message>
+        <source>Lock relative zero position</source>
+        <translation>Ασφάλιση θέσης σχετικού σημείου Μηδέν</translation>
+    </message>
+    <message>
+        <source>Exclusive Snap Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_SplineOptions</name>
     <message>
         <source>Spline Options</source>
@@ -8940,6 +9686,140 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
         <translation type="obsolete">Το μήκος εισόδου χρησιμοποιείται ως ολικό μήκος μετά τη διευθέτηση, αντί για αύξηση του μήκους</translation>
+    </message>
+</context>
+<context>
+    <name>QG_WidgetPen</name>
+    <message>
+        <source>Pen</source>
+        <translation>Πένα</translation>
+    </message>
+    <message>
+        <source>Line type:</source>
+        <translation>Τύπος γραμμής:</translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation>Πλάτος:</translation>
+    </message>
+    <message>
+        <source>Color:</source>
+        <translation>Χρώμα:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_WidthBox</name>
+    <message>
+        <source>By Layer</source>
+        <translation>Κατά στρώση</translation>
+    </message>
+    <message>
+        <source>By Block</source>
+        <translation>Κατά μπλοκ</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation>Προεπιλεγμένο</translation>
+    </message>
+    <message>
+        <source>0.00mm</source>
+        <translation>0.00mm</translation>
+    </message>
+    <message>
+        <source>0.05mm</source>
+        <translation>0.05mm</translation>
+    </message>
+    <message>
+        <source>0.09mm</source>
+        <translation>0.09mm</translation>
+    </message>
+    <message>
+        <source>0.13mm (ISO)</source>
+        <translation>0.13mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.15mm</source>
+        <translation>0.15mm</translation>
+    </message>
+    <message>
+        <source>0.18mm (ISO)</source>
+        <translation>0.18mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.20mm</source>
+        <translation>0.20mm</translation>
+    </message>
+    <message>
+        <source>0.25mm (ISO)</source>
+        <translation>0.25mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.30mm</source>
+        <translation>0.30mm</translation>
+    </message>
+    <message>
+        <source>0.35mm (ISO)</source>
+        <translation>0.35mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.40mm</source>
+        <translation>0.40mm</translation>
+    </message>
+    <message>
+        <source>0.50mm (ISO)</source>
+        <translation>0.50mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.53mm</source>
+        <translation>0.53mm</translation>
+    </message>
+    <message>
+        <source>0.60mm</source>
+        <translation>0.60mm</translation>
+    </message>
+    <message>
+        <source>0.70mm (ISO)</source>
+        <translation>0.70mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.80mm</source>
+        <translation>0.80mm</translation>
+    </message>
+    <message>
+        <source>0.90mm</source>
+        <translation>0.90mm</translation>
+    </message>
+    <message>
+        <source>1.00mm (ISO)</source>
+        <translation>1.00mm (ISO)</translation>
+    </message>
+    <message>
+        <source>1.06mm</source>
+        <translation>1.06mm</translation>
+    </message>
+    <message>
+        <source>1.20mm</source>
+        <translation>1.20mm</translation>
+    </message>
+    <message>
+        <source>1.40mm (ISO)</source>
+        <translation>1.40mm (ISO)</translation>
+    </message>
+    <message>
+        <source>1.58mm</source>
+        <translation>1.58mm</translation>
+    </message>
+    <message>
+        <source>2.00mm (ISO)</source>
+        <translation>2.00mm (ISO)</translation>
+    </message>
+    <message>
+        <source>2.11mm</source>
+        <translation>2.11mm</translation>
+    </message>
+    <message>
+        <source>- Unchanged -</source>
+        <translation>- Αμετάβλητο -</translation>
     </message>
 </context>
 <context>
@@ -10875,6 +11755,106 @@ Continue?</source>
         <source>Touchscreen</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>A0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>C5E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comm10E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DLE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen</source>
+        <translation type="unfinished">Πένα</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -11076,6 +12056,17 @@ Continue?</source>
     <message>
         <source>Toggle Block &amp;Visibility</source>
         <translation type="obsolete">Εναλλαγή &amp;ορατότητας μπλοκ</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDefault</name>
+    <message>
+        <source>Choose second edge</source>
+        <translation>Επιλέξτε τη δεύτερη πλευρά</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Επιστροφή</translation>
     </message>
 </context>
 <context>
@@ -11623,6 +12614,33 @@ Continue?</source>
     <message>
         <source>radius=%1 is invalid</source>
         <translation>ακτίνα=%1 δεν είναι έγκυρη</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleDiam</name>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Specify circle radius</source>
+        <translation type="unfinished">Καθορίστε την ακτίνα του κύκλου</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>diameter=%1 is invalid</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -14005,6 +15023,21 @@ Continue?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionModifyShapeText</name>
+    <message>
+        <source>Select text entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select entity to shape text to</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionModifyStretch</name>
     <message>
         <source>Stretch</source>
@@ -14131,6 +15164,17 @@ Continue?</source>
     <message>
         <source>Back</source>
         <translation>Επιστροφή</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyTrimExcess</name>
+    <message>
+        <source>Select entity to trim</source>
+        <translation type="unfinished">Επιλέξτε την οντότητα προς διευθέτηση</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -14556,6 +15600,89 @@ Continue?</source>
     </message>
     <message>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionSelect</name>
+    <message>
+        <source>Select to modify attributes</source>
+        <translation>Επιλέξτε για τροποποίηση χαρακτηριστικών</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Select to delete</source>
+        <translation>Επιλέξτε για διαγραφή</translation>
+    </message>
+    <message>
+        <source>Select to delete immediately</source>
+        <translation>Επιλέξτε για άμεση διαγραφή</translation>
+    </message>
+    <message>
+        <source>Select to move</source>
+        <translation>Επιλέξτε για μετακίνηση</translation>
+    </message>
+    <message>
+        <source>Select to rotate</source>
+        <translation>Επιλέξτε για περιστροφή</translation>
+    </message>
+    <message>
+        <source>Select to scale</source>
+        <translation>Επιλέξτε για προσαρμογή κλίμακας</translation>
+    </message>
+    <message>
+        <source>Select to mirror</source>
+        <translation>Επιλέξτε για συμμετρία</translation>
+    </message>
+    <message>
+        <source>Select to move and rotate</source>
+        <translation>Επιλέξτε για μετακίνηση και περιστροφή</translation>
+    </message>
+    <message>
+        <source>Select for two axis rotation</source>
+        <translation>Επιλέξτε για περιστροφή δύο αξόνων</translation>
+    </message>
+    <message>
+        <source>Select to explode text</source>
+        <translation>Επιλέξτε για διαχωρισμό κειμένου</translation>
+    </message>
+    <message>
+        <source>Select to create block</source>
+        <translation>Επιλέξτε για δημιουργία μπλοκ</translation>
+    </message>
+    <message>
+        <source>Select to copy</source>
+        <translation>Επιλέξτε για αντιγραφή</translation>
+    </message>
+    <message>
+        <source>Select to cut</source>
+        <translation>Επιλέξτε για αποκοπή</translation>
+    </message>
+    <message>
+        <source>No entity selected!</source>
+        <translation>Δεν έχει επιλεχθεί κάποια οντότητα!</translation>
+    </message>
+    <message>
+        <source>Select to create offset</source>
+        <translation>Επιλέξτε για δημιουργία αναπαραγωγής</translation>
+    </message>
+    <message>
+        <source>Select entities to order</source>
+        <translation>Επιλέξτε οντότητες για διάταξη</translation>
+    </message>
+    <message>
+        <source>Select to explode block</source>
+        <translation>Επιλέξτε για διαχωρισμό μπλοκ</translation>
+    </message>
+    <message>
+        <source>Select to revert direction</source>
+        <translation>Επιλέξτε για αντιστροφή φοράς</translation>
+    </message>
+    <message>
+        <source>Select to unlink shaped text</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -15880,1033 +17007,6 @@ Continue?</source>
         <source>row</source>
         <comment>row</comment>
         <translation type="obsolete">σειρά</translation>
-    </message>
-</context>
-<context>
-    <name>ColorWizard</name>
-    <message>
-        <source>Frame</source>
-        <translation type="unfinished">Πλαίσιο</translation>
-    </message>
-    <message>
-        <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-</context>
-<context>
-    <name>ComboBoxOption</name>
-    <message>
-        <source>Frame</source>
-        <translation>Πλαίσιο</translation>
-    </message>
-    <message>
-        <source>GroupBox</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>SplinePoints</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation>Στρώση:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation>Γεωμετρία</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation>Κλειστό</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation>Σημεία Ελέγχου</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify center</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionFileExportMakerCam</name>
-    <message>
-        <source>Export as</source>
-        <translation>Εξαγωγή ως</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DeviceOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mouse</source>
-        <translation type="unfinished">Ποντίκι</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Αποθήκευση</translation>
-    </message>
-    <message>
-        <source>Tablet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Trackpad</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Touchscreen</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_SimpleTests</name>
-    <message>
-        <source>De&amp;bugging</source>
-        <translation>Αποσφαλ&amp;μάτωση</translation>
-    </message>
-    <message>
-        <source>Insert Image</source>
-        <translation>Εισαγωγή εικόνας</translation>
-    </message>
-</context>
-<context>
-    <name>LC_WidgetOptionsDialog</name>
-    <message>
-        <source>Widget Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toolbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Icon Size</source>
-        <translation>Μέγεθος Εικόνας</translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation>Γενικά</translation>
-    </message>
-    <message>
-        <source>Style</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Style Sheet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Statusbar</source>
-        <translation>Πλαίσιο κατάστασης</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation>Ύψος</translation>
-    </message>
-    <message>
-        <source>Font Size</source>
-        <translation>Μέγεθος Γραμματοσειράς</translation>
-    </message>
-    <message>
-        <source>Input the path of a Qt style sheet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>side length in pixels</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Use themed icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LG_DimzerosBox</name>
-    <message>
-        <source>select:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>remove left</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>remove right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>remove 0&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>remove 0&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation>Επιλογές γραμμής με σχετική γωνία</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation>Διάκενο:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation>Απόσταση από την αρχική πολυγραμμή</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation>Αντίγραφα:</translation>
-    </message>
-</context>
-<context>
-    <name>QC_ActionGetEnt</name>
-    <message>
-        <source>Select object:</source>
-        <translation>Επιλέξτε αντικείμενο:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Ακύρωση</translation>
-    </message>
-</context>
-<context>
-    <name>QC_ActionGetSelect</name>
-    <message>
-        <source>Select objects:</source>
-        <translation>Επιλέξτε αντικείμενα:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Ακύρωση</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>διαφυγή</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ActiveLayerName</name>
-    <message>
-        <source>Selection</source>
-        <translation>Επιλογή</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Current Layer</source>
-        <translation>Τρέχουσα στρώση</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Όνομα της τρέχουσας ενεργής στρώσης&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CommandEdit</name>
-    <message>
-        <source>clear</source>
-        <translation>εκκαθάριση</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CommandHistory</name>
-    <message>
-        <source>&amp;Copy</source>
-        <translation>Αντιγραφή</translation>
-    </message>
-    <message>
-        <source>Select &amp;All</source>
-        <translation>Επιλογή Όλων</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Εκκαθάριση</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CoordinateWidget</name>
-    <message>
-        <source>Coordinates</source>
-        <translation>Συντεταγμένες</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgFontConversion</name>
-    <message>
-        <source>Convert Fonts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Font family:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Font file:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-    <message>
-        <source>Save as:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Letter spacing:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Author:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Word spacing:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>License:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line spacing:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Writing System:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Preview</source>
-        <translation type="unfinished">Προεπισκόπηση</translation>
-    </message>
-    <message>
-        <source>Create</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> - Searching</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LibreCAD Font Files(*.lff)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> - Rendering</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgOptionsMakerCam</name>
-    <message>
-        <source>Export as MakerCAM SVG</source>
-        <translation type="vanished">Εξαγωγή ως MakerCAM SVG</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation>Στρώσεις</translation>
-    </message>
-    <message>
-        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
-        <translation type="vanished">Το MakerCAM από το Νοέμβριο του 2014 δεν αποκρύπτει SVG περιεχόμενο που έχει τεθεί αόρατο (&quot;display: none;&quot; ή &quot;visibility: hidden;&quot;).</translation>
-    </message>
-    <message>
-        <source>Export invisible layers</source>
-        <translation>Εξαγωγή αόρατων στρώσεων</translation>
-    </message>
-    <message>
-        <source>Export visible construction layers</source>
-        <translation>Εξαγωγή ορατών στρώσεων κατασκευής</translation>
-    </message>
-    <message>
-        <source>Blocks</source>
-        <translation>Μπλοκς</translation>
-    </message>
-    <message>
-        <source>MakerCAM as of November 2014 cannot correctly deal with blocks, because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation type="vanished">Το MakerCAM από το Νοέμβριο του 2014 δεν μπορεί να αντιμετωπίσει τα μπλοκς σωστά, καθώς δεν λαμβάνει υπόψη το σημείο αναφοράς στο &lt;use&gt;.</translation>
-    </message>
-    <message>
-        <source>Convert blocks to safe inline SVG content</source>
-        <translation>Μετατροπή μπλοκς σε ασφαλές εμβόλιμο SVG περιεχόμενο</translation>
-    </message>
-    <message>
-        <source>Ellipses / Ellipse arcs</source>
-        <translation>Ελλείψεις / Ελλειπτικά τόξα</translation>
-    </message>
-    <message>
-        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation type="vanished">Το MakerCAM από το Μάρτιο του 2015 δεν μπορεί να εμφανίσει ελλείψεις και ελλειπτικά τόξα σωστά, όταν αυτά δημιουργούνται με τη χρήση της ετικέτας &lt;ellipse&gt; με περιστροφή στο χαρακτηριστικό &quot;transform&quot; ή ως &lt;path&gt; με τη χρήση τμημάτων ελλειπτικών τόξων.</translation>
-    </message>
-    <message>
-        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation>Προσέγγιση ελλείψεων και ελλειπτικών τόξων με κυβικές μπεζιέ</translation>
-    </message>
-    <message>
-        <source>Export as CAM/plain SVG</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Default width of elements, mm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Raster Image export</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dash/Dot Lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Length of the pattern, mm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bake dash/dot lines to SVG path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
-because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
-when they are created using the &lt;ellipse&gt; tag  with a rotation in 
-the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
-which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
-but ignored by other</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Length of line pattern related to zoom, 
-so default step value required for baking</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_LayerBox</name>
-    <message>
-        <source>- Unchanged -</source>
-        <translation>- Αμετάβλητο -</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineTypeBox</name>
-    <message>
-        <source>By Layer</source>
-        <translation>Κατά στρώση</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation>Κατά μπλοκ</translation>
-    </message>
-    <message>
-        <source>No Pen</source>
-        <translation>Χωρίς πένα</translation>
-    </message>
-    <message>
-        <source>Continuous</source>
-        <translation>Συνεχής</translation>
-    </message>
-    <message>
-        <source>Dot</source>
-        <translation>Τελεία</translation>
-    </message>
-    <message>
-        <source>Dot (small)</source>
-        <translation>Τελεία (μικρή)</translation>
-    </message>
-    <message>
-        <source>Dot (large)</source>
-        <translation>Τελεία (μεγάλη)</translation>
-    </message>
-    <message>
-        <source>Dash</source>
-        <translation>Παύλα</translation>
-    </message>
-    <message>
-        <source>Dash (small)</source>
-        <translation>Παύλα (μικρή)</translation>
-    </message>
-    <message>
-        <source>Dash (large)</source>
-        <translation>Παύλα (μεγάλη)</translation>
-    </message>
-    <message>
-        <source>Dash Dot</source>
-        <translation>Παύλα Τελεία</translation>
-    </message>
-    <message>
-        <source>Dash Dot (small)</source>
-        <translation>Παύλα Τελεία (μικρή)</translation>
-    </message>
-    <message>
-        <source>Dash Dot (large)</source>
-        <translation>Παύλα Τελεία (μεγάλη)</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation>Διαίρεση</translation>
-    </message>
-    <message>
-        <source>Divide (small)</source>
-        <translation>Διαίρεση (μικρή)</translation>
-    </message>
-    <message>
-        <source>Divide (large)</source>
-        <translation>Διαίρεση (μεγάλη)</translation>
-    </message>
-    <message>
-        <source>Center</source>
-        <translation>Αξονική</translation>
-    </message>
-    <message>
-        <source>Center (small)</source>
-        <translation>Αξονική (μικρή)</translation>
-    </message>
-    <message>
-        <source>Center (large)</source>
-        <translation>Αξονική (μεγάλη)</translation>
-    </message>
-    <message>
-        <source>Border</source>
-        <translation>Περιθώριο</translation>
-    </message>
-    <message>
-        <source>Border (small)</source>
-        <translation>Περιθώριο (μικρό)</translation>
-    </message>
-    <message>
-        <source>Border (large)</source>
-        <translation>Περιθώριο (μεγάλο)</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation>- Αμετάβλητο -</translation>
-    </message>
-    <message>
-        <source>Dot (tiny)</source>
-        <translation>Τελεία (μικροσκοπική)</translation>
-    </message>
-    <message>
-        <source>Dash (tiny)</source>
-        <translation>Παύλα (μικροσκοπική)</translation>
-    </message>
-    <message>
-        <source>Dash Dot (tiny)</source>
-        <translation>Παύλα Τελεία (μικροσκοπική)</translation>
-    </message>
-    <message>
-        <source>Divide (tiny)</source>
-        <translation>Διαίρεση (μικροσκοπική)</translation>
-    </message>
-    <message>
-        <source>Center (tiny)</source>
-        <translation>Αξονική (μικροσκοπική)</translation>
-    </message>
-    <message>
-        <source>Border (tiny)</source>
-        <translation>Περιθώριο (μικροσκοπικό)</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PenToolBar</name>
-    <message>
-        <source>Line color</source>
-        <translation type="unfinished">Χρώμα γραμμής</translation>
-    </message>
-    <message>
-        <source>Line width</source>
-        <translation type="unfinished">Πλάτος γραμμής</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="unfinished">Τύπος γραμμής</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SnapToolBar</name>
-    <message>
-        <source>Snap</source>
-        <translation>Έλξη</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation>Έλξη σε άκρα</translation>
-    </message>
-    <message>
-        <source>Snap to equidistant points of entity</source>
-        <translation>Έλξη σε ισαπέχοντα σημεία οντότητας</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation>Έλξη σε κέντρα</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation>Έλξη σε τομές αυτόματα</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation>Έλξη στο κοντινότερο σημείο πάνω σε οντότητα</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation>Έλξη σε σημείο με δεδομένη απόσταση από άκρο</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation>Έλξη σε τομές χειροκίνητα</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation>Έλξη στον κάνναβο</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation>Περιορισμός οριζόντια</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation>Περιορισμός κατακόρυφα</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation>Μετακίνηση σχετικού μηδέν</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation>Κλείδωμα σχετικού μηδέν</translation>
-    </message>
-    <message>
-        <source>Free Snap</source>
-        <translation>Χωρίς έλξη</translation>
-    </message>
-    <message>
-        <source>Snap on grid</source>
-        <translation>Έλξη στον κάνναβο</translation>
-    </message>
-    <message>
-        <source>Snap on Endpoints</source>
-        <translation>Έλξη σε άκρα</translation>
-    </message>
-    <message>
-        <source>Snap on Entity</source>
-        <translation>Έλξη σε οντότητες</translation>
-    </message>
-    <message>
-        <source>Snap Center</source>
-        <translation>Έλξη σε κέντρα</translation>
-    </message>
-    <message>
-        <source>Snap Middle</source>
-        <translation>Έλξη στη μέση</translation>
-    </message>
-    <message>
-        <source>Snap Distance</source>
-        <translation>Έλξη με απόσταση</translation>
-    </message>
-    <message>
-        <source>Snap Intersection</source>
-        <translation>Έλξη σε διασταύρωση</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontal</source>
-        <translation>Περιορισμός Οριζόντια</translation>
-    </message>
-    <message>
-        <source>Restrict Vertical</source>
-        <translation>Περιορισμός κατακόρυφα</translation>
-    </message>
-    <message>
-        <source>Restrict Orthogonal</source>
-        <translation>Περιορισμός Ορθογώνια</translation>
-    </message>
-    <message>
-        <source>Restrict Nothing</source>
-        <translation>Χωρίς περιορισμό</translation>
-    </message>
-    <message>
-        <source>Set relative zero position</source>
-        <translation>Καθορισμός θέσης του σχετικού σημείου μηδέν</translation>
-    </message>
-    <message>
-        <source>Lock relative zero position</source>
-        <translation>Ασφάλιση θέσης σχετικού σημείου Μηδέν</translation>
-    </message>
-    <message>
-        <source>Exclusive Snap Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_WidgetPen</name>
-    <message>
-        <source>Pen</source>
-        <translation>Πένα</translation>
-    </message>
-    <message>
-        <source>Line type:</source>
-        <translation>Τύπος γραμμής:</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation>Πλάτος:</translation>
-    </message>
-    <message>
-        <source>Color:</source>
-        <translation>Χρώμα:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_WidthBox</name>
-    <message>
-        <source>By Layer</source>
-        <translation>Κατά στρώση</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation>Κατά μπλοκ</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation>Προεπιλεγμένο</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation>0.00mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation>0.05mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation>0.09mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation>0.13mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation>0.15mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation>0.18mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation>0.20mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation>0.25mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation>0.30mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation>0.35mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation>0.40mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation>0.50mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation>0.53mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation>0.60mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation>0.70mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation>0.80mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation>0.90mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation>1.00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation>1.06mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation>1.20mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation>1.40mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation>1.58mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation>2.00mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation>2.11mm</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation>- Αμετάβλητο -</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDefault</name>
-    <message>
-        <source>Choose second edge</source>
-        <translation>Επιλέξτε τη δεύτερη πλευρά</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Επιστροφή</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleDiam</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Ακύρωση</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="unfinished">Καθορίστε την ακτίνα του κύκλου</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>diameter=%1 is invalid</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyShapeText</name>
-    <message>
-        <source>Select text entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select entity to shape text to</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrimExcess</name>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="unfinished">Επιλέξτε την οντότητα προς διευθέτηση</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>Select to modify attributes</source>
-        <translation>Επιλέξτε για τροποποίηση χαρακτηριστικών</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Ακύρωση</translation>
-    </message>
-    <message>
-        <source>Select to delete</source>
-        <translation>Επιλέξτε για διαγραφή</translation>
-    </message>
-    <message>
-        <source>Select to delete immediately</source>
-        <translation>Επιλέξτε για άμεση διαγραφή</translation>
-    </message>
-    <message>
-        <source>Select to move</source>
-        <translation>Επιλέξτε για μετακίνηση</translation>
-    </message>
-    <message>
-        <source>Select to rotate</source>
-        <translation>Επιλέξτε για περιστροφή</translation>
-    </message>
-    <message>
-        <source>Select to scale</source>
-        <translation>Επιλέξτε για προσαρμογή κλίμακας</translation>
-    </message>
-    <message>
-        <source>Select to mirror</source>
-        <translation>Επιλέξτε για συμμετρία</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate</source>
-        <translation>Επιλέξτε για μετακίνηση και περιστροφή</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation</source>
-        <translation>Επιλέξτε για περιστροφή δύο αξόνων</translation>
-    </message>
-    <message>
-        <source>Select to explode text</source>
-        <translation>Επιλέξτε για διαχωρισμό κειμένου</translation>
-    </message>
-    <message>
-        <source>Select to create block</source>
-        <translation>Επιλέξτε για δημιουργία μπλοκ</translation>
-    </message>
-    <message>
-        <source>Select to copy</source>
-        <translation>Επιλέξτε για αντιγραφή</translation>
-    </message>
-    <message>
-        <source>Select to cut</source>
-        <translation>Επιλέξτε για αποκοπή</translation>
-    </message>
-    <message>
-        <source>No entity selected!</source>
-        <translation>Δεν έχει επιλεχθεί κάποια οντότητα!</translation>
-    </message>
-    <message>
-        <source>Select to create offset</source>
-        <translation>Επιλέξτε για δημιουργία αναπαραγωγής</translation>
-    </message>
-    <message>
-        <source>Select entities to order</source>
-        <translation>Επιλέξτε οντότητες για διάταξη</translation>
-    </message>
-    <message>
-        <source>Select to explode block</source>
-        <translation>Επιλέξτε για διαχωρισμό μπλοκ</translation>
-    </message>
-    <message>
-        <source>Select to revert direction</source>
-        <translation>Επιλέξτε για αντιστροφή φοράς</translation>
-    </message>
-    <message>
-        <source>Select to unlink shaped text</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

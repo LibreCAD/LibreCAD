@@ -62,7 +62,7 @@ void QG_DlgAttributes::setData(RS_AttributesData* data, RS_LayerList& layerList)
     this->data = data;
 
     //pen = line->getPen();
-    wPen->setPen(data->pen, true, true, "Pen");
+    wPen->setPen(data->pen, true, true, QObject::tr("Pen"));
 
     //RS_Graphic* graphic = line->getGraphic();
     //if (graphic) {

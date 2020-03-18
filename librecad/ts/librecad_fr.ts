@@ -1876,6 +1876,289 @@ Vous pouvez enregistrer votre travail maintenant.</translation>
     </message>
 </context>
 <context>
+    <name>QG_ActionFactory</name>
+    <message>
+        <source>&amp;Close</source>
+        <translation type="obsolete">&amp;Fermer</translation>
+    </message>
+    <message>
+        <source>Quits the application</source>
+        <translation type="obsolete">Quitte l’application</translation>
+    </message>
+    <message>
+        <source>Free</source>
+        <translation type="obsolete">Libre</translation>
+    </message>
+    <message>
+        <source>&amp;Free</source>
+        <translation type="obsolete">&amp;Libre</translation>
+    </message>
+    <message>
+        <source>Free positioning</source>
+        <translation type="obsolete">Positionnement libre</translation>
+    </message>
+    <message>
+        <source>Grid</source>
+        <translation type="obsolete">Grille</translation>
+    </message>
+    <message>
+        <source>&amp;Grid</source>
+        <translation type="obsolete">&amp;Grille</translation>
+    </message>
+    <message>
+        <source>Grid positioning</source>
+        <translation type="obsolete">Positionnement sur la grille</translation>
+    </message>
+    <message>
+        <source>Endpoints</source>
+        <translation type="obsolete">Extrémités</translation>
+    </message>
+    <message>
+        <source>&amp;Endpoints</source>
+        <translation type="obsolete">&amp;Extrémités</translation>
+    </message>
+    <message>
+        <source>Snap to endpoints</source>
+        <translation type="obsolete">Accrocher aux extrémités</translation>
+    </message>
+    <message>
+        <source>On Entity</source>
+        <translation type="obsolete">Sur l’objet</translation>
+    </message>
+    <message>
+        <source>&amp;On Entity</source>
+        <translation type="obsolete">&amp;Sur l’objet</translation>
+    </message>
+    <message>
+        <source>Snap to nearest point on entity</source>
+        <translation type="obsolete">Accrocher au point le plus près sur l’objet</translation>
+    </message>
+    <message>
+        <source>Center</source>
+        <translation type="obsolete">Centre</translation>
+    </message>
+    <message>
+        <source>&amp;Center</source>
+        <translation type="obsolete">&amp;Centre</translation>
+    </message>
+    <message>
+        <source>Snap to centers</source>
+        <translation type="obsolete">Accrocher aux centres</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="obsolete">Milieu</translation>
+    </message>
+    <message>
+        <source>&amp;Middle</source>
+        <translation type="obsolete">&amp;Milieu</translation>
+    </message>
+    <message>
+        <source>Snap to middle points</source>
+        <translation type="obsolete">Accrocher aux points du milieu</translation>
+    </message>
+    <message>
+        <source>Distance from Endpoint</source>
+        <translation type="obsolete">Distance depuis l’extrémité</translation>
+    </message>
+    <message>
+        <source>&amp;Distance from Endpoint</source>
+        <translation type="obsolete">&amp;Distance depuis l’extrémité</translation>
+    </message>
+    <message>
+        <source>Snap to points with a given distance to an endpoint</source>
+        <translation type="obsolete">Accrocher aux points à une distance donnée d’une extrémité</translation>
+    </message>
+    <message>
+        <source>Intersection</source>
+        <translation type="obsolete">Intersection</translation>
+    </message>
+    <message>
+        <source>&amp;Intersection</source>
+        <translation type="obsolete">&amp;Intersection</translation>
+    </message>
+    <message>
+        <source>Snap to intersection points</source>
+        <translation type="obsolete">Accrocher aux points d’intersection</translation>
+    </message>
+    <message>
+        <source>Restrict Nothing</source>
+        <translation type="obsolete">Aucune restriction</translation>
+    </message>
+    <message>
+        <source>Restrict &amp;Nothing</source>
+        <translation type="obsolete">Aucune &amp;restriction</translation>
+    </message>
+    <message>
+        <source>No snap restriction</source>
+        <translation type="obsolete">Aucune restriction d’accrochage</translation>
+    </message>
+    <message>
+        <source>Restrict Orthogonally</source>
+        <translation type="obsolete">Restreindre orthogonalement</translation>
+    </message>
+    <message>
+        <source>Restrict &amp;Orthogonally</source>
+        <translation type="obsolete">Restreindre &amp;orthogonalement</translation>
+    </message>
+    <message>
+        <source>Restrict snapping orthogonally</source>
+        <translation type="obsolete">Restriction de l’accrochage orthogonal</translation>
+    </message>
+    <message>
+        <source>Restrict Horizontally</source>
+        <translation type="obsolete">Restreindre horizontalement</translation>
+    </message>
+    <message>
+        <source>Restrict &amp;Horizontally</source>
+        <translation type="obsolete">Restreindre &amp;horizontalement</translation>
+    </message>
+    <message>
+        <source>Restrict snapping horizontally</source>
+        <translation type="obsolete">Restriction de l’accrochage horizontal</translation>
+    </message>
+    <message>
+        <source>Restrict Vertically</source>
+        <translation type="obsolete">Restreindre verticalement</translation>
+    </message>
+    <message>
+        <source>Restrict &amp;Vertically</source>
+        <translation type="obsolete">Restreindre &amp;verticalement</translation>
+    </message>
+    <message>
+        <source>Restrict snapping vertically</source>
+        <translation type="obsolete">Restriction de l’accrochage vertical</translation>
+    </message>
+    <message>
+        <source>General Application Preferences</source>
+        <translation type="obsolete">Paramètres généraux de l’application</translation>
+    </message>
+    <message>
+        <source>Closes the current drawing</source>
+        <translation type="obsolete">Ferme le dessin actif</translation>
+    </message>
+    <message>
+        <source>Prints out the current drawing</source>
+        <translation type="obsolete">Imprime le dessin actif</translation>
+    </message>
+    <message>
+        <source>Close Drawing</source>
+        <translation type="obsolete">Fermer le dessin</translation>
+    </message>
+    <message>
+        <source>Print Drawing</source>
+        <translation type="obsolete">Imprimer le dessin</translation>
+    </message>
+    <message>
+        <source>Export Drawing</source>
+        <translation type="obsolete">Exporter le dessin</translation>
+    </message>
+    <message>
+        <source>Exports the current drawing as bitmap</source>
+        <translation type="obsolete">Exporte le dessin actif en tant que bitmap</translation>
+    </message>
+    <message>
+        <source>Application</source>
+        <translation type="obsolete">Application</translation>
+    </message>
+    <message>
+        <source>&amp;Application Preferences</source>
+        <translation type="obsolete">&amp;Paramètres de l’application</translation>
+    </message>
+    <message>
+        <source>Enables/disables the grid</source>
+        <translation type="obsolete">Active/désactive la grille</translation>
+    </message>
+    <message>
+        <source>Statusbar</source>
+        <translation type="obsolete">Barre d’état</translation>
+    </message>
+    <message>
+        <source>&amp;Statusbar</source>
+        <translation type="obsolete">&amp;Barre d’état</translation>
+    </message>
+    <message>
+        <source>Enables/disables the statusbar</source>
+        <translation type="obsolete">Active/désactive la barre d’état</translation>
+    </message>
+    <message>
+        <source>Draft</source>
+        <translation type="obsolete">Esquisse</translation>
+    </message>
+    <message>
+        <source>&amp;Draft</source>
+        <translation type="obsolete">&amp;Esquisse</translation>
+    </message>
+    <message>
+        <source>Enables/disables the draft mode</source>
+        <translation type="obsolete">Active/désactive le mode Esquisse</translation>
+    </message>
+    <message>
+        <source>Open IDE</source>
+        <translation type="obsolete">Ouvrir IDE</translation>
+    </message>
+    <message>
+        <source>&amp;Open IDE</source>
+        <translation type="obsolete">&amp;Ouvrir IDE</translation>
+    </message>
+    <message>
+        <source>Opens the integrated development environment for scripting</source>
+        <translation type="obsolete">Ouvre l’environnement de développement intégré de scripts</translation>
+    </message>
+    <message>
+        <source>Run Script..</source>
+        <translation type="obsolete">Lancer le script...</translation>
+    </message>
+    <message>
+        <source>&amp;Run Script..</source>
+        <translation type="obsolete">&amp;Lancer le script...</translation>
+    </message>
+    <message>
+        <source>Runs a script</source>
+        <translation type="obsolete">Lance un script</translation>
+    </message>
+    <message>
+        <source>&amp;Preferences</source>
+        <translation type="obsolete">&amp;Préférences</translation>
+    </message>
+    <message>
+        <source>&amp;Export...</source>
+        <translation type="obsolete">&amp;Exporter...</translation>
+    </message>
+    <message>
+        <source>&amp;Print...</source>
+        <translation type="obsolete">&amp;Imprimer...</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation type="obsolete">Quitter</translation>
+    </message>
+    <message>
+        <source>&amp;Quit</source>
+        <translation type="obsolete">&amp;Quitter</translation>
+    </message>
+    <message>
+        <source>CTRL-G</source>
+        <translation type="obsolete">CTRL-G</translation>
+    </message>
+    <message>
+        <source>Restrict&amp;Vertically</source>
+        <translation type="obsolete">Restreindre&amp;verticalement</translation>
+    </message>
+    <message>
+        <source>&amp;back</source>
+        <translation type="obsolete">&amp;retour</translation>
+    </message>
+    <message>
+        <source>&amp;Selection pointer</source>
+        <translation type="obsolete">&amp;Pointeur de sélection</translation>
+    </message>
+    <message>
+        <source>&amp;Block</source>
+        <translation type="obsolete">&amp;Bloc</translation>
+    </message>
+</context>
+<context>
     <name>QG_ActionHandler</name>
     <message>
         <source>escape</source>
@@ -1908,6 +2191,60 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Nom du calque actif&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ArcOptions</name>
+    <message>
+        <source>Arc Options</source>
+        <translation type="obsolete">Paramètres des arcs</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="obsolete">Sens horaire</translation>
+    </message>
+    <message>
+        <source>Counter Clockwise</source>
+        <translation type="obsolete">Sens antihoraire</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ArcTangentialOptions</name>
+    <message>
+        <source>Tangential Arc Options</source>
+        <translation type="obsolete">Paramètres d’arc tangent</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="obsolete">Rayon&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="obsolete">Angle</translation>
+    </message>
+</context>
+<context>
+    <name>QG_BevelOptions</name>
+    <message>
+        <source>Bevel Options</source>
+        <translation type="obsolete">Paramètres de chanfrein</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="obsolete">Ajuster</translation>
+    </message>
+    <message>
+        <source>Check to trim both entities to the bevel</source>
+        <translation type="obsolete">Vérifier pour ajuster les deux éléments avec le chanfrein</translation>
+    </message>
+    <message>
+        <source>Length 1:</source>
+        <translation type="obsolete">Longueur 1&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Length 2:</source>
+        <translation type="obsolete">Longueur 2&#xa0;:</translation>
     </message>
 </context>
 <context>
@@ -2036,6 +2373,646 @@ dans une nouvelle fenêtre</translation>
     <message>
         <source>Add a block</source>
         <translation type="obsolete">Ajouter un bloc</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBar</name>
+    <message>
+        <source>CAD Tools</source>
+        <translation type="obsolete">Outils de DAO</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarArcs</name>
+    <message>
+        <source>Arcs</source>
+        <translation type="obsolete">Arcs</translation>
+    </message>
+    <message>
+        <source>Arc with three points</source>
+        <translation type="obsolete">Arc avec trois points</translation>
+    </message>
+    <message>
+        <source>Arc with Center, Point, Angles</source>
+        <translation type="obsolete">Arc avec centre, point, angles</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Retour au menu précédent</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">Concentrique</translation>
+    </message>
+    <message>
+        <source>Arc tangential to base entity with radius</source>
+        <translation type="obsolete">Arc tangent à l’objet de base avec un rayon</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarCircles</name>
+    <message>
+        <source>Circles</source>
+        <translation type="obsolete">Cercles</translation>
+    </message>
+    <message>
+        <source>Circle with two opposite points</source>
+        <translation type="obsolete">Cercle avec deux points opposés</translation>
+    </message>
+    <message>
+        <source>Circle with center and radius</source>
+        <translation type="obsolete">Cercle avec centre et rayon</translation>
+    </message>
+    <message>
+        <source>Circle with center and point</source>
+        <translation type="obsolete">Cercle avec centre et point</translation>
+    </message>
+    <message>
+        <source>Circle with three points</source>
+        <translation type="obsolete">Cercle avec trois points</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Retour au menu précédent</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">Concentrique</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarDim</name>
+    <message>
+        <source>Dimensions</source>
+        <translation type="obsolete">Cotations</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Retour au menu précédent</translation>
+    </message>
+    <message>
+        <source>Diametric Dimension</source>
+        <translation type="obsolete">Dimension du diamètre</translation>
+    </message>
+    <message>
+        <source>Radial Dimension</source>
+        <translation type="obsolete">Cotation radiale</translation>
+    </message>
+    <message>
+        <source>Vertical Dimension</source>
+        <translation type="obsolete">Cotation verticale</translation>
+    </message>
+    <message>
+        <source>Horizontal Dimension</source>
+        <translation type="obsolete">Cotation horizontale</translation>
+    </message>
+    <message>
+        <source>Linear Dimension</source>
+        <translation type="obsolete">Cotation linéaire</translation>
+    </message>
+    <message>
+        <source>Aligned Dimension</source>
+        <translation type="obsolete">Cotation alignée</translation>
+    </message>
+    <message>
+        <source>Angular Dimension</source>
+        <translation type="obsolete">Cotation angulaire</translation>
+    </message>
+    <message>
+        <source>Leader</source>
+        <translation type="obsolete">Repère</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">Concentrique</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarEllipses</name>
+    <message>
+        <source>Ellipses</source>
+        <translation type="obsolete">Ellipses</translation>
+    </message>
+    <message>
+        <source>Ellipse arc with center, two points and angles</source>
+        <translation type="obsolete">Arc d’ellipse avec un centre, deux points et des angles</translation>
+    </message>
+    <message>
+        <source>Ellipse with Center and two points</source>
+        <translation type="obsolete">Ellipse avec un centre et deux points</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Retour au menu précédent</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">Concentrique</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarInfo</name>
+    <message>
+        <source>Info</source>
+        <translation type="obsolete">Info</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Retour au menu précédent</translation>
+    </message>
+    <message>
+        <source>Distance (Point, Point)</source>
+        <translation type="obsolete">Distance (Point, Point)</translation>
+    </message>
+    <message>
+        <source>Distance (Entity, Point)</source>
+        <translation type="obsolete">Distance (Objet, Point)</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="obsolete">Angle</translation>
+    </message>
+    <message>
+        <source>Total length of selected entities</source>
+        <translation type="obsolete">Longueur totale des éléments sélectionnés</translation>
+    </message>
+    <message>
+        <source>Area of polygon</source>
+        <translation type="obsolete">Surface du polygone</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">Concentrique</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarLines</name>
+    <message>
+        <source>Lines</source>
+        <translation type="obsolete">Lignes</translation>
+    </message>
+    <message>
+        <source>Freehand lines</source>
+        <translation type="obsolete">Lignes à main levée</translation>
+    </message>
+    <message>
+        <source>Orthogonal lines</source>
+        <translation type="obsolete">Lignes orthogonales</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Retour au menu précédent</translation>
+    </message>
+    <message>
+        <source>Bisectors</source>
+        <translation type="obsolete">Bissectrices</translation>
+    </message>
+    <message>
+        <source>Tangents from circle to circle</source>
+        <translation type="obsolete">Tangentes d’un cercle à l’autre</translation>
+    </message>
+    <message>
+        <source>Tangents from point to circle</source>
+        <translation type="obsolete">Tangentes d’un point à un cercle</translation>
+    </message>
+    <message>
+        <source>Line with two points</source>
+        <translation type="obsolete">Ligne avec deux points</translation>
+    </message>
+    <message>
+        <source>Lines with relative angles</source>
+        <translation type="obsolete">Lignes avec angles relatifs</translation>
+    </message>
+    <message>
+        <source>Line with given angle</source>
+        <translation type="obsolete">Ligne avec angle donné</translation>
+    </message>
+    <message>
+        <source>Horizontal lines</source>
+        <translation type="obsolete">Lignes horizontales</translation>
+    </message>
+    <message>
+        <source>Vertical lines</source>
+        <translation type="obsolete">Lignes verticales</translation>
+    </message>
+    <message>
+        <source>Rectangles</source>
+        <translation type="obsolete">Rectangles</translation>
+    </message>
+    <message>
+        <source>Polygons with Center and Corner</source>
+        <translation type="obsolete">Polygones avec centre et coin</translation>
+    </message>
+    <message>
+        <source>Polygons with two Corners</source>
+        <translation type="obsolete">Polygones avec deux coins</translation>
+    </message>
+    <message>
+        <source>Parallels with distance</source>
+        <translation type="obsolete">Parallèles avec distance</translation>
+    </message>
+    <message>
+        <source>Parallels through point</source>
+        <translation type="obsolete">Parallèles passant par un point</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarMain</name>
+    <message>
+        <source>Main</source>
+        <translation type="obsolete">Principal</translation>
+    </message>
+    <message>
+        <source>Show menu &quot;Lines&quot;</source>
+        <translation type="obsolete">Afficher le menu «&#xa0;Lignes&#xa0;»</translation>
+    </message>
+    <message>
+        <source>Show menu &quot;Arcs&quot;</source>
+        <translation type="obsolete">Afficher le menu «&#xa0;Arcs&#xa0;»</translation>
+    </message>
+    <message>
+        <source>Show menu &quot;Circles&quot;</source>
+        <translation type="obsolete">Afficher le menu «&#xa0;Cercles&#xa0;»</translation>
+    </message>
+    <message>
+        <source>Show menu &quot;Points&quot;</source>
+        <translation type="obsolete">Afficher le menu «&#xa0;Points&#xa0;»</translation>
+    </message>
+    <message>
+        <source>Show menu &quot;Measure&quot;</source>
+        <translation type="obsolete">Afficher le menu «&#xa0;Mesures&#xa0;»</translation>
+    </message>
+    <message>
+        <source>Show menu &quot;Ellipses&quot;</source>
+        <translation type="obsolete">Afficher le menu «&#xa0;Ellipses&#xa0;»</translation>
+    </message>
+    <message>
+        <source>Hatches / Solid Fills</source>
+        <translation type="obsolete">Hachures/motifs de remplissage</translation>
+    </message>
+    <message>
+        <source>Show menu &quot;Edit&quot;</source>
+        <translation type="obsolete">Afficher le menu «&#xa0;Édition&#xa0;»</translation>
+    </message>
+    <message>
+        <source>Show menu &quot;Dimensions&quot;</source>
+        <translation type="obsolete">Afficher le menu «&#xa0;Cotations&#xa0;»</translation>
+    </message>
+    <message>
+        <source>Texts</source>
+        <translation type="obsolete">Textes</translation>
+    </message>
+    <message>
+        <source>Show menu &quot;Select&quot;</source>
+        <translation type="obsolete">Afficher le menu «&#xa0;Sélection&#xa0;»</translation>
+    </message>
+    <message>
+        <source>Create Block</source>
+        <translation type="obsolete">Créer un bloc</translation>
+    </message>
+    <message>
+        <source>Raster Image</source>
+        <translation type="obsolete">Image de trame</translation>
+    </message>
+    <message>
+        <source>Show menu &quot;Splines&quot;</source>
+        <translation type="obsolete">Afficher le menu «&#xa0;Courbes splines&#xa0;»</translation>
+    </message>
+    <message>
+        <source>Points</source>
+        <translation type="obsolete">Points</translation>
+    </message>
+    <message>
+        <source>Splines</source>
+        <translation type="obsolete">Courbes splines</translation>
+    </message>
+    <message>
+        <source>Polylines</source>
+        <translation type="obsolete">Polylignes</translation>
+    </message>
+    <message>
+        <source>Draw Points</source>
+        <translation type="obsolete">Dessiner des points</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="obsolete">Insérer une image</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarModify</name>
+    <message>
+        <source>Modify</source>
+        <translation type="obsolete">Modifier</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Retour au menu précédent</translation>
+    </message>
+    <message>
+        <source>Rotate</source>
+        <translation type="obsolete">Rotation</translation>
+    </message>
+    <message>
+        <source>Scale</source>
+        <translation type="obsolete">Mettre à l’échelle</translation>
+    </message>
+    <message>
+        <source>Move</source>
+        <translation type="obsolete">Déplacer</translation>
+    </message>
+    <message>
+        <source>Move and Rotate</source>
+        <translation type="obsolete">Déplacement et rotation</translation>
+    </message>
+    <message>
+        <source>Explode</source>
+        <translation type="obsolete">Éclater</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="obsolete">Supprimer</translation>
+    </message>
+    <message>
+        <source>Stretch</source>
+        <translation type="obsolete">Déformer</translation>
+    </message>
+    <message>
+        <source>Round</source>
+        <translation type="obsolete">Arrondi</translation>
+    </message>
+    <message>
+        <source>Bevel</source>
+        <translation type="obsolete">Chanfrein</translation>
+    </message>
+    <message>
+        <source>Trim by amount</source>
+        <translation type="obsolete">Ajuster par quantité</translation>
+    </message>
+    <message>
+        <source>Trim / Extend two</source>
+        <translation type="obsolete">Ajuster/Étirer les deux</translation>
+    </message>
+    <message>
+        <source>Trim / Extend</source>
+        <translation type="obsolete">Ajuster/Étirer</translation>
+    </message>
+    <message>
+        <source>Rotate around two centers</source>
+        <translation type="obsolete">Rotation autour de deux centres</translation>
+    </message>
+    <message>
+        <source>Edit Entity Attributes</source>
+        <translation type="obsolete">Éditer les attributs de l’objet</translation>
+    </message>
+    <message>
+        <source>Edit Entity Geometry</source>
+        <translation type="obsolete">Éditer la géométrie de l’objet</translation>
+    </message>
+    <message>
+        <source>Mirror</source>
+        <translation type="obsolete">Symétrie axiale</translation>
+    </message>
+    <message>
+        <source>Divide</source>
+        <translation type="obsolete">Diviser</translation>
+    </message>
+    <message>
+        <source>Explode Text into Letters</source>
+        <translation type="obsolete">Éclater le texte en lettres</translation>
+    </message>
+    <message>
+        <source>Edit Text</source>
+        <translation type="obsolete">Éditer le texte</translation>
+    </message>
+    <message>
+        <source>Move / Copy</source>
+        <translation type="obsolete">Déplacer/Copier</translation>
+    </message>
+    <message>
+        <source>Rotate Two</source>
+        <translation type="obsolete">Double rotation</translation>
+    </message>
+    <message>
+        <source>Lengthen</source>
+        <translation type="obsolete">Allonger</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarPoints</name>
+    <message>
+        <source>Points</source>
+        <translation type="obsolete">Points</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Retour au menu précédent</translation>
+    </message>
+    <message>
+        <source>Single points</source>
+        <translation type="obsolete">Points uniques</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarPolylines</name>
+    <message>
+        <source>Polylines</source>
+        <translation type="obsolete">Polylignes</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Retour au menu précédent</translation>
+    </message>
+    <message>
+        <source>Create Polyline</source>
+        <translation type="obsolete">Créer une polyligne</translation>
+    </message>
+    <message>
+        <source>Trim segments</source>
+        <translation type="obsolete">Ajuster les segments</translation>
+    </message>
+    <message>
+        <source>Delete between two nodes</source>
+        <translation type="obsolete">Supprimer entre deux nœuds</translation>
+    </message>
+    <message>
+        <source>Delete node</source>
+        <translation type="obsolete">Supprimer un nœud</translation>
+    </message>
+    <message>
+        <source>Add node</source>
+        <translation type="obsolete">Ajouter un nœud</translation>
+    </message>
+    <message>
+        <source>Append node</source>
+        <translation type="obsolete">Apposer un nœud</translation>
+    </message>
+    <message>
+        <source>Create Polyline from Existing Segments</source>
+        <translation type="obsolete">Créer une polyligne à partir de segments existants</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">Concentrique</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarSelect</name>
+    <message>
+        <source>Select</source>
+        <translation type="obsolete">Sélectionner</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="obsolete">Tout sélectionner</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Retour au menu précédent</translation>
+    </message>
+    <message>
+        <source>Select intersected entities</source>
+        <translation type="obsolete">Sélectionner les éléments communs</translation>
+    </message>
+    <message>
+        <source>Deselect intersected entities</source>
+        <translation type="obsolete">Annuler la sélection des éléments communs</translation>
+    </message>
+    <message>
+        <source>Deselect all</source>
+        <translation type="obsolete">Désélectionner tout</translation>
+    </message>
+    <message>
+        <source>Invert Selection</source>
+        <translation type="obsolete">Inverser la sélection</translation>
+    </message>
+    <message>
+        <source>Select layer</source>
+        <translation type="obsolete">Sélectionner un calque</translation>
+    </message>
+    <message>
+        <source>(De-)Select contour</source>
+        <translation type="obsolete">(Dé-)sélectionner la forme</translation>
+    </message>
+    <message>
+        <source>(De-)Select entity</source>
+        <translation type="obsolete">(Dé-)sélectionner l’objet</translation>
+    </message>
+    <message>
+        <source>Deselect Window</source>
+        <translation type="obsolete">Annuler la sélection dans une zone</translation>
+    </message>
+    <message>
+        <source>Select Window</source>
+        <translation type="obsolete">Sélectionner dans une zone</translation>
+    </message>
+    <message>
+        <source>Continue action</source>
+        <translation type="obsolete">Continuer l’action</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarSnap</name>
+    <message>
+        <source>Snap</source>
+        <translation type="obsolete">Accrocher</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Retour au menu précédent</translation>
+    </message>
+    <message>
+        <source>Snap to grid</source>
+        <translation type="obsolete">Accrocher à la grille</translation>
+    </message>
+    <message>
+        <source>Free positioning</source>
+        <translation type="obsolete">Positionnement libre</translation>
+    </message>
+    <message>
+        <source>Snap to Endpoints</source>
+        <translation type="obsolete">Accrocher aux extrémités</translation>
+    </message>
+    <message>
+        <source>Snap to closest point on entity</source>
+        <translation type="obsolete">Accrocher au point le plus proche sur l’objet</translation>
+    </message>
+    <message>
+        <source>Snap to center points</source>
+        <translation type="obsolete">Accrocher aux points centraux</translation>
+    </message>
+    <message>
+        <source>Snap to middle points</source>
+        <translation type="obsolete">Accrocher aux points du milieu</translation>
+    </message>
+    <message>
+        <source>Snap to point with given distance to endpoint</source>
+        <translation type="obsolete">Accrocher à un point situé à une distance donnée de l’extrémité</translation>
+    </message>
+    <message>
+        <source>Snap to intersections automatically</source>
+        <translation type="obsolete">Accrocher automatiquement aux intersections</translation>
+    </message>
+    <message>
+        <source>No Restriction</source>
+        <translation type="obsolete">Aucune restriction</translation>
+    </message>
+    <message>
+        <source>Orthogonal Restriction</source>
+        <translation type="obsolete">Restriction orthogonale</translation>
+    </message>
+    <message>
+        <source>Horizontal Restriction</source>
+        <translation type="obsolete">Restriction horizontale</translation>
+    </message>
+    <message>
+        <source>Vertical Restriction</source>
+        <translation type="obsolete">Restriction verticale</translation>
+    </message>
+    <message>
+        <source>Move relative Zero</source>
+        <translation type="obsolete">Déplacer le zéro relatif</translation>
+    </message>
+    <message>
+        <source>Lock relative Zero</source>
+        <translation type="obsolete">Verrouiller le zéro relatif</translation>
+    </message>
+    <message>
+        <source>Snap to intersections manually</source>
+        <translation type="obsolete">Accrocher manuellement aux intersections</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarSplines</name>
+    <message>
+        <source>Splines</source>
+        <translation type="obsolete">Courbes splines</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Retour au menu précédent</translation>
+    </message>
+    <message>
+        <source>Spline</source>
+        <translation type="obsolete">Courbe spline</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CircleOptions</name>
+    <message>
+        <source>Circle Options</source>
+        <translation type="obsolete">Paramètres des cercles</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="obsolete">Rayon&#xa0;:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CircleTan2Options</name>
+    <message>
+        <source>Radius:</source>
+        <translation type="obsolete">Rayon&#xa0;:</translation>
     </message>
 </context>
 <context>
@@ -2184,6 +3161,56 @@ dans une nouvelle fenêtre</translation>
     <message>
         <source>Coordinates</source>
         <translation>Coordonnées</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DimLinearOptions</name>
+    <message>
+        <source>Linear Dimension Options</source>
+        <translation type="obsolete">Paramètres de cotation linéaire</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Angle&#xa0;:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DimOptions</name>
+    <message>
+        <source>Dimension Options</source>
+        <translation type="obsolete">Paramètres de cotation</translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation type="obsolete">Étiquette&#xa0;:</translation>
+    </message>
+    <message>
+        <source>ø</source>
+        <translation type="obsolete">ø</translation>
+    </message>
+    <message>
+        <source>°</source>
+        <translation type="obsolete">°</translation>
+    </message>
+    <message>
+        <source>±</source>
+        <translation type="obsolete">±</translation>
+    </message>
+    <message>
+        <source>¶</source>
+        <translation type="obsolete">¶</translation>
+    </message>
+    <message>
+        <source>×</source>
+        <translation type="obsolete">×</translation>
+    </message>
+    <message>
+        <source>÷</source>
+        <translation type="obsolete">÷</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="obsolete">...</translation>
     </message>
 </context>
 <context>
@@ -4757,6 +5784,41 @@ la valeur par défaut de l’étape est donc nécessaire pour l’association</t
     </message>
 </context>
 <context>
+    <name>QG_DlgOptionsVariables</name>
+    <message>
+        <source>Drawing Variables</source>
+        <translation type="obsolete">Variables du dessin</translation>
+    </message>
+    <message>
+        <source>Variable</source>
+        <translation type="obsolete">Variable</translation>
+    </message>
+    <message>
+        <source>Code</source>
+        <translation type="obsolete">Code</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="obsolete">Valeur</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="obsolete">&amp;OK</translation>
+    </message>
+    <message>
+        <source>Alt+O</source>
+        <translation type="obsolete">Alt+O</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Annuler</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="obsolete">Esc</translation>
+    </message>
+</context>
+<context>
     <name>QG_DlgPoint</name>
     <message>
         <source>Point</source>
@@ -5850,6 +6912,29 @@ la valeur par défaut de l’étape est donc nécessaire pour l’association</t
     </message>
 </context>
 <context>
+    <name>QG_ImageOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="obsolete">Paramètres d’insertion</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Angle&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="obsolete">Angle de rotation</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="obsolete">Facteur&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="obsolete">Facteur de mise à l’échelle</translation>
+    </message>
+</context>
+<context>
     <name>QG_ImageOptionsDialog</name>
     <message>
         <source>Image Export Options</source>
@@ -6009,6 +7094,53 @@ la valeur par défaut de l’étape est donc nécessaire pour l’association</t
     </message>
 </context>
 <context>
+    <name>QG_InsertOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="obsolete">Paramètres d’insertion</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Angle&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="obsolete">Angle de rotation</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="obsolete">Facteur&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="obsolete">Facteur de mise à l’échelle</translation>
+    </message>
+    <message>
+        <source>Array:</source>
+        <translation type="obsolete">Matrice&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Number of Columns</source>
+        <translation type="obsolete">Nombre de colonnes</translation>
+    </message>
+    <message>
+        <source>Number of Rows</source>
+        <translation type="obsolete">Nombre de lignes</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="obsolete">Espacement&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Column Spacing</source>
+        <translation type="obsolete">Espacement des colonnes</translation>
+    </message>
+    <message>
+        <source>Row Spacing</source>
+        <translation type="obsolete">Espacement des lignes</translation>
+    </message>
+</context>
+<context>
     <name>QG_LayerBox</name>
     <message>
         <source>- Unchanged -</source>
@@ -6148,6 +7280,29 @@ Le contenu d’un calque de construction ne devrait pas s’afficher lors de l�
     </message>
 </context>
 <context>
+    <name>QG_LibraryInsertOptions</name>
+    <message>
+        <source>Library Insert Options</source>
+        <translation type="obsolete">Paramètres d’insertion de bibliothèques</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Angle&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="obsolete">Angle de rotation</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="obsolete">Facteur&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="obsolete">Facteur de mise à l’échelle</translation>
+    </message>
+</context>
+<context>
     <name>QG_LibraryWidget</name>
     <message>
         <source>Directories</source>
@@ -6168,6 +7323,178 @@ Le contenu d’un calque de construction ne devrait pas s’afficher lors de l�
     <message>
         <source>Library Browser</source>
         <translation type="obsolete">Menu des bibliothèques</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineAngleOptions</name>
+    <message>
+        <source>Line Angle Options</source>
+        <translation type="obsolete">Paramètres d’inclinaison de lignes</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Angle&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="obsolete">Inclinaison de la ligne</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">Longueur&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="obsolete">Longueur de la ligne</translation>
+    </message>
+    <message>
+        <source>Snap Point:</source>
+        <translation type="obsolete">Point d’accrochage&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="obsolete">Départ</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="obsolete">Milieu</translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation type="obsolete">Fin</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineBisectorOptions</name>
+    <message>
+        <source>Line Bisector Options</source>
+        <translation type="obsolete">Paramètres des lignes bissectrices</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">Longueur&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Length of bisector</source>
+        <translation type="obsolete">Longueur de la bissectrice</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">Nombre&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Number of bisectors to create</source>
+        <translation type="obsolete">Nombre de bissectrices à créer</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineOptions</name>
+    <message>
+        <source>Line Options</source>
+        <translation type="obsolete">Paramètres des lignes</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="obsolete">Fermer</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="obsolete">Annuler</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="obsolete">Effectuer à nouveau</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineParallelOptions</name>
+    <message>
+        <source>Line Parallel Options</source>
+        <translation type="obsolete">Paramètres des lignes parallèles</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="obsolete">Distance&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Distance to original entity</source>
+        <translation type="obsolete">Distance depuis l’objet de référence</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">Nombre&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="obsolete">Nombre de parallèles à créer</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineParallelThroughOptions</name>
+    <message>
+        <source>Line Parallel Through Options</source>
+        <translation type="obsolete">Paramètres des lignes parallèles passant par un point</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">Nombre&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="obsolete">Nombre de parallèles à créer</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LinePolygon2Options</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="obsolete">Paramètres des polygones</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">Nombre&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="obsolete">Nombre de bords</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LinePolygonOptions</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="obsolete">Paramètres des polygones</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">Nombre&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="obsolete">Nombre de bords</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineRelAngleOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="obsolete">Paramètres des lignes avec un angle relatif</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Angle&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="obsolete">Inclinaison de la ligne</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">Longueur&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="obsolete">Longueur de la ligne</translation>
     </message>
 </context>
 <context>
@@ -6290,6 +7617,28 @@ Le contenu d’un calque de construction ne devrait pas s’afficher lors de l�
     </message>
 </context>
 <context>
+    <name>QG_MTextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="obsolete">Paramètres des textes</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="obsolete">Texte&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Angle&#xa0;:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ModifyOffsetOptions</name>
+    <message>
+        <source>Distance:</source>
+        <translation type="obsolete">Distance&#xa0;:</translation>
+    </message>
+</context>
+<context>
     <name>QG_MouseWidget</name>
     <message>
         <source>Mouse</source>
@@ -6321,6 +7670,17 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QG_MoveRotateOptions</name>
+    <message>
+        <source>Move Rotate Options</source>
+        <translation type="obsolete">Paramètres de déplacement/rotation</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Angle&#xa0;:</translation>
+    </message>
+</context>
+<context>
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
@@ -6333,6 +7693,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Line type</source>
         <translation type="unfinished">Type de ligne</translation>
+    </message>
+</context>
+<context>
+    <name>QG_PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="obsolete">Paramètres des lignes avec un angle relatif</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="obsolete">Espacement&#xa0;:</translation>
     </message>
 </context>
 <context>
@@ -6387,6 +7758,25 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QG_PrintPreviewOptions</name>
+    <message>
+        <source>Print Preview Options</source>
+        <translation type="obsolete">Options d’aperçu avant impression</translation>
+    </message>
+    <message>
+        <source>Toggle Black / White mode</source>
+        <translation type="obsolete">Basculer entre les modes blanc et noir</translation>
+    </message>
+    <message>
+        <source>Center to page</source>
+        <translation type="obsolete">Centré sur la page</translation>
+    </message>
+    <message>
+        <source>Fit to page</source>
+        <translation type="obsolete">Ajusté à la page</translation>
+    </message>
+</context>
+<context>
     <name>QG_RecentFiles</name>
     <message>
         <source>&amp;%1 %2</source>
@@ -6395,6 +7785,25 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Opening recent file...</source>
         <translation type="obsolete">Ouverture du fichier récent...</translation>
+    </message>
+</context>
+<context>
+    <name>QG_RoundOptions</name>
+    <message>
+        <source>Round Options</source>
+        <translation type="obsolete">Paramètres des arrondis</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="obsolete">Ajuster</translation>
+    </message>
+    <message>
+        <source>Check to trim both edges to the rounding</source>
+        <translation type="obsolete">Vérifier pour ajuster les deux bords selon l’arrondi</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="obsolete">Rayon&#xa0;:</translation>
     </message>
 </context>
 <context>
@@ -6442,6 +7851,24 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>0</source>
         <translation type="obsolete">0</translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapDistOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="obsolete">Options de la distance d’accrochage</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="obsolete">Distance&#xa0;:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapMiddleOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="obsolete">Options de la distance d’accrochage</translation>
     </message>
 </context>
 <context>
@@ -6557,6 +7984,71 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Exclusive Snap Mode</source>
         <translation>Mode d’accrochage exclusif</translation>
+    </message>
+</context>
+<context>
+    <name>QG_SplineOptions</name>
+    <message>
+        <source>Spline Options</source>
+        <translation type="obsolete">Paramètres des courbes splines</translation>
+    </message>
+    <message>
+        <source>Degree:</source>
+        <translation type="obsolete">Degré&#xa0;:</translation>
+    </message>
+    <message>
+        <source>1</source>
+        <translation type="obsolete">1</translation>
+    </message>
+    <message>
+        <source>2</source>
+        <translation type="obsolete">2</translation>
+    </message>
+    <message>
+        <source>3</source>
+        <translation type="obsolete">3</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="obsolete">Fermé</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="obsolete">Annuler</translation>
+    </message>
+</context>
+<context>
+    <name>QG_TextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="obsolete">Paramètres des textes</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="obsolete">Texte&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Angle&#xa0;:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_TrimAmountOptions</name>
+    <message>
+        <source>Trim Amount Options</source>
+        <translation type="obsolete">Paramètres de la quantité d’ajustements</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending.</source>
+        <translation type="obsolete">Distance. Valeurs négatives pour raccourcir, positives pour rallonger.</translation>
+    </message>
+    <message>
+        <source>Amount:</source>
+        <translation type="obsolete">Quantité&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">Longueur&#xa0;:</translation>
     </message>
 </context>
 <context>
@@ -8655,6 +10147,132 @@ Continuer?</translation>
         <source>Loading Library Paths..</source>
         <translation type="obsolete">Chargement des chemins d’accès à la bibliothèque...</translation>
     </message>
+    <message>
+        <source>A0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>C5E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comm10E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DLE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen</source>
+        <translation type="unfinished">Stylet</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksAdd</name>
+    <message>
+        <source>Add Block</source>
+        <translation type="obsolete">Ajouter un bloc</translation>
+    </message>
+    <message>
+        <source>&amp;Add Block</source>
+        <translation type="obsolete">&amp;Ajouter un bloc</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksAttributes</name>
+    <message>
+        <source>Rename Block</source>
+        <translation type="obsolete">Renommer le bloc</translation>
+    </message>
+    <message>
+        <source>&amp;Rename Block</source>
+        <translation type="obsolete">&amp;Renommer le bloc</translation>
+    </message>
+    <message>
+        <source>Rename Block and all Inserts</source>
+        <translation type="obsolete">Renommer le blocs et tous les objets insérés</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
@@ -8673,6 +10291,59 @@ Continuer?</translation>
     <message>
         <source>&amp;Create Block</source>
         <translation type="obsolete">&amp;Créer un bloc</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksEdit</name>
+    <message>
+        <source>Edit Block</source>
+        <translation type="obsolete">Éditer le bloc</translation>
+    </message>
+    <message>
+        <source>&amp;Edit Block</source>
+        <translation type="obsolete">&amp;Éditer le bloc</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksExplode</name>
+    <message>
+        <source>Explode</source>
+        <translation type="obsolete">Éclater</translation>
+    </message>
+    <message>
+        <source>&amp;Explode</source>
+        <translation type="obsolete">&amp;Éclater</translation>
+    </message>
+    <message>
+        <source>Explode Blocks and other Entity Groups</source>
+        <translation type="obsolete">Éclater les blocs et les autres éléments groupés</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksFreezeAll</name>
+    <message>
+        <source>Freeze all</source>
+        <translation type="obsolete">Bloquer tout</translation>
+    </message>
+    <message>
+        <source>&amp;Freeze all</source>
+        <translation type="obsolete">&amp;Bloquer tout</translation>
+    </message>
+    <message>
+        <source>Freeze all blocks</source>
+        <translation type="obsolete">Bloquer tous les blocs</translation>
+    </message>
+    <message>
+        <source>Defreeze all</source>
+        <translation type="obsolete">Débloquer tout</translation>
+    </message>
+    <message>
+        <source>&amp;Defreeze all</source>
+        <translation type="obsolete">&amp;Débloquer tout</translation>
+    </message>
+    <message>
+        <source>Defreeze all blocks</source>
+        <translation type="obsolete">Débloquer tous les blocs</translation>
     </message>
 </context>
 <context>
@@ -8727,10 +10398,36 @@ Continuer?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionBlocksRemove</name>
+    <message>
+        <source>Remove Block</source>
+        <translation type="obsolete">Supprimer le bloc</translation>
+    </message>
+    <message>
+        <source>&amp;Remove Block</source>
+        <translation type="obsolete">&amp;Supprimer le bloc</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionBlocksSave</name>
     <message>
         <source>No block activated to save</source>
         <translation>Aucun bloc activé à enregistrer</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksToggleView</name>
+    <message>
+        <source>Toggle Block Visibility</source>
+        <translation type="obsolete">Basculer la visibilité du bloc</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Block</source>
+        <translation type="obsolete">&amp;Basculer le bloc</translation>
+    </message>
+    <message>
+        <source>Toggle Block</source>
+        <translation type="obsolete">Basculer le bloc</translation>
     </message>
 </context>
 <context>
@@ -10075,6 +11772,49 @@ Continuer?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionDrawLinePolygon2</name>
+    <message>
+        <source>Polygon</source>
+        <translation type="obsolete">Polygone</translation>
+    </message>
+    <message>
+        <source>Polygo&amp;n (Cor,Cor)</source>
+        <translation type="obsolete">Polygo&amp;ne (Coin, Coin)</translation>
+    </message>
+    <message>
+        <source>Draw polygon with two corners</source>
+        <translation type="obsolete">Dessiner un polygone à partir de deux coins</translation>
+    </message>
+    <message>
+        <source>Specify first corner</source>
+        <translation type="obsolete">Indiquer le premier coin</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Annuler</translation>
+    </message>
+    <message>
+        <source>Specify second corner</source>
+        <translation type="obsolete">Indiquer le deuxième coin</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="obsolete">Retour</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">Nombre&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="obsolete">Chiffre non valide. Essayer entre 1 et&#xa0;9999.</translation>
+    </message>
+    <message>
+        <source>Not a valid expression.</source>
+        <translation type="obsolete">N’est pas une expression valide.</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionDrawLinePolygonCenCor</name>
     <message>
         <source>Specify center</source>
@@ -10134,6 +11874,41 @@ Continuer?</translation>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
         <translation type="obsolete">Polygo&amp;ne (Coin, Coin)</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawLinePolyline</name>
+    <message>
+        <source>Draw polylines</source>
+        <translation type="obsolete">Dessiner des polylignes</translation>
+    </message>
+    <message>
+        <source>Specify first point</source>
+        <translation type="obsolete">Indiquer le premier point</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Annuler</translation>
+    </message>
+    <message>
+        <source>Specify next point or [%1]</source>
+        <translation type="obsolete">Indiquer le point suivant ou [%1]</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="obsolete">Retour</translation>
+    </message>
+    <message>
+        <source>Specify next point</source>
+        <translation type="obsolete">Indiquer le point suivant</translation>
+    </message>
+    <message>
+        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
+        <translation type="obsolete">Impossible de fermer la séquence des lignes&#xa0;: pas encore assez d’éléments définis.</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="obsolete">Impossible d’annuler&#xa0;: pas encore assez d’éléments définis.</translation>
     </message>
 </context>
 <context>
@@ -10537,6 +12312,70 @@ Continuer?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionFileNew</name>
+    <message>
+        <source>New Drawing</source>
+        <translation type="obsolete">Nouveau dessin</translation>
+    </message>
+    <message>
+        <source>&amp;New</source>
+        <translation type="obsolete">&amp;Nouveau</translation>
+    </message>
+    <message>
+        <source>Creates a new drawing</source>
+        <translation type="obsolete">Crée un nouveau dessin</translation>
+    </message>
+    <message>
+        <source>&amp;New...</source>
+        <translation type="obsolete">&amp;Nouveau...</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionFileOpen</name>
+    <message>
+        <source>Open Drawing</source>
+        <translation type="obsolete">Ouvrir un dessin</translation>
+    </message>
+    <message>
+        <source>&amp;Open...</source>
+        <translation type="obsolete">&amp;Ouvrir...</translation>
+    </message>
+    <message>
+        <source>Opens an existing drawing</source>
+        <translation type="obsolete">Ouvre un dessin existant</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionFileSave</name>
+    <message>
+        <source>Save Drawing</source>
+        <translation type="obsolete">Enregistrer le dessin</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation type="obsolete">&amp;Enregistrer</translation>
+    </message>
+    <message>
+        <source>Saves the current drawing</source>
+        <translation type="obsolete">Enregistre le dessin actif</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionFileSaveAs</name>
+    <message>
+        <source>Save Drawing As</source>
+        <translation type="obsolete">Enregistrer le dessin sous</translation>
+    </message>
+    <message>
+        <source>Save &amp;as...</source>
+        <translation type="obsolete">Enregistrer &amp;sous...</translation>
+    </message>
+    <message>
+        <source>Saves the current drawing under a new filename</source>
+        <translation type="obsolete">Enregistre le dessin actif sous un autre nom</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Lines are parallel</source>
@@ -10759,6 +12598,96 @@ Continuer?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionLayersAdd</name>
+    <message>
+        <source>Add Layer</source>
+        <translation type="obsolete">Ajouter un calque</translation>
+    </message>
+    <message>
+        <source>&amp;Add Layer</source>
+        <translation type="obsolete">&amp;Ajouter un calque</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionLayersEdit</name>
+    <message>
+        <source>Edit Layer</source>
+        <translation type="obsolete">Éditer un calque</translation>
+    </message>
+    <message>
+        <source>&amp;Edit Layer</source>
+        <translation type="obsolete">&amp;Modifier le calque</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionLayersFreezeAll</name>
+    <message>
+        <source>Freeze all</source>
+        <translation type="obsolete">Bloquer tout</translation>
+    </message>
+    <message>
+        <source>&amp;Freeze all</source>
+        <translation type="obsolete">&amp;Bloquer tout</translation>
+    </message>
+    <message>
+        <source>Freeze all layers</source>
+        <translation type="obsolete">Bloquer tous les calques</translation>
+    </message>
+    <message>
+        <source>Defreeze all</source>
+        <translation type="obsolete">Débloquer tout</translation>
+    </message>
+    <message>
+        <source>&amp;Defreeze all</source>
+        <translation type="obsolete">&amp;Débloquer tout</translation>
+    </message>
+    <message>
+        <source>Defreeze all layers</source>
+        <translation type="obsolete">Débloquer tous les calques</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionLayersRemove</name>
+    <message>
+        <source>Remove Layer</source>
+        <translation type="obsolete">Supprimer le calque</translation>
+    </message>
+    <message>
+        <source>&amp;Remove Layer</source>
+        <translation type="obsolete">&amp;Supprimer le calque</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionLayersToggleLock</name>
+    <message>
+        <source>Toggle Layer Lock</source>
+        <translation type="obsolete">Basculer le verrouillage du calque</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Lock</source>
+        <translation type="obsolete">&amp;Basculer le verrouillage</translation>
+    </message>
+    <message>
+        <source>Toggle Lock</source>
+        <translation type="obsolete">Basculer le verrouillage</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionLayersToggleView</name>
+    <message>
+        <source>Toggle Layer Visibility</source>
+        <translation type="obsolete">Basculer la visibilité du calque</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Layer</source>
+        <translation type="obsolete">&amp;Basculer le calque</translation>
+    </message>
+    <message>
+        <source>Toggle Layer</source>
+        <translation type="obsolete">Basculer le calque</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionLibraryInsert</name>
     <message>
         <source>Insert Library Object</source>
@@ -10814,6 +12743,21 @@ Continuer?</translation>
     <message>
         <source>(Un-)Lock relative Zero</source>
         <translation type="obsolete">(Dé-)verrouiller le zéro relatif</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyAttributes</name>
+    <message>
+        <source>Attributes</source>
+        <translation type="obsolete">Attributs</translation>
+    </message>
+    <message>
+        <source>&amp;Attributes</source>
+        <translation type="obsolete">&amp;Attributs</translation>
+    </message>
+    <message>
+        <source>Modify Entity Attributes</source>
+        <translation type="obsolete">Modifier les attributs de l’objet</translation>
     </message>
 </context>
 <context>
@@ -10916,6 +12860,21 @@ Continuer?</translation>
     <message>
         <source>Entity must be a line, arc, circle or ellipse.</source>
         <translation type="obsolete">L’objet doit être une ligne, un arc, un cercle ou une ellipse.</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyDelete</name>
+    <message>
+        <source>Delete</source>
+        <translation type="obsolete">Supprimer</translation>
+    </message>
+    <message>
+        <source>&amp;Delete</source>
+        <translation type="obsolete">&amp;Supprimer</translation>
+    </message>
+    <message>
+        <source>Delete Entities</source>
+        <translation type="obsolete">Supprimer les éléments</translation>
     </message>
 </context>
 <context>
@@ -11041,6 +13000,21 @@ Continuer?</translation>
     <message>
         <source>Modify Entity Properties</source>
         <translation type="obsolete">Modifier les propriétés d’un objet</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyExplodeText</name>
+    <message>
+        <source>Explode Text</source>
+        <translation type="obsolete">Éclater le texte</translation>
+    </message>
+    <message>
+        <source>&amp;Explode Text into Letters</source>
+        <translation type="obsolete">&amp;Éclater le texte en lettres</translation>
+    </message>
+    <message>
+        <source>Explodes Text Entities into single Letters</source>
+        <translation type="obsolete">Éclate des éléments de texte en simple lettres</translation>
     </message>
 </context>
 <context>
@@ -11436,6 +13410,21 @@ Continuer?</translation>
     <message>
         <source>Back</source>
         <translation type="unfinished">Retour</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionOptionsDrawing</name>
+    <message>
+        <source>Drawing</source>
+        <translation type="obsolete">Dessin</translation>
+    </message>
+    <message>
+        <source>Current &amp;Drawing Preferences</source>
+        <translation type="obsolete">Préférences du &amp;dessin actif</translation>
+    </message>
+    <message>
+        <source>Settings for the current Drawing</source>
+        <translation type="obsolete">Paramètres du dessin actif</translation>
     </message>
 </context>
 <context>
@@ -11905,6 +13894,37 @@ Continuer?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionSelectAll</name>
+    <message>
+        <source>Select All</source>
+        <translation type="obsolete">Sélectionner tout</translation>
+    </message>
+    <message>
+        <source>Select &amp;All</source>
+        <translation type="obsolete">&amp;Tout sélectionner</translation>
+    </message>
+    <message>
+        <source>Selects all Entities</source>
+        <translation type="obsolete">Sélectionne tous les éléments</translation>
+    </message>
+    <message>
+        <source>Deselect all</source>
+        <translation type="obsolete">Désélectionner tout</translation>
+    </message>
+    <message>
+        <source>Deselect &amp;all</source>
+        <translation type="obsolete">&amp;Annuler la sélection</translation>
+    </message>
+    <message>
+        <source>Deselects all Entities</source>
+        <translation type="obsolete">Annule la sélection de tous les éléments</translation>
+    </message>
+    <message>
+        <source>Ctrl+K</source>
+        <translation type="obsolete">Ctrl+K</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionSelectContour</name>
     <message>
         <source>Entity must be an Atomic Entity.</source>
@@ -11964,6 +13984,47 @@ Continuer?</translation>
     <message>
         <source>Deselects all entities intersected by a line</source>
         <translation type="obsolete">Annule la sélection de tous les éléments coupés par une ligne</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionSelectInvert</name>
+    <message>
+        <source>Invert Selection</source>
+        <translation type="obsolete">Inverser la sélection</translation>
+    </message>
+    <message>
+        <source>&amp;Invert Selection</source>
+        <translation type="obsolete">&amp;Inverser la sélection</translation>
+    </message>
+    <message>
+        <source>Inverts the current selection</source>
+        <translation type="obsolete">Inverse la sélection active</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionSelectLayer</name>
+    <message>
+        <source>(De-)Select Layer</source>
+        <translation type="obsolete">(Dé-)sélectionner le calque</translation>
+    </message>
+    <message>
+        <source>(De-)Selects layers</source>
+        <translation type="obsolete">(Dé-)sélectionne des calques</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionSelectSingle</name>
+    <message>
+        <source>Select Entity</source>
+        <translation type="obsolete">Sélectionner l’objet</translation>
+    </message>
+    <message>
+        <source>(De-)&amp;Select Entity</source>
+        <translation type="obsolete">(Dé-)&amp;sélectionner l’objet</translation>
+    </message>
+    <message>
+        <source>Selects single Entities</source>
+        <translation type="obsolete">Sélectionne les objets simples</translation>
     </message>
 </context>
 <context>
@@ -12091,2738 +14152,6 @@ Continuer?</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionZoomPan</name>
-    <message>
-        <source>Click and drag to pan zoom</source>
-        <translation>Cliquer et glisser pour effectuer un zoom panoramique</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Zoom panning</source>
-        <translation>Déplacement de la vue</translation>
-    </message>
-    <message>
-        <source>Pan Zoom</source>
-        <translation type="obsolete">Zoom panoramique</translation>
-    </message>
-    <message>
-        <source>&amp;Pan Zoom</source>
-        <translation type="obsolete">&amp;Zoom panoramique</translation>
-    </message>
-    <message>
-        <source>Realtime Panning</source>
-        <translation type="obsolete">Déplacement latéral en temps réel</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionZoomWindow</name>
-    <message>
-        <source>Specify first edge</source>
-        <translation>Indiquer le premier bord</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Specify second edge</source>
-        <translation>Indiquer le deuxième bord</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Retour</translation>
-    </message>
-    <message>
-        <source>Window Zoom</source>
-        <translation type="obsolete">Zoom sur une zone</translation>
-    </message>
-    <message>
-        <source>&amp;Window Zoom</source>
-        <translation type="obsolete">Zoom sur une &amp;zone</translation>
-    </message>
-    <message>
-        <source>Zooms in a window</source>
-        <translation type="obsolete">Effectue un zoom dans une zone</translation>
-    </message>
-</context>
-<context>
-    <name>TextFileViewer</name>
-    <message>
-        <source>Frame</source>
-        <translation>Cadre</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation>Paramètres des arcs</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation>Sens antihoraire</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation>Sens horaire</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation>Paramètres d’arc tangent</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation>Rayon de l’arc tangent</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation>Angle sous-tendu total de l’arc tangent</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>Rayon</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>Angle</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation>Paramètres de chanfrein</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation>Vérifier pour ajuster les deux éléments avec le chanfrein</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation>Ajuster</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation>Longueur 1&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation>Longueur 2&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleDiamOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="unfinished">Paramètres des cercles</translation>
-    </message>
-    <message>
-        <source>Diameter:</source>
-        <translation type="unfinished">Diamètre&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation>Paramètres des cercles</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation>Rayon&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleTan2Options</name>
-    <message>
-        <source>Circle Tangential2 Options</source>
-        <translation>Paramètres des cercles tangents 2</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rayon du cercle tangent à tracer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation>Rayon&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation>Rayon du cercle tangent</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Linear Dimension Options</source>
-        <translation>Paramètres de cotation linéaire</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation>Angle&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_DimOptions</name>
-    <message>
-        <source>Dimension Options</source>
-        <translation>Paramètres de cotation</translation>
-    </message>
-    <message>
-        <source>Label:</source>
-        <translation>Étiquette&#xa0;:</translation>
-    </message>
-    <message>
-        <source>⌀</source>
-        <translation>⌀</translation>
-    </message>
-    <message>
-        <source>°</source>
-        <translation>°</translation>
-    </message>
-    <message>
-        <source>±</source>
-        <translation>±</translation>
-    </message>
-    <message>
-        <source>π</source>
-        <translation>π</translation>
-    </message>
-    <message>
-        <source>×</source>
-        <translation>×</translation>
-    </message>
-    <message>
-        <source>÷</source>
-        <translation>÷</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation>...</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation>Paramètres d’insertion</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation>Angle&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation>Angle de rotation</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation>Facteur&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation>Facteur de mise à l’échelle</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation>DPI</translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation>PPP de l’image</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation>Paramètres d’insertion</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation>Angle&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation>Angle de rotation</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation>Facteur&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation>Facteur de mise à l’échelle</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation>Matrice&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation>Nombre de colonnes</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation>Nombre de lignes</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation>Espacement&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation>Espacement des colonnes</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation>Espacement des lignes</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LibraryInsertOptions</name>
-    <message>
-        <source>Library Insert Options</source>
-        <translation>Paramètres d’insertion de bibliothèques</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation>Angle&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation>Angle de rotation</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation>Facteur&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation>Facteur de mise à l’échelle</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation>Paramètres d’inclinaison de lignes</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation>Angle&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation>Inclinaison de la ligne</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation>Longueur&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation>Longueur de la ligne</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation>Point d’accrochage&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation>Départ</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation>Milieu</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation>Fin</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation>Paramètres des lignes bissectrices</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation>Longueur&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation>Longueur de la bissectrice</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation>Nombre&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation>Nombre de bissectrices à créer</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation>Paramètres des lignes</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation>Créer une forme fermée à partir des lignes tracées</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Fermer</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation>Annuler le dernier tracé de ligne</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation>Rétablir le dernier tracé de ligne</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation>Effectuer à nouveau</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation>Paramètres des lignes parallèles</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation>Distance&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation>Distance depuis l’objet de référence</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation>Nombre&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation>Nombre de parallèles à créer</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation>Paramètres des lignes parallèles passant par un point</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation>Nombre&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation>Nombre de parallèles à créer</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation>Paramètres des polygones</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation>Nombre&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation>Nombre de bords</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation>Paramètres des polygones</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation>Nombre&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation>Nombre de bords</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation>Paramètres des lignes avec un angle relatif</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation>Angle&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation>Inclinaison de la ligne</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation>Longueur&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation>Longueur de la ligne</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation>Paramètres des textes</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation>Texte&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation>Angle&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ModifyOffsetOptions</name>
-    <message>
-        <source>Modify Offset Options</source>
-        <translation>Paramètres de décalage</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation>Distance&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Offset from original entity</source>
-        <translation>Décalage depuis l’objet de référence</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation>Paramètres de déplacement/rotation</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation>Angle&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PolylineOptions</name>
-    <message>
-        <source>Polyline Options</source>
-        <translation>Paramètres des polylignes</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Fermer</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation>Ligne</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation>Tangent</translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation>Rayon tangent</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation>Angle</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation>Rayon&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation>Angle&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation>Sens antihoraire</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation>Sens horaire</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation>Options d’aperçu avant impression</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;L’échelle d’impression est fixée à la valeur actuelle&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation>fixé</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation>Basculer entre les modes blanc et noir</translation>
-    </message>
-    <message>
-        <source>Center to page</source>
-        <translation>Centré sur la page</translation>
-    </message>
-    <message>
-        <source>Fit to page</source>
-        <translation>Ajusté à la page</translation>
-    </message>
-    <message>
-        <source>Calculate number of pages needed to contain the drawing.</source>
-        <translation type="unfinished">Calculer le nombre de pages nécessaires pour contenir le dessin.</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation>Paramètres des arrondis</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation>Vérifier pour ajuster les deux bords selon l’arrondi</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation>Ajuster</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation>Rayon&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ShapeTextOptions</name>
-    <message>
-        <source>Shape Text Options</source>
-        <translation type="unfinished">Paramètres de texte de forme</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="unfinished">Décalage&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_SnapDistOptions</name>
-    <message>
-        <source>Snap Distance Options</source>
-        <translation>Options de la distance d’accrochage</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation>Distance&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_SnapMiddleOptions</name>
-    <message>
-        <source>Snap Distance Options</source>
-        <translation>Options de la distance d’accrochage</translation>
-    </message>
-    <message>
-        <source>Middle Points:</source>
-        <translation>Points intermédiaires&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Number of equidistant division points</source>
-        <translation>Nombre de points de division équidistants</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation>Paramètres des courbes splines</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation>Degré&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation>Fermé</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation>Annuler</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation>Paramètres des textes</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation>Texte&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation>Angle&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation>Paramètres de la quantité d’ajustements</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>Distance. Valeurs négatives pour raccourcir, positives pour rallonger.</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation>Longueur&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation>Distance. Valeurs négatives pour raccourcir, positives pour rallonger. Les signes négatifs sont ignorés lors de l’ajustement pour obtenir la longueur totale finale.</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation>La longueur saisie est utilisée en tant que longueur totale après ajustement, plutôt que comme une longueur ajoutée</translation>
-    </message>
-</context>
-<context>
-    <name>WidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation>Cadre</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation>&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation>&lt;</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation>Nom</translation>
-    </message>
-    <message>
-        <source>Create</source>
-        <translation>Créer</translation>
-    </message>
-    <message>
-        <source>Destroy</source>
-        <translation>Détruire</translation>
-    </message>
-    <message>
-        <source>Assign</source>
-        <translation>Assigner</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>Mettre à jour</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ActionFactory</name>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="obsolete">&amp;Fermer</translation>
-    </message>
-    <message>
-        <source>Quits the application</source>
-        <translation type="obsolete">Quitte l’application</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="obsolete">Libre</translation>
-    </message>
-    <message>
-        <source>&amp;Free</source>
-        <translation type="obsolete">&amp;Libre</translation>
-    </message>
-    <message>
-        <source>Free positioning</source>
-        <translation type="obsolete">Positionnement libre</translation>
-    </message>
-    <message>
-        <source>Grid</source>
-        <translation type="obsolete">Grille</translation>
-    </message>
-    <message>
-        <source>&amp;Grid</source>
-        <translation type="obsolete">&amp;Grille</translation>
-    </message>
-    <message>
-        <source>Grid positioning</source>
-        <translation type="obsolete">Positionnement sur la grille</translation>
-    </message>
-    <message>
-        <source>Endpoints</source>
-        <translation type="obsolete">Extrémités</translation>
-    </message>
-    <message>
-        <source>&amp;Endpoints</source>
-        <translation type="obsolete">&amp;Extrémités</translation>
-    </message>
-    <message>
-        <source>Snap to endpoints</source>
-        <translation type="obsolete">Accrocher aux extrémités</translation>
-    </message>
-    <message>
-        <source>On Entity</source>
-        <translation type="obsolete">Sur l’objet</translation>
-    </message>
-    <message>
-        <source>&amp;On Entity</source>
-        <translation type="obsolete">&amp;Sur l’objet</translation>
-    </message>
-    <message>
-        <source>Snap to nearest point on entity</source>
-        <translation type="obsolete">Accrocher au point le plus près sur l’objet</translation>
-    </message>
-    <message>
-        <source>Center</source>
-        <translation type="obsolete">Centre</translation>
-    </message>
-    <message>
-        <source>&amp;Center</source>
-        <translation type="obsolete">&amp;Centre</translation>
-    </message>
-    <message>
-        <source>Snap to centers</source>
-        <translation type="obsolete">Accrocher aux centres</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="obsolete">Milieu</translation>
-    </message>
-    <message>
-        <source>&amp;Middle</source>
-        <translation type="obsolete">&amp;Milieu</translation>
-    </message>
-    <message>
-        <source>Snap to middle points</source>
-        <translation type="obsolete">Accrocher aux points du milieu</translation>
-    </message>
-    <message>
-        <source>Distance from Endpoint</source>
-        <translation type="obsolete">Distance depuis l’extrémité</translation>
-    </message>
-    <message>
-        <source>&amp;Distance from Endpoint</source>
-        <translation type="obsolete">&amp;Distance depuis l’extrémité</translation>
-    </message>
-    <message>
-        <source>Snap to points with a given distance to an endpoint</source>
-        <translation type="obsolete">Accrocher aux points à une distance donnée d’une extrémité</translation>
-    </message>
-    <message>
-        <source>Intersection</source>
-        <translation type="obsolete">Intersection</translation>
-    </message>
-    <message>
-        <source>&amp;Intersection</source>
-        <translation type="obsolete">&amp;Intersection</translation>
-    </message>
-    <message>
-        <source>Snap to intersection points</source>
-        <translation type="obsolete">Accrocher aux points d’intersection</translation>
-    </message>
-    <message>
-        <source>Restrict Nothing</source>
-        <translation type="obsolete">Aucune restriction</translation>
-    </message>
-    <message>
-        <source>Restrict &amp;Nothing</source>
-        <translation type="obsolete">Aucune &amp;restriction</translation>
-    </message>
-    <message>
-        <source>No snap restriction</source>
-        <translation type="obsolete">Aucune restriction d’accrochage</translation>
-    </message>
-    <message>
-        <source>Restrict Orthogonally</source>
-        <translation type="obsolete">Restreindre orthogonalement</translation>
-    </message>
-    <message>
-        <source>Restrict &amp;Orthogonally</source>
-        <translation type="obsolete">Restreindre &amp;orthogonalement</translation>
-    </message>
-    <message>
-        <source>Restrict snapping orthogonally</source>
-        <translation type="obsolete">Restriction de l’accrochage orthogonal</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation type="obsolete">Restreindre horizontalement</translation>
-    </message>
-    <message>
-        <source>Restrict &amp;Horizontally</source>
-        <translation type="obsolete">Restreindre &amp;horizontalement</translation>
-    </message>
-    <message>
-        <source>Restrict snapping horizontally</source>
-        <translation type="obsolete">Restriction de l’accrochage horizontal</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation type="obsolete">Restreindre verticalement</translation>
-    </message>
-    <message>
-        <source>Restrict &amp;Vertically</source>
-        <translation type="obsolete">Restreindre &amp;verticalement</translation>
-    </message>
-    <message>
-        <source>Restrict snapping vertically</source>
-        <translation type="obsolete">Restriction de l’accrochage vertical</translation>
-    </message>
-    <message>
-        <source>General Application Preferences</source>
-        <translation type="obsolete">Paramètres généraux de l’application</translation>
-    </message>
-    <message>
-        <source>Closes the current drawing</source>
-        <translation type="obsolete">Ferme le dessin actif</translation>
-    </message>
-    <message>
-        <source>Prints out the current drawing</source>
-        <translation type="obsolete">Imprime le dessin actif</translation>
-    </message>
-    <message>
-        <source>Close Drawing</source>
-        <translation type="obsolete">Fermer le dessin</translation>
-    </message>
-    <message>
-        <source>Print Drawing</source>
-        <translation type="obsolete">Imprimer le dessin</translation>
-    </message>
-    <message>
-        <source>Export Drawing</source>
-        <translation type="obsolete">Exporter le dessin</translation>
-    </message>
-    <message>
-        <source>Exports the current drawing as bitmap</source>
-        <translation type="obsolete">Exporte le dessin actif en tant que bitmap</translation>
-    </message>
-    <message>
-        <source>Application</source>
-        <translation type="obsolete">Application</translation>
-    </message>
-    <message>
-        <source>&amp;Application Preferences</source>
-        <translation type="obsolete">&amp;Paramètres de l’application</translation>
-    </message>
-    <message>
-        <source>Enables/disables the grid</source>
-        <translation type="obsolete">Active/désactive la grille</translation>
-    </message>
-    <message>
-        <source>Statusbar</source>
-        <translation type="obsolete">Barre d’état</translation>
-    </message>
-    <message>
-        <source>&amp;Statusbar</source>
-        <translation type="obsolete">&amp;Barre d’état</translation>
-    </message>
-    <message>
-        <source>Enables/disables the statusbar</source>
-        <translation type="obsolete">Active/désactive la barre d’état</translation>
-    </message>
-    <message>
-        <source>Draft</source>
-        <translation type="obsolete">Esquisse</translation>
-    </message>
-    <message>
-        <source>&amp;Draft</source>
-        <translation type="obsolete">&amp;Esquisse</translation>
-    </message>
-    <message>
-        <source>Enables/disables the draft mode</source>
-        <translation type="obsolete">Active/désactive le mode Esquisse</translation>
-    </message>
-    <message>
-        <source>Open IDE</source>
-        <translation type="obsolete">Ouvrir IDE</translation>
-    </message>
-    <message>
-        <source>&amp;Open IDE</source>
-        <translation type="obsolete">&amp;Ouvrir IDE</translation>
-    </message>
-    <message>
-        <source>Opens the integrated development environment for scripting</source>
-        <translation type="obsolete">Ouvre l’environnement de développement intégré de scripts</translation>
-    </message>
-    <message>
-        <source>Run Script..</source>
-        <translation type="obsolete">Lancer le script...</translation>
-    </message>
-    <message>
-        <source>&amp;Run Script..</source>
-        <translation type="obsolete">&amp;Lancer le script...</translation>
-    </message>
-    <message>
-        <source>Runs a script</source>
-        <translation type="obsolete">Lance un script</translation>
-    </message>
-    <message>
-        <source>&amp;Preferences</source>
-        <translation type="obsolete">&amp;Préférences</translation>
-    </message>
-    <message>
-        <source>&amp;Export...</source>
-        <translation type="obsolete">&amp;Exporter...</translation>
-    </message>
-    <message>
-        <source>&amp;Print...</source>
-        <translation type="obsolete">&amp;Imprimer...</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation type="obsolete">Quitter</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation type="obsolete">&amp;Quitter</translation>
-    </message>
-    <message>
-        <source>CTRL-G</source>
-        <translation type="obsolete">CTRL-G</translation>
-    </message>
-    <message>
-        <source>Restrict&amp;Vertically</source>
-        <translation type="obsolete">Restreindre&amp;verticalement</translation>
-    </message>
-    <message>
-        <source>&amp;back</source>
-        <translation type="obsolete">&amp;retour</translation>
-    </message>
-    <message>
-        <source>&amp;Selection pointer</source>
-        <translation type="obsolete">&amp;Pointeur de sélection</translation>
-    </message>
-    <message>
-        <source>&amp;Block</source>
-        <translation type="obsolete">&amp;Bloc</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="obsolete">Paramètres des arcs</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="obsolete">Sens horaire</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation type="obsolete">Sens antihoraire</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="obsolete">Paramètres d’arc tangent</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Rayon&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="obsolete">Angle</translation>
-    </message>
-</context>
-<context>
-    <name>QG_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="obsolete">Paramètres de chanfrein</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="obsolete">Ajuster</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="obsolete">Vérifier pour ajuster les deux éléments avec le chanfrein</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="obsolete">Longueur 1&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="obsolete">Longueur 2&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBar</name>
-    <message>
-        <source>CAD Tools</source>
-        <translation type="obsolete">Outils de DAO</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarArcs</name>
-    <message>
-        <source>Arcs</source>
-        <translation type="obsolete">Arcs</translation>
-    </message>
-    <message>
-        <source>Arc with three points</source>
-        <translation type="obsolete">Arc avec trois points</translation>
-    </message>
-    <message>
-        <source>Arc with Center, Point, Angles</source>
-        <translation type="obsolete">Arc avec centre, point, angles</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Retour au menu précédent</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Concentrique</translation>
-    </message>
-    <message>
-        <source>Arc tangential to base entity with radius</source>
-        <translation type="obsolete">Arc tangent à l’objet de base avec un rayon</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarCircles</name>
-    <message>
-        <source>Circles</source>
-        <translation type="obsolete">Cercles</translation>
-    </message>
-    <message>
-        <source>Circle with two opposite points</source>
-        <translation type="obsolete">Cercle avec deux points opposés</translation>
-    </message>
-    <message>
-        <source>Circle with center and radius</source>
-        <translation type="obsolete">Cercle avec centre et rayon</translation>
-    </message>
-    <message>
-        <source>Circle with center and point</source>
-        <translation type="obsolete">Cercle avec centre et point</translation>
-    </message>
-    <message>
-        <source>Circle with three points</source>
-        <translation type="obsolete">Cercle avec trois points</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Retour au menu précédent</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Concentrique</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarDim</name>
-    <message>
-        <source>Dimensions</source>
-        <translation type="obsolete">Cotations</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Retour au menu précédent</translation>
-    </message>
-    <message>
-        <source>Diametric Dimension</source>
-        <translation type="obsolete">Dimension du diamètre</translation>
-    </message>
-    <message>
-        <source>Radial Dimension</source>
-        <translation type="obsolete">Cotation radiale</translation>
-    </message>
-    <message>
-        <source>Vertical Dimension</source>
-        <translation type="obsolete">Cotation verticale</translation>
-    </message>
-    <message>
-        <source>Horizontal Dimension</source>
-        <translation type="obsolete">Cotation horizontale</translation>
-    </message>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="obsolete">Cotation linéaire</translation>
-    </message>
-    <message>
-        <source>Aligned Dimension</source>
-        <translation type="obsolete">Cotation alignée</translation>
-    </message>
-    <message>
-        <source>Angular Dimension</source>
-        <translation type="obsolete">Cotation angulaire</translation>
-    </message>
-    <message>
-        <source>Leader</source>
-        <translation type="obsolete">Repère</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Concentrique</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarEllipses</name>
-    <message>
-        <source>Ellipses</source>
-        <translation type="obsolete">Ellipses</translation>
-    </message>
-    <message>
-        <source>Ellipse arc with center, two points and angles</source>
-        <translation type="obsolete">Arc d’ellipse avec un centre, deux points et des angles</translation>
-    </message>
-    <message>
-        <source>Ellipse with Center and two points</source>
-        <translation type="obsolete">Ellipse avec un centre et deux points</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Retour au menu précédent</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Concentrique</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarInfo</name>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Info</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Retour au menu précédent</translation>
-    </message>
-    <message>
-        <source>Distance (Point, Point)</source>
-        <translation type="obsolete">Distance (Point, Point)</translation>
-    </message>
-    <message>
-        <source>Distance (Entity, Point)</source>
-        <translation type="obsolete">Distance (Objet, Point)</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="obsolete">Angle</translation>
-    </message>
-    <message>
-        <source>Total length of selected entities</source>
-        <translation type="obsolete">Longueur totale des éléments sélectionnés</translation>
-    </message>
-    <message>
-        <source>Area of polygon</source>
-        <translation type="obsolete">Surface du polygone</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Concentrique</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarLines</name>
-    <message>
-        <source>Lines</source>
-        <translation type="obsolete">Lignes</translation>
-    </message>
-    <message>
-        <source>Freehand lines</source>
-        <translation type="obsolete">Lignes à main levée</translation>
-    </message>
-    <message>
-        <source>Orthogonal lines</source>
-        <translation type="obsolete">Lignes orthogonales</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Retour au menu précédent</translation>
-    </message>
-    <message>
-        <source>Bisectors</source>
-        <translation type="obsolete">Bissectrices</translation>
-    </message>
-    <message>
-        <source>Tangents from circle to circle</source>
-        <translation type="obsolete">Tangentes d’un cercle à l’autre</translation>
-    </message>
-    <message>
-        <source>Tangents from point to circle</source>
-        <translation type="obsolete">Tangentes d’un point à un cercle</translation>
-    </message>
-    <message>
-        <source>Line with two points</source>
-        <translation type="obsolete">Ligne avec deux points</translation>
-    </message>
-    <message>
-        <source>Lines with relative angles</source>
-        <translation type="obsolete">Lignes avec angles relatifs</translation>
-    </message>
-    <message>
-        <source>Line with given angle</source>
-        <translation type="obsolete">Ligne avec angle donné</translation>
-    </message>
-    <message>
-        <source>Horizontal lines</source>
-        <translation type="obsolete">Lignes horizontales</translation>
-    </message>
-    <message>
-        <source>Vertical lines</source>
-        <translation type="obsolete">Lignes verticales</translation>
-    </message>
-    <message>
-        <source>Rectangles</source>
-        <translation type="obsolete">Rectangles</translation>
-    </message>
-    <message>
-        <source>Polygons with Center and Corner</source>
-        <translation type="obsolete">Polygones avec centre et coin</translation>
-    </message>
-    <message>
-        <source>Polygons with two Corners</source>
-        <translation type="obsolete">Polygones avec deux coins</translation>
-    </message>
-    <message>
-        <source>Parallels with distance</source>
-        <translation type="obsolete">Parallèles avec distance</translation>
-    </message>
-    <message>
-        <source>Parallels through point</source>
-        <translation type="obsolete">Parallèles passant par un point</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarMain</name>
-    <message>
-        <source>Main</source>
-        <translation type="obsolete">Principal</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Lines&quot;</source>
-        <translation type="obsolete">Afficher le menu «&#xa0;Lignes&#xa0;»</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Arcs&quot;</source>
-        <translation type="obsolete">Afficher le menu «&#xa0;Arcs&#xa0;»</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Circles&quot;</source>
-        <translation type="obsolete">Afficher le menu «&#xa0;Cercles&#xa0;»</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Points&quot;</source>
-        <translation type="obsolete">Afficher le menu «&#xa0;Points&#xa0;»</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Measure&quot;</source>
-        <translation type="obsolete">Afficher le menu «&#xa0;Mesures&#xa0;»</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Ellipses&quot;</source>
-        <translation type="obsolete">Afficher le menu «&#xa0;Ellipses&#xa0;»</translation>
-    </message>
-    <message>
-        <source>Hatches / Solid Fills</source>
-        <translation type="obsolete">Hachures/motifs de remplissage</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Edit&quot;</source>
-        <translation type="obsolete">Afficher le menu «&#xa0;Édition&#xa0;»</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Dimensions&quot;</source>
-        <translation type="obsolete">Afficher le menu «&#xa0;Cotations&#xa0;»</translation>
-    </message>
-    <message>
-        <source>Texts</source>
-        <translation type="obsolete">Textes</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Select&quot;</source>
-        <translation type="obsolete">Afficher le menu «&#xa0;Sélection&#xa0;»</translation>
-    </message>
-    <message>
-        <source>Create Block</source>
-        <translation type="obsolete">Créer un bloc</translation>
-    </message>
-    <message>
-        <source>Raster Image</source>
-        <translation type="obsolete">Image de trame</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Splines&quot;</source>
-        <translation type="obsolete">Afficher le menu «&#xa0;Courbes splines&#xa0;»</translation>
-    </message>
-    <message>
-        <source>Points</source>
-        <translation type="obsolete">Points</translation>
-    </message>
-    <message>
-        <source>Splines</source>
-        <translation type="obsolete">Courbes splines</translation>
-    </message>
-    <message>
-        <source>Polylines</source>
-        <translation type="obsolete">Polylignes</translation>
-    </message>
-    <message>
-        <source>Draw Points</source>
-        <translation type="obsolete">Dessiner des points</translation>
-    </message>
-    <message>
-        <source>Insert Image</source>
-        <translation type="obsolete">Insérer une image</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarModify</name>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">Modifier</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Retour au menu précédent</translation>
-    </message>
-    <message>
-        <source>Rotate</source>
-        <translation type="obsolete">Rotation</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="obsolete">Mettre à l’échelle</translation>
-    </message>
-    <message>
-        <source>Move</source>
-        <translation type="obsolete">Déplacer</translation>
-    </message>
-    <message>
-        <source>Move and Rotate</source>
-        <translation type="obsolete">Déplacement et rotation</translation>
-    </message>
-    <message>
-        <source>Explode</source>
-        <translation type="obsolete">Éclater</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="obsolete">Supprimer</translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="obsolete">Déformer</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="obsolete">Arrondi</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="obsolete">Chanfrein</translation>
-    </message>
-    <message>
-        <source>Trim by amount</source>
-        <translation type="obsolete">Ajuster par quantité</translation>
-    </message>
-    <message>
-        <source>Trim / Extend two</source>
-        <translation type="obsolete">Ajuster/Étirer les deux</translation>
-    </message>
-    <message>
-        <source>Trim / Extend</source>
-        <translation type="obsolete">Ajuster/Étirer</translation>
-    </message>
-    <message>
-        <source>Rotate around two centers</source>
-        <translation type="obsolete">Rotation autour de deux centres</translation>
-    </message>
-    <message>
-        <source>Edit Entity Attributes</source>
-        <translation type="obsolete">Éditer les attributs de l’objet</translation>
-    </message>
-    <message>
-        <source>Edit Entity Geometry</source>
-        <translation type="obsolete">Éditer la géométrie de l’objet</translation>
-    </message>
-    <message>
-        <source>Mirror</source>
-        <translation type="obsolete">Symétrie axiale</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="obsolete">Diviser</translation>
-    </message>
-    <message>
-        <source>Explode Text into Letters</source>
-        <translation type="obsolete">Éclater le texte en lettres</translation>
-    </message>
-    <message>
-        <source>Edit Text</source>
-        <translation type="obsolete">Éditer le texte</translation>
-    </message>
-    <message>
-        <source>Move / Copy</source>
-        <translation type="obsolete">Déplacer/Copier</translation>
-    </message>
-    <message>
-        <source>Rotate Two</source>
-        <translation type="obsolete">Double rotation</translation>
-    </message>
-    <message>
-        <source>Lengthen</source>
-        <translation type="obsolete">Allonger</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarPoints</name>
-    <message>
-        <source>Points</source>
-        <translation type="obsolete">Points</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Retour au menu précédent</translation>
-    </message>
-    <message>
-        <source>Single points</source>
-        <translation type="obsolete">Points uniques</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarPolylines</name>
-    <message>
-        <source>Polylines</source>
-        <translation type="obsolete">Polylignes</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Retour au menu précédent</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="obsolete">Créer une polyligne</translation>
-    </message>
-    <message>
-        <source>Trim segments</source>
-        <translation type="obsolete">Ajuster les segments</translation>
-    </message>
-    <message>
-        <source>Delete between two nodes</source>
-        <translation type="obsolete">Supprimer entre deux nœuds</translation>
-    </message>
-    <message>
-        <source>Delete node</source>
-        <translation type="obsolete">Supprimer un nœud</translation>
-    </message>
-    <message>
-        <source>Add node</source>
-        <translation type="obsolete">Ajouter un nœud</translation>
-    </message>
-    <message>
-        <source>Append node</source>
-        <translation type="obsolete">Apposer un nœud</translation>
-    </message>
-    <message>
-        <source>Create Polyline from Existing Segments</source>
-        <translation type="obsolete">Créer une polyligne à partir de segments existants</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Concentrique</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarSelect</name>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">Sélectionner</translation>
-    </message>
-    <message>
-        <source>Select all</source>
-        <translation type="obsolete">Tout sélectionner</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Retour au menu précédent</translation>
-    </message>
-    <message>
-        <source>Select intersected entities</source>
-        <translation type="obsolete">Sélectionner les éléments communs</translation>
-    </message>
-    <message>
-        <source>Deselect intersected entities</source>
-        <translation type="obsolete">Annuler la sélection des éléments communs</translation>
-    </message>
-    <message>
-        <source>Deselect all</source>
-        <translation type="obsolete">Désélectionner tout</translation>
-    </message>
-    <message>
-        <source>Invert Selection</source>
-        <translation type="obsolete">Inverser la sélection</translation>
-    </message>
-    <message>
-        <source>Select layer</source>
-        <translation type="obsolete">Sélectionner un calque</translation>
-    </message>
-    <message>
-        <source>(De-)Select contour</source>
-        <translation type="obsolete">(Dé-)sélectionner la forme</translation>
-    </message>
-    <message>
-        <source>(De-)Select entity</source>
-        <translation type="obsolete">(Dé-)sélectionner l’objet</translation>
-    </message>
-    <message>
-        <source>Deselect Window</source>
-        <translation type="obsolete">Annuler la sélection dans une zone</translation>
-    </message>
-    <message>
-        <source>Select Window</source>
-        <translation type="obsolete">Sélectionner dans une zone</translation>
-    </message>
-    <message>
-        <source>Continue action</source>
-        <translation type="obsolete">Continuer l’action</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarSnap</name>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">Accrocher</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Retour au menu précédent</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="obsolete">Accrocher à la grille</translation>
-    </message>
-    <message>
-        <source>Free positioning</source>
-        <translation type="obsolete">Positionnement libre</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="obsolete">Accrocher aux extrémités</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="obsolete">Accrocher au point le plus proche sur l’objet</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="obsolete">Accrocher aux points centraux</translation>
-    </message>
-    <message>
-        <source>Snap to middle points</source>
-        <translation type="obsolete">Accrocher aux points du milieu</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="obsolete">Accrocher à un point situé à une distance donnée de l’extrémité</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation type="obsolete">Accrocher automatiquement aux intersections</translation>
-    </message>
-    <message>
-        <source>No Restriction</source>
-        <translation type="obsolete">Aucune restriction</translation>
-    </message>
-    <message>
-        <source>Orthogonal Restriction</source>
-        <translation type="obsolete">Restriction orthogonale</translation>
-    </message>
-    <message>
-        <source>Horizontal Restriction</source>
-        <translation type="obsolete">Restriction horizontale</translation>
-    </message>
-    <message>
-        <source>Vertical Restriction</source>
-        <translation type="obsolete">Restriction verticale</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation type="obsolete">Déplacer le zéro relatif</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation type="obsolete">Verrouiller le zéro relatif</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation type="obsolete">Accrocher manuellement aux intersections</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarSplines</name>
-    <message>
-        <source>Splines</source>
-        <translation type="obsolete">Courbes splines</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Retour au menu précédent</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="obsolete">Courbe spline</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="obsolete">Paramètres des cercles</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Rayon&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CircleTan2Options</name>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Rayon&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DimLinearOptions</name>
-    <message>
-        <source>Linear Dimension Options</source>
-        <translation type="obsolete">Paramètres de cotation linéaire</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Angle&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DimOptions</name>
-    <message>
-        <source>Dimension Options</source>
-        <translation type="obsolete">Paramètres de cotation</translation>
-    </message>
-    <message>
-        <source>Label:</source>
-        <translation type="obsolete">Étiquette&#xa0;:</translation>
-    </message>
-    <message>
-        <source>ø</source>
-        <translation type="obsolete">ø</translation>
-    </message>
-    <message>
-        <source>°</source>
-        <translation type="obsolete">°</translation>
-    </message>
-    <message>
-        <source>±</source>
-        <translation type="obsolete">±</translation>
-    </message>
-    <message>
-        <source>¶</source>
-        <translation type="obsolete">¶</translation>
-    </message>
-    <message>
-        <source>×</source>
-        <translation type="obsolete">×</translation>
-    </message>
-    <message>
-        <source>÷</source>
-        <translation type="obsolete">÷</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="obsolete">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="obsolete">Variables du dessin</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="obsolete">Variable</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="obsolete">Code</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">Valeur</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuler</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="obsolete">Paramètres d’insertion</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Angle&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="obsolete">Angle de rotation</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="obsolete">Facteur&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="obsolete">Facteur de mise à l’échelle</translation>
-    </message>
-</context>
-<context>
-    <name>QG_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="obsolete">Paramètres d’insertion</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Angle&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="obsolete">Angle de rotation</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="obsolete">Facteur&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="obsolete">Facteur de mise à l’échelle</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="obsolete">Matrice&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="obsolete">Nombre de colonnes</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="obsolete">Nombre de lignes</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="obsolete">Espacement&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="obsolete">Espacement des colonnes</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="obsolete">Espacement des lignes</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LibraryInsertOptions</name>
-    <message>
-        <source>Library Insert Options</source>
-        <translation type="obsolete">Paramètres d’insertion de bibliothèques</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Angle&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="obsolete">Angle de rotation</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="obsolete">Facteur&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="obsolete">Facteur de mise à l’échelle</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="obsolete">Paramètres d’inclinaison de lignes</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Angle&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="obsolete">Inclinaison de la ligne</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">Longueur&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="obsolete">Longueur de la ligne</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="obsolete">Point d’accrochage&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="obsolete">Départ</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="obsolete">Milieu</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="obsolete">Fin</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="obsolete">Paramètres des lignes bissectrices</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">Longueur&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="obsolete">Longueur de la bissectrice</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Nombre&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="obsolete">Nombre de bissectrices à créer</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="obsolete">Paramètres des lignes</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Fermer</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="obsolete">Annuler</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="obsolete">Effectuer à nouveau</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="obsolete">Paramètres des lignes parallèles</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Distance&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="obsolete">Distance depuis l’objet de référence</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Nombre&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="obsolete">Nombre de parallèles à créer</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="obsolete">Paramètres des lignes parallèles passant par un point</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Nombre&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="obsolete">Nombre de parallèles à créer</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">Paramètres des polygones</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Nombre&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">Nombre de bords</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">Paramètres des polygones</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Nombre&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">Nombre de bords</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="obsolete">Paramètres des lignes avec un angle relatif</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Angle&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="obsolete">Inclinaison de la ligne</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">Longueur&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="obsolete">Longueur de la ligne</translation>
-    </message>
-</context>
-<context>
-    <name>QG_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="obsolete">Paramètres des textes</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="obsolete">Texte&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Angle&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ModifyOffsetOptions</name>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Distance&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="obsolete">Paramètres de déplacement/rotation</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Angle&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="obsolete">Paramètres des lignes avec un angle relatif</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="obsolete">Espacement&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="obsolete">Options d’aperçu avant impression</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="obsolete">Basculer entre les modes blanc et noir</translation>
-    </message>
-    <message>
-        <source>Center to page</source>
-        <translation type="obsolete">Centré sur la page</translation>
-    </message>
-    <message>
-        <source>Fit to page</source>
-        <translation type="obsolete">Ajusté à la page</translation>
-    </message>
-</context>
-<context>
-    <name>QG_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation type="obsolete">Paramètres des arrondis</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="obsolete">Ajuster</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation type="obsolete">Vérifier pour ajuster les deux bords selon l’arrondi</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Rayon&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SnapDistOptions</name>
-    <message>
-        <source>Snap Distance Options</source>
-        <translation type="obsolete">Options de la distance d’accrochage</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Distance&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SnapMiddleOptions</name>
-    <message>
-        <source>Snap Distance Options</source>
-        <translation type="obsolete">Options de la distance d’accrochage</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="obsolete">Paramètres des courbes splines</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="obsolete">Degré&#xa0;:</translation>
-    </message>
-    <message>
-        <source>1</source>
-        <translation type="obsolete">1</translation>
-    </message>
-    <message>
-        <source>2</source>
-        <translation type="obsolete">2</translation>
-    </message>
-    <message>
-        <source>3</source>
-        <translation type="obsolete">3</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">Fermé</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="obsolete">Annuler</translation>
-    </message>
-</context>
-<context>
-    <name>QG_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="obsolete">Paramètres des textes</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="obsolete">Texte&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Angle&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation type="obsolete">Paramètres de la quantité d’ajustements</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="obsolete">Distance. Valeurs négatives pour raccourcir, positives pour rallonger.</translation>
-    </message>
-    <message>
-        <source>Amount:</source>
-        <translation type="obsolete">Quantité&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">Longueur&#xa0;:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksAdd</name>
-    <message>
-        <source>Add Block</source>
-        <translation type="obsolete">Ajouter un bloc</translation>
-    </message>
-    <message>
-        <source>&amp;Add Block</source>
-        <translation type="obsolete">&amp;Ajouter un bloc</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksAttributes</name>
-    <message>
-        <source>Rename Block</source>
-        <translation type="obsolete">Renommer le bloc</translation>
-    </message>
-    <message>
-        <source>&amp;Rename Block</source>
-        <translation type="obsolete">&amp;Renommer le bloc</translation>
-    </message>
-    <message>
-        <source>Rename Block and all Inserts</source>
-        <translation type="obsolete">Renommer le blocs et tous les objets insérés</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksEdit</name>
-    <message>
-        <source>Edit Block</source>
-        <translation type="obsolete">Éditer le bloc</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translation type="obsolete">&amp;Éditer le bloc</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>Explode</source>
-        <translation type="obsolete">Éclater</translation>
-    </message>
-    <message>
-        <source>&amp;Explode</source>
-        <translation type="obsolete">&amp;Éclater</translation>
-    </message>
-    <message>
-        <source>Explode Blocks and other Entity Groups</source>
-        <translation type="obsolete">Éclater les blocs et les autres éléments groupés</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksFreezeAll</name>
-    <message>
-        <source>Freeze all</source>
-        <translation type="obsolete">Bloquer tout</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all</source>
-        <translation type="obsolete">&amp;Bloquer tout</translation>
-    </message>
-    <message>
-        <source>Freeze all blocks</source>
-        <translation type="obsolete">Bloquer tous les blocs</translation>
-    </message>
-    <message>
-        <source>Defreeze all</source>
-        <translation type="obsolete">Débloquer tout</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all</source>
-        <translation type="obsolete">&amp;Débloquer tout</translation>
-    </message>
-    <message>
-        <source>Defreeze all blocks</source>
-        <translation type="obsolete">Débloquer tous les blocs</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksRemove</name>
-    <message>
-        <source>Remove Block</source>
-        <translation type="obsolete">Supprimer le bloc</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Block</source>
-        <translation type="obsolete">&amp;Supprimer le bloc</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksToggleView</name>
-    <message>
-        <source>Toggle Block Visibility</source>
-        <translation type="obsolete">Basculer la visibilité du bloc</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Block</source>
-        <translation type="obsolete">&amp;Basculer le bloc</translation>
-    </message>
-    <message>
-        <source>Toggle Block</source>
-        <translation type="obsolete">Basculer le bloc</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygon2</name>
-    <message>
-        <source>Polygon</source>
-        <translation type="obsolete">Polygone</translation>
-    </message>
-    <message>
-        <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation type="obsolete">Polygo&amp;ne (Coin, Coin)</translation>
-    </message>
-    <message>
-        <source>Draw polygon with two corners</source>
-        <translation type="obsolete">Dessiner un polygone à partir de deux coins</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="obsolete">Indiquer le premier coin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuler</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="obsolete">Indiquer le deuxième coin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Retour</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Nombre&#xa0;:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="obsolete">Chiffre non valide. Essayer entre 1 et&#xa0;9999.</translation>
-    </message>
-    <message>
-        <source>Not a valid expression.</source>
-        <translation type="obsolete">N’est pas une expression valide.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolyline</name>
-    <message>
-        <source>Draw polylines</source>
-        <translation type="obsolete">Dessiner des polylignes</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="obsolete">Indiquer le premier point</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Annuler</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="obsolete">Indiquer le point suivant ou [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Retour</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="obsolete">Indiquer le point suivant</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="obsolete">Impossible de fermer la séquence des lignes&#xa0;: pas encore assez d’éléments définis.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="obsolete">Impossible d’annuler&#xa0;: pas encore assez d’éléments définis.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionFileNew</name>
-    <message>
-        <source>New Drawing</source>
-        <translation type="obsolete">Nouveau dessin</translation>
-    </message>
-    <message>
-        <source>&amp;New</source>
-        <translation type="obsolete">&amp;Nouveau</translation>
-    </message>
-    <message>
-        <source>Creates a new drawing</source>
-        <translation type="obsolete">Crée un nouveau dessin</translation>
-    </message>
-    <message>
-        <source>&amp;New...</source>
-        <translation type="obsolete">&amp;Nouveau...</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionFileOpen</name>
-    <message>
-        <source>Open Drawing</source>
-        <translation type="obsolete">Ouvrir un dessin</translation>
-    </message>
-    <message>
-        <source>&amp;Open...</source>
-        <translation type="obsolete">&amp;Ouvrir...</translation>
-    </message>
-    <message>
-        <source>Opens an existing drawing</source>
-        <translation type="obsolete">Ouvre un dessin existant</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionFileSave</name>
-    <message>
-        <source>Save Drawing</source>
-        <translation type="obsolete">Enregistrer le dessin</translation>
-    </message>
-    <message>
-        <source>&amp;Save</source>
-        <translation type="obsolete">&amp;Enregistrer</translation>
-    </message>
-    <message>
-        <source>Saves the current drawing</source>
-        <translation type="obsolete">Enregistre le dessin actif</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionFileSaveAs</name>
-    <message>
-        <source>Save Drawing As</source>
-        <translation type="obsolete">Enregistrer le dessin sous</translation>
-    </message>
-    <message>
-        <source>Save &amp;as...</source>
-        <translation type="obsolete">Enregistrer &amp;sous...</translation>
-    </message>
-    <message>
-        <source>Saves the current drawing under a new filename</source>
-        <translation type="obsolete">Enregistre le dessin actif sous un autre nom</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersAdd</name>
-    <message>
-        <source>Add Layer</source>
-        <translation type="obsolete">Ajouter un calque</translation>
-    </message>
-    <message>
-        <source>&amp;Add Layer</source>
-        <translation type="obsolete">&amp;Ajouter un calque</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersEdit</name>
-    <message>
-        <source>Edit Layer</source>
-        <translation type="obsolete">Éditer un calque</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Layer</source>
-        <translation type="obsolete">&amp;Modifier le calque</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersFreezeAll</name>
-    <message>
-        <source>Freeze all</source>
-        <translation type="obsolete">Bloquer tout</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all</source>
-        <translation type="obsolete">&amp;Bloquer tout</translation>
-    </message>
-    <message>
-        <source>Freeze all layers</source>
-        <translation type="obsolete">Bloquer tous les calques</translation>
-    </message>
-    <message>
-        <source>Defreeze all</source>
-        <translation type="obsolete">Débloquer tout</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all</source>
-        <translation type="obsolete">&amp;Débloquer tout</translation>
-    </message>
-    <message>
-        <source>Defreeze all layers</source>
-        <translation type="obsolete">Débloquer tous les calques</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersRemove</name>
-    <message>
-        <source>Remove Layer</source>
-        <translation type="obsolete">Supprimer le calque</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Layer</source>
-        <translation type="obsolete">&amp;Supprimer le calque</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersToggleLock</name>
-    <message>
-        <source>Toggle Layer Lock</source>
-        <translation type="obsolete">Basculer le verrouillage du calque</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Lock</source>
-        <translation type="obsolete">&amp;Basculer le verrouillage</translation>
-    </message>
-    <message>
-        <source>Toggle Lock</source>
-        <translation type="obsolete">Basculer le verrouillage</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersToggleView</name>
-    <message>
-        <source>Toggle Layer Visibility</source>
-        <translation type="obsolete">Basculer la visibilité du calque</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Layer</source>
-        <translation type="obsolete">&amp;Basculer le calque</translation>
-    </message>
-    <message>
-        <source>Toggle Layer</source>
-        <translation type="obsolete">Basculer le calque</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>Attributes</source>
-        <translation type="obsolete">Attributs</translation>
-    </message>
-    <message>
-        <source>&amp;Attributes</source>
-        <translation type="obsolete">&amp;Attributs</translation>
-    </message>
-    <message>
-        <source>Modify Entity Attributes</source>
-        <translation type="obsolete">Modifier les attributs de l’objet</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Delete</source>
-        <translation type="obsolete">Supprimer</translation>
-    </message>
-    <message>
-        <source>&amp;Delete</source>
-        <translation type="obsolete">&amp;Supprimer</translation>
-    </message>
-    <message>
-        <source>Delete Entities</source>
-        <translation type="obsolete">Supprimer les éléments</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>Explode Text</source>
-        <translation type="obsolete">Éclater le texte</translation>
-    </message>
-    <message>
-        <source>&amp;Explode Text into Letters</source>
-        <translation type="obsolete">&amp;Éclater le texte en lettres</translation>
-    </message>
-    <message>
-        <source>Explodes Text Entities into single Letters</source>
-        <translation type="obsolete">Éclate des éléments de texte en simple lettres</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOptionsDrawing</name>
-    <message>
-        <source>Drawing</source>
-        <translation type="obsolete">Dessin</translation>
-    </message>
-    <message>
-        <source>Current &amp;Drawing Preferences</source>
-        <translation type="obsolete">Préférences du &amp;dessin actif</translation>
-    </message>
-    <message>
-        <source>Settings for the current Drawing</source>
-        <translation type="obsolete">Paramètres du dessin actif</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectAll</name>
-    <message>
-        <source>Select All</source>
-        <translation type="obsolete">Sélectionner tout</translation>
-    </message>
-    <message>
-        <source>Select &amp;All</source>
-        <translation type="obsolete">&amp;Tout sélectionner</translation>
-    </message>
-    <message>
-        <source>Selects all Entities</source>
-        <translation type="obsolete">Sélectionne tous les éléments</translation>
-    </message>
-    <message>
-        <source>Deselect all</source>
-        <translation type="obsolete">Désélectionner tout</translation>
-    </message>
-    <message>
-        <source>Deselect &amp;all</source>
-        <translation type="obsolete">&amp;Annuler la sélection</translation>
-    </message>
-    <message>
-        <source>Deselects all Entities</source>
-        <translation type="obsolete">Annule la sélection de tous les éléments</translation>
-    </message>
-    <message>
-        <source>Ctrl+K</source>
-        <translation type="obsolete">Ctrl+K</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectInvert</name>
-    <message>
-        <source>Invert Selection</source>
-        <translation type="obsolete">Inverser la sélection</translation>
-    </message>
-    <message>
-        <source>&amp;Invert Selection</source>
-        <translation type="obsolete">&amp;Inverser la sélection</translation>
-    </message>
-    <message>
-        <source>Inverts the current selection</source>
-        <translation type="obsolete">Inverse la sélection active</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>(De-)Select Layer</source>
-        <translation type="obsolete">(Dé-)sélectionner le calque</translation>
-    </message>
-    <message>
-        <source>(De-)Selects layers</source>
-        <translation type="obsolete">(Dé-)sélectionne des calques</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Select Entity</source>
-        <translation type="obsolete">Sélectionner l’objet</translation>
-    </message>
-    <message>
-        <source>(De-)&amp;Select Entity</source>
-        <translation type="obsolete">(Dé-)&amp;sélectionner l’objet</translation>
-    </message>
-    <message>
-        <source>Selects single Entities</source>
-        <translation type="obsolete">Sélectionne les objets simples</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionZoomAuto</name>
     <message>
         <source>Auto Zoom</source>
@@ -14865,6 +14194,33 @@ Continuer?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionZoomPan</name>
+    <message>
+        <source>Click and drag to pan zoom</source>
+        <translation>Cliquer et glisser pour effectuer un zoom panoramique</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Zoom panning</source>
+        <translation>Déplacement de la vue</translation>
+    </message>
+    <message>
+        <source>Pan Zoom</source>
+        <translation type="obsolete">Zoom panoramique</translation>
+    </message>
+    <message>
+        <source>&amp;Pan Zoom</source>
+        <translation type="obsolete">&amp;Zoom panoramique</translation>
+    </message>
+    <message>
+        <source>Realtime Panning</source>
+        <translation type="obsolete">Déplacement latéral en temps réel</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionZoomPrevious</name>
     <message>
         <source>Previous View</source>
@@ -14888,6 +14244,37 @@ Continuer?</translation>
     <message>
         <source>&amp;Redraw</source>
         <translation type="obsolete">&amp;Redessiner</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionZoomWindow</name>
+    <message>
+        <source>Specify first edge</source>
+        <translation>Indiquer le premier bord</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Specify second edge</source>
+        <translation>Indiquer le deuxième bord</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Retour</translation>
+    </message>
+    <message>
+        <source>Window Zoom</source>
+        <translation type="obsolete">Zoom sur une zone</translation>
+    </message>
+    <message>
+        <source>&amp;Window Zoom</source>
+        <translation type="obsolete">Zoom sur une &amp;zone</translation>
+    </message>
+    <message>
+        <source>Zooms in a window</source>
+        <translation type="obsolete">Effectue un zoom dans une zone</translation>
     </message>
 </context>
 <context>
@@ -15687,6 +15074,719 @@ Continuer?</translation>
         <source>re</source>
         <comment>modify - revert direction</comment>
         <translation type="obsolete">re</translation>
+    </message>
+</context>
+<context>
+    <name>TextFileViewer</name>
+    <message>
+        <source>Frame</source>
+        <translation>Cadre</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ArcOptions</name>
+    <message>
+        <source>Arc Options</source>
+        <translation>Paramètres des arcs</translation>
+    </message>
+    <message>
+        <source>Counterclockwise</source>
+        <translation>Sens antihoraire</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation>Sens horaire</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ArcTangentialOptions</name>
+    <message>
+        <source>Tangential Arc Options</source>
+        <translation>Paramètres d’arc tangent</translation>
+    </message>
+    <message>
+        <source>Radius of the tangential arc</source>
+        <translation>Rayon de l’arc tangent</translation>
+    </message>
+    <message>
+        <source>Total subtending angle of the tangential arc</source>
+        <translation>Angle sous-tendu total de l’arc tangent</translation>
+    </message>
+    <message>
+        <source>Radius</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation>Rayon</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation>Angle</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_BevelOptions</name>
+    <message>
+        <source>Bevel Options</source>
+        <translation>Paramètres de chanfrein</translation>
+    </message>
+    <message>
+        <source>Check to trim both entities to the bevel</source>
+        <translation>Vérifier pour ajuster les deux éléments avec le chanfrein</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation>Ajuster</translation>
+    </message>
+    <message>
+        <source>Length 1:</source>
+        <translation>Longueur 1&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Length 2:</source>
+        <translation>Longueur 2&#xa0;:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleDiamOptions</name>
+    <message>
+        <source>Circle Options</source>
+        <translation type="unfinished">Paramètres des cercles</translation>
+    </message>
+    <message>
+        <source>Diameter:</source>
+        <translation type="unfinished">Diamètre&#xa0;:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleOptions</name>
+    <message>
+        <source>Circle Options</source>
+        <translation>Paramètres des cercles</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation>Rayon&#xa0;:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleTan2Options</name>
+    <message>
+        <source>Circle Tangential2 Options</source>
+        <translation>Paramètres des cercles tangents 2</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rayon du cercle tangent à tracer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation>Rayon&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Radius of tangential circle</source>
+        <translation>Rayon du cercle tangent</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_DimLinearOptions</name>
+    <message>
+        <source>Linear Dimension Options</source>
+        <translation>Paramètres de cotation linéaire</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation>Angle&#xa0;:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_DimOptions</name>
+    <message>
+        <source>Dimension Options</source>
+        <translation>Paramètres de cotation</translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation>Étiquette&#xa0;:</translation>
+    </message>
+    <message>
+        <source>⌀</source>
+        <translation>⌀</translation>
+    </message>
+    <message>
+        <source>°</source>
+        <translation>°</translation>
+    </message>
+    <message>
+        <source>±</source>
+        <translation>±</translation>
+    </message>
+    <message>
+        <source>π</source>
+        <translation>π</translation>
+    </message>
+    <message>
+        <source>×</source>
+        <translation>×</translation>
+    </message>
+    <message>
+        <source>÷</source>
+        <translation>÷</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ImageOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation>Paramètres d’insertion</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation>Angle&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation>Angle de rotation</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation>Facteur&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation>Facteur de mise à l’échelle</translation>
+    </message>
+    <message>
+        <source>DPI</source>
+        <translation>DPI</translation>
+    </message>
+    <message>
+        <source>DPI of Image</source>
+        <translation>PPP de l’image</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_InsertOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation>Paramètres d’insertion</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation>Angle&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation>Angle de rotation</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation>Facteur&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation>Facteur de mise à l’échelle</translation>
+    </message>
+    <message>
+        <source>Array:</source>
+        <translation>Matrice&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Number of Columns</source>
+        <translation>Nombre de colonnes</translation>
+    </message>
+    <message>
+        <source>Number of Rows</source>
+        <translation>Nombre de lignes</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation>Espacement&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Column Spacing</source>
+        <translation>Espacement des colonnes</translation>
+    </message>
+    <message>
+        <source>Row Spacing</source>
+        <translation>Espacement des lignes</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LibraryInsertOptions</name>
+    <message>
+        <source>Library Insert Options</source>
+        <translation>Paramètres d’insertion de bibliothèques</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation>Angle&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation>Angle de rotation</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation>Facteur&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation>Facteur de mise à l’échelle</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineAngleOptions</name>
+    <message>
+        <source>Line Angle Options</source>
+        <translation>Paramètres d’inclinaison de lignes</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation>Angle&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation>Inclinaison de la ligne</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation>Longueur&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation>Longueur de la ligne</translation>
+    </message>
+    <message>
+        <source>Snap Point:</source>
+        <translation>Point d’accrochage&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation>Départ</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation>Milieu</translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation>Fin</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineBisectorOptions</name>
+    <message>
+        <source>Line Bisector Options</source>
+        <translation>Paramètres des lignes bissectrices</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation>Longueur&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Length of bisector</source>
+        <translation>Longueur de la bissectrice</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation>Nombre&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Number of bisectors to create</source>
+        <translation>Nombre de bissectrices à créer</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineOptions</name>
+    <message>
+        <source>Line Options</source>
+        <translation>Paramètres des lignes</translation>
+    </message>
+    <message>
+        <source>Form a closed contour from lines drawn</source>
+        <translation>Créer une forme fermée à partir des lignes tracées</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Fermer</translation>
+    </message>
+    <message>
+        <source>Undo the last line drawing</source>
+        <translation>Annuler le dernier tracé de ligne</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Redo the last line drawing</source>
+        <translation>Rétablir le dernier tracé de ligne</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation>Effectuer à nouveau</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineParallelOptions</name>
+    <message>
+        <source>Line Parallel Options</source>
+        <translation>Paramètres des lignes parallèles</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation>Distance&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Distance to original entity</source>
+        <translation>Distance depuis l’objet de référence</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation>Nombre&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation>Nombre de parallèles à créer</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineParallelThroughOptions</name>
+    <message>
+        <source>Line Parallel Through Options</source>
+        <translation>Paramètres des lignes parallèles passant par un point</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation>Nombre&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation>Nombre de parallèles à créer</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LinePolygon2Options</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation>Paramètres des polygones</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation>Nombre&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation>Nombre de bords</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LinePolygonOptions</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation>Paramètres des polygones</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation>Nombre&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation>Nombre de bords</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineRelAngleOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation>Paramètres des lignes avec un angle relatif</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation>Angle&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation>Inclinaison de la ligne</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation>Longueur&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation>Longueur de la ligne</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_MTextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation>Paramètres des textes</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation>Texte&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation>Angle&#xa0;:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ModifyOffsetOptions</name>
+    <message>
+        <source>Modify Offset Options</source>
+        <translation>Paramètres de décalage</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation>Distance&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Offset from original entity</source>
+        <translation>Décalage depuis l’objet de référence</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_MoveRotateOptions</name>
+    <message>
+        <source>Move Rotate Options</source>
+        <translation>Paramètres de déplacement/rotation</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation>Angle&#xa0;:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PolylineOptions</name>
+    <message>
+        <source>Polyline Options</source>
+        <translation>Paramètres des polylignes</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Fermer</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation>Ligne</translation>
+    </message>
+    <message>
+        <source>Tangential</source>
+        <translation>Tangent</translation>
+    </message>
+    <message>
+        <source>Tan Radius</source>
+        <translation>Rayon tangent</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation>Angle</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation>Rayon&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation>Angle&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Counter Clockwise</source>
+        <translation>Sens antihoraire</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation>Sens horaire</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PrintPreviewOptions</name>
+    <message>
+        <source>Print Preview Options</source>
+        <translation>Options d’aperçu avant impression</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;L’échelle d’impression est fixée à la valeur actuelle&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>fixed</source>
+        <translation>fixé</translation>
+    </message>
+    <message>
+        <source>Toggle Black / White mode</source>
+        <translation>Basculer entre les modes blanc et noir</translation>
+    </message>
+    <message>
+        <source>Center to page</source>
+        <translation>Centré sur la page</translation>
+    </message>
+    <message>
+        <source>Fit to page</source>
+        <translation>Ajusté à la page</translation>
+    </message>
+    <message>
+        <source>Calculate number of pages needed to contain the drawing.</source>
+        <translation type="unfinished">Calculer le nombre de pages nécessaires pour contenir le dessin.</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_RoundOptions</name>
+    <message>
+        <source>Round Options</source>
+        <translation>Paramètres des arrondis</translation>
+    </message>
+    <message>
+        <source>Check to trim both edges to the rounding</source>
+        <translation>Vérifier pour ajuster les deux bords selon l’arrondi</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation>Ajuster</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation>Rayon&#xa0;:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ShapeTextOptions</name>
+    <message>
+        <source>Shape Text Options</source>
+        <translation type="unfinished">Paramètres de texte de forme</translation>
+    </message>
+    <message>
+        <source>Offset:</source>
+        <translation type="unfinished">Décalage&#xa0;:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SnapDistOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation>Options de la distance d’accrochage</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation>Distance&#xa0;:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SnapMiddleOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation>Options de la distance d’accrochage</translation>
+    </message>
+    <message>
+        <source>Middle Points:</source>
+        <translation>Points intermédiaires&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Number of equidistant division points</source>
+        <translation>Nombre de points de division équidistants</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SplineOptions</name>
+    <message>
+        <source>Spline Options</source>
+        <translation>Paramètres des courbes splines</translation>
+    </message>
+    <message>
+        <source>Degree:</source>
+        <translation>Degré&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation>Fermé</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation>Annuler</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_TextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation>Paramètres des textes</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation>Texte&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation>Angle&#xa0;:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_TrimAmountOptions</name>
+    <message>
+        <source>Trim Amount Options</source>
+        <translation>Paramètres de la quantité d’ajustements</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending.</source>
+        <translation>Distance. Valeurs négatives pour raccourcir, positives pour rallonger.</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation>Longueur&#xa0;:</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
+        <translation>Distance. Valeurs négatives pour raccourcir, positives pour rallonger. Les signes négatifs sont ignorés lors de l’ajustement pour obtenir la longueur totale finale.</translation>
+    </message>
+    <message>
+        <source>The input length is used as total length after trimming, instead of length increase</source>
+        <translation>La longueur saisie est utilisée en tant que longueur totale après ajustement, plutôt que comme une longueur ajoutée</translation>
+    </message>
+</context>
+<context>
+    <name>WidgetCreator</name>
+    <message>
+        <source>Frame</source>
+        <translation>Cadre</translation>
+    </message>
+    <message>
+        <source>&gt;</source>
+        <translation>&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;</source>
+        <translation>&lt;</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation>Créer</translation>
+    </message>
+    <message>
+        <source>Destroy</source>
+        <translation>Détruire</translation>
+    </message>
+    <message>
+        <source>Assign</source>
+        <translation>Assigner</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>Mettre à jour</translation>
     </message>
 </context>
 </TS>

@@ -1742,6 +1742,69 @@ Printer settings:
     </message>
 </context>
 <context>
+    <name>QG_ActionFactory</name>
+    <message>
+        <source>&amp;Close</source>
+        <translation type="obsolete">닫기(&amp;C)</translation>
+    </message>
+    <message>
+        <source>&amp;Grid</source>
+        <translation type="obsolete">격자(&amp;G)</translation>
+    </message>
+    <message>
+        <source>&amp;Application Preferences</source>
+        <translation type="obsolete">응용프로그램 환경설정(&amp;A)</translation>
+    </message>
+    <message>
+        <source>&amp;Statusbar</source>
+        <translation type="obsolete">상태표지줄(&amp;S)</translation>
+    </message>
+    <message>
+        <source>&amp;Draft</source>
+        <translation type="obsolete">초안(&amp;D)</translation>
+    </message>
+    <message>
+        <source>Open IDE</source>
+        <translation type="obsolete">IDE 열기</translation>
+    </message>
+    <message>
+        <source>Run Script..</source>
+        <translation type="obsolete">스크립트 실행..</translation>
+    </message>
+    <message>
+        <source>&amp;Preferences</source>
+        <translation type="obsolete">환경설정(&amp;P)</translation>
+    </message>
+    <message>
+        <source>&amp;Export...</source>
+        <translation type="obsolete">내보내기(&amp;E)</translation>
+    </message>
+    <message>
+        <source>&amp;Print...</source>
+        <translation type="obsolete">인쇄(&amp;P)</translation>
+    </message>
+    <message>
+        <source>CTRL-G</source>
+        <translation type="obsolete">CTRL-G</translation>
+    </message>
+    <message>
+        <source>&amp;Quit</source>
+        <translation type="obsolete">끝내기(&amp;Q)</translation>
+    </message>
+    <message>
+        <source>&amp;Selection pointer</source>
+        <translation type="obsolete">지점 선택(&amp;S)</translation>
+    </message>
+    <message>
+        <source>Export as PDF</source>
+        <translation type="obsolete">PDF로 내보내기</translation>
+    </message>
+    <message>
+        <source>&amp;Block</source>
+        <translation type="obsolete">블록(&amp;B)</translation>
+    </message>
+</context>
+<context>
     <name>QG_ActionHandler</name>
     <message>
         <source>escape</source>
@@ -1774,6 +1837,65 @@ p, li { white-space: pre-wrap; }
  p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;현재 활성 레이어 이름&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ArcOptions</name>
+    <message>
+        <source>Arc Options</source>
+        <translation type="obsolete">호 선택사항</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="obsolete">시계방향</translation>
+    </message>
+    <message>
+        <source>Counterclockwise</source>
+        <translation type="obsolete">반 시계방향</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ArcTangentialOptions</name>
+    <message>
+        <source>Tangential Arc Options</source>
+        <translation type="obsolete">접선 원호 선택사항</translation>
+    </message>
+    <message>
+        <source>Radius of the tangential arc</source>
+        <translation type="obsolete">접선 원호의 반지름</translation>
+    </message>
+    <message>
+        <source>Total subtending angle of the tangential arc</source>
+        <translation type="obsolete">접선 호에서 총 이루는 각도</translation>
+    </message>
+    <message>
+        <source>Radius</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="obsolete">반지름</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="obsolete">각도</translation>
+    </message>
+</context>
+<context>
+    <name>QG_BevelOptions</name>
+    <message>
+        <source>Bevel Options</source>
+        <translation type="obsolete">바벨 선택사항</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="obsolete">자르기</translation>
+    </message>
+    <message>
+        <source>Length 1:</source>
+        <translation type="obsolete">길이 1:</translation>
+    </message>
+    <message>
+        <source>Length 2:</source>
+        <translation type="obsolete">길이 2:</translation>
     </message>
 </context>
 <context>
@@ -1882,6 +2004,347 @@ in a separate window</source>
     <message>
         <source>Filter</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBar</name>
+    <message>
+        <source>CAD Tools</source>
+        <translation type="obsolete">CAD 도구들</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarArcs</name>
+    <message>
+        <source>Arcs</source>
+        <translation type="obsolete">원호</translation>
+    </message>
+    <message>
+        <source>Arc with three points</source>
+        <translation type="obsolete">3점 원호</translation>
+    </message>
+    <message>
+        <source>Arc with Center, Point, Angles</source>
+        <translation type="obsolete">중심, 점, 각도로된 호</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">동심</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarCircles</name>
+    <message>
+        <source>Circles</source>
+        <translation type="obsolete">원</translation>
+    </message>
+    <message>
+        <source>Circle with two opposite points</source>
+        <translation type="obsolete">두 반대 지점으로 원 그리기</translation>
+    </message>
+    <message>
+        <source>Circle with center and radius</source>
+        <translation type="obsolete">중심과 반지름으로 원 그리기</translation>
+    </message>
+    <message>
+        <source>Circle with center and point</source>
+        <translation type="obsolete">중심과 점으로 원그리기</translation>
+    </message>
+    <message>
+        <source>Circle with three points</source>
+        <translation type="obsolete">3점으로 원그리기</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">동심</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+ p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;주어진 반지름으로 두개의 원에 접하는 원그리기&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+ p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;주어진 두개 점을 통과하는 원에 접하는 원 그리기&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+ p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;주어진 한 점을 통과하는 두개의 원에 접하는 원 그리기&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;3개 선분/호/원들에 접하는 원그리기&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarDim</name>
+    <message>
+        <source>Dimensions</source>
+        <translation type="obsolete">치수</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
+    </message>
+    <message>
+        <source>Diametric Dimension</source>
+        <translation type="obsolete">지름 치수</translation>
+    </message>
+    <message>
+        <source>Radial Dimension</source>
+        <translation type="obsolete">반지름 치수</translation>
+    </message>
+    <message>
+        <source>Vertical Dimension</source>
+        <translation type="obsolete">수직 치수</translation>
+    </message>
+    <message>
+        <source>Horizontal Dimension</source>
+        <translation type="obsolete">수평 치수</translation>
+    </message>
+    <message>
+        <source>Linear Dimension</source>
+        <translation type="obsolete">선분 치수</translation>
+    </message>
+    <message>
+        <source>Aligned Dimension</source>
+        <translation type="obsolete">정렬된 치수</translation>
+    </message>
+    <message>
+        <source>Angular Dimension</source>
+        <translation type="obsolete">각도 치수</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">동심</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarEllipses</name>
+    <message>
+        <source>Ellipses</source>
+        <translation type="obsolete">타원</translation>
+    </message>
+    <message>
+        <source>Ellipse arc with center, two points and angles</source>
+        <translation type="obsolete">중심, 두개 점과 각으로된 타원</translation>
+    </message>
+    <message>
+        <source>Ellipse with Center and two points</source>
+        <translation type="obsolete">중심과 두개 점으로 된 타원</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
+    </message>
+    <message>
+        <source>Draw Ellipse by foci and a point on ellipse</source>
+        <translation type="obsolete">타원상의 한점과 초점으로 타원그리기</translation>
+    </message>
+    <message>
+        <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
+        <translation type="obsolete">타원상의 4점으로 x/y 방향 축에 타원그리기</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">동심</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarInfo</name>
+    <message>
+        <source>Info</source>
+        <translation type="obsolete">정보</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
+    </message>
+    <message>
+        <source>Distance (Point, Point)</source>
+        <translation type="obsolete">거리(엔터티, 점)</translation>
+    </message>
+    <message>
+        <source>Distance (Entity, Point)</source>
+        <translation type="obsolete">거리(엔터티, 점)</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="obsolete">각도</translation>
+    </message>
+    <message>
+        <source>Total length of selected entities</source>
+        <translation type="obsolete">선택된 엔터티의 총 길이</translation>
+    </message>
+    <message>
+        <source>Area of polygon</source>
+        <translation type="obsolete">다각형의 면적</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">동심</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarLines</name>
+    <message>
+        <source>Lines</source>
+        <translation type="obsolete">선분</translation>
+    </message>
+    <message>
+        <source>Freehand lines</source>
+        <translation type="obsolete">자유형 선</translation>
+    </message>
+    <message>
+        <source>Orthogonal lines</source>
+        <translation type="obsolete">직교 선분</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
+    </message>
+    <message>
+        <source>Bisectors</source>
+        <translation type="obsolete">이등분선</translation>
+    </message>
+    <message>
+        <source>Tangents from circle to circle</source>
+        <translation type="obsolete">원과 원의 접선</translation>
+    </message>
+    <message>
+        <source>Tangents from point to circle</source>
+        <translation type="obsolete">점과 원의 접선</translation>
+    </message>
+    <message>
+        <source>Line with two points</source>
+        <translation type="obsolete">두점간선</translation>
+    </message>
+    <message>
+        <source>Horizontal lines</source>
+        <translation type="obsolete">수평선</translation>
+    </message>
+    <message>
+        <source>Vertical lines</source>
+        <translation type="obsolete">수직선</translation>
+    </message>
+    <message>
+        <source>Rectangles</source>
+        <translation type="obsolete">직사각형</translation>
+    </message>
+    <message>
+        <source>Polygons with Center and Corner</source>
+        <translation type="obsolete">중심과 모서리를 갖는 다각형</translation>
+    </message>
+    <message>
+        <source>Polygons with two Corners</source>
+        <translation type="obsolete">두 모서리를 갖는 다각형</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarMain</name>
+    <message>
+        <source>Create Block</source>
+        <translation type="obsolete">블록 만들기</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="obsolete">그림 삽입</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarModify</name>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarPoints</name>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarPolylines</name>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">동심</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarSelect</name>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarSplines</name>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CircleOptions</name>
+    <message>
+        <source>Circle Options</source>
+        <translation type="obsolete">원 옵션</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="obsolete">반지름:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CircleTan2Options</name>
+    <message>
+        <source>Radius:</source>
+        <translation type="obsolete">반지름:</translation>
     </message>
 </context>
 <context>
@@ -2030,6 +2493,44 @@ in a separate window</source>
     <message>
         <source>Coordinates</source>
         <translation>좌표</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DimLinearOptions</name>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">각:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DimOptions</name>
+    <message>
+        <source>°</source>
+        <translation type="obsolete">°</translation>
+    </message>
+    <message>
+        <source>±</source>
+        <translation type="obsolete">±</translation>
+    </message>
+    <message>
+        <source>×</source>
+        <translation type="obsolete">×</translation>
+    </message>
+    <message>
+        <source>÷</source>
+        <translation type="obsolete">÷</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="obsolete">...</translation>
+    </message>
+    <message>
+        <source>⌀</source>
+        <translation type="obsolete">⌀</translation>
+    </message>
+    <message>
+        <source>π</source>
+        <translation type="obsolete">π</translation>
     </message>
 </context>
 <context>
@@ -5071,6 +5572,33 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
+    <name>QG_ImageOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="obsolete">삽입 옵션</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">각도:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="obsolete">회전 각</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="obsolete">축척</translation>
+    </message>
+    <message>
+        <source>DPI</source>
+        <translation type="obsolete">DPI</translation>
+    </message>
+    <message>
+        <source>DPI of Image</source>
+        <translation type="obsolete">이미지의 DPI</translation>
+    </message>
+</context>
+<context>
     <name>QG_ImageOptionsDialog</name>
     <message>
         <source>Image Export Options</source>
@@ -5139,6 +5667,49 @@ so default step value required for baking</source>
     <message>
         <source>Black</source>
         <translation type="obsolete">흑색</translation>
+    </message>
+</context>
+<context>
+    <name>QG_InsertOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="obsolete">삽입 옵션</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">각도:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="obsolete">회전 각</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="obsolete">축척</translation>
+    </message>
+    <message>
+        <source>Array:</source>
+        <translation type="obsolete">배열:</translation>
+    </message>
+    <message>
+        <source>Number of Columns</source>
+        <translation type="obsolete">열 개수</translation>
+    </message>
+    <message>
+        <source>Number of Rows</source>
+        <translation type="obsolete">행 개수</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="obsolete">간격:</translation>
+    </message>
+    <message>
+        <source>Column Spacing</source>
+        <translation type="obsolete">열 간격</translation>
+    </message>
+    <message>
+        <source>Row Spacing</source>
+        <translation type="obsolete">행 간격</translation>
     </message>
 </context>
 <context>
@@ -5261,6 +5832,25 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
 </context>
 <context>
+    <name>QG_LibraryInsertOptions</name>
+    <message>
+        <source>Library Insert Options</source>
+        <translation type="obsolete">라이브러리 삽입 옵션</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">각도:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="obsolete">회전 각</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="obsolete">축척</translation>
+    </message>
+</context>
+<context>
     <name>QG_LibraryWidget</name>
     <message>
         <source>Directories</source>
@@ -5277,6 +5867,190 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <source>Rebuild</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineAngleOptions</name>
+    <message>
+        <source>Line Angle Options</source>
+        <translation type="obsolete">선 각도 옵션</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">각도:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="obsolete">선 각도</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">길이:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="obsolete">선의 길이</translation>
+    </message>
+    <message>
+        <source>Snap Point:</source>
+        <translation type="obsolete">스냅 점:</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="obsolete">시작</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="obsolete">중간</translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation type="obsolete">끝</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineBisectorOptions</name>
+    <message>
+        <source>Line Bisector Options</source>
+        <translation type="obsolete">이등분선 옵션</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">길이:</translation>
+    </message>
+    <message>
+        <source>Length of bisector</source>
+        <translation type="obsolete">이등분의 길이</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">개수:</translation>
+    </message>
+    <message>
+        <source>Number of bisectors to create</source>
+        <translation type="obsolete">만들 이등분의 수</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineOptions</name>
+    <message>
+        <source>Line Options</source>
+        <translation type="obsolete">선 옵션</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="obsolete">닫기</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="obsolete">명령 취소</translation>
+    </message>
+    <message>
+        <source>Form a closed contour from lines drawn</source>
+        <translation type="obsolete">그려진 선으로 폐곡선 만들기</translation>
+    </message>
+    <message>
+        <source>Undo the last line drawing</source>
+        <translation type="obsolete">마지막 선 그리기 명령 취소</translation>
+    </message>
+    <message>
+        <source>Redo the last line drawing</source>
+        <translation type="obsolete">마지막 선 그리기 명령 복구</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="obsolete">명령 복구</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineParallelOptions</name>
+    <message>
+        <source>Line Parallel Options</source>
+        <translation type="obsolete">평행선 옵션</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="obsolete">거리:</translation>
+    </message>
+    <message>
+        <source>Distance to original entity</source>
+        <translation type="obsolete">기준 요소까지 거리</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">개수:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="obsolete">생성할 평행선의 수</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineParallelThroughOptions</name>
+    <message>
+        <source>Line Parallel Through Options</source>
+        <translation type="obsolete">점을 지나는 평행선 옵션</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">개수:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="obsolete">생성할 평행선의 수</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LinePolygon2Options</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="obsolete">다각형 옵션</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">개수:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="obsolete">모서리의 개수</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LinePolygonOptions</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="obsolete">다각형 옵션</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">개수:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="obsolete">모시리의 개수</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineRelAngleOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="obsolete">상대각 선 옵션</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">각도:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="obsolete">선 각도</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">길이:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="obsolete">선의 길이:</translation>
     </message>
 </context>
 <context>
@@ -5399,6 +6173,36 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
 </context>
 <context>
+    <name>QG_MTextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="obsolete">문자 옵션</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="obsolete">내용:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">각도:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ModifyOffsetOptions</name>
+    <message>
+        <source>Modify Offset Options</source>
+        <translation type="obsolete">옵셋 수정 옵션</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="obsolete">거리:</translation>
+    </message>
+    <message>
+        <source>Offset from original entity</source>
+        <translation type="obsolete">기준 옵션으로부터 옵셋</translation>
+    </message>
+</context>
+<context>
     <name>QG_MouseWidget</name>
     <message>
         <source>Mouse</source>
@@ -5426,6 +6230,17 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QG_MoveRotateOptions</name>
+    <message>
+        <source>Move Rotate Options</source>
+        <translation type="obsolete">이동 회전 옵션</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">각도:</translation>
+    </message>
+</context>
+<context>
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
@@ -5438,6 +6253,25 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Line type</source>
         <translation type="unfinished">선 종류</translation>
+    </message>
+</context>
+<context>
+    <name>QG_PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="obsolete">상대각 선 옵션</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="obsolete">간격:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="obsolete">기준 폴리선과의 거리</translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="obsolete">복제 수:</translation>
     </message>
 </context>
 <context>
@@ -5488,6 +6322,33 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QG_PrintPreviewOptions</name>
+    <message>
+        <source>Print Preview Options</source>
+        <translation type="obsolete">미리보기 표시 옵션</translation>
+    </message>
+    <message>
+        <source>Toggle Black / White mode</source>
+        <translation type="obsolete">흑 / 백 모드 변경</translation>
+    </message>
+    <message>
+        <source>Center to page</source>
+        <translation type="obsolete">페이지에 중심</translation>
+    </message>
+    <message>
+        <source>Fit to page</source>
+        <translation type="obsolete">페이지에 맞춤</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;인쇄 축척은 현재 값으로 고정된다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>fixed</source>
+        <translation type="obsolete">고정</translation>
+    </message>
+</context>
+<context>
     <name>QG_RecentFiles</name>
     <message>
         <source>&amp;%1 %2</source>
@@ -5496,6 +6357,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Opening recent file...</source>
         <translation type="obsolete">최근 파일 열기...</translation>
+    </message>
+</context>
+<context>
+    <name>QG_RoundOptions</name>
+    <message>
+        <source>Trim</source>
+        <translation type="obsolete">자르기</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="obsolete">반지름:</translation>
     </message>
 </context>
 <context>
@@ -5535,6 +6407,28 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;선택된 요소의 전체 길이&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapDistOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="obsolete">스냅 거리 옵션</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="obsolete">거리:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapMiddleOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="obsolete">스냅 거리 옵션</translation>
+    </message>
+    <message>
+        <source>Middle Points:</source>
+        <translation type="obsolete">중앙점:</translation>
     </message>
 </context>
 <context>
@@ -5650,6 +6544,59 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Exclusive Snap Mode</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_SplineOptions</name>
+    <message>
+        <source>Spline Options</source>
+        <translation type="obsolete">스플라인 옵션</translation>
+    </message>
+    <message>
+        <source>Degree:</source>
+        <translation type="obsolete">차수:</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="obsolete">닫기</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="obsolete">명령 취소</translation>
+    </message>
+</context>
+<context>
+    <name>QG_TextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="obsolete">문자 옵션</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="obsolete">내용:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">각도:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_TrimAmountOptions</name>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending.</source>
+        <translation type="obsolete">거리. 잘라내려면 음수값, 늘이려면 양수값</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">길이:</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
+        <translation type="obsolete">거리. 잘라내려면 음수값, 늘이려면 양수값. 음의 기호는 최종 전체 길이로 잘라낼 때 무시된다.</translation>
+    </message>
+    <message>
+        <source>The input length is used as total length after trimming, instead of length increase</source>
+        <translation type="obsolete">입력값은 잘라낸 후에 전체길이로 길이 증가 대신에 사용된다.</translation>
     </message>
 </context>
 <context>
@@ -7677,6 +8624,120 @@ Continue?</source>
         <source>None</source>
         <translation type="obsolete">없음</translation>
     </message>
+    <message>
+        <source>A0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>C5E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comm10E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DLE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen</source>
+        <translation type="unfinished">펜</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksAdd</name>
+    <message>
+        <source>&amp;Add Block</source>
+        <translation type="obsolete">블록 추가(&amp;A)</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksAttributes</name>
+    <message>
+        <source>&amp;Rename Block</source>
+        <translation type="obsolete">블록 이름변경(&amp;R)</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
@@ -7687,6 +8748,13 @@ Continue?</source>
     <message>
         <source>Cancel</source>
         <translation type="unfinished">취소</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksEdit</name>
+    <message>
+        <source>&amp;Edit Block</source>
+        <translation type="obsolete">블록 편집(&amp;E)</translation>
     </message>
 </context>
 <context>
@@ -7734,6 +8802,13 @@ Continue?</source>
     <message>
         <source>&amp;Insert Block</source>
         <translation type="obsolete">블록 삽입(&amp;I)</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksRemove</name>
+    <message>
+        <source>&amp;Remove Block</source>
+        <translation type="obsolete">블록 제거(&amp;R)</translation>
     </message>
 </context>
 <context>
@@ -10765,981 +11840,6 @@ Continue?</source>
     <message>
         <source>Update</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_ActionFactory</name>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="obsolete">닫기(&amp;C)</translation>
-    </message>
-    <message>
-        <source>&amp;Grid</source>
-        <translation type="obsolete">격자(&amp;G)</translation>
-    </message>
-    <message>
-        <source>&amp;Application Preferences</source>
-        <translation type="obsolete">응용프로그램 환경설정(&amp;A)</translation>
-    </message>
-    <message>
-        <source>&amp;Statusbar</source>
-        <translation type="obsolete">상태표지줄(&amp;S)</translation>
-    </message>
-    <message>
-        <source>&amp;Draft</source>
-        <translation type="obsolete">초안(&amp;D)</translation>
-    </message>
-    <message>
-        <source>Open IDE</source>
-        <translation type="obsolete">IDE 열기</translation>
-    </message>
-    <message>
-        <source>Run Script..</source>
-        <translation type="obsolete">스크립트 실행..</translation>
-    </message>
-    <message>
-        <source>&amp;Preferences</source>
-        <translation type="obsolete">환경설정(&amp;P)</translation>
-    </message>
-    <message>
-        <source>&amp;Export...</source>
-        <translation type="obsolete">내보내기(&amp;E)</translation>
-    </message>
-    <message>
-        <source>&amp;Print...</source>
-        <translation type="obsolete">인쇄(&amp;P)</translation>
-    </message>
-    <message>
-        <source>CTRL-G</source>
-        <translation type="obsolete">CTRL-G</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation type="obsolete">끝내기(&amp;Q)</translation>
-    </message>
-    <message>
-        <source>&amp;Selection pointer</source>
-        <translation type="obsolete">지점 선택(&amp;S)</translation>
-    </message>
-    <message>
-        <source>Export as PDF</source>
-        <translation type="obsolete">PDF로 내보내기</translation>
-    </message>
-    <message>
-        <source>&amp;Block</source>
-        <translation type="obsolete">블록(&amp;B)</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="obsolete">호 선택사항</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="obsolete">시계방향</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="obsolete">반 시계방향</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="obsolete">접선 원호 선택사항</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="obsolete">접선 원호의 반지름</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="obsolete">접선 호에서 총 이루는 각도</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="obsolete">반지름</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="obsolete">각도</translation>
-    </message>
-</context>
-<context>
-    <name>QG_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="obsolete">바벨 선택사항</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="obsolete">자르기</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="obsolete">길이 1:</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="obsolete">길이 2:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBar</name>
-    <message>
-        <source>CAD Tools</source>
-        <translation type="obsolete">CAD 도구들</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarArcs</name>
-    <message>
-        <source>Arcs</source>
-        <translation type="obsolete">원호</translation>
-    </message>
-    <message>
-        <source>Arc with three points</source>
-        <translation type="obsolete">3점 원호</translation>
-    </message>
-    <message>
-        <source>Arc with Center, Point, Angles</source>
-        <translation type="obsolete">중심, 점, 각도로된 호</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">주 메뉴로 돌아가기</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">동심</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarCircles</name>
-    <message>
-        <source>Circles</source>
-        <translation type="obsolete">원</translation>
-    </message>
-    <message>
-        <source>Circle with two opposite points</source>
-        <translation type="obsolete">두 반대 지점으로 원 그리기</translation>
-    </message>
-    <message>
-        <source>Circle with center and radius</source>
-        <translation type="obsolete">중심과 반지름으로 원 그리기</translation>
-    </message>
-    <message>
-        <source>Circle with center and point</source>
-        <translation type="obsolete">중심과 점으로 원그리기</translation>
-    </message>
-    <message>
-        <source>Circle with three points</source>
-        <translation type="obsolete">3점으로 원그리기</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">주 메뉴로 돌아가기</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">동심</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
- p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;주어진 반지름으로 두개의 원에 접하는 원그리기&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
- p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;주어진 두개 점을 통과하는 원에 접하는 원 그리기&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
- p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;주어진 한 점을 통과하는 두개의 원에 접하는 원 그리기&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;3개 선분/호/원들에 접하는 원그리기&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarDim</name>
-    <message>
-        <source>Dimensions</source>
-        <translation type="obsolete">치수</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">주 메뉴로 돌아가기</translation>
-    </message>
-    <message>
-        <source>Diametric Dimension</source>
-        <translation type="obsolete">지름 치수</translation>
-    </message>
-    <message>
-        <source>Radial Dimension</source>
-        <translation type="obsolete">반지름 치수</translation>
-    </message>
-    <message>
-        <source>Vertical Dimension</source>
-        <translation type="obsolete">수직 치수</translation>
-    </message>
-    <message>
-        <source>Horizontal Dimension</source>
-        <translation type="obsolete">수평 치수</translation>
-    </message>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="obsolete">선분 치수</translation>
-    </message>
-    <message>
-        <source>Aligned Dimension</source>
-        <translation type="obsolete">정렬된 치수</translation>
-    </message>
-    <message>
-        <source>Angular Dimension</source>
-        <translation type="obsolete">각도 치수</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">동심</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarEllipses</name>
-    <message>
-        <source>Ellipses</source>
-        <translation type="obsolete">타원</translation>
-    </message>
-    <message>
-        <source>Ellipse arc with center, two points and angles</source>
-        <translation type="obsolete">중심, 두개 점과 각으로된 타원</translation>
-    </message>
-    <message>
-        <source>Ellipse with Center and two points</source>
-        <translation type="obsolete">중심과 두개 점으로 된 타원</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">주 메뉴로 돌아가기</translation>
-    </message>
-    <message>
-        <source>Draw Ellipse by foci and a point on ellipse</source>
-        <translation type="obsolete">타원상의 한점과 초점으로 타원그리기</translation>
-    </message>
-    <message>
-        <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
-        <translation type="obsolete">타원상의 4점으로 x/y 방향 축에 타원그리기</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">동심</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarInfo</name>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">정보</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">주 메뉴로 돌아가기</translation>
-    </message>
-    <message>
-        <source>Distance (Point, Point)</source>
-        <translation type="obsolete">거리(엔터티, 점)</translation>
-    </message>
-    <message>
-        <source>Distance (Entity, Point)</source>
-        <translation type="obsolete">거리(엔터티, 점)</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="obsolete">각도</translation>
-    </message>
-    <message>
-        <source>Total length of selected entities</source>
-        <translation type="obsolete">선택된 엔터티의 총 길이</translation>
-    </message>
-    <message>
-        <source>Area of polygon</source>
-        <translation type="obsolete">다각형의 면적</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">동심</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarLines</name>
-    <message>
-        <source>Lines</source>
-        <translation type="obsolete">선분</translation>
-    </message>
-    <message>
-        <source>Freehand lines</source>
-        <translation type="obsolete">자유형 선</translation>
-    </message>
-    <message>
-        <source>Orthogonal lines</source>
-        <translation type="obsolete">직교 선분</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">주 메뉴로 돌아가기</translation>
-    </message>
-    <message>
-        <source>Bisectors</source>
-        <translation type="obsolete">이등분선</translation>
-    </message>
-    <message>
-        <source>Tangents from circle to circle</source>
-        <translation type="obsolete">원과 원의 접선</translation>
-    </message>
-    <message>
-        <source>Tangents from point to circle</source>
-        <translation type="obsolete">점과 원의 접선</translation>
-    </message>
-    <message>
-        <source>Line with two points</source>
-        <translation type="obsolete">두점간선</translation>
-    </message>
-    <message>
-        <source>Horizontal lines</source>
-        <translation type="obsolete">수평선</translation>
-    </message>
-    <message>
-        <source>Vertical lines</source>
-        <translation type="obsolete">수직선</translation>
-    </message>
-    <message>
-        <source>Rectangles</source>
-        <translation type="obsolete">직사각형</translation>
-    </message>
-    <message>
-        <source>Polygons with Center and Corner</source>
-        <translation type="obsolete">중심과 모서리를 갖는 다각형</translation>
-    </message>
-    <message>
-        <source>Polygons with two Corners</source>
-        <translation type="obsolete">두 모서리를 갖는 다각형</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarMain</name>
-    <message>
-        <source>Create Block</source>
-        <translation type="obsolete">블록 만들기</translation>
-    </message>
-    <message>
-        <source>Insert Image</source>
-        <translation type="obsolete">그림 삽입</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarModify</name>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">주 메뉴로 돌아가기</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarPoints</name>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">주 메뉴로 돌아가기</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarPolylines</name>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">주 메뉴로 돌아가기</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">동심</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarSelect</name>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">주 메뉴로 돌아가기</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarSplines</name>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">주 메뉴로 돌아가기</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="obsolete">원 옵션</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">반지름:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CircleTan2Options</name>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">반지름:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DimLinearOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">각:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DimOptions</name>
-    <message>
-        <source>°</source>
-        <translation type="obsolete">°</translation>
-    </message>
-    <message>
-        <source>±</source>
-        <translation type="obsolete">±</translation>
-    </message>
-    <message>
-        <source>×</source>
-        <translation type="obsolete">×</translation>
-    </message>
-    <message>
-        <source>÷</source>
-        <translation type="obsolete">÷</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="obsolete">...</translation>
-    </message>
-    <message>
-        <source>⌀</source>
-        <translation type="obsolete">⌀</translation>
-    </message>
-    <message>
-        <source>π</source>
-        <translation type="obsolete">π</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="obsolete">삽입 옵션</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">각도:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="obsolete">회전 각</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="obsolete">축척</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="obsolete">DPI</translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="obsolete">이미지의 DPI</translation>
-    </message>
-</context>
-<context>
-    <name>QG_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="obsolete">삽입 옵션</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">각도:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="obsolete">회전 각</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="obsolete">축척</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="obsolete">배열:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="obsolete">열 개수</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="obsolete">행 개수</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="obsolete">간격:</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="obsolete">열 간격</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="obsolete">행 간격</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LibraryInsertOptions</name>
-    <message>
-        <source>Library Insert Options</source>
-        <translation type="obsolete">라이브러리 삽입 옵션</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">각도:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="obsolete">회전 각</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="obsolete">축척</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="obsolete">선 각도 옵션</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">각도:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="obsolete">선 각도</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">길이:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="obsolete">선의 길이</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="obsolete">스냅 점:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="obsolete">시작</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="obsolete">중간</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="obsolete">끝</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="obsolete">이등분선 옵션</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">길이:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="obsolete">이등분의 길이</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">개수:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="obsolete">만들 이등분의 수</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="obsolete">선 옵션</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">닫기</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="obsolete">명령 취소</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="obsolete">그려진 선으로 폐곡선 만들기</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="obsolete">마지막 선 그리기 명령 취소</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="obsolete">마지막 선 그리기 명령 복구</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="obsolete">명령 복구</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="obsolete">평행선 옵션</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">거리:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="obsolete">기준 요소까지 거리</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">개수:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="obsolete">생성할 평행선의 수</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="obsolete">점을 지나는 평행선 옵션</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">개수:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="obsolete">생성할 평행선의 수</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">다각형 옵션</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">개수:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">모서리의 개수</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">다각형 옵션</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">개수:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">모시리의 개수</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="obsolete">상대각 선 옵션</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">각도:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="obsolete">선 각도</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">길이:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="obsolete">선의 길이:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="obsolete">문자 옵션</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="obsolete">내용:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">각도:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ModifyOffsetOptions</name>
-    <message>
-        <source>Modify Offset Options</source>
-        <translation type="obsolete">옵셋 수정 옵션</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">거리:</translation>
-    </message>
-    <message>
-        <source>Offset from original entity</source>
-        <translation type="obsolete">기준 옵션으로부터 옵셋</translation>
-    </message>
-</context>
-<context>
-    <name>QG_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="obsolete">이동 회전 옵션</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">각도:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="obsolete">상대각 선 옵션</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="obsolete">간격:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="obsolete">기준 폴리선과의 거리</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="obsolete">복제 수:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="obsolete">미리보기 표시 옵션</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="obsolete">흑 / 백 모드 변경</translation>
-    </message>
-    <message>
-        <source>Center to page</source>
-        <translation type="obsolete">페이지에 중심</translation>
-    </message>
-    <message>
-        <source>Fit to page</source>
-        <translation type="obsolete">페이지에 맞춤</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;인쇄 축척은 현재 값으로 고정된다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="obsolete">고정</translation>
-    </message>
-</context>
-<context>
-    <name>QG_RoundOptions</name>
-    <message>
-        <source>Trim</source>
-        <translation type="obsolete">자르기</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">반지름:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SnapDistOptions</name>
-    <message>
-        <source>Snap Distance Options</source>
-        <translation type="obsolete">스냅 거리 옵션</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">거리:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SnapMiddleOptions</name>
-    <message>
-        <source>Snap Distance Options</source>
-        <translation type="obsolete">스냅 거리 옵션</translation>
-    </message>
-    <message>
-        <source>Middle Points:</source>
-        <translation type="obsolete">중앙점:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="obsolete">스플라인 옵션</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="obsolete">차수:</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">닫기</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="obsolete">명령 취소</translation>
-    </message>
-</context>
-<context>
-    <name>QG_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="obsolete">문자 옵션</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="obsolete">내용:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">각도:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_TrimAmountOptions</name>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="obsolete">거리. 잘라내려면 음수값, 늘이려면 양수값</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">길이:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="obsolete">거리. 잘라내려면 음수값, 늘이려면 양수값. 음의 기호는 최종 전체 길이로 잘라낼 때 무시된다.</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="obsolete">입력값은 잘라낸 후에 전체길이로 길이 증가 대신에 사용된다.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksAdd</name>
-    <message>
-        <source>&amp;Add Block</source>
-        <translation type="obsolete">블록 추가(&amp;A)</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksAttributes</name>
-    <message>
-        <source>&amp;Rename Block</source>
-        <translation type="obsolete">블록 이름변경(&amp;R)</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksEdit</name>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translation type="obsolete">블록 편집(&amp;E)</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksRemove</name>
-    <message>
-        <source>&amp;Remove Block</source>
-        <translation type="obsolete">블록 제거(&amp;R)</translation>
     </message>
 </context>
 </TS>

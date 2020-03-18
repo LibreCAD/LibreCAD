@@ -1806,6 +1806,1521 @@ Printer settings:
     </message>
 </context>
 <context>
+    <name>QG_ActionFactory</name>
+    <message>
+        <source>&amp;New</source>
+        <translation type="obsolete">Ст&amp;ворити</translation>
+    </message>
+    <message>
+        <source>&amp;Open...</source>
+        <translation type="obsolete">&amp;Відкрити…</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation type="obsolete">&amp;Зберегти</translation>
+    </message>
+    <message>
+        <source>Save &amp;as...</source>
+        <translation type="obsolete">Зберегти &amp;як…</translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation type="obsolete">&amp;Зачинити</translation>
+    </message>
+    <message>
+        <source>&amp;Print</source>
+        <translation type="obsolete">Д&amp;рук</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translation type="obsolete">Вихід</translation>
+    </message>
+    <message>
+        <source>E&amp;xit</source>
+        <translation type="obsolete">В&amp;ихід</translation>
+    </message>
+    <message>
+        <source>Quits the application</source>
+        <translation type="obsolete">Вихід з програми</translation>
+    </message>
+    <message>
+        <source>Zoom in</source>
+        <translation type="obsolete">Наблизити</translation>
+    </message>
+    <message>
+        <source>Zoom &amp;In</source>
+        <translation type="obsolete">На&amp;близити</translation>
+    </message>
+    <message>
+        <source>Zooms in</source>
+        <translation type="obsolete">Збільшує масштаб документа</translation>
+    </message>
+    <message>
+        <source>Zoom out</source>
+        <translation type="obsolete">Віддалити</translation>
+    </message>
+    <message>
+        <source>Zoom &amp;Out</source>
+        <translation type="obsolete">Від&amp;далити</translation>
+    </message>
+    <message>
+        <source>Zooms out</source>
+        <translation type="obsolete">Зменшує масштаб документа</translation>
+    </message>
+    <message>
+        <source>Auto Zoom</source>
+        <translation type="obsolete">Показати усі</translation>
+    </message>
+    <message>
+        <source>&amp;Auto Zoom</source>
+        <translation type="obsolete">&amp;Показати усі</translation>
+    </message>
+    <message>
+        <source>Zooms automatic</source>
+        <translation type="obsolete">Підбирає масштаб документа автоматично</translation>
+    </message>
+    <message>
+        <source>Window Zoom</source>
+        <translation type="obsolete">Масштабування у вікні</translation>
+    </message>
+    <message>
+        <source>&amp;Window Zoom</source>
+        <translation type="obsolete">&amp;Збільшити рамкою</translation>
+    </message>
+    <message>
+        <source>Zooms in a window</source>
+        <translation type="obsolete">Збільшує зображення у рамці</translation>
+    </message>
+    <message>
+        <source>Pan Zoom</source>
+        <translation type="obsolete">Зрушити</translation>
+    </message>
+    <message>
+        <source>&amp;Pan Zoom</source>
+        <translation type="obsolete">З&amp;рушити</translation>
+    </message>
+    <message>
+        <source>Realtime Panning</source>
+        <translation type="obsolete">Зсуває зображення</translation>
+    </message>
+    <message>
+        <source>Redraw</source>
+        <translation type="obsolete">Оновити зображення</translation>
+    </message>
+    <message>
+        <source>&amp;Redraw</source>
+        <translation type="obsolete">&amp;Оновити зображення</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="obsolete">Скасувати</translation>
+    </message>
+    <message>
+        <source>&amp;Undo</source>
+        <translation type="obsolete">&amp;Скасувати</translation>
+    </message>
+    <message>
+        <source>Undoes last action</source>
+        <translation type="obsolete">Скасовує останню дію</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="obsolete">Повторити</translation>
+    </message>
+    <message>
+        <source>&amp;Redo</source>
+        <translation type="obsolete">&amp;Повторити</translation>
+    </message>
+    <message>
+        <source>Redoes last action</source>
+        <translation type="obsolete">Повторює скасовану дію</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="obsolete">Вирізати</translation>
+    </message>
+    <message>
+        <source>Cu&amp;t</source>
+        <translation type="obsolete">Ви&amp;різати</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="obsolete">Копіювати</translation>
+    </message>
+    <message>
+        <source>&amp;Copy</source>
+        <translation type="obsolete">&amp;Копіювати</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation type="obsolete">Вставити</translation>
+    </message>
+    <message>
+        <source>&amp;Paste</source>
+        <translation type="obsolete">&amp;Вставити</translation>
+    </message>
+    <message>
+        <source>Select Entity</source>
+        <translation type="obsolete">Вибрати об’єкт</translation>
+    </message>
+    <message>
+        <source>Selects single Entities</source>
+        <translation type="obsolete">Вибирає один об’єкт</translation>
+    </message>
+    <message>
+        <source>Select Window</source>
+        <translation type="obsolete">Вибрати рамкою</translation>
+    </message>
+    <message>
+        <source>Select &amp;Window</source>
+        <translation type="obsolete">Вибрати &amp;рамкою</translation>
+    </message>
+    <message>
+        <source>Selects all Entities in a given Window</source>
+        <translation type="obsolete">Вибирає усі об’єкти, захоплені рамкою</translation>
+    </message>
+    <message>
+        <source>Deselect Window</source>
+        <translation type="obsolete">Скасувати вибір рамкою</translation>
+    </message>
+    <message>
+        <source>Deselect &amp;Window</source>
+        <translation type="obsolete">Скасувати ви&amp;бір рамкою</translation>
+    </message>
+    <message>
+        <source>Deselects all Entities in a given Window</source>
+        <translation type="obsolete">Відміняє вибір об’єктів, захоплених рамкою</translation>
+    </message>
+    <message>
+        <source>(De-)Select Contour</source>
+        <translation type="obsolete">Вибрати замкнутий контур (cкас. вибір)</translation>
+    </message>
+    <message>
+        <source>(De-)Selects connected entities</source>
+        <translation type="obsolete">Вибирає (або скасовує вибір) об&apos;єктів, що утворюють замкнутий контур</translation>
+    </message>
+    <message>
+        <source>Select All</source>
+        <translation type="obsolete">Вибрати усе</translation>
+    </message>
+    <message>
+        <source>Select &amp;All</source>
+        <translation type="obsolete">Вибр&amp;ати усе</translation>
+    </message>
+    <message>
+        <source>Selects all Entities</source>
+        <translation type="obsolete">Вибирає усі об’єкти</translation>
+    </message>
+    <message>
+        <source>Deselect all</source>
+        <translation type="obsolete">Відмінити вибір усіх об’єктів</translation>
+    </message>
+    <message>
+        <source>Deselect &amp;all</source>
+        <translation type="obsolete">Скасувати ви&amp;бір усіх об’єктів</translation>
+    </message>
+    <message>
+        <source>Deselects all Entities</source>
+        <translation type="obsolete">Скасовує вибір усіх об’єктів</translation>
+    </message>
+    <message>
+        <source>Invert Selection</source>
+        <translation type="obsolete">Інвертувати вибір</translation>
+    </message>
+    <message>
+        <source>&amp;Invert Selection</source>
+        <translation type="obsolete">&amp;Інвертувати вибір</translation>
+    </message>
+    <message>
+        <source>Inverts the current selection</source>
+        <translation type="obsolete">інвертує поточний вибір об’єктів</translation>
+    </message>
+    <message>
+        <source>Select Intersected Entities</source>
+        <translation type="obsolete">Вибрати об’єкти січною</translation>
+    </message>
+    <message>
+        <source>In&amp;tersected Entities</source>
+        <translation type="obsolete">&amp;Вибрати об’єкти січною</translation>
+    </message>
+    <message>
+        <source>Selects all entities intersected by a line</source>
+        <translation type="obsolete">Вибирає усі об’єкти, пересічені лінією</translation>
+    </message>
+    <message>
+        <source>Deselect Intersected Entities</source>
+        <translation type="obsolete">Скасувати вибір січної</translation>
+    </message>
+    <message>
+        <source>Deselect Inte&amp;rsected Entities</source>
+        <translation type="obsolete">Скасувати вибір &amp;січної</translation>
+    </message>
+    <message>
+        <source>Deselects all entities intersected by a line</source>
+        <translation type="obsolete">Відміняє вибір усіх об’єктів, які пересічені лінією</translation>
+    </message>
+    <message>
+        <source>(De-)Select Layer</source>
+        <translation type="obsolete">Вибрати шар (скасов. вибір)</translation>
+    </message>
+    <message>
+        <source>(De-)Selects layers</source>
+        <translation type="obsolete">Вибирає шар (або скасовує вибір шару)</translation>
+    </message>
+    <message>
+        <source>Points</source>
+        <translation type="obsolete">Точки</translation>
+    </message>
+    <message>
+        <source>&amp;Points</source>
+        <translation type="obsolete">&amp;Точки</translation>
+    </message>
+    <message>
+        <source>Draw Points</source>
+        <translation type="obsolete">Накреслити точки</translation>
+    </message>
+    <message>
+        <source>Line: 2 Points</source>
+        <translation type="obsolete">Лінія: за 2-ма точками</translation>
+    </message>
+    <message>
+        <source>&amp;2 Points</source>
+        <translation type="obsolete">За &amp;2-ма точками</translation>
+    </message>
+    <message>
+        <source>Draw lines</source>
+        <translation type="obsolete">Накреслити лінії</translation>
+    </message>
+    <message>
+        <source>Line: Angle</source>
+        <translation type="obsolete">Лінія: під кутом</translation>
+    </message>
+    <message>
+        <source>&amp;Angle</source>
+        <translation type="obsolete">Під &amp;кутом</translation>
+    </message>
+    <message>
+        <source>Draw lines with a given angle</source>
+        <translation type="obsolete">Накреслити лінії під заданим кутом</translation>
+    </message>
+    <message>
+        <source>Line: Horizontal</source>
+        <translation type="obsolete">Лінія: горизонтальна</translation>
+    </message>
+    <message>
+        <source>&amp;Horizontal</source>
+        <translation type="obsolete">&amp;Горизонтальна</translation>
+    </message>
+    <message>
+        <source>Draw horizontal lines</source>
+        <translation type="obsolete">Накреслити горизонтальну лінію</translation>
+    </message>
+    <message>
+        <source>hor. / vert. line</source>
+        <translation type="obsolete">гор./верт. лінія</translation>
+    </message>
+    <message>
+        <source>H&amp;orizontal / Vertical</source>
+        <translation type="obsolete">&amp;Горизонтальна/вертикальна</translation>
+    </message>
+    <message>
+        <source>Draw horizontal / vertical lines</source>
+        <translation type="obsolete">Накреслити горизонтальну/вертикальну лінію</translation>
+    </message>
+    <message>
+        <source>Line: Vertical</source>
+        <translation type="obsolete">Лінія: вертикальна</translation>
+    </message>
+    <message>
+        <source>&amp;Vertical</source>
+        <translation type="obsolete">&amp;Вертикальна</translation>
+    </message>
+    <message>
+        <source>Draw vertical lines</source>
+        <translation type="obsolete">Накреслити вертикальну лінію</translation>
+    </message>
+    <message>
+        <source>Line: Freehand</source>
+        <translation type="obsolete">Лінія: довільна</translation>
+    </message>
+    <message>
+        <source>&amp;Freehand Line</source>
+        <translation type="obsolete">&amp;Довільна лінія (крива)</translation>
+    </message>
+    <message>
+        <source>Draw freehand lines</source>
+        <translation type="obsolete">Накреслити довільну криву</translation>
+    </message>
+    <message>
+        <source>Parallel</source>
+        <translation type="obsolete">Паралельна</translation>
+    </message>
+    <message>
+        <source>Para&amp;llel</source>
+        <translation type="obsolete">Пара&amp;лельна</translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation type="obsolete">Прямокутник</translation>
+    </message>
+    <message>
+        <source>&amp;Rectangle</source>
+        <translation type="obsolete">П&amp;рямокутник</translation>
+    </message>
+    <message>
+        <source>Draw rectangles</source>
+        <translation type="obsolete">Накреслити прямокутник</translation>
+    </message>
+    <message>
+        <source>Bisector</source>
+        <translation type="obsolete">Бісектриса</translation>
+    </message>
+    <message>
+        <source>&amp;Bisector</source>
+        <translation type="obsolete">Б&amp;ісектриса</translation>
+    </message>
+    <message>
+        <source>Draw bisectors</source>
+        <translation type="obsolete">Накреслити бісектрису</translation>
+    </message>
+    <message>
+        <source>Tangent (P,C)</source>
+        <translation type="obsolete">Дотична (Т,К)</translation>
+    </message>
+    <message>
+        <source>&amp;Tangent (P,C)</source>
+        <translation type="obsolete">&amp;Дотична (Т,К)</translation>
+    </message>
+    <message>
+        <source>Draw tangent (point, circle)</source>
+        <translation type="obsolete">Накреслити дотичну (точка, коло)</translation>
+    </message>
+    <message>
+        <source>Tangent (C,C)</source>
+        <translation type="obsolete">Дотична (К,К)</translation>
+    </message>
+    <message>
+        <source>Tan&amp;gent (C,C)</source>
+        <translation type="obsolete">До&amp;тична (К,К)</translation>
+    </message>
+    <message>
+        <source>Draw tangent (circle, circle)</source>
+        <translation type="obsolete">Накреслити дотичну (коло, коло)</translation>
+    </message>
+    <message>
+        <source>Orthogonal</source>
+        <translation type="obsolete">Перпендикулярна</translation>
+    </message>
+    <message>
+        <source>&amp;Orthogonal</source>
+        <translation type="obsolete">&amp;Перпендикулярна</translation>
+    </message>
+    <message>
+        <source>Draw orthogonal line</source>
+        <translation type="obsolete">Накреслити перпендикулярну лінію</translation>
+    </message>
+    <message>
+        <source>Relative angle</source>
+        <translation type="obsolete">Відносний кут</translation>
+    </message>
+    <message>
+        <source>R&amp;elative angle</source>
+        <translation type="obsolete">Відно&amp;сний кут</translation>
+    </message>
+    <message>
+        <source>Draw line with relative angle</source>
+        <translation type="obsolete">Накреслити лінію під відносним кутом</translation>
+    </message>
+    <message>
+        <source>Polygon</source>
+        <translation type="obsolete">Багатокутник</translation>
+    </message>
+    <message>
+        <source>Pol&amp;ygon (Cen,Cor)</source>
+        <translation type="obsolete">Багато&amp;кутник (центр, кут)</translation>
+    </message>
+    <message>
+        <source>Draw polygon with center and corner</source>
+        <translation type="obsolete">Накреслити багатокутник по центру й куту</translation>
+    </message>
+    <message>
+        <source>Pol&amp;ygon (Cor,Cor)</source>
+        <translation type="obsolete">Багато&amp;кутник (кут, кут)</translation>
+    </message>
+    <message>
+        <source>Draw polygon with two corners</source>
+        <translation type="obsolete">Накреслити багатокутник за двома кутами</translation>
+    </message>
+    <message>
+        <source>Circle: Center, Point</source>
+        <translation type="obsolete">Коло: центр, точка</translation>
+    </message>
+    <message>
+        <source>Center, &amp;Point</source>
+        <translation type="obsolete">Центр, &amp;точка</translation>
+    </message>
+    <message>
+        <source>Draw circles with center and point</source>
+        <translation type="obsolete">Накреслити коло по центру й точці прив’язки</translation>
+    </message>
+    <message>
+        <source>Circle: Center, Radius</source>
+        <translation type="obsolete">Коло: центр, радіус</translation>
+    </message>
+    <message>
+        <source>Center, &amp;Radius</source>
+        <translation type="obsolete">Центр, &amp;радіус</translation>
+    </message>
+    <message>
+        <source>Draw circles with center and radius</source>
+        <translation type="obsolete">Накреслити коло за центром й радіусом</translation>
+    </message>
+    <message>
+        <source>Circle: 2 Points</source>
+        <translation type="obsolete">Коло: за 2-ма точками</translation>
+    </message>
+    <message>
+        <source>2 Points</source>
+        <translation type="obsolete">За 2-ма точками</translation>
+    </message>
+    <message>
+        <source>Draw circles with 2 points</source>
+        <translation type="obsolete">Накреслити коло за 2-ма точками</translation>
+    </message>
+    <message>
+        <source>Circle: 3 Points</source>
+        <translation type="obsolete">Коло: за 3-ма точками</translation>
+    </message>
+    <message>
+        <source>3 Points</source>
+        <translation type="obsolete">За 3-ма точками</translation>
+    </message>
+    <message>
+        <source>Draw circles with 3 points</source>
+        <translation type="obsolete">Накреслити коло за 3-ма точками</translation>
+    </message>
+    <message>
+        <source>Arc: Center, Point, Angles</source>
+        <translation type="obsolete">Дуга: центр, точка, кути</translation>
+    </message>
+    <message>
+        <source>&amp;Center, Point, Angles</source>
+        <translation type="obsolete">&amp;Центр, точка, кути</translation>
+    </message>
+    <message>
+        <source>Draw arcs</source>
+        <translation type="obsolete">Накреслити дугу</translation>
+    </message>
+    <message>
+        <source>Arc: 3 Points</source>
+        <translation type="obsolete">Дуга: за 3-ма точками</translation>
+    </message>
+    <message>
+        <source>&amp;3 Points</source>
+        <translation type="obsolete">За &amp;3-ма точками</translation>
+    </message>
+    <message>
+        <source>Draw arcs with 3 points</source>
+        <translation type="obsolete">Накреслити дугу за 3-ма точками</translation>
+    </message>
+    <message>
+        <source>Ellipse with Axis</source>
+        <translation type="obsolete">Еліпс з віссю</translation>
+    </message>
+    <message>
+        <source>&amp;Ellipse (Axis)</source>
+        <translation type="obsolete">&amp;Еліпс (з віссю)</translation>
+    </message>
+    <message>
+        <source>Draw Ellipses</source>
+        <translation type="obsolete">Накреслити еліпс</translation>
+    </message>
+    <message>
+        <source>Ellipse Arc with Axis</source>
+        <translation type="obsolete">Дуга еліпса з віссю</translation>
+    </message>
+    <message>
+        <source>&amp;Ellipse Arc (Axis)</source>
+        <translation type="obsolete">&amp;Дуга еліпса (з віссю)</translation>
+    </message>
+    <message>
+        <source>Draw Ellipse Arcs</source>
+        <translation type="obsolete">Накреслити дугу еліпса</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation type="obsolete">Текст</translation>
+    </message>
+    <message>
+        <source>&amp;Text</source>
+        <translation type="obsolete">&amp;Текст</translation>
+    </message>
+    <message>
+        <source>Draw Text Entities</source>
+        <translation type="obsolete">Створити текстовий об’єкт</translation>
+    </message>
+    <message>
+        <source>Draw Hatches and Solid Fills</source>
+        <translation type="obsolete">Заштрихувати або залити кольором</translation>
+    </message>
+    <message>
+        <source>Aligned</source>
+        <translation type="obsolete">Вирівняний</translation>
+    </message>
+    <message>
+        <source>&amp;Aligned</source>
+        <translation type="obsolete">Ви&amp;рівняний</translation>
+    </message>
+    <message>
+        <source>Aligned Dimension</source>
+        <translation type="obsolete">Вирівняний розмір</translation>
+    </message>
+    <message>
+        <source>Linear</source>
+        <translation type="obsolete">Лінійний</translation>
+    </message>
+    <message>
+        <source>&amp;Linear</source>
+        <translation type="obsolete">&amp;Лінійний</translation>
+    </message>
+    <message>
+        <source>Linear Dimension</source>
+        <translation type="obsolete">Лінійний розмір</translation>
+    </message>
+    <message>
+        <source>Horizontal</source>
+        <translation type="obsolete">Горизонтальний</translation>
+    </message>
+    <message>
+        <source>Horizontal Dimension</source>
+        <translation type="obsolete">Горизонтальний розмір</translation>
+    </message>
+    <message>
+        <source>Vertical</source>
+        <translation type="obsolete">Вертикальний</translation>
+    </message>
+    <message>
+        <source>Vertical Dimension</source>
+        <translation type="obsolete">Вертикальний розмір</translation>
+    </message>
+    <message>
+        <source>Radial</source>
+        <translation type="obsolete">Радіальний</translation>
+    </message>
+    <message>
+        <source>&amp;Radial</source>
+        <translation type="obsolete">&amp;Радіальний</translation>
+    </message>
+    <message>
+        <source>Radial Dimension</source>
+        <translation type="obsolete">Радіальний розмір</translation>
+    </message>
+    <message>
+        <source>Diametric</source>
+        <translation type="obsolete">Діаметральний</translation>
+    </message>
+    <message>
+        <source>&amp;Diametric</source>
+        <translation type="obsolete">&amp;Діаметральний</translation>
+    </message>
+    <message>
+        <source>Diametric Dimension</source>
+        <translation type="obsolete">Діаметральний розмір</translation>
+    </message>
+    <message>
+        <source>Angular</source>
+        <translation type="obsolete">Кутовий</translation>
+    </message>
+    <message>
+        <source>&amp;Angular</source>
+        <translation type="obsolete">&amp;Кутовий</translation>
+    </message>
+    <message>
+        <source>Angular Dimension</source>
+        <translation type="obsolete">Кутовий розмір</translation>
+    </message>
+    <message>
+        <source>Leader</source>
+        <translation type="obsolete">Поличка-виноска</translation>
+    </message>
+    <message>
+        <source>&amp;Leader</source>
+        <translation type="obsolete">П&amp;оличка-виноска</translation>
+    </message>
+    <message>
+        <source>Leader Dimension</source>
+        <translation type="obsolete">Поличка-виноска</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="obsolete">Вилучити</translation>
+    </message>
+    <message>
+        <source>&amp;Delete</source>
+        <translation type="obsolete">Ви&amp;лучити</translation>
+    </message>
+    <message>
+        <source>Delete Entities</source>
+        <translation type="obsolete">Вилучити об’єкти</translation>
+    </message>
+    <message>
+        <source>Delete Freehand</source>
+        <translation type="obsolete">Вилучити довільну криву</translation>
+    </message>
+    <message>
+        <source>&amp;Delete Freehand</source>
+        <translation type="obsolete">Ви&amp;лучити довільну криву</translation>
+    </message>
+    <message>
+        <source>Move</source>
+        <translation type="obsolete">Зрушення</translation>
+    </message>
+    <message>
+        <source>&amp;Move</source>
+        <translation type="obsolete">&amp;Зрушення</translation>
+    </message>
+    <message>
+        <source>Move Entities</source>
+        <translation type="obsolete">Перемістити об’єкти</translation>
+    </message>
+    <message>
+        <source>Rotate</source>
+        <translation type="obsolete">Обертання</translation>
+    </message>
+    <message>
+        <source>&amp;Rotate</source>
+        <translation type="obsolete">&amp;Обертання</translation>
+    </message>
+    <message>
+        <source>Rotate Entities</source>
+        <translation type="obsolete">Обертати об’єкти</translation>
+    </message>
+    <message>
+        <source>Scale</source>
+        <translation type="obsolete">Масштабувати</translation>
+    </message>
+    <message>
+        <source>&amp;Scale</source>
+        <translation type="obsolete">&amp;Масштабувати</translation>
+    </message>
+    <message>
+        <source>Scale Entities</source>
+        <translation type="obsolete">Масштабувати об’єкти</translation>
+    </message>
+    <message>
+        <source>Mirror</source>
+        <translation type="obsolete">Дзеркально відобразити</translation>
+    </message>
+    <message>
+        <source>&amp;Mirror</source>
+        <translation type="obsolete">&amp;Дзеркально відобразити</translation>
+    </message>
+    <message>
+        <source>Mirror Entities</source>
+        <translation type="obsolete">Дзеркально відобразити об’єкти</translation>
+    </message>
+    <message>
+        <source>Move and Rotate</source>
+        <translation type="obsolete">Зрушення й обертання</translation>
+    </message>
+    <message>
+        <source>M&amp;ove and Rotate</source>
+        <translation type="obsolete">Зрушення й &amp;обертання</translation>
+    </message>
+    <message>
+        <source>Move and Rotate Entities</source>
+        <translation type="obsolete">Зрушення й обертання об’єктів</translation>
+    </message>
+    <message>
+        <source>Rotate Two</source>
+        <translation type="obsolete">Обертати навколо двох</translation>
+    </message>
+    <message>
+        <source>Rotate T&amp;wo</source>
+        <translation type="obsolete">Обертати навколо &amp;двох</translation>
+    </message>
+    <message>
+        <source>Rotate Entities around two centers</source>
+        <translation type="obsolete">Обертати об’єкти навколо двох центрів</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="obsolete">Вирівняти</translation>
+    </message>
+    <message>
+        <source>&amp;Trim</source>
+        <translation type="obsolete">&amp;Вирівняти</translation>
+    </message>
+    <message>
+        <source>Trim Entities</source>
+        <translation type="obsolete">Вирівнює об’єкти</translation>
+    </message>
+    <message>
+        <source>Trim Two</source>
+        <translation type="obsolete">Вирівняти два</translation>
+    </message>
+    <message>
+        <source>&amp;Trim Two</source>
+        <translation type="obsolete">Ви&amp;рівняти два</translation>
+    </message>
+    <message>
+        <source>Trim two Entities</source>
+        <translation type="obsolete">Вирівнює два об’єкти</translation>
+    </message>
+    <message>
+        <source>Lengthen</source>
+        <translation type="obsolete">Подовжити</translation>
+    </message>
+    <message>
+        <source>&amp;Lengthen</source>
+        <translation type="obsolete">По&amp;довжити</translation>
+    </message>
+    <message>
+        <source>Lengthen by a given amount</source>
+        <translation type="obsolete">Подовжити на задану величину</translation>
+    </message>
+    <message>
+        <source>&amp;Cut</source>
+        <translation type="obsolete">&amp;Розбити</translation>
+    </message>
+    <message>
+        <source>Cut Entities</source>
+        <translation type="obsolete">Розбиває об’єкти</translation>
+    </message>
+    <message>
+        <source>Stretch</source>
+        <translation type="obsolete">Витягнути</translation>
+    </message>
+    <message>
+        <source>&amp;Stretch</source>
+        <translation type="obsolete">&amp;Витягнути</translation>
+    </message>
+    <message>
+        <source>Stretch Entities</source>
+        <translation type="obsolete">Витягає об’єкти</translation>
+    </message>
+    <message>
+        <source>Bevel</source>
+        <translation type="obsolete">Фаска</translation>
+    </message>
+    <message>
+        <source>&amp;Bevel</source>
+        <translation type="obsolete">&amp;Фаска</translation>
+    </message>
+    <message>
+        <source>Bevel Entities</source>
+        <translation type="obsolete">Елементи фаски</translation>
+    </message>
+    <message>
+        <source>Round</source>
+        <translation type="obsolete">Округлення</translation>
+    </message>
+    <message>
+        <source>&amp;Round</source>
+        <translation type="obsolete">&amp;Округлення</translation>
+    </message>
+    <message>
+        <source>Round Entities</source>
+        <translation type="obsolete">Елементи округлення</translation>
+    </message>
+    <message>
+        <source>Free</source>
+        <translation type="obsolete">Без прив’язок</translation>
+    </message>
+    <message>
+        <source>&amp;Free</source>
+        <translation type="obsolete">&amp;Без прив’язок</translation>
+    </message>
+    <message>
+        <source>Free positioning</source>
+        <translation type="obsolete">Вільне розміщення курсору</translation>
+    </message>
+    <message>
+        <source>Grid</source>
+        <translation type="obsolete">За сіткою</translation>
+    </message>
+    <message>
+        <source>&amp;Grid</source>
+        <translation type="obsolete">&amp;Сітка</translation>
+    </message>
+    <message>
+        <source>Grid positioning</source>
+        <translation type="obsolete">Прив’язка за сіткою</translation>
+    </message>
+    <message>
+        <source>Endpoints</source>
+        <translation type="obsolete">Кінцева точка</translation>
+    </message>
+    <message>
+        <source>&amp;Endpoints</source>
+        <translation type="obsolete">&amp;Кінцева точка</translation>
+    </message>
+    <message>
+        <source>Snap to endpoints</source>
+        <translation type="obsolete">Прив’язка до кінцевих точок об’єкту</translation>
+    </message>
+    <message>
+        <source>On Entity</source>
+        <translation type="obsolete">Точка на кривій</translation>
+    </message>
+    <message>
+        <source>&amp;On Entity</source>
+        <translation type="obsolete">&amp;Точка на кривій</translation>
+    </message>
+    <message>
+        <source>Snap to nearest point on entity</source>
+        <translation type="obsolete">Прив’язка до найближчої точки на кривій</translation>
+    </message>
+    <message>
+        <source>Center</source>
+        <translation type="obsolete">Центр</translation>
+    </message>
+    <message>
+        <source>&amp;Center</source>
+        <translation type="obsolete">&amp;Центр</translation>
+    </message>
+    <message>
+        <source>Snap to centers</source>
+        <translation type="obsolete">Прив’язка до центру</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="obsolete">Середина</translation>
+    </message>
+    <message>
+        <source>&amp;Middle</source>
+        <translation type="obsolete">&amp;Середина</translation>
+    </message>
+    <message>
+        <source>Snap to middle points</source>
+        <translation type="obsolete">Прив’язка до середини</translation>
+    </message>
+    <message>
+        <source>Distance from Endpoint</source>
+        <translation type="obsolete">На відстані від точки</translation>
+    </message>
+    <message>
+        <source>&amp;Distance from Endpoint</source>
+        <translation type="obsolete">&amp;На відстані від точки</translation>
+    </message>
+    <message>
+        <source>Snap to points with a given distance to an endpoint</source>
+        <translation type="obsolete">Прив’язка на заданій відстані від точки</translation>
+    </message>
+    <message>
+        <source>Intersection</source>
+        <translation type="obsolete">Перетин</translation>
+    </message>
+    <message>
+        <source>&amp;Intersection</source>
+        <translation type="obsolete">&amp;Перетин</translation>
+    </message>
+    <message>
+        <source>Snap to intersection points</source>
+        <translation type="obsolete">Прив’язка до точки перетину</translation>
+    </message>
+    <message>
+        <source>Intersection Manually</source>
+        <translation type="obsolete">Перетини вручну</translation>
+    </message>
+    <message>
+        <source>I&amp;ntersection Manually</source>
+        <translation type="obsolete">&amp;Перетини вручну</translation>
+    </message>
+    <message>
+        <source>Snap to intersection points manually</source>
+        <translation type="obsolete">Прив’язка до точок перетину вручну</translation>
+    </message>
+    <message>
+        <source>Restrict Nothing</source>
+        <translation type="obsolete">Без обмежень</translation>
+    </message>
+    <message>
+        <source>Restrict &amp;Nothing</source>
+        <translation type="obsolete">Без &amp;обмежень</translation>
+    </message>
+    <message>
+        <source>No snap restriction</source>
+        <translation type="obsolete">Прив’язка без обмежень</translation>
+    </message>
+    <message>
+        <source>Restrict Orthogonally</source>
+        <translation type="obsolete">Обмежити ортогонально</translation>
+    </message>
+    <message>
+        <source>Restrict &amp;Orthogonally</source>
+        <translation type="obsolete">Обмежити ор&amp;тогонально</translation>
+    </message>
+    <message>
+        <source>Restrict snapping orthogonally</source>
+        <translation type="obsolete">Обмежити прив’язку ортогонально</translation>
+    </message>
+    <message>
+        <source>Restrict Horizontally</source>
+        <translation type="obsolete">Обмежити горизонтально</translation>
+    </message>
+    <message>
+        <source>Restrict &amp;Horizontally</source>
+        <translation type="obsolete">Обмежити &amp;горизонтально</translation>
+    </message>
+    <message>
+        <source>Restrict snapping horizontally</source>
+        <translation type="obsolete">Обмежити прив’язку горизонтально</translation>
+    </message>
+    <message>
+        <source>Restrict Vertically</source>
+        <translation type="obsolete">Обмежити вертикально</translation>
+    </message>
+    <message>
+        <source>Restrict &amp;Vertically</source>
+        <translation type="obsolete">Обмежити &amp;вертикально</translation>
+    </message>
+    <message>
+        <source>Restrict snapping vertically</source>
+        <translation type="obsolete">Обмежити прив’язку вертикально</translation>
+    </message>
+    <message>
+        <source>Set Relative Zero</source>
+        <translation type="obsolete">Встановити відносний нуль</translation>
+    </message>
+    <message>
+        <source>&amp;Set Relative Zero</source>
+        <translation type="obsolete">&amp;Встановити відносний нуль</translation>
+    </message>
+    <message>
+        <source>Set position of the Relative Zero point</source>
+        <translation type="obsolete">Поставити положення відносного початку координат</translation>
+    </message>
+    <message>
+        <source>(Un-)Lock Relative Zero</source>
+        <translation type="obsolete">Увімкн./вимкн. відносний нуль</translation>
+    </message>
+    <message>
+        <source>(Un-)&amp;Lock Relative Zero</source>
+        <translation type="obsolete">Увімкн./в&amp;имкн. відносний нуль</translation>
+    </message>
+    <message>
+        <source>(Un-)Lock relative Zero</source>
+        <translation type="obsolete">Увімкн./вимкн. відносний нуль</translation>
+    </message>
+    <message>
+        <source>Point inside contour</source>
+        <translation type="obsolete">Точка всередині контуру</translation>
+    </message>
+    <message>
+        <source>&amp;Point inside contour</source>
+        <translation type="obsolete">&amp;Точка всередині контуру</translation>
+    </message>
+    <message>
+        <source>Checks if a given point is inside the selected contour</source>
+        <translation type="obsolete">Перевіряє, чи знаходиться дана точка всередині вибраного контуру</translation>
+    </message>
+    <message>
+        <source>Defreeze all</source>
+        <translation type="obsolete">Розморозити усі</translation>
+    </message>
+    <message>
+        <source>&amp;Defreeze all</source>
+        <translation type="obsolete">&amp;Розморозити усі</translation>
+    </message>
+    <message>
+        <source>Defreeze all layers</source>
+        <translation type="obsolete">Розморозити усі шари</translation>
+    </message>
+    <message>
+        <source>Freeze all</source>
+        <translation type="obsolete">Заморозити усі</translation>
+    </message>
+    <message>
+        <source>&amp;Freeze all</source>
+        <translation type="obsolete">&amp;Заморозити усі</translation>
+    </message>
+    <message>
+        <source>Freeze all layers</source>
+        <translation type="obsolete">Заморозити усі шари</translation>
+    </message>
+    <message>
+        <source>Add Layer</source>
+        <translation type="obsolete">Додати шар</translation>
+    </message>
+    <message>
+        <source>&amp;Add Layer</source>
+        <translation type="obsolete">&amp;Додати шар</translation>
+    </message>
+    <message>
+        <source>Remove Layer</source>
+        <translation type="obsolete">Вилучити шар</translation>
+    </message>
+    <message>
+        <source>&amp;Remove Layer</source>
+        <translation type="obsolete">&amp;Вилучити шар</translation>
+    </message>
+    <message>
+        <source>Edit Layer</source>
+        <translation type="obsolete">Редагувати шар</translation>
+    </message>
+    <message>
+        <source>&amp;Edit Layer</source>
+        <translation type="obsolete">&amp;Редагувати шар</translation>
+    </message>
+    <message>
+        <source>Toggle Layer Visibility</source>
+        <translation type="obsolete">Переключити видимість шару</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Layer</source>
+        <translation type="obsolete">&amp;Видимість шару</translation>
+    </message>
+    <message>
+        <source>Toggle Layer</source>
+        <translation type="obsolete">Видимість шару</translation>
+    </message>
+    <message>
+        <source>Defreeze all blocks</source>
+        <translation type="obsolete">Розморозити усі блоки</translation>
+    </message>
+    <message>
+        <source>Freeze all blocks</source>
+        <translation type="obsolete">Заморозити усі блоки</translation>
+    </message>
+    <message>
+        <source>Add Block</source>
+        <translation type="obsolete">Додати блок</translation>
+    </message>
+    <message>
+        <source>&amp;Add Block</source>
+        <translation type="obsolete">До&amp;дати блок</translation>
+    </message>
+    <message>
+        <source>Remove Block</source>
+        <translation type="obsolete">Вилучити блок</translation>
+    </message>
+    <message>
+        <source>&amp;Remove Block</source>
+        <translation type="obsolete">Ви&amp;лучити блок</translation>
+    </message>
+    <message>
+        <source>Rename Block</source>
+        <translation type="obsolete">Перейменувати блок</translation>
+    </message>
+    <message>
+        <source>&amp;Rename Block</source>
+        <translation type="obsolete">&amp;Перейменувати блок</translation>
+    </message>
+    <message>
+        <source>Rename Block and all Inserts</source>
+        <translation type="obsolete">Перейменувати блок та усі вставки</translation>
+    </message>
+    <message>
+        <source>Edit Block</source>
+        <translation type="obsolete">Редагувати блок</translation>
+    </message>
+    <message>
+        <source>&amp;Edit Block</source>
+        <translation type="obsolete">&amp;Редагувати блок</translation>
+    </message>
+    <message>
+        <source>Insert Block</source>
+        <translation type="obsolete">Вставити блок</translation>
+    </message>
+    <message>
+        <source>&amp;Insert Block</source>
+        <translation type="obsolete">&amp;Вставити блок</translation>
+    </message>
+    <message>
+        <source>Toggle Block Visibility</source>
+        <translation type="obsolete">Перемкнути видимість блоку</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Block</source>
+        <translation type="obsolete">&amp;Видимість блоку</translation>
+    </message>
+    <message>
+        <source>Toggle Block</source>
+        <translation type="obsolete">Видимість блоку</translation>
+    </message>
+    <message>
+        <source>Create Block</source>
+        <translation type="obsolete">Створити блок</translation>
+    </message>
+    <message>
+        <source>&amp;Create Block</source>
+        <translation type="obsolete">&amp;Створити блок</translation>
+    </message>
+    <message>
+        <source>Explode</source>
+        <translation type="obsolete">Зруйнувати</translation>
+    </message>
+    <message>
+        <source>&amp;Explode</source>
+        <translation type="obsolete">&amp;Зруйнувати</translation>
+    </message>
+    <message>
+        <source>Explode Blocks and other Entity Groups</source>
+        <translation type="obsolete">Зруйнувати блок та інші групи об’єктів</translation>
+    </message>
+    <message>
+        <source>General Application Preferences</source>
+        <translation type="obsolete">Загальні налаштування програми</translation>
+    </message>
+    <message>
+        <source>Drawing</source>
+        <translation type="obsolete">Креслення</translation>
+    </message>
+    <message>
+        <source>Creates a new drawing</source>
+        <translation type="obsolete">Створює нове креслення</translation>
+    </message>
+    <message>
+        <source>Opens an existing drawing</source>
+        <translation type="obsolete">Відкриває існуюче креслення</translation>
+    </message>
+    <message>
+        <source>Saves the current drawing</source>
+        <translation type="obsolete">Зберігає поточне креслення</translation>
+    </message>
+    <message>
+        <source>Saves the current drawing under a new filename</source>
+        <translation type="obsolete">Зберігає поточне креслення під новим іменем</translation>
+    </message>
+    <message>
+        <source>Closes the current drawing</source>
+        <translation type="obsolete">Закриває поточне креслення</translation>
+    </message>
+    <message>
+        <source>Prints out the current drawing</source>
+        <translation type="obsolete">Друкує поточне креслення</translation>
+    </message>
+    <message>
+        <source>New Drawing</source>
+        <translation type="obsolete">Нове креслення</translation>
+    </message>
+    <message>
+        <source>Open Drawing</source>
+        <translation type="obsolete">Відкрити креслення</translation>
+    </message>
+    <message>
+        <source>Save Drawing</source>
+        <translation type="obsolete">Зберегти креслення</translation>
+    </message>
+    <message>
+        <source>Save Drawing As</source>
+        <translation type="obsolete">Зберегти креслення як</translation>
+    </message>
+    <message>
+        <source>Close Drawing</source>
+        <translation type="obsolete">Закрити креслення</translation>
+    </message>
+    <message>
+        <source>Print Drawing</source>
+        <translation type="obsolete">Друк креслення</translation>
+    </message>
+    <message>
+        <source>Cuts entities  to the clipboard</source>
+        <translation type="obsolete">Вирізає об’єкти в буфер</translation>
+    </message>
+    <message>
+        <source>Copies entities to the clipboard</source>
+        <translation type="obsolete">Копіює об’єкти в буфер</translation>
+    </message>
+    <message>
+        <source>Pastes the clipboard contents</source>
+        <translation type="obsolete">Вставляє об’єкти з буфера</translation>
+    </message>
+    <message>
+        <source>(De-)&amp;Select Entity</source>
+        <translation type="obsolete">Вибрати об’єкт (скасов. вибір)</translation>
+    </message>
+    <message>
+        <source>(De-)Select &amp;Contour</source>
+        <translation type="obsolete">Вибрати &amp;замкнутий контур (скасов. вибір)</translation>
+    </message>
+    <message>
+        <source>Draw parallels to existing lines, arcs, circles</source>
+        <translation type="obsolete">Креслити паралельно до існуючих ліній, дуг, кіл</translation>
+    </message>
+    <message>
+        <source>Parallel through point</source>
+        <translation type="obsolete">Паралельно через точку</translation>
+    </message>
+    <message>
+        <source>Par&amp;allel through point</source>
+        <translation type="obsolete">Пар&amp;алельно через точку</translation>
+    </message>
+    <message>
+        <source>Draw parallel through a given point</source>
+        <translation type="obsolete">Креслити паралельно через задану точку</translation>
+    </message>
+    <message>
+        <source>Attributes</source>
+        <translation type="obsolete">Атрибути</translation>
+    </message>
+    <message>
+        <source>&amp;Attributes</source>
+        <translation type="obsolete">А&amp;трибути</translation>
+    </message>
+    <message>
+        <source>Modify Entity Attributes</source>
+        <translation type="obsolete">Змінити атрибути об’єкту</translation>
+    </message>
+    <message>
+        <source>Delete selected</source>
+        <translation type="obsolete">Вилучити вибране</translation>
+    </message>
+    <message>
+        <source>&amp;Delete selected</source>
+        <translation type="obsolete">Ви&amp;лучити вибране</translation>
+    </message>
+    <message>
+        <source>Delete selected entities</source>
+        <translation type="obsolete">Вилучити вибрані об’єкти</translation>
+    </message>
+    <message>
+        <source>Print Preview</source>
+        <translation type="obsolete">Попередній перегляд</translation>
+    </message>
+    <message>
+        <source>Print Pre&amp;view</source>
+        <translation type="obsolete">&amp;Попередній перегляд</translation>
+    </message>
+    <message>
+        <source>Shows a preview of a print</source>
+        <translation type="obsolete">Відображає попередній перегляд перед друком</translation>
+    </message>
+    <message>
+        <source>Distance Point to Point</source>
+        <translation type="obsolete">Відстань від точки до точки</translation>
+    </message>
+    <message>
+        <source>&amp;Distance Point to Point</source>
+        <translation type="obsolete">&amp;Відстань від точки до точки</translation>
+    </message>
+    <message>
+        <source>Measures the distance between two points</source>
+        <translation type="obsolete">Вимірює відстань між двома точками</translation>
+    </message>
+    <message>
+        <source>Distance Entity to Point</source>
+        <translation type="obsolete">Відстань від об’єкта до точки</translation>
+    </message>
+    <message>
+        <source>&amp;Distance Entity to Point</source>
+        <translation type="obsolete">Від&amp;стань від об’єкта до точки</translation>
+    </message>
+    <message>
+        <source>Measures the distance between an entity and a point</source>
+        <translation type="obsolete">Вимірює відстань між об’єктом та точкою</translation>
+    </message>
+    <message>
+        <source>Angle between two lines</source>
+        <translation type="obsolete">Кут між двома лініями</translation>
+    </message>
+    <message>
+        <source>&amp;Angle between two lines</source>
+        <translation type="obsolete">&amp;Кут між двома лініями</translation>
+    </message>
+    <message>
+        <source>Measures the angle between two lines</source>
+        <translation type="obsolete">Вимірює кут між двома лініями</translation>
+    </message>
+    <message>
+        <source>Export Drawing</source>
+        <translation type="obsolete">Експорт креслення</translation>
+    </message>
+    <message>
+        <source>&amp;Export..</source>
+        <translation type="obsolete">&amp;Експорт…</translation>
+    </message>
+    <message>
+        <source>Exports the current drawing as bitmap</source>
+        <translation type="obsolete">Експортувати поточне креслення у растрове зображення</translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation type="obsolete">Властивості</translation>
+    </message>
+    <message>
+        <source>Modify Entity Properties</source>
+        <translation type="obsolete">Змінити властивості об’єкта</translation>
+    </message>
+    <message>
+        <source>&amp;Properties</source>
+        <translation type="obsolete">Власти&amp;вості</translation>
+    </message>
+    <message>
+        <source>Application</source>
+        <translation type="obsolete">Додаток</translation>
+    </message>
+    <message>
+        <source>&amp;Application Preferences</source>
+        <translation type="obsolete">На&amp;лаштування програми</translation>
+    </message>
+    <message>
+        <source>Current &amp;Drawing Preferences</source>
+        <translation type="obsolete">Поточні параметри &amp;креслення</translation>
+    </message>
+    <message>
+        <source>Settings for the current Drawing</source>
+        <translation type="obsolete">Налаштування для поточного креслення</translation>
+    </message>
+    <message>
+        <source>Enables/disables the grid</source>
+        <translation type="obsolete">Вмикає/вимикає сітку</translation>
+    </message>
+    <message>
+        <source>Circle: Concentric</source>
+        <translation type="obsolete">Коло: концентрична</translation>
+    </message>
+    <message>
+        <source>&amp;Concentric</source>
+        <translation type="obsolete">&amp;Концентрична</translation>
+    </message>
+    <message>
+        <source>Draw circles concentric to existing circles</source>
+        <translation type="obsolete">Креслить кола, концентричні існуючим</translation>
+    </message>
+    <message>
+        <source>Arc: Concentric</source>
+        <translation type="obsolete">Дуга: концентрична</translation>
+    </message>
+    <message>
+        <source>Draw arcs concentric to existing arcs</source>
+        <translation type="obsolete">Креслить дуги, концентричні існуючим</translation>
+    </message>
+    <message>
+        <source>Hatch</source>
+        <translation type="obsolete">Штрихування</translation>
+    </message>
+    <message>
+        <source>&amp;Hatch</source>
+        <translation type="obsolete">&amp;Штрихування</translation>
+    </message>
+    <message>
+        <source>Image</source>
+        <translation type="obsolete">Зображення</translation>
+    </message>
+    <message>
+        <source>&amp;Image</source>
+        <translation type="obsolete">&amp;Зображення</translation>
+    </message>
+    <message>
+        <source>Insert Image (Bitmap)</source>
+        <translation type="obsolete">Вставити зображення (растрове)</translation>
+    </message>
+    <message>
+        <source>Statusbar</source>
+        <translation type="obsolete">Рядок стану</translation>
+    </message>
+    <message>
+        <source>&amp;Statusbar</source>
+        <translation type="obsolete">&amp;Рядок стану</translation>
+    </message>
+    <message>
+        <source>Enables/disables the statusbar</source>
+        <translation type="obsolete">Вмикає/вимикає рядок стану</translation>
+    </message>
+    <message>
+        <source>Total length of selected entities</source>
+        <translation type="obsolete">Сумарна довжина вибраних об’єктів</translation>
+    </message>
+    <message>
+        <source>&amp;Total length of selected entities</source>
+        <translation type="obsolete">Су&amp;марна довжина вибраних об’єктів</translation>
+    </message>
+    <message>
+        <source>Measures the total length of all selected entities</source>
+        <translation type="obsolete">Вимірює сумарну довжину усіх вибраних об’єктів</translation>
+    </message>
+    <message>
+        <source>Polygo&amp;n (Cor,Cor)</source>
+        <translation type="obsolete">Багато&amp;кутник (кут, кут)</translation>
+    </message>
+    <message>
+        <source>Draft</source>
+        <translation type="obsolete">Чернетка</translation>
+    </message>
+    <message>
+        <source>&amp;Draft</source>
+        <translation type="obsolete">&amp;Чернетка</translation>
+    </message>
+    <message>
+        <source>Enables/disables the draft mode</source>
+        <translation type="obsolete">Вмикає/вимикає режим чернетки</translation>
+    </message>
+    <message>
+        <source>Open IDE</source>
+        <translation type="obsolete">Відкрити IDE</translation>
+    </message>
+    <message>
+        <source>&amp;Open IDE</source>
+        <translation type="obsolete">&amp;Відкрити IDE</translation>
+    </message>
+    <message>
+        <source>Opens the integrated development environment for scripting</source>
+        <translation type="obsolete">Відкриває інтегроване середовище для написання сценаріїв</translation>
+    </message>
+    <message>
+        <source>Run Script..</source>
+        <translation type="obsolete">Виконати сценарій…</translation>
+    </message>
+    <message>
+        <source>&amp;Run Script..</source>
+        <translation type="obsolete">&amp;Виконати сценарій…</translation>
+    </message>
+    <message>
+        <source>Runs a script</source>
+        <translation type="obsolete">Запускає сценарій</translation>
+    </message>
+    <message>
+        <source>&amp;Preferences</source>
+        <translation type="obsolete">&amp;Налаштування</translation>
+    </message>
+    <message>
+        <source>&amp;Export...</source>
+        <translation type="obsolete">&amp;Експорт…</translation>
+    </message>
+    <message>
+        <source>&amp;Print...</source>
+        <translation type="obsolete">&amp;Друк…</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation type="obsolete">Вихід</translation>
+    </message>
+    <message>
+        <source>&amp;Quit</source>
+        <translation type="obsolete">&amp;Вихід</translation>
+    </message>
+    <message>
+        <source>CTRL-G</source>
+        <translation type="obsolete">CTRL-G</translation>
+    </message>
+    <message>
+        <source>Restrict&amp;Vertically</source>
+        <translation type="obsolete">Обмежити &amp;вертикально</translation>
+    </message>
+    <message>
+        <source>&amp;back</source>
+        <translation type="obsolete">&amp;назад</translation>
+    </message>
+    <message>
+        <source>&amp;Selection pointer</source>
+        <translation type="obsolete">Вказівник &amp;вибору</translation>
+    </message>
+    <message>
+        <source>&amp;Endpoint</source>
+        <translation type="obsolete">&amp;Кінцева точка</translation>
+    </message>
+    <message>
+        <source>&amp;OnEntity</source>
+        <translation type="obsolete">На к&amp;ривій</translation>
+    </message>
+    <message>
+        <source>&amp;Block</source>
+        <translation type="obsolete">&amp;Блок</translation>
+    </message>
+</context>
+<context>
     <name>QG_ActionHandler</name>
     <message>
         <source>escape</source>
@@ -1834,6 +3349,77 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_ArcOptions</name>
+    <message>
+        <source>Arc Options</source>
+        <translation type="obsolete">Параметри дуги</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="obsolete">За годинниковою стрілкою</translation>
+    </message>
+    <message>
+        <source>Counter Clockwise</source>
+        <translation type="obsolete">Проти годинникової стрілки</translation>
+    </message>
+    <message>
+        <source>Counterclockwise</source>
+        <translation type="obsolete">Проти годинникової стрілки</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ArcTangentialOptions</name>
+    <message>
+        <source>Tangential Arc Options</source>
+        <translation type="obsolete">Тангенціальні параметри дуги</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="obsolete">Радіус: </translation>
+    </message>
+    <message>
+        <source>Radius of the tangential arc</source>
+        <translation type="obsolete">Радіус дотичної дуги</translation>
+    </message>
+    <message>
+        <source>Total subtending angle of the tangential arc</source>
+        <translation type="obsolete">Повний стягуючий кут дотичної дуги</translation>
+    </message>
+    <message>
+        <source>Radius</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="obsolete">Радіус</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="obsolete">Кут</translation>
+    </message>
+</context>
+<context>
+    <name>QG_BevelOptions</name>
+    <message>
+        <source>Bevel Options</source>
+        <translation type="obsolete">Параметри фаски</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="obsolete">Усікти</translation>
+    </message>
+    <message>
+        <source>Check to trim both entities to the bevel</source>
+        <translation type="obsolete">Позначте, щоб усікти обидва об’єкти до фаски</translation>
+    </message>
+    <message>
+        <source>Length 1:</source>
+        <translation type="obsolete">Довжина 1:</translation>
+    </message>
+    <message>
+        <source>Length 2:</source>
+        <translation type="obsolete">Довжина 2:</translation>
     </message>
 </context>
 <context>
@@ -1962,6 +3548,842 @@ in a separate window</source>
     <message>
         <source>Add a block</source>
         <translation type="obsolete">Додати блок</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBar</name>
+    <message>
+        <source>CAD Tools</source>
+        <translation type="obsolete">Інструменти САПР</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarArcs</name>
+    <message>
+        <source>Arcs</source>
+        <translation type="obsolete">Дуги</translation>
+    </message>
+    <message>
+        <source>Arc with three points</source>
+        <translation type="obsolete">Дуга за трьома точками</translation>
+    </message>
+    <message>
+        <source>Arc with Center, Point, Angles</source>
+        <translation type="obsolete">Дуга за центром, точкою та кутами</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Назад до головного меню</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">Концентрична</translation>
+    </message>
+    <message>
+        <source>Arc tangential to base entity with radius</source>
+        <translation type="obsolete">Дуга, дотична до основи, радіусом у </translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarCircles</name>
+    <message>
+        <source>Circles</source>
+        <translation type="obsolete">Кола</translation>
+    </message>
+    <message>
+        <source>Circle with two opposite points</source>
+        <translation type="obsolete">Коло за двома протилежними точками</translation>
+    </message>
+    <message>
+        <source>Circle with center and radius</source>
+        <translation type="obsolete">Коло за центром й радіусом</translation>
+    </message>
+    <message>
+        <source>Circle with center and point</source>
+        <translation type="obsolete">Коло за центром й точкою</translation>
+    </message>
+    <message>
+        <source>Circle with three points</source>
+        <translation type="obsolete">Коло за трьома точками</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Назад до головного меню</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">Концентрична</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Circle inscribed in a triangle, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Побудувати коло, вписане в трикутник, &lt;span style=&quot; font-style:italic;&quot;&gt;тобто&lt;/span&gt; дотичне до 3 ліній&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Накреслити коло з заданим радіусом, дотичне до двох кіл&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of three circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Накреслити коло, дотичне до трьох кіл&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Накреслити коло, дотичне до іншого кола та проходить через дві точки&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Накреслити коло, дотичне до двох кіл і проходить через задану точку&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Накреслити коло, дотичне до трьох ліній, дуг чи кіл&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Накреслити коло, вписане в трикутник, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;тобто&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, дотичне до 3 ліній. Будь ласка, натомість використовуйте нову функцію &amp;quot;Коло дотичне трьом&amp;quot;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarDim</name>
+    <message>
+        <source>Dimensions</source>
+        <translation type="obsolete">Розміри</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Назад до головного меню</translation>
+    </message>
+    <message>
+        <source>Diametric Dimension</source>
+        <translation type="obsolete">Діаметральний розмір</translation>
+    </message>
+    <message>
+        <source>Radial Dimension</source>
+        <translation type="obsolete">Радіальний розмір</translation>
+    </message>
+    <message>
+        <source>Vertical Dimension</source>
+        <translation type="obsolete">Вертикальний розмір</translation>
+    </message>
+    <message>
+        <source>Horizontal Dimension</source>
+        <translation type="obsolete">Горизонтальний розмір</translation>
+    </message>
+    <message>
+        <source>Linear Dimension</source>
+        <translation type="obsolete">Лінійний розмір</translation>
+    </message>
+    <message>
+        <source>Aligned Dimension</source>
+        <translation type="obsolete">Вирівняний розмір</translation>
+    </message>
+    <message>
+        <source>Angular Dimension</source>
+        <translation type="obsolete">Кутовий розмір</translation>
+    </message>
+    <message>
+        <source>Leader</source>
+        <translation type="obsolete">Поличка-виноска</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">Концентричний</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarEllipses</name>
+    <message>
+        <source>Ellipses</source>
+        <translation type="obsolete">Еліпси</translation>
+    </message>
+    <message>
+        <source>Ellipse arc with center, two points and angles</source>
+        <translation type="obsolete">Дуга еліпса за центром, двома точками й кутами</translation>
+    </message>
+    <message>
+        <source>Ellipse with Center and two points</source>
+        <translation type="obsolete">Еліпс за центром й двома точками</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Назад до головного меню</translation>
+    </message>
+    <message>
+        <source>Draw Ellipse by foci and a point on ellipse</source>
+        <translation type="obsolete">Намалювати еліпс за фокусами та точці на еліпсі</translation>
+    </message>
+    <message>
+        <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
+        <translation type="obsolete">Намалювати еліпс з осями у напрямку X/Y та чотирьом точкам на еліпсі</translation>
+    </message>
+    <message>
+        <source>Draw Ellipse with by center and 3 points on ellipse</source>
+        <translation type="obsolete">Намалювати еліпс за центром та 3 точкам на еліпсі</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Побудувати еліпс, вписаний у чотирикутник, &lt;span style=&quot; font-style:italic;&quot;&gt;тобто&lt;/span&gt; дотичний до чотирьох прямих.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">Концентрично</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Draw Ellipse by center and 3 points on ellipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Накреслити еліпс за центром та трьома точками&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarInfo</name>
+    <message>
+        <source>Info</source>
+        <translation type="obsolete">Інформація</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Назад до головного меню</translation>
+    </message>
+    <message>
+        <source>Distance (Point, Point)</source>
+        <translation type="obsolete">Відстань (точка, точка)</translation>
+    </message>
+    <message>
+        <source>Distance (Entity, Point)</source>
+        <translation type="obsolete">Відстань (об’єкт, точка)</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="obsolete">Кут</translation>
+    </message>
+    <message>
+        <source>Total length of selected entities</source>
+        <translation type="obsolete">Сумарна довжина вибраних об’єктів</translation>
+    </message>
+    <message>
+        <source>Area of polygon</source>
+        <translation type="obsolete">Площа багатокутника</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">Концентрично</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarLines</name>
+    <message>
+        <source>Lines</source>
+        <translation type="obsolete">Лінії</translation>
+    </message>
+    <message>
+        <source>Freehand lines</source>
+        <translation type="obsolete">Довільні лінії (криві)</translation>
+    </message>
+    <message>
+        <source>Orthogonal lines</source>
+        <translation type="obsolete">Ортогональні лінії</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Назад до головного меню</translation>
+    </message>
+    <message>
+        <source>Bisectors</source>
+        <translation type="obsolete">Бісектриси</translation>
+    </message>
+    <message>
+        <source>Tangents from circle to circle</source>
+        <translation type="obsolete">Дотичні від кола до кола</translation>
+    </message>
+    <message>
+        <source>Tangents from point to circle</source>
+        <translation type="obsolete">Дотичні від точки до кола</translation>
+    </message>
+    <message>
+        <source>Line with two points</source>
+        <translation type="obsolete">Лінія за двома точками</translation>
+    </message>
+    <message>
+        <source>Lines with relative angles</source>
+        <translation type="obsolete">Лінії під відносним кутом</translation>
+    </message>
+    <message>
+        <source>Line with given angle</source>
+        <translation type="obsolete">Лінія під заданим кутом</translation>
+    </message>
+    <message>
+        <source>Horizontal lines</source>
+        <translation type="obsolete">Горизонтальні лінії</translation>
+    </message>
+    <message>
+        <source>Vertical lines</source>
+        <translation type="obsolete">Вертикальні лінії</translation>
+    </message>
+    <message>
+        <source>Rectangles</source>
+        <translation type="obsolete">Прямокутники</translation>
+    </message>
+    <message>
+        <source>Polygons with Center and Corner</source>
+        <translation type="obsolete">Багатокутники за центром й кутовою точкою</translation>
+    </message>
+    <message>
+        <source>Polygons with two Corners</source>
+        <translation type="obsolete">Багатокутники за двома кутовими точками</translation>
+    </message>
+    <message>
+        <source>Parallels with distance</source>
+        <translation type="obsolete">Паралельні на відстані</translation>
+    </message>
+    <message>
+        <source>Parallels through point</source>
+        <translation type="obsolete">Паралельні через точку</translation>
+    </message>
+    <message>
+        <source>Tangents to a circle, orthogonal to a line</source>
+        <translation type="obsolete">Дотична до кола, перпендикулярно відрізку</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarMain</name>
+    <message>
+        <source>Main</source>
+        <translation type="obsolete">Головна</translation>
+    </message>
+    <message>
+        <source>Show menu &quot;Lines&quot;</source>
+        <translation type="obsolete">Показати меню „Лінії“</translation>
+    </message>
+    <message>
+        <source>Show menu &quot;Arcs&quot;</source>
+        <translation type="obsolete">Показати меню „Дуги“</translation>
+    </message>
+    <message>
+        <source>Show menu &quot;Circles&quot;</source>
+        <translation type="obsolete">Показати меню „Кола“</translation>
+    </message>
+    <message>
+        <source>Show menu &quot;Points&quot;</source>
+        <translation type="obsolete">Показати меню „Точки“</translation>
+    </message>
+    <message>
+        <source>Show menu &quot;Measure&quot;</source>
+        <translation type="obsolete">Показати меню „Вимір“</translation>
+    </message>
+    <message>
+        <source>Show menu &quot;Ellipses&quot;</source>
+        <translation type="obsolete">Показати меню „Еліпси“</translation>
+    </message>
+    <message>
+        <source>Hatches / Solid Fills</source>
+        <translation type="obsolete">Штрихування/заливання кольором</translation>
+    </message>
+    <message>
+        <source>Show menu &quot;Edit&quot;</source>
+        <translation type="obsolete">Показати меню „Редагування“</translation>
+    </message>
+    <message>
+        <source>Show menu &quot;Dimensions&quot;</source>
+        <translation type="obsolete">Показати меню „Розміри“</translation>
+    </message>
+    <message>
+        <source>Texts</source>
+        <translation type="obsolete">Тексти</translation>
+    </message>
+    <message>
+        <source>Show menu &quot;Select&quot;</source>
+        <translation type="obsolete">Показати меню „Вибір“</translation>
+    </message>
+    <message>
+        <source>Create Block</source>
+        <translation type="obsolete">Створити блок</translation>
+    </message>
+    <message>
+        <source>Raster Image</source>
+        <translation type="obsolete">Растрове зображення</translation>
+    </message>
+    <message>
+        <source>Points</source>
+        <translation type="obsolete">Точки</translation>
+    </message>
+    <message>
+        <source>Splines</source>
+        <translation type="obsolete">Сплайни</translation>
+    </message>
+    <message>
+        <source>Polylines</source>
+        <translatorcomment>Багатокутники</translatorcomment>
+        <translation type="obsolete">Ламані</translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Lines&quot;</source>
+        <translation type="obsolete">Показати панель інструментів „Лінії“</translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Arcs&quot;</source>
+        <translation type="obsolete">Показати панель інструментів „Дуги“</translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Circles&quot;</source>
+        <translation type="obsolete">Показати панель інструментів „Кола“</translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Ellipses&quot;</source>
+        <translation type="obsolete">Показати панель інструментів „Еліпси“</translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Polylines&quot;</source>
+        <translation type="obsolete">Показати панель інструментів „Ламані“</translation>
+    </message>
+    <message>
+        <source>Draw Splines</source>
+        <translation type="obsolete">Намалювати сплайни</translation>
+    </message>
+    <message>
+        <source>Draw Points</source>
+        <translation type="obsolete">Накреслити точки</translation>
+    </message>
+    <message>
+        <source>Insert Text</source>
+        <translation type="obsolete">Вставити текст</translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Dimensions&quot;</source>
+        <translation type="obsolete">Показати панель інструментів „Розміри“</translation>
+    </message>
+    <message>
+        <source>Create Hatch</source>
+        <translation type="obsolete">Створити штрихування</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="obsolete">Вставити зображення</translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Modify&quot;</source>
+        <translation type="obsolete">Показати панель інструментів „Правка“</translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Info&quot;</source>
+        <translation type="obsolete">Показати панель інструментів „Інформація“</translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Select&quot;</source>
+        <translation type="obsolete">Показати панель інструментів „Вибір“</translation>
+    </message>
+    <message>
+        <source>Insert Multi-line Text</source>
+        <translation type="obsolete">Вставити багаторядковий текст</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarModify</name>
+    <message>
+        <source>Modify</source>
+        <translation type="obsolete">Змінити</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Назад до головного меню</translation>
+    </message>
+    <message>
+        <source>Rotate</source>
+        <translation type="obsolete">Повернути</translation>
+    </message>
+    <message>
+        <source>Scale</source>
+        <translation type="obsolete">Масшабувати</translation>
+    </message>
+    <message>
+        <source>Move</source>
+        <translation type="obsolete">Зрушення</translation>
+    </message>
+    <message>
+        <source>Move and Rotate</source>
+        <translation type="obsolete">Зрушення та обертання</translation>
+    </message>
+    <message>
+        <source>Explode</source>
+        <translation type="obsolete">Розбити</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="obsolete">Вилучити</translation>
+    </message>
+    <message>
+        <source>Stretch</source>
+        <translation type="obsolete">Витягнути</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="obsolete">Вирізати</translation>
+    </message>
+    <message>
+        <source>Round</source>
+        <translation type="obsolete">Округлення</translation>
+    </message>
+    <message>
+        <source>Bevel</source>
+        <translation type="obsolete">Фаска</translation>
+    </message>
+    <message>
+        <source>Trim by amount</source>
+        <translation type="obsolete">Усікти на величину</translation>
+    </message>
+    <message>
+        <source>Trim / Extend two</source>
+        <translation type="obsolete">Усікти/розтягнути обидва</translation>
+    </message>
+    <message>
+        <source>Trim / Extend</source>
+        <translation type="obsolete">Усікти/розтягнути</translation>
+    </message>
+    <message>
+        <source>Rotate around two centers</source>
+        <translation type="obsolete">Обертати навколо двох центрів</translation>
+    </message>
+    <message>
+        <source>Edit Entity Attributes</source>
+        <translation type="obsolete">Редагувати атрибути об’єкта</translation>
+    </message>
+    <message>
+        <source>Edit Entity Geometry</source>
+        <translation type="obsolete">Редагувати геометрію об’єкта</translation>
+    </message>
+    <message>
+        <source>Mirror</source>
+        <translation type="obsolete">Віддзеркалення</translation>
+    </message>
+    <message>
+        <source>Divide</source>
+        <translation type="obsolete">Розділити</translation>
+    </message>
+    <message>
+        <source>Explode Text into Letters</source>
+        <translation type="obsolete">Розбити текст на букви</translation>
+    </message>
+    <message>
+        <source>Edit Text</source>
+        <translation type="obsolete">Редагувати текст</translation>
+    </message>
+    <message>
+        <source>Move / Copy</source>
+        <translation type="obsolete">Перемістити / копіювати</translation>
+    </message>
+    <message>
+        <source>Rotate Two</source>
+        <translation type="obsolete">Повернути навколо двох центрів</translation>
+    </message>
+    <message>
+        <source>Offset (Experimental Feature, work in progress)</source>
+        <translation type="obsolete">Еквідистанта (інструмент ще в розробці)</translation>
+    </message>
+    <message>
+        <source>Revert direction</source>
+        <translation type="obsolete">Повернути напрямок</translation>
+    </message>
+    <message>
+        <source>Lengthen</source>
+        <translation type="obsolete">Подовжити</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarPoints</name>
+    <message>
+        <source>Points</source>
+        <translation type="obsolete">Точки</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Назад до головного меню</translation>
+    </message>
+    <message>
+        <source>Single points</source>
+        <translation type="obsolete">Поодинокі точки</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarPolylines</name>
+    <message>
+        <source>Polylines</source>
+        <translatorcomment>Багатокутники</translatorcomment>
+        <translation type="obsolete">Ламані</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Назад до головного меню</translation>
+    </message>
+    <message>
+        <source>Create Polyline</source>
+        <translatorcomment>Створити багатокутник</translatorcomment>
+        <translation type="obsolete">Створити ламану</translation>
+    </message>
+    <message>
+        <source>Delete between two nodes</source>
+        <translation type="obsolete">Вилучити між двома вузлами</translation>
+    </message>
+    <message>
+        <source>Add node</source>
+        <translation type="obsolete">Додати вузол</translation>
+    </message>
+    <message>
+        <source>Delete node</source>
+        <translation type="obsolete">Вилучити вузол</translation>
+    </message>
+    <message>
+        <source>Trim segments</source>
+        <translatorcomment>вирівняти відрізки, сегменти</translatorcomment>
+        <translation type="obsolete">Усікти відрізки</translation>
+    </message>
+    <message>
+        <source>Append node</source>
+        <translation type="obsolete">Доповнити вузол</translation>
+    </message>
+    <message>
+        <source>Polyline equidistant</source>
+        <translation type="obsolete">Еквідістанта ламаної</translation>
+    </message>
+    <message>
+        <source>Create Polyline from Existing Segments</source>
+        <translation type="obsolete">Створити ламану з існуючих відрізків</translation>
+    </message>
+    <message>
+        <source>Concentric</source>
+        <translation type="obsolete">Концентрично</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarSelect</name>
+    <message>
+        <source>Select</source>
+        <translation type="obsolete">Вибрати</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="obsolete">Вибрати усе</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Назад до головного меню</translation>
+    </message>
+    <message>
+        <source>Select intersected entities</source>
+        <translation type="obsolete">Вибрати пересічені об’єкти</translation>
+    </message>
+    <message>
+        <source>Deselect intersected entities</source>
+        <translation type="obsolete">Відмінити вибір пересічених об’єктів</translation>
+    </message>
+    <message>
+        <source>Deselect all</source>
+        <translation type="obsolete">Відмінити вибір усіх об’єктів</translation>
+    </message>
+    <message>
+        <source>Invert Selection</source>
+        <translation type="obsolete">Інвертувати вибір</translation>
+    </message>
+    <message>
+        <source>Select layer</source>
+        <translation type="obsolete">Вибрати шар</translation>
+    </message>
+    <message>
+        <source>(De-)Select contour</source>
+        <translation type="obsolete">Вибрати замкнутий контур (скасов. вибір)</translation>
+    </message>
+    <message>
+        <source>(De-)Select entity</source>
+        <translation type="obsolete">Вибрати об’єкт (скасов. вибір)</translation>
+    </message>
+    <message>
+        <source>Deselect Window</source>
+        <translation type="obsolete">Скасувати вибір рамкою</translation>
+    </message>
+    <message>
+        <source>Select Window</source>
+        <translation type="obsolete">Вибрати рамкою</translation>
+    </message>
+    <message>
+        <source>Continue action</source>
+        <translation type="obsolete">Продовжити дію</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarSnap</name>
+    <message>
+        <source>Snap</source>
+        <translation type="obsolete">Прив’язка</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Назад до головного меню</translation>
+    </message>
+    <message>
+        <source>Snap to grid</source>
+        <translation type="obsolete">Прив’язка до сітки</translation>
+    </message>
+    <message>
+        <source>Free positioning</source>
+        <translation type="obsolete">Вільне розміщення курсору</translation>
+    </message>
+    <message>
+        <source>Snap to Endpoints</source>
+        <translation type="obsolete">Прив’язка до кінцевих точок об’єкта</translation>
+    </message>
+    <message>
+        <source>Snap to closest point on entity</source>
+        <translation type="obsolete">Прив’язка до найближчої точки на об’єкті</translation>
+    </message>
+    <message>
+        <source>Snap to center points</source>
+        <translation type="obsolete">Прив’язка до точок центру</translation>
+    </message>
+    <message>
+        <source>Snap to middle points</source>
+        <translation type="obsolete">Прив’язка до середини</translation>
+    </message>
+    <message>
+        <source>Snap to point with given distance to endpoint</source>
+        <translation type="obsolete">Прив’язка на заданій відстані від точки</translation>
+    </message>
+    <message>
+        <source>Snap to intersections automatically</source>
+        <translation type="obsolete">Прив’язка до точок перетину автоматично</translation>
+    </message>
+    <message>
+        <source>No Restriction</source>
+        <translation type="obsolete">Без обмежень</translation>
+    </message>
+    <message>
+        <source>Orthogonal Restriction</source>
+        <translation type="obsolete">Обмежити ортогонально</translation>
+    </message>
+    <message>
+        <source>Horizontal Restriction</source>
+        <translation type="obsolete">Обмежити горизонтально</translation>
+    </message>
+    <message>
+        <source>Vertical Restriction</source>
+        <translation type="obsolete">Обмежити вертикально</translation>
+    </message>
+    <message>
+        <source>Move relative Zero</source>
+        <translation type="obsolete">Перемістити відносний нуль</translation>
+    </message>
+    <message>
+        <source>Lock relative Zero</source>
+        <translation type="obsolete">Увімк. відносний нуль</translation>
+    </message>
+    <message>
+        <source>Snap to intersections manually</source>
+        <translation type="obsolete">Прив’язка до точок перетину вручну</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarSplines</name>
+    <message>
+        <source>Splines</source>
+        <translation type="obsolete">Сплайни</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">Назад до головного меню</translation>
+    </message>
+    <message>
+        <source>Spline</source>
+        <translation type="obsolete">Сплайн</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CircleOptions</name>
+    <message>
+        <source>Circle Options</source>
+        <translation type="obsolete">Параметри кола</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="obsolete">Радіус:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CircleTan2Options</name>
+    <message>
+        <source>Circle Tangential2 Options</source>
+        <translation type="obsolete">Параметри кола, дотичного до двох об’єктів</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Радіус дотичного кола&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="obsolete">Радіус: </translation>
+    </message>
+    <message>
+        <source>Radius of tangential circle</source>
+        <translation type="obsolete">Радіус дотичного кола</translation>
     </message>
 </context>
 <context>
@@ -2118,6 +4540,56 @@ in a separate window</source>
     <message>
         <source>Coordinates</source>
         <translation>Координати</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DimLinearOptions</name>
+    <message>
+        <source>Linear Dimension Options</source>
+        <translation type="obsolete">Параметри лінійного розміру</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Кут:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DimOptions</name>
+    <message>
+        <source>Dimension Options</source>
+        <translation type="obsolete">Параметри розміру</translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation type="obsolete">Мітка:</translation>
+    </message>
+    <message>
+        <source>ø</source>
+        <translation type="obsolete">ø</translation>
+    </message>
+    <message>
+        <source>°</source>
+        <translation type="obsolete">°</translation>
+    </message>
+    <message>
+        <source>±</source>
+        <translation type="obsolete">±</translation>
+    </message>
+    <message>
+        <source>¶</source>
+        <translation type="obsolete">¶</translation>
+    </message>
+    <message>
+        <source>×</source>
+        <translation type="obsolete">×</translation>
+    </message>
+    <message>
+        <source>÷</source>
+        <translation type="obsolete">÷</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="obsolete">…</translation>
     </message>
 </context>
 <context>
@@ -4732,6 +7204,41 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
+    <name>QG_DlgOptionsVariables</name>
+    <message>
+        <source>Drawing Variables</source>
+        <translation type="obsolete">Змінні креслення</translation>
+    </message>
+    <message>
+        <source>Variable</source>
+        <translation type="obsolete">Змінна</translation>
+    </message>
+    <message>
+        <source>Code</source>
+        <translation type="obsolete">Код</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="obsolete">Значення</translation>
+    </message>
+    <message>
+        <source>&amp;OK</source>
+        <translation type="obsolete">&amp;Гаразд</translation>
+    </message>
+    <message>
+        <source>Alt+O</source>
+        <translation type="obsolete">Alt+O</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Відміна</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <translation type="obsolete">Esc</translation>
+    </message>
+</context>
+<context>
     <name>QG_DlgPoint</name>
     <message>
         <source>Point</source>
@@ -5841,6 +8348,37 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
+    <name>QG_ImageOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="obsolete">Параметри вставки</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Кут:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="obsolete">Кут повороту</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="obsolete">Коефіцієнт:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="obsolete">Коефіцієнт масштабування</translation>
+    </message>
+    <message>
+        <source>DPI</source>
+        <translation type="obsolete">DPI</translation>
+    </message>
+    <message>
+        <source>DPI of Image</source>
+        <translation type="obsolete">DPI зображення</translation>
+    </message>
+</context>
+<context>
     <name>QG_ImageOptionsDialog</name>
     <message>
         <source>Image Export Options</source>
@@ -6000,6 +8538,53 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
+    <name>QG_InsertOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="obsolete">Параметри вставки</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Кут:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="obsolete">Кут повороту</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="obsolete">Коефіцієнт:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="obsolete">Коефіцієнт масштабування</translation>
+    </message>
+    <message>
+        <source>Array:</source>
+        <translation type="obsolete">Масив:</translation>
+    </message>
+    <message>
+        <source>Number of Columns</source>
+        <translation type="obsolete">Кількість стовпців</translation>
+    </message>
+    <message>
+        <source>Number of Rows</source>
+        <translation type="obsolete">Число рядів</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="obsolete">Проміжок</translation>
+    </message>
+    <message>
+        <source>Column Spacing</source>
+        <translation type="obsolete">Проміжок між стовпцями:</translation>
+    </message>
+    <message>
+        <source>Row Spacing</source>
+        <translation type="obsolete">Відстань між рядами:</translation>
+    </message>
+</context>
+<context>
     <name>QG_LayerBox</name>
     <message>
         <source>- Unchanged -</source>
@@ -6148,6 +8733,29 @@ The contents of a Help Layer should not appear in printout.</source>
     </message>
 </context>
 <context>
+    <name>QG_LibraryInsertOptions</name>
+    <message>
+        <source>Library Insert Options</source>
+        <translation type="obsolete">Параметри вставки бібліотечного елемента</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Кут:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="obsolete">Кут повороту</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="obsolete">Коефіцієнт:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="obsolete">Коефіцієнт масштабування</translation>
+    </message>
+</context>
+<context>
     <name>QG_LibraryWidget</name>
     <message>
         <source>Directories</source>
@@ -6168,6 +8776,190 @@ The contents of a Help Layer should not appear in printout.</source>
     <message>
         <source>Library Browser</source>
         <translation type="obsolete">Огляд бібліотеки</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineAngleOptions</name>
+    <message>
+        <source>Line Angle Options</source>
+        <translation type="obsolete">Параметри лінії під заданим кутом</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Кут:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="obsolete">Кут лінії</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">Довжина:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="obsolete">Довжина лінії</translation>
+    </message>
+    <message>
+        <source>Snap Point:</source>
+        <translation type="obsolete">Точка прив’язки:</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="obsolete">Початок</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="obsolete">Середина</translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation type="obsolete">Кінець</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineBisectorOptions</name>
+    <message>
+        <source>Line Bisector Options</source>
+        <translation type="obsolete">Параметри бісектриси</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">Довжина:</translation>
+    </message>
+    <message>
+        <source>Length of bisector</source>
+        <translation type="obsolete">Довжина бісектрісси</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">Кількість:</translation>
+    </message>
+    <message>
+        <source>Number of bisectors to create</source>
+        <translation type="obsolete">Кількість створених бісектрис</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineOptions</name>
+    <message>
+        <source>Line Options</source>
+        <translation type="obsolete">Параметри лінії</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="obsolete">Закрити</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="obsolete">Скасувати</translation>
+    </message>
+    <message>
+        <source>Form a closed contour from lines drawn</source>
+        <translation type="obsolete">Створити замкнений контур з існуючих ліній</translation>
+    </message>
+    <message>
+        <source>Undo the last line drawing</source>
+        <translation type="obsolete">Скасувати останню накреслену лінію</translation>
+    </message>
+    <message>
+        <source>Redo the last line drawing</source>
+        <translation type="obsolete">Повторити останню накреслену лінію</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="obsolete">Повторити</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineParallelOptions</name>
+    <message>
+        <source>Line Parallel Options</source>
+        <translation type="obsolete">Параметри паралельної лінії</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="obsolete">Відстань:</translation>
+    </message>
+    <message>
+        <source>Distance to original entity</source>
+        <translation type="obsolete">Відстань до вихідного об’єкту</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">Кількість:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="obsolete">Кількість створених паралельних ліній</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineParallelThroughOptions</name>
+    <message>
+        <source>Line Parallel Through Options</source>
+        <translation type="obsolete">Параметри паралельної лінії через точку</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">Кількість:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="obsolete">Кількість створених паралельних ліній</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LinePolygon2Options</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="obsolete">Параметри багатокутника</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">Кількість:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="obsolete">Кількість сторін</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LinePolygonOptions</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="obsolete">Параметри багатокутника</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">Кількість:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="obsolete">Кількість сторін</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineRelAngleOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="obsolete">Параметри лінії під відносним кутом</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Кут:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="obsolete">Кут лінії</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">Довжина:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="obsolete">Довжина лінії</translation>
     </message>
 </context>
 <context>
@@ -6290,6 +9082,36 @@ The contents of a Help Layer should not appear in printout.</source>
     </message>
 </context>
 <context>
+    <name>QG_MTextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="obsolete">Параметри тексту</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="obsolete">Текст:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Кут:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ModifyOffsetOptions</name>
+    <message>
+        <source>Modify Offset Options</source>
+        <translation type="obsolete">Змінити параметри зміщення</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="obsolete">Відстань:</translation>
+    </message>
+    <message>
+        <source>Offset from original entity</source>
+        <translation type="obsolete">Зсув від вихідного об’єкту</translation>
+    </message>
+</context>
+<context>
     <name>QG_MouseWidget</name>
     <message>
         <source>Mouse</source>
@@ -6317,6 +9139,17 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QG_MoveRotateOptions</name>
+    <message>
+        <source>Move Rotate Options</source>
+        <translation type="obsolete">Параметри зсуву/обертання</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Кут:</translation>
+    </message>
+</context>
+<context>
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
@@ -6329,6 +9162,25 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Line type</source>
         <translation type="unfinished">Тип лінії</translation>
+    </message>
+</context>
+<context>
+    <name>QG_PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="obsolete">Параметри лінії під відносним кутом</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="obsolete">Проміжок: </translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="obsolete">Відстань від базової ламаної</translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="obsolete">Копій: </translation>
     </message>
 </context>
 <context>
@@ -6388,6 +9240,33 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QG_PrintPreviewOptions</name>
+    <message>
+        <source>Print Preview Options</source>
+        <translation type="obsolete">Параметри попереднього перегляду</translation>
+    </message>
+    <message>
+        <source>Toggle Black / White mode</source>
+        <translation type="obsolete">Переключити режим чорний/білий</translation>
+    </message>
+    <message>
+        <source>Center to page</source>
+        <translation type="obsolete">По центру сторінки</translation>
+    </message>
+    <message>
+        <source>Fit to page</source>
+        <translation type="obsolete">Вписати в сторінку</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Масштаб друку зафіксований на поточному значенні&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>fixed</source>
+        <translation type="obsolete">зафіксований</translation>
+    </message>
+</context>
+<context>
     <name>QG_RecentFiles</name>
     <message>
         <source>&amp;%1 %2</source>
@@ -6396,6 +9275,25 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Opening recent file...</source>
         <translation type="obsolete">Відкриття нещодавно редагованого файлу…</translation>
+    </message>
+</context>
+<context>
+    <name>QG_RoundOptions</name>
+    <message>
+        <source>Round Options</source>
+        <translation type="obsolete">Параметри округлення</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="obsolete">Усікти</translation>
+    </message>
+    <message>
+        <source>Check to trim both edges to the rounding</source>
+        <translation type="obsolete">Увімкніть, щоб усікти обидві лінії при округленні</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="obsolete">Радіус:</translation>
     </message>
 </context>
 <context>
@@ -6443,6 +9341,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>0</source>
         <translation type="obsolete">0</translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapDistOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="obsolete">Параметри прив’язки на відстані</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="obsolete">Відстань:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapMiddleOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="obsolete">Параметри відстані прив’язки</translation>
+    </message>
+    <message>
+        <source>Middle Points:</source>
+        <translation type="obsolete">Середніх точок: </translation>
+    </message>
+    <message>
+        <source>Number of equidistant division points</source>
+        <translation type="obsolete">Кількість точок, що розділяють криву на рівні відрізки</translation>
     </message>
 </context>
 <context>
@@ -6558,6 +9482,79 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Exclusive Snap Mode</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_SplineOptions</name>
+    <message>
+        <source>Spline Options</source>
+        <translation type="obsolete">Параметри сплайну</translation>
+    </message>
+    <message>
+        <source>Degree:</source>
+        <translation type="obsolete">Ступінь:</translation>
+    </message>
+    <message>
+        <source>1</source>
+        <translation type="obsolete">1</translation>
+    </message>
+    <message>
+        <source>2</source>
+        <translation type="obsolete">2</translation>
+    </message>
+    <message>
+        <source>3</source>
+        <translation type="obsolete">3</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="obsolete">Закрито</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="obsolete">Скасувати</translation>
+    </message>
+</context>
+<context>
+    <name>QG_TextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="obsolete">Параметри тексту</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="obsolete">Текст:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">Кут:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_TrimAmountOptions</name>
+    <message>
+        <source>Trim Amount Options</source>
+        <translation type="obsolete">Параметри усікання на величину</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending.</source>
+        <translation type="obsolete">Відстань. Від’ємні значення для відсікання, позитивні для витягування. </translation>
+    </message>
+    <message>
+        <source>Amount:</source>
+        <translation type="obsolete">Величина:</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">Довжина: </translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
+        <translation type="obsolete">Відстань. Негативні значення для обрізки, позитивні для подовження. Негативний знак не враховується, коли встановлена ​​остаточна довжина відрізка.</translation>
+    </message>
+    <message>
+        <source>The input length is used as total length after trimming, instead of length increase</source>
+        <translation type="obsolete">Використовувати введену довжину як остаточну довжину відрізка після обрізки, замість розміру збільшення.</translation>
     </message>
 </context>
 <context>
@@ -8613,6 +11610,120 @@ Do you want to replace it?</source>
         <comment>bevel/fillet lenght2</comment>
         <translation type="obsolete">довжина2</translation>
     </message>
+    <message>
+        <source>A0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>C5E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comm10E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DLE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen</source>
+        <translation type="unfinished">Перо</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksAdd</name>
+    <message>
+        <source>&amp;Add Block</source>
+        <translation type="obsolete">До&amp;дати блок</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksAttributes</name>
+    <message>
+        <source>&amp;Rename Block</source>
+        <translation type="obsolete">&amp;Перейменувати блок</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
@@ -8627,6 +11738,43 @@ Do you want to replace it?</source>
     <message>
         <source>&amp;Create Block</source>
         <translation type="obsolete">&amp;Створити блок</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksEdit</name>
+    <message>
+        <source>&amp;Edit Block</source>
+        <translation type="obsolete">&amp;Редагувати блок</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksExplode</name>
+    <message>
+        <source>&amp;Explode</source>
+        <translation type="obsolete">&amp;Розбити</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="obsolete">&amp;Розкласти</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksFreezeAll</name>
+    <message>
+        <source>&amp;Freeze all</source>
+        <translation type="obsolete">&amp;Заморозити усі</translation>
+    </message>
+    <message>
+        <source>&amp;Defreeze all</source>
+        <translation type="obsolete">&amp;Розморозити усі</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="obsolete">&amp;Приховати усі</translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="obsolete">&amp;Показати усі</translation>
     </message>
 </context>
 <context>
@@ -8673,6 +11821,13 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionBlocksRemove</name>
+    <message>
+        <source>&amp;Remove Block</source>
+        <translation type="obsolete">Ви&amp;лучити блок</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionBlocksSave</name>
     <message>
         <source>No block activated to save</source>
@@ -8681,6 +11836,17 @@ Do you want to replace it?</source>
     <message>
         <source>&amp;Save Block</source>
         <translation type="obsolete">&amp;Зберегти блок</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksToggleView</name>
+    <message>
+        <source>Toggle Block Visibility</source>
+        <translation type="obsolete">Перемкнути видимість блоку</translation>
+    </message>
+    <message>
+        <source>Toggle Block &amp;Visibility</source>
+        <translation type="obsolete">Змінити &amp;видимість блоку</translation>
     </message>
 </context>
 <context>
@@ -9802,6 +12968,68 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionDrawLinePolygon</name>
+    <message>
+        <source>Pol&amp;ygon (Cen,Cor)</source>
+        <translation type="obsolete">Багато&amp;кутник (центр, кут)</translation>
+    </message>
+    <message>
+        <source>Specify center</source>
+        <translation type="obsolete">Вкажіть центр</translation>
+    </message>
+    <message>
+        <source>Specify a corner</source>
+        <translation type="obsolete">Вкажіть кут</translation>
+    </message>
+    <message>
+        <source>Enter number:</source>
+        <translation type="obsolete">Введіть число:</translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="obsolete">Неприпустиме число. Спробуйте 1..9999</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="obsolete">Некоректний вираз</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawLinePolygon2</name>
+    <message>
+        <source>Polygo&amp;n (Cor,Cor)</source>
+        <translation type="obsolete">Багато&amp;кутник (кут, кут)</translation>
+    </message>
+    <message>
+        <source>Specify first corner</source>
+        <translation type="obsolete">Вкажіть перший кут</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Відміна</translation>
+    </message>
+    <message>
+        <source>Specify second corner</source>
+        <translation type="obsolete">Вкажіть другий кут</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="obsolete">Назад</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">Число:</translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="obsolete">Неприпустиме число. Спробуйте 1..9999</translation>
+    </message>
+    <message>
+        <source>Not a valid expression.</source>
+        <translation type="obsolete">Неприпустимий вираз.</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionDrawLinePolygonCenCor</name>
     <message>
         <source>Specify center</source>
@@ -10164,6 +13392,45 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionFileNew</name>
+    <message>
+        <source>&amp;New...</source>
+        <translation type="obsolete">&amp;Новий…</translation>
+    </message>
+    <message>
+        <source>&amp;New</source>
+        <translation type="obsolete">&amp;Новий</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionFileNewTemplate</name>
+    <message>
+        <source>New From &amp;Template</source>
+        <translation type="obsolete">Новий за &amp;шаблоном</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionFileOpen</name>
+    <message>
+        <source>&amp;Open...</source>
+        <translation type="obsolete">&amp;Відкрити…</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionFileSave</name>
+    <message>
+        <source>&amp;Save</source>
+        <translation type="obsolete">&amp;Зберегти</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionFileSaveAs</name>
+    <message>
+        <source>Save &amp;as...</source>
+        <translation type="obsolete">Зберегти &amp;як…</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Lines are parallel</source>
@@ -10354,6 +13621,83 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionLayersAdd</name>
+    <message>
+        <source>Add Layer</source>
+        <translation type="obsolete">Додати шар</translation>
+    </message>
+    <message>
+        <source>&amp;Add Layer</source>
+        <translation type="obsolete">&amp;Додати шар</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionLayersEdit</name>
+    <message>
+        <source>&amp;Edit Layer</source>
+        <translation type="obsolete">&amp;Редагувати шар</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionLayersFreezeAll</name>
+    <message>
+        <source>&amp;Freeze all</source>
+        <translation type="obsolete">&amp;Заморозити усі</translation>
+    </message>
+    <message>
+        <source>&amp;Defreeze all</source>
+        <translation type="obsolete">&amp;Розморозити усі</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="obsolete">&amp;Приховати усі</translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="obsolete">&amp;Показати усі</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionLayersRemove</name>
+    <message>
+        <source>Remove Layer</source>
+        <translation type="obsolete">Вилучити шар</translation>
+    </message>
+    <message>
+        <source>&amp;Remove Layer</source>
+        <translation type="obsolete">&amp;Вилучити шар</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionLayersToggleLock</name>
+    <message>
+        <source>Toggle Layer Lock</source>
+        <translation type="obsolete">Перемкнути захист шару</translation>
+    </message>
+    <message>
+        <source>Toggle Layer Loc&amp;k</source>
+        <translation type="obsolete">Перемкнути &amp;захист шару</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionLayersTogglePrint</name>
+    <message>
+        <source>Toggle Layer &amp;Print</source>
+        <translation type="obsolete">Змінити &amp;друк шару</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionLayersToggleView</name>
+    <message>
+        <source>&amp;Toggle Layer</source>
+        <translation type="obsolete">&amp;Перемикач шару</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Layer Visibility</source>
+        <translation type="obsolete">Перемкнути &amp;видимість шару</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionLibraryInsert</name>
     <message>
         <source>Insert Library Object</source>
@@ -10389,6 +13733,13 @@ Do you want to replace it?</source>
     <message>
         <source>(Un-)&amp;Lock Relative Zero</source>
         <translation>Увімкн./в&amp;имкн. відносний нуль</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyAttributes</name>
+    <message>
+        <source>&amp;Attributes</source>
+        <translation type="obsolete">А&amp;трибути</translation>
     </message>
 </context>
 <context>
@@ -10469,6 +13820,13 @@ Do you want to replace it?</source>
     <message>
         <source>Entity must be a line, arc, circle or ellipse.</source>
         <translation type="obsolete">Об’єкт повинен бути лінією, дугою, колом чи еліпсом.</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyDelete</name>
+    <message>
+        <source>&amp;Delete</source>
+        <translation type="obsolete">Ви&amp;лучити</translation>
     </message>
 </context>
 <context>
@@ -10577,6 +13935,13 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionModifyExplodeText</name>
+    <message>
+        <source>&amp;Explode Text into Letters</source>
+        <translation type="obsolete">&amp;Розбити текст на букви</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionModifyMirror</name>
     <message>
         <source>Specify first point of mirror line</source>
@@ -10670,6 +14035,17 @@ Do you want to replace it?</source>
     <message>
         <source>&amp;Offset</source>
         <translation type="obsolete">&amp;Зсув</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyRevertDirection</name>
+    <message>
+        <source>Re&amp;vert direction</source>
+        <translation type="obsolete">Звернути напрямок</translation>
+    </message>
+    <message>
+        <source>Ctrl+R</source>
+        <translation type="obsolete">Ctrl+R</translation>
     </message>
 </context>
 <context>
@@ -10885,6 +14261,13 @@ Do you want to replace it?</source>
     <message>
         <source>Back</source>
         <translation type="unfinished">Назад</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionOptionsDrawing</name>
+    <message>
+        <source>Current &amp;Drawing Preferences</source>
+        <translation type="obsolete">Поточні налаштування &amp;креслення</translation>
     </message>
 </context>
 <context>
@@ -11369,6 +14752,21 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionSelectAll</name>
+    <message>
+        <source>Select &amp;All</source>
+        <translation type="obsolete">Вибр&amp;ати усе</translation>
+    </message>
+    <message>
+        <source>Deselect &amp;all</source>
+        <translation type="obsolete">Скасувати ви&amp;бір усіх об’єктів</translation>
+    </message>
+    <message>
+        <source>Ctrl+K</source>
+        <translation type="obsolete">Ctrl+K</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionSelectContour</name>
     <message>
         <source>Entity must be an Atomic Entity.</source>
@@ -11406,6 +14804,27 @@ Do you want to replace it?</source>
         <source>Deselect Intersected Entities</source>
         <translatorcomment>Зняти вибір об’єктів, які перетинаються</translatorcomment>
         <translation type="obsolete">Прибрати вибір з об’єктів, що перетинаються</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionSelectInvert</name>
+    <message>
+        <source>Invert Selection</source>
+        <translation type="obsolete">Інвертувати вибір</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionSelectLayer</name>
+    <message>
+        <source>(De-)Select Layer</source>
+        <translation type="obsolete">Вибрати (чи зняти вибір) шар</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionSelectSingle</name>
+    <message>
+        <source>Select Entity</source>
+        <translation type="obsolete">Вибрати об’єкт</translation>
     </message>
 </context>
 <context>
@@ -11493,6 +14912,24 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionZoomAuto</name>
+    <message>
+        <source>&amp;Auto Zoom</source>
+        <translation type="obsolete">&amp;Автомасштабування</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionZoomIn</name>
+    <message>
+        <source>Zoom &amp;In</source>
+        <translation type="obsolete">На&amp;близити</translation>
+    </message>
+    <message>
+        <source>Zoom &amp;Out</source>
+        <translation type="obsolete">Від&amp;далити</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionZoomPan</name>
     <message>
         <source>Click and drag to pan zoom</source>
@@ -11516,6 +14953,24 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionZoomPrevious</name>
+    <message>
+        <source>&amp;Previous View</source>
+        <translation type="obsolete">&amp;Попередній вигляд</translation>
+    </message>
+    <message>
+        <source>Previous &amp;View</source>
+        <translation type="obsolete">Попередній &amp;вигляд</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionZoomRedraw</name>
+    <message>
+        <source>&amp;Redraw</source>
+        <translation type="obsolete">&amp;Оновити зображення</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionZoomWindow</name>
     <message>
         <source>Specify first edge</source>
@@ -11536,6 +14991,368 @@ Do you want to replace it?</source>
     <message>
         <source>&amp;Window Zoom</source>
         <translation type="obsolete">&amp;Збільшити за рамкою</translation>
+    </message>
+</context>
+<context>
+    <name>RS_Commands</name>
+    <message>
+        <source>point</source>
+        <translation type="obsolete">точка</translation>
+    </message>
+    <message>
+        <source>po</source>
+        <translation type="obsolete">тчк</translation>
+    </message>
+    <message>
+        <source>line</source>
+        <translation type="obsolete">лінія</translation>
+    </message>
+    <message>
+        <source>ln</source>
+        <translation type="obsolete">л-я</translation>
+    </message>
+    <message>
+        <source>l</source>
+        <translation type="obsolete">л</translation>
+    </message>
+    <message>
+        <source>polyline</source>
+        <translation type="obsolete">ламана</translation>
+    </message>
+    <message>
+        <source>offset</source>
+        <translation type="obsolete">зміщення</translation>
+    </message>
+    <message>
+        <source>o</source>
+        <comment>offset</comment>
+        <translation type="obsolete">зм</translation>
+    </message>
+    <message>
+        <source>parallel</source>
+        <translation type="obsolete">паралельний</translation>
+    </message>
+    <message>
+        <source>par</source>
+        <comment>parallel</comment>
+        <translation type="obsolete">пар</translation>
+    </message>
+    <message>
+        <source>arc</source>
+        <translation type="obsolete">дуга</translation>
+    </message>
+    <message>
+        <source>a</source>
+        <translation type="obsolete">д</translation>
+    </message>
+    <message>
+        <source>circle</source>
+        <translation type="obsolete">коло</translation>
+    </message>
+    <message>
+        <source>ci</source>
+        <translation type="obsolete">ко</translation>
+    </message>
+    <message>
+        <source>rectangle</source>
+        <translation type="obsolete">прямокутник</translation>
+    </message>
+    <message>
+        <source>rec</source>
+        <translation type="obsolete">прк</translation>
+    </message>
+    <message>
+        <source>rectang</source>
+        <translation type="obsolete">прямокутні</translation>
+    </message>
+    <message>
+        <source>text</source>
+        <translation type="obsolete">текст</translation>
+    </message>
+    <message>
+        <source>undo</source>
+        <translation type="obsolete">скасувати</translation>
+    </message>
+    <message>
+        <source>u</source>
+        <comment>undo</comment>
+        <translation type="obsolete">с</translation>
+    </message>
+    <message>
+        <source>redo</source>
+        <translation type="obsolete">повторити</translation>
+    </message>
+    <message>
+        <source>r</source>
+        <translation type="obsolete">п</translation>
+    </message>
+    <message>
+        <source>Command: %1</source>
+        <translation type="obsolete">Команда: %1</translation>
+    </message>
+    <message>
+        <source>po</source>
+        <comment>point</comment>
+        <translation type="obsolete">тчк</translation>
+    </message>
+    <message>
+        <source>ci</source>
+        <comment>circle</comment>
+        <translation type="obsolete">ко</translation>
+    </message>
+    <message>
+        <source>angle</source>
+        <translation type="obsolete">кут</translation>
+    </message>
+    <message>
+        <source>close</source>
+        <translation type="obsolete">закрито</translation>
+    </message>
+    <message>
+        <source>chord length</source>
+        <translation type="obsolete">довжина хорди</translation>
+    </message>
+    <message>
+        <source>columns</source>
+        <translation type="obsolete">стовпці</translation>
+    </message>
+    <message>
+        <source>columnspacing</source>
+        <translation type="obsolete">відступ між стовпцями</translation>
+    </message>
+    <message>
+        <source>factor</source>
+        <translation type="obsolete">коефіцієнт</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <translation type="obsolete">довжина</translation>
+    </message>
+    <message>
+        <source>length1</source>
+        <translation type="obsolete">довжина1</translation>
+    </message>
+    <message>
+        <source>length2</source>
+        <translation type="obsolete">довжина2</translation>
+    </message>
+    <message>
+        <source>number</source>
+        <translation type="obsolete">число</translation>
+    </message>
+    <message>
+        <source>radius</source>
+        <translation type="obsolete">радіус</translation>
+    </message>
+    <message>
+        <source>rows</source>
+        <translation type="obsolete">рядки</translation>
+    </message>
+    <message>
+        <source>rowspacing</source>
+        <translation type="obsolete">відступ між рядками</translation>
+    </message>
+    <message>
+        <source>through</source>
+        <translation type="obsolete">через</translation>
+    </message>
+    <message>
+        <source>trim</source>
+        <translation type="obsolete">усікти</translation>
+    </message>
+    <message>
+        <source>ang</source>
+        <comment>angle</comment>
+        <translation type="obsolete">кут</translation>
+    </message>
+    <message>
+        <source>a</source>
+        <comment>angle</comment>
+        <translation type="obsolete">к</translation>
+    </message>
+    <message>
+        <source>center</source>
+        <translation type="obsolete">центр</translation>
+    </message>
+    <message>
+        <source>cen</source>
+        <comment>center</comment>
+        <translation type="obsolete">цтр</translation>
+    </message>
+    <message>
+        <source>c</source>
+        <comment>center</comment>
+        <translation type="obsolete">ц</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <comment>chord length</comment>
+        <translation type="obsolete">довжина</translation>
+    </message>
+    <message>
+        <source>l</source>
+        <comment>chord length</comment>
+        <translation type="obsolete">д</translation>
+    </message>
+    <message>
+        <source>c</source>
+        <comment>close</comment>
+        <translation type="obsolete">ц</translation>
+    </message>
+    <message>
+        <source>c</source>
+        <comment>columns</comment>
+        <translation type="obsolete">ц</translation>
+    </message>
+    <message>
+        <source>columnspacing</source>
+        <comment>columnspacing for inserts</comment>
+        <translation type="obsolete">відступ між колонками</translation>
+    </message>
+    <message>
+        <source>fact</source>
+        <comment>factor</comment>
+        <translation type="obsolete">множник</translation>
+    </message>
+    <message>
+        <source>f</source>
+        <comment>factor</comment>
+        <translation type="obsolete">м</translation>
+    </message>
+    <message>
+        <source>help</source>
+        <translation type="obsolete">довідка</translation>
+    </message>
+    <message>
+        <source>?</source>
+        <comment>help</comment>
+        <translation type="obsolete">?</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <comment>length</comment>
+        <translation type="obsolete">довжина</translation>
+    </message>
+    <message>
+        <source>len</source>
+        <comment>length</comment>
+        <translation type="obsolete">дов</translation>
+    </message>
+    <message>
+        <source>l</source>
+        <comment>length</comment>
+        <translation type="obsolete">д</translation>
+    </message>
+    <message>
+        <source>length1</source>
+        <comment>length1</comment>
+        <translation type="obsolete">довжина1</translation>
+    </message>
+    <message>
+        <source>len1</source>
+        <comment>length1</comment>
+        <translation type="obsolete">довж1</translation>
+    </message>
+    <message>
+        <source>l1</source>
+        <comment>length1</comment>
+        <translation type="obsolete">д1</translation>
+    </message>
+    <message>
+        <source>length2</source>
+        <comment>length2</comment>
+        <translation type="obsolete">довжина2</translation>
+    </message>
+    <message>
+        <source>len2</source>
+        <comment>length2</comment>
+        <translation type="obsolete">довж2</translation>
+    </message>
+    <message>
+        <source>l2</source>
+        <comment>length2</comment>
+        <translation type="obsolete">д2</translation>
+    </message>
+    <message>
+        <source>num</source>
+        <comment>number</comment>
+        <translation type="obsolete">числ</translation>
+    </message>
+    <message>
+        <source>reversed</source>
+        <comment>reversed arc</comment>
+        <translation type="obsolete">зворотньо</translation>
+    </message>
+    <message>
+        <source>rev</source>
+        <comment>reversed arc</comment>
+        <translation type="obsolete">звр</translation>
+    </message>
+    <message>
+        <source>r</source>
+        <comment>reversed arc</comment>
+        <translation type="obsolete">з</translation>
+    </message>
+    <message>
+        <source>rowspacing</source>
+        <comment>rowspacing for inserts</comment>
+        <translation type="obsolete">відступ між рядками</translation>
+    </message>
+    <message>
+        <source>Available commands:</source>
+        <translation type="obsolete">Доступні команди:</translation>
+    </message>
+    <message>
+        <source>kill</source>
+        <translation type="obsolete">вбити</translation>
+    </message>
+    <message>
+        <source>back</source>
+        <translation type="obsolete">назад</translation>
+    </message>
+    <message>
+        <source>redraw</source>
+        <translation type="obsolete">перерисувати</translation>
+    </message>
+    <message>
+        <source>u</source>
+        <translation type="obsolete">с</translation>
+    </message>
+    <message>
+        <source>number</source>
+        <comment>number</comment>
+        <translation type="obsolete">число</translation>
+    </message>
+    <message>
+        <source>reversed</source>
+        <comment>reversed</comment>
+        <translation type="obsolete">зворотньо</translation>
+    </message>
+    <message>
+        <source>rev</source>
+        <comment>reversed</comment>
+        <translation type="obsolete">звр</translation>
+    </message>
+    <message>
+        <source>row</source>
+        <translation type="obsolete">рядок</translation>
+    </message>
+    <message>
+        <source>Command not found: %1</source>
+        <translation type="obsolete">Команду не знайдено: %1</translation>
+    </message>
+    <message>
+        <source>Accepted keycode: %1</source>
+        <translation type="obsolete">Прийнята клавіатурна послідовність: %1</translation>
+    </message>
+    <message>
+        <source>dpi</source>
+        <translation type="obsolete">DPI</translation>
+    </message>
+    <message>
+        <source>row</source>
+        <comment>row</comment>
+        <translation type="obsolete">рядок</translation>
     </message>
 </context>
 <context>
@@ -12249,3723 +16066,6 @@ Do you want to replace it?</source>
     <message>
         <source>Update</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_ActionFactory</name>
-    <message>
-        <source>&amp;New</source>
-        <translation type="obsolete">Ст&amp;ворити</translation>
-    </message>
-    <message>
-        <source>&amp;Open...</source>
-        <translation type="obsolete">&amp;Відкрити…</translation>
-    </message>
-    <message>
-        <source>&amp;Save</source>
-        <translation type="obsolete">&amp;Зберегти</translation>
-    </message>
-    <message>
-        <source>Save &amp;as...</source>
-        <translation type="obsolete">Зберегти &amp;як…</translation>
-    </message>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="obsolete">&amp;Зачинити</translation>
-    </message>
-    <message>
-        <source>&amp;Print</source>
-        <translation type="obsolete">Д&amp;рук</translation>
-    </message>
-    <message>
-        <source>Exit</source>
-        <translation type="obsolete">Вихід</translation>
-    </message>
-    <message>
-        <source>E&amp;xit</source>
-        <translation type="obsolete">В&amp;ихід</translation>
-    </message>
-    <message>
-        <source>Quits the application</source>
-        <translation type="obsolete">Вихід з програми</translation>
-    </message>
-    <message>
-        <source>Zoom in</source>
-        <translation type="obsolete">Наблизити</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;In</source>
-        <translation type="obsolete">На&amp;близити</translation>
-    </message>
-    <message>
-        <source>Zooms in</source>
-        <translation type="obsolete">Збільшує масштаб документа</translation>
-    </message>
-    <message>
-        <source>Zoom out</source>
-        <translation type="obsolete">Віддалити</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;Out</source>
-        <translation type="obsolete">Від&amp;далити</translation>
-    </message>
-    <message>
-        <source>Zooms out</source>
-        <translation type="obsolete">Зменшує масштаб документа</translation>
-    </message>
-    <message>
-        <source>Auto Zoom</source>
-        <translation type="obsolete">Показати усі</translation>
-    </message>
-    <message>
-        <source>&amp;Auto Zoom</source>
-        <translation type="obsolete">&amp;Показати усі</translation>
-    </message>
-    <message>
-        <source>Zooms automatic</source>
-        <translation type="obsolete">Підбирає масштаб документа автоматично</translation>
-    </message>
-    <message>
-        <source>Window Zoom</source>
-        <translation type="obsolete">Масштабування у вікні</translation>
-    </message>
-    <message>
-        <source>&amp;Window Zoom</source>
-        <translation type="obsolete">&amp;Збільшити рамкою</translation>
-    </message>
-    <message>
-        <source>Zooms in a window</source>
-        <translation type="obsolete">Збільшує зображення у рамці</translation>
-    </message>
-    <message>
-        <source>Pan Zoom</source>
-        <translation type="obsolete">Зрушити</translation>
-    </message>
-    <message>
-        <source>&amp;Pan Zoom</source>
-        <translation type="obsolete">З&amp;рушити</translation>
-    </message>
-    <message>
-        <source>Realtime Panning</source>
-        <translation type="obsolete">Зсуває зображення</translation>
-    </message>
-    <message>
-        <source>Redraw</source>
-        <translation type="obsolete">Оновити зображення</translation>
-    </message>
-    <message>
-        <source>&amp;Redraw</source>
-        <translation type="obsolete">&amp;Оновити зображення</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="obsolete">Скасувати</translation>
-    </message>
-    <message>
-        <source>&amp;Undo</source>
-        <translation type="obsolete">&amp;Скасувати</translation>
-    </message>
-    <message>
-        <source>Undoes last action</source>
-        <translation type="obsolete">Скасовує останню дію</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="obsolete">Повторити</translation>
-    </message>
-    <message>
-        <source>&amp;Redo</source>
-        <translation type="obsolete">&amp;Повторити</translation>
-    </message>
-    <message>
-        <source>Redoes last action</source>
-        <translation type="obsolete">Повторює скасовану дію</translation>
-    </message>
-    <message>
-        <source>Cut</source>
-        <translation type="obsolete">Вирізати</translation>
-    </message>
-    <message>
-        <source>Cu&amp;t</source>
-        <translation type="obsolete">Ви&amp;різати</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="obsolete">Копіювати</translation>
-    </message>
-    <message>
-        <source>&amp;Copy</source>
-        <translation type="obsolete">&amp;Копіювати</translation>
-    </message>
-    <message>
-        <source>Paste</source>
-        <translation type="obsolete">Вставити</translation>
-    </message>
-    <message>
-        <source>&amp;Paste</source>
-        <translation type="obsolete">&amp;Вставити</translation>
-    </message>
-    <message>
-        <source>Select Entity</source>
-        <translation type="obsolete">Вибрати об’єкт</translation>
-    </message>
-    <message>
-        <source>Selects single Entities</source>
-        <translation type="obsolete">Вибирає один об’єкт</translation>
-    </message>
-    <message>
-        <source>Select Window</source>
-        <translation type="obsolete">Вибрати рамкою</translation>
-    </message>
-    <message>
-        <source>Select &amp;Window</source>
-        <translation type="obsolete">Вибрати &amp;рамкою</translation>
-    </message>
-    <message>
-        <source>Selects all Entities in a given Window</source>
-        <translation type="obsolete">Вибирає усі об’єкти, захоплені рамкою</translation>
-    </message>
-    <message>
-        <source>Deselect Window</source>
-        <translation type="obsolete">Скасувати вибір рамкою</translation>
-    </message>
-    <message>
-        <source>Deselect &amp;Window</source>
-        <translation type="obsolete">Скасувати ви&amp;бір рамкою</translation>
-    </message>
-    <message>
-        <source>Deselects all Entities in a given Window</source>
-        <translation type="obsolete">Відміняє вибір об’єктів, захоплених рамкою</translation>
-    </message>
-    <message>
-        <source>(De-)Select Contour</source>
-        <translation type="obsolete">Вибрати замкнутий контур (cкас. вибір)</translation>
-    </message>
-    <message>
-        <source>(De-)Selects connected entities</source>
-        <translation type="obsolete">Вибирає (або скасовує вибір) об&apos;єктів, що утворюють замкнутий контур</translation>
-    </message>
-    <message>
-        <source>Select All</source>
-        <translation type="obsolete">Вибрати усе</translation>
-    </message>
-    <message>
-        <source>Select &amp;All</source>
-        <translation type="obsolete">Вибр&amp;ати усе</translation>
-    </message>
-    <message>
-        <source>Selects all Entities</source>
-        <translation type="obsolete">Вибирає усі об’єкти</translation>
-    </message>
-    <message>
-        <source>Deselect all</source>
-        <translation type="obsolete">Відмінити вибір усіх об’єктів</translation>
-    </message>
-    <message>
-        <source>Deselect &amp;all</source>
-        <translation type="obsolete">Скасувати ви&amp;бір усіх об’єктів</translation>
-    </message>
-    <message>
-        <source>Deselects all Entities</source>
-        <translation type="obsolete">Скасовує вибір усіх об’єктів</translation>
-    </message>
-    <message>
-        <source>Invert Selection</source>
-        <translation type="obsolete">Інвертувати вибір</translation>
-    </message>
-    <message>
-        <source>&amp;Invert Selection</source>
-        <translation type="obsolete">&amp;Інвертувати вибір</translation>
-    </message>
-    <message>
-        <source>Inverts the current selection</source>
-        <translation type="obsolete">інвертує поточний вибір об’єктів</translation>
-    </message>
-    <message>
-        <source>Select Intersected Entities</source>
-        <translation type="obsolete">Вибрати об’єкти січною</translation>
-    </message>
-    <message>
-        <source>In&amp;tersected Entities</source>
-        <translation type="obsolete">&amp;Вибрати об’єкти січною</translation>
-    </message>
-    <message>
-        <source>Selects all entities intersected by a line</source>
-        <translation type="obsolete">Вибирає усі об’єкти, пересічені лінією</translation>
-    </message>
-    <message>
-        <source>Deselect Intersected Entities</source>
-        <translation type="obsolete">Скасувати вибір січної</translation>
-    </message>
-    <message>
-        <source>Deselect Inte&amp;rsected Entities</source>
-        <translation type="obsolete">Скасувати вибір &amp;січної</translation>
-    </message>
-    <message>
-        <source>Deselects all entities intersected by a line</source>
-        <translation type="obsolete">Відміняє вибір усіх об’єктів, які пересічені лінією</translation>
-    </message>
-    <message>
-        <source>(De-)Select Layer</source>
-        <translation type="obsolete">Вибрати шар (скасов. вибір)</translation>
-    </message>
-    <message>
-        <source>(De-)Selects layers</source>
-        <translation type="obsolete">Вибирає шар (або скасовує вибір шару)</translation>
-    </message>
-    <message>
-        <source>Points</source>
-        <translation type="obsolete">Точки</translation>
-    </message>
-    <message>
-        <source>&amp;Points</source>
-        <translation type="obsolete">&amp;Точки</translation>
-    </message>
-    <message>
-        <source>Draw Points</source>
-        <translation type="obsolete">Накреслити точки</translation>
-    </message>
-    <message>
-        <source>Line: 2 Points</source>
-        <translation type="obsolete">Лінія: за 2-ма точками</translation>
-    </message>
-    <message>
-        <source>&amp;2 Points</source>
-        <translation type="obsolete">За &amp;2-ма точками</translation>
-    </message>
-    <message>
-        <source>Draw lines</source>
-        <translation type="obsolete">Накреслити лінії</translation>
-    </message>
-    <message>
-        <source>Line: Angle</source>
-        <translation type="obsolete">Лінія: під кутом</translation>
-    </message>
-    <message>
-        <source>&amp;Angle</source>
-        <translation type="obsolete">Під &amp;кутом</translation>
-    </message>
-    <message>
-        <source>Draw lines with a given angle</source>
-        <translation type="obsolete">Накреслити лінії під заданим кутом</translation>
-    </message>
-    <message>
-        <source>Line: Horizontal</source>
-        <translation type="obsolete">Лінія: горизонтальна</translation>
-    </message>
-    <message>
-        <source>&amp;Horizontal</source>
-        <translation type="obsolete">&amp;Горизонтальна</translation>
-    </message>
-    <message>
-        <source>Draw horizontal lines</source>
-        <translation type="obsolete">Накреслити горизонтальну лінію</translation>
-    </message>
-    <message>
-        <source>hor. / vert. line</source>
-        <translation type="obsolete">гор./верт. лінія</translation>
-    </message>
-    <message>
-        <source>H&amp;orizontal / Vertical</source>
-        <translation type="obsolete">&amp;Горизонтальна/вертикальна</translation>
-    </message>
-    <message>
-        <source>Draw horizontal / vertical lines</source>
-        <translation type="obsolete">Накреслити горизонтальну/вертикальну лінію</translation>
-    </message>
-    <message>
-        <source>Line: Vertical</source>
-        <translation type="obsolete">Лінія: вертикальна</translation>
-    </message>
-    <message>
-        <source>&amp;Vertical</source>
-        <translation type="obsolete">&amp;Вертикальна</translation>
-    </message>
-    <message>
-        <source>Draw vertical lines</source>
-        <translation type="obsolete">Накреслити вертикальну лінію</translation>
-    </message>
-    <message>
-        <source>Line: Freehand</source>
-        <translation type="obsolete">Лінія: довільна</translation>
-    </message>
-    <message>
-        <source>&amp;Freehand Line</source>
-        <translation type="obsolete">&amp;Довільна лінія (крива)</translation>
-    </message>
-    <message>
-        <source>Draw freehand lines</source>
-        <translation type="obsolete">Накреслити довільну криву</translation>
-    </message>
-    <message>
-        <source>Parallel</source>
-        <translation type="obsolete">Паралельна</translation>
-    </message>
-    <message>
-        <source>Para&amp;llel</source>
-        <translation type="obsolete">Пара&amp;лельна</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="obsolete">Прямокутник</translation>
-    </message>
-    <message>
-        <source>&amp;Rectangle</source>
-        <translation type="obsolete">П&amp;рямокутник</translation>
-    </message>
-    <message>
-        <source>Draw rectangles</source>
-        <translation type="obsolete">Накреслити прямокутник</translation>
-    </message>
-    <message>
-        <source>Bisector</source>
-        <translation type="obsolete">Бісектриса</translation>
-    </message>
-    <message>
-        <source>&amp;Bisector</source>
-        <translation type="obsolete">Б&amp;ісектриса</translation>
-    </message>
-    <message>
-        <source>Draw bisectors</source>
-        <translation type="obsolete">Накреслити бісектрису</translation>
-    </message>
-    <message>
-        <source>Tangent (P,C)</source>
-        <translation type="obsolete">Дотична (Т,К)</translation>
-    </message>
-    <message>
-        <source>&amp;Tangent (P,C)</source>
-        <translation type="obsolete">&amp;Дотична (Т,К)</translation>
-    </message>
-    <message>
-        <source>Draw tangent (point, circle)</source>
-        <translation type="obsolete">Накреслити дотичну (точка, коло)</translation>
-    </message>
-    <message>
-        <source>Tangent (C,C)</source>
-        <translation type="obsolete">Дотична (К,К)</translation>
-    </message>
-    <message>
-        <source>Tan&amp;gent (C,C)</source>
-        <translation type="obsolete">До&amp;тична (К,К)</translation>
-    </message>
-    <message>
-        <source>Draw tangent (circle, circle)</source>
-        <translation type="obsolete">Накреслити дотичну (коло, коло)</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="obsolete">Перпендикулярна</translation>
-    </message>
-    <message>
-        <source>&amp;Orthogonal</source>
-        <translation type="obsolete">&amp;Перпендикулярна</translation>
-    </message>
-    <message>
-        <source>Draw orthogonal line</source>
-        <translation type="obsolete">Накреслити перпендикулярну лінію</translation>
-    </message>
-    <message>
-        <source>Relative angle</source>
-        <translation type="obsolete">Відносний кут</translation>
-    </message>
-    <message>
-        <source>R&amp;elative angle</source>
-        <translation type="obsolete">Відно&amp;сний кут</translation>
-    </message>
-    <message>
-        <source>Draw line with relative angle</source>
-        <translation type="obsolete">Накреслити лінію під відносним кутом</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="obsolete">Багатокутник</translation>
-    </message>
-    <message>
-        <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation type="obsolete">Багато&amp;кутник (центр, кут)</translation>
-    </message>
-    <message>
-        <source>Draw polygon with center and corner</source>
-        <translation type="obsolete">Накреслити багатокутник по центру й куту</translation>
-    </message>
-    <message>
-        <source>Pol&amp;ygon (Cor,Cor)</source>
-        <translation type="obsolete">Багато&amp;кутник (кут, кут)</translation>
-    </message>
-    <message>
-        <source>Draw polygon with two corners</source>
-        <translation type="obsolete">Накреслити багатокутник за двома кутами</translation>
-    </message>
-    <message>
-        <source>Circle: Center, Point</source>
-        <translation type="obsolete">Коло: центр, точка</translation>
-    </message>
-    <message>
-        <source>Center, &amp;Point</source>
-        <translation type="obsolete">Центр, &amp;точка</translation>
-    </message>
-    <message>
-        <source>Draw circles with center and point</source>
-        <translation type="obsolete">Накреслити коло по центру й точці прив’язки</translation>
-    </message>
-    <message>
-        <source>Circle: Center, Radius</source>
-        <translation type="obsolete">Коло: центр, радіус</translation>
-    </message>
-    <message>
-        <source>Center, &amp;Radius</source>
-        <translation type="obsolete">Центр, &amp;радіус</translation>
-    </message>
-    <message>
-        <source>Draw circles with center and radius</source>
-        <translation type="obsolete">Накреслити коло за центром й радіусом</translation>
-    </message>
-    <message>
-        <source>Circle: 2 Points</source>
-        <translation type="obsolete">Коло: за 2-ма точками</translation>
-    </message>
-    <message>
-        <source>2 Points</source>
-        <translation type="obsolete">За 2-ма точками</translation>
-    </message>
-    <message>
-        <source>Draw circles with 2 points</source>
-        <translation type="obsolete">Накреслити коло за 2-ма точками</translation>
-    </message>
-    <message>
-        <source>Circle: 3 Points</source>
-        <translation type="obsolete">Коло: за 3-ма точками</translation>
-    </message>
-    <message>
-        <source>3 Points</source>
-        <translation type="obsolete">За 3-ма точками</translation>
-    </message>
-    <message>
-        <source>Draw circles with 3 points</source>
-        <translation type="obsolete">Накреслити коло за 3-ма точками</translation>
-    </message>
-    <message>
-        <source>Arc: Center, Point, Angles</source>
-        <translation type="obsolete">Дуга: центр, точка, кути</translation>
-    </message>
-    <message>
-        <source>&amp;Center, Point, Angles</source>
-        <translation type="obsolete">&amp;Центр, точка, кути</translation>
-    </message>
-    <message>
-        <source>Draw arcs</source>
-        <translation type="obsolete">Накреслити дугу</translation>
-    </message>
-    <message>
-        <source>Arc: 3 Points</source>
-        <translation type="obsolete">Дуга: за 3-ма точками</translation>
-    </message>
-    <message>
-        <source>&amp;3 Points</source>
-        <translation type="obsolete">За &amp;3-ма точками</translation>
-    </message>
-    <message>
-        <source>Draw arcs with 3 points</source>
-        <translation type="obsolete">Накреслити дугу за 3-ма точками</translation>
-    </message>
-    <message>
-        <source>Ellipse with Axis</source>
-        <translation type="obsolete">Еліпс з віссю</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse (Axis)</source>
-        <translation type="obsolete">&amp;Еліпс (з віссю)</translation>
-    </message>
-    <message>
-        <source>Draw Ellipses</source>
-        <translation type="obsolete">Накреслити еліпс</translation>
-    </message>
-    <message>
-        <source>Ellipse Arc with Axis</source>
-        <translation type="obsolete">Дуга еліпса з віссю</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse Arc (Axis)</source>
-        <translation type="obsolete">&amp;Дуга еліпса (з віссю)</translation>
-    </message>
-    <message>
-        <source>Draw Ellipse Arcs</source>
-        <translation type="obsolete">Накреслити дугу еліпса</translation>
-    </message>
-    <message>
-        <source>Text</source>
-        <translation type="obsolete">Текст</translation>
-    </message>
-    <message>
-        <source>&amp;Text</source>
-        <translation type="obsolete">&amp;Текст</translation>
-    </message>
-    <message>
-        <source>Draw Text Entities</source>
-        <translation type="obsolete">Створити текстовий об’єкт</translation>
-    </message>
-    <message>
-        <source>Draw Hatches and Solid Fills</source>
-        <translation type="obsolete">Заштрихувати або залити кольором</translation>
-    </message>
-    <message>
-        <source>Aligned</source>
-        <translation type="obsolete">Вирівняний</translation>
-    </message>
-    <message>
-        <source>&amp;Aligned</source>
-        <translation type="obsolete">Ви&amp;рівняний</translation>
-    </message>
-    <message>
-        <source>Aligned Dimension</source>
-        <translation type="obsolete">Вирівняний розмір</translation>
-    </message>
-    <message>
-        <source>Linear</source>
-        <translation type="obsolete">Лінійний</translation>
-    </message>
-    <message>
-        <source>&amp;Linear</source>
-        <translation type="obsolete">&amp;Лінійний</translation>
-    </message>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="obsolete">Лінійний розмір</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="obsolete">Горизонтальний</translation>
-    </message>
-    <message>
-        <source>Horizontal Dimension</source>
-        <translation type="obsolete">Горизонтальний розмір</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="obsolete">Вертикальний</translation>
-    </message>
-    <message>
-        <source>Vertical Dimension</source>
-        <translation type="obsolete">Вертикальний розмір</translation>
-    </message>
-    <message>
-        <source>Radial</source>
-        <translation type="obsolete">Радіальний</translation>
-    </message>
-    <message>
-        <source>&amp;Radial</source>
-        <translation type="obsolete">&amp;Радіальний</translation>
-    </message>
-    <message>
-        <source>Radial Dimension</source>
-        <translation type="obsolete">Радіальний розмір</translation>
-    </message>
-    <message>
-        <source>Diametric</source>
-        <translation type="obsolete">Діаметральний</translation>
-    </message>
-    <message>
-        <source>&amp;Diametric</source>
-        <translation type="obsolete">&amp;Діаметральний</translation>
-    </message>
-    <message>
-        <source>Diametric Dimension</source>
-        <translation type="obsolete">Діаметральний розмір</translation>
-    </message>
-    <message>
-        <source>Angular</source>
-        <translation type="obsolete">Кутовий</translation>
-    </message>
-    <message>
-        <source>&amp;Angular</source>
-        <translation type="obsolete">&amp;Кутовий</translation>
-    </message>
-    <message>
-        <source>Angular Dimension</source>
-        <translation type="obsolete">Кутовий розмір</translation>
-    </message>
-    <message>
-        <source>Leader</source>
-        <translation type="obsolete">Поличка-виноска</translation>
-    </message>
-    <message>
-        <source>&amp;Leader</source>
-        <translation type="obsolete">П&amp;оличка-виноска</translation>
-    </message>
-    <message>
-        <source>Leader Dimension</source>
-        <translation type="obsolete">Поличка-виноска</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="obsolete">Вилучити</translation>
-    </message>
-    <message>
-        <source>&amp;Delete</source>
-        <translation type="obsolete">Ви&amp;лучити</translation>
-    </message>
-    <message>
-        <source>Delete Entities</source>
-        <translation type="obsolete">Вилучити об’єкти</translation>
-    </message>
-    <message>
-        <source>Delete Freehand</source>
-        <translation type="obsolete">Вилучити довільну криву</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Freehand</source>
-        <translation type="obsolete">Ви&amp;лучити довільну криву</translation>
-    </message>
-    <message>
-        <source>Move</source>
-        <translation type="obsolete">Зрушення</translation>
-    </message>
-    <message>
-        <source>&amp;Move</source>
-        <translation type="obsolete">&amp;Зрушення</translation>
-    </message>
-    <message>
-        <source>Move Entities</source>
-        <translation type="obsolete">Перемістити об’єкти</translation>
-    </message>
-    <message>
-        <source>Rotate</source>
-        <translation type="obsolete">Обертання</translation>
-    </message>
-    <message>
-        <source>&amp;Rotate</source>
-        <translation type="obsolete">&amp;Обертання</translation>
-    </message>
-    <message>
-        <source>Rotate Entities</source>
-        <translation type="obsolete">Обертати об’єкти</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="obsolete">Масштабувати</translation>
-    </message>
-    <message>
-        <source>&amp;Scale</source>
-        <translation type="obsolete">&amp;Масштабувати</translation>
-    </message>
-    <message>
-        <source>Scale Entities</source>
-        <translation type="obsolete">Масштабувати об’єкти</translation>
-    </message>
-    <message>
-        <source>Mirror</source>
-        <translation type="obsolete">Дзеркально відобразити</translation>
-    </message>
-    <message>
-        <source>&amp;Mirror</source>
-        <translation type="obsolete">&amp;Дзеркально відобразити</translation>
-    </message>
-    <message>
-        <source>Mirror Entities</source>
-        <translation type="obsolete">Дзеркально відобразити об’єкти</translation>
-    </message>
-    <message>
-        <source>Move and Rotate</source>
-        <translation type="obsolete">Зрушення й обертання</translation>
-    </message>
-    <message>
-        <source>M&amp;ove and Rotate</source>
-        <translation type="obsolete">Зрушення й &amp;обертання</translation>
-    </message>
-    <message>
-        <source>Move and Rotate Entities</source>
-        <translation type="obsolete">Зрушення й обертання об’єктів</translation>
-    </message>
-    <message>
-        <source>Rotate Two</source>
-        <translation type="obsolete">Обертати навколо двох</translation>
-    </message>
-    <message>
-        <source>Rotate T&amp;wo</source>
-        <translation type="obsolete">Обертати навколо &amp;двох</translation>
-    </message>
-    <message>
-        <source>Rotate Entities around two centers</source>
-        <translation type="obsolete">Обертати об’єкти навколо двох центрів</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="obsolete">Вирівняти</translation>
-    </message>
-    <message>
-        <source>&amp;Trim</source>
-        <translation type="obsolete">&amp;Вирівняти</translation>
-    </message>
-    <message>
-        <source>Trim Entities</source>
-        <translation type="obsolete">Вирівнює об’єкти</translation>
-    </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="obsolete">Вирівняти два</translation>
-    </message>
-    <message>
-        <source>&amp;Trim Two</source>
-        <translation type="obsolete">Ви&amp;рівняти два</translation>
-    </message>
-    <message>
-        <source>Trim two Entities</source>
-        <translation type="obsolete">Вирівнює два об’єкти</translation>
-    </message>
-    <message>
-        <source>Lengthen</source>
-        <translation type="obsolete">Подовжити</translation>
-    </message>
-    <message>
-        <source>&amp;Lengthen</source>
-        <translation type="obsolete">По&amp;довжити</translation>
-    </message>
-    <message>
-        <source>Lengthen by a given amount</source>
-        <translation type="obsolete">Подовжити на задану величину</translation>
-    </message>
-    <message>
-        <source>&amp;Cut</source>
-        <translation type="obsolete">&amp;Розбити</translation>
-    </message>
-    <message>
-        <source>Cut Entities</source>
-        <translation type="obsolete">Розбиває об’єкти</translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="obsolete">Витягнути</translation>
-    </message>
-    <message>
-        <source>&amp;Stretch</source>
-        <translation type="obsolete">&amp;Витягнути</translation>
-    </message>
-    <message>
-        <source>Stretch Entities</source>
-        <translation type="obsolete">Витягає об’єкти</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="obsolete">Фаска</translation>
-    </message>
-    <message>
-        <source>&amp;Bevel</source>
-        <translation type="obsolete">&amp;Фаска</translation>
-    </message>
-    <message>
-        <source>Bevel Entities</source>
-        <translation type="obsolete">Елементи фаски</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="obsolete">Округлення</translation>
-    </message>
-    <message>
-        <source>&amp;Round</source>
-        <translation type="obsolete">&amp;Округлення</translation>
-    </message>
-    <message>
-        <source>Round Entities</source>
-        <translation type="obsolete">Елементи округлення</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="obsolete">Без прив’язок</translation>
-    </message>
-    <message>
-        <source>&amp;Free</source>
-        <translation type="obsolete">&amp;Без прив’язок</translation>
-    </message>
-    <message>
-        <source>Free positioning</source>
-        <translation type="obsolete">Вільне розміщення курсору</translation>
-    </message>
-    <message>
-        <source>Grid</source>
-        <translation type="obsolete">За сіткою</translation>
-    </message>
-    <message>
-        <source>&amp;Grid</source>
-        <translation type="obsolete">&amp;Сітка</translation>
-    </message>
-    <message>
-        <source>Grid positioning</source>
-        <translation type="obsolete">Прив’язка за сіткою</translation>
-    </message>
-    <message>
-        <source>Endpoints</source>
-        <translation type="obsolete">Кінцева точка</translation>
-    </message>
-    <message>
-        <source>&amp;Endpoints</source>
-        <translation type="obsolete">&amp;Кінцева точка</translation>
-    </message>
-    <message>
-        <source>Snap to endpoints</source>
-        <translation type="obsolete">Прив’язка до кінцевих точок об’єкту</translation>
-    </message>
-    <message>
-        <source>On Entity</source>
-        <translation type="obsolete">Точка на кривій</translation>
-    </message>
-    <message>
-        <source>&amp;On Entity</source>
-        <translation type="obsolete">&amp;Точка на кривій</translation>
-    </message>
-    <message>
-        <source>Snap to nearest point on entity</source>
-        <translation type="obsolete">Прив’язка до найближчої точки на кривій</translation>
-    </message>
-    <message>
-        <source>Center</source>
-        <translation type="obsolete">Центр</translation>
-    </message>
-    <message>
-        <source>&amp;Center</source>
-        <translation type="obsolete">&amp;Центр</translation>
-    </message>
-    <message>
-        <source>Snap to centers</source>
-        <translation type="obsolete">Прив’язка до центру</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="obsolete">Середина</translation>
-    </message>
-    <message>
-        <source>&amp;Middle</source>
-        <translation type="obsolete">&amp;Середина</translation>
-    </message>
-    <message>
-        <source>Snap to middle points</source>
-        <translation type="obsolete">Прив’язка до середини</translation>
-    </message>
-    <message>
-        <source>Distance from Endpoint</source>
-        <translation type="obsolete">На відстані від точки</translation>
-    </message>
-    <message>
-        <source>&amp;Distance from Endpoint</source>
-        <translation type="obsolete">&amp;На відстані від точки</translation>
-    </message>
-    <message>
-        <source>Snap to points with a given distance to an endpoint</source>
-        <translation type="obsolete">Прив’язка на заданій відстані від точки</translation>
-    </message>
-    <message>
-        <source>Intersection</source>
-        <translation type="obsolete">Перетин</translation>
-    </message>
-    <message>
-        <source>&amp;Intersection</source>
-        <translation type="obsolete">&amp;Перетин</translation>
-    </message>
-    <message>
-        <source>Snap to intersection points</source>
-        <translation type="obsolete">Прив’язка до точки перетину</translation>
-    </message>
-    <message>
-        <source>Intersection Manually</source>
-        <translation type="obsolete">Перетини вручну</translation>
-    </message>
-    <message>
-        <source>I&amp;ntersection Manually</source>
-        <translation type="obsolete">&amp;Перетини вручну</translation>
-    </message>
-    <message>
-        <source>Snap to intersection points manually</source>
-        <translation type="obsolete">Прив’язка до точок перетину вручну</translation>
-    </message>
-    <message>
-        <source>Restrict Nothing</source>
-        <translation type="obsolete">Без обмежень</translation>
-    </message>
-    <message>
-        <source>Restrict &amp;Nothing</source>
-        <translation type="obsolete">Без &amp;обмежень</translation>
-    </message>
-    <message>
-        <source>No snap restriction</source>
-        <translation type="obsolete">Прив’язка без обмежень</translation>
-    </message>
-    <message>
-        <source>Restrict Orthogonally</source>
-        <translation type="obsolete">Обмежити ортогонально</translation>
-    </message>
-    <message>
-        <source>Restrict &amp;Orthogonally</source>
-        <translation type="obsolete">Обмежити ор&amp;тогонально</translation>
-    </message>
-    <message>
-        <source>Restrict snapping orthogonally</source>
-        <translation type="obsolete">Обмежити прив’язку ортогонально</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation type="obsolete">Обмежити горизонтально</translation>
-    </message>
-    <message>
-        <source>Restrict &amp;Horizontally</source>
-        <translation type="obsolete">Обмежити &amp;горизонтально</translation>
-    </message>
-    <message>
-        <source>Restrict snapping horizontally</source>
-        <translation type="obsolete">Обмежити прив’язку горизонтально</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation type="obsolete">Обмежити вертикально</translation>
-    </message>
-    <message>
-        <source>Restrict &amp;Vertically</source>
-        <translation type="obsolete">Обмежити &amp;вертикально</translation>
-    </message>
-    <message>
-        <source>Restrict snapping vertically</source>
-        <translation type="obsolete">Обмежити прив’язку вертикально</translation>
-    </message>
-    <message>
-        <source>Set Relative Zero</source>
-        <translation type="obsolete">Встановити відносний нуль</translation>
-    </message>
-    <message>
-        <source>&amp;Set Relative Zero</source>
-        <translation type="obsolete">&amp;Встановити відносний нуль</translation>
-    </message>
-    <message>
-        <source>Set position of the Relative Zero point</source>
-        <translation type="obsolete">Поставити положення відносного початку координат</translation>
-    </message>
-    <message>
-        <source>(Un-)Lock Relative Zero</source>
-        <translation type="obsolete">Увімкн./вимкн. відносний нуль</translation>
-    </message>
-    <message>
-        <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation type="obsolete">Увімкн./в&amp;имкн. відносний нуль</translation>
-    </message>
-    <message>
-        <source>(Un-)Lock relative Zero</source>
-        <translation type="obsolete">Увімкн./вимкн. відносний нуль</translation>
-    </message>
-    <message>
-        <source>Point inside contour</source>
-        <translation type="obsolete">Точка всередині контуру</translation>
-    </message>
-    <message>
-        <source>&amp;Point inside contour</source>
-        <translation type="obsolete">&amp;Точка всередині контуру</translation>
-    </message>
-    <message>
-        <source>Checks if a given point is inside the selected contour</source>
-        <translation type="obsolete">Перевіряє, чи знаходиться дана точка всередині вибраного контуру</translation>
-    </message>
-    <message>
-        <source>Defreeze all</source>
-        <translation type="obsolete">Розморозити усі</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all</source>
-        <translation type="obsolete">&amp;Розморозити усі</translation>
-    </message>
-    <message>
-        <source>Defreeze all layers</source>
-        <translation type="obsolete">Розморозити усі шари</translation>
-    </message>
-    <message>
-        <source>Freeze all</source>
-        <translation type="obsolete">Заморозити усі</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all</source>
-        <translation type="obsolete">&amp;Заморозити усі</translation>
-    </message>
-    <message>
-        <source>Freeze all layers</source>
-        <translation type="obsolete">Заморозити усі шари</translation>
-    </message>
-    <message>
-        <source>Add Layer</source>
-        <translation type="obsolete">Додати шар</translation>
-    </message>
-    <message>
-        <source>&amp;Add Layer</source>
-        <translation type="obsolete">&amp;Додати шар</translation>
-    </message>
-    <message>
-        <source>Remove Layer</source>
-        <translation type="obsolete">Вилучити шар</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Layer</source>
-        <translation type="obsolete">&amp;Вилучити шар</translation>
-    </message>
-    <message>
-        <source>Edit Layer</source>
-        <translation type="obsolete">Редагувати шар</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Layer</source>
-        <translation type="obsolete">&amp;Редагувати шар</translation>
-    </message>
-    <message>
-        <source>Toggle Layer Visibility</source>
-        <translation type="obsolete">Переключити видимість шару</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Layer</source>
-        <translation type="obsolete">&amp;Видимість шару</translation>
-    </message>
-    <message>
-        <source>Toggle Layer</source>
-        <translation type="obsolete">Видимість шару</translation>
-    </message>
-    <message>
-        <source>Defreeze all blocks</source>
-        <translation type="obsolete">Розморозити усі блоки</translation>
-    </message>
-    <message>
-        <source>Freeze all blocks</source>
-        <translation type="obsolete">Заморозити усі блоки</translation>
-    </message>
-    <message>
-        <source>Add Block</source>
-        <translation type="obsolete">Додати блок</translation>
-    </message>
-    <message>
-        <source>&amp;Add Block</source>
-        <translation type="obsolete">До&amp;дати блок</translation>
-    </message>
-    <message>
-        <source>Remove Block</source>
-        <translation type="obsolete">Вилучити блок</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Block</source>
-        <translation type="obsolete">Ви&amp;лучити блок</translation>
-    </message>
-    <message>
-        <source>Rename Block</source>
-        <translation type="obsolete">Перейменувати блок</translation>
-    </message>
-    <message>
-        <source>&amp;Rename Block</source>
-        <translation type="obsolete">&amp;Перейменувати блок</translation>
-    </message>
-    <message>
-        <source>Rename Block and all Inserts</source>
-        <translation type="obsolete">Перейменувати блок та усі вставки</translation>
-    </message>
-    <message>
-        <source>Edit Block</source>
-        <translation type="obsolete">Редагувати блок</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translation type="obsolete">&amp;Редагувати блок</translation>
-    </message>
-    <message>
-        <source>Insert Block</source>
-        <translation type="obsolete">Вставити блок</translation>
-    </message>
-    <message>
-        <source>&amp;Insert Block</source>
-        <translation type="obsolete">&amp;Вставити блок</translation>
-    </message>
-    <message>
-        <source>Toggle Block Visibility</source>
-        <translation type="obsolete">Перемкнути видимість блоку</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Block</source>
-        <translation type="obsolete">&amp;Видимість блоку</translation>
-    </message>
-    <message>
-        <source>Toggle Block</source>
-        <translation type="obsolete">Видимість блоку</translation>
-    </message>
-    <message>
-        <source>Create Block</source>
-        <translation type="obsolete">Створити блок</translation>
-    </message>
-    <message>
-        <source>&amp;Create Block</source>
-        <translation type="obsolete">&amp;Створити блок</translation>
-    </message>
-    <message>
-        <source>Explode</source>
-        <translation type="obsolete">Зруйнувати</translation>
-    </message>
-    <message>
-        <source>&amp;Explode</source>
-        <translation type="obsolete">&amp;Зруйнувати</translation>
-    </message>
-    <message>
-        <source>Explode Blocks and other Entity Groups</source>
-        <translation type="obsolete">Зруйнувати блок та інші групи об’єктів</translation>
-    </message>
-    <message>
-        <source>General Application Preferences</source>
-        <translation type="obsolete">Загальні налаштування програми</translation>
-    </message>
-    <message>
-        <source>Drawing</source>
-        <translation type="obsolete">Креслення</translation>
-    </message>
-    <message>
-        <source>Creates a new drawing</source>
-        <translation type="obsolete">Створює нове креслення</translation>
-    </message>
-    <message>
-        <source>Opens an existing drawing</source>
-        <translation type="obsolete">Відкриває існуюче креслення</translation>
-    </message>
-    <message>
-        <source>Saves the current drawing</source>
-        <translation type="obsolete">Зберігає поточне креслення</translation>
-    </message>
-    <message>
-        <source>Saves the current drawing under a new filename</source>
-        <translation type="obsolete">Зберігає поточне креслення під новим іменем</translation>
-    </message>
-    <message>
-        <source>Closes the current drawing</source>
-        <translation type="obsolete">Закриває поточне креслення</translation>
-    </message>
-    <message>
-        <source>Prints out the current drawing</source>
-        <translation type="obsolete">Друкує поточне креслення</translation>
-    </message>
-    <message>
-        <source>New Drawing</source>
-        <translation type="obsolete">Нове креслення</translation>
-    </message>
-    <message>
-        <source>Open Drawing</source>
-        <translation type="obsolete">Відкрити креслення</translation>
-    </message>
-    <message>
-        <source>Save Drawing</source>
-        <translation type="obsolete">Зберегти креслення</translation>
-    </message>
-    <message>
-        <source>Save Drawing As</source>
-        <translation type="obsolete">Зберегти креслення як</translation>
-    </message>
-    <message>
-        <source>Close Drawing</source>
-        <translation type="obsolete">Закрити креслення</translation>
-    </message>
-    <message>
-        <source>Print Drawing</source>
-        <translation type="obsolete">Друк креслення</translation>
-    </message>
-    <message>
-        <source>Cuts entities  to the clipboard</source>
-        <translation type="obsolete">Вирізає об’єкти в буфер</translation>
-    </message>
-    <message>
-        <source>Copies entities to the clipboard</source>
-        <translation type="obsolete">Копіює об’єкти в буфер</translation>
-    </message>
-    <message>
-        <source>Pastes the clipboard contents</source>
-        <translation type="obsolete">Вставляє об’єкти з буфера</translation>
-    </message>
-    <message>
-        <source>(De-)&amp;Select Entity</source>
-        <translation type="obsolete">Вибрати об’єкт (скасов. вибір)</translation>
-    </message>
-    <message>
-        <source>(De-)Select &amp;Contour</source>
-        <translation type="obsolete">Вибрати &amp;замкнутий контур (скасов. вибір)</translation>
-    </message>
-    <message>
-        <source>Draw parallels to existing lines, arcs, circles</source>
-        <translation type="obsolete">Креслити паралельно до існуючих ліній, дуг, кіл</translation>
-    </message>
-    <message>
-        <source>Parallel through point</source>
-        <translation type="obsolete">Паралельно через точку</translation>
-    </message>
-    <message>
-        <source>Par&amp;allel through point</source>
-        <translation type="obsolete">Пар&amp;алельно через точку</translation>
-    </message>
-    <message>
-        <source>Draw parallel through a given point</source>
-        <translation type="obsolete">Креслити паралельно через задану точку</translation>
-    </message>
-    <message>
-        <source>Attributes</source>
-        <translation type="obsolete">Атрибути</translation>
-    </message>
-    <message>
-        <source>&amp;Attributes</source>
-        <translation type="obsolete">А&amp;трибути</translation>
-    </message>
-    <message>
-        <source>Modify Entity Attributes</source>
-        <translation type="obsolete">Змінити атрибути об’єкту</translation>
-    </message>
-    <message>
-        <source>Delete selected</source>
-        <translation type="obsolete">Вилучити вибране</translation>
-    </message>
-    <message>
-        <source>&amp;Delete selected</source>
-        <translation type="obsolete">Ви&amp;лучити вибране</translation>
-    </message>
-    <message>
-        <source>Delete selected entities</source>
-        <translation type="obsolete">Вилучити вибрані об’єкти</translation>
-    </message>
-    <message>
-        <source>Print Preview</source>
-        <translation type="obsolete">Попередній перегляд</translation>
-    </message>
-    <message>
-        <source>Print Pre&amp;view</source>
-        <translation type="obsolete">&amp;Попередній перегляд</translation>
-    </message>
-    <message>
-        <source>Shows a preview of a print</source>
-        <translation type="obsolete">Відображає попередній перегляд перед друком</translation>
-    </message>
-    <message>
-        <source>Distance Point to Point</source>
-        <translation type="obsolete">Відстань від точки до точки</translation>
-    </message>
-    <message>
-        <source>&amp;Distance Point to Point</source>
-        <translation type="obsolete">&amp;Відстань від точки до точки</translation>
-    </message>
-    <message>
-        <source>Measures the distance between two points</source>
-        <translation type="obsolete">Вимірює відстань між двома точками</translation>
-    </message>
-    <message>
-        <source>Distance Entity to Point</source>
-        <translation type="obsolete">Відстань від об’єкта до точки</translation>
-    </message>
-    <message>
-        <source>&amp;Distance Entity to Point</source>
-        <translation type="obsolete">Від&amp;стань від об’єкта до точки</translation>
-    </message>
-    <message>
-        <source>Measures the distance between an entity and a point</source>
-        <translation type="obsolete">Вимірює відстань між об’єктом та точкою</translation>
-    </message>
-    <message>
-        <source>Angle between two lines</source>
-        <translation type="obsolete">Кут між двома лініями</translation>
-    </message>
-    <message>
-        <source>&amp;Angle between two lines</source>
-        <translation type="obsolete">&amp;Кут між двома лініями</translation>
-    </message>
-    <message>
-        <source>Measures the angle between two lines</source>
-        <translation type="obsolete">Вимірює кут між двома лініями</translation>
-    </message>
-    <message>
-        <source>Export Drawing</source>
-        <translation type="obsolete">Експорт креслення</translation>
-    </message>
-    <message>
-        <source>&amp;Export..</source>
-        <translation type="obsolete">&amp;Експорт…</translation>
-    </message>
-    <message>
-        <source>Exports the current drawing as bitmap</source>
-        <translation type="obsolete">Експортувати поточне креслення у растрове зображення</translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation type="obsolete">Властивості</translation>
-    </message>
-    <message>
-        <source>Modify Entity Properties</source>
-        <translation type="obsolete">Змінити властивості об’єкта</translation>
-    </message>
-    <message>
-        <source>&amp;Properties</source>
-        <translation type="obsolete">Власти&amp;вості</translation>
-    </message>
-    <message>
-        <source>Application</source>
-        <translation type="obsolete">Додаток</translation>
-    </message>
-    <message>
-        <source>&amp;Application Preferences</source>
-        <translation type="obsolete">На&amp;лаштування програми</translation>
-    </message>
-    <message>
-        <source>Current &amp;Drawing Preferences</source>
-        <translation type="obsolete">Поточні параметри &amp;креслення</translation>
-    </message>
-    <message>
-        <source>Settings for the current Drawing</source>
-        <translation type="obsolete">Налаштування для поточного креслення</translation>
-    </message>
-    <message>
-        <source>Enables/disables the grid</source>
-        <translation type="obsolete">Вмикає/вимикає сітку</translation>
-    </message>
-    <message>
-        <source>Circle: Concentric</source>
-        <translation type="obsolete">Коло: концентрична</translation>
-    </message>
-    <message>
-        <source>&amp;Concentric</source>
-        <translation type="obsolete">&amp;Концентрична</translation>
-    </message>
-    <message>
-        <source>Draw circles concentric to existing circles</source>
-        <translation type="obsolete">Креслить кола, концентричні існуючим</translation>
-    </message>
-    <message>
-        <source>Arc: Concentric</source>
-        <translation type="obsolete">Дуга: концентрична</translation>
-    </message>
-    <message>
-        <source>Draw arcs concentric to existing arcs</source>
-        <translation type="obsolete">Креслить дуги, концентричні існуючим</translation>
-    </message>
-    <message>
-        <source>Hatch</source>
-        <translation type="obsolete">Штрихування</translation>
-    </message>
-    <message>
-        <source>&amp;Hatch</source>
-        <translation type="obsolete">&amp;Штрихування</translation>
-    </message>
-    <message>
-        <source>Image</source>
-        <translation type="obsolete">Зображення</translation>
-    </message>
-    <message>
-        <source>&amp;Image</source>
-        <translation type="obsolete">&amp;Зображення</translation>
-    </message>
-    <message>
-        <source>Insert Image (Bitmap)</source>
-        <translation type="obsolete">Вставити зображення (растрове)</translation>
-    </message>
-    <message>
-        <source>Statusbar</source>
-        <translation type="obsolete">Рядок стану</translation>
-    </message>
-    <message>
-        <source>&amp;Statusbar</source>
-        <translation type="obsolete">&amp;Рядок стану</translation>
-    </message>
-    <message>
-        <source>Enables/disables the statusbar</source>
-        <translation type="obsolete">Вмикає/вимикає рядок стану</translation>
-    </message>
-    <message>
-        <source>Total length of selected entities</source>
-        <translation type="obsolete">Сумарна довжина вибраних об’єктів</translation>
-    </message>
-    <message>
-        <source>&amp;Total length of selected entities</source>
-        <translation type="obsolete">Су&amp;марна довжина вибраних об’єктів</translation>
-    </message>
-    <message>
-        <source>Measures the total length of all selected entities</source>
-        <translation type="obsolete">Вимірює сумарну довжину усіх вибраних об’єктів</translation>
-    </message>
-    <message>
-        <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation type="obsolete">Багато&amp;кутник (кут, кут)</translation>
-    </message>
-    <message>
-        <source>Draft</source>
-        <translation type="obsolete">Чернетка</translation>
-    </message>
-    <message>
-        <source>&amp;Draft</source>
-        <translation type="obsolete">&amp;Чернетка</translation>
-    </message>
-    <message>
-        <source>Enables/disables the draft mode</source>
-        <translation type="obsolete">Вмикає/вимикає режим чернетки</translation>
-    </message>
-    <message>
-        <source>Open IDE</source>
-        <translation type="obsolete">Відкрити IDE</translation>
-    </message>
-    <message>
-        <source>&amp;Open IDE</source>
-        <translation type="obsolete">&amp;Відкрити IDE</translation>
-    </message>
-    <message>
-        <source>Opens the integrated development environment for scripting</source>
-        <translation type="obsolete">Відкриває інтегроване середовище для написання сценаріїв</translation>
-    </message>
-    <message>
-        <source>Run Script..</source>
-        <translation type="obsolete">Виконати сценарій…</translation>
-    </message>
-    <message>
-        <source>&amp;Run Script..</source>
-        <translation type="obsolete">&amp;Виконати сценарій…</translation>
-    </message>
-    <message>
-        <source>Runs a script</source>
-        <translation type="obsolete">Запускає сценарій</translation>
-    </message>
-    <message>
-        <source>&amp;Preferences</source>
-        <translation type="obsolete">&amp;Налаштування</translation>
-    </message>
-    <message>
-        <source>&amp;Export...</source>
-        <translation type="obsolete">&amp;Експорт…</translation>
-    </message>
-    <message>
-        <source>&amp;Print...</source>
-        <translation type="obsolete">&amp;Друк…</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation type="obsolete">Вихід</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation type="obsolete">&amp;Вихід</translation>
-    </message>
-    <message>
-        <source>CTRL-G</source>
-        <translation type="obsolete">CTRL-G</translation>
-    </message>
-    <message>
-        <source>Restrict&amp;Vertically</source>
-        <translation type="obsolete">Обмежити &amp;вертикально</translation>
-    </message>
-    <message>
-        <source>&amp;back</source>
-        <translation type="obsolete">&amp;назад</translation>
-    </message>
-    <message>
-        <source>&amp;Selection pointer</source>
-        <translation type="obsolete">Вказівник &amp;вибору</translation>
-    </message>
-    <message>
-        <source>&amp;Endpoint</source>
-        <translation type="obsolete">&amp;Кінцева точка</translation>
-    </message>
-    <message>
-        <source>&amp;OnEntity</source>
-        <translation type="obsolete">На к&amp;ривій</translation>
-    </message>
-    <message>
-        <source>&amp;Block</source>
-        <translation type="obsolete">&amp;Блок</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="obsolete">Параметри дуги</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="obsolete">За годинниковою стрілкою</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation type="obsolete">Проти годинникової стрілки</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="obsolete">Проти годинникової стрілки</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="obsolete">Тангенціальні параметри дуги</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Радіус: </translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="obsolete">Радіус дотичної дуги</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="obsolete">Повний стягуючий кут дотичної дуги</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="obsolete">Радіус</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="obsolete">Кут</translation>
-    </message>
-</context>
-<context>
-    <name>QG_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="obsolete">Параметри фаски</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="obsolete">Усікти</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="obsolete">Позначте, щоб усікти обидва об’єкти до фаски</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="obsolete">Довжина 1:</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="obsolete">Довжина 2:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBar</name>
-    <message>
-        <source>CAD Tools</source>
-        <translation type="obsolete">Інструменти САПР</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarArcs</name>
-    <message>
-        <source>Arcs</source>
-        <translation type="obsolete">Дуги</translation>
-    </message>
-    <message>
-        <source>Arc with three points</source>
-        <translation type="obsolete">Дуга за трьома точками</translation>
-    </message>
-    <message>
-        <source>Arc with Center, Point, Angles</source>
-        <translation type="obsolete">Дуга за центром, точкою та кутами</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Назад до головного меню</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Концентрична</translation>
-    </message>
-    <message>
-        <source>Arc tangential to base entity with radius</source>
-        <translation type="obsolete">Дуга, дотична до основи, радіусом у </translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarCircles</name>
-    <message>
-        <source>Circles</source>
-        <translation type="obsolete">Кола</translation>
-    </message>
-    <message>
-        <source>Circle with two opposite points</source>
-        <translation type="obsolete">Коло за двома протилежними точками</translation>
-    </message>
-    <message>
-        <source>Circle with center and radius</source>
-        <translation type="obsolete">Коло за центром й радіусом</translation>
-    </message>
-    <message>
-        <source>Circle with center and point</source>
-        <translation type="obsolete">Коло за центром й точкою</translation>
-    </message>
-    <message>
-        <source>Circle with three points</source>
-        <translation type="obsolete">Коло за трьома точками</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Назад до головного меню</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Концентрична</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Circle inscribed in a triangle, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Побудувати коло, вписане в трикутник, &lt;span style=&quot; font-style:italic;&quot;&gt;тобто&lt;/span&gt; дотичне до 3 ліній&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Накреслити коло з заданим радіусом, дотичне до двох кіл&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of three circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Накреслити коло, дотичне до трьох кіл&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Накреслити коло, дотичне до іншого кола та проходить через дві точки&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Накреслити коло, дотичне до двох кіл і проходить через задану точку&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Накреслити коло, дотичне до трьох ліній, дуг чи кіл&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Накреслити коло, вписане в трикутник, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;тобто&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, дотичне до 3 ліній. Будь ласка, натомість використовуйте нову функцію &amp;quot;Коло дотичне трьом&amp;quot;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarDim</name>
-    <message>
-        <source>Dimensions</source>
-        <translation type="obsolete">Розміри</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Назад до головного меню</translation>
-    </message>
-    <message>
-        <source>Diametric Dimension</source>
-        <translation type="obsolete">Діаметральний розмір</translation>
-    </message>
-    <message>
-        <source>Radial Dimension</source>
-        <translation type="obsolete">Радіальний розмір</translation>
-    </message>
-    <message>
-        <source>Vertical Dimension</source>
-        <translation type="obsolete">Вертикальний розмір</translation>
-    </message>
-    <message>
-        <source>Horizontal Dimension</source>
-        <translation type="obsolete">Горизонтальний розмір</translation>
-    </message>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="obsolete">Лінійний розмір</translation>
-    </message>
-    <message>
-        <source>Aligned Dimension</source>
-        <translation type="obsolete">Вирівняний розмір</translation>
-    </message>
-    <message>
-        <source>Angular Dimension</source>
-        <translation type="obsolete">Кутовий розмір</translation>
-    </message>
-    <message>
-        <source>Leader</source>
-        <translation type="obsolete">Поличка-виноска</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Концентричний</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarEllipses</name>
-    <message>
-        <source>Ellipses</source>
-        <translation type="obsolete">Еліпси</translation>
-    </message>
-    <message>
-        <source>Ellipse arc with center, two points and angles</source>
-        <translation type="obsolete">Дуга еліпса за центром, двома точками й кутами</translation>
-    </message>
-    <message>
-        <source>Ellipse with Center and two points</source>
-        <translation type="obsolete">Еліпс за центром й двома точками</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Назад до головного меню</translation>
-    </message>
-    <message>
-        <source>Draw Ellipse by foci and a point on ellipse</source>
-        <translation type="obsolete">Намалювати еліпс за фокусами та точці на еліпсі</translation>
-    </message>
-    <message>
-        <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
-        <translation type="obsolete">Намалювати еліпс з осями у напрямку X/Y та чотирьом точкам на еліпсі</translation>
-    </message>
-    <message>
-        <source>Draw Ellipse with by center and 3 points on ellipse</source>
-        <translation type="obsolete">Намалювати еліпс за центром та 3 точкам на еліпсі</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Побудувати еліпс, вписаний у чотирикутник, &lt;span style=&quot; font-style:italic;&quot;&gt;тобто&lt;/span&gt; дотичний до чотирьох прямих.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Концентрично</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Draw Ellipse by center and 3 points on ellipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Накреслити еліпс за центром та трьома точками&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarInfo</name>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Інформація</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Назад до головного меню</translation>
-    </message>
-    <message>
-        <source>Distance (Point, Point)</source>
-        <translation type="obsolete">Відстань (точка, точка)</translation>
-    </message>
-    <message>
-        <source>Distance (Entity, Point)</source>
-        <translation type="obsolete">Відстань (об’єкт, точка)</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="obsolete">Кут</translation>
-    </message>
-    <message>
-        <source>Total length of selected entities</source>
-        <translation type="obsolete">Сумарна довжина вибраних об’єктів</translation>
-    </message>
-    <message>
-        <source>Area of polygon</source>
-        <translation type="obsolete">Площа багатокутника</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Концентрично</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarLines</name>
-    <message>
-        <source>Lines</source>
-        <translation type="obsolete">Лінії</translation>
-    </message>
-    <message>
-        <source>Freehand lines</source>
-        <translation type="obsolete">Довільні лінії (криві)</translation>
-    </message>
-    <message>
-        <source>Orthogonal lines</source>
-        <translation type="obsolete">Ортогональні лінії</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Назад до головного меню</translation>
-    </message>
-    <message>
-        <source>Bisectors</source>
-        <translation type="obsolete">Бісектриси</translation>
-    </message>
-    <message>
-        <source>Tangents from circle to circle</source>
-        <translation type="obsolete">Дотичні від кола до кола</translation>
-    </message>
-    <message>
-        <source>Tangents from point to circle</source>
-        <translation type="obsolete">Дотичні від точки до кола</translation>
-    </message>
-    <message>
-        <source>Line with two points</source>
-        <translation type="obsolete">Лінія за двома точками</translation>
-    </message>
-    <message>
-        <source>Lines with relative angles</source>
-        <translation type="obsolete">Лінії під відносним кутом</translation>
-    </message>
-    <message>
-        <source>Line with given angle</source>
-        <translation type="obsolete">Лінія під заданим кутом</translation>
-    </message>
-    <message>
-        <source>Horizontal lines</source>
-        <translation type="obsolete">Горизонтальні лінії</translation>
-    </message>
-    <message>
-        <source>Vertical lines</source>
-        <translation type="obsolete">Вертикальні лінії</translation>
-    </message>
-    <message>
-        <source>Rectangles</source>
-        <translation type="obsolete">Прямокутники</translation>
-    </message>
-    <message>
-        <source>Polygons with Center and Corner</source>
-        <translation type="obsolete">Багатокутники за центром й кутовою точкою</translation>
-    </message>
-    <message>
-        <source>Polygons with two Corners</source>
-        <translation type="obsolete">Багатокутники за двома кутовими точками</translation>
-    </message>
-    <message>
-        <source>Parallels with distance</source>
-        <translation type="obsolete">Паралельні на відстані</translation>
-    </message>
-    <message>
-        <source>Parallels through point</source>
-        <translation type="obsolete">Паралельні через точку</translation>
-    </message>
-    <message>
-        <source>Tangents to a circle, orthogonal to a line</source>
-        <translation type="obsolete">Дотична до кола, перпендикулярно відрізку</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarMain</name>
-    <message>
-        <source>Main</source>
-        <translation type="obsolete">Головна</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Lines&quot;</source>
-        <translation type="obsolete">Показати меню „Лінії“</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Arcs&quot;</source>
-        <translation type="obsolete">Показати меню „Дуги“</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Circles&quot;</source>
-        <translation type="obsolete">Показати меню „Кола“</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Points&quot;</source>
-        <translation type="obsolete">Показати меню „Точки“</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Measure&quot;</source>
-        <translation type="obsolete">Показати меню „Вимір“</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Ellipses&quot;</source>
-        <translation type="obsolete">Показати меню „Еліпси“</translation>
-    </message>
-    <message>
-        <source>Hatches / Solid Fills</source>
-        <translation type="obsolete">Штрихування/заливання кольором</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Edit&quot;</source>
-        <translation type="obsolete">Показати меню „Редагування“</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Dimensions&quot;</source>
-        <translation type="obsolete">Показати меню „Розміри“</translation>
-    </message>
-    <message>
-        <source>Texts</source>
-        <translation type="obsolete">Тексти</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Select&quot;</source>
-        <translation type="obsolete">Показати меню „Вибір“</translation>
-    </message>
-    <message>
-        <source>Create Block</source>
-        <translation type="obsolete">Створити блок</translation>
-    </message>
-    <message>
-        <source>Raster Image</source>
-        <translation type="obsolete">Растрове зображення</translation>
-    </message>
-    <message>
-        <source>Points</source>
-        <translation type="obsolete">Точки</translation>
-    </message>
-    <message>
-        <source>Splines</source>
-        <translation type="obsolete">Сплайни</translation>
-    </message>
-    <message>
-        <source>Polylines</source>
-        <translatorcomment>Багатокутники</translatorcomment>
-        <translation type="obsolete">Ламані</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Lines&quot;</source>
-        <translation type="obsolete">Показати панель інструментів „Лінії“</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Arcs&quot;</source>
-        <translation type="obsolete">Показати панель інструментів „Дуги“</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Circles&quot;</source>
-        <translation type="obsolete">Показати панель інструментів „Кола“</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Ellipses&quot;</source>
-        <translation type="obsolete">Показати панель інструментів „Еліпси“</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Polylines&quot;</source>
-        <translation type="obsolete">Показати панель інструментів „Ламані“</translation>
-    </message>
-    <message>
-        <source>Draw Splines</source>
-        <translation type="obsolete">Намалювати сплайни</translation>
-    </message>
-    <message>
-        <source>Draw Points</source>
-        <translation type="obsolete">Накреслити точки</translation>
-    </message>
-    <message>
-        <source>Insert Text</source>
-        <translation type="obsolete">Вставити текст</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Dimensions&quot;</source>
-        <translation type="obsolete">Показати панель інструментів „Розміри“</translation>
-    </message>
-    <message>
-        <source>Create Hatch</source>
-        <translation type="obsolete">Створити штрихування</translation>
-    </message>
-    <message>
-        <source>Insert Image</source>
-        <translation type="obsolete">Вставити зображення</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Modify&quot;</source>
-        <translation type="obsolete">Показати панель інструментів „Правка“</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Info&quot;</source>
-        <translation type="obsolete">Показати панель інструментів „Інформація“</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Select&quot;</source>
-        <translation type="obsolete">Показати панель інструментів „Вибір“</translation>
-    </message>
-    <message>
-        <source>Insert Multi-line Text</source>
-        <translation type="obsolete">Вставити багаторядковий текст</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarModify</name>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">Змінити</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Назад до головного меню</translation>
-    </message>
-    <message>
-        <source>Rotate</source>
-        <translation type="obsolete">Повернути</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="obsolete">Масшабувати</translation>
-    </message>
-    <message>
-        <source>Move</source>
-        <translation type="obsolete">Зрушення</translation>
-    </message>
-    <message>
-        <source>Move and Rotate</source>
-        <translation type="obsolete">Зрушення та обертання</translation>
-    </message>
-    <message>
-        <source>Explode</source>
-        <translation type="obsolete">Розбити</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="obsolete">Вилучити</translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="obsolete">Витягнути</translation>
-    </message>
-    <message>
-        <source>Cut</source>
-        <translation type="obsolete">Вирізати</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="obsolete">Округлення</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="obsolete">Фаска</translation>
-    </message>
-    <message>
-        <source>Trim by amount</source>
-        <translation type="obsolete">Усікти на величину</translation>
-    </message>
-    <message>
-        <source>Trim / Extend two</source>
-        <translation type="obsolete">Усікти/розтягнути обидва</translation>
-    </message>
-    <message>
-        <source>Trim / Extend</source>
-        <translation type="obsolete">Усікти/розтягнути</translation>
-    </message>
-    <message>
-        <source>Rotate around two centers</source>
-        <translation type="obsolete">Обертати навколо двох центрів</translation>
-    </message>
-    <message>
-        <source>Edit Entity Attributes</source>
-        <translation type="obsolete">Редагувати атрибути об’єкта</translation>
-    </message>
-    <message>
-        <source>Edit Entity Geometry</source>
-        <translation type="obsolete">Редагувати геометрію об’єкта</translation>
-    </message>
-    <message>
-        <source>Mirror</source>
-        <translation type="obsolete">Віддзеркалення</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="obsolete">Розділити</translation>
-    </message>
-    <message>
-        <source>Explode Text into Letters</source>
-        <translation type="obsolete">Розбити текст на букви</translation>
-    </message>
-    <message>
-        <source>Edit Text</source>
-        <translation type="obsolete">Редагувати текст</translation>
-    </message>
-    <message>
-        <source>Move / Copy</source>
-        <translation type="obsolete">Перемістити / копіювати</translation>
-    </message>
-    <message>
-        <source>Rotate Two</source>
-        <translation type="obsolete">Повернути навколо двох центрів</translation>
-    </message>
-    <message>
-        <source>Offset (Experimental Feature, work in progress)</source>
-        <translation type="obsolete">Еквідистанта (інструмент ще в розробці)</translation>
-    </message>
-    <message>
-        <source>Revert direction</source>
-        <translation type="obsolete">Повернути напрямок</translation>
-    </message>
-    <message>
-        <source>Lengthen</source>
-        <translation type="obsolete">Подовжити</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarPoints</name>
-    <message>
-        <source>Points</source>
-        <translation type="obsolete">Точки</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Назад до головного меню</translation>
-    </message>
-    <message>
-        <source>Single points</source>
-        <translation type="obsolete">Поодинокі точки</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarPolylines</name>
-    <message>
-        <source>Polylines</source>
-        <translatorcomment>Багатокутники</translatorcomment>
-        <translation type="obsolete">Ламані</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Назад до головного меню</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translatorcomment>Створити багатокутник</translatorcomment>
-        <translation type="obsolete">Створити ламану</translation>
-    </message>
-    <message>
-        <source>Delete between two nodes</source>
-        <translation type="obsolete">Вилучити між двома вузлами</translation>
-    </message>
-    <message>
-        <source>Add node</source>
-        <translation type="obsolete">Додати вузол</translation>
-    </message>
-    <message>
-        <source>Delete node</source>
-        <translation type="obsolete">Вилучити вузол</translation>
-    </message>
-    <message>
-        <source>Trim segments</source>
-        <translatorcomment>вирівняти відрізки, сегменти</translatorcomment>
-        <translation type="obsolete">Усікти відрізки</translation>
-    </message>
-    <message>
-        <source>Append node</source>
-        <translation type="obsolete">Доповнити вузол</translation>
-    </message>
-    <message>
-        <source>Polyline equidistant</source>
-        <translation type="obsolete">Еквідістанта ламаної</translation>
-    </message>
-    <message>
-        <source>Create Polyline from Existing Segments</source>
-        <translation type="obsolete">Створити ламану з існуючих відрізків</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Концентрично</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarSelect</name>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">Вибрати</translation>
-    </message>
-    <message>
-        <source>Select all</source>
-        <translation type="obsolete">Вибрати усе</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Назад до головного меню</translation>
-    </message>
-    <message>
-        <source>Select intersected entities</source>
-        <translation type="obsolete">Вибрати пересічені об’єкти</translation>
-    </message>
-    <message>
-        <source>Deselect intersected entities</source>
-        <translation type="obsolete">Відмінити вибір пересічених об’єктів</translation>
-    </message>
-    <message>
-        <source>Deselect all</source>
-        <translation type="obsolete">Відмінити вибір усіх об’єктів</translation>
-    </message>
-    <message>
-        <source>Invert Selection</source>
-        <translation type="obsolete">Інвертувати вибір</translation>
-    </message>
-    <message>
-        <source>Select layer</source>
-        <translation type="obsolete">Вибрати шар</translation>
-    </message>
-    <message>
-        <source>(De-)Select contour</source>
-        <translation type="obsolete">Вибрати замкнутий контур (скасов. вибір)</translation>
-    </message>
-    <message>
-        <source>(De-)Select entity</source>
-        <translation type="obsolete">Вибрати об’єкт (скасов. вибір)</translation>
-    </message>
-    <message>
-        <source>Deselect Window</source>
-        <translation type="obsolete">Скасувати вибір рамкою</translation>
-    </message>
-    <message>
-        <source>Select Window</source>
-        <translation type="obsolete">Вибрати рамкою</translation>
-    </message>
-    <message>
-        <source>Continue action</source>
-        <translation type="obsolete">Продовжити дію</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarSnap</name>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">Прив’язка</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Назад до головного меню</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="obsolete">Прив’язка до сітки</translation>
-    </message>
-    <message>
-        <source>Free positioning</source>
-        <translation type="obsolete">Вільне розміщення курсору</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="obsolete">Прив’язка до кінцевих точок об’єкта</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="obsolete">Прив’язка до найближчої точки на об’єкті</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="obsolete">Прив’язка до точок центру</translation>
-    </message>
-    <message>
-        <source>Snap to middle points</source>
-        <translation type="obsolete">Прив’язка до середини</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="obsolete">Прив’язка на заданій відстані від точки</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation type="obsolete">Прив’язка до точок перетину автоматично</translation>
-    </message>
-    <message>
-        <source>No Restriction</source>
-        <translation type="obsolete">Без обмежень</translation>
-    </message>
-    <message>
-        <source>Orthogonal Restriction</source>
-        <translation type="obsolete">Обмежити ортогонально</translation>
-    </message>
-    <message>
-        <source>Horizontal Restriction</source>
-        <translation type="obsolete">Обмежити горизонтально</translation>
-    </message>
-    <message>
-        <source>Vertical Restriction</source>
-        <translation type="obsolete">Обмежити вертикально</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation type="obsolete">Перемістити відносний нуль</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation type="obsolete">Увімк. відносний нуль</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation type="obsolete">Прив’язка до точок перетину вручну</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarSplines</name>
-    <message>
-        <source>Splines</source>
-        <translation type="obsolete">Сплайни</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Назад до головного меню</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="obsolete">Сплайн</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="obsolete">Параметри кола</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Радіус:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CircleTan2Options</name>
-    <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="obsolete">Параметри кола, дотичного до двох об’єктів</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Радіус дотичного кола&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Радіус: </translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="obsolete">Радіус дотичного кола</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DimLinearOptions</name>
-    <message>
-        <source>Linear Dimension Options</source>
-        <translation type="obsolete">Параметри лінійного розміру</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Кут:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DimOptions</name>
-    <message>
-        <source>Dimension Options</source>
-        <translation type="obsolete">Параметри розміру</translation>
-    </message>
-    <message>
-        <source>Label:</source>
-        <translation type="obsolete">Мітка:</translation>
-    </message>
-    <message>
-        <source>ø</source>
-        <translation type="obsolete">ø</translation>
-    </message>
-    <message>
-        <source>°</source>
-        <translation type="obsolete">°</translation>
-    </message>
-    <message>
-        <source>±</source>
-        <translation type="obsolete">±</translation>
-    </message>
-    <message>
-        <source>¶</source>
-        <translation type="obsolete">¶</translation>
-    </message>
-    <message>
-        <source>×</source>
-        <translation type="obsolete">×</translation>
-    </message>
-    <message>
-        <source>÷</source>
-        <translation type="obsolete">÷</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="obsolete">…</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="obsolete">Змінні креслення</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="obsolete">Змінна</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="obsolete">Код</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">Значення</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Гаразд</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Відміна</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="obsolete">Параметри вставки</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Кут:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="obsolete">Кут повороту</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="obsolete">Коефіцієнт:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="obsolete">Коефіцієнт масштабування</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="obsolete">DPI</translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="obsolete">DPI зображення</translation>
-    </message>
-</context>
-<context>
-    <name>QG_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="obsolete">Параметри вставки</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Кут:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="obsolete">Кут повороту</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="obsolete">Коефіцієнт:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="obsolete">Коефіцієнт масштабування</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="obsolete">Масив:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="obsolete">Кількість стовпців</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="obsolete">Число рядів</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="obsolete">Проміжок</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="obsolete">Проміжок між стовпцями:</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="obsolete">Відстань між рядами:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LibraryInsertOptions</name>
-    <message>
-        <source>Library Insert Options</source>
-        <translation type="obsolete">Параметри вставки бібліотечного елемента</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Кут:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="obsolete">Кут повороту</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="obsolete">Коефіцієнт:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="obsolete">Коефіцієнт масштабування</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="obsolete">Параметри лінії під заданим кутом</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Кут:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="obsolete">Кут лінії</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">Довжина:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="obsolete">Довжина лінії</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="obsolete">Точка прив’язки:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="obsolete">Початок</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="obsolete">Середина</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="obsolete">Кінець</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="obsolete">Параметри бісектриси</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">Довжина:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="obsolete">Довжина бісектрісси</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Кількість:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="obsolete">Кількість створених бісектрис</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="obsolete">Параметри лінії</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Закрити</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="obsolete">Скасувати</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="obsolete">Створити замкнений контур з існуючих ліній</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="obsolete">Скасувати останню накреслену лінію</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="obsolete">Повторити останню накреслену лінію</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="obsolete">Повторити</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="obsolete">Параметри паралельної лінії</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Відстань:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="obsolete">Відстань до вихідного об’єкту</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Кількість:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="obsolete">Кількість створених паралельних ліній</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="obsolete">Параметри паралельної лінії через точку</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Кількість:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="obsolete">Кількість створених паралельних ліній</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">Параметри багатокутника</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Кількість:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">Кількість сторін</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">Параметри багатокутника</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Кількість:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">Кількість сторін</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="obsolete">Параметри лінії під відносним кутом</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Кут:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="obsolete">Кут лінії</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">Довжина:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="obsolete">Довжина лінії</translation>
-    </message>
-</context>
-<context>
-    <name>QG_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="obsolete">Параметри тексту</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="obsolete">Текст:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Кут:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ModifyOffsetOptions</name>
-    <message>
-        <source>Modify Offset Options</source>
-        <translation type="obsolete">Змінити параметри зміщення</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Відстань:</translation>
-    </message>
-    <message>
-        <source>Offset from original entity</source>
-        <translation type="obsolete">Зсув від вихідного об’єкту</translation>
-    </message>
-</context>
-<context>
-    <name>QG_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="obsolete">Параметри зсуву/обертання</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Кут:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="obsolete">Параметри лінії під відносним кутом</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="obsolete">Проміжок: </translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="obsolete">Відстань від базової ламаної</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="obsolete">Копій: </translation>
-    </message>
-</context>
-<context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="obsolete">Параметри попереднього перегляду</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="obsolete">Переключити режим чорний/білий</translation>
-    </message>
-    <message>
-        <source>Center to page</source>
-        <translation type="obsolete">По центру сторінки</translation>
-    </message>
-    <message>
-        <source>Fit to page</source>
-        <translation type="obsolete">Вписати в сторінку</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Масштаб друку зафіксований на поточному значенні&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="obsolete">зафіксований</translation>
-    </message>
-</context>
-<context>
-    <name>QG_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation type="obsolete">Параметри округлення</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="obsolete">Усікти</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation type="obsolete">Увімкніть, щоб усікти обидві лінії при округленні</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Радіус:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SnapDistOptions</name>
-    <message>
-        <source>Snap Distance Options</source>
-        <translation type="obsolete">Параметри прив’язки на відстані</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Відстань:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SnapMiddleOptions</name>
-    <message>
-        <source>Snap Distance Options</source>
-        <translation type="obsolete">Параметри відстані прив’язки</translation>
-    </message>
-    <message>
-        <source>Middle Points:</source>
-        <translation type="obsolete">Середніх точок: </translation>
-    </message>
-    <message>
-        <source>Number of equidistant division points</source>
-        <translation type="obsolete">Кількість точок, що розділяють криву на рівні відрізки</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="obsolete">Параметри сплайну</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="obsolete">Ступінь:</translation>
-    </message>
-    <message>
-        <source>1</source>
-        <translation type="obsolete">1</translation>
-    </message>
-    <message>
-        <source>2</source>
-        <translation type="obsolete">2</translation>
-    </message>
-    <message>
-        <source>3</source>
-        <translation type="obsolete">3</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">Закрито</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="obsolete">Скасувати</translation>
-    </message>
-</context>
-<context>
-    <name>QG_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="obsolete">Параметри тексту</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="obsolete">Текст:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Кут:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation type="obsolete">Параметри усікання на величину</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="obsolete">Відстань. Від’ємні значення для відсікання, позитивні для витягування. </translation>
-    </message>
-    <message>
-        <source>Amount:</source>
-        <translation type="obsolete">Величина:</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">Довжина: </translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="obsolete">Відстань. Негативні значення для обрізки, позитивні для подовження. Негативний знак не враховується, коли встановлена ​​остаточна довжина відрізка.</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="obsolete">Використовувати введену довжину як остаточну довжину відрізка після обрізки, замість розміру збільшення.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksAdd</name>
-    <message>
-        <source>&amp;Add Block</source>
-        <translation type="obsolete">До&amp;дати блок</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksAttributes</name>
-    <message>
-        <source>&amp;Rename Block</source>
-        <translation type="obsolete">&amp;Перейменувати блок</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksEdit</name>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translation type="obsolete">&amp;Редагувати блок</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>&amp;Explode</source>
-        <translation type="obsolete">&amp;Розбити</translation>
-    </message>
-    <message>
-        <source>Ex&amp;plode</source>
-        <translation type="obsolete">&amp;Розкласти</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksFreezeAll</name>
-    <message>
-        <source>&amp;Freeze all</source>
-        <translation type="obsolete">&amp;Заморозити усі</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all</source>
-        <translation type="obsolete">&amp;Розморозити усі</translation>
-    </message>
-    <message>
-        <source>&amp;Hide all</source>
-        <translation type="obsolete">&amp;Приховати усі</translation>
-    </message>
-    <message>
-        <source>&amp;Show all</source>
-        <translation type="obsolete">&amp;Показати усі</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksRemove</name>
-    <message>
-        <source>&amp;Remove Block</source>
-        <translation type="obsolete">Ви&amp;лучити блок</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksToggleView</name>
-    <message>
-        <source>Toggle Block Visibility</source>
-        <translation type="obsolete">Перемкнути видимість блоку</translation>
-    </message>
-    <message>
-        <source>Toggle Block &amp;Visibility</source>
-        <translation type="obsolete">Змінити &amp;видимість блоку</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygon</name>
-    <message>
-        <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation type="obsolete">Багато&amp;кутник (центр, кут)</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="obsolete">Вкажіть центр</translation>
-    </message>
-    <message>
-        <source>Specify a corner</source>
-        <translation type="obsolete">Вкажіть кут</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="obsolete">Введіть число:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="obsolete">Неприпустиме число. Спробуйте 1..9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="obsolete">Некоректний вираз</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygon2</name>
-    <message>
-        <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation type="obsolete">Багато&amp;кутник (кут, кут)</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="obsolete">Вкажіть перший кут</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Відміна</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="obsolete">Вкажіть другий кут</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Назад</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Число:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="obsolete">Неприпустиме число. Спробуйте 1..9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression.</source>
-        <translation type="obsolete">Неприпустимий вираз.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionFileNew</name>
-    <message>
-        <source>&amp;New...</source>
-        <translation type="obsolete">&amp;Новий…</translation>
-    </message>
-    <message>
-        <source>&amp;New</source>
-        <translation type="obsolete">&amp;Новий</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionFileNewTemplate</name>
-    <message>
-        <source>New From &amp;Template</source>
-        <translation type="obsolete">Новий за &amp;шаблоном</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionFileOpen</name>
-    <message>
-        <source>&amp;Open...</source>
-        <translation type="obsolete">&amp;Відкрити…</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionFileSave</name>
-    <message>
-        <source>&amp;Save</source>
-        <translation type="obsolete">&amp;Зберегти</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionFileSaveAs</name>
-    <message>
-        <source>Save &amp;as...</source>
-        <translation type="obsolete">Зберегти &amp;як…</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersAdd</name>
-    <message>
-        <source>Add Layer</source>
-        <translation type="obsolete">Додати шар</translation>
-    </message>
-    <message>
-        <source>&amp;Add Layer</source>
-        <translation type="obsolete">&amp;Додати шар</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersEdit</name>
-    <message>
-        <source>&amp;Edit Layer</source>
-        <translation type="obsolete">&amp;Редагувати шар</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersFreezeAll</name>
-    <message>
-        <source>&amp;Freeze all</source>
-        <translation type="obsolete">&amp;Заморозити усі</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all</source>
-        <translation type="obsolete">&amp;Розморозити усі</translation>
-    </message>
-    <message>
-        <source>&amp;Hide all</source>
-        <translation type="obsolete">&amp;Приховати усі</translation>
-    </message>
-    <message>
-        <source>&amp;Show all</source>
-        <translation type="obsolete">&amp;Показати усі</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersRemove</name>
-    <message>
-        <source>Remove Layer</source>
-        <translation type="obsolete">Вилучити шар</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Layer</source>
-        <translation type="obsolete">&amp;Вилучити шар</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersToggleLock</name>
-    <message>
-        <source>Toggle Layer Lock</source>
-        <translation type="obsolete">Перемкнути захист шару</translation>
-    </message>
-    <message>
-        <source>Toggle Layer Loc&amp;k</source>
-        <translation type="obsolete">Перемкнути &amp;захист шару</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersTogglePrint</name>
-    <message>
-        <source>Toggle Layer &amp;Print</source>
-        <translation type="obsolete">Змінити &amp;друк шару</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersToggleView</name>
-    <message>
-        <source>&amp;Toggle Layer</source>
-        <translation type="obsolete">&amp;Перемикач шару</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Layer Visibility</source>
-        <translation type="obsolete">Перемкнути &amp;видимість шару</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>&amp;Attributes</source>
-        <translation type="obsolete">А&amp;трибути</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>&amp;Delete</source>
-        <translation type="obsolete">Ви&amp;лучити</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>&amp;Explode Text into Letters</source>
-        <translation type="obsolete">&amp;Розбити текст на букви</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRevertDirection</name>
-    <message>
-        <source>Re&amp;vert direction</source>
-        <translation type="obsolete">Звернути напрямок</translation>
-    </message>
-    <message>
-        <source>Ctrl+R</source>
-        <translation type="obsolete">Ctrl+R</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOptionsDrawing</name>
-    <message>
-        <source>Current &amp;Drawing Preferences</source>
-        <translation type="obsolete">Поточні налаштування &amp;креслення</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectAll</name>
-    <message>
-        <source>Select &amp;All</source>
-        <translation type="obsolete">Вибр&amp;ати усе</translation>
-    </message>
-    <message>
-        <source>Deselect &amp;all</source>
-        <translation type="obsolete">Скасувати ви&amp;бір усіх об’єктів</translation>
-    </message>
-    <message>
-        <source>Ctrl+K</source>
-        <translation type="obsolete">Ctrl+K</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectInvert</name>
-    <message>
-        <source>Invert Selection</source>
-        <translation type="obsolete">Інвертувати вибір</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>(De-)Select Layer</source>
-        <translation type="obsolete">Вибрати (чи зняти вибір) шар</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Select Entity</source>
-        <translation type="obsolete">Вибрати об’єкт</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionZoomAuto</name>
-    <message>
-        <source>&amp;Auto Zoom</source>
-        <translation type="obsolete">&amp;Автомасштабування</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionZoomIn</name>
-    <message>
-        <source>Zoom &amp;In</source>
-        <translation type="obsolete">На&amp;близити</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;Out</source>
-        <translation type="obsolete">Від&amp;далити</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionZoomPrevious</name>
-    <message>
-        <source>&amp;Previous View</source>
-        <translation type="obsolete">&amp;Попередній вигляд</translation>
-    </message>
-    <message>
-        <source>Previous &amp;View</source>
-        <translation type="obsolete">Попередній &amp;вигляд</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionZoomRedraw</name>
-    <message>
-        <source>&amp;Redraw</source>
-        <translation type="obsolete">&amp;Оновити зображення</translation>
-    </message>
-</context>
-<context>
-    <name>RS_Commands</name>
-    <message>
-        <source>point</source>
-        <translation type="obsolete">точка</translation>
-    </message>
-    <message>
-        <source>po</source>
-        <translation type="obsolete">тчк</translation>
-    </message>
-    <message>
-        <source>line</source>
-        <translation type="obsolete">лінія</translation>
-    </message>
-    <message>
-        <source>ln</source>
-        <translation type="obsolete">л-я</translation>
-    </message>
-    <message>
-        <source>l</source>
-        <translation type="obsolete">л</translation>
-    </message>
-    <message>
-        <source>polyline</source>
-        <translation type="obsolete">ламана</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation type="obsolete">зміщення</translation>
-    </message>
-    <message>
-        <source>o</source>
-        <comment>offset</comment>
-        <translation type="obsolete">зм</translation>
-    </message>
-    <message>
-        <source>parallel</source>
-        <translation type="obsolete">паралельний</translation>
-    </message>
-    <message>
-        <source>par</source>
-        <comment>parallel</comment>
-        <translation type="obsolete">пар</translation>
-    </message>
-    <message>
-        <source>arc</source>
-        <translation type="obsolete">дуга</translation>
-    </message>
-    <message>
-        <source>a</source>
-        <translation type="obsolete">д</translation>
-    </message>
-    <message>
-        <source>circle</source>
-        <translation type="obsolete">коло</translation>
-    </message>
-    <message>
-        <source>ci</source>
-        <translation type="obsolete">ко</translation>
-    </message>
-    <message>
-        <source>rectangle</source>
-        <translation type="obsolete">прямокутник</translation>
-    </message>
-    <message>
-        <source>rec</source>
-        <translation type="obsolete">прк</translation>
-    </message>
-    <message>
-        <source>rectang</source>
-        <translation type="obsolete">прямокутні</translation>
-    </message>
-    <message>
-        <source>text</source>
-        <translation type="obsolete">текст</translation>
-    </message>
-    <message>
-        <source>undo</source>
-        <translation type="obsolete">скасувати</translation>
-    </message>
-    <message>
-        <source>u</source>
-        <comment>undo</comment>
-        <translation type="obsolete">с</translation>
-    </message>
-    <message>
-        <source>redo</source>
-        <translation type="obsolete">повторити</translation>
-    </message>
-    <message>
-        <source>r</source>
-        <translation type="obsolete">п</translation>
-    </message>
-    <message>
-        <source>Command: %1</source>
-        <translation type="obsolete">Команда: %1</translation>
-    </message>
-    <message>
-        <source>po</source>
-        <comment>point</comment>
-        <translation type="obsolete">тчк</translation>
-    </message>
-    <message>
-        <source>ci</source>
-        <comment>circle</comment>
-        <translation type="obsolete">ко</translation>
-    </message>
-    <message>
-        <source>angle</source>
-        <translation type="obsolete">кут</translation>
-    </message>
-    <message>
-        <source>close</source>
-        <translation type="obsolete">закрито</translation>
-    </message>
-    <message>
-        <source>chord length</source>
-        <translation type="obsolete">довжина хорди</translation>
-    </message>
-    <message>
-        <source>columns</source>
-        <translation type="obsolete">стовпці</translation>
-    </message>
-    <message>
-        <source>columnspacing</source>
-        <translation type="obsolete">відступ між стовпцями</translation>
-    </message>
-    <message>
-        <source>factor</source>
-        <translation type="obsolete">коефіцієнт</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="obsolete">довжина</translation>
-    </message>
-    <message>
-        <source>length1</source>
-        <translation type="obsolete">довжина1</translation>
-    </message>
-    <message>
-        <source>length2</source>
-        <translation type="obsolete">довжина2</translation>
-    </message>
-    <message>
-        <source>number</source>
-        <translation type="obsolete">число</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="obsolete">радіус</translation>
-    </message>
-    <message>
-        <source>rows</source>
-        <translation type="obsolete">рядки</translation>
-    </message>
-    <message>
-        <source>rowspacing</source>
-        <translation type="obsolete">відступ між рядками</translation>
-    </message>
-    <message>
-        <source>through</source>
-        <translation type="obsolete">через</translation>
-    </message>
-    <message>
-        <source>trim</source>
-        <translation type="obsolete">усікти</translation>
-    </message>
-    <message>
-        <source>ang</source>
-        <comment>angle</comment>
-        <translation type="obsolete">кут</translation>
-    </message>
-    <message>
-        <source>a</source>
-        <comment>angle</comment>
-        <translation type="obsolete">к</translation>
-    </message>
-    <message>
-        <source>center</source>
-        <translation type="obsolete">центр</translation>
-    </message>
-    <message>
-        <source>cen</source>
-        <comment>center</comment>
-        <translation type="obsolete">цтр</translation>
-    </message>
-    <message>
-        <source>c</source>
-        <comment>center</comment>
-        <translation type="obsolete">ц</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <comment>chord length</comment>
-        <translation type="obsolete">довжина</translation>
-    </message>
-    <message>
-        <source>l</source>
-        <comment>chord length</comment>
-        <translation type="obsolete">д</translation>
-    </message>
-    <message>
-        <source>c</source>
-        <comment>close</comment>
-        <translation type="obsolete">ц</translation>
-    </message>
-    <message>
-        <source>c</source>
-        <comment>columns</comment>
-        <translation type="obsolete">ц</translation>
-    </message>
-    <message>
-        <source>columnspacing</source>
-        <comment>columnspacing for inserts</comment>
-        <translation type="obsolete">відступ між колонками</translation>
-    </message>
-    <message>
-        <source>fact</source>
-        <comment>factor</comment>
-        <translation type="obsolete">множник</translation>
-    </message>
-    <message>
-        <source>f</source>
-        <comment>factor</comment>
-        <translation type="obsolete">м</translation>
-    </message>
-    <message>
-        <source>help</source>
-        <translation type="obsolete">довідка</translation>
-    </message>
-    <message>
-        <source>?</source>
-        <comment>help</comment>
-        <translation type="obsolete">?</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <comment>length</comment>
-        <translation type="obsolete">довжина</translation>
-    </message>
-    <message>
-        <source>len</source>
-        <comment>length</comment>
-        <translation type="obsolete">дов</translation>
-    </message>
-    <message>
-        <source>l</source>
-        <comment>length</comment>
-        <translation type="obsolete">д</translation>
-    </message>
-    <message>
-        <source>length1</source>
-        <comment>length1</comment>
-        <translation type="obsolete">довжина1</translation>
-    </message>
-    <message>
-        <source>len1</source>
-        <comment>length1</comment>
-        <translation type="obsolete">довж1</translation>
-    </message>
-    <message>
-        <source>l1</source>
-        <comment>length1</comment>
-        <translation type="obsolete">д1</translation>
-    </message>
-    <message>
-        <source>length2</source>
-        <comment>length2</comment>
-        <translation type="obsolete">довжина2</translation>
-    </message>
-    <message>
-        <source>len2</source>
-        <comment>length2</comment>
-        <translation type="obsolete">довж2</translation>
-    </message>
-    <message>
-        <source>l2</source>
-        <comment>length2</comment>
-        <translation type="obsolete">д2</translation>
-    </message>
-    <message>
-        <source>num</source>
-        <comment>number</comment>
-        <translation type="obsolete">числ</translation>
-    </message>
-    <message>
-        <source>reversed</source>
-        <comment>reversed arc</comment>
-        <translation type="obsolete">зворотньо</translation>
-    </message>
-    <message>
-        <source>rev</source>
-        <comment>reversed arc</comment>
-        <translation type="obsolete">звр</translation>
-    </message>
-    <message>
-        <source>r</source>
-        <comment>reversed arc</comment>
-        <translation type="obsolete">з</translation>
-    </message>
-    <message>
-        <source>rowspacing</source>
-        <comment>rowspacing for inserts</comment>
-        <translation type="obsolete">відступ між рядками</translation>
-    </message>
-    <message>
-        <source>Available commands:</source>
-        <translation type="obsolete">Доступні команди:</translation>
-    </message>
-    <message>
-        <source>kill</source>
-        <translation type="obsolete">вбити</translation>
-    </message>
-    <message>
-        <source>back</source>
-        <translation type="obsolete">назад</translation>
-    </message>
-    <message>
-        <source>redraw</source>
-        <translation type="obsolete">перерисувати</translation>
-    </message>
-    <message>
-        <source>u</source>
-        <translation type="obsolete">с</translation>
-    </message>
-    <message>
-        <source>number</source>
-        <comment>number</comment>
-        <translation type="obsolete">число</translation>
-    </message>
-    <message>
-        <source>reversed</source>
-        <comment>reversed</comment>
-        <translation type="obsolete">зворотньо</translation>
-    </message>
-    <message>
-        <source>rev</source>
-        <comment>reversed</comment>
-        <translation type="obsolete">звр</translation>
-    </message>
-    <message>
-        <source>row</source>
-        <translation type="obsolete">рядок</translation>
-    </message>
-    <message>
-        <source>Command not found: %1</source>
-        <translation type="obsolete">Команду не знайдено: %1</translation>
-    </message>
-    <message>
-        <source>Accepted keycode: %1</source>
-        <translation type="obsolete">Прийнята клавіатурна послідовність: %1</translation>
-    </message>
-    <message>
-        <source>dpi</source>
-        <translation type="obsolete">DPI</translation>
-    </message>
-    <message>
-        <source>row</source>
-        <comment>row</comment>
-        <translation type="obsolete">рядок</translation>
     </message>
 </context>
 </TS>

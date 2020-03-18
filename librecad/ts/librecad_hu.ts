@@ -32,6 +32,154 @@
     </message>
 </context>
 <context>
+    <name>ColorWizard</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished">Keret</translation>
+    </message>
+    <message>
+        <source>Add to favorites</source>
+        <translation type="unfinished">Hozzáadás a kedvencekhez</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+</context>
+<context>
+    <name>ComboBoxOption</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished">Keret</translation>
+    </message>
+    <message>
+        <source>GroupBox</source>
+        <translation type="unfinished">Csoportmező</translation>
+    </message>
+    <message>
+        <source>Set</source>
+        <translation type="unfinished">Beállítás</translation>
+    </message>
+</context>
+<context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished">Gerincpontok</translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Réteg:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Geometria</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Zárt</translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished">Gerincpontok</translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished">Vezérlő pontok</translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished">Gerincen lévő pontok</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawCircle2PR</name>
+    <message>
+        <source>radius=%1 is too small for points selected
+distance between points=%2 is larger than diameter=%3</source>
+        <translation type="unfinished">sugár=%1 túl kicsi a kiválasztott pontokhoz
+pontok közti távolság=%2 nagyobb, mint az átmérő=%3</translation>
+    </message>
+    <message>
+        <source>Select from two possible circle centers</source>
+        <translation type="unfinished">Válasszon két lehetséges körközéppont közül</translation>
+    </message>
+    <message>
+        <source>Specify first point</source>
+        <translation type="unfinished">Első pont megadása</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Mégsem</translation>
+    </message>
+    <message>
+        <source>Specify second point</source>
+        <translation type="unfinished">Második pont megadása</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Vissza</translation>
+    </message>
+    <message>
+        <source>Select circle center</source>
+        <translation type="unfinished">Körközéppont kiválasztása</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawLinePolygonCenTan</name>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished">Középpont megadása</translation>
+    </message>
+    <message>
+        <source>Specify a tangent</source>
+        <translation type="unfinished">Érintő megadása</translation>
+    </message>
+    <message>
+        <source>Enter number:</source>
+        <translation type="unfinished">Szám megadása:</translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="unfinished">Érvénytelen szám. Próbálja meg ezeket: 1..9999</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Nem érvényes kifejezés</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawSplinePoints</name>
+    <message>
+        <source>Specify first control point</source>
+        <translation type="unfinished">Első vezérlő pont megadása</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Mégsem</translation>
+    </message>
+    <message>
+        <source>Specify next control point or [%1]</source>
+        <translation type="unfinished">Adja meg a következő vezérlő pontot, vagy [%1]</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Vissza</translation>
+    </message>
+    <message>
+        <source>Specify next control point</source>
+        <translation type="unfinished">A következő vezérlő pont megadása</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="unfinished">Nem lehet visszavonni: Nincs elég elem meghatározva.</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Nothing could be redone.</source>
+        <translation type="unfinished">Nem lehet visszavonni: nincs mit ismételni.</translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionFactory</name>
     <message>
         <source>Add polyline&apos;s node</source>
@@ -770,10 +918,174 @@
     </message>
 </context>
 <context>
+    <name>LC_ActionFileExportMakerCam</name>
+    <message>
+        <source>Export as</source>
+        <translation type="unfinished">Exportálás másként</translation>
+    </message>
+</context>
+<context>
+    <name>LC_DeviceOptions</name>
+    <message>
+        <source>Mouse</source>
+        <translation type="unfinished">Egér</translation>
+    </message>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">Űrlap</translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation type="unfinished">Eszköz</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Mentés</translation>
+    </message>
+    <message>
+        <source>Tablet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trackpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Touchscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_SimpleTests</name>
+    <message>
+        <source>De&amp;bugging</source>
+        <translation type="unfinished">De&amp;buggolás</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="unfinished">Kép beillesztése</translation>
+    </message>
+</context>
+<context>
+    <name>LC_WidgetOptionsDialog</name>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished">Céleszköz beállításai</translation>
+    </message>
+    <message>
+        <source>Toolbar</source>
+        <translation type="unfinished">Eszköztár</translation>
+    </message>
+    <message>
+        <source>Icon Size</source>
+        <translation type="unfinished">Ikonméret</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished">Általános</translation>
+    </message>
+    <message>
+        <source>Style</source>
+        <translation type="unfinished">Stílus</translation>
+    </message>
+    <message>
+        <source>Style Sheet</source>
+        <translation type="unfinished">Stíluslap</translation>
+    </message>
+    <message>
+        <source>Statusbar</source>
+        <translation type="unfinished">Állapotsor</translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished">Magasság</translation>
+    </message>
+    <message>
+        <source>Font Size</source>
+        <translation type="unfinished">Betűméret</translation>
+    </message>
+    <message>
+        <source>Input the path of a Qt style sheet.</source>
+        <translation type="unfinished">Adja meg egy Qt-stíluslap útvonalát.</translation>
+    </message>
+    <message>
+        <source>side length in pixels</source>
+        <translation type="unfinished">oldalhossz képpontban</translation>
+    </message>
+    <message>
+        <source>Use themed icons</source>
+        <translation type="unfinished">Tematizált ikonok használata</translation>
+    </message>
+</context>
+<context>
+    <name>LG_DimzerosBox</name>
+    <message>
+        <source>select:</source>
+        <translation type="unfinished">kiválasztás:</translation>
+    </message>
+    <message>
+        <source>remove left</source>
+        <translation type="unfinished">eltávolítás balra</translation>
+    </message>
+    <message>
+        <source>remove right</source>
+        <translation type="unfinished">eltávolítás jobbra</translation>
+    </message>
+    <message>
+        <source>remove 0&apos;</source>
+        <translation type="unfinished">0&apos; eltávolítása</translation>
+    </message>
+    <message>
+        <source>remove 0&quot;</source>
+        <translation type="unfinished">0&quot; eltávolítása</translation>
+    </message>
+</context>
+<context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Szögben álló vonalak beállításai</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Távolság:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished">Eredeti töröttvonaltól vett távolság</translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished">Másolatok:</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetEnt</name>
+    <message>
+        <source>Select object:</source>
+        <translation>Objektum kiválasztása:</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Mégsem</translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetPoint</name>
     <message>
         <source>Specify a point</source>
         <translation type="obsolete">Egy pont megadása</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Mégsem</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetSelect</name>
+    <message>
+        <source>Select objects:</source>
+        <translation>Objektumok kiválasztása:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3095,6 +3407,41 @@ Printer settings:
     </message>
 </context>
 <context>
+    <name>QG_ActionHandler</name>
+    <message>
+        <source>escape</source>
+        <comment>escape, go back from action steps</comment>
+        <translation type="unfinished">escape</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ActiveLayerName</name>
+    <message>
+        <source>Selection</source>
+        <translation type="unfinished">Kijelölés</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Current Layer</source>
+        <translation type="unfinished">Aktuális réteg</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aktuális aktív réteg neve&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
     <name>QG_ArcOptions</name>
     <message>
         <source>Arc Options</source>
@@ -4125,6 +4472,28 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QG_CommandEdit</name>
+    <message>
+        <source>clear</source>
+        <translation type="unfinished">törlés</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CommandHistory</name>
+    <message>
+        <source>&amp;Copy</source>
+        <translation type="unfinished">&amp;Másolás</translation>
+    </message>
+    <message>
+        <source>Select &amp;All</source>
+        <translation type="unfinished">&amp;Mindent kijelöl</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished">Törlés</translation>
+    </message>
+</context>
+<context>
     <name>QG_CommandWidget</name>
     <message>
         <source>&amp;Copy</source>
@@ -4154,6 +4523,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>...</source>
         <translation type="unfinished">...</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CoordinateWidget</name>
+    <message>
+        <source>Coordinates</source>
+        <translation>Koordináták</translation>
     </message>
 </context>
 <context>
@@ -4535,6 +4911,73 @@ Ez rekurzív módon módosítja magának a blokknak az összes elemét.</transla
     <message>
         <source>Reversed</source>
         <translation>Fordított</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgFontConversion</name>
+    <message>
+        <source>Convert Fonts</source>
+        <translation type="unfinished">Betűkészletek átalakítása</translation>
+    </message>
+    <message>
+        <source>Font family:</source>
+        <translation type="unfinished">Betűcsalád:</translation>
+    </message>
+    <message>
+        <source>Font file:</source>
+        <translation type="unfinished">Betűkészlet-fájl:</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Save as:</source>
+        <translation type="unfinished">Mentés másként:</translation>
+    </message>
+    <message>
+        <source>Letter spacing:</source>
+        <translation type="unfinished">Betűtérköz:</translation>
+    </message>
+    <message>
+        <source>Author:</source>
+        <translation type="unfinished">Szerző:</translation>
+    </message>
+    <message>
+        <source>Word spacing:</source>
+        <translation type="unfinished">Szótérköz:</translation>
+    </message>
+    <message>
+        <source>License:</source>
+        <translation type="unfinished">Licenc:</translation>
+    </message>
+    <message>
+        <source>Line spacing:</source>
+        <translation type="unfinished">Sorköz:</translation>
+    </message>
+    <message>
+        <source>Writing System:</source>
+        <translation type="unfinished">Írásrendszer</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished">Előnézet</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">Létrehozás</translation>
+    </message>
+    <message>
+        <source> - Searching</source>
+        <translation type="unfinished"> – Keresés</translation>
+    </message>
+    <message>
+        <source>LibreCAD Font Files(*.lff)</source>
+        <translation type="unfinished">LibreCAD betűkészlet-fájlok (*.lff)</translation>
+    </message>
+    <message>
+        <source> - Rendering</source>
+        <translation type="unfinished"> – Megjelenítés</translation>
     </message>
 </context>
 <context>
@@ -6791,6 +7234,109 @@ Válassza ki az új rajzokhoz használni kívánt egységet és nyelvet.&lt;br&g
     </message>
 </context>
 <context>
+    <name>QG_DlgOptionsMakerCam</name>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished">Rétegek</translation>
+    </message>
+    <message>
+        <source>Export invisible layers</source>
+        <translation type="unfinished">Láthatatlan rétegek exportálása</translation>
+    </message>
+    <message>
+        <source>Export visible construction layers</source>
+        <translation type="unfinished">Látható szerkezeti rétegek exportálása</translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished">Blokkok</translation>
+    </message>
+    <message>
+        <source>Convert blocks to safe inline SVG content</source>
+        <translation type="unfinished">A blokkokat biztonságos beépített SVG-tartalommá alakítja át</translation>
+    </message>
+    <message>
+        <source>Ellipses / Ellipse arcs</source>
+        <translation type="unfinished">Ellipszisek/ellipszisívek</translation>
+    </message>
+    <message>
+        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
+        <translation type="unfinished">Megközelítő ellipszisek és ellipszisívek Bézier-kockákkal</translation>
+    </message>
+    <message>
+        <source>Export as CAM/plain SVG</source>
+        <translation type="unfinished">Exportálás CAM/sima SVG formátumban</translation>
+    </message>
+    <message>
+        <source>Default width of elements, mm</source>
+        <translation type="unfinished">Elemek alapértelmezett szélessége, mm</translation>
+    </message>
+    <message>
+        <source>Images</source>
+        <translation type="unfinished">Képek</translation>
+    </message>
+    <message>
+        <source>Raster Image export</source>
+        <translation type="unfinished">Raszterkép exportálása</translation>
+    </message>
+    <message>
+        <source>Dash/Dot Lines</source>
+        <translation type="unfinished">Szaggatott/pontozott vonalak</translation>
+    </message>
+    <message>
+        <source>Length of the pattern, mm</source>
+        <translation type="unfinished">Minta hossza, mm</translation>
+    </message>
+    <message>
+        <source>Bake dash/dot lines to SVG path</source>
+        <translation type="unfinished">Szaggatott/pontozott vonalak beégetése SVG útvonalba</translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content 
+that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
+        <translation type="unfinished">A MakerCAM 2014 novemberétől kezdődően nem rejti el az olyan SVG-tartalmat, 
+amely láthatatlanra van állítva („display: none” vagy „visibility: hidden”).</translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
+because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="unfinished">A MakerCAM 2014. novemberi állapotában nem tudja helyesen kezelni a blokkokat,
+mivel nem veszi figyelembe a hivatkozási pontot itt: &lt;use&gt;.</translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
+when they are created using the &lt;ellipse&gt; tag  with a rotation in 
+the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished">A MakerCAM 2015 márciusától nem tudja helyesen megjeleníti az ellipsziseket és az ellipszisíveket, 
+ha létrehozásuk az &lt;ellipse&gt; címkével történik, és elforgatás 
+van a &lt;transform&gt; attribútumban, vagy az ellipszisív-szegmenseket alkalmazó &lt;path&gt; formájában.</translation>
+    </message>
+    <message>
+        <source>Exported images can be useful in SVG editors (Inkscape, etc), 
+but avoided in some CAM&apos;s.</source>
+        <translation type="unfinished">Az exportált képek hasznosak lehetnek az SVG-szerkesztőkben (Inkscape stb.), 
+de egyes CAM-ekben kerülendők.</translation>
+    </message>
+    <message>
+        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+which can be useful in lasercut of plywood or for papercraft. </source>
+        <translation type="unfinished">Számos CAM (MakerCAM, EleskCAM, LaserWeb) figyelmen kívül hagyja a szaggatott/pontozott vonalstílust, 
+amely farostlemez lézervágásakor és papírnál lehet hasznos. </translation>
+    </message>
+    <message>
+        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+but ignored by other</source>
+        <translation type="unfinished">Az elemek alapértelmezett szélessége kihathat egyes CAM-/SVG-szerkesztőkre, 
+de mások figyelmen kívül hagyhatják</translation>
+    </message>
+    <message>
+        <source>Length of line pattern related to zoom, 
+so default step value required for baking</source>
+        <translation type="unfinished">Nagyításhoz kapcsolódó vonalminta-szélesség, 
+így a beégetéshez alapértelmezett lépésérték szükséges</translation>
+    </message>
+</context>
+<context>
     <name>QG_DlgOptionsVariables</name>
     <message>
         <source>&amp;OK</source>
@@ -8276,6 +8822,13 @@ Válassza ki az új rajzokhoz használni kívánt egységet és nyelvet.&lt;br&g
     </message>
 </context>
 <context>
+    <name>QG_LayerBox</name>
+    <message>
+        <source>- Unchanged -</source>
+        <translation>– változatlan –</translation>
+    </message>
+</context>
+<context>
     <name>QG_LayerDialog</name>
     <message>
         <source>OK</source>
@@ -8638,6 +9191,125 @@ A szerkezeti réteg tartalma ne jelenjen meg a nyomtatásban.</translation>
     </message>
 </context>
 <context>
+    <name>QG_LineTypeBox</name>
+    <message>
+        <source>- Unchanged -</source>
+        <translation>– változatlan –</translation>
+    </message>
+    <message>
+        <source>By Layer</source>
+        <translation>Réteg szerint</translation>
+    </message>
+    <message>
+        <source>By Block</source>
+        <translation>Blokkonként</translation>
+    </message>
+    <message>
+        <source>No Pen</source>
+        <translation>Toll nélkül</translation>
+    </message>
+    <message>
+        <source>Continuous</source>
+        <translation>Folytonos</translation>
+    </message>
+    <message>
+        <source>Dot</source>
+        <translation>Pontozott</translation>
+    </message>
+    <message>
+        <source>Dot (small)</source>
+        <translation>Pontozott (kicsi)</translation>
+    </message>
+    <message>
+        <source>Dot (large)</source>
+        <translation>Pontozott (nagy)</translation>
+    </message>
+    <message>
+        <source>Dash</source>
+        <translation>Szaggatott</translation>
+    </message>
+    <message>
+        <source>Dash (small)</source>
+        <translation>Szaggatott (kicsi)</translation>
+    </message>
+    <message>
+        <source>Dash (large)</source>
+        <translation>Szaggatott (nagy)</translation>
+    </message>
+    <message>
+        <source>Dash Dot</source>
+        <translation>Pontvonal</translation>
+    </message>
+    <message>
+        <source>Dash Dot (small)</source>
+        <translation>Pontvonal (kicsi)</translation>
+    </message>
+    <message>
+        <source>Dash Dot (large)</source>
+        <translation>Pontvonal (nagy)</translation>
+    </message>
+    <message>
+        <source>Divide</source>
+        <translation>Osztás</translation>
+    </message>
+    <message>
+        <source>Divide (small)</source>
+        <translation>Osztás (kicsi)</translation>
+    </message>
+    <message>
+        <source>Divide (large)</source>
+        <translation>Osztás (nagy)</translation>
+    </message>
+    <message>
+        <source>Center</source>
+        <translation>Közép</translation>
+    </message>
+    <message>
+        <source>Center (small)</source>
+        <translation>Közép (kicsi)</translation>
+    </message>
+    <message>
+        <source>Center (large)</source>
+        <translation>Közép (nagy)</translation>
+    </message>
+    <message>
+        <source>Border</source>
+        <translation>Határ</translation>
+    </message>
+    <message>
+        <source>Border (small)</source>
+        <translation>Határ (kicsi)</translation>
+    </message>
+    <message>
+        <source>Border (large)</source>
+        <translation>Határ (nagy)</translation>
+    </message>
+    <message>
+        <source>Dot (tiny)</source>
+        <translation type="unfinished">Pont (kicsi)</translation>
+    </message>
+    <message>
+        <source>Dash (tiny)</source>
+        <translation type="unfinished">Szaggatott (kicsi)</translation>
+    </message>
+    <message>
+        <source>Dash Dot (tiny)</source>
+        <translation type="unfinished">Pontvonal (kicsi)</translation>
+    </message>
+    <message>
+        <source>Divide (tiny)</source>
+        <translation type="unfinished">Osztás (kicsi)</translation>
+    </message>
+    <message>
+        <source>Center (tiny)</source>
+        <translation type="unfinished">Középpont (kicsi)</translation>
+    </message>
+    <message>
+        <source>Border (tiny)</source>
+        <translation type="unfinished">Szegély (kicsi)</translation>
+    </message>
+</context>
+<context>
     <name>QG_MTextOptions</name>
     <message>
         <source>Text Options</source>
@@ -8699,6 +9371,21 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Angle:</source>
         <translation type="obsolete">Szög:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_PenToolBar</name>
+    <message>
+        <source>Line color</source>
+        <translation type="unfinished">Vonal színe</translation>
+    </message>
+    <message>
+        <source>Line width</source>
+        <translation type="unfinished">Vonal vastagsága</translation>
+    </message>
+    <message>
+        <source>Line type</source>
+        <translation type="unfinished">Vonal típusa</translation>
     </message>
 </context>
 <context>
@@ -8894,6 +9581,121 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QG_SnapToolBar</name>
+    <message>
+        <source>Snap</source>
+        <translation>Igazítás</translation>
+    </message>
+    <message>
+        <source>Snap to Endpoints</source>
+        <translation>Igazítás végpontokhoz</translation>
+    </message>
+    <message>
+        <source>Snap to equidistant points of entity</source>
+        <translation>Elemtől egyenlő távolságra lévő pontokhoz igazítás</translation>
+    </message>
+    <message>
+        <source>Snap to center points</source>
+        <translation>Igazítás középponthoz</translation>
+    </message>
+    <message>
+        <source>Snap to intersections automatically</source>
+        <translation>Automatikus igazítás metszésponthoz</translation>
+    </message>
+    <message>
+        <source>Snap to closest point on entity</source>
+        <translation>Igazítás az elem legközelebbi pontjához</translation>
+    </message>
+    <message>
+        <source>Snap to point with given distance to endpoint</source>
+        <translation>Végponttól adott távolságra igazítás</translation>
+    </message>
+    <message>
+        <source>Snap to intersections manually</source>
+        <translation>Igazítás nem látható metszésponthoz</translation>
+    </message>
+    <message>
+        <source>Snap to grid</source>
+        <translation>Igazítás rácsponthoz</translation>
+    </message>
+    <message>
+        <source>Restrict Horizontally</source>
+        <translation>Vízszintes korlátozás</translation>
+    </message>
+    <message>
+        <source>Restrict Vertically</source>
+        <translation>Függőleges korlátozás</translation>
+    </message>
+    <message>
+        <source>Move relative Zero</source>
+        <translation>Relatív zérus mozgatása</translation>
+    </message>
+    <message>
+        <source>Lock relative Zero</source>
+        <translation>Relatív zérus zárolása</translation>
+    </message>
+    <message>
+        <source>Free Snap</source>
+        <translation type="unfinished">Szabad igazítás</translation>
+    </message>
+    <message>
+        <source>Snap on grid</source>
+        <translation type="unfinished">Igazítás rácsra</translation>
+    </message>
+    <message>
+        <source>Snap on Endpoints</source>
+        <translation type="unfinished">Igazítás végpontokra</translation>
+    </message>
+    <message>
+        <source>Snap on Entity</source>
+        <translation type="unfinished">Igazítás elemre</translation>
+    </message>
+    <message>
+        <source>Snap Center</source>
+        <translation type="unfinished">Igazítás középpontra</translation>
+    </message>
+    <message>
+        <source>Snap Middle</source>
+        <translation type="unfinished">Igazítás középre</translation>
+    </message>
+    <message>
+        <source>Snap Distance</source>
+        <translation type="unfinished">Igazítás távolsága</translation>
+    </message>
+    <message>
+        <source>Snap Intersection</source>
+        <translation type="unfinished">Igazítás metszetre</translation>
+    </message>
+    <message>
+        <source>Restrict Horizontal</source>
+        <translation type="unfinished">Vízszintes korlátozása</translation>
+    </message>
+    <message>
+        <source>Restrict Vertical</source>
+        <translation type="unfinished">Függőleges korlátozása</translation>
+    </message>
+    <message>
+        <source>Restrict Orthogonal</source>
+        <translation type="unfinished">Merőleges korlátozása</translation>
+    </message>
+    <message>
+        <source>Restrict Nothing</source>
+        <translation type="unfinished">Nincs korlátozás</translation>
+    </message>
+    <message>
+        <source>Set relative zero position</source>
+        <translation type="unfinished">Relatív nullahelyzet beállítása</translation>
+    </message>
+    <message>
+        <source>Lock relative zero position</source>
+        <translation type="unfinished">Relatív nullahelyzet zárolása</translation>
+    </message>
+    <message>
+        <source>Exclusive Snap Mode</source>
+        <translation type="unfinished">Kizárólagos igazítási mód</translation>
+    </message>
+</context>
+<context>
     <name>QG_SplineOptions</name>
     <message>
         <source>Spline Options</source>
@@ -8964,6 +9766,140 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
         <translation type="obsolete">A megadott hosszúság a végső hosszt határozza meg, nem a hosszúság növekedését</translation>
+    </message>
+</context>
+<context>
+    <name>QG_WidgetPen</name>
+    <message>
+        <source>Pen</source>
+        <translation>Toll</translation>
+    </message>
+    <message>
+        <source>Line type:</source>
+        <translation>Vonal típusa:</translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation>Szélesség:</translation>
+    </message>
+    <message>
+        <source>Color:</source>
+        <translation>Szín:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_WidthBox</name>
+    <message>
+        <source>- Unchanged -</source>
+        <translation>– változatlan –</translation>
+    </message>
+    <message>
+        <source>By Layer</source>
+        <translation>Réteg szerint</translation>
+    </message>
+    <message>
+        <source>By Block</source>
+        <translation>Blokkonként</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation>Alapértelmezett</translation>
+    </message>
+    <message>
+        <source>0.00mm</source>
+        <translation>0,00 mm</translation>
+    </message>
+    <message>
+        <source>0.05mm</source>
+        <translation>0,05 mm</translation>
+    </message>
+    <message>
+        <source>0.09mm</source>
+        <translation>0,09 mm</translation>
+    </message>
+    <message>
+        <source>0.13mm (ISO)</source>
+        <translation>0,13 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.15mm</source>
+        <translation>0,15 mm</translation>
+    </message>
+    <message>
+        <source>0.18mm (ISO)</source>
+        <translation>0,18 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.20mm</source>
+        <translation>0,20 mm</translation>
+    </message>
+    <message>
+        <source>0.25mm (ISO)</source>
+        <translation>0,25 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.30mm</source>
+        <translation>0,30 mm</translation>
+    </message>
+    <message>
+        <source>0.35mm (ISO)</source>
+        <translation>0,35 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.40mm</source>
+        <translation>0,40 mm</translation>
+    </message>
+    <message>
+        <source>0.50mm (ISO)</source>
+        <translation>0,50 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.53mm</source>
+        <translation>0,53 mm</translation>
+    </message>
+    <message>
+        <source>0.60mm</source>
+        <translation>0,60 mm</translation>
+    </message>
+    <message>
+        <source>0.70mm (ISO)</source>
+        <translation>0,70 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.80mm</source>
+        <translation>0,80 mm</translation>
+    </message>
+    <message>
+        <source>0.90mm</source>
+        <translation>0,90 mm</translation>
+    </message>
+    <message>
+        <source>1.00mm (ISO)</source>
+        <translation>1,00 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>1.06mm</source>
+        <translation>1,06 mm</translation>
+    </message>
+    <message>
+        <source>1.20mm</source>
+        <translation>1,20 mm</translation>
+    </message>
+    <message>
+        <source>1.40mm (ISO)</source>
+        <translation>1,40 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>1.58mm</source>
+        <translation>1,58 mm</translation>
+    </message>
+    <message>
+        <source>2.00mm (ISO)</source>
+        <translation>2,00 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>2.11mm</source>
+        <translation>2,11 mm</translation>
     </message>
 </context>
 <context>
@@ -10898,6 +11834,106 @@ Lecseréli?</translation>
         <source>Dock Areas</source>
         <translation type="unfinished">Dokkterületek</translation>
     </message>
+    <message>
+        <source>A0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>C5E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comm10E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DLE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen</source>
+        <translation type="unfinished">Toll</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -11072,6 +12108,13 @@ Lecseréli?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionBlocksSave</name>
+    <message>
+        <source>No block activated to save</source>
+        <translation type="unfinished">Nincs aktivált mentendő blokk</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
@@ -11088,6 +12131,17 @@ Lecseréli?</translation>
     <message>
         <source>Toggle Block &amp;Visibility</source>
         <translation type="obsolete">Blokk és Láthatóság átváltása</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDefault</name>
+    <message>
+        <source>Choose second edge</source>
+        <translation>Második él kiválasztása</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Vissza</translation>
     </message>
 </context>
 <context>
@@ -11447,6 +12501,29 @@ Lecseréli?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionDrawArcTangential</name>
+    <message>
+        <source>Specify base entity</source>
+        <translation>Bázis elem meghatározása</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Mégsem</translation>
+    </message>
+    <message>
+        <source>Specify end angle</source>
+        <translation>Lezáró szög megadása</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Vissza</translation>
+    </message>
+    <message>
+        <source>Specify end point</source>
+        <translation>Végpont megadása</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionDrawCircle</name>
     <message>
         <source>Circle: Center, Point</source>
@@ -11599,6 +12676,33 @@ Lecseréli?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionDrawCircleDiam</name>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Nem érvényes kifejezés</translation>
+    </message>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished">Középpont megadása</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Mégsem</translation>
+    </message>
+    <message>
+        <source>Specify circle radius</source>
+        <translation type="unfinished">Sugár megadása</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Vissza</translation>
+    </message>
+    <message>
+        <source>diameter=%1 is invalid</source>
+        <translation type="unfinished">átmérő=%1 érvénytelen</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionDrawCircleInscribe</name>
     <message>
         <source>Circle &amp;Inscribed</source>
@@ -11623,6 +12727,110 @@ Lecseréli?</translation>
     <message>
         <source>Specify the third line</source>
         <translation>Harmadik vonal megadása</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan1_2P</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Mégsem</translation>
+    </message>
+    <message>
+        <source>Specify the first point on the tangent circle</source>
+        <translation type="unfinished">Első pont megadása az érintő körön</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Vissza</translation>
+    </message>
+    <message>
+        <source>Specify the second point on the tangent circle</source>
+        <translation type="unfinished">Második pont megadása az érintő körön</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished">Érintő kör középpontjának megadása</translation>
+    </message>
+    <message>
+        <source>Specify a line/arc/circle</source>
+        <translation type="unfinished">Vonal/ív/kör megadása</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan2</name>
+    <message>
+        <source>Specify the first line/arc/circle</source>
+        <translation type="unfinished">Első vonal/ív/kör megadása</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Mégsem</translation>
+    </message>
+    <message>
+        <source>Specify the second line/arc/circle</source>
+        <translation type="unfinished">Második vonal/ív/kör megadása</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Vissza</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished">Érintő kör középpontjának megadása</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan2_1P</name>
+    <message>
+        <source>Specify a line/arc/circle</source>
+        <translation type="unfinished">Vonal/ív/kör megadása</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Mégsem</translation>
+    </message>
+    <message>
+        <source>Specify the another arc/circle</source>
+        <translation type="unfinished">Másik ív/kör megadása</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Vissza</translation>
+    </message>
+    <message>
+        <source>Specify a point on the tangent circle</source>
+        <translation type="unfinished">Egy pont megadása az érintő körön</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished">Érintő kör középpontjának megadása</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan3</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Mégsem</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Vissza</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished">Érintő kör középpontjának megadása</translation>
+    </message>
+    <message>
+        <source>Specify the first line/arc/circle</source>
+        <translation type="unfinished">Első vonal/ív/kör megadása</translation>
+    </message>
+    <message>
+        <source>Specify the second line/arc/circle</source>
+        <translation type="unfinished">Második vonal/ív/kör megadása</translation>
+    </message>
+    <message>
+        <source>Specify the third line/arc/circle</source>
+        <translation type="unfinished">Harmadik vonal/ív/kör megadása</translation>
     </message>
 </context>
 <context>
@@ -12596,6 +13804,25 @@ Lecseréli?</translation>
     <message>
         <source>Select second circle or ellipse</source>
         <translation type="unfinished">Második kör vagy ellipszis kiválasztása</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawMText</name>
+    <message>
+        <source>Specify insertion point</source>
+        <translation type="unfinished">Beszúrás helyének megadása</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Mégsem</translation>
+    </message>
+    <message>
+        <source>Enter text:</source>
+        <translation type="unfinished">Szöveg:</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Vissza</translation>
     </message>
 </context>
 <context>
@@ -13687,6 +14914,17 @@ Lecseréli?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionModifyOffset</name>
+    <message>
+        <source>Specify direction of offset</source>
+        <translation type="unfinished">Eltolás irányának megadása</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Vissza</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionModifyRotate</name>
     <message>
         <source>Rotate</source>
@@ -13808,6 +15046,21 @@ Lecseréli?</translation>
     <message>
         <source>Cancel</source>
         <translation>Mégsem</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyShapeText</name>
+    <message>
+        <source>Select text entity</source>
+        <translation type="unfinished">Szövegelem kiválasztása</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Vissza</translation>
+    </message>
+    <message>
+        <source>Select entity to shape text to</source>
+        <translation type="unfinished">Válassza ki azt az elemet, amelyre a szöveget szeretné formálni</translation>
     </message>
 </context>
 <context>
@@ -13940,6 +15193,17 @@ Lecseréli?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionModifyTrimExcess</name>
+    <message>
+        <source>Select entity to trim</source>
+        <translation type="unfinished">Elem kiválasztása körülvágáshoz</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Vissza</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionOptionsDrawing</name>
     <message>
         <source>Drawing</source>
@@ -13952,6 +15216,21 @@ Lecseréli?</translation>
     <message>
         <source>Settings for the current Drawing</source>
         <translation type="obsolete">Beállítások az aktuális rajzhoz</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionOrder</name>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">Nincs elem.</translation>
+    </message>
+    <message>
+        <source>Choose entity for order</source>
+        <translation type="unfinished">Válasszon elemet a rendeléshez</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Mégsem</translation>
     </message>
 </context>
 <context>
@@ -13998,6 +15277,84 @@ Lecseréli?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionPolylineAppend</name>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">Nincs elem.</translation>
+    </message>
+    <message>
+        <source>Entity must be a polyline.</source>
+        <translation type="unfinished">Az elemnek töröttvonalnak kell lennie.</translation>
+    </message>
+    <message>
+        <source>Click somewhere near the beginning or end of existing polyline.</source>
+        <translation type="unfinished">Kattintson valahol a meglévő töröttvonal elejénél vagy végénél.</translation>
+    </message>
+    <message>
+        <source>Specify the polyline somewhere near the beginning or end point</source>
+        <translation type="unfinished">Töröttvonalat kijelölése valahol az elejénél vagy a végénél</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Mégsem</translation>
+    </message>
+    <message>
+        <source>Specify next point or [%1]</source>
+        <translation type="unfinished">Következő pont vagy [%1] megadása</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Vissza</translation>
+    </message>
+    <message>
+        <source>Specify next point</source>
+        <translation type="unfinished">Következő pont kijelölése</translation>
+    </message>
+    <message>
+        <source>Can not append nodes in a closed polyline.</source>
+        <translation type="unfinished">Zárt töröttvonalhoz nem fűzhetők hozzá csomópontok.</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="unfinished">Nem lehet visszavonni: Nincs elég elem meghatározva.</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionPolylineDel</name>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">Nincs elem.</translation>
+    </message>
+    <message>
+        <source>Entity must be a polyline.</source>
+        <translation type="unfinished">Az elemnek töröttvonalnak kell lennie.</translation>
+    </message>
+    <message>
+        <source>Specify polyline to delete node</source>
+        <translation type="unfinished">Csomópont törléséhez töröttvonal megadása</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Mégsem</translation>
+    </message>
+    <message>
+        <source>Specify deleting node&apos;s point</source>
+        <translation type="unfinished">Törlő csomópont pontjának megadása</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Vissza</translation>
+    </message>
+    <message>
+        <source>Deleting point is invalid.</source>
+        <translation type="unfinished">Pont törlése érvénytelen.</translation>
+    </message>
+    <message>
+        <source>Deleting point is not on entity.</source>
+        <translation type="unfinished">Pont törlése nincs az elemen.</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionPolylineDelBetween</name>
     <message>
         <source>Delete between two nodes</source>
@@ -14041,6 +15398,25 @@ Lecseréli?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionPolylineEquidistant</name>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">Nincs elem.</translation>
+    </message>
+    <message>
+        <source>Entity must be a polyline.</source>
+        <translation type="unfinished">Az elemnek töröttvonalnak kell lennie.</translation>
+    </message>
+    <message>
+        <source>Choose the original polyline</source>
+        <translation type="unfinished">Eredeti töröttvonal kiválasztása</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Mégsem</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionPolylineSegment</name>
     <message>
         <source>Create Polyline from Existing Segments</source>
@@ -14065,6 +15441,45 @@ Lecseréli?</translation>
     <message>
         <source>Polyline created</source>
         <translation type="unfinished">Töröttvonal létrehozva</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionPolylineTrim</name>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">Nincs elem.</translation>
+    </message>
+    <message>
+        <source>Entity must be a polyline.</source>
+        <translation type="unfinished">Az elemnek töröttvonalnak kell lennie.</translation>
+    </message>
+    <message>
+        <source>Specifying point is invalid.</source>
+        <translation type="unfinished">Pont megadása érvénytelen.</translation>
+    </message>
+    <message>
+        <source>No Segment found on entity.</source>
+        <translation type="unfinished">Nem található szegmens az elemen.</translation>
+    </message>
+    <message>
+        <source>Specify polyline to trim</source>
+        <translation type="unfinished">Körbevágáshoz töröttvonal megadása</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Mégsem</translation>
+    </message>
+    <message>
+        <source>Specify first segment</source>
+        <translation type="unfinished">Első szegmens megadása</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Vissza</translation>
+    </message>
+    <message>
+        <source>Specify second segment</source>
+        <translation type="unfinished">Második szegmens megadása</translation>
     </message>
 </context>
 <context>
@@ -14124,6 +15539,89 @@ Lecseréli?</translation>
     <message>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
         <translation type="unfinished">RS_ActionPrintPreview::calcPagesNum(): Az oldalak korlátja túllépve.</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionSelect</name>
+    <message>
+        <source>Select to modify attributes</source>
+        <translation type="unfinished">Válassza ki attribútumok módosításához</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Mégsem</translation>
+    </message>
+    <message>
+        <source>Select to delete</source>
+        <translation type="unfinished">Válassza ki törléshez</translation>
+    </message>
+    <message>
+        <source>Select to delete immediately</source>
+        <translation type="unfinished">Válassza ki azonnali törléshez</translation>
+    </message>
+    <message>
+        <source>Select to move</source>
+        <translation type="unfinished">Válassza ki mozgatáshoz</translation>
+    </message>
+    <message>
+        <source>Select to rotate</source>
+        <translation type="unfinished">Válassza ki elforgatáshoz</translation>
+    </message>
+    <message>
+        <source>Select to scale</source>
+        <translation type="unfinished">Válassza ki méretezéshez</translation>
+    </message>
+    <message>
+        <source>Select to mirror</source>
+        <translation type="unfinished">Válassza ki tükrözéshez</translation>
+    </message>
+    <message>
+        <source>Select to move and rotate</source>
+        <translation type="unfinished">Válassza ki mozgatáshoz és elforgatáshoz</translation>
+    </message>
+    <message>
+        <source>Select for two axis rotation</source>
+        <translation type="unfinished">Válassza ki kéttengelyes elforgatáshoz</translation>
+    </message>
+    <message>
+        <source>Select to explode text</source>
+        <translation type="unfinished">Válassza ki szöveg robbantásához</translation>
+    </message>
+    <message>
+        <source>Select to create block</source>
+        <translation type="unfinished">Válassza ki blokk létrehozásához</translation>
+    </message>
+    <message>
+        <source>Select to copy</source>
+        <translation type="unfinished">Válassza ki másoláshoz</translation>
+    </message>
+    <message>
+        <source>Select to cut</source>
+        <translation type="unfinished">Válassza ki kivágáshoz</translation>
+    </message>
+    <message>
+        <source>No entity selected!</source>
+        <translation type="unfinished">Nincs kiválasztva elem.</translation>
+    </message>
+    <message>
+        <source>Select to create offset</source>
+        <translation type="unfinished">Válassza ki eltolás létrehozásához</translation>
+    </message>
+    <message>
+        <source>Select entities to order</source>
+        <translation type="unfinished">Válasszon ki rendelni kívánt elemeket</translation>
+    </message>
+    <message>
+        <source>Select to explode block</source>
+        <translation type="unfinished">Válassza ki blokk robbantásához</translation>
+    </message>
+    <message>
+        <source>Select to revert direction</source>
+        <translation type="unfinished">Válassza ki az irány megfordításához</translation>
+    </message>
+    <message>
+        <source>Select to unlink shaped text</source>
+        <translation type="unfinished">Válassza ki alakított szöveg leválasztásához</translation>
     </message>
 </context>
 <context>
@@ -15339,1404 +16837,6 @@ Lecseréli?</translation>
         <source>re</source>
         <comment>modify - revert direction</comment>
         <translation type="obsolete">re</translation>
-    </message>
-</context>
-<context>
-    <name>ColorWizard</name>
-    <message>
-        <source>Frame</source>
-        <translation type="unfinished">Keret</translation>
-    </message>
-    <message>
-        <source>Add to favorites</source>
-        <translation type="unfinished">Hozzáadás a kedvencekhez</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-</context>
-<context>
-    <name>ComboBoxOption</name>
-    <message>
-        <source>Frame</source>
-        <translation type="unfinished">Keret</translation>
-    </message>
-    <message>
-        <source>GroupBox</source>
-        <translation type="unfinished">Csoportmező</translation>
-    </message>
-    <message>
-        <source>Set</source>
-        <translation type="unfinished">Beállítás</translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>SplinePoints</source>
-        <translation type="unfinished">Gerincpontok</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="unfinished">Réteg:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="unfinished">Geometria</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="unfinished">Zárt</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="unfinished">Gerincpontok</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="unfinished">Vezérlő pontok</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="unfinished">Gerincen lévő pontok</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished">sugár=%1 túl kicsi a kiválasztott pontokhoz
-pontok közti távolság=%2 nagyobb, mint az átmérő=%3</translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="unfinished">Válasszon két lehetséges körközéppont közül</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="unfinished">Első pont megadása</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="unfinished">Második pont megadása</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Vissza</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="unfinished">Körközéppont kiválasztása</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify center</source>
-        <translation type="unfinished">Középpont megadása</translation>
-    </message>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="unfinished">Érintő megadása</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="unfinished">Szám megadása:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished">Érvénytelen szám. Próbálja meg ezeket: 1..9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="unfinished">Nem érvényes kifejezés</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawSplinePoints</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="unfinished">Első vezérlő pont megadása</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="unfinished">Adja meg a következő vezérlő pontot, vagy [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Vissza</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="unfinished">A következő vezérlő pont megadása</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">Nem lehet visszavonni: Nincs elég elem meghatározva.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Nothing could be redone.</source>
-        <translation type="unfinished">Nem lehet visszavonni: nincs mit ismételni.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionFileExportMakerCam</name>
-    <message>
-        <source>Export as</source>
-        <translation type="unfinished">Exportálás másként</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DeviceOptions</name>
-    <message>
-        <source>Mouse</source>
-        <translation type="unfinished">Egér</translation>
-    </message>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished">Űrlap</translation>
-    </message>
-    <message>
-        <source>Device</source>
-        <translation type="unfinished">Eszköz</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="unfinished">Mentés</translation>
-    </message>
-    <message>
-        <source>Tablet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Trackpad</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Touchscreen</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_SimpleTests</name>
-    <message>
-        <source>De&amp;bugging</source>
-        <translation type="unfinished">De&amp;buggolás</translation>
-    </message>
-    <message>
-        <source>Insert Image</source>
-        <translation type="unfinished">Kép beillesztése</translation>
-    </message>
-</context>
-<context>
-    <name>LC_WidgetOptionsDialog</name>
-    <message>
-        <source>Widget Options</source>
-        <translation type="unfinished">Céleszköz beállításai</translation>
-    </message>
-    <message>
-        <source>Toolbar</source>
-        <translation type="unfinished">Eszköztár</translation>
-    </message>
-    <message>
-        <source>Icon Size</source>
-        <translation type="unfinished">Ikonméret</translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="unfinished">Általános</translation>
-    </message>
-    <message>
-        <source>Style</source>
-        <translation type="unfinished">Stílus</translation>
-    </message>
-    <message>
-        <source>Style Sheet</source>
-        <translation type="unfinished">Stíluslap</translation>
-    </message>
-    <message>
-        <source>Statusbar</source>
-        <translation type="unfinished">Állapotsor</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="unfinished">Magasság</translation>
-    </message>
-    <message>
-        <source>Font Size</source>
-        <translation type="unfinished">Betűméret</translation>
-    </message>
-    <message>
-        <source>Input the path of a Qt style sheet.</source>
-        <translation type="unfinished">Adja meg egy Qt-stíluslap útvonalát.</translation>
-    </message>
-    <message>
-        <source>side length in pixels</source>
-        <translation type="unfinished">oldalhossz képpontban</translation>
-    </message>
-    <message>
-        <source>Use themed icons</source>
-        <translation type="unfinished">Tematizált ikonok használata</translation>
-    </message>
-</context>
-<context>
-    <name>LG_DimzerosBox</name>
-    <message>
-        <source>select:</source>
-        <translation type="unfinished">kiválasztás:</translation>
-    </message>
-    <message>
-        <source>remove left</source>
-        <translation type="unfinished">eltávolítás balra</translation>
-    </message>
-    <message>
-        <source>remove right</source>
-        <translation type="unfinished">eltávolítás jobbra</translation>
-    </message>
-    <message>
-        <source>remove 0&apos;</source>
-        <translation type="unfinished">0&apos; eltávolítása</translation>
-    </message>
-    <message>
-        <source>remove 0&quot;</source>
-        <translation type="unfinished">0&quot; eltávolítása</translation>
-    </message>
-</context>
-<context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="unfinished">Szögben álló vonalak beállításai</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="unfinished">Távolság:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="unfinished">Eredeti töröttvonaltól vett távolság</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="unfinished">Másolatok:</translation>
-    </message>
-</context>
-<context>
-    <name>QC_ActionGetEnt</name>
-    <message>
-        <source>Select object:</source>
-        <translation>Objektum kiválasztása:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Mégsem</translation>
-    </message>
-</context>
-<context>
-    <name>QC_ActionGetSelect</name>
-    <message>
-        <source>Select objects:</source>
-        <translation>Objektumok kiválasztása:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Mégsem</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="unfinished">escape</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ActiveLayerName</name>
-    <message>
-        <source>Selection</source>
-        <translation type="unfinished">Kijelölés</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Current Layer</source>
-        <translation type="unfinished">Aktuális réteg</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Aktuális aktív réteg neve&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CommandEdit</name>
-    <message>
-        <source>clear</source>
-        <translation type="unfinished">törlés</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CommandHistory</name>
-    <message>
-        <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Másolás</translation>
-    </message>
-    <message>
-        <source>Select &amp;All</source>
-        <translation type="unfinished">&amp;Mindent kijelöl</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation type="unfinished">Törlés</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CoordinateWidget</name>
-    <message>
-        <source>Coordinates</source>
-        <translation>Koordináták</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgFontConversion</name>
-    <message>
-        <source>Convert Fonts</source>
-        <translation type="unfinished">Betűkészletek átalakítása</translation>
-    </message>
-    <message>
-        <source>Font family:</source>
-        <translation type="unfinished">Betűcsalád:</translation>
-    </message>
-    <message>
-        <source>Font file:</source>
-        <translation type="unfinished">Betűkészlet-fájl:</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-    <message>
-        <source>Save as:</source>
-        <translation type="unfinished">Mentés másként:</translation>
-    </message>
-    <message>
-        <source>Letter spacing:</source>
-        <translation type="unfinished">Betűtérköz:</translation>
-    </message>
-    <message>
-        <source>Author:</source>
-        <translation type="unfinished">Szerző:</translation>
-    </message>
-    <message>
-        <source>Word spacing:</source>
-        <translation type="unfinished">Szótérköz:</translation>
-    </message>
-    <message>
-        <source>License:</source>
-        <translation type="unfinished">Licenc:</translation>
-    </message>
-    <message>
-        <source>Line spacing:</source>
-        <translation type="unfinished">Sorköz:</translation>
-    </message>
-    <message>
-        <source>Writing System:</source>
-        <translation type="unfinished">Írásrendszer</translation>
-    </message>
-    <message>
-        <source>Preview</source>
-        <translation type="unfinished">Előnézet</translation>
-    </message>
-    <message>
-        <source>Create</source>
-        <translation type="unfinished">Létrehozás</translation>
-    </message>
-    <message>
-        <source> - Searching</source>
-        <translation type="unfinished"> – Keresés</translation>
-    </message>
-    <message>
-        <source>LibreCAD Font Files(*.lff)</source>
-        <translation type="unfinished">LibreCAD betűkészlet-fájlok (*.lff)</translation>
-    </message>
-    <message>
-        <source> - Rendering</source>
-        <translation type="unfinished"> – Megjelenítés</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgOptionsMakerCam</name>
-    <message>
-        <source>Layers</source>
-        <translation type="unfinished">Rétegek</translation>
-    </message>
-    <message>
-        <source>Export invisible layers</source>
-        <translation type="unfinished">Láthatatlan rétegek exportálása</translation>
-    </message>
-    <message>
-        <source>Export visible construction layers</source>
-        <translation type="unfinished">Látható szerkezeti rétegek exportálása</translation>
-    </message>
-    <message>
-        <source>Blocks</source>
-        <translation type="unfinished">Blokkok</translation>
-    </message>
-    <message>
-        <source>Convert blocks to safe inline SVG content</source>
-        <translation type="unfinished">A blokkokat biztonságos beépített SVG-tartalommá alakítja át</translation>
-    </message>
-    <message>
-        <source>Ellipses / Ellipse arcs</source>
-        <translation type="unfinished">Ellipszisek/ellipszisívek</translation>
-    </message>
-    <message>
-        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation type="unfinished">Megközelítő ellipszisek és ellipszisívek Bézier-kockákkal</translation>
-    </message>
-    <message>
-        <source>Export as CAM/plain SVG</source>
-        <translation type="unfinished">Exportálás CAM/sima SVG formátumban</translation>
-    </message>
-    <message>
-        <source>Default width of elements, mm</source>
-        <translation type="unfinished">Elemek alapértelmezett szélessége, mm</translation>
-    </message>
-    <message>
-        <source>Images</source>
-        <translation type="unfinished">Képek</translation>
-    </message>
-    <message>
-        <source>Raster Image export</source>
-        <translation type="unfinished">Raszterkép exportálása</translation>
-    </message>
-    <message>
-        <source>Dash/Dot Lines</source>
-        <translation type="unfinished">Szaggatott/pontozott vonalak</translation>
-    </message>
-    <message>
-        <source>Length of the pattern, mm</source>
-        <translation type="unfinished">Minta hossza, mm</translation>
-    </message>
-    <message>
-        <source>Bake dash/dot lines to SVG path</source>
-        <translation type="unfinished">Szaggatott/pontozott vonalak beégetése SVG útvonalba</translation>
-    </message>
-    <message>
-        <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation type="unfinished">A MakerCAM 2014 novemberétől kezdődően nem rejti el az olyan SVG-tartalmat, 
-amely láthatatlanra van állítva („display: none” vagy „visibility: hidden”).</translation>
-    </message>
-    <message>
-        <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
-because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation type="unfinished">A MakerCAM 2014. novemberi állapotában nem tudja helyesen kezelni a blokkokat,
-mivel nem veszi figyelembe a hivatkozási pontot itt: &lt;use&gt;.</translation>
-    </message>
-    <message>
-        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
-when they are created using the &lt;ellipse&gt; tag  with a rotation in 
-the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation type="unfinished">A MakerCAM 2015 márciusától nem tudja helyesen megjeleníti az ellipsziseket és az ellipszisíveket, 
-ha létrehozásuk az &lt;ellipse&gt; címkével történik, és elforgatás 
-van a &lt;transform&gt; attribútumban, vagy az ellipszisív-szegmenseket alkalmazó &lt;path&gt; formájában.</translation>
-    </message>
-    <message>
-        <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
-        <translation type="unfinished">Az exportált képek hasznosak lehetnek az SVG-szerkesztőkben (Inkscape stb.), 
-de egyes CAM-ekben kerülendők.</translation>
-    </message>
-    <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
-which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation type="unfinished">Számos CAM (MakerCAM, EleskCAM, LaserWeb) figyelmen kívül hagyja a szaggatott/pontozott vonalstílust, 
-amely farostlemez lézervágásakor és papírnál lehet hasznos. </translation>
-    </message>
-    <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
-but ignored by other</source>
-        <translation type="unfinished">Az elemek alapértelmezett szélessége kihathat egyes CAM-/SVG-szerkesztőkre, 
-de mások figyelmen kívül hagyhatják</translation>
-    </message>
-    <message>
-        <source>Length of line pattern related to zoom, 
-so default step value required for baking</source>
-        <translation type="unfinished">Nagyításhoz kapcsolódó vonalminta-szélesség, 
-így a beégetéshez alapértelmezett lépésérték szükséges</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LayerBox</name>
-    <message>
-        <source>- Unchanged -</source>
-        <translation>– változatlan –</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineTypeBox</name>
-    <message>
-        <source>- Unchanged -</source>
-        <translation>– változatlan –</translation>
-    </message>
-    <message>
-        <source>By Layer</source>
-        <translation>Réteg szerint</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation>Blokkonként</translation>
-    </message>
-    <message>
-        <source>No Pen</source>
-        <translation>Toll nélkül</translation>
-    </message>
-    <message>
-        <source>Continuous</source>
-        <translation>Folytonos</translation>
-    </message>
-    <message>
-        <source>Dot</source>
-        <translation>Pontozott</translation>
-    </message>
-    <message>
-        <source>Dot (small)</source>
-        <translation>Pontozott (kicsi)</translation>
-    </message>
-    <message>
-        <source>Dot (large)</source>
-        <translation>Pontozott (nagy)</translation>
-    </message>
-    <message>
-        <source>Dash</source>
-        <translation>Szaggatott</translation>
-    </message>
-    <message>
-        <source>Dash (small)</source>
-        <translation>Szaggatott (kicsi)</translation>
-    </message>
-    <message>
-        <source>Dash (large)</source>
-        <translation>Szaggatott (nagy)</translation>
-    </message>
-    <message>
-        <source>Dash Dot</source>
-        <translation>Pontvonal</translation>
-    </message>
-    <message>
-        <source>Dash Dot (small)</source>
-        <translation>Pontvonal (kicsi)</translation>
-    </message>
-    <message>
-        <source>Dash Dot (large)</source>
-        <translation>Pontvonal (nagy)</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation>Osztás</translation>
-    </message>
-    <message>
-        <source>Divide (small)</source>
-        <translation>Osztás (kicsi)</translation>
-    </message>
-    <message>
-        <source>Divide (large)</source>
-        <translation>Osztás (nagy)</translation>
-    </message>
-    <message>
-        <source>Center</source>
-        <translation>Közép</translation>
-    </message>
-    <message>
-        <source>Center (small)</source>
-        <translation>Közép (kicsi)</translation>
-    </message>
-    <message>
-        <source>Center (large)</source>
-        <translation>Közép (nagy)</translation>
-    </message>
-    <message>
-        <source>Border</source>
-        <translation>Határ</translation>
-    </message>
-    <message>
-        <source>Border (small)</source>
-        <translation>Határ (kicsi)</translation>
-    </message>
-    <message>
-        <source>Border (large)</source>
-        <translation>Határ (nagy)</translation>
-    </message>
-    <message>
-        <source>Dot (tiny)</source>
-        <translation type="unfinished">Pont (kicsi)</translation>
-    </message>
-    <message>
-        <source>Dash (tiny)</source>
-        <translation type="unfinished">Szaggatott (kicsi)</translation>
-    </message>
-    <message>
-        <source>Dash Dot (tiny)</source>
-        <translation type="unfinished">Pontvonal (kicsi)</translation>
-    </message>
-    <message>
-        <source>Divide (tiny)</source>
-        <translation type="unfinished">Osztás (kicsi)</translation>
-    </message>
-    <message>
-        <source>Center (tiny)</source>
-        <translation type="unfinished">Középpont (kicsi)</translation>
-    </message>
-    <message>
-        <source>Border (tiny)</source>
-        <translation type="unfinished">Szegély (kicsi)</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PenToolBar</name>
-    <message>
-        <source>Line color</source>
-        <translation type="unfinished">Vonal színe</translation>
-    </message>
-    <message>
-        <source>Line width</source>
-        <translation type="unfinished">Vonal vastagsága</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="unfinished">Vonal típusa</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SnapToolBar</name>
-    <message>
-        <source>Snap</source>
-        <translation>Igazítás</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation>Igazítás végpontokhoz</translation>
-    </message>
-    <message>
-        <source>Snap to equidistant points of entity</source>
-        <translation>Elemtől egyenlő távolságra lévő pontokhoz igazítás</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation>Igazítás középponthoz</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation>Automatikus igazítás metszésponthoz</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation>Igazítás az elem legközelebbi pontjához</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation>Végponttól adott távolságra igazítás</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation>Igazítás nem látható metszésponthoz</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation>Igazítás rácsponthoz</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation>Vízszintes korlátozás</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation>Függőleges korlátozás</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation>Relatív zérus mozgatása</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation>Relatív zérus zárolása</translation>
-    </message>
-    <message>
-        <source>Free Snap</source>
-        <translation type="unfinished">Szabad igazítás</translation>
-    </message>
-    <message>
-        <source>Snap on grid</source>
-        <translation type="unfinished">Igazítás rácsra</translation>
-    </message>
-    <message>
-        <source>Snap on Endpoints</source>
-        <translation type="unfinished">Igazítás végpontokra</translation>
-    </message>
-    <message>
-        <source>Snap on Entity</source>
-        <translation type="unfinished">Igazítás elemre</translation>
-    </message>
-    <message>
-        <source>Snap Center</source>
-        <translation type="unfinished">Igazítás középpontra</translation>
-    </message>
-    <message>
-        <source>Snap Middle</source>
-        <translation type="unfinished">Igazítás középre</translation>
-    </message>
-    <message>
-        <source>Snap Distance</source>
-        <translation type="unfinished">Igazítás távolsága</translation>
-    </message>
-    <message>
-        <source>Snap Intersection</source>
-        <translation type="unfinished">Igazítás metszetre</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontal</source>
-        <translation type="unfinished">Vízszintes korlátozása</translation>
-    </message>
-    <message>
-        <source>Restrict Vertical</source>
-        <translation type="unfinished">Függőleges korlátozása</translation>
-    </message>
-    <message>
-        <source>Restrict Orthogonal</source>
-        <translation type="unfinished">Merőleges korlátozása</translation>
-    </message>
-    <message>
-        <source>Restrict Nothing</source>
-        <translation type="unfinished">Nincs korlátozás</translation>
-    </message>
-    <message>
-        <source>Set relative zero position</source>
-        <translation type="unfinished">Relatív nullahelyzet beállítása</translation>
-    </message>
-    <message>
-        <source>Lock relative zero position</source>
-        <translation type="unfinished">Relatív nullahelyzet zárolása</translation>
-    </message>
-    <message>
-        <source>Exclusive Snap Mode</source>
-        <translation type="unfinished">Kizárólagos igazítási mód</translation>
-    </message>
-</context>
-<context>
-    <name>QG_WidgetPen</name>
-    <message>
-        <source>Pen</source>
-        <translation>Toll</translation>
-    </message>
-    <message>
-        <source>Line type:</source>
-        <translation>Vonal típusa:</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation>Szélesség:</translation>
-    </message>
-    <message>
-        <source>Color:</source>
-        <translation>Szín:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_WidthBox</name>
-    <message>
-        <source>- Unchanged -</source>
-        <translation>– változatlan –</translation>
-    </message>
-    <message>
-        <source>By Layer</source>
-        <translation>Réteg szerint</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation>Blokkonként</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation>Alapértelmezett</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation>0,00 mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation>0,05 mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation>0,09 mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation>0,13 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation>0,15 mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation>0,18 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation>0,20 mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation>0,25 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation>0,30 mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation>0,35 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation>0,40 mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation>0,50 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation>0,53 mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation>0,60 mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation>0,70 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation>0,80 mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation>0,90 mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation>1,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation>1,06 mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation>1,20 mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation>1,40 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation>1,58 mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation>2,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation>2,11 mm</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksSave</name>
-    <message>
-        <source>No block activated to save</source>
-        <translation type="unfinished">Nincs aktivált mentendő blokk</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDefault</name>
-    <message>
-        <source>Choose second edge</source>
-        <translation>Második él kiválasztása</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Vissza</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArcTangential</name>
-    <message>
-        <source>Specify base entity</source>
-        <translation>Bázis elem meghatározása</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Mégsem</translation>
-    </message>
-    <message>
-        <source>Specify end angle</source>
-        <translation>Lezáró szög megadása</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Vissza</translation>
-    </message>
-    <message>
-        <source>Specify end point</source>
-        <translation>Végpont megadása</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleDiam</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="unfinished">Nem érvényes kifejezés</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="unfinished">Középpont megadása</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="unfinished">Sugár megadása</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Vissza</translation>
-    </message>
-    <message>
-        <source>diameter=%1 is invalid</source>
-        <translation type="unfinished">átmérő=%1 érvénytelen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
-    </message>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="unfinished">Első pont megadása az érintő körön</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Vissza</translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="unfinished">Második pont megadása az érintő körön</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Érintő kör középpontjának megadása</translation>
-    </message>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">Vonal/ív/kör megadása</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished">Első vonal/ív/kör megadása</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished">Második vonal/ív/kör megadása</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Vissza</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Érintő kör középpontjának megadása</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">Vonal/ív/kör megadása</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
-    </message>
-    <message>
-        <source>Specify the another arc/circle</source>
-        <translation type="unfinished">Másik ív/kör megadása</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Vissza</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="unfinished">Egy pont megadása az érintő körön</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Érintő kör középpontjának megadása</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Vissza</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Érintő kör középpontjának megadása</translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished">Első vonal/ív/kör megadása</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished">Második vonal/ív/kör megadása</translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="unfinished">Harmadik vonal/ív/kör megadása</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="unfinished">Beszúrás helyének megadása</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="unfinished">Szöveg:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Vissza</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="unfinished">Eltolás irányának megadása</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Vissza</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyShapeText</name>
-    <message>
-        <source>Select text entity</source>
-        <translation type="unfinished">Szövegelem kiválasztása</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Vissza</translation>
-    </message>
-    <message>
-        <source>Select entity to shape text to</source>
-        <translation type="unfinished">Válassza ki azt az elemet, amelyre a szöveget szeretné formálni</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrimExcess</name>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="unfinished">Elem kiválasztása körülvágáshoz</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Vissza</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">Nincs elem.</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="unfinished">Válasszon elemet a rendeléshez</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAppend</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">Nincs elem.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Az elemnek töröttvonalnak kell lennie.</translation>
-    </message>
-    <message>
-        <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="unfinished">Kattintson valahol a meglévő töröttvonal elejénél vagy végénél.</translation>
-    </message>
-    <message>
-        <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="unfinished">Töröttvonalat kijelölése valahol az elejénél vagy a végénél</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="unfinished">Következő pont vagy [%1] megadása</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Vissza</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="unfinished">Következő pont kijelölése</translation>
-    </message>
-    <message>
-        <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished">Zárt töröttvonalhoz nem fűzhetők hozzá csomópontok.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">Nem lehet visszavonni: Nincs elég elem meghatározva.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">Nincs elem.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Az elemnek töröttvonalnak kell lennie.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete node</source>
-        <translation type="unfinished">Csomópont törléséhez töröttvonal megadása</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
-    </message>
-    <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="unfinished">Törlő csomópont pontjának megadása</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Vissza</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="unfinished">Pont törlése érvénytelen.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="unfinished">Pont törlése nincs az elemen.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineEquidistant</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">Nincs elem.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Az elemnek töröttvonalnak kell lennie.</translation>
-    </message>
-    <message>
-        <source>Choose the original polyline</source>
-        <translation type="unfinished">Eredeti töröttvonal kiválasztása</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineTrim</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">Nincs elem.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Az elemnek töröttvonalnak kell lennie.</translation>
-    </message>
-    <message>
-        <source>Specifying point is invalid.</source>
-        <translation type="unfinished">Pont megadása érvénytelen.</translation>
-    </message>
-    <message>
-        <source>No Segment found on entity.</source>
-        <translation type="unfinished">Nem található szegmens az elemen.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to trim</source>
-        <translation type="unfinished">Körbevágáshoz töröttvonal megadása</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
-    </message>
-    <message>
-        <source>Specify first segment</source>
-        <translation type="unfinished">Első szegmens megadása</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Vissza</translation>
-    </message>
-    <message>
-        <source>Specify second segment</source>
-        <translation type="unfinished">Második szegmens megadása</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>Select to modify attributes</source>
-        <translation type="unfinished">Válassza ki attribútumok módosításához</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
-    </message>
-    <message>
-        <source>Select to delete</source>
-        <translation type="unfinished">Válassza ki törléshez</translation>
-    </message>
-    <message>
-        <source>Select to delete immediately</source>
-        <translation type="unfinished">Válassza ki azonnali törléshez</translation>
-    </message>
-    <message>
-        <source>Select to move</source>
-        <translation type="unfinished">Válassza ki mozgatáshoz</translation>
-    </message>
-    <message>
-        <source>Select to rotate</source>
-        <translation type="unfinished">Válassza ki elforgatáshoz</translation>
-    </message>
-    <message>
-        <source>Select to scale</source>
-        <translation type="unfinished">Válassza ki méretezéshez</translation>
-    </message>
-    <message>
-        <source>Select to mirror</source>
-        <translation type="unfinished">Válassza ki tükrözéshez</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate</source>
-        <translation type="unfinished">Válassza ki mozgatáshoz és elforgatáshoz</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation</source>
-        <translation type="unfinished">Válassza ki kéttengelyes elforgatáshoz</translation>
-    </message>
-    <message>
-        <source>Select to explode text</source>
-        <translation type="unfinished">Válassza ki szöveg robbantásához</translation>
-    </message>
-    <message>
-        <source>Select to create block</source>
-        <translation type="unfinished">Válassza ki blokk létrehozásához</translation>
-    </message>
-    <message>
-        <source>Select to copy</source>
-        <translation type="unfinished">Válassza ki másoláshoz</translation>
-    </message>
-    <message>
-        <source>Select to cut</source>
-        <translation type="unfinished">Válassza ki kivágáshoz</translation>
-    </message>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="unfinished">Nincs kiválasztva elem.</translation>
-    </message>
-    <message>
-        <source>Select to create offset</source>
-        <translation type="unfinished">Válassza ki eltolás létrehozásához</translation>
-    </message>
-    <message>
-        <source>Select entities to order</source>
-        <translation type="unfinished">Válasszon ki rendelni kívánt elemeket</translation>
-    </message>
-    <message>
-        <source>Select to explode block</source>
-        <translation type="unfinished">Válassza ki blokk robbantásához</translation>
-    </message>
-    <message>
-        <source>Select to revert direction</source>
-        <translation type="unfinished">Válassza ki az irány megfordításához</translation>
-    </message>
-    <message>
-        <source>Select to unlink shaped text</source>
-        <translation type="unfinished">Válassza ki alakított szöveg leválasztásához</translation>
     </message>
 </context>
 <context>

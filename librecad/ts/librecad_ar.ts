@@ -1663,6 +1663,17 @@ Printer settings:
     </message>
 </context>
 <context>
+    <name>QG_ActionFactory</name>
+    <message>
+        <source>&amp;Print...</source>
+        <translation type="obsolete">وطباعة...</translation>
+    </message>
+    <message>
+        <source>&amp;Selection pointer</source>
+        <translation type="obsolete">واختيار مؤشر</translation>
+    </message>
+</context>
+<context>
     <name>QG_ActionHandler</name>
     <message>
         <source>escape</source>
@@ -1691,6 +1702,57 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_ArcOptions</name>
+    <message>
+        <source>Arc Options</source>
+        <translation type="obsolete">خيارات القوس</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="obsolete">في اتجاه عقارب الساعة</translation>
+    </message>
+    <message>
+        <source>Counterclockwise</source>
+        <translation type="obsolete">عكس اتجاه عقارب الساعة</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ArcTangentialOptions</name>
+    <message>
+        <source>Tangential Arc Options</source>
+        <translation type="obsolete">خيارات قوس المماس</translation>
+    </message>
+    <message>
+        <source>Radius of the tangential arc</source>
+        <translation type="obsolete">نصف قطر قوس المماس</translation>
+    </message>
+    <message>
+        <source>Radius</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="obsolete">نصف القطر</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="obsolete">زاوية</translation>
+    </message>
+</context>
+<context>
+    <name>QG_BevelOptions</name>
+    <message>
+        <source>Trim</source>
+        <translation type="obsolete">تقليم</translation>
+    </message>
+    <message>
+        <source>Length 1:</source>
+        <translation type="obsolete">الطول 1:</translation>
+    </message>
+    <message>
+        <source>Length 2:</source>
+        <translation type="obsolete">الطول 2:</translation>
     </message>
 </context>
 <context>
@@ -1798,6 +1860,377 @@ in a separate window</source>
     <message>
         <source>Filter</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarArcs</name>
+    <message>
+        <source>Arcs</source>
+        <translation type="obsolete">أقواس</translation>
+    </message>
+    <message>
+        <source>Arc with three points</source>
+        <translation type="obsolete">قوس بثلاث نقاط</translation>
+    </message>
+    <message>
+        <source>Arc with Center, Point, Angles</source>
+        <translation type="obsolete">قوس مع مركز، نقطة، زوايا</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">العودة إلى القائمة الرئيسية</translation>
+    </message>
+    <message>
+        <source>Arc tangential to base entity with radius</source>
+        <translation type="obsolete">قوس مماس لقاعدة كائن ونصف قطره</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarCircles</name>
+    <message>
+        <source>Circles</source>
+        <translation type="obsolete">دوائر</translation>
+    </message>
+    <message>
+        <source>Circle with two opposite points</source>
+        <translation type="obsolete">دائرة مع نقطتين متعاكستين</translation>
+    </message>
+    <message>
+        <source>Circle with center and point</source>
+        <translation type="obsolete">دائرة مع مركز ونقطة</translation>
+    </message>
+    <message>
+        <source>Circle with three points</source>
+        <translation type="obsolete">دائرة مع ثلاث نقاط</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarDim</name>
+    <message>
+        <source>Dimensions</source>
+        <translation type="obsolete">الأبعاد</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">العودة إلى القائمة الرئيسية</translation>
+    </message>
+    <message>
+        <source>Linear Dimension</source>
+        <translation type="obsolete">البُعْد الخطي</translation>
+    </message>
+    <message>
+        <source>Leader</source>
+        <translation type="obsolete">مرشد</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarEllipses</name>
+    <message>
+        <source>Ellipses</source>
+        <translation type="obsolete">قطَع ناقصة</translation>
+    </message>
+    <message>
+        <source>Ellipse arc with center, two points and angles</source>
+        <translation type="obsolete">قوس قطْع ناقص مع مركز، ونقطتين وزوايا</translation>
+    </message>
+    <message>
+        <source>Ellipse with Center and two points</source>
+        <translation type="obsolete">قطْع ناقص مع المركز ونقطتين</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">العودة إلى القائمة الرئيسية</translation>
+    </message>
+    <message>
+        <source>Draw Ellipse by foci and a point on ellipse</source>
+        <translation type="obsolete">رسم القطّع الناقص بواسطة البؤرة ونقطة على القطّع الناقص</translation>
+    </message>
+    <message>
+        <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
+        <translation type="obsolete">رسم قطْع ناقص مع محاور في الاتجاهات السينية-الصادية وبأرباع نقاط على القطْع الناقص</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Draw Ellipse by center and 3 points on ellipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;HTML&gt; &lt;HEAD /&gt; &lt;body&gt; &lt;p&gt;  رسم القطّع الناقص من قبل المنتصف و3 نقاط على القطّع الناقص &lt;/ P&gt; &lt;/ body&gt; &lt;/ HTML&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarInfo</name>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">العودة إلى القائمة الرئيسية</translation>
+    </message>
+    <message>
+        <source>Distance (Point, Point)</source>
+        <translation type="obsolete">المسافة (نقطة، نقطة)</translation>
+    </message>
+    <message>
+        <source>Distance (Entity, Point)</source>
+        <translation type="obsolete">المسافة (كيان، نقطة)</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="obsolete">زاوية</translation>
+    </message>
+    <message>
+        <source>Total length of selected entities</source>
+        <translation type="obsolete">إجمالي أطوال الكيانات المختارة</translation>
+    </message>
+    <message>
+        <source>Area of polygon</source>
+        <translation type="obsolete">مساحة المضلع</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarLines</name>
+    <message>
+        <source>Lines</source>
+        <translation type="obsolete">خطوط</translation>
+    </message>
+    <message>
+        <source>Freehand lines</source>
+        <translation type="obsolete">خطوط يد حرة</translation>
+    </message>
+    <message>
+        <source>Orthogonal lines</source>
+        <translation type="obsolete">خطوط متعامدة</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">العودة إلى القائمة الرئيسية</translation>
+    </message>
+    <message>
+        <source>Tangents from circle to circle</source>
+        <translation type="obsolete">مماسات من دائرة إلى دائرة</translation>
+    </message>
+    <message>
+        <source>Tangents from point to circle</source>
+        <translation type="obsolete">مماسات من نقطة إلى دائرة</translation>
+    </message>
+    <message>
+        <source>Line with two points</source>
+        <translation type="obsolete">خط مستقيم بنقطتين</translation>
+    </message>
+    <message>
+        <source>Lines with relative angles</source>
+        <translation type="obsolete">خطوط بزوايا نسبية</translation>
+    </message>
+    <message>
+        <source>Line with given angle</source>
+        <translation type="obsolete">خط مع زاوية معطاة</translation>
+    </message>
+    <message>
+        <source>Horizontal lines</source>
+        <translation type="obsolete">خطوط أفقية</translation>
+    </message>
+    <message>
+        <source>Vertical lines</source>
+        <translation type="obsolete">خطوط عمودية</translation>
+    </message>
+    <message>
+        <source>Rectangles</source>
+        <translation type="obsolete">مستطيلات</translation>
+    </message>
+    <message>
+        <source>Polygons with Center and Corner</source>
+        <translation type="obsolete">مضلعات مع مركز وركن</translation>
+    </message>
+    <message>
+        <source>Polygons with two Corners</source>
+        <translation type="obsolete">مضلعات مع ركنين</translation>
+    </message>
+    <message>
+        <source>Parallels with distance</source>
+        <translation type="obsolete">متوازيات مع المسافة</translation>
+    </message>
+    <message>
+        <source>Parallels through point</source>
+        <translation type="obsolete">المتوازيات من خلال نقطة</translation>
+    </message>
+    <message>
+        <source>Tangents to a circle, orthogonal to a line</source>
+        <translation type="obsolete">مماسات إلى دائرة، متعامدة مع الخط</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarMain</name>
+    <message>
+        <source>Main</source>
+        <translation type="obsolete">رئيسي</translation>
+    </message>
+    <message>
+        <source>Create Block</source>
+        <translation type="obsolete">إنشاء كتلة</translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Lines&quot;</source>
+        <translation type="obsolete">إِظْهارُ شريط الأدوات &quot;خطوط&quot;</translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Arcs&quot;</source>
+        <translation type="obsolete">إِظْهارُ شريط الأدوات &quot;أقواس&quot;</translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Circles&quot;</source>
+        <translation type="obsolete">إِظْهارُ شريط الأدوات &quot;دوائر&quot;</translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Ellipses&quot;</source>
+        <translation type="obsolete">إظْهارُ شريط الأدوات &quot;القطوع الناقصة&quot;</translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Polylines&quot;</source>
+        <translation type="obsolete">إِظْهارُ شريط الأدوات &quot;متعدّدات خطوط&quot;</translation>
+    </message>
+    <message>
+        <source>Draw Splines</source>
+        <translation type="obsolete">رسم شرائح</translation>
+    </message>
+    <message>
+        <source>Draw Points</source>
+        <translation type="obsolete">رسم نقاط</translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Dimensions&quot;</source>
+        <translation type="obsolete">إِظْهارُ شريط الأدوات &quot;أبعاد&quot;</translation>
+    </message>
+    <message>
+        <source>Create Hatch</source>
+        <translation type="obsolete">إنشي تظليل</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="obsolete">إدراج صورة</translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Modify&quot;</source>
+        <translation type="obsolete">إِظْهارُ شريط الأدوات &quot;تعديل&quot;</translation>
+    </message>
+    <message>
+        <source>Show toolbar &quot;Info&quot;</source>
+        <translation type="obsolete">اظهر شريط الأدوات &quot;معلومات&quot;</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarModify</name>
+    <message>
+        <source>Modify</source>
+        <translation type="obsolete">تعديل</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">العودة إلى القائمة الرئيسية</translation>
+    </message>
+    <message>
+        <source>Rotate</source>
+        <translation type="obsolete">تدوير</translation>
+    </message>
+    <message>
+        <source>Scale</source>
+        <translation type="obsolete">تحجيم</translation>
+    </message>
+    <message>
+        <source>Move and Rotate</source>
+        <translation type="obsolete">نقل وتدوير</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="obsolete">حذف</translation>
+    </message>
+    <message>
+        <source>Stretch</source>
+        <translation type="obsolete">امتداد</translation>
+    </message>
+    <message>
+        <source>Trim / Extend two</source>
+        <translation type="obsolete">تقليم / تمديد اثنين</translation>
+    </message>
+    <message>
+        <source>Trim / Extend</source>
+        <translation type="obsolete">تقليم / تمديد</translation>
+    </message>
+    <message>
+        <source>Edit Entity Attributes</source>
+        <translation type="obsolete">حرر سمات الكيان</translation>
+    </message>
+    <message>
+        <source>Edit Entity Geometry</source>
+        <translation type="obsolete">تحرير هندسة الكيان</translation>
+    </message>
+    <message>
+        <source>Mirror</source>
+        <translation type="obsolete">مرآة</translation>
+    </message>
+    <message>
+        <source>Edit Text</source>
+        <translation type="obsolete">تحرير النص</translation>
+    </message>
+    <message>
+        <source>Move / Copy</source>
+        <translation type="obsolete">نقل / نسخ</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarPoints</name>
+    <message>
+        <source>Points</source>
+        <translation type="obsolete">نقاط</translation>
+    </message>
+    <message>
+        <source>Single points</source>
+        <translation type="obsolete">نقاط فردية</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarPolylines</name>
+    <message>
+        <source>Polylines</source>
+        <translation type="obsolete">متعدّدات خطوط</translation>
+    </message>
+    <message>
+        <source>Back to main menu</source>
+        <translation type="obsolete">العودة إلى القائمة الرئيسية</translation>
+    </message>
+    <message>
+        <source>Create Polyline</source>
+        <translation type="obsolete">إنشاء متعدّد خطوط</translation>
+    </message>
+    <message>
+        <source>Polyline equidistant</source>
+        <translation type="obsolete">متعدّد خطوط متساوي البُعْد</translation>
+    </message>
+    <message>
+        <source>Create Polyline from Existing Segments</source>
+        <translation type="obsolete">إنشاء متعدّد خطوط من القطاعات الموجودة</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarSelect</name>
+    <message>
+        <source>Select layer</source>
+        <translation type="obsolete">اختر طبقة</translation>
+    </message>
+    <message>
+        <source>(De-)Select entity</source>
+        <translation type="obsolete">إلغاء اختيار الكيان</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CadToolBarSplines</name>
+    <message>
+        <source>Splines</source>
+        <translation type="obsolete">شرائح</translation>
+    </message>
+    <message>
+        <source>Spline</source>
+        <translation type="obsolete">شريحة</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CircleTan2Options</name>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;HTML&gt; &lt;HEAD /&gt; &lt;body&gt; &lt;p&gt;نصف قطر دائرة المماس لرسم &lt;/ P&gt; &lt;/ body&gt; &lt;/ HTML&gt;</translation>
     </message>
 </context>
 <context>
@@ -1938,6 +2371,17 @@ in a separate window</source>
     <message>
         <source>Coordinates</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_DimLinearOptions</name>
+    <message>
+        <source>Linear Dimension Options</source>
+        <translation type="obsolete">خيارات البُعْد الخطي</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">زاوية:</translation>
     </message>
 </context>
 <context>
@@ -4887,6 +5331,21 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
+    <name>QG_ImageOptions</name>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">زاوية:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="obsolete">زاوية دوران</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="obsolete">معامل التحجيم</translation>
+    </message>
+</context>
+<context>
     <name>QG_ImageOptionsDialog</name>
     <message>
         <source>Image Export Options</source>
@@ -4951,6 +5410,29 @@ so default step value required for baking</source>
     <message>
         <source>B&amp;lack</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_InsertOptions</name>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">زاوية:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="obsolete">زاوية دوران</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="obsolete">معامل التحجيم</translation>
+    </message>
+    <message>
+        <source>Number of Columns</source>
+        <translation type="obsolete">عدد اﻷعمدة</translation>
+    </message>
+    <message>
+        <source>Number of Rows</source>
+        <translation type="obsolete">عدد الصفوف</translation>
     </message>
 </context>
 <context>
@@ -5072,6 +5554,21 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
 </context>
 <context>
+    <name>QG_LibraryInsertOptions</name>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">زاوية:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="obsolete">زاوية دوران</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="obsolete">معامل التحجيم</translation>
+    </message>
+</context>
+<context>
     <name>QG_LibraryWidget</name>
     <message>
         <source>Directories</source>
@@ -5088,6 +5585,162 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <source>Rebuild</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineAngleOptions</name>
+    <message>
+        <source>Line Angle Options</source>
+        <translation type="obsolete">خيارات خط الزاوية</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">زاوية:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="obsolete">خط الزاوية</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">الطول:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="obsolete">طول الخط</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineBisectorOptions</name>
+    <message>
+        <source>Line Bisector Options</source>
+        <translation type="obsolete">خيارات الخط المُنَصِّف</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">الطول:</translation>
+    </message>
+    <message>
+        <source>Length of bisector</source>
+        <translation type="obsolete">طول المنصّف</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">عدد:</translation>
+    </message>
+    <message>
+        <source>Number of bisectors to create</source>
+        <translation type="obsolete">عدد المنصّفات للإنشاء</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineOptions</name>
+    <message>
+        <source>Line Options</source>
+        <translation type="obsolete">خيارات الخط</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="obsolete">تراجع</translation>
+    </message>
+    <message>
+        <source>Undo the last line drawing</source>
+        <translation type="obsolete">التراجع عن خط الرسم الأخير</translation>
+    </message>
+    <message>
+        <source>Redo the last line drawing</source>
+        <translation type="obsolete">إعادة خط الرسم الأخير</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="obsolete">إعادة </translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineParallelOptions</name>
+    <message>
+        <source>Line Parallel Options</source>
+        <translation type="obsolete">خيارات الخط الموازي</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="obsolete">المسافة:</translation>
+    </message>
+    <message>
+        <source>Distance to original entity</source>
+        <translation type="obsolete">المسافة إلى الكيان الأصلي</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">عدد:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="obsolete">عدد المتوازيات للإنشاء</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineParallelThroughOptions</name>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">عدد:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="obsolete">عدد المتوازيات للإنشاء</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LinePolygon2Options</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="obsolete">خيارات المضلع</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">عدد:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="obsolete">عدد الحواف</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LinePolygonOptions</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="obsolete">خيارات المضلع</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="obsolete">عدد:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="obsolete">عدد الحواف</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineRelAngleOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="obsolete">خيارات خط الزاوية النسبية</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">زاوية:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="obsolete">خط الزاوية</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">الطول:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="obsolete">طول الخط</translation>
     </message>
 </context>
 <context>
@@ -5210,6 +5863,24 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
 </context>
 <context>
+    <name>QG_MTextOptions</name>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">زاوية:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ModifyOffsetOptions</name>
+    <message>
+        <source>Distance:</source>
+        <translation type="obsolete">المسافة:</translation>
+    </message>
+    <message>
+        <source>Offset from original entity</source>
+        <translation type="obsolete">الإزاحة من الكيان الأصلي</translation>
+    </message>
+</context>
+<context>
     <name>QG_MouseWidget</name>
     <message>
         <source>Mouse</source>
@@ -5233,6 +5904,13 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QG_MoveRotateOptions</name>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">زاوية:</translation>
+    </message>
+</context>
+<context>
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
@@ -5245,6 +5923,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Line type</source>
         <translation type="unfinished">نوع الخط</translation>
+    </message>
+</context>
+<context>
+    <name>QG_PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="obsolete">خيارات خط الزاوية النسبية</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="obsolete">المسافة من متعدّد الخطوط الأصلي</translation>
     </message>
 </context>
 <context>
@@ -5279,6 +5968,17 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QG_PrintPreviewOptions</name>
+    <message>
+        <source>Print Preview Options</source>
+        <translation type="obsolete">خيارات معاينة الطباعة</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;مقياس رسم الطباعة مقفل للقيمة الحالية&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
     <name>QG_RecentFiles</name>
     <message>
         <source>&amp;%1 %2</source>
@@ -5287,6 +5987,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Opening recent file...</source>
         <translation type="obsolete">فتح الملف الأخير ...</translation>
+    </message>
+</context>
+<context>
+    <name>QG_RoundOptions</name>
+    <message>
+        <source>Trim</source>
+        <translation type="obsolete">تقليم</translation>
     </message>
 </context>
 <context>
@@ -5318,6 +6025,28 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapDistOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="obsolete">خيارات مسافة الوثب</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="obsolete">المسافة:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapMiddleOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="obsolete">خيارات مسافة الوثب</translation>
+    </message>
+    <message>
+        <source>Middle Points:</source>
+        <translation type="obsolete">النقاط المتوسطة:</translation>
     </message>
 </context>
 <context>
@@ -5433,6 +6162,43 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Exclusive Snap Mode</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_SplineOptions</name>
+    <message>
+        <source>Spline Options</source>
+        <translation type="obsolete">خيارات الشريحة</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="obsolete">تراجع</translation>
+    </message>
+</context>
+<context>
+    <name>QG_TextOptions</name>
+    <message>
+        <source>Angle:</source>
+        <translation type="obsolete">زاوية:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_TrimAmountOptions</name>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending.</source>
+        <translation type="obsolete">المسافة. القيم السلبية لتقليم، والقيم الإيجابية لتمديد.</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="obsolete">الطول:</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
+        <translation type="obsolete">المسافة. القيم السلبية لتقليم، والقيم الإيجابية لتمديد. يتم تجاهل إشارة سلبية عند التقليم إلى الطول الإجمالي النهائي.</translation>
+    </message>
+    <message>
+        <source>The input length is used as total length after trimming, instead of length increase</source>
+        <translation type="obsolete">طول الإدخال يستخدم مثل الطول الإجمالي بعد التشذيب، بدلا من زيادة الطول</translation>
     </message>
 </context>
 <context>
@@ -7463,6 +8229,106 @@ Do you want to replace it?</source>
         <comment>bevel/fillet lenght2</comment>
         <translation type="obsolete">طول 2</translation>
     </message>
+    <message>
+        <source>A0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>B10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>C5E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comm10E</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DLE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
@@ -7473,6 +8339,13 @@ Do you want to replace it?</source>
     <message>
         <source>Cancel</source>
         <translation>إلغاء</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksEdit</name>
+    <message>
+        <source>&amp;Edit Block</source>
+        <translation type="obsolete">وتحرير كتلة</translation>
     </message>
 </context>
 <context>
@@ -9003,6 +9876,20 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionLayersEdit</name>
+    <message>
+        <source>&amp;Edit Layer</source>
+        <translation type="obsolete">وتحرير طبقة</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionLayersTogglePrint</name>
+    <message>
+        <source>Toggle Layer &amp;Print</source>
+        <translation type="obsolete">طبقة تبديل وطباعة</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionLibraryInsert</name>
     <message>
         <source>Insert Library Object</source>
@@ -9887,6 +10774,13 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionSelectSingle</name>
+    <message>
+        <source>Select Entity</source>
+        <translation type="obsolete">اِخْتار كيان</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionSelectWindow</name>
     <message>
         <source>Cancel</source>
@@ -9982,6 +10876,81 @@ Do you want to replace it?</source>
     <message>
         <source>Back</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_Commands</name>
+    <message>
+        <source>line</source>
+        <translation type="obsolete">خط</translation>
+    </message>
+    <message>
+        <source>rectangle</source>
+        <translation type="obsolete">مستطيل</translation>
+    </message>
+    <message>
+        <source>undo</source>
+        <translation type="obsolete">تراجع</translation>
+    </message>
+    <message>
+        <source>redo</source>
+        <translation type="obsolete">إعادة</translation>
+    </message>
+    <message>
+        <source>arc</source>
+        <translation type="obsolete">قوس</translation>
+    </message>
+    <message>
+        <source>angle</source>
+        <translation type="obsolete">زاوية</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <translation type="obsolete">طول</translation>
+    </message>
+    <message>
+        <source>number</source>
+        <translation type="obsolete">عدد</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <comment>length</comment>
+        <translation type="obsolete">طول</translation>
+    </message>
+    <message>
+        <source>length1</source>
+        <translation type="obsolete">طول 1</translation>
+    </message>
+    <message>
+        <source>length2</source>
+        <translation type="obsolete">طول 2</translation>
+    </message>
+    <message>
+        <source>length1</source>
+        <comment>length1</comment>
+        <translation type="obsolete">طول 1</translation>
+    </message>
+    <message>
+        <source>length2</source>
+        <comment>length2</comment>
+        <translation type="obsolete">طول 2</translation>
+    </message>
+    <message>
+        <source>chord length</source>
+        <translation type="obsolete">طول الوتر</translation>
+    </message>
+    <message>
+        <source>polyline</source>
+        <translation type="obsolete">متعدّد خطوط</translation>
+    </message>
+    <message>
+        <source>number</source>
+        <comment>number</comment>
+        <translation type="obsolete">رقم</translation>
+    </message>
+    <message>
+        <source>Accepted keycode: %1</source>
+        <translation type="obsolete">رمز المفتاح المقبول: 1%</translation>
     </message>
 </context>
 <context>
@@ -10695,875 +11664,6 @@ Do you want to replace it?</source>
     <message>
         <source>Update</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_ActionFactory</name>
-    <message>
-        <source>&amp;Print...</source>
-        <translation type="obsolete">وطباعة...</translation>
-    </message>
-    <message>
-        <source>&amp;Selection pointer</source>
-        <translation type="obsolete">واختيار مؤشر</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="obsolete">خيارات القوس</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="obsolete">في اتجاه عقارب الساعة</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="obsolete">عكس اتجاه عقارب الساعة</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="obsolete">خيارات قوس المماس</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="obsolete">نصف قطر قوس المماس</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="obsolete">نصف القطر</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="obsolete">زاوية</translation>
-    </message>
-</context>
-<context>
-    <name>QG_BevelOptions</name>
-    <message>
-        <source>Trim</source>
-        <translation type="obsolete">تقليم</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="obsolete">الطول 1:</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="obsolete">الطول 2:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarArcs</name>
-    <message>
-        <source>Arcs</source>
-        <translation type="obsolete">أقواس</translation>
-    </message>
-    <message>
-        <source>Arc with three points</source>
-        <translation type="obsolete">قوس بثلاث نقاط</translation>
-    </message>
-    <message>
-        <source>Arc with Center, Point, Angles</source>
-        <translation type="obsolete">قوس مع مركز، نقطة، زوايا</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">العودة إلى القائمة الرئيسية</translation>
-    </message>
-    <message>
-        <source>Arc tangential to base entity with radius</source>
-        <translation type="obsolete">قوس مماس لقاعدة كائن ونصف قطره</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarCircles</name>
-    <message>
-        <source>Circles</source>
-        <translation type="obsolete">دوائر</translation>
-    </message>
-    <message>
-        <source>Circle with two opposite points</source>
-        <translation type="obsolete">دائرة مع نقطتين متعاكستين</translation>
-    </message>
-    <message>
-        <source>Circle with center and point</source>
-        <translation type="obsolete">دائرة مع مركز ونقطة</translation>
-    </message>
-    <message>
-        <source>Circle with three points</source>
-        <translation type="obsolete">دائرة مع ثلاث نقاط</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarDim</name>
-    <message>
-        <source>Dimensions</source>
-        <translation type="obsolete">الأبعاد</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">العودة إلى القائمة الرئيسية</translation>
-    </message>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="obsolete">البُعْد الخطي</translation>
-    </message>
-    <message>
-        <source>Leader</source>
-        <translation type="obsolete">مرشد</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarEllipses</name>
-    <message>
-        <source>Ellipses</source>
-        <translation type="obsolete">قطَع ناقصة</translation>
-    </message>
-    <message>
-        <source>Ellipse arc with center, two points and angles</source>
-        <translation type="obsolete">قوس قطْع ناقص مع مركز، ونقطتين وزوايا</translation>
-    </message>
-    <message>
-        <source>Ellipse with Center and two points</source>
-        <translation type="obsolete">قطْع ناقص مع المركز ونقطتين</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">العودة إلى القائمة الرئيسية</translation>
-    </message>
-    <message>
-        <source>Draw Ellipse by foci and a point on ellipse</source>
-        <translation type="obsolete">رسم القطّع الناقص بواسطة البؤرة ونقطة على القطّع الناقص</translation>
-    </message>
-    <message>
-        <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
-        <translation type="obsolete">رسم قطْع ناقص مع محاور في الاتجاهات السينية-الصادية وبأرباع نقاط على القطْع الناقص</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Draw Ellipse by center and 3 points on ellipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;HTML&gt; &lt;HEAD /&gt; &lt;body&gt; &lt;p&gt;  رسم القطّع الناقص من قبل المنتصف و3 نقاط على القطّع الناقص &lt;/ P&gt; &lt;/ body&gt; &lt;/ HTML&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarInfo</name>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">العودة إلى القائمة الرئيسية</translation>
-    </message>
-    <message>
-        <source>Distance (Point, Point)</source>
-        <translation type="obsolete">المسافة (نقطة، نقطة)</translation>
-    </message>
-    <message>
-        <source>Distance (Entity, Point)</source>
-        <translation type="obsolete">المسافة (كيان، نقطة)</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="obsolete">زاوية</translation>
-    </message>
-    <message>
-        <source>Total length of selected entities</source>
-        <translation type="obsolete">إجمالي أطوال الكيانات المختارة</translation>
-    </message>
-    <message>
-        <source>Area of polygon</source>
-        <translation type="obsolete">مساحة المضلع</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarLines</name>
-    <message>
-        <source>Lines</source>
-        <translation type="obsolete">خطوط</translation>
-    </message>
-    <message>
-        <source>Freehand lines</source>
-        <translation type="obsolete">خطوط يد حرة</translation>
-    </message>
-    <message>
-        <source>Orthogonal lines</source>
-        <translation type="obsolete">خطوط متعامدة</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">العودة إلى القائمة الرئيسية</translation>
-    </message>
-    <message>
-        <source>Tangents from circle to circle</source>
-        <translation type="obsolete">مماسات من دائرة إلى دائرة</translation>
-    </message>
-    <message>
-        <source>Tangents from point to circle</source>
-        <translation type="obsolete">مماسات من نقطة إلى دائرة</translation>
-    </message>
-    <message>
-        <source>Line with two points</source>
-        <translation type="obsolete">خط مستقيم بنقطتين</translation>
-    </message>
-    <message>
-        <source>Lines with relative angles</source>
-        <translation type="obsolete">خطوط بزوايا نسبية</translation>
-    </message>
-    <message>
-        <source>Line with given angle</source>
-        <translation type="obsolete">خط مع زاوية معطاة</translation>
-    </message>
-    <message>
-        <source>Horizontal lines</source>
-        <translation type="obsolete">خطوط أفقية</translation>
-    </message>
-    <message>
-        <source>Vertical lines</source>
-        <translation type="obsolete">خطوط عمودية</translation>
-    </message>
-    <message>
-        <source>Rectangles</source>
-        <translation type="obsolete">مستطيلات</translation>
-    </message>
-    <message>
-        <source>Polygons with Center and Corner</source>
-        <translation type="obsolete">مضلعات مع مركز وركن</translation>
-    </message>
-    <message>
-        <source>Polygons with two Corners</source>
-        <translation type="obsolete">مضلعات مع ركنين</translation>
-    </message>
-    <message>
-        <source>Parallels with distance</source>
-        <translation type="obsolete">متوازيات مع المسافة</translation>
-    </message>
-    <message>
-        <source>Parallels through point</source>
-        <translation type="obsolete">المتوازيات من خلال نقطة</translation>
-    </message>
-    <message>
-        <source>Tangents to a circle, orthogonal to a line</source>
-        <translation type="obsolete">مماسات إلى دائرة، متعامدة مع الخط</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarMain</name>
-    <message>
-        <source>Main</source>
-        <translation type="obsolete">رئيسي</translation>
-    </message>
-    <message>
-        <source>Create Block</source>
-        <translation type="obsolete">إنشاء كتلة</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Lines&quot;</source>
-        <translation type="obsolete">إِظْهارُ شريط الأدوات &quot;خطوط&quot;</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Arcs&quot;</source>
-        <translation type="obsolete">إِظْهارُ شريط الأدوات &quot;أقواس&quot;</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Circles&quot;</source>
-        <translation type="obsolete">إِظْهارُ شريط الأدوات &quot;دوائر&quot;</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Ellipses&quot;</source>
-        <translation type="obsolete">إظْهارُ شريط الأدوات &quot;القطوع الناقصة&quot;</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Polylines&quot;</source>
-        <translation type="obsolete">إِظْهارُ شريط الأدوات &quot;متعدّدات خطوط&quot;</translation>
-    </message>
-    <message>
-        <source>Draw Splines</source>
-        <translation type="obsolete">رسم شرائح</translation>
-    </message>
-    <message>
-        <source>Draw Points</source>
-        <translation type="obsolete">رسم نقاط</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Dimensions&quot;</source>
-        <translation type="obsolete">إِظْهارُ شريط الأدوات &quot;أبعاد&quot;</translation>
-    </message>
-    <message>
-        <source>Create Hatch</source>
-        <translation type="obsolete">إنشي تظليل</translation>
-    </message>
-    <message>
-        <source>Insert Image</source>
-        <translation type="obsolete">إدراج صورة</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Modify&quot;</source>
-        <translation type="obsolete">إِظْهارُ شريط الأدوات &quot;تعديل&quot;</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Info&quot;</source>
-        <translation type="obsolete">اظهر شريط الأدوات &quot;معلومات&quot;</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarModify</name>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">تعديل</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">العودة إلى القائمة الرئيسية</translation>
-    </message>
-    <message>
-        <source>Rotate</source>
-        <translation type="obsolete">تدوير</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="obsolete">تحجيم</translation>
-    </message>
-    <message>
-        <source>Move and Rotate</source>
-        <translation type="obsolete">نقل وتدوير</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="obsolete">حذف</translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="obsolete">امتداد</translation>
-    </message>
-    <message>
-        <source>Trim / Extend two</source>
-        <translation type="obsolete">تقليم / تمديد اثنين</translation>
-    </message>
-    <message>
-        <source>Trim / Extend</source>
-        <translation type="obsolete">تقليم / تمديد</translation>
-    </message>
-    <message>
-        <source>Edit Entity Attributes</source>
-        <translation type="obsolete">حرر سمات الكيان</translation>
-    </message>
-    <message>
-        <source>Edit Entity Geometry</source>
-        <translation type="obsolete">تحرير هندسة الكيان</translation>
-    </message>
-    <message>
-        <source>Mirror</source>
-        <translation type="obsolete">مرآة</translation>
-    </message>
-    <message>
-        <source>Edit Text</source>
-        <translation type="obsolete">تحرير النص</translation>
-    </message>
-    <message>
-        <source>Move / Copy</source>
-        <translation type="obsolete">نقل / نسخ</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarPoints</name>
-    <message>
-        <source>Points</source>
-        <translation type="obsolete">نقاط</translation>
-    </message>
-    <message>
-        <source>Single points</source>
-        <translation type="obsolete">نقاط فردية</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarPolylines</name>
-    <message>
-        <source>Polylines</source>
-        <translation type="obsolete">متعدّدات خطوط</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">العودة إلى القائمة الرئيسية</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="obsolete">إنشاء متعدّد خطوط</translation>
-    </message>
-    <message>
-        <source>Polyline equidistant</source>
-        <translation type="obsolete">متعدّد خطوط متساوي البُعْد</translation>
-    </message>
-    <message>
-        <source>Create Polyline from Existing Segments</source>
-        <translation type="obsolete">إنشاء متعدّد خطوط من القطاعات الموجودة</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarSelect</name>
-    <message>
-        <source>Select layer</source>
-        <translation type="obsolete">اختر طبقة</translation>
-    </message>
-    <message>
-        <source>(De-)Select entity</source>
-        <translation type="obsolete">إلغاء اختيار الكيان</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarSplines</name>
-    <message>
-        <source>Splines</source>
-        <translation type="obsolete">شرائح</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="obsolete">شريحة</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CircleTan2Options</name>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;HTML&gt; &lt;HEAD /&gt; &lt;body&gt; &lt;p&gt;نصف قطر دائرة المماس لرسم &lt;/ P&gt; &lt;/ body&gt; &lt;/ HTML&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DimLinearOptions</name>
-    <message>
-        <source>Linear Dimension Options</source>
-        <translation type="obsolete">خيارات البُعْد الخطي</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">زاوية:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ImageOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">زاوية:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="obsolete">زاوية دوران</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="obsolete">معامل التحجيم</translation>
-    </message>
-</context>
-<context>
-    <name>QG_InsertOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">زاوية:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="obsolete">زاوية دوران</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="obsolete">معامل التحجيم</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="obsolete">عدد اﻷعمدة</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="obsolete">عدد الصفوف</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LibraryInsertOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">زاوية:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="obsolete">زاوية دوران</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="obsolete">معامل التحجيم</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="obsolete">خيارات خط الزاوية</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">زاوية:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="obsolete">خط الزاوية</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">الطول:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="obsolete">طول الخط</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="obsolete">خيارات الخط المُنَصِّف</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">الطول:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="obsolete">طول المنصّف</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">عدد:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="obsolete">عدد المنصّفات للإنشاء</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="obsolete">خيارات الخط</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="obsolete">تراجع</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="obsolete">التراجع عن خط الرسم الأخير</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="obsolete">إعادة خط الرسم الأخير</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="obsolete">إعادة </translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="obsolete">خيارات الخط الموازي</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">المسافة:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="obsolete">المسافة إلى الكيان الأصلي</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">عدد:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="obsolete">عدد المتوازيات للإنشاء</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineParallelThroughOptions</name>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">عدد:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="obsolete">عدد المتوازيات للإنشاء</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">خيارات المضلع</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">عدد:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">عدد الحواف</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">خيارات المضلع</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">عدد:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">عدد الحواف</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="obsolete">خيارات خط الزاوية النسبية</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">زاوية:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="obsolete">خط الزاوية</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">الطول:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="obsolete">طول الخط</translation>
-    </message>
-</context>
-<context>
-    <name>QG_MTextOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">زاوية:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ModifyOffsetOptions</name>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">المسافة:</translation>
-    </message>
-    <message>
-        <source>Offset from original entity</source>
-        <translation type="obsolete">الإزاحة من الكيان الأصلي</translation>
-    </message>
-</context>
-<context>
-    <name>QG_MoveRotateOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">زاوية:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="obsolete">خيارات خط الزاوية النسبية</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="obsolete">المسافة من متعدّد الخطوط الأصلي</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="obsolete">خيارات معاينة الطباعة</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;مقياس رسم الطباعة مقفل للقيمة الحالية&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>QG_RoundOptions</name>
-    <message>
-        <source>Trim</source>
-        <translation type="obsolete">تقليم</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SnapDistOptions</name>
-    <message>
-        <source>Snap Distance Options</source>
-        <translation type="obsolete">خيارات مسافة الوثب</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">المسافة:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SnapMiddleOptions</name>
-    <message>
-        <source>Snap Distance Options</source>
-        <translation type="obsolete">خيارات مسافة الوثب</translation>
-    </message>
-    <message>
-        <source>Middle Points:</source>
-        <translation type="obsolete">النقاط المتوسطة:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="obsolete">خيارات الشريحة</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="obsolete">تراجع</translation>
-    </message>
-</context>
-<context>
-    <name>QG_TextOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">زاوية:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_TrimAmountOptions</name>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="obsolete">المسافة. القيم السلبية لتقليم، والقيم الإيجابية لتمديد.</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">الطول:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="obsolete">المسافة. القيم السلبية لتقليم، والقيم الإيجابية لتمديد. يتم تجاهل إشارة سلبية عند التقليم إلى الطول الإجمالي النهائي.</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="obsolete">طول الإدخال يستخدم مثل الطول الإجمالي بعد التشذيب، بدلا من زيادة الطول</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksEdit</name>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translation type="obsolete">وتحرير كتلة</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersEdit</name>
-    <message>
-        <source>&amp;Edit Layer</source>
-        <translation type="obsolete">وتحرير طبقة</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersTogglePrint</name>
-    <message>
-        <source>Toggle Layer &amp;Print</source>
-        <translation type="obsolete">طبقة تبديل وطباعة</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Select Entity</source>
-        <translation type="obsolete">اِخْتار كيان</translation>
-    </message>
-</context>
-<context>
-    <name>RS_Commands</name>
-    <message>
-        <source>line</source>
-        <translation type="obsolete">خط</translation>
-    </message>
-    <message>
-        <source>rectangle</source>
-        <translation type="obsolete">مستطيل</translation>
-    </message>
-    <message>
-        <source>undo</source>
-        <translation type="obsolete">تراجع</translation>
-    </message>
-    <message>
-        <source>redo</source>
-        <translation type="obsolete">إعادة</translation>
-    </message>
-    <message>
-        <source>arc</source>
-        <translation type="obsolete">قوس</translation>
-    </message>
-    <message>
-        <source>angle</source>
-        <translation type="obsolete">زاوية</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="obsolete">طول</translation>
-    </message>
-    <message>
-        <source>number</source>
-        <translation type="obsolete">عدد</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <comment>length</comment>
-        <translation type="obsolete">طول</translation>
-    </message>
-    <message>
-        <source>length1</source>
-        <translation type="obsolete">طول 1</translation>
-    </message>
-    <message>
-        <source>length2</source>
-        <translation type="obsolete">طول 2</translation>
-    </message>
-    <message>
-        <source>length1</source>
-        <comment>length1</comment>
-        <translation type="obsolete">طول 1</translation>
-    </message>
-    <message>
-        <source>length2</source>
-        <comment>length2</comment>
-        <translation type="obsolete">طول 2</translation>
-    </message>
-    <message>
-        <source>chord length</source>
-        <translation type="obsolete">طول الوتر</translation>
-    </message>
-    <message>
-        <source>polyline</source>
-        <translation type="obsolete">متعدّد خطوط</translation>
-    </message>
-    <message>
-        <source>number</source>
-        <comment>number</comment>
-        <translation type="obsolete">رقم</translation>
-    </message>
-    <message>
-        <source>Accepted keycode: %1</source>
-        <translation type="obsolete">رمز المفتاح المقبول: 1%</translation>
     </message>
 </context>
 </TS>
