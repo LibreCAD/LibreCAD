@@ -229,7 +229,6 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
     }
 
     // initialize dialog properties
-    setWindowTitle(tr("Save %1 As").arg(name));
     setFileMode(QFileDialog::AnyFile);
     setDirectory(defDir);
     setNameFilters(filters);
@@ -309,7 +308,6 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
 
     fileDlg->setNameFilters(filters);
     fileDlg->setFileMode(QFileDialog::AnyFile);
-    fileDlg->setWindowTitle(QObject::tr("Save Drawing As"));
     fileDlg->setDirectory(defDir);
     fileDlg->setAcceptMode(QFileDialog::AcceptSave);
 	fileDlg->selectNameFilter(defFilter);
