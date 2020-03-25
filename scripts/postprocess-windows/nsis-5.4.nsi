@@ -141,6 +141,19 @@ Section "Install Section" SecInstall
     Abort
   notRunning:
 
+  ;Clean up old files
+  Delete "$INSTDIR\resources\qm\*.*"
+  ${If} ${FileExists} `$INSTDIR\resources\library\algorithm\*.*`
+    ; file is a directory
+  ${ElseIf} ${FileExists} `$INSTDIR\resources\library\algorithm`
+    Delete $INSTDIR\resources\library\algorithm
+  ${EndIf}
+  ${If} ${FileExists} `$INSTDIR\resources\library\sheets\*.*`
+    ; file is a directory
+  ${ElseIf} ${FileExists} `$INSTDIR\resources\library\sheets`
+    Delete $INSTDIR\resources\library\sheets
+  ${EndIf}
+
   ;Install Visual C++ Redistributable
   SetOutPath "$INSTDIR"
   File /r "..\..\redist\*.*"

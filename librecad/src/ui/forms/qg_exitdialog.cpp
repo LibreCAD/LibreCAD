@@ -81,6 +81,12 @@ void QG_ExitDialog::init()
 //    bSaveAs->setIcon(QIcon(":/actions/filesaveas.png"));
      // RVT_PORT makeLetterAccell( bSaveAs );
     // RVT_PORT  makeLetterAccell( bCancel );
+	if (QDialogButtonBox::tr("Save") != "Save")
+		ui->buttonBox->button(QDialogButtonBox::Save)->setText(QDialogButtonBox::tr("Save"));
+	if (QDialogButtonBox::tr("Save All") != "Save All")
+		ui->buttonBox->button(QDialogButtonBox::SaveAll)->setText(QDialogButtonBox::tr("Save All"));
+	if (QDialogButtonBox::tr("Cancel") != "Cancel")
+		ui->buttonBox->button(QDialogButtonBox::Cancel)->setText(QDialogButtonBox::tr("Cancel"));
 }
 
 void QG_ExitDialog::clicked(QAbstractButton * button){

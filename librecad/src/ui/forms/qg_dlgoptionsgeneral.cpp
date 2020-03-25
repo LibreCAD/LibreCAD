@@ -229,6 +229,11 @@ void QG_DlgOptionsGeneral::init()
 	cbEvaluateOnSpace->setChecked(RS_SETTINGS->readNumEntry("/Keyboard/EvaluateCommandOnSpace", false));
 	cbToggleFreeSnapOnSpace->setChecked(RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false));
 
+	if (QDialogButtonBox::tr("OK") != "OK")
+		this->buttonBox->button(QDialogButtonBox::Ok)->setText(QDialogButtonBox::tr("OK"));
+	if (QDialogButtonBox::tr("Cancel") != "Cancel")
+		this->buttonBox->button(QDialogButtonBox::Cancel)->setText(QDialogButtonBox::tr("Cancel"));
+
     restartNeeded = false;
 }
 

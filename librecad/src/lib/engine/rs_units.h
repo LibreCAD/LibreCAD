@@ -98,6 +98,9 @@ public:
 	static QString inputDeviceTypeToString(RS2::InputDeviceType t);
 	static RS2::InputDeviceType stringToInputDeviceType(const QString& s);
 
+private:
+	static QString translate(QStringList contexts, const char* phrase);
+
 };
 
 
