@@ -373,6 +373,15 @@ public:
     bool isPanning() const;
     void setPanning(bool state);
 
+    void setLineWidthScaling(bool state){
+        scaleLineWidth = state;
+    }
+
+    bool getLineWidthScaling(){
+        return scaleLineWidth;
+    }
+
+
 protected:
 
     RS_EntityContainer* container{nullptr}; // Holds a pointer to all the enties
@@ -452,6 +461,8 @@ private:
 	bool m_bIsCleanUp=false;
 
     bool panning;
+
+	bool scaleLineWidth;
 
 signals:
     void relative_zero_changed(const RS_Vector&);

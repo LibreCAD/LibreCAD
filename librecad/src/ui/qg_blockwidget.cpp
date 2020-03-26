@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2020 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2011 Rallaz (rallazz@gmail.com)
 ** Copyright (C) 2010-2011 R. van Twisk (librecad@rvt.dds.nl)
 **
@@ -65,9 +66,9 @@ bool blockLessThan(const RS_Block *s1, const RS_Block *s2) {
 }
 
 void QG_BlockModel::setBlockList(RS_BlockList* bl) {
-	/* since 4.6 the recommended way is to use begin/endResetModel()
-	 * TNick <nicu.tofan@gmail.com>
-	 */
+    /* since 4.6 the recommended way is to use begin/endResetModel()
+     * TNick <nicu.tofan@gmail.com>
+     */
     beginResetModel();
     listBlock.clear();
     if (bl == NULL){
@@ -78,8 +79,10 @@ void QG_BlockModel::setBlockList(RS_BlockList* bl) {
         if ( !bl->at(i)->isUndone() )
             listBlock.append(bl->at(i));
     }
-    std::sort(listBlock.begin(), listBlock.end(), blockLessThan);
-//called to force redraw
+    setActiveBlock(bl->getActive());
+    std::sort ( listBlock.begin(), listBlock.end(), blockLessThan );
+
+    //called to force redraw
     endResetModel();
 }
 
@@ -113,6 +116,13 @@ QVariant QG_BlockModel::data ( const QModelIndex & index, int role ) const {
     if (role ==Qt::DisplayRole && index.column() == NAME) {
         return blk->getName();
     }
+    if (role == Qt::FontRole && index.column() == NAME) {
+        if (activeBlock && activeBlock == blk) {
+            QFont font;
+            font.setBold(true);
+            return font;
+        }
+    }
 //Other roles:
     return QVariant();
 }
@@ -133,7 +143,7 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     blockView = new QTableView(this);
     blockView->setModel (blockModel);
     blockView->setShowGrid (false);
-    blockView->setSelectionMode(QAbstractItemView::SingleSelection);
+    blockView->setSelectionMode(QAbstractItemView::ExtendedSelection);
     blockView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     blockView->setFocusPolicy(Qt::NoFocus);
     blockView->setColumnWidth(QG_BlockModel::VISIBLE, 20);
@@ -154,48 +164,42 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     but->setIcon(QIcon(":/icons/visible.svg"));
     but->setMinimumSize(button_size);
     but->setToolTip(tr("Show all blocks"));
-    connect(but, SIGNAL(clicked()),
-            actionHandler, SLOT(slotBlocksDefreezeAll()));
+    connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksDefreezeAll);
     layButtons->addWidget(but);
     // hide all blocks:
     but = new QToolButton(this);
     but->setIcon( QIcon(":/icons/invisible.svg") );
     but->setMinimumSize(button_size);
     but->setToolTip(tr("Hide all blocks"));
-    connect(but, SIGNAL(clicked()),
-            actionHandler, SLOT(slotBlocksFreezeAll()));
+    connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksFreezeAll);
     layButtons->addWidget(but);
     // create block:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/create_block.svg"));
     but->setMinimumSize(button_size);
     but->setToolTip(tr("Create Block"));
-    connect(but, SIGNAL(clicked()),
-            actionHandler, SLOT(slotBlocksCreate()));
+    connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksCreate);
     layButtons->addWidget(but);
     // add block:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/add.svg"));
     but->setMinimumSize(button_size);
     but->setToolTip(tr("Add an empty block"));
-    connect(but, SIGNAL(clicked()),
-            actionHandler, SLOT(slotBlocksAdd()));
+    connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksAdd);
     layButtons->addWidget(but);
     // remove block:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/remove.svg"));
     but->setMinimumSize(button_size);
-    but->setToolTip(tr("Remove the active block"));
-    connect(but, SIGNAL(clicked()),
-            actionHandler, SLOT(slotBlocksRemove()));
+    but->setToolTip(tr("Remove block"));
+    connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksRemove);
     layButtons->addWidget(but);
     // edit attributes:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/rename_active_block.svg"));
     but->setMinimumSize(button_size);
     but->setToolTip(tr("Rename the active block"));
-    connect(but, SIGNAL(clicked()),
-            actionHandler, SLOT(slotBlocksAttributes()));
+    connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksAttributes);
     layButtons2->addWidget(but);
     // edit block:
     but = new QToolButton(this);
@@ -203,40 +207,39 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     but->setMinimumSize(button_size);
     but->setToolTip(tr("Edit the active block\n"
                           "in a separate window"));
-    connect(but, SIGNAL(clicked()),
-            actionHandler, SLOT(slotBlocksEdit()));
+    connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksEdit);
     layButtons2->addWidget(but);
     // save block:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/save.svg"));
     but->setMinimumSize(button_size);
     but->setToolTip(tr("save the active block to a file"));
-    connect(but, SIGNAL(clicked()),
-            actionHandler, SLOT(slotBlocksSave()));
+    connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksSave);
     layButtons2->addWidget(but);
     // insert block:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/insert_active_block.svg"));
     but->setMinimumSize(button_size);
     but->setToolTip(tr("Insert the active block"));
-    connect(but, SIGNAL(clicked()),
-            actionHandler, SLOT(slotBlocksInsert()));
+    connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksInsert);
     layButtons2->addWidget(but);
 
     // lineEdit to filter block list with RegEx
     matchBlockName = new QLineEdit(this);
     matchBlockName->setReadOnly(false);
-    matchBlockName->setPlaceholderText("Filter");
+    matchBlockName->setPlaceholderText(tr("Filter"));
     matchBlockName->setClearButtonEnabled(true);
     matchBlockName->setToolTip(tr("Looking for matching block names"));
-    connect(matchBlockName, SIGNAL(textChanged(QString)), this, SLOT(slotUpdateBlockList()));
+    connect(matchBlockName, &QLineEdit::textChanged, this, &QG_BlockWidget::slotUpdateBlockList);
 
     lay->addWidget(matchBlockName);
     lay->addLayout(layButtons);
     lay->addLayout(layButtons2);
     lay->addWidget(blockView);
 
-    connect(blockView, SIGNAL(clicked(QModelIndex)), this, SLOT(slotActivated(QModelIndex)));
+    connect(blockView, &QTableView::clicked, this, &QG_BlockWidget::slotActivated);
+    connect(blockView->selectionModel(), &QItemSelectionModel::selectionChanged,
+            this, &QG_BlockWidget::slotSelectionChanged);
 }
 
 /**
@@ -266,6 +269,7 @@ void QG_BlockWidget::update() {
 
     if (blockList==NULL) {
         RS_DEBUG->print("QG_BlockWidget::update(): blockList is NULL");
+        blockModel->setActiveBlock(nullptr);
         return;
     }
 
@@ -275,9 +279,26 @@ void QG_BlockWidget::update() {
     blockView->resizeRowsToContents();
     blockView->verticalScrollBar()->setValue(yPos);
 
+    restoreSelections();
+
     RS_DEBUG->print("QG_BlockWidget::update() done");
 }
 
+
+void QG_BlockWidget::restoreSelections() {
+
+    QItemSelectionModel* selectionModel = blockView->selectionModel();
+
+    for (auto block: *blockList) {
+        if (!block) continue;
+        if (!block->isVisibleInBlockList()) continue;
+        if (!block->isSelectedInBlockList()) continue;
+
+        QModelIndex idx = blockModel->getIndex(block);
+        QItemSelection selection(idx, idx);
+        selectionModel->select(selection, QItemSelectionModel::Select);
+    }
+}
 
 
 /**
@@ -294,7 +315,23 @@ void QG_BlockWidget::activateBlock(RS_Block* block) {
     lastBlock = blockList->getActive();
     blockList->activate(block);
     QModelIndex idx = blockModel->getIndex (block);
+
+    // remember selected status of the block
+    bool selected = block->isSelectedInBlockList();
+
     blockView->setCurrentIndex ( idx );
+    blockModel->setActiveBlock(block);
+    blockView->viewport()->update();
+
+    // restore selected status of the block
+    QItemSelectionModel::SelectionFlag selFlag;
+    if (selected) {
+        selFlag = QItemSelectionModel::Select;
+    } else {
+        selFlag = QItemSelectionModel::Deselect;
+    }
+    block->selectedInBlockList(selected);
+    blockView->selectionModel()->select(QItemSelection(idx, idx), selFlag);
 }
 
 /**
@@ -318,9 +355,38 @@ void QG_BlockWidget::slotActivated(QModelIndex blockIdx) {
 
     if (blockIdx.column() == QG_BlockModel::NAME) {
         lastBlock = blockList->getActive();
-        blockList->activate(block);
+        activateBlock(block);
     }
 }
+
+
+/**
+ * Called on blocks selection/deselection
+ */
+void QG_BlockWidget::slotSelectionChanged(
+    const QItemSelection &selected,
+    const QItemSelection &deselected)
+{
+    QModelIndex index;
+    QItemSelectionModel *selectionModel {blockView->selectionModel()};
+
+    foreach (index, selected.indexes()) {
+        auto block = blockModel->getBlock(index.row());
+        if (block) {
+            block->selectedInBlockList(true);
+            selectionModel->select(QItemSelection(index, index), QItemSelectionModel::Select);
+        }
+    }
+
+    foreach (index, deselected.indexes()) {
+        auto block = blockModel->getBlock(index.row());
+        if (block && block->isVisibleInBlockList()) {
+            block->selectedInBlockList(false);
+            selectionModel->select(QItemSelection(index, index), QItemSelectionModel::Deselect);
+        }
+    }
+}
+
 
 /**
  * Shows a context menu for the block widget. Launched with a right click.
@@ -328,7 +394,7 @@ void QG_BlockWidget::slotActivated(QModelIndex blockIdx) {
 void QG_BlockWidget::contextMenuEvent(QContextMenuEvent *e) {
 
     // select item (block) in Block List widget first because left-mouse-click event are not to be triggered
-    slotActivated(blockView->currentIndex());
+    // slotActivated(blockView->currentIndex());
 
     QMenu* contextMenu = new QMenu(this);
     QLabel* caption = new QLabel(tr("Block Menu"), this);
@@ -337,22 +403,28 @@ void QG_BlockWidget::contextMenuEvent(QContextMenuEvent *e) {
     palette.setColor(caption->foregroundRole(), RS_Color(255,255,255));
     caption->setPalette(palette);
     caption->setAlignment( Qt::AlignCenter );
+    // Actions for all blocks:
     contextMenu->addAction( tr("&Defreeze all Blocks"), actionHandler,
                              SLOT(slotBlocksDefreezeAll()), 0);
     contextMenu->addAction( tr("&Freeze all Blocks"), actionHandler,
                              SLOT(slotBlocksFreezeAll()), 0);
-    contextMenu->addAction( tr("&Add Block"), actionHandler,
-                             SLOT(slotBlocksAdd()), 0);
+    contextMenu->addSeparator();
+    // Actions for selected blocks or,
+    // if nothing is selected, for active block:
+    contextMenu->addAction( tr("&Toggle Visibility"), actionHandler,
+                             SLOT(slotBlocksToggleView()), 0);
     contextMenu->addAction( tr("&Remove Block"), actionHandler,
                              SLOT(slotBlocksRemove()), 0);
+    contextMenu->addSeparator();
+    // Single block actions:
+    contextMenu->addAction( tr("&Add Block"), actionHandler,
+                             SLOT(slotBlocksAdd()), 0);
     contextMenu->addAction( tr("&Rename Block"), actionHandler,
                              SLOT(slotBlocksAttributes()), 0);
     contextMenu->addAction( tr("&Edit Block"), actionHandler,
                              SLOT(slotBlocksEdit()), 0);
     contextMenu->addAction( tr("&Insert Block"), actionHandler,
                              SLOT(slotBlocksInsert()), 0);
-    contextMenu->addAction( tr("&Toggle Visibility"), actionHandler,
-                             SLOT(slotBlocksToggleView()), 0);
     contextMenu->addAction( tr("&Create New Block"), actionHandler,
                              SLOT(slotBlocksCreate()), 0);
     contextMenu->exec(QCursor::pos());
@@ -405,7 +477,9 @@ void QG_BlockWidget::slotUpdateBlockList() {
     rx.setPatternSyntax(QRegExp::WildcardUnix);
 
     for (int i = 0; i < blockList->count(); i++) {
-        s = blockModel->getBlock(i)->getName();
+        RS_Block* block = blockModel->getBlock(i);
+        if (!block) continue;
+        s = block->getName();
         int f = rx.indexIn(s, pos);
         if (!f) {
             blockView->showRow(i);
@@ -415,5 +489,6 @@ void QG_BlockWidget::slotUpdateBlockList() {
             blockModel->getBlock(i)->visibleInBlockList(false);
         }
     }
-}
 
+    restoreSelections();
+}

@@ -171,6 +171,7 @@ public:
                                       bool onEntity = true,
                                       double* dist = nullptr,
                                       RS_Entity** entity=nullptr) const override;
+    //RS_Vector getPointOnEntityAlongLine(const RS_Vector& coord,const double angle,bool onEntity,double* dist,RS_Entity** entity) const;
     RS_Vector getNearestMiddle(const RS_Vector& coord,
                                double* dist = nullptr,
                                int middlePoints = 1) const override;

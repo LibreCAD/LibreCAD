@@ -109,12 +109,16 @@ public:
 			RS_LayerList* layerList = nullptr) override;
 	RS_Layer* requestLayerRemovalDialog(
 			RS_LayerList* layerList = nullptr) override;
+	QStringList requestSelectedLayersRemovalDialog(
+			RS_LayerList* layerList = nullptr) override;
 	RS_Layer* requestEditLayerDialog(
 			RS_LayerList* layerList = nullptr) override;
 
 	RS_BlockData requestNewBlockDialog(RS_BlockList* blockList) override;
 	RS_Block* requestBlockRemovalDialog(
 			RS_BlockList* blockList) override;
+	QList<RS_Block*> requestSelectedBlocksRemovalDialog(
+			RS_BlockList* blockList = nullptr) override;
 	RS_BlockData requestBlockAttributesDialog(
 			RS_BlockList* blockList) override;
 	void requestEditBlockWindow(RS_BlockList* /*blockList*/) override{}

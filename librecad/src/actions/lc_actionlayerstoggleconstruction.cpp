@@ -52,20 +52,21 @@ LC_ActionLayersToggleConstruction::LC_ActionLayersToggleConstruction(
 void LC_ActionLayersToggleConstruction::trigger() {
     RS_DEBUG->print("toggle layer construction");
     if (graphic) {
-        if (a_layer) {
+        RS_LayerList* ll = graphic->getLayerList();
+        unsigned cnt = 0;
+        // toggle selected layers
+        for (auto layer: *ll) {
+            if (!layer) continue;
+            if (!layer->isVisibleInLayerList()) continue;
+            if (!layer->isSelectedInLayerList()) continue;
+            graphic->toggleLayerConstruction(layer);
+            deselectEntities(layer);
+            cnt++;
+        }
+        // if there wasn't selected layers, toggle active layer
+        if (!cnt) {
             graphic->toggleLayerConstruction(a_layer);
-
-            // deselect entities on locked layer:
-			for(auto e: *container){
-                if (e && e->isVisible() && e->getLayer()==a_layer) {
-                    if (graphicView) {
-                        graphicView->deleteEntity(e);
-                    }
-                    if (graphicView) {
-                        graphicView->drawEntity(e);
-                    }
-                }
-            }
+            deselectEntities(a_layer);
         }
     }
     finish(false);
@@ -76,5 +77,25 @@ void LC_ActionLayersToggleConstruction::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
+
+
+void LC_ActionLayersToggleConstruction::deselectEntities(RS_Layer* layer)
+{
+    if (!layer) return;
+
+    for(auto e: *container){
+        if (e && e->isVisible() && e->getLayer() == layer) {
+
+            if (graphicView) {
+                graphicView->deleteEntity(e);
+            }
+
+            if (graphicView) {
+                graphicView->drawEntity(e);
+            }
+        }
+    }
+}
+
 
 // EOF

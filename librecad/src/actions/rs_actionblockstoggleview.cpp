@@ -29,6 +29,7 @@
 #include <QAction>
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
+#include "rs_block.h"
 #include "rs_debug.h"
 
 
@@ -42,11 +43,23 @@ RS_ActionBlocksToggleView::RS_ActionBlocksToggleView(
 
 void RS_ActionBlocksToggleView::trigger() {
     RS_DEBUG->print("toggle block");
-	if (graphic) {
-        RS_Block* block = graphic->getActiveBlock();
-        graphic->toggleBlock(block);
+    if (graphic) {
+        RS_BlockList* bl = graphic->getBlockList();
+        unsigned cnt = 0;
+        // toggle selected blocks
+        for (auto block: *bl) {
+            if (!block) continue;
+            if (!block->isVisibleInBlockList()) continue;
+            if (!block->isSelectedInBlockList()) continue;
+            graphic->toggleBlock(block);
+            cnt++;
+        }
+        // if there wasn't selected blocks, toggle active block
+        if (!cnt) {
+            graphic->toggleBlock(graphic->getActiveBlock());
+        }
     }
-        graphicView->redraw(RS2::RedrawDrawing);
+    graphicView->redraw(RS2::RedrawDrawing);
 
     finish(false);
 }

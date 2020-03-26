@@ -54,6 +54,7 @@ struct RS_BlockData {
 
 	bool frozen {false};              //!< Frozen flag
 	bool visibleInBlockList {true};   //!< Visible in block list
+	bool selectedInBlockList {false}; //!< selected in block list
 };
 
 
@@ -194,6 +195,18 @@ public:
      * Returns the visibility of the Block in block list
      */
     bool isVisibleInBlockList() const;
+
+    /**
+     * Sets selection state of the block in block list
+     *
+     * @param v true: selected, false: deselected
+     */
+    void selectedInBlockList(bool v);
+
+    /**
+     * Returns selection state of the block in block list
+     */
+    bool isSelectedInBlockList() const;
 
 protected:
 	//! Block data

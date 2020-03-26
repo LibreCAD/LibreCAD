@@ -50,6 +50,8 @@ public:
 protected:
     RS_Layer* a_layer;
 
+private:
+    void deselectEntitiesOnLockedLayer(RS_Layer* layer);
 };
 
 #endif

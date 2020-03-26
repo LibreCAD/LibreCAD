@@ -31,6 +31,7 @@
 #include <QWidget>
 #include <QIcon>
 #include <QAbstractTableModel>
+#include <QItemSelection>
 
 #include "rs_layerlistlistener.h"
 #include "rs_layerlist.h"
@@ -75,6 +76,9 @@ public:
     RS_Layer *getLayer( int row );
     QModelIndex getIndex (RS_Layer * lay);
 
+    RS_Layer* getActiveLayer() { return activeLayer; };
+    void setActiveLayer(RS_Layer* l) { activeLayer = l; };
+
 private:
     QList<RS_Layer*> listLayer;
     QIcon layerVisible;
@@ -85,6 +89,7 @@ private:
     QIcon layerNoPrint;
     QIcon layerConstruction;
     QIcon layerNoConstruction;
+    RS_Layer* activeLayer {nullptr};
 };
 
 
@@ -143,6 +148,9 @@ signals:
 
 public slots:
     void slotActivated(QModelIndex layerIdx);
+    void slotSelectionChanged(
+        const QItemSelection &selected,
+        const QItemSelection &deselected);
     void slotUpdateLayerList();
     void activateLayer(int row);
 
@@ -158,6 +166,8 @@ private:
     QG_LayerModel *layerModel;
     RS_Layer* lastLayer;   
     QG_ActionHandler* actionHandler;
+
+    void restoreSelections();
 };
 
 #endif

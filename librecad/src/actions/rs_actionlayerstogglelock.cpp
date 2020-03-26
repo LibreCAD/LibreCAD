@@ -45,28 +45,22 @@ RS_ActionLayersToggleLock::RS_ActionLayersToggleLock(
 void RS_ActionLayersToggleLock::trigger() {
     RS_DEBUG->print("toggle layer");
     if (graphic) {
-        if (a_layer) {
-            graphic->toggleLayerLock(a_layer);
-
-            // deselect entities on locked layer:
-            if (a_layer->isLocked()) {
-				for(auto e: *container){
-                    if (e && e->isVisible() && e->getLayer()==a_layer) {
-
-                        if (graphicView) {
-                            graphicView->deleteEntity(e);
-                        }
-
-                        e->setSelected(false);
-
-                        if (graphicView) {
-                            graphicView->drawEntity(e);
-                        }
-                    }
-                }
-            }
+        RS_LayerList* ll = graphic->getLayerList();
+        unsigned cnt = 0;
+        // toggle selected layers
+        for (auto layer: *ll) {
+            if (!layer) continue;
+            if (!layer->isVisibleInLayerList()) continue;
+            if (!layer->isSelectedInLayerList()) continue;
+            graphic->toggleLayerLock(layer);
+            deselectEntitiesOnLockedLayer(layer);
+            cnt++;
         }
-
+        // if there wasn't selected layers, toggle active layer
+        if (!cnt) {
+            graphic->toggleLayerLock(a_layer);
+            deselectEntitiesOnLockedLayer(a_layer);
+        }
     }
     finish(false);
 }
@@ -75,5 +69,27 @@ void RS_ActionLayersToggleLock::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
+
+void RS_ActionLayersToggleLock::deselectEntitiesOnLockedLayer(RS_Layer* layer)
+{
+    if (!layer) return;
+    if (!layer->isLocked()) return;
+
+    for(auto e: *container){
+        if (e && e->isVisible() && e->getLayer() == layer) {
+
+            if (graphicView) {
+                graphicView->deleteEntity(e);
+            }
+
+            e->setSelected(false);
+
+            if (graphicView) {
+                graphicView->drawEntity(e);
+            }
+        }
+    }
+}
+
 
 // EOF

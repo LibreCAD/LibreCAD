@@ -102,6 +102,35 @@
     </spacer>
    </item>
    <item>
+    <widget class="QToolButton" name="bScaleLineWidth">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Apply Print Scale to line width</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/icons/icons.qrc">
+       <normaloff>:/icons/scaleLineWidth.svg</normaloff>:/icons/scaleLineWidth.svg</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QToolButton" name="bBlackWhite">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
@@ -191,7 +220,7 @@
       </sizepolicy>
      </property>
      <property name="toolTip">
-      <string>Calculate number of pages needed to contain the drawing.</string>
+      <string>Calculate number of pages needed to contain the drawing</string>
      </property>
      <property name="text">
       <string/>
@@ -236,6 +265,22 @@
    <signal>clicked()</signal>
    <receiver>Ui_PrintPreviewOptions</receiver>
    <slot>center()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bScaleLineWidth</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>Ui_PrintPreviewOptions</receiver>
+   <slot>setLineWidthScaling(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>20</x>

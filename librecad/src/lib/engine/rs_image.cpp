@@ -397,7 +397,7 @@ void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
                      view->toGui(data.insertionPoint),
                      angle, scale);
 
-    if (isSelected()) {
+    if (isSelected() && !(view->isPrinting() || view->isPrintPreview())) {
         RS_VectorSolutions sol = getCorners();
 		for (size_t i = 0; i < sol.size(); ++i){
 			size_t const j = (i+1)%sol.size();

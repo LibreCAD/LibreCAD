@@ -251,7 +251,7 @@ void RS_ActionInterface::finish(bool /*updateTB*/)
 {
 	RS_DEBUG->print("RS_ActionInterface::finish");
 	//refuse to quit the default action
-	if(!(rtti() == RS2::ActionDefault || rtti()==RS2::ActionFilePrintPreview) ) {
+	if(rtti() != RS2::ActionDefault) {
 		status = -1;
 		finished = true;
 		hideOptions();

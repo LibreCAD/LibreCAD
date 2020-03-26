@@ -2,11 +2,11 @@
 
 [→ Download ←](https://github.com/LibreCAD/LibreCAD/wiki/Download)
 
-[LibreCAD](http://www.librecad.org) is a 2D CAD drawing tool
-based on the community edition of [QCAD](http://www.qcad.org).  
-LibreCAD uses the cross-platform framework [Qt](http://www.qt.io/download-open-source/),
+[LibreCAD](https://www.librecad.org) is a 2D CAD drawing tool
+based on the community edition of [QCAD](https://www.qcad.org).
+LibreCAD uses the cross-platform framework [Qt](https://www.qt.io/download-open-source/),
 which means it works with most operating systems.  
-The user interface is translated in over 30 languages.  http://translate.librecad.org
+The user interface is translated in over 30 languages.  https://translate.librecad.org
 
 LibreCAD is free software; you can redistribute it and/or modify  
 it under the terms of the [GNU General Public License version 2](https://www.gnu.org/licenses/gpl-2.0.html) (GPLv2)  
@@ -19,7 +19,6 @@ The 2.1 branch will be the last to support Qt4.
 The 2.0 branch will be the last to support the QCAD toolbar. [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=2.0)](https://travis-ci.org/LibreCAD/LibreCAD) 
 
 - [Releases](https://github.com/LibreCAD/LibreCAD/releases)
-
 - [Milestones](https://github.com/LibreCAD/LibreCAD/milestones)
 
 [libdxfrw](https://sourceforge.net/projects/libdxfrw/) is an associated project that allows LibreCAD to read DWG files.
@@ -29,22 +28,22 @@ The 2.0 branch will be the last to support the QCAD toolbar. [![Build Status](ht
 - [GitHub issues (preferred)](https://github.com/LibreCAD/LibreCAD/issues)
 - [SourceForge tickets (disabled)](https://sourceforge.net/p/librecad/_list/tickets?source=navbar)
 
+**Users Documentation**
+
+- [Users Manual](https://librecad.readthedocs.io/)
+- [Wiki Main Page](https://dokuwiki.librecad.org/)
+
 **Questions or Comments**
 
-- [LibreCAD's Forum](http://forum.librecad.org/)
-- IRC: [#librecad](http://webchat.freenode.net/?channels=librecad) at freenode.net
-
-**Wiki**
-
-- [Main Page](http://wiki.librecad.org/index.php/Main_Page)
-- [Users Manual](http://wiki.librecad.org/index.php/LibreCAD_users_Manual)
+- [LibreCAD's Forum](https://forum.librecad.org/)
+- IRC: [#librecad](https://webchat.freenode.net/?channels=librecad) at freenode.net
 
 **Building**
 
 Requirements:
 
-- [Qt](http://www.qt.io/download-open-source/) 5.2.1+ (MinGW version on Windows)
-- [Boost](http://www.boost.org/) 
+- [Qt](https://www.qt.io/download-open-source/) 5.2.1+ (MinGW version on Windows)
+- [Boost](https://www.boost.org/)
 
 More information: [Build from source](https://github.com/LibreCAD/LibreCAD/wiki/Build-from-source)
 

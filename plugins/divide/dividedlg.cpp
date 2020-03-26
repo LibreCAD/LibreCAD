@@ -32,12 +32,6 @@ dividedlg::dividedlg( Document_Interface *doc, QString passedData,
     //hide titie bar '?'
     this->setWindowFlags( this->windowFlags() & ~Qt::WindowContextHelpButtonHint );
 
-    //change text colour
-    //this->setStyleSheet( "QLabel, QRadioButton, QSpinBox, QGroupBox, QPushButton,"
-    //                     "QTextBox, QLineEdit { color: blue }" );
-
-    this->setFixedSize( 405, 400 );
-
     QFont font1, font2, font3, font4;
     font1.setPointSize( 14 );
     font2.setPointSize( 12 );
@@ -51,86 +45,93 @@ dividedlg::dividedlg( Document_Interface *doc, QString passedData,
 
     QList<QString> splitList = data.at( 0 ).split( ": " );
     QString entType = splitList.at( 1 );
-    this->setWindowTitle( "Divide - " + entType );
+    this->setWindowTitle( tr("Divide - ") + entType );
     entType = entType.toLower();
 
-    QFrame *Fr1 = new QFrame( this );
+    QHBoxLayout *mainLayout = new QHBoxLayout;
+    setLayout(mainLayout);
+
+    QVBoxLayout *leftcolayout = new QVBoxLayout;
+    mainLayout->addLayout(leftcolayout);
+
+    QFrame *Fr1 = new QFrame();
     Fr1->setFrameStyle( QFrame::Box );
     Fr1->setLineWidth( 1 );
-    Fr1->setGeometry( 5, 5, this->width() - 115, 30 );
+    leftcolayout->addWidget(Fr1);
 
-    QFrame *Fr2 = new QFrame( this );
+    QFrame *Fr2 = new QFrame();
     Fr2->setFrameStyle( QFrame::Box );
     Fr2->setLineWidth( 1 );
-    Fr2->setGeometry( 5, Fr1->height() + Fr1->y() + 5,
-                      this->width() - 115, 30 );
+    leftcolayout->addWidget(Fr2);
 
-    QDialogButtonBox *BB1 = new QDialogButtonBox( this );
-    BB1->setGeometry( ( this->width() / 2 ) - 105, this->height() - 30,
-                      ( this->width() / 2) - 5, 30 );
+    QGroupBox *G1 = new QGroupBox();
+    G1->setFont( font2 );
+    G1->setTitle(tr("Layers"));
+    G1->setVisible( true );
+    leftcolayout->addWidget(G1);
+
+    QDialogButtonBox *BB1 = new QDialogButtonBox();
+    leftcolayout->addWidget(BB1, 0, Qt::AlignRight);
     BB1->addButton( tr( "OK" ), QDialogButtonBox::AcceptRole );
     BB1->addButton( tr( "Cancel" ), QDialogButtonBox::RejectRole );
     QObject::connect( BB1, SIGNAL( accepted() ), this, SLOT( onOkClickedSlot() ) );
     QObject::connect( BB1, SIGNAL( rejected() ), this, SLOT( reject() ) );
 
-    QGroupBox *G1 = new QGroupBox( this );
-    G1->setFont( font2 );
-    G1->setTitle( "Layers" );
-    G1->setVisible( true );
-    G1->setGeometry( 5, Fr2->height() + Fr2->y() + 2,
-                     this->width() - 115,
-                     this->height() - ( Fr2->height() + Fr2->y() + 2 ) - 30 );
-
-    QLabel *L1 = new QLabel( Fr1 );
-    L1->setGeometry( 5, 0, 50, Fr1->height() );
+    QHBoxLayout* fr1layout = new QHBoxLayout;
+    Fr1->setLayout(fr1layout);
+    QLabel *L1 = new QLabel();
+    fr1layout->addWidget(L1);
     L1->setFont( font1 );
-    L1->setText( "Ticks" );
+    L1->setText(tr("Divide at"));
 
-    QLabel *L2 = new QLabel( Fr2 );
-    L2->setGeometry( 5, 0, 50, Fr2->height() );
+    QHBoxLayout* fr2layout = new QHBoxLayout;
+    Fr2->setLayout(fr2layout);
+    QLabel *L2 = new QLabel();
+    fr2layout->addWidget(L2);
     L2->setFont( font1 );
-    L2->setText( "Size" );
+    L2->setText(tr("Size"));
 
-    Sp1 = new QSpinBox( Fr1 ); //size
-    Sp1->setGeometry( 60, 0, 45, 30 );
+    Sp1 = new QSpinBox(); // quantity
+    fr1layout->addWidget(Sp1);
     Sp1->setFont( font1 );
     Sp1->setMaximum( 99 );
     Sp1->setMinimum( 0 );
     Sp1->setValue( 0 );
     QObject::connect( Sp1, SIGNAL( valueChanged( int ) ), this,
-                      SLOT( onSizeChangedSlot( int ) ) );
+                      SLOT( onQtyChangedSlot( int ) ) );
 
-    Sp2 = new QSpinBox( Fr2 ); //qty
-    Sp2->setGeometry( 60, 0, 45, 30 );
+    Sp2 = new QSpinBox(); // size
+    fr2layout->addWidget(Sp2);
     Sp2->setFont(font1);
     Sp2->setMaximum( 10 );
     Sp2->setMinimum( 1 );
     Sp2->setValue(5);
     QObject::connect( Sp2, SIGNAL( valueChanged( int ) ), this,
-                      SLOT( onQtyChangedSlot( int ) ) );
+                      SLOT( onSizeChangedSlot( int ) ) );
 
-    QLabel *L3 = new QLabel( Fr1 );
-    L3->setGeometry( Sp1->x() + Sp1->width() + 5, 0, 45, Fr1->height() );
+    QLabel* L3 = new QLabel();
+    fr1layout->addWidget(L3);
     L3->setFont( font1 );
-    L3->setText( "Qty." );
+    L3->setText(tr("places"));
+    fr1layout->addSpacing(10); // otherwise text runs too close to R1 below
 
-    QLabel *L4 = new QLabel( Fr2 );
-    L4->setGeometry( Sp2->x() + Sp2->width() + 5, 0, 45, Fr2->height() );
+    QLabel* L4 = new QLabel();
+    fr2layout->addWidget(L4);
     L4->setFont( font1 );
     L4->setText("%");
 
-    R1 = new QRadioButton( Fr1 ); // ticks on/off
-    R1->setGeometry( L3->x() + L3->width() + 10, 1, 150, Fr1->height() );
+    R1 = new QRadioButton(Fr1); // ticks on/off
+    fr1layout->addWidget(R1);
     R1->setFont( font2 );
-    R1->setText("Ticks - Off");
+    R1->setText(tr("Ticks - Off"));
     ticksShowHideFlag = false;
     QObject::connect( R1, SIGNAL( toggled( bool ) ), this,
                       SLOT( onOffTicksSlot( bool ) ) );
 
-    R2 = new QRadioButton( Fr2 ); // breaks on/off
-    R2->setGeometry( L4->x() + L4->width() + 10, 1, 150, Fr2->height() );
+    R2 = new QRadioButton(Fr2); // breaks on/off
+    fr2layout->addWidget(R2);
     R2->setFont( font2 );
-    R2->setText( "Breaks - Off" );
+    R2->setText(tr("Breaks - Off"));
     breaksOnOffFlag = false;
     QObject::connect (R2, SIGNAL( toggled( bool ) ), this,
                       SLOT( onOffBreaksSlot( bool ) ) );
@@ -138,12 +139,11 @@ dividedlg::dividedlg( Document_Interface *doc, QString passedData,
     QList<QString> layerList = doc->getAllLayer();
     QString activeLayerName = doc->getCurrentLayer();
     QString num;
-    QGridLayout *layout = new QGridLayout;
+    QGridLayout *laylayout = new QGridLayout;
 
     for( int i = 0; i < layerList.size(); i++ )
     {
         QRadioButton *RB = new QRadioButton;
-        RB->setFixedHeight( 14 );
         RB->setFont( font4 );
         num = QString::number( i );
         RB->setObjectName( num );
@@ -158,51 +158,60 @@ dividedlg::dividedlg( Document_Interface *doc, QString passedData,
             activeLayer = i;
         }
 
-        layout->addWidget( RB );
+        laylayout->addWidget( RB );
     }
 
-    QScrollArea *Sa1 = new QScrollArea( G1 );
-    Sa1->setGeometry( 0, 20, G1->width(), G1->height() - 39 );
-    Sa1->setLineWidth( 1 );
+    QVBoxLayout* g1layout = new QVBoxLayout;
+    G1->setLayout(g1layout);
 
+    QScrollArea *Sa1 = new QScrollArea( G1 );
+    g1layout->addWidget(Sa1);
+    Sa1->setLineWidth( 1 );
+    Sa1->setWidgetResizable(true);
+    QWidget *containerWidget = new QWidget;
+    containerWidget->setLayout( laylayout );
+    Sa1->setWidget( containerWidget );
+
+    QHBoxLayout* newlaylayout = new QHBoxLayout;
     QLabel *L5 = new QLabel( G1 );
-    L5->setGeometry( 0, G1->height() - 20, 30, 20 );
+    newlaylayout->addWidget(L5);
     L5->setFont( font4 );
-    L5->setText( "<i>New</i>" );
+    L5->setText(tr("<i>New</i>"));
 
     Le2 = new QLineEdit( G1 ); // new layer
-    Le2->setGeometry( 30, L5->y(), G1->width() - 30, 20 );
+    newlaylayout->addWidget(Le2);
     Le2->setFont( font4 );
+    g1layout->addLayout(newlaylayout);
 
-    QWidget *containerWidget = new QWidget;
-    containerWidget->setLayout( layout );
-
-    Sa1->setWidgetResizable(true);
-    Sa1->setWidget( containerWidget );
+    QVBoxLayout* rtcolayout = new QVBoxLayout;
+    mainLayout->addLayout(rtcolayout);
 
     if ( entType == "line" )
     {
         dataToReturn.append( "LINE:" );
-        choice( 5, 1, font4 );
+	rtcolayout->addWidget(choice(STRAIGHT, font4));
     } //end line
 
     else if ( entType == "circle" )
     {
         dataToReturn.append( "CIRCLE:" );
 
-        QFrame *Cr2 = new QFrame( this );
+        QFrame *Cr2 = new QFrame();
         Cr2->setFrameStyle( QFrame::Box );
         Cr2->setLineWidth(1);
-        Cr2->setGeometry( this->width() - 105, 5, 100, 90 );
+	rtcolayout->addWidget(Cr2);
 
-        QLabel *C4 = new QLabel( Cr2 );
-        C4->setGeometry( 5, 0, Cr2->width() - 10, Cr2->height() );
+	QVBoxLayout* anglayout = new QVBoxLayout();
+	Cr2->setLayout(anglayout);
+	
+        QLabel *C4 = new QLabel();
+	anglayout->addWidget(C4);
         C4->setFont( font4 );
-        C4->setText( "Enter start\nangle, in\ndecimal degrees\n"
-                     "0° at 3 o'clock\ngoes\nanti-clockwise." );
+        C4->setText(tr("Enter start\nangle, in\ndecimal degrees\n"
+                       "0° at 3 o'clock\ngoes\nanti-clockwise."));
 
-        Le1 = new QLineEdit( this );
-        Le1->setGeometry( Cr2->x(), C4->height() + 10, Cr2->width(), 20 );
+        Le1 = new QLineEdit();
+	anglayout->addWidget(Le1);
 
         QDoubleValidator *doubleVal = new QDoubleValidator
                 ( -999999.999, 999999.999, 3, this ); //± 1 million - 0.001
@@ -213,58 +222,71 @@ dividedlg::dividedlg( Document_Interface *doc, QString passedData,
         QObject::connect( Le1, SIGNAL( textChanged( const QString & ) ), this,
                           SLOT( onStartAngleChangedSlot ( const QString & ) ) );
 
-        choice( ( Le1->y() + Le1->height() + 5 ), 2, font4 );
+        rtcolayout->addWidget(choice(CURVED, font4));
     } //end circle
 
     else if ( entType == "arc" )
     {
         dataToReturn.append( "ARC:" );
-        choice( 5, 2, font4 );
+	rtcolayout->addWidget(choice(CURVED, font4));
     }
 
-    else if ( entType == "poyline" )
+    else if ( entType == "polyline" )
     {
         dataToReturn.append( "POLYLINE:" );
     }
+    rtcolayout->addStretch();
+
+    QLabel *C2 = new QLabel();
+    rtcolayout->addWidget(C2);
+    C2->setStyleSheet("border: 0.2ex solid black");
+    C2->setFont(font4);
+    C2->setContentsMargins( 0, 3, 0, 0 );
+    C2->setAlignment( Qt::Alignment( Qt::AlignTop ) );
+    C2->setText(tr("<i>\"New\"</i><br>Enter name<br>for a new layer<br>"
+                   "(if required?) to<br>draw ticks on."));
 }
 
-void dividedlg::choice( int yPos, int msgText, QFont font )
+QFrame* dividedlg::choice(ElementKind ek, QFont font )
 {
-    QString msg1;
+    QString msg1 = tr("Ticks");
     QString msg2;
     QString msg3;
 
-    switch ( msgText ) {
-    case ( 1 ): { // line
-        msg1 = ( "Ticks\nAbove/Below." );
-        msg2 = ( "Ab~" );
-        msg3 = ( "Be~" );
+    switch ( ek ) {
+    case STRAIGHT:
+        msg2 = tr("Above");
+        msg3 = tr("Below");
         break;
-    }
-    case ( 2 ): { //circle, arc
-        msg1 = ( "Ticks\nOutside/Inside." );
-        msg2 = ( "Out" );
-        msg3 = ( "In" );
+
+    case CURVED:
+        msg2 = tr("Outside");
+        msg3 = tr("Inside");
         break;
-    }
+
     default:
         break;
     }
 
-    QFrame *Cr1= new QFrame( this );
+    QFrame *Cr1= new QFrame();
     Cr1->setFrameStyle( QFrame::Box );
     Cr1->setLineWidth(1);
-    Cr1->setGeometry( this->width() - 105, yPos, 100, 55 );
+
+    QVBoxLayout* tickloclayout = new QVBoxLayout;
+    Cr1->setLayout(tickloclayout);
 
     QLabel *C1 = new QLabel( Cr1 );
-    C1->setGeometry( 5, 0, Cr1->width() - 10, Cr1->height() );
+    tickloclayout->addWidget(C1);
     C1->setFont( font );
     C1->setContentsMargins( 0, 3, 0, 0 );
     C1->setAlignment( Qt::Alignment( Qt::AlignTop ) );
     C1->setText( msg1 );
 
+    QHBoxLayout* tickchoiceslayout = new QHBoxLayout;
+    tickloclayout->addLayout(tickchoiceslayout);
+
     QRadioButton *R1 = new QRadioButton( C1 );
-    R1->setGeometry( 7, C1->height() - 20, 50, 20 );
+    tickchoiceslayout->addWidget(R1);
     R1->setText( msg2 );
     R1->setObjectName( "o" );
     QObject::connect(R1,SIGNAL( toggled( bool ) ), this,
@@ -272,24 +294,13 @@ void dividedlg::choice( int yPos, int msgText, QFont font )
     R1->setChecked( true );
 
     QRadioButton *R2 = new QRadioButton( C1 );
-    R2->setGeometry( 51, C1->height() - 20, 50, 20 );
+    tickchoiceslayout->addWidget(R2);
     R2->setText( msg3 );
     R2->setObjectName( "i" );
     QObject::connect(R2, SIGNAL( toggled( bool ) ), this,
                      SLOT( onInOutSlot( bool ) ) );
 
-    QFrame *Cr2= new QFrame( this );
-    Cr2->setFrameStyle( QFrame::Box );
-    Cr2->setLineWidth( 1 );
-    Cr2->setGeometry( this->width() - 105, this->height() - 82, 100, 77 );
-
-    QLabel *C2 = new QLabel( Cr2 );
-    C2->setGeometry( 5, 0, Cr2->width() - 10, Cr2->height() );
-    C2->setFont( font );
-    C2->setContentsMargins( 0, 3, 0, 0 );
-    C2->setAlignment( Qt::Alignment( Qt::AlignTop ) );
-    C2->setText( "<i>\"New\"</i><br>Enter name<br>for a new layer<br>"
-                 "(if required?) to<br>draw ticks on." );
+    return Cr1;
 }
 
 bool dividedlg::eventFilter( QObject * obj, QEvent * event )

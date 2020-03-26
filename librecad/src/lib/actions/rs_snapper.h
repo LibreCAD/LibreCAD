@@ -51,7 +51,7 @@ struct RS_SnapMode {
 	bool snapDistance= false;       /// Whether to snap to distance from endpoints or not.
 	bool snapCenter= false;       /// Whether to snap to centers or not.
 	bool snapIntersection= false; /// Whether to snap to intersections or not.
-
+    bool snapAngle=false;         /// Whether to snap along line under certain angle
 	bool snapOnEntity= false;     /// Whether to snap to entities or not.
 
 	RS2::SnapRestriction restriction= RS2::RestrictNothing; /// The restriction on the free snap.
@@ -68,6 +68,8 @@ struct RS_SnapMode {
 	 RS_SnapMode const & clear(void);
 	 bool operator == (RS_SnapMode const& rhs) const;
 };
+
+typedef std::initializer_list<RS2::EntityType> EntityTypeList;
 
 /**
  * This class is used for snapping functions in a graphic view.
@@ -136,6 +138,7 @@ public:
     RS_Vector snapDist(const RS_Vector& coord);
     RS_Vector snapIntersection(const RS_Vector& coord);
     //RS_Vector snapDirect(RS_Vector coord, bool abs);
+    RS_Vector snapToAngle(const RS_Vector &coord, const RS_Vector &ref_coord, const double ang_res);
 
     RS_Vector restrictOrthogonal(const RS_Vector& coord);
     RS_Vector restrictHorizontal(const RS_Vector& coord);
@@ -153,7 +156,7 @@ public:
                            RS2::ResolveLevel level=RS2::ResolveNone);
     RS_Entity* catchEntity(QMouseEvent* e, RS2::EntityType enType,
                            RS2::ResolveLevel level=RS2::ResolveNone);
-	RS_Entity* catchEntity(QMouseEvent* e, const std::initializer_list<RS2::EntityType>& enTypeList,
+	RS_Entity* catchEntity(QMouseEvent* e, const EntityTypeList& enTypeList,
                            RS2::ResolveLevel level=RS2::ResolveNone);
 
     /**

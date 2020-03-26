@@ -137,6 +137,23 @@ bool RS_Block::isVisibleInBlockList() const {
 }
 
 
+/**
+ * Sets selection state of the block in block list
+ *
+ * @param v true: selected, false: deselected
+ */
+void RS_Block::selectedInBlockList(bool v) {
+    data.selectedInBlockList = v;
+}
+
+/**
+ * Returns selection state of the block in block list
+ */
+bool RS_Block::isSelectedInBlockList() const {
+    return data.selectedInBlockList;
+}
+
+
 std::ostream& operator << (std::ostream& os, const RS_Block& b) {
     os << " name: " << b.getName().toLatin1().data() << "\n";
     os << " entities: " << (RS_EntityContainer&)b << "\n";
