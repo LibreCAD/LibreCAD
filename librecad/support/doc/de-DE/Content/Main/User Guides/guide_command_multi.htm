@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="de" xml:lang="de" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Bedienungsanleitungen|[%=System.LinkedTitle%] ">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Mehrfach-Befehlseingaben mit Variablendateien</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/ExampleGrid.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/User Guides/guide_command_multi.htm">Open Thema mit Navigation</a>
+        </p>
+        <div>
+            <h1 class="TOC4"><a name="Multi-Co"></a><a name="kanchor51"></a>Mehrfach-Befehlseingaben mit Variablendateien (erweitert)</h1>
+            <p>Man kann Befehlseingaben kombinieren und innerhalb einer einzelnen Zeile eingeben. Dazu werden die Befehle und andere Eingaben mit Semikolons getrennt. Wenn man in der Kommandozeile <span class="CodeSnippet">li;0,0;10..0;0..10;-10..0;c;k</span> eingibt, wird ein Quadrat der Größe 10 × 10 gezeichnet. Man kann eine Liste von Befehlen (getrennt durch Zeilenschaltungen) kopieren und über die Kommandozeilen-Schaltfläche mit „Mehrere Befehle einfügen“ wieder einfügen (unten rechts im Kommandozeilen-Andockwidget).</p>
+            <p>&#160;</p>
+            <p>Befehlseingaben können auch aus Textdateien geladen werden. Tragen Sie die Befehle und andere Eingaben in eine Textdatei ein, immer durch eine Zeilenschaltung getrennt. Legen Sie beispielsweise eine Textdatei an und tragen Sie folgende Befehle ein:</p>
+            <table style="border-spacing: 1px 1px;border-left-style: solid;border-left-width: 1px;border-right-style: solid;border-right-width: 1px;border-top-style: solid;border-top-width: 1px;border-bottom-style: solid;border-bottom-width: 1px;margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/ExampleGrid.css');" class="TableStyle-ExampleGrid" cellspacing="0">
+                <col style="width: 2in;" class="TableStyle-ExampleGrid-Column-Column1" />
+                <tbody>
+                    <tr class="TableStyle-ExampleGrid-Body-Body1">
+                        <td class="TableStyle-ExampleGrid-BodyA-Column1-Body1">
+                            <p class="CodeSnippet">li
+</p>
+                            <p class="CodeSnippet">0,0
+</p>
+                            <p class="CodeSnippet">@10,0
+</p>
+                            <p class="CodeSnippet">@0,10
+</p>
+                            <p class="CodeSnippet">@-10,0
+</p>
+                            <p class="CodeSnippet">c
+</p>
+                            <p class="CodeSnippet">k</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Mit diesen Befehlen wird ein Quadrat der Größe 10 × 10 gezeichnet.</p>
+            <p class="Procedure">Mehrfach-Befehlseingaben verwenden</p>
+            <ol>
+                <li value="1">Erstellen Sie eine Textdatei, die die Befehlseingaben enthält.</li>
+                <li value="2">Wählen Sie in LibreCAD die Befehlszeilen-Schaltfläche aus (&#160;<img src="../../Images/button.png" />&#160;) und klicken Sie im Dropdown-Menü auf <b>Befehlsdatei laden</b>. </li>
+                <li value="3">Suchen Sie die Datei heraus, klicken Sie sie an und anschließend auf <b>Öffnen</b>.</li>
+            </ol>
+            <p>Die in der Textdatei spezifizierte Geometrie erscheint dann in der aktuellen Zeichnung.</p>
+            <p>&#160;</p>
+            <p style="font-weight: bold;">Variablen in Mehrfach-Befehlseingaben</p>
+            <p>Mehrfach-Befehlseingaben können einer Variablen zugewiesen werden. Außerdem können Variablen andere Variablen enthalten, diese werden dann rekursiv gelesen:</p>
+            <table style="border-left-style: solid;border-left-width: 1px;border-left-color: ;border-right-style: solid;border-right-width: 1px;border-right-color: ;border-top-style: solid;border-top-width: 1px;border-top-color: ;border-bottom-style: solid;border-bottom-width: 1px;border-bottom-color: ;margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/ExampleGrid.css');" class="TableStyle-ExampleGrid" cellspacing="0">
+                <col style="width: 2in;" class="TableStyle-ExampleGrid-Column-Column1" />
+                <tbody>
+                    <tr class="TableStyle-ExampleGrid-Body-Body1">
+                        <td class="TableStyle-ExampleGrid-BodyA-Column1-Body1">
+                            <p class="CodeSnippet">a=ci;0,0;10</p>
+                            <p class="CodeSnippet">b=ci;10,0;10</p>
+                            <p class="CodeSnippet">c=\a;\b;kill</p>
+                            <p class="CodeSnippet">\c</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Geben Sie die einzelnen Zeilen des obigen Textes in der Befehlszeile ein. Wenn Sie <span class="CodeSnippet">\c</span> eingeben, werden zwei Kreise mit einem Radius von 10 gezeichnet, die sich überschneiden. Das Zeichen <span class="CodeSnippet">\</span> ist ein Escape-Zeichen, durch das die Befehlszeile den Variablennamen als Aktion interpretieren kann. Im obigen Beispiel wird <span class="CodeSnippet">\c</span> aufgelöst zu <span class="CodeSnippet">ci;0,0;10;ci;10,0;10;kill</span>.</p>
+            <p class="Procedure">Variablen mit Mehrfach-Befehlseingaben verwenden</p>
+            <ol>
+                <li value="1">Erstellen Sie eine Textdatei mit variablen Mehrfach-Befehlseingaben.</li>
+                <li value="2">Laden Sie die Datei. Wählen Sie dazu <b>Optionen</b> aus.</li>
+                <li value="3">Klicken Sie auf <b>Anwendungseinstellungen</b>.</li>
+                <li value="4">Klicken Sie auf die <b>Pfade</b>.</li>
+                <li value="5">Klicken Sie auf <b>Durchsuchen</b> (&#160;<img src="../../Images/open.svg" />&#160;) und suchen Sie die Variablendatei heraus.</li>
+                <li value="6">Klicken Sie auf <b>OK</b>.</li>
+                <li value="7">Klicken Sie noch einmal auf <b>OK</b>, um die Anwendungseinstellungen zu speichern.</li>
+                <li value="8">Starten Sie LibreCAD neu.</li>
+                <li value="9">Geben Sie <span class="CodeSnippet">\c</span> in der Befehlszeile ein.</li>
+            </ol>
+            <p>Die Datei wird nun geladen.</p>
+            <div class="TopicFooter">
+                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Damit verbundene Artikel</span>
+                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_commandline.htm">Arbeiten mit der Befehlszeile</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_command_aliases.htm">Befehlszeilen-Aliasse</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Appendices/append_commandline.htm">Befehlszeilenkürzel</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Appendices/append_calculator.htm">Operatoren und Funktionen des Rechners</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_container.htm">Über Zeichen- und Änderungs-Werkzeuge</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 6pt;margin-top: 0;margin-bottom: 0;">&#160;</p>
+    </body>
+</html>

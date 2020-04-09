@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="de" xml:lang="de" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-browse-sequence-path="Blocks" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Bedienungsanleitungen">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Arbeiten mit Blöcken</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/User Guides/guide_blocks.htm">Open Thema mit Navigation</a>
+        </p>
+        <div>
+            <h1 class="TOC4"><a name="kanchor18"></a>Arbeiten mit Blöcken</h1>
+            <p>Blöcke sind kleine, wiederverwendbare Zeichnungen häufig verwendeter Objekte wie Schrauben, Titelblöcke usw. Eingefügte Blöcke (auch als Inserts bezeichnet) setzen sich aus geometrischen Formen wie Linien und Bögen zusammen und können auch Text und Bemaßungen enthalten. LibreCAD enthält mehrere Bibliotheken mit Blöcken, die in eine Zeichnung eingefügt werden können. Ebenso können Sie eigene Blöcke erstellen.</p>
+            <p>&#160;</p>
+            <p>Zur Verwaltung von Blöcken stehen zwei Andockwidgets zur Verfügung: </p>
+            <ul>
+                <li value="1">Mit dem <a href="../Toolbars and Widgets/tw_blocklistdock.htm">Andockwidget „Blockliste“</a> werden Blöcke innerhalb der aktuellen Zeichnung verwaltet, und</li>
+                <li value="2"> mit dem Andockwidget „Bibliotheks-Browser“ können Sie eine Sammlung verfügbarer Blöcke aufrufen und Blöcke in die aktuelle Zeichnung einfügen. </li>
+            </ul>
+            <p>Weitere Informationen <a href="../Toolbars and Widgets/tw_dockwidgets.htm">über Andockwidgets finden Sie hier</a> und <a href="../Toolbars and Widgets/tw_librarybrowserdock.htm">über den Bibliotheks-Browser finden Sie hier</a>.
+
+</p>
+            <p>&#160;</p>
+            <p>Beim Einfügen in eine Zeichnung wird ein Block als einzelnes Objekt behandelt. Man kann Blöcke aus der Blockliste heraus mehrmals in die gleiche Zeichnung einfügen, zum Beispiel an verschiedenen Positionen, in verschiedenen Maßstäben und Drehwinkeln. Die eingefügten Blöcke sind alle verknüpft. Änderungen an einem eingefügten Block werden in allen Instanzen des Blocks übernommen.</p>
+            <p class="Procedure">Einen Block aus einer vorhandenen Zeichnung erstellen</p>
+            <ol>
+                <li value="1">Zeichnen Sie das Objekt, das Sie in einen Block umwandeln.</li>
+                <li value="2">Wählen Sie alle Objekte aus, aus denen der Block bestehen soll. Klicken Sie dazu auf die einzelnen Objekte oder wählen Sie mehrere Objekte in einem Bereich aus.</li>
+                <li value="3">Klicken Sie im Andockwidget „Blockliste“ auf <b>Block erstellen</b> (&#160;<img src="../../Images/create_block.svg" />&#160;).</li>
+                <li value="4">Geben Sie einen Referenzpunkt an.</li>
+                <li value="5">Geben Sie dem Block einen Namen und klicken Sie auf <b>OK</b>.</li>
+            </ol>
+            <p>Der Block erscheint jetzt in der Blockliste und kann mehrmals in die Zeichnung eingefügt oder in eine Datei oder die Bibliothek gespeichert werden.</p>
+            <p class="Procedure">Einen Block aus einem leeren Block erstellen</p>
+            <ol>
+                <li value="1">Klicken Sie im Andockwidget „Blockliste“ auf <b>Leeren Block hinzufügen</b> (&#160;<img src="../../Images/add.svg" />&#160;).</li>
+                <li value="2">Geben Sie dem Block einen Namen und klicken Sie auf <b>OK</b>.</li>
+                <li value="3">Klicken Sie auf <b>Aktiven Block in separatem Fenster bearbeiten</b> (&#160;<img src="../../Images/properties.svg" />&#160;). Dadurch öffnet sich eine Registerkarte mit einem Zeichendokument für einen leeren Block.</li>
+                <li value="4">Zeichnen Sie den Block. Der Ursprung der Zeichnung (0,0) wird zum Referenzpunkt für den Block.</li>
+                <li value="5">Verlassen Sie die Registerkarte mit der Block-Zeichnung. Der Block wird gespeichert und kann nun in eine Zeichnung eingefügt werden.</li>
+            </ol>
+            <p class="Procedure">Blöcke in eine Zeichnung einfügen</p>
+            <ol>
+                <li value="1">Klicken Sie in der Blockliste auf den Block, der eingefügt werden soll.</li>
+                <li value="2">Klicken Sie im Andockwidget „Blockliste“ auf <b>Aktiven Block einfügen</b> (&#160;<img src="../../Images/insert_active_block.svg" />&#160;).</li>
+                <li value="3">Legen Sie die Einfügeposition fest. Klicken Sie dazu irgendwo in die Zeichnung oder geben Sie die Koordinaten in der Befehlszeile an.</li>
+            </ol>
+            <p class="Procedure">Blöcke mit der Symbolleiste (erweitert) in eine Zeichnung einfügen</p>
+            <ol>
+                <li value="1">Klicken Sie in der Blockliste auf den Block, der eingefügt werden soll.</li>
+                <li value="2">Klicken Sie im Andockwidget „Blockliste“ auf <b>Aktiven Block einfügen</b> (&#160;<img src="../../Images/insert_active_block.svg" />&#160;).</li>
+                <li value="3">Legen Sie die Parameter fest, die auf der Symbolleiste erscheinen.</li>
+            </ol>
+            <blockquote>
+                <p>
+                    <img src="../../Images/trans_block_toolbar.png" />
+                </p>
+                <ul>
+                    <li value="1">Parameter im Zusammenhang mit Blocktransformationen:&#160;<i>Winkel</i> für die Drehung und <i>Faktor</i> für die Skalierung.</li>
+                    <li value="2">Parameter im Zusammenhang mit Blockmustern:&#160;<i>Matrix</i> (Rastergröße) und <i>Abstand</i> zwischen Spalten und Zeilen der Matrix.</li>
+                </ul>
+            </blockquote>
+            <ol start="4">
+                <li value="4">Legen Sie die Einfügeposition fest. Klicken Sie dazu irgendwo in die Zeichnung oder geben Sie die Koordinaten in der Befehlszeile an.</li>
+            </ol>
+            <p class="Procedure">Eine Instanz eines Blocks aus einer Zeichnung entfernen</p>
+            <ol>
+                <li value="1">Klicken Sie in der Zeichnung auf den Block.</li>
+                <li value="2">Klicken Sie auf die Taste „Löschen“.</li>
+            </ol>
+            <p class="Procedure">Einen Block und alle Instanzen aus einer Zeichnung entfernen</p>
+            <p>Wenn eine Instanz eines Blocks aus einer Zeichnung entfernt wird, wird nur der Block entfernt, der auf einer Ebene platziert wurde, der Block wird aber weiterhin in der DXF-Datei gespeichert. Wenn Sie einen Block vollständig aus der Zeichnungsebene und der DXF-Datei entfernen möchten, gehen Sie so vor:</p>
+            <ol>
+                <li value="1">Klicken Sie in der Blockliste auf den Block.</li>
+                <li value="2">Klicken Sie in der Blockliste auf <b>Aktiven Block entfernen</b> (&#160;<img src="../../Images/remove.svg" />&#160;).</li>
+            </ol>
+            <p class="Procedure">Blöcke auflösen</p>
+            <p>Wenn Sie irgendeine Geometrie oder einzelne Objekte verändern möchten, müssen Sie Blöcke möglicherweise wieder aufbrechen. Nach dem Einfügen eines Blocks in eine Zeichnung wird der Block zunächst als Ganzes behandelt und kann nur verändert werden, wenn man ihn aufbricht.</p>
+            <ol>
+                <li value="1">Geben Sie in der Befehlszeile <span class="CodeSnippet">explode</span> ein oder klicken Sie bei den Bearbeitungsoptionen auf <b>Aufbrechen</b> (&#160;<img src="../../Images/explode.svg" />&#160;).</li>
+                <li value="2">Klicken Sie auf den Block, der aufgebrochen werden soll.</li>
+                <li value="3">Drücken Sie die Enter-Taste.</li>
+            </ol>
+            <p class="Procedure">Blöcke ändern</p>
+            <p>Wenn der Block in eine Datei gespeichert wurde, müssen Sie diese Datei nur öffnen, Ihre Änderungen vornehmen und vor dem Verlassen speichern.</p>
+            <p>&#160;</p>
+            <p>Wenn der Block noch nicht in eine bestimmte Zeichnung gespeichert wurde, aber Bestandteil der Zeichnung ist, an der Sie gerade arbeiten, können Sie den Block so ändern:</p>
+            <ol>
+                <li value="1">Klicken Sie in der Blockliste auf den Block, der geändert werden soll.</li>
+                <li value="2">Klicken Sie in der Blockliste auf <b>Aktiven Block in separatem Fenster bearbeiten</b> (&#160;<img src="../../Images/properties.svg" />&#160;).</li>
+                <li value="3">Nehmen Sie die gewünschten Änderungen an dem Block vor.</li>
+                <li value="4">Verlassen Sie die Block-Zeichnung.</li>
+            </ol>
+            <p>Der Block wird aktualisiert.</p>
+            <p class="Procedure">Blöcke aus der Bibliothek einfügen</p>
+            <ol>
+                <li value="1">Klicken Sie im Andockwidget „Bibliotheks-Browser“ auf den Block, der eingefügt werden soll.</li>
+                <li value="2">Klicken Sie auf <b>Einfügen</b>.</li>
+                <li value="3">Klicken Sie auf einen Referenzpunkt in der Zeichnung oder geben Sie in der Befehlszeile die Koordinaten ein.</li>
+            </ol>
+            <p>Sie können den Block so oft einfügen, wie Sie möchten. Mit der Esc-Taste oder einem Rechtsklick verlassen Sie den Block-Einfügemodus.</p>
+            <p class="Procedure">Blöcke in einer Datei speichern</p>
+            <ol>
+                <li value="1">Klicken Sie in der Blockliste auf den Block, der gespeichert werden soll.</li>
+                <li value="2">Klicken Sie auf <b>Aktiven Block in einer Datei speichern</b> (&#160;<img src="../../Images/save.svg" />&#160;).</li>
+                <li value="3">Geben Sie einen Namen und einen Speicherort für die Datei an und klicken Sie dann auf <b>OK</b>.</li>
+            </ol>
+            <div class="TopicFooter">
+                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Damit verbundene Artikel</span>
+                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_library.htm">Arbeiten mit dem Bibliotheks-Browser</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_templates.htm">Arbeiten mit Vorlagen</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Toolbars and Widgets/tw_librarybrowserdock.htm">Bibliotheks-Browser-Andockwidget</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Toolbars and Widgets/tw_blocklistdock.htm">Blocklisten-Andockwidget</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 6pt;margin-top: 0;margin-bottom: 0;">&#160;</p>
+    </body>
+</html>
