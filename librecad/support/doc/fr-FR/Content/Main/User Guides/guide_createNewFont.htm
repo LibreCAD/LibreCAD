@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="fr-ca" xml:lang="fr-ca" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Guides de l’utilisateur|[%=System.LinkedTitle%]">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Création de nouvelles polices</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/ExampleGrid.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/User Guides/guide_createNewFont.htm">Ouvrir la rubrique avec les liens de navigation</a>
+        </p>
+        <div>
+            <h1 class="TOC4"><a name="kanchor47"></a>Création de nouvelles polices</h1>
+            <p>Avec LibreCAD, vous pouvez facilement créer une nouvelle police en utilisant une police existante comme modèle. Dans LibreCAD, chaque caractère de police est un bloc, et chaque bloc est désigné d’après le code de caractère Unicode.</p>
+            <p class="Procedure">Création d’une police à partir d’un modèle</p>
+            <p style="font-weight: bold;">Étape&#160;1</p>
+            <p>Trouvez une police existante à utiliser comme modèle pour votre nouvelle police.&#160;Essayez de trouver une police similaire à celle que vous souhaitez créer, ou choisissez une police standard comme Times New Roman.</p>
+            <div class="Tip">
+                <p>Si vous ne savez pas quelle police utiliser, vous pouvez consulter un aperçu des polices dans la boîte de dialogue <b>Convertir police</b> depuis <b>Outils</b> &gt;&#160;<b>MTexte</b> &gt;&#160;<b>Convertir police</b> (<img src="../../Images/convertfont.png" />). </p>
+            </div>
+            <p>&#160;</p>
+            <p style="font-weight: bold;">Étape&#160;2</p>
+            <p style="font-weight: normal;">Localisez la police à l’aide de l’explorateur de fichier sur votre ordinateur. </p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: normal;">Si vous utilisez une police que vous avez <a href="guide_convertFonts.htm#Microsof">convertie depuis AutoCAD ou Microsoft</a>, le fichier de la police se trouvera à l’emplacement indiqué par le chemin que vous avez précisé dans <b>Paramètres de l’application</b> &gt; <b>Chemin d’accès</b> &gt;&#160;<b>Polices</b>.</p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: normal;">Si vous utilisez une police LibreCAD, le fichier de la police sera placé dans ce dossier&#160;: <span class="CodeSnippet">C:\Program Files (x86)\Hypertherm CAM\LibreCAD\resources\fonts</span></p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: bold;">Étape&#160;3</p>
+            <p style="font-weight: normal;">Ouvrez le fichier de la police (*.LFF) dans LibreCAD en sélectionnant <b>Fichier</b> &gt; <b>Ouvrir</b>, puis choisissez le type de fichier <b>Police LFF (*.lff)</b>. Accédez ensuite au dossier approprié et cliquez sur le fichier de la police que vous souhaitez ouvrir.</p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: bold;">Étape&#160;4</p>
+            <p style="font-weight: normal;">Le fichier de la police est maintenant ouvert dans LibreCAD. Veuillez noter que chaque caractère est indiqué dans une ligne avec l’Unicode correspondant sous chaque caractère. Veuillez également remarquer que la Liste de blocs présente chaque caractère, par nom Unicode, en tant que bloc individuel.</p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: normal;">Pour modifier un caractère&#160;:</p>
+            <ol>
+                <li style="font-weight: normal;" value="1">Localisez le bloc correspondant à ce caractère dans la Liste de blocs. </li>
+                <li style="font-weight: normal;" value="2">Cliquez sur le bloc dans la Liste de blocs.</li>
+                <li style="font-weight: normal;" value="3">Cliquez sur <b>Éditer le bloc actif dans une nouvelle fenêtre</b> (<img src="../../Images/properties.svg" />).</li>
+            </ol>
+            <p style="font-weight: normal;">Le bloc actif s’ouvrira dans une nouvelle fenêtre.</p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: bold;">Étape&#160;5</p>
+            <p style="font-weight: normal;">Apportez les modifications au caractère, s’il y a lieu. Lorsque vous avez terminé de modifier un caractère, quittez l’onglet, ce qui vous ramènera au fichier LFF de la police complet. Il n’est pas nécessaire d’enregistrer le bloc dans un fichier individuel; le bloc sera conservé dans le fichier LFF. </p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: normal;">Répétez cette procédure jusqu’à ce que tous les caractères soient modifiés, si nécessaire.</p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: bold;">Étape&#160;6</p>
+            <p style="font-weight: normal;">Il est conseillé d’enregistrer la police modifiée dans un fichier différent afin de conserver l’état original de la police. </p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: normal;">Pour enregistrer la police dans un fichier différent&#160;:</p>
+            <ol>
+                <li style="font-weight: normal;" value="1">Cliquez sur <b>Fichier</b>.</li>
+                <li style="font-weight: normal;" value="2">Cliquez sur <b>Enregistrer sous</b>.</li>
+                <li style="font-weight: normal;" value="3">Localisez le dossier dans lequel vous souhaitez enregistrer le fichier de la police. Il est conseillé d’utiliser le fichier suivant&#160;: <span class="CodeSnippet">C:\Program Files (x86)\Hypertherm CAM\LibreCAD\resources\fonts</span>.</li>
+                <li style="font-weight: normal;" value="4">Depuis le menu déroulant de types de fichier, sélectionnez <b>Fichier LFF (*.lff)</b>.</li>
+                <li style="font-weight: normal;" value="5">Nommez le fichier, mais n’incluez <i>pas</i> d’extension de fichier dans le nom. Par exemple, écrivez «&#160;MaPolice&#160;»&#160;plutôt que «&#160;MaPolice.lff&#160;».</li>
+                <li style="font-weight: normal;" value="6">Cliquez sur <b>Enregistrer</b>.</li>
+            </ol>
+            <div class="Note">
+                <p>Si vous enregistrez la police dans le dossier de police LibreCAD de l’étape&#160;6.3, vous devrez modifier les autorisations de dossier afin de pouvoir enregistrer votre dossier. Si cela n’est pas possible, enregistrez le fichier de la police dans le dossier que vous avez indiqué dans <b>Paramètres de l’application</b> &gt;&#160;<b>Chemin d’accès</b> &gt;&#160;<b>Polices</b>.</p>
+            </div>
+            <p style="font-weight: normal;">&#160;</p>
+            <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/ExampleGrid.css');" class="TableStyle-ExampleGrid" cellspacing="0">
+                <col class="TableStyle-ExampleGrid-Column-Column1" />
+                <tbody>
+                    <tr class="TableStyle-ExampleGrid-Body-Body1">
+                        <td class="TableStyle-ExampleGrid-BodyA-Column1-Body1" style="font-weight: bold;">
+                            <p style="font-weight: bold;">Exemple</p>
+                            <p>&#160;</p>
+                            <p>Étape&#160;1 – <i>Italict.lff</i> est la police à utiliser comme modèle.</p>
+                            <p>&#160;</p>
+                            <p>Étape&#160;2 – Italict.lff est une police LibreCAD par défaut qui se trouve ici&#160;: C:\Program Files (x86)\Hypertherm CAM\LibreCAD\resources\fonts.</p>
+                            <p>&#160;</p>
+                            <p>Étape&#160;3 – La police est ouverte.</p>
+                            <p>&#160;</p>
+                            <p>
+                                <img src="../../Images/trans_createfont_example1.png" />
+                            </p>
+                            <p>&#160;</p>
+                            <p>Étape&#160;4 – Un caractère est modifié en sélectionnant un bloc de caractère individuel et en le modifiant dans un nouvel onglet ou une nouvelle fenêtre. L’image ci-dessous montre l’onglet de dessin de bloc pour le caractère «&#160;A&#160;».</p>
+                            <p>&#160;</p>
+                            <p>
+                                <img src="../../Images/trans_createfont_example2.png" />
+                            </p>
+                            <p>&#160;</p>
+                            <p>Étape&#160;5 – Apportez les modifications au bloc de caractère, puis quittez l’onglet.</p>
+                            <p>&#160;</p>
+                            <p>Étape&#160;6 – Enregistrez la police dans un nouveau fichier. (Remarque&#160;:&#160;N’incluez pas l’extension de fichier (.lff) à la fin du nom du fichier; sélectionnez simplement LFF&#160;dans le menu déroulant de types de fichier.)</p>
+                            <p>&#160;</p>
+                            <p>La police peut maintenant être utilisée dans un dessin.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="TopicFooter">
+                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Articles connexes</span>
+                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_convertFonts.htm">Conversion des polices Microsoft et AutoCAD en polices LibreCAD</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_dimension.htm">Outils de cotation</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_modify.htm">Outils Modifier</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_other.htm">Outils supplémentaires&#160;: Texte, Hachure, Point</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_text.htm">Utilisation du texte</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 6pt;margin-top: 0;margin-bottom: 0;">&#160;</p>
+    </body>
+</html>

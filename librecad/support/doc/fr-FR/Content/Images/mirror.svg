@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="15.999995"
+   height="15.269971"
+   viewBox="0 0 4.5155544 4.3095253"
+   id="svg4295"
+   version="1.1"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="mirror.svg"
+   inkscape:export-filename="/mnt/sdb1/icons/mirror24.png"
+   inkscape:export-xdpi="8.4375"
+   inkscape:export-ydpi="8.4375"
+   sodipodi:version="0.32"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <metadata
+     id="metadata4325">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs4323" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1137"
+     id="namedview4321"
+     showgrid="true"
+     units="px"
+     inkscape:snap-grids="true"
+     inkscape:zoom="1.09375"
+     inkscape:cx="159.87969"
+     inkscape:cy="143.96343"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4295"
+     inkscape:object-nodes="true"
+     inkscape:snap-object-midpoints="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4867"
+       originx="-4.1988326"
+       originy="-6.7680509" />
+    <inkscape:grid
+       id="GridFromPre046Settings"
+       type="xygrid"
+       originx="-4.1988326"
+       originy="-6.7680509"
+       spacingx="1"
+       spacingy="1"
+       color="#3f3fff"
+       empcolor="#3f3fff"
+       opacity="0.15"
+       empopacity="0.38"
+       empspacing="8" />
+  </sodipodi:namedview>
+  <g
+     id="g6041"
+     transform="matrix(0.07068425,0,0,0.07068425,-0.29679133,-0.31893876)">
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 41.757745,14.928133 c 0,46.736003 -0.005,42.651373 -0.005,42.651373 h 24.384001 z"
+       id="path3156"
+       sodipodi:nodetypes="cccc"
+       inkscape:connector-curvature="0" />
+    <path
+       sodipodi:nodetypes="cccc"
+       id="path5122"
+       d="m 30.523402,14.928133 c 0,46.736003 0.005,42.651373 0.005,42.651373 H 6.1443807 Z"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.25777793;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:connector-curvature="0" />
+    <path
+       sodipodi:nodetypes="cc"
+       id="path5126"
+       d="m 36.120793,65.480841 c 0,-56.4444462 0.0037,-60.9679868 0.0037,-60.9679868"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.69333339;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:6.77333362, 3.38666681, 1.69333341, 3.38666681;stroke-dashoffset:2.70933342;stroke-opacity:1"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

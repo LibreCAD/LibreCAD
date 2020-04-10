@@ -1,0 +1,1 @@
+define({'skin':{'default':{},'HTML5SkinWhite':{}},'toc':{'default':{'OpenBookIconAlternateText':'Open Book','ClosedBookIconAlternateText':'Closed Book','TopicIconAlternateText':'Topic','MarkAsNewIconAlternateText':'New Topic'}}});
