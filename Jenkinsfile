@@ -22,6 +22,7 @@ pipeline
 			steps 
 			{
 				bat 'SET'
+				deleteDir()
 				unstash 'source'
 				script
 				{
@@ -48,6 +49,7 @@ pipeline
 			steps 
 			{
 				bat 'SET'
+				deleteDir()
 				// build installer
 				unstash 'source'
 				unstash 'build_files'
