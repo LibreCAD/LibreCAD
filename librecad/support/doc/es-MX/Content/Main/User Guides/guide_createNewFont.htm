@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="es" xml:lang="es" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Guías del Usuario|[%=System.LinkedTitle%]">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Crear tipo de letra nuevo</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/ExampleGrid.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/User Guides/guide_createNewFont.htm">Abierto de navegación</a>
+        </p>
+        <div>
+            <h1 class="TOC4"><a name="kanchor46"></a>Crear tipo de letra nuevo</h1>
+            <p>Con LibreCAD, puede fácilmente crear tipos de letra nuevos utilizando un tipo de letra existente como plantilla. En LibreCAD, cada carácter de tipo de letra es un bloque, y cada bloque lleva el nombre del código de caracteres Unicode.</p>
+            <p class="Procedure">Crear un tipo de letra nuevo a partir de una plantilla</p>
+            <p style="font-weight: bold;">Paso 1</p>
+            <p>Identifique un tipo de letra existente a utilizar como plantilla para su nuevo tipo de letra.&#160;Intente encontrar un tipo de letra que sea similar al que desea crear, o elija un tipo de letra estándar tal como Times New Roman.</p>
+            <div class="Tip">
+                <p>Si no está seguro del tipo de letra que desea utilizar, puede acceder a una vista previa en el diálogo <b>Convertir Tipo de Letra</b> desde <b>Herramientas</b> &gt;&#160;<b>MTexto</b> &gt;&#160;<b>Convertir Tipo de Letra</b> ( <img src="../../Images/convertfont.png" /> ). </p>
+            </div>
+            <p>&#160;</p>
+            <p style="font-weight: bold;">Paso 2</p>
+            <p style="font-weight: normal;">Ubique el tipo de letra utilizando el Explorador de Archivos en su PC. </p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: normal;">Si está utilizando un tipo de letra que <a href="guide_convertFonts.htm#Microsof">convirtió desde AutoCAD o Microsoft</a>, el archivo de tipo de letra se encontrará en la ruta que especificó en <b>Preferencias de Aplicación</b> &gt; <b>Rutas</b> &gt;&#160;<b>Tipos de Letra</b>.</p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: normal;">Si está utilizando un tipo de letra de LibreCAD, el tipo de letra se encontrará en esta carpeta: <span class="CodeSnippet">C:\Program Files (x86)\Hypertherm CAM\LibreCAD\resources\fonts</span></p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: bold;">Paso 3</p>
+            <p style="font-weight: normal;">Abra el archivo de tipo de letra (*.LFF) en LibreCAD seleccionando <b>Archivo</b> &gt; <b>Abrir</b>, y configure el tipo de archivo como <b>Tipo de letra LFF (*.lff)</b>. Luego, navegue a la carpeta adecuada, y haga clic en el archivo de tipo de letra que desea abrir.</p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: bold;">Paso 4</p>
+            <p style="font-weight: normal;">El archivo de tipo de letra ahora está abierto en LibreCAD. Tenga en cuenta que cada carácter está enlistado en una fila junto con el código Unicode correspondiente bajo cada carácter. Además, note que la Lista de Bloques enumera cada carácter, por su nombre Unicode, como un bloque individual.</p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: normal;">Para editar un carácter:</p>
+            <ol>
+                <li style="font-weight: normal;" value="1">Localice el bloque que corresponde con ese carácter en la Lista de Bloques. </li>
+                <li style="font-weight: normal;" value="2">Haga clic en el bloque en la Lista de Bloques.</li>
+                <li style="font-weight: normal;" value="3">Haga clic en <b>Editar el bloque activo en otra ventana</b>( <img src="../../Images/properties.svg" /> ).</li>
+            </ol>
+            <p style="font-weight: normal;">El bloque activo se abrirá en una ventana separada.</p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: bold;">Paso 5</p>
+            <p style="font-weight: normal;">Haga los cambios necesarios al carácter. Cuando haya terminado de editar un carácter, salga de la pestaña, lo cual lo llevará de regreso al archivo LLF de tipo de letra completo. No es necesario guardar el bloque en un archivo individual, el bloque se guarda en el archivo LFF. </p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: normal;">Repita este proceso hasta haber modificado todos los caracteres, según sea necesario.</p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: bold;">Paso 6</p>
+            <p style="font-weight: normal;">Es recomendable guardar el tipo de letra modificado en un archivo distinto, de modo que conserve el estado original del tipo de letra original. </p>
+            <p style="font-weight: normal;">&#160;</p>
+            <p style="font-weight: normal;">Para guardar el tipo de letra como un archivo distinto:</p>
+            <ol>
+                <li style="font-weight: normal;" value="1">Haga clic en <b>Archivo</b>.</li>
+                <li style="font-weight: normal;" value="2">Haga clic en <b>Guardar Como</b>.</li>
+                <li style="font-weight: normal;" value="3">Busque la carpeta en la que quiere guardar el archivo de tipo de letra. Es recomendable que use la siguiente: <span class="CodeSnippet">C:\Program Files (x86)\Hypertherm CAM\LibreCAD\resources\fonts</span>.</li>
+                <li style="font-weight: normal;" value="4">Desde el menú desplegable de tipo de letra, seleccione <b>Archivo LFF (*.lff)</b>.</li>
+                <li style="font-weight: normal;" value="5">Dé nombre al archivo, pero <i>no</i> incluya una extensión de archivo en el nombre. Por ejemplo, ingrese “MiTipodeLetra”&#160;en lugar de “MiTipodeLetra.lff”.</li>
+                <li style="font-weight: normal;" value="6">Haga clic en <b>Guardar</b>.</li>
+            </ol>
+            <div class="Note">
+                <p>Si está guardando el tipo de letra en la carpeta de tipos de letra de LibreCAD del Paso 6.3, es posible que necesite modificar los permisos de carpeta para que pueda guardar en esa carpeta. En caso de que esto no pueda hacerse, guarde el archivo de tipo de letra en la carpeta que especificó en <b>Preferencias de Aplicación</b> &gt;&#160;<b>Rutas</b> &gt;&#160;<b>Tipos de Letra</b>.</p>
+            </div>
+            <p style="font-weight: normal;">&#160;</p>
+            <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/ExampleGrid.css');" class="TableStyle-ExampleGrid" cellspacing="0">
+                <col class="TableStyle-ExampleGrid-Column-Column1" />
+                <tbody>
+                    <tr class="TableStyle-ExampleGrid-Body-Body1">
+                        <td class="TableStyle-ExampleGrid-BodyA-Column1-Body1" style="font-weight: bold;">
+                            <p style="font-weight: bold;">Ejemplo</p>
+                            <p>&#160;</p>
+                            <p>Paso 1: <i>Italict.lff</i> es el tipo de letra que se usará como plantilla.</p>
+                            <p>&#160;</p>
+                            <p>Paso 2: Italict.lff es un tipo de letra predeterminado de LibreCAD, que se encuentra en: C:\Program Files (x86)\Hypertherm CAM\LibreCAD\resources\fonts</p>
+                            <p>&#160;</p>
+                            <p>Paso 3: se abre el tipo de letra.</p>
+                            <p>&#160;</p>
+                            <p>
+                                <img src="../../Images/trans_createfont_example1.png" />
+                            </p>
+                            <p>&#160;</p>
+                            <p>Paso 4: un carácter se edita seleccionando un bloque de carácter individual y editándolo en una nueva ventana/pestaña. La imagen a continuación muestra la pestaña de dibujo de bloque para el carácter “A”.</p>
+                            <p>&#160;</p>
+                            <p>
+                                <img src="../../Images/trans_createfont_example2.png" />
+                            </p>
+                            <p>&#160;</p>
+                            <p>Paso 5: modifique el bloque de carácter, luego salga de la pestaña.</p>
+                            <p>&#160;</p>
+                            <p>Paso 6: guarde el tipo de letra en un archivo nuevo. (Recuerde:&#160;no incluya la extensión de archivo (.lff) al final del nombre de archivo, simplemente seleccione LFF&#160;desde el menú desplegable de tipo de archivo.</p>
+                            <p>&#160;</p>
+                            <p>El tipo de letra estará ahora disponible para usarse en un dibujo.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="TopicFooter">
+                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Artículos relacionados</span>
+                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_convertFonts.htm">Convertir tipos de letra Microsoft y AutoCAD a tipos de letra LibreCAD</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_other.htm">Herramientas adicionales: Texto, Sombreado, Punto</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_dimension.htm">Herramientas de cotas</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_modify.htm">Herramientas para modificar</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_text.htm">Utilizar Texto</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 6pt;margin-top: 0;margin-bottom: 0;">&#160;</p>
+    </body>
+</html>

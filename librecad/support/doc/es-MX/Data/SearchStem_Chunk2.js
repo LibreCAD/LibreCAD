@@ -1,0 +1,1 @@
+define({"ya":{"ya":[3,4,33,36,38,46],},"z":{"z":[49],},"za":{"za":[43],},"zoom":{"zoom":[1,2,8,32,43],},"zoomaut":{"zoomauto":[43],},"zoomp":{"zoompan":[43],},"zoomprevious":{"zoomprevious":[43],},"zoomwindow":{"zoomwindow":[43],},"zp":{"zp":[43],},"zr":{"zr":[43],},"zv":{"zv":[43],},"zw":{"zw":[43],},"°":{"°":[9],},"​pulg":{"​pulg":[50],},});

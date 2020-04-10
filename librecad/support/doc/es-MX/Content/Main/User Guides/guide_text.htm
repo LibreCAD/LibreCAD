@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="es" xml:lang="es" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-browse-sequence-path="Text" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Guías del Usuario">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Utilizar Texto</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/User Guides/guide_text.htm">Abierto de navegación</a>
+        </p>
+        <div>
+            <h1 class="TOC4"><a name="kanchor40"></a><a name="kanchor41"></a><a name="kanchor42"></a>Utilizar Texto</h1>
+            <p>El texto puede integrase en dibujos artísticos y letreros, y puede utilizarse para proporcionar información y notas, incluyendo bloques de título. Cree líneas de texto sencillas o múltiples usando las herramientas Texto o MTexto.</p>
+            <div class="ImportantDiv">
+                <ul>
+                    <li value="1">Para obtener los mejores resultados, al usar texto, es recomendable desagrupar el texto en geometría (usando el comando <span class="CodeSnippet">explode</span>) antes de enviar un dibujo a ProNest. Utilice una alineación de <b>Línea Base Izquierda</b> ( <img src="../../Images/text_baselineleft.png" /> )&#160;para Texto, o <b>Inferior Izquierda</b> para MTexto para ayudarle a evitar cualquier problema con geometrías al enviar un dibujo a ProNest.</li>
+                </ul>
+                <ul>
+                    <li value="1">Tenga en cuenta que el texto siempre se convertirá en geometría en ProNest a menos que se encuentre en una capa de trazado, pero los resultados serán mejores si el texto se desagrupa en LibreCAD antes de ser exportado a ProNest.</li>
+                </ul>
+                <ul>
+                    <li value="1">Asegurar Suavizado está habilitado en ProNest para convertir segmentos de línea entrecortados en arcos y perfiles más suaves antes de importar una pieza de LibreCAD (<b>ProNest</b> &gt;&#160;<b>Configuración</b> &gt;&#160;<b>Importar Piezas</b> &gt;&#160;habilitar <b>Suavizar objetos</b>, y pruebe con <b>Tolerancias de Suavizado</b> entre 0,001 y 0,005 para empezar).</li>
+                </ul>
+            </div>
+            <p class="Procedure">Crear texto de una sola línea</p>
+            <ol>
+                <li value="1">Haga clic en <b>Texto</b> (<img src="../../Images/text.svg" />) desde el menú Herramientas.</li>
+                <li value="2">En el campo <b>Texto</b>, teclee el texto que desea que se muestre en el dibujo.</li>
+                <li value="3">Ajuste Configuración de Fuentes, Alineación, y Símbolos, y convierta a fuentes de Microsoft, en caso necesario.</li>
+                <li value="4">Haga clic en <b>Aceptar</b>.</li>
+                <li value="5">Haga clic en el dibujo para colocar texto, o ingrese las coordenadas de posicionamiento en la Línea de Comandos (la Alineación del texto se utiliza como punto de inserción cuando se especifican coordenadas).</li>
+            </ol>
+            <p class="Procedure">Crear texto multilínea</p>
+            <ol>
+                <li value="1">Haga clic en <b>MTexto</b> (<img src="../../Images/text.svg" />) desde el menú Herramientas.</li>
+                <li value="2">En el campo <b>Texto</b>, teclee el texto que desea que se muestre en el dibujo. Utilice el menú desplegable Insertar Símbolo para insertar caracteres especiales en su texto, tales como el símbolo de grados y el símbolo de derechos reservados.</li>
+                <li value="3"><a href="guide_convertFonts.htm">Convierta a fuentes de Microsoft</a> y configure los valores de espaciado, en caso necesario.</li>
+                <li value="4">Configure la Alineación y el Ángulo de inserción (el Ángulo puede dejarse en blanco para insertar texto a 180°).</li>
+                <li value="5">Haga clic en <b>Aceptar</b>.</li>
+                <li value="6">Haga clic en el dibujo para colocar texto, o ingrese las coordenadas de posicionamiento en la Línea de Comandos (la Alineación del texto se utiliza como punto de inserción cuando se especifican coordenadas).</li>
+            </ol>
+            <p class="Procedure">Modificar texto</p>
+            <ol>
+                <li value="1">Haga clic en <b>Propiedades</b> ( <img src="../../Images/properties.svg" /> )&#160;desde el menú Herramientas para modificar. Aparecerá el diálogo de texto nuevamente, permitiéndole modificar el texto, así como la capa y la información de color.</li>
+                <li value="2">Haga clic en el texto que desea modificar.</li>
+                <li value="3">Modifique las propiedades necesarias.</li>
+                <li value="4">Haga clic en <b>Aceptar</b>.</li>
+            </ol>
+            <p class="Procedure"><a name="kanchor43"></a>Dar forma a un texto alrededor de un objeto</p>
+            <p>Con la característica exclusiva de Hypertherm <a href="../Tools/tool_modify.htm#Shape">Forma de Texto</a> en LibreCAD, puede dar forma a un texto alrededor de una línea sencilla, un arco, o un objeto circular.</p>
+            <ol>
+                <li value="1">Dibuje una forma. </li>
+                <li value="2">Posicione el texto utilizando las herramientas <b>Texto</b> o <b>MTexto</b>. Cuando esté en el cuadro de diálogo de Texto o MTexto, asegúrese de especificar una Alineación. Si no está seguro de qué Alineación debe usar, pruebe usando la opción inferior izquierda.</li>
+                <li value="3">Ingrese al modo de Forma de Texto haciendo clic en <b>Forma de Texto</b> ( <img src="../../Images/shape2.svg" /> ) desde el menú Herramientas para modificar, o ingresando <span class="CodeSnippet">st</span> en la Línea de Comandos.</li>
+                <li value="4">Haga clic en el texto al que desea dar forma.</li>
+                <li value="5">Mueva su cursor alrededor de la forma. Modifique el valor de equidistancia y cambie la orientación del texto seleccionando la casilla de verificación, en caso necesario. Cuando el texto esté en la posición deseada, haga clic para posicionarlo.</li>
+            </ol>
+            <div class="Tip">
+                <p>Para lograr un control preciso sobre el texto al que desea dar forma, se recomienda desagrupar los hilos de texto en letras individuales usando la herramienta para modificar <b>Desagrupar Texto en Letras</b> ( <img src="../../Images/explode_text_to_letters.svg" /> ).</p>
+            </div>
+            <p class="Procedure">Alinear texto con forma a través del perímetro del objeto</p>
+            <ol>
+                <li value="1">Dibuje una forma.</li>
+                <li value="2">Posicione el texto utilizando las herramientas <b>Texto</b> o <b>MTexto</b>. Cuando esté en el cuadro de diálogo de Texto o MTexto, asegúrese de especificar una Alineación media centro.</li>
+                <li value="3">Ingrese al modo Forma de Texto seleccionando <b>Forma de Texto</b> ( <img src="../../Images/shape2.svg" /> ) desde el menú Herramientas para modificar, o ingresando <span class="CodeSnippet">st</span> en la Línea de Comandos.</li>
+                <li value="4">Ajuste el modo Equidistancia de Forma de Texto en la barra de herramientas. <ul><li value="1">&#160;Para texto de una sola línea, la Equidistancia deberá ser un valor negativo de la mitad de la Altura del texto. Por ejemplo, al usar una altura de texto de 1, el valor de equidistancia deberá ser de -0.5.</li><li value="2">La Equidistancia también puede ajustarse y actualizarse ingresando un valor y seleccionando la tecla Intro.</li></ul></li>
+                <li value="5">Haga clic en el texto al que desea dar forma.</li>
+                <li value="6">Mueva su cursor alrededor de la forma. Cuando el texto esté en la posición deseada, haga clic para posicionarlo.</li>
+            </ol>
+            <p>&#160;</p>
+            <blockquote>
+                <p>
+                    <img src="../../Images/st_example.png" />
+                </p>
+            </blockquote>
+            <div class="Tip">
+                <p>Utilice la herramienta para modificar <a href="../Tools/tool_modify.htm#Trim">Recortar Exceso</a> (<img src="../../Images/trim_excess.svg" /> ) para eliminar rápidamente cualquier geometría no deseada con un solo clic.</p>
+            </div>
+            <div class="TopicFooter">
+                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Artículos relacionados</span>
+                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_convertFonts.htm">Convertir tipos de letra Microsoft y AutoCAD a tipos de letra LibreCAD</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_createNewFont.htm">Crear tipo de letra nuevo</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_other.htm">Herramientas adicionales: Texto, Sombreado, Punto</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_dimension.htm">Herramientas de cotas</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_modify.htm">Herramientas para modificar</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 6pt;margin-top: 0;margin-bottom: 0;">&#160;</p>
+    </body>
+</html>
