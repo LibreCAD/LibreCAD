@@ -11032,7 +11032,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Pen Wizard</source>
-        <translation type="unfinished">Pen Wizard</translation>
+        <translation type="unfinished">Asistente de pluma</translation>
     </message>
     <message>
         <source>Select objects</source>
