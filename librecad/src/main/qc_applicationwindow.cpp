@@ -3056,11 +3056,11 @@ void QC_ApplicationWindow::invokeLinkList()
     dlg.setWindowTitle(tr("Help Links"));
     auto layout = new QVBoxLayout;
     auto list = new LinkList(&dlg);
-    list->addLink(QObject::tr("Wiki"), "http://wiki.librecad.org/");
-    list->addLink(QObject::tr("User's Manual"), "http://wiki.librecad.org/index.php/LibreCAD_users_Manual");
-    list->addLink(QObject::tr("Commands"), "http://wiki.librecad.org/index.php/Commands");
-    list->addLink(QObject::tr("Style Sheets"), "https://github.com/LibreCAD/LibreCAD/wiki/Style-Sheets");
-    list->addLink(QObject::tr("Widgets"), "https://github.com/LibreCAD/LibreCAD/wiki/Widgets");
+    list->addLink(QObject::tr("Wiki"), "https://librecad.readthedocs.io/en/latest/about/index.html");
+    list->addLink(QObject::tr("User's Manual"), "https://librecad.readthedocs.io/en/latest/guides/index.html");
+    list->addLink(QObject::tr("Commands"), "https://librecad.readthedocs.io/en/latest/ref/tools.html");
+    list->addLink(QObject::tr("Style Sheets"), "https://librecad.readthedocs.io/en/latest/ref/customize.html#style-sheets");
+    list->addLink(QObject::tr("Widgets"), "https://librecad.readthedocs.io/en/latest/ref/menu.html#widgets");
     list->addLink(QObject::tr("Forum"), "http://forum.librecad.org/");
     list->addLink(QObject::tr("Release Information"), "https://github.com/LibreCAD/LibreCAD/releases");
     layout->addWidget(list);
