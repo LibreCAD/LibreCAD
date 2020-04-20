@@ -979,9 +979,8 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 		w = 0;
 	}
 
-#if 1 /*TRUE*/
 	// - Scale pen width.
-	// - Notes: pen width is not scaled on print and print preview.
+	// - By default pen width is not scaled on print and print preview.
 	//   This is the standard (AutoCAD like) behaviour.
 	// bug# 3437941
 	// ------------------------------------------------------------
@@ -996,7 +995,7 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 		{
 			uf = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
 
-			if (	(isPrinting() || isPrintPreview()) &&
+			if ((isPrinting() || isPrintPreview()) && !scaleLineWidth &&
 					graphic->getPaperScale() > RS_TOLERANCE )
 			{
 				wf = 1.0 / graphic->getPaperScale();
@@ -1011,27 +1010,6 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 		pen.setScreenWidth(0);
 	}
 
-#else
-
-	// - Scale pen width.
-	// - Notes: pen width is scaled on print and print preview.
-	//   This is not the standard (AutoCAD like) behaviour.
-	// --------------------------------------------------------
-	if (!draftMode)
-	{
-		double	uf = 1.0;	//	Unit factor.
-
-		RS_Graphic* graphic = container->getGraphic();
-
-        if (graphic)
-			uf = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
-
-		pen.setScreenWidth(toGuiDX(w / 100.0 * uf));
-	}
-	else
-		pen.setScreenWidth(0);
-#endif
-
 	// prevent drawing with 1-width which is slow:
 	if (RS_Math::round(pen.getScreenWidth())==1) {
 		pen.setScreenWidth(0.0);
@@ -1042,15 +1020,18 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 		pen.setColor(foreground);
 	}
 
-	// this entity is selected:
-	if (e->isSelected()) {
-		pen.setLineType(RS2::DotLine);
-		pen.setColor(selectedColor);
-	}
+	if (!isPrinting() && !isPrintPreview())
+	{
+		// this entity is selected:
+		if (e->isSelected()) {
+			pen.setLineType(RS2::DotLine);
+			pen.setColor(selectedColor);
+		}
 
-	// this entity is highlighted:
-	if (e->isHighlighted()) {
-		pen.setColor(highlightedColor);
+		// this entity is highlighted:
+		if (e->isHighlighted()) {
+			pen.setColor(highlightedColor);
+		}
 	}
 
 	// deleting not drawing:
@@ -1146,7 +1127,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
 	}
 
 	// draw reference points:
-	if (e->isSelected()) {
+	if (e->isSelected() && !(isPrinting() || isPrintPreview())) {
 		if (!e->isParentSelected()) {
 			RS_VectorSolutions const& s = e->getRefPoints();
 

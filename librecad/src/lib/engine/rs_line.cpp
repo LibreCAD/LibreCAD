@@ -174,7 +174,51 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
     return vpc;
 }
 
-    RS_Vector RS_Line::getMiddlePoint()const
+/*
+RS_Vector RS_Line::getPointOnEntityAlongLine(const RS_Vector& coord,const double angle,
+                                           bool onEntity,
+                                           double* dist,
+                                           RS_Entity** entity) const
+{
+    if (entity)
+    {
+        *entity = const_cast<RS_Line*>(this);
+    }
+
+
+    RS_Vector direction {data.endpoint - data.startpoint};
+    RS_Vector vpc {coord - data.startpoint};
+    double a {direction.squared()};
+
+    if( a < RS_TOLERANCE2)
+    {
+        //line too short
+        vpc = getMiddlePoint();
+    }
+    else
+    {
+        //find projection on line
+        const double t {RS_Vector::dotP( vpc, direction) / a};
+        if( !isConstruction()   && onEntity  && ( t <= -RS_TOLERANCE || t >= 1. + RS_TOLERANCE ) )
+        {
+            //projection point not within range, find the nearest endpoint
+            return getNearestEndpoint( coord, dist);
+        }
+
+        vpc = data.startpoint + direction * t;
+    }
+
+    if (dist)
+    {
+        *dist = vpc.distanceTo( coord);
+    }
+
+    return vpc;
+}
+*/
+
+
+RS_Vector RS_Line::getMiddlePoint()const
 {
         return (getStartpoint() + getEndpoint())*0.5;
 }
@@ -647,9 +691,12 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
 		pEnd=view->toGui(vpIts.get(1));
 		direction=pEnd-pStart;
     }
+
+    bool drawAsSelected = isSelected() && !(view->isPrinting() || view->isPrintPreview());
+
     double  length=direction.magnitude();
     patternOffset -= length;
-    if (( !isSelected() && (
+    if (( !drawAsSelected && (
               getPen().getLineType()==RS2::SolidLine ||
               view->getDrawingMode()==RS2::ModePreview)) ) {
         //if length is too small, attempt to draw the line, could be a potential bug
@@ -661,9 +708,10 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
 
     // Pattern:
     const RS_LineTypePattern* pat;
-    if (isSelected()) {
+    if (drawAsSelected) {
 //        styleFactor=1.;
         pat = &RS_LineTypePattern::patternSelected;
+
     } else {
         pat = view->getPattern(getPen().getLineType());
     }

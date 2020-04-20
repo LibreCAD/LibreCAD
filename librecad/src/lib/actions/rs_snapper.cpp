@@ -321,10 +321,14 @@ RS_Vector RS_Snapper::snapPoint(const RS_Vector& coord, bool setSpot)
     }
     return coord;
 }
+
+
 double RS_Snapper::getSnapRange() const
 {
-	if(graphicView )
-    return (graphicView->getGrid()->getCellVector()*0.5).magnitude();
+    if (graphicView) {
+        return (graphicView->getGrid()->getCellVector() * 0.5).magnitude();
+    }
+
     return 20.;
 }
 
@@ -645,7 +649,7 @@ RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, RS2::EntityType enType,
 				level);
 }
 
-RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, const std::initializer_list<RS2::EntityType>& enTypeList,
+RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, const EntityTypeList& enTypeList,
                                    RS2::ResolveLevel level) {
 	RS_Entity* pten = nullptr;
 	RS_Vector coord{graphicView->toGraphX(e->x()), graphicView->toGraphY(e->y())};
@@ -929,6 +933,7 @@ unsigned int RS_Snapper::snapModeToInt(const RS_SnapMode& s)
     ret <<=1;ret |= s.snapCenter;
     ret <<=1;ret |= s.snapOnEntity;
     ret <<=1;ret |= s.snapIntersection;
+    ret <<=1;ret |= s.snapAngle;
    return ret;
 }
 /**
@@ -954,6 +959,9 @@ RS_SnapMode RS_Snapper::intToSnapMode(unsigned int ret)
     ret >>= 1;
     s.snapFree =ret & binaryOne;
     ret >>= 1;
+    s.snapAngle =ret & binaryOne;
+    ret >>= 1;
+
     switch (ret) {
     case 1:
             s.restriction=RS2::RestrictHorizontal;
@@ -969,3 +977,36 @@ RS_SnapMode RS_Snapper::intToSnapMode(unsigned int ret)
     }
    return s;
 }
+
+
+RS_Vector RS_Snapper::snapToAngle(const RS_Vector &currentCoord, const RS_Vector &referenceCoord, const double angularResolution)
+{
+
+    if(snapMode.restriction != RS2::RestrictNothing || snapMode.snapGrid)
+    {
+        return currentCoord;
+    }
+
+    double angle = referenceCoord.angleTo(currentCoord)*180.0/M_PI;
+    angle -= remainder(angle,angularResolution);
+    angle *= M_PI/180.;
+    RS_Vector res = RS_Vector::polar(referenceCoord.distanceTo(currentCoord),angle);
+    res += referenceCoord;
+
+    if (snapMode.snapOnEntity)
+    {
+        RS_Vector t(false);
+        //RS_Vector mouseCoord = graphicView->toGraph(currentCoord.x(), currentCoord.y());
+        t = container->getNearestVirtualIntersection(res,angle,nullptr);
+
+        pImpData->snapSpot = t;
+        snapPoint(pImpData->snapSpot, true);
+        return t;
+    }
+    else
+    {
+        snapPoint(res, true);
+        return res;
+    }
+}
+

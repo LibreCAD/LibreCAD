@@ -200,5 +200,6 @@
         <file>noprint.svg</file>
         <file>close_all.svg</file>
         <file>save_all.svg</file>
+        <file>scaleLineWidth.svg</file>
     </qresource>
 </RCC>

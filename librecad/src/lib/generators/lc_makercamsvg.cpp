@@ -59,7 +59,7 @@
 
 namespace {
 const std::string NAMESPACE_URI_SVG = "http://www.w3.org/2000/svg";
-const std::string NAMESPACE_URI_LC = "http://www.librecad.org";
+const std::string NAMESPACE_URI_LC = "https://librecad.org";
 const std::string NAMESPACE_URI_XLINK = "http://www.w3.org/1999/xlink";
 }
 

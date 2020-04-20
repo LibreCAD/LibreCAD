@@ -75,7 +75,6 @@ public:
 	void redo();
 
 protected:
-	RS_Vector snapToAngle(const RS_Vector& currentCoord);
 	struct Points;
 	std::unique_ptr<Points> pPoints;
 };

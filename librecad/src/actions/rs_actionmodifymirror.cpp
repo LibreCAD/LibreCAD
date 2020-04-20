@@ -37,18 +37,18 @@
 #include "rs_debug.h"
 
 struct RS_ActionModifyMirror::Points {
-	RS_MirrorData data;
-	RS_Vector axisPoint1;
-	RS_Vector axisPoint2;
+    RS_MirrorData data;
+    RS_Vector axisPoint1;
+    RS_Vector axisPoint2;
 };
 
 RS_ActionModifyMirror::RS_ActionModifyMirror(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Mirror Entities",
-						   container, graphicView)
-		, pPoints(new Points{})
+                                   container, graphicView)
+        , pPoints(new Points{})
 {
-	actionType=RS2::ActionModifyMirror;
+    actionType=RS2::ActionModifyMirror;
 }
 
 RS_ActionModifyMirror::~RS_ActionModifyMirror() = default;
@@ -62,10 +62,10 @@ void RS_ActionModifyMirror::trigger() {
     RS_DEBUG->print("RS_ActionModifyMirror::trigger()");
 
     RS_Modification m(*container, graphicView);
-	m.mirror(pPoints->data);
+    m.mirror(pPoints->data);
 
-	RS_DIALOGFACTORY->updateSelectionWidget(
-				container->countSelected(), container->totalSelectedLength());
+    RS_DIALOGFACTORY->updateSelectionWidget( container->countSelected(),
+                                             container->totalSelectedLength());
 }
 
 void RS_ActionModifyMirror::mouseMoveEvent(QMouseEvent* e) {
@@ -77,19 +77,23 @@ void RS_ActionModifyMirror::mouseMoveEvent(QMouseEvent* e) {
         RS_Vector mouse = snapPoint(e);
         switch (getStatus()) {
         case SetAxisPoint1:
-			pPoints->axisPoint1 = mouse;
+            pPoints->axisPoint1 = mouse;
             break;
 
         case SetAxisPoint2:
-			if (pPoints->axisPoint1.valid) {
-				pPoints->axisPoint2 = mouse;
+            if (pPoints->axisPoint1.valid) {
+                if(e->modifiers() & Qt::ShiftModifier)
+                    mouse = snapToAngle(mouse, pPoints->axisPoint1, 15.);
+
+                pPoints->axisPoint2 = mouse;
 
                 deletePreview();
                 preview->addSelectionFrom(*container);
-				preview->mirror(pPoints->axisPoint1, pPoints->axisPoint2);
+                preview->mirror(pPoints->axisPoint1, pPoints->axisPoint2);
 
-				preview->addEntity(new RS_Line{preview.get(),
-											   pPoints->axisPoint1, pPoints->axisPoint2});
+                preview->addEntity(new RS_Line{preview.get(),
+                                               pPoints->axisPoint1,
+                                               pPoints->axisPoint2});
 
                 drawPreview();
             }
@@ -105,7 +109,11 @@ void RS_ActionModifyMirror::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionModifyMirror::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
+        RS_Vector snapped = snapPoint(e);
+        if((e->modifiers() & Qt::ShiftModifier) && getStatus() == SetAxisPoint2 )
+            snapped = snapToAngle(snapped, pPoints->axisPoint1, 15.);
+
+        RS_CoordinateEvent ce(snapped);
         coordinateEvent(&ce);
 
     } else if (e->button()==Qt::RightButton) {
@@ -123,18 +131,18 @@ void RS_ActionModifyMirror::coordinateEvent(RS_CoordinateEvent* e) {
 
         switch (getStatus()) {
         case SetAxisPoint1:
-			pPoints->axisPoint1 = mouse;
+            pPoints->axisPoint1 = mouse;
             setStatus(SetAxisPoint2);
                 graphicView->moveRelativeZero(mouse);
             break;
 
         case SetAxisPoint2:
-			pPoints->axisPoint2 = mouse;
+            pPoints->axisPoint2 = mouse;
             setStatus(ShowDialog);
                 graphicView->moveRelativeZero(mouse);
-				if (RS_DIALOGFACTORY->requestMirrorDialog(pPoints->data)) {
-					pPoints->data.axisPoint1 = pPoints->axisPoint1;
-					pPoints->data.axisPoint2 = pPoints->axisPoint2;
+                if (RS_DIALOGFACTORY->requestMirrorDialog(pPoints->data)) {
+                    pPoints->data.axisPoint1 = pPoints->axisPoint1;
+                    pPoints->data.axisPoint2 = pPoints->axisPoint2;
                     deletePreview();
                     trigger();
                     finish(false);
@@ -147,25 +155,21 @@ void RS_ActionModifyMirror::coordinateEvent(RS_CoordinateEvent* e) {
 }
 
 void RS_ActionModifyMirror::updateMouseButtonHints() {
-	switch (getStatus()) {
-	/*case Select:
-				RS_DIALOGFACTORY->updateMouseWidget(tr("Pick entities to move"),
-											   tr("Cancel"));
-				break;*/
-	case SetAxisPoint1:
-		RS_DIALOGFACTORY->updateMouseWidget(
-					tr("Specify first point of mirror line"),
-					tr("Cancel"));
-		break;
-	case SetAxisPoint2:
-		RS_DIALOGFACTORY->updateMouseWidget(
-					tr("Specify second point of mirror line"),
-					tr("Back"));
-		break;
-	default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-		break;
-	}
+    switch (getStatus()) {
+    case SetAxisPoint1:
+        RS_DIALOGFACTORY->updateMouseWidget(
+                    tr("Specify first point of mirror line"),
+                    tr("Cancel"));
+        break;
+    case SetAxisPoint2:
+        RS_DIALOGFACTORY->updateMouseWidget(
+                    tr("Specify second point of mirror line"),
+                    tr("Back"));
+        break;
+    default:
+        RS_DIALOGFACTORY->updateMouseWidget();
+        break;
+    }
 }
 
 void RS_ActionModifyMirror::updateMouseCursor() {

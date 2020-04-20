@@ -50,16 +50,15 @@ RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
     :RS_ActionInterface("Print Preview",
 						container, graphicView)
 	, hasOptions(false)
-	, scaleFixed(false)
 	, m_bPaperOffset(false)
 	, pPoints(new Points{})
 {
-    showOptions();
-	actionType=RS2::ActionFilePrintPreview;
+    actionType=RS2::ActionFilePrintPreview;
     RS_SETTINGS->beginGroup("/PrintPreview");
     bool fixed = (RS_SETTINGS->readNumEntry("/PrintScaleFixed", 0) != 0);
     RS_SETTINGS->endGroup();
     setPaperScaleFixed(fixed);
+    showOptions();
 }
 
 RS_ActionPrintPreview::~RS_ActionPrintPreview()=default;
@@ -212,7 +211,6 @@ QStringList RS_ActionPrintPreview::getAvailableCommands() {
 
 void RS_ActionPrintPreview::resume() {
     RS_ActionInterface::resume();
-    showOptions();
 }
 
 //printout warning in command widget
@@ -301,6 +299,11 @@ double RS_ActionPrintPreview::getScale() const{
     return ret;
 }
 
+
+void RS_ActionPrintPreview::setLineWidthScaling(bool state) {
+    graphicView->setLineWidthScaling(state);
+    graphicView->redraw();
+}
 
 
 void RS_ActionPrintPreview::setBlackWhite(bool bw) {
