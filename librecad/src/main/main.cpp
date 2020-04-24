@@ -82,6 +82,10 @@ int main(int argc, char** argv)
     QCoreApplication::setApplicationName("LibreCAD");
     QCoreApplication::setApplicationVersion(XSTR(LC_VERSION));
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0))
+    QGuiApplication::setDesktopFileName("librecad.desktop");
+#endif
+
     QSettings settings;
 
     bool first_load = settings.value("Startup/FirstLoad", 1).toBool();
