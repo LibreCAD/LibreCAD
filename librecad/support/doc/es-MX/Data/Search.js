@@ -1,1 +1,1 @@
-define({r:0.5,st:'Stem',n:1,t:[0],u:['../Content/Main/Appendices/append_calculator.htm'],s:['+','idiom'],p:[['+',51],['bloques',14],['de',8],['el',26],['haga',33],['línea',26],['patrones',8],['seleccionada',28],['varias',32]]});
+define({r:0.5,st:'Stem',n:1,t:[0],u:['../Content/Main/Appendices/append_calculator.htm'],s:['+','identifiqu'],p:[['+',51],['bloques',1],['de',6],['el',22],['haga',19],['línea',25],['pasos',38],['seleccionada',11],['variables',45]]});
