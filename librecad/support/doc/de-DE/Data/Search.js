@@ -1,1 +1,1 @@
-define({r:0.5,st:'Stem',n:1,t:[0],u:['../Content/Main/Appendices/append_calculator.htm'],s:['+','for','sonstig'],p:[['+',51],['bedarf',48],['der',38],['er',32],['in',21],['mittelpunkt',33],['se',43],['vektordaten',49],['zukünftige',40]]});
+define({r:0.5,st:'Stem',n:1,t:[0],u:['../Content/Main/Appendices/append_calculator.htm'],s:['+','for','sonderzeich'],p:[['+',51],['bedarf',48],['der',38],['er',32],['in',21],['mittelpunkt',33],['se',43],['vektordaten',49],['zukünftig',9]]});
