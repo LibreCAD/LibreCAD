@@ -22,6 +22,7 @@ pipeline
 			steps 
 			{
 				bat 'SET'
+				deleteDir()
 				unstash 'source'
 				script
 				{
@@ -48,6 +49,7 @@ pipeline
 			steps 
 			{
 				bat 'SET'
+				deleteDir()
 				// build installer
 				unstash 'source'
 				unstash 'build_files'
@@ -175,5 +177,5 @@ def CreateNetworkPathForInstaller()
 	else
 		installerType = ' ' + installerType + ' '
 	
-	return  '\\\\cam-issvr\\installations\\built by jenkins\\LibreCAD' + installerType +'(' + env.TARGET_PLATFORM + ')\\' + env.BRANCH_NAME + '\\'
+	return  '\\\\cam-issvr\\installations\\built by jenkins\\LibreCAD' + installerType +' (' + env.TARGET_PLATFORM + ')\\' + env.BRANCH_NAME + '\\' + "${currentBuild.number}" + '\\'
 }

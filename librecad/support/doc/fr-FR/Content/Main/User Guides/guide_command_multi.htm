@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="fr-ca" xml:lang="fr-ca" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Guides de l’utilisateur|[%=System.LinkedTitle%]">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Entrée multicommande avec fichiers de variables</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
+        <link href="../../Resources/TableStyles/ExampleGrid.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/User Guides/guide_command_multi.htm">Ouvrir la rubrique avec les liens de navigation</a>
+        </p>
+        <div>
+            <h1 class="TOC4"><a name="Multi-Co"></a><a name="kanchor53"></a>Entrée multicommande avec fichiers de variables (Avancé)</h1>
+            <p>Les entrées de commande peuvent se combiner et être saisies sur une seule ligne, en séparant les commandes et les autres entrées par un point-virgule. Le fait de saisir <span class="CodeSnippet">li;0,0;10..0;0..10;-10..0;c;k</span> sur la ligne de commande dessinera un carré de 10&#160;x&#160;10. Une liste de commandes, séparées par une nouvelle ligne (retour), peut être copiée et collée en utilisant la fonction «&#160;Coller plusieurs commandes&#160;» depuis le bouton de ligne de commande (angle inférieur droit de l’ancrage Ligne de commande).</p>
+            <p>&#160;</p>
+            <p>L’entrée de commande peut également être chargée à partir des fichiers de texte. Entrez les commandes et les autres entrées dans un fichier de texte, en les séparant par un saut de ligne. Par exemple, créez un fichier de texte et entrez les commandes suivantes&#160;:</p>
+            <table style="border-spacing: 1px 1px;border-left-style: solid;border-left-width: 1px;border-right-style: solid;border-right-width: 1px;border-top-style: solid;border-top-width: 1px;border-bottom-style: solid;border-bottom-width: 1px;margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/ExampleGrid.css');" class="TableStyle-ExampleGrid" cellspacing="0">
+                <col style="width: 2in;" class="TableStyle-ExampleGrid-Column-Column1" />
+                <tbody>
+                    <tr class="TableStyle-ExampleGrid-Body-Body1">
+                        <td class="TableStyle-ExampleGrid-BodyA-Column1-Body1">
+                            <p class="CodeSnippet">li
+</p>
+                            <p class="CodeSnippet">0,0
+</p>
+                            <p class="CodeSnippet">@10,0
+</p>
+                            <p class="CodeSnippet">@0,10
+</p>
+                            <p class="CodeSnippet">@-10,0
+</p>
+                            <p class="CodeSnippet">c
+</p>
+                            <p class="CodeSnippet">k</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Les commandes ci-dessus dessineront un carré de 10&#160;x&#160;10.</p>
+            <p class="Procedure">Utilisation de l’entrée multicommande</p>
+            <ol>
+                <li value="1">Créez un fichier de texte contenant l’entrée de commande.</li>
+                <li value="2">Dans LibreCAD, cliquez sur <b>Charger le fichier de commande</b> depuis le menu déroulant en sélectionnant le bouton Ligne de commande ( <img src="../../Images/button.png" /> ). </li>
+                <li value="3">Localisez et cliquez sur le fichier, puis cliquez sur <b>Ouvrir</b>.</li>
+            </ol>
+            <p>La géométrie que vous avez indiquée dans le fichier de texte apparaîtra dans le dessin actif.</p>
+            <p>&#160;</p>
+            <p style="font-weight: bold;">Variables dans l’entrée multicommande</p>
+            <p>L’entrée multicommande peut être attribuée à une variable, et des variables peuvent également contenir d’autres variables qui sont lues de manière récursive&#160;:</p>
+            <table style="border-left-style: solid;border-left-width: 1px;border-left-color: ;border-right-style: solid;border-right-width: 1px;border-right-color: ;border-top-style: solid;border-top-width: 1px;border-top-color: ;border-bottom-style: solid;border-bottom-width: 1px;border-bottom-color: ;margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/ExampleGrid.css');" class="TableStyle-ExampleGrid" cellspacing="0">
+                <col style="width: 2in;" class="TableStyle-ExampleGrid-Column-Column1" />
+                <tbody>
+                    <tr class="TableStyle-ExampleGrid-Body-Body1">
+                        <td class="TableStyle-ExampleGrid-BodyA-Column1-Body1">
+                            <p class="CodeSnippet">a=ci;0,0;10</p>
+                            <p class="CodeSnippet">b=ci;10,0;10</p>
+                            <p class="CodeSnippet">c=\a;\b;kill</p>
+                            <p class="CodeSnippet">\c</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Entrez chaque ligne de texte ci-dessus dans la ligne de commande. Lorsque <span class="CodeSnippet">\c</span> est saisi, deux cercles se chevauchant avec un rayon de 10 sont dessinés. Le caractère <span class="CodeSnippet">\</span> est un caractère d’échappement permettant à la ligne de commande d’interpréter le nom de la variable en tant qu’action. Dans l’exemple ci-dessus, <span class="CodeSnippet">\c</span> devient <span class="CodeSnippet">ci;0,0;10;ci;10,0;10;kill</span>.</p>
+            <p class="Procedure">Utilisation des variables dans l’entrée multicommande</p>
+            <ol>
+                <li value="1">Créez un fichier de texte d’entrée de variables multicommande.</li>
+                <li value="2">Chargez le fichier en sélectionnant <b>Options</b>.</li>
+                <li value="3">Cliquez sur <b>Paramètres de l’application</b>.</li>
+                <li value="4">Cliquez sur <b>Trajectoires</b>.</li>
+                <li value="5">Cliquez sur <b>Parcourir</b> ( <img src="../../Images/open.svg" /> ) et localisez le fichier de variables.</li>
+                <li value="6">Cliquez sur <b>OK</b>.</li>
+                <li value="7">Cliquez de nouveau sur <b>OK</b> pour enregistrer les paramètres de l’application.</li>
+                <li value="8">Redémarrez LibreCAD.</li>
+                <li value="9">Entrez <span class="CodeSnippet">\c</span> dans la ligne de commande.</li>
+            </ol>
+            <p>Le fichier sera chargé.</p>
+            <div class="TopicFooter">
+                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Articles connexes</span>
+                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_container.htm">À propos des outils Dessin et Modifier</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_command_aliases.htm">Alias de lignes de commande</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Appendices/append_calculator.htm">Opérateurs et fonctions de la calculatrice</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Appendices/append_commandline.htm">Raccourcis de lignes de commande</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_commandline.htm">Utilisation de la ligne de commande</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 6pt;margin-top: 0;margin-bottom: 0;">&#160;</p>
+    </body>
+</html>

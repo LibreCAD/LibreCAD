@@ -1,0 +1,84 @@
+/* MadCap Styles */
+#contentBody.nav-closed
+{
+    width: 100%;
+}
+
+button, .button
+{
+    border-color: none;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="week"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="time"],
+input[type="url"],
+textarea
+{
+    margin: 0;
+}
+
+.contain-to-grid
+{
+    background: none;
+}
+
+.complementary
+{
+    padding: 0;
+}
+
+.expand-for-small-10
+{
+    width: 83%;
+}
+
+.row
+{
+    max-width: 100%;
+}
+
+.menu-icon
+{
+    margin-top: -10px;
+    width: 60px;
+}
+
+    .menu-icon a
+    {
+        text-indent: -48px;
+        width:60px;
+        height: 70px;
+        line-height: 33px;
+        padding: 0;
+        color: white;
+    }
+
+        .menu-icon a span
+        {
+            position: absolute;
+            display: block;
+            width: 60px;
+            height: 28px;
+            top: 25px;
+            background: url('Images/ResponsiveMenuButton.png') no-repeat center center;
+        }
+
+    .hide-extras [role="main"]
+    {
+        width: 83%;
+    }
+
+    #search-sidebar
+    {
+        display: none;
+    }

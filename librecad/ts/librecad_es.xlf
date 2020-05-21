@@ -13559,7 +13559,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="_msg3147">
         <source xml:space="preserve">Pen Wizard</source>
-        <target xml:space="preserve" state="needs-review-translation">Pen Wizard</target>
+        <target xml:space="preserve" state="needs-review-translation">Asistente de pluma</target>
       </trans-unit>
       <trans-unit id="_msg3148">
         <source xml:space="preserve">Select objects</source>

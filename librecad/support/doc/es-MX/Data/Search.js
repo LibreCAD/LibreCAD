@@ -1,0 +1,1 @@
+define({r:0.5,st:'Stem',n:1,t:[0],u:['../Content/Main/Appendices/append_calculator.htm'],s:['+','identifiqu'],p:[['+',51],['bloques',1],['de',6],['el',22],['haga',19],['línea',25],['pasos',38],['seleccionada',11],['variables',45]]});

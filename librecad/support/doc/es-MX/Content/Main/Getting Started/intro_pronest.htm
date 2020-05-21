@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="es" xml:lang="es" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-browse-sequence-path="ProNest" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Para empezar">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Integración de LibreCAD con ProNest</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/Getting Started/intro_pronest.htm">Abierto de navegación</a>
+        </p>
+        <div>
+            <h1 class="TOC4"><a name="kanchor44"></a>Integración de LibreCAD con ProNest</h1>
+            <p>LibreCAD para ProNest y ProNest están integrados, facilitando el paso de CAD a corte. LibreCAD puede accederse como:</p>
+            <ul>
+                <li value="1">una aplicación individual de CAD, o</li>
+                <li value="2">un editor para modificar dibujos existentes y piezas de ProNest.</li>
+            </ul>
+            <p>LibreCAD para ProNest cuenta con un sistema de Ayuda sensible al contexto que funciona igual que la Ayuda de ProNest. Para más información acerca de cómo utilizar LibreCAD, seleccione la tecla F1 cuando la aplicación esté abierta o cuando se encuentre en algún modo en particular.</p>
+            <p>&#160;</p>
+            <p>Cualquier pieza importada a ProNest puede abrirse y editarse en LibreCAD después de ser importada. Los archivos DWG y DXF pueden editarse directamente en LibreCAD, sin tener que ir a la ventana Editar Lista de Piezas en ProNest.</p>
+            <p>&#160;</p>
+            <p>Una vez que un archivo se ha abierto y ha sido modificado en LibreCAD, deberá guardarse como archivo DXF.</p>
+            <h2>Instalación</h2>
+            <p>LibreCAD para ProNest, un&#160;programa CAD exclusivo de Hypertherm que incluye características especiales tales como Forma de Texto y Recortar Exceso, se instalará automáticamente al instalar o actualizar ProNest. Si ya tiene el programa base LibreCAD instalado en su PC (no LibreCAD para ProNest), el instalador de ProNest no sobrescribirá su instalación existente y se instalará como un programa por separado). Además, en este caso, puede utilizar LibreCAD y LibreCAD para ProNest en forma independiente.</p>
+            <h2>Crear y editar dibujos desde ProNest</h2>
+            <p class="Procedure">Crear un nuevo dibujo desde ProNest</p>
+            <p>En la ventana <b>Editar Lista de Piezas</b>, haga clic en el botón <b>LibreCAD para ProNest</b> ( <img src="../../Images/LibreCADbutton.png" /> ) para arrancar el programa, en donde podrá crear un nuevo dibujo.</p>
+            <p>Cuando haya terminado, puede hacer clic ya sea en el botón <b>Salir</b> para regresar a ProNest, o en el botón <b>Exportar a ProNest</b> ( <img src="../../Images/ButtonLibreCADExporttoProNest.png" /> ) para importar en ProNest sin salir de LibreCAD. Al utilizar el botón Exportar a ProNest, asegúrese de que ProNest ya esté corriendo en su computadora para obtener mejores resultados.</p>
+            <p class="Procedure">Abrir archivos CAD en LibreCAD antes de importar piezas</p>
+            <ol>
+                <li class="StepInstruction" value="1">Seleccione un archivo CAD en el recuadro <b>Fuentes de Piezas</b> de la ventana <b>Editar Lista de Piezas</b>. <ul><li class="StepInstruction" value="1">También puede seleccionar varios archivos para abrirlos en LibreCAD a un mismo tiempo, manteniendo presionada la tecla Ctrl en su teclado y haciendo clic en varios archivos.</li></ul></li>
+                <li value="2">En la Vista Previa, haga clic en <b>LibreCAD</b> desde el menú desplegable.</li>
+                <ul>
+                    <li value="1">Termine de hacer los cambios a su dibujo y salga de LibreCAD antes de continuar trabajando en ProNest.</li>
+                </ul>
+                <li class="StepInstruction" value="3">En LibreCAD, haga los cambios necesarios al archivo&#160;CAD (modifique la geometría, cambie las propiedades de capa, configure bloques, parámetros de cotas y similares).</li>
+                <li class="StepInstruction" value="4">Haga clic en <b>Salir</b>. Se le preguntará si quiere guardar su dibujo y regresar a ProNest.</li>
+            </ol>
+            <div class="Note">
+                <ul>
+                    <li value="1">Modificar una pieza en LibreCAD después de que ha sido importada ocasionará que se pierdan los biseles que se añadieron a la pieza en ProNest.</li>
+                    <li value="2">Las piezas que estén encadenadas, puenteadas o con corte de línea común no pueden editarse en LibreCAD.</li>
+                    <li value="3">Si ha importado múltiples cantidades de una pieza (por ejemplo, 10 cantidades requeridas de Placa Base), se editarán todas las instancias de la pieza. Para editar solamente una instancia de la pieza, deberá agregar esa pieza a la lista de piezas de forma individual.</li>
+                </ul>
+            </div>
+            <p class="Procedure">Abrir archivo CAD en LibreCAD después de importar una pieza</p>
+            <p>Puede hacer algunas modificaciones a una pieza después de haberla importado a ProNest, tales como cambios a la geometría, texto, cotas, e información de solo visualización.</p>
+            <p>La información de la capa puede modificarse, pero solamente pueden agregarse capas nuevas si están en el listado de sus parámetros de Importar Piezas ProNest (<b>ProNest</b> &gt;&#160;<b>Configuración</b> &gt; <b>Importar Piezas</b> &gt; pestaña&#160;<b>Importar CAD</b>). Cualquier capa nueva añadida a un dibujo que no esté definida en ProNest antes de importar la pieza será descartada.</p>
+            <ol>
+                <li value="1">Desde la Lista de Piezas o nido, haga clic con el botón derecho en una o más piezas. </li>
+                <li value="2">Haga clic en <b>Editar en LibreCAD para ProNest</b> ( <img src="../../Images/btnEditInLibreCAD.png" />).</li>
+                <li value="3">En LibreCAD, haga los cambios necesarios al archivo CAD&#160;.</li>
+                <li value="4">Haga clic en <b>Salir</b>. Se le preguntará si quiere guardar su dibujo y regresar a ProNest.</li>
+            </ol>
+            <div class="TopicFooter">
+                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Artículos relacionados</span>
+                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_container.htm">Acerca de Herramientas para Dibujar y Modificar</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="intro_overview.htm">Navegar por la pantalla principal</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Preferences and Customizations/prefs_drawingpreferences.htm">Preferencias de Dibujo</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 6pt;margin-top: 0;margin-bottom: 0;">&#160;</p>
+    </body>
+</html>

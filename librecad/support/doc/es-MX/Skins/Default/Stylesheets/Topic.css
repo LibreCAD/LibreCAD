@@ -1,0 +1,710 @@
+/*<meta />*/
+
+/* Prevents Safari in landscape orientation from zooming in on text*/
+
+body
+{
+	-ms-text-size-adjust: 100%;
+	-moz-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	font-size: 16px;
+}
+
+/* Css to prevent Chrome's automatic border around active fields*/
+
+*:focus
+{
+	outline: none;
+}
+
+/* Default css class for hiding element*/
+
+.hidden
+{
+	display: none;
+}
+
+/* Topic Popup */
+
+.MCTopicPopup
+{
+	text-decoration: none;
+}
+
+.MCTopicPopupHotSpot
+{
+	cursor: pointer;
+	background-position: left center;
+	background-repeat: no-repeat;
+}
+
+.MCTopicPopup_Open.MCTopicPopupHotSpot
+{
+	
+}
+
+.MCTopicPopup_Closed.MCTopicPopupHotSpot
+{
+	
+}
+
+.MCTopicPopupContainer
+{
+	background-color: #FFFFFF;
+	padding: 10px;
+	position: fixed;
+	top: 100px;
+	left: 100px;
+	right: 100px;
+	bottom: 100px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 4px 10px #333333;
+	-moz-box-shadow: 0 4px 10px #333333;
+	box-shadow: 0 4px 10px #333333;
+	filter: alpha( opacity = 0 );
+	opacity: 0.0;
+	z-index: 10001;
+}
+
+#contentBodyInner .MCTopicPopupContainer
+{
+	position: absolute;
+}
+
+.MCTopicPopupBody
+{
+	width: 100%;
+	border: none;
+}
+
+/**/
+/* Thumbnail Popup */
+
+.MCPopupThumbnailLink
+{
+	
+}
+
+.MCPopupThumbnail
+{
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.MCPopupContainer
+{
+	background-color: #FFFFFF;
+	border: solid 1px #000000;
+	padding: 10px;
+	position: absolute;
+	cursor: pointer;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	z-index: 999;
+}
+
+.MCPopupContainer2
+{
+	background-color: #FFFFFF;
+	border: solid 1px #000000;
+	padding: 10px;
+	position: absolute;
+	cursor: pointer;
+	-moz-box-shadow: 2px 2px 8px #FFFFFF;
+	-webkit-box-shadow: 2px 2px 8px #FFFFFF;
+	box-shadow: 2px 2px 8px #FFFFFF;
+}
+
+.MCPopupFullImage
+{
+	width: 0px;
+	height: 0px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+/**/
+/* HelpControl */
+
+.MCHelpControl_Image_Icon
+{
+	border: none;
+}
+
+.MCHelpControl span
+{
+	background: url("Images/help-control.png") no-repeat left center;
+	padding-left: 18px;
+}
+
+a.MCHelpControl
+{
+	cursor: pointer;
+	text-decoration: none;
+}
+
+/**/
+/* Dialog */
+
+.MCDialog
+{
+	display: none;
+	width: 400px;
+	position: fixed;
+	top: 20px;
+	left: 20px;
+	padding: 6px;
+	background-color: #000000;
+	border: 1px solid #000000;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	-moz-box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
+	box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
+	filter: alpha( opacity = 0 );
+	opacity: 0.0;
+	z-index: 10001;
+}
+
+.MCDialogHeader
+{
+	margin: 0 0 4px;
+	padding: 5px 0 5px 5px;
+	color: #FFFFFF;
+	font-size: 15px;
+	font-family: Helvetica;
+}
+
+.MCDialogClose
+{
+	color: #FFFFFF;
+	font-family: tahoma, sans-serif;
+	font-weight: bold;
+	font-size: 16px;
+	line-height: 12px;
+	text-align: center;
+	text-decoration: none;
+	float: right;
+	width: 20px;
+	height: 18px;
+	padding-top: 2px;
+	margin-top: -2px;
+	background-color: #999999;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.MCDialogBody
+{
+	color: #555555;
+	padding: 10px;
+	background-color: #FFFFFF;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+/**/
+
+a.glossaryTerm
+{
+	text-decoration: none;
+}
+
+/**/
+
+#ios-wrapper
+{
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+.img_off
+{
+	display: none;
+}
+
+/* Feedback/Pulse */
+
+.pulse-required,
+.feedback-required,
+.feedback-topic-required
+{
+	display: none;
+}
+
+.pulse-active .pulse-required,
+.feedback-active .feedback-required,
+.feedback-active.has-topic .feedback-topic-required
+{
+	display: block;
+}
+
+/* Login Dialog */
+
+.login-dialog
+{
+	display: none;
+	z-index: 10001;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -200px;
+	margin-left: -175px;
+	width: 350px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: 0 4px 10px #333333;
+	-moz-box-shadow: 0 4px 10px #333333;
+	box-shadow: 0 4px 10px #333333;
+}
+
+.login-dialog.pulse
+{
+	position: fixed;
+	width: 408px;
+	height: 428px;
+	margin-left: -204px;
+	margin-top: -214px;
+}
+
+#pulse-login-frame
+{
+	width: 100%;
+	height: 100%;
+	border: none;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: 0 4px 10px #333333;
+	-moz-box-shadow: 0 4px 10px #333333;
+	box-shadow: 0 4px 10px #333333;
+}
+
+.login-dialog-header
+{
+	color: #FFF;
+	font-size: 13px;
+	font-weight: bold;
+	height: 36px;
+	line-height: 36px;
+	padding-left: 50px;
+	border-bottom: solid 1px #2B2B2B;
+	background: #5A5A5A url("Images/login-dialog-icon.png") no-repeat 18px center;
+	/* Old browsers */
+	background: url("Images/login-dialog-icon.png") no-repeat 18px center, -moz-linear-gradient(top, #5A5A5A 0%, #4A4A4A 100%);
+	/* FF3.6+ */
+	background: url("Images/login-dialog-icon.png") no-repeat 18px center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5A5A5A), color-stop(100%,#4A4A4A));
+	/* Chrome,Safari4+ */
+	background: url("Images/login-dialog-icon.png") no-repeat 18px center, -webkit-linear-gradient(top, #5A5A5A 0%,#4A4A4A 100%);
+	/* Chrome10+,Safari5.1+ */
+	background: url("Images/login-dialog-icon.png") no-repeat 18px center, -o-linear-gradient(top, #5A5A5A 0%,#4A4A4A 100%);
+	/* Opera11.10+ */
+	background: url("Images/login-dialog-icon.png") no-repeat 18px center, -ms-linear-gradient(top, #5A5A5A 0%,#4A4A4A 100%);
+	/* IE10+ */
+	background: url("Images/login-dialog-icon.png") no-repeat 18px center, linear-gradient(top, #5A5A5A 0%,#4A4A4A 100%);
+	/* W3C */
+	-pie-background: url("Skins/Default/Stylesheets/Images/login-dialog-icon.png") no-repeat 18px center, linear-gradient(#5A5A5A, #4A4A4A);
+	/*PIE*/
+	background-repeat: no-repeat;
+	background-position: 18px center;
+	-webkit-border-radius: 3px 3px 0 0;
+	-moz-border-radius: 3px 3px 0 0;
+	border-radius: 3px 3px 0 0;
+}
+
+.login-dialog-content
+{
+	border-top: solid 1px #767676;
+	background: #5A5A5A;
+	background-repeat: no-repeat;
+	background-position: center center;
+	-webkit-border-radius: 0 0 3px 3px;
+	-moz-border-radius: 0 0 3px 3px;
+	border-radius: 0 0 3px 3px;
+	padding: 17px;
+}
+
+.login-dialog-content .profile-item-wrapper
+{
+	color: #CECECE;
+	margin-bottom: 10px;
+	height: 32px;
+	line-height: 32px;
+}
+
+.login-dialog-content .profile-item-wrapper .label-wrapper
+{
+	margin-bottom: 5px;
+	float: left;
+}
+
+.login-dialog-content .profile-item-wrapper .input-wrapper
+{
+	float: right;
+}
+
+.login-dialog-content .profile-item-wrapper input[type=text]
+{
+	margin: 0;
+	padding: 5px;
+	border: solid 1px #191919;
+	background: #FFF;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: 0 1px #888;
+	-moz-box-shadow: 0 1px #888;
+	box-shadow: 0 1px #888;
+	outline: none;
+}
+
+.login-dialog-content .profile-item-wrapper.email-notifications-wrapper
+{
+	margin-top: 15px;
+	height: auto;
+	line-height: normal;
+}
+
+.login-dialog-content .profile-item-wrapper.email-notifications-wrapper .label-wrapper
+{
+	float: none;
+}
+
+.login-dialog-content .profile-item-wrapper.email-notifications-wrapper .email-notifications-group
+{
+	margin-right: 0;
+	padding: 12px;
+	background-color: #4A4A4A;
+	background-repeat: no-repeat;
+	background-position: center center;
+	border: solid 1px #2B2B2B;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: 0 1px #888;
+	-moz-box-shadow: 0 1px #888;
+	box-shadow: 0 1px #888;
+}
+
+.login-dialog-content .profile-item-wrapper.error input,
+.login-dialog-content .profile-item-wrapper.error select
+{
+	border: solid 1px #F00;
+	background-color: #FEE7E7;
+}
+
+.login-dialog-buttons
+{
+	text-align: right;
+}
+
+.login-dialog button
+{
+	color: #FFF;
+	font-weight: bold;
+	margin-left: 5px;
+	margin-right: 0;
+	padding: 8px 26px;
+	border: solid 1px #2B2B2B;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background: #595959;
+	/* Old browsers */
+	background: -moz-linear-gradient(top, #595959 0%, #4A4A4A 100%);
+	/* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#595959), color-stop(100%,#4A4A4A));
+	/* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #595959 0%,#4A4A4A 100%);
+	/* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #595959 0%,#4A4A4A 100%);
+	/* Opera11.10+ */
+	background: -ms-linear-gradient(top, #595959 0%,#4A4A4A 100%);
+	/* IE10+ */
+	background: linear-gradient(top, #595959 0%,#4A4A4A 100%);
+	/* W3C */
+	-pie-background: linear-gradient(#595959, #4A4A4A);
+	/*PIE*/
+	background-repeat: no-repeat;
+	background-position: center center;
+	cursor: pointer;
+}
+
+.login-dialog button.close-dialog
+{
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	background: none;
+	background-image: url('Images/close.png');
+	height: 16px;
+	width: 16px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.login-dialog .status-message-box
+{
+	display: none;
+	color: #0F0;
+	text-align: center;
+	margin-top: 16px;
+	padding: 12px;
+	background-color: #DCFEDC;
+	border: solid 1px #0F0;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.login-dialog .status-message-box.error
+{
+	color: #F00;
+	border: solid 1px #F00;
+	background-color: #FEE7E7;
+}
+
+.login-dialog .status-message-box .message
+{
+	display: none;
+}
+
+.MCHelpControl-Related .MCHelpControl-RelatedHotSpot_
+{
+	background-position: none;
+	background-image: none;
+	padding-left: 0;
+}
+
+.link-list-popup
+{
+	color: #000000;
+	background-color: #dcdcdc;
+	border: solid 1px #000000;
+	margin: 0px;
+	padding: 0px;
+}
+
+.link-list-popup ul li
+{
+	color: Black;
+	background-color: Transparent;
+	padding: 5px;
+	font-family: sans-serif;
+	font-size: 10pt;
+}
+
+.link-list-popup ul li:hover
+{
+	color: White;
+	background-color: Blue;
+}
+
+.MCHelpControlList
+{
+	
+}
+
+.MCHelpControlListItem
+{
+	
+}
+
+.MCHelpControlListItem a
+{
+	
+}
+
+.MCHelpControlListItem a:link
+{
+	
+}
+
+.MCConceptLinkControlListItem a:link
+{
+	
+}
+
+.MCKeywordLinkControlListItem a:link
+{
+	
+}
+
+.MCRelatedTopicsControlListItem a:link
+{
+	
+}
+
+.MCHelpControlListItem a:visited
+{
+	
+}
+
+.MCConceptLinkControlListItem a:visited
+{
+	
+}
+
+.MCKeywordLinkControlListItem a:visited
+{
+	
+}
+
+.MCRelatedTopicsControlListItem a:visited
+{
+	
+}
+
+.MCHelpControlListItem a:focus
+{
+	
+}
+
+.MCConceptLinkControlListItem a:focus
+{
+	
+}
+
+.MCKeywordLinkControlListItem a:focus
+{
+	
+}
+
+.MCRelatedTopicsControlListItem a:focus
+{
+	
+}
+
+.MCHelpControlListItem a:hover
+{
+	
+}
+
+.MCConceptLinkControlListItem a:hover
+{
+	
+}
+
+.MCKeywordLinkControlListItem a:hover
+{
+	
+}
+
+.MCRelatedTopicsControlListItem a:hover
+{
+	
+}
+
+.MCConceptLinkControlList
+{
+	
+}
+
+.MCConceptLinkControlListItem
+{
+	
+}
+
+.MCConceptLinkControlListItem a
+{
+	
+}
+
+.MCKeywordLinkControlList
+{
+	
+}
+
+.MCKeywordLinkControlListItem
+{
+	
+}
+
+.MCKeywordLinkControlListItem a
+{
+	
+}
+
+.MCRelatedTopicsControlList
+{
+	
+}
+
+.MCRelatedTopicsControlListItem
+{
+	font-weight: normal;
+	list-style-type: square;
+}
+
+.MCRelatedTopicsControlListItem a
+{
+	font-weight: normal;
+}
+
+.relatedTopics
+{
+	color: #696969;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.mcReset
+{
+	margin-left: 0;
+	margin-right: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding-left: 0;
+	padding-right: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	border-left-color: transparent;
+	border-left-style: none;
+	border-left-width: 0;
+	border-right-color: transparent;
+	border-right-style: none;
+	border-right-width: 0;
+	border-top-color: transparent;
+	border-top-style: none;
+	border-top-width: 0;
+	border-bottom-color: transparent;
+	border-bottom-style: none;
+	border-bottom-width: 0;
+	background-color: transparent;
+	background-image: none;
+	float: inherit;
+	font-size: inherit;
+	font-family: inherit;
+	font-style: inherit;
+	font-variant: inherit;
+	text-transform: inherit;
+	color: inherit;
+	letter-spacing: inherit;
+	word-spacing: inherit;
+	text-decoration: inherit;
+	text-align: inherit;
+}
+
+.MCWebHelpFramesetLink a
+{
+	color: #0000ee;
+}
+
+.MCWebHelpFramesetLink.MCWebHelpFramesetLinkTop a
+{
+	
+}
+
+.MCWebHelpFramesetLink.MCWebHelpFramesetLinkBottom a
+{
+	
+}
+

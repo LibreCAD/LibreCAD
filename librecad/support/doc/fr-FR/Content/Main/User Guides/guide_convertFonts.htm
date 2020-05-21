@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="fr-ca" xml:lang="fr-ca" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Guides de l’utilisateur|[%=System.LinkedTitle%]">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Conversion des polices Microsoft et AutoCAD en polices LibreCAD</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/User Guides/guide_convertFonts.htm">Ouvrir la rubrique avec les liens de navigation</a>
+        </p>
+        <div>
+            <h1 class="TOC4"><a name="kanchor13"></a>Conversion des polices Microsoft et AutoCAD en polices LibreCAD</h1>
+            <h2>Polices</h2>
+            <p>Plusieurs options de polices sont offertes dans LibreCAD, dont les polices ProNest. Pour utiliser les <a href="#Microsof">polices Microsoft®</a> ou les <a href="#AutoCAD">polices AutoCAD®</a>, vous devez suivre les étapes ci-dessous pour d’abord convertir les polices en un format lisible pour LibreCAD.</p>
+            <div class="Note">
+                <p>Si vous ouvrez des dessins AutoCAD .dwg qui utilisent des polices AutoCAD, vous devrez convertir la police afin de garantir que le texte soit transféré correctement dans LibreCAD. Le processus de conversion de la police convertira toutes les polices AutoCAD et ne devra être réalisé qu’une seule fois.</p>
+            </div>
+            <h3>Conversion des polices</h3>
+            <h5>Polices ProNest</h5>
+            <p>LibreCAD comprend les polices ProNest dans la liste des polices. Il s’agit des mêmes polices qui sont indiquées à la page Paramètres des polices de CAO de ProNest, comme la police «&#160;no lift&#160;». </p>
+            <ul>
+                <li value="1">Pour utiliser les polices ProNest, il suffit de trouver la police dans le menu déroulant Polices dans la boîte de dialogue Texte et MTexte.</li>
+            </ul>
+            <h5><a name="Microsof"></a>Polices Microsoft</h5>
+            <p>Utilisez les polices par défaut de Microsoft et personnalisez les lettres, les mots et les espacements de lignes de ces polices en utilisant la boîte de dialogue Convertir la police de la boîte de dialogue Texte et MTexte.</p>
+            <p class="Procedure">Conversion des polices Microsoft</p>
+            <ol>
+                <li value="1">Cliquez sur <b>Texte</b> ou <b>MTexte</b>.</li>
+                <li value="2">Cliquez sur <b>Convertir texte</b> ( <img src="../../Images/add_font.svg" /> ) dans le coin supérieur droit.</li>
+                <li value="3">Sélectionnez une police que vous souhaitez convertir dans le menu déroulant.</li>
+                <li value="4">Réglez Lettre, Mot et Espacement de ligne, si nécessaire.<ol><li value="1">Si vous avez réglé l’espacement, vous pouvez enregistrer les modifications dans la police par défaut en cours ou vous pouvez ajuster le nom du fichier dans le champ Enregistrer sous, ce qui vous permettra ainsi d’enregistrer une copie de la police modifiée sans remplacer la police convertie par défaut.</li></ol></li>
+                <li value="5">Cliquez sur <b>OK</b>.</li>
+            </ol>
+            <p>Assurez-vous de sélectionner la police convertie dans le menu déroulant Police dans la boîte de dialogue Texte ou MTexte afin d’utiliser la police lorsqu’elle sera convertie.</p>
+            <h5><a name="AutoCAD"></a>Polices AutoCAD</h5>
+            <p>LibreCAD pour ProNest prend en charge les polices AutoCAD (.shx). Si vos polices AutoCAD sont stockées dans le dossier de police par défaut pour AutoCAD &lt;<span class="CodeSnippet">C:\Program Files\AutoDesk\AutoCAD 2019\Fonts</span>&gt;, aucune action n’est nécessaire (veuillez noter que ce chemin de fichier est celui d’AutoCAD 2019 et qu’il peut différer selon votre version d’AutoCAD). </p>
+            <p class="Procedure">Conversion manuelle des polices AutoCAD</p>
+            <p>Si des polices AutoCAD (.shx) sont stockées dans un autre endroit, vous devrez réaliser une fois les actions suivantes&#160;:</p>
+            <ol>
+                <li value="1">Ouvrir un explorateur de fichier sur votre ordinateur.</li>
+                <li value="2">Naviguer jusqu’au dossier <span class="CodeSnippet">C:\Program Files (x86)\Hypertherm CAM\LibreCAD</span> et localiser le fichier <b>dumpshp.bat</b>. </li>
+                <li value="3">Effectuer un clic droit sur <b>dumpshp.bat</b> et cliquer sur <b>Copier</b>.</li>
+                <li value="4">Naviguer jusqu’au dossier contenant vos polices AutoCAD.</li>
+                <li value="5">Effectuer un clic droit et cliquer sur Coller pour placer une copie de <b>dumpshp.bat</b> dans le dossier contenant les polices AutoCAD.</li>
+                <li value="6">Double-cliquer sur <b>dumpshp.bat</b> pour exécuter le fichier. Une&#160;fenêtre de commande s’affichera et se fermera automatiquement lorsque l’exécution sera terminée. </li>
+            </ol>
+            <p>Désormais, toute police AutoCAD utilisée dans vos dessins sera automatiquement convertie en un format lisible pour LibreCAD. Vous pourrez utiliser n’importe quelle police AutoCAD dans un nouveau dessin LibreCAD.</p>
+            <div class="TopicFooter">
+                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Articles connexes</span>
+                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_createNewFont.htm">Création de nouvelles polices</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_dimension.htm">Outils de cotation</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_modify.htm">Outils Modifier</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_other.htm">Outils supplémentaires&#160;: Texte, Hachure, Point</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_text.htm">Utilisation du texte</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 6pt;margin-top: 0;margin-bottom: 0;">&#160;</p>
+    </body>
+</html>

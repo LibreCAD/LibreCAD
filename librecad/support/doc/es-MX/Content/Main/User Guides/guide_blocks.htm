@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="es" xml:lang="es" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-browse-sequence-path="Blocks" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="Guías del Usuario">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Uso de Bloques</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/User Guides/guide_blocks.htm">Abierto de navegación</a>
+        </p>
+        <div>
+            <h1 class="TOC4"><a name="kanchor18"></a>Uso de Bloques</h1>
+            <p>Los bloques son dibujos pequeños, reutilizables de objetos utilizados con frecuencia, tales como pernos, bloques de título y similares. Los bloques insertados, también llamados insertos, se componen de formas geométricas (líneas, arcos) y pueden incluir texto y cotas. LibreCAD incluye varias bibliotecas de bloques que pueden insertarse en un dibujo, o usted también puede crear los suyos propios.</p>
+            <p>&#160;</p>
+            <p>Existen dos miniaplicaciones anclables para administrar bloques: </p>
+            <ul>
+                <li value="1">La <a href="../Toolbars and Widgets/tw_blocklistdock.htm">Lista de Bloques anclable</a> para administrar bloques dentro del dibujo actual, y</li>
+                <li value="2"> El Explorador de Bibliotecas anclable, que muestra la colección de bloques disponible y permite al usuario insertar bloques en el dibujo actual. </li>
+            </ul>
+            <p>Puede encontrar más información acerca de <a href="../Toolbars and Widgets/tw_dockwidgets.htm">Miniaplicaciones Anclables aquí</a> y sobre el <a href="../Toolbars and Widgets/tw_librarybrowserdock.htm">Explorador de Bibliotecas, aquí</a>.
+
+</p>
+            <p>&#160;</p>
+            <p>Al ser insertado en un dibujo, el bloque será tratado como un objeto individual. Los bloques pueden insertarse desde la Lista de Bloques en el mismo dibujo más de una vez, en diferentes ubicaciones, escalas y ángulos de rotación. Todos los bloques insertados estarán vinculados. Los cambios realizados a un bloque insertado se verán reflejados en todas las instancias del bloque.</p>
+            <p class="Procedure">Crear un Bloque a partir de un dibujo existente</p>
+            <ol>
+                <li value="1">Dibuje el objeto que desea convertir en bloque.</li>
+                <li value="2">Seleccione todos los objetos que componen el bloque. Esto se logra haciendo clic en los objetos individuales o seleccionando varios objetos en una área.</li>
+                <li value="3">Haga clic en <b>Crear Bloque</b> ( <img src="../../Images/create_block.svg" /> ) de la Lista de Bloques anclable.</li>
+                <li value="4">Especifique un punto de referencia.</li>
+                <li value="5">Dé nombre al bloque y haga clic en <b>Aceptar</b>.</li>
+            </ol>
+            <p>El bloque nuevo ahora aparecerá en la Lista de Bloques y puede insertarse en el dibujo varias veces o guardarse en un archivo o en la Biblioteca.</p>
+            <p class="Procedure">Crear un Bloque a partir de un Bloque vacío</p>
+            <ol>
+                <li value="1">Haga clic en <b>Añadir un bloque vacío</b> ( <img src="../../Images/add.svg" /> ) de la Lista de Bloques anclable.</li>
+                <li value="2">Dé nombre al bloque y haga clic en <b>Aceptar</b>.</li>
+                <li value="3">Haga clic en <b>Editar el bloque activo en otra ventana</b> ( <img src="../../Images/properties.svg" /> ). Esto abrirá una pestaña de documento de dibujo de bloque vacío.</li>
+                <li value="4">Dibuje el bloque. El origen del dibujo (0,0) será el punto de referencia para el bloque.</li>
+                <li value="5">Salga de la pestaña de dibujo de bloque. El bloque se guardará y puede insertarse en un dibujo.</li>
+            </ol>
+            <p class="Procedure">Insertar Bloques en un dibujo</p>
+            <ol>
+                <li value="1">Haga clic en el bloque que desea insertar de la Lista de Bloques.</li>
+                <li value="2">Haga clic en <b>Insertar bloque activo</b> ( <img src="../../Images/insert_active_block.svg" /> ) de la Lista de Bloques anclable.</li>
+                <li value="3">Especifique el punto de inserción haciendo clic en algún lugar del dibujo, o especificando las coordenadas en la Línea de Comandos.</li>
+            </ol>
+            <p class="Procedure">Insertar Bloques en un dibujo usando la Barra de herramientas (Avanzado)</p>
+            <ol>
+                <li value="1">Haga clic en el bloque que desea insertar de la Lista de Bloques.</li>
+                <li value="2">Haga clic en <b>Insertar bloque activo</b> ( <img src="../../Images/insert_active_block.svg" /> ) de la Lista de Bloques anclable.</li>
+                <li value="3">Especifique los parámetros que aparecen en la barra de herramientas.</li>
+            </ol>
+            <blockquote>
+                <p>
+                    <img src="../../Images/trans_block_toolbar.png" />
+                </p>
+                <ul>
+                    <li value="1">Parámetros relacionados con transformaciones de bloques:&#160;<i>Ángulo</i> de rotación y <i>Factor</i> de escala.</li>
+                    <li value="2">Parámetros relacionados con patrones de bloques:&#160;<i>Matriz</i> (tamaño de la cuadrícula) y <i>Espaciado</i> entre columnas y filas de la matriz.</li>
+                </ul>
+            </blockquote>
+            <ol start="4">
+                <li value="4">Especifique el punto de inserción haciendo clic en algún lugar del dibujo, o especificando las coordenadas en la Línea de Comandos.</li>
+            </ol>
+            <p class="Procedure">Eliminar una instancia de bloque de un dibujo</p>
+            <ol>
+                <li value="1">Haga clic en el bloque en el dibujo.</li>
+                <li value="2">Haga clic en la tecla Eliminar.</li>
+            </ol>
+            <p class="Procedure">Eliminar un bloque y todas sus instancias de un dibujo</p>
+            <p>Eliminar una instancia de bloque de un dibujo solamente eliminará el bloque de una capa, y el bloque permanecerá guardado en el archivo DXF. Para eliminar por completo un bloque de tanto la capa de dibujo como del archivo DXF, haga lo siguiente:</p>
+            <ol>
+                <li value="1">Haga clic en el bloque en la Lista de Bloques.</li>
+                <li value="2">Haga clic en <b>Eliminar el bloque activo</b> ( <img src="../../Images/remove.svg" /> ) en la Lista de Bloques.</li>
+            </ol>
+            <p class="Procedure">Desagrupar bloques</p>
+            <p>Es posible que necesite desagrupar bloques para modificar su geometría o sus objetos individuales. Cuando los bloques se insertan en un dibujo, el bloque es tratado como un todo y no puede modificarse a menos que se desagrupe.</p>
+            <ol>
+                <li value="1">Ingrese <span class="CodeSnippet">explode</span> en la Línea de Comandos, o haga clic en <b>Desagrupar</b> ( <img src="../../Images/explode.svg" /> ) desde las opciones Modificar.</li>
+                <li value="2">Haga clic en el bloque que desea desagrupar.</li>
+                <li value="3">Seleccione la tecla Enter (Intro).</li>
+            </ol>
+            <p class="Procedure">Modificar Bloques</p>
+            <p>Si el bloque está guardado en un archivo, tan solo abra el archivo, haga cambios y guárdelo antes de salir.</p>
+            <p>&#160;</p>
+            <p>Si el bloque aún no ha sido guardado en un dibujo específico y en cambio es parte del dibujo actual en el que está trabajando, puede modificar el bloque haciendo lo siguiente:</p>
+            <ol>
+                <li value="1">Haga clic en el bloque que desea modificar de la Lista de Bloques.</li>
+                <li value="2">Haga clic en <b>Editar el bloque activo en otra ventana</b> (&#160;<img src="../../Images/properties.svg" /> ) desde la Lista de Bloques.</li>
+                <li value="3">Haga los cambios necesarios al bloque.</li>
+                <li value="4">Salga del dibujo del bloque.</li>
+            </ol>
+            <p>El bloque se actualizará.</p>
+            <p class="Procedure">Insertar Bloques desde la Biblioteca</p>
+            <ol>
+                <li value="1">Desde el Explorador de Bibliotecas anclable, haga clic en el bloque que desea insertar.</li>
+                <li value="2">Haga clic en <b>Insertar</b>.</li>
+                <li value="3">Haga clic en un punto de referencia del dibujo, o ingrese las coordenadas en la Línea de Comandos.</li>
+            </ol>
+            <p>El bloque puede posicionarse tantas veces como sea necesario. Seleccione la tecla Esc, o haga clic en el botón derecho para salir del modo de inserción de bloques.</p>
+            <p class="Procedure">Guardar Bloques en un archivo</p>
+            <ol>
+                <li value="1">Haga clic en el bloque que desea guardar de la Lista de Bloques.</li>
+                <li value="2">Haga clic en <b>Guardar el bloque activo en un archivo</b> ( <img src="../../Images/save.svg" /> ).</li>
+                <li value="3">Especifique el nombre y la ubicación para guardar el archivo, luego haga clic en <b>Aceptar</b>.</li>
+            </ol>
+            <div class="TopicFooter">
+                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Artículos relacionados</span>
+                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Toolbars and Widgets/tw_blocklistdock.htm">Miniaplicación anclable de Lista de Bloques</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Toolbars and Widgets/tw_librarybrowserdock.htm">Miniaplicación anclable del Explorador de Bibliotecas</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_library.htm">Utilización del Explorador de Bibliotecas</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_templates.htm">Utilizar Plantillas</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 6pt;margin-top: 0;margin-bottom: 0;">&#160;</p>
+    </body>
+</html>
