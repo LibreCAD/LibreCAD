@@ -28,154 +28,6 @@
     </message>
 </context>
 <context>
-    <name>ColorWizard</name>
-    <message>
-        <source>Frame</source>
-        <translation type="unfinished">Marco</translation>
-    </message>
-    <message>
-        <source>Add to favorites</source>
-        <translation type="unfinished">Agregar a favoritos</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-</context>
-<context>
-    <name>ComboBoxOption</name>
-    <message>
-        <source>Frame</source>
-        <translation type="unfinished">Marco</translation>
-    </message>
-    <message>
-        <source>GroupBox</source>
-        <translation type="unfinished">RecuadrodeGrupo</translation>
-    </message>
-    <message>
-        <source>Set</source>
-        <translation type="unfinished">Establecer</translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>SplinePoints</source>
-        <translation type="unfinished">PuntosdeCurva</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="unfinished">Capa:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="unfinished">Geometría</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="unfinished">Cerrado</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="unfinished">Puntos de curva</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="unfinished">Puntos de control</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="unfinished">Puntos sobre la curva</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished">radio=%1 es demasiado pequeño para los puntos seleccionados
-distancia entre puntos=%2 es más grande que el diámetro=%3</translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="unfinished">Seleccionar entre dos posibles centros de círculo</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="unfinished">Especificar primer punto</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="unfinished">Especificar segundo punto</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Volver</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="unfinished">Seleccionar centro del círculo</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify center</source>
-        <translation type="unfinished">Especificar centro</translation>
-    </message>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="unfinished">Especificar tangente</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="unfinished">Introducir número:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished">Número no válido. Intente 1...9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="unfinished">Comando no válido</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawSplinePoints</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="unfinished">Especificar primer punto de control</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="unfinished">Especificar próximo punto de control o [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Volver</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="unfinished">Especificar siguiente punto de control</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">No se puede deshacer: No hay suficientes objetos definidos.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Nothing could be redone.</source>
-        <translation type="unfinished">No es posible deshacer: no se pudo rehacer nada.</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionFactory</name>
     <message>
         <source>Draw polylines</source>
@@ -899,177 +751,6 @@ distancia entre puntos=%2 es más grande que el diámetro=%3</translation>
     <message>
         <source>Save A&amp;ll...</source>
         <translation type="unfinished">Guardar T&amp;odo...</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionFileExportMakerCam</name>
-    <message>
-        <source>Export as</source>
-        <translation type="unfinished">Exportar como</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DeviceOptions</name>
-    <message>
-        <source>Mouse</source>
-        <translation type="unfinished">Ratón</translation>
-    </message>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished">Forma</translation>
-    </message>
-    <message>
-        <source>Device</source>
-        <translation type="unfinished">Dispositivo</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="unfinished">Guardar</translation>
-    </message>
-    <message>
-        <source>Tablet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Trackpad</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Touchscreen</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_SimpleTests</name>
-    <message>
-        <source>De&amp;bugging</source>
-        <translation type="unfinished">Depu&amp;rando</translation>
-    </message>
-    <message>
-        <source>Insert Image</source>
-        <translation type="unfinished">Insertar Imagen</translation>
-    </message>
-</context>
-<context>
-    <name>LC_WidgetOptionsDialog</name>
-    <message>
-        <source>Widget Options</source>
-        <translation type="unfinished">Opciones de Miniaplicación</translation>
-    </message>
-    <message>
-        <source>Toolbar</source>
-        <translation type="unfinished">Barra de herramientas</translation>
-    </message>
-    <message>
-        <source>Icon Size</source>
-        <translation type="unfinished">Tamaño del Ícono</translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation type="unfinished">General</translation>
-    </message>
-    <message>
-        <source>Style</source>
-        <translation type="unfinished">Estilo</translation>
-    </message>
-    <message>
-        <source>Style Sheet</source>
-        <translation type="unfinished">Hoja de Estilos</translation>
-    </message>
-    <message>
-        <source>Statusbar</source>
-        <translation type="unfinished">Barra de estado</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="unfinished">Altura</translation>
-    </message>
-    <message>
-        <source>Font Size</source>
-        <translation type="unfinished">Tamaño de letra</translation>
-    </message>
-    <message>
-        <source>Input the path of a Qt style sheet.</source>
-        <translation type="unfinished">Ingresar la trayectoria de hoja de estilos Qt.</translation>
-    </message>
-    <message>
-        <source>side length in pixels</source>
-        <translation type="unfinished">longitud de lado en píxeles</translation>
-    </message>
-    <message>
-        <source>Use themed icons</source>
-        <translation type="unfinished">Usar íconos temáticos</translation>
-    </message>
-</context>
-<context>
-    <name>LG_DimzerosBox</name>
-    <message>
-        <source>select:</source>
-        <translation type="unfinished">seleccionar:</translation>
-    </message>
-    <message>
-        <source>remove left</source>
-        <translation type="unfinished">eliminar izquierda</translation>
-    </message>
-    <message>
-        <source>remove right</source>
-        <translation type="unfinished">eliminar derecha</translation>
-    </message>
-    <message>
-        <source>remove 0&apos;</source>
-        <translation type="unfinished">eliminar 0&apos;</translation>
-    </message>
-    <message>
-        <source>remove 0&quot;</source>
-        <translation type="unfinished">eliminar 0&quot;</translation>
-    </message>
-</context>
-<context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="unfinished">Opciones ángulo relativo de línea</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="unfinished">Espaciado:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="unfinished">Distancia de la polilínea original</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="unfinished">Copias:</translation>
-    </message>
-</context>
-<context>
-    <name>QC_ActionGetEnt</name>
-    <message>
-        <source>Select object:</source>
-        <translation type="unfinished">Seleccionar objeto:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-</context>
-<context>
-    <name>QC_ActionGetPoint</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-</context>
-<context>
-    <name>QC_ActionGetSelect</name>
-    <message>
-        <source>Select objects:</source>
-        <translation type="unfinished">Seleccionar objetos:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
     </message>
 </context>
 <context>
@@ -3303,41 +2984,6 @@ Printer settings:
     </message>
 </context>
 <context>
-    <name>QG_ActionHandler</name>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="unfinished">escape</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ActiveLayerName</name>
-    <message>
-        <source>Selection</source>
-        <translation type="unfinished">Selección</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Current Layer</source>
-        <translation type="unfinished">Capa actual</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { espacio en blanco: preenvoltura; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Nombre de la Capa Activa Actual&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-</context>
-<context>
     <name>QG_ArcOptions</name>
     <message>
         <source>Arc Options</source>
@@ -4286,63 +3932,6 @@ en otra ventana</translation>
     </message>
 </context>
 <context>
-    <name>QG_CommandEdit</name>
-    <message>
-        <source>clear</source>
-        <translation type="unfinished">borrar</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CommandHistory</name>
-    <message>
-        <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Copiar</translation>
-    </message>
-    <message>
-        <source>Select &amp;All</source>
-        <translation type="unfinished">Seleccionar &amp;todo</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation type="unfinished">Borrar</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CommandWidget</name>
-    <message>
-        <source>Command Line</source>
-        <translation>Línea de Comandos</translation>
-    </message>
-    <message>
-        <source>Command:</source>
-        <translation>Comando:</translation>
-    </message>
-    <message>
-        <source>Command history and output</source>
-        <translation type="unfinished">Historial de comandos y resultados</translation>
-    </message>
-    <message>
-        <source>Unknown command: %1</source>
-        <translation type="unfinished">Comando desconocido: %1</translation>
-    </message>
-    <message>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation type="unfinished">escape</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CoordinateWidget</name>
-    <message>
-        <source>Coordinates</source>
-        <translation>Coordenadas</translation>
-    </message>
-</context>
-<context>
     <name>QG_DimLinearOptions</name>
     <message>
         <source>Linear Dimension Options</source>
@@ -4709,73 +4298,6 @@ Esto modifica en forma recurrente todos los objetos del Bloque en sí.</translat
     <message>
         <source>Reversed</source>
         <translation>Invertido</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgFontConversion</name>
-    <message>
-        <source>Convert Fonts</source>
-        <translation type="unfinished">Convertir Tipos de letra</translation>
-    </message>
-    <message>
-        <source>Font family:</source>
-        <translation type="unfinished">Familia de tipo de letra:</translation>
-    </message>
-    <message>
-        <source>Font file:</source>
-        <translation type="unfinished">Archivo de tipo de letra:</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-    <message>
-        <source>Save as:</source>
-        <translation type="unfinished">Guardar como:</translation>
-    </message>
-    <message>
-        <source>Letter spacing:</source>
-        <translation type="unfinished">Espaciado entre letras:</translation>
-    </message>
-    <message>
-        <source>Author:</source>
-        <translation type="unfinished">Autor:</translation>
-    </message>
-    <message>
-        <source>Word spacing:</source>
-        <translation type="unfinished">Espaciado entre palabras:</translation>
-    </message>
-    <message>
-        <source>License:</source>
-        <translation type="unfinished">Licencia:</translation>
-    </message>
-    <message>
-        <source>Line spacing:</source>
-        <translation type="unfinished">Espaciado entre líneas:</translation>
-    </message>
-    <message>
-        <source>Writing System:</source>
-        <translation type="unfinished">Sistema de Escritura:</translation>
-    </message>
-    <message>
-        <source>Preview</source>
-        <translation type="unfinished">Vista previa</translation>
-    </message>
-    <message>
-        <source>Create</source>
-        <translation type="unfinished">Crear</translation>
-    </message>
-    <message>
-        <source> - Searching</source>
-        <translation type="unfinished"> - Buscando</translation>
-    </message>
-    <message>
-        <source>LibreCAD Font Files(*.lff)</source>
-        <translation type="unfinished">Archivos de tipos de letra de LibreCAD (*.lff)</translation>
-    </message>
-    <message>
-        <source> - Rendering</source>
-        <translation type="unfinished"> - Renderizando</translation>
     </message>
 </context>
 <context>
@@ -6856,109 +6378,6 @@ Seleccione el idioma y unidad preferidos a utilizar en sus nuevos dibujos.&lt;br
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsMakerCam</name>
-    <message>
-        <source>Layers</source>
-        <translation type="unfinished">Capas</translation>
-    </message>
-    <message>
-        <source>Export invisible layers</source>
-        <translation type="unfinished">Exportar capas invisibles</translation>
-    </message>
-    <message>
-        <source>Export visible construction layers</source>
-        <translation type="unfinished">Exportar capas de construcción visibles</translation>
-    </message>
-    <message>
-        <source>Blocks</source>
-        <translation type="unfinished">Bloques</translation>
-    </message>
-    <message>
-        <source>Convert blocks to safe inline SVG content</source>
-        <translation type="unfinished">Convertir bloques a contenido en línea SVG seguro</translation>
-    </message>
-    <message>
-        <source>Ellipses / Ellipse arcs</source>
-        <translation type="unfinished">Elipses/arcos elípticos</translation>
-    </message>
-    <message>
-        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation type="unfinished">Elipses aproximadas y arcos elípticos con Bézier cúbico</translation>
-    </message>
-    <message>
-        <source>Export as CAM/plain SVG</source>
-        <translation type="unfinished">Exportar como CAM/SVG simple</translation>
-    </message>
-    <message>
-        <source>Default width of elements, mm</source>
-        <translation type="unfinished">Ancho predeterminado de elementos, mm</translation>
-    </message>
-    <message>
-        <source>Images</source>
-        <translation type="unfinished">Imágenes</translation>
-    </message>
-    <message>
-        <source>Raster Image export</source>
-        <translation type="unfinished">Exportar Imagen ráster</translation>
-    </message>
-    <message>
-        <source>Dash/Dot Lines</source>
-        <translation type="unfinished">Líneas punteadas/con guiones</translation>
-    </message>
-    <message>
-        <source>Length of the pattern, mm</source>
-        <translation type="unfinished">Longitud del patrón, mm</translation>
-    </message>
-    <message>
-        <source>Bake dash/dot lines to SVG path</source>
-        <translation type="unfinished">Texturizar líneas punteadas/con guiones en ruta SVG</translation>
-    </message>
-    <message>
-        <source>MakerCAM as of November 2014 does not hide SVG content 
-that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation type="unfinished">MakerCAM, a partir de noviembre de 2014 no oculta el contenido SVG 
-que se ha configurado como invisible (“mostrar: ninguno” o “visibilidad: oculto”).</translation>
-    </message>
-    <message>
-        <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
-because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation type="unfinished">MakerCAM, a noviembre de 2014 no puede trabajar correctamente con bloques,
-debido a que no toma en cuenta el punto de referencia en el &lt;use&gt;.</translation>
-    </message>
-    <message>
-        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
-when they are created using the &lt;ellipse&gt; tag  with a rotation in 
-the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation type="unfinished">MakerCAM, a marzo de 2015 no puede desplegar elipses y arcos elípticos correctamente, 
-al crearse usando la etiqueta &lt;ellipse&gt; con rotación en 
-el &lt;transform&gt; atributo o como &lt;path&gt; usando segmentos de arco elípticos.</translation>
-    </message>
-    <message>
-        <source>Exported images can be useful in SVG editors (Inkscape, etc), 
-but avoided in some CAM&apos;s.</source>
-        <translation type="unfinished">Las imágenes exportadas pueden ser útiles en editores SVG (Inkscape, etc) 
-pero se evitan en algunos CAM.</translation>
-    </message>
-    <message>
-        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
-which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation type="unfinished">Muchos CAM (MakerCAM, EleskCAM, LaserWeb) ignoran el estilo de línea punteada/con guiones, 
-que puede ser útil en los cortes láser de madera contrachapada o papel kraft. </translation>
-    </message>
-    <message>
-        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
-but ignored by other</source>
-        <translation type="unfinished">El ancho predeterminado de los elementos puede afectar a algunos Editores CAM/SVG, 
-pero puede ser ignorado por otros</translation>
-    </message>
-    <message>
-        <source>Length of line pattern related to zoom, 
-so default step value required for baking</source>
-        <translation type="unfinished">La longitud del patrón de línea en relación al zoom, 
-de modo que se requiere el valor predeterminado del paso para texturizar</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgOptionsVariables</name>
     <message>
         <source>&amp;OK</source>
@@ -8292,13 +7711,6 @@ de modo que se requiere el valor predeterminado del paso para texturizar</transl
     </message>
 </context>
 <context>
-    <name>QG_LayerBox</name>
-    <message>
-        <source>- Unchanged -</source>
-        <translation>- Sin alterar -</translation>
-    </message>
-</context>
-<context>
     <name>QG_LayerDialog</name>
     <message>
         <source>Cancel</source>
@@ -8657,125 +8069,6 @@ Los contenidos de una Capa de Construcción no deberán aparecer en las impresio
     </message>
 </context>
 <context>
-    <name>QG_LineTypeBox</name>
-    <message>
-        <source>By Layer</source>
-        <translation>Por Capa</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation>Por Bloque</translation>
-    </message>
-    <message>
-        <source>No Pen</source>
-        <translation>Sin trazador</translation>
-    </message>
-    <message>
-        <source>Continuous</source>
-        <translation>Continua</translation>
-    </message>
-    <message>
-        <source>Dot</source>
-        <translation>Punto</translation>
-    </message>
-    <message>
-        <source>Dot (small)</source>
-        <translation>Punto (pequeño)</translation>
-    </message>
-    <message>
-        <source>Dot (large)</source>
-        <translation>Punto (grande)</translation>
-    </message>
-    <message>
-        <source>Dash</source>
-        <translation>Guión</translation>
-    </message>
-    <message>
-        <source>Dash (small)</source>
-        <translation>Guón (pequeño)</translation>
-    </message>
-    <message>
-        <source>Dash (large)</source>
-        <translation>Guión (grande)</translation>
-    </message>
-    <message>
-        <source>Dash Dot</source>
-        <translation>Punto guión</translation>
-    </message>
-    <message>
-        <source>Dash Dot (small)</source>
-        <translation>Punto guión (pequeño)</translation>
-    </message>
-    <message>
-        <source>Dash Dot (large)</source>
-        <translation>Punto guión (grande)</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation>Partir</translation>
-    </message>
-    <message>
-        <source>Divide (small)</source>
-        <translation>Partir (pequeña)</translation>
-    </message>
-    <message>
-        <source>Divide (large)</source>
-        <translation>Partir (grande)</translation>
-    </message>
-    <message>
-        <source>Center</source>
-        <translation>Centrar</translation>
-    </message>
-    <message>
-        <source>Center (small)</source>
-        <translation>Centrar (pequeña)</translation>
-    </message>
-    <message>
-        <source>Center (large)</source>
-        <translation>Centrar (grande)</translation>
-    </message>
-    <message>
-        <source>Border</source>
-        <translation>Borde</translation>
-    </message>
-    <message>
-        <source>Border (small)</source>
-        <translation>Borde (pequeño)</translation>
-    </message>
-    <message>
-        <source>Border (large)</source>
-        <translation>Borde (grande)</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation>- Sin alterar -</translation>
-    </message>
-    <message>
-        <source>Dot (tiny)</source>
-        <translation type="unfinished">Punto (chico)</translation>
-    </message>
-    <message>
-        <source>Dash (tiny)</source>
-        <translation type="unfinished">Guión (chico)</translation>
-    </message>
-    <message>
-        <source>Dash Dot (tiny)</source>
-        <translation type="unfinished">Guión Punto (chico)</translation>
-    </message>
-    <message>
-        <source>Divide (tiny)</source>
-        <translation type="unfinished">Partir (chico)</translation>
-    </message>
-    <message>
-        <source>Center (tiny)</source>
-        <translation type="unfinished">Centro (chico)</translation>
-    </message>
-    <message>
-        <source>Border (tiny)</source>
-        <translation type="unfinished">Borde (chico)</translation>
-    </message>
-</context>
-<context>
     <name>QG_MTextOptions</name>
     <message>
         <source>Text Options</source>
@@ -8833,21 +8126,6 @@ p, li { espacio en blanco; envoltura previa; }
     <message>
         <source>Angle:</source>
         <translation type="obsolete">Ángulo:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PenToolBar</name>
-    <message>
-        <source>Line color</source>
-        <translation type="unfinished">Color de línea</translation>
-    </message>
-    <message>
-        <source>Line width</source>
-        <translation type="unfinished">Ancho de línea</translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="unfinished">Tipo de línea</translation>
     </message>
 </context>
 <context>
@@ -9027,121 +8305,6 @@ p, li { espacio en blanco: preenvoltura;}
     </message>
 </context>
 <context>
-    <name>QG_SnapToolBar</name>
-    <message>
-        <source>Snap</source>
-        <translation type="unfinished">Forzar cursor</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="unfinished">Forzar a extremos</translation>
-    </message>
-    <message>
-        <source>Snap to equidistant points of entity</source>
-        <translation type="unfinished">Forzar a puntos equidistantes del objeto</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="unfinished">Forzar a los puntos del centro</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation type="unfinished">Forzar a punto de intersección automáticamente</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="unfinished">Forzar a punto más cercano en objeto</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="unfinished">Forzar a una distancia desde el extremo</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation type="unfinished">Forzar a punto de intersección manualmente</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="unfinished">Forzar a cuadrícula</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation type="unfinished">Restringir horizontalmente</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation type="unfinished">Restringir verticalmente</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation type="unfinished">Desplazar el cero relativo</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation type="unfinished">Bloquear el cero relativo</translation>
-    </message>
-    <message>
-        <source>Free Snap</source>
-        <translation type="unfinished">No Forzar</translation>
-    </message>
-    <message>
-        <source>Snap on grid</source>
-        <translation type="unfinished">Forzar a cuadrícula</translation>
-    </message>
-    <message>
-        <source>Snap on Endpoints</source>
-        <translation type="unfinished">Forzar a Puntos Finales</translation>
-    </message>
-    <message>
-        <source>Snap on Entity</source>
-        <translation type="unfinished">Forzar a objetos</translation>
-    </message>
-    <message>
-        <source>Snap Center</source>
-        <translation type="unfinished">Forzar al Centro</translation>
-    </message>
-    <message>
-        <source>Snap Middle</source>
-        <translation type="unfinished">Forzar a medio</translation>
-    </message>
-    <message>
-        <source>Snap Distance</source>
-        <translation type="unfinished">Forzar a Distancia</translation>
-    </message>
-    <message>
-        <source>Snap Intersection</source>
-        <translation type="unfinished">Forzar a Intersección</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontal</source>
-        <translation type="unfinished">Restringir Horizontal</translation>
-    </message>
-    <message>
-        <source>Restrict Vertical</source>
-        <translation type="unfinished">Restringir Vertical</translation>
-    </message>
-    <message>
-        <source>Restrict Orthogonal</source>
-        <translation type="unfinished">Restringir Ortogonal</translation>
-    </message>
-    <message>
-        <source>Restrict Nothing</source>
-        <translation type="unfinished">Sin restricciones</translation>
-    </message>
-    <message>
-        <source>Set relative zero position</source>
-        <translation type="unfinished">Establecer ubicación de cero relativo</translation>
-    </message>
-    <message>
-        <source>Lock relative zero position</source>
-        <translation type="unfinished">Bloquear ubicación de cero relativo</translation>
-    </message>
-    <message>
-        <source>Exclusive Snap Mode</source>
-        <translation type="unfinished">Modo Forzar Exclusivo</translation>
-    </message>
-</context>
-<context>
     <name>QG_SplineOptions</name>
     <message>
         <source>Spline Options</source>
@@ -9212,140 +8375,6 @@ p, li { espacio en blanco: preenvoltura;}
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
         <translation type="obsolete">La longitud de entrada se utiliza como longitud total después de recortar, en lugar de aumento de longitud</translation>
-    </message>
-</context>
-<context>
-    <name>QG_WidgetPen</name>
-    <message>
-        <source>Pen</source>
-        <translation>Trazador</translation>
-    </message>
-    <message>
-        <source>Line type:</source>
-        <translation>Tipo de línea:</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation>Ancho:</translation>
-    </message>
-    <message>
-        <source>Color:</source>
-        <translation>Color:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_WidthBox</name>
-    <message>
-        <source>By Layer</source>
-        <translation>Por Capa</translation>
-    </message>
-    <message>
-        <source>By Block</source>
-        <translation>Por Bloque</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation>Por Defecto</translation>
-    </message>
-    <message>
-        <source>0.00mm</source>
-        <translation>0,00 mm</translation>
-    </message>
-    <message>
-        <source>0.05mm</source>
-        <translation>0,05 mm</translation>
-    </message>
-    <message>
-        <source>0.09mm</source>
-        <translation>0,09 mm</translation>
-    </message>
-    <message>
-        <source>0.13mm (ISO)</source>
-        <translation>0,13 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.15mm</source>
-        <translation>0,15 mm</translation>
-    </message>
-    <message>
-        <source>0.18mm (ISO)</source>
-        <translation>0,18 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.20mm</source>
-        <translation>0,20 mm</translation>
-    </message>
-    <message>
-        <source>0.25mm (ISO)</source>
-        <translation>0,25 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.30mm</source>
-        <translation>0,30 mm</translation>
-    </message>
-    <message>
-        <source>0.35mm (ISO)</source>
-        <translation>0,35 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.40mm</source>
-        <translation>0,40 mm</translation>
-    </message>
-    <message>
-        <source>0.50mm (ISO)</source>
-        <translation>0,50 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.53mm</source>
-        <translation>0,53 mm</translation>
-    </message>
-    <message>
-        <source>0.60mm</source>
-        <translation>0,60 mm</translation>
-    </message>
-    <message>
-        <source>0.70mm (ISO)</source>
-        <translation>0,70 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>0.80mm</source>
-        <translation>0,80 mm</translation>
-    </message>
-    <message>
-        <source>0.90mm</source>
-        <translation>0,90 mm</translation>
-    </message>
-    <message>
-        <source>1.00mm (ISO)</source>
-        <translation>1,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.06mm</source>
-        <translation>1,06 mm</translation>
-    </message>
-    <message>
-        <source>1.20mm</source>
-        <translation>1,20 mm</translation>
-    </message>
-    <message>
-        <source>1.40mm (ISO)</source>
-        <translation>1,40 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>1.58mm</source>
-        <translation>1,58 mm</translation>
-    </message>
-    <message>
-        <source>2.00mm (ISO)</source>
-        <translation>2,00 mm (ISO)</translation>
-    </message>
-    <message>
-        <source>2.11mm</source>
-        <translation>2,11 mm</translation>
-    </message>
-    <message>
-        <source>- Unchanged -</source>
-        <translation>- Sin alterar -</translation>
     </message>
 </context>
 <context>
@@ -11032,7 +10061,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Pen Wizard</source>
-        <translation type="unfinished">Asistente de pluma/translation>
+        <translation type="unfinished">Asistente de pluma</translation>
     </message>
     <message>
         <source>Select objects</source>
@@ -11550,13 +10579,6 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionBlocksSave</name>
-    <message>
-        <source>No block activated to save</source>
-        <translation type="unfinished">No hay bloque activo para guardar</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
@@ -11573,17 +10595,6 @@ Do you want to replace it?</source>
     <message>
         <source>Toggle Block &amp;Visibility</source>
         <translation type="obsolete">Alternar &amp;Visibilidad del bloque</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDefault</name>
-    <message>
-        <source>Choose second edge</source>
-        <translation>Elegir segundo borde</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Volver</translation>
     </message>
 </context>
 <context>
@@ -12130,33 +11141,6 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawCircleDiam</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="unfinished">Comando no válido</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="unfinished">Especificar centro</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="unfinished">Especificar radio del círculo</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Volver</translation>
-    </message>
-    <message>
-        <source>diameter=%1 is invalid</source>
-        <translation type="unfinished">diámetro=%1 es inválido</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawCircleInscribe</name>
     <message>
         <source>Circle &amp;Inscribed</source>
@@ -12181,141 +11165,6 @@ Do you want to replace it?</source>
     <message>
         <source>Specify the third line</source>
         <translation>Especificar la tercera línea</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="unfinished">Especificar el primer punto en la tangente del círculo</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Volver</translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="unfinished">Especificar el segundo punto en la tangente del círculo</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Seleccionar el centro de tangente del círculo</translation>
-    </message>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">Especificar una línea/arco/círculo</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished">Especificar la primera línea/arco/círculo</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished">Especificar la segunda línea/arco/círculo</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Volver</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Seleccionar el centro de tangente del círculo</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">Especificar una línea/arco/círculo</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>Specify the another arc/circle</source>
-        <translation type="unfinished">Especificar el otro arco/círculo</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Volver</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="unfinished">Especificar un punto en la tangente del círculo</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Seleccionar el centro de tangente del círculo</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Volver</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Seleccionar el centro de tangente del círculo</translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished">Especificar la primera línea/arco/círculo</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished">Especificar la segunda línea/arco/círculo</translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="unfinished">Especificar la tercera línea/arco/círculo</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawEllipse4Points</name>
-    <message>
-        <source>Specify the first point on ellipse</source>
-        <translation>Especificar el primer punto en la elipse</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>Specify the second point on ellipse</source>
-        <translation>Especificar el segundo punto en la elipse</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Volver</translation>
-    </message>
-    <message>
-        <source>Specify the third point on ellipse</source>
-        <translation>Especificar el tercer punto en la elipse</translation>
-    </message>
-    <message>
-        <source>Specify the fourth point on ellipse</source>
-        <translation>Especificar el cuarto punto en la elipse</translation>
-    </message>
-    <message>
-        <source>Can not determine uniquely an ellipse</source>
-        <translation type="unfinished">No es posible determinar una elipse exclusivamente</translation>
     </message>
 </context>
 <context>
@@ -12375,99 +11224,6 @@ Do you want to replace it?</source>
     <message>
         <source>Specify end angle</source>
         <translation>Especificar ángulo final</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawEllipseCenter3Points</name>
-    <message>
-        <source>Specify the center of ellipse</source>
-        <translation>Especificar el centro de la elipse</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>Specify the first point on ellipse</source>
-        <translation type="unfinished">Especificar el primer punto en la elipse</translation>
-    </message>
-    <message>
-        <source>Specify the second point on ellipse</source>
-        <translation type="unfinished">Especificar el segundo punto en la elipse</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Volver</translation>
-    </message>
-    <message>
-        <source>Specify the third point on ellipse</source>
-        <translation type="unfinished">Especificar el tercer punto en la elipse</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawEllipseFociPoint</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="unfinished">Comando no válido</translation>
-    </message>
-    <message>
-        <source>Specify first focus of ellipse</source>
-        <translation type="unfinished">Especificar primer foco de la elipse</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>Specify second focus of ellipse</source>
-        <translation>Especificar el segundo foco de la elipse</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Volver</translation>
-    </message>
-    <message>
-        <source>Specify a point on ellipse or total distance to foci</source>
-        <translation>Especificar un punto de la elipse o la distancia total al foco</translation>
-    </message>
-    <message>
-        <source>specify a point on ellipse, or total distance to foci</source>
-        <translation type="unfinished">especificar un punto en la elipse, o la distancia total al foco</translation>
-    </message>
-    <message>
-        <source>Total distance %1 is smaller than distance between foci</source>
-        <translation type="unfinished">Distancia total %1 es menor a la distancia entre puntos focales</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawEllipseInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation>Especificar la primera línea</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation>Especificar la segunda línea</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Volver</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation>Especificar la tercera línea</translation>
-    </message>
-    <message>
-        <source>Specify the fourth line</source>
-        <translation>Especificar la cuarta línea</translation>
-    </message>
-    <message>
-        <source>Can not determine uniquely an ellipse</source>
-        <translation type="unfinished">No es posible determinar una elipse exclusivamente</translation>
     </message>
 </context>
 <context>
@@ -12785,25 +11541,6 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawLineOrthTan</name>
-    <message>
-        <source>Select a line</source>
-        <translation>Seleccionar una linea</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
-    </message>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation>Seleccionar círculo, arco o elipse</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation>Volver</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawLineParallel</name>
     <message>
         <source>Parallel</source>
@@ -12969,29 +11706,6 @@ Do you want to replace it?</source>
     <message>
         <source>Not a valid expression.</source>
         <translation type="obsolete">Comando no válido.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCenCor</name>
-    <message>
-        <source>Specify center</source>
-        <translation type="unfinished">Especificar centro</translation>
-    </message>
-    <message>
-        <source>Specify a corner</source>
-        <translation type="unfinished">Especificar esquina</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="unfinished">Introducir número:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished">Número no válido. Intente 1...9999</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="unfinished">Comando no válido</translation>
     </message>
 </context>
 <context>
@@ -13218,25 +11932,6 @@ Do you want to replace it?</source>
     <message>
         <source>Select second circle or ellipse</source>
         <translation type="unfinished">Seleccionar segundo círculo o elipse</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="unfinished">Especificar punto de inserción</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="unfinished">Texto:</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Volver</translation>
     </message>
 </context>
 <context>
@@ -14300,17 +12995,6 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="unfinished">Especificar dirección del corrimiento</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Volver</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionModifyRotate</name>
     <message>
         <source>Rotate</source>
@@ -14432,21 +13116,6 @@ Do you want to replace it?</source>
     <message>
         <source>Cancel</source>
         <translation>Cancelar</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyShapeText</name>
-    <message>
-        <source>Select text entity</source>
-        <translation type="unfinished">Seleccionar objeto de texto</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Volver</translation>
-    </message>
-    <message>
-        <source>Select entity to shape text to</source>
-        <translation type="unfinished">Seleccionar un objeto para dar forma al texto</translation>
     </message>
 </context>
 <context>
@@ -14579,17 +13248,6 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyTrimExcess</name>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="unfinished">Seleccionar objeto a recortar</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Volver</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionOptionsDrawing</name>
     <message>
         <source>Drawing</source>
@@ -14602,134 +13260,6 @@ Do you want to replace it?</source>
     <message>
         <source>Settings for the current Drawing</source>
         <translation type="obsolete">Parámetros del Dibujo actual</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">No se encontraron objetos.</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="unfinished">Elegir objeto para ordenar</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">No se encontraron objetos.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="unfinished">El objeto debe ser una polilínea.</translation>
-    </message>
-    <message>
-        <source>Adding point is invalid.</source>
-        <translation type="unfinished">El punto de adición no es válido.</translation>
-    </message>
-    <message>
-        <source>Adding point is not on entity.</source>
-        <translation type="unfinished">El punto de adición no es un objeto.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to add nodes</source>
-        <translation type="unfinished">Especificar polilínea para agregar nodos</translation>
-    </message>
-    <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="unfinished">Especificar agregar punto de nodo</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Volver</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAppend</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">No se encontraron objetos.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="unfinished">El objeto debe ser una polilínea.</translation>
-    </message>
-    <message>
-        <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="unfinished">Hacer clic en algún punto cercano al inicio o fin de una polilínea existente.</translation>
-    </message>
-    <message>
-        <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="unfinished">Especificar la polilínea en algún lugar cercano al punto de inicio o final.</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="unfinished">Especificar primer punto o [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Volver</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="unfinished">Especificar punto siguiente</translation>
-    </message>
-    <message>
-        <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished">No es posible añadir nodos en una polilínea cerrada.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">No se puede deshacer: No hay suficientes objetos definidos.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">No se encontraron objetos.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="unfinished">El objeto debe ser una polilínea.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete node</source>
-        <translation type="unfinished">Especificar una polilínea para eliminar nodo</translation>
-    </message>
-    <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="unfinished">Especificar el punto de eliminación de nodo</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Volver</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="unfinished">El punto de eliminación es inválido.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="unfinished">El punto de eliminación no está en el objeto.</translation>
     </message>
 </context>
 <context>
@@ -14773,87 +13303,6 @@ Do you want to replace it?</source>
     <message>
         <source>Deleting point is invalid.</source>
         <translation type="unfinished">El punto de eliminación es inválido.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineEquidistant</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">No se encontraron objetos.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="unfinished">El objeto debe ser una polilínea.</translation>
-    </message>
-    <message>
-        <source>Choose the original polyline</source>
-        <translation type="unfinished">Elegir la polilínea original</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineSegment</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">No se encontraron objetos.</translation>
-    </message>
-    <message>
-        <source>Choose one of the segments on the original polyline</source>
-        <translation type="unfinished">Elegir uno de los segmentos de la polilínea original</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>Entity can not be a closed polyline.</source>
-        <translation type="unfinished">El objeto no puede ser una polilínea cerrada.</translation>
-    </message>
-    <message>
-        <source>Polyline created</source>
-        <translation type="unfinished">Polilínea creada</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineTrim</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="unfinished">No se encontraron objetos.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="unfinished">El objeto debe ser una polilínea.</translation>
-    </message>
-    <message>
-        <source>Specifying point is invalid.</source>
-        <translation type="unfinished">El punto de especificación es inválido.</translation>
-    </message>
-    <message>
-        <source>No Segment found on entity.</source>
-        <translation type="unfinished">No se encontraron Segmentos en el objeto.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to trim</source>
-        <translation type="unfinished">Especificar polilínea a recortar</translation>
-    </message>
-    <message>
-        <source>Specify first segment</source>
-        <translation type="unfinished">Especificar primer segmento</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="unfinished">Volver</translation>
-    </message>
-    <message>
-        <source>Specify second segment</source>
-        <translation type="unfinished">Especificar segundo segmento</translation>
     </message>
 </context>
 <context>
@@ -14913,89 +13362,6 @@ Do you want to replace it?</source>
     <message>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
         <translation type="unfinished">AccióndePrevisualizacióndeImpresión_RS::calcularNúmPáginas(): Se ha excedido el límite de páginas.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>Select to modify attributes</source>
-        <translation type="unfinished">Seleccionar atributos a modificar</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
-    </message>
-    <message>
-        <source>Select to delete</source>
-        <translation type="unfinished">Seleccionar para eliminar</translation>
-    </message>
-    <message>
-        <source>Select to delete immediately</source>
-        <translation type="unfinished">Seleccionar para eliminar de inmediato</translation>
-    </message>
-    <message>
-        <source>Select to move</source>
-        <translation type="unfinished">Seleccionar para mover</translation>
-    </message>
-    <message>
-        <source>Select to rotate</source>
-        <translation type="unfinished">Seleccionar para rotar</translation>
-    </message>
-    <message>
-        <source>Select to scale</source>
-        <translation type="unfinished">Seleccionar para cambiar a escala</translation>
-    </message>
-    <message>
-        <source>Select to mirror</source>
-        <translation type="unfinished">Seleccionar para reflejar</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate</source>
-        <translation type="unfinished">Seleccionar para mover y rotar</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation</source>
-        <translation type="unfinished">Seleccionar para rotación de dos ejes</translation>
-    </message>
-    <message>
-        <source>Select to explode text</source>
-        <translation type="unfinished">Seleccionar para desagrupar texto</translation>
-    </message>
-    <message>
-        <source>Select to create block</source>
-        <translation type="unfinished">Seleccionar para crear bloque</translation>
-    </message>
-    <message>
-        <source>Select to copy</source>
-        <translation type="unfinished">Seleccionar para copiar</translation>
-    </message>
-    <message>
-        <source>Select to cut</source>
-        <translation type="unfinished">Seleccionar para cortar</translation>
-    </message>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="unfinished">¡No se ha seleccionado ningún objeto!</translation>
-    </message>
-    <message>
-        <source>Select to create offset</source>
-        <translation type="unfinished">Seleccionar para crear corrimiento</translation>
-    </message>
-    <message>
-        <source>Select entities to order</source>
-        <translation type="unfinished">Seleccionar grupos a ordenar</translation>
-    </message>
-    <message>
-        <source>Select to explode block</source>
-        <translation type="unfinished">Seleccionar para desagregar bloque</translation>
-    </message>
-    <message>
-        <source>Select to revert direction</source>
-        <translation type="unfinished">Seleccionar para invertir dirección</translation>
-    </message>
-    <message>
-        <source>Select to unlink shaped text</source>
-        <translation type="unfinished">Seleccionar para desvincular texto con forma</translation>
     </message>
 </context>
 <context>
@@ -16199,6 +14565,1640 @@ Do you want to replace it?</source>
         <source>re</source>
         <comment>modify - revert direction</comment>
         <translation type="obsolete">re</translation>
+    </message>
+</context>
+<context>
+    <name>ColorWizard</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished">Marco</translation>
+    </message>
+    <message>
+        <source>Add to favorites</source>
+        <translation type="unfinished">Agregar a favoritos</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+</context>
+<context>
+    <name>ComboBoxOption</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished">Marco</translation>
+    </message>
+    <message>
+        <source>GroupBox</source>
+        <translation type="unfinished">RecuadrodeGrupo</translation>
+    </message>
+    <message>
+        <source>Set</source>
+        <translation type="unfinished">Establecer</translation>
+    </message>
+</context>
+<context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished">PuntosdeCurva</translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Capa:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Geometría</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Cerrado</translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished">Puntos de curva</translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished">Puntos de control</translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished">Puntos sobre la curva</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawCircle2PR</name>
+    <message>
+        <source>radius=%1 is too small for points selected
+distance between points=%2 is larger than diameter=%3</source>
+        <translation type="unfinished">radio=%1 es demasiado pequeño para los puntos seleccionados
+distancia entre puntos=%2 es más grande que el diámetro=%3</translation>
+    </message>
+    <message>
+        <source>Select from two possible circle centers</source>
+        <translation type="unfinished">Seleccionar entre dos posibles centros de círculo</translation>
+    </message>
+    <message>
+        <source>Specify first point</source>
+        <translation type="unfinished">Especificar primer punto</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Specify second point</source>
+        <translation type="unfinished">Especificar segundo punto</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Volver</translation>
+    </message>
+    <message>
+        <source>Select circle center</source>
+        <translation type="unfinished">Seleccionar centro del círculo</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawLinePolygonCenTan</name>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished">Especificar centro</translation>
+    </message>
+    <message>
+        <source>Specify a tangent</source>
+        <translation type="unfinished">Especificar tangente</translation>
+    </message>
+    <message>
+        <source>Enter number:</source>
+        <translation type="unfinished">Introducir número:</translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="unfinished">Número no válido. Intente 1...9999</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Comando no válido</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawSplinePoints</name>
+    <message>
+        <source>Specify first control point</source>
+        <translation type="unfinished">Especificar primer punto de control</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Specify next control point or [%1]</source>
+        <translation type="unfinished">Especificar próximo punto de control o [%1]</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Volver</translation>
+    </message>
+    <message>
+        <source>Specify next control point</source>
+        <translation type="unfinished">Especificar siguiente punto de control</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="unfinished">No se puede deshacer: No hay suficientes objetos definidos.</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Nothing could be redone.</source>
+        <translation type="unfinished">No es posible deshacer: no se pudo rehacer nada.</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionFileExportMakerCam</name>
+    <message>
+        <source>Export as</source>
+        <translation type="unfinished">Exportar como</translation>
+    </message>
+</context>
+<context>
+    <name>LC_DeviceOptions</name>
+    <message>
+        <source>Mouse</source>
+        <translation type="unfinished">Ratón</translation>
+    </message>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished">Forma</translation>
+    </message>
+    <message>
+        <source>Device</source>
+        <translation type="unfinished">Dispositivo</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Guardar</translation>
+    </message>
+    <message>
+        <source>Tablet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Trackpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Touchscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_SimpleTests</name>
+    <message>
+        <source>De&amp;bugging</source>
+        <translation type="unfinished">Depu&amp;rando</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="unfinished">Insertar Imagen</translation>
+    </message>
+</context>
+<context>
+    <name>LC_WidgetOptionsDialog</name>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished">Opciones de Miniaplicación</translation>
+    </message>
+    <message>
+        <source>Toolbar</source>
+        <translation type="unfinished">Barra de herramientas</translation>
+    </message>
+    <message>
+        <source>Icon Size</source>
+        <translation type="unfinished">Tamaño del Ícono</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished">General</translation>
+    </message>
+    <message>
+        <source>Style</source>
+        <translation type="unfinished">Estilo</translation>
+    </message>
+    <message>
+        <source>Style Sheet</source>
+        <translation type="unfinished">Hoja de Estilos</translation>
+    </message>
+    <message>
+        <source>Statusbar</source>
+        <translation type="unfinished">Barra de estado</translation>
+    </message>
+    <message>
+        <source>Height</source>
+        <translation type="unfinished">Altura</translation>
+    </message>
+    <message>
+        <source>Font Size</source>
+        <translation type="unfinished">Tamaño de letra</translation>
+    </message>
+    <message>
+        <source>Input the path of a Qt style sheet.</source>
+        <translation type="unfinished">Ingresar la trayectoria de hoja de estilos Qt.</translation>
+    </message>
+    <message>
+        <source>side length in pixels</source>
+        <translation type="unfinished">longitud de lado en píxeles</translation>
+    </message>
+    <message>
+        <source>Use themed icons</source>
+        <translation type="unfinished">Usar íconos temáticos</translation>
+    </message>
+</context>
+<context>
+    <name>LG_DimzerosBox</name>
+    <message>
+        <source>select:</source>
+        <translation type="unfinished">seleccionar:</translation>
+    </message>
+    <message>
+        <source>remove left</source>
+        <translation type="unfinished">eliminar izquierda</translation>
+    </message>
+    <message>
+        <source>remove right</source>
+        <translation type="unfinished">eliminar derecha</translation>
+    </message>
+    <message>
+        <source>remove 0&apos;</source>
+        <translation type="unfinished">eliminar 0&apos;</translation>
+    </message>
+    <message>
+        <source>remove 0&quot;</source>
+        <translation type="unfinished">eliminar 0&quot;</translation>
+    </message>
+</context>
+<context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Opciones ángulo relativo de línea</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Espaciado:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished">Distancia de la polilínea original</translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished">Copias:</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetEnt</name>
+    <message>
+        <source>Select object:</source>
+        <translation type="unfinished">Seleccionar objeto:</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetPoint</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+</context>
+<context>
+    <name>QC_ActionGetSelect</name>
+    <message>
+        <source>Select objects:</source>
+        <translation type="unfinished">Seleccionar objetos:</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ActionHandler</name>
+    <message>
+        <source>escape</source>
+        <comment>escape, go back from action steps</comment>
+        <translation type="unfinished">escape</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ActiveLayerName</name>
+    <message>
+        <source>Selection</source>
+        <translation type="unfinished">Selección</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Current Layer</source>
+        <translation type="unfinished">Capa actual</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { espacio en blanco: preenvoltura; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Nombre de la Capa Activa Actual&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CommandEdit</name>
+    <message>
+        <source>clear</source>
+        <translation type="unfinished">borrar</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CommandHistory</name>
+    <message>
+        <source>&amp;Copy</source>
+        <translation type="unfinished">&amp;Copiar</translation>
+    </message>
+    <message>
+        <source>Select &amp;All</source>
+        <translation type="unfinished">Seleccionar &amp;todo</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished">Borrar</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CommandWidget</name>
+    <message>
+        <source>Command Line</source>
+        <translation>Línea de Comandos</translation>
+    </message>
+    <message>
+        <source>Command:</source>
+        <translation>Comando:</translation>
+    </message>
+    <message>
+        <source>Command history and output</source>
+        <translation type="unfinished">Historial de comandos y resultados</translation>
+    </message>
+    <message>
+        <source>Unknown command: %1</source>
+        <translation type="unfinished">Comando desconocido: %1</translation>
+    </message>
+    <message>
+        <source>escape</source>
+        <comment>escape, go back from action steps</comment>
+        <translation type="unfinished">escape</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CoordinateWidget</name>
+    <message>
+        <source>Coordinates</source>
+        <translation>Coordenadas</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgFontConversion</name>
+    <message>
+        <source>Convert Fonts</source>
+        <translation type="unfinished">Convertir Tipos de letra</translation>
+    </message>
+    <message>
+        <source>Font family:</source>
+        <translation type="unfinished">Familia de tipo de letra:</translation>
+    </message>
+    <message>
+        <source>Font file:</source>
+        <translation type="unfinished">Archivo de tipo de letra:</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Save as:</source>
+        <translation type="unfinished">Guardar como:</translation>
+    </message>
+    <message>
+        <source>Letter spacing:</source>
+        <translation type="unfinished">Espaciado entre letras:</translation>
+    </message>
+    <message>
+        <source>Author:</source>
+        <translation type="unfinished">Autor:</translation>
+    </message>
+    <message>
+        <source>Word spacing:</source>
+        <translation type="unfinished">Espaciado entre palabras:</translation>
+    </message>
+    <message>
+        <source>License:</source>
+        <translation type="unfinished">Licencia:</translation>
+    </message>
+    <message>
+        <source>Line spacing:</source>
+        <translation type="unfinished">Espaciado entre líneas:</translation>
+    </message>
+    <message>
+        <source>Writing System:</source>
+        <translation type="unfinished">Sistema de Escritura:</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished">Vista previa</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">Crear</translation>
+    </message>
+    <message>
+        <source> - Searching</source>
+        <translation type="unfinished"> - Buscando</translation>
+    </message>
+    <message>
+        <source>LibreCAD Font Files(*.lff)</source>
+        <translation type="unfinished">Archivos de tipos de letra de LibreCAD (*.lff)</translation>
+    </message>
+    <message>
+        <source> - Rendering</source>
+        <translation type="unfinished"> - Renderizando</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgOptionsMakerCam</name>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished">Capas</translation>
+    </message>
+    <message>
+        <source>Export invisible layers</source>
+        <translation type="unfinished">Exportar capas invisibles</translation>
+    </message>
+    <message>
+        <source>Export visible construction layers</source>
+        <translation type="unfinished">Exportar capas de construcción visibles</translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished">Bloques</translation>
+    </message>
+    <message>
+        <source>Convert blocks to safe inline SVG content</source>
+        <translation type="unfinished">Convertir bloques a contenido en línea SVG seguro</translation>
+    </message>
+    <message>
+        <source>Ellipses / Ellipse arcs</source>
+        <translation type="unfinished">Elipses/arcos elípticos</translation>
+    </message>
+    <message>
+        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
+        <translation type="unfinished">Elipses aproximadas y arcos elípticos con Bézier cúbico</translation>
+    </message>
+    <message>
+        <source>Export as CAM/plain SVG</source>
+        <translation type="unfinished">Exportar como CAM/SVG simple</translation>
+    </message>
+    <message>
+        <source>Default width of elements, mm</source>
+        <translation type="unfinished">Ancho predeterminado de elementos, mm</translation>
+    </message>
+    <message>
+        <source>Images</source>
+        <translation type="unfinished">Imágenes</translation>
+    </message>
+    <message>
+        <source>Raster Image export</source>
+        <translation type="unfinished">Exportar Imagen ráster</translation>
+    </message>
+    <message>
+        <source>Dash/Dot Lines</source>
+        <translation type="unfinished">Líneas punteadas/con guiones</translation>
+    </message>
+    <message>
+        <source>Length of the pattern, mm</source>
+        <translation type="unfinished">Longitud del patrón, mm</translation>
+    </message>
+    <message>
+        <source>Bake dash/dot lines to SVG path</source>
+        <translation type="unfinished">Texturizar líneas punteadas/con guiones en ruta SVG</translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content 
+that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
+        <translation type="unfinished">MakerCAM, a partir de noviembre de 2014 no oculta el contenido SVG 
+que se ha configurado como invisible (“mostrar: ninguno” o “visibilidad: oculto”).</translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
+because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="unfinished">MakerCAM, a noviembre de 2014 no puede trabajar correctamente con bloques,
+debido a que no toma en cuenta el punto de referencia en el &lt;use&gt;.</translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
+when they are created using the &lt;ellipse&gt; tag  with a rotation in 
+the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished">MakerCAM, a marzo de 2015 no puede desplegar elipses y arcos elípticos correctamente, 
+al crearse usando la etiqueta &lt;ellipse&gt; con rotación en 
+el &lt;transform&gt; atributo o como &lt;path&gt; usando segmentos de arco elípticos.</translation>
+    </message>
+    <message>
+        <source>Exported images can be useful in SVG editors (Inkscape, etc), 
+but avoided in some CAM&apos;s.</source>
+        <translation type="unfinished">Las imágenes exportadas pueden ser útiles en editores SVG (Inkscape, etc) 
+pero se evitan en algunos CAM.</translation>
+    </message>
+    <message>
+        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+which can be useful in lasercut of plywood or for papercraft. </source>
+        <translation type="unfinished">Muchos CAM (MakerCAM, EleskCAM, LaserWeb) ignoran el estilo de línea punteada/con guiones, 
+que puede ser útil en los cortes láser de madera contrachapada o papel kraft. </translation>
+    </message>
+    <message>
+        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+but ignored by other</source>
+        <translation type="unfinished">El ancho predeterminado de los elementos puede afectar a algunos Editores CAM/SVG, 
+pero puede ser ignorado por otros</translation>
+    </message>
+    <message>
+        <source>Length of line pattern related to zoom, 
+so default step value required for baking</source>
+        <translation type="unfinished">La longitud del patrón de línea en relación al zoom, 
+de modo que se requiere el valor predeterminado del paso para texturizar</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LayerBox</name>
+    <message>
+        <source>- Unchanged -</source>
+        <translation>- Sin alterar -</translation>
+    </message>
+</context>
+<context>
+    <name>QG_LineTypeBox</name>
+    <message>
+        <source>By Layer</source>
+        <translation>Por Capa</translation>
+    </message>
+    <message>
+        <source>By Block</source>
+        <translation>Por Bloque</translation>
+    </message>
+    <message>
+        <source>No Pen</source>
+        <translation>Sin trazador</translation>
+    </message>
+    <message>
+        <source>Continuous</source>
+        <translation>Continua</translation>
+    </message>
+    <message>
+        <source>Dot</source>
+        <translation>Punto</translation>
+    </message>
+    <message>
+        <source>Dot (small)</source>
+        <translation>Punto (pequeño)</translation>
+    </message>
+    <message>
+        <source>Dot (large)</source>
+        <translation>Punto (grande)</translation>
+    </message>
+    <message>
+        <source>Dash</source>
+        <translation>Guión</translation>
+    </message>
+    <message>
+        <source>Dash (small)</source>
+        <translation>Guón (pequeño)</translation>
+    </message>
+    <message>
+        <source>Dash (large)</source>
+        <translation>Guión (grande)</translation>
+    </message>
+    <message>
+        <source>Dash Dot</source>
+        <translation>Punto guión</translation>
+    </message>
+    <message>
+        <source>Dash Dot (small)</source>
+        <translation>Punto guión (pequeño)</translation>
+    </message>
+    <message>
+        <source>Dash Dot (large)</source>
+        <translation>Punto guión (grande)</translation>
+    </message>
+    <message>
+        <source>Divide</source>
+        <translation>Partir</translation>
+    </message>
+    <message>
+        <source>Divide (small)</source>
+        <translation>Partir (pequeña)</translation>
+    </message>
+    <message>
+        <source>Divide (large)</source>
+        <translation>Partir (grande)</translation>
+    </message>
+    <message>
+        <source>Center</source>
+        <translation>Centrar</translation>
+    </message>
+    <message>
+        <source>Center (small)</source>
+        <translation>Centrar (pequeña)</translation>
+    </message>
+    <message>
+        <source>Center (large)</source>
+        <translation>Centrar (grande)</translation>
+    </message>
+    <message>
+        <source>Border</source>
+        <translation>Borde</translation>
+    </message>
+    <message>
+        <source>Border (small)</source>
+        <translation>Borde (pequeño)</translation>
+    </message>
+    <message>
+        <source>Border (large)</source>
+        <translation>Borde (grande)</translation>
+    </message>
+    <message>
+        <source>- Unchanged -</source>
+        <translation>- Sin alterar -</translation>
+    </message>
+    <message>
+        <source>Dot (tiny)</source>
+        <translation type="unfinished">Punto (chico)</translation>
+    </message>
+    <message>
+        <source>Dash (tiny)</source>
+        <translation type="unfinished">Guión (chico)</translation>
+    </message>
+    <message>
+        <source>Dash Dot (tiny)</source>
+        <translation type="unfinished">Guión Punto (chico)</translation>
+    </message>
+    <message>
+        <source>Divide (tiny)</source>
+        <translation type="unfinished">Partir (chico)</translation>
+    </message>
+    <message>
+        <source>Center (tiny)</source>
+        <translation type="unfinished">Centro (chico)</translation>
+    </message>
+    <message>
+        <source>Border (tiny)</source>
+        <translation type="unfinished">Borde (chico)</translation>
+    </message>
+</context>
+<context>
+    <name>QG_PenToolBar</name>
+    <message>
+        <source>Line color</source>
+        <translation type="unfinished">Color de línea</translation>
+    </message>
+    <message>
+        <source>Line width</source>
+        <translation type="unfinished">Ancho de línea</translation>
+    </message>
+    <message>
+        <source>Line type</source>
+        <translation type="unfinished">Tipo de línea</translation>
+    </message>
+</context>
+<context>
+    <name>QG_SnapToolBar</name>
+    <message>
+        <source>Snap</source>
+        <translation type="unfinished">Forzar cursor</translation>
+    </message>
+    <message>
+        <source>Snap to Endpoints</source>
+        <translation type="unfinished">Forzar a extremos</translation>
+    </message>
+    <message>
+        <source>Snap to equidistant points of entity</source>
+        <translation type="unfinished">Forzar a puntos equidistantes del objeto</translation>
+    </message>
+    <message>
+        <source>Snap to center points</source>
+        <translation type="unfinished">Forzar a los puntos del centro</translation>
+    </message>
+    <message>
+        <source>Snap to intersections automatically</source>
+        <translation type="unfinished">Forzar a punto de intersección automáticamente</translation>
+    </message>
+    <message>
+        <source>Snap to closest point on entity</source>
+        <translation type="unfinished">Forzar a punto más cercano en objeto</translation>
+    </message>
+    <message>
+        <source>Snap to point with given distance to endpoint</source>
+        <translation type="unfinished">Forzar a una distancia desde el extremo</translation>
+    </message>
+    <message>
+        <source>Snap to intersections manually</source>
+        <translation type="unfinished">Forzar a punto de intersección manualmente</translation>
+    </message>
+    <message>
+        <source>Snap to grid</source>
+        <translation type="unfinished">Forzar a cuadrícula</translation>
+    </message>
+    <message>
+        <source>Restrict Horizontally</source>
+        <translation type="unfinished">Restringir horizontalmente</translation>
+    </message>
+    <message>
+        <source>Restrict Vertically</source>
+        <translation type="unfinished">Restringir verticalmente</translation>
+    </message>
+    <message>
+        <source>Move relative Zero</source>
+        <translation type="unfinished">Desplazar el cero relativo</translation>
+    </message>
+    <message>
+        <source>Lock relative Zero</source>
+        <translation type="unfinished">Bloquear el cero relativo</translation>
+    </message>
+    <message>
+        <source>Free Snap</source>
+        <translation type="unfinished">No Forzar</translation>
+    </message>
+    <message>
+        <source>Snap on grid</source>
+        <translation type="unfinished">Forzar a cuadrícula</translation>
+    </message>
+    <message>
+        <source>Snap on Endpoints</source>
+        <translation type="unfinished">Forzar a Puntos Finales</translation>
+    </message>
+    <message>
+        <source>Snap on Entity</source>
+        <translation type="unfinished">Forzar a objetos</translation>
+    </message>
+    <message>
+        <source>Snap Center</source>
+        <translation type="unfinished">Forzar al Centro</translation>
+    </message>
+    <message>
+        <source>Snap Middle</source>
+        <translation type="unfinished">Forzar a medio</translation>
+    </message>
+    <message>
+        <source>Snap Distance</source>
+        <translation type="unfinished">Forzar a Distancia</translation>
+    </message>
+    <message>
+        <source>Snap Intersection</source>
+        <translation type="unfinished">Forzar a Intersección</translation>
+    </message>
+    <message>
+        <source>Restrict Horizontal</source>
+        <translation type="unfinished">Restringir Horizontal</translation>
+    </message>
+    <message>
+        <source>Restrict Vertical</source>
+        <translation type="unfinished">Restringir Vertical</translation>
+    </message>
+    <message>
+        <source>Restrict Orthogonal</source>
+        <translation type="unfinished">Restringir Ortogonal</translation>
+    </message>
+    <message>
+        <source>Restrict Nothing</source>
+        <translation type="unfinished">Sin restricciones</translation>
+    </message>
+    <message>
+        <source>Set relative zero position</source>
+        <translation type="unfinished">Establecer ubicación de cero relativo</translation>
+    </message>
+    <message>
+        <source>Lock relative zero position</source>
+        <translation type="unfinished">Bloquear ubicación de cero relativo</translation>
+    </message>
+    <message>
+        <source>Exclusive Snap Mode</source>
+        <translation type="unfinished">Modo Forzar Exclusivo</translation>
+    </message>
+</context>
+<context>
+    <name>QG_WidgetPen</name>
+    <message>
+        <source>Pen</source>
+        <translation>Trazador</translation>
+    </message>
+    <message>
+        <source>Line type:</source>
+        <translation>Tipo de línea:</translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation>Ancho:</translation>
+    </message>
+    <message>
+        <source>Color:</source>
+        <translation>Color:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_WidthBox</name>
+    <message>
+        <source>By Layer</source>
+        <translation>Por Capa</translation>
+    </message>
+    <message>
+        <source>By Block</source>
+        <translation>Por Bloque</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation>Por Defecto</translation>
+    </message>
+    <message>
+        <source>0.00mm</source>
+        <translation>0,00 mm</translation>
+    </message>
+    <message>
+        <source>0.05mm</source>
+        <translation>0,05 mm</translation>
+    </message>
+    <message>
+        <source>0.09mm</source>
+        <translation>0,09 mm</translation>
+    </message>
+    <message>
+        <source>0.13mm (ISO)</source>
+        <translation>0,13 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.15mm</source>
+        <translation>0,15 mm</translation>
+    </message>
+    <message>
+        <source>0.18mm (ISO)</source>
+        <translation>0,18 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.20mm</source>
+        <translation>0,20 mm</translation>
+    </message>
+    <message>
+        <source>0.25mm (ISO)</source>
+        <translation>0,25 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.30mm</source>
+        <translation>0,30 mm</translation>
+    </message>
+    <message>
+        <source>0.35mm (ISO)</source>
+        <translation>0,35 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.40mm</source>
+        <translation>0,40 mm</translation>
+    </message>
+    <message>
+        <source>0.50mm (ISO)</source>
+        <translation>0,50 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.53mm</source>
+        <translation>0,53 mm</translation>
+    </message>
+    <message>
+        <source>0.60mm</source>
+        <translation>0,60 mm</translation>
+    </message>
+    <message>
+        <source>0.70mm (ISO)</source>
+        <translation>0,70 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>0.80mm</source>
+        <translation>0,80 mm</translation>
+    </message>
+    <message>
+        <source>0.90mm</source>
+        <translation>0,90 mm</translation>
+    </message>
+    <message>
+        <source>1.00mm (ISO)</source>
+        <translation>1,00 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>1.06mm</source>
+        <translation>1,06 mm</translation>
+    </message>
+    <message>
+        <source>1.20mm</source>
+        <translation>1,20 mm</translation>
+    </message>
+    <message>
+        <source>1.40mm (ISO)</source>
+        <translation>1,40 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>1.58mm</source>
+        <translation>1,58 mm</translation>
+    </message>
+    <message>
+        <source>2.00mm (ISO)</source>
+        <translation>2,00 mm (ISO)</translation>
+    </message>
+    <message>
+        <source>2.11mm</source>
+        <translation>2,11 mm</translation>
+    </message>
+    <message>
+        <source>- Unchanged -</source>
+        <translation>- Sin alterar -</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionBlocksSave</name>
+    <message>
+        <source>No block activated to save</source>
+        <translation type="unfinished">No hay bloque activo para guardar</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDefault</name>
+    <message>
+        <source>Choose second edge</source>
+        <translation>Elegir segundo borde</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Volver</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleDiam</name>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Comando no válido</translation>
+    </message>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished">Especificar centro</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Specify circle radius</source>
+        <translation type="unfinished">Especificar radio del círculo</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Volver</translation>
+    </message>
+    <message>
+        <source>diameter=%1 is invalid</source>
+        <translation type="unfinished">diámetro=%1 es inválido</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan1_2P</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Specify the first point on the tangent circle</source>
+        <translation type="unfinished">Especificar el primer punto en la tangente del círculo</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Volver</translation>
+    </message>
+    <message>
+        <source>Specify the second point on the tangent circle</source>
+        <translation type="unfinished">Especificar el segundo punto en la tangente del círculo</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished">Seleccionar el centro de tangente del círculo</translation>
+    </message>
+    <message>
+        <source>Specify a line/arc/circle</source>
+        <translation type="unfinished">Especificar una línea/arco/círculo</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan2</name>
+    <message>
+        <source>Specify the first line/arc/circle</source>
+        <translation type="unfinished">Especificar la primera línea/arco/círculo</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Specify the second line/arc/circle</source>
+        <translation type="unfinished">Especificar la segunda línea/arco/círculo</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Volver</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished">Seleccionar el centro de tangente del círculo</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan2_1P</name>
+    <message>
+        <source>Specify a line/arc/circle</source>
+        <translation type="unfinished">Especificar una línea/arco/círculo</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Specify the another arc/circle</source>
+        <translation type="unfinished">Especificar el otro arco/círculo</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Volver</translation>
+    </message>
+    <message>
+        <source>Specify a point on the tangent circle</source>
+        <translation type="unfinished">Especificar un punto en la tangente del círculo</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished">Seleccionar el centro de tangente del círculo</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan3</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Volver</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished">Seleccionar el centro de tangente del círculo</translation>
+    </message>
+    <message>
+        <source>Specify the first line/arc/circle</source>
+        <translation type="unfinished">Especificar la primera línea/arco/círculo</translation>
+    </message>
+    <message>
+        <source>Specify the second line/arc/circle</source>
+        <translation type="unfinished">Especificar la segunda línea/arco/círculo</translation>
+    </message>
+    <message>
+        <source>Specify the third line/arc/circle</source>
+        <translation type="unfinished">Especificar la tercera línea/arco/círculo</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipse4Points</name>
+    <message>
+        <source>Specify the first point on ellipse</source>
+        <translation>Especificar el primer punto en la elipse</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Specify the second point on ellipse</source>
+        <translation>Especificar el segundo punto en la elipse</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Volver</translation>
+    </message>
+    <message>
+        <source>Specify the third point on ellipse</source>
+        <translation>Especificar el tercer punto en la elipse</translation>
+    </message>
+    <message>
+        <source>Specify the fourth point on ellipse</source>
+        <translation>Especificar el cuarto punto en la elipse</translation>
+    </message>
+    <message>
+        <source>Can not determine uniquely an ellipse</source>
+        <translation type="unfinished">No es posible determinar una elipse exclusivamente</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseCenter3Points</name>
+    <message>
+        <source>Specify the center of ellipse</source>
+        <translation>Especificar el centro de la elipse</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Specify the first point on ellipse</source>
+        <translation type="unfinished">Especificar el primer punto en la elipse</translation>
+    </message>
+    <message>
+        <source>Specify the second point on ellipse</source>
+        <translation type="unfinished">Especificar el segundo punto en la elipse</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Volver</translation>
+    </message>
+    <message>
+        <source>Specify the third point on ellipse</source>
+        <translation type="unfinished">Especificar el tercer punto en la elipse</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseFociPoint</name>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Comando no válido</translation>
+    </message>
+    <message>
+        <source>Specify first focus of ellipse</source>
+        <translation type="unfinished">Especificar primer foco de la elipse</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Specify second focus of ellipse</source>
+        <translation>Especificar el segundo foco de la elipse</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Volver</translation>
+    </message>
+    <message>
+        <source>Specify a point on ellipse or total distance to foci</source>
+        <translation>Especificar un punto de la elipse o la distancia total al foco</translation>
+    </message>
+    <message>
+        <source>specify a point on ellipse, or total distance to foci</source>
+        <translation type="unfinished">especificar un punto en la elipse, o la distancia total al foco</translation>
+    </message>
+    <message>
+        <source>Total distance %1 is smaller than distance between foci</source>
+        <translation type="unfinished">Distancia total %1 es menor a la distancia entre puntos focales</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawEllipseInscribe</name>
+    <message>
+        <source>Specify the first line</source>
+        <translation>Especificar la primera línea</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Specify the second line</source>
+        <translation>Especificar la segunda línea</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Volver</translation>
+    </message>
+    <message>
+        <source>Specify the third line</source>
+        <translation>Especificar la tercera línea</translation>
+    </message>
+    <message>
+        <source>Specify the fourth line</source>
+        <translation>Especificar la cuarta línea</translation>
+    </message>
+    <message>
+        <source>Can not determine uniquely an ellipse</source>
+        <translation type="unfinished">No es posible determinar una elipse exclusivamente</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawLineOrthTan</name>
+    <message>
+        <source>Select a line</source>
+        <translation>Seleccionar una linea</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancelar</translation>
+    </message>
+    <message>
+        <source>Select circle, arc or ellipse</source>
+        <translation>Seleccionar círculo, arco o elipse</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Volver</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawLinePolygonCenCor</name>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished">Especificar centro</translation>
+    </message>
+    <message>
+        <source>Specify a corner</source>
+        <translation type="unfinished">Especificar esquina</translation>
+    </message>
+    <message>
+        <source>Enter number:</source>
+        <translation type="unfinished">Introducir número:</translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="unfinished">Número no válido. Intente 1...9999</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Comando no válido</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawMText</name>
+    <message>
+        <source>Specify insertion point</source>
+        <translation type="unfinished">Especificar punto de inserción</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Enter text:</source>
+        <translation type="unfinished">Texto:</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Volver</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyOffset</name>
+    <message>
+        <source>Specify direction of offset</source>
+        <translation type="unfinished">Especificar dirección del corrimiento</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Volver</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyShapeText</name>
+    <message>
+        <source>Select text entity</source>
+        <translation type="unfinished">Seleccionar objeto de texto</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Volver</translation>
+    </message>
+    <message>
+        <source>Select entity to shape text to</source>
+        <translation type="unfinished">Seleccionar un objeto para dar forma al texto</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionModifyTrimExcess</name>
+    <message>
+        <source>Select entity to trim</source>
+        <translation type="unfinished">Seleccionar objeto a recortar</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Volver</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionOrder</name>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">No se encontraron objetos.</translation>
+    </message>
+    <message>
+        <source>Choose entity for order</source>
+        <translation type="unfinished">Elegir objeto para ordenar</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionPolylineAdd</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">No se encontraron objetos.</translation>
+    </message>
+    <message>
+        <source>Entity must be a polyline.</source>
+        <translation type="unfinished">El objeto debe ser una polilínea.</translation>
+    </message>
+    <message>
+        <source>Adding point is invalid.</source>
+        <translation type="unfinished">El punto de adición no es válido.</translation>
+    </message>
+    <message>
+        <source>Adding point is not on entity.</source>
+        <translation type="unfinished">El punto de adición no es un objeto.</translation>
+    </message>
+    <message>
+        <source>Specify polyline to add nodes</source>
+        <translation type="unfinished">Especificar polilínea para agregar nodos</translation>
+    </message>
+    <message>
+        <source>Specify adding node&apos;s point</source>
+        <translation type="unfinished">Especificar agregar punto de nodo</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Volver</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionPolylineAppend</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">No se encontraron objetos.</translation>
+    </message>
+    <message>
+        <source>Entity must be a polyline.</source>
+        <translation type="unfinished">El objeto debe ser una polilínea.</translation>
+    </message>
+    <message>
+        <source>Click somewhere near the beginning or end of existing polyline.</source>
+        <translation type="unfinished">Hacer clic en algún punto cercano al inicio o fin de una polilínea existente.</translation>
+    </message>
+    <message>
+        <source>Specify the polyline somewhere near the beginning or end point</source>
+        <translation type="unfinished">Especificar la polilínea en algún lugar cercano al punto de inicio o final.</translation>
+    </message>
+    <message>
+        <source>Specify next point or [%1]</source>
+        <translation type="unfinished">Especificar primer punto o [%1]</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Volver</translation>
+    </message>
+    <message>
+        <source>Specify next point</source>
+        <translation type="unfinished">Especificar punto siguiente</translation>
+    </message>
+    <message>
+        <source>Can not append nodes in a closed polyline.</source>
+        <translation type="unfinished">No es posible añadir nodos en una polilínea cerrada.</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="unfinished">No se puede deshacer: No hay suficientes objetos definidos.</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionPolylineDel</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">No se encontraron objetos.</translation>
+    </message>
+    <message>
+        <source>Entity must be a polyline.</source>
+        <translation type="unfinished">El objeto debe ser una polilínea.</translation>
+    </message>
+    <message>
+        <source>Specify polyline to delete node</source>
+        <translation type="unfinished">Especificar una polilínea para eliminar nodo</translation>
+    </message>
+    <message>
+        <source>Specify deleting node&apos;s point</source>
+        <translation type="unfinished">Especificar el punto de eliminación de nodo</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Volver</translation>
+    </message>
+    <message>
+        <source>Deleting point is invalid.</source>
+        <translation type="unfinished">El punto de eliminación es inválido.</translation>
+    </message>
+    <message>
+        <source>Deleting point is not on entity.</source>
+        <translation type="unfinished">El punto de eliminación no está en el objeto.</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionPolylineEquidistant</name>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">No se encontraron objetos.</translation>
+    </message>
+    <message>
+        <source>Entity must be a polyline.</source>
+        <translation type="unfinished">El objeto debe ser una polilínea.</translation>
+    </message>
+    <message>
+        <source>Choose the original polyline</source>
+        <translation type="unfinished">Elegir la polilínea original</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionPolylineSegment</name>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">No se encontraron objetos.</translation>
+    </message>
+    <message>
+        <source>Choose one of the segments on the original polyline</source>
+        <translation type="unfinished">Elegir uno de los segmentos de la polilínea original</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Entity can not be a closed polyline.</source>
+        <translation type="unfinished">El objeto no puede ser una polilínea cerrada.</translation>
+    </message>
+    <message>
+        <source>Polyline created</source>
+        <translation type="unfinished">Polilínea creada</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionPolylineTrim</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">No se encontraron objetos.</translation>
+    </message>
+    <message>
+        <source>Entity must be a polyline.</source>
+        <translation type="unfinished">El objeto debe ser una polilínea.</translation>
+    </message>
+    <message>
+        <source>Specifying point is invalid.</source>
+        <translation type="unfinished">El punto de especificación es inválido.</translation>
+    </message>
+    <message>
+        <source>No Segment found on entity.</source>
+        <translation type="unfinished">No se encontraron Segmentos en el objeto.</translation>
+    </message>
+    <message>
+        <source>Specify polyline to trim</source>
+        <translation type="unfinished">Especificar polilínea a recortar</translation>
+    </message>
+    <message>
+        <source>Specify first segment</source>
+        <translation type="unfinished">Especificar primer segmento</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Volver</translation>
+    </message>
+    <message>
+        <source>Specify second segment</source>
+        <translation type="unfinished">Especificar segundo segmento</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionSelect</name>
+    <message>
+        <source>Select to modify attributes</source>
+        <translation type="unfinished">Seleccionar atributos a modificar</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Select to delete</source>
+        <translation type="unfinished">Seleccionar para eliminar</translation>
+    </message>
+    <message>
+        <source>Select to delete immediately</source>
+        <translation type="unfinished">Seleccionar para eliminar de inmediato</translation>
+    </message>
+    <message>
+        <source>Select to move</source>
+        <translation type="unfinished">Seleccionar para mover</translation>
+    </message>
+    <message>
+        <source>Select to rotate</source>
+        <translation type="unfinished">Seleccionar para rotar</translation>
+    </message>
+    <message>
+        <source>Select to scale</source>
+        <translation type="unfinished">Seleccionar para cambiar a escala</translation>
+    </message>
+    <message>
+        <source>Select to mirror</source>
+        <translation type="unfinished">Seleccionar para reflejar</translation>
+    </message>
+    <message>
+        <source>Select to move and rotate</source>
+        <translation type="unfinished">Seleccionar para mover y rotar</translation>
+    </message>
+    <message>
+        <source>Select for two axis rotation</source>
+        <translation type="unfinished">Seleccionar para rotación de dos ejes</translation>
+    </message>
+    <message>
+        <source>Select to explode text</source>
+        <translation type="unfinished">Seleccionar para desagrupar texto</translation>
+    </message>
+    <message>
+        <source>Select to create block</source>
+        <translation type="unfinished">Seleccionar para crear bloque</translation>
+    </message>
+    <message>
+        <source>Select to copy</source>
+        <translation type="unfinished">Seleccionar para copiar</translation>
+    </message>
+    <message>
+        <source>Select to cut</source>
+        <translation type="unfinished">Seleccionar para cortar</translation>
+    </message>
+    <message>
+        <source>No entity selected!</source>
+        <translation type="unfinished">¡No se ha seleccionado ningún objeto!</translation>
+    </message>
+    <message>
+        <source>Select to create offset</source>
+        <translation type="unfinished">Seleccionar para crear corrimiento</translation>
+    </message>
+    <message>
+        <source>Select entities to order</source>
+        <translation type="unfinished">Seleccionar grupos a ordenar</translation>
+    </message>
+    <message>
+        <source>Select to explode block</source>
+        <translation type="unfinished">Seleccionar para desagregar bloque</translation>
+    </message>
+    <message>
+        <source>Select to revert direction</source>
+        <translation type="unfinished">Seleccionar para invertir dirección</translation>
+    </message>
+    <message>
+        <source>Select to unlink shaped text</source>
+        <translation type="unfinished">Seleccionar para desvincular texto con forma</translation>
     </message>
 </context>
 <context>
