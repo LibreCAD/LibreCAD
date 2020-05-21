@@ -1,4 +1,5 @@
 @echo off
+cd ../../scripts
 set cmd="call dailybuildnumber"
 FOR /F "tokens=*" %%i IN (' %cmd% ') DO SET DAILY_BUILD=%%i
 FOR /F "tokens=2" %%i IN (' "date /t" ') DO SET DATE_STR=%%i

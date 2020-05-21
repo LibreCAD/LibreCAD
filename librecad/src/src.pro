@@ -77,6 +77,7 @@ win32 {
 
     RC_FILE = ../res/main/librecad.rc
     contains(DISABLE_POSTSCRIPT, false) {
+        QMAKE_PRE_LINK = "$$_PRO_FILE_PWD_/../../scripts/generate-rc-win.bat"
         QMAKE_POST_LINK = "$$_PRO_FILE_PWD_/../../scripts/postprocess-win.bat" $$LC_VERSION
     }
 
