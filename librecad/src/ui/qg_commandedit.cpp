@@ -330,7 +330,8 @@ void QG_CommandEdit::readCommandFile(const QString& path)
     {
         line = txt_stream.readLine();
         line.remove(" ");
-        processInput(line);
+        if (!line.startsWith("#"))
+            processInput(line);
     }
 }
 
