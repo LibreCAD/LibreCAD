@@ -1,5 +1,5 @@
 /****************************************************************************
-**
+** Test
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
