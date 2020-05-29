@@ -27,10 +27,11 @@
 #include "rs_actionblocksattributes.h"
 
 #include <QAction>
+#include "qc_applicationwindow.h"
+#include "qc_mdiwindow.h"
 #include "rs_graphic.h"
 #include "rs_dialogfactory.h"
 #include "rs_debug.h"
-
 
 
 RS_ActionBlocksAttributes::RS_ActionBlocksAttributes(
@@ -56,6 +57,18 @@ void RS_ActionBlocksAttributes::trigger() {
             if (d.isValid()) {
 
                 QString newName = d.name;
+
+                // update window title of opened block
+                QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
+                QC_MDIWindow* blockWindow = appWindow->getWindowWithDoc(block);
+                if (blockWindow) {
+                    QString title = blockWindow->windowTitle();
+                    title = title.replace(
+                            "'" + oldName + "'",
+                            "'" + newName + "'");
+                    blockWindow->setWindowTitle(title);
+                }
+
                 blockList->rename(block, newName);
 
                 // update the name of all inserts:

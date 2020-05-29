@@ -50,26 +50,25 @@ void RS_ActionBlocksRemove::trigger() {
 	QList<RS_Block*> blocks =
 		RS_DIALOGFACTORY->requestSelectedBlocksRemovalDialog(bl);
 
+    if (blocks.isEmpty()) {
+        finish(false);
+        return;
+    }
+
 	// list of containers that might refer to the block via inserts:
 	std::vector<RS_EntityContainer*> containerList;
 	containerList.push_back(graphic);
-	RS_BlockList* blkLst = graphic->getBlockList();
-	for (int bi=0; bi<blkLst->count(); bi++) {
-		containerList.push_back(blkLst->at(bi));
+    for (int bi = 0; bi < bl->count(); bi++) {
+        containerList.push_back(bl->at(bi));
 	}
 
-	if (blocks.isEmpty()) {
-		finish(false);
-		return;
-	}
-
-	document->startUndoCycle();
+    document->startUndoCycle();
 
 	for (auto block: blocks) {
-
-		if (!block) continue;
-
-		for(auto cont: containerList){
+        if (nullptr == block) {
+            continue;
+        }
+        for(auto cont: containerList){
 			// remove all inserts from the graphic:
 			bool done;
 			do {
@@ -79,8 +78,8 @@ void RS_ActionBlocksRemove::trigger() {
 					if (e->rtti()==RS2::EntityInsert) {
 						RS_Insert* ins = (RS_Insert*)e;
 						if (ins->getName()==block->getName() && !ins->isUndone()) {
-							document->addUndoable(ins);
-							ins->setUndoState(true);
+                            document->addUndoable(ins);
+                            ins->setUndoState(true);
 							done = false;
 							break;
 						}
@@ -98,14 +97,16 @@ void RS_ActionBlocksRemove::trigger() {
 		// close all windows that are editing this block:
 		RS_DIALOGFACTORY->closeEditBlockWindow(block);
 
-		// Now remove the block from the block list, but do not delete:
-		block->setUndoState(true);
-		document->addUndoable(block);
-	}
-	document->endUndoCycle();
-	graphic->addBlockNotification();
+        // Now remove block from the block list, but do not delete:
+        block->setUndoState(true);
+        document->addUndoable(block);
+    }
+    document->endUndoCycle();
+
+    graphic->addBlockNotification();
 	graphic->updateInserts();
 	graphicView->redraw(RS2::RedrawDrawing);
+    bl->activate(nullptr);
 
 	finish(false);
 	RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());

@@ -28,6 +28,7 @@
 #include "rs_block.h"
 
 #include "rs_graphic.h"
+#include "rs_insert.h"
 
 RS_BlockData::RS_BlockData(const QString& _name,
 						   const RS_Vector& _basePoint,
@@ -153,6 +154,46 @@ bool RS_Block::isSelectedInBlockList() const {
     return data.selectedInBlockList;
 }
 
+/**
+ * Block may contain inserts of other blocks.
+ * Find name of the nested block that contain the insert
+ * of specified block.
+ *
+ * @param bName name of the block the nested insert references to
+ *
+ * @return block name chain to the block that contain searched insert
+ */
+QStringList RS_Block::findNestedInsert(const QString& bName) {
+
+    QStringList bnChain;
+
+    for (RS_Entity* e: entities) {
+        if (e->rtti()==RS2::EntityInsert) {
+            RS_Insert* i = ((RS_Insert*)e);
+            QString iName = i->getName();
+            if (iName == bName) {
+                bnChain << data.name;
+                break;
+            } else {
+                RS_BlockList* bList = getBlockList();
+                if (bList) {
+                    RS_Block* nestedBlock = bList->find(iName);
+                    if (nestedBlock) {
+                        QStringList nestedChain;
+                        nestedChain = nestedBlock->findNestedInsert(bName);
+                        if (!nestedChain.empty()) {
+                            bnChain << data.name;
+                            bnChain << nestedChain;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return bnChain;
+}
 
 std::ostream& operator << (std::ostream& os, const RS_Block& b) {
     os << " name: " << b.getName().toLatin1().data() << "\n";

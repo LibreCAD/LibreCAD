@@ -292,6 +292,11 @@ public:
         return snapToolBar;
     }
 
+    /**
+     * Find opened window for specified document.
+     */
+    QC_MDIWindow* getWindowWithDoc(const RS_Document* doc);
+
 protected:
     void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open

@@ -1005,10 +1005,14 @@ RS_Block* RS_Creation::createBlock(const RS_BlockData* data,
                                    const bool remove) {
 
     // start undo cycle for the container if we're deleting the existing entities
-    LC_UndoSection undo( document, remove);
-    RS_Block* block =
-            new RS_Block(container,
-						 RS_BlockData(*data));
+    LC_UndoSection undo(document, remove);
+    RS_Block* block;
+    // Block cannot contain blocks.
+    if (container->rtti() == RS2::EntityBlock) {
+        block = new RS_Block(container->getParent(), RS_BlockData(*data));
+    } else {
+        block = new RS_Block(container, RS_BlockData(*data));
+    }
 
 	// copy entities into a block
 	for(auto e: *container){

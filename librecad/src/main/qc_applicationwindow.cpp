@@ -1005,12 +1005,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
 
         coordinateWidget->setGraphic(m->getGraphic());
 
-        // Only graphics show blocks. (blocks don't)
-        if (m->getDocument()->rtti()==RS2::EntityGraphic) {
-            blockWidget->setBlockList(m->getDocument()->getBlockList());
-        } else {
-            blockWidget->setBlockList(nullptr);
-        }
+        blockWidget->setBlockList(m->getDocument()->getBlockList());
 
         // Update all inserts in this graphic (blocks might have changed):
         m->getDocument()->updateInserts();
@@ -1511,7 +1506,6 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
 
     w->setWindowIcon(QIcon(":/main/document.png"));
 
-    // only graphics offer block lists, blocks don't
     RS_DEBUG->print("  adding listeners");
     RS_Graphic* graphic = w->getDocument()->getGraphic();
 
@@ -3658,4 +3652,21 @@ void QC_ApplicationWindow::invokeLicenseWindow()
     viewer->setFile("readme");
 
     dlg.exec();
+}
+
+
+QC_MDIWindow* QC_ApplicationWindow::getWindowWithDoc(const RS_Document* doc)
+{
+    QC_MDIWindow* wwd = nullptr;
+
+    if (doc) {
+        foreach (QC_MDIWindow* w, window_list) {
+            if (w && w->getDocument() == doc) {
+                wwd = w;
+                break;
+            }
+        }
+    }
+
+    return wwd;
 }

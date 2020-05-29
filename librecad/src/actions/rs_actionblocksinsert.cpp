@@ -64,9 +64,26 @@ void RS_ActionBlocksInsert::init(int status) {
     reset();
 
     if (graphic) {
-		block = graphic->getActiveBlock();
-		if (block) {
-			data->name = block->getName();
+        block = graphic->getActiveBlock();
+        if (block) {
+            QString blockName = block->getName();
+            data->name = blockName;
+            if (document->rtti() == RS2::EntityBlock) {
+                QString parentBlockName = ((RS_Block*)(document))->getName();
+                if (parentBlockName == blockName) {
+                    RS_DIALOGFACTORY->commandMessage(tr("Block cannot contain an insert of itself."));
+                    finish(false);
+                } else {
+                    QStringList bnChain = block->findNestedInsert(parentBlockName);
+                    if (!bnChain.empty()) {
+                        RS_DIALOGFACTORY->commandMessage(blockName
+                            + tr(" has nested insert of current block in:\n")
+                            + bnChain.join("->")
+                            + tr("\nThis block cannot be inserted."));
+                        finish(false);
+                    }
+                }
+            }
         } else {
             finish(false);
         }
