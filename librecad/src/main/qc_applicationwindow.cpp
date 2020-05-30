@@ -2159,9 +2159,9 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
 
 	RS_StaticGraphicView gv(size.width(), size.height(), &painter, &borders);
     if (black) {
-		gv.setBackground(Qt::black);
+		gv.setBackground(QColor(Qt::black));
     } else {
-		gv.setBackground(Qt::white);
+		gv.setBackground(QColor(Qt::white));
     }
     gv.setContainer(graphic);
     gv.zoomAuto(false);
