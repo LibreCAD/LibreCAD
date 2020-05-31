@@ -2092,7 +2092,7 @@ bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     if (!ret)
         return ret;
     DRW_DBG("\n***************************** parsing spline *********************************************\n");
-    duint8 weight = 0; // RLZ ??? flags, weight, code 70, bit 4 (16)
+    int weight = 0; // RLZ ??? flags, weight, code 70, bit 4 (16)
 
     dint32 scenario = buf->getBitLong();
     DRW_DBG("scenario: "); DRW_DBG(scenario);
@@ -2101,7 +2101,7 @@ bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         if (splFlag1 & 1)
             scenario = 2;
         dint32 knotParam = buf->getBitLong();
-        DRW_DBG("2013 splFlag1: "); DRW_DBG(splFlag1); DRW_DBG(" 2013 knotParam: ");
+        DRW_DBG("\n2013 splFlag1: "); DRW_DBG(splFlag1); DRW_DBG(" 2013 knotParam: ");
         DRW_DBG(knotParam);
 //        DRW_DBG("unk bit: "); DRW_DBG(buf->getBit());
     }
@@ -2143,8 +2143,10 @@ bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     controllist.reserve(ncontrol);
 	for (dint32 i= 0; i<ncontrol; ++i){
 		controllist.push_back(std::make_shared<DRW_Coord>(buf->get3BitDouble()));
-		if (weight)
-            DRW_DBG("\n w: "); DRW_DBG(buf->getBitDouble()); //RLZ Warning: D (BD or RD)
+        if (weight) {
+            DRW_DBG("\n w: ");
+            DRW_DBG(buf->getBitDouble()); //RLZ Warning: D (BD or RD)
+        }
     }
     fitlist.reserve(nfit);
 	for (dint32 i= 0; i<nfit; ++i)
