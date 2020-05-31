@@ -1,6 +1,6 @@
 language: cpp
 sudo: required
-dist: trusty
+dist: bionic
 compiler: gcc
 branches:
   only:
@@ -10,20 +10,22 @@ matrix:
   fast_finish: true
   include:
   - compiler: gcc
-    env: ANALYZE="scan-build-3.7 -o out " GH_REF=github.com/LibreCAD/static-analyzer-reports.git
+    env: ANALYZE="scan-build-3.9 -o out " GH_REF=github.com/LibreCAD/static-analyzer-reports.git
   allow_failures:
-  - env: ANALYZE="scan-build-3.7 -o out " GH_REF=github.com/LibreCAD/static-analyzer-reports.git
+  - env: ANALYZE="scan-build-3.9 -o out " GH_REF=github.com/LibreCAD/static-analyzer-reports.git
 install:
-- sudo apt-get -qq install qt5-default qtbase5-dev  libqt5svg5-dev qttools5-dev qttools5-dev-tools
-  libmuparser-dev libboost-dev libfreetype6-dev libicu-dev pkg-config
+- sudo add-apt-repository -y ppa:beineri/opt-qt-5.12.6-bionic
+- sudo apt-get -y update
+- sudo apt-get -qq install qt512-meta-full libmuparser-dev libboost-dev libfreetype6-dev libicu-dev pkg-config
 - |
   if [ "${ANALYZE}" ]; then
     wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|sudo apt-key add -;
-    echo "yes" | sudo apt-add-repository "deb http://llvm.org/apt/$(lsb_release -sc)/ llvm-toolchain-$(lsb_release -sc)-3.7 main";
+    echo "yes" | sudo apt-add-repository "deb http://llvm.org/apt/$(lsb_release -sc)/ llvm-toolchain-$(lsb_release -sc)-3.9 main";
     sudo apt-get update;
-    sudo apt-get -qq install clang-3.7;
+    sudo apt-get -qq install clang-3.9;
   fi;
 script:
+- source /opt/qt512/bin/qt512-env.sh
 - ${ANALYZE}qmake -r librecad.pro CONFIG+=debug_and_release
 - ${ANALYZE}make debug -j3
 - if [ "${ANALYZE}" ] && [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then ./CI/static-analyzer-reports.sh; fi
