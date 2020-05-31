@@ -16,7 +16,7 @@ matrix:
 install:
 - sudo add-apt-repository -y ppa:beineri/opt-qt-5.12.6-bionic
 - sudo apt-get -y update
-- sudo apt-get -qq install qt512-meta-full libmuparser-dev libboost-dev libfreetype6-dev libicu-dev pkg-config
+- sudo apt-get -qq install qt512-meta-full libgl-dev libmuparser-dev libboost-dev libfreetype6-dev libicu-dev pkg-config
 - |
   if [ "${ANALYZE}" ]; then
     wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|sudo apt-key add -;
@@ -27,7 +27,7 @@ install:
 script:
 - source /opt/qt512/bin/qt512-env.sh
 - ${ANALYZE}qmake -r librecad.pro CONFIG+=debug_and_release
-- ${ANALYZE}make debug -j3
+- ${ANALYZE}make debug -j2
 - if [ "${ANALYZE}" ] && [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then ./CI/static-analyzer-reports.sh; fi
 env:
   global:
