@@ -29,6 +29,3 @@ script:
 - ${ANALYZE}qmake -r librecad.pro CONFIG+=debug_and_release
 - ${ANALYZE}make debug -j2
 - if [ "${ANALYZE}" ] && [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then ./CI/static-analyzer-reports.sh; fi
-env:
-  global:
-    secure: aqKbo5VbrT9Ss8glHCdHtpLTyBqrNExLU8td+obAxksmfrfFD5728vBNgYdYQKBQHuXA+Ng30qpAB0b34yMmvwykvTVYaLYnFL48j/t2u/cCbb7CstYiKz4NTlhJacVzi91S1WypDdN5wTuJu1eOPn+o2m07a0/LHxONnHqOIEQ=
