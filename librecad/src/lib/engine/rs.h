@@ -875,47 +875,45 @@ public:
      */
     enum PaperFormat {
         Custom,
-                Letter,
-                Legal,
-                Executive,
-        A0,
-                A1,
-                A2,
-                A3,
-                A4,
-                A5,
-                A6,
-                A7,
-                A8,
-                A9,
-        B0,
-                B1,
-                B2,
-                B3,
-                B4,
-                B5,
-                B6,
-                B7,
-                B8,
-                B9,
-                B10,
-        C5E,
-                Comm10E,
-        DLE,
-                Folio,
-                Ledger,
-                Tabloid,
-        Arch_A,
-        Arch_B,
-        Arch_C,
-        Arch_D,
-        Arch_E,
-        Arch_E1,
-        Arch_E2,
-        Arch_E3,
 
-                NPageSize
-        };
+        /* ISO "A" Series */
+        A0,   /* 841 x 1189 mm	33.1 x 46.8 in */
+        A1,   /* 594 x 841 mm	23.4 x 33.1 in */
+        A2,   /* 420 x 594 mm	16.5 x 23.4 in */
+        A3,   /* 297 x 420 mm	11.7 x 16.5 in */
+        A4,   /* 210 x 297 mm	8.3 x 11.7 in  */
+
+        /* ISO "B" Series */
+        B0,   /* 1000 x 1414 mm	39.4 x 55.7 in */
+        B1,   /* 707 x 1000 mm	27.8 x 39.4 in */
+        B2,   /* 500 x 707 mm	19.7 x 27.8 in */
+        B3,   /* 353 x 500 mm	13.9 x 19.7 in */
+        B4,   /* 250 x 353 mm	9.8 x 13.9 in */
+
+        /* Removed "C" Series, C5E, Comm10E, DLE, (envelope sizes) */
+
+
+        /* US "Office" */
+        Letter,   /* 216 x 279 mm	8.5 x 11.0 in */
+        Legal,    /* 216 x 356 mm	8.5 x 14.0 in */
+        Ledger,   /* 279 x 432 mm	11.0 x 17.0 in (Also "Tabloid".  Although, technically, "Ledger" is 17 x 11.) */
+
+        /* ANSI */
+        Ansi_A,   /* 216 x 279 mm	8.5 x 11.0 in */
+        Ansi_B,   /* 279 x 432 mm	11.0 x 17.0 in */
+        Ansi_C,   /* 432 x 559 mm	17.0 x 22.0 in */
+        Ansi_D,   /* 559 x 864 mm	22.0 x 34.0 in */
+        Ansi_E,   /* 864 x 1118 mm	34.0 x 44.0 in */
+
+        /* Architectural */
+        Arch_A,    /* 229 x 305 mm	9.0 x 12.0 in */
+        Arch_B,    /* 305 x 457 mm	12.0 x 18.0 in */
+        Arch_C,    /* 457 x 610 mm	18.0 x 24.0 in */
+        Arch_D,    /* 610 x 914 mm	24.0 x 36.0 in */
+        Arch_E,    /* 914 x 1219 mm	36.0 x 48.0 in */
+
+        NPageSize
+    };
 
         /**
          * Items that can be put on a overlay, the items are rendered in this order. Best is to leave snapper as last so

@@ -607,7 +607,7 @@ QString RS_Units::formatFractional(double length, RS2::Unit /*unit*/,
 
 	unsigned num;            // number of complete inches (num' 7/128")
 	unsigned nominator;      // number of fractions (nominator/128)
-	unsigned denominator;    // (4/denominator)
+	unsigned denominator;    // (7/denominator)
 
     // sign:
     QString neg = "";
@@ -654,8 +654,6 @@ QString RS_Units::formatFractional(double length, RS2::Unit /*unit*/,
 
     return ret;
 }
-
-
 
 
 
@@ -825,166 +823,72 @@ RS2::AngleFormat RS_Units::numberToAngleFormat(int num) {
  * @return Size of the given paper format.
  */
 RS_Vector RS_Units::paperFormatToSize(RS2::PaperFormat p) {
-    RS_Vector ret(false);
 
     switch (p) {
     case RS2::Custom:
-        ret = RS_Vector(0.0, 0.0);
-        break;
-    case RS2::Letter:
-        ret = RS_Vector(215.9, 279.4);
-        break;
-    case RS2::Legal:
-        ret = RS_Vector(215.9, 355.6);
-        break;
-    case RS2::Executive:
-        ret = RS_Vector(190.5, 254.0);
-        break;
+        return RS_Vector(0.0, 0.0);
+
     case RS2::A0:
-        ret = RS_Vector(841.0, 1189.0);
-        break;
+        return RS_Vector(841.0, 1189.0);
     case RS2::A1:
-        ret = RS_Vector(594.0, 841.0);
-        break;
+        return RS_Vector(594.0, 841.0);
     case RS2::A2:
-        ret = RS_Vector(420.0, 594.0);
-        break;
+        return RS_Vector(420.0, 594.0);
     case RS2::A3:
-        ret = RS_Vector(297.0, 420.0);
-        break;
+        return RS_Vector(297.0, 420.0);
     case RS2::A4:
-        ret = RS_Vector(210.0, 297.0);
-        break;
-    case RS2::A5:
-        ret = RS_Vector(148.0, 210.0);
-        break;
-    case RS2::A6:
-        ret = RS_Vector(105.0, 148.0);
-        break;
-    case RS2::A7:
-        ret = RS_Vector(74.0, 105.0);
-        break;
-    case RS2::A8:
-        ret = RS_Vector(52.0, 74.0);
-        break;
-    case RS2::A9:
-        ret = RS_Vector(37.0, 52.0);
-        break;
-        /*case RS2::A10:
-            ret = RS_Vector(26.0, 37.0);
-            break;*/
+        return RS_Vector(210.0, 297.0);
+
     case RS2::B0:
-        ret = RS_Vector(1000.0, 1414.0);
-        break;
+        return RS_Vector(1000.0, 1414.0);
     case RS2::B1:
-        ret = RS_Vector(707.0, 1000.0);
-        break;
+        return RS_Vector(707.0, 1000.0);
     case RS2::B2:
-        ret = RS_Vector(500.0, 707.0);
-        break;
+        return RS_Vector(500.0, 707.0);
     case RS2::B3:
-        ret = RS_Vector(353.0, 500.0);
-        break;
+        return RS_Vector(353.0, 500.0);
     case RS2::B4:
-        ret = RS_Vector(250.0, 353.0);
-        break;
-    case RS2::B5:
-        ret = RS_Vector(176.0, 250.0);
-        break;
-    case RS2::B6:
-        ret = RS_Vector(125.0, 176.0);
-        break;
-    case RS2::B7:
-        ret = RS_Vector(88.0, 125.0);
-        break;
-    case RS2::B8:
-        ret = RS_Vector(62.0, 88.0);
-        break;
-    case RS2::B9:
-        ret = RS_Vector(44.0, 62.0);
-        break;
-    case RS2::B10:
-        ret = RS_Vector(31.0, 44.0);
-        break;
-        /*
-          case RS2::C0:
-              ret = RS_Vector(917.0, 1297.0);
-              break;
-          case RS2::C1:
-              ret = RS_Vector(648.0, 917.0);
-              break;
-          case RS2::C2:
-              ret = RS_Vector(458.0, 648.0);
-              break;
-          case RS2::C3:
-              ret = RS_Vector(324.0, 458.0);
-              break;
-          case RS2::C4:
-              ret = RS_Vector(229.0, 324.0);
-              break;
-          case RS2::C5:
-              ret = RS_Vector(162.0, 229.0);
-              break;
-          case RS2::C6:
-              ret = RS_Vector(114.0, 162.0);
-              break;
-          case RS2::C7:
-              ret = RS_Vector(81.0, 114.0);
-              break;
-          case RS2::C8:
-              ret = RS_Vector(57.0, 81.0);
-              break;
-          case RS2::C9:
-              ret = RS_Vector(40.0, 57.0);
-              break;
-          case RS2::C10:
-              ret = RS_Vector(28.0, 40.0);
-              break;
-        */
-    case RS2::C5E:
-        ret = RS_Vector(163.0, 229.0);
-        break;
-    case RS2::Comm10E:
-        ret = RS_Vector(105.0, 241.0);
-        break;
-    case RS2::DLE:
-        ret = RS_Vector(110.0, 220.0);
-        break;
-    case RS2::Folio:
-        ret = RS_Vector(210.0, 330.0);
-        break;
-    case RS2::Ledger:
-        ret = RS_Vector(432.0, 279.0);
-        break;
-    case RS2::Tabloid:
-        ret = RS_Vector(279.0, 432.0);
+        return RS_Vector(250.0, 353.0);
+
+    case RS2::Letter:  /* 8.5 x 11.0 in.  Sizes used for 'hard' conversion to metric */
+        return RS_Vector(215.9, 279.4);
+    case RS2::Legal:  /* 8.5 x 14.0 in */
+        return RS_Vector(215.9, 355.6);
+
+    case RS2::Ledger:  /* 11.0 x 17.0 */
+        return RS_Vector(279.4, 431.8);
         break;
 
-    case RS2::Arch_A:
-    return RS_Vector(229.,305.);
-    case RS2::Arch_B:
-    return RS_Vector(305.,457.);
-    case RS2::Arch_C:
-    return RS_Vector(457.,610.);
-    case RS2::Arch_D:
-    return RS_Vector(610.,914.);
-    case RS2::Arch_E:
-    return RS_Vector(914.,1219.);
-    case RS2::Arch_E1:
-    return RS_Vector(762.,1067.);
-    case RS2::Arch_E2:
-    return RS_Vector(660.,965.);
-    case RS2::Arch_E3:
-    return RS_Vector(686.,991.);
+    case RS2::Ansi_A:  /* 8.5 x 11.0 in */
+        return RS_Vector(215.9, 279.4);
+    case RS2::Ansi_B:  /* 11.0 x 17.0 in */
+        return RS_Vector(279.4, 431.8);
+    case RS2::Ansi_C:  /* 17.0 x 22.0 in */
+        return RS_Vector(431.8, 558.8);
+    case RS2::Ansi_D:  /* 22.0 x 34.0 in */
+        return RS_Vector(558.8, 863.6);
+    case RS2::Ansi_E:  /* 34.0 x 44.0 in */
+        return RS_Vector(863.6, 1117.6);
+
+    case RS2::Arch_A:  /* 9.0 x 12.0 in */
+        return RS_Vector(228.6, 304.8);
+    case RS2::Arch_B:  /* 12.0 x 18.0 in */
+        return RS_Vector(304.8, 457.2);
+    case RS2::Arch_C:  /* 18.0 x 24.0 in */
+        return RS_Vector(457.2, 609.6);
+    case RS2::Arch_D:  /* 24.0 x 36.0 in */
+        return RS_Vector(609.6, 914.4);
+    case RS2::Arch_E:  /* 36.0 x 48.0 in */
+        return RS_Vector(914.4, 1219.2);
 
     case RS2::NPageSize:
         return RS_Vector(0.0, 0.0);
-        break;
+
     default:
         break;
     }
 
-    return ret;
+    return RS_Vector (false);
 }
 
 
@@ -1015,162 +919,70 @@ RS2::PaperFormat RS_Units::paperSizeToFormat(const RS_Vector& s) {
  * Converts a paper format to a string (e.g. for a combobox).
  */
 QString RS_Units::paperFormatToString(RS2::PaperFormat p) {
-    QString ret = "";
 
     switch (p) {
     case RS2::Custom:
-        ret = "Custom";
-        break;
-    case RS2::Letter:
-        ret = "Letter";
-        break;
-    case RS2::Legal:
-        ret = "Legal";
-        break;
-    case RS2::Executive:
-        ret = "Executive";
-        break;
+        return QString("Custom");
+
     case RS2::A0:
-        ret = "A0";
-        break;
+        return QString("A0");
     case RS2::A1:
-        ret = "A1";
-        break;
+        return QString("A1");
     case RS2::A2:
-        ret = "A2";
-        break;
+        return QString("A2");
     case RS2::A3:
-        ret = "A3";
-        break;
+        return QString("A3");
     case RS2::A4:
-        ret = "A4";
-        break;
-    case RS2::A5:
-        ret = "A5";
-        break;
-    case RS2::A6:
-        ret = "A6";
-        break;
-    case RS2::A7:
-        ret = "A7";
-        break;
-    case RS2::A8:
-        ret = "A8";
-        break;
-    case RS2::A9:
-        ret = "A9";
-        break;
+        return QString("A4");
+
     case RS2::B0:
-        ret = "B0";
-        break;
+        return QString("B0");
     case RS2::B1:
-        ret = "B1";
-        break;
+        return QString("B1");
     case RS2::B2:
-        ret = "B2";
-        break;
+        return QString("B2");
     case RS2::B3:
-        ret = "B3";
-        break;
+        return QString("B3");
     case RS2::B4:
-        ret = "B4";
-        break;
-    case RS2::B5:
-        ret = "B5";
-        break;
-    case RS2::B6:
-        ret = "B6";
-        break;
-    case RS2::B7:
-        ret = "B7";
-        break;
-    case RS2::B8:
-        ret = "B8";
-        break;
-    case RS2::B9:
-        ret = "B9";
-        break;
-    case RS2::B10:
-        ret = "B10";
-        break;
-        /*
-           case RS2::C0:
-               ret = "C0";
-               break;
-           case RS2::C1:
-               ret = "C1";
-               break;
-           case RS2::C2:
-               ret = "C2";
-               break;
-           case RS2::C3:
-               ret = "C3";
-               break;
-           case RS2::C4:
-               ret = "C4";
-               break;
-           case RS2::C5:
-               ret = "C5";
-               break;
-           case RS2::C6:
-               ret = "C6";
-               break;
-           case RS2::C7:
-               ret = "C7";
-               break;
-           case RS2::C8:
-               ret = "C8";
-               break;
-           case RS2::C9:
-               ret = "C9";
-               break;
-           case RS2::C10:
-               ret = "C10";
-               break;
-        */
-    case RS2::C5E:
-        ret = "C5E";
-        break;
-    case RS2::Comm10E:
-        ret = "Comm10E";
-        break;
-    case RS2::DLE:
-        ret = "DLE";
-        break;
-    case RS2::Folio:
-        ret = "Folio";
-        break;
+        return QString("B4");
+
+    case RS2::Letter:
+        return QString("Letter");
+    case RS2::Legal:
+        return QString("Legal");
     case RS2::Ledger:
-        ret = "Ledger";
-        break;
-    case RS2::Tabloid:
-        ret = "Tabloid";
-        break;
+        return QString("Ledger");
+
+    case RS2::Ansi_A:
+        return QString("ANSI A");
+    case RS2::Ansi_B:
+        return QString("ANSI B");
+    case RS2::Ansi_C:
+        return QString("ANSI C");
+    case RS2::Ansi_D:
+        return QString("ANSI D");
+    case RS2::Ansi_E:
+        return QString("ANSI E");
+
     case RS2::Arch_A:
-    return QString("Arch A");
+        return QString("Arch A");
     case RS2::Arch_B:
-    return QString("Arch B");
+        return QString("Arch B");
     case RS2::Arch_C:
-    return QString("Arch C");
+        return QString("Arch C");
     case RS2::Arch_D:
-    return QString("Arch D");
+        return QString("Arch D");
     case RS2::Arch_E:
-    return QString("Arch E");
-    case RS2::Arch_E1:
-    return QString("Arch E1");
-    case RS2::Arch_E2:
-    return QString("Arch E2");
-    case RS2::Arch_E3:
-    return QString("Arch E3");
+        return QString("Arch E");
 
     case RS2::NPageSize:
-        ret = "NPageSize";
-        break;
+        return QString("NPageSize");
+
     default:
         break;
     }
 
-    return ret;
+    return QString("");
 }
 
 
@@ -1182,101 +994,35 @@ RS2::PaperFormat RS_Units::stringToPaperFormat(const QString& p) {
     QString ls = p.toLower();
     RS2::PaperFormat ret = RS2::Custom;
 
-    if (p=="custom") {
-        ret = RS2::Custom;
-    } else if (p=="letter") {
-        ret = RS2::Letter;
-    } else if (p=="legal") {
-        ret = RS2::Legal;
-    } else if (p=="executive") {
-        ret = RS2::Executive;
-    } else if (p=="a0") {
-        ret = RS2::A0;
-    } else if (p=="a1") {
-        ret = RS2::A1;
-    } else if (p=="a2") {
-        ret = RS2::A2;
-    } else if (p=="a3") {
-        ret = RS2::A3;
-    } else if (p=="a4") {
-        ret = RS2::A4;
-    } else if (p=="a5") {
-        ret = RS2::A5;
-    } else if (p=="a6") {
-        ret = RS2::A6;
-    } else if (p=="a7") {
-        ret = RS2::A7;
-    } else if (p=="a8") {
-        ret = RS2::A8;
-    } else if (p=="a9") {
-        ret = RS2::A9;
-    } else if (p=="b0") {
-        ret = RS2::B0;
-    } else if (p=="b1") {
-        ret = RS2::B1;
-    } else if (p=="b2") {
-        ret = RS2::B2;
-    } else if (p=="b3") {
-        ret = RS2::B3;
-    } else if (p=="b4") {
-        ret = RS2::B4;
-    } else if (p=="b5") {
-        ret = RS2::B5;
-    } else if (p=="b6") {
-        ret = RS2::B6;
-    } else if (p=="b7") {
-        ret = RS2::B7;
-    } else if (p=="b8") {
-        ret = RS2::B8;
-    } else if (p=="b9") {
-        ret = RS2::B9;
-    } else if (p=="b10") {
-        ret = RS2::B10;
-    }
-    /*else if (p=="c0") {
-           ret = RS2::C0;
-       } else if (p=="c1") {
-           ret = RS2::C1;
-       } else if (p=="c2") {
-           ret = RS2::C2;
-       } else if (p=="c3") {
-           ret = RS2::C3;
-       } else if (p=="c4") {
-           ret = RS2::C4;
-       } else if (p=="c5") {
-           ret = RS2::C5;
-       } else if (p=="c6") {
-           ret = RS2::C6;
-       } else if (p=="c7") {
-           ret = RS2::C7;
-       } else if (p=="c8") {
-           ret = RS2::C8;
-       } else if (p=="c9") {
-           ret = RS2::C9;
-       } else if (p=="c10") {
-           ret = RS2::C10;
-       }*/
-    else if (p=="c5e") {
-        ret = RS2::C5E;
-    } else if (p=="comm10e") {
-        ret = RS2::Comm10E;
-    } else if (p=="dle") {
-        ret = RS2::DLE;
-    } else if (p=="folio") {
-        ret = RS2::Folio;
-    } else if (p=="ledger") {
-        ret = RS2::Ledger;
-    } else if (p=="tabloid") {
-        ret = RS2::Tabloid;
-    }
+    if (p==QString("custom")) return RS2::Custom;
+
+    if (p==QString("a0")) return RS2::A0;
+    if (p==QString("a1")) return RS2::A1;
+    if (p==QString("a2")) return RS2::A2;
+    if (p==QString("a3")) return RS2::A3;
+    if (p==QString("a4")) return RS2::A4;
+
+    if (p==QString("b0")) return RS2::B0;
+    if (p==QString("b1")) return RS2::B1;
+    if (p==QString("b2")) return RS2::B2;
+    if (p==QString("b3")) return RS2::B3;
+    if (p==QString("b4")) return RS2::B4;
+
+    if (p==QString("letter")) return RS2::Letter;
+    if (p==QString("legal")) return RS2::Legal;
+    if (p==QString("ledger")) return RS2::Ledger;
+
+    if (p==QString("Ansi A")) return RS2::Ansi_A;
+    if (p==QString("Ansi B")) return RS2::Ansi_B;
+    if (p==QString("Ansi C")) return RS2::Ansi_C;
+    if (p==QString("Ansi D")) return RS2::Ansi_D;
+    if (p==QString("Ansi E")) return RS2::Ansi_E;
+
     if (p==QString("Arch A")) return RS2::Arch_A;
     if (p==QString("Arch B")) return RS2::Arch_B;
     if (p==QString("Arch C")) return RS2::Arch_C;
     if (p==QString("Arch D")) return RS2::Arch_D;
     if (p==QString("Arch E")) return RS2::Arch_E;
-    if (p==QString("Arch E1")) return RS2::Arch_E1;
-    if (p==QString("Arch E2")) return RS2::Arch_E2;
-    if (p==QString("Arch E3")) return RS2::Arch_E3;
 
     if (p=="npagesize") return RS2::NPageSize;
 
