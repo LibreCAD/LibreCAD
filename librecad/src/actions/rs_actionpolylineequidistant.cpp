@@ -155,7 +155,6 @@ bool RS_ActionPolylineEquidistant::makeContour() {
     for (int num=1; num<=number || (number==0 && num<=1); num++) {
         RS_Polyline* newPolyline = new RS_Polyline(container);
         newPolyline->setLayerToActive();
-        newPolyline->setPen(((RS_Polyline*)originalEntity)->getPen());
 
         bool first = true;
         bool closed = originalPolyline->isClosed();
