@@ -53,6 +53,7 @@ public:
 	~RS_ActionModifyTrim() override;
 
 	void init(int status=0) override;
+	void finish(bool updateTB=true) override;
 	void trigger() override;
 	void mouseMoveEvent(QMouseEvent* e) override;
 	void mouseReleaseEvent(QMouseEvent* e) override;
@@ -66,6 +67,8 @@ private:
 	struct Points;
 	std::unique_ptr<Points> pPoints;
 	bool both;
+
+	void unhighlightLimitingEntity();
 };
 
 #endif
