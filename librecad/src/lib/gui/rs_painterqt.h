@@ -29,6 +29,7 @@
 #define RS_PAINTERQT_H
 
 #include <QPainter>
+#include <QPainterPath>
 
 #include "rs_painter.h"
 #include "rs_pen.h"
