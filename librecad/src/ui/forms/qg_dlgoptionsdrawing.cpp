@@ -125,8 +125,8 @@ void QG_DlgOptionsDrawing::init() {
     cbDimAUnit->insertItems(0, aunitList);
 
     // Paper format:
-    for (int i=RS2::Custom; i<=RS2::NPageSize; i++) {
-		cbPaperFormat->addItem(RS_Units::paperFormatToString(static_cast<RS2::PaperFormat>(i)));
+    for (RS2::PaperFormat i = RS2::FirstPaperFormat; RS2::NPageFormat > i; i = static_cast<RS2::PaperFormat>(i + 1)) {
+        cbPaperFormat->addItem( RS_Units::paperFormatToString( i));
     }
     // Paper preview:
     gvPaperPreview->setScene(paperScene);
@@ -421,12 +421,11 @@ void QG_DlgOptionsDrawing::validate() {
         graphic->addVariable("$AUNITS", cbAngleFormat->currentIndex(), 70);
         graphic->addVariable("$AUPREC", cbAnglePrecision->currentIndex(), 70);
 
+        RS2::PaperFormat currentFormat {static_cast<RS2::PaperFormat>(cbPaperFormat->currentIndex())};
         // paper:
-        graphic->setPaperFormat(
-					static_cast<RS2::PaperFormat>(cbPaperFormat->currentIndex()),
-                    rbLandscape->isChecked());
+        graphic->setPaperFormat( currentFormat, rbLandscape->isChecked());
         // custom paper size:
-		if (static_cast<RS2::PaperFormat>(cbPaperFormat->currentIndex()) == RS2::Custom) {
+        if (RS2::Custom == currentFormat) {
             graphic->setPaperSize(RS_Vector(RS_Math::eval(lePaperWidth->text()),
                                             RS_Math::eval(lePaperHeight->text())));
 			bool landscape;
@@ -778,7 +777,7 @@ void  QG_DlgOptionsDrawing::updatePaperSize() {
     lePaperHeight->setText(QString("%1").setNum(s.y,'g',5));
     lePaperHeight->blockSignals(false);
 
-    if (cbPaperFormat->currentIndex()==0) {
+    if (RS2::Custom == cbPaperFormat->currentIndex()) {
         lePaperWidth->setEnabled(true);
         lePaperHeight->setEnabled(true);
     } else {

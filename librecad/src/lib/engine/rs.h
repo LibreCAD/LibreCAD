@@ -874,7 +874,8 @@ public:
      * Paper formats.
      */
     enum PaperFormat {
-        Custom,
+        FirstPaperFormat,
+        Custom = FirstPaperFormat,
 
         /* ISO "A" Series */
         A0,   /* 841 x 1189 mm	33.1 x 46.8 in */
@@ -912,7 +913,7 @@ public:
         Arch_D,    /* 610 x 914 mm	24.0 x 36.0 in */
         Arch_E,    /* 914 x 1219 mm	36.0 x 48.0 in */
 
-        NPageSize
+        NPageFormat
     };
 
         /**
