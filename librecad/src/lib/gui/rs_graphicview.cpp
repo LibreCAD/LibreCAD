@@ -995,10 +995,18 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 		{
 			uf = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
 
-			if ((isPrinting() || isPrintPreview()) && !scaleLineWidth &&
+			if ((isPrinting() || isPrintPreview()) &&
 					graphic->getPaperScale() > RS_TOLERANCE )
 			{
-				wf = 1.0 / graphic->getPaperScale();
+				if (scaleLineWidth)
+				{
+					wf = graphic->getVariableDouble("$DIMSCALE", 1.0);
+				}
+				else
+				{
+					wf = 1.0 / graphic->getPaperScale();
+				}
+
 			}
 		}
 
