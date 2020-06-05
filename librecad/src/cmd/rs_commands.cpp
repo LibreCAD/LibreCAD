@@ -400,81 +400,25 @@ RS_Commands::RS_Commands() {
             {{"join", QObject::tr("join", "pl join")}},
             RS2::ActionPolylineSegment
          },
-
+ 
 /*  -- START DEBUG
 */ //-- END DEBUG
 
-/* SELECT COMMANDS */
+        /* SELECT COMMANDS */
+        //Select all entities
+        {
+            {{"selectall", QObject::tr("selectall", "Select all entities")}},
+            {{"sa", QObject::tr("sa", "Select all entities")}},
+            RS2::ActionSelectAll
+        },
+        //DeSelect all entities
+        {
+            {{"deselectall", QObject::tr("deselectall", "deselect all entities")}},
+            {{"tn", QObject::tr("tn", "deselect all entities")}},
+            RS2::ActionDeselectAll
+        },
 
-
-        //draw hatch
-        {
-            {{"hatch", QObject::tr("hatch", "draw hatch")}},
-            {{"ha", QObject::tr("ha", "draw hatch")}},
-            RS2::ActionDrawHatchNoSelect
-        },
-        //draw mtext
-        {
-            {{"mtext", QObject::tr("mtext", "draw mtext")}},
-            {{"mtxt", QObject::tr("mtxt", "draw mtext")}},
-            RS2::ActionDrawMText
-        },
-        //draw text
-        {
-            {{"text", QObject::tr("text", "draw text")}},
-            {{"txt", QObject::tr("txt", "draw text")}},
-            RS2::ActionDrawText
-        },
-        //zoom redraw
-        {
-            {{"regen", QObject::tr("regen", "zoom - redraw")},
-             {"redraw", QObject::tr("redraw", "zoom - redraw")}},
-            {{"rg", QObject::tr("rg", "zoom - redraw")},
-            {"zr", QObject::tr("zr", "zoom - redraw")}},
-            RS2::ActionZoomRedraw
-        },
-        //zoom window
-        {
-            {{"zoomwindow", QObject::tr("zoomwindow", "zoom - window")}},
-            {{"zw", QObject::tr("zw", "zoom - window")}},
-            RS2::ActionZoomWindow
-        },
-        //zoom auto
-        {
-            {{"zoomauto", QObject::tr("zoomauto", "zoom - auto")}},
-            {{"za", QObject::tr("za", "zoom - auto")}},
-            RS2::ActionZoomAuto
-        },
-        //zoom pan
-        {
-            {{"zoompan", QObject::tr("zoompan", "zoom - pan")}},
-            {{"zp", QObject::tr("zp", "zoom - pan")}},
-            RS2::ActionZoomPan
-        },
-        //zoom previous
-        {
-            {{"zoomprevious", QObject::tr("zoomprevious", "zoom - previous")}},
-            {{"zv", QObject::tr("zv", "zoom - previous")}},
-            RS2::ActionZoomPrevious
-        },
-        //kill actions
-        {
-            {{"kill", QObject::tr("kill", "kill all actions")}},
-            {{"k", QObject::tr("k", "kill all actions")}},
-            RS2::ActionEditKillAllActions
-        },
-        //undo cycle
-        {
-            {{"undo", QObject::tr("undo", "undo cycle")}},
-            {{"u", QObject::tr("u", "undo cycle")}},
-            RS2::ActionEditUndo
-        },
-        //redo cycle
-        {
-            {{"redo", QObject::tr("redo", "redo cycle")}},
-            {{"r", QObject::tr("r", "redo cycle")}},
-            RS2::ActionEditRedo
-        },
+        /* DIMENSION COMMANDS */
         //dimension aligned
         {
             {{"dimaligned", QObject::tr("dimaligned", "dimension - aligned")}},
@@ -531,30 +475,8 @@ RS_Commands::RS_Commands() {
             {},
             RS2::ActionToolRegenerateDimensions
         },
-        //snap restrictions
-        {
-            {{"restrictnothing", QObject::tr("restrictnothing", "restrict - nothing")}},
-            {{"rn", QObject::tr("rn", "restrict - nothing")}},
-            RS2::ActionRestrictNothing
-        },
-        //snap orthogonal
-        {
-            {{"restrictorthogonal", QObject::tr("restrictorthogonal", "restrict - orthogonal")}},
-            {{"rr", QObject::tr("rr", "restrict - orthogonal")}},
-            RS2::ActionRestrictOrthogonal
-        },
-        //snap horizontal
-        {
-            {{"restricthorizontal", QObject::tr("restricthorizontal", "restrict - horizontal")}},
-            {{"rh", QObject::tr("rh", "restrict - horizontal")}},
-            RS2::ActionRestrictHorizontal
-        },
-        //snap vertical
-        {
-            {{"restrictvertical", QObject::tr("restrictvertical", "restrict - vertical")}},
-            {{"rv", QObject::tr("rv", "restrict - vertical")}},
-            RS2::ActionRestrictVertical
-        },
+
+        /* MODIFY COMMANDS */
         //move
         {
             {{"move", QObject::tr("move", "modify - move (copy)")}},
@@ -644,6 +566,63 @@ RS_Commands::RS_Commands() {
             {{"xp", QObject::tr("xp", "explode block/polyline into entities")}},
             RS2::ActionBlocksExplode
         },
+        //Modify Attributes
+        {
+            {{"modifyattr", QObject::tr("modifyattr", "modify attribute")}},            
+            {{"attr", QObject::tr("attr", "modify attribute")},
+            {"ma", QObject::tr("ma", "modify attribute")}},
+            RS2::ActionModifyAttributes
+        },
+        //Modify Properties
+        {
+            {{"properties", QObject::tr("properties", "modify properties")}},
+            {{"prop", QObject::tr("prop", "modify properties")},
+             {"mp", QObject::tr("mp", "modify properties")}},
+            RS2::ActionModifyEntity
+        },
+
+        /* INFO COMMANDS */
+        //Distance Point to Point
+        {
+            {{"distance", QObject::tr("distance", "distance point to point")}},
+            {{"dist", QObject::tr("dist", "distance point to point")},
+            {"dpp", QObject::tr("dpp", "distance point to point")}},
+            RS2::ActionInfoDist
+		},
+        //Measure angle
+        {
+            {{"angle", QObject::tr("angle", "measure angle")}},
+            {{"ang", QObject::tr("ang", "measure angle")}},
+            RS2::ActionInfoAngle
+        },
+        //Measure area
+        {
+            {{"area", QObject::tr("area", "measure area")}},
+            {{"ar", QObject::tr("ar", "measure area")}},
+            RS2::ActionInfoArea
+        }
+
+        /* OTHER COMMANDS */
+        //draw hatch
+        {
+            {{"hatch", QObject::tr("hatch", "draw hatch")}},
+            {{"ha", QObject::tr("ha", "draw hatch")}},
+            RS2::ActionDrawHatchNoSelect
+        },
+        //draw mtext
+        {
+            {{"mtext", QObject::tr("mtext", "draw mtext")}},
+            {{"mtxt", QObject::tr("mtxt", "draw mtext")}},
+            RS2::ActionDrawMText
+        },
+        //draw text
+        {
+            {{"text", QObject::tr("text", "draw text")}},
+            {{"txt", QObject::tr("txt", "draw text")}},
+            RS2::ActionDrawText
+        },
+
+        /* SNAP COMMANDS */
         //snap exclusive
         {
             {{"snapexcl", QObject::tr("snapexcl", "snap - excl")}},
@@ -707,51 +686,84 @@ RS_Commands::RS_Commands() {
             {{"rz", QObject::tr("rz", "set relative zero position")}},
             RS2::ActionSetRelativeZero
         },
-        //Select all entities
+        //snap restrictions
         {
-            {{"selectall", QObject::tr("selectall", "Select all entities")}},
-            {{"sa", QObject::tr("sa", "Select all entities")}},
-            RS2::ActionSelectAll
+            {{"restrictnothing", QObject::tr("restrictnothing", "restrict - nothing")}},
+            {{"rn", QObject::tr("rn", "restrict - nothing")}},
+            RS2::ActionRestrictNothing
         },
-        //DeSelect all entities
+        //snap orthogonal
         {
-            {{"deselectall", QObject::tr("deselectall", "deselect all entities")}},
-            {{"tn", QObject::tr("tn", "deselect all entities")}},
-            RS2::ActionDeselectAll
+            {{"restrictorthogonal", QObject::tr("restrictorthogonal", "restrict - orthogonal")}},
+            {{"rr", QObject::tr("rr", "restrict - orthogonal")}},
+            RS2::ActionRestrictOrthogonal
         },
-        //Modify Attributes
+        //snap horizontal
         {
-            {{"modifyattr", QObject::tr("modifyattr", "modify attribute")}},            
-            {{"attr", QObject::tr("attr", "modify attribute")},
-            {"ma", QObject::tr("ma", "modify attribute")}},
-            RS2::ActionModifyAttributes
+            {{"restricthorizontal", QObject::tr("restricthorizontal", "restrict - horizontal")}},
+            {{"rh", QObject::tr("rh", "restrict - horizontal")}},
+            RS2::ActionRestrictHorizontal
         },
-        //Modify Properties
+        //snap vertical
         {
-            {{"properties", QObject::tr("properties", "modify properties")}},
-            {{"prop", QObject::tr("prop", "modify properties")},
-             {"mp", QObject::tr("mp", "modify properties")}},
-            RS2::ActionModifyEntity
+            {{"restrictvertical", QObject::tr("restrictvertical", "restrict - vertical")}},
+            {{"rv", QObject::tr("rv", "restrict - vertical")}},
+            RS2::ActionRestrictVertical
         },
-        //Distance Point to Point
+
+        /* EDIT COMMANDS */
+        //kill actions
         {
-            {{"distance", QObject::tr("distance", "distance point to point")}},
-            {{"dist", QObject::tr("dist", "distance point to point")},
-            {"dpp", QObject::tr("dpp", "distance point to point")}},
-            RS2::ActionInfoDist
-		},
-        //Measure angle
-        {
-            {{"angle", QObject::tr("angle", "measure angle")}},
-            {{"ang", QObject::tr("ang", "measure angle")}},
-            RS2::ActionInfoAngle
+            {{"kill", QObject::tr("kill", "kill all actions")}},
+            {{"k", QObject::tr("k", "kill all actions")}},
+            RS2::ActionEditKillAllActions
         },
-        //Measure area
+        //undo cycle
         {
-            {{"area", QObject::tr("area", "measure area")}},
-            {{"ar", QObject::tr("ar", "measure area")}},
-            RS2::ActionInfoArea
-        }
+            {{"undo", QObject::tr("undo", "undo cycle")}},
+            {{"u", QObject::tr("u", "undo cycle")}},
+            RS2::ActionEditUndo
+        },
+        //redo cycle
+        {
+            {{"redo", QObject::tr("redo", "redo cycle")}},
+            {{"r", QObject::tr("r", "redo cycle")}},
+            RS2::ActionEditRedo
+        },
+
+        /* VIEW COMMANDS */
+        //zoom redraw
+        {
+            {{"regen", QObject::tr("regen", "zoom - redraw")},
+             {"redraw", QObject::tr("redraw", "zoom - redraw")}},
+            {{"rg", QObject::tr("rg", "zoom - redraw")},
+            {"zr", QObject::tr("zr", "zoom - redraw")}},
+            RS2::ActionZoomRedraw
+        },
+        //zoom auto
+        {
+            {{"zoomauto", QObject::tr("zoomauto", "zoom - auto")}},
+            {{"za", QObject::tr("za", "zoom - auto")}},
+            RS2::ActionZoomAuto
+        },
+        //zoom previous
+        {
+            {{"zoomprevious", QObject::tr("zoomprevious", "zoom - previous")}},
+            {{"zv", QObject::tr("zv", "zoom - previous")}},
+            RS2::ActionZoomPrevious
+        },
+        //zoom window
+        {
+            {{"zoomwindow", QObject::tr("zoomwindow", "zoom - window")}},
+            {{"zw", QObject::tr("zw", "zoom - window")}},
+            RS2::ActionZoomWindow
+        },
+        //zoom pan
+        {
+            {{"zoompan", QObject::tr("zoompan", "zoom - pan")}},
+            {{"zp", QObject::tr("zp", "zoom - pan")}},
+            RS2::ActionZoomPan
+        },
     };
 
     for(auto const& c0: commandList){
