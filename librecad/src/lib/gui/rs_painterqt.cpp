@@ -515,8 +515,17 @@ RS_Pen RS_PainterQt::getPen() const{
 
 void RS_PainterQt::setPen(const RS_Pen& pen) {
     lpen = pen;
-    if (drawingMode==RS2::ModeBW) {
-        lpen.setColor(RS_Color(0,0,0));
+    switch (drawingMode) {
+    case RS2::ModeBW:
+        lpen.setColor( RS_Color( Qt::black));
+        break;
+
+    case RS2::ModeWB:
+        lpen.setColor( RS_Color( Qt::white));
+        break;
+
+    default:
+        break;
     }
     QPen p(lpen.getColor(), RS_Math::round(lpen.getScreenWidth()),
 		   rsToQtLineType(lpen.getLineType()));
@@ -526,20 +535,37 @@ void RS_PainterQt::setPen(const RS_Pen& pen) {
 }
 
 void RS_PainterQt::setPen(const RS_Color& color) {
-    if (drawingMode==RS2::ModeBW) {
-        lpen.setColor(RS_Color(0,0,0));
-        QPainter::setPen(RS_Color(0,0,0));
-    } else {
-        lpen.setColor(color);
-        QPainter::setPen(color);
+    switch (drawingMode) {
+    case RS2::ModeBW:
+        lpen.setColor( RS_Color( Qt::black));
+        QPainter::setPen( RS_Color( Qt::black));
+        break;
+
+    case RS2::ModeWB:
+        lpen.setColor( RS_Color( Qt::white));
+        QPainter::setPen( RS_Color( Qt::white));
+        break;
+
+    default:
+        lpen.setColor( color);
+        QPainter::setPen( color);
+        break;
     }
 }
 
 void RS_PainterQt::setPen(int r, int g, int b) {
-    if (drawingMode==RS2::ModeBW) {
-        setPen(QColor(0, 0, 0));
-    } else {
-        setPen(QColor(r, g, b));
+    switch (drawingMode) {
+    case RS2::ModeBW:
+        setPen( QColor( Qt::black));
+        break;
+
+    case RS2::ModeWB:
+        setPen( QColor( Qt::white));
+        break;
+
+    default:
+        setPen( QColor( r, g, b));
+        break;
     }
 }
 
@@ -549,10 +575,18 @@ void RS_PainterQt::disablePen() {
 }
 
 void RS_PainterQt::setBrush(const RS_Color& color) {
-    if (drawingMode==RS2::ModeBW) {
-        QPainter::setBrush(QColor(0, 0, 0));
-    } else {
-        QPainter::setBrush(color);
+    switch (drawingMode) {
+    case RS2::ModeBW:
+        QPainter::setBrush( QColor( Qt::black));
+        break;
+
+    case RS2::ModeWB:
+        QPainter::setBrush( QColor( Qt::white));
+        break;
+
+    default:
+        QPainter::setBrush( color);
+        break;
     }
 }
 

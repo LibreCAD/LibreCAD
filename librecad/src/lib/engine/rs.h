@@ -425,7 +425,8 @@ public:
         ModeFull,       /**< Draw everything always detailed (default) */
         ModeAuto,       /**< Draw details when reasonable */
         ModePreview,    /**< Draw only in black/white without styles */
-                ModeBW          /**< Black/white. Can be used for printing. */
+        ModeBW,         /**< Black/white. Can be used for printing. */
+        ModeWB,         /**< White/black, used for export */
     };
 
     /**

@@ -2139,20 +2139,17 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
     // set painter with buffer
     RS_PainterQt painter(buffer);
 
-    // black background:
     if (black) {
-//RLZ        painter.setBackgroundColor(RS_Color(0,0,0));
-		painter.setBackground(Qt::black);
+        painter.setBackground( Qt::black);
+        if (bw) {
+            painter.setDrawingMode( RS2::ModeWB);
+        }
     }
-    // white background:
     else {
-//RLZ        painter.setBackgroundColor(RS_Color(255,255,255));
-		painter.setBackground(Qt::white);
-    }
-
-    // black/white:
-    if (bw) {
-        painter.setDrawingMode(RS2::ModeBW);
+        painter.setBackground(Qt::white);
+        if (bw) {
+            painter.setDrawingMode( RS2::ModeBW);
+        }
     }
 
     painter.eraseRect(0,0, size.width(), size.height());
