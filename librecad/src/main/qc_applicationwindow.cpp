@@ -1655,9 +1655,9 @@ void QC_ApplicationWindow::slotFileNewTemplate() {
     QMdiSubWindow* old=activedMdiSubWindow;
     QRect geo;
     bool maximized=false;
-    if(old ) {//save old geometry
-        geo=activedMdiSubWindow->geometry();
-        maximized=activedMdiSubWindow->isMaximized();
+    if(old != nullptr ) {//save old geometry
+        geo=old->geometry();
+        maximized=old->isMaximized();
     }
     QC_MDIWindow* w =nullptr;
 	if (!slotFileNewHelper(fileName, w)) {
@@ -1787,9 +1787,9 @@ void QC_ApplicationWindow::
 
         qApp->processEvents(QEventLoop::AllEvents, 1000);
 
-        if(old) {//save old geometry
-            geo=activedMdiSubWindow->geometry();
-            maximized=activedMdiSubWindow->isMaximized();
+        if(old != nullptr) {//save old geometry
+            geo=old->geometry();
+            maximized=old->isMaximized();
         }
 
         // open the file in the new view:
