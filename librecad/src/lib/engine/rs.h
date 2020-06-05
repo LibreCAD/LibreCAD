@@ -255,6 +255,7 @@ public:
         ActionDrawHatch,
         ActionDrawHatchNoSelect,
         ActionDrawImage,
+
         ActionDrawLine,
         ActionDrawLineAngle,
         ActionDrawLineBisector,
@@ -266,7 +267,7 @@ public:
         ActionDrawLineParallel,
         ActionDrawLineParallelThrough,
         ActionDrawLinePolygonCenCor,
-        ActionDrawLinePolygonCenTan,//add by txmy
+        ActionDrawLinePolygonCenTan,   //add by txmy
         ActionDrawLinePolygonCorCor,
         ActionDrawLineRectangle,
         ActionDrawLineRelAngle,
@@ -276,7 +277,7 @@ public:
         ActionDrawMText,
         ActionDrawPoint,
         ActionDrawSpline,
-        ActionDrawSplinePoints, //interpolation spline
+        ActionDrawSplinePoints,   //interpolation spline
         ActionDrawPolyline,
         ActionDrawText,
 
@@ -328,6 +329,7 @@ public:
         ActionModifyOffset,
         ActionModifyOffsetNoSelect,
 
+        ActionSnapExcl,
         ActionSnapFree,
         ActionSnapGrid,
         ActionSnapEndpoint,
@@ -625,6 +627,7 @@ public:
      * Snapping modes
      */
     enum SnapMode {
+        SnapExcl,         /**< Exclusive snap mode */
         SnapFree,         /**< Free positioning */
         SnapGrid,         /**< Snap to grid points */
         SnapEndpoint,     /**< Snap to endpoints */

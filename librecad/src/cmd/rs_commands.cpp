@@ -78,37 +78,216 @@ RS_Commands* RS_Commands::instance() {
  */
 RS_Commands::RS_Commands() {
     std::initializer_list<LC_CommandItem> commandList={
+
+/* 
+        // draw entity command template
+        {
+// list all <full command, translation> pairs (category+targets, i.e "line2p")
+            {{"fullcmd", QObject::tr("fullcmd", "translationText")}},
+// list all <short command, translation> pairs (shortcategory[two characters or less]+targets, i.e "li2p", "l")
+            {{"shortcmd0", QObject::tr("shortcmd0", "translationText")},
+             {"shortcmdn", QObject::tr("shortcmdn", "translationText")}},
+//action type
+            RS2::ActionCommand
+        },
+*/
+
         //draw point
         {
-            //list all <full command, translation> pairs
             {{"point", QObject::tr("point", "draw point")}},
-
-            //list all <short command, translation> pairs
             {{"po", QObject::tr("po", "draw point")}},
-
-            //action type
             RS2::ActionDrawPoint
         },
-        //draw line
+
+        /* LINE COMMANDS */
+        // draw line
         {
             {{"line", QObject::tr("line", "draw line")}},
-            {{"li", QObject::tr("li", "draw line")},
+            {{"li2p", QObject::tr("li2p", "draw line")},
+             {"li", QObject::tr("li", "draw line")},
              {"l", QObject::tr("l", "draw line")}},
             RS2::ActionDrawLine
         },
-        //draw polyline
+        // draw line at angle - GSS
         {
-            {{"polyline", QObject::tr("polyline", "draw polyline")}},
-            {{"pl", QObject::tr("pl", "draw polyline")}},
-            RS2::ActionDrawPolyline
+            {{"lineangled", QObject::tr("lineangled", "angled line")}},
+            {{"la", QObject::tr("la", "angled line")}},
+            RS2::ActionDrawLineAngle
         },
-        //draw freehand line
+        // draw horizontal line
         {
-            {{"free", QObject::tr("free", "draw freehand line")}},
-            {{"fhl", QObject::tr("fhl", "draw freehand line")}},
-            RS2::ActionDrawLineFree
+            {{"horizontal", QObject::tr("horizontal", "horizontal line")}},
+            {{"hor", QObject::tr("hor", "horizontal line")}},
+            RS2::ActionDrawLineHorizontal
         },
-        //draw spline
+        // draw vertical line
+        {
+            {{"vertical", QObject::tr("vertical", "vertical line")}},
+            {{"ver", QObject::tr("ver", "vertical line")}},
+            RS2::ActionDrawLineVertical
+        },
+        // draw rectangle
+        {
+            {{"rectangle", QObject::tr("rectangle", "draw rectangle")}},
+            {{"rectang", QObject::tr("rectang", "draw rectangle")},
+             {"rect", QObject::tr("rect", "draw rectangle")},
+             {"rec", QObject::tr("rec", "draw rectangle")}},
+            RS2::ActionDrawLineRectangle
+        },
+        // draw parallel line
+        {
+            {{"offset", QObject::tr("offset", "create offset")},
+            {"parallel", QObject::tr("parallel", "create offset")}},
+            {{"o", QObject::tr("o", "create offset")},
+             {"pa", QObject::tr("pa", "create offset")}},
+            RS2::ActionDrawLineParallel
+        },
+        // draw parallel line through point
+        {
+            {{"ptp", QObject::tr("ptp", "parallel through point")}},
+            {{"pp", QObject::tr("pp", "parallel through point")}},
+            RS2::ActionDrawLineParallelThrough
+        },
+        // draw angle bisector
+        {
+            {{"bisect", QObject::tr("bisect", "angle bisector")}},
+            {{"bi", QObject::tr("bi", "angle bisector")}},
+            RS2::ActionDrawLineBisector
+        },
+        // draw line tangent to circle from point
+        {
+            {{"tangentpc", QObject::tr("tangentpc", "tangent point and circle")}},
+            {{"tanpc", QObject::tr("tanpc", "tangent point and circle")}},
+            RS2::ActionDrawLineTangent1
+        },
+        // draw line tangent to two existing circles - GSS
+        {
+            {{"tangentcc", QObject::tr("tangentcc", "tangent two circles")}},
+            {{"tancc", QObject::tr("tancc", "tangent two circles")}},
+            RS2::ActionDrawLineTangent2
+        },
+        // draw line tangent to an existing circle perpendicular to an existing line - GSS
+        {
+            {{"tangentoc", QObject::tr("tangentoc", "tangent line and circle")}},
+            {{"tanoc", QObject::tr("tanoc", "tangent line and circle")}},
+            RS2::ActionDrawLineOrthTan
+        },
+        // draw perpendicular line
+        {
+            {{"perp", QObject::tr("perp", "perpendicular line")}},
+            {{"ortho", QObject::tr("ortho", "perpendicular line")}},
+            RS2::ActionDrawLineOrthogonal
+        },
+        // draw line with relative angle - GSS
+        {
+            {{"linerel", QObject::tr("linerel", "relative line")}},
+            {{"lr", QObject::tr("lr", "relative line")}},
+            RS2::ActionDrawLineRelAngle
+        },
+        // draw polygon by centre & point - GSS
+        {
+            {{"polygoncencor", QObject::tr("polygoncencor", "polygon centre point")}},
+            {{"polycp", QObject::tr("polycp", "polygon centre point")},
+             {"pcp", QObject::tr("pcp", "polygon centre point")}},
+            RS2::ActionDrawLinePolygonCenCor
+        },
+        // draw polygon by centre & vertex - GSS
+        {
+            {{"polygoncentan", QObject::tr("polygoncentan", "polygon centre vertex")}},
+            {{"polyct", QObject::tr("polyct", "polygon centre vertex")}},
+            RS2::ActionDrawLinePolygonCenTan
+        },
+        // draw polygon by 2 vertices
+        {
+            {{"polygon2v", QObject::tr("polygon2v", "polygon by 2 vertices")}},
+            {{"poly2", QObject::tr("poly2", "polygon by 2 vertices")}},
+            RS2::ActionDrawLinePolygonCorCor
+        },
+
+        /* CIRCLE COMMANDS */
+        // draw circle
+        {
+            {{"circle", QObject::tr("circle", "draw circle")}},
+            {{"ci", QObject::tr("ci", "draw circle")}},
+            RS2::ActionDrawCircle
+        },        
+        // draw circle 2 point
+        {
+            {{"circle2", QObject::tr("circle2", "circle 2 points")}},
+            {{"c2p", QObject::tr("c2p", "circle 2 points")},
+             {"c2", QObject::tr("c2", "circle 2 points")}},
+            RS2::ActionDrawCircle2P
+        },
+        // draw circle 2 points and radius - GSS
+        {
+            {{"circle2pr", QObject::tr("circle2pr", "circle 2 points radius")}},
+            {{"c2pr", QObject::tr("c2pr", "circle 2 points radius")},
+             {"c2r", QObject::tr("c2r", "circle 2 points radius")}},
+            RS2::ActionDrawCircle2PR
+        },
+        // draw 3 point circle
+        {
+            {{"circle3", QObject::tr("circle3", "circle 3 points")}},
+            {{"c3p", QObject::tr("c3", "circle 3 points")},
+             {"c3", QObject::tr("c3", "circle 3 points")}},
+            RS2::ActionDrawCircle3P
+        },
+        // draw circle with centre point and radius - GSS
+        {
+            {{"circlepr", QObject::tr("circlecr", "circle point radius")}},
+            {{"ccr", QObject::tr("ccr", "circle point radius")},
+             {"cc", QObject::tr("cc", "circle point radius")}},
+            RS2::ActionDrawCircleCR
+        },
+
+        // draw circle Tangential to 2 Circles, 1 Point - GSS
+        {     
+            {{"circle2tan1p", QObject::tr("circle2tan1p", "circle 2 tangent point")}},
+            {{"c2tp", QObject::tr("c2tp", "circle 2 tangent point")}},
+            RS2::ActionDrawCircleTan2_1P
+        },
+        // draw circle Tangential, 2 Points - GSS
+        {
+            {{"circle1tan2p", QObject::tr("circle1tan2p", "circle tangent 2 points")}},
+            {{"ct2p", QObject::tr("ctan2p", "circle tangent 2 points")}},
+            RS2::ActionDrawCircleTan1_2P
+        },
+        //draw circle Tangential to 2 Circles, radius - GSS
+        {     
+            {{"circle2tanr", QObject::tr("circle2tan1p", "circle 2 tangent radius")}},
+            {{"c2tr", QObject::tr("c2tp", "circle 2 tangent radius")}},
+            RS2::ActionDrawCircleTan2
+        },
+
+        // draw circle tangent to 3 objects
+        {
+            {{"circletan3", QObject::tr("tan3", "circle tangent to 3")}},
+            {{"ct3", QObject::tr("ct3", "circle tangent to 3")},
+             {"tan3", QObject::tr("tan3", "circle tangent to 3")}},
+            RS2::ActionDrawCircleTan3
+        },
+
+        /* CURVE (ARC) COMMANDS */
+        // draw arc by centre point and radius - GSS
+        {
+            {{"arcpr", QObject::tr("arcpr", "arc point radius")}},
+			{{"apr", QObject::tr("apr", "arc point radius")}},
+            RS2::ActionDrawArc
+        },
+        // draw arc (3 points)
+        {
+            {{"arc", QObject::tr("arc", "draw arc")}},
+			{//{"ar", QObject::tr("ar", "draw arc")},
+            {"a", QObject::tr("a", "draw arc")}},
+            RS2::ActionDrawArc3P
+        },
+        // draw arc tangential - GSS
+        {
+            {{"arctan", QObject::tr("arctan", "arc tangent")}},
+			{{"at", QObject::tr("at", "arc tangent")}},
+            RS2::ActionDrawArcTangential
+        },
+        // draw spline
         {
             {{"spline", QObject::tr("spline", "draw spline")}},
             {{"spl", QObject::tr("spl", "draw spline")}},
@@ -120,108 +299,114 @@ RS_Commands::RS_Commands() {
             {{"stp", QObject::tr("stp", "spline through points")}},
             RS2::ActionDrawSplinePoints
         },
-        //draw parallel line
+        // draw ellipse arc by axis - GSS
         {
-            {{"offset", QObject::tr("offset", "create offset")},
-            {"parallel", QObject::tr("parallel", "create offset")}},
-            {{"o", QObject::tr("o", "create offset")},
-            {"pa", QObject::tr("pa", "create offset")}},
-            RS2::ActionDrawLineParallel
+            {{"arcell", QObject::tr("arcell", "arc ellipse")}},
+			{{"ae", QObject::tr("ae", "arc ellipse")}},
+            RS2::ActionDrawEllipseArcAxis
         },
-        //draw parallel line through point
+        //draw freehand line
         {
-            {{"ptp", QObject::tr("ptp", "parallel through point")}},
-            {{"pp", QObject::tr("pp", "parallel through point")}},
-            RS2::ActionDrawLineParallelThrough
+            {{"free", QObject::tr("free", "draw freehand line")}},
+            {{"fhl", QObject::tr("fhl", "draw freehand line")}},
+            RS2::ActionDrawLineFree
         },
-        //draw angle bisector
+
+        /* ELLIPSE COMMANDS */
+        // draw ellipse by axis - GSS
         {
-            {{"bisect", QObject::tr("bisect", "angle bisector")}},
-            {{"bi", QObject::tr("bi", "angle bisector")}},
-            RS2::ActionDrawLineBisector
+            {{"ellipseaxis", QObject::tr("ellipseaxis", "ellipse axis")}},
+            {{"elax", QObject::tr("elax", "ellipse axis")},
+            {"ea", QObject::tr("ea", "ellipse axis")}},
+            RS2::ActionDrawEllipseAxis
         },
-        //draw line tangent to circle from point
+        // draw ellipse by foci point - GSS
         {
-            {{"tangentpc", QObject::tr("tangentpc", "tangent point and circle")}},
-            {{"tanpc", QObject::tr("tanpc", "tangent point and circle")}},
-            RS2::ActionDrawLineTangent1
+            {{"ellipsefoci", QObject::tr("ellipsefoci", "ellipse foci")}},
+            {{"elf", QObject::tr("elf", "ellipse foci")},
+            {"ef", QObject::tr("ef", "ellipse foci")}},
+            RS2::ActionDrawEllipseFociPoint
         },
-        //draw perpendicular line
+        // draw ellipse by 4 points - GSS
         {
-            {{"perp", QObject::tr("perp", "perpendicular line")}},
-            {{"ortho", QObject::tr("ortho", "perpendicular line")}},
-            RS2::ActionDrawLineOrthogonal
+            {{"ellipse4p", QObject::tr("ellipse4p", "ellipse 4 point")}},
+            {{"el4p", QObject::tr("el4p", "ellipse 4 point")},
+            {"e4", QObject::tr("e4", "ellipse 4 point")}},
+            RS2::ActionDrawEllipse4Points
         },
-        //draw vertical line
+        // draw ellipse by center and 3 points - GSS
         {
-            {{"vertical", QObject::tr("vertical", "vertical line")}},
-            {{"ver", QObject::tr("ver", "vertical line")}},
-            RS2::ActionDrawLineVertical
+            {{"ellipsec3p", QObject::tr("ellipsec3p", "ellipse center 3 point")}},
+            {{"elc3p", QObject::tr("elc3p", "ellipse center 3 point")},
+             {"ec3p", QObject::tr("ec3p", "ellipse center 3 point")},
+             {"c3po", QObject::tr("c3po", "ellipse center 3 point")}},  // For the Star War nerds
+            RS2::ActionDrawEllipseCenter3Points
         },
-        //draw horizontal line
-        {
-            {{"horizontal", QObject::tr("horizontal", "horizontal line")}},
-            {{"hor", QObject::tr("hor", "horizontal line")}},
-            RS2::ActionDrawLineHorizontal
-        },
-        //draw rectangle
-        {
-            {{"rectangle", QObject::tr("rectangle", "draw rectangle")}},
-            {{"rectang", QObject::tr("rectang", "draw rectangle")},
-             {"rect", QObject::tr("rect", "draw rectangle")},
-            {"rec", QObject::tr("rec", "draw rectangle")}},
-            RS2::ActionDrawLineRectangle
-        },
-        //draw polygon by 2 vertices
-        {
-            {{"polygon2v", QObject::tr("polygon2v", "polygon by 2 vertices")}},
-            {{"poly2", QObject::tr("poly2", "polygon by 2 vertices")}},
-            RS2::ActionDrawLinePolygonCorCor
-        },
-        //draw arc
-        {
-            {{"arc", QObject::tr("arc", "draw arc")}},
-			{//{"ar", QObject::tr("ar", "draw arc")},
-            {"a", QObject::tr("a", "draw arc")}},
-            RS2::ActionDrawArc3P
-        },
-        //draw circle
-        {
-            {{"circle", QObject::tr("circle", "draw circle")}},
-            {{"ci", QObject::tr("ci", "draw circle")}},
-            RS2::ActionDrawCircle
-        },        
-        //draw 2 point circle
-        {
-            {{"circle2", QObject::tr("circle2", "circle 2 points")}},
-            {{"c2", QObject::tr("c2", "circle 2 points")}},
-            RS2::ActionDrawCircle2P
-        },
-        //draw 3 point circle
-        {
-            {{"circle3", QObject::tr("circle3", "circle 3 points")}},
-            {{"c3", QObject::tr("c3", "circle 3 points")}},
-            RS2::ActionDrawCircle3P
-        },
-	//draw circle with point and radius
-	{
-		{{"circlecr", QObject::tr("circlecr", "circle with center and radius")}},
-		{{"cc", QObject::tr("cc", "circle with center and radius")}},
-		RS2::ActionDrawCircleCR
-	},
-        //draw circle tangent to 3 objects
-        {
-            {{"tan3", QObject::tr("tan3", "circle tangent to 3")}},
-            {{"ct3", QObject::tr("ct3", "circle tangent to 3")}},
-            RS2::ActionDrawCircleTan3
-        },
-        //draw inscribed ellipse
+        // draw inscribed ellipse
         {
             {{"ellipseinscribed", QObject::tr("ellipseinscribed", "inscribed ellipse")}},
             {{"ei", QObject::tr("ei", "inscribed ellipse")},
             {"ie", QObject::tr("ie", "inscribed ellipse")}},
             RS2::ActionDrawEllipseInscribe
         },
+
+        /* POLYLINE COMMANDS */
+        // draw polyline
+        {
+            {{"polyline", QObject::tr("polyline", "draw polyline")}},
+            {{"pl", QObject::tr("pl", "draw polyline")}},
+            RS2::ActionDrawPolyline
+        },
+        // polyline add node
+        {
+            {{"pladdnode", QObject::tr("pladdnode", "pl add node")}},
+            {{"pladd", QObject::tr("pladd", "pl add node")}},
+            RS2::ActionPolylineAdd
+        },
+        // polyline append node
+        {
+            {{"plappnode", QObject::tr("plappnode", "pl append node")}},
+            {{"plapp", QObject::tr("plapp", "pl append node")}},
+            RS2::ActionPolylineAppend
+        },
+        // polyline delete node
+        {
+            {{"pldelnode", QObject::tr("pldelnode", "pl delete node")}},
+            {{"pldeln", QObject::tr("pldeln", "pl delete node")}},
+            RS2::ActionPolylineDel
+        },
+        // polyline delete between two nodes
+        {
+            {{"pldelbtwn", QObject::tr("pldelbtwn", "pl del between nodes")}},
+            {{"pldelseg", QObject::tr("pldelseg", "pl del between nodes")}},
+            RS2::ActionPolylineDelBetween
+        },
+        // polyline trim segments
+        {
+            {{"pltrimseg", QObject::tr("pltrimseg", "pl trim segments")}},
+            {{"pltr", QObject::tr("pltr", "pl trim segments")}},
+            RS2::ActionPolylineTrim
+        },
+        // equidistant polyline
+        {
+            {{"plparallel", QObject::tr("plparallel", "pl equidistant")}},
+            {{"plpa", QObject::tr("plpa", "pl equidistant")},
+             {"plo", QObject::tr("plo", "pl equidistant")}},
+            RS2::ActionPolylineEquidistant
+         },
+        // polyline from existing segments
+        {
+            {{"pljoin", QObject::tr("fullcmd", "pl join")}},
+            {{"join", QObject::tr("join", "pl join")}},
+            RS2::ActionPolylineSegment
+         },
+
+/*  -- START DEBUG
+*/ //-- END DEBUG
+
+/* SELECT COMMANDS */
+
+
         //draw hatch
         {
             {{"hatch", QObject::tr("hatch", "draw hatch")}},
@@ -315,25 +500,25 @@ RS_Commands::RS_Commands() {
              {"dr", QObject::tr("dr", "dimension - linear")}},
             RS2::ActionDimLinear
         },
-	//dimension angular
-	{
-		{{"dimangular", QObject::tr("dimangular", "dimension - angular")}},
-		{{"dan", QObject::tr("dan", "dimension - angular")}},
-		RS2::ActionDimAngular
-	},
-	//dimension radius
-	{
-		{{"dimradial", QObject::tr("dimradial", "dimension - radial")}},
-		{{"dimradius", QObject::tr("dimradius", "dimension - radius")}},
-		RS2::ActionDimRadial
-	},
-	//dimension diameter
-	{
-		{{"dimdiametric", QObject::tr("dimdiametric", "dimension - diametric")}},
-		{{"dimdiameter", QObject::tr("dimdiameter", "dimension - diametric")},
-		 {"dd", QObject::tr("dd", "dimension - diametric")}},
-		RS2::ActionDimDiametric
-	},
+        //dimension angular
+        {
+            {{"dimangular", QObject::tr("dimangular", "dimension - angular")}},
+            {{"dan", QObject::tr("dan", "dimension - angular")}},
+            RS2::ActionDimAngular
+        },
+        //dimension radius
+        {
+            {{"dimradial", QObject::tr("dimradial", "dimension - radial")}},
+            {{"dimradius", QObject::tr("dimradius", "dimension - radius")}},
+            RS2::ActionDimRadial
+        },
+        //dimension diameter
+        {
+            {{"dimdiametric", QObject::tr("dimdiametric", "dimension - diametric")}},
+            {{"dimdiameter", QObject::tr("dimdiameter", "dimension - diametric")},
+            {"dd", QObject::tr("dd", "dimension - diametric")}},
+            RS2::ActionDimDiametric
+        },
         //dimension leader
         {
             {{"dimleader", QObject::tr("dimleader", "dimension - leader")}},
@@ -458,6 +643,13 @@ RS_Commands::RS_Commands() {
             {{"explode", QObject::tr("explode", "explode block/polyline into entities")}},
             {{"xp", QObject::tr("xp", "explode block/polyline into entities")}},
             RS2::ActionBlocksExplode
+        },
+        //snap exclusive
+        {
+            {{"snapexcl", QObject::tr("snapexcl", "snap - excl")}},
+            {{"sx", QObject::tr("sx", "snap - excl")},
+            {"ex", QObject::tr("ex", "snap - excl")}},
+            RS2::ActionSnapExcl
         },
         //snap free
         {
