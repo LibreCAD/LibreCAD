@@ -164,6 +164,7 @@ public:
 
         ActionDefault,
 
+        /*  MENU ACTIONS */
         ActionFileNew,
         ActionFileNewTemplate,
         ActionFileOpen,
@@ -177,6 +178,9 @@ public:
         ActionFileExportMakerCam,
         ActionFileQuit,
 
+        ActionOptionsGeneral,
+        ActionOptionsDrawing,
+
         ActionEditKillAllActions,
         ActionEditUndo,
         ActionEditRedo,
@@ -185,11 +189,6 @@ public:
         ActionEditCopy,
         ActionEditCopyNoSelect,
         ActionEditPaste,
-        ActionOrderNoSelect,
-        ActionOrderBottom,
-        ActionOrderLower,
-        ActionOrderRaise,
-        ActionOrderTop,
 
         ActionViewStatusBar,
         ActionViewLayerList,
@@ -215,6 +214,7 @@ public:
         ActionZoomRedraw,
         ActionZoomPrevious,
 
+        /* SELECT ACTIONS */
         ActionSelect,
         ActionSelectSingle,
         ActionSelectContour,
@@ -229,10 +229,25 @@ public:
         ActionSelectDouble,
         ActionGetSelect,
 
-        ActionDrawArc,
-        ActionDrawArc3P,
-        ActionDrawArcParallel,
-        ActionDrawArcTangential,
+        /* DRAWING TOOL ACTIONS */
+        ActionDrawLine,
+        ActionDrawLineAngle,
+        ActionDrawLineHorizontal,
+        ActionDrawLineVertical,
+        ActionDrawLineRectangle,
+        ActionDrawLineParallelThrough,
+        ActionDrawLineParallel,
+        ActionDrawLineBisector,
+        ActionDrawLineHorVert,
+        ActionDrawLineOrthogonal,
+        ActionDrawLineOrthTan,
+        ActionDrawLinePolygonCenCor,
+        ActionDrawLinePolygonCenTan,   //add by txmy
+        ActionDrawLinePolygonCorCor,
+        ActionDrawLineRelAngle,
+        ActionDrawLineTangent1,
+        ActionDrawLineTangent2,
+
         ActionDrawCircle,
         ActionDrawCircle2P,
         ActionDrawCircle2PR,
@@ -245,6 +260,14 @@ public:
         ActionDrawCircleTan2,
         ActionDrawCircleTan3,
 
+        ActionDrawArc,
+        ActionDrawArc3P,
+        ActionDrawArcParallel,
+        ActionDrawArcTangential,
+        ActionDrawSpline,
+        ActionDrawSplinePoints,   //interpolation spline
+        ActionDrawLineFree,
+
         ActionDrawEllipseArcAxis,
         ActionDrawEllipseAxis,
         ActionDrawEllipseFociPoint,
@@ -252,35 +275,7 @@ public:
         ActionDrawEllipseCenter3Points,
         ActionDrawEllipseInscribe,
 
-        ActionDrawHatch,
-        ActionDrawHatchNoSelect,
-        ActionDrawImage,
-
-        ActionDrawLine,
-        ActionDrawLineAngle,
-        ActionDrawLineBisector,
-        ActionDrawLineFree,
-        ActionDrawLineHorVert,
-        ActionDrawLineHorizontal,
-        ActionDrawLineOrthogonal,
-        ActionDrawLineOrthTan,
-        ActionDrawLineParallel,
-        ActionDrawLineParallelThrough,
-        ActionDrawLinePolygonCenCor,
-        ActionDrawLinePolygonCenTan,   //add by txmy
-        ActionDrawLinePolygonCorCor,
-        ActionDrawLineRectangle,
-        ActionDrawLineRelAngle,
-        ActionDrawLineTangent1,
-        ActionDrawLineTangent2,
-        ActionDrawLineVertical,
-        ActionDrawMText,
-        ActionDrawPoint,
-        ActionDrawSpline,
-        ActionDrawSplinePoints,   //interpolation spline
         ActionDrawPolyline,
-        ActionDrawText,
-
         ActionPolylineAdd,
         ActionPolylineAppend,
         ActionPolylineDel,
@@ -297,6 +292,7 @@ public:
         ActionDimDiametric,
         ActionDimAngular,
         ActionDimLeader,
+        ActionToolRegenerateDimensions,
 
         ActionModifyAttributes,
         ActionModifyAttributesNoSelect,
@@ -328,6 +324,28 @@ public:
         ActionModifyRound,
         ActionModifyOffset,
         ActionModifyOffsetNoSelect,
+        ActionModifyExplodeText,
+        ActionModifyExplodeTextNoSelect,
+
+        ActionInfoInside,
+        ActionInfoDist,
+        ActionInfoDist2,
+        ActionInfoAngle,
+        ActionInfoTotalLength,
+        ActionInfoTotalLengthNoSelect,
+        ActionInfoArea,
+        ActionDrawText,
+        ActionDrawMText,
+        ActionDrawHatch,
+        ActionDrawPoint,
+        ActionDrawHatchNoSelect,
+        ActionDrawImage,
+
+        ActionOrderNoSelect,
+        ActionOrderBottom,
+        ActionOrderLower,
+        ActionOrderRaise,
+        ActionOrderTop,
 
         ActionSnapExcl,
         ActionSnapFree,
@@ -348,14 +366,6 @@ public:
         ActionSetRelativeZero,
         ActionLockRelativeZero,
         ActionUnlockRelativeZero,
-
-        ActionInfoInside,
-        ActionInfoDist,
-        ActionInfoDist2,
-        ActionInfoAngle,
-        ActionInfoTotalLength,
-        ActionInfoTotalLengthNoSelect,
-        ActionInfoArea,
 
         ActionLayersDefreezeAll,
         ActionLayersFreezeAll,
@@ -384,15 +394,7 @@ public:
         ActionBlocksExplodeNoSelect,
         ActionBlocksImport,
 
-        ActionModifyExplodeText,
-        ActionModifyExplodeTextNoSelect,
-
         ActionLibraryInsert,
-
-        ActionOptionsGeneral,
-        ActionOptionsDrawing,
-
-        ActionToolRegenerateDimensions,
 
         ActionScriptOpenIDE,
         ActionScriptRun,
