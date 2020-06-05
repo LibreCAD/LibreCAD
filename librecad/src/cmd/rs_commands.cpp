@@ -401,22 +401,29 @@ RS_Commands::RS_Commands() {
             RS2::ActionPolylineSegment
          },
  
-/*  -- START DEBUG
-*/ //-- END DEBUG
-
         /* SELECT COMMANDS */
-        //Select all entities
+        // Select all entities
         {
             {{"selectall", QObject::tr("selectall", "Select all entities")}},
             {{"sa", QObject::tr("sa", "Select all entities")}},
             RS2::ActionSelectAll
         },
-        //DeSelect all entities
+        // DeSelect all entities
         {
             {{"deselectall", QObject::tr("deselectall", "deselect all entities")}},
             {{"tn", QObject::tr("tn", "deselect all entities")}},
             RS2::ActionDeselectAll
         },
+        // Invert selection - GSS
+        {
+            {{"invertselect", QObject::tr("invertselect", "invert select")}},
+            {{"is", QObject::tr("is", "invert select")}},
+            RS2::ActionSelectInvert
+        },
+        /* Remaining select tools are mouse-specific. */
+
+/*  -- START DEBUG
+*/ //-- END DEBUG
 
         /* DIMENSION COMMANDS */
         //dimension aligned
