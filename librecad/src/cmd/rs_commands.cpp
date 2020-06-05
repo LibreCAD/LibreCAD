@@ -92,13 +92,6 @@ RS_Commands::RS_Commands() {
         },
 */
 
-        //draw point
-        {
-            {{"point", QObject::tr("point", "draw point")}},
-            {{"po", QObject::tr("po", "draw point")}},
-            RS2::ActionDrawPoint
-        },
-
         /* LINE COMMANDS */
         // draw line
         {
@@ -612,24 +605,28 @@ RS_Commands::RS_Commands() {
             RS2::ActionModifyDelete
 		},
 
-/*  -- START DEBUG
-*/ //-- END DEBUG
-
         /* INFO COMMANDS */
-        //Distance Point to Point
+        // Distance Point to Point
         {
             {{"distance", QObject::tr("distance", "distance point to point")}},
             {{"dist", QObject::tr("dist", "distance point to point")},
             {"dpp", QObject::tr("dpp", "distance point to point")}},
             RS2::ActionInfoDist
 		},
-        //Measure angle
+        // Distance Entity to Point
+        {
+            {{"distep", QObject::tr("distep", "distance entity to point")}},
+            {{"dep", QObject::tr("dist", "distance entity to point")},
+            {"", QObject::tr("dpp", "distance entity to point")}},
+            RS2::ActionInfoDist2
+		},
+        // Measure angle
         {
             {{"angle", QObject::tr("angle", "measure angle")}},
             {{"ang", QObject::tr("ang", "measure angle")}},
             RS2::ActionInfoAngle
         },
-        //Measure area
+        // Measure area
         {
             {{"area", QObject::tr("area", "measure area")}},
             {{"ar", QObject::tr("ar", "measure area")}},
@@ -637,27 +634,35 @@ RS_Commands::RS_Commands() {
         },
 
         /* OTHER COMMANDS */
-        //draw hatch
-        {
-            {{"hatch", QObject::tr("hatch", "draw hatch")}},
-            {{"ha", QObject::tr("ha", "draw hatch")}},
-            RS2::ActionDrawHatchNoSelect
-        },
-        //draw mtext
+        // draw mtext
         {
             {{"mtext", QObject::tr("mtext", "draw mtext")}},
             {{"mtxt", QObject::tr("mtxt", "draw mtext")}},
             RS2::ActionDrawMText
         },
-        //draw text
+        // draw text
         {
             {{"text", QObject::tr("text", "draw text")}},
             {{"txt", QObject::tr("txt", "draw text")}},
             RS2::ActionDrawText
         },
+        // draw hatch
+        {
+            {{"hatch", QObject::tr("hatch", "draw hatch")}},
+            {{"ha", QObject::tr("ha", "draw hatch")}},
+            RS2::ActionDrawHatchNoSelect
+        },
+        //draw point
+        {
+            {{"point", QObject::tr("point", "draw point")}},
+            {{"po", QObject::tr("po", "draw point")}},
+            RS2::ActionDrawPoint
+        },
 
+/*  -- START DEBUG
+*/ //-- END DEBUG
         /* SNAP COMMANDS */
-        //snap exclusive
+        // snap exclusive
         {
             {{"snapexcl", QObject::tr("snapexcl", "snap - excl")}},
             {{"sx", QObject::tr("sx", "snap - excl")},
@@ -745,6 +750,7 @@ RS_Commands::RS_Commands() {
             RS2::ActionRestrictVertical
         },
 
+        /* MENU COMMANDS */
         /* EDIT COMMANDS */
         //kill actions
         {
@@ -763,6 +769,14 @@ RS_Commands::RS_Commands() {
             {{"redo", QObject::tr("redo", "redo cycle")}},
             {{"r", QObject::tr("r", "redo cycle")}},
             RS2::ActionEditRedo
+        },
+
+        /* OPTIONS COMMANDS */
+        // Drawing Prefs - GSS
+        {
+            {{"drawpref", QObject::tr("drawpref", "drawing preferences")}},
+            {{"dp", QObject::tr("dp", "drawing preferences")}},
+            RS2::ActionOptionsDrawing
         },
 
         /* VIEW COMMANDS */
