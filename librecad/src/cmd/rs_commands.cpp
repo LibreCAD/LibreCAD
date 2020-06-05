@@ -421,44 +421,41 @@ RS_Commands::RS_Commands() {
              {"si", QObject::tr("si", "invert select")}},
             RS2::ActionSelectInvert
         },
-        /* Remaining select tools are mouse-specific. */
-
-/*  -- START DEBUG
-*/ //-- END DEBUG
+        /* Remaining select tools require the mouse - no point in adding commands. */
 
         /* DIMENSION COMMANDS */
-        //dimension aligned
+        // dimension aligned
         {
             {{"dimaligned", QObject::tr("dimaligned", "dimension - aligned")}},
             {{"da", QObject::tr("da", "dimension - aligned")}},
             RS2::ActionDimAligned
         },
-        //dimension linear
+        // dimension linear
         {
             {{"dimlinear", QObject::tr("dimlinear", "dimension - linear")}},
 			{{"dl", QObject::tr("dl", "dimension - linear")}},
             RS2::ActionDimLinear
         },
-        //dimension horizontal
+        // dimension horizontal
         {
             {{"dimhorizontal", QObject::tr("dimhorizontal", "dimension - horizontal")}},
             {{"dh", QObject::tr("dh", "dimension - horizontal")}},
             RS2::ActionDimLinearHor
         },
-        //dimension vertical
+        // dimension vertical
         {
             {{"dimvertical", QObject::tr("dimvertical", "dimension - vertical")}},
             {{"dv", QObject::tr("dv", "dimension - vertical")}},
             RS2::ActionDimLinearVer
         },
-        //dimension radius
+        // dimension radius
         {
             {{"dimradial", QObject::tr("dimradial", "dimension - radial")}},
             {{"dimradius", QObject::tr("dimradius", "dimension - radius")},
              {"dr", QObject::tr("dr", "dimension - linear")},
             RS2::ActionDimRadial
         },
-        //dimension diameter
+        // dimension diameter
         {
             {{"dimdiametric", QObject::tr("dimdiametric", "dimension - diametric")}},
             {{"dimdiameter", QObject::tr("dimdiameter", "dimension - diametric")},
@@ -471,13 +468,13 @@ RS_Commands::RS_Commands() {
             {{"dan", QObject::tr("dan", "dimension - angular")}},
             RS2::ActionDimAngular
         },
-        //dimension leader
+        // dimension leader
         {
             {{"dimleader", QObject::tr("dimleader", "dimension - leader")}},
             {{"ld", QObject::tr("ld", "dimension - leader")}},
             RS2::ActionDimLeader
         },
-        //dimension regenerate
+        // dimension regenerate
         {
             {{"dimregen", QObject::tr("dimregen", "dimension - regenerate")}},
             {},
@@ -485,26 +482,89 @@ RS_Commands::RS_Commands() {
         },
 
         /* MODIFY COMMANDS */
-        //move
+        // move
         {
             {{"move", QObject::tr("move", "modify - move (copy)")}},
             {{"mv", QObject::tr("mv", "modify - move (copy)")}},
             RS2::ActionModifyMove
         },
-        //bevel
+        // rotate
+        {
+            {{"rotate", QObject::tr("rotate", "modify - rotate")}},
+            {{"ro", QObject::tr("ro", "modify - rotate")}},
+            RS2::ActionModifyRotate
+        },
+        // scale
+        {
+            {{"scale", QObject::tr("scale", "modify - scale")}},
+            {{"sz", QObject::tr("sz", "modify - scale")}},
+            RS2::ActionModifyScale
+        },
+        // mirror
+        {
+            {{"mirror", QObject::tr("mirror", "modify -  mirror")}},
+            {{"mi", QObject::tr("mi", "modify -  mirror")}},
+            RS2::ActionModifyMirror
+        },
+        // move and rotate - GSS
+        {
+            {{"moverotate", QObject::tr("moverotate", "modify - move rotate")}},
+            {{"mvro", QObject::tr("mvro", "modify - move rotate")}
+             {"mr", QObject::tr("mr", "modify - move rotate"},
+            RS2::ActionModifyMoveRotate
+        },
+        // rotate two - GSS
+        {
+            {{"rotatetwo", QObject::tr("rotatetwo", "modify - rotate2")}},
+            {{"ro2", QObject::tr("ro2", "modify - rotate2")},
+             {"r2", QObject::tr("r2", "modify - rotate2")},
+            RS2::ActionModifyRotate2
+        },
+        // revert
+        {
+            {{"revert", QObject::tr("revert", "modify -  revert direction")}},
+            {{"rev", QObject::tr("rev", "modify -  revert direction")}},
+            RS2::ActionModifyRevertDirection
+        },
+        // trim
+        {
+            {{"trim", QObject::tr("trim", "modify - trim (extend)")}},
+            {{"tm", QObject::tr("tm", "modify - trim (extend)")}},
+            RS2::ActionModifyTrim
+        },
+        // trim2
+        {
+            {{"trim2", QObject::tr("trim2", "modify - multi trim (extend)")}},
+            {{"tm2", QObject::tr("tm2", "modify - multi trim (extend)")},
+             {"t2", QObject::tr("t2", "modify - multi trim (extend)")}},
+            RS2::ActionModifyTrim2
+        },
+        // lengthen
+        {
+            {{"lengthen", QObject::tr("lengthen", "modify - lengthen")}},
+            {{"le", QObject::tr("le", "modify - lengthen")}},
+            RS2::ActionModifyTrimAmount
+        },
+        // offset
+        {
+            {{"modoffset", QObject::tr("lengthen", "modify - offset")}},
+            {{"moff", QObject::tr("le", "modify - offset")}},
+            RS2::ActionModifyOffset
+        },
+        // bevel
         {
             {{"bevel", QObject::tr("bevel", "modify - bevel")}},
             {{"bev", QObject::tr("bev", "modify - bevel")},
             {"ch", QObject::tr("ch", "modify - bevel")}},
             RS2::ActionModifyBevel
         },
-        //fillet
+        // fillet
         {
             {{"fillet", QObject::tr("fillet", "modify - fillet")}},
             {{"fi", QObject::tr("fi", "modify - fillet")}},
             RS2::ActionModifyRound
         },
-        //divide
+        // divide
         {
             {{"divide", QObject::tr("divide", "modify - divide (cut)")},
              {"cut", QObject::tr("cut", "modify - divide (cut)")}},
@@ -512,82 +572,48 @@ RS_Commands::RS_Commands() {
             {"di", QObject::tr("di", "modify - divide (cut)")}},
             RS2::ActionModifyCut
         },
-        //mirror
-        {
-            {{"mirror", QObject::tr("mirror", "modify -  mirror")}},
-            {{"mi", QObject::tr("mi", "modify -  mirror")}},
-            RS2::ActionModifyMirror
-        },
-        //revert
-        {
-            {{"revert", QObject::tr("revert", "modify -  revert direction")}},
-            {{"rev", QObject::tr("rev", "modify -  revert direction")}},
-            RS2::ActionModifyRevertDirection
-        },
-        //rotate
-        {
-            {{"rotate", QObject::tr("rotate", "modify - rotate")}},
-            {{"ro", QObject::tr("ro", "modify - rotate")}},
-            RS2::ActionModifyRotate
-        },
-        //scale
-        {
-            {{"scale", QObject::tr("scale", "modify - scale")}},
-            {{"sz", QObject::tr("sz", "modify - scale")}},
-            RS2::ActionModifyScale
-        },
-        //trim
-        {
-            {{"trim", QObject::tr("trim", "modify - trim (extend)")}},
-            {{"tm", QObject::tr("tm", "modify - trim (extend)")}},
-            RS2::ActionModifyTrim
-        },
-        //trim2
-        {
-            {{"trim2", QObject::tr("trim2", "modify - multi trim (extend)")}},
-            {{"tm2", QObject::tr("tm2", "modify - multi trim (extend)")},
-             {"t2", QObject::tr("t2", "modify - multi trim (extend)")}},
-            RS2::ActionModifyTrim2
-        },
-        //lengthen
-        {
-            {{"lengthen", QObject::tr("lengthen", "modify - lengthen")}},
-            {{"le", QObject::tr("le", "modify - lengthen")}},
-            RS2::ActionModifyTrimAmount
-        },
-        //stretch
+        // stretch
         {
             {{"stretch", QObject::tr("stretch", "modify - stretch")}},
             {{"ss", QObject::tr("ss", "modify - stretch")}},
             RS2::ActionModifyStretch
         },
-        //delete
-        {
-            {{"delete", QObject::tr("delete", "modify - delete (erase)")}},
-            {{"er", QObject::tr("er", "modify - delete (erase)")},
-             {"del", QObject::tr("del", "modify - delete (erase)")}},
-            RS2::ActionModifyDelete
-		},
-        //explode
-        {
-            {{"explode", QObject::tr("explode", "explode block/polyline into entities")}},
-            {{"xp", QObject::tr("xp", "explode block/polyline into entities")}},
-            RS2::ActionBlocksExplode
-        },
-        //Modify Attributes
-        {
-            {{"modifyattr", QObject::tr("modifyattr", "modify attribute")}},            
-            {{"attr", QObject::tr("attr", "modify attribute")},
-            {"ma", QObject::tr("ma", "modify attribute")}},
-            RS2::ActionModifyAttributes
-        },
-        //Modify Properties
+        // Modify Properties
         {
             {{"properties", QObject::tr("properties", "modify properties")}},
             {{"prop", QObject::tr("prop", "modify properties")},
              {"mp", QObject::tr("mp", "modify properties")}},
             RS2::ActionModifyEntity
         },
+        // Modify Attributes
+        {
+            {{"modifyattr", QObject::tr("modifyattr", "modify attribute")}},            
+            {{"attr", QObject::tr("attr", "modify attribute")},
+            {"ma", QObject::tr("ma", "modify attribute")}},
+            RS2::ActionModifyAttributes
+        },
+        // explode text - GSS
+        {
+            {{"explodetext", QObject::tr("explodetext", "explode text strings")}},
+            {{"xpt", QObject::tr("xpt", "explode text strings")}},
+            RS2::ActionModifyExplodeText
+        },
+        // explode
+        {
+            {{"explode", QObject::tr("explode", "explode block/polyline into entities")}},
+            {{"xp", QObject::tr("xp", "explode block/polyline into entities")}},
+            RS2::ActionBlocksExplode
+        },
+        // delete
+        {
+            {{"delete", QObject::tr("delete", "modify - delete (erase)")}},
+            {{"er", QObject::tr("er", "modify - delete (erase)")},
+             {"del", QObject::tr("del", "modify - delete (erase)")}},
+            RS2::ActionModifyDelete
+		},
+
+/*  -- START DEBUG
+*/ //-- END DEBUG
 
         /* INFO COMMANDS */
         //Distance Point to Point
