@@ -417,7 +417,8 @@ RS_Commands::RS_Commands() {
         // Invert selection - GSS
         {
             {{"invertselect", QObject::tr("invertselect", "invert select")}},
-            {{"is", QObject::tr("is", "invert select")}},
+            {{"is", QObject::tr("is", "invert select")},
+             {"si", QObject::tr("si", "invert select")}},
             RS2::ActionSelectInvert
         },
         /* Remaining select tools are mouse-specific. */
@@ -432,6 +433,12 @@ RS_Commands::RS_Commands() {
             {{"da", QObject::tr("da", "dimension - aligned")}},
             RS2::ActionDimAligned
         },
+        //dimension linear
+        {
+            {{"dimlinear", QObject::tr("dimlinear", "dimension - linear")}},
+			{{"dl", QObject::tr("dl", "dimension - linear")}},
+            RS2::ActionDimLinear
+        },
         //dimension horizontal
         {
             {{"dimhorizontal", QObject::tr("dimhorizontal", "dimension - horizontal")}},
@@ -444,23 +451,11 @@ RS_Commands::RS_Commands() {
             {{"dv", QObject::tr("dv", "dimension - vertical")}},
             RS2::ActionDimLinearVer
         },
-        //dimension linear
-        {
-            {{"dimlinear", QObject::tr("dimlinear", "dimension - linear")}},
-			{{"dl", QObject::tr("dl", "dimension - linear")},
-             {"dr", QObject::tr("dr", "dimension - linear")}},
-            RS2::ActionDimLinear
-        },
-        //dimension angular
-        {
-            {{"dimangular", QObject::tr("dimangular", "dimension - angular")}},
-            {{"dan", QObject::tr("dan", "dimension - angular")}},
-            RS2::ActionDimAngular
-        },
         //dimension radius
         {
             {{"dimradial", QObject::tr("dimradial", "dimension - radial")}},
-            {{"dimradius", QObject::tr("dimradius", "dimension - radius")}},
+            {{"dimradius", QObject::tr("dimradius", "dimension - radius")},
+             {"dr", QObject::tr("dr", "dimension - linear")},
             RS2::ActionDimRadial
         },
         //dimension diameter
@@ -469,6 +464,12 @@ RS_Commands::RS_Commands() {
             {{"dimdiameter", QObject::tr("dimdiameter", "dimension - diametric")},
             {"dd", QObject::tr("dd", "dimension - diametric")}},
             RS2::ActionDimDiametric
+        },
+        //dimension angular
+        {
+            {{"dimangular", QObject::tr("dimangular", "dimension - angular")}},
+            {{"dan", QObject::tr("dan", "dimension - angular")}},
+            RS2::ActionDimAngular
         },
         //dimension leader
         {
@@ -607,7 +608,7 @@ RS_Commands::RS_Commands() {
             {{"area", QObject::tr("area", "measure area")}},
             {{"ar", QObject::tr("ar", "measure area")}},
             RS2::ActionInfoArea
-        }
+        },
 
         /* OTHER COMMANDS */
         //draw hatch
@@ -770,7 +771,7 @@ RS_Commands::RS_Commands() {
             {{"zoompan", QObject::tr("zoompan", "zoom - pan")}},
             {{"zp", QObject::tr("zp", "zoom - pan")}},
             RS2::ActionZoomPan
-        },
+        }
     };
 
     for(auto const& c0: commandList){
