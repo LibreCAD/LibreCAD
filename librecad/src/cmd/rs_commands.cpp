@@ -452,7 +452,7 @@ RS_Commands::RS_Commands() {
         {
             {{"dimradial", QObject::tr("dimradial", "dimension - radial")}},
             {{"dimradius", QObject::tr("dimradius", "dimension - radius")},
-             {"dr", QObject::tr("dr", "dimension - linear")},
+             {"dr", QObject::tr("dr", "dimension - linear")}},
             RS2::ActionDimRadial
         },
         // dimension diameter
@@ -509,15 +509,15 @@ RS_Commands::RS_Commands() {
         // move and rotate - GSS
         {
             {{"moverotate", QObject::tr("moverotate", "modify - move rotate")}},
-            {{"mvro", QObject::tr("mvro", "modify - move rotate")}
-             {"mr", QObject::tr("mr", "modify - move rotate"},
+            {{"mvro", QObject::tr("mvro", "modify - move rotate")},
+             {"mr", QObject::tr("mr", "modify - move rotate")}},
             RS2::ActionModifyMoveRotate
         },
         // rotate two - GSS
         {
             {{"rotatetwo", QObject::tr("rotatetwo", "modify - rotate2")}},
             {{"ro2", QObject::tr("ro2", "modify - rotate2")},
-             {"r2", QObject::tr("r2", "modify - rotate2")},
+             {"r2", QObject::tr("r2", "modify - rotate2")}},
             RS2::ActionModifyRotate2
         },
         // revert
