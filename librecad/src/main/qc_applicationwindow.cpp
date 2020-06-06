@@ -2582,7 +2582,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                 RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): create");
 
                 QC_MDIWindow* w = new QC_MDIWindow(parent->getDocument(), mdiAreaCAD, 0);
-                QMdiSubWindow* subWindow=mdiAreaCAD->addSubWindow(w);
+                mdiAreaCAD->addSubWindow(w);
                 parent->addChildWindow(w);
                 connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
                         this, SLOT(slotFileClosing(QC_MDIWindow*)));

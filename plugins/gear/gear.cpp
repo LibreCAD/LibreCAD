@@ -293,12 +293,12 @@ double evolute::find_common_phi_evo1(const double eps)
     double a = -radius2arg(cos_p_angle, alpha);
     double b = -radius2arg(1.0, alpha);
     double f_a = aux(a), f_b = aux(b);
-    double x = a, f_x = f_a;
+    double x = a;
 
     if (f_a > 0) do {
 
         x = (a*f_b - b*f_a) / (f_b - f_a);
-        f_x = aux(x);
+        double f_x = aux(x);
 
         if (fabs(x - a) < fabs(x - b)) {
             b = x; f_b = f_x;
