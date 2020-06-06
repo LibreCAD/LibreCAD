@@ -1931,7 +1931,7 @@ void QC_ApplicationWindow::slotFileSaveAs() {
 bool QC_ApplicationWindow::slotFileSaveAll()
 {
 	QC_MDIWindow* current = getMDIWindow();
-	bool result;
+    bool result {true};
 	for (auto w : window_list) {
 		if (w && w->getDocument()->isModified()) {
 			result = doSave(w);
