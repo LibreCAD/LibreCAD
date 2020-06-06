@@ -1121,10 +1121,10 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
 		menuItem->setCheckable(true);
 		menuItem->setChecked(RS_SETTINGS->readNumEntry("/SubWindowMode") == RS2::Maximized);
 
-		menuItem = menu->addAction(tr("&Cascade"), this, SLOT(slotCascade()));
-		menuItem = menu->addAction(tr("&Tile"), this, SLOT(slotTile()));
-		menuItem = menu->addAction(tr("Tile &Vertically"), this, SLOT(slotTileVertical()));
-		menuItem = menu->addAction(tr("Tile &Horizontally"), this, SLOT(slotTileHorizontal()));
+        menu->addAction(tr("&Cascade"), this, SLOT(slotCascade()));
+        menu->addAction(tr("&Tile"), this, SLOT(slotTile()));
+        menu->addAction(tr("Tile &Vertically"), this, SLOT(slotTileVertical()));
+        menu->addAction(tr("Tile &Horizontally"), this, SLOT(slotTileHorizontal()));
 	}
 	
 
