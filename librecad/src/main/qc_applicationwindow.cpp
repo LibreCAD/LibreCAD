@@ -1048,7 +1048,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
             ai->hideOptions();
         }
     }
-    if (m->getGraphicView()->getCurrentAction()) {
+    if (m && m->getGraphicView()->getCurrentAction()) {
         m->getGraphicView()->getCurrentAction()->showOptions();
     }
 
