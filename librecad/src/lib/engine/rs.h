@@ -347,7 +347,7 @@ public:
         ActionOrderRaise,
         ActionOrderTop,
 
-        ActionSnapExcl,
+        // ActionSnapExcl,
         ActionSnapFree,
         ActionSnapGrid,
         ActionSnapEndpoint,

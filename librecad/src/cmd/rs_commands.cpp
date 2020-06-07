@@ -350,44 +350,44 @@ RS_Commands::RS_Commands() {
             {{"pl", QObject::tr("pl", "draw polyline")}},
             RS2::ActionDrawPolyline
         },
-        // polyline add node
+        // polyline add node - GSS
         {
             {{"pladdnode", QObject::tr("pladdnode", "pl add node")}},
             {{"pladd", QObject::tr("pladd", "pl add node")}},
             RS2::ActionPolylineAdd
         },
-        // polyline append node
+        // polyline append node - GSS
         {
             {{"plappnode", QObject::tr("plappnode", "pl append node")}},
             {{"plapp", QObject::tr("plapp", "pl append node")}},
             RS2::ActionPolylineAppend
         },
-        // polyline delete node
+        // polyline delete node - GSS
         {
             {{"pldelnode", QObject::tr("pldelnode", "pl delete node")}},
             {{"pldeln", QObject::tr("pldeln", "pl delete node")}},
             RS2::ActionPolylineDel
         },
-        // polyline delete between two nodes
+        // polyline delete between two nodes - GSS
         {
             {{"pldelbtwn", QObject::tr("pldelbtwn", "pl del between nodes")}},
             {{"pldelseg", QObject::tr("pldelseg", "pl del between nodes")}},
             RS2::ActionPolylineDelBetween
         },
-        // polyline trim segments
+        // polyline trim segments - GSS
         {
             {{"pltrimseg", QObject::tr("pltrimseg", "pl trim segments")}},
             {{"pltr", QObject::tr("pltr", "pl trim segments")}},
             RS2::ActionPolylineTrim
         },
-        // equidistant polyline
+        // equidistant polyline - GSS
         {
             {{"plparallel", QObject::tr("plparallel", "pl equidistant")}},
             {{"plpa", QObject::tr("plpa", "pl equidistant")},
              {"plo", QObject::tr("plo", "pl equidistant")}},
             RS2::ActionPolylineEquidistant
          },
-        // polyline from existing segments
+        // polyline from existing segments - GSS
         {
             {{"pljoin", QObject::tr("pljoin", "pl join")}},
             {{"join", QObject::tr("join", "pl join")}},
