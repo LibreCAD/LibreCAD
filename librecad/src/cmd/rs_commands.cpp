@@ -221,13 +221,13 @@ RS_Commands::RS_Commands() {
         // draw 3 point circle
         {
             {{"circle3", QObject::tr("circle3", "circle 3 points")}},
-            {{"c3p", QObject::tr("c3", "circle 3 points")},
+            {{"c3p", QObject::tr("c3p", "circle 3 points")},
              {"c3", QObject::tr("c3", "circle 3 points")}},
             RS2::ActionDrawCircle3P
         },
         // draw circle with centre point and radius - GSS
         {
-            {{"circlepr", QObject::tr("circlecr", "circle point radius")}},
+            {{"circlecr", QObject::tr("circlecr", "circle point radius")}},
             {{"ccr", QObject::tr("ccr", "circle point radius")},
              {"cc", QObject::tr("cc", "circle point radius")}},
             RS2::ActionDrawCircleCR
@@ -242,19 +242,19 @@ RS_Commands::RS_Commands() {
         // draw circle Tangential, 2 Points - GSS
         {
             {{"circle1tan2p", QObject::tr("circle1tan2p", "circle tangent 2 points")}},
-            {{"ct2p", QObject::tr("ctan2p", "circle tangent 2 points")}},
+            {{"ct2p", QObject::tr("ct2p", "circle tangent 2 points")}},
             RS2::ActionDrawCircleTan1_2P
         },
         //draw circle Tangential to 2 Circles, radius - GSS
         {     
-            {{"circle2tanr", QObject::tr("circle2tan1p", "circle 2 tangent radius")}},
-            {{"c2tr", QObject::tr("c2tp", "circle 2 tangent radius")}},
+            {{"circle2tanr", QObject::tr("circle2tanr", "circle 2 tangent radius")}},
+            {{"c2tr", QObject::tr("c2tr", "circle 2 tangent radius")}},
             RS2::ActionDrawCircleTan2
         },
 
         // draw circle tangent to 3 objects
         {
-            {{"circletan3", QObject::tr("tan3", "circle tangent to 3")}},
+            {{"circletan3", QObject::tr("circletan3", "circle tangent to 3")}},
             {{"ct3", QObject::tr("ct3", "circle tangent to 3")},
              {"tan3", QObject::tr("tan3", "circle tangent to 3")}},
             RS2::ActionDrawCircleTan3
@@ -389,7 +389,7 @@ RS_Commands::RS_Commands() {
          },
         // polyline from existing segments
         {
-            {{"pljoin", QObject::tr("fullcmd", "pl join")}},
+            {{"pljoin", QObject::tr("pljoin", "pl join")}},
             {{"join", QObject::tr("join", "pl join")}},
             RS2::ActionPolylineSegment
          },
@@ -444,8 +444,8 @@ RS_Commands::RS_Commands() {
         // dimension radius
         {
             {{"dimradial", QObject::tr("dimradial", "dimension - radial")}},
-            {{"dimradius", QObject::tr("dimradius", "dimension - radius")},
-             {"dr", QObject::tr("dr", "dimension - linear")}},
+            {{"dimradius", QObject::tr("dimradius", "dimension - radial")},
+             {"dr", QObject::tr("dr", "dimension - radial")}},
             RS2::ActionDimRadial
         },
         // dimension diameter
@@ -540,8 +540,8 @@ RS_Commands::RS_Commands() {
         },
         // offset
         {
-            {{"modoffset", QObject::tr("lengthen", "modify - offset")}},
-            {{"moff", QObject::tr("le", "modify - offset")}},
+            {{"modoffset", QObject::tr("modoffset", "modify - offset")}},
+            {{"moff", QObject::tr("moff", "modify - offset")}},
             RS2::ActionModifyOffset
         },
         // bevel
@@ -616,8 +616,7 @@ RS_Commands::RS_Commands() {
         // Distance Entity to Point
         {
             {{"distep", QObject::tr("distep", "distance entity to point")}},
-            {{"dep", QObject::tr("dist", "distance entity to point")},
-            {"", QObject::tr("dpp", "distance entity to point")}},
+            {{"dep", QObject::tr("dep", "distance entity to point")}},
             RS2::ActionInfoDist2
 		},
         // Measure angle
@@ -659,16 +658,14 @@ RS_Commands::RS_Commands() {
             RS2::ActionDrawPoint
         },
 
-/*  -- START DEBUG
-*/ //-- END DEBUG
         /* SNAP COMMANDS */
-        // snap exclusive
+        /* snap exclusive - GSS
         {
             {{"snapexcl", QObject::tr("snapexcl", "snap - excl")}},
             {{"sx", QObject::tr("sx", "snap - excl")},
             {"ex", QObject::tr("ex", "snap - excl")}},
-            RS2::ActionSnapExcl
-        },
+            RS2::ActionSnapExcl  // Not present
+        }, */
         //snap free
         {
             {{"snapfree", QObject::tr("snapfree", "snap - free")}},
