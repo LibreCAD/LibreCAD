@@ -47,6 +47,14 @@ public:
         SetEndpoint      ///< Setting the endpoint
     };
 
+    /// History Actions
+    enum HistoryAction {
+        HA_SetStartpoint,   ///< Setting the startpoint
+        HA_SetEndpoint,     ///< Setting the endpoint
+        HA_Close,           ///< Close group of lines
+        HA_Next             ///< Start new group of lines
+    };
+
 public:
     RS_ActionDrawLine(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
@@ -69,13 +77,15 @@ public:
 
     void updateMouseButtonHints() override;
     void updateMouseCursor() override;
-    void addHistory(const RS_Vector& v);//add history after the current point
+    void addHistory(RS_ActionDrawLine::HistoryAction a, const RS_Vector& p, const RS_Vector& c, const int s);
 
     void close();
+    void next();
     void undo();
     void redo();
 
 protected:
+    struct History;
     struct Points;
     std::unique_ptr<Points> pPoints;
 };

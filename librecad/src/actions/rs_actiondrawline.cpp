@@ -26,6 +26,7 @@
 **********************************************************************/
 
 #include <cmath>
+#include <vector>
 
 #include <QAction>
 #include <QMouseEvent>
@@ -41,17 +42,58 @@
 #include "rs_preview.h"
 #include "rs_debug.h"
 
+struct RS_ActionDrawLine::History
+{
+    explicit History(RS_ActionDrawLine::HistoryAction a,
+                     const RS_Vector& p,
+                     const RS_Vector& c,
+                     const int s) :
+        histAct( a),
+        prevPt( p),
+        currPt( c),
+        startOffset( s) {}
+
+    explicit History(const History& h) :
+        histAct( h.histAct),
+        prevPt( h.prevPt),
+        currPt( h.currPt),
+        startOffset( h.startOffset) {}
+
+    History& operator=(const History& rho) {
+        histAct     = rho.histAct;
+        prevPt      = rho.prevPt;
+        currPt      = rho.currPt;
+        startOffset = rho.startOffset;
+        return *this;
+    }
+
+    RS_ActionDrawLine::HistoryAction    histAct;    ///< action to undo/redo
+    RS_Vector       prevPt;     ///< previous coordinate
+    RS_Vector       currPt;     ///< current coordinate
+    int             startOffset;///< offset to start point for close method
+};
+
 struct RS_ActionDrawLine::Points
 {
     /// Line data defined so far
     RS_LineData data;
-    /// Start point of the series of lines. Used for close function.
-    RS_Vector start;
-    /// Point history (for undo)
-    int historyIndex {-1};
+    /// Point history (undo/redo pointer)
+    int  historyIndex {-1};
+    /// start point offset for close method
+    int  startOffset {0};
 
-    std::vector<RS_Vector> history;
+    /// Point history (undo/redo buffer)
+    std::vector<History> history;
+
+    /// wrapper for historyIndex to avoid 'signedness' warnings where std::vector-methods expect size_t
+    /// also, offset helps in close method to find starting point
+    size_t index(const int offset = 0);
 };
+
+size_t RS_ActionDrawLine::Points::index(const int offset /*= 0*/)
+{
+    return static_cast<size_t>( std::max( 0, historyIndex + offset));
+}
 
 RS_ActionDrawLine::RS_ActionDrawLine(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView) :
@@ -60,8 +102,6 @@ RS_ActionDrawLine::RS_ActionDrawLine(RS_EntityContainer& container,
 {
     RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine");
     actionType=RS2::ActionDrawLine;
-    reset();
-    RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine: OK");
 }
 
 RS_ActionDrawLine::~RS_ActionDrawLine() = default;
@@ -70,7 +110,6 @@ void RS_ActionDrawLine::reset()
 {
     RS_DEBUG->print("RS_ActionDrawLine::reset");
     pPoints.reset(new Points{});
-    RS_DEBUG->print("RS_ActionDrawLine::reset: OK");
 }
 
 void RS_ActionDrawLine::init(int status)
@@ -80,7 +119,6 @@ void RS_ActionDrawLine::init(int status)
 
     reset();
     drawSnapper();
-    RS_DEBUG->print("RS_ActionDrawLine::init: OK");
 }
 
 void RS_ActionDrawLine::trigger()
@@ -100,7 +138,7 @@ void RS_ActionDrawLine::trigger()
     }
 
     graphicView->redraw(RS2::RedrawDrawing);
-    graphicView->moveRelativeZero(pPoints->history.at(pPoints->historyIndex));
+    graphicView->moveRelativeZero(pPoints->history.at(pPoints->index()).currPt);
     RS_DEBUG->print("RS_ActionDrawLine::trigger(): line added: %d",
                     line->getId());
 }
@@ -139,7 +177,16 @@ void RS_ActionDrawLine::mouseReleaseEvent(QMouseEvent* e)
     }
     else if (e->button() == Qt::RightButton) {
         deletePreview();
-        init(getStatus()-1);
+        switch (getStatus()) {
+        default:
+        case SetStartpoint:
+            init( getStatus() - 1);
+            break;
+
+        case SetEndpoint:
+            next();
+            break;
+        }
     }
 }
 
@@ -147,23 +194,23 @@ void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e)
 {
     RS_DEBUG->print("RS_ActionDrawLine::coordinateEvent");
 
-    if (e == NULL) {
-        RS_DEBUG->print("RS_ActionDrawLine::coordinateEvent: event was NULL");
+    if (nullptr == e) {
+        RS_DEBUG->print("RS_ActionDrawLine::coordinateEvent: event was nullptr");
         return;
     }
 
     RS_Vector mouse = e->getCoordinate();
     if (pPoints->data.startpoint.valid == false
-            && getStatus() == SetEndpoint) {
+        && getStatus() == SetEndpoint) {
         setStatus(SetStartpoint);
+        pPoints->startOffset = 0;
     }
 
     switch (getStatus()) {
     case SetStartpoint:
         pPoints->data.startpoint = mouse;
-        addHistory(mouse);
-
-        pPoints->start = pPoints->data.startpoint;
+        pPoints->startOffset = 0;
+        addHistory( HA_SetStartpoint, graphicView->getRelativeZero(), mouse, pPoints->startOffset);
         setStatus(SetEndpoint);
         graphicView->moveRelativeZero(mouse);
         updateMouseButtonHints();
@@ -173,7 +220,8 @@ void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e)
         if ((mouse-pPoints->data.startpoint).squared() > RS_TOLERANCE2) {
             // refuse zero length lines
             pPoints->data.endpoint = mouse;
-            addHistory(mouse);
+            ++pPoints->startOffset;
+            addHistory( HA_SetEndpoint, pPoints->data.startpoint, mouse, pPoints->startOffset);
             trigger();
             pPoints->data.startpoint = pPoints->data.endpoint;
             if (pPoints->history.size() >= 2) {
@@ -230,13 +278,13 @@ void RS_ActionDrawLine::commandEvent(RS_CommandEvent* e)
         e->accept();
         updateMouseButtonHints();
     }
-    // RS_DEBUG->print("RS_ActionDrawLine::commandEvent: OK");
+    RS_DEBUG->print("RS_ActionDrawLine::commandEvent: OK");
 }
 
 QStringList RS_ActionDrawLine::getAvailableCommands()
 {
     QStringList cmd;
-    if (pPoints->historyIndex + 1 < (int) pPoints->history.size()) {
+    if (pPoints->index() + 1 < pPoints->history.size()) {
         cmd += command("redo");
     }
 
@@ -247,7 +295,7 @@ QStringList RS_ActionDrawLine::getAvailableCommands()
         if (pPoints->historyIndex >= 1) {
             cmd += command("undo");
         }
-        if (pPoints->historyIndex >= 2) {
+        if (pPoints->startOffset >= 2) {
             cmd += command("close");
         }
         break;
@@ -268,10 +316,10 @@ void RS_ActionDrawLine::updateMouseButtonHints()
     case SetEndpoint: {
         QString msg = "";
 
-        if (pPoints->historyIndex >= 2) {
+        if (pPoints->startOffset >= 2) {
             msg += RS_COMMANDS->command("close");
         }
-        if (pPoints->historyIndex + 1 < (int) pPoints->history.size()) {
+        if (pPoints->index() + 1 < pPoints->history.size()) {
             if (msg.size() > 0) {
                 msg += "/";
             }
@@ -307,7 +355,6 @@ void RS_ActionDrawLine::showOptions()
     RS_ActionInterface::showOptions();
 
     RS_DIALOGFACTORY->requestOptions(this, true);
-    RS_DEBUG->print("RS_ActionDrawLine::showOptions: OK");
 }
 
 void RS_ActionDrawLine::hideOptions()
@@ -325,13 +372,18 @@ void RS_ActionDrawLine::updateMouseCursor()
 
 void RS_ActionDrawLine::close()
 {
-    if (pPoints->historyIndex > 2
-            && pPoints->start.valid
-            && (pPoints->data.startpoint - pPoints->start).squared() > RS_TOLERANCE2 ) {
-        pPoints->data.endpoint = pPoints->start;
-        addHistory(pPoints->data.endpoint);
-        trigger();
-        setStatus(SetStartpoint);
+    if (SetEndpoint != getStatus()) {
+        return;
+    }
+    if (1 < pPoints->startOffset
+        && 0 <= pPoints->historyIndex - pPoints->startOffset) {
+        History h(pPoints->history.at( pPoints->index( -pPoints->startOffset)));
+        if ((pPoints->data.startpoint - h.currPt).squared() > RS_TOLERANCE2) {
+            pPoints->data.endpoint = h.currPt;
+            addHistory( HA_Close, pPoints->data.startpoint, pPoints->data.endpoint, pPoints->startOffset);
+            trigger();
+            setStatus(SetStartpoint);
+        }
     }
     else {
         RS_DIALOGFACTORY->commandMessage(tr("Cannot close sequence of lines: "
@@ -339,50 +391,91 @@ void RS_ActionDrawLine::close()
     }
 }
 
-void RS_ActionDrawLine::addHistory(const RS_Vector& v)
+void RS_ActionDrawLine::next()
+{
+    addHistory( HA_Next, pPoints->data.startpoint, pPoints->data.endpoint, pPoints->startOffset);
+    setStatus(SetStartpoint);
+}
+
+void RS_ActionDrawLine::addHistory(RS_ActionDrawLine::HistoryAction a, const RS_Vector& p, const RS_Vector& c, const int s)
 {
     if (pPoints->historyIndex < -1) {
         pPoints->historyIndex = -1;
     }
 
     pPoints->history.erase(pPoints->history.begin() + pPoints->historyIndex + 1, pPoints->history.end());
-    pPoints->history.push_back(v);
-    pPoints->historyIndex=pPoints->history.size() - 1;
+    pPoints->history.push_back( History( a, p, c, s));
+    pPoints->historyIndex = static_cast<int>(pPoints->history.size() - 1);
 }
 
 void RS_ActionDrawLine::undo()
 {
-    if (pPoints->historyIndex > 0) {
-        pPoints->historyIndex--;
+    if (0 <= pPoints->historyIndex) {
+        History h( pPoints->history.at( pPoints->index()));
+
+        --pPoints->historyIndex;
         deletePreview();
-        graphicView->setCurrentAction( new RS_ActionEditUndo(true, *container, *graphicView));
-        pPoints->data.startpoint = pPoints->history.at(pPoints->historyIndex);
-        graphicView->moveRelativeZero(pPoints->data.startpoint);
+        graphicView->moveRelativeZero(h.prevPt);
+
+        switch (h.histAct) {
+        case HA_SetStartpoint:
+            setStatus(SetStartpoint);
+            break;
+
+        case HA_SetEndpoint:
+        case HA_Close:
+            graphicView->setCurrentAction( new RS_ActionEditUndo(true, *container, *graphicView));
+            pPoints->data.startpoint = h.prevPt;
+            setStatus(SetEndpoint);
+            break;
+
+        case HA_Next:
+            pPoints->data.startpoint = h.prevPt;
+            setStatus(SetEndpoint);
+            break;
+        }
+
+        // get index for close from new current history
+        h = pPoints->history.at( pPoints->index());
+        pPoints->startOffset = h.startOffset;
     }
     else {
         RS_DIALOGFACTORY->commandMessage(tr("Cannot undo: "
-                                            "Not enough entities defined yet."));
-    }
-    if (pPoints->historyIndex >= 1) {
-        setStatus(SetEndpoint);
-    }
-    else {
-        setStatus(SetStartpoint);
+                                            "Begin of history reached"));
     }
 }
 
 void RS_ActionDrawLine::redo()
 {
-    if ((int) pPoints->history.size() > pPoints->historyIndex + 1) {
-        pPoints->historyIndex++;
+    if (pPoints->history.size() > (pPoints->index() + 1)) {
+        ++pPoints->historyIndex;
+        History h( pPoints->history.at( pPoints->index()));
         deletePreview();
-        graphicView->setCurrentAction( new RS_ActionEditUndo(false, *container, *graphicView));
-        pPoints->data.startpoint = pPoints->history.at( pPoints->historyIndex);
-        graphicView->moveRelativeZero( pPoints->data.startpoint);
+        graphicView->moveRelativeZero(h.currPt);
+        pPoints->data.startpoint = h.currPt;
+        pPoints->startOffset = h.startOffset;
+        switch (h.histAct) {
+        case HA_SetStartpoint:
+            setStatus(SetEndpoint);
+            break;
+
+        case HA_SetEndpoint:
+            graphicView->setCurrentAction( new RS_ActionEditUndo(false, *container, *graphicView));
+            setStatus(SetEndpoint);
+            break;
+
+        case HA_Close:
+            graphicView->setCurrentAction( new RS_ActionEditUndo(false, *container, *graphicView));
+            setStatus(SetStartpoint);
+            break;
+
+        case HA_Next:
+            setStatus(SetStartpoint);
+            break;
+        }
     }
     else {
         RS_DIALOGFACTORY->commandMessage( tr("Cannot redo: "
-                                             "Not previous line segment defined."));
+                                             "End of history reached"));
     }
-    setStatus(SetEndpoint);
 }
