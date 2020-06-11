@@ -133,14 +133,14 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
     this->addAction(bLockRelZero);
     //restore snapMode from saved preferences
     RS_SETTINGS->beginGroup("/Snap");
-    setSnaps(RS_Snapper::intToSnapMode(RS_SETTINGS->readNumEntry("/SnapMode",0)));
+    setSnaps( RS_SnapMode::fromInt( RS_SETTINGS->readNumEntry( "/SnapMode", 0)));
     RS_SETTINGS->endGroup();
 }
 
 void QG_SnapToolBar::saveSnapMode()
 {
     //@write default snap mode from prefrences.
-    unsigned int snapFlags=RS_Snapper::snapModeToInt(getSnaps());
+    unsigned int snapFlags {RS_SnapMode::toInt( getSnaps())};
     RS_SETTINGS->beginGroup("/Snap");
     RS_SETTINGS->writeEntry("/SnapMode",QString::number(snapFlags));
     RS_SETTINGS->endGroup();

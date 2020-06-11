@@ -44,19 +44,41 @@ class RS_EntityContainer;
   * @author Kevin Cox
   */
 struct RS_SnapMode {
-	bool snapFree= false;     /// Whether to snap freely
-	bool snapGrid= false;     /// Whether to snap to grid or not.
-	bool snapEndpoint= false;     /// Whether to snap to endpoints or not.
-	bool snapMiddle= false;       /// Whether to snap to midpoints or not.
-	bool snapDistance= false;       /// Whether to snap to distance from endpoints or not.
-	bool snapCenter= false;       /// Whether to snap to centers or not.
-	bool snapIntersection= false; /// Whether to snap to intersections or not.
-    bool snapAngle=false;         /// Whether to snap along line under certain angle
-	bool snapOnEntity= false;     /// Whether to snap to entities or not.
+    /* SnapModes for RS_SnapMode to Int conversion and vice versa
+     *
+     * The conversion is only used for save/restore of active snap modes in application settings.
+     * Don't change existing mode order, because this will mess up settings on upgrades
+     *
+     * When adding new values, take care for correct implementation in \p toInt() and \p fromInt()
+     */
+    enum SnapModes {
+        SnapIntersection    = 1 << 0,
+        SnapOnEntity        = 1 << 1,
+        SnapCenter          = 1 << 2,
+        SnapDistance        = 1 << 3,
+        SnapMiddle          = 1 << 4,
+        SnapEndpoint        = 1 << 5,
+        SnapGrid            = 1 << 6,
+        SnapFree            = 1 << 7,
+        RestrictHorizontal  = 1 << 8,
+        RestrictVertical    = 1 << 9,
+        RestrictOrthogonal  = RestrictHorizontal | RestrictVertical,
+        SnapAngle           = 1 << 10
+    };
 
-	RS2::SnapRestriction restriction= RS2::RestrictNothing; /// The restriction on the free snap.
+    bool snapIntersection   {false}; //< Whether to snap to intersections or not.
+    bool snapOnEntity       {false}; //< Whether to snap to entities or not.
+    bool snapCenter         {false}; //< Whether to snap to centers or not.
+    bool snapDistance       {false}; //< Whether to snap to distance from endpoints or not.
+    bool snapMiddle         {false}; //< Whether to snap to midpoints or not.
+    bool snapEndpoint       {false}; //< Whether to snap to endpoints or not.
+    bool snapGrid           {false}; //< Whether to snap to grid or not.
+    bool snapFree           {false}; //< Whether to snap freely
+    bool snapAngle          {false}; //< Whether to snap along line under certain angle
 
-    double distance=5.; /// The distance to snap before defaulting to free snapping.
+    RS2::SnapRestriction restriction {RS2::RestrictNothing}; /// The restriction on the free snap.
+
+    double distance {5.0}; //< The distance to snap before defaulting to free snapping.
 
     /**
       * Disable all snapping.
@@ -65,8 +87,11 @@ struct RS_SnapMode {
       *
       * @returns A reference to itself.
       */
-	 RS_SnapMode const & clear(void);
-	 bool operator == (RS_SnapMode const& rhs) const;
+    RS_SnapMode const & clear(void);
+    bool operator == (RS_SnapMode const& rhs) const;
+
+    static uint toInt(const RS_SnapMode& s);    //< convert to int, to save settings
+    static RS_SnapMode fromInt(unsigned int);   //< convert from int, to restore settings
 };
 
 typedef std::initializer_list<RS2::EntityType> EntityTypeList;
@@ -175,8 +200,6 @@ public:
     virtual void showOptions();
 
     void drawSnapper();
-    static unsigned int snapModeToInt(const RS_SnapMode& s);
-    static RS_SnapMode intToSnapMode(unsigned int);
 
 protected:
     void deleteSnapper();
