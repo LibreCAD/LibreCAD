@@ -888,9 +888,12 @@ public:
         /* Removed ISO "B" and "C" series, C5E, Comm10E, DLE, (envelope sizes) */
 
         /* US "Office" */
-        Letter,   /* 216 x 279 mm	8.5 x 11.0 in */
-        Legal,    /* 216 x 356 mm	8.5 x 14.0 in */
-        Ledger,   /* 279 x 432 mm	11.0 x 17.0 in (Also "Tabloid".  Although, technically, "Ledger" is 17 x 11.) */
+        Letter,   /* 216 x 279 mm   8.5 x 11.0 in */
+        Legal,    /* 216 x 356 mm   8.5 x 14.0 in */
+        Tabloid,  /* 279 x 432 mm   11.0 x 17.0 in */
+        /* Ledger - technically, "Ledger" is 17 x 11 (according to the 
+           standards and in the qt library.  Using "ledger" will result in the
+           wrong page orientation when printing or exporting to PDF.) */
 
         /* ANSI */
         Ansi_A,   /* 216 x 279 mm	8.5 x 11.0 in */

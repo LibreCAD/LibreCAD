@@ -845,8 +845,7 @@ RS_Vector RS_Units::paperFormatToSize(RS2::PaperFormat p) {
         return RS_Vector(215.9, 279.4);
     case RS2::Legal:  /* 8.5 x 14.0 in */
         return RS_Vector(215.9, 355.6);
-
-    case RS2::Ledger:  /* 11.0 x 17.0 */
+    case RS2::Tabloid:  /* 11.0 x 17.0 */
         return RS_Vector(279.4, 431.8);
         break;
 
@@ -921,7 +920,7 @@ QString RS_Units::paperFormatToString(RS2::PaperFormat p) {
 
     case RS2::Letter: return QObject::tr( "Letter", "Paper format");
     case RS2::Legal:  return QObject::tr( "Legal",  "Paper format");
-    case RS2::Ledger: return QObject::tr( "Ledger", "Paper format");
+    case RS2::Tabloid: return QObject::tr( "Tabloid", "Paper format");
 
     case RS2::Ansi_A: return QObject::tr( "ANSI A", "Paper format");
     case RS2::Ansi_B: return QObject::tr( "ANSI B", "Paper format");
@@ -972,8 +971,8 @@ RS2::PaperFormat RS_Units::stringToPaperFormat(const QString& p) {
         return RS2::Letter;
     if (ls == QStringLiteral("legal")  || ls == QObject::tr("legal",  "Paper format").toLower())
         return RS2::Legal;
-    if (ls == QStringLiteral("ledger") || ls == QObject::tr("ledger", "Paper format").toLower())
-        return RS2::Ledger;
+    if (ls == QStringLiteral("tabloid") || ls == QObject::tr("tabloid", "Paper format").toLower())
+        return RS2::Tabloid;
 
     if (ls == QStringLiteral("ansi a") || ls == QObject::tr("ansi a", "Paper format").toLower())
         return RS2::Ansi_A;
