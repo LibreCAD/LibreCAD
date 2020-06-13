@@ -839,16 +839,7 @@ RS_Vector RS_Units::paperFormatToSize(RS2::PaperFormat p) {
     case RS2::A4:
         return RS_Vector(210.0, 297.0);
 
-    case RS2::B0:
-        return RS_Vector(1000.0, 1414.0);
-    case RS2::B1:
-        return RS_Vector(707.0, 1000.0);
-    case RS2::B2:
-        return RS_Vector(500.0, 707.0);
-    case RS2::B3:
-        return RS_Vector(353.0, 500.0);
-    case RS2::B4:
-        return RS_Vector(250.0, 353.0);
+    /* Removed ISO "B" and "C" series, C5E, Comm10E, DLE, (envelope sizes) */
 
     case RS2::Letter:  /* 8.5 x 11.0 in.  Sizes used for 'hard' conversion to metric */
         return RS_Vector(215.9, 279.4);
@@ -926,11 +917,7 @@ QString RS_Units::paperFormatToString(RS2::PaperFormat p) {
     case RS2::A3: return QObject::tr( "A3", "Paper format");
     case RS2::A4: return QObject::tr( "A4", "Paper format");
 
-    case RS2::B0: return QObject::tr( "B0", "Paper format");
-    case RS2::B1: return QObject::tr( "B1", "Paper format");
-    case RS2::B2: return QObject::tr( "B2", "Paper format");
-    case RS2::B3: return QObject::tr( "B3", "Paper format");
-    case RS2::B4: return QObject::tr( "B4", "Paper format");
+    /* Removed ISO "B" and "C" series, C5E, Comm10E, DLE, (envelope sizes) */
 
     case RS2::Letter: return QObject::tr( "Letter", "Paper format");
     case RS2::Legal:  return QObject::tr( "Legal",  "Paper format");
@@ -978,16 +965,8 @@ RS2::PaperFormat RS_Units::stringToPaperFormat(const QString& p) {
     if (ls == QStringLiteral("a4") || ls == QObject::tr("a4", "Paper format").toLower())
         return RS2::A4;
 
-    if (ls == QStringLiteral("b0") || ls == QObject::tr("b0", "Paper format").toLower())
-        return RS2::B0;
-    if (ls == QStringLiteral("b1") || ls == QObject::tr("b1", "Paper format").toLower())
-        return RS2::B1;
-    if (ls == QStringLiteral("b2") || ls == QObject::tr("b2", "Paper format").toLower())
-        return RS2::B2;
-    if (ls == QStringLiteral("b3") || ls == QObject::tr("b3", "Paper format").toLower())
-        return RS2::B3;
-    if (ls == QStringLiteral("b4") || ls == QObject::tr("b4", "Paper format").toLower())
-        return RS2::B4;
+    /* Removed ISO "B" and "C" series, C5E, Comm10E, DLE, (envelope sizes) */
+
 
     if (ls == QStringLiteral("letter") || ls == QObject::tr("letter", "Paper format").toLower())
         return RS2::Letter;
