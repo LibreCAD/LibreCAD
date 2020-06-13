@@ -885,12 +885,20 @@ public:
         A3,   /* 297 x 420 mm	11.7 x 16.5 in */
         A4,   /* 210 x 297 mm	8.3 x 11.7 in  */
 
-        /* Removed ISO "B" and "C" Series, C5E, Comm10E, DLE, (envelope sizes) */
+        /* ISO "B" Series */
+        B0,   /* 1000 x 1414 mm	39.4 x 55.7 in */
+        B1,   /* 707 x 1000 mm	27.8 x 39.4 in */
+        B2,   /* 500 x 707 mm	19.7 x 27.8 in */
+        B3,   /* 353 x 500 mm	13.9 x 19.7 in */
+        B4,   /* 250 x 353 mm	9.8 x 13.9 in */
 
-        /* Combined letter and tabloid (ledger) with respective ANSI sizes, dropped legal */
-        /* Ledger - technically, "Ledger" is 17 x 11 (according to the 
-           standards and in the qt library.  Using "ledger" will result in the
-           wrong page orientation when printing or exporting to PDF.) */
+        /* Removed "C" Series, C5E, Comm10E, DLE, (envelope sizes) */
+
+
+        /* US "Office" */
+        Letter,   /* 216 x 279 mm	8.5 x 11.0 in */
+        Legal,    /* 216 x 356 mm	8.5 x 14.0 in */
+        Ledger,   /* 279 x 432 mm	11.0 x 17.0 in (Also "Tabloid".  Although, technically, "Ledger" is 17 x 11.) */
 
         /* ANSI */
         Ansi_A,   /* 216 x 279 mm	8.5 x 11.0 in */
