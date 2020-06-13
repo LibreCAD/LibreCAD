@@ -841,7 +841,7 @@ RS_Vector RS_Units::paperFormatToSize(RS2::PaperFormat p) {
 
     /* Removed ISO "B" and "C" series, C5E, Comm10E, DLE, (envelope sizes) */
 
-    case RS2::Letter:  /* 8.5 x 11.0 in.  Sizes used for 'hard' conversion to metric */
+    case RS2::Letter:  /* 8.5 x 11.0 in.  Sizes shown are used for 'hard' conversion to metric */
         return RS_Vector(215.9, 279.4);
     case RS2::Legal:  /* 8.5 x 14.0 in */
         return RS_Vector(215.9, 355.6);

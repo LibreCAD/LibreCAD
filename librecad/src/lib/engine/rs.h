@@ -891,9 +891,11 @@ public:
         Letter,   /* 216 x 279 mm   8.5 x 11.0 in */
         Legal,    /* 216 x 356 mm   8.5 x 14.0 in */
         Tabloid,  /* 279 x 432 mm   11.0 x 17.0 in */
-        /* Ledger - technically, "Ledger" is 17 x 11 (according to the 
-           standards and in the qt library.  Using "ledger" will result in the
-           wrong page orientation when printing or exporting to PDF.) */
+        /* Tabloid = Ledger = ANSI B.  Although, technically, both ANSI B and  
+           Ledger are defined in the qt library as 431.8 mm x 279.4 mm / 17 
+           x 11", while Tabloid is 279 x 432 mm / 11.0 x 17.0 in .  Using either 
+           "Ledger" or "AnsiB" will result in the wrong page orientation when 
+           printing or exporting to PDF.) */
 
         /* ANSI */
         //Ansi_A,   /* 216 x 279 mm	8.5 x 11.0 in */
