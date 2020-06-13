@@ -33,15 +33,9 @@ QPrinter::PageSize LC_Printing::rsToQtPaperFormat(RS2::PaperFormat f)
     case RS2::A3: return QPrinter::A3;
     case RS2::A4: return QPrinter::A4;
 
-    case RS2::B0: return QPrinter::B0;
-    case RS2::B1: return QPrinter::B1;
-    case RS2::B2: return QPrinter::B2;
-    case RS2::B3: return QPrinter::B3;
-    case RS2::B4: return QPrinter::B4;
+    /* Removed ISO "B" and "C" Series, C5E, Comm10E, DLE, (envelope sizes) */
 
-    case RS2::Letter: return QPrinter::Letter;
-    case RS2::Legal:  return QPrinter::Legal;
-    case RS2::Ledger: return QPrinter::Ledger;
+    /* Combined letter and tabloid (ledger) with respective ANSI sizes, dropped legal */
 
     case RS2::Ansi_A: return QPrinter::AnsiA;
     case RS2::Ansi_B: return QPrinter::AnsiB;

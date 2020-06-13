@@ -839,25 +839,9 @@ RS_Vector RS_Units::paperFormatToSize(RS2::PaperFormat p) {
     case RS2::A4:
         return RS_Vector(210.0, 297.0);
 
-    case RS2::B0:
-        return RS_Vector(1000.0, 1414.0);
-    case RS2::B1:
-        return RS_Vector(707.0, 1000.0);
-    case RS2::B2:
-        return RS_Vector(500.0, 707.0);
-    case RS2::B3:
-        return RS_Vector(353.0, 500.0);
-    case RS2::B4:
-        return RS_Vector(250.0, 353.0);
+    /* Removed ISO "B" and "C" Series, C5E, Comm10E, DLE, (envelope sizes) */
 
-    case RS2::Letter:  /* 8.5 x 11.0 in.  Sizes used for 'hard' conversion to metric */
-        return RS_Vector(215.9, 279.4);
-    case RS2::Legal:  /* 8.5 x 14.0 in */
-        return RS_Vector(215.9, 355.6);
-
-    case RS2::Ledger:  /* 11.0 x 17.0 */
-        return RS_Vector(279.4, 431.8);
-        break;
+    /* Combined letter and tabloid (ledger) with respective ANSI sizes, dropped legal */
 
     case RS2::Ansi_A:  /* 8.5 x 11.0 in */
         return RS_Vector(215.9, 279.4);
