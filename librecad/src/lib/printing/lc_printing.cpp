@@ -39,8 +39,8 @@ QPrinter::PageSize LC_Printing::rsToQtPaperFormat(RS2::PaperFormat f)
     case RS2::Legal:  return QPrinter::Legal;
     case RS2::Tabloid: return QPrinter::Tabloid;
 
-    case RS2::Ansi_A: return QPrinter::AnsiA;
-    case RS2::Ansi_B: return QPrinter::AnsiB;
+    //case RS2::Ansi_A: return QPrinter::AnsiA;
+    //case RS2::Ansi_B: return QPrinter::AnsiB;
     case RS2::Ansi_C: return QPrinter::AnsiC;
     case RS2::Ansi_D: return QPrinter::AnsiD;
     case RS2::Ansi_E: return QPrinter::AnsiE;

@@ -896,8 +896,8 @@ public:
            wrong page orientation when printing or exporting to PDF.) */
 
         /* ANSI */
-        Ansi_A,   /* 216 x 279 mm	8.5 x 11.0 in */
-        Ansi_B,   /* 279 x 432 mm	11.0 x 17.0 in */
+        //Ansi_A,   /* 216 x 279 mm	8.5 x 11.0 in */
+        //Ansi_B,   /* 279 x 432 mm	11.0 x 17.0 in */
         Ansi_C,   /* 432 x 559 mm	17.0 x 22.0 in */
         Ansi_D,   /* 559 x 864 mm	22.0 x 34.0 in */
         Ansi_E,   /* 864 x 1118 mm	34.0 x 44.0 in */
