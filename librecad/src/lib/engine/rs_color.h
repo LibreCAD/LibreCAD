@@ -78,9 +78,16 @@ public:
             return c0;
     }
 
-    //These 2 methods are used for plugins
+    //These 3 methods are used for plugins
     int toIntColor(void) const;
     void fromIntColor(int co);
+    double colorDistance(const RS_Color& c) const;
+
+    /**
+     * Minimum acceptable distance between two colors before visibility
+     * enhancement is required. Determined empirically.
+     */
+    constexpr static double colorDistanceHumanPerceptiveLimitThreshold = 0.2;
 
     RS_Color& operator = (const RS_Color& c) {
         setRgb(c.red(), c.green(), c.blue());

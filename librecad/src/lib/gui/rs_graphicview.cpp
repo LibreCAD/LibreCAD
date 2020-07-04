@@ -49,6 +49,7 @@
 #include "rs_layer.h"
 #include "rs_math.h"
 #include "rs_debug.h"
+#include "rs_color.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -1023,8 +1024,11 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 		pen.setScreenWidth(0.0);
 	}
 
-	// prevent background color on background drawing:
-	if (pen.getColor().stripFlags()==background.stripFlags()) {
+	// prevent background color on background drawing
+	// and enhance visibility of black lines on dark backgrounds
+	if ((pen.getColor().stripFlags()==background.stripFlags()) ||
+	    ((pen.getColor().toQColor() == QColor(Qt::black)) &&
+	     (pen.getColor().colorDistance(background.stripFlags()) < RS_Color::colorDistanceHumanPerceptiveLimitThreshold))) {
 		pen.setColor(foreground);
 	}
 
