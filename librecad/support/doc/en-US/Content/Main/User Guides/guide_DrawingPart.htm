@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="User Guides">
+    <!-- saved from url=(0016)http://localhost -->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Drawing a part</title>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
+        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../Resources/Scripts/foundation.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/User Guides/guide_DrawingPart.htm">Open topic with navigation</a>
+        </p>
+        <div>
+            <h1 class="TOC4">Drawing a part walkthrough</h1>
+            <p>Like with any CAD program, LibreCAD offers various ways to approach drawing a part. This article covers a few different walkthrough examples on how to draw a part.</p>
+            <div class="Tip">
+                <ul>
+                    <li value="1">Check the <a href="../Getting Started/intro_overview.htm">tool status bar</a> above the drawing area and the Command window, in case you are prompted to set parameters.</li>
+                    <li value="2">You can use <a href="guide_layers.htm#Creating">construction layers</a> to create display only guide lines.</li>
+                    <li value="3">You can use <a href="guide_commandline.htm#RelativeCoordinates">relative coordinates</a> instead of absolute coordinates in the Command Line.</li>
+                </ul>
+            </div>
+            <h2>Using the Command Line</h2>
+            <p>You can draw a part using only the command line.</p>
+            <p>&#160;</p>
+            <div class="Example">
+                <p style="font-weight: bold;">Example 1:&#160;Notched rectangle using command prompts</p>
+                <ol>
+                    <li style="font-weight: normal;" value="1">Enter <span class="CodeSnippet">rect</span> into the Command Line (this is the shortcut for Rectangle).</li>
+                    <li style="font-weight: normal;" value="2">Enter coordinates for the first corner: <span class="CodeSnippet">0,0</span>.</li>
+                    <li style="font-weight: normal;" value="3">Enter coordinates for the second corner: <span class="CodeSnippet">6,3</span>.<p><img src="../../Images/drawingpartCmd1.png" /></p></li>
+                    <li style="font-weight: normal;" value="4">Enter <span class="CodeSnippet">cd</span> into the Command Line (this is the shortcut for the <b>Center, Diameter</b> circle tool).</li>
+                    <li style="font-weight: normal;" value="5">In the tool status bar, set the <b>Diameter</b> to <span class="CodeSnippet">1</span>.</li>
+                    <li style="font-weight: normal;" value="6">Enter coordinates for the first circle center point: <span class="CodeSnippet">0,1.5</span>.</li>
+                    <li style="font-weight: normal;" value="7">Since we are still in Center, Diameter circle mode, continue entering center points to draw circles on each side of the rectangle.<ul><li style="font-weight: normal;" value="1"><span class="CodeSnippet">3,3</span></li><li style="font-weight: normal;" value="2"><span class="CodeSnippet">6,1.5</span></li><li style="font-weight: normal;" value="3"><span class="CodeSnippet">3,0</span><p><img src="../../Images/drawingpartCmd2.png" /></p></li></ul></li>
+                    <li style="font-weight: normal;" value="8">Next, clean up unwanted geometry using the <b>Trim Excess</b> tool. Enter <span class="CodeSnippet">tx</span> into the Command Line.</li>
+                    <li style="font-weight: normal;" value="9">Click on the geometry you want to remove, which should be the halves of circles that are outside of the rectangle and the line segments that intersect the circles.</li>
+                </ol>
+                <p style="font-weight: normal;">
+                    <img src="../../Images/drawingpartCmd3.png" />
+                </p>
+                <p style="font-weight: normal;">&#160;</p>
+                <p style="font-weight: normal;">The drawing is complete.</p>
+            </div>
+            <h2>Using buttons and the drawing area</h2>
+            <p>Instead of entering commands in the Command Line, click on any of the drawing tools to begin drawing.</p>
+            <p>&#160;</p>
+            <p>The Command window will prompt you to enter coordinates, which you can enter by clicking in the drawing area to place a shape or point, or you can enter coordinates in the Command Line.</p>
+            <p>&#160;</p>
+            <div class="Example">
+                <p style="font-weight: bold;">Example 2:&#160;Notched rectangle using buttons and the drawing area</p>
+                <p style="font-weight: normal;">&#160;</p>
+                <ol>
+                    <li style="font-weight: normal;" value="1">Click the <b>Rectangle</b> ( <img src="../../Images/line_rectangle.svg" /> ) button, which is docked on the custom Hypertherm toolbar just above the drawing area.<ul><li style="font-weight: normal;" value="1">The Rectangle button is also available in <b>Tools</b> &gt;&#160;<b>Line</b> &gt; <b>Rectangle</b>.</li></ul></li>
+                    <li style="font-weight: normal;" value="2">Click the 0,0 location in the drawing area to place the first corner.<div class="Tip"><p style="font-weight: normal;">Tip:&#160;Turn on <b>Snap on Grid</b> for precise placement.</p></div></li>
+                    <li style="font-weight: normal;" value="3">Click the 6,3 location in the drawing area to place the second corner.<p><img src="../../Images/drawingpartCmd1.png" /></p></li>
+                    <li style="font-weight: normal;" value="4">Click the <b>Center, Diameter</b> ( <img src="../../Images/circle_center_diameter.svg" /> ) circle button, which is also docked in the Hypertherm toolbar.<ul><li style="font-weight: normal;" value="1">The Center, Diameter button available in <b>Tools</b> &gt;&#160;<b>Circle</b> &gt;&#160;<b>Center, Diameter</b>.</li></ul></li>
+                    <li style="font-weight: normal;" value="5">In the tool status bar, set the <b>Diameter</b> to <span class="CodeSnippet">1</span>. The diameter will already be 1 if you changed in Example 1.</li>
+                    <li style="font-weight: normal;" value="6">Turn off all snapping options in the snapping toolbar below the drawing area. Turn on the Snap to Middle option, which will allow us to snap the center of the circle to the middle of each line segment.</li>
+                    <li style="font-weight: normal;" value="7">Click near the center of each line segment of the rectangle to place a circle.<p><img src="../../Images/drawingpartCmd2.png" /></p></li>
+                    <li style="font-weight: normal;" value="8">Click the <b>Trim Excess</b> ( <img src="../../Images/trim_excess.svg" /> ) button, which is docked on the custom Hypertherm toolbar just above the drawing area. Click the extruding half-circles and line segments that go through each circle, to remove them from the drawing.<ul><li style="font-weight: normal;" value="1">The Trim Excess button is also available in <b>Tools</b> &gt;&#160;<b>Modify</b> &gt;&#160;<b>Trim Excess</b>.</li></ul></li>
+                </ol>
+                <p style="font-weight: normal;">
+                    <img src="../../Images/drawingpartCmd3.png" />
+                </p>
+                <p style="font-weight: normal;">The drawing is complete.</p>
+            </div>
+            <h2>Using the Offset tool</h2>
+            <p>The Offset tool in LibreCAD allows you to create drawings without needing to know coordinates. This method may be helpful if you are starting the drawing with dimension information but not necessarily coordinate information. This approach uses both the Command Line and the drawing area.</p>
+            <div class="Example">
+                <p style="font-weight: bold;">Example 3:&#160;Slotted rectangle using the Offset tool</p>
+                <ol>
+                    <li value="1">Turn on <b>Snap on grid</b> ( <img src="../../Images/snap_grid.svg" /> ). All other grid options can be disabled.</li>
+                    <li value="2">Use the <b>Two Points</b> line tool ( <img src="../../Images/line_2p.svg" /> ) to draw two lines perpendicular to each other:<p><img src="../../Images/drawingpartOffset1.png" /></p></li>
+                    <li value="3">Turn off <b>Snap on grid</b>.</li>
+                    <li value="4">Use the <b>Offset</b> tool by entering <span class="CodeSnippet">offset</span> in the Command Line.<ol><li value="1">In the Offset tool status bar, set the <b>Distance</b> to <span class="CodeSnippet">10</span> and <b>Number</b> to <span class="CodeSnippet">1</span>. </li><li value="2">Then, click near the bottom line so that an offset line is drawn above it, and click near the left line so that an offset line is drawn on the right side. This will result in a square drawing.<p><img src="../../Images/drawingpartOffset2_298x213.png" style="width: 298;height: 213;" /></p></li><li value="3">While still in Offset mode, change the <b>Distance</b> to <span class="CodeSnippet">5</span> to draw a horizontal and vertical center guide line for the interior cutout.<p><img src="../../Images/drawingpartOffset3.png" /></p></li><li value="4">Change the <b>Distance</b> to <span class="CodeSnippet">2.5</span> to draw one additional horizontal line above and below the middle horizontal line.</li><li value="5">Change the <b>Distance</b> to <span class="CodeSnippet">1.5</span> to draw one additional vertical line to the left and to the right of the middle vertical line. The lines from steps 4 and 5 are guides for drawing slots.</li><p><img src="../../Images/drawingpartOffset4.png" /></p><li value="6">Turn on <b>Snap Intersection</b> ( <img src="../../Images/snap_intersection.svg" /> ).</li><li value="7">Click the <b>2 Points</b> circle ( <img src="../../Images/circle_2_points.svg" /> ) button.<ol><li value="1">Click the intersection of the horizontal line that is second from the top and the second vertical line from the right, to draw the first circle.</li><li value="2">Click the intersection of the horizontal line that is fourth from the top and the second vertical line from the right, to draw the second circle.</li><p><img src="../../Images/drawingpartOffset5_372x272.png" style="width: 372;height: 272;" /></p></ol></li><li value="8">Next, start to clean up unwanted geometry using the <b>Trim Excess</b> tool. Enter <span class="CodeSnippet">tx</span> into the Command Line, then click geometry you want to remove.<p><img src="../../Images/drawingpartOffset6_377x267.png" style="width: 377;height: 267;" /></p></li><li value="9">Continue using Trim Excess to clean up the remainder of guide lines to finish the part.</li></ol></li>
+                </ol>
+                <p>
+                    <img src="../../Images/drawingpartOffset7.png" />
+                </p>
+                <p>&#160;</p>
+                <p>The drawing is complete.</p>
+            </div>
+            <div class="TopicFooter" data-mc-conditions="Primary.ExcludeFromPDF">
+                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
+                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Getting Started/intro_newDrawing.htm">Creating a new drawing</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_drawing_attributes.htm">Modifying Attributes of an entity</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_drawing_properties.htm">Modifying Properties of an entity</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_command_multi.htm">Multi-command input with variable files</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_drawingsetup.htm">Setting up a drawing</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_entities.htm">Using Entities</a>
+                        </li>
+                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_commandline.htm">Using the Command Line</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 6pt;margin-top: 0;margin-bottom: 0;">&#160;</p>
+    </body>
+</html>

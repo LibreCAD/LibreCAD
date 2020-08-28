@@ -38,7 +38,7 @@
         <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/User Guides/guide_commandline.htm">Open topic with navigation</a>
         </p>
         <div>
-            <h1 class="TOC4"><a name="kanchor61"></a>Using the Command Line</h1>
+            <h1 class="TOC4"><a name="kanchor62"></a>Using the Command Line</h1>
             <p>The Command Line offers users an alternative to using the mouse to select tools and draw. Using the keyboard to select tools and enter coordinates can provide greater speed and accuracy when creating drawings. </p>
             <p>&#160;</p>
             <p>The command line provides other useful features not available using the mouse:</p>
@@ -69,7 +69,6 @@
             <div class="Tip">
                 <ul>
                     <li value="1">The Spacebar may be selected instead of the Enter key when <b>Options</b>&#160;&gt;&#160;<b>Application Preferences</b> &gt;&#160;<b>Defaults</b> &gt;&#160;<b>Evaluate commands when Spacebar is pressed</b> is enabled (which is the default).</li>
-                    <li value="2">In addition to the comma separated coordinates, coordinates can also be entered using the numeric keypad using the X..Y format. For example, entering <span class="CodeSnippet">10..20</span> is equivalent to <span class="CodeSnippet">@10,20</span>. Using the two decimals may be faster than typing the comma.</li>
                 </ul>
                 <ul>
                     <li value="1">The Keycode Mode permits the use of two letter commands and eliminates the need to select Enter after typing the command.</li>
@@ -78,6 +77,22 @@
                     <li value="1">Typing <span class="CodeSnippet">c</span> or <span class="CodeSnippet">u</span> followed by Enter can be used instead of typing <span class="CodeSnippet">close</span> or <span class="CodeSnippet">undo</span>.</li>
                 </ul>
             </div>
+            <p class="Procedure"><a name="RelativeCoordinates"></a>Using relative coordinates</p>
+            <p>Instead of using absolute coordinates that always use 0,0 as the reference point, you can use relative coordinates. In LibreCAD, relative coordinates set the reference point to the last location you clicked when drawing an entity. Additionally, you can <a href="../Snapping/snapping.htm">set or lock the relative zero</a> to a given location.</p>
+            <p>The relative zero location is indicated by a small red crosshair ( <img src="../../Images/RelativeZeroIndicator.png" /> ).</p>
+            <p>&#160;</p>
+            <ol>
+                <li value="1">Establish a relative zero location in the drawing, by drawing an entity or by manually setting the relative zero point (see <a href="../Snapping/snapping.htm">Snapping</a>).</li>
+                <li value="2">Enter a drawing mode, such as the draw rectangle mode, that you will use to reference the relative zero point.</li>
+                <li value="3">Follow prompts in the Command Line, but type an at-symbol (@) before  coordinate values. For example, <span class="CodeSnippet">@1,1</span>.</li>
+            </ol>
+            <div class="Tip">
+                <p>You can use two periods instead of the at-symbol when entering relative coordinates. For example, <span class="CodeSnippet">1..1</span>.</p>
+            </div>
+            <p>
+                <img src="../../Images/RelativeCoordinateEx.png" />
+            </p>
+            <p style="font-style: italic;">The relative zero point is at the center of the circle, after drawing a Circle by Diameter.</p>
             <p class="Procedure">Using the Command Line Calculator</p>
             <ol>
                 <li value="1">Enter <span class="CodeSnippet">Cal</span> in the Command Line to enable Calculator Mode.</li>
