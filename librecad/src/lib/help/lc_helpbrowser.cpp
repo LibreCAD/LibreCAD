@@ -223,12 +223,9 @@ void LC_HelpBrowser::populateHelpTopics()
 
 void LC_HelpBrowser::sendTelemetryData(const QString & topic)
 {
-	LC_Telemetry t;
-	t.BeginSession();
-	t.AddProperty("Help Topic ID", topic);
-	t.TrackEvent("Help Clicked");
-	t.RemoveProperty("Help Topic ID");
-	t.EndSession();
+	LC_TELEMETRY->AddProperty("Help Topic ID", topic);
+	LC_TELEMETRY->TrackEvent("Help Clicked");
+	LC_TELEMETRY->RemoveProperty("Help Topic ID");
 }
 
 QString LC_HelpBrowser::getLocaleName()

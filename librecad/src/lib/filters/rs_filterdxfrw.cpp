@@ -1403,10 +1403,7 @@ bool RS_FilterDXFRW::importDWG(const QString & fileName)
 	QFileInfo exe = QFileInfo(dir, "ProNestUtils.dll");
 	if (exe.exists()) {
 		if (convertDWG(QFile::encodeName(file))) {
-			LC_Telemetry t;
-			t.BeginSession();
-			t.TrackEvent("Convert DWG to DXF");
-			t.EndSession();
+			LC_TELEMETRY->TrackEvent("Convert DWG to DXF");
 			this->file = getTempFileName(file);
 			importDXF(this->file);
 		}

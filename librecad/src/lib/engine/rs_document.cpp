@@ -68,29 +68,26 @@ void RS_Document::endUndoCycle()
 	 if (!telemetryData.shxFontsConverted && !telemetryData.ttfFontsConverted && !telemetryData.fontConversionClicks
 		 && !telemetryData.textShapingClicks && !telemetryData.trimExcessClicks)
 		 return;
-	 LC_Telemetry t;
-	 t.BeginSession();
 	 if (telemetryData.fontConversionClicks)
-		 t.AddProperty("Fonts Manually Converted", QString("%1").arg(telemetryData.fontConversionClicks));
+		 LC_TELEMETRY->AddProperty("Fonts Manually Converted", QString("%1").arg(telemetryData.fontConversionClicks));
 	 if (telemetryData.shxFontsConverted)
-		t.AddProperty("SHX Fonts Converted", QString("%1").arg(telemetryData.shxFontsConverted));
+		 LC_TELEMETRY->AddProperty("SHX Fonts Converted", QString("%1").arg(telemetryData.shxFontsConverted));
 	 if (telemetryData.textShapingClicks)
-		 t.AddProperty("Shape Text Clicks", QString("%1").arg(telemetryData.textShapingClicks));
+		 LC_TELEMETRY->AddProperty("Shape Text Clicks", QString("%1").arg(telemetryData.textShapingClicks));
 	 if (telemetryData.trimExcessClicks)
-		 t.AddProperty("Trim Excess Clicks", QString("%1").arg(telemetryData.trimExcessClicks));
+		 LC_TELEMETRY->AddProperty("Trim Excess Clicks", QString("%1").arg(telemetryData.trimExcessClicks));
 	 if (telemetryData.ttfFontsConverted)
-		 t.AddProperty("TTF Fonts Converted", QString("%1").arg(telemetryData.ttfFontsConverted));
-	 t.TrackEvent("File Save");
-	 t.RemoveProperty("Fonts Manually Converted");
-	 t.RemoveProperty("SHX Fonts Converted");
-	 t.RemoveProperty("Shape Text Clicks");
-	 t.RemoveProperty("Trim Excess Clicks");
-	 t.RemoveProperty("TTF Fonts Converted");
+		 LC_TELEMETRY->AddProperty("TTF Fonts Converted", QString("%1").arg(telemetryData.ttfFontsConverted));
+	 LC_TELEMETRY->TrackEvent("File Save");
+	 LC_TELEMETRY->RemoveProperty("Fonts Manually Converted");
+	 LC_TELEMETRY->RemoveProperty("SHX Fonts Converted");
+	 LC_TELEMETRY->RemoveProperty("Shape Text Clicks");
+	 LC_TELEMETRY->RemoveProperty("Trim Excess Clicks");
+	 LC_TELEMETRY->RemoveProperty("TTF Fonts Converted");
 	 telemetryData.fontConversionClicks = 0;
 	 telemetryData.shxFontsConverted = 0;
 	 telemetryData.textShapingClicks = 0;
 	 telemetryData.trimExcessClicks = 0;
 	 telemetryData.ttfFontsConverted = 0;
-	 t.EndSession();
  }
 

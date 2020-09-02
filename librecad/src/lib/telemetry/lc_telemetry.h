@@ -32,11 +32,12 @@ typedef void(*TrackPageViewFunc)(const wchar_t*);
 typedef void(*AddPropertyFunc)(const wchar_t*, const wchar_t*);
 typedef void(*RemovePropertyFunc)(const wchar_t*);
 
+#define LC_TELEMETRY LC_Telemetry::instance()
+
 class LC_Telemetry
 {
 public:
-    LC_Telemetry();
-	virtual ~LC_Telemetry();
+	static LC_Telemetry* instance();
 
 	void BeginSession();
 	void EndSession();
@@ -54,6 +55,13 @@ private:
 	QString GetProductVersion();
 	QString GetAssociate();
 	QString GetLocale();
+
+private:
+	LC_Telemetry();
+	virtual ~LC_Telemetry();
+	LC_Telemetry(LC_Telemetry const&) = delete;
+	LC_Telemetry& operator = (LC_Telemetry const&) = delete;
+	static LC_Telemetry* uniqueInstance;
 
 private:
 	QLibrary *library;

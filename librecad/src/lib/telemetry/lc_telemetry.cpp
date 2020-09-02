@@ -31,6 +31,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "winreg.h"
 #include "winerror.h"
 
+LC_Telemetry* LC_Telemetry::uniqueInstance = nullptr;
+
+LC_Telemetry * LC_Telemetry::instance()
+{
+	if (!uniqueInstance) {
+		uniqueInstance = new LC_Telemetry();
+	}
+	return uniqueInstance;
+}
+
 LC_Telemetry::LC_Telemetry() : open(false)
 {
 	QString path = QFileInfo(QDir::cleanPath(QCoreApplication::applicationDirPath()), "ProNestUtils.dll").filePath();

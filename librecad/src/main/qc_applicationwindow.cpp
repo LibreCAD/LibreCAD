@@ -387,11 +387,10 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 	setMouseTracking(true);
 	LC_HELP->setActionHandler(actionHandler);
 	installEventFilter(LC_HELP);
-	LC_Telemetry t;
-	t.BeginSession();
-	t.TrackEvent("ApplicationStarted");
-	t.EndSession();
 
+	LC_TELEMETRY->BeginSession();
+	LC_TELEMETRY->TrackEvent("ApplicationStarted");
+	
     statusBar()->showMessage(qApp->applicationName() + " Ready", 2000);
 
 	RS_SETTINGS->beginGroup("/Appearance");
@@ -750,6 +749,8 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
                     "deleting dialog factory");
 
+	LC_TELEMETRY->EndSession();
+
     delete dialogFactory;
 
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
@@ -867,10 +868,7 @@ void QC_ApplicationWindow::slotExportToProNest()
 		if (Export) {
 			QApplication::setOverrideCursor(Qt::WaitCursor);
 			Export(QDir::toNativeSeparators(QFileInfo(w->getDocument()->getFilename()).filePath()).toStdWString().c_str());
-			LC_Telemetry t;
-			t.BeginSession();
-			t.TrackEvent("ExportToProNest");
-			t.EndSession();
+			LC_TELEMETRY->TrackEvent("ExportToProNest");
 			QApplication::restoreOverrideCursor();
 		}
 	}
