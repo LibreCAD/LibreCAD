@@ -50,6 +50,8 @@ public:
 
 	void setActionHandler(QG_ActionHandler* h);
 
+	QString getLocaleName();
+
 protected:
 	bool eventFilter(QObject *obj, QEvent *event) override;
 
@@ -60,7 +62,8 @@ private:
 	LC_HelpBrowser& operator = (LC_HelpBrowser const&) = delete;
 	void initLocale();
 	void populateHelpTopics();
-	QString getLocaleName();
+	void sendTelemetryData(const QString& topic);
+	
 	QString getRelativeFilePath(const QString& fileName);
 	QString getDefaultBrowser();
 

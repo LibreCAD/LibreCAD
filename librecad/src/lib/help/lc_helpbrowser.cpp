@@ -19,6 +19,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_helpbrowser.h"
+#include "lc_telemetry.h"
 #include "qc_applicationwindow.h"
 #include <QDir>
 #include <QCoreApplication>
@@ -62,7 +63,7 @@ void LC_HelpBrowser::showHelpTopic(const QString & topic)
 		QStringList args;
 		args << topicMap[topic].toString();
 		proc.start(getDefaultBrowser(), args);
-	}
+		sendTelemetryData(topic);	}
 }
 
 void LC_HelpBrowser::showHelpTopic(QObject * w)
@@ -218,6 +219,16 @@ void LC_HelpBrowser::populateHelpTopics()
 	topicMap["topic_prefs_applicationpreferences"] = base.resolved(QUrl(getRelativeFilePath("Default.htm#Main/Preferences and Customizations/prefs_applicationpreferences.htm")));
 	topicMap["topic_guide_convertFonts"] = base.resolved(QUrl(getRelativeFilePath("Default.htm#Main/User Guides/guide_convertFonts.htm")));
 	topicMap["topic_intro_exportProNest"] = base.resolved(QUrl(getRelativeFilePath("Default.htm#Main/Getting Started/intro_exportProNest.htm")));
+}
+
+void LC_HelpBrowser::sendTelemetryData(const QString & topic)
+{
+	LC_Telemetry t;
+	t.BeginSession();
+	t.AddProperty("Help Topic ID", topic);
+	t.TrackEvent("Help Clicked");
+	t.RemoveProperty("Help Topic ID");
+	t.EndSession();
 }
 
 QString LC_HelpBrowser::getLocaleName()

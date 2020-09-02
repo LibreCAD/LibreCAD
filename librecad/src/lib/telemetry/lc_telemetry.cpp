@@ -19,6 +19,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "lc_telemetry.h"
+#include "lc_helpbrowser.h"
 #include <QFileinfo>
 #include <QDir>
 #include <QCoreApplication>
@@ -53,6 +54,7 @@ void LC_Telemetry::BeginSession()
 		);
 		addProperty(L"Associate", GetAssociate().toStdWString().c_str());
 		addProperty(L"Locale", GetLocale().toStdWString().c_str());
+		addProperty(L"Locale Name", LC_HELP->getLocaleName().toStdWString().c_str());
 		open = true;
 	}
 }
