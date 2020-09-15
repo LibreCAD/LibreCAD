@@ -205,7 +205,7 @@ RS_Commands::RS_Commands() {
 	//draw circle with point and radius
 	{
 		{{"circlecr", QObject::tr("circlecr", "circle with center and radius")}},
-		{{"cc", QObject::tr("cc", "circle with center and radius")}},
+		{{"cr", QObject::tr("cr", "circle with center and radius")}},
 		RS2::ActionDrawCircleCR
 	},
         //draw circle tangent to 3 objects
