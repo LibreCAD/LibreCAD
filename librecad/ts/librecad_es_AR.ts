@@ -24,15 +24,15 @@
     </message>
     <message>
       <source>Layer:</source>
-      <translation type="unfinished">Layer:</translation>
+      <translation>Capa:</translation>
     </message>
     <message>
       <source>Geometry</source>
-      <translation type="unfinished">Geometry</translation>
+      <translation>Geometría</translation>
     </message>
     <message>
       <source>Closed</source>
-      <translation type="unfinished">Closed</translation>
+      <translation>Cerrada</translation>
     </message>
     <message>
       <source>Spline Points</source>
@@ -65,15 +65,15 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Cancelar</translation>
     </message>
     <message>
       <source>Specify second point</source>
-      <translation type="unfinished">Specify second point</translation>
+      <translation>Especificar segundo punto</translation>
     </message>
     <message>
       <source>Back</source>
-      <translation type="unfinished">Back</translation>
+      <translation>Atrás</translation>
     </message>
     <message>
       <source>Select circle center</source>
@@ -175,7 +175,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Parallel</source>
-      <translation type="unfinished">&amp;Parallel</translation>
+      <translation>&amp;Paralela</translation>
     </message>
     <message>
       <source>Parallel through point</source>
@@ -183,7 +183,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Rectangle</source>
-      <translation type="unfinished">Rectangle</translation>
+      <translation>Rectángulo</translation>
     </message>
     <message>
       <source>Bisector</source>
@@ -203,11 +203,11 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Orthogonal</source>
-      <translation type="unfinished">Orthogonal</translation>
+      <translation>Ortogonal</translation>
     </message>
     <message>
       <source>Relative angle</source>
-      <translation type="unfinished">Relative angle</translation>
+      <translation>Ángulo relativo</translation>
     </message>
     <message>
       <source>Pol&amp;ygon (Cen,Cor)</source>
