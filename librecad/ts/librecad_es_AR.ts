@@ -40,7 +40,7 @@
     </message>
     <message>
       <source>Control Points</source>
-      <translation type="unfinished">Control Points</translation>
+      <translation>Puntos de Control</translation>
     </message>
     <message>
       <source>Points on Spline</source>
@@ -61,7 +61,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Specify first point</source>
-      <translation type="unfinished">Specify first point</translation>
+      <translation>Especificar primer punto</translation>
     </message>
     <message>
       <source>Cancel</source>
@@ -77,7 +77,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Select circle center</source>
-      <translation type="unfinished">Select circle center</translation>
+      <translation>Seleccionar centro del círculo</translation>
     </message>
   </context>
   <context>
@@ -88,7 +88,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>Cancelar</translation>
     </message>
     <message>
       <source>Specify next control point or [%1]</source>
@@ -96,7 +96,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Back</source>
-      <translation type="unfinished">Back</translation>
+      <translation>Atrás</translation>
     </message>
     <message>
       <source>Specify next control point</source>
@@ -151,7 +151,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Points</source>
-      <translation type="unfinished">&amp;Points</translation>
+      <translation>&amp;Puntos</translation>
     </message>
     <message>
       <source>&amp;2 Points</source>
@@ -167,7 +167,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Vertical</source>
-      <translation type="unfinished">Vertical</translation>
+      <translation>Vertical</translation>
     </message>
     <message>
       <source>&amp;Freehand Line</source>
@@ -219,31 +219,31 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Center, &amp;Point</source>
-      <translation type="unfinished">Center, &amp;Point</translation>
+      <translation>Centro, &amp;Punto</translation>
     </message>
     <message>
       <source>Center, &amp;Radius</source>
-      <translation type="unfinished">Center, &amp;Radius</translation>
+      <translation>Centro, &amp;Radio</translation>
     </message>
     <message>
       <source>2 Points</source>
-      <translation type="unfinished">2 Points</translation>
+      <translation>2 Puntos</translation>
     </message>
     <message>
       <source>2 Points, Radius</source>
-      <translation type="unfinished">2 Points, Radius</translation>
+      <translation>2 Puntos, Radio</translation>
     </message>
     <message>
       <source>3 Points</source>
-      <translation type="unfinished">3 Points</translation>
+      <translation>3 Puntos</translation>
     </message>
     <message>
       <source>&amp;Concentric</source>
-      <translation type="unfinished">&amp;Concentric</translation>
+      <translation>&amp;Concéntrico</translation>
     </message>
     <message>
       <source>Circle &amp;Inscribed</source>
-      <translation type="unfinished">Circle &amp;Inscribed</translation>
+      <translation>Círculo &amp;Inscrito</translation>
     </message>
     <message>
       <source>Tangential 2 Circles, Radius</source>
@@ -268,15 +268,15 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;3 Points</source>
-      <translation type="unfinished">&amp;3 Points</translation>
+      <translation>&amp;3 Puntos</translation>
     </message>
     <message>
       <source>Arc &amp;Tangential</source>
-      <translation type="unfinished">Arc &amp;Tangential</translation>
+      <translation>Arco &amp;Tangencial</translation>
     </message>
     <message>
       <source>&amp;Ellipse (Axis)</source>
-      <translation type="unfinished">&amp;Ellipse (Axis)</translation>
+      <translation>&amp;Elipse (Ejes)</translation>
     </message>
     <message>
       <source>Ellipse &amp;Arc (Axis)</source>
@@ -300,7 +300,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Spline</source>
-      <translation type="unfinished">&amp;Spline</translation>
+      <translation>&amp;Spline</translation>
     </message>
     <message>
       <source>&amp;Spline through points</source>
@@ -308,7 +308,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Polyline</source>
-      <translation type="unfinished">&amp;Polyline</translation>
+      <translation>&amp;Polilínea</translation>
     </message>
     <message>
       <source>&amp;Add node</source>
@@ -340,31 +340,31 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;MText</source>
-      <translation type="unfinished">&amp;MText</translation>
+      <translation>&amp;MultiTexto</translation>
     </message>
     <message>
       <source>&amp;Text</source>
-      <translation type="unfinished">&amp;Text</translation>
+      <translation>&amp;Texto</translation>
     </message>
     <message>
       <source>&amp;Hatch</source>
-      <translation type="unfinished">&amp;Hatch</translation>
+      <translation>&amp;Rayado</translation>
     </message>
     <message>
       <source>Insert &amp;Image</source>
-      <translation type="unfinished">Insert &amp;Image</translation>
+      <translation>Insertar &amp;Imagen</translation>
     </message>
     <message>
       <source>&amp;Aligned</source>
-      <translation type="unfinished">&amp;Aligned</translation>
+      <translation>&amp;Alineada</translation>
     </message>
     <message>
       <source>&amp;Linear</source>
-      <translation type="unfinished">&amp;Linear</translation>
+      <translation>&amp;Lineal</translation>
     </message>
     <message>
       <source>&amp;Vertical</source>
-      <translation type="unfinished">&amp;Vertical</translation>
+      <translation>&amp;Vertical</translation>
     </message>
     <message>
       <source>&amp;Radial</source>
@@ -380,15 +380,15 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Leader</source>
-      <translation type="unfinished">&amp;Leader</translation>
+      <translation>&amp;Directriz</translation>
     </message>
     <message>
       <source>&amp;Attributes</source>
-      <translation type="unfinished">&amp;Attributes</translation>
+      <translation>&amp;Atributos</translation>
     </message>
     <message>
       <source>&amp;Delete</source>
-      <translation type="unfinished">&amp;Delete</translation>
+      <translation>&amp;Borrar</translation>
     </message>
     <message>
       <source>Delete Freehand</source>
@@ -396,7 +396,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Move / Copy</source>
-      <translation type="unfinished">&amp;Move / Copy</translation>
+      <translation>&amp;Mover / Copiar</translation>
     </message>
     <message>
       <source>Re&amp;vert direction</source>
@@ -404,11 +404,11 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Ctrl+R</source>
-      <translation type="unfinished">Ctrl+R</translation>
+      <translation>Ctrl+R</translation>
     </message>
     <message>
       <source>&amp;Rotate</source>
-      <translation type="unfinished">&amp;Rotate</translation>
+      <translation>&amp;Rotar</translation>
     </message>
     <message>
       <source>&amp;Scale</source>
@@ -416,7 +416,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Mirror</source>
-      <translation type="unfinished">&amp;Mirror</translation>
+      <translation>&amp;Simetría</translation>
     </message>
     <message>
       <source>Rotate T&amp;wo</source>
@@ -440,7 +440,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Stretch</source>
-      <translation type="unfinished">&amp;Stretch</translation>
+      <translation>&amp;Estirar</translation>
     </message>
     <message>
       <source>&amp;Bevel</source>
@@ -448,7 +448,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Fillet</source>
-      <translation type="unfinished">&amp;Fillet</translation>
+      <translation>&amp;Redondear</translation>
     </message>
     <message>
       <source>&amp;Explode Text into Letters</source>
@@ -484,11 +484,11 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Undo</source>
-      <translation type="unfinished">&amp;Undo</translation>
+      <translation>&amp;Deshacer</translation>
     </message>
     <message>
       <source>&amp;Redo</source>
-      <translation type="unfinished">&amp;Redo</translation>
+      <translation>&amp;Rehacer</translation>
     </message>
     <message>
       <source>Cu&amp;t</source>
@@ -496,11 +496,11 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Copy</source>
-      <translation type="unfinished">&amp;Copy</translation>
+      <translation>&amp;Copiar</translation>
     </message>
     <message>
       <source>&amp;Paste</source>
-      <translation type="unfinished">&amp;Paste</translation>
+      <translation>&amp;Pegar</translation>
     </message>
     <message>
       <source>move to bottom</source>
@@ -2089,7 +2089,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Font</source>
-      <translation type="unfinished">Font</translation>
+      <translation>Fuente</translation>
     </message>
     <message>
       <source>&amp;Height:</source>
@@ -2101,7 +2101,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Alt+D</source>
-      <translation type="unfinished">Alt+D</translation>
+      <translation>Alt+D</translation>
     </message>
     <message>
       <source>Alignment</source>
@@ -2145,15 +2145,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Angle</source>
-      <translation type="unfinished">Angle</translation>
+      <translation>Ángulo</translation>
     </message>
     <message>
       <source>Text:</source>
-      <translation type="unfinished">Text:</translation>
+      <translation>Texto:</translation>
     </message>
     <message>
       <source>Clear Text</source>
-      <translation type="unfinished">Clear Text</translation>
+      <translation>Limpiar Texto</translation>
     </message>
     <message>
       <source>Load Text From File</source>
@@ -2165,47 +2165,47 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Cut</source>
-      <translation type="unfinished">Cut</translation>
+      <translation>Cortar</translation>
     </message>
     <message>
       <source>Copy</source>
-      <translation type="unfinished">Copy</translation>
+      <translation>Copiar</translation>
     </message>
     <message>
       <source>Paste</source>
-      <translation type="unfinished">Paste</translation>
+      <translation>Pegar</translation>
     </message>
     <message>
       <source>Insert Symbol</source>
-      <translation type="unfinished">Insert Symbol</translation>
+      <translation>Insertar Símbolo</translation>
     </message>
     <message utf8="true">
       <source>Degree (°)</source>
-      <translation type="unfinished">Degree (°)</translation>
+      <translation>Grado (°)</translation>
     </message>
     <message utf8="true">
       <source>Plus / Minus (±)</source>
-      <translation type="unfinished">Plus / Minus (±)</translation>
+      <translation>Más / Menos (±)</translation>
     </message>
     <message>
       <source>At (@)</source>
-      <translation type="unfinished">At (@)</translation>
+      <translation>Arroba (@)</translation>
     </message>
     <message>
       <source>Hash (#)</source>
-      <translation type="unfinished">Hash (#)</translation>
+      <translation>Numeral (#)</translation>
     </message>
     <message>
       <source>Dollar ($)</source>
-      <translation type="unfinished">Dollar ($)</translation>
+      <translation>Dólar ($)</translation>
     </message>
     <message utf8="true">
       <source>Copyright (©)</source>
-      <translation type="unfinished">Copyright (©)</translation>
+      <translation>Copyright (©)</translation>
     </message>
     <message utf8="true">
       <source>Registered (®)</source>
-      <translation type="unfinished">Registered (®)</translation>
+      <translation>Registrado (®)</translation>
     </message>
     <message utf8="true">
       <source>Paragraph (§)</source>
@@ -2213,15 +2213,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message utf8="true">
       <source>Pi (π)</source>
-      <translation type="unfinished">Pi (π)</translation>
+      <translation>Pi (π)</translation>
     </message>
     <message utf8="true">
       <source>Pound (£)</source>
-      <translation type="unfinished">Pound (£)</translation>
+      <translation>Libra (£)</translation>
     </message>
     <message utf8="true">
       <source>Yen (¥)</source>
-      <translation type="unfinished">Yen (¥)</translation>
+      <translation>Yen (¥)</translation>
     </message>
     <message utf8="true">
       <source>Times (×)</source>
@@ -2237,7 +2237,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Page:</source>
-      <translation type="unfinished">Page:</translation>
+      <translation>Página:</translation>
     </message>
     <message>
       <source>Char:</source>
