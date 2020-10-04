@@ -336,7 +336,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Create Polyline from Existing &amp;Segments</source>
-      <translation type="unfinished">Create Polyline from Existing &amp;Segments</translation>
+      <translation>Crear Polilínea desde &amp;Segmentos Existentes</translation>
     </message>
     <message>
       <source>&amp;MText</source>
@@ -368,15 +368,15 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Radial</source>
-      <translation type="unfinished">&amp;Radial</translation>
+      <translation>&amp;Radio</translation>
     </message>
     <message>
       <source>&amp;Diametric</source>
-      <translation type="unfinished">&amp;Diametric</translation>
+      <translation>&amp;Diámetro</translation>
     </message>
     <message>
       <source>&amp;Angular</source>
-      <translation type="unfinished">&amp;Angular</translation>
+      <translation>&amp;Angular</translation>
     </message>
     <message>
       <source>&amp;Leader</source>
@@ -412,7 +412,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Scale</source>
-      <translation type="unfinished">&amp;Scale</translation>
+      <translation>&amp;Escala</translation>
     </message>
     <message>
       <source>&amp;Mirror</source>
@@ -428,7 +428,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Trim</source>
-      <translation type="unfinished">&amp;Trim</translation>
+      <translation>&amp;Recortar</translation>
     </message>
     <message>
       <source>&amp;Lengthen</source>
@@ -436,7 +436,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Divide</source>
-      <translation type="unfinished">&amp;Divide</translation>
+      <translation>&amp;Dividir</translation>
     </message>
     <message>
       <source>&amp;Stretch</source>
@@ -444,7 +444,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Bevel</source>
-      <translation type="unfinished">&amp;Bevel</translation>
+      <translation>&amp;Biselar</translation>
     </message>
     <message>
       <source>&amp;Fillet</source>
@@ -652,31 +652,31 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Open...</source>
-      <translation type="unfinished">&amp;Open...</translation>
+      <translation>&amp;Abrir...</translation>
     </message>
     <message>
       <source>&amp;Save</source>
-      <translation type="unfinished">&amp;Save</translation>
+      <translation>&amp;Guardar</translation>
     </message>
     <message>
       <source>Save &amp;as...</source>
-      <translation type="unfinished">Save &amp;as...</translation>
+      <translation>Guardar &amp;como...</translation>
     </message>
     <message>
       <source>&amp;Export as image</source>
-      <translation type="unfinished">&amp;Export as image</translation>
+      <translation>&amp;Exportar como imagen</translation>
     </message>
     <message>
       <source>&amp;Close</source>
-      <translation type="unfinished">&amp;Close</translation>
+      <translation>&amp;Cerrar</translation>
     </message>
     <message>
       <source>&amp;Print...</source>
-      <translation type="unfinished">&amp;Print...</translation>
+      <translation>&amp;Imprimir...</translation>
     </message>
     <message>
       <source>Export as PDF</source>
-      <translation type="unfinished">Export as PDF</translation>
+      <translation>Exportar como PDF</translation>
     </message>
     <message>
       <source>Print Pre&amp;view</source>
