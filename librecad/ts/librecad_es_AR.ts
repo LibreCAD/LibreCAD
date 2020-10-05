@@ -684,15 +684,15 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Quit</source>
-      <translation type="unfinished">&amp;Quit</translation>
+      <translation>&amp;Salir</translation>
     </message>
     <message>
       <source>&amp;Block</source>
-      <translation type="unfinished">&amp;Block</translation>
+      <translation>&amp;Bloque</translation>
     </message>
     <message>
       <source>&amp;Fullscreen</source>
-      <translation type="unfinished">&amp;Fullscreen</translation>
+      <translation>&amp;Pantalla completa</translation>
     </message>
     <message>
       <source>Ctrl+Meta+F</source>
@@ -700,11 +700,11 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>F11</source>
-      <translation type="unfinished">F11</translation>
+      <translation>F11</translation>
     </message>
     <message>
       <source>Ctrl+F11</source>
-      <translation type="unfinished">Ctrl+F11</translation>
+      <translation>Ctrl+F11</translation>
     </message>
     <message>
       <source>&amp;Grid</source>
@@ -815,7 +815,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Insert Image</source>
-      <translation type="unfinished">Insert Image</translation>
+      <translation>Insertar Imagen</translation>
     </message>
   </context>
   <context>
@@ -834,11 +834,11 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>General</source>
-      <translation type="unfinished">General</translation>
+      <translation>General</translation>
     </message>
     <message>
       <source>Style</source>
-      <translation type="unfinished">Style</translation>
+      <translation>Estilo</translation>
     </message>
     <message>
       <source>Style Sheet</source>
@@ -850,7 +850,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Height</source>
-      <translation type="unfinished">Height</translation>
+      <translation>Altura</translation>
     </message>
     <message>
       <source>Font Size</source>
