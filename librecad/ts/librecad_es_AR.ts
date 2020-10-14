@@ -424,7 +424,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Properties</source>
-      <translation type="unfinished">&amp;Properties</translation>
+      <translation>&amp;Propiedades</translation>
     </message>
     <message>
       <source>&amp;Trim</source>
@@ -612,7 +612,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Ctrl+K</source>
-      <translation type="unfinished">Ctrl+K</translation>
+      <translation>Ctrl+K</translation>
     </message>
     <message>
       <source>Invert Selection</source>
