@@ -4,6 +4,7 @@
 **
 ** Copyright (C) 2018 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2018 Simon Wells <simonrwells@gmail.com>
+** Copyright (C) 2020 Nikita Letov <letovnn@gmail.com>
 ** Copyright (C) 2015-2016 ravas (github.com/r-a-v-a-s)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
@@ -46,6 +47,7 @@
 #include "rs_debug.h"
 
 #include "console_dxf2pdf.h"
+#include "console_dxf2png.h"
 
 
 /**
