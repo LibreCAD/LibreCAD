@@ -72,6 +72,9 @@ int main(int argc, char** argv)
         if (arg.compare("dxf2pdf") == 0) {
             return console_dxf2pdf(argc, argv);
         }
+        if (arg.compare("dxf2png") == 0) {
+            return console_dxf2png(argc, argv);
+        }
     }
 
     RS_DEBUG->setLevel(RS_Debug::D_WARNING);
@@ -109,6 +112,7 @@ int main(int argc, char** argv)
             qDebug()<<"Commands:";
             qDebug()<<"";
             qDebug()<<"  dxf2pdf\tRun librecad as console dxf2pdf tool. Use -h for help.";
+            qDebug()<<"  dxf2png\tRun librecad as console dxf2png tool. Use -h for help.";
             qDebug()<<"";
             qDebug()<<"Options:";
             qDebug()<<"";

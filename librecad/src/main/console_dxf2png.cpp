@@ -65,11 +65,11 @@ int console_dxf2png(int argc, char* argv[])
     appDesc += "\n\n";
     appDesc += "Examples:\n\n";
     appDesc += "  " + librecad + " dxf2png *.dxf";
-    appDesc += "    -- print all dxf files to pdf files with the same names.\n";
-    appDesc += "\n";
-    appDesc += "  " + librecad + " dxf2pdf -o some.pdf *.dxf";
-    appDesc += "    -- print all dxf files to 'some.pdf' file.";
+    appDesc += "    -- print all dxf files to a png file with the same name.\n";
     parser.setApplicationDescription(appDesc);
+
+    parser.addHelpOption();
+    parser.addVersionOption();
 
     return app.exec();
 }
