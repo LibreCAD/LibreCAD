@@ -44,7 +44,7 @@ QG_MoveRotateOptions::QG_MoveRotateOptions(QWidget* parent, Qt::WindowFlags fl)
 
 void QG_MoveRotateOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Modify");
-	RS_SETTINGS->writeEntry("/MoveRotate", ui->leAngle->text());
+	RS_SETTINGS->writeEntry("/MoveRotateAngle", ui->leAngle->text());
     RS_SETTINGS->endGroup();
 }
 
@@ -58,7 +58,7 @@ void QG_MoveRotateOptions::setAction(RS_ActionInterface* a, bool update) {
             sa = QString("%1").arg(RS_Math::rad2deg(action->getAngle()));
         } else {
             RS_SETTINGS->beginGroup("/Modify");
-            sa = RS_SETTINGS->readEntry("/MoveRotate", "30");
+            sa = RS_SETTINGS->readEntry("/MoveRotateAngle", "30");
             RS_SETTINGS->endGroup();
             action->setAngle(RS_Math::deg2rad(sa.toDouble()));
         }
@@ -92,4 +92,3 @@ void QG_MoveRotateOptions::languageChange()
 {
 	ui->retranslateUi(this);
 }
-
