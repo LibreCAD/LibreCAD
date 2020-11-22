@@ -75,13 +75,14 @@ void QG_MoveRotateOptions::updateAngle(const QString& a) {
     if (action) {
         action->setAngle(RS_Math::deg2rad(RS_Math::eval(a)));
     }
+    saveSettings();
 }
+
 /*
  *  Destroys the object and frees any allocated resources
  */
 QG_MoveRotateOptions::~QG_MoveRotateOptions()
 {
-	saveSettings();
 }
 
 /*
