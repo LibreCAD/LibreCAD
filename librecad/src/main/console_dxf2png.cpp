@@ -27,6 +27,12 @@
 #include <QCoreApplication>
 #include <QApplication>
 
+#include "rs.h"
+#include "rs_graphic.h"
+#include "rs_painterqt.h"
+#include "lc_printing.h"
+#include "rs_staticgraphicview.h"
+
 #include "rs_debug.h"
 #include "rs_fontlist.h"
 #include "rs_patternlist.h"
@@ -91,6 +97,19 @@ int console_dxf2png(int argc, char* argv[])
 
     if (dxfFiles.isEmpty())
         parser.showHelp(EXIT_FAILURE);
+
+
+    // Start of the actual conversion
+
+    bool ret = false;
+    QString& dxfFile = dxfFiles[0];
+
+    QFileInfo dxfFileInfo(dxfFile);
+
+    QString outFile = dxfFileInfo.path()
+            + "/" + dxfFileInfo.completeBaseName() + ".png";
+
+    qDebug() << "Printing" << dxfFile << "to" << outFile << ">>>>";
 
     return app.exec();
 }
