@@ -80,24 +80,17 @@ int console_dxf2png(int argc, char* argv[])
     if (args.isEmpty() || (args.size() == 1 && args[0] == "dxf2png"))
         parser.showHelp(EXIT_FAILURE);
 
+    QStringList dxfFiles;
+
     for (auto arg : args) {
         QFileInfo dxfFileInfo(arg);
         if (dxfFileInfo.suffix().toLower() != "dxf")
             continue; // Skip files without .dxf extension
-        params.dxfFiles.append(arg);
+        dxfFiles.append(arg);
     }
 
-    if (params.dxfFiles.isEmpty())
+    if (dxfFiles.isEmpty())
         parser.showHelp(EXIT_FAILURE);
-
-    if (!params.outDir.isEmpty()) {
-        // Create output directory
-        if (!QDir().mkpath(params.outDir)) {
-            qDebug() << "ERROR: Cannot create directory" << params.outDir;
-            return EXIT_FAILURE;
-        }
-    }
-
 
     return app.exec();
 }
