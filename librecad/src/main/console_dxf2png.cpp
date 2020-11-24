@@ -65,11 +65,20 @@ int console_dxf2png(int argc, char* argv[])
     appDesc += "\n\n";
     appDesc += "Examples:\n\n";
     appDesc += "  " + librecad + " dxf2png *.dxf";
-    appDesc += "    -- print all dxf files to a png file with the same name.\n";
+    appDesc += "    -- print a dxf file to a png file with the same name.\n";
     parser.setApplicationDescription(appDesc);
 
     parser.addHelpOption();
     parser.addVersionOption();
+
+    parser.addPositionalArgument("<dxf_files>", "Input DXF file");
+
+    parser.process(app);
+
+    const QStringList args = parser.positionalArguments();
+
+    if (args.isEmpty() || (args.size() == 1 && args[0] == "dxf2png"))
+        parser.showHelp(EXIT_FAILURE);
 
     return app.exec();
 }
