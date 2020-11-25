@@ -110,9 +110,13 @@ int console_dxf2png(int argc, char* argv[])
     QString& dxfFile = dxfFiles[0];
 
     QFileInfo dxfFileInfo(dxfFile);
+    QString fn = dxfFileInfo.completeBaseName();
 
     QString outFile = dxfFileInfo.path()
-            + "/" + dxfFileInfo.completeBaseName() + ".png";
+            + "/" + fn + ".png";
+
+    if(fn==nullptr)
+        fn = "unnamed";
 
     RS_Document *doc;
     RS_Graphic *graphic;
@@ -122,15 +126,12 @@ int console_dxf2png(int argc, char* argv[])
     // Start of the actual conversion
 
     RS_DEBUG->print("QC_ApplicationWindow::slotFileExport()");
-    QString fn;
 
     // read default settings:
     RS_SETTINGS->beginGroup("/Export");
     QString defDir = dxfFileInfo.path();
 
     RS_SETTINGS->endGroup();
-
-    bool cancel = false;
 
     QStringList filters;
     QList<QByteArray> supportedImageFormats = QImageWriter::supportedImageFormats();
@@ -153,6 +154,13 @@ int console_dxf2png(int argc, char* argv[])
     // revise list of filters
     filters.removeDuplicates();
     filters.sort();
+
+    // find out extension:
+    QString filter = "Portable Network Graphic (png)(*.png)";
+    QString format = "";
+
+
+
 
     return app.exec();
 }
