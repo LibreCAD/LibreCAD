@@ -28,6 +28,7 @@
 #include <QApplication>
 
 #include <QImageWriter>
+#include <QtSvg>
 
 #include "rs.h"
 #include "rs_graphic.h"
@@ -42,7 +43,10 @@
 #include "rs_system.h"
 
 #include "rs_document.h"
+#include "rs_math.h"
 
+
+#include "qc_applicationwindow.h"
 #include "qg_dialogfactory.h"
 
 #include "main.h"
@@ -51,6 +55,13 @@
 
 static bool openDocAndSetGraphic(RS_Document**, RS_Graphic**, QString&);
 static void touchGraphic(RS_Graphic*);
+bool slotFileExport(RS_Graphic* graphic,
+                    const QString& name,
+                    const QString& format,
+                    QSize size,
+                    QSize borders,
+                    bool black,
+                    bool bw=true);
 
 
 int console_dxf2png(int argc, char* argv[])
@@ -110,7 +121,6 @@ int console_dxf2png(int argc, char* argv[])
 
     // Output setup
 
-    bool ret = false;
     QString& dxfFile = dxfFiles[0];
 
     QFileInfo dxfFileInfo(dxfFile);
@@ -133,8 +143,6 @@ int console_dxf2png(int argc, char* argv[])
     qDebug() << "Printing" << dxfFile << "to" << outFile << ">>>>";
 
     touchGraphic(graphic);
-
-
 
     // Start of the actual conversion
 
@@ -171,8 +179,27 @@ int console_dxf2png(int argc, char* argv[])
     // find out extension:
     QString filter = "Portable Network Graphic (png)(*.png)";
     QString format = "";
+    int i = filter.indexOf("(*.");
+    if (i!=-1) {
+        int i2 = filter.indexOf(QRegExp("[) ]"), i);
+        format = filter.mid(i+3, i2-(i+3));
+        format = format.toUpper();
+    }
 
+    // append extension to file:
+    if (!QFileInfo(fn).fileName().contains(".")) {
+        fn.push_back("." + format.toLower());
+    }
 
+    QSize size = QSize(RS_Math::round(RS_Math::eval("2000")),
+                       RS_Math::round(RS_Math::eval("1000")));;
+    QSize borders = QSize(RS_Math::round(RS_Math::eval("5")),
+                          RS_Math::round(RS_Math::eval("5")));;
+    bool black = false;
+    bool bw = false;
+
+    bool ret = slotFileExport(graphic, fn, format, size, borders,
+                black, bw);
 
 
     return app.exec();
@@ -221,4 +248,86 @@ static void touchGraphic(RS_Graphic* graphic)
     graphic->fitToPage(); // fit and center
 }
 
+bool slotFileExport(RS_Graphic* graphic, const QString& name,
+        const QString& format, QSize size, QSize borders, bool black, bool bw) {
 
+    if (graphic==nullptr) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                "QC_ApplicationWindow::slotFileExport: "
+                "no graphic");
+        return false;
+    }
+
+    QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+
+    bool ret = false;
+    // set vars for normal pictures and vectors (svg)
+    QPixmap* picture = new QPixmap(size);
+
+    QSvgGenerator* vector = new QSvgGenerator();
+
+    // set buffer var
+    QPaintDevice* buffer;
+
+    if(format.toLower() != "svg") {
+        buffer = picture;
+    } else {
+        vector->setSize(size);
+        vector->setViewBox(QRectF(QPointF(0,0),size));
+        vector->setFileName(name);
+        buffer = vector;
+    }
+
+    // set painter with buffer
+    RS_PainterQt painter(buffer);
+
+    if (black) {
+        painter.setBackground( Qt::black);
+        if (bw) {
+            painter.setDrawingMode( RS2::ModeWB);
+        }
+    }
+    else {
+        painter.setBackground(Qt::white);
+        if (bw) {
+            painter.setDrawingMode( RS2::ModeBW);
+        }
+    }
+
+    painter.eraseRect(0,0, size.width(), size.height());
+
+    RS_StaticGraphicView gv(size.width(), size.height(), &painter, &borders);
+    if (black) {
+        gv.setBackground(Qt::black);
+    } else {
+        gv.setBackground(Qt::white);
+    }
+    gv.setContainer(graphic);
+    gv.zoomAuto(false);
+    gv.drawEntity(&painter, gv.getContainer());
+
+    // end the picture output
+    if(format.toLower() != "svg")
+    {
+        // RVT_PORT QImageIO iio;
+        QImageWriter iio;
+        QImage img = picture->toImage();
+        // RVT_PORT iio.setImage(img);
+        iio.setFileName(name);
+        iio.setFormat(format.toLatin1());
+        // RVT_PORT if (iio.write()) {
+        if (iio.write(img)) {
+            ret = true;
+        }
+//        QString error=iio.errorString();
+    }
+    QApplication::restoreOverrideCursor();
+
+    // GraphicView deletes painter
+    painter.end();
+    // delete vars
+    delete picture;
+    delete vector;
+
+    return ret;
+}
