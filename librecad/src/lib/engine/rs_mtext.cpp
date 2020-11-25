@@ -247,7 +247,7 @@ void RS_MText::update()
     int lineCounter {0};
 
     // Every single text line gets stored in this entity container
-    // so we can move the whole line around easely:
+    // so we can move the whole line around easily:
     RS_EntityContainer* oneLine {new RS_EntityContainer(this)};
 
     // First every text line is created with

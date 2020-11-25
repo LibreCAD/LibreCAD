@@ -119,7 +119,7 @@ void RS_Undo::startUndoCycle()
         obsolete.sort();
         obsolete.unique();
 
-        // delete obsolte undoables which are not in keep list
+        // delete obsolete undoables which are not in keep list
         for (auto it = obsolete.begin(); it != obsolete.end(); ++it) {
             if (keep.end() == std::find( keep.begin(), keep.end(), *it)) {
                 removeUndoable( *it);

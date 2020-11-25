@@ -2417,7 +2417,7 @@ void RS_FilterDXF::writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con,
 
 
 /**
- * Writes the atomic entities of the given cotnainer to the file.
+ * Writes the atomic entities of the given container to the file.
  */
 void RS_FilterDXF::writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c,
                                        const DL_Attributes& attrib,
@@ -3276,7 +3276,7 @@ RS2::Unit RS_FilterDXF::numberToUnit(int num) {
 
 
 /**
- * Converst a unit enum into a DXF unit number e.g. for INSUNITS.
+ * Converts a unit enum into a DXF unit number e.g. for INSUNITS.
  */
 int RS_FilterDXF::unitToNumber(RS2::Unit unit) {
     switch (unit) {

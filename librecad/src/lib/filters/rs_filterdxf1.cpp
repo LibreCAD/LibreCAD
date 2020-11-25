@@ -1791,7 +1791,7 @@ void RS_FilterDXF1::separateBuf(char _c1,
 //   comments get replaced by '\0'
 //
 void RS_FilterDXF1::removeComment(char _fc, char _lc) {
-    bool rem=false;   // Are we removing currrently?
+    bool rem=false;   // Are we removing currently?
     int bc;           // counter
 
     for(bc=0; bc<(int)fSize; ++bc) {

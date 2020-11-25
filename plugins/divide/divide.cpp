@@ -2,7 +2,7 @@
 *  divide.cpp - divide lines, circles and arcs                              *
 *                                                                           *
 *  Copyright (C) 2018 mad-hatter                                            *
-*  somme code borrowed from                                                 *
+*  some code borrowed from                                                  *
 *  list.cpp - Copyrighted by Rallaz, rallazz@gmail.com                      *
 *                                                                           *
 *  This library is free software, licensed under the terms of the GNU       *
@@ -557,7 +557,7 @@ QString divide::getStrData( Plug_Entity *ent )
     return strData;
 }
 
-//return center of active windoow
+//return center of active window
 QPoint divide::findWindowCentre()
 {
     QPoint centXY;

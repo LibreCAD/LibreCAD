@@ -57,7 +57,7 @@ void PdfPrintLoop::printOneDxfToOnePdf(QString& dxfFile) {
 
     // Main code logic and flow for this method is originally stolen from
     // QC_ApplicationWindow::slotFilePrint(bool printPDF) method.
-    // But finally it was splitted in smaller parts.
+    // But finally it was split in to smaller parts.
 
     QFileInfo dxfFileInfo(dxfFile);
     params.outFile =

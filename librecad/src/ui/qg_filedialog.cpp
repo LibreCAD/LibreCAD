@@ -325,7 +325,7 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
             cancel = false;
 
             // append default extension:
-            // TODO, since we are starting to suppor tmore extensions, we need to find a better way to add the default
+            // TODO, since we are starting to support more extensions, we need to find a better way to add the default
             if (QFileInfo(fn).fileName().indexOf('.')==-1) {
 
                 if (fileDlg->selectedNameFilter()=="LFF Font (*.lff)") {

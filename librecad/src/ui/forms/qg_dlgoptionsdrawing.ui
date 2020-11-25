@@ -1595,7 +1595,7 @@
        <item row="11" column="2">
         <widget class="QDoubleSpinBox" name="cbDimFxL">
          <property name="toolTip">
-          <string>fixed extension line legth</string>
+          <string>fixed extension line length</string>
          </property>
          <property name="decimals">
           <number>4</number>

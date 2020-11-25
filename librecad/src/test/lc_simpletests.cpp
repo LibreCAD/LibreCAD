@@ -980,7 +980,7 @@ void LC_SimpleTests::slotTestUnicode() {
 		int col;
 		int row;
 		QChar uCode;       // e.g. 65 (or 'A')
-		QString strCode;   // unicde as string e.g. '[0041] A'
+		QString strCode;   // unicode as string e.g. '[0041] A'
 
 		graphic->setAutoUpdateBorders(false);
 

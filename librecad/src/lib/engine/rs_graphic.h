@@ -364,7 +364,7 @@ private:
         RS_LayerList layerList;
         RS_BlockList blockList;
         RS_VariableDict variableDict;
-        RS2::CrosshairType crosshairType; //corss hair type used by isometric grid
+        RS2::CrosshairType crosshairType; //crosshair type used by isometric grid
         //if set to true, will refuse to modify paper scale
         bool paperScaleFixed;
 

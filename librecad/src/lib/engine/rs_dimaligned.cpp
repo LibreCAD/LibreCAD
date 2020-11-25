@@ -102,7 +102,7 @@ RS_VectorSolutions RS_DimAligned::getRefPoints() const
 }
 
 /**
- * @return Automatically creted label for the default
+ * @return Automatically created label for the default
  * measurement of this dimension.
  */
 QString RS_DimAligned::getMeasuredLabel() {

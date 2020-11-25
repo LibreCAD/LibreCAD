@@ -41,7 +41,7 @@
  * the action. Undoables are entities in a container that can be
  * created and deleted.
  *
- * Undo Cycles are stored within classes derrived from RS_Undo.
+ * Undo Cycles are stored within classes derived from RS_Undo.
  *
  * @see RS_Undoable
  * @see RS_Undo

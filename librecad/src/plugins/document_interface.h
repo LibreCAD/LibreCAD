@@ -268,10 +268,10 @@ public:
     virtual QString intColor2str(int color) = 0;
 };
 
-//! Interface for comunicate plugins.
+//! Interface for communicate plugins.
  /*!
- * Class for comunicate plugins with document (drawing).
- * entities whitout add*() function:
+ * Class for communicate plugins with document (drawing).
+ * entities without add*() function:
  * atomic = CONSTRUCTIONLINE, OVERLAYBOX, SOLID,
  * container = INSERT, POLYLINE, SPLINE, HATCH, DIMLEADER,
  * DIMALIGNED, DIMLINEAR, DIMRADIAL, DIMDIAMETRIC, DIMANGULAR,
@@ -469,7 +469,7 @@ public:
     //! Gets all entities in document.
     /*! You can delete all, the Plug_Entity and the returned QList wen no more needed.
     * \param sel a QList of pointers to Plug_Entity handled the selected entities.
-    * \param visible default fo false, do not select entities in hidden layers.
+    * \param visible default for false, do not select entities in hidden layers.
     * \return true if success.
     * \return false if fail, i.e. user cancel.
     */

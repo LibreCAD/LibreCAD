@@ -388,7 +388,7 @@ void RS_BlockList::setModified(bool m) {
 		}
 	}
 
-	// Notify listeneres
+	// Notify listeners
 	for (auto l: blockListListeners) {
 		l->blockListModified(m);
 	}
