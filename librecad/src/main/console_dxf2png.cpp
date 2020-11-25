@@ -49,6 +49,10 @@
 
 #include "console_dxf2pdf.h"
 
+static bool openDocAndSetGraphic(RS_Document**, RS_Graphic**, QString&);
+static void touchGraphic(RS_Graphic*);
+
+
 int console_dxf2png(int argc, char* argv[])
 {
     RS_DEBUG->setLevel(RS_Debug::D_NOTHING);
@@ -118,10 +122,19 @@ int console_dxf2png(int argc, char* argv[])
     if(fn==nullptr)
         fn = "unnamed";
 
+    // Open the file and process the graphics
+
     RS_Document *doc;
     RS_Graphic *graphic;
 
+    if (!openDocAndSetGraphic(&doc, &graphic, dxfFile))
+        app.exec();
+
     qDebug() << "Printing" << dxfFile << "to" << outFile << ">>>>";
+
+    touchGraphic(graphic);
+
+
 
     // Start of the actual conversion
 
@@ -164,3 +177,48 @@ int console_dxf2png(int argc, char* argv[])
 
     return app.exec();
 }
+
+static bool openDocAndSetGraphic(RS_Document** doc, RS_Graphic** graphic,
+    QString& dxfFile)
+{
+    *doc = new RS_Graphic();
+
+    if (!(*doc)->open(dxfFile, RS2::FormatUnknown)) {
+        qDebug() << "ERROR: Failed to open document" << dxfFile;
+        delete *doc;
+        return false;
+    }
+
+    *graphic = (*doc)->getGraphic();
+    if (*graphic == nullptr) {
+        qDebug() << "ERROR: No graphic in" << dxfFile;
+        delete *doc;
+        return false;
+    }
+
+    return true;
+}
+
+static void touchGraphic(RS_Graphic* graphic)
+{
+    // If margin < 0.0, values from dxf file are used.
+    double marginLeft = -1.0;
+    double marginTop = -1.0;
+    double marginRight = -1.0;
+    double marginBottom = -1.0;
+
+    int pagesH = 0;      // If number of pages < 1,
+    int pagesV = 0;      // use value from dxf file.
+
+    graphic->calculateBorders();
+    graphic->setMargins(marginLeft, marginTop,
+                        marginRight, marginBottom);
+    graphic->setPagesNum(pagesH, pagesV);
+
+    //if (params.pageSize != RS_Vector(0.0, 0.0))
+    //    graphic->setPaperSize(params.pageSize);
+
+    graphic->fitToPage(); // fit and center
+}
+
+
