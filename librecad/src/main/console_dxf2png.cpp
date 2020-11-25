@@ -27,6 +27,8 @@
 #include <QCoreApplication>
 #include <QApplication>
 
+#include <QImageWriter>
+
 #include "rs.h"
 #include "rs_graphic.h"
 #include "rs_painterqt.h"
@@ -38,6 +40,10 @@
 #include "rs_patternlist.h"
 #include "rs_settings.h"
 #include "rs_system.h"
+
+#include "rs_document.h"
+
+#include "qg_dialogfactory.h"
 
 #include "main.h"
 
@@ -98,8 +104,7 @@ int console_dxf2png(int argc, char* argv[])
     if (dxfFiles.isEmpty())
         parser.showHelp(EXIT_FAILURE);
 
-
-    // Start of the actual conversion
+    // Output setup
 
     bool ret = false;
     QString& dxfFile = dxfFiles[0];
@@ -109,7 +114,45 @@ int console_dxf2png(int argc, char* argv[])
     QString outFile = dxfFileInfo.path()
             + "/" + dxfFileInfo.completeBaseName() + ".png";
 
+    RS_Document *doc;
+    RS_Graphic *graphic;
+
     qDebug() << "Printing" << dxfFile << "to" << outFile << ">>>>";
+
+    // Start of the actual conversion
+
+    RS_DEBUG->print("QC_ApplicationWindow::slotFileExport()");
+    QString fn;
+
+    // read default settings:
+    RS_SETTINGS->beginGroup("/Export");
+    QString defDir = dxfFileInfo.path();
+
+    RS_SETTINGS->endGroup();
+
+    bool cancel = false;
+
+    QStringList filters;
+    QList<QByteArray> supportedImageFormats = QImageWriter::supportedImageFormats();
+    supportedImageFormats.push_back("svg"); // add svg
+
+    for (QString format: supportedImageFormats) {
+        format = format.toLower();
+        QString st;
+        if (format=="jpeg" || format=="tiff") {
+            // Don't add the aliases
+        } else {
+            st = QString("%1 (%2)(*.%2)")
+                    .arg(QG_DialogFactory::extToFormat(format))
+                    .arg(format);
+        }
+        if (st.length()>0)
+            filters.push_back(st);
+    }
+
+    // revise list of filters
+    filters.removeDuplicates();
+    filters.sort();
 
     return app.exec();
 }
