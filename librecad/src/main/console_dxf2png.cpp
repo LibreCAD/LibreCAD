@@ -200,7 +200,8 @@ int console_dxf2png(int argc, char* argv[])
     bool ret = slotFileExport(graphic, fn, format, size, borders,
                 black, bw);
 
-    return app.exec();
+    qDebug() << "Printing" << dxfFile << "to" << outFile << "DONE";
+    return 0;
 }
 
 static bool openDocAndSetGraphic(RS_Document** doc, RS_Graphic** graphic,
