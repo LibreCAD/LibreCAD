@@ -138,7 +138,7 @@ int console_dxf2png(int argc, char* argv[])
     RS_Graphic *graphic;
 
     if (!openDocAndSetGraphic(&doc, &graphic, dxfFile))
-        app.exec();
+        app.exit();
 
     qDebug() << "Printing" << dxfFile << "to" << outFile << ">>>>";
 
@@ -171,7 +171,6 @@ int console_dxf2png(int argc, char* argv[])
         if (st.length()>0)
             filters.push_back(st);
     }
-
     // revise list of filters
     filters.removeDuplicates();
     filters.sort();
@@ -200,7 +199,6 @@ int console_dxf2png(int argc, char* argv[])
 
     bool ret = slotFileExport(graphic, fn, format, size, borders,
                 black, bw);
-
 
     return app.exec();
 }

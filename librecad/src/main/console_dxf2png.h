@@ -24,30 +24,6 @@
 #ifndef CONSOLE_DXF2PNG_H
 #define CONSOLE_DXF2PNG_H
 
-struct PngPrintParams {
-        QStringList dxfFiles;
-        QString outDir;
-        QString outFile;
-        int resolution = 1200;
-        bool centerOnPage;
-        bool fitToPage;
-        bool monochrome;
-        bool grayscale;
-        double scale = 0.0;  // If scale <= 0.0, use value from dxf file.
-        RS_Vector pageSize;  // If zeros, use value from dxf file.
-        struct {
-            double left = -1.0;
-            double top = -1.0;
-            double right = -1.0;
-            double bottom = -1.0;
-        } margins;           // If margin < 0.0, use value from dxf file.
-        int pagesH = 0;      // If number of pages < 1,
-        int pagesV = 0;      // use value from dxf file.
-};
-
-
 int console_dxf2png(int argc, char** argv);
-
-
 
 #endif // CONSOLE_DXF2PNG_H
