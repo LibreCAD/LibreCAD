@@ -1,4 +1,4 @@
-# LibreCAD [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=master)](https://travis-ci.org/LibreCAD/LibreCAD) 
+# DXF Converter
 
 [→ Download ←](https://github.com/LibreCAD/LibreCAD/wiki/Download)
 
