@@ -63,7 +63,6 @@ bool slotFileExport(RS_Graphic* graphic,
                     bool black,
                     bool bw=true);
 
-
 int console_dxf2png(int argc, char* argv[])
 {
     RS_DEBUG->setLevel(RS_Debug::D_NOTHING);
