@@ -135,7 +135,7 @@ int console_dxf2png(int argc, char* argv[])
     QString outFile = dxfFileInfo.path()
             + "/" + fn + ".png";
 
-    if(fn==nullptr)
+    if(fn == nullptr)
         fn = "unnamed";
 
     // Open the file and process the graphics
@@ -167,7 +167,7 @@ int console_dxf2png(int argc, char* argv[])
     for (QString format: supportedImageFormats) {
         format = format.toLower();
         QString st;
-        if (format=="jpeg" || format=="tiff") {
+        if (format == "jpeg" || format == "tiff") {
             // Don't add the aliases
         } else {
             st = QString("%1 (%2)(*.%2)")
@@ -196,10 +196,8 @@ int console_dxf2png(int argc, char* argv[])
         fn.push_back("." + format.toLower());
     }
 
-    QSize size = QSize(RS_Math::round(RS_Math::eval("2000")),
-                       RS_Math::round(RS_Math::eval("1000")));;
-    QSize borders = QSize(RS_Math::round(RS_Math::eval("5")),
-                          RS_Math::round(RS_Math::eval("5")));;
+    QSize size = QSize(2000, 1000);
+    QSize borders = QSize(5, 5);
     bool black = false;
     bool bw = false;
 
@@ -212,7 +210,7 @@ int console_dxf2png(int argc, char* argv[])
 
 
 static bool openDocAndSetGraphic(RS_Document** doc, RS_Graphic** graphic,
-    QString& dxfFile)
+                                 QString& dxfFile)
 {
     *doc = new RS_Graphic();
 
