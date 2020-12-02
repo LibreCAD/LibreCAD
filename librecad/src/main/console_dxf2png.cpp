@@ -53,7 +53,14 @@
 
 #include "console_dxf2pdf.h"
 
+///////////////////////////////////////////////////////////////////////
+/// \brief openDocAndSetGraphic opens a DXF file and prepares all its graphics content
+/// for further manipulations
+/// \return
+//////////////////////////////////////////////////////////////////////
 static bool openDocAndSetGraphic(RS_Document**, RS_Graphic**, QString&);
+
+
 static void touchGraphic(RS_Graphic*);
 bool slotFileExport(RS_Graphic* graphic,
                     const QString& name,
@@ -137,7 +144,7 @@ int console_dxf2png(int argc, char* argv[])
     RS_Graphic *graphic;
 
     if (!openDocAndSetGraphic(&doc, &graphic, dxfFile))
-        app.exit();
+        return 1;
 
     qDebug() << "Printing" << dxfFile << "to" << outFile << ">>>>";
 
@@ -203,6 +210,7 @@ int console_dxf2png(int argc, char* argv[])
     return 0;
 }
 
+
 static bool openDocAndSetGraphic(RS_Document** doc, RS_Graphic** graphic,
     QString& dxfFile)
 {
@@ -210,6 +218,7 @@ static bool openDocAndSetGraphic(RS_Document** doc, RS_Graphic** graphic,
 
     if (!(*doc)->open(dxfFile, RS2::FormatUnknown)) {
         qDebug() << "ERROR: Failed to open document" << dxfFile;
+        qDebug() << "Check if file exists";
         delete *doc;
         return false;
     }
