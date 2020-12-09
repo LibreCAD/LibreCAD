@@ -45,7 +45,6 @@
 #include "rs_document.h"
 #include "rs_math.h"
 
-
 #include "qc_applicationwindow.h"
 #include "qg_dialogfactory.h"
 
@@ -60,8 +59,10 @@
 //////////////////////////////////////////////////////////////////////
 static bool openDocAndSetGraphic(RS_Document**, RS_Graphic**, QString&);
 
-
 static void touchGraphic(RS_Graphic*);
+
+static QSize parsePngSizeArg(QString);
+
 bool slotFileExport(RS_Graphic* graphic,
                     const QString& name,
                     const QString& format,
@@ -70,6 +71,14 @@ bool slotFileExport(RS_Graphic* graphic,
                     bool black,
                     bool bw=true);
 
+
+/////////
+/// \brief console_dxf2png is called if librecad
+/// as console dxf2png tool for converting DXF to PNG.
+/// \param argc
+/// \param argv
+/// \return
+///
 int console_dxf2png(int argc, char* argv[])
 {
     RS_DEBUG->setLevel(RS_Debug::D_NOTHING);
@@ -104,6 +113,10 @@ int console_dxf2png(int argc, char* argv[])
     parser.addHelpOption();
     parser.addVersionOption();
 
+    QCommandLineOption pngSizeOpt(QStringList() << "r" << "resolution",
+        "Output PNG size (Width x Height) in pixels.", "WxH");
+    parser.addOption(pngSizeOpt);
+
     parser.addPositionalArgument("<dxf_files>", "Input DXF file");
 
     parser.process(app);
@@ -112,6 +125,8 @@ int console_dxf2png(int argc, char* argv[])
 
     if (args.isEmpty() || (args.size() == 1 && args[0] == "dxf2png"))
         parser.showHelp(EXIT_FAILURE);
+
+    QSize pngSize = parsePngSizeArg(parser.value(pngSizeOpt)); // If nothing, use default values.
 
     QStringList dxfFiles;
 
@@ -196,12 +211,12 @@ int console_dxf2png(int argc, char* argv[])
         fn.push_back("." + format.toLower());
     }
 
-    QSize size = QSize(2000, 1000);
+    //QSize size = QSize(2000, 1000);
     QSize borders = QSize(5, 5);
     bool black = false;
     bool bw = false;
 
-    bool ret = slotFileExport(graphic, fn, format, size, borders,
+    bool ret = slotFileExport(graphic, fn, format, pngSize, borders,
                 black, bw);
 
     qDebug() << "Printing" << dxfFile << "to" << outFile << "DONE";
@@ -335,4 +350,32 @@ bool slotFileExport(RS_Graphic* graphic, const QString& name,
     delete vector;
 
     return ret;
+}
+
+/////////////////
+/// \brief Parses the user input of PNG output resolution and
+/// converts it to a vector value
+/// \param arg - input string
+/// \return
+///
+static QSize parsePngSizeArg(QString arg)
+{
+    QSize v(2000, 1000); // default resolution
+
+    if (arg.isEmpty())
+        return v;
+
+    QRegularExpression re("^(?<width>\\d+)[x|X]{1}(?<height>\\d+)$");
+    QRegularExpressionMatch match = re.match(arg);
+
+    if (match.hasMatch()) {
+        QString width = match.captured("width");
+        QString height = match.captured("height");
+        v.setWidth(width.toDouble());
+        v.setHeight(height.toDouble());
+    } else {
+        qDebug() << "WARNING: Ignoring incorrect PNG resolution:" << arg;
+    }
+
+    return v;
 }
