@@ -113,6 +113,10 @@ int console_dxf2png(int argc, char* argv[])
     parser.addHelpOption();
     parser.addVersionOption();
 
+    QCommandLineOption outFileOpt(QStringList() << "o" << "outfile",
+        "Output PNG file.", "file");
+    parser.addOption(outFileOpt);
+
     QCommandLineOption pngSizeOpt(QStringList() << "r" << "resolution",
         "Output PNG size (Width x Height) in pixels.", "WxH");
     parser.addOption(pngSizeOpt);
@@ -126,6 +130,7 @@ int console_dxf2png(int argc, char* argv[])
     if (args.isEmpty() || (args.size() == 1 && args[0] == "dxf2png"))
         parser.showHelp(EXIT_FAILURE);
 
+    // Set PNG size from user input
     QSize pngSize = parsePngSizeArg(parser.value(pngSizeOpt)); // If nothing, use default values.
 
     QStringList dxfFiles;
@@ -145,10 +150,15 @@ int console_dxf2png(int argc, char* argv[])
     QString& dxfFile = dxfFiles[0];
 
     QFileInfo dxfFileInfo(dxfFile);
-    QString fn = dxfFileInfo.completeBaseName();
+    QString fn = dxfFileInfo.completeBaseName(); // original DXF file name
 
-    QString outFile = dxfFileInfo.path()
-            + "/" + fn + ".png";
+    // Set output filename from user input if present
+    QString outFile = parser.value(outFileOpt);
+    if (outFile.isEmpty()) {
+        outFile = dxfFileInfo.path() + "/" + fn + ".png";
+    } else {
+        outFile = dxfFileInfo.path() + "/" + outFile;
+    }
 
     if(fn == nullptr)
         fn = "unnamed";
@@ -189,7 +199,7 @@ int console_dxf2png(int argc, char* argv[])
                     .arg(QG_DialogFactory::extToFormat(format))
                     .arg(format);
         }
-        if (st.length()>0)
+        if (st.length() > 0)
             filters.push_back(st);
     }
     // revise list of filters
@@ -202,7 +212,7 @@ int console_dxf2png(int argc, char* argv[])
     int i = filter.indexOf("(*.");
     if (i!=-1) {
         int i2 = filter.indexOf(QRegExp("[) ]"), i);
-        format = filter.mid(i+3, i2-(i+3));
+        format = filter.mid(i + 3, i2 - (i + 3));
         format = format.toUpper();
     }
 
@@ -211,12 +221,11 @@ int console_dxf2png(int argc, char* argv[])
         fn.push_back("." + format.toLower());
     }
 
-    //QSize size = QSize(2000, 1000);
     QSize borders = QSize(5, 5);
     bool black = false;
     bool bw = false;
 
-    bool ret = slotFileExport(graphic, fn, format, pngSize, borders,
+    bool ret = slotFileExport(graphic, outFile, format, pngSize, borders,
                 black, bw);
 
     qDebug() << "Printing" << dxfFile << "to" << outFile << "DONE";
