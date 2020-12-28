@@ -1,3 +1,31 @@
+/****************************************************************************
+**
+** This file is part of the LibreCAD project, a 2D CAD program
+**
+** Copyright (C) 2020 A. Stebich (librecad@mail.lordofbikes.de)
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
+** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
+**
+**
+** This file may be distributed and/or modified under the terms of the
+** GNU General Public License version 2 as published by the Free Software
+** Foundation and appearing in the file gpl-2.0.txt included in the
+** packaging of this file.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+**
+** This copyright notice MUST APPEAR in all copies of the script!
+**
+**********************************************************************/
+
+
 #include <iostream>
 #include <cmath>
 #include "rs_color.h"
@@ -42,22 +70,20 @@ void RS_Color::fromIntColor(int co) {
  *
  * @param c Color to perform comparison against
  *
- * @return Distance between colors, a unitless value ranging from 0 (identical)
- *         to 1 (maximum difference)
+ * @return Distance between colors in percent, value ranging from 0 (identical)
+ *         to 100 (maximum difference)
  */
-double RS_Color::colorDistance(const RS_Color& c) const {
-    double redMean, rDiff, gDiff, bDiff, cDist;
+int RS_Color::colorDistance(const RS_Color& c) const {
 
-    redMean = (((double) c.red()) + ((double) red())) / 2;
+    int myRed {red()};
+    int otherRed {c.red()};
+    int redMean {(myRed + otherRed) / 2};
 
-    rDiff = ((double) c.red()) - ((double) red());
-    gDiff = ((double) c.green()) - ((double) green());
-    bDiff = ((double) c.blue()) - ((double) blue());
-
-    cDist = std::sqrt((((512 + redMean) * std::pow(rDiff, 2)) / 256) + 4 * std::pow(gDiff, 2) + (((767 - redMean) * std::pow(bDiff, 2)) / 256));
-
-    // Convert difference value to percentage using maximum color difference
-    return (cDist / 764.834);
+    // Convert difference value to percentage using maximum color difference (764.834 / 100)
+    return std::lround( std::sqrt( std::pow(otherRed - myRed, 2) * (512 + redMean) / 256
+                                   + std::pow(c.green() - green(), 2) * 4
+                                   + std::pow(c.blue() - blue(), 2) * (767 - redMean) / 256)
+                        / 7.64834);
 }
 
 std::ostream& operator << (std::ostream& os, const RS_Color& c) {
