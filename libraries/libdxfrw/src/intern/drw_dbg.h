@@ -38,6 +38,8 @@ public:
     LEVEL getLevel();
     static DRW_dbg *getInstance();
     void print(std::string s);
+    void print(signed char i);
+    void print(unsigned char i);
     void print(int i);
     void print(unsigned int i);
     void print(long long int i);

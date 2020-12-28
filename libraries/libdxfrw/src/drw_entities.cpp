@@ -2092,7 +2092,7 @@ bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     if (!ret)
         return ret;
     DRW_DBG("\n***************************** parsing spline *********************************************\n");
-    int weight = 0; // RLZ ??? flags, weight, code 70, bit 4 (16)
+    duint8 weight = 0; // RLZ ??? flags, weight, code 70, bit 4 (16)
 
     dint32 scenario = buf->getBitLong();
     DRW_DBG("scenario: "); DRW_DBG(scenario);
@@ -2101,8 +2101,8 @@ bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         if (splFlag1 & 1)
             scenario = 2;
         dint32 knotParam = buf->getBitLong();
-        DRW_DBG("\n2013 splFlag1: "); DRW_DBG(splFlag1); DRW_DBG(" 2013 knotParam: ");
-        DRW_DBG(knotParam);
+        DRW_DBG(" 2013 splFlag1: "); DRW_DBG(splFlag1);
+        DRW_DBG(" 2013 knotParam: "); DRW_DBG(knotParam);
 //        DRW_DBG("unk bit: "); DRW_DBG(buf->getBit());
     }
     degree = buf->getBitLong(); //RLZ: code 71, verify with dxf
