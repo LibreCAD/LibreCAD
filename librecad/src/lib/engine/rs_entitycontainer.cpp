@@ -571,7 +571,7 @@ void RS_EntityContainer::calculateBorders() {
         maxV.y = 0.0;
     }
 
-    RS_DEBUG->print("RS_EntityCotnainer::calculateBorders: size: %f,%f",
+    RS_DEBUG->print("RS_EntityContainer::calculateBorders: size: %f,%f",
                     getSize().x, getSize().y);
 
     //RS_DEBUG->print("  borders: %f/%f %f/%f", minV.x, minV.y, maxV.x, maxV.y);
