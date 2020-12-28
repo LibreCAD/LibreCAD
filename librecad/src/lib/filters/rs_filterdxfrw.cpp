@@ -2943,7 +2943,7 @@ void RS_FilterDXFRW::writeImage(RS_Image * i) {
 
 
 /**
- * Writes the atomic entities of the given cotnainer to the file.
+ * Writes the atomic entities of the given container to the file.
  */
 /*void RS_FilterDXFRW::writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c,
                                        const DRW_Entity& attrib,
@@ -3839,7 +3839,7 @@ RS2::Unit RS_FilterDXFRW::numberToUnit(int num) {
 
 
 /**
- * Converst a unit enum into a DXF unit number e.g. for INSUNITS.
+ * Converts a unit enum into a DXF unit number e.g. for INSUNITS.
  */
 int RS_FilterDXFRW::unitToNumber(RS2::Unit unit) {
     switch (unit) {

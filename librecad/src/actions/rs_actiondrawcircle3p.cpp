@@ -46,7 +46,7 @@ struct RS_ActionDrawCircle3P::Points {
 	 */
 	RS_Vector point2;
 	/**
-	 * 3nd point.
+	 * 3rd point.
 	 */
 	RS_Vector point3;
 };

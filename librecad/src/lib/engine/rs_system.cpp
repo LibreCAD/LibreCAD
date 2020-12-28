@@ -658,7 +658,7 @@ QString RS_System::languageToSymbol(const QString& lang) {
 
 
 /**
- * Converst a locale code into a readable string
+ * Converts a locale code into a readable string
  * (e.g. 'de' to 'German Deutsch'
  * (e.g. 'en_au' to 'English (Australia)'
  */

@@ -49,7 +49,7 @@ RS_Vector point1;
  */
 RS_Vector point2;
 /**
- * 3nd point.
+ * 3rd point.
  */
 RS_Vector point3;
 };

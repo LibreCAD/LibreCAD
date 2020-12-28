@@ -2423,7 +2423,7 @@ void RS_FilterJWW::writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con,
 
 
 /**
- * Writes the atomic entities of the given cotnainer to the file.
+ * Writes the atomic entities of the given container to the file.
  */
 void RS_FilterJWW::writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c,
                                                                            const DL_Attributes& attrib,
@@ -3299,7 +3299,7 @@ RS2::Unit RS_FilterJWW::numberToUnit(int num) {
 
 
 /**
- * Converst a unit enum into a JWW unit number e.g. for INSUNITS.
+ * Converts a unit enum into a JWW unit number e.g. for INSUNITS.
  */
 int RS_FilterJWW::unitToNumber(RS2::Unit unit) {
         switch (unit) {

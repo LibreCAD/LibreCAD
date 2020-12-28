@@ -948,7 +948,7 @@ QString RS_Units::paperFormatToString(RS2::PaperFormat p) {
 RS2::PaperFormat RS_Units::stringToPaperFormat(const QString& p) {
     QString ls {p.toLower()};
 
-    // use toLower() on localized paper format strings, dont't trust that translators keep lower case
+    // use toLower() on localized paper format strings, don't trust that translators keep lower case
     if (ls == QStringLiteral("custom") || ls == QObject::tr("custom", "Paper format").toLower())
         return RS2::Custom;
 

@@ -811,12 +811,12 @@ public:
         SizeAllCursor,        /**< SizeAllCursor - all directions resize. */
         BlankCursor,          /**< BlankCursor - blank/invisible cursor. */
         SplitVCursor,         /**< SplitVCursor - vertical splitting. */
-        SplitHCursor,         /**< SplitHCursor - horziontal splitting. */
+        SplitHCursor,         /**< SplitHCursor - horizontal splitting. */
         PointingHandCursor,   /**< PointingHandCursor - a pointing hand. */
         ForbiddenCursor,      /**< ForbiddenCursor - a slashed circle. */
         WhatsThisCursor,      /**< WhatsThisCursor - an arrow with a ?. */
         OpenHandCursor,       /**< Qt OpenHandCursor */
-        ClosedHandCursor,       /**< Qt ClosedHandCursor */
+        ClosedHandCursor,     /**< Qt ClosedHandCursor */
         CadCursor,            /**< CadCursor - a bigger cross. */
         DelCursor,            /**< DelCursor - cursor for choosing entities */
         SelectCursor,         /**< SelectCursor - for selecting single entities */
