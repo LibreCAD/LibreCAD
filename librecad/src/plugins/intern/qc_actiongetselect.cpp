@@ -66,7 +66,7 @@ void QC_ActionGetSelect::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
-void QC_ActionGetSelect::setMesage(QString msg){
+void QC_ActionGetSelect::setMessage(QString msg){
 	message = msg;
 }
 

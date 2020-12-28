@@ -57,7 +57,7 @@ public:
 
     void getPoint(QPointF *point);
     void setBasepoint(QPointF* basepoint);
-    void setMesage(QString msg);
+    void setMessage(QString msg);
     bool isCompleted(){return completed;}
     bool wasCanceled(){return canceled;}
 

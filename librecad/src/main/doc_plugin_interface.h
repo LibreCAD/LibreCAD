@@ -109,9 +109,9 @@ public:
     void setCurrentLayerProperties(int c, DPI::LineWidth w, DPI::LineType t);
 	void setCurrentLayerProperties(int c, QString const& w, QString const& t);
 
-    bool getPoint(QPointF *point, const QString& mesage, QPointF *base);
-    Plug_Entity *getEnt(const QString& mesage);
-    bool getSelect(QList<Plug_Entity *> *sel, const QString& mesage);
+    bool getPoint(QPointF *point, const QString& message, QPointF *base);
+    Plug_Entity *getEnt(const QString& message);
+    bool getSelect(QList<Plug_Entity *> *sel, const QString& message);
     bool getAllEntities(QList<Plug_Entity *> *sel, bool visible = false);
 
     bool getVariableInt(const QString& key, int *num);
@@ -119,9 +119,9 @@ public:
     bool addVariable(const QString& key, int value, int code=70);
     bool addVariable(const QString& key, double value, int code=40);
 
-    bool getInt(int *num, const QString& mesage, const QString& title);
-    bool getReal(qreal *num, const QString& mesage, const QString& title);
-    bool getString(QString *txt, const QString& mesage, const QString& title);
+    bool getInt(int *num, const QString& message, const QString& title);
+    bool getReal(qreal *num, const QString& message, const QString& title);
+    bool getString(QString *txt, const QString& message, const QString& title);
     QString realToStr(const qreal num, const int units = 0, const int prec = 0);
 
     //method to handle undo in Plugin_Entity 

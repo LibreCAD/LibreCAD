@@ -68,13 +68,13 @@ public:
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseCursor();
 
-    void setMesage(QString msg);
+    void setMessage(QString msg);
     bool isCompleted(){return completed;}
     Plugin_Entity *getSelected(Doc_plugin_interface* d);
 
 private:
     bool completed;
-    QString mesage;
+    QString message;
     RS_Entity* en;
 
 };
