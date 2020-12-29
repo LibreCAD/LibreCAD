@@ -40,7 +40,7 @@ struct QC_ActionGetPoint::Points {
 		RS_MoveData data;
 		RS_Vector referencePoint;
 		RS_Vector targetPoint;
-		QString mesage;
+		QString message;
 };
 
 QC_ActionGetPoint::QC_ActionGetPoint(RS_EntityContainer& container,
@@ -116,7 +116,7 @@ void QC_ActionGetPoint::coordinateEvent(RS_CoordinateEvent* e) {
 
 void QC_ActionGetPoint::updateMouseButtonHints() {
     if (!completed)
-		RS_DIALOGFACTORY->updateMouseWidget(pPoints->mesage, tr("Cancel"));
+		RS_DIALOGFACTORY->updateMouseWidget(pPoints->message, tr("Cancel"));
     else
         RS_DIALOGFACTORY->updateMouseWidget();
 }
@@ -134,8 +134,8 @@ void QC_ActionGetPoint::setBasepoint(QPointF* basepoint){
 }
 
 
-void QC_ActionGetPoint::setMesage(QString msg){
-	pPoints->mesage = msg;
+void QC_ActionGetPoint::setMessage(QString msg){
+	pPoints->message = msg;
 }
 
 
