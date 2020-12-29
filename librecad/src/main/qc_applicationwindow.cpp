@@ -3085,7 +3085,7 @@ void QC_ApplicationWindow::invokeLinkList()
     auto list = new LinkList(&dlg);
     list->addLink(QObject::tr("Wiki"), "https://dokuwiki.librecad.org/");
     list->addLink(QObject::tr("User's Manual"), "https://librecad.readthedocs.io/");
-    list->addLink(QObject::tr("Commands"), "https://wiki.librecad.org/index.php/Commands");
+    list->addLink(QObject::tr("Commands"), "https://librecad.readthedocs.io/en/latest/ref/tools.html");
     list->addLink(QObject::tr("Style Sheets"), "https://librecad.readthedocs.io/en/latest/ref/customize.html#style-sheets");
     list->addLink(QObject::tr("Widgets"), "https://librecad.readthedocs.io/en/latest/ref/menu.html#widgets");
     list->addLink(QObject::tr("Forum"), "https://forum.librecad.org/");
