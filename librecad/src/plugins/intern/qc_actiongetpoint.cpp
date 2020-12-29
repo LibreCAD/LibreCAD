@@ -135,7 +135,7 @@ void QC_ActionGetPoint::setBasepoint(QPointF* basepoint){
 
 
 void QC_ActionGetPoint::setMessage(QString msg){
-	pPoints->Message = msg;
+	pPoints->message = msg;
 }
 
 
