@@ -176,8 +176,6 @@ void dwgCompressor::decompress18(duint8 *cbuf, duint8 *dbuf, duint32 csize, duin
             compOffset = twoByteOffset(&litCount);
             if (litCount == 0)
                 litCount= litLength18();
-//            else
-//                oc = 0x00;
         } else if (oc > 0x20 && oc< 0x40){
             compBytes = oc - 0x1E;
             compOffset = twoByteOffset(&litCount);

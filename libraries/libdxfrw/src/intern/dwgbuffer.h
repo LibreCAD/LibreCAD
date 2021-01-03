@@ -23,9 +23,9 @@ class DRW_TextCodec;
 
 class dwgBasicStream{
 protected:
-	dwgBasicStream() = default;
+    dwgBasicStream() = default;
 public:
-	virtual ~dwgBasicStream() = default;
+    virtual ~dwgBasicStream() = default;
     virtual bool read(duint8* s, duint64 n) = 0;
     virtual duint64 size() = 0;
     virtual duint64 getPos() = 0;
@@ -42,7 +42,7 @@ public:
         sz = stream->tellg();
         stream->seekg(0, std::ios_base::beg);
     }
-    virtual ~dwgFileStream(){}
+    virtual ~dwgFileStream() = default;
     virtual bool read(duint8* s, duint64 n);
     virtual duint64 size(){return sz;}
     virtual duint64 getPos(){return stream->tellg();}
@@ -62,7 +62,7 @@ public:
         pos = 0;
         isOk = true;
     }
-	virtual ~dwgCharStream() = default;
+    virtual ~dwgCharStream() = default;
     virtual bool read(duint8* s, duint64 n);
     virtual duint64 size(){return sz;}
     virtual duint64 getPos(){return pos;}
@@ -82,7 +82,7 @@ public:
     dwgBuffer(duint8 *buf, int size, DRW_TextCodec *decoder= NULL);
     dwgBuffer( const dwgBuffer& org );
     dwgBuffer& operator=( const dwgBuffer& org );
-    ~dwgBuffer();
+    virtual ~dwgBuffer() = default;
     duint64 size(){return filestr->size();}
     bool setPosition(duint64 pos);
     duint64 getPosition();
@@ -144,7 +144,7 @@ public:
     DRW_TextCodec *decoder;
 
 private:
-	std::unique_ptr<dwgBasicStream> filestr;
+    std::unique_ptr<dwgBasicStream> filestr;
     int maxSize;
     duint8 currByte;
     duint8 bitPos;

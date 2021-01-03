@@ -476,7 +476,6 @@ public:
     std::map<std::string,std::string> reactors;
 };
 
-
 //! Class to handle plotsettings entries
 /*!
 *  Class to handle plot settings object entries

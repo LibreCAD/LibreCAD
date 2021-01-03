@@ -144,24 +144,24 @@ bool dwgCharStream::read(duint8* s, duint64 n){
     return true;
 }
 
-dwgBuffer::dwgBuffer(duint8 *buf, int size, DRW_TextCodec *dc):
-	filestr{new dwgCharStream(buf, size)}
+dwgBuffer::dwgBuffer(duint8 *buf, int size, DRW_TextCodec *dc) :
+    filestr( new dwgCharStream(buf, size))
 {
     decoder = dc;
     maxSize = size;
     bitPos = 0;
 }
 
-dwgBuffer::dwgBuffer(std::ifstream *stream, DRW_TextCodec *dc):
-	filestr{new dwgFileStream(stream)}
+dwgBuffer::dwgBuffer(std::ifstream *stream, DRW_TextCodec *dc) :
+    filestr( new dwgFileStream(stream))
 {
     decoder = dc;
     maxSize = filestr->size();
     bitPos = 0;
 }
 
-dwgBuffer::dwgBuffer( const dwgBuffer& org ):
-	filestr{org.filestr->clone()}
+dwgBuffer::dwgBuffer( const dwgBuffer& org ) :
+    filestr( org.filestr->clone())
 {
     decoder = org.decoder;
     maxSize = filestr->size();
@@ -170,15 +170,13 @@ dwgBuffer::dwgBuffer( const dwgBuffer& org ):
 }
 
 dwgBuffer& dwgBuffer::operator=( const dwgBuffer& org ){
-	filestr.reset(org.filestr->clone());
+    filestr.reset( org.filestr->clone());
     decoder = org.decoder;
     maxSize = filestr->size();
     currByte = org.currByte;
     bitPos = org.bitPos;
     return *this;
 }
-
-dwgBuffer::~dwgBuffer() = default;
 
 /**Gets the current byte position in buffer **/
 duint64 dwgBuffer::getPosition(){
@@ -379,8 +377,8 @@ DRW_Coord dwgBuffer::get3BitDouble(){
 
 /**Reads raw char 8 bits returns a unsigned char (RC) **/
 duint8 dwgBuffer::getRawChar8(){
-    duint8 ret;
-    duint8 buffer;
+    duint8 ret=0;
+    duint8 buffer=0;
     filestr->read (&buffer,1);
     if (bitPos == 0)
         return buffer;
@@ -394,8 +392,8 @@ duint8 dwgBuffer::getRawChar8(){
 
 /**Reads raw short 16 bits little-endian order, returns a unsigned short (RS) **/
 duint16 dwgBuffer::getRawShort16(){
-    duint8 buffer[2];
-    duint16 ret;
+    duint8 buffer[2]={0,0};
+    duint16 ret=0;
 
     filestr->read (buffer,2);
     if (bitPos == 0) {
@@ -416,6 +414,7 @@ duint16 dwgBuffer::getRawShort16(){
 /**Reads raw double IEEE standard 64 bits returns a double (RD) **/
 double dwgBuffer::getRawDouble(){
     duint8 buffer[8];
+    memset(buffer,0,sizeof(buffer));
     if (bitPos == 0)
         filestr->read (buffer,8);
     else {
@@ -545,7 +544,6 @@ dwgHandle dwgBuffer::getHandle(){ //H
 
 dwgHandle dwgBuffer::getOffsetHandle(duint32 href){ //H
     dwgHandle hl = getHandle();
-
     if (hl.code > 5){
         if (hl.code == 0x0C)
             hl.ref = href - hl.ref;

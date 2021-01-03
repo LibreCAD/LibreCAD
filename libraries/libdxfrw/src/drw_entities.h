@@ -670,18 +670,18 @@ public:
         interlin = 1;
         alignV = (VAlign)TopLeft;
         textgen = 1;
-        haveXAxis = false;    //if true needed to recalculate angle
+        hasXAxisVec = false; // if true need to calculate angle from secPoint vector
     }
 
 protected:
     void parseCode(int code, dxfReader *reader);
-    void updateAngle();    //recalculate angle if 'haveXAxis' is true
+    void updateAngle();    // recalculate angle if 'hasXAxisVec' is true
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
     double interlin;     /*!< width factor, code 44 */
 private:
-    bool haveXAxis;
+    bool hasXAxisVec; /* renamed by djm for better description */
 };
 
 //! Class to handle vertex
@@ -742,9 +742,9 @@ public:
         basePoint.x = basePoint.y = 0.0;
         flags = vertexcount = facecount = 0;
         smoothM = smoothN = curvetype = 0;
-	}
+    }
     void addVertex (DRW_Vertex v) {
-		std::shared_ptr<DRW_Vertex> vert = std::make_shared<DRW_Vertex>();
+        std::shared_ptr<DRW_Vertex> vert = std::make_shared<DRW_Vertex>();
         vert->basePoint.x = v.basePoint.x;
         vert->basePoint.y = v.basePoint.y;
         vert->basePoint.z = v.basePoint.z;
@@ -753,7 +753,7 @@ public:
         vert->bulge = v.bulge;
         vertlist.push_back(vert);
     }
-	void appendVertex (std::shared_ptr<DRW_Vertex> const& v) {
+    void appendVertex (std::shared_ptr<DRW_Vertex> const& v) {
         vertlist.push_back(v);
     }
 
@@ -771,7 +771,7 @@ public:
     int smoothN;             /*!< smooth surface M density, code 74, default 0 */
     int curvetype;           /*!< curves & smooth surface type, code 75, default 0 */
 
-	std::vector<std::shared_ptr<DRW_Vertex>> vertlist;  /*!< vertex list */
+    std::vector<std::shared_ptr<DRW_Vertex>> vertlist;  /*!< vertex list */
 
 private:
     std::list<duint32>hadlesList; //list of handles, only in 2004+
@@ -794,7 +794,7 @@ public:
         flags = nknots = ncontrol = nfit = 0;
         tolknot = tolcontrol = tolfit = 0.0000001;
 
-	}
+    }
     virtual void applyExtrusion(){}
 
 protected:
@@ -824,12 +824,12 @@ public:
     double tolfit;            /*!< fit point tolerance, code 44, default 0.0000001 */
 
     std::vector<double> knotslist;           /*!< knots list, code 40 */
-	std::vector<std::shared_ptr<DRW_Coord>> controllist;  /*!< control points list, code 10, 20 & 30 */
-	std::vector<std::shared_ptr<DRW_Coord>> fitlist;      /*!< fit points list, code 11, 21 & 31 */
+    std::vector<std::shared_ptr<DRW_Coord>> controllist;  /*!< control points list, code 10, 20 & 30 */
+    std::vector<std::shared_ptr<DRW_Coord>> fitlist;      /*!< fit points list, code 11, 21 & 31 */
 
 private:
-	std::shared_ptr<DRW_Coord> controlpoint;   /*!< current control point to add data */
-	std::shared_ptr<DRW_Coord> fitpoint;       /*!< current fit point to add data */
+    std::shared_ptr<DRW_Coord> controlpoint;   /*!< current control point to add data */
+    std::shared_ptr<DRW_Coord> fitpoint;       /*!< current fit point to add data */
 };
 
 //! Class to handle hatch loop
@@ -853,7 +853,7 @@ public:
     int numedges;           /*!< number of edges (if not a polyline), code 93 */
 //TODO: store lwpolylines as entities
 //    std::vector<DRW_LWPolyline *> pollist;  /*!< polyline list */
-	std::vector<std::shared_ptr<DRW_Entity>> objlist;      /*!< entities list */
+    std::vector<std::shared_ptr<DRW_Entity>> objlist;      /*!< entities list */
 };
 
 //! Class to handle hatch entity
@@ -875,7 +875,7 @@ public:
         clearEntities();
     }
 
-	void appendLoop (std::shared_ptr<DRW_HatchLoop> const& v) {
+    void appendLoop (std::shared_ptr<DRW_HatchLoop> const& v) {
         looplist.push_back(v);
     }
 
@@ -897,23 +897,23 @@ public:
     double scale;              /*!< hatch pattern scale, code 41 */
     int deflines;              /*!< number of pattern definition lines, code 78 */
 
-	std::vector<std::shared_ptr<DRW_HatchLoop>> looplist;  /*!< polyline list */
+    std::vector<std::shared_ptr<DRW_HatchLoop>> looplist;  /*!< polyline list */
 
 private:
     void clearEntities(){
-		pt.reset();
-		line.reset();
-		pline.reset();
-		arc.reset();
-		ellipse.reset();
-		spline.reset();
-		plvert.reset();
+        pt.reset();
+        line.reset();
+        pline.reset();
+        arc.reset();
+        ellipse.reset();
+        spline.reset();
+        plvert.reset();
     }
 
     void addLine() {
         clearEntities();
         if (loop) {
-			pt = line = std::make_shared<DRW_Line>();
+            pt = line = std::make_shared<DRW_Line>();
             loop->objlist.push_back(line);
         }
     }
@@ -921,7 +921,7 @@ private:
     void addArc() {
         clearEntities();
         if (loop) {
-			pt = arc = std::make_shared<DRW_Arc>();
+            pt = arc = std::make_shared<DRW_Arc>();
             loop->objlist.push_back(arc);
         }
     }
@@ -929,7 +929,7 @@ private:
     void addEllipse() {
         clearEntities();
         if (loop) {
-			pt = ellipse = std::make_shared<DRW_Ellipse>();
+            pt = ellipse = std::make_shared<DRW_Ellipse>();
             loop->objlist.push_back(ellipse);
         }
     }
@@ -937,20 +937,20 @@ private:
     void addSpline() {
         clearEntities();
         if (loop) {
-			pt.reset();
-			spline = std::make_shared<DRW_Spline>();
+            pt.reset();
+            spline = std::make_shared<DRW_Spline>();
             loop->objlist.push_back(spline);
         }
     }
 
-	std::shared_ptr<DRW_HatchLoop> loop;       /*!< current loop to add data */
-	std::shared_ptr<DRW_Line> line;
-	std::shared_ptr<DRW_Arc> arc;
-	std::shared_ptr<DRW_Ellipse> ellipse;
-	std::shared_ptr<DRW_Spline> spline;
-	std::shared_ptr<DRW_LWPolyline> pline;
-	std::shared_ptr<DRW_Point> pt;
-	std::shared_ptr<DRW_Vertex2D> plvert;
+    std::shared_ptr<DRW_HatchLoop> loop;       /*!< current loop to add data */
+    std::shared_ptr<DRW_Line> line;
+    std::shared_ptr<DRW_Arc> arc;
+    std::shared_ptr<DRW_Ellipse> ellipse;
+    std::shared_ptr<DRW_Spline> spline;
+    std::shared_ptr<DRW_LWPolyline> pline;
+    std::shared_ptr<DRW_Point> pt;
+    std::shared_ptr<DRW_Vertex2D> plvert;
     bool ispol;
 };
 
@@ -1317,7 +1317,7 @@ public:
         extrusionPoint.x = extrusionPoint.y = 0.0;
         arrow = 1;
         extrusionPoint.z = 1.0;
-	}
+    }
 
     virtual void applyExtrusion(){}
 
@@ -1342,10 +1342,10 @@ public:
     DRW_Coord offsetblock;     /*!< Offset of last leader vertex from block, code 212, 222 & 232 */
     DRW_Coord offsettext;      /*!< Offset of last leader vertex from annotation, code 213, 223 & 233 */
 
-	std::vector<std::shared_ptr<DRW_Coord>> vertexlist;  /*!< vertex points list, code 10, 20 & 30 */
+    std::vector<std::shared_ptr<DRW_Coord>> vertexlist;  /*!< vertex points list, code 10, 20 & 30 */
 
 private:
-	std::shared_ptr<DRW_Coord> vertexpoint;   /*!< current control point to add data */
+    std::shared_ptr<DRW_Coord> vertexpoint;   /*!< current control point to add data */
     dwgHandle dimStyleH;
     dwgHandle AnnotH;
 };
