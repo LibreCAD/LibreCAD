@@ -104,7 +104,7 @@ void RS_PreviewActionInterface::trigger() {
  */
 void RS_PreviewActionInterface::deletePreview() {
 		if (hasPreview){
-                //avoid deletiong NULL or empty preview
+                //avoid deleting NULL or empty preview
             preview->clear();
             hasPreview=false;
         }

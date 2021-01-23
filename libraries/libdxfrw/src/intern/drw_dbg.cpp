@@ -81,6 +81,14 @@ void DRW_dbg::print(std::string s){
     prClass->printS(s);
 }
 
+void DRW_dbg::print(signed char i){
+    prClass->printI(i);
+}
+
+void DRW_dbg::print(unsigned char i){
+    prClass->printUI(i);
+}
+
 void DRW_dbg::print(int i){
     prClass->printI(i);
 }

@@ -8,7 +8,7 @@
 
 /*
  * DimZin value is mixed integer and bit flag value
- * inches and feets are integer values, removal of left and right zeros are flags
+ * inches and feet are integer values, removal of left and right zeros are flags
  * 0: removes 0' & 0"
  * 1: draw 0' & 0"
  * 2: removes 0"

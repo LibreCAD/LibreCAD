@@ -811,12 +811,12 @@ public:
         SizeAllCursor,        /**< SizeAllCursor - all directions resize. */
         BlankCursor,          /**< BlankCursor - blank/invisible cursor. */
         SplitVCursor,         /**< SplitVCursor - vertical splitting. */
-        SplitHCursor,         /**< SplitHCursor - horziontal splitting. */
+        SplitHCursor,         /**< SplitHCursor - horizontal splitting. */
         PointingHandCursor,   /**< PointingHandCursor - a pointing hand. */
         ForbiddenCursor,      /**< ForbiddenCursor - a slashed circle. */
         WhatsThisCursor,      /**< WhatsThisCursor - an arrow with a ?. */
         OpenHandCursor,       /**< Qt OpenHandCursor */
-        ClosedHandCursor,       /**< Qt ClosedHandCursor */
+        ClosedHandCursor,     /**< Qt ClosedHandCursor */
         CadCursor,            /**< CadCursor - a bigger cross. */
         DelCursor,            /**< DelCursor - cursor for choosing entities */
         SelectCursor,         /**< SelectCursor - for selecting single entities */
@@ -885,24 +885,21 @@ public:
         A3,   /* 297 x 420 mm	11.7 x 16.5 in */
         A4,   /* 210 x 297 mm	8.3 x 11.7 in  */
 
-        /* ISO "B" Series */
-        B0,   /* 1000 x 1414 mm	39.4 x 55.7 in */
-        B1,   /* 707 x 1000 mm	27.8 x 39.4 in */
-        B2,   /* 500 x 707 mm	19.7 x 27.8 in */
-        B3,   /* 353 x 500 mm	13.9 x 19.7 in */
-        B4,   /* 250 x 353 mm	9.8 x 13.9 in */
-
-        /* Removed "C" Series, C5E, Comm10E, DLE, (envelope sizes) */
-
+        /* Removed ISO "B" and "C" series, C5E, Comm10E, DLE, (envelope sizes) */
 
         /* US "Office" */
-        Letter,   /* 216 x 279 mm	8.5 x 11.0 in */
-        Legal,    /* 216 x 356 mm	8.5 x 14.0 in */
-        Ledger,   /* 279 x 432 mm	11.0 x 17.0 in (Also "Tabloid".  Although, technically, "Ledger" is 17 x 11.) */
+        Letter,   /* 216 x 279 mm   8.5 x 11.0 in */
+        Legal,    /* 216 x 356 mm   8.5 x 14.0 in */
+        Tabloid,  /* 279 x 432 mm   11.0 x 17.0 in */
+        /* Tabloid = Ledger = ANSI B.  Although, technically, both ANSI B and  
+           Ledger are defined in the qt library as 431.8 mm x 279.4 mm / 17 
+           x 11", while Tabloid is 279 x 432 mm / 11.0 x 17.0 in .  Using either 
+           "Ledger" or "AnsiB" will result in the wrong page orientation when 
+           printing or exporting to PDF.) */
 
         /* ANSI */
-        Ansi_A,   /* 216 x 279 mm	8.5 x 11.0 in */
-        Ansi_B,   /* 279 x 432 mm	11.0 x 17.0 in */
+        //Ansi_A,   /* 216 x 279 mm	8.5 x 11.0 in */
+        //Ansi_B,   /* 279 x 432 mm	11.0 x 17.0 in */
         Ansi_C,   /* 432 x 559 mm	17.0 x 22.0 in */
         Ansi_D,   /* 559 x 864 mm	22.0 x 34.0 in */
         Ansi_E,   /* 864 x 1118 mm	34.0 x 44.0 in */

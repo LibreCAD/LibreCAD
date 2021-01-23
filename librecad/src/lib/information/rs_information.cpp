@@ -57,7 +57,7 @@ RS_Information::RS_Information(RS_EntityContainer& container):
 
 
 /**
- * @return true: if the entity is a dimensioning enity.
+ * @return true: if the entity is a dimensioning entity.
  *         false: otherwise
  */
 bool RS_Information::isDimension(RS2::EntityType type) {
@@ -589,7 +589,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(
     double b2=e02->getMinorRadius();
 
     if( e01->getMinorRadius() < RS_TOLERANCE || e01 -> getRatio()< RS_TOLERANCE) {
-        // treate e01 as a line
+        // treat e01 as a line
         RS_Line line{e1->getParent(), {{-a1,0.}, {a1,0.}}};
         ret= getIntersectionEllipseLine(&line, e02);
         ret.rotate(-shifta1);
@@ -597,7 +597,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(
         return ret;
     }
     if( e02->getMinorRadius() < RS_TOLERANCE || e02 -> getRatio()< RS_TOLERANCE) {
-        // treate e02 as a line
+        // treat e02 as a line
         RS_Line line{e1->getParent(), {{-a2,0.}, {a2,0.}}};
         line.rotate({0.,0.}, e02->getAngle());
         line.move(e02->getCenter());

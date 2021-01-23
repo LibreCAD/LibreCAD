@@ -407,7 +407,7 @@ public:
      * This virtual method must be overwritten if the graphic view has
      * a component that is interested in the current mouse button hints.
      * The implementation will be called typically by actions to inform
-     * the user about the current functionalty of the mouse buttons.
+     * the user about the current functionality of the mouse buttons.
      *
      * @param left Help text for the left mouse button.
      * @param right Help text for the right mouse button.

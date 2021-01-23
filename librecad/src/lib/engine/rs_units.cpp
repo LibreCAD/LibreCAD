@@ -839,30 +839,19 @@ RS_Vector RS_Units::paperFormatToSize(RS2::PaperFormat p) {
     case RS2::A4:
         return RS_Vector(210.0, 297.0);
 
-    case RS2::B0:
-        return RS_Vector(1000.0, 1414.0);
-    case RS2::B1:
-        return RS_Vector(707.0, 1000.0);
-    case RS2::B2:
-        return RS_Vector(500.0, 707.0);
-    case RS2::B3:
-        return RS_Vector(353.0, 500.0);
-    case RS2::B4:
-        return RS_Vector(250.0, 353.0);
+    /* Removed ISO "B" and "C" series, C5E, Comm10E, DLE, (envelope sizes) */
 
-    case RS2::Letter:  /* 8.5 x 11.0 in.  Sizes used for 'hard' conversion to metric */
+    case RS2::Letter:  /* 8.5 x 11.0 in.  Sizes shown are used for 'hard' conversion to metric */
         return RS_Vector(215.9, 279.4);
     case RS2::Legal:  /* 8.5 x 14.0 in */
         return RS_Vector(215.9, 355.6);
-
-    case RS2::Ledger:  /* 11.0 x 17.0 */
+    case RS2::Tabloid:  /* 11.0 x 17.0 */
         return RS_Vector(279.4, 431.8);
-        break;
 
-    case RS2::Ansi_A:  /* 8.5 x 11.0 in */
-        return RS_Vector(215.9, 279.4);
-    case RS2::Ansi_B:  /* 11.0 x 17.0 in */
-        return RS_Vector(279.4, 431.8);
+    //case RS2::Ansi_A:  /* 8.5 x 11.0 in */
+    //    return RS_Vector(215.9, 279.4);
+    //case RS2::Ansi_B:  /* 11.0 x 17.0 in */
+    //    return RS_Vector(279.4, 431.8);
     case RS2::Ansi_C:  /* 17.0 x 22.0 in */
         return RS_Vector(431.8, 558.8);
     case RS2::Ansi_D:  /* 22.0 x 34.0 in */
@@ -926,18 +915,14 @@ QString RS_Units::paperFormatToString(RS2::PaperFormat p) {
     case RS2::A3: return QObject::tr( "A3", "Paper format");
     case RS2::A4: return QObject::tr( "A4", "Paper format");
 
-    case RS2::B0: return QObject::tr( "B0", "Paper format");
-    case RS2::B1: return QObject::tr( "B1", "Paper format");
-    case RS2::B2: return QObject::tr( "B2", "Paper format");
-    case RS2::B3: return QObject::tr( "B3", "Paper format");
-    case RS2::B4: return QObject::tr( "B4", "Paper format");
+    /* Removed ISO "B" and "C" series, C5E, Comm10E, DLE, (envelope sizes) */
 
-    case RS2::Letter: return QObject::tr( "Letter", "Paper format");
+    case RS2::Letter: return QObject::tr( "Letter / ANSI A", "Paper format");
     case RS2::Legal:  return QObject::tr( "Legal",  "Paper format");
-    case RS2::Ledger: return QObject::tr( "Ledger", "Paper format");
+    case RS2::Tabloid: return QObject::tr( "Tabloid / ANSI B", "Paper format");
 
-    case RS2::Ansi_A: return QObject::tr( "ANSI A", "Paper format");
-    case RS2::Ansi_B: return QObject::tr( "ANSI B", "Paper format");
+    //case RS2::Ansi_A: return QObject::tr( "Letter / ANSI A", "Paper format");
+    //case RS2::Ansi_B: return QObject::tr( "Tabloid / ANSI B", "Paper format");
     case RS2::Ansi_C: return QObject::tr( "ANSI C", "Paper format");
     case RS2::Ansi_D: return QObject::tr( "ANSI D", "Paper format");
     case RS2::Ansi_E: return QObject::tr( "ANSI E", "Paper format");
@@ -963,7 +948,7 @@ QString RS_Units::paperFormatToString(RS2::PaperFormat p) {
 RS2::PaperFormat RS_Units::stringToPaperFormat(const QString& p) {
     QString ls {p.toLower()};
 
-    // use toLower() on localized paper format strings, dont't trust that translators keep lower case
+    // use toLower() on localized paper format strings, don't trust that translators keep lower case
     if (ls == QStringLiteral("custom") || ls == QObject::tr("custom", "Paper format").toLower())
         return RS2::Custom;
 
@@ -978,28 +963,19 @@ RS2::PaperFormat RS_Units::stringToPaperFormat(const QString& p) {
     if (ls == QStringLiteral("a4") || ls == QObject::tr("a4", "Paper format").toLower())
         return RS2::A4;
 
-    if (ls == QStringLiteral("b0") || ls == QObject::tr("b0", "Paper format").toLower())
-        return RS2::B0;
-    if (ls == QStringLiteral("b1") || ls == QObject::tr("b1", "Paper format").toLower())
-        return RS2::B1;
-    if (ls == QStringLiteral("b2") || ls == QObject::tr("b2", "Paper format").toLower())
-        return RS2::B2;
-    if (ls == QStringLiteral("b3") || ls == QObject::tr("b3", "Paper format").toLower())
-        return RS2::B3;
-    if (ls == QStringLiteral("b4") || ls == QObject::tr("b4", "Paper format").toLower())
-        return RS2::B4;
+    /* Removed ISO "B" and "C" series, C5E, Comm10E, DLE, (envelope sizes) */
 
     if (ls == QStringLiteral("letter") || ls == QObject::tr("letter", "Paper format").toLower())
         return RS2::Letter;
     if (ls == QStringLiteral("legal")  || ls == QObject::tr("legal",  "Paper format").toLower())
         return RS2::Legal;
-    if (ls == QStringLiteral("ledger") || ls == QObject::tr("ledger", "Paper format").toLower())
-        return RS2::Ledger;
+    if (ls == QStringLiteral("tabloid") || ls == QObject::tr("tabloid", "Paper format").toLower())
+        return RS2::Tabloid;
 
-    if (ls == QStringLiteral("ansi a") || ls == QObject::tr("ansi a", "Paper format").toLower())
-        return RS2::Ansi_A;
-    if (ls == QStringLiteral("ansi b") || ls == QObject::tr("ansi b", "Paper format").toLower())
-        return RS2::Ansi_B;
+    //if (ls == QStringLiteral("ansi a") || ls == QObject::tr("ansi a", "Paper format").toLower())
+    //    return RS2::Ansi_A;
+    //if (ls == QStringLiteral("ansi b") || ls == QObject::tr("ansi b", "Paper format").toLower())
+    //    return RS2::Ansi_B;
     if (ls == QStringLiteral("ansi c") || ls == QObject::tr("ansi c", "Paper format").toLower())
         return RS2::Ansi_C;
     if (ls == QStringLiteral("ansi d") || ls == QObject::tr("ansi d", "Paper format").toLower())

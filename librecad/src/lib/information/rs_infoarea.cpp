@@ -41,7 +41,7 @@ RS_InfoArea::RS_InfoArea():
 /**
  * Adds a point to the internal list
  *
- * @param p co-ordinate of the point
+ * @param p coordinate of the point
  */
 void RS_InfoArea::push_back(const RS_Vector& p) {
     if (thePoints.empty()) {

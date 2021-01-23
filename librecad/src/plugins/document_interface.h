@@ -268,10 +268,10 @@ public:
     virtual QString intColor2str(int color) = 0;
 };
 
-//! Interface for comunicate plugins.
+//! Interface for communicate plugins.
  /*!
- * Class for comunicate plugins with document (drawing).
- * entities whitout add*() function:
+ * Class for communicate plugins with document (drawing).
+ * entities without add*() function:
  * atomic = CONSTRUCTIONLINE, OVERLAYBOX, SOLID,
  * container = INSERT, POLYLINE, SPLINE, HATCH, DIMLEADER,
  * DIMALIGNED, DIMLINEAR, DIMRADIAL, DIMDIAMETRIC, DIMANGULAR,
@@ -441,35 +441,35 @@ public:
     /*! Prompt message or an default message to the user asking for a point.
     *   If base is present draw a line from base to cursor position.
     * \param point a pointer to QPointF to store the obtained point.
-    * \param mesage an optional QString with prompt message.
+    * \param message an optional QString with prompt message.
     * \param base visual helper point, if present.
     * \return true if success.
     * \return false if fail, i.e. user cancel.
     */
-    virtual bool getPoint(QPointF *point, const QString& mesage = "", QPointF *base = 0) = 0;
+    virtual bool getPoint(QPointF *point, const QString& message = "", QPointF *base = 0) = 0;
 
     //! Select a entity.
     /*! Prompt message or a default message to the user asking for a single selection.
     * You can delete the Plug_Entity wen no more needed.
-    * \param mesage an optional QString with prompt message.
+    * \param message an optional QString with prompt message.
     * \return a Plug_Entity handle the selected entity or NULL.
     */
-    virtual Plug_Entity *getEnt(const QString& mesage = "") = 0;
+    virtual Plug_Entity *getEnt(const QString& message = "") = 0;
 
     //! Gets a entities selection.
     /*! Prompt message or an default message to the user asking for a selection.
     * You can delete all, the Plug_Entity and the returned QList wen no more needed.
     * \param sel a QList of pointers to Plug_Entity handled the selected entities.
-    * \param mesage an optional QString with prompt message.
+    * \param message an optional QString with prompt message.
     * \return true if success.
     * \return false if fail, i.e. user cancel.
     */
-    virtual bool getSelect(QList<Plug_Entity *> *sel, const QString& mesage = "") = 0;
+    virtual bool getSelect(QList<Plug_Entity *> *sel, const QString& message = "") = 0;
 
     //! Gets all entities in document.
     /*! You can delete all, the Plug_Entity and the returned QList wen no more needed.
     * \param sel a QList of pointers to Plug_Entity handled the selected entities.
-    * \param visible default fo false, do not select entities in hidden layers.
+    * \param visible default for false, do not select entities in hidden layers.
     * \return true if success.
     * \return false if fail, i.e. user cancel.
     */
@@ -480,9 +480,9 @@ public:
     virtual bool addVariable(const QString& key, int value, int code=70) = 0;
     virtual bool addVariable(const QString& key, double value, int code=40) = 0;
 
-    virtual bool getInt(int *num, const QString& mesage = "", const QString& title = "") = 0;
-    virtual bool getReal(qreal *num, const QString& mesage = "", const QString& title = "") = 0;
-    virtual bool getString(QString *txt, const QString& mesage = "", const QString& title = "") = 0;
+    virtual bool getInt(int *num, const QString& message = "", const QString& title = "") = 0;
+    virtual bool getReal(qreal *num, const QString& message = "", const QString& title = "") = 0;
+    virtual bool getString(QString *txt, const QString& message = "", const QString& title = "") = 0;
 
     //! Convert real to string.
     /*! Convert a real number to string using indicated units format & precision. If omitted

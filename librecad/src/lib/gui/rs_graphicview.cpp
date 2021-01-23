@@ -49,6 +49,7 @@
 #include "rs_layer.h"
 #include "rs_math.h"
 #include "rs_debug.h"
+#include "rs_color.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -1023,10 +1024,14 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 		pen.setScreenWidth(0.0);
 	}
 
-	// prevent background color on background drawing:
-	if (pen.getColor().stripFlags()==background.stripFlags()) {
-		pen.setColor(foreground);
-	}
+    // prevent background color on background drawing
+    // and enhance visibility of black lines on dark backgrounds
+    RS_Color    penColor {pen.getColor().stripFlags()};
+    if ( penColor == background.stripFlags()
+         || (penColor.toIntColor() == RS_Color::Black
+             && penColor.colorDistance( background) < RS_Color::MinColorDistance)) {
+        pen.setColor( foreground);
+    }
 
 	if (!isPrinting() && !isPrintPreview())
 	{
@@ -1761,12 +1766,13 @@ RS_EventHandler* RS_GraphicView::getEventHandler() const{
 void RS_GraphicView::setBackground(const RS_Color& bg) {
 	background = bg;
 
-	// bright background:
-	if (bg.red()+bg.green()+bg.blue()>380) {
-		foreground = RS_Color(0,0,0);
-	} else {
-		foreground = RS_Color(255,255,255);
-	}
+    RS_Color black(0,0,0);
+    if (black.colorDistance( bg) >= RS_Color::MinColorDistance) {
+        foreground = black;
+    }
+    else {
+        foreground = RS_Color(255,255,255);
+    }
 }
 
 void RS_GraphicView::setBorders(int left, int top, int right, int bottom) {

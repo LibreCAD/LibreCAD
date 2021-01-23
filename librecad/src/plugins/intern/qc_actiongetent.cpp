@@ -39,7 +39,7 @@ QC_ActionGetEnt::QC_ActionGetEnt(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView)
         :RS_ActionInterface("Get Entity", container, graphicView) {
     completed = false;
-    mesage = tr("Select object:");
+    message = tr("Select object:");
     en = nullptr;
 }
 
@@ -47,7 +47,7 @@ QC_ActionGetEnt::QC_ActionGetEnt(RS_EntityContainer& container,
 
 void QC_ActionGetEnt::updateMouseButtonHints() {
     if (!completed)
-        RS_DIALOGFACTORY->updateMouseWidget(mesage, tr("Cancel"));
+        RS_DIALOGFACTORY->updateMouseWidget(message, tr("Cancel"));
     else
         RS_DIALOGFACTORY->updateMouseWidget();
 }
@@ -57,8 +57,8 @@ void QC_ActionGetEnt::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
-void QC_ActionGetEnt::setMesage(QString msg){
-    mesage = msg;
+void QC_ActionGetEnt::setMessage(QString msg){
+    message = msg;
 }
 
 void QC_ActionGetEnt::trigger() {

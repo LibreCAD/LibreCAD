@@ -318,7 +318,7 @@ public:
 	void lockRelativeZero(bool lock);
 
 	/**
-		 * @return true if the position of the realtive zero point is
+		 * @return true if the position of the relative zero point is
 		 * locked.
 		 */
 	bool isRelativeZeroLocked() const;

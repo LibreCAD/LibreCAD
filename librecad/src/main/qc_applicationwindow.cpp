@@ -2905,16 +2905,14 @@ void QC_ApplicationWindow::showAboutWindow()
 
     connect(copy_button, SIGNAL(released()), &dlg, SLOT(accept()));
 
-    QString links
-    (
-        QString("<a href=\"https://github.com/LibreCAD/LibreCAD/graphs/contributors\">%1</a>").arg(tr("Contributors"))
-        + "<br/>" +
-        QString("<a href=\"https://github.com/LibreCAD/LibreCAD/blob/master/LICENSE\">%1</a>").arg(tr("License"))
-        + "<br/>" +
-        QString("<a href=\"https://github.com/LibreCAD/LibreCAD/tree/%1\">%2</a>").arg(XSTR(LC_VERSION)).arg("The Code")
-    );
-
-    auto links_label = new QLabel(links);
+    QLabel *links_label = new QLabel( QString( "<a href=\"https://github.com/LibreCAD/LibreCAD/graphs/contributors\">%1</a>"
+                                               "<br/>"
+                                               "<a href=\"https://github.com/LibreCAD/LibreCAD/blob/master/LICENSE\">%2</a>"
+                                               "<br/>"
+                                               "<a href=\"https://github.com/LibreCAD/LibreCAD/\">%3</a>")
+                                      .arg( tr("Contributors"))
+                                      .arg( tr("License"))
+                                      .arg( tr("The Code")) );
     links_label->setOpenExternalLinks(true);
     links_label->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
     f_layout->addWidget(links_label);
@@ -3087,9 +3085,9 @@ void QC_ApplicationWindow::invokeLinkList()
     auto list = new LinkList(&dlg);
     list->addLink(QObject::tr("Wiki"), "https://dokuwiki.librecad.org/");
     list->addLink(QObject::tr("User's Manual"), "https://librecad.readthedocs.io/");
-    list->addLink(QObject::tr("Commands"), "https://wiki.librecad.org/index.php/Commands");
-    list->addLink(QObject::tr("Style Sheets"), "https://github.com/LibreCAD/LibreCAD/wiki/Style-Sheets");
-    list->addLink(QObject::tr("Widgets"), "https://github.com/LibreCAD/LibreCAD/wiki/Widgets");
+    list->addLink(QObject::tr("Commands"), "https://librecad.readthedocs.io/en/latest/ref/tools.html");
+    list->addLink(QObject::tr("Style Sheets"), "https://librecad.readthedocs.io/en/latest/ref/customize.html#style-sheets");
+    list->addLink(QObject::tr("Widgets"), "https://librecad.readthedocs.io/en/latest/ref/menu.html#widgets");
     list->addLink(QObject::tr("Forum"), "https://forum.librecad.org/");
     list->addLink(QObject::tr("Release Information"), "https://github.com/LibreCAD/LibreCAD/releases");
     layout->addWidget(list);

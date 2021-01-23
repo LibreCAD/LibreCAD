@@ -356,7 +356,7 @@ bool RS_Entity::isVisible() const{
         return false;
     }
 
-        /*RS_EntityCotnainer* parent = getParent();
+        /*RS_EntityContainer* parent = getParent();
         if (parent && parent->isUndone()) {
                 return false;
         }*/
