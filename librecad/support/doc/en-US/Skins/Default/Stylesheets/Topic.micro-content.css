@@ -2,7 +2,7 @@
 
 /* Prevents Safari in landscape orientation from zooming in on text*/
 
-body
+.micro-response
 {
 	-ms-text-size-adjust: 100%;
 	-moz-text-size-adjust: 100%;
@@ -12,19 +12,19 @@ body
 
 /* Default css class for hiding element*/
 
-.hidden
+.micro-response .hidden
 {
 	display: none;
 }
 
-a.glossaryTerm
+.micro-response a.glossaryTerm
 {
 	text-decoration: none;
 }
 
 /**/
 
-#ios-wrapper
+.micro-response #ios-wrapper
 {
 	width: 100%;
 	height: 100%;
@@ -32,30 +32,30 @@ a.glossaryTerm
 	-webkit-overflow-scrolling: touch;
 }
 
-.img_off
+.micro-response .img_off
 {
 	display: none;
 }
 
 /* Feedback/Pulse */
 
-.pulse-required,
-.feedback-required,
-.feedback-topic-required
+.micro-response .pulse-required,
+.micro-response .feedback-required,
+.micro-response .feedback-topic-required
 {
 	display: none;
 }
 
-.pulse-active .pulse-required,
-.feedback-active .feedback-required,
-.feedback-active.has-topic .feedback-topic-required
+.micro-response .pulse-active .pulse-required,
+.micro-response .feedback-active .feedback-required,
+.micro-response .feedback-active.has-topic .feedback-topic-required
 {
 	display: block;
 }
 
 /* Login Dialog */
 
-.login-dialog
+.micro-response .login-dialog
 {
 	display: none;
 	z-index: 10001;
@@ -73,7 +73,7 @@ a.glossaryTerm
 	box-shadow: 0 4px 10px #333333;
 }
 
-.login-dialog.pulse
+.micro-response .login-dialog.pulse
 {
 	position: fixed;
 	width: 408px;
@@ -82,7 +82,7 @@ a.glossaryTerm
 	margin-top: -214px;
 }
 
-#pulse-login-frame
+.micro-response #pulse-login-frame
 {
 	width: 100%;
 	height: 100%;
@@ -95,7 +95,7 @@ a.glossaryTerm
 	box-shadow: 0 4px 10px #333333;
 }
 
-.login-dialog-header
+.micro-response .login-dialog-header
 {
 	color: #FFF;
 	font-size: 13px;
@@ -127,7 +127,7 @@ a.glossaryTerm
 	border-radius: 3px 3px 0 0;
 }
 
-.login-dialog-content
+.micro-response .login-dialog-content
 {
 	border-top: solid 1px #767676;
 	background: #5A5A5A;
@@ -139,7 +139,7 @@ a.glossaryTerm
 	padding: 17px;
 }
 
-.login-dialog-content .profile-item-wrapper
+.micro-response .login-dialog-content .profile-item-wrapper
 {
 	color: #CECECE;
 	margin-bottom: 10px;
@@ -147,18 +147,18 @@ a.glossaryTerm
 	line-height: 32px;
 }
 
-.login-dialog-content .profile-item-wrapper .label-wrapper
+.micro-response .login-dialog-content .profile-item-wrapper .label-wrapper
 {
 	margin-bottom: 5px;
 	float: left;
 }
 
-.login-dialog-content .profile-item-wrapper .input-wrapper
+.micro-response .login-dialog-content .profile-item-wrapper .input-wrapper
 {
 	float: right;
 }
 
-.login-dialog-content .profile-item-wrapper input[type=text]
+.micro-response .login-dialog-content .profile-item-wrapper input[type=text]
 {
 	margin: 0;
 	padding: 5px;
@@ -173,19 +173,19 @@ a.glossaryTerm
 	outline: none;
 }
 
-.login-dialog-content .profile-item-wrapper.email-notifications-wrapper
+.micro-response .login-dialog-content .profile-item-wrapper.email-notifications-wrapper
 {
 	margin-top: 15px;
 	height: auto;
 	line-height: normal;
 }
 
-.login-dialog-content .profile-item-wrapper.email-notifications-wrapper .label-wrapper
+.micro-response .login-dialog-content .profile-item-wrapper.email-notifications-wrapper .label-wrapper
 {
 	float: none;
 }
 
-.login-dialog-content .profile-item-wrapper.email-notifications-wrapper .email-notifications-group
+.micro-response .login-dialog-content .profile-item-wrapper.email-notifications-wrapper .email-notifications-group
 {
 	margin-right: 0;
 	padding: 12px;
@@ -201,19 +201,19 @@ a.glossaryTerm
 	box-shadow: 0 1px #888;
 }
 
-.login-dialog-content .profile-item-wrapper.error input,
-.login-dialog-content .profile-item-wrapper.error select
+.micro-response .login-dialog-content .profile-item-wrapper.error input,
+.micro-response .login-dialog-content .profile-item-wrapper.error select
 {
 	border: solid 1px #F00;
 	background-color: #FEE7E7;
 }
 
-.login-dialog-buttons
+.micro-response .login-dialog-buttons
 {
 	text-align: right;
 }
 
-.login-dialog button
+.micro-response .login-dialog button
 {
 	color: #FFF;
 	font-weight: bold;
@@ -245,7 +245,7 @@ a.glossaryTerm
 	cursor: pointer;
 }
 
-.login-dialog button.close-dialog
+.micro-response .login-dialog button.close-dialog
 {
 	position: absolute;
 	top: 8px;
@@ -259,7 +259,7 @@ a.glossaryTerm
 	border: 0;
 }
 
-.login-dialog .status-message-box
+.micro-response .login-dialog .status-message-box
 {
 	display: none;
 	color: #0F0;
@@ -273,38 +273,38 @@ a.glossaryTerm
 	border-radius: 3px;
 }
 
-.login-dialog .status-message-box.error
+.micro-response .login-dialog .status-message-box.error
 {
 	color: #F00;
 	border: solid 1px #F00;
 	background-color: #FEE7E7;
 }
 
-.login-dialog .status-message-box .message
+.micro-response .login-dialog .status-message-box .message
 {
 	display: none;
 }
 
-.backlink-container
+.micro-response .backlink-container
 {
 	position: absolute;
 	bottom: 11px;
 	right: 20px;
 }
 
-.backlink-container-topnav
+.micro-response .backlink-container-topnav
 {
 	bottom: 4px;
 	right: 4px;
 }
 
-.backlink-container-sidenav
+.micro-response .backlink-container-sidenav
 {
 	bottom: 20px;
 	right: 20px;
 }
 
-#mc-backlink
+.micro-response #mc-backlink
 {
 	text-decoration: none;
 	color: #7d858a;
@@ -313,12 +313,12 @@ a.glossaryTerm
 	font-weight: normal;
 }
 
-#mc-backlink > sup
+.micro-response #mc-backlink > sup
 {
 	font-size: 12px;
 }
 
-.height-container
+.micro-response .height-container
 {
 	/* just to contain top margin of element inside */
 	padding-top: 0.1px;
@@ -326,19 +326,19 @@ a.glossaryTerm
 	box-sizing: border-box;
 }
 
-.height-container-no-footer
+.micro-response .height-container-no-footer
 {
 	padding-bottom: 30px;
 }
 
-.height-container-sidenav
+.micro-response .height-container-sidenav
 {
 	padding-bottom: 40px;
 }
 
 /* to contain floating elements in the div */
 
-.height-container:after
+.micro-response .height-container:after
 {
 	visibility: hidden;
 	display: block;
@@ -348,30 +348,30 @@ a.glossaryTerm
 	height: 0;
 }
 
-.codeSnippet
+.micro-response .codeSnippet
 {
 	overflow: auto;
 }
 
-.codeSnippetBody
+.micro-response .codeSnippetBody
 {
 	margin: 0;
 	font-family: inherit;
 	overflow: auto;
 }
 
-.codeSnippetBody > pre
+.micro-response .codeSnippetBody > pre
 {
 	font-family: inherit;
 	margin: 0;
 }
 
-.codeSnippetBody > pre > code
+.micro-response .codeSnippetBody > pre > code
 {
 	font-family: inherit;
 }
 
-.codeSnippetBody span.codeSnippetLineNumbers
+.micro-response .codeSnippetBody span.codeSnippetLineNumbers
 {
 	text-decoration: inherit;
 	float: left;
@@ -381,20 +381,20 @@ a.glossaryTerm
 	text-align: right;
 }
 
-.codeSnippetCopyButton
+.micro-response .codeSnippetCopyButton
 {
 	font: inherit;
 	right: 0;
 }
 
-.MCHelpControl-Related .MCHelpControl-RelatedHotSpot_
+.micro-response .MCHelpControl-Related .MCHelpControl-RelatedHotSpot_
 {
 	background-position: none;
 	background-image: none;
 	padding-left: 0;
 }
 
-.link-list-popup
+.micro-response .link-list-popup
 {
 	color: #000000;
 	background-color: #dcdcdc;
@@ -403,7 +403,7 @@ a.glossaryTerm
 	padding: 0px;
 }
 
-.link-list-popup ul li
+.micro-response .link-list-popup ul li
 {
 	color: Black;
 	background-color: Transparent;
@@ -412,161 +412,161 @@ a.glossaryTerm
 	font-size: 10pt;
 }
 
-.link-list-popup ul li:hover
+.micro-response .link-list-popup ul li:hover
 {
 	color: White;
 	background-color: Blue;
 }
 
-.MCHelpControlList
+.micro-response .MCHelpControlList
 {
 	
 }
 
-.MCHelpControlListItem
+.micro-response .MCHelpControlListItem
 {
 	
 }
 
-.MCHelpControlListItem a
+.micro-response .MCHelpControlListItem a
 {
 	
 }
 
-.MCHelpControlListItem a:link
+.micro-response .MCHelpControlListItem a:link
 {
 	
 }
 
-.MCHelpControlListItem a:visited
+.micro-response .MCHelpControlListItem a:visited
 {
 	
 }
 
-.MCHelpControlListItem a:hover
+.micro-response .MCHelpControlListItem a:hover
 {
 	
 }
 
-.MCHelpControlListItem a:focus
+.micro-response .MCHelpControlListItem a:focus
 {
 	
 }
 
-.MCConceptLinkControlList
+.micro-response .MCConceptLinkControlList
 {
 	
 }
 
-.MCConceptLinkControlListItem
+.micro-response .MCConceptLinkControlListItem
 {
 	
 }
 
-.MCConceptLinkControlListItem a
+.micro-response .MCConceptLinkControlListItem a
 {
 	
 }
 
-.MCConceptLinkControlListItem a:link
+.micro-response .MCConceptLinkControlListItem a:link
 {
 	
 }
 
-.MCConceptLinkControlListItem a:visited
+.micro-response .MCConceptLinkControlListItem a:visited
 {
 	
 }
 
-.MCConceptLinkControlListItem a:hover
+.micro-response .MCConceptLinkControlListItem a:hover
 {
 	
 }
 
-.MCConceptLinkControlListItem a:focus
+.micro-response .MCConceptLinkControlListItem a:focus
 {
 	
 }
 
-.MCKeywordLinkControlList
+.micro-response .MCKeywordLinkControlList
 {
 	
 }
 
-.MCKeywordLinkControlListItem
+.micro-response .MCKeywordLinkControlListItem
 {
 	
 }
 
-.MCKeywordLinkControlListItem a
+.micro-response .MCKeywordLinkControlListItem a
 {
 	
 }
 
-.MCKeywordLinkControlListItem a:link
+.micro-response .MCKeywordLinkControlListItem a:link
 {
 	
 }
 
-.MCKeywordLinkControlListItem a:visited
+.micro-response .MCKeywordLinkControlListItem a:visited
 {
 	
 }
 
-.MCKeywordLinkControlListItem a:hover
+.micro-response .MCKeywordLinkControlListItem a:hover
 {
 	
 }
 
-.MCKeywordLinkControlListItem a:focus
+.micro-response .MCKeywordLinkControlListItem a:focus
 {
 	
 }
 
-.MCRelatedTopicsControlList
+.micro-response .MCRelatedTopicsControlList
 {
 	
 }
 
-.MCRelatedTopicsControlListItem
+.micro-response .MCRelatedTopicsControlListItem
 {
 	font-weight: normal;
 	list-style-type: square;
 }
 
-.MCRelatedTopicsControlListItem a
+.micro-response .MCRelatedTopicsControlListItem a
 {
 	font-weight: normal;
 }
 
-.MCRelatedTopicsControlListItem a:link
+.micro-response .MCRelatedTopicsControlListItem a:link
 {
 	
 }
 
-.MCRelatedTopicsControlListItem a:visited
+.micro-response .MCRelatedTopicsControlListItem a:visited
 {
 	
 }
 
-.MCRelatedTopicsControlListItem a:hover
+.micro-response .MCRelatedTopicsControlListItem a:hover
 {
 	
 }
 
-.MCRelatedTopicsControlListItem a:focus
+.micro-response .MCRelatedTopicsControlListItem a:focus
 {
 	
 }
 
-.relatedTopics
+.micro-response .relatedTopics
 {
 	color: #696969;
 	font-weight: bold;
 	font-size: 12px;
 }
 
-.mcReset
+.micro-response .mcReset
 {
 	margin-left: 0;
 	margin-right: 0;
@@ -603,17 +603,17 @@ a.glossaryTerm
 	text-align: inherit;
 }
 
-.MCWebHelpFramesetLink a
+.micro-response .MCWebHelpFramesetLink a
 {
 	color: #0000ee;
 }
 
-.MCWebHelpFramesetLink.MCWebHelpFramesetLinkTop a
+.micro-response .MCWebHelpFramesetLink.MCWebHelpFramesetLinkTop a
 {
 	
 }
 
-.MCWebHelpFramesetLink.MCWebHelpFramesetLinkBottom a
+.micro-response .MCWebHelpFramesetLink.MCWebHelpFramesetLinkBottom a
 {
 	
 }

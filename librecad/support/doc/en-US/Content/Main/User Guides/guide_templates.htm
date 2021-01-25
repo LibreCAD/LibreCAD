@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-browse-sequence-path="Drawing set-up and Templates" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="User Guides">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-browse-sequence-path="Drawing set-up and Templates" data-mc-toc-path="User Guides" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print">
     <!-- saved from url=(0016)http://localhost -->
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,61 +12,66 @@
         <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
         <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
         <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Using Templates</title>
-        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
-        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
-        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" type="text/css" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
+        <script src="../../../Resources/Scripts/jquery.min.js" type="text/javascript">
         </script>
-        <script src="../../../Resources/Scripts/jquery.min.js">
+        <script src="../../../Resources/Scripts/require.min.js" type="text/javascript" defer="defer">
         </script>
-        <script src="../../../Resources/Scripts/require.min.js">
+        <script src="../../../Resources/Scripts/require.config.js" type="text/javascript" defer="defer">
         </script>
-        <script src="../../../Resources/Scripts/require.config.js">
+        <script src="../../../Resources/Scripts/foundation.min.js" type="text/javascript" defer="defer">
         </script>
-        <script src="../../../Resources/Scripts/foundation.min.js">
+        <script src="../../../Resources/Scripts/plugins.min.js" type="text/javascript" defer="defer">
         </script>
-        <script src="../../../Resources/Scripts/plugins.min.js">
-        </script>
-        <script src="../../../Resources/Scripts/MadCapAll.js">
+        <script src="../../../Resources/Scripts/MadCapAll.js" type="text/javascript" defer="defer">
         </script>
     </head>
     <body>
         <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/User Guides/guide_templates.htm">Open topic with navigation</a>
         </p>
         <div>
-            <h1 class="TOC4"><a name="kanchor22"></a>Using Templates</h1>
-            <p>Templates are prototype drawings that provide the means to save basic parameters and settings so a drawing does not have to be configured each time a new one is started. The parameters and settings include the settings defined in the Drawing Preferences, such as the paper format, main unit of measure and format, and dimension format. Templates can also include layers and layer configuration, line type and thickness, pen color, and other drawing elements such as a border. These settings are inherited by the drawings created from the template.</p>
-            <p>&#160;</p>
-            <p>You can use an existing drawing as a template, or you can use the default blank drawing as a template.</p>
-            <p class="Procedure">Add a title block to the default blank drawing template</p>
-            <p>You can add a title block, or other entities, to the blank default drawing that appears when LibreCAD is launched or a new drawing is created. This is useful to set up if you have entities that need to be present in all of your CAD drawings.</p>
-            <ol>
-                <li value="1">Open the default DXF template file in LibreCAD:&#160;<span class="CodeSnippet">C:\Users\[Windows Username]\AppData\Local\Hypertherm CAM\ProNest 2019\ProNestTemplate.DXF</span></li>
-                <li value="2">Make changes to the template drawing as needed.</li>
-                <li value="3">Click <b>Save</b> ( <img src="../../Images/save.svg" /> ).</li>
-            </ol>
-            <p>The template file is now updated. To verify your changes, create a new drawing.</p>
-            <div class="Note">
-                <p>If you can't locate the template file, the default drawing template is listed in the Command Line when a new drawing is created.</p>
-            </div>
-            <p class="Procedure">Use an existing drawing as a template</p>
-            <ol>
-                <li value="1">Click <b>File</b>.</li>
-                <li value="2">Click <b>New from Template</b>.</li>
-                <li value="3">Select the drawing that you want to use as a template.</li>
-                <li value="4">Click <b>Open</b>.</li>
-            </ol>
-            <p>Modify the drawing as needed. Note that the template drawing won't be modified in any way, and you'll need to save the new drawing as a separate file.</p>
-            <div class="TopicFooter">
-                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
-                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_drawingsetup.htm">Setting up a drawing</a>
-                        </li>
-                    </ul>
+            <div role="main" id="mc-main-content">
+                <h1 class="TOC4"><a name="kanchor22"></a>Using Templates</h1>
+                <p>Templates are prototype drawings that provide the means to save basic parameters and settings so a drawing does not have to be configured each time a new one is started. The parameters and settings include the settings defined in the Drawing Preferences, such as the paper format, main unit of measure and format, and dimension format. Templates can also include layers and layer configuration, line type and thickness, pen color, and other drawing elements such as a border. These settings are inherited by the drawings created from the template.</p>
+                <p>&#160;</p>
+                <p>You can use an existing drawing as a template, or you can use the default blank drawing as a template.</p>
+                <p class="Procedure">Add a title block to the default blank drawing template</p>
+                <p>You can add a title block, or other entities, to the blank default drawing that appears when LibreCAD is launched or a new drawing is created. This is useful to set up if you have entities that need to be present in all of your CAD drawings.</p>
+                <ol>
+                    <li value="1">Open the default DXF template file in LibreCAD:&#160;<span class="CodeSnippet">C:\Users\[Windows Username]\AppData\Local\Hypertherm CAM\ProNest 2019\ProNestTemplate.DXF</span></li>
+                    <li value="2">Make changes to the template drawing as needed.</li>
+                    <li value="3">Click <b>Save</b> ( <img src="../../Images/save.svg" /> ).</li>
+                </ol>
+                <p>The template file is now updated. To verify your changes, create a new drawing.</p>
+                <div class="Note">
+                    <p>If you can't locate the template file, the default drawing template is listed in the Command Line when a new drawing is created.</p>
+                </div>
+                <p class="Procedure">Use an existing drawing as a template</p>
+                <ol>
+                    <li value="1">Click <b>File</b>.</li>
+                    <li value="2">Click <b>New from Template</b>.</li>
+                    <li value="3">Select the drawing that you want to use as a template.</li>
+                    <li value="4">Click <b>Open</b>.</li>
+                </ol>
+                <p>Modify the drawing as needed. Note that the template drawing won't be modified in any way, and you'll need to save the new drawing as a separate file.</p>
+                <div class="TopicFooter">
+                    <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
+                        <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_drawingsetup.htm">Setting up a drawing</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

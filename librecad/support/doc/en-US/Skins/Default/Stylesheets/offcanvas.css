@@ -35,7 +35,7 @@
 		width: 100%;
 	}
 
-	:before[role="main"]
+	[role="main"]:before
 	{
 		/*content: " ";*/
 		position: absolute;
@@ -46,7 +46,7 @@
 		height: 100%;
 	}
 
-	.right-layout :before[role="main"]
+	.right-layout [role="main"]:before
 	{
 		/*content: " ";*/
 		position: absolute;

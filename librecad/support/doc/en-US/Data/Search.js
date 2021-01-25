@@ -1,1 +1,1 @@
-define({r:0.5,st:'Stem',n:1,t:[0],u:['../Content/Main/Appendices/append_calculator.htm'],s:['+','myblock2'],p:[['+',52],['base',3],['detail',32],['function',52],['looks',40],['pl',26],['space',50],['two',28]]});
+define({r:0.5,st:'Stem',n:1,t:[0],m:[],u:['../Content/Main/Appendices/append_calculator.htm'],s:['+','myblock2'],p:[['+',52],['bar',43],['destroy',19],['full',48],['long',45],['perpendicular',26],['some',32],['turn',34]]});

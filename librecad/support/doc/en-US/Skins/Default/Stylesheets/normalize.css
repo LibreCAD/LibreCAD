@@ -94,20 +94,13 @@ a {
 }
 
 /**
- * Address `outline` inconsistency between Chrome and other browsers.
- */
-
-a:focus {
-    outline: thin dotted;
-}
-
-/**
  * Improve readability when focused and also mouse hovered in all browsers.
  */
 
 a:active,
 a:hover {
-    outline: 0;
+    /* Commented out because outlines are necessary for 508 Compliance */
+    /*outline: 0;*/
 }
 
 /* ==========================================================================
@@ -382,7 +375,6 @@ input[type="search"]::-webkit-search-decoration {
 
 button::-moz-focus-inner,
 input::-moz-focus-inner {
-    border: 0;
     padding: 0;
 }
 
@@ -407,4 +399,9 @@ textarea {
 table {
     border-collapse: collapse;
     border-spacing: 0;
+}
+
+/* Fixes for specific elements */
+#show-hide-navigation:-moz-focusring {
+    outline: grey dotted thin;
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="User Guides">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-toc-path="User Guides" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print">
     <!-- saved from url=(0016)http://localhost -->
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,113 +12,118 @@
         <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
         <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
         <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Using Plugins</title>
-        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
-        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
-        <link href="../../Resources/TableStyles/Basic.css" rel="stylesheet" />
-        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" type="text/css" />
+        <link href="../../Resources/TableStyles/Basic.css" rel="stylesheet" data-mc-stylesheet-type="table" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
+        <script src="../../../Resources/Scripts/jquery.min.js" type="text/javascript">
         </script>
-        <script src="../../../Resources/Scripts/jquery.min.js">
+        <script src="../../../Resources/Scripts/require.min.js" type="text/javascript" defer="defer">
         </script>
-        <script src="../../../Resources/Scripts/require.min.js">
+        <script src="../../../Resources/Scripts/require.config.js" type="text/javascript" defer="defer">
         </script>
-        <script src="../../../Resources/Scripts/require.config.js">
+        <script src="../../../Resources/Scripts/foundation.min.js" type="text/javascript" defer="defer">
         </script>
-        <script src="../../../Resources/Scripts/foundation.min.js">
+        <script src="../../../Resources/Scripts/plugins.min.js" type="text/javascript" defer="defer">
         </script>
-        <script src="../../../Resources/Scripts/plugins.min.js">
-        </script>
-        <script src="../../../Resources/Scripts/MadCapAll.js">
+        <script src="../../../Resources/Scripts/MadCapAll.js" type="text/javascript" defer="defer">
         </script>
     </head>
     <body>
         <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/User Guides/guide_plugins.htm">Open topic with navigation</a>
         </p>
         <div>
-            <h1 class="TOC4"><a name="kanchor51"></a>Using Plugins</h1>
-            <p>In LibreCAD, Plugins are special commands that may help create, modify, or get information about entities in a drawing. Plugins can have many different purposes outside of modifying entities, such as supporting certain file types, such as the ESRI Shapefile plugin.</p>
-            <p>&#160;</p>
-            <table style="mc-table-style: url('../../Resources/TableStyles/Basic.css');margin-left: 0;margin-right: auto;" class="TableStyle-Basic" cellspacing="0">
-                <col class="Column-Column1" />
-                <col class="Column-Column1" />
-                <tbody>
-                    <tr class="Body-Body1">
-                        <td class="BodyE-Column1-Body1" style="text-align: center;font-weight: bold;">Name</td>
-                        <td class="BodyD-Column1-Body1" style="text-align: center;font-weight: bold;">Description</td>
-                    </tr>
-                    <tr class="Body-Body1">
-                        <td class="BodyE-Column1-Body1">Align</td>
-                        <td class="BodyD-Column1-Body1">Align selected entities to a reference by defining the final positions of 2 initial points.</td>
-                    </tr>
-                    <tr class="Body-Body1">
-                        <td class="BodyE-Column1-Body1">Read ASCII points</td>
-                        <td class="BodyD-Column1-Body1">
-                            <p>Read points from a text file. </p>
-                            <p>Each line of the file is a point defined by an ID, X coordinate, Y coordinate, Z coordinate and an optional code. Each field can be separated by a comma, tab, or space. The decimal separator is a period (.). The points can be connected with a line, ID, or coordinate, and code fields can be plotted as text.</p>
-                        </td>
-                    </tr>
-                    <tr class="Body-Body1">
-                        <td class="BodyE-Column1-Body1">Divide</td>
-                        <td class="BodyD-Column1-Body1">
-                            <p>Divide a line or a circle with <i>n</i> sections. </p>
-                            <p>A tick can be located at the limit of each section to show each limit. The size of this tick can be defined as a percentage of the segment length. The line or the circle can be broken at the limit of each section using the <a href="../Tools/tool_modify.htm">Divide tool</a>.</p>
-                        </td>
-                    </tr>
-                    <tr class="Body-Body1">
-                        <td class="BodyE-Column1-Body1">Gear plugin</td>
-                        <td class="BodyD-Column1-Body1">Draw a gear by selecting the center of gear and defining parameters such as number of teeth, modulus, and so forth.</td>
-                    </tr>
-                    <tr class="Body-Body1">
-                        <td class="BodyE-Column1-Body1">ESRI Shapefile</td>
-                        <td class="BodyD-Column1-Body1">
-                            <p>Import GIS geospatial vector data shapefile (maps). </p>
-                            <p><i>Note</i>: The import process will lock LibreCAD until it is complete and large files can be very time consuming.</p>
-                        </td>
-                    </tr>
-                    <tr class="Body-Body1">
-                        <td class="BodyE-Column1-Body1">List entities</td>
-                        <td class="BodyD-Column1-Body1">List the selected entities along with their properties such as ID, layer, color, line type, line thickness, and coordinates.</td>
-                    </tr>
-                    <tr class="Body-Body1">
-                        <td class="BodyE-Column1-Body1">Read PIC file</td>
-                        <td class="BodyD-Column1-Body1">Import PIC graphics language diagrams.</td>
-                    </tr>
-                    <tr class="Body-Body1">
-                        <td class="BodyE-Column1-Body1">Plot plugin</td>
-                        <td class="BodyD-Column1-Body1">
-                            <p>Plot a mathematical function or a parametric function using the drawing coordinate system. </p>
-                            <p>The formula, start value, end value, and step value are required. The plot can be lines, a polyline, or a spline.</p>
-                        </td>
-                    </tr>
-                    <tr class="Body-Body1">
-                        <td class="BodyE-Column1-Body1">Same properties</td>
-                        <td class="BodyD-Column1-Body1">
-                            <p>Apply the properties of a reference entity to selected entities. </p>
-                            <p>The modified properties are layer, color, line type, and line thickness.</p>
-                        </td>
-                    </tr>
-                    <tr class="Body-Body1">
-                        <td class="BodyB-Column1-Body1">Sample plugin</td>
-                        <td class="BodyA-Column1-Body1">Draw a line by specifying the X and Y coordinates of end points.</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="TopicFooter">
-                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
-                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Toolbars and Widgets/tw_blocklistdock.htm">Block List dock widget</a>
-                        </li>
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Toolbars and Widgets/tw_librarybrowserdock.htm">Library Browser dock widget</a>
-                        </li>
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_templates.htm">Using Templates</a>
-                        </li>
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_library.htm">Using the Library Browser</a>
-                        </li>
-                    </ul>
+            <div role="main" id="mc-main-content">
+                <h1 class="TOC4"><a name="kanchor51"></a>Using Plugins</h1>
+                <p>In LibreCAD, Plugins are special commands that may help create, modify, or get information about entities in a drawing. Plugins can have many different purposes outside of modifying entities, such as supporting certain file types, such as the ESRI Shapefile plugin.</p>
+                <p>&#160;</p>
+                <table style="mc-table-style: url('../../Resources/TableStyles/Basic.css');margin-left: 0;margin-right: auto;" class="TableStyle-Basic" cellspacing="0">
+                    <col class="Column-Column1" />
+                    <col class="Column-Column1" />
+                    <tbody>
+                        <tr class="Body-Body1">
+                            <td class="BodyE-Column1-Body1" style="text-align: center;font-weight: bold;">Name</td>
+                            <td class="BodyD-Column1-Body1" style="text-align: center;font-weight: bold;">Description</td>
+                        </tr>
+                        <tr class="Body-Body1">
+                            <td class="BodyE-Column1-Body1">Align</td>
+                            <td class="BodyD-Column1-Body1">Align selected entities to a reference by defining the final positions of 2 initial points.</td>
+                        </tr>
+                        <tr class="Body-Body1">
+                            <td class="BodyE-Column1-Body1">Read ASCII points</td>
+                            <td class="BodyD-Column1-Body1">
+                                <p>Read points from a text file. </p>
+                                <p>Each line of the file is a point defined by an ID, X coordinate, Y coordinate, Z coordinate and an optional code. Each field can be separated by a comma, tab, or space. The decimal separator is a period (.). The points can be connected with a line, ID, or coordinate, and code fields can be plotted as text.</p>
+                            </td>
+                        </tr>
+                        <tr class="Body-Body1">
+                            <td class="BodyE-Column1-Body1">Divide</td>
+                            <td class="BodyD-Column1-Body1">
+                                <p>Divide a line or a circle with <i>n</i> sections. </p>
+                                <p>A tick can be located at the limit of each section to show each limit. The size of this tick can be defined as a percentage of the segment length. The line or the circle can be broken at the limit of each section using the <a href="../Tools/tool_modify.htm">Divide tool</a>.</p>
+                            </td>
+                        </tr>
+                        <tr class="Body-Body1">
+                            <td class="BodyE-Column1-Body1">Gear plugin</td>
+                            <td class="BodyD-Column1-Body1">Draw a gear by selecting the center of gear and defining parameters such as number of teeth, modulus, and so forth.</td>
+                        </tr>
+                        <tr class="Body-Body1">
+                            <td class="BodyE-Column1-Body1">ESRI Shapefile</td>
+                            <td class="BodyD-Column1-Body1">
+                                <p>Import GIS geospatial vector data shapefile (maps). </p>
+                                <p><i>Note</i>: The import process will lock LibreCAD until it is complete and large files can be very time consuming.</p>
+                            </td>
+                        </tr>
+                        <tr class="Body-Body1">
+                            <td class="BodyE-Column1-Body1">List entities</td>
+                            <td class="BodyD-Column1-Body1">List the selected entities along with their properties such as ID, layer, color, line type, line thickness, and coordinates.</td>
+                        </tr>
+                        <tr class="Body-Body1">
+                            <td class="BodyE-Column1-Body1">Read PIC file</td>
+                            <td class="BodyD-Column1-Body1">Import PIC graphics language diagrams.</td>
+                        </tr>
+                        <tr class="Body-Body1">
+                            <td class="BodyE-Column1-Body1">Plot plugin</td>
+                            <td class="BodyD-Column1-Body1">
+                                <p>Plot a mathematical function or a parametric function using the drawing coordinate system. </p>
+                                <p>The formula, start value, end value, and step value are required. The plot can be lines, a polyline, or a spline.</p>
+                            </td>
+                        </tr>
+                        <tr class="Body-Body1">
+                            <td class="BodyE-Column1-Body1">Same properties</td>
+                            <td class="BodyD-Column1-Body1">
+                                <p>Apply the properties of a reference entity to selected entities. </p>
+                                <p>The modified properties are layer, color, line type, and line thickness.</p>
+                            </td>
+                        </tr>
+                        <tr class="Body-Body1">
+                            <td class="BodyB-Column1-Body1">Sample plugin</td>
+                            <td class="BodyA-Column1-Body1">Draw a line by specifying the X and Y coordinates of end points.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="TopicFooter">
+                    <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
+                        <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Toolbars and Widgets/tw_blocklistdock.htm">Block List dock widget</a>
+                            </li>
+                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Toolbars and Widgets/tw_librarybrowserdock.htm">Library Browser dock widget</a>
+                            </li>
+                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_templates.htm">Using Templates</a>
+                            </li>
+                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_library.htm">Using the Library Browser</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

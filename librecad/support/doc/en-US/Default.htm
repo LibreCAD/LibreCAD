@@ -11,6 +11,7 @@
         <link rel="icon" sizes="32x32" href="Skins/Favicons/favicon-32x32.png" />
         <link rel="icon" sizes="16x16" href="Skins/Favicons/favicon-16x16.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>LibreCAD for ProNest Help</title>
+        <link rel="Stylesheet" href="Skins/Default/Stylesheets/Slideshow.css" />
         <link rel="Stylesheet" href="Skins/Default/Stylesheets/TextEffects.css" />
         <link rel="Stylesheet" href="Skins/Default/Stylesheets/Styles.css" />
         <link rel="Stylesheet" href="Skins/Default/Stylesheets/normalize.css" />
@@ -19,19 +20,19 @@
         <link rel="Stylesheet" href="Skins/Default/Stylesheets/Web.css" />
         <link rel="Stylesheet" href="Skins/Default/Stylesheets/Tablet.css" />
         <link rel="Stylesheet" href="Skins/Default/Stylesheets/Mobile.css" />
-        <script type="text/javascript" src="Resources/Scripts/custom.modernizr.js">
-        </script>
         <script type="text/javascript" src="Resources/Scripts/jquery.min.js">
         </script>
         <script type="text/javascript" src="Resources/Scripts/foundation.min.js">
         </script>
         <script type="text/javascript" src="Resources/Scripts/plugins.min.js">
         </script>
+        <script type="text/javascript" src="Resources/Scripts/purify.min.js">
+        </script>
         <script type="text/javascript" src="Resources/Scripts/require.min.js">
         </script>
         <script type="text/javascript" src="Resources/Scripts/require.config.js">
         </script>
-        <script type="text/javascript" src="Resources/Scripts/MadCapAll.js">
+        <script type="text/javascript" src="Resources/Scripts/MadCapAll.js" defer="defer">
         </script>
         <style>/*<meta />*/
 
@@ -145,182 +146,203 @@
             </div>
             <div class="MCDebugLogFooter">
             </div>
-        </div>
-        <div id="header"><a class="homeLink" href="Default.htm"><h1 class="logo"><img src="Skins/Default/Stylesheets/Images/transparent.gif" alt="Logo" /></h1></a>
-            <div class="search-bar search-bar-container needs-pie">
-                <input id="search-field" class="search-field needs-pie" type="text" placeholder="Search" />
-                <div class="search-filter-wrapper">
-                    <div class="search-filter"><span>All Files</span>
-                        <div class="search-filter-content">
-                            <ul>
-                                <li>All Files</li>
-                            </ul>
+        </div><a class="skip-to-content tripane-skip showOnFocus" href="#">Skip To Main Content</a>
+        <div id="header"><a class="homeLink logo" href="Default.htm"><img src="Skins/Default/Stylesheets/Images/transparent.gif" alt="Logo" /></a>
+            <div class="search-account-container">
+                <div class="central-account-wrapper">
+                    <div class="central-dropdown"><a class="central-account-drop"><span class="central-account-image"></span><span class="central-account-text">Account</span></a>
+                        <div class="central-dropdown-content"><a class="MCCentralLink central-dropdown-content-settings" href="#">Settings</a>
+                            <hr class="central-separator" /><a class="MCCentralLink central-dropdown-content-logout">Logout</a>
                         </div>
                     </div>
                 </div>
-                <div class="search-submit-wrapper" dir="ltr">
-                    <div class="search-submit" title="Search">
+                <div class="search-bar search-bar-container needs-pie">
+                    <input id="search-field" class="search-field needs-pie" type="text" placeholder="Search" aria-label="Search" />
+                    <div class="search-filter-wrapper">
+                        <div class="search-filter" aria-haspopup="true" aria-controls="sf-content" aria-expanded="false" title="All Files" aria-label="Search Filter"><span>All Files</span>
+                        </div>
+                        <div id="sf-content" class="search-filter-content">
+                            <ul>
+                                <li>
+                                    <button aria-labelledby="search-filters-label filterSelectorLabel-00001" href="#" class="mc-dropdown-item"><span id="filterSelectorLabel-00001">All Files</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="search-submit-wrapper" dir="ltr">
+                        <div class="search-submit" title="Search"><span class="invisible-label">Submit Search</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div id="navigationResizeBar" class="show-for-xlarge-up columns navbar-offset">
-            <div id="show-hide-navigation" class="needs-pie" dir="ltr">
-            </div>
+            <button id="show-hide-navigation" aria-expanded="true" aria-controls="navigation" class="needs-pie" dir="ltr" aria-label="Show Navigation Panel">
+            </button>
         </div>
         <div id="body" class="row collapse">
             <div id="navigation" class="small-2 columns" role="complementary">
                 <form id="search-sidebar" class="search-bar-container needs-pie">
-                    <input id="search-field-sidebar" type="search" placeholder="Search" />
-                    <input id="responsive-search-index" type="search" class="tabs-panel-search" placeholder="Search Index" />
-                    <input id="responsive-search-glossary" type="search" class="tabs-panel-search" placeholder="Search Glossary" />
+                    <input id="search-field-sidebar" type="search" placeholder="Search" aria-label="Search" />
+                    <input id="responsive-search-index" type="search" class="tabs-panel-search" placeholder="Search Index" aria-label="Search Index" />
+                    <input id="responsive-search-glossary" type="search" class="tabs-panel-search" placeholder="Search Glossary" aria-label="Search Glossary" />
                 </form>
                 <div id="home" class="image-then-text tab-icon"><span id="home-icon" class="tabs-nav-icon"></span><span id="home-text" class="tabs-nav-text">Home</span>
                 </div>
                 <div class="tabs">
                     <div class="tab">
-                        <ul class="tabs-nav clearfix image-then-text tab-icon">
-                            <li id="TocTab" class="needs-pie tabs-nav-active">
+                        <ul role="presentation" class="tabs-nav clearfix image-then-text tab-icon">
+                            <li id="TocTab" class="needs-pie tabs-nav-active" aria-label="Table of Contents">
                                 <div><span class="tabs-nav-icon active" title="Contents"></span><span class="tabs-nav-text">Contents</span>
                                 </div>
                             </li>
                         </ul>
                         <div class="tabs-panel tabs-panel-active">
-                            <div id="toc" class="tabs-panel-content needs-pie">
-                            </div>
+                            <section id="toc" class="tabs-panel-content needs-pie" aria-label="Table of Contents">
+                            </section>
                         </div>
                     </div>
                     <div class="tab">
-                        <ul class="tabs-nav clearfix image-then-text tab-icon">
-                            <li id="IndexTab" class="needs-pie tabs-nav-inactive">
+                        <ul role="presentation" class="tabs-nav clearfix image-then-text tab-icon">
+                            <li id="IndexTab" class="needs-pie tabs-nav-inactive" aria-label="Index">
                                 <div><span class="tabs-nav-icon active" title="Index"></span><span class="tabs-nav-text">Index</span>
                                 </div>
                             </li>
                         </ul>
                         <div class="tabs-panel">
-                            <input type="text" id="search-index" class="tabs-panel-search" placeholder="Search Index" />
-                            <div id="index" class="tabs-panel-content searchable needs-pie popup-container" data-see-prefix="See" data-see-also-prefix="See Also">
+                            <input type="text" id="search-index" class="tabs-panel-search" placeholder="Search Index" aria-label="Search Index" />
+                            <section id="index" class="tabs-panel-content searchable needs-pie popup-container" data-see-prefix="See" data-see-also-prefix="See Also" aria-label="Index">
                                 <div class="index-wrapper">
                                 </div>
-                            </div>
+                            </section>
                         </div>
                     </div>
                     <div class="tab">
-                        <ul class="tabs-nav clearfix image-then-text tab-icon">
-                            <li id="GlossaryTab" class="needs-pie tabs-nav-inactive" style="display: none">
+                        <ul role="presentation" class="tabs-nav clearfix image-then-text tab-icon">
+                            <li id="GlossaryTab" class="needs-pie tabs-nav-inactive" style="display: none" aria-label="Glossary">
                                 <div><span class="tabs-nav-icon active" title="Glossary"></span><span class="tabs-nav-text">Glossary</span>
                                 </div>
                             </li>
                         </ul>
                         <div class="tabs-panel">
-                            <input type="text" id="search-glossary" class="tabs-panel-search" placeholder="Search Glossary" />
-                            <div id="glossary" class="tabs-panel-content searchable needs-pie popup-container">
-                            </div>
+                            <input type="text" id="search-glossary" class="tabs-panel-search" placeholder="Search Glossary" aria-label="Search Glossary" />
+                            <section id="glossary" class="tabs-panel-content searchable needs-pie popup-container" aria-label="Glossary">
+                            </section>
                         </div>
                     </div>
                     <div class="tab">
-                        <ul class="tabs-nav clearfix image-then-text tab-icon">
-                            <li id="BrowseSequencesTab" class="needs-pie tabs-nav-inactive">
+                        <ul role="presentation" class="tabs-nav clearfix image-then-text tab-icon">
+                            <li id="BrowseSequencesTab" class="needs-pie tabs-nav-inactive" aria-label="Browse Sequences">
                                 <div><span class="tabs-nav-icon active" title="Browse"></span><span class="tabs-nav-text">Browse</span>
                                 </div>
                             </li>
                         </ul>
                         <div class="tabs-panel">
-                            <div id="browseSequences" class="tabs-panel-content needs-pie">
-                            </div>
+                            <section id="browseSequences" class="tabs-panel-content needs-pie" aria-label="Browse Sequences">
+                            </section>
                         </div>
                     </div>
                     <div class="tab">
-                        <ul class="tabs-nav clearfix image-then-text tab-icon">
-                            <li id="CommunityTab" class="needs-pie pulse-required tabs-nav-inactive" style="display: none">
+                        <ul role="presentation" class="tabs-nav clearfix image-then-text tab-icon">
+                            <li id="CommunityTab" class="needs-pie pulse-required tabs-nav-inactive" style="display: none" aria-label="Community">
                                 <div><span class="tabs-nav-icon active" title="Community"></span><span class="tabs-nav-text">Community</span>
                                 </div>
                             </li>
                         </ul>
                         <div class="tabs-panel">
-                            <div id="community" class="tabs-panel-content needs-pie popup-container pulse-required"><iframe id="community-frame-html5" name="community-frame-html5" frameborder="0"></iframe>
-                            </div>
+                            <section id="community" class="tabs-panel-content needs-pie popup-container pulse-required" aria-label="Community"><iframe id="community-frame-html5" name="community-frame-html5" frameborder="0"></iframe>
+                            </section>
                         </div>
                     </div>
                     <div class="tab">
-                        <ul class="tabs-nav clearfix image-then-text tab-icon">
-                            <li id="SearchTab" class="needs-pie tabs-nav-inactive">
+                        <ul role="presentation" class="tabs-nav clearfix image-then-text tab-icon">
+                            <li id="SearchTab" class="needs-pie tabs-nav-inactive" aria-label="Search Filters">
                                 <div><span class="tabs-nav-icon active" title="Search Filters"></span><span class="tabs-nav-text">Search Filters</span>
                                 </div>
                             </li>
                         </ul>
                         <div class="tabs-panel">
-                            <div id="search" class="tabs-panel-content needs-pie">
+                            <section id="search" class="tabs-panel-content needs-pie" aria-label="Search Filters">
                                 <ul class="tree">
                                     <li class="SearchFilterEntry tree-node tree-node-leaf">
                                         <div class="SearchFilter"><span class="label">All Files</span>
                                         </div>
                                     </li>
                                 </ul>
-                            </div>
+                            </section>
                         </div>
                     </div>
                 </div>
             </div>
             <div id="contentBody" class="small-10 expand-for-small-10 columns non-collapsable needs-pie" role="main">
-                <div id="responsiveHeader" class="needs-pie"><a class="homeLink" href="Default.htm"><h1 class="logo"><img src="Skins/Default/Stylesheets/Images/transparent.gif" alt="Logo" /></h1></a>
-                    <div id="slideRight" class="toggle-topbar menu-icon"><a id="sidebarButton" href="#"><span></span></a>
+                <div id="responsiveHeader" class="needs-pie"><a class="homeLink" href="Default.htm"><div class="logo"><img src="Skins/Default/Stylesheets/Images/transparent.gif" alt="Logo" /></div></a>
+                    <div class="central-account-wrapper">
+                        <div class="central-dropdown"><a class="central-account-drop"><span class="central-account-image"></span><span class="central-account-text">Account</span></a>
+                            <div class="central-dropdown-content"><a class="MCCentralLink central-dropdown-content-settings" href="#">Settings</a>
+                                <hr class="central-separator" /><a class="MCCentralLink central-dropdown-content-logout">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="slideRight" class="toggle-topbar menu-icon">
+                        <button id="sidebarButton" aria-expanded="false" aria-controls="navigation" aria-label="Show Navigation Panel"><span></span>
+                        </button>
                     </div>
                 </div>
                 <div class="buttons toolbar-buttons popup-container">
                     <div class="button-group-container-left">
                         <button class="button needs-pie print-button" title="Print">
-                            <img src="Skins/Default/Stylesheets/Images/transparent.gif" alt="print" />
+                            <img alt="Print" src="Skins/Default/Stylesheets/Images/transparent.gif" class="invisible-label" />
                         </button>
                         <button class="button needs-pie expand-all-button" data-state1-class="expand-all-button" data-state2-class="collapse-all-button" data-state2-title="Collapse all" title="Expand all" data-state1-title="Expand all">
-                            <img src="Skins/Default/Stylesheets/Images/transparent.gif" alt="expand all" />
+                            <img alt="Expand all" src="Skins/Default/Stylesheets/Images/transparent.gif" class="invisible-label" />
                         </button>
                         <button class="button needs-pie remove-highlight-button" title="Remove Highlights">
-                            <img src="Skins/Default/Stylesheets/Images/transparent.gif" alt="remove highlight" />
+                            <img alt="Remove Highlights" src="Skins/Default/Stylesheets/Images/transparent.gif" class="invisible-label" />
                         </button>
                         <div class="button-separator">
                         </div>
                         <div class="button-group star-buttons loading feedback-topic-required">
                             <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
-                                <img src="Skins/Default/Stylesheets/Images/transparent.gif" alt="topic rating" />
+                                <img alt="Click a star to rate this topic" src="Skins/Default/Stylesheets/Images/transparent.gif" class="invisible-label" data-state1-alt="Click a star to rate this topic" data-state2-alt="Click a star to rate this topic" />
                             </div>
                             <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
-                                <img src="Skins/Default/Stylesheets/Images/transparent.gif" alt="topic rating" />
+                                <img alt="Click a star to rate this topic" src="Skins/Default/Stylesheets/Images/transparent.gif" class="invisible-label" data-state1-alt="Click a star to rate this topic" data-state2-alt="Click a star to rate this topic" />
                             </div>
                             <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
-                                <img src="Skins/Default/Stylesheets/Images/transparent.gif" alt="topic rating" />
+                                <img alt="Click a star to rate this topic" src="Skins/Default/Stylesheets/Images/transparent.gif" class="invisible-label" data-state1-alt="Click a star to rate this topic" data-state2-alt="Click a star to rate this topic" />
                             </div>
                             <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
-                                <img src="Skins/Default/Stylesheets/Images/transparent.gif" alt="topic rating" />
+                                <img alt="Click a star to rate this topic" src="Skins/Default/Stylesheets/Images/transparent.gif" class="invisible-label" data-state1-alt="Click a star to rate this topic" data-state2-alt="Click a star to rate this topic" />
                             </div>
                             <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
-                                <img src="Skins/Default/Stylesheets/Images/transparent.gif" alt="topic rating" />
+                                <img alt="Click a star to rate this topic" src="Skins/Default/Stylesheets/Images/transparent.gif" class="invisible-label" data-state1-alt="Click a star to rate this topic" data-state2-alt="Click a star to rate this topic" />
                             </div>
                         </div>
                         <div class="button-separator feedback-topic-required">
                         </div>
                         <button class="button feedback-required login-button" id="normalLoginBtn" data-state1-class="login-button" data-state2-class="edit-user-profile-button" data-state2-title="Edit user profile" title="Login" data-state1-title="Login">
-                            <img src="Skins/Default/Stylesheets/Images/transparent.gif" alt="login" />
+                            <img alt="Login" src="Skins/Default/Stylesheets/Images/transparent.gif" class="invisible-label" />
                         </button>
                     </div>
                     <div class="button-group-container-right">
                         <button class="button needs-pie previous-topic-button" title="Navigate previous">
-                            <img src="Skins/Default/Stylesheets/Images/transparent.gif" alt="previous topic" />
+                            <img alt="Navigate previous" src="Skins/Default/Stylesheets/Images/transparent.gif" class="invisible-label" />
                         </button>
                         <div class="button current-topic-index-button disabled"><span class="sequence-index"></span> of <span class="sequence-total"></span></div>
                         <button class="button needs-pie next-topic-button" title="Navigate next">
-                            <img src="Skins/Default/Stylesheets/Images/transparent.gif" alt="next topic" />
+                            <img alt="Navigate next" src="Skins/Default/Stylesheets/Images/transparent.gif" class="invisible-label" />
                         </button>
                         <button class="button needs-pie select-language-button" title="Change language">
-                            <img src="Skins/Default/Stylesheets/Images/transparent.gif" alt="select language" />
+                            <img alt="Change language" src="Skins/Default/Stylesheets/Images/transparent.gif" class="invisible-label" />
                         </button>
                     </div>
-                </div>
+                </div><span id="tripane-iframe-title" class="invisible-label" aria-hidden="true"></span>
                 <div id="contentBodyInner">
-                    <!-- frameBorder="0" is for IE 8 and below --><iframe id="topic" class="content" name="topic" frameBorder="0"></iframe><iframe id="pulse" class="content" name="pulse" frameBorder="0"></iframe>
+                    <!-- frameBorder="0" is for IE 8 and below --><iframe id="topic" class="content" name="topic" frameBorder="0" aria-label="Topic"></iframe><iframe id="pulse" class="content" name="pulse" frameBorder="0" aria-label="Pulse"></iframe>
                     <div id="searchPane">
                         <h1 id="results-heading">Your search for <span class="query"></span> returned <span class="total-results"></span> result(s).</h1>
-                        <div id="pagination"><a class="previousPage">Previous</a><a class="nextPage">Next</a>
+                        <div id="pagination"><a href="#" class="previousPage">Previous</a><a href="#" class="nextPage">Next</a>
                         </div>
                     </div>
                 </div>
@@ -331,7 +353,7 @@
             Create Profile
         </div>
             <div class="login-dialog-content needs-pie">
-                <div class="profile-item-wrapper clearfix" data-mc-style="Feedback User Profile Item Label">
+                <div class="profile-item-wrapper clearfix">
                     <div class="label-wrapper">
                         <label>Username *</label>
                     </div>
@@ -362,7 +384,7 @@
                 <div class="status-message-box"><span class="message verification-email-sent-message">An email has been sent to verify your new profile.</span><span class="message required-fields-missing-message">Please fill out all required fields before submitting your information.</span>
                 </div>
             </div>
-        </div>
+        </div><span id="search-filters-label" class="invisible-label">Filter: </span>
         <script type="text/javascript" src="Resources/Scripts/jquery.offcanvas.js">
         </script>
         <script>

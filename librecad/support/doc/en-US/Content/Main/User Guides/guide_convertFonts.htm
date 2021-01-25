@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="User Guides|[%=System.LinkedTitle%]">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-toc-path="User Guides|[%=System.LinkedTitle%]" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print">
     <!-- saved from url=(0016)http://localhost -->
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,91 +12,96 @@
         <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
         <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
         <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Importing Microsoft and AutoCAD fonts to LibreCAD fonts</title>
-        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
-        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
-        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" type="text/css" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
+        <script src="../../../Resources/Scripts/jquery.min.js" type="text/javascript">
         </script>
-        <script src="../../../Resources/Scripts/jquery.min.js">
+        <script src="../../../Resources/Scripts/require.min.js" type="text/javascript" defer="defer">
         </script>
-        <script src="../../../Resources/Scripts/require.min.js">
+        <script src="../../../Resources/Scripts/require.config.js" type="text/javascript" defer="defer">
         </script>
-        <script src="../../../Resources/Scripts/require.config.js">
+        <script src="../../../Resources/Scripts/foundation.min.js" type="text/javascript" defer="defer">
         </script>
-        <script src="../../../Resources/Scripts/foundation.min.js">
+        <script src="../../../Resources/Scripts/plugins.min.js" type="text/javascript" defer="defer">
         </script>
-        <script src="../../../Resources/Scripts/plugins.min.js">
-        </script>
-        <script src="../../../Resources/Scripts/MadCapAll.js">
+        <script src="../../../Resources/Scripts/MadCapAll.js" type="text/javascript" defer="defer">
         </script>
     </head>
     <body>
         <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/User Guides/guide_convertFonts.htm">Open topic with navigation</a>
         </p>
         <div>
-            <h1 class="TOC4"><a name="kanchor14"></a>Importing Microsoft and AutoCAD fonts to LibreCAD fonts</h1>
-            <h2>Fonts</h2>
-            <p>Many font options are available in LibreCAD, including ProNest fonts. In general, ProNest fonts are already imported in LibreCAD, but you can also import TrueType Fonts (.ttf). To use <a href="#Microsof">Microsoft® fonts</a> (including TTF) or <a href="#AutoCAD">AutoCAD® fonts</a>, you'll need to follow steps below to first convert those fonts into a readable format for LibreCAD.</p>
-            <div class="Note">
-                <p>If you are opening AutoCAD .dwg drawings that use AutoCAD fonts, you'll need to convert the font to ensure it comes into LibreCAD properly. The font conversion process will convert all AutoCAD fonts and only needs to be done once.</p>
-            </div>
-            <h3>Importing fonts</h3>
-            <h5>ProNest fonts</h5>
-            <p>LibreCAD includes ProNest fonts in the font list. These are the same fonts listed on the ProNest CAD Font Preferences page, such as the no lift font. </p>
-            <ul>
-                <li value="1">To use ProNest fonts, simply locate the font from the Font dropdown menu in the Text and MText dialog.</li>
-            </ul>
-            <h5><a name="Microsof"></a>Microsoft fonts</h5>
-            <p>Use default fonts from Microsoft, or any other TTF or OTF font file, and customize letter, word, and line spacing for these fonts using the Convert Font dialog from the Text or MText dialog.</p>
-            <p>LibreCAD will look for fonts in the default Microsoft font folder on your PC:&#160;<span class="CodeSnippet">C:/Windows/Fonts</span>.</p>
-            <p class="Procedure">Importing Microsoft fonts</p>
-            <ol>
-                <li value="1">Click either <b>Text</b> or <b>MText</b>.</li>
-                <li value="2">Click <b>Convert Text</b> (<img src="../../Images/add_font.svg" />) in the upper right-hand corner.</li>
-                <p>
-                    <img src="../../Images/trans_openConvertTextDialog.png" />
-                </p>
-                <li value="3">Select a font you want to convert from the <b>Font Family</b> dropdown menu. Adjust Letter spacing, Word spacing, and Line Spacing, if needed.</li>
-                <p>
-                    <img src="../../Images/trans_ConvertFontDialog.png" />
-                </p>
-                <li value="4">Click <b>OK</b>.</li>
-            </ol>
-            <p>To use the font after it has been imported, be sure to select the converted font from the <b>Font</b> dropdown menu in the Text or MText dialog. Newly converted fonts will appear at the bottom of the list.</p>
-            <div class="Tip">
-                <p>If you adjusted any spacing values, you can save the spacing in the current default font, or you can adjust the name of the file in the <b>Save as</b> field, allowing you to save a copy of the adjusted font without overwriting the default spacing values in the converted font.</p>
-            </div>
-            <h5><a name="AutoCAD"></a>AutoCAD fonts</h5>
-            <p>LibreCAD for ProNest supports AutoCAD fonts (.shx). If your AutoCAD fonts are stored in the default font folder for AutoCAD &lt;<span class="CodeSnippet">C:\Program Files\AutoDesk\AutoCAD 2019\Fonts</span>&gt;, no action is needed (note that this file path is for AutoCAD 2019 and may differ slightly depending on your version of AutoCAD). </p>
-            <p class="Procedure">Importing AutoCAD fonts manually</p>
-            <p>If you have AutoCAD (.shx) fonts stored outside of this location, the following needs to be done only once:</p>
-            <ol>
-                <li value="1">Open a file explorer on your PC.</li>
-                <li value="2">Navigate to the folder <span class="CodeSnippet">C:\Program Files (x86)\Hypertherm CAM\LibreCAD</span> and locate the file <b>dumpshp.bat</b>. </li>
-                <li value="3">Right-click on <b>dumpshp.bat</b> and click <b>Copy</b>.</li>
-                <li value="4">Navigate to the folder containing your AutoCAD fonts.</li>
-                <li value="5">Right-click and click Paste to put a copy of <b>dumpshp.bat</b> into the folder containing your AutoCAD fonts.</li>
-                <li value="6">Double-click on <b>dumpshp.bat</b> to run the file. A&#160;command window will appear and then automatically close when finished. </li>
-            </ol>
-            <p>Now, any AutoCAD fonts used in your drawings will automatically convert into a readable format for LibreCAD, and you can use any AutoCAD font in a new LibreCAD drawing.</p>
-            <div class="TopicFooter">
-                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
-                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_other.htm">Additional tools: Text, Hatch, Point</a>
-                        </li>
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_createNewFont.htm">Creating new fonts</a>
-                        </li>
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_dimension.htm">Dimensioning tools</a>
-                        </li>
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_modify.htm">Modify tools</a>
-                        </li>
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_text.htm">Using Text</a>
-                        </li>
-                    </ul>
+            <div role="main" id="mc-main-content">
+                <h1 class="TOC4"><a name="kanchor14"></a>Importing Microsoft and AutoCAD fonts to LibreCAD fonts</h1>
+                <h2>Fonts</h2>
+                <p>Many font options are available in LibreCAD, including ProNest fonts. In general, ProNest fonts are already imported in LibreCAD, but you can also import TrueType Fonts (.ttf). To use <a href="#Microsof">Microsoft® fonts</a> (including TTF) or <a href="#AutoCAD">AutoCAD® fonts</a>, you'll need to follow steps below to first convert those fonts into a readable format for LibreCAD.</p>
+                <div class="Note">
+                    <p>If you are opening AutoCAD .dwg drawings that use AutoCAD fonts, you'll need to convert the font to ensure it comes into LibreCAD properly. The font conversion process will convert all AutoCAD fonts and only needs to be done once.</p>
+                </div>
+                <h3>Importing fonts</h3>
+                <h5>ProNest fonts</h5>
+                <p>LibreCAD includes ProNest fonts in the font list. These are the same fonts listed on the ProNest CAD Font Preferences page, such as the no lift font. </p>
+                <ul>
+                    <li>To use ProNest fonts, simply locate the font from the Font dropdown menu in the Text and MText dialog.</li>
+                </ul>
+                <h5><a name="Microsof"></a>Microsoft fonts</h5>
+                <p>Use default fonts from Microsoft, or any other TTF or OTF font file, and customize letter, word, and line spacing for these fonts using the Convert Font dialog from the Text or MText dialog.</p>
+                <p>LibreCAD will look for fonts in the default Microsoft font folder on your PC:&#160;<span class="CodeSnippet">C:/Windows/Fonts</span>.</p>
+                <p class="Procedure">Importing Microsoft fonts</p>
+                <ol>
+                    <li value="1">Click either <b>Text</b> or <b>MText</b>.</li>
+                    <li value="2">Click <b>Convert Text</b> (<img src="../../Images/add_font.svg" />) in the upper right-hand corner.</li>
+                    <p>
+                        <img src="../../Images/trans_openConvertTextDialog.png" />
+                    </p>
+                    <li value="3">Select a font you want to convert from the <b>Font Family</b> dropdown menu. Adjust Letter spacing, Word spacing, and Line Spacing, if needed.</li>
+                    <p>
+                        <img src="../../Images/trans_ConvertFontDialog.png" />
+                    </p>
+                    <li value="4">Click <b>OK</b>.</li>
+                </ol>
+                <p>To use the font after it has been imported, be sure to select the converted font from the <b>Font</b> dropdown menu in the Text or MText dialog. Newly converted fonts will appear at the bottom of the list.</p>
+                <div class="Tip">
+                    <p>If you adjusted any spacing values, you can save the spacing in the current default font, or you can adjust the name of the file in the <b>Save as</b> field, allowing you to save a copy of the adjusted font without overwriting the default spacing values in the converted font.</p>
+                </div>
+                <h5><a name="AutoCAD"></a>AutoCAD fonts</h5>
+                <p>LibreCAD for ProNest supports AutoCAD fonts (.shx). If your AutoCAD fonts are stored in the default font folder for AutoCAD &lt;<span class="CodeSnippet">C:\Program Files\AutoDesk\AutoCAD 2019\Fonts</span>&gt;, no action is needed (note that this file path is for AutoCAD 2019 and may differ slightly depending on your version of AutoCAD). </p>
+                <p class="Procedure">Importing AutoCAD fonts manually</p>
+                <p>If you have AutoCAD (.shx) fonts stored outside of this location, the following needs to be done only once:</p>
+                <ol>
+                    <li value="1">Open a file explorer on your PC.</li>
+                    <li value="2">Navigate to the folder <span class="CodeSnippet">C:\Program Files (x86)\Hypertherm CAM\LibreCAD</span> and locate the file <b>dumpshp.bat</b>. </li>
+                    <li value="3">Right-click on <b>dumpshp.bat</b> and click <b>Copy</b>.</li>
+                    <li value="4">Navigate to the folder containing your AutoCAD fonts.</li>
+                    <li value="5">Right-click and click Paste to put a copy of <b>dumpshp.bat</b> into the folder containing your AutoCAD fonts.</li>
+                    <li value="6">Double-click on <b>dumpshp.bat</b> to run the file. A&#160;command window will appear and then automatically close when finished. </li>
+                </ol>
+                <p>Now, any AutoCAD fonts used in your drawings will automatically convert into a readable format for LibreCAD, and you can use any AutoCAD font in a new LibreCAD drawing.</p>
+                <div class="TopicFooter">
+                    <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
+                        <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_other.htm">Additional tools: Text, Hatch, Point</a>
+                            </li>
+                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_createNewFont.htm">Creating new fonts</a>
+                            </li>
+                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_dimension.htm">Dimensioning tools</a>
+                            </li>
+                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_modify.htm">Modify tools</a>
+                            </li>
+                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_text.htm">Using Text</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

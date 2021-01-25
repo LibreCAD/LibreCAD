@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="User Guides|[%=System.LinkedTitle%]">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-toc-path="User Guides|[%=System.LinkedTitle%]" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print">
     <!-- saved from url=(0016)http://localhost -->
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,60 +12,65 @@
         <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
         <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
         <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Command Line Aliases</title>
-        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
-        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
-        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" type="text/css" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
+        <script src="../../../Resources/Scripts/jquery.min.js" type="text/javascript">
         </script>
-        <script src="../../../Resources/Scripts/jquery.min.js">
+        <script src="../../../Resources/Scripts/require.min.js" type="text/javascript" defer="defer">
         </script>
-        <script src="../../../Resources/Scripts/require.min.js">
+        <script src="../../../Resources/Scripts/require.config.js" type="text/javascript" defer="defer">
         </script>
-        <script src="../../../Resources/Scripts/require.config.js">
+        <script src="../../../Resources/Scripts/foundation.min.js" type="text/javascript" defer="defer">
         </script>
-        <script src="../../../Resources/Scripts/foundation.min.js">
+        <script src="../../../Resources/Scripts/plugins.min.js" type="text/javascript" defer="defer">
         </script>
-        <script src="../../../Resources/Scripts/plugins.min.js">
-        </script>
-        <script src="../../../Resources/Scripts/MadCapAll.js">
+        <script src="../../../Resources/Scripts/MadCapAll.js" type="text/javascript" defer="defer">
         </script>
     </head>
     <body>
         <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/User Guides/guide_command_aliases.htm">Open topic with navigation</a>
         </p>
         <div>
-            <h1 class="TOC4"><a name="kanchor1"></a>Command Line Aliases</h1>
-            <p>In LibreCAD, some commands have multiple forms. The long form is the native, untranslated command, and the short form is the alias. For example, the long, native command for Shape Text is "shapetext," but the short, alias form is "st." Aliases for any command can be defined in the <span class="CodeSnippet">librecad.alias</span> configuration file.</p>
-            <blockquote>
-                <p>Format:&#160;<span class="CodeSnippet">&lt;alias&gt;[TAB]&lt;command-untranslated&gt;</span></p>
-                <p>&#160;</p>
-                <p>Example:&#160;<span class="CodeSnippet">l &#160;&#160;&#160;&#160;&#160;&#160;line</span></p>
-            </blockquote>
-            <p>The alias file can be edited using any text editor, such as Notepad. The file can be found here:&#160;<span class="CodeSnippet">C:\Users\{UserName}\AppData\Local\LibreCAD\librecad.alias</span>.</p>
-            <div class="ImportantDiv">
-                <ul>
-                    <li value="1">Only change the alias, not the long untranslated form.</li>
-                    <li value="2">You may need to restart LibreCAD for alias changes to take effect.</li>
-                </ul>
-            </div>
-            <div class="TopicFooter">
-                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
-                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_container.htm">About Draw and Modify Tools</a>
-                        </li>
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Appendices/append_calculator.htm">Calculator Operators and Functions</a>
-                        </li>
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Appendices/append_commandline.htm">Command Line Shortcuts</a>
-                        </li>
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_command_multi.htm">Multi-command input with variable files</a>
-                        </li>
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_commandline.htm">Using the Command Line</a>
-                        </li>
+            <div role="main" id="mc-main-content">
+                <h1 class="TOC4"><a name="kanchor1"></a>Command Line Aliases</h1>
+                <p>In LibreCAD, some commands have multiple forms. The long form is the native, untranslated command, and the short form is the alias. For example, the long, native command for Shape Text is "shapetext," but the short, alias form is "st." Aliases for any command can be defined in the <span class="CodeSnippet">librecad.alias</span> configuration file.</p>
+                <blockquote>
+                    <p>Format:&#160;<span class="CodeSnippet">&lt;alias&gt;[TAB]&lt;command-untranslated&gt;</span></p>
+                    <p>&#160;</p>
+                    <p>Example:&#160;<span class="CodeSnippet">l &#160;&#160;&#160;&#160;&#160;&#160;line</span></p>
+                </blockquote>
+                <p>The alias file can be edited using any text editor, such as Notepad. The file can be found here:&#160;<span class="CodeSnippet">C:\Users\{UserName}\AppData\Local\LibreCAD\librecad.alias</span>.</p>
+                <div class="ImportantDiv">
+                    <ul>
+                        <li>Only change the alias, not the long untranslated form.</li>
+                        <li>You may need to restart LibreCAD for alias changes to take effect.</li>
                     </ul>
+                </div>
+                <div class="TopicFooter">
+                    <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
+                        <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_container.htm">About Draw and Modify Tools</a>
+                            </li>
+                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Appendices/append_calculator.htm">Calculator Operators and Functions</a>
+                            </li>
+                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Appendices/append_commandline.htm">Command Line Shortcuts</a>
+                            </li>
+                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_command_multi.htm">Multi-command input with variable files</a>
+                            </li>
+                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_commandline.htm">Using the Command Line</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

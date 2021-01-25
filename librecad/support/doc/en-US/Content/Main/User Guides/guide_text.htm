@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-browse-sequence-path="Text" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print" data-mc-toc-path="User Guides">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-browse-sequence-path="Text" data-mc-toc-path="User Guides" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-medium="non-print">
     <!-- saved from url=(0016)http://localhost -->
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,113 +12,118 @@
         <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
         <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
         <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" /><title>Using Text</title>
-        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
-        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
-        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" />
-        <script src="../../../Resources/Scripts/custom.modernizr.js">
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" type="text/css" data-mc-generated="True" />
+        <link href="../../Resources/Stylesheets/default.css" rel="stylesheet" type="text/css" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
+        <script src="../../../Resources/Scripts/jquery.min.js" type="text/javascript">
         </script>
-        <script src="../../../Resources/Scripts/jquery.min.js">
+        <script src="../../../Resources/Scripts/require.min.js" type="text/javascript" defer="defer">
         </script>
-        <script src="../../../Resources/Scripts/require.min.js">
+        <script src="../../../Resources/Scripts/require.config.js" type="text/javascript" defer="defer">
         </script>
-        <script src="../../../Resources/Scripts/require.config.js">
+        <script src="../../../Resources/Scripts/foundation.min.js" type="text/javascript" defer="defer">
         </script>
-        <script src="../../../Resources/Scripts/foundation.min.js">
+        <script src="../../../Resources/Scripts/plugins.min.js" type="text/javascript" defer="defer">
         </script>
-        <script src="../../../Resources/Scripts/plugins.min.js">
-        </script>
-        <script src="../../../Resources/Scripts/MadCapAll.js">
+        <script src="../../../Resources/Scripts/MadCapAll.js" type="text/javascript" defer="defer">
         </script>
     </head>
     <body>
         <p class="MCWebHelpFramesetLink MCWebHelpFramesetLinkTop"><a href="../../../Default.htm#Main/User Guides/guide_text.htm">Open topic with navigation</a>
         </p>
         <div>
-            <h1 class="TOC4"><a name="kanchor42"></a><a name="kanchor43"></a><a name="kanchor44"></a>Using Text</h1>
-            <p>Text can be integrated into artistic drawings and signs, and it can be used to provide information and notes, including title blocks. Create single- or multi-line text using the Text or MText tools.</p>
-            <div class="ImportantDiv">
-                <ul>
-                    <li value="1">For best results, when using text, it is recommended to explode text into geometry (using the <span class="CodeSnippet">explode</span> command) before sending a drawing to ProNest. Use an alignment of <b>Baseline Left</b> ( <img src="../../Images/text_baselineleft.png" /> )&#160;for Text, or <b>Bottom Left</b> for MText to help prevent any geometry issues when sending a drawing to ProNest.</li>
-                </ul>
-                <ul>
-                    <li value="1">Note that text will always be converted to geometry in ProNest unless it is on a scribe layer, but results will be better if text is exploded in LibreCAD prior to exporting to ProNest.</li>
-                </ul>
-                <ul>
-                    <li value="1">Ensure Smoothing is enabled in ProNest to convert choppy line segments to arcs and smoother profiles before importing a part from LibreCAD (<b>ProNest</b> &gt;&#160;<b>Settings</b> &gt;&#160;<b>Importing Parts</b> &gt;&#160;enable <b>Smooth entities</b>, and try <b>Smooth tolerances</b> between 0.001 and 0.005 to start).</li>
-                </ul>
-            </div>
-            <p class="Procedure">Creating single-line text</p>
-            <ol>
-                <li value="1">Click <b>Text</b> (<img src="../../Images/text.svg" />) from the Tools menu.</li>
-                <li value="2">In the <b>Text</b> field, type the text that you want to appear in the drawing.</li>
-                <li value="3">Adjust Font Settings, Alignment, and Symbols, and import fonts, if necessary.</li>
-                <li value="4">Click <b>OK</b>.</li>
-                <li value="5">Click on the drawing to place text, or enter placement coordinates into the Command line (the text Alignment is used as the insertion point when specifying coordinates).</li>
-            </ol>
-            <p class="Procedure">Creating multi-line text</p>
-            <ol>
-                <li value="1">Click <b>MText</b> (<img src="../../Images/text.svg" />) from the Tools menu.</li>
-                <li value="2">In the <b>Text</b> field, type the text that you want to appear in the drawing. Use the Insert Symbol dropdown menu to insert special characters into your text, such as degree symbols and copyright symbols.</li>
-                <li value="3"><a href="guide_convertFonts.htm">Import fonts</a> and set spacing values, if necessary.</li>
-                <li value="4">Set the Alignment and insertion Angle (the Angle may be left blank to insert text at 180°).</li>
-                <li value="5">Click <b>OK</b>.</li>
-                <li value="6">Click on the drawing to place text, or enter placement coordinates into the Command line (the text Alignment is used as the insertion point when specifying coordinates).</li>
-            </ol>
-            <p class="Procedure">Modifying text</p>
-            <ol>
-                <li value="1">Click <b>Properties</b> ( <img src="../../Images/properties.svg" /> )&#160;from the Modify tools menu. The text dialog will appear again, allowing you to modify the text as well as layer and color information.</li>
-                <li value="2">Click the text you want to modify.</li>
-                <li value="3">Modify any relevant properties.</li>
-                <li value="4">Click <b>OK</b>.</li>
-            </ol>
-            <p class="Procedure"><a name="kanchor45"></a>Shaping text around an entity</p>
-            <p>With the Hypertherm-exclusive <a href="../Tools/tool_modify.htm#Shape">Shape Text</a> feature in LibreCAD, you can shape text around a single line, arc, or circle entity.</p>
-            <ol>
-                <li value="1">Draw a shape. </li>
-                <li value="2">Place text using the <b>Text</b> or <b>MText</b> tools. When in the Text or MText dialog, be sure to specify an Alignment. If you are unsure of what Alignment to use, try using the lower left option.</li>
-                <li value="3">Enter Shape Text mode by clicking <b>Shape Text</b> ( <img src="../../Images/shape2.svg" /> ) from the Modify tools, or by entering <span class="CodeSnippet">st</span> into the Command Line.</li>
-                <li value="4">Click the text that you want to shape.</li>
-                <li value="5">Move your cursor around a shape. Modify the Offset value and change the text direction by selecting the checkbox, if needed. When the text is in the desired location, click to place the text.</li>
-            </ol>
-            <div class="Tip">
-                <p>To achieve fine-grain control over text that you are shaping, it is recommended to explode text strings into individual letters using the <b>Explode Text into Letters</b> ( <img src="../../Images/explode_text_to_letters.svg" /> ) modify tool.</p>
-            </div>
-            <p class="Procedure">Aligning shaped text through the entity perimeter</p>
-            <ol>
-                <li value="1">Draw a shape.</li>
-                <li value="2">Place text using the <b>Text</b> or <b>MText</b> tools. When in the Text or MText dialog, be sure to specify a middle center Alignment.</li>
-                <li value="3">Enter Shape Text mode by selecting <b>Shape Text</b> ( <img src="../../Images/shape2.svg" /> ) from the Modify tools, or by entering <span class="CodeSnippet">st</span> into the Command Line.</li>
-                <li value="4">Adjust the Shape Text mode Offset on the toolbar. <ul><li value="1">&#160;For single-line text, the Offset should be the negative value of half of the text Height. For example, when using a text height of 1, the offset value should be -0.5.</li><li value="2">The Offset can be adjusted and updated by entering a value and selecting the Enter key.</li></ul></li>
-                <li value="5">Click the text that you want to shape.</li>
-                <li value="6">Move your cursor around a shape. When the text is in the desired location, click to place the text.</li>
-            </ol>
-            <p>&#160;</p>
-            <blockquote>
-                <p>
-                    <img src="../../Images/st_example.png" />
-                </p>
-            </blockquote>
-            <div class="Tip">
-                <p>Use the <a href="../Tools/tool_modify.htm#Trim">Trim Excess</a> modify tool ( <img src="../../Images/trim_excess.svg" /> ) to quickly remove any unwanted geometry in one click.</p>
-            </div>
-            <div class="TopicFooter">
-                <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
-                    <ul class="MCHelpControlList MCRelatedTopicsControlList">
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_other.htm">Additional tools: Text, Hatch, Point</a>
-                        </li>
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_createNewFont.htm">Creating new fonts</a>
-                        </li>
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_dimension.htm">Dimensioning tools</a>
-                        </li>
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_convertFonts.htm">Importing Microsoft and AutoCAD fonts to LibreCAD fonts</a>
-                        </li>
-                        <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_modify.htm">Modify tools</a>
-                        </li>
+            <div role="main" id="mc-main-content">
+                <h1 class="TOC4"><a name="kanchor42"></a><a name="kanchor43"></a><a name="kanchor44"></a>Using Text</h1>
+                <p>Text can be integrated into artistic drawings and signs, and it can be used to provide information and notes, including title blocks. Create single- or multi-line text using the Text or MText tools.</p>
+                <div class="ImportantDiv">
+                    <ul>
+                        <li>For best results, when using text, it is recommended to explode text into geometry (using the <span class="CodeSnippet">explode</span> command) before sending a drawing to ProNest. Use an alignment of <b>Baseline Left</b> ( <img src="../../Images/text_baselineleft.png" /> )&#160;for Text, or <b>Bottom Left</b> for MText to help prevent any geometry issues when sending a drawing to ProNest.</li>
                     </ul>
+                    <ul>
+                        <li>Note that text will always be converted to geometry in ProNest unless it is on a scribe layer, but results will be better if text is exploded in LibreCAD prior to exporting to ProNest.</li>
+                    </ul>
+                    <ul>
+                        <li>Ensure Smoothing is enabled in ProNest to convert choppy line segments to arcs and smoother profiles before importing a part from LibreCAD (<b>ProNest</b> &gt;&#160;<b>Settings</b> &gt;&#160;<b>Importing Parts</b> &gt;&#160;enable <b>Smooth entities</b>, and try <b>Smooth tolerances</b> between 0.001 and 0.005 to start).</li>
+                    </ul>
+                </div>
+                <p class="Procedure">Creating single-line text</p>
+                <ol>
+                    <li value="1">Click <b>Text</b> (<img src="../../Images/text.svg" />) from the Tools menu.</li>
+                    <li value="2">In the <b>Text</b> field, type the text that you want to appear in the drawing.</li>
+                    <li value="3">Adjust Font Settings, Alignment, and Symbols, and import fonts, if necessary.</li>
+                    <li value="4">Click <b>OK</b>.</li>
+                    <li value="5">Click on the drawing to place text, or enter placement coordinates into the Command line (the text Alignment is used as the insertion point when specifying coordinates).</li>
+                </ol>
+                <p class="Procedure">Creating multi-line text</p>
+                <ol>
+                    <li value="1">Click <b>MText</b> (<img src="../../Images/text.svg" />) from the Tools menu.</li>
+                    <li value="2">In the <b>Text</b> field, type the text that you want to appear in the drawing. Use the Insert Symbol dropdown menu to insert special characters into your text, such as degree symbols and copyright symbols.</li>
+                    <li value="3"><a href="guide_convertFonts.htm">Import fonts</a> and set spacing values, if necessary.</li>
+                    <li value="4">Set the Alignment and insertion Angle (the Angle may be left blank to insert text at 180°).</li>
+                    <li value="5">Click <b>OK</b>.</li>
+                    <li value="6">Click on the drawing to place text, or enter placement coordinates into the Command line (the text Alignment is used as the insertion point when specifying coordinates).</li>
+                </ol>
+                <p class="Procedure">Modifying text</p>
+                <ol>
+                    <li value="1">Click <b>Properties</b> ( <img src="../../Images/properties.svg" /> )&#160;from the Modify tools menu. The text dialog will appear again, allowing you to modify the text as well as layer and color information.</li>
+                    <li value="2">Click the text you want to modify.</li>
+                    <li value="3">Modify any relevant properties.</li>
+                    <li value="4">Click <b>OK</b>.</li>
+                </ol>
+                <p class="Procedure"><a name="kanchor45"></a>Shaping text around an entity</p>
+                <p>With the Hypertherm-exclusive <a href="../Tools/tool_modify.htm#Shape">Shape Text</a> feature in LibreCAD, you can shape text around a single line, arc, or circle entity.</p>
+                <ol>
+                    <li value="1">Draw a shape. </li>
+                    <li value="2">Place text using the <b>Text</b> or <b>MText</b> tools. When in the Text or MText dialog, be sure to specify an Alignment. If you are unsure of what Alignment to use, try using the lower left option.</li>
+                    <li value="3">Enter Shape Text mode by clicking <b>Shape Text</b> ( <img src="../../Images/shape2.svg" /> ) from the Modify tools, or by entering <span class="CodeSnippet">st</span> into the Command Line.</li>
+                    <li value="4">Click the text that you want to shape.</li>
+                    <li value="5">Move your cursor around a shape. Modify the Offset value and change the text direction by selecting the checkbox, if needed. When the text is in the desired location, click to place the text.</li>
+                </ol>
+                <div class="Tip">
+                    <p>To achieve fine-grain control over text that you are shaping, it is recommended to explode text strings into individual letters using the <b>Explode Text into Letters</b> ( <img src="../../Images/explode_text_to_letters.svg" /> ) modify tool.</p>
+                </div>
+                <p class="Procedure">Aligning shaped text through the entity perimeter</p>
+                <ol>
+                    <li value="1">Draw a shape.</li>
+                    <li value="2">Place text using the <b>Text</b> or <b>MText</b> tools. When in the Text or MText dialog, be sure to specify a middle center Alignment.</li>
+                    <li value="3">Enter Shape Text mode by selecting <b>Shape Text</b> ( <img src="../../Images/shape2.svg" /> ) from the Modify tools, or by entering <span class="CodeSnippet">st</span> into the Command Line.</li>
+                    <li value="4">Adjust the Shape Text mode Offset on the toolbar. <ul><li>&#160;For single-line text, the Offset should be the negative value of half of the text Height. For example, when using a text height of 1, the offset value should be -0.5.</li><li>The Offset can be adjusted and updated by entering a value and selecting the Enter key.</li></ul></li>
+                    <li value="5">Click the text that you want to shape.</li>
+                    <li value="6">Move your cursor around a shape. When the text is in the desired location, click to place the text.</li>
+                </ol>
+                <p>&#160;</p>
+                <blockquote>
+                    <p>
+                        <img src="../../Images/st_example.png" />
+                    </p>
+                </blockquote>
+                <div class="Tip">
+                    <p>Use the <a href="../Tools/tool_modify.htm#Trim">Trim Excess</a> modify tool ( <img src="../../Images/trim_excess.svg" /> ) to quickly remove any unwanted geometry in one click.</p>
+                </div>
+                <div class="TopicFooter">
+                    <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
+                        <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_other.htm">Additional tools: Text, Hatch, Point</a>
+                            </li>
+                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_createNewFont.htm">Creating new fonts</a>
+                            </li>
+                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_dimension.htm">Dimensioning tools</a>
+                            </li>
+                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="guide_convertFonts.htm">Importing Microsoft and AutoCAD fonts to LibreCAD fonts</a>
+                            </li>
+                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="../Tools/tool_modify.htm">Modify tools</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

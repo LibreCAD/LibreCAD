@@ -7,7 +7,7 @@
         <meta charset="utf-8" /><title></title>
         <script src="Resources/Scripts/jquery.min.js">
         </script>
-        <script src="Resources/Scripts/MadCapAll.js">
+        <script src="Resources/Scripts/MadCapAll.js" defer="defer">
         </script>
         <script>
         //<![CDATA[
@@ -83,7 +83,7 @@
                     path += "&firstPick=true";
             }
 
-            document.location.replace(path);
+            document.location.replace(MadCap.Utilities.Url.EnsureUrlSafety(path));
         }
         //]]></script>
     </head>

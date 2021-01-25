@@ -75,8 +75,14 @@
 	{
 		display: block;
 		height: 60px;
+		text-align: center;
 		background: #ffffff url('Images/BannerHexagons.png') no-repeat;
 		-pie-background: #ffffff url('Skins/Default/Stylesheets/Images/BannerHexagons.png') no-repeat;
+	}
+
+	#responsiveHeader > a.homeLink
+	{
+		
 	}
 
 	#responsiveHeader .logo
@@ -102,7 +108,7 @@
 		width: 60px;
 	}
 
-	.toggle-topbar a
+	.toggle-topbar button
 	{
 		position: relative;
 		display: block;
@@ -118,8 +124,7 @@
 	{
 		overflow-y: auto;
 		overflow-x: hidden;
-		background-repeat: repeat;
-		background-color: #ffffff;
+		background-color: #f1f1f1;
 	}
 
 	#normalLoginBtn
@@ -254,10 +259,10 @@
 		border: solid 1px #494949;
 		border-width: 1px 0px 0px 0px;
 		border-radius: 0px;
-		border-top: solid 1px #cccccc;
-		border-right: solid 0px #cccccc;
-		border-bottom: solid 1px #cccccc;
 		border-left: solid 0px #cccccc;
+		border-right: solid 0px #cccccc;
+		border-top: solid 1px #cccccc;
+		border-bottom: solid 1px #cccccc;
 		background: #f7f7f7;
 		background: -moz-linear-gradient(top, #ffffff 0%, #f7f7f7 100%);
 		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f7f7f7));
@@ -530,7 +535,7 @@
 		display: block;
 	}
 
-	.menu-icon a span
+	.menu-icon button span
 	{
 		background: transparent url('Images/ResponsiveMenuButton_light.png') no-repeat center center;
 		-pie-background: transparent url('Skins/Default/Stylesheets/Images/ResponsiveMenuButton_light.png') no-repeat center center;
@@ -713,10 +718,75 @@
 		display: none !important;
 	}
 
+	.central-account-wrapper
+	{
+		position: absolute;
+		top: 0;
+		z-index: 1;
+		line-height: 60px;
+		left: 60px;
+		right: auto;
+	}
+
+	.central-dropdown
+	{
+		margin: 0;
+	}
+
+	.central-dropdown .central-account-drop
+	{
+		padding: 0;
+	}
+
+	.central-account-image
+	{
+		margin: 0 20px 3px 20px;
+		background: transparent url('Images/icon-user-light-gray.png') no-repeat center center;
+		-pie-background: transparent url('Skins/Default/Stylesheets/Images/icon-user-light-gray.png') no-repeat center center;
+	}
+
+	.central-account-text
+	{
+		display: none;
+	}
+
+	.central-dropdown-content
+	{
+		left: 0;
+		right: auto;
+		background-color: #ffffff;
+	}
+
+	.central-dropdown:hover
+	{
+		
+	}
+
+	.central-dropdown-content a
+	{
+		
+	}
+
+	.central-dropdown-content a:hover
+	{
+		
+	}
+
+	.central-separator
+	{
+		background-color: #D5D8DA;
+	}
+
 	body
 	{
 		background: #ffffff url('Images/BannerHexagons.png') no-repeat;
 		-pie-background: #ffffff url('Skins/Default/Stylesheets/Images/BannerHexagons.png') no-repeat;
+	}
+
+	#navigation[role="complementary"]
+	{
+		background-repeat: repeat;
+		background-color: #ffffff;
 	}
 
 	#browseSequences.tabs-panel-content
@@ -1009,6 +1079,11 @@
 		background: -ms-linear-gradient(top, #ebebeb 0%,#dadada 100%);
 		background: linear-gradient(top, #ebebeb 0%,#dadada 100%);
 		-pie-background: linear-gradient(#ebebeb, #dadada);
+	}
+
+	.search-account-container
+	{
+		
 	}
 
 	#search-field::-webkit-input-placeholder

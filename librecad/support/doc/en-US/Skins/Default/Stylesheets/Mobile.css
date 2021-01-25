@@ -65,8 +65,7 @@
 
 	#navigation
 	{
-		background-repeat: repeat;
-		background-color: #ffffff;
+		
 	}
 
 	.tab
@@ -288,6 +287,53 @@
 		display: none !important;
 	}
 
+	.central-dropdown
+	{
+		
+	}
+
+	.central-dropdown .central-account-drop
+	{
+		
+	}
+
+	.central-account-wrapper
+	{
+		left: 60px;
+		right: auto;
+	}
+
+	.central-dropdown:hover
+	{
+		
+	}
+
+	.central-account-image
+	{
+		background: transparent url('Images/icon-user-light-gray.png') no-repeat center center;
+		-pie-background: transparent url('Skins/Default/Stylesheets/Images/icon-user-light-gray.png') no-repeat center center;
+	}
+
+	.central-dropdown-content
+	{
+		background-color: #ffffff;
+	}
+
+	.central-dropdown-content a
+	{
+		
+	}
+
+	.central-dropdown-content a:hover
+	{
+		
+	}
+
+	.central-separator
+	{
+		background-color: #D5D8DA;
+	}
+
 	#responsiveHeader
 	{
 		background: #ffffff url('Images/BannerHexagons.png') no-repeat;
@@ -298,6 +344,12 @@
 	{
 		background: #ffffff url('Images/BannerHexagons.png') no-repeat;
 		-pie-background: #ffffff url('Skins/Default/Stylesheets/Images/BannerHexagons.png') no-repeat;
+	}
+
+	#navigation[role="complementary"]
+	{
+		background-repeat: repeat;
+		background-color: #ffffff;
 	}
 
 	#browseSequences.tabs-panel-content
@@ -394,7 +446,7 @@
 		background-color: #949494;
 	}
 
-	.menu-icon a span
+	.menu-icon button span
 	{
 		background: transparent url('Images/ResponsiveMenuButton_light.png') no-repeat center center;
 		-pie-background: transparent url('Skins/Default/Stylesheets/Images/ResponsiveMenuButton_light.png') no-repeat center center;
@@ -585,6 +637,11 @@
 		background: -ms-linear-gradient(top, #ebebeb 0%,#dadada 100%);
 		background: linear-gradient(top, #ebebeb 0%,#dadada 100%);
 		-pie-background: linear-gradient(#ebebeb, #dadada);
+	}
+
+	.search-account-container
+	{
+		
 	}
 
 	#search-field-sidebar
