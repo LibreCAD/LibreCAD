@@ -72,4 +72,4 @@ const RS_LineTypePattern RS_LineTypePattern::patternBorderLine2{{6.0, -3.0, 6.0,
 const RS_LineTypePattern RS_LineTypePattern::patternBorderLineX2{{24.0, -8.0, 24.0, -8., 0.2, -8.}};
 
 const RS_LineTypePattern RS_LineTypePattern::patternBlockLine{{0.5, -0.5}};
-const RS_LineTypePattern RS_LineTypePattern::patternSelected{10.0};
+const RS_LineTypePattern RS_LineTypePattern::patternSelected={10.0};
