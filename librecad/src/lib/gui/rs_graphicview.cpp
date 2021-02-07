@@ -1374,17 +1374,17 @@ void RS_GraphicView::drawRelativeZero(RS_Painter *painter) {
     painter->drawLine(RS_Vector(vp.x, vp.y-zr),
                       RS_Vector(vp.x, vp.y+zr)
                       );
-    painter->drawLine(RS_Vector(vp.x-zr, vp.y),
-                    RS_Vector(vp.x, vp.y+zr)
+    painter->drawLine(RS_Vector(vp.x-zr, vp.y+zr),
+                    RS_Vector(vp.x+zr, vp.y+zr)
                       );
-    painter->drawLine(RS_Vector(vp.x-zr, vp.y),
-                    RS_Vector(vp.x, vp.y-zr)
+    painter->drawLine(RS_Vector(vp.x-zr, vp.y-zr),
+                    RS_Vector(vp.x+zr, vp.y-zr)
                       );
-    painter->drawLine(RS_Vector(vp.x+zr, vp.y),
-                      RS_Vector(vp.x, vp.y+zr)
+    painter->drawLine(RS_Vector(vp.x-zr, vp.y-zr),
+                      RS_Vector(vp.x-zr, vp.y+zr)
                       );
-    painter->drawLine(RS_Vector(vp.x+zr, vp.y),
-                      RS_Vector(vp.x, vp.y-zr)
+    painter->drawLine(RS_Vector(vp.x+zr, vp.y-zr),
+                      RS_Vector(vp.x+zr, vp.y+zr)
                       );
     /**painter->drawCircle(vp, 5);*/
 }
