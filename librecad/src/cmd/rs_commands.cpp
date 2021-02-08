@@ -25,17 +25,14 @@
 **
 **********************************************************************/
 
-#include <vector>
-
+#include<vector>
 #include <QObject>
-#include <QString>
-#include <QStringList>
 #include <QTextStream>
-
 #include "rs_commands.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
+
 #include "rs_system.h"
+#include "rs_dialogfactory.h"
+#include "rs_debug.h"
 
 namespace {
 struct LC_CommandItem {
@@ -59,13 +56,17 @@ bool isCollisionFree(std::map<T1, T2> const& lookUp, T1 const& key, T2 const& va
 }
 }
 
+RS_Commands* RS_Commands::uniqueInstance = nullptr;
+
 const char* RS_Commands::FnPrefix = "Fn";
 const char* RS_Commands::AltPrefix = "Alt-";
 const char* RS_Commands::MetaPrefix = "Meta-";
 
 
 RS_Commands* RS_Commands::instance() {
-    static RS_Commands*  uniqueInstance = new RS_Commands();
+    if (!uniqueInstance) {
+        uniqueInstance = new RS_Commands();
+    }
     return uniqueInstance;
 }
 
@@ -731,17 +732,17 @@ void RS_Commands::updateAlias(){
     //alias file do no exist, create one with translated shortCommands
         if (f.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
             QTextStream ts(&f);
-            ts << "#LibreCAD alias v1" << '\n' << '\n';
-            ts << "# lines starting with # are comments" << '\n';
-            ts << "# format are:" << '\n';
-            ts << R"(# <alias>\t<command-untranslated>)" << '\n';
-            ts << "# example"<<'\n';
-            ts << "# l\tline"<<'\n'<<'\n';
+            ts << "#LibreCAD alias v1" << endl << endl;
+            ts << "# lines starting with # are comments" << endl;
+            ts << "# format are:" << endl;
+            ts << R"(# <alias>\t<command-untranslated>)" << endl;
+            ts << "# example"<<endl;
+            ts << "# l\tline"<<endl<<endl;
             for(auto const& p: shortCommands){
                 auto const act=p.second;
                 for(auto const& pCmd: mainCommands){
                     if(pCmd.second==act){
-                        ts<<p.first<<'\t'<<pCmd.first<<'\n';
+                        ts<<p.first<<'\t'<<pCmd.first<<endl;
                         break;
                     }
                 }
@@ -772,7 +773,7 @@ void RS_Commands::updateAlias(){
 /**
  * Tries to complete the given command (e.g. when tab is pressed).
  */
-QStringList RS_Commands::complete(const QString& cmd) const {
+QStringList RS_Commands::complete(const QString& cmd) {
     QStringList ret;
     for(auto const& p: mainCommands){
         if(p.first.startsWith(cmd, Qt::CaseInsensitive)){
@@ -796,16 +797,16 @@ QStringList RS_Commands::complete(const QString& cmd) const {
  *
  * @return The translated command.
  */
-RS2::ActionType RS_Commands::cmdToAction(const QString& cmd, bool verbose) const {
+RS2::ActionType RS_Commands::cmdToAction(const QString& cmd, bool verbose) {
     QString full = cmd.toLower();
     RS2::ActionType ret = RS2::ActionNone;
 
         // find command:
 //	RS2::ActionType* retPtr = mainCommands.value(cmd);
         if ( mainCommands.count(cmd) ) {
-            ret = mainCommands.at(cmd);
+                ret = mainCommands[cmd];
         } else if ( shortCommands.count(cmd) ) {
-            ret = shortCommands.at(cmd);
+                ret = shortCommands[cmd];
 		} else
 			return ret;
 
@@ -829,7 +830,7 @@ RS2::ActionType RS_Commands::cmdToAction(const QString& cmd, bool verbose) const
  * Gets the action for the given keycode. A keycode is a sequence
  * of key-strokes that is entered like hotkeys.
  */
-RS2::ActionType RS_Commands::keycodeToAction(const QString& code) const {
+RS2::ActionType RS_Commands::keycodeToAction(const QString& code) {
 	if(code.size() < 1)
 		return RS2::ActionNone;
 
