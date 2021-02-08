@@ -52,7 +52,7 @@ private:
     void RSgenerate_gf(unsigned int pp);
     void RSgen_poly();
     int calcDecode(unsigned char* data, int* recd, int** elp, int* d, int* l, int* u_lu, int* s, int* root, int* loc, int* z, int* err, int* reg, int bb);
-  
+
 
 private:
     int mm; //RS code over GF(2^4)

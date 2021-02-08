@@ -155,7 +155,7 @@ public:
 /*!< convert to unitary vector */
     void unitize(){
         double dist;
-		dist = hypot(hypot(x, y), z);
+        dist = hypot(hypot(x, y), z);
         if (dist > 0.0) {
             x= x/dist;
             y= y/dist;
@@ -269,11 +269,8 @@ private:
 */
 class dwgHandle{
 public:
-    dwgHandle(){
-        code=0;
-        size=0;
-        ref=0;
-    }
+    dwgHandle(): code(0), size(0), ref(0){}
+
     ~dwgHandle(){}
     duint8 code;
     duint8 size;

@@ -41,30 +41,30 @@ static const int DRW_magicNumEnd18[] = {
 
 class dwgReader18 : public dwgReader {
 public:
-	dwgReader18(std::ifstream *stream, dwgR *p):dwgReader(stream, p){
-	}
-	bool readMetaData() override;
-	bool readFileHeader() override;
-	bool readDwgHeader(DRW_Header& hdr) override;
-	bool readDwgClasses() override;
-	bool readDwgHandles() override;
-	bool readDwgTables(DRW_Header& hdr) override;
-	bool readDwgBlocks(DRW_Interface& intfa) override{
+    dwgReader18(std::ifstream *stream, dwgR *p):dwgReader(stream, p){
+    }
+    bool readMetaData() override;
+    bool readFileHeader() override;
+    bool readDwgHeader(DRW_Header& hdr) override;
+    bool readDwgClasses() override;
+    bool readDwgHandles() override;
+    bool readDwgTables(DRW_Header& hdr) override;
+    bool readDwgBlocks(DRW_Interface& intfa) override{
         bool ret = true;
-		dwgBuffer dataBuf(objData.data(), uncompSize, &decoder);
+        dwgBuffer dataBuf(objData.data(), uncompSize, &decoder);
         ret = dwgReader::readDwgBlocks(intfa, &dataBuf);
         return ret;
     }
 
-	virtual bool readDwgEntities(DRW_Interface& intfa) override{
+    virtual bool readDwgEntities(DRW_Interface& intfa) override{
         bool ret = true;
-		dwgBuffer dataBuf(objData.data(), uncompSize, &decoder);
+        dwgBuffer dataBuf(objData.data(), uncompSize, &decoder);
         ret = dwgReader::readDwgEntities(intfa, &dataBuf);
         return ret;
     }
-	virtual bool readDwgObjects(DRW_Interface& intfa) override{
+    virtual bool readDwgObjects(DRW_Interface& intfa) override{
         bool ret = true;
-		dwgBuffer dataBuf(objData.data(), uncompSize, &decoder);
+        dwgBuffer dataBuf(objData.data(), uncompSize, &decoder);
         ret = dwgReader::readDwgObjects(intfa, &dataBuf);
         return ret;
     }
@@ -75,7 +75,7 @@ public:
 //    }
 
 protected:
-	std::vector<duint8> objData;
+    std::vector<duint8> objData;
     duint64 uncompSize;
 
 private:

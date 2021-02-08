@@ -87,7 +87,7 @@ public:
 private:
     std::string comments;
     std::string name;
-    DRW_Variant* curr;
+    DRW_Variant* curr {nullptr};
     int version; //to use on read
 
     duint32 linetypeCtrl;

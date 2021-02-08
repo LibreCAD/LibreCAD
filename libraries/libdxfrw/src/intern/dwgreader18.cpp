@@ -25,9 +25,9 @@
 #include "../libdwgr.h"
 
 void dwgReader18::genMagicNumber(){
-	int size =0x114;
-	std::vector<duint8> tmpMagicStr(size);
-	duint8 *p = tmpMagicStr.data();
+    int size =0x114;
+    std::vector<duint8> tmpMagicStr(size);
+    duint8 *p = tmpMagicStr.data();
     int rSeed =1;
     while (size--) {
         rSeed *= 0x343fd;
@@ -45,7 +45,7 @@ void dwgReader18::genMagicNumber(){
             DRW_DBG(", ");
             j++;
         }
-	}
+    }
 }
 
 duint32 dwgReader18::checksum(duint32 seed, duint8* data, duint32 sz){
@@ -66,7 +66,7 @@ duint32 dwgReader18::checksum(duint32 seed, duint8* data, duint32 sz){
     return (sum2 << 0x10) | (sum1 & 0xffff);
 }
 
- //called: Section page map: 0x41630e3b
+//called: Section page map: 0x41630e3b
 void dwgReader18::parseSysPage(duint8 *decompSec, duint32 decompSize){
     DRW_DBG("\nparseSysPage:\n ");
     duint32 compSize = fileBuf->getRawLong32();
@@ -81,9 +81,9 @@ void dwgReader18::parseSysPage(duint8 *decompSec, duint32 decompSize){
         hdrData[i]=0;
     duint32 calcsH = checksum(0, hdrData, 20);
     DRW_DBG("Calc hdr checksum= "); DRW_DBGH(calcsH);
-	std::vector<duint8> tmpCompSec(compSize);
-	fileBuf->getBytes(tmpCompSec.data(), compSize);
-	duint32 calcsD = checksum(calcsH, tmpCompSec.data(), compSize);
+    std::vector<duint8> tmpCompSec(compSize);
+    fileBuf->getBytes(tmpCompSec.data(), compSize);
+    duint32 calcsD = checksum(calcsH, tmpCompSec.data(), compSize);
     DRW_DBG("\nCalc data checksum= "); DRW_DBGH(calcsD); DRW_DBG("\n");
 
 #ifdef DRW_DBG_DUMP
@@ -95,7 +95,7 @@ void dwgReader18::parseSysPage(duint8 *decompSec, duint32 decompSize){
 #endif
     DRW_DBG("decompresing "); DRW_DBG(compSize); DRW_DBG(" bytes in "); DRW_DBG(decompSize); DRW_DBG(" bytes\n");
     dwgCompressor comp;
-	comp.decompress18(tmpCompSec.data(), decompSec, compSize, decompSize);
+    comp.decompress18(tmpCompSec.data(), decompSec, compSize, decompSize);
 #ifdef DRW_DBG_DUMP
     for (unsigned int i=0, j=0; i< decompSize;i++) {
         DRW_DBGH( decompSec[i]);
@@ -108,7 +108,7 @@ void dwgReader18::parseSysPage(duint8 *decompSec, duint32 decompSize){
  //called ???: Section map: 0x4163003b
 bool dwgReader18::parseDataPage(dwgSectionInfo si/*, duint8 *dData*/){
     DRW_DBG("\nparseDataPage\n ");
-	objData.resize(si.pageCount * si.maxSize);
+    objData.resize(si.pageCount * si.maxSize);
 
     for (std::map<duint32, dwgPageInfo>::iterator it=si.pages.begin(); it!=si.pages.end(); ++it){
         dwgPageInfo pi = it->second;
@@ -148,24 +148,24 @@ bool dwgReader18::parseDataPage(dwgSectionInfo si/*, duint8 *dData*/){
         DRW_DBG("\n      data checksum= "); DRW_DBGH(bufHdr.getRawLong32()); DRW_DBG("\n");
 
         //get compresed data
-		std::vector<duint8> cData(pi.cSize);
+        std::vector<duint8> cData(pi.cSize);
         if (!fileBuf->setPosition(pi.address+32))
             return false;
-		fileBuf->getBytes(cData.data(), pi.cSize);
+        fileBuf->getBytes(cData.data(), pi.cSize);
 
         //calculate checksum
-		duint32 calcsD = checksum(0, cData.data(), pi.cSize);
+        duint32 calcsD = checksum(0, cData.data(), pi.cSize);
         for (duint8 i= 24; i<28; ++i)
             hdrData[i]=0;
         duint32 calcsH = checksum(calcsD, hdrData, 32);
         DRW_DBG("Calc header checksum= "); DRW_DBGH(calcsH);
         DRW_DBG("\nCalc data checksum= "); DRW_DBGH(calcsD); DRW_DBG("\n");
 
-		duint8* oData = &objData[pi.startOffset];
+        duint8* oData = &objData[pi.startOffset];
         pi.uSize = si.maxSize;
         DRW_DBG("decompresing "); DRW_DBG(pi.cSize); DRW_DBG(" bytes in "); DRW_DBG(pi.uSize); DRW_DBG(" bytes\n");
         dwgCompressor comp;
-		comp.decompress18(cData.data(), oData, pi.cSize, pi.uSize);
+        comp.decompress18(cData.data(), oData, pi.cSize, pi.uSize);
     }
     return true;
 }
@@ -301,11 +301,11 @@ bool dwgReader18::readFileHeader() {
         DRW_DBG("Warning, bad page type, was expected 0x41630e3b instead of");  DRW_DBGH(pageType); DRW_DBG("\n");
         return false;
     }
-	std::vector<duint8> tmpDecompSec(decompSize);
-	parseSysPage(tmpDecompSec.data(), decompSize);
+    std::vector<duint8> tmpDecompSec(decompSize);
+    parseSysPage(tmpDecompSec.data(), decompSize);
 
 //parses "Section page map" decompresed data
-	dwgBuffer buff2(tmpDecompSec.data(), decompSize, &decoder);
+    dwgBuffer buff2(tmpDecompSec.data(), decompSize, &decoder);
     duint32 address = 0x100;
     //stores temporaly info of all pages:
     std::map<duint32, dwgPageInfo >sectionPageMapTmp;
@@ -343,12 +343,12 @@ bool dwgReader18::readFileHeader() {
         DRW_DBG("Warning, bad page type, was expected 0x4163003b instead of");  DRW_DBGH(pageType); DRW_DBG("\n");
         return false;
     }
-	tmpDecompSec.resize(decompSize);
-	parseSysPage(tmpDecompSec.data(), decompSize);
+    tmpDecompSec.resize(decompSize);
+    parseSysPage(tmpDecompSec.data(), decompSize);
 
 //reads sections:
     DRW_DBG("\n*** dwgReader18: reads sections:");
-	dwgBuffer buff3(tmpDecompSec.data(), decompSize, &decoder);
+    dwgBuffer buff3(tmpDecompSec.data(), decompSize, &decoder);
     duint32 numDescriptions = buff3.getRawLong32();
     DRW_DBG("\nnumDescriptions (sections)= "); DRW_DBG(numDescriptions);
     DRW_DBG("\n0x02 long= "); DRW_DBGH(buff3.getRawLong32());
@@ -394,7 +394,7 @@ bool dwgReader18::readFileHeader() {
             DRW_DBG("Saved section Name= "); DRW_DBG( secInfo.name.c_str() ); DRW_DBG("\n");
             sections[secEnum::getEnum(secInfo.name)] = secInfo;
         }
-	}
+    }
 
     if (! fileBuf->isGood())
         return false;
@@ -411,18 +411,18 @@ bool dwgReader18::readDwgHeader(DRW_Header& hdr){
     //global store for uncompressed data of all pages
     uncompSize=si.size;
     if (ret) {
-		dwgBuffer dataBuf(objData.data(), si.size, &decoder);
+        dwgBuffer dataBuf(objData.data(), si.size, &decoder);
         DRW_DBG("Header section sentinel= ");
         checkSentinel(&dataBuf, secEnum::HEADER, true);
         if (version == DRW::AC1018){
             ret = dwgReader::readDwgHeader(hdr, &dataBuf, &dataBuf);
         } else {
-			dwgBuffer handleBuf(objData.data(), si.size, &decoder);
+            dwgBuffer handleBuf(objData.data(), si.size, &decoder);
             ret = dwgReader::readDwgHeader(hdr, &dataBuf, &handleBuf);
         }
     }
     //Cleanup: global store for uncompressed data of all pages
-	objData.clear();
+    objData.clear();
     return ret;
 }
 
@@ -436,23 +436,22 @@ bool dwgReader18::readDwgClasses(){
     //global store for uncompressed data of all pages
     uncompSize=si.size;
     if (ret) {
+        dwgBuffer dataBuf(objData.data(), uncompSize, &decoder);
 
-	dwgBuffer dataBuf(objData.data(), uncompSize, &decoder);
+        DRW_DBG("classes section sentinel= ");
+        checkSentinel(&dataBuf, secEnum::CLASSES, true);
 
-    DRW_DBG("classes section sentinel= ");
-    checkSentinel(&dataBuf, secEnum::CLASSES, true);
-
-    duint32 size = dataBuf.getRawLong32();
-    DRW_DBG("\ndata size in bytes "); DRW_DBG(size);
-    if (version > DRW::AC1021 && maintenanceVersion > 3) { //2010+
-        duint32 hSize = dataBuf.getRawLong32();
-        DRW_DBG("\n2010+ & MV> 3, higth 32b: "); DRW_DBG(hSize);
+        duint32 size = dataBuf.getRawLong32();
+        DRW_DBG("\ndata size in bytes "); DRW_DBG(size);
+        if (version > DRW::AC1021 && maintenanceVersion > 3) { //2010+
+            duint32 hSize = dataBuf.getRawLong32();
+            DRW_DBG("\n2010+ & MV> 3, higth 32b: "); DRW_DBG(hSize);
+        }
+        duint32 bitSize = 0;
+        if (version > DRW::AC1021) {//2007+
+            bitSize = dataBuf.getRawLong32();
+            DRW_DBG("\ntotal size in bits "); DRW_DBG(bitSize);
     }
-    duint32 bitSize = 0;
-    if (version > DRW::AC1021) {//2007+
-    bitSize = dataBuf.getRawLong32();
-    DRW_DBG("\ntotal size in bits "); DRW_DBG(bitSize);
-}
     duint32 maxClassNum = dataBuf.getBitShort();
     DRW_DBG("\nMaximum class number "); DRW_DBG(maxClassNum);
     DRW_DBG("\nRc 1 "); DRW_DBG(dataBuf.getRawChar8());
@@ -461,7 +460,7 @@ bool dwgReader18::readDwgClasses(){
 
     /*******************************/
     dwgBuffer *strBuf = &dataBuf;
-	dwgBuffer strBuff(objData.data(), uncompSize, &decoder);
+    dwgBuffer strBuff(objData.data(), uncompSize, &decoder);
     //prepare string stream for 2007+
     if (version > DRW::AC1021) {//2007+
         strBuf = &strBuff;
@@ -524,7 +523,7 @@ bool dwgReader18::readDwgClasses(){
     ret = strBuf->isGood();
     }
     //Cleanup: global store for uncompressed data of all pages
-	objData.clear();
+    objData.clear();
     return ret;
 }
 
@@ -545,12 +544,12 @@ bool dwgReader18::readDwgHandles() {
     //global store for uncompressed data of all pages
     uncompSize=si.size;
     if (ret) {
-		dwgBuffer dataBuf(objData.data(), uncompSize, &decoder);
+        dwgBuffer dataBuf(objData.data(), uncompSize, &decoder);
 
         ret = dwgReader::readDwgHandles(&dataBuf, 0, si.size);
     }
     //Cleanup: global store for uncompressed data of all pages
-	objData.clear();
+    objData.clear();
     return ret;
 }
 
@@ -571,7 +570,7 @@ bool dwgReader18::readDwgTables(DRW_Header& hdr) {
     uncompSize=si.size;
     if (ret) {
 
-		dwgBuffer dataBuf(objData.data(), uncompSize, &decoder);
+        dwgBuffer dataBuf(objData.data(), uncompSize, &decoder);
 
         ret = dwgReader::readDwgTables(hdr, &dataBuf);
 
@@ -579,5 +578,4 @@ bool dwgReader18::readDwgTables(DRW_Header& hdr) {
     //Do not delete objData in this point, needed in the remaining code
     return ret;
 }
-
 

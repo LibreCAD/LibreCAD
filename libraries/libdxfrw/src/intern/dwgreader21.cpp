@@ -65,12 +65,12 @@ bool dwgReader21::parseSysPage(duint64 sizeCompressed, duint64 sizeUncompressed,
     duint64 fpsize = chunks * 255;
 
     if (! fileBuf->setPosition(offset))
-		return false;
-	std::vector<duint8> tmpDataRaw(fpsize);
-	fileBuf->getBytes(&tmpDataRaw.front(), fpsize);
-	std::vector<duint8> tmpDataRS(fpsize);
-	dwgRSCodec::decode239I(&tmpDataRaw.front(), &tmpDataRS.front(), fpsize/255);
-	dwgCompressor::decompress21(&tmpDataRS.front(), decompData, sizeCompressed, sizeUncompressed);
+        return false;
+    std::vector<duint8> tmpDataRaw(fpsize);
+    fileBuf->getBytes(&tmpDataRaw.front(), fpsize);
+    std::vector<duint8> tmpDataRS(fpsize);
+    dwgRSCodec::decode239I(&tmpDataRaw.front(), &tmpDataRS.front(), fpsize/255);
+    dwgCompressor::decompress21(&tmpDataRS.front(), decompData, sizeCompressed, sizeUncompressed);
     return true;
 }
 
@@ -81,8 +81,8 @@ bool dwgReader21::parseDataPage(dwgSectionInfo si, duint8 *dData){
         if (!fileBuf->setPosition(pi.address))
             return false;
 
-		std::vector<duint8> tmpPageRaw(pi.size);
-		fileBuf->getBytes(&tmpPageRaw.front(), pi.size);
+        std::vector<duint8> tmpPageRaw(pi.size);
+        fileBuf->getBytes(&tmpPageRaw.front(), pi.size);
     #ifdef DRW_DBG_DUMP
         DRW_DBG("\nSection OBJECTS raw data=\n");
         for (unsigned int i=0, j=0; i< pi.size;i++) {
@@ -92,10 +92,10 @@ bool dwgReader21::parseDataPage(dwgSectionInfo si, duint8 *dData){
         } DRW_DBG("\n");
     #endif
 
-		std::vector<duint8> tmpPageRS(pi.size);
+        std::vector<duint8> tmpPageRS(pi.size);
 
         duint8 chunks =pi.size / 255;
-		dwgRSCodec::decode251I(&tmpPageRaw.front(), &tmpPageRS.front(), chunks);
+        dwgRSCodec::decode251I(&tmpPageRaw.front(), &tmpPageRS.front(), chunks);
     #ifdef DRW_DBG_DUMP
         DRW_DBG("\nSection OBJECTS RS data=\n");
         for (unsigned int i=0, j=0; i< pi.size;i++) {
@@ -108,7 +108,7 @@ bool dwgReader21::parseDataPage(dwgSectionInfo si, duint8 *dData){
         DRW_DBG("\npage uncomp size: "); DRW_DBG(pi.uSize); DRW_DBG(" comp size: "); DRW_DBG(pi.cSize);
         DRW_DBG("\noffset: "); DRW_DBG(pi.startOffset);
         duint8 *pageData = dData + pi.startOffset;
-		dwgCompressor::decompress21(&tmpPageRS.front(), pageData, pi.cSize, pi.uSize);
+        dwgCompressor::decompress21(&tmpPageRS.front(), pageData, pi.cSize, pi.uSize);
 
     #ifdef DRW_DBG_DUMP
         DRW_DBG("\n\nSection OBJECTS decompresed data=\n");
@@ -154,18 +154,18 @@ bool dwgReader21::readFileHeader() {
     DRW_DBG("\nlength2 4bytes= "); DRW_DBG(fileHdrCompLength2);
 
     int fileHdrDataLength = 0x110;
-	std::vector<duint8> fileHdrData;
+    std::vector<duint8> fileHdrData;
     if (fileHdrCompLength < 0) {
         fileHdrDataLength = fileHdrCompLength * -1;
-		fileHdrData.resize(fileHdrDataLength);
-		fileHdrBuf.getBytes(&fileHdrData.front(), fileHdrDataLength);
+        fileHdrData.resize(fileHdrDataLength);
+        fileHdrBuf.getBytes(&fileHdrData.front(), fileHdrDataLength);
     }else {
         DRW_DBG("\ndwgReader21:: file header are compresed:\n");
-		std::vector<duint8> compByteStr(fileHdrCompLength);
-		fileHdrBuf.getBytes(compByteStr.data(), fileHdrCompLength);
-		fileHdrData.resize(fileHdrDataLength);
-		dwgCompressor::decompress21(compByteStr.data(), &fileHdrData.front(),
-									fileHdrCompLength, fileHdrDataLength);
+        std::vector<duint8> compByteStr(fileHdrCompLength);
+        fileHdrBuf.getBytes(compByteStr.data(), fileHdrCompLength);
+        fileHdrData.resize(fileHdrDataLength);
+        dwgCompressor::decompress21(compByteStr.data(), &fileHdrData.front(),
+                                    fileHdrCompLength, fileHdrDataLength);
     }
 
 #ifdef DRW_DBG_DUMP
@@ -177,7 +177,7 @@ bool dwgReader21::readFileHeader() {
     } DRW_DBG("\n");
 #endif
 
-	dwgBuffer fileHdrDataBuf(&fileHdrData.front(), fileHdrDataLength, &decoder);
+    dwgBuffer fileHdrDataBuf(&fileHdrData.front(), fileHdrDataLength, &decoder);
     DRW_DBG("\nHeader size = "); DRW_DBGH(fileHdrDataBuf.getRawLong64());
     DRW_DBG("\nFile size = "); DRW_DBGH(fileHdrDataBuf.getRawLong64());
     DRW_DBG("\nPagesMapCrcCompressed = "); DRW_DBGH(fileHdrDataBuf.getRawLong64());
@@ -223,18 +223,18 @@ bool dwgReader21::readFileHeader() {
     DRW_DBG("\nHeader CRC64 = "); DRW_DBGH(fileHdrDataBuf.getRawLong64()); DRW_DBG("\n");
 
 
-	DRW_DBG("\ndwgReader21::parse page map:\n");
-	std::vector<duint8> PagesMapData(PagesMapSizeUncompressed);
+    DRW_DBG("\ndwgReader21::parse page map:\n");
+    std::vector<duint8> PagesMapData(PagesMapSizeUncompressed);
 
-	bool ret = parseSysPage(PagesMapSizeCompressed, PagesMapSizeUncompressed,
-							PagesMapCorrectionFactor, 0x480+PagesMapOffset,
-							&PagesMapData.front());
-	if (!ret)
-		return false;
+    bool ret = parseSysPage(PagesMapSizeCompressed, PagesMapSizeUncompressed,
+                            PagesMapCorrectionFactor, 0x480+PagesMapOffset,
+                            &PagesMapData.front());
+    if (!ret)
+        return false;
 
     duint64 address = 0x480;
     duint64 i = 0;
-	dwgBuffer PagesMapBuf(&PagesMapData.front(), PagesMapSizeUncompressed, &decoder);
+    dwgBuffer PagesMapBuf(&PagesMapData.front(), PagesMapSizeUncompressed, &decoder);
     //stores temporaly info of all pages:
     std::map<duint32, dwgPageInfo >sectionPageMapTmp;
 
@@ -254,17 +254,17 @@ bool dwgReader21::readFileHeader() {
     }
 
     DRW_DBG("\n*** dwgReader21: Processing Section Map ***\n");
-	std::vector<duint8> SectionsMapData(SectionsMapSizeUncompressed);
+    std::vector<duint8> SectionsMapData(SectionsMapSizeUncompressed);
     dwgPageInfo sectionMap = sectionPageMapTmp[SectionsMapId];
-	ret = parseSysPage(SectionsMapSizeCompressed, SectionsMapSizeUncompressed,
-					   SectionsMapCorrectionFactor, sectionMap.address, &SectionsMapData.front());
-	if (!ret)
+    ret = parseSysPage(SectionsMapSizeCompressed, SectionsMapSizeUncompressed,
+                       SectionsMapCorrectionFactor, sectionMap.address, &SectionsMapData.front());
+    if (!ret)
         return false;
 
 //reads sections:
     //Note: compressed value are not stored in file then, commpresed field are use to store
     // encoding value
-	dwgBuffer SectionsMapBuf(&SectionsMapData.front(), SectionsMapSizeUncompressed, &decoder);
+    dwgBuffer SectionsMapBuf(&SectionsMapData.front(), SectionsMapSizeUncompressed, &decoder);
     duint8 nextId =1;
     while(SectionsMapBuf.getPosition() < SectionsMapBuf.size()){
         dwgSectionInfo secInfo;
@@ -328,15 +328,15 @@ bool dwgReader21::readDwgHeader(DRW_Header& hdr){
     dwgSectionInfo si = sections[secEnum::HEADER];
     if (si.Id<0)//not found, ends
         return false;
-	DRW_DBG("\nprepare section of size "); DRW_DBG(si.size);DRW_DBG("\n");
-	std::vector<duint8> tmpHeaderData(si.size);
+    DRW_DBG("\nprepare section of size "); DRW_DBG(si.size);DRW_DBG("\n");
+    std::vector<duint8> tmpHeaderData(si.size);
 
-	bool ret = dwgReader21::parseDataPage(si, &tmpHeaderData.front());
-	if (!ret)
+    bool ret = dwgReader21::parseDataPage(si, &tmpHeaderData.front());
+    if (!ret)
         return ret;
 
-	dwgBuffer dataBuf(&tmpHeaderData.front(), si.size, &decoder);
-	dwgBuffer handleBuf(&tmpHeaderData.front(), si.size, &decoder);
+    dwgBuffer dataBuf(&tmpHeaderData.front(), si.size, &decoder);
+    dwgBuffer handleBuf(&tmpHeaderData.front(), si.size, &decoder);
     DRW_DBG("Header section sentinel= ");
     checkSentinel(&dataBuf, secEnum::HEADER, true);
     ret = dwgReader::readDwgHeader(hdr, &dataBuf, &handleBuf);
@@ -350,8 +350,8 @@ bool dwgReader21::readDwgClasses(){
         return false;
 
     DRW_DBG("\nprepare section of size "); DRW_DBG(si.size);DRW_DBG("\n");
-	std::vector<duint8> tmpClassesData(si.size);
-	bool ret = dwgReader21::parseDataPage(si, tmpClassesData.data());
+    std::vector<duint8> tmpClassesData(si.size);
+    bool ret = dwgReader21::parseDataPage(si, tmpClassesData.data());
     if (!ret)
         return ret;
 
@@ -373,7 +373,7 @@ bool dwgReader21::readDwgClasses(){
 
     /*******************************/
     //prepare string stream
-	dwgBuffer strBuff(tmpClassesData.data(), si.size, &decoder);
+    dwgBuffer strBuff(tmpClassesData.data(), si.size, &decoder);
     duint32 strStartPos = bitSize + 159;//size in bits + 20 bytes (sn+size) - 1 bit (endbit)
     DRW_DBG("\nstrStartPos: "); DRW_DBG(strStartPos);
     strBuff.setPosition(strStartPos >> 3);
@@ -421,7 +421,7 @@ bool dwgReader21::readDwgClasses(){
     buff.setPosition(size+20);//sizeVal+sn+32bSize
     DRW_DBG("\nCRC: "); DRW_DBGH(buff.getRawShort16());
     DRW_DBG("\nclasses section end sentinel= ");
-	checkSentinel(&buff, secEnum::CLASSES, true);
+    checkSentinel(&buff, secEnum::CLASSES, true);
     return buff.isGood();
 }
 
@@ -433,8 +433,8 @@ bool dwgReader21::readDwgHandles(){
         return false;
 
     DRW_DBG("\nprepare section of size "); DRW_DBG(si.size);DRW_DBG("\n");
-	std::vector<duint8> tmpHandlesData(si.size);
-	bool ret = dwgReader21::parseDataPage(si, tmpHandlesData.data());
+    std::vector<duint8> tmpHandlesData(si.size);
+    bool ret = dwgReader21::parseDataPage(si, tmpHandlesData.data());
     if (!ret)
         return ret;
 
@@ -457,13 +457,13 @@ bool dwgReader21::readDwgTables(DRW_Header& hdr) {
 
     DRW_DBG("\nprepare section of size "); DRW_DBG(si.size);DRW_DBG("\n");
     dataSize = si.size;
-	objData.resize(dataSize);
-	bool ret = dwgReader21::parseDataPage(si, objData.data());
+    objData.resize(dataSize);
+    bool ret = dwgReader21::parseDataPage(si, objData.data());
     if (!ret)
         return ret;
 
     DRW_DBG("readDwgTables total data size= "); DRW_DBG(dataSize); DRW_DBG("\n");
-	dwgBuffer dataBuf(objData.data(), dataSize, &decoder);
+    dwgBuffer dataBuf(objData.data(), dataSize, &decoder);
     ret = dwgReader::readDwgTables(hdr, &dataBuf);
 
     return ret;
@@ -472,11 +472,10 @@ bool dwgReader21::readDwgTables(DRW_Header& hdr) {
 
 bool dwgReader21::readDwgBlocks(DRW_Interface& intfa){
     bool ret = true;
-	dwgBuffer dataBuf(objData.data(), dataSize, &decoder);
+    dwgBuffer dataBuf(objData.data(), dataSize, &decoder);
     ret = dwgReader::readDwgBlocks(intfa, &dataBuf);
     return ret;
 
     return false;
 }
-
 
