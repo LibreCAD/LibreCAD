@@ -258,7 +258,7 @@ RS_Commands::RS_Commands() {
         // draw circle 2 points and radius - v2.2.0r2
         {
             {{"circle2pr", QObject::tr("circle2pr", "circle 2 points radius")}},
-            {{"cr", QObject::tr("cr", "circle 2 points radius")}},
+            {{"cc", QObject::tr("cc", "circle 2 points radius")}},
             RS2::ActionDrawCircle2PR
         },
         // draw 3 point circle
@@ -271,7 +271,7 @@ RS_Commands::RS_Commands() {
         // draw circle with centre point and radius - v2.2.0r2
         {
             {{"circlecr", QObject::tr("circlecr", "circle point radius")}},
-            {{"cc", QObject::tr("cc", "circle point radius")},
+            {{"cr", QObject::tr("cr", "circle point radius")},
              {"ccr", QObject::tr("ccr", "circle point radius")}},
             RS2::ActionDrawCircleCR
         },
@@ -512,7 +512,7 @@ RS_Commands::RS_Commands() {
         // dimension regenerate
         {
             {{"dimregen", QObject::tr("dimregen", "dimension - regenerate")}},
-            {{"df", QObject::tr("df", "dimension - regenerate")}},
+            {{"dg", QObject::tr("dg", "dimension - regenerate")}},
             RS2::ActionToolRegenerateDimensions
         },
 
