@@ -70,6 +70,35 @@ RS_Commands* RS_Commands::instance() {
     return uniqueInstance;
 }
 
+/**
+Just thinking outload...
+If the following section [RS_Commands::RS_Commands()] was to be abstracted...
+
+  // draw line
+        {
+            {{"line2p", QObject::tr("line2p", "draw line")}},
+            {{"li", QObject::tr("li", "draw line")},
+             {"line", QObject::tr("line", "draw line")},
+             {"l", QObject::tr("l", "draw line")}},
+            RS2::ActionDrawLine
+        },
+
+becomes
+
+   commandGroup("line2p", "li", "l", "draw line");
+
+where
+
+   commandGroup(longCommand, keyCode, letterCode, translationString) { 
+      {{longCommand, QObject::tr(longCommand, translationString)}},
+      {{keyCode, QObject::tr(keyCode, translationString)},
+       {letterCode, QObject::tr(letterCode, translationString)}},
+   }
+
+Legacy (e.g. "line", "horizontal") commands are removed (?)
+
+*/
+
 
 /**
  * Constructor. Initiates main command dictionary.
