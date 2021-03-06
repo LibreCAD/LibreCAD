@@ -1864,63 +1864,88 @@ bool dxfRW::writeExtData(const std::vector<DRW_Variant*> &ed){
 
 bool dxfRW::processDxf() {
     DRW_DBG("dxfRW::processDxf() start processing dxf\n");
-    int code;
-    bool more = true;
-    std::string sectionstr;
-//    section = secUnknown;
+    int code {-1};
+    bool inSection {false};
+
     reader->setIgnoreComments( false);
     while (reader->readRec(&code)) {
-        DRW_DBG(code); DRW_DBG(" processDxf\n");
-        if (code == 999) {
-            // when DXF was created by libdxfrw, first record is a comment with dxfrw version info
-            header.addComment(reader->getString());
-        } else if (code == 0) {
+        DRW_DBG(code); DRW_DBG(" code\n");
+        /* at this level we should only get:
+         999 - Comment
+         0 - SECTION or EOF
+         2 - section name
+         everything else between "2 - section name" and "0 - ENDSEC" is handled in process() methods
+        */
+        switch (code) {
+        case 999: // when DXF was created by libdxfrw, first record is a comment with dxfrw version info
+            header.addComment( reader->getString());
+            continue;
+
+        case 0:
             // ignore further comments, as libdxfrw doesn't support comments in sections
             reader->setIgnoreComments( true);
+            if (!inSection) {
+                std::string sectionstr {reader->getString()};
 
-            sectionstr = reader->getString();
-            DRW_DBG(sectionstr); DRW_DBG(" processDxf\n");
-            if (sectionstr == "EOF") {
-                return true;  //found EOF terminate
-            }
-            if (sectionstr == "SECTION") {
-                more = reader->readRec(&code);
-                DRW_DBG(code); DRW_DBG(" processDxf\n");
-                if (!more)
-                    return false; //wrong dxf file
-                if (code == 2) {
-                    sectionstr = reader->getString();
-                    DRW_DBG(sectionstr); DRW_DBG("  processDxf\n");
-                    //found section, process it
-                    if (sectionstr == "HEADER") {
-                        if (!processHeader()) {
-                            return false;
-                        }
-                    } else if (sectionstr == "CLASSES") {
-//                        processClasses();
-                    } else if (sectionstr == "TABLES") {
-                        if (!processTables()) {
-                            return false;
-                        }
-                    } else if (sectionstr == "BLOCKS") {
-                        if (!processBlocks()) {
-                            return false;
-                        }
-                    } else if (sectionstr == "ENTITIES") {
-                        if (!processEntities(false)) {
-                            return false;
-                        }
-                    } else if (sectionstr == "OBJECTS") {
-                        if (!processObjects()) {
-                            return false;
-                        }
-                    }
+                if ("SECTION" == sectionstr) {
+                    DRW_DBG(sectionstr); DRW_DBG(" new section\n");
+                    inSection = true;
+                    continue;
+                }
+                if ("EOF" == sectionstr) {
+                    return true;  //found EOF terminate
                 }
             }
+            break;
+
+        case 2:
+            if (inSection) {
+                bool processed {false};
+                std::string sectionname {reader->getString()};
+
+                DRW_DBG(sectionname); DRW_DBG(" process section\n");
+                if ("HEADER" == sectionname) {
+                    processed = processHeader();
+                }
+                else if ("TABLES" == sectionname) {
+                    processed = processTables();
+                }
+                else if ("BLOCKS" == sectionname) {
+                    processed = processBlocks();
+                }
+                else if ("ENTITIES" == sectionname) {
+                    processed = processEntities(false);
+                }
+                else if ("OBJECTS" == sectionname) {
+                    processed = processObjects();
+                }
+                else {
+                    //TODO handle CLASSES
+
+                    DRW_DBG("section unknown or not supported\n");
+                    continue;
+                }
+
+                if (!processed) {
+                    DRW_DBG("  failed\n");
+                    return false;
+                }
+
+                inSection = false;
+            }
+            continue;
+
+        default:
+            break;
         }
-/*    if (!more)
-        return true;*/
     }
+
+    if (0 == code && "EOF" == reader->getString()) {
+        // in case the final EOF has no newline we end up here!
+        // this is caused by filestr->good() which is false for missing newline on EOF
+        return true;
+    }
+
     return false;
 }
 
@@ -1939,15 +1964,14 @@ bool dxfRW::processHeader() {
                 iface->addHeader(&header);
                 return true;  //found ENDSEC terminate
             }
-            else {
-                DRW_DBG("unexpected 0 code in header!\n");
-                return false;
-            }
+
+            DRW_DBG("unexpected 0 code in header!\n");
+            return false;
         }
-        else {
-            header.parseCode(code, reader);
-        }
+
+        header.parseCode(code, reader);
     }
+
     return false;
 }
 
@@ -2212,68 +2236,71 @@ bool dxfRW::processEntities(bool isblock) {
     }
 
     if (code == 0) {
-            nextentity = reader->getString();
+        nextentity = reader->getString();
     } else if (!isblock) {
-            return false;  //first record in entities is 0
+        return false;  //first record in entities is 0
     }
+
+    bool processed {false};
     do {
         if (nextentity == "ENDSEC" || nextentity == "ENDBLK") {
             return true;  //found ENDSEC or ENDBLK terminate
         }
-        else if (nextentity == "POINT" && !processPoint()) {
-            return false;
-        } else if (nextentity == "LINE" && !processLine()) {
-            return false;
-        } else if (nextentity == "CIRCLE" && !processCircle()) {
-            return false;
-        } else if (nextentity == "ARC" && !processArc()) {
-            return false;
-        } else if (nextentity == "ELLIPSE" && !processEllipse()) {
-            return false;
-        } else if (nextentity == "TRACE" && !processTrace()) {
-            return false;
-        } else if (nextentity == "SOLID" && !processSolid()) {
-            return false;
-        } else if (nextentity == "INSERT" && !processInsert()) {
-            return false;
-        } else if (nextentity == "LWPOLYLINE" && !processLWPolyline()) {
-            return false;
-        } else if (nextentity == "POLYLINE" && !processPolyline()) {
-            return false;
-        } else if (nextentity == "TEXT" && !processText()) {
-            return false;
-        } else if (nextentity == "MTEXT" && !processMText()) {
-            return false;
-        } else if (nextentity == "HATCH" && !processHatch()) {
-            return false;
-        } else if (nextentity == "SPLINE" && !processSpline()) {
-            return false;
-        } else if (nextentity == "3DFACE" && !process3dface()) {
-            return false;
-        } else if (nextentity == "VIEWPORT" && !processViewport()) {
-            return false;
-        } else if (nextentity == "IMAGE" && !processImage()) {
-            return false;
-        } else if (nextentity == "DIMENSION" && !processDimension()) {
-            return false;
-        } else if (nextentity == "LEADER" && !processLeader()) {
-            return false;
-        } else if (nextentity == "RAY" && !processRay()) {
-            return false;
-        } else if (nextentity == "XLINE" && !processXline()) {
-            return false;
+        else if (nextentity == "POINT") {
+            processed = processPoint();
+        } else if (nextentity == "LINE") {
+            processed = processLine();
+        } else if (nextentity == "CIRCLE") {
+            processed = processCircle();
+        } else if (nextentity == "ARC") {
+            processed = processArc();
+        } else if (nextentity == "ELLIPSE") {
+            processed = processEllipse();
+        } else if (nextentity == "TRACE") {
+            processed = processTrace();
+        } else if (nextentity == "SOLID") {
+            processed = processSolid();
+        } else if (nextentity == "INSERT") {
+            processed = processInsert();
+        } else if (nextentity == "LWPOLYLINE") {
+            processed = processLWPolyline();
+        } else if (nextentity == "POLYLINE") {
+            processed = processPolyline();
+        } else if (nextentity == "TEXT") {
+            processed = processText();
+        } else if (nextentity == "MTEXT") {
+            processed = processMText();
+        } else if (nextentity == "HATCH") {
+            processed = processHatch();
+        } else if (nextentity == "SPLINE") {
+            processed = processSpline();
+        } else if (nextentity == "3DFACE") {
+            processed = process3dface();
+        } else if (nextentity == "VIEWPORT") {
+            processed = processViewport();
+        } else if (nextentity == "IMAGE") {
+            processed = processImage();
+        } else if (nextentity == "DIMENSION") {
+            processed = processDimension();
+        } else if (nextentity == "LEADER") {
+            processed = processLeader();
+        } else if (nextentity == "RAY") {
+            processed = processRay();
+        } else if (nextentity == "XLINE") {
+            processed = processXline();
         } else {
-            if (reader->readRec(&code)) {
-                if (code == 0) {
-                    nextentity = reader->getString();
-                }
-            }
-            else {
+            if (!reader->readRec(&code)) {
                 return false; //end of file without ENDSEC
             }
-        }
 
-    } while (true);
+            if (code == 0) {
+                nextentity = reader->getString();
+            }
+            processed = true;
+        }
+    } while (processed);
+
+    return false;
 }
 
 bool dxfRW::processEllipse() {
@@ -2572,10 +2599,12 @@ bool dxfRW::processPolyline() {
             nextentity = reader->getString();
             DRW_DBG(nextentity); DRW_DBG("\n");
             if (nextentity != "VERTEX") {
-            iface->addPolyline(pl);
-            return true;  //found new entity or ENDSEC, terminate
-            } else {
+                iface->addPolyline(pl);
+                return true;  //found new entity or ENDSEC, terminate
+            }
+            else {
                 processVertex(&pl);
+                //TODO LoB, check fall through
             }
         }
         default:
@@ -2601,6 +2630,7 @@ bool dxfRW::processVertex(DRW_Polyline *pl) {
                 return true;  //found SEQEND no more vertex, terminate
             } else if (nextentity == "VERTEX"){
                 v = std::make_shared<DRW_Vertex>(); //another vertex
+                //TODO LoB, check fall through
             }
         }
         default:
@@ -2798,31 +2828,37 @@ bool dxfRW::processLeader() {
 bool dxfRW::processObjects() {
     DRW_DBG("dxfRW::processObjects\n");
     int code;
-    if (!reader->readRec(&code)){
-        return false;
+    if (!reader->readRec(&code)
+            || 0 != code){
+        return false; //first record in objects must be 0
     }
-    bool next = true;
-    if (code == 0) {
-            nextentity = reader->getString();
-    } else {
-            return false;  //first record in objects is 0
-    }
+
+    bool processed {false};
+    nextentity = reader->getString();
     do {
-        if (nextentity == "ENDSEC") {
+        if ("ENDSEC" == nextentity) {
             return true;  //found ENDSEC terminate
-        } else if (nextentity == "IMAGEDEF" && !processImageDef()) {
-            return false;
-        } else if (nextentity == "PLOTSETTINGS" && !processPlotSettings()) {
-            return false;
-        } else {
-            if (reader->readRec(&code)){
-                if (code == 0)
-                    nextentity = reader->getString();
-            } else
-                return false; //end of file without ENDSEC
         }
 
-    } while (next);
+        if ("IMAGEDEF" == nextentity) {
+            processed = processImageDef();
+        }
+        else if ("PLOTSETTINGS" == nextentity) {
+            processed = processPlotSettings();
+        }
+        else {
+            if (!reader->readRec(&code)) {
+                return false; //end of file without ENDSEC
+            }
+
+            if (code == 0) {
+                nextentity = reader->getString();
+            }
+            processed = true;
+        }
+    }
+    while (processed);
+
     return false;
 }
 
