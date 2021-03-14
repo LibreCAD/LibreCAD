@@ -1896,6 +1896,12 @@ bool dxfRW::processDxf() {
                     return true;  //found EOF terminate
                 }
             }
+            else {
+                // in case SECTION was unknown or not supported
+                if ("ENDSEC" == reader->getString()) {
+                    inSection = false;
+                }
+            }
             break;
 
         case 2:
@@ -1936,6 +1942,8 @@ bool dxfRW::processDxf() {
             continue;
 
         default:
+            // landing here means an unknown or not supported SECTION
+            inSection = false;
             break;
         }
     }
