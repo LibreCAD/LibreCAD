@@ -113,8 +113,9 @@ void QG_PolylineEquidistantOptions::updateNumber() {
 		const QString& l = ui->leNumber->text();
 		bool ok;
 		unsigned i=static_cast<unsigned>(RS_Math::eval(l,&ok)+0.5);
-		if (!ok || (i==0 && i>100))
+        if (!ok || 0 == i || 100 < i) {
 			i=1;
+        }
 		ui->leNumber->setText(QString::number(i));
 		action->setNumber(i);
 	}
