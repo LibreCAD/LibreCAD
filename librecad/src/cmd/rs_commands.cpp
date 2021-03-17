@@ -525,8 +525,8 @@ RS_Commands::RS_Commands() {
         },
         // mirror  (Removed extra space from translation sting.)
         {
-            {{"modmirror", QObject::tr("modmirror", "modify - mirror")}},
-            {{"mi", QObject::tr("mi", "modify - mirror")}},
+            {{"modmirror", QObject::tr("modmirror", "modify -  mirror")}},
+            {{"mi", QObject::tr("mi", "modify -  mirror")}},
             RS2::ActionModifyMirror
         },
         // move and rotate - v2.2.0r2
@@ -543,9 +543,9 @@ RS_Commands::RS_Commands() {
         },
         // revert (Removed extra space from translation sting.)
         {
-            {{"modrevert", QObject::tr("modrevert", "modify - revert direction")}},
-            {{"md", QObject::tr("md", "modify - revert direction")},
-             {"rev", QObject::tr("rev", "modify - revert direction")}},
+            {{"modrevert", QObject::tr("modrevert", "modify -  revert direction")}},
+            {{"md", QObject::tr("md", "modify -  revert direction")},
+             {"rev", QObject::tr("rev", "modify -  revert direction")}},
             RS2::ActionModifyRevertDirection
         },
         // trim
