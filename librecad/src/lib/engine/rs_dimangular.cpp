@@ -241,6 +241,11 @@ void RS_DimAngular::arrow(const RS_Vector& point,
                           const LC_DimAngularVars& av,
                           const RS_Pen& pen)
 {
+    if (RS_TOLERANCE_ANGLE >= av.arrow()) {
+        // arrow size is 0, no need to add an arrow
+        return;
+    }
+
     double arrowAngle {0.0};
 
     if (outsideArrows) {

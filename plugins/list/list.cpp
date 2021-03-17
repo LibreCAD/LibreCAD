@@ -177,6 +177,10 @@ QString LC_List::getStrData(Plug_Entity *ent) {
         break;
     case DPI::TEXT:
         strData.prepend( strEntity.arg(tr("TEXT")));
+        strData.append( strSpecificXY.arg(tr("in point")).
+                        arg(d->realToStr(data.value(DPI::STARTX).toDouble())).
+                        arg(d->realToStr(data.value(DPI::STARTY).toDouble())));
+        strData.append( strSpecific.arg(tr("TEXTCONTENT")).arg(data.value(DPI::TEXTCONTENT).toString()));
         break;
     case DPI::INSERT:
         strData.prepend( strEntity.arg(tr("INSERT")));
