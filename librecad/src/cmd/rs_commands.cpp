@@ -70,35 +70,6 @@ RS_Commands* RS_Commands::instance() {
     return uniqueInstance;
 }
 
-/**
-Just thinking outload...
-If the following section [RS_Commands::RS_Commands()] was to be abstracted...
-
-  // draw line
-        {
-            {{"line2p", QObject::tr("line2p", "draw line")}},
-            {{"li", QObject::tr("li", "draw line")},
-             {"line", QObject::tr("line", "draw line")},
-             {"l", QObject::tr("l", "draw line")}},
-            RS2::ActionDrawLine
-        },
-
-becomes
-
-   commandGroup("line2p", "li", "l", "draw line");
-
-where
-
-   commandGroup(longCommand, keyCode, letterCode, translationString) { 
-      {{longCommand, QObject::tr(longCommand, translationString)}},
-      {{keyCode, QObject::tr(keyCode, translationString)},
-       {letterCode, QObject::tr(letterCode, translationString)}},
-   }
-
-Legacy (e.g. "line", "horizontal") commands are removed (?)
-
-*/
-
 
 /**
  * Constructor. Initiates main command dictionary.
@@ -112,12 +83,7 @@ Legacy (e.g. "line", "horizontal") commands are removed (?)
  *    list all <main (full) command and translation string> pairs (category+parameters, i.e "line2p")
  *    Category: (long form for mainCommands, also appear is alias file as "command-untranslated")
  *        line - lin / li / l
- *        circle - cir / ci / c
- *        curve - arc / ar / a
- *        ellipse - ell / el / e
- *        polyline - pl / pl / p
- *        select - sel / sl / s
- *        modify - mod / mo / m
+ *        ...
  *        (others as req'd)
  *    Parameters:
  *        point - pt / p
@@ -132,11 +98,7 @@ Legacy (e.g. "line", "horizontal") commands are removed (?)
  *        first two letters for 'base' command or 
  *        first letter of catagory followed by parameter (best choice when possible)
  *           draw line - li
- *           line angled - la
- *           line horizontal - lh
- *           circle - ci
- *           draw circle 2 points and radius - cr
- *           modify - mo
+ *           ...
  *           etc.
  */
  
@@ -173,23 +135,20 @@ RS_Commands::RS_Commands() {
         // draw horizontal line
         {
             {{"linehor", QObject::tr("linehor", "horizontal line")}},   // - v2.2.0r2
-            {{"lh", QObject::tr("lh", "horizontal line")},
-             {"horizontal", QObject::tr("horizontal", "horizontal line")}},
+            {{"lh", QObject::tr("lh", "horizontal line")}},
             RS2::ActionDrawLineHorizontal
         },
         // draw vertical line
         {
             {{"linever", QObject::tr("linever", "vertical line")}},   // - v2.2.0r2
-            {{"lv", QObject::tr("lv", "vertical line")},
-             {"vertical", QObject::tr("vertical", "vertical line")}},
+            {{"lv", QObject::tr("lv", "vertical line")}},
             RS2::ActionDrawLineVertical
         },
         // draw rectangle - v2.2.0r2
         {
             {{"linerec", QObject::tr("linerec", "draw rectangle")}},
             {{"re", QObject::tr("re", "draw rectangle")},
-             {"rect", QObject::tr("rect", "draw rectangle")},
-             {"rectangle", QObject::tr("rectangle", "draw rectangle")}},
+             {"rect", QObject::tr("rect", "draw rectangle")}},
             RS2::ActionDrawLineRectangle
         },
         // draw parallel line
@@ -929,7 +888,7 @@ RS_Commands::RS_Commands() {
 
     /** following are reversed translation,i.e.,from translated to english **/
         //not used as command keywords
-    // used in function,checkCommand()
+        // used in function,checkCommand()
         {QObject::tr("angle"),"angle"},
         {QObject::tr("ang", "angle"),"angle"},
         {QObject::tr("an", "angle"),"angle"},
@@ -1008,7 +967,7 @@ RS_Commands::RS_Commands() {
 		{QObject::tr("color"), "color"},
 		{QObject::tr("paperoffset"),"paperoffset"},
         {QObject::tr("graphoffset"),"graphoffset"}
-};
+    };
     for(auto const& p: transList){
        cmdTranslation[p.first] = p.second;
     }
