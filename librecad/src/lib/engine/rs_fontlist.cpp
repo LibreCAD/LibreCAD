@@ -109,7 +109,7 @@ RS_Font* RS_FontList::requestFont(const QString& name) {
 	// Search our list of available fonts:
 	for( auto const& f: fonts){
 
-        if (f->getFileName()==name2) {
+        if (f->getFileName().toLower() == name2) {
             // Make sure this font is loaded into memory:
             f->loadFont();
 			foundFont = f.get();
