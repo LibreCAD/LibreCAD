@@ -660,7 +660,6 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
     RS_MTextData::MTextDrawingDirection dir;
     RS_MTextData::MTextLineSpacingStyle lss;
     QString sty = QString::fromUtf8(data.style.c_str());
-    sty=sty.toLower();
 
     if (data.textgen<=3) {
         valign=RS_MTextData::VATop;
@@ -768,7 +767,6 @@ void RS_FilterDXFRW::addText(const DRW_Text& data) {
     RS_TextData::HAlign halign = (RS_TextData::HAlign)data.alignH;
     RS_TextData::TextGeneration dir;
     QString sty = QString::fromUtf8(data.style.c_str());
-    sty=sty.toLower();
 
     if (data.textgen==2) {
         dir = RS_TextData::Backward;
