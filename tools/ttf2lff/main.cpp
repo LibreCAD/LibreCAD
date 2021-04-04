@@ -357,6 +357,11 @@ int main(int argc, char* argv[]) {
         ret = 1;
     }
     else {
+        FT_Int major {0};
+        FT_Int minor {0};
+        FT_Int patch {0};
+        FT_Library_Version( library, &major, &minor, &patch);
+        std::cerr << "FreeType version: " << major << '.' << minor << '.' << patch << std::endl;
         // load ttf font
         error = FT_New_Face(library,
                             fTtf.c_str(),
@@ -367,10 +372,13 @@ int main(int argc, char* argv[]) {
             ret = 1;
         }
         else {
-            std::cout << "Family:    " << face->family_name << "\n";
-            std::cout << "Height:    " << face->height << "\n";
-            std::cout << "Ascender:  " << face->ascender << "\n";
-            std::cout << "Descender: " << face->descender << "\n";
+            std::cout << "Family:    " << face->family_name << std::endl;
+            std::cout << "Style:     " << face->style_name << std::endl;
+            std::cout << "Height:    " << face->height << std::endl;
+            std::cout << "Ascender:  " << face->ascender << std::endl;
+            std::cout << "Descender: " << face->descender << std::endl;
+            std::cout << "Faces:     " << face->num_faces << std::endl;
+            std::cout << "Glyphs:    " << face->num_glyphs << std::endl;
             name = face->family_name;
 
             // find out height by tracing 'A'
