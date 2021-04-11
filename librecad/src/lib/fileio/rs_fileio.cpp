@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2021 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -73,7 +74,15 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
                     return false;
             }
 #endif
-            return filter->fileImport(graphic, file, t);
+            bool bImported {filter->fileImport(graphic, file, t)};
+            if (!bImported) {
+                QMessageBox::critical( qApp->activeWindow(),
+                                       QObject::tr("Error"),
+                                       QObject::tr( "Import error:\n    %1", "fileImport").arg( filter->lastError()),
+                                       QMessageBox::Ok,
+                                       QMessageBox::NoButton);
+            }
+            return bImported;
         }
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_FileIO::fileImport: failed to import file: %s",

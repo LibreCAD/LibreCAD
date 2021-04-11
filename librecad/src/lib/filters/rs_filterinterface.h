@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2021 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -80,7 +81,27 @@ public:
      */
     virtual bool fileExport(RS_Graphic& g, const QString& file, RS2::FormatType type) = 0;
 
+    /**
+     * Request the error message for the last import/export action, based on member variable \p errorCode.
+     * The default implementation is for existing filters, inherited without error handling methods.
+     * It is strongly recommend for new implementations to overwrite this method with some useful error messages.
+     */
+    virtual QString lastError() const {
+        return QObject::tr( "undefined error", "RS_FilterInterface");
+    };
+
+    /**
+     * Request the error code for the last import/export action.
+     * The default value 0 means no error.
+     */
+    virtual int lastErrorCode() const {
+        return errorCode;
+    };
+
     static RS_FilterInterface * createFilter(){return NULL;}
+
+protected:
+    int errorCode {0};  //< error code for last import/export action
 };
 
 #endif

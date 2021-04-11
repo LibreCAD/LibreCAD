@@ -3,9 +3,9 @@
 ** This file is part of the LibreCAD project, a 2D CAD program
 ** 
 ** Copyright (C) 2019 Shawn Curry (noneyabiz@mail.wasent.cz)
-** Copyright (C) 2018 Simon Wells <simonrwells@gmail.com>
+** Copyright (C) 2018 Simon Wells (simonrwells@gmail.com)
 ** Copyright (C) 2015-2016 ravas (github.com/r-a-v-a-s)
-** Copyright (C) 2015-2018 A. Stebich (librecad@mail.lordofbikes.de)
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -1794,19 +1794,21 @@ void QC_ApplicationWindow::
 
         // open the file in the new view:
         bool success=false;
-        if(QFileInfo(fileName).exists())
-            success=w->slotFileOpen(fileName, type);
+        if (QFileInfo( fileName).exists()) {
+            success = w->slotFileOpen( fileName, type);
+        }
+        else {
+            QString msg=tr("Cannot open the file\n%1\nPlease "
+                           "check its existence and permissions.")
+                    .arg( fileName);
+            commandWidget->appendHistory( msg);
+            QMessageBox::information( this, QMessageBox::tr("Warning"), msg, QMessageBox::Ok);
+        }
         if (!success) {
                // error
                QApplication::restoreOverrideCursor();
-               QString msg=tr("Cannot open the file\n%1\nPlease "
-                              "check its existence and permissions.")
-                       .arg(fileName);
-               commandWidget->appendHistory(msg);
-               QMessageBox::information(this, QMessageBox::tr("Warning"),
-                                        msg,
-                                        QMessageBox::Ok);
-           //file opening failed, clean up QC_MDIWindow and QMdiSubWindow
+
+               //file opening failed, clean up QC_MDIWindow and QMdiSubWindow
                slotFilePrintPreview(false);
                doClose(w); //force closing, without asking user for confirmation
                QMdiSubWindow* active=mdiAreaCAD->currentSubWindow();

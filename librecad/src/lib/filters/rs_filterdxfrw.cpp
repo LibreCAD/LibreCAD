@@ -93,6 +93,42 @@ RS_FilterDXFRW::~RS_FilterDXFRW() {
     RS_DEBUG->print("RS_FilterDXFRW::~RS_FilterDXFRW(): OK");
 }
 
+QString RS_FilterDXFRW::lastError() const
+{
+    switch (errorCode) {
+    case DRW::BAD_NONE:
+        return (QObject::tr( "no DXF/DWG error", "RS_FilterDXFRW"));
+    case DRW::BAD_OPEN:
+        return (QObject::tr( "error opening DXF/DWG file", "RS_FilterDXFRW"));
+    case DRW::BAD_VERSION:
+        return (QObject::tr( "unsupported DXF/DWG file version", "RS_FilterDXFRW"));
+    case DRW::BAD_READ_METADATA:
+        return (QObject::tr( "error reading DXF/DWG meta data", "RS_FilterDXFRW"));
+    case DRW::BAD_READ_FILE_HEADER:
+        return (QObject::tr( "error reading DXF/DWG file header", "RS_FilterDXFRW"));
+    case DRW::BAD_READ_HEADER:
+        return (QObject::tr( "error reading DXF/DWG header dara", "RS_FilterDXFRW"));
+    case DRW::BAD_READ_HANDLES:
+        return (QObject::tr( "error reading DXF/DWG object map", "RS_FilterDXFRW"));
+    case DRW::BAD_READ_CLASSES:
+        return (QObject::tr( "error reading DXF/DWG classes", "RS_FilterDXFRW"));
+    case DRW::BAD_READ_TABLES:
+        return (QObject::tr( "error reading DXF/DWG tables", "RS_FilterDXFRW"));
+    case DRW::BAD_READ_BLOCKS:
+        return (QObject::tr( "error reading DXF/DWG blocks", "RS_FilterDXFRW"));
+    case DRW::BAD_READ_ENTITIES:
+        return (QObject::tr( "error reading DXF/DWG entities", "RS_FilterDXFRW"));
+    case DRW::BAD_READ_OBJECTS:
+        return (QObject::tr( "error reading DXF/DWG objects", "RS_FilterDXFRW"));
+    case DRW::BAD_READ_SECTION:
+        return (QObject::tr( "error reading DXF/DWG sections", "RS_FilterDXFRW"));
+    default:
+        break;
+    }
+
+    return RS_FilterInterface::lastError();
+}
+
 
 
 /**
@@ -135,10 +171,11 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
         RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file: OK");
         RS_DIALOGFACTORY->commandMessage(QObject::tr("Opened dwg file version %1.").arg(printDwgVersion(dwgr.getVersion())));
         int  lastError = dwgr.getError();
-        if (success==false) {
+        if (false == success) {
             printDwgError(lastError);
             RS_DEBUG->print(RS_Debug::D_WARNING,
                             "Cannot open DWG file '%s'.", (const char*)QFile::encodeName(file));
+            errorCode = dwgr.getError();
             return false;
         }
     } else {
@@ -150,9 +187,10 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
         RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file: OK");
         //graphic->setAutoUpdateBorders(true);
 
-        if (success==false) {
+        if (false == success) {
             RS_DEBUG->print(RS_Debug::D_WARNING,
                             "Cannot open DXF file '%s'.", (const char*)QFile::encodeName(file));
+            errorCode = dxfR.getError();
             return false;
         }
 #ifdef DWGSUPPORT

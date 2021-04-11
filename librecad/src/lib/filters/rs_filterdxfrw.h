@@ -2,7 +2,8 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-**  Copyright (C) 2011 Rallaz, rallazz@gmail.com
+** Copyright (C) 2021 A. Stebich (librecad@mail.lordofbikes.de)
+** Copyright (C) 2011 Rallaz, rallazz@gmail.com
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 **
 **
@@ -62,7 +63,7 @@ public:
     RS_FilterDXFRW();
     ~RS_FilterDXFRW();
         
-    virtual bool canImport(const QString &/*fileName*/, RS2::FormatType t) const {
+    virtual bool canImport(const QString &/*fileName*/, RS2::FormatType t) const override {
 #ifdef DWGSUPPORT
         return (t==RS2::FormatDXFRW || t==RS2::FormatDWG);
 #else
@@ -70,74 +71,77 @@ public:
 #endif
         }
         
-    virtual bool canExport(const QString &/*fileName*/, RS2::FormatType t) const {
+    virtual bool canExport(const QString &/*fileName*/, RS2::FormatType t) const override {
         return (t==RS2::FormatDXFRW || t==RS2::FormatDXFRW2004 || t==RS2::FormatDXFRW2000
                 || t==RS2::FormatDXFRW14 || t==RS2::FormatDXFRW12);
     }
 
+    // Error messages
+    virtual QString lastError() const override;
+
     // Import:
-    virtual bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType type);
+    virtual bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType type) override;
 
     // Methods from DRW_CreationInterface:
-    virtual void addHeader(const DRW_Header* data);
-    virtual void addLType(const DRW_LType& /*data*/){}
-    virtual void addLayer(const DRW_Layer& data);
-    virtual void addDimStyle(const DRW_Dimstyle& data);
-    virtual void addVport(const DRW_Vport& data);
-    virtual void addTextStyle(const DRW_Textstyle& /*data*/){}
-    virtual void addAppId(const DRW_AppId& /*data*/){}
-    virtual void addBlock(const DRW_Block& data);
-    virtual void setBlock(const int handle);
-    virtual void endBlock();
-    virtual void addPoint(const DRW_Point& data);
-    virtual void addLine(const DRW_Line& data);
-    virtual void addRay(const DRW_Ray& data);
-    virtual void addXline(const DRW_Xline& data);
-    virtual void addCircle(const DRW_Circle& data);
-    virtual void addArc(const DRW_Arc& data);
-    virtual void addEllipse(const DRW_Ellipse& data);
-    virtual void addLWPolyline(const DRW_LWPolyline& data);
-    virtual void addText(const DRW_Text& data);
-    virtual void addPolyline(const DRW_Polyline& data);
-    virtual void addSpline(const DRW_Spline* data);
-    virtual void addKnot(const DRW_Entity&) {}
-    virtual void addInsert(const DRW_Insert& data);
-    virtual void addTrace(const DRW_Trace& data);
-    virtual void addSolid(const DRW_Solid& data);
-    virtual void addMText(const DRW_MText& data);
+    virtual void addHeader(const DRW_Header* data) override;
+    virtual void addLType(const DRW_LType& /*data*/) override{}
+    virtual void addLayer(const DRW_Layer& data) override;
+    virtual void addDimStyle(const DRW_Dimstyle& data) override;
+    virtual void addVport(const DRW_Vport& data) override;
+    virtual void addTextStyle(const DRW_Textstyle& /*data*/) override{}
+    virtual void addAppId(const DRW_AppId& /*data*/) override{}
+    virtual void addBlock(const DRW_Block& data) override;
+    virtual void setBlock(const int handle) override;
+    virtual void endBlock() override;
+    virtual void addPoint(const DRW_Point& data) override;
+    virtual void addLine(const DRW_Line& data) override;
+    virtual void addRay(const DRW_Ray& data) override;
+    virtual void addXline(const DRW_Xline& data) override;
+    virtual void addCircle(const DRW_Circle& data) override;
+    virtual void addArc(const DRW_Arc& data) override;
+    virtual void addEllipse(const DRW_Ellipse& data) override;
+    virtual void addLWPolyline(const DRW_LWPolyline& data) override;
+    virtual void addText(const DRW_Text& data) override;
+    virtual void addPolyline(const DRW_Polyline& data) override;
+    virtual void addSpline(const DRW_Spline* data) override;
+    virtual void addKnot(const DRW_Entity&) override{}
+    virtual void addInsert(const DRW_Insert& data) override;
+    virtual void addTrace(const DRW_Trace& data) override;
+    virtual void addSolid(const DRW_Solid& data) override;
+    virtual void addMText(const DRW_MText& data) override;
     RS_DimensionData convDimensionData(const DRW_Dimension* data);
-    virtual void addDimAlign(const DRW_DimAligned *data);
-    virtual void addDimLinear(const DRW_DimLinear *data);
-    virtual void addDimRadial(const DRW_DimRadial *data);
-    virtual void addDimDiametric(const DRW_DimDiametric *data);
-    virtual void addDimAngular(const DRW_DimAngular *data);
-    virtual void addDimAngular3P(const DRW_DimAngular3p *data);
-    virtual void addDimOrdinate(const DRW_DimOrdinate *data);
-    virtual void addLeader(const DRW_Leader *data);
-    virtual void addHatch(const DRW_Hatch* data);
-    virtual void addViewport(const DRW_Viewport& /*data*/){}
-    virtual void addImage(const DRW_Image* data);
-    virtual void linkImage(const DRW_ImageDef* data);
+    virtual void addDimAlign(const DRW_DimAligned *data) override;
+    virtual void addDimLinear(const DRW_DimLinear *data) override;
+    virtual void addDimRadial(const DRW_DimRadial *data) override;
+    virtual void addDimDiametric(const DRW_DimDiametric *data) override;
+    virtual void addDimAngular(const DRW_DimAngular *data) override;
+    virtual void addDimAngular3P(const DRW_DimAngular3p *data) override;
+    virtual void addDimOrdinate(const DRW_DimOrdinate *data) override;
+    virtual void addLeader(const DRW_Leader *data) override;
+    virtual void addHatch(const DRW_Hatch* data) override;
+    virtual void addViewport(const DRW_Viewport& /*data*/) override{}
+    virtual void addImage(const DRW_Image* data) override;
+    virtual void linkImage(const DRW_ImageDef* data) override;
 
-    virtual void add3dFace(const DRW_3Dface& data);
-    virtual void addComment(const char*);
+    virtual void add3dFace(const DRW_3Dface& data) override;
+    virtual void addComment(const char*) override;
 
-    virtual void addPlotSettings(const DRW_PlotSettings* data);
+    virtual void addPlotSettings(const DRW_PlotSettings* data) override;
 
     // Export:
-    virtual bool fileExport(RS_Graphic& g, const QString& file, RS2::FormatType type);
+    virtual bool fileExport(RS_Graphic& g, const QString& file, RS2::FormatType type) override;
 
-    virtual void writeHeader(DRW_Header& data);
-    virtual void writeEntities();
-    virtual void writeLTypes();
-    virtual void writeLayers();
-    virtual void writeTextstyles();
-    virtual void writeVports();
-    virtual void writeBlockRecords();
-    virtual void writeBlocks();
-    virtual void writeDimstyles();
-    virtual void writeObjects();
-    virtual void writeAppId();
+    virtual void writeHeader(DRW_Header& data) override;
+    virtual void writeEntities() override;
+    virtual void writeLTypes() override;
+    virtual void writeLayers() override;
+    virtual void writeTextstyles() override;
+    virtual void writeVports() override;
+    virtual void writeBlockRecords() override;
+    virtual void writeBlocks() override;
+    virtual void writeDimstyles() override;
+    virtual void writeObjects() override;
+    virtual void writeAppId() override;
 
     void writePoint(RS_Point* p);
     void writeLine(RS_Line* l);
