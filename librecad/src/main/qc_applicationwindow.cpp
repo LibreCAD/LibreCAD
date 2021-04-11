@@ -563,11 +563,13 @@ void QC_ApplicationWindow::doActivate(QMdiSubWindow * w)
 		w->activateWindow();
 		w->raise();
 		w->setFocus();
-		if (maximized)
-			w->showMaximized();
-		else
-			w->show();
-	}
+        if (maximized || QMdiArea::TabbedView == mdiAreaCAD->viewMode()) {
+            w->showMaximized();
+        }
+        else {
+            w->show();
+        }
+    }
 	if (mdiAreaCAD->viewMode() == QMdiArea::SubWindowView)
 		doArrangeWindows(RS2::CurrentMode);
 	enableFileActions(qobject_cast<QC_MDIWindow*>(w));
@@ -1811,19 +1813,6 @@ void QC_ApplicationWindow::
                //file opening failed, clean up QC_MDIWindow and QMdiSubWindow
                slotFilePrintPreview(false);
                doClose(w); //force closing, without asking user for confirmation
-               QMdiSubWindow* active=mdiAreaCAD->currentSubWindow();
-               activedMdiSubWindow=nullptr; //to allow reactivate the previous active
-               if( active){//restore old geometry
-                   mdiAreaCAD->setActiveSubWindow(active);
-                   active->raise();
-                   active->setFocus();
-                   if(old==nullptr || maximized){
-                       active->showMaximized();
-                   }else{
-                       active->setGeometry(geo);
-                   }
-                   qobject_cast<QC_MDIWindow*>(active)->slotZoomAuto();
-               }
                return;
         }
 
