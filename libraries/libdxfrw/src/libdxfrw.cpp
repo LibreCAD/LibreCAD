@@ -1,6 +1,7 @@
 /******************************************************************************
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
+**  Copyright (C) 2016-2021 A. Stebich (librecad@mail.lordofbikes.de)        **
 **  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
@@ -63,17 +64,17 @@ void dxfRW::setDebug(DRW::DBG_LEVEL lvl){
 
 bool dxfRW::read(DRW_Interface *interface_, bool ext){
     drw_assert(fileName.empty() == false);
-    bool isOk = false;
     applyExt = ext;
     std::ifstream filestr;
-    if ( interface_ == NULL )
-                return isOk;
+    if (nullptr == interface_) {
+        return setError(DRW::BAD_UNKNOWN);
+    }
     DRW_DBG("dxfRW::read 1def\n");
     filestr.open (fileName.c_str(), std::ios_base::in | std::ios::binary);
-    if (!filestr.is_open())
-        return isOk;
-    if (!filestr.good())
-        return isOk;
+    if (!filestr.is_open()
+            || !filestr.good()) {
+        return setError(DRW::BAD_OPEN);
+    }
 
     char line[22];
     char line2[22] = "AutoCAD Binary DXF\r\n";
@@ -96,7 +97,7 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
         reader = new dxfReaderAscii(&filestr);
     }
 
-    isOk = processDxf();
+    bool isOk {processDxf()};
     filestr.close();
     version = (DRW::Version) reader->getVersion();
     delete reader;
@@ -1934,7 +1935,7 @@ bool dxfRW::processDxf() {
 
                 if (!processed) {
                     DRW_DBG("  failed\n");
-                    return false;
+                    return setError(DRW::BAD_READ_SECTION);
                 }
 
                 inSection = false;
@@ -1954,7 +1955,7 @@ bool dxfRW::processDxf() {
         return true;
     }
 
-    return false;
+    return setError(DRW::BAD_UNKNOWN);
 }
 
 /********* Header Section *********/
@@ -1974,13 +1975,13 @@ bool dxfRW::processHeader() {
             }
 
             DRW_DBG("unexpected 0 code in header!\n");
-            return false;
+            return setError(DRW::BAD_READ_HEADER);
         }
 
         header.parseCode(code, reader);
     }
 
-    return false;
+    return setError(DRW::BAD_READ_HEADER);
 }
 
 /********* Tables Section *********/
@@ -1998,8 +1999,9 @@ bool dxfRW::processTables() {
             if (sectionstr == "TABLE") {
                 more = reader->readRec(&code);
                 DRW_DBG(code); DRW_DBG("\n");
-                if (!more)
-                    return false; //wrong dxf file
+                if (!more) {
+                    return setError(DRW::BAD_READ_TABLES); //wrong dxf file
+                }
                 if (code == 2) {
                     sectionstr = reader->getString();
                     DRW_DBG(sectionstr); DRW_DBG(" processHeader\n\n");
@@ -2029,7 +2031,8 @@ bool dxfRW::processTables() {
             }
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_TABLES);
 }
 
 bool dxfRW::processLType() {
@@ -2056,7 +2059,8 @@ bool dxfRW::processLType() {
         } else if (reading)
             ltype.parseCode(code, reader);
     }
-    return false;
+
+    return setError(DRW::BAD_READ_TABLES);
 }
 
 bool dxfRW::processLayer() {
@@ -2081,7 +2085,8 @@ bool dxfRW::processLayer() {
         } else if (reading)
             layer.parseCode(code, reader);
     }
-    return false;
+
+    return setError(DRW::BAD_READ_TABLES);
 }
 
 bool dxfRW::processDimStyle() {
@@ -2106,7 +2111,8 @@ bool dxfRW::processDimStyle() {
         } else if (reading)
             dimSty.parseCode(code, reader);
     }
-    return false;
+
+    return setError(DRW::BAD_READ_TABLES);
 }
 
 bool dxfRW::processTextStyle(){
@@ -2131,7 +2137,8 @@ bool dxfRW::processTextStyle(){
         } else if (reading)
             TxtSty.parseCode(code, reader);
     }
-    return false;
+
+    return setError(DRW::BAD_READ_TABLES);
 }
 
 bool dxfRW::processVports(){
@@ -2156,7 +2163,8 @@ bool dxfRW::processVports(){
         } else if (reading)
             vp.parseCode(code, reader);
     }
-    return false;
+
+    return setError(DRW::BAD_READ_TABLES);
 }
 
 bool dxfRW::processAppId(){
@@ -2181,7 +2189,8 @@ bool dxfRW::processAppId(){
         } else if (reading)
             vp.parseCode(code, reader);
     }
-    return false;
+
+    return setError(DRW::BAD_READ_TABLES);
 }
 
 /********* Block Section *********/
@@ -2202,7 +2211,8 @@ bool dxfRW::processBlocks() {
             }
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_BLOCKS);
 }
 
 bool dxfRW::processBlock() {
@@ -2230,7 +2240,8 @@ bool dxfRW::processBlock() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_BLOCKS);
 }
 
 
@@ -2240,13 +2251,13 @@ bool dxfRW::processEntities(bool isblock) {
     DRW_DBG("dxfRW::processEntities\n");
     int code;
     if (!reader->readRec(&code)){
-        return false;
+        return setError(DRW::BAD_READ_ENTITIES);
     }
 
     if (code == 0) {
         nextentity = reader->getString();
     } else if (!isblock) {
-        return false;  //first record in entities is 0
+        return setError(DRW::BAD_READ_ENTITIES);  //first record in entities is 0
     }
 
     bool processed {false};
@@ -2298,7 +2309,7 @@ bool dxfRW::processEntities(bool isblock) {
             processed = processXline();
         } else {
             if (!reader->readRec(&code)) {
-                return false; //end of file without ENDSEC
+                return setError(DRW::BAD_READ_ENTITIES); //end of file without ENDSEC
             }
 
             if (code == 0) {
@@ -2308,7 +2319,7 @@ bool dxfRW::processEntities(bool isblock) {
         }
     } while (processed);
 
-    return false;
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 bool dxfRW::processEllipse() {
@@ -2331,7 +2342,8 @@ bool dxfRW::processEllipse() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 bool dxfRW::processTrace() {
@@ -2354,7 +2366,8 @@ bool dxfRW::processTrace() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 bool dxfRW::processSolid() {
@@ -2377,7 +2390,8 @@ bool dxfRW::processSolid() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 bool dxfRW::process3dface() {
@@ -2398,7 +2412,8 @@ bool dxfRW::process3dface() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 bool dxfRW::processViewport() {
@@ -2419,7 +2434,8 @@ bool dxfRW::processViewport() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 bool dxfRW::processPoint() {
@@ -2440,7 +2456,8 @@ bool dxfRW::processPoint() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 bool dxfRW::processLine() {
@@ -2461,7 +2478,8 @@ bool dxfRW::processLine() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 bool dxfRW::processRay() {
@@ -2482,7 +2500,8 @@ bool dxfRW::processRay() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 bool dxfRW::processXline() {
@@ -2503,7 +2522,8 @@ bool dxfRW::processXline() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 bool dxfRW::processCircle() {
@@ -2526,7 +2546,8 @@ bool dxfRW::processCircle() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 bool dxfRW::processArc() {
@@ -2549,7 +2570,8 @@ bool dxfRW::processArc() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 bool dxfRW::processInsert() {
@@ -2570,7 +2592,8 @@ bool dxfRW::processInsert() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 bool dxfRW::processLWPolyline() {
@@ -2593,7 +2616,8 @@ bool dxfRW::processLWPolyline() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 bool dxfRW::processPolyline() {
@@ -2620,7 +2644,8 @@ bool dxfRW::processPolyline() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 bool dxfRW::processVertex(DRW_Polyline *pl) {
@@ -2646,7 +2671,8 @@ bool dxfRW::processVertex(DRW_Polyline *pl) {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 bool dxfRW::processText() {
@@ -2667,7 +2693,8 @@ bool dxfRW::processText() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 bool dxfRW::processMText() {
@@ -2689,7 +2716,8 @@ bool dxfRW::processMText() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 bool dxfRW::processHatch() {
@@ -2710,7 +2738,8 @@ bool dxfRW::processHatch() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 
@@ -2732,7 +2761,8 @@ bool dxfRW::processSpline() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 
@@ -2754,7 +2784,8 @@ bool dxfRW::processImage() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 
@@ -2806,7 +2837,8 @@ bool dxfRW::processDimension() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 bool dxfRW::processLeader() {
@@ -2827,7 +2859,8 @@ bool dxfRW::processLeader() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_ENTITIES);
 }
 
 
@@ -2838,7 +2871,7 @@ bool dxfRW::processObjects() {
     int code;
     if (!reader->readRec(&code)
             || 0 != code){
-        return false; //first record in objects must be 0
+        return setError(DRW::BAD_READ_OBJECTS); //first record in objects must be 0
     }
 
     bool processed {false};
@@ -2856,7 +2889,7 @@ bool dxfRW::processObjects() {
         }
         else {
             if (!reader->readRec(&code)) {
-                return false; //end of file without ENDSEC
+                return setError(DRW::BAD_READ_OBJECTS); //end of file without ENDSEC
             }
 
             if (code == 0) {
@@ -2867,7 +2900,7 @@ bool dxfRW::processObjects() {
     }
     while (processed);
 
-    return false;
+    return setError(DRW::BAD_READ_OBJECTS);
 }
 
 bool dxfRW::processImageDef() {
@@ -2888,7 +2921,8 @@ bool dxfRW::processImageDef() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_OBJECTS);
 }
 
 bool dxfRW::processPlotSettings() {
@@ -2909,7 +2943,8 @@ bool dxfRW::processPlotSettings() {
             break;
         }
     }
-    return false;
+
+    return setError(DRW::BAD_READ_OBJECTS);
 }
 
 bool dxfRW::writePlotSettings(DRW_PlotSettings *ent) {
@@ -2941,4 +2976,15 @@ std::string dxfRW::toHexStr(int n){
 
 DRW::Version dxfRW::getVersion() const {
     return version;
+}
+
+DRW::error dxfRW::getError() const
+{
+    return error;
+}
+
+bool dxfRW::setError(const DRW::error lastError)
+{
+    error = lastError;
+    return (DRW::BAD_NONE == error);
 }

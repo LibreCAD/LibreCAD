@@ -1,6 +1,7 @@
 /******************************************************************************
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
+**  Copyright (C) 2016-2021 A. Stebich (librecad@mail.lordofbikes.de)        **
 **  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
@@ -91,7 +92,8 @@ BAD_READ_CLASSES,     /*!< error in classes read process. */
 BAD_READ_TABLES,      /*!< error in tables read process. */
 BAD_READ_BLOCKS,      /*!< error in block read process. */
 BAD_READ_ENTITIES,    /*!< error in entities read process. */
-BAD_READ_OBJECTS      /*!< error in objects read process. */
+BAD_READ_OBJECTS,     /*!< error in objects read process. */
+BAD_READ_SECTION,     /*!< error in sections read process. */
 };
 
 enum DBG_LEVEL {
