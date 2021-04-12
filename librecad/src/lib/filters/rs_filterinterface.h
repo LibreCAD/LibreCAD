@@ -31,6 +31,8 @@
 
 #include "rs_graphic.h"
 
+#include <QObject>
+
 /**
  * This is the interface that must be implemented for all 
  * format filter classes. The RS_FileIO class 
