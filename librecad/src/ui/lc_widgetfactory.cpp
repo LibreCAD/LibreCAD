@@ -259,7 +259,7 @@ void LC_WidgetFactory::createLeftSidebar(int columns, int icon_size)
     dock_dimension->raise();
     main_window->addDockWidget(Qt::LeftDockWidgetArea, dock_modify);
     main_window->addDockWidget(Qt::LeftDockWidgetArea, dock_spacer);
-    dock_spacer->raise();
+    //dock_spacer->raise();
 
     dock_line->hide();
     dock_polyline->hide();
