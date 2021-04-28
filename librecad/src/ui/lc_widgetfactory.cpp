@@ -242,10 +242,9 @@ void LC_WidgetFactory::createLeftSidebar(int columns, int icon_size)
     dock_info->setWindowTitle(QC_ApplicationWindow::tr("Info"));
     dock_info->add_actions(info_actions, columns, icon_size);
 
+    // 'spacer' dock fills out dock area to prevent expansion of previous dock
     LC_DockWidget* dock_spacer = new LC_DockWidget(main_window);
     dock_info->setObjectName("dock_spacer");
-    //dock_info->setWindowTitle(QC_ApplicationWindow::tr("Info"));
-    //dock_info->add_actions(info_actions, columns, icon_size);
 
     main_window->addDockWidget(Qt::LeftDockWidgetArea, dock_line);
     main_window->tabifyDockWidget(dock_line, dock_polyline);
