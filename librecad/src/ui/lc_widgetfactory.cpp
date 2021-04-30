@@ -244,20 +244,22 @@ void LC_WidgetFactory::createLeftSidebar(int columns, int icon_size)
 
     // 'spacer' dock fills out dock area to prevent expansion of previous dock
     LC_DockWidget* dock_spacer = new LC_DockWidget(main_window);
-    dock_info->setObjectName("dock_spacer");
+    dock_spacer->setObjectName("dock_spacer");
+    dock_spacer->setFeatures(QDockWidget::NoDockWidgetFeatures);
 
     main_window->addDockWidget(Qt::LeftDockWidgetArea, dock_line);
     main_window->tabifyDockWidget(dock_line, dock_polyline);
-    dock_line->raise();
+    //dock_line->raise();
     main_window->addDockWidget(Qt::LeftDockWidgetArea, dock_circle);
     main_window->tabifyDockWidget(dock_circle, dock_curve);
     main_window->tabifyDockWidget(dock_curve, dock_ellipse);
-    dock_circle->raise();
+    //dock_circle->raise();
     main_window->addDockWidget(Qt::LeftDockWidgetArea, dock_dimension);
     main_window->tabifyDockWidget(dock_dimension, dock_info);
-    main_window->tabifyDockWidget(dock_info, dock_select);
-    dock_dimension->raise();
+    //dock_dimension->raise();
     main_window->addDockWidget(Qt::LeftDockWidgetArea, dock_modify);
+    main_window->tabifyDockWidget(dock_info, dock_select);
+    //dock_modify->raise();
     main_window->addDockWidget(Qt::LeftDockWidgetArea, dock_spacer);
     //dock_spacer->raise();
 
@@ -270,6 +272,7 @@ void LC_WidgetFactory::createLeftSidebar(int columns, int icon_size)
     dock_info->hide();
     dock_modify->hide();
     dock_select->hide();
+    dock_spacer->hide();
 }
 
 void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
