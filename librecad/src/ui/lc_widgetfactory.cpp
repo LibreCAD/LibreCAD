@@ -136,7 +136,9 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["DimRadial"]
             << a_map["DimDiametric"]
             << a_map["DimAngular"]
-            << a_map["DimLeader"];
+            << a_map["DimLeader"]
+            << a_map["DrawMText"]
+            << a_map["DrawText"];
 
     modify_actions
             << a_map["ModifyMove"]
@@ -158,7 +160,8 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["ModifyAttributes"]
             << a_map["ModifyExplodeText"]
             << a_map["BlocksExplode"]
-            << a_map["ModifyDeleteQuick"];
+            << a_map["ModifyDeleteQuick"]
+            << a_map["DrawHatch"];
 
     info_actions
             << a_map["InfoDist"]
