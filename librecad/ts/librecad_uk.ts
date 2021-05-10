@@ -9,22 +9,22 @@
     </message>
     <message>
       <source>GroupBox</source>
-      <translation type="unfinished">GroupBox</translation>
+      <translation>Груповий чат</translation>
     </message>
     <message>
       <source>Set</source>
-      <translation type="unfinished">Set</translation>
+      <translation>Набір</translation>
     </message>
   </context>
   <context>
     <name>DlgSplinePoints</name>
     <message>
       <source>SplinePoints</source>
-      <translation type="unfinished">SplinePoints</translation>
+      <translation>Точки сплайну</translation>
     </message>
     <message>
       <source>Layer:</source>
-      <translation type="unfinished">Layer:</translation>
+      <translation>Рівень:</translation>
     </message>
     <message>
       <source>Geometry</source>
@@ -32,19 +32,19 @@
     </message>
     <message>
       <source>Closed</source>
-      <translation type="unfinished">Closed</translation>
+      <translation>Зачинено</translation>
     </message>
     <message>
       <source>Spline Points</source>
-      <translation type="unfinished">Spline Points</translation>
+      <translation>Бали сплайну</translation>
     </message>
     <message>
       <source>Control Points</source>
-      <translation type="unfinished">Control Points</translation>
+      <translation>Контрольні точки</translation>
     </message>
     <message>
       <source>Points on Spline</source>
-      <translation type="unfinished">Points on Spline</translation>
+      <translation>Точки на сплайні</translation>
     </message>
   </context>
   <context>
