@@ -231,7 +231,7 @@ SAFile SAUtf8WFOpen( const char *pszFilename, const char *pszAccess )
     const wchar_t *pwszFileName, *pwszAccess;
     pwszFileName = Utf8ToWideChar( pszFilename );
     pwszAccess = Utf8ToWideChar( pszAccess );
-    if( pwszFileName != NULL && pwszFileName != NULL)
+    if( pwszFileName != NULL && pwszAccess != NULL)
     {
         file = (SAFile) _wfopen( pwszFileName, pwszAccess );
     }
