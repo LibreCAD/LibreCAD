@@ -48,6 +48,9 @@
 #include <boost/version.hpp>
 #include <boost/math/tools/roots.hpp>
 #include <boost/math/special_functions/ellint_2.hpp>
+#if BOOST_VERSION > 104500
+#include <boost/math/tools/tuple.hpp>
+#endif
 #endif
 
 namespace{
