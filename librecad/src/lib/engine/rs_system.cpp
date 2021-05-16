@@ -39,7 +39,6 @@
 
 RS_System* RS_System::uniqueInstance = NULL;
 
-
 /**
  * Initializes the system.
  *
@@ -55,9 +54,10 @@ void RS_System::init(const QString& appName, const QString& appVersion,
     this->appName = appName;
     this->appVersion = appVersion;
     this->appDirName = appDirName;
-    if (appDir=="") {
+    if (appDir == "") {
         this->appDir = QDir::currentPath();
-    } else {
+    }
+    else {
         this->appDir = appDir;
     }
 
@@ -68,7 +68,6 @@ void RS_System::init(const QString& appName, const QString& appVersion,
     initAllLanguagesList();
     initLanguageList();
 }
-
 
 
 /**
@@ -83,21 +82,21 @@ void RS_System::initLanguageList() {
     RS_SETTINGS->endGroup();
 
     for (QStringList::Iterator it = lst.begin();
-            it!=lst.end();
-            ++it) {
+         it != lst.end();
+         ++it) {
 
         RS_DEBUG->print("RS_System::initLanguageList: qm file: %s",
                         (*it).toLatin1().data());
-//        std::cout<<"RS_System::initLanguageList: qm file: "<<(*it).toLatin1().data()<<std::endl;
 
         int i0 = (*it).lastIndexOf(QString("librecad"),-1,Qt::CaseInsensitive);
         int i1 = (*it).indexOf('_',i0);
         int i2 = (*it).indexOf('.', i1);
-        if( i1 == -1 || i2 == -1 ) continue;
+        if (i1 == -1 || i2 == -1) {
+            continue;
+        }
         QString l = (*it).mid(i1+1, i2-i1-1);
-//        std::cout<<"RS_System::initLanguageList: l: "<<qPrintable(l)<<std::endl;
 
-        if ( !(languageList.contains(l)) ) {
+        if (!(languageList.contains(l)) ) {
             RS_DEBUG->print("RS_System::initLanguageList: append language: %s",
                             l.toLatin1().data());
             languageList.append(l);
@@ -107,254 +106,253 @@ void RS_System::initLanguageList() {
 }
 
 void RS_System::addLocale(RS_Locale *locale) {
-    allKnownLocales.push_back(QSharedPointer<RS_Locale>(locale));
+    allKnownLocales.push_back( QSharedPointer<RS_Locale>( locale));
 }
 
 #define LNG(canonical, direction, name) \
-    locale=new RS_Locale(); \
-    locale->setCanonical(canonical); \
-    locale->setDirection(direction); \
-    locale->setName(name); \
-    addLocale(locale);
+    locale = new RS_Locale(); \
+    locale->setCanonical( canonical); \
+    locale->setDirection( direction); \
+    locale->setName( name); \
+    addLocale( locale);
 
 void RS_System::initAllLanguagesList() {
-
     // RVT uk_AU renamed to uk so that we don't have to change the pootle server
-    //
+
     allKnownLocales.clear();
     RS_Locale *locale;
-    LNG("ab"   ,RS2::locLeftToRight, "Abkhazian")
-    LNG("aa"   ,RS2::locLeftToRight, "Afar")
-    LNG("af_ZA",RS2::locLeftToRight, "Afrikaans")
-    LNG("sq_AL",RS2::locLeftToRight, "Albanian")
-    LNG("am"   ,RS2::locLeftToRight, "Amharic")
-    LNG("ar"   ,RS2::locRightToLeft, "Arabic")
-    LNG("ar_DZ",RS2::locRightToLeft, "Arabic (Algeria)")
-    LNG("ar_BH",RS2::locRightToLeft, "Arabic (Bahrain)")
-    LNG("ar_EG",RS2::locRightToLeft, "Arabic (Egypt)")
-    LNG("ar_IQ",RS2::locRightToLeft, "Arabic (Iraq)")
-    LNG("ar_JO",RS2::locRightToLeft, "Arabic (Jordan)")
-    LNG("ar_KW",RS2::locRightToLeft, "Arabic (Kuwait)")
-    LNG("ar_LB",RS2::locRightToLeft, "Arabic (Lebanon)")
-    LNG("ar_LY",RS2::locRightToLeft, "Arabic (Libya)")
-    LNG("ar_MA",RS2::locRightToLeft, "Arabic (Morocco)")
-    LNG("ar_OM",RS2::locRightToLeft, "Arabic (Oman)")
-    LNG("ar_QA",RS2::locRightToLeft, "Arabic (Qatar)")
-    LNG("ar_SA",RS2::locRightToLeft, "Arabic (Saudi Arabia)")
-    LNG("ar_SD",RS2::locRightToLeft, "Arabic (Sudan)")
-    LNG("ar_SY",RS2::locRightToLeft, "Arabic (Syria)")
-    LNG("ar_TN",RS2::locRightToLeft, "Arabic (Tunisia)")
-    LNG("ar_AE",RS2::locRightToLeft, "Arabic (Uae)")
-    LNG("ar_YE",RS2::locRightToLeft, "Arabic (Yemen)")
-    LNG("hy"   ,RS2::locLeftToRight, "Armenian")
-    LNG("as"   ,RS2::locLeftToRight, "Assamese")
-    LNG("ay"   ,RS2::locLeftToRight, "Aymara")
-    LNG("az"   ,RS2::locLeftToRight, "Azeri")
-    LNG("az"   ,RS2::locLeftToRight, "Azeri (Cyrillic)")
-    LNG("az"   ,RS2::locLeftToRight, "Azeri (Latin)")
-    LNG("ba"   ,RS2::locLeftToRight, "Bashkir")
-    LNG("eu_ES",RS2::locLeftToRight, "Basque")
-    LNG("be_BY",RS2::locLeftToRight, "Belarusian")
-    LNG("bn"   ,RS2::locLeftToRight, "Bengali")
-    LNG("dz"   ,RS2::locLeftToRight, "Bhutani")
-    LNG("bh"   ,RS2::locLeftToRight, "Bihari")
-    LNG("bi"   ,RS2::locLeftToRight, "Bislama")
-    LNG("br"   ,RS2::locLeftToRight, "Breton")
-    LNG("bg_BG",RS2::locLeftToRight, "Bulgarian")
-    LNG("my"   ,RS2::locLeftToRight, "Burmese")
-    LNG("km"   ,RS2::locLeftToRight, "Cambodian")
-    LNG("ca_ES",RS2::locLeftToRight, "Catalan")
-    LNG("zh_TW",RS2::locLeftToRight, "Chinese")
-    LNG("zh_CN",RS2::locLeftToRight, "Chinese (Simplified)")
-    LNG("zh_TW",RS2::locLeftToRight, "Chinese (Traditional)")
-    LNG("zh_HK",RS2::locLeftToRight, "Chinese (Hongkong)")
-    LNG("zh_MO",RS2::locLeftToRight, "Chinese (Macau)")
-    LNG("zh_SG",RS2::locLeftToRight, "Chinese (Singapore)")
-    LNG("zh_TW",RS2::locLeftToRight, "Chinese (Taiwan)")
-    LNG("co"   ,RS2::locLeftToRight, "Corsican")
-    LNG("hr_HR",RS2::locLeftToRight, "Croatian")
-    LNG("cs_CZ",RS2::locLeftToRight, "Czech")
-    LNG("da_DK",RS2::locLeftToRight, "Danish")
-    LNG("nl_NL",RS2::locLeftToRight, "Dutch")
-    LNG("nl_BE",RS2::locLeftToRight, "Dutch (Belgian)")
-    LNG("en_GB",RS2::locLeftToRight, "English")
-    LNG("en_GB",RS2::locLeftToRight, "English (U.K.)")
-    LNG("en_US",RS2::locLeftToRight, "English (U.S.)")
-    LNG("en_AU",RS2::locLeftToRight, "English (Australia)")
-    LNG("en_BZ",RS2::locLeftToRight, "English (Belize)")
-    LNG("en_BW",RS2::locLeftToRight, "English (Botswana)")
-    LNG("en_CA",RS2::locLeftToRight, "English (Canada)")
-    LNG("en_CB",RS2::locLeftToRight, "English (Caribbean)")
-    LNG("en_DK",RS2::locLeftToRight, "English (Denmark)")
-    LNG("en_IE",RS2::locLeftToRight, "English (Eire)")
-    LNG("en_JM",RS2::locLeftToRight, "English (Jamaica)")
-    LNG("en_NZ",RS2::locLeftToRight, "English (New Zealand)")
-    LNG("en_PH",RS2::locLeftToRight, "English (Philippines)")
-    LNG("en_ZA",RS2::locLeftToRight, "English (South Africa)")
-    LNG("en_TT",RS2::locLeftToRight, "English (Trinidad)")
-    LNG("en_ZW",RS2::locLeftToRight, "English (Zimbabwe)")
-    LNG("eo"   ,RS2::locLeftToRight, "Esperanto")
-    LNG("et_EE",RS2::locLeftToRight, "Estonian")
-    LNG("fo_FO",RS2::locLeftToRight, "Faeroese")
-    LNG("fa_IR",RS2::locLeftToRight, "Farsi")
-    LNG("fj"   ,RS2::locLeftToRight, "Fiji")
-    LNG("fi_FI",RS2::locLeftToRight, "Finnish")
-    LNG("fr_FR",RS2::locLeftToRight, "French")
-    LNG("fr_BE",RS2::locLeftToRight, "French (Belgian)")
-    LNG("fr_CA",RS2::locLeftToRight, "French (Canadian)")
-    LNG("fr_LU",RS2::locLeftToRight, "French (Luxembourg)")
-    LNG("fr_MC",RS2::locLeftToRight, "French (Monaco)")
-    LNG("fr_CH",RS2::locLeftToRight, "French (Swiss)")
-    LNG("fy"   ,RS2::locLeftToRight, "Frisian")
-    LNG("gl_ES",RS2::locLeftToRight, "Galician")
-    LNG("ka_GE",RS2::locLeftToRight, "Georgian")
-    LNG("de_DE",RS2::locLeftToRight, "German")
-    LNG("de_AT",RS2::locLeftToRight, "German (Austrian)")
-    LNG("de_BE",RS2::locLeftToRight, "German (Belgium)")
-    LNG("de_LI",RS2::locLeftToRight, "German (Liechtenstein)")
-    LNG("de_LU",RS2::locLeftToRight, "German (Luxembourg)")
-    LNG("de_CH",RS2::locLeftToRight, "German (Swiss)")
-    LNG("el_GR",RS2::locLeftToRight, "Greek")
-    LNG("kl_GL",RS2::locLeftToRight, "Greenlandic")
-    LNG("gn"   ,RS2::locLeftToRight, "Guarani")
-    LNG("gu"   ,RS2::locLeftToRight, "Gujarati")
-    LNG("ha"   ,RS2::locLeftToRight, "Hausa")
-    LNG("he_IL",RS2::locRightToLeft, "Hebrew")
-    LNG("hi_IN",RS2::locLeftToRight, "Hindi")
-    LNG("hu_HU",RS2::locLeftToRight, "Hungarian")
-    LNG("is_IS",RS2::locLeftToRight, "Icelandic")
-    LNG("id_ID",RS2::locLeftToRight, "Indonesian")
-    LNG("ia"   ,RS2::locLeftToRight, "Interlingua")
-    LNG("ie"   ,RS2::locLeftToRight, "Interlingue")
-    LNG("iu"   ,RS2::locLeftToRight, "Inuktitut")
-    LNG("ik"   ,RS2::locLeftToRight, "Inupiak")
-    LNG("ga_IE",RS2::locLeftToRight, "Irish")
-    LNG("it_IT",RS2::locLeftToRight, "Italian")
-    LNG("it_CH",RS2::locLeftToRight, "Italian (Swiss)")
-    LNG("ja_JP",RS2::locLeftToRight, "Japanese")
-    LNG("jw"   ,RS2::locLeftToRight, "Javanese")
-    LNG("kn"   ,RS2::locLeftToRight, "Kannada")
-    LNG("ks"   ,RS2::locLeftToRight, "Kashmiri")
-    LNG("ks_IN",RS2::locLeftToRight, "Kashmiri (India)")
-    LNG("kk"   ,RS2::locLeftToRight, "Kazakh")
-    LNG("kw_GB",RS2::locLeftToRight, "Kernewek")
-    LNG("rw"   ,RS2::locLeftToRight, "Kinyarwanda")
-    LNG("ky"   ,RS2::locLeftToRight, "Kirghiz")
-    LNG("rn"   ,RS2::locLeftToRight, "Kirundi")
-    LNG(""     ,RS2::locLeftToRight, "Konkani")
-    LNG("ko_KR",RS2::locLeftToRight, "Korean")
-    LNG("ku_TR",RS2::locLeftToRight, "Kurdish")
-    LNG("lo"   ,RS2::locLeftToRight, "Laothian")
-    LNG("la"   ,RS2::locLeftToRight, "Latin")
-    LNG("lv_LV",RS2::locLeftToRight, "Latvian")
-    LNG("ln"   ,RS2::locLeftToRight, "Lingala")
-    LNG("lt_LT",RS2::locLeftToRight, "Lithuanian")
-    LNG("mk_MK",RS2::locLeftToRight, "Macedonian")
-    LNG("mg"   ,RS2::locLeftToRight, "Malagasy")
-    LNG("ms_MY",RS2::locLeftToRight, "Malay")
-    LNG("ml"   ,RS2::locLeftToRight, "Malayalam")
-    LNG("ms_BN",RS2::locLeftToRight, "Malay (Brunei Darussalam)")
-    LNG("ms_MY",RS2::locLeftToRight, "Malay (Malaysia)")
-    LNG("mt_MT",RS2::locLeftToRight, "Maltese")
-    LNG(""     ,RS2::locLeftToRight, "Manipuri")
-    LNG("mi"   ,RS2::locLeftToRight, "Maori")
-    LNG("mr_IN",RS2::locLeftToRight, "Marathi")
-    LNG("mo"   ,RS2::locLeftToRight, "Moldavian")
-    LNG("mn"   ,RS2::locLeftToRight, "Mongolian")
-    LNG("na"   ,RS2::locLeftToRight, "Nauru")
-    LNG("ne_NP",RS2::locLeftToRight, "Nepali")
-    LNG("ne_IN",RS2::locLeftToRight, "Nepali (India)")
-    LNG("nb_NO",RS2::locLeftToRight, "Norwegian (Bokmal)")
-    LNG("nn_NO",RS2::locLeftToRight, "Norwegian (Nynorsk)")
-    LNG("oc"   ,RS2::locLeftToRight, "Occitan")
-    LNG("or"   ,RS2::locLeftToRight, "Oriya")
-    LNG("om"   ,RS2::locLeftToRight, "(Afan) Oromo")
-    LNG("ps"   ,RS2::locLeftToRight, "Pashto, Pushto")
-    LNG("pl_PL",RS2::locLeftToRight, "Polish")
-    LNG("pt_PT",RS2::locLeftToRight, "Portuguese")
-    LNG("pt_BR",RS2::locLeftToRight, "Portuguese (Brazilian)")
-    LNG("pa"   ,RS2::locLeftToRight, "Punjabi")
-    LNG("qu"   ,RS2::locLeftToRight, "Quechua")
-    LNG("rm"   ,RS2::locLeftToRight, "Rhaeto-Romance")
-    LNG("ro_RO",RS2::locLeftToRight, "Romanian")
-    LNG("ru_RU",RS2::locLeftToRight, "Russian")
-    LNG("ru_UA",RS2::locLeftToRight, "Russian (Ukraine)")
-    LNG("sm"   ,RS2::locLeftToRight, "Samoan")
-    LNG("sg"   ,RS2::locLeftToRight, "Sangho")
-    LNG("sa"   ,RS2::locLeftToRight, "Sanskrit")
-    LNG("gd"   ,RS2::locLeftToRight, "Scots Gaelic")
-    LNG("se_NO",RS2::locLeftToRight, "Northern Sami")
-    LNG("sr_SR",RS2::locLeftToRight, "Serbian")
-    LNG("sr_SR",RS2::locLeftToRight, "Serbian (Cyrillic)")
-    LNG("sr_SR@latin",RS2::locLeftToRight, "Serbian (Latin)")
-    LNG("sr_YU",RS2::locLeftToRight, "Serbian (Cyrillic)")
-    LNG("sr_YU@latin",RS2::locLeftToRight, "Serbian (Latin)")
-    LNG("sh"   ,RS2::locLeftToRight, "Serbo-Croatian")
-    LNG("st"   ,RS2::locLeftToRight, "Sesotho")
-    LNG("tn"   ,RS2::locLeftToRight, "Setswana")
-    LNG("sn"   ,RS2::locLeftToRight, "Shona")
-    LNG("sd"   ,RS2::locLeftToRight, "Sindhi")
-    LNG("si"   ,RS2::locLeftToRight, "Sinhalese")
-    LNG("ss"   ,RS2::locLeftToRight, "Siswati")
-    LNG("sk_SK",RS2::locLeftToRight, "Slovak")
-    LNG("sl_SI",RS2::locLeftToRight, "Slovenian")
-    LNG("so"   ,RS2::locLeftToRight, "Somali")
-    LNG("es_ES",RS2::locLeftToRight, "Spanish")
-    LNG("es_AR",RS2::locLeftToRight, "Spanish (Argentina)")
-    LNG("es_BO",RS2::locLeftToRight, "Spanish (Bolivia)")
-    LNG("es_CL",RS2::locLeftToRight, "Spanish (Chile)")
-    LNG("es_CO",RS2::locLeftToRight, "Spanish (Colombia)")
-    LNG("es_CR",RS2::locLeftToRight, "Spanish (Costa Rica)")
-    LNG("es_DO",RS2::locLeftToRight, "Spanish (Dominican republic)")
-    LNG("es_EC",RS2::locLeftToRight, "Spanish (Ecuador)")
-    LNG("es_SV",RS2::locLeftToRight, "Spanish (El Salvador)")
-    LNG("es_GT",RS2::locLeftToRight, "Spanish (Guatemala)")
-    LNG("es_HN",RS2::locLeftToRight, "Spanish (Honduras)")
-    LNG("es_MX",RS2::locLeftToRight, "Spanish (Mexican)")
-    LNG("es_ES",RS2::locLeftToRight, "Spanish (Modern)")
-    LNG("es_NI",RS2::locLeftToRight, "Spanish (Nicaragua)")
-    LNG("es_PA",RS2::locLeftToRight, "Spanish (Panama)")
-    LNG("es_PY",RS2::locLeftToRight, "Spanish (Paraguay)")
-    LNG("es_PE",RS2::locLeftToRight, "Spanish (Peru)")
-    LNG("es_PR",RS2::locLeftToRight, "Spanish (Puerto Rico)")
-    LNG("es_UY",RS2::locLeftToRight, "Spanish (Uruguay)")
-    LNG("es_US",RS2::locLeftToRight, "Spanish (U.S.)")
-    LNG("es_VE",RS2::locLeftToRight, "Spanish (Venezuela)")
-    LNG("su"   ,RS2::locLeftToRight, "Sundanese")
-    LNG("sw_KE",RS2::locLeftToRight, "Swahili")
-    LNG("sv_SE",RS2::locLeftToRight, "Swedish")
-    LNG("sv_FI",RS2::locLeftToRight, "Swedish (Finland)")
-    LNG("tl_PH",RS2::locLeftToRight, "Tagalog")
-    LNG("tg"   ,RS2::locLeftToRight, "Tajik")
-    LNG("ta"   ,RS2::locLeftToRight, "Tamil")
-    LNG("tt"   ,RS2::locLeftToRight, "Tatar")
-    LNG("te"   ,RS2::locLeftToRight, "Telugu")
-    LNG("th_TH",RS2::locLeftToRight, "Thai")
-    LNG("bo"   ,RS2::locLeftToRight, "Tibetan")
-    LNG("ti"   ,RS2::locLeftToRight, "Tigrinya")
-    LNG("to"   ,RS2::locLeftToRight, "Tonga")
-    LNG("ts"   ,RS2::locLeftToRight, "Tsonga")
-    LNG("tr_TR",RS2::locLeftToRight, "Turkish")
-    LNG("tk"   ,RS2::locLeftToRight, "Turkmen")
-    LNG("tw"   ,RS2::locLeftToRight, "Twi")
-    LNG("ug"   ,RS2::locLeftToRight, "Uighur")
-    LNG("uk",RS2::locLeftToRight, "Ukrainian")
-    LNG("ur"   ,RS2::locLeftToRight, "Urdu")
-    LNG("ur_IN",RS2::locLeftToRight, "Urdu (India)")
-    LNG("ur_PK",RS2::locLeftToRight, "Urdu (Pakistan)")
-    LNG("uz"   ,RS2::locLeftToRight, "Uzbek")
-    LNG("uz"   ,RS2::locLeftToRight, "Uzbek (Cyrillic)")
-    LNG("uz"   ,RS2::locLeftToRight, "Uzbek (Latin)")
-    LNG("ca_ES@valencia",RS2::locLeftToRight, "Valencian")
-    LNG("vi_VN",RS2::locLeftToRight, "Vietnamese")
-    LNG("vo"   ,RS2::locLeftToRight, "Volapuk")
-    LNG("cy"   ,RS2::locLeftToRight, "Welsh")
-    LNG("wo"   ,RS2::locLeftToRight, "Wolof")
-    LNG("xh"   ,RS2::locLeftToRight, "Xhosa")
-    LNG("yi"   ,RS2::locLeftToRight, "Yiddish")
-    LNG("yo"   ,RS2::locLeftToRight, "Yoruba")
-    LNG("za"   ,RS2::locLeftToRight, "Zhuang")
-    LNG("zu"   ,RS2::locLeftToRight, "Zulu")
+    LNG( "ab"   , RS2::locLeftToRight, "Abkhazian")
+    LNG( "aa"   , RS2::locLeftToRight, "Afar")
+    LNG( "af_ZA", RS2::locLeftToRight, "Afrikaans")
+    LNG( "sq_AL", RS2::locLeftToRight, "Albanian")
+    LNG( "am"   , RS2::locLeftToRight, "Amharic")
+    LNG( "ar"   , RS2::locRightToLeft, "Arabic")
+    LNG( "ar_DZ", RS2::locRightToLeft, "Arabic (Algeria)")
+    LNG( "ar_BH", RS2::locRightToLeft, "Arabic (Bahrain)")
+    LNG( "ar_EG", RS2::locRightToLeft, "Arabic (Egypt)")
+    LNG( "ar_IQ", RS2::locRightToLeft, "Arabic (Iraq)")
+    LNG( "ar_JO", RS2::locRightToLeft, "Arabic (Jordan)")
+    LNG( "ar_KW", RS2::locRightToLeft, "Arabic (Kuwait)")
+    LNG( "ar_LB", RS2::locRightToLeft, "Arabic (Lebanon)")
+    LNG( "ar_LY", RS2::locRightToLeft, "Arabic (Libya)")
+    LNG( "ar_MA", RS2::locRightToLeft, "Arabic (Morocco)")
+    LNG( "ar_OM", RS2::locRightToLeft, "Arabic (Oman)")
+    LNG( "ar_QA", RS2::locRightToLeft, "Arabic (Qatar)")
+    LNG( "ar_SA", RS2::locRightToLeft, "Arabic (Saudi Arabia)")
+    LNG( "ar_SD", RS2::locRightToLeft, "Arabic (Sudan)")
+    LNG( "ar_SY", RS2::locRightToLeft, "Arabic (Syria)")
+    LNG( "ar_TN", RS2::locRightToLeft, "Arabic (Tunisia)")
+    LNG( "ar_AE", RS2::locRightToLeft, "Arabic (Uae)")
+    LNG( "ar_YE", RS2::locRightToLeft, "Arabic (Yemen)")
+    LNG( "hy"   , RS2::locLeftToRight, "Armenian")
+    LNG( "as"   , RS2::locLeftToRight, "Assamese")
+    LNG( "ay"   , RS2::locLeftToRight, "Aymara")
+    LNG( "az"   , RS2::locLeftToRight, "Azeri")
+    LNG( "az"   , RS2::locLeftToRight, "Azeri (Cyrillic)")
+    LNG( "az"   , RS2::locLeftToRight, "Azeri (Latin)")
+    LNG( "ba"   , RS2::locLeftToRight, "Bashkir")
+    LNG( "eu_ES", RS2::locLeftToRight, "Basque")
+    LNG( "be_BY", RS2::locLeftToRight, "Belarusian")
+    LNG( "bn"   , RS2::locLeftToRight, "Bengali")
+    LNG( "dz"   , RS2::locLeftToRight, "Bhutani")
+    LNG( "bh"   , RS2::locLeftToRight, "Bihari")
+    LNG( "bi"   , RS2::locLeftToRight, "Bislama")
+    LNG( "br"   , RS2::locLeftToRight, "Breton")
+    LNG( "bg_BG", RS2::locLeftToRight, "Bulgarian")
+    LNG( "my"   , RS2::locLeftToRight, "Burmese")
+    LNG( "km"   , RS2::locLeftToRight, "Cambodian")
+    LNG( "ca_ES", RS2::locLeftToRight, "Catalan")
+    LNG( "zh_TW", RS2::locLeftToRight, "Chinese")
+    LNG( "zh_CN", RS2::locLeftToRight, "Chinese (Simplified)")
+    LNG( "zh_TW", RS2::locLeftToRight, "Chinese (Traditional)")
+    LNG( "zh_HK", RS2::locLeftToRight, "Chinese (Hongkong)")
+    LNG( "zh_MO", RS2::locLeftToRight, "Chinese (Macau)")
+    LNG( "zh_SG", RS2::locLeftToRight, "Chinese (Singapore)")
+    LNG( "zh_TW", RS2::locLeftToRight, "Chinese (Taiwan)")
+    LNG( "co"   , RS2::locLeftToRight, "Corsican")
+    LNG( "hr_HR", RS2::locLeftToRight, "Croatian")
+    LNG( "cs_CZ", RS2::locLeftToRight, "Czech")
+    LNG( "da_DK", RS2::locLeftToRight, "Danish")
+    LNG( "nl_NL", RS2::locLeftToRight, "Dutch")
+    LNG( "nl_BE", RS2::locLeftToRight, "Dutch (Belgian)")
+    LNG( "en_GB", RS2::locLeftToRight, "English")
+    LNG( "en_GB", RS2::locLeftToRight, "English (U.K.)")
+    LNG( "en_US", RS2::locLeftToRight, "English (U.S.)")
+    LNG( "en_AU", RS2::locLeftToRight, "English (Australia)")
+    LNG( "en_BZ", RS2::locLeftToRight, "English (Belize)")
+    LNG( "en_BW", RS2::locLeftToRight, "English (Botswana)")
+    LNG( "en_CA", RS2::locLeftToRight, "English (Canada)")
+    LNG( "en_CB", RS2::locLeftToRight, "English (Caribbean)")
+    LNG( "en_DK", RS2::locLeftToRight, "English (Denmark)")
+    LNG( "en_IE", RS2::locLeftToRight, "English (Eire)")
+    LNG( "en_JM", RS2::locLeftToRight, "English (Jamaica)")
+    LNG( "en_NZ", RS2::locLeftToRight, "English (New Zealand)")
+    LNG( "en_PH", RS2::locLeftToRight, "English (Philippines)")
+    LNG( "en_ZA", RS2::locLeftToRight, "English (South Africa)")
+    LNG( "en_TT", RS2::locLeftToRight, "English (Trinidad)")
+    LNG( "en_ZW", RS2::locLeftToRight, "English (Zimbabwe)")
+    LNG( "eo"   , RS2::locLeftToRight, "Esperanto")
+    LNG( "et_EE", RS2::locLeftToRight, "Estonian")
+    LNG( "fo_FO", RS2::locLeftToRight, "Faeroese")
+    LNG( "fa_IR", RS2::locLeftToRight, "Farsi")
+    LNG( "fj"   , RS2::locLeftToRight, "Fiji")
+    LNG( "fi_FI", RS2::locLeftToRight, "Finnish")
+    LNG( "fr_FR", RS2::locLeftToRight, "French")
+    LNG( "fr_BE", RS2::locLeftToRight, "French (Belgian)")
+    LNG( "fr_CA", RS2::locLeftToRight, "French (Canadian)")
+    LNG( "fr_LU", RS2::locLeftToRight, "French (Luxembourg)")
+    LNG( "fr_MC", RS2::locLeftToRight, "French (Monaco)")
+    LNG( "fr_CH", RS2::locLeftToRight, "French (Swiss)")
+    LNG( "fy"   , RS2::locLeftToRight, "Frisian")
+    LNG( "gl_ES", RS2::locLeftToRight, "Galician")
+    LNG( "ka_GE", RS2::locLeftToRight, "Georgian")
+    LNG( "de_DE", RS2::locLeftToRight, "German")
+    LNG( "de_AT", RS2::locLeftToRight, "German (Austrian)")
+    LNG( "de_BE", RS2::locLeftToRight, "German (Belgium)")
+    LNG( "de_LI", RS2::locLeftToRight, "German (Liechtenstein)")
+    LNG( "de_LU", RS2::locLeftToRight, "German (Luxembourg)")
+    LNG( "de_CH", RS2::locLeftToRight, "German (Swiss)")
+    LNG( "el_GR", RS2::locLeftToRight, "Greek")
+    LNG( "kl_GL", RS2::locLeftToRight, "Greenlandic")
+    LNG( "gn"   , RS2::locLeftToRight, "Guarani")
+    LNG( "gu"   , RS2::locLeftToRight, "Gujarati")
+    LNG( "ha"   , RS2::locLeftToRight, "Hausa")
+    LNG( "he_IL", RS2::locRightToLeft, "Hebrew")
+    LNG( "hi_IN", RS2::locLeftToRight, "Hindi")
+    LNG( "hu_HU", RS2::locLeftToRight, "Hungarian")
+    LNG( "is_IS", RS2::locLeftToRight, "Icelandic")
+    LNG( "id_ID", RS2::locLeftToRight, "Indonesian")
+    LNG( "ia"   , RS2::locLeftToRight, "Interlingua")
+    LNG( "ie"   , RS2::locLeftToRight, "Interlingue")
+    LNG( "iu"   , RS2::locLeftToRight, "Inuktitut")
+    LNG( "ik"   , RS2::locLeftToRight, "Inupiak")
+    LNG( "ga_IE", RS2::locLeftToRight, "Irish")
+    LNG( "it_IT", RS2::locLeftToRight, "Italian")
+    LNG( "it_CH", RS2::locLeftToRight, "Italian (Swiss)")
+    LNG( "ja_JP", RS2::locLeftToRight, "Japanese")
+    LNG( "jw"   , RS2::locLeftToRight, "Javanese")
+    LNG( "kn"   , RS2::locLeftToRight, "Kannada")
+    LNG( "ks"   , RS2::locLeftToRight, "Kashmiri")
+    LNG( "ks_IN", RS2::locLeftToRight, "Kashmiri (India)")
+    LNG( "kk"   , RS2::locLeftToRight, "Kazakh")
+    LNG( "kw_GB", RS2::locLeftToRight, "Kernewek")
+    LNG( "rw"   , RS2::locLeftToRight, "Kinyarwanda")
+    LNG( "ky"   , RS2::locLeftToRight, "Kirghiz")
+    LNG( "rn"   , RS2::locLeftToRight, "Kirundi")
+    LNG( ""     , RS2::locLeftToRight, "Konkani")
+    LNG( "ko_KR", RS2::locLeftToRight, "Korean")
+    LNG( "ku_TR", RS2::locLeftToRight, "Kurdish")
+    LNG( "lo"   , RS2::locLeftToRight, "Laothian")
+    LNG( "la"   , RS2::locLeftToRight, "Latin")
+    LNG( "lv_LV", RS2::locLeftToRight, "Latvian")
+    LNG( "ln"   , RS2::locLeftToRight, "Lingala")
+    LNG( "lt_LT", RS2::locLeftToRight, "Lithuanian")
+    LNG( "mk_MK", RS2::locLeftToRight, "Macedonian")
+    LNG( "mg"   , RS2::locLeftToRight, "Malagasy")
+    LNG( "ms_MY", RS2::locLeftToRight, "Malay")
+    LNG( "ml"   , RS2::locLeftToRight, "Malayalam")
+    LNG( "ms_BN", RS2::locLeftToRight, "Malay (Brunei Darussalam)")
+    LNG( "ms_MY", RS2::locLeftToRight, "Malay (Malaysia)")
+    LNG( "mt_MT", RS2::locLeftToRight, "Maltese")
+    LNG( ""     , RS2::locLeftToRight, "Manipuri")
+    LNG( "mi"   , RS2::locLeftToRight, "Maori")
+    LNG( "mr_IN", RS2::locLeftToRight, "Marathi")
+    LNG( "mo"   , RS2::locLeftToRight, "Moldavian")
+    LNG( "mn"   , RS2::locLeftToRight, "Mongolian")
+    LNG( "na"   , RS2::locLeftToRight, "Nauru")
+    LNG( "ne_NP", RS2::locLeftToRight, "Nepali")
+    LNG( "ne_IN", RS2::locLeftToRight, "Nepali (India)")
+    LNG( "nb_NO", RS2::locLeftToRight, "Norwegian (Bokmal)")
+    LNG( "nn_NO", RS2::locLeftToRight, "Norwegian (Nynorsk)")
+    LNG( "oc"   , RS2::locLeftToRight, "Occitan")
+    LNG( "or"   , RS2::locLeftToRight, "Oriya")
+    LNG( "om"   , RS2::locLeftToRight, "(Afan) Oromo")
+    LNG( "ps"   , RS2::locLeftToRight, "Pashto, Pushto")
+    LNG( "pl_PL", RS2::locLeftToRight, "Polish")
+    LNG( "pt_PT", RS2::locLeftToRight, "Portuguese")
+    LNG( "pt_BR", RS2::locLeftToRight, "Portuguese (Brazilian)")
+    LNG( "pa"   , RS2::locLeftToRight, "Punjabi")
+    LNG( "qu"   , RS2::locLeftToRight, "Quechua")
+    LNG( "rm"   , RS2::locLeftToRight, "Rhaeto-Romance")
+    LNG( "ro_RO", RS2::locLeftToRight, "Romanian")
+    LNG( "ru_RU", RS2::locLeftToRight, "Russian")
+    LNG( "ru_UA", RS2::locLeftToRight, "Russian (Ukraine)")
+    LNG( "sm"   , RS2::locLeftToRight, "Samoan")
+    LNG( "sg"   , RS2::locLeftToRight, "Sangho")
+    LNG( "sa"   , RS2::locLeftToRight, "Sanskrit")
+    LNG( "gd"   , RS2::locLeftToRight, "Scots Gaelic")
+    LNG( "se_NO", RS2::locLeftToRight, "Northern Sami")
+    LNG( "sr_SR", RS2::locLeftToRight, "Serbian")
+    LNG( "sr_SR", RS2::locLeftToRight, "Serbian (Cyrillic)")
+    LNG( "sr_SR@latin", RS2::locLeftToRight, "Serbian (Latin)")
+    LNG( "sr_YU", RS2::locLeftToRight, "Serbian (Cyrillic)")
+    LNG( "sr_YU@latin", RS2::locLeftToRight, "Serbian (Latin)")
+    LNG( "sh"   , RS2::locLeftToRight, "Serbo-Croatian")
+    LNG( "st"   , RS2::locLeftToRight, "Sesotho")
+    LNG( "tn"   , RS2::locLeftToRight, "Setswana")
+    LNG( "sn"   , RS2::locLeftToRight, "Shona")
+    LNG( "sd"   , RS2::locLeftToRight, "Sindhi")
+    LNG( "si"   , RS2::locLeftToRight, "Sinhalese")
+    LNG( "ss"   , RS2::locLeftToRight, "Siswati")
+    LNG( "sk_SK", RS2::locLeftToRight, "Slovak")
+    LNG( "sl_SI", RS2::locLeftToRight, "Slovenian")
+    LNG( "so"   , RS2::locLeftToRight, "Somali")
+    LNG( "es_ES", RS2::locLeftToRight, "Spanish")
+    LNG( "es_AR", RS2::locLeftToRight, "Spanish (Argentina)")
+    LNG( "es_BO", RS2::locLeftToRight, "Spanish (Bolivia)")
+    LNG( "es_CL", RS2::locLeftToRight, "Spanish (Chile)")
+    LNG( "es_CO", RS2::locLeftToRight, "Spanish (Colombia)")
+    LNG( "es_CR", RS2::locLeftToRight, "Spanish (Costa Rica)")
+    LNG( "es_DO", RS2::locLeftToRight, "Spanish (Dominican republic)")
+    LNG( "es_EC", RS2::locLeftToRight, "Spanish (Ecuador)")
+    LNG( "es_SV", RS2::locLeftToRight, "Spanish (El Salvador)")
+    LNG( "es_GT", RS2::locLeftToRight, "Spanish (Guatemala)")
+    LNG( "es_HN", RS2::locLeftToRight, "Spanish (Honduras)")
+    LNG( "es_MX", RS2::locLeftToRight, "Spanish (Mexican)")
+    LNG( "es_ES", RS2::locLeftToRight, "Spanish (Modern)")
+    LNG( "es_NI", RS2::locLeftToRight, "Spanish (Nicaragua)")
+    LNG( "es_PA", RS2::locLeftToRight, "Spanish (Panama)")
+    LNG( "es_PY", RS2::locLeftToRight, "Spanish (Paraguay)")
+    LNG( "es_PE", RS2::locLeftToRight, "Spanish (Peru)")
+    LNG( "es_PR", RS2::locLeftToRight, "Spanish (Puerto Rico)")
+    LNG( "es_UY", RS2::locLeftToRight, "Spanish (Uruguay)")
+    LNG( "es_US", RS2::locLeftToRight, "Spanish (U.S.)")
+    LNG( "es_VE", RS2::locLeftToRight, "Spanish (Venezuela)")
+    LNG( "su"   , RS2::locLeftToRight, "Sundanese")
+    LNG( "sw_KE", RS2::locLeftToRight, "Swahili")
+    LNG( "sv_SE", RS2::locLeftToRight, "Swedish")
+    LNG( "sv_FI", RS2::locLeftToRight, "Swedish (Finland)")
+    LNG( "tl_PH", RS2::locLeftToRight, "Tagalog")
+    LNG( "tg"   , RS2::locLeftToRight, "Tajik")
+    LNG( "ta"   , RS2::locLeftToRight, "Tamil")
+    LNG( "tt"   , RS2::locLeftToRight, "Tatar")
+    LNG( "te"   , RS2::locLeftToRight, "Telugu")
+    LNG( "th_TH", RS2::locLeftToRight, "Thai")
+    LNG( "bo"   , RS2::locLeftToRight, "Tibetan")
+    LNG( "ti"   , RS2::locLeftToRight, "Tigrinya")
+    LNG( "to"   , RS2::locLeftToRight, "Tonga")
+    LNG( "ts"   , RS2::locLeftToRight, "Tsonga")
+    LNG( "tr_TR", RS2::locLeftToRight, "Turkish")
+    LNG( "tk"   , RS2::locLeftToRight, "Turkmen")
+    LNG( "tw"   , RS2::locLeftToRight, "Twi")
+    LNG( "ug"   , RS2::locLeftToRight, "Uighur")
+    LNG( "uk"   , RS2::locLeftToRight, "Ukrainian")
+    LNG( "ur"   , RS2::locLeftToRight, "Urdu")
+    LNG( "ur_IN", RS2::locLeftToRight, "Urdu (India)")
+    LNG( "ur_PK", RS2::locLeftToRight, "Urdu (Pakistan)")
+    LNG( "uz"   , RS2::locLeftToRight, "Uzbek")
+    LNG( "uz"   , RS2::locLeftToRight, "Uzbek (Cyrillic)")
+    LNG( "uz"   , RS2::locLeftToRight, "Uzbek (Latin)")
+    LNG( "ca_ES@valencia", RS2::locLeftToRight, "Valencian")
+    LNG( "vi_VN", RS2::locLeftToRight, "Vietnamese")
+    LNG( "vo"   , RS2::locLeftToRight, "Volapuk")
+    LNG( "cy"   , RS2::locLeftToRight, "Welsh")
+    LNG( "wo"   , RS2::locLeftToRight, "Wolof")
+    LNG( "xh"   , RS2::locLeftToRight, "Xhosa")
+    LNG( "yi"   , RS2::locLeftToRight, "Yiddish")
+    LNG( "yo"   , RS2::locLeftToRight, "Yoruba")
+    LNG( "za"   , RS2::locLeftToRight, "Zhuang")
+    LNG( "zu"   , RS2::locLeftToRight, "Zulu")
 }
 
 
@@ -372,31 +370,32 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
     QString langLower("");
     QString langUpper("");
     int i0 = lang.indexOf('_');
-    if( i0 >= 2 && lang.size() - i0 >= 2 ){
+    if (i0 >= 2 && lang.size() - i0 >= 2) {
         //contains region code
-        langLower = lang.left(i0) + '_' + lang.mid(i0+1).toLower();
-        langUpper = lang.left(i0) + '_' + lang.mid(i0+1).toUpper();
-    }else{
+        langLower = lang.left( i0) + '_' + lang.mid( i0 + 1).toLower();
+        langUpper = lang.left( i0) + '_' + lang.mid( i0 + 1).toUpper();
+    }
+    else {
         langLower = lang;
         langUpper.clear();
     }
     // search in various directories for translations
-    QStringList lst = getDirectoryList("qm");
+    QStringList lst = getDirectoryList( "qm");
 
-    RS_SETTINGS->beginGroup("/Paths");
-    lst += (RS_SETTINGS->readEntry("/Translations", "")).split(";", QString::SkipEmptyParts);
+    RS_SETTINGS->beginGroup( "/Paths");
+    lst += (RS_SETTINGS->readEntry( "/Translations", "")).split( ";", QString::SkipEmptyParts);
     RS_SETTINGS->endGroup();
 
     if( tLibreCAD != NULL) {
-        qApp->removeTranslator(tLibreCAD);
+        qApp->removeTranslator( tLibreCAD);
         delete tLibreCAD;
     }
     if( tPlugIns != NULL) {
-        qApp->removeTranslator(tPlugIns);
+        qApp->removeTranslator( tPlugIns);
         delete tPlugIns;
     }
     if( tQt != NULL) {
-        qApp->removeTranslator(tQt);
+        qApp->removeTranslator( tQt);
         delete tQt;
     }
     QString langFileLower = "librecad_" + langLower + ".qm",
@@ -407,50 +406,49 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
             langQtUpper = "qt_" + langUpper + ".qm";
     QTranslator* t = new QTranslator(0);
     for (QStringList::Iterator it = lst.begin();
-         it!=lst.end();
+         it != lst.end();
          ++it) {
 
         // load LibreCAD translations
-        if( NULL == tLibreCAD) {
-            if(	t->load(langFileLower, *it)==true
+        if (NULL == tLibreCAD) {
+            if (t->load( langFileLower, *it) == true
                     || (  ! langUpper.isEmpty()
-                          &&	t->load(langFileUpper, *it)==true)) {
+                          && t->load( langFileUpper, *it) == true)) {
                 tLibreCAD = t;
-                qApp->installTranslator(tLibreCAD);
+                qApp->installTranslator( tLibreCAD);
                 t = new QTranslator(0);
             }
         }
 
         // load PlugIns translations
-        if( NULL == tPlugIns) {
-            if(	t->load(langPlugInsLower, *it)==true
+        if (NULL == tPlugIns) {
+            if (t->load( langPlugInsLower, *it) == true
                     || (  ! langUpper.isEmpty()
-                          &&	t->load(langPlugInsUpper, *it)==true)) {
+                          && t->load( langPlugInsUpper, *it) == true)) {
                 tPlugIns = t;
-                qApp->installTranslator(tPlugIns);
+                qApp->installTranslator( tPlugIns);
                 t = new QTranslator(0);
             }
         }
 
         // load Qt standard dialog translations
-        if( NULL == tQt) {
-            if( t->load(langQtLower, *it)==true
+        if (NULL == tQt) {
+            if (t->load( langQtLower, *it) == true
                     || (  ! langUpper.isEmpty()
-                          &&	t->load(langQtUpper, *it)==true)) {
+                          && t->load( langQtUpper, *it) == true)) {
                 tQt = t;
-                qApp->installTranslator(tQt);
+                qApp->installTranslator( tQt);
                 t = new QTranslator(0);
             }
         }
-        if( NULL != tLibreCAD && NULL != tPlugIns && NULL != tQt) {
+        if (NULL != tLibreCAD && NULL != tPlugIns && NULL != tQt) {
             break;
         }
     }
-    if( NULL != t) {
+    if (NULL != t) {
         delete t;
     }
 }
-
 
 
 /**
@@ -461,7 +459,7 @@ bool RS_System::checkInit() {
     if (!initialized) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_System::checkInit: System not initialized.\n"
-            "Use RS_SYSTEM->init(appname, appdirname) to do so.");
+                        "Use RS_SYSTEM->init(appname, appdirname) to do so.");
     }
     return initialized;
 }
@@ -474,8 +472,8 @@ bool RS_System::checkInit() {
  */
 bool RS_System::createPaths(const QString& directory) {
     QDir dir;
-    dir.cd(QDir::homePath());
-    dir.mkpath(directory);
+    dir.cd( QDir::homePath());
+    dir.mkpath( directory);
     return true;
 }
 
@@ -489,11 +487,11 @@ bool RS_System::createPaths(const QString& directory) {
  * @return Application data directory.
  */
 QString RS_System::getAppDataDir() {
-    QString appData = 
-        QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-    QDir dir(appData);
+    QString appData =
+            QStandardPaths::writableLocation( QStandardPaths::DataLocation);
+    QDir dir( appData);
     if (!dir.exists()) {
-        if (!dir.mkpath(appData))
+        if (!dir.mkpath( appData))
             return QString();
     }
     return appData;
@@ -507,34 +505,32 @@ QString RS_System::getAppDataDir() {
  * @return List of the absolute paths of the files found.
  */
 QStringList RS_System::getFileList(const QString& subDirectory,
-                                     const QString& fileExtension) {
-
+                                   const QString& fileExtension) {
     checkInit();
 
-        RS_DEBUG->print("RS_System::getFileList: subdirectory %s ", subDirectory.toLatin1().data());
-        RS_DEBUG->print("RS_System::getFileList: appDirName %s ", appDirName.toLatin1().data());
-        RS_DEBUG->print("RS_System::getFileList: getCurrentDir %s ", getCurrentDir().toLatin1().data());
+    RS_DEBUG->print( "RS_System::getFileList: subdirectory %s ", subDirectory.toLatin1().data());
+    RS_DEBUG->print( "RS_System::getFileList: appDirName %s ", appDirName.toLatin1().data());
+    RS_DEBUG->print( "RS_System::getFileList: getCurrentDir %s ", getCurrentDir().toLatin1().data());
 
-
-    QStringList dirList = getDirectoryList(subDirectory);
+    QStringList dirList = getDirectoryList( subDirectory);
 
     QStringList fileList;
     QString path;
     QDir dir;
 
     for (QStringList::Iterator it = dirList.begin();
-            it!=dirList.end();
-            ++it ) {
+         it != dirList.end();
+         ++it) {
 
         //path = QString(*it) + "/" + subDirectory;
-        path = QString(*it);
-        dir = QDir(path);
+        path = QString( *it);
+        dir = QDir( path);
 
         if (dir.exists() && dir.isReadable()) {
-            QStringList files = dir.entryList( QStringList("*." + fileExtension) );
+            QStringList files = dir.entryList( QStringList( "*." + fileExtension));
             for (QStringList::Iterator it2 = files.begin();
-                    it2!=files.end();
-                    it2++) {
+                 it2 != files.end();
+                 it2++) {
 
                 fileList += path + "/" + (*it2);
             }
@@ -545,7 +541,6 @@ QStringList RS_System::getFileList(const QString& subDirectory,
 }
 
 
-
 /**
  * @return List of all directories in subdirectory 'subDirectory' in
  * all possible QCad directories.
@@ -553,66 +548,69 @@ QStringList RS_System::getFileList(const QString& subDirectory,
 QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     QStringList dirList;
 
-    QString subDirectory=QDir::fromNativeSeparators(_subDirectory);
+    QString subDirectory = QDir::fromNativeSeparators( _subDirectory);
 
 #ifdef Q_OS_MAC
-         dirList.append(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
+    dirList.append( QStandardPaths::writableLocation( QStandardPaths::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
 #endif // Q_OS_MAC
-		
+
 #ifdef Q_OS_WIN32
-        dirList.append(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
+    dirList.append( QStandardPaths::writableLocation( QStandardPaths::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
 #endif // Q_OS_WIN32
-		
+
     // Unix home directory, it's old style but some people might have stuff there.
-    dirList.append(getHomeDir() + "/." + appDirName + "/" + subDirectory);
+    dirList.append( getHomeDir() + "/." + appDirName + "/" + subDirectory);
 
-        //local (application) directory has priority over other dirs:
-        if (!appDir.isEmpty() && appDir!="/" && appDir!=getHomeDir()) {
-                if( appDir != getCurrentDir() && subDirectory != QString("plugins")) {// 17 Aug, 2011, Dongxu Li, do not look for plugins in the current folder, we should install plugins to system or ~/.LibreCAD/plugins/
-            dirList.append(appDir + "/" + subDirectory);
-            }
+    //local (application) directory has priority over other dirs:
+    if (!appDir.isEmpty() && appDir!="/" && appDir!=getHomeDir()) {
+        if (appDir != getCurrentDir() && subDirectory != QString( "plugins")) {// 17 Aug, 2011, Dongxu Li, do not look for plugins in the current folder, we should install plugins to system or ~/.LibreCAD/plugins/
+            dirList.append( appDir + "/" + subDirectory);
         }
+    }
 
-        // Ubuntu
-        dirList.append("/usr/share/doc/" + appDirName + "/" + subDirectory);
+    // Ubuntu
+    dirList.append( "/usr/share/doc/" + appDirName + "/" + subDirectory);
 
-        // Redhat style:
-        dirList.append("/usr/share/" + appDirName + "/" + subDirectory);
+    // Redhat style:
+    dirList.append( "/usr/share/" + appDirName + "/" + subDirectory);
 
-        // Others, RVT April 25, 2011 removed, doesn anybody use that still?
-        // dirList.append("/usr/X11R6/share/" + appDirName + "/" + subDirectory);
-
+    // Others, RVT April 25, 2011 removed, doesn anybody use that still?
+    // dirList.append("/usr/X11R6/share/" + appDirName + "/" + subDirectory);
 
 #ifdef Q_OS_MAC
     // Apple uses the resource directory
     if (!appDir.isEmpty() && appDir!="/") {
-        dirList.append(appDir + "/../Resources/" + subDirectory);
+        dirList.append( appDir + "/../Resources/" + subDirectory);
     }
 #endif
 
 #ifndef Q_OS_MAC
-        // Add support directory if librecad is run-in-place,
-        // not for Apple because it uses resources this is more for unix systems
-        dirList.append(appDir + "/resources/" + subDirectory);
+    // Add support directory if librecad is run-in-place,
+    // not for Apple because it uses resources this is more for unix systems
+    dirList.append( appDir + "/resources/" + subDirectory);
 #endif
 
     // Individual directories:
-    RS_SETTINGS->beginGroup("/Paths");
-    if (subDirectory=="fonts") {
-        dirList += (RS_SETTINGS->readEntry("/Fonts", "")).split(QRegExp("[;]"),
-                                                        QString::SkipEmptyParts);
-    } else if (subDirectory=="patterns") {
-        dirList += (RS_SETTINGS->readEntry("/Patterns", "")).split(QRegExp("[;]"),
-                                                        QString::SkipEmptyParts);
-    } else if (subDirectory.startsWith("scripts")) {
-        dirList += (RS_SETTINGS->readEntry("/Scripts", "")).split(QRegExp("[;]"),
-                                                        QString::SkipEmptyParts);
-    } else if (subDirectory.startsWith("library")) {
-        dirList += (RS_SETTINGS->readEntry("/Library", "")).split(QRegExp("[;]"),
-                                                        QString::SkipEmptyParts);
-    } else if (subDirectory.startsWith("po")) {
-        dirList += (RS_SETTINGS->readEntry("/Translations", "")).split(QRegExp("[;]"),
-                                                        QString::SkipEmptyParts);
+    RS_SETTINGS->beginGroup( "/Paths");
+    if (subDirectory == "fonts") {
+        dirList += (RS_SETTINGS->readEntry( "/Fonts", "")).split( QRegExp("[;]"),
+                                                                  QString::SkipEmptyParts);
+    }
+    else if (subDirectory == "patterns") {
+        dirList += (RS_SETTINGS->readEntry( "/Patterns", "")).split( QRegExp("[;]"),
+                                                                     QString::SkipEmptyParts);
+    }
+    else if (subDirectory.startsWith( "scripts")) {
+        dirList += (RS_SETTINGS->readEntry( "/Scripts", "")).split( QRegExp("[;]"),
+                                                                    QString::SkipEmptyParts);
+    }
+    else if (subDirectory.startsWith( "library")) {
+        dirList += (RS_SETTINGS->readEntry( "/Library", "")).split( QRegExp("[;]"),
+                                                                    QString::SkipEmptyParts);
+    }
+    else if (subDirectory.startsWith( "po")) {
+        dirList += (RS_SETTINGS->readEntry( "/Translations", "")).split( QRegExp("[;]"),
+                                                                         QString::SkipEmptyParts);
     }
     RS_SETTINGS->endGroup();
 
@@ -620,9 +618,9 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 
     RS_DEBUG->print("RS_System::getDirectoryList: Paths:");
     for (QStringList::Iterator it = dirList.begin();
-            it!=dirList.end(); ++it ) {
-
-        if (QFileInfo(*it).isDir()) {
+         it != dirList.end();
+         ++it ) {
+        if (QFileInfo( *it).isDir()) {
             ret += (*it);
             RS_DEBUG->print( (*it).toLatin1() );
         }
@@ -632,22 +630,21 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 }
 
 
-
 /**
  * Converts a language string to a symbol (e.g. Deutsch or German to 'de').
  * Languages taken from RFC3066
  */
 QString RS_System::languageToSymbol(const QString& lang) {
-        int i1=lang.indexOf(' ');
+    int i1 = lang.indexOf( ' ');
     QString l = lang;
-        if(i1 >= 2){
-                l=lang.mid(0,i1);
-        }
-        return l;
+    if (i1 >= 2){
+        l = lang.mid( 0, i1);
+    }
+    return l;
 
 //    RS_Locale *locale;
 //    foreach (locale, *RS_SYSTEM->allKnownLocales) {
-//        if (locale->getName().toLower()==l) {
+//        if (locale->getName().toLower() == l) {
 //            return locale->getCanonical();
 //        }
 //    }
@@ -656,33 +653,29 @@ QString RS_System::languageToSymbol(const QString& lang) {
 }
 
 
-
 /**
  * Converts a locale code into a readable string
  * (e.g. 'de' to 'German Deutsch'
  * (e.g. 'en_au' to 'English (Australia)'
  */
 QString RS_System::symbolToLanguage(const QString& symb) {
-    RS_Locale loc(symb);
+    RS_Locale loc( symb);
     QString ret;
-    if( symb.contains(QRegExp("^en"))){
-        ret=RS_Locale::languageToString(loc.language());
+    if (symb.contains( QRegExp( "^en"))) {
+        ret = RS_Locale::languageToString( loc.language());
         if( symb.contains('_') ) {
-            ret +=" ("+RS_Locale::countryToString(loc.country())+')';
+            ret += " (" + RS_Locale::countryToString( loc.country()) + ')';
         }
-    }else{
-        ret=RS_Locale::languageToString(loc.language())+' '+loc.nativeLanguageName();
-        if( symb.contains('_') ) {
-            ret +=" ("+RS_Locale::countryToString(loc.country())+' '+ loc.nativeCountryName()+')';
+    }
+    else {
+        ret = RS_Locale::languageToString( loc.language()) + ' ' + loc.nativeLanguageName();
+        if( symb.contains( '_') ) {
+            ret += " (" + RS_Locale::countryToString( loc.country()) + ' ' + loc.nativeCountryName() + ')';
         }
     }
 
-//    std::cout<<__FILE__<<" : "<<__func__<<" :  line "<<__LINE__<<" :  symb="<<qPrintable(symb)<<" name="<<qPrintable(ret)<<std::endl;
-
-        return ret;
-
+    return ret;
 }
-
 
 
 /**
@@ -921,7 +914,8 @@ QByteArray RS_System::localeToISO(const QByteArray& locale) {
         loc_map["kk_KZ"]="KOI8-R";
     }
     QByteArray l = loc_map[locale];
-    if (l.isEmpty())
+    if (l.isEmpty()) {
         return "ISO8859-1";
+    }
     return l;
 }
