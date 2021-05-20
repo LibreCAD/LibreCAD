@@ -60,10 +60,10 @@ public:
     virtual void getPolylineData(QList<Plug_VertexData> *data);
     virtual void updatePolylineData(QList<Plug_VertexData> *data);
 
-	virtual void move(QPointF offset);
-	virtual void moveRotate(QPointF const& offset, QPointF const& center, double angle);
-	virtual void rotate(QPointF center, double angle);
-    virtual void scale(QPointF center, QPointF factor);
+    virtual void move(QPointF offset, DPI::Disposition disp = DPI::DELETE_ORIGINAL);
+    virtual void moveRotate(QPointF const& offset, QPointF const& center, double angle, DPI::Disposition disp = DPI::DELETE_ORIGINAL);
+    virtual void rotate(QPointF center, double angle, DPI::Disposition disp = DPI::DELETE_ORIGINAL);
+    virtual void scale(QPointF center, QPointF factor, DPI::Disposition disp = DPI::DELETE_ORIGINAL);
     virtual QString intColor2str(int color);
 private:
     RS_Entity* entity;
@@ -125,7 +125,7 @@ public:
     QString realToStr(const qreal num, const int units = 0, const int prec = 0);
 
     //method to handle undo in Plugin_Entity 
-    bool addToUndo(RS_Entity* current, RS_Entity* modified);
+    bool addToUndo(RS_Entity* current, RS_Entity* modified, DPI::Disposition how);
 private:
     RS_Document *doc;
     RS_Graphic *docGr;
