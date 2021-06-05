@@ -607,7 +607,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 //                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
 //                        jp<<pt1;
 //                    }
-                    if(pa.size() && (pa.last()-pt1).manhattanLength()>=1)
+                    //if(pa.size() && (pa.last()-pt1).manhattanLength()>=1)
                         pa<<pt1;
                     pa<<pt2;
                 }
@@ -739,26 +739,25 @@ double RS_Hatch::getDistanceToPoint(
     RS_Entity** entity,
     RS2::ResolveLevel level,
     double solidDist) const {
-
-    if (data.solid==true) {
+    
+        if (data.solid == true) {
         if (entity) {
             *entity = const_cast<RS_Hatch*>(this);
         }
-
         bool onContour;
         if (RS_Information::isPointInsideContour(
-                    coord,
-                     const_cast<RS_Hatch*>(this), &onContour)) {
+            coord,
+            const_cast<RS_Hatch*>(this), &onContour)) {
 
             // distance is the snap range:
             return solidDist;
         }
-
-        return RS_MAXDOUBLE;
-    } else {
         return RS_EntityContainer::getDistanceToPoint(coord, entity,
-                level, solidDist);
+            level, solidDist);
+        return RS_MAXDOUBLE;
     }
+    else return RS_EntityContainer::getDistanceToPoint(coord, entity,
+        level, solidDist);
 }
 
 
