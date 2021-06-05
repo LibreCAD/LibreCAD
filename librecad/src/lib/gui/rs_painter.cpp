@@ -150,7 +150,7 @@ void RS_Painter::drawHandle(const RS_Vector& p, const RS_Color& c, int size) {
     if (size<0) {
         size = 2;
     }
-    fillRect((int)(p.x-size), (int)(p.y-size), 2*size, 2*size, c);
+    fillRect((int)(p.x-size), (int)(p.y-size), 4*size, 4*size, c);
 }
 
 int RS_Painter::toScreenX(double x) const {

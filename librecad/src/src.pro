@@ -285,6 +285,7 @@ SOURCES += \
     lib/gui/rs_graphicview.cpp \
     lib/gui/rs_grid.cpp \
     lib/gui/rs_linetypepattern.cpp \
+    lib/gui/rs_linetypepattern.cpp \
     lib/gui/rs_painter.cpp \
     lib/gui/rs_painterqt.cpp \
     lib/gui/rs_staticgraphicview.cpp \
