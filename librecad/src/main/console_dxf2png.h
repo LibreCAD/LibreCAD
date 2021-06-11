@@ -2,7 +2,7 @@
 **
 ** This file was created for the LibreCAD project, a 2D CAD program.
 **
-** Copyright (C) 2018 Alexander Pravdin <aledin@mail.ru>
+** Copyright (C) 2020 Nikita Letov <letovnn@gmail.com>
 **
 ** This file may be distributed and/or modified under the terms of the
 ** GNU General Public License version 2 as published by the Free Software
@@ -21,9 +21,9 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 ******************************************************************************/
-#ifndef CONSOLE_DXF2PDF_H
-#define CONSOLE_DXF2PDF_H
+#ifndef CONSOLE_DXF2PNG_H
+#define CONSOLE_DXF2PNG_H
 
-int console_dxf2pdf(int argc, char** argv);
+int console_dxf2png(int argc, char** argv);
 
-#endif // CONSOLE_DXF2PDF_H
+#endif // CONSOLE_DXF2PNG_H
