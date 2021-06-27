@@ -197,6 +197,7 @@ protected:
     QString appVersion;
     QString appDirName;
     QString appDir;
+    QString binDir;
 
     QStringList languageList;   //< List of available translations
     bool initialized;

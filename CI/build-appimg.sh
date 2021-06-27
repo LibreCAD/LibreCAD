@@ -28,11 +28,12 @@ fi
 
 # create folder structure
 mkdir -p appdir/usr/bin
-mkdir -p appdir/usr/lib/librecad/plugins
-mkdir -p appdir/usr/lib/librecad/qm
+mkdir -p appdir/usr/lib/librecad
 mkdir -p appdir/usr/share/applications
-mkdir -p appdir/usr/share/librecad
+mkdir -p appdir/usr/share/doc/librecad
+mkdir -p appdir/usr/share/icons/hicolor/48x48/apps
 mkdir -p appdir/usr/share/icons/hicolor/scalable/apps
+mkdir -p appdir/usr/share/librecad
 
 # strip binaries
 strip unix/librecad
@@ -40,12 +41,12 @@ strip unix/resources/plugins/*.so
 
 # copy executables and binary resources
 cp unix/librecad appdir/usr/bin/
-cp unix/resources/plugins/*.so appdir/usr/lib/librecad/plugins/
-cp unix/resources/qm/* appdir/usr/lib/librecad/qm/
+cp unix/resources/plugins/*.so appdir/usr/lib/librecad/
+cp -r unix/resources/qm appdir/usr/share/librecad/
 
 cp desktop/librecad.desktop appdir/usr/share/applications/
 
-cp -r librecad/support/doc appdir/usr/share/librecad/
+cp -r librecad/support/doc/* appdir/usr/share/doc/librecad/
 cp -r librecad/support/fonts appdir/usr/share/librecad/
 cp -r librecad/support/library appdir/usr/share/librecad/
 cp -r librecad/support/patterns appdir/usr/share/librecad/

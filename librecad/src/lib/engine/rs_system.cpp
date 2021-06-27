@@ -60,6 +60,7 @@ void RS_System::init(const QString& appName, const QString& appVersion,
     else {
         this->appDir = appDir;
     }
+    binDir = QCoreApplication::applicationDirPath();
 
     RS_DEBUG->print("RS_System::init: System %s initialized.", appName.toLatin1().data());
     RS_DEBUG->print("RS_System::init: App dir: %s", appDir.toLatin1().data());
@@ -543,7 +544,7 @@ QStringList RS_System::getFileList(const QString& subDirectory,
 
 /**
  * @return List of all directories in subdirectory 'subDirectory' in
- * all possible QCad directories.
+ * all possible LibreCAD directories.
  */
 QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     QStringList dirList;
@@ -568,19 +569,22 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
         }
     }
 
-    // Ubuntu
-    dirList.append( "/usr/share/doc/" + appDirName + "/" + subDirectory);
+#ifdef Q_OS_UNIX
+    RS_DEBUG->print( RS_Debug::D_ERROR, "RS_System::getDirectoryList: %s", binDir.toStdString().c_str());
+    // for AppImage use relative paths from executable
+    // from packet manager the executable is in /usr/bin
+    // in AppImage the executable is APPDIR/usr/bin
+    // so this should work for paket manager and AppImage distribution
+    dirList.append( QDir::cleanPath( binDir + "/../share/doc/" + appDirName + "/" + subDirectory));
 
     // Redhat style:
-    dirList.append( "/usr/share/" + appDirName + "/" + subDirectory);
-
-    // Others, RVT April 25, 2011 removed, doesn anybody use that still?
-    // dirList.append("/usr/X11R6/share/" + appDirName + "/" + subDirectory);
+    dirList.append( QDir::cleanPath( binDir + "/../share/" + appDirName + "/" + subDirectory));
+#endif
 
 #ifdef Q_OS_MAC
     // Apple uses the resource directory
     if (!appDir.isEmpty() && appDir!="/") {
-        dirList.append( appDir + "/../Resources/" + subDirectory);
+        dirList.append( QDir::cleanPath( appDir + "/../Resources/" + subDirectory));
     }
 #endif
 
