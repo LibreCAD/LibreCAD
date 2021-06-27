@@ -579,6 +579,10 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 
     // Redhat style:
     dirList.append( QDir::cleanPath( binDir + "/../share/" + appDirName + "/" + subDirectory));
+
+    if (QStringLiteral( "plugins") == subDirectory) {
+        dirList.append( QDir::cleanPath( binDir + "/../lib/" + appDirName));
+    }
 #endif
 
 #ifdef Q_OS_MAC
