@@ -25,7 +25,7 @@
   <property name="maximumSize">
    <size>
     <width>500</width>
-    <height>50</height>
+    <height>80</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -64,7 +64,7 @@
      <property name="maximumSize">
       <size>
        <width>32767</width>
-       <height>28</height>
+       <height>80</height>
       </size>
      </property>
      <property name="text">
@@ -95,7 +95,7 @@
      <property name="maximumSize">
       <size>
        <width>32767</width>
-       <height>28</height>
+       <height>80</height>
       </size>
      </property>
      <property name="frameShape">
