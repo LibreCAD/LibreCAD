@@ -4,6 +4,9 @@ LibreCAD.pbproj/
 LibreCAD.dmg
 Info.plist
 
+#CLion internal directory
+.idea/
+
 # globs, anywhere
 *.o
 *.lo

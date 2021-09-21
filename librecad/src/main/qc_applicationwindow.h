@@ -163,8 +163,8 @@ public slots:
                         QSize borders,
                         bool black,
                         bool bw=true);
-    /** closing the current file */
-    void slotFileClosing(QC_MDIWindow*);
+    /** closing the current file; return false == operation cancelled */
+    bool slotFileClosing(QC_MDIWindow*);
 	/** close all files; return false == operation cancelled */
 	bool slotFileCloseAll();
     /** prints the current file */

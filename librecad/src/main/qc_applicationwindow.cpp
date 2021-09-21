@@ -2193,7 +2193,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
  * If modified, show the Save/Close/Cancel dialog, then do the request.
  * If a save is needed but the user cancels, the window is not closed.
  */
-void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
+bool QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
 {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClosing()");
 	bool cancel = false;
@@ -2208,11 +2208,11 @@ void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
 			break;
 		}
 	}
-	if (!cancel)
-	{
+	if (!cancel) {
 		doClose(win);
 		doArrangeWindows(RS2::CurrentMode);
 	}
+	return !cancel;
 }
 
 /**
