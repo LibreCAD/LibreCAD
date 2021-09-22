@@ -1487,8 +1487,8 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     actionHandler->set_view(view);
     actionHandler->set_document(w->getDocument());
 
-    connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
-            this, SLOT(slotFileClosing(QC_MDIWindow*)));
+    connect(w, SIGNAL(signalClosing(QC_MDIWindow*, QCloseEvent*)),
+            this, SLOT(slotFileClosing(QC_MDIWindow * , QCloseEvent*)));
 
     if (w->getDocument()->rtti()==RS2::EntityBlock) {
         w->setWindowTitle(tr("Block '%1'").arg(((RS_Block*)(w->getDocument()))->getName()) + "[*]");
@@ -2193,7 +2193,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
  * If modified, show the Save/Close/Cancel dialog, then do the request.
  * If a save is needed but the user cancels, the window is not closed.
  */
-void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
+void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow *win, QCloseEvent *event)
 {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClosing()");
 	bool cancel = false;
@@ -2208,10 +2208,12 @@ void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
 			break;
 		}
 	}
-	if (!cancel)
-	{
+	if (!cancel) {
 		doClose(win);
 		doArrangeWindows(RS2::CurrentMode);
+	}
+	if(event != nullptr) {
+	    (cancel)?event->ignore():event->accept();
 	}
 }
 
@@ -2575,8 +2577,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                 QC_MDIWindow* w = new QC_MDIWindow(parent->getDocument(), mdiAreaCAD, 0);
                 mdiAreaCAD->addSubWindow(w);
                 parent->addChildWindow(w);
-                connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
-                        this, SLOT(slotFileClosing(QC_MDIWindow*)));
+                connect(w, SIGNAL(signalClosing(QC_MDIWindow*, QCloseEvent*)),
+                        this, SLOT(slotFileClosing(QC_MDIWindow * , QCloseEvent*)));
 
                 w->setWindowTitle(tr("Print preview for %1").arg(parent->windowTitle()));
                 w->setWindowIcon(QIcon(":/main/document.png"));

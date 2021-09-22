@@ -227,8 +227,7 @@ QC_MDIWindow* QC_MDIWindow::getPrintPreview() {
 void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
     RS_DEBUG->print("QC_MDIWindow::closeEvent begin");
 
-    emit(signalClosing(this));
-    ce->accept(); // handling delegated to QApplication
+    emit(signalClosing(this, ce));
 
     RS_DEBUG->print("QC_MDIWindow::closeEvent end");
 }

@@ -115,7 +115,7 @@ public:
     bool has_children();
 
 signals:
-    void signalClosing(QC_MDIWindow*);
+    void signalClosing(QC_MDIWindow*, QCloseEvent*);
 
 protected:
     void closeEvent(QCloseEvent*);
