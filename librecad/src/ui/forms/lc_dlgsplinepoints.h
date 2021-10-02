@@ -14,8 +14,13 @@ class LC_DlgSplinePoints : public QDialog
 {
 	Q_OBJECT
 public:
-	LC_DlgSplinePoints(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
-	virtual ~LC_DlgSplinePoints();
+	explicit LC_DlgSplinePoints(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
+	LC_DlgSplinePoints(LC_DlgSplinePoints const&) = delete;
+	LC_DlgSplinePoints(LC_DlgSplinePoints &&) = delete;
+	~LC_DlgSplinePoints() override;
+
+	LC_DlgSplinePoints& operator = (LC_DlgSplinePoints const&) = delete;
+	LC_DlgSplinePoints& operator = (LC_DlgSplinePoints &&) = delete;
 
 public slots:
 	virtual void setSpline(LC_SplinePoints& b);
@@ -26,10 +31,6 @@ protected slots:
 	virtual void languageChange();
 
 private:
-	LC_DlgSplinePoints(LC_DlgSplinePoints const&) = delete;
-	LC_DlgSplinePoints& operator = (LC_DlgSplinePoints const&) = delete;
-	LC_DlgSplinePoints(LC_DlgSplinePoints &&) = delete;
-	LC_DlgSplinePoints& operator = (LC_DlgSplinePoints &&) = delete;
 
 	LC_SplinePoints* bezier;
 	std::unique_ptr<Ui::DlgSplinePoints> ui;
