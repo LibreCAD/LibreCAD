@@ -315,17 +315,18 @@ void RS_ActionModifyRound::hideOptions() {
 void RS_ActionModifyRound::updateMouseButtonHints() {
 	switch (getStatus()) {
 	case SetEntity1:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first entity"),
-											tr("Back"));
+		RS_DIALOGFACTORY->updateMouseWidget(
+            tr("Specify first entity or enter radius <%1>").arg(getRadius()),
+            tr("Back"));
 		break;
 	case SetEntity2:
 		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second entity"),
 											tr("Back"));
 		break;
-	case SetRadius:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Enter radius:"),
-											tr("Cancel"));
-		break;
+	    case SetRadius:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter radius:"),
+                                                tr("Cancel"));
+            break;
 		/*case SetTrim:
 				RS_DIALOGFACTORY->updateMouseWidget(tr("Trim on? (yes/no):"),
 													"");
