@@ -218,6 +218,16 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
             setStatus(SetTrim);
 			pPoints->data.trim = !pPoints->data.trim;
 			RS_DIALOGFACTORY->requestOptions(this, true, true);
+        } else {
+            bool ok;
+            double r = RS_Math::eval(c, &ok);
+            if(ok && r > 1.0e-10) {
+                e->accept();
+                pPoints->data.radius = r;
+            } else
+                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            setStatus(lastStatus);
         }
         break;
 
