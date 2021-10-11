@@ -323,10 +323,10 @@ void RS_ActionModifyRound::updateMouseButtonHints() {
 		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second entity"),
 											tr("Back"));
 		break;
-	    case SetRadius:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter radius:"),
-                                                tr("Cancel"));
-            break;
+    case SetRadius:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter radius:"),
+                                            tr("Cancel"));
+        break;
 		/*case SetTrim:
 				RS_DIALOGFACTORY->updateMouseWidget(tr("Trim on? (yes/no):"),
 													"");
