@@ -525,7 +525,7 @@ QString RS_Units::formatEngineering(double length, RS2::Unit /*unit*/,
 QString RS_Units::formatArchitectural(double length, RS2::Unit /*unit*/,
                                         int prec, bool showUnit) {
     QString ret;
-    bool neg = (length<0.0);
+    QString neg = (length<0.0)?"-":"";
 
     int feet = (int)floor(fabs(length)/12);
     double inches = fabs(length) - feet*12;
@@ -537,10 +537,10 @@ QString RS_Units::formatArchitectural(double length, RS2::Unit /*unit*/,
         sInches = "0";
     }
 
-    if (neg) {
-        ret = QString("-%1'-%2\"").arg(feet).arg(sInches);
+    if ( feet ) {
+        ret = QString("%1%2'-%3\"").arg(neg).arg(feet).arg(sInches);
     } else {
-        ret = QString("%1'-%2\"").arg(feet).arg(sInches);
+        ret = QString("%1\"").arg(sInches);
     }
 
     return ret;
