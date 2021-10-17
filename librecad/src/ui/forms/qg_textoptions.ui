@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
+    <width>350</width>
     <height>24</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>250</width>
+    <width>350</width>
     <height>22</height>
    </size>
   </property>
@@ -101,7 +101,7 @@
    <item>
     <widget class="QLabel" name="lSize">
      <property name="text">
-      <string>Size:</string>
+      <string>Height:</string>
      </property>
     </widget>
    </item>
