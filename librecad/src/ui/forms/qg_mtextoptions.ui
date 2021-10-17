@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
+    <width>350</width>
     <height>24</height>
    </rect>
   </property>
@@ -18,13 +18,13 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>200</width>
+    <width>350</width>
     <height>22</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>300</width>
+    <width>350</width>
     <height>32767</height>
    </size>
   </property>
@@ -99,6 +99,23 @@
     <widget class="QLineEdit" name="leAngle"/>
    </item>
    <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Height:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="leHeight">
+     <property name="maximumSize">
+      <size>
+       <width>30</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="Line" name="sep1">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
@@ -140,6 +157,22 @@
    <signal>textChanged(QString)</signal>
    <receiver>Ui_MTextOptions</receiver>
    <slot>updateAngle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>leHeight</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>Ui_MTextOptions</receiver>
+   <slot>updateHeight()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>20</x>

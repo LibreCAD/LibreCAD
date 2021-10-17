@@ -294,5 +294,13 @@ double RS_ActionDrawMText::getAngle() {
 	return data->angle;
 }
 
+void RS_ActionDrawMText::setHeight(double h) {
+    data->height = h;
+    textChanged = true;
+}
+
+double RS_ActionDrawMText::getHeight() const {
+    return data->height;
+}
 
 // EOF
