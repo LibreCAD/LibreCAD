@@ -79,6 +79,9 @@ public:
         void setAngle(double a);
         double getAngle();
 
+        void setHeight(double h);
+        double getHeight() const;
+
 private:
 	std::unique_ptr<RS_MTextData> data;
         //RS_Text* text;
