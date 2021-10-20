@@ -45,7 +45,6 @@
             <div role="main" id="mc-main-content">
                 <h1 class="TOC4"><a name="Multi-Co"></a><a name="kanchor54"></a>Multi-Command Input with Variable Files (Advanced)</h1>
                 <p>Command input can be combined and entered on a single line by separating the commands and other input with semicolons. Entering <span class="CodeSnippet">li;0,0;10..0;0..10;-10..0;c;k</span> on the command line will draw a 10 x 10 square. A list of commands, separated by a newline (return), can be copied and pasted using Paste multiple commands from the command line button (lower right corner of the Command Line dock).</p>
-                <p>&#160;</p>
                 <p>Command input can also be loaded from text files. Enter the commands and other input into a text file, separating each with a line break. For example, create a text file and enter the following commands:</p>
                 <table style="border-spacing: 1px 1px;border-left-style: solid;border-left-width: 1px;border-right-style: solid;border-right-width: 1px;border-top-style: solid;border-top-width: 1px;border-bottom-style: solid;border-bottom-width: 1px;margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/ExampleGrid.css');" class="TableStyle-ExampleGrid" cellspacing="0">
                     <col style="width: 2in;" class="TableStyle-ExampleGrid-Column-Column1" />
@@ -70,15 +69,14 @@
                     </tbody>
                 </table>
                 <p>The above commands will draw a 10x10 square.</p>
-                <p class="Procedure">Using multi-command input</p>
+                <h2 class="Procedure">Using multi-command input</h2>
                 <ol>
                     <li value="1">Create a text file containing the command input.</li>
                     <li value="2">In LibreCAD, click <b>Load Command File</b> from the dropdown menu by selecting the Command Line button ( <img src="../../Images/button.png" /> ). </li>
                     <li value="3">Locate and click the file, and click <b>Open</b>.</li>
                 </ol>
                 <p>The geometry you specified in the text file will appear in the current drawing.</p>
-                <p>&#160;</p>
-                <p style="font-weight: bold;">Variables in multi-command input</p>
+                <h2>Variables in multi-command input</h2>
                 <p>Multi-command input can be assigned to a variable and variables can also contain other variables, which are read recursively:</p>
                 <table style="border-left-style: solid;border-left-width: 1px;border-left-color: ;border-right-style: solid;border-right-width: 1px;border-right-color: ;border-top-style: solid;border-top-width: 1px;border-top-color: ;border-bottom-style: solid;border-bottom-width: 1px;border-bottom-color: ;margin-left: 0;margin-right: auto;mc-table-style: url('../../Resources/TableStyles/ExampleGrid.css');" class="TableStyle-ExampleGrid" cellspacing="0">
                     <col style="width: 2in;" class="TableStyle-ExampleGrid-Column-Column1" />
@@ -94,7 +92,7 @@
                     </tbody>
                 </table>
                 <p>Enter each line of the text above on the command line. When <span class="CodeSnippet">\c</span> is entered, two overlapping circles with a radius of 10 are drawn. The <span class="CodeSnippet">\</span> character is an escape character that allows the command line to interpret the variable name as an action. In the above example <span class="CodeSnippet">\c</span> expands to <span class="CodeSnippet">ci;0,0;10;ci;10,0;10;kill</span>.</p>
-                <p class="Procedure">Using variables with multi-command input</p>
+                <h2 class="Procedure">Using variables with multi-command input</h2>
                 <ol>
                     <li value="1">Create a variable multi-command input text file.</li>
                     <li value="2">Load the file by selecting <b>Options</b>.</li>

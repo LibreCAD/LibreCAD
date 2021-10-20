@@ -6,6 +6,8 @@ body
 {
 	font-family: 'Segoe UI', sans-serif;
 	background-color: #ffffff;
+	margin-left: 24px;
+	max-width: 1200px;
 }
 
 h1
@@ -14,12 +16,12 @@ h1
 	padding: 2px;
 	padding-left: 0px;
 	padding-right: 0px;
-	color: #000000;
 	z: ;
 	font-weight: normal;
 	margin-bottom: 6px;
 	margin-top: 8px;
-	font-size: 24px;
+	font-size: 1.7rem;
+	page-break-before: always;
 }
 
 h2
@@ -27,11 +29,12 @@ h2
 	margin: 6px;
 	margin-left: 0px;
 	margin-right: 0px;
-	margin-bottom: 6px;
 	sans-serif: ;
 	font-family: 'Segoe UI';
-	font-size: 16pt;
-	margin-top: 18px;
+	margin-bottom: 10px;
+	font-weight: normal;
+	margin-top: 30px;
+	font-size: 1.35rem;
 }
 
 h3
@@ -40,9 +43,10 @@ h3
 	margin-left: 0px;
 	margin-right: 0px;
 	border: solid 0px;
-	margin-top: 16px;
+	margin-top: 22px;
 	font-family: 'Segoe UI', sans-serif;
-	font-size: 12pt;
+	font-weight: normal;
+	font-size: 1.1rem;
 }
 
 h4
@@ -53,7 +57,7 @@ h4
 	font-weight: normal;
 	color: #d2691e;
 	font-family: 'Segoe UI';
-	font-size: 10pt;
+	font-size: 1.125rem;
 }
 
 h5
@@ -77,41 +81,18 @@ h6
 
 p
 {
-	margin-left: 0pt;
-	margin-top: 0pt;
-	margin-bottom: 0pt;
-	font-family: 'Segoe UI';
-	sans-serif: ;
-	font-size: 12px;
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 0.9rem;
+	margin-bottom: 8px;
+	margin-top: 8px;
 }
 
 li
 {
-	font-size: 9pt;
-	font-family: 'Segoe UI', sans-serif;
 	margin-top: 2px;
 	margin-bottom: 2px;
 	padding-bottom: 0;
-}
-
-a.WelcomePanels
-{
-	text-decoration: none;
-}
-
-p.WelcomePanels
-{
-	text-decoration: none;
-	font-size: 1.5em;
-}
-
-ol,
-ul
-{
-	margin-top: 0px;
-	margin-bottom: 0px;
-	font-size: 9pt;
-	font-family: 'Segoe UI', sans-serif;
+	font-size: 0.9rem;
 }
 
 p.SettingName
@@ -122,8 +103,66 @@ p.SettingName
 	mc-next-tag: p;
 	font-family: 'Segoe UI', sans-serif;
 	font-weight: normal;
-	font-size: 10pt;
 	color: #000080;
+	font-size: 1rem;
+}
+
+p.SettingNameNoToggle
+{
+	font-style: normal;
+	mc-next-tag: p;
+	font-weight: normal;
+	font-family: 'Segoe UI', sans-serif;
+	color: #00008b;
+	font-size: 1rem;
+	margin-bottom: 4px;
+	margin-top: 32px;
+}
+
+li.SettingName
+{
+	font-style: normal;
+	mc-next-tag: p;
+	margin-top: 2pt;
+	margin-bottom: 6pt;
+	color: #000080;
+}
+
+p.SettingHeader
+{
+	font-style: normal;
+	border-bottom-style: none;
+	font-variant: normal;
+	mc-next-tag: p;
+	margin: 0;
+	margin-bottom: 2px;
+	font-weight: normal;
+	font-family: 'Segoe UI';
+	text-transform: uppercase;
+	margin-top: 20px;
+}
+
+p.NoSpace
+{
+	font-family: 'Segoe UI';
+	sans-serif: ;
+	font-size: 0.9rem;
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+
+span.SettingRangeValue
+{
+	font-style: normal;
+	color: #800000;
+	font-weight: normal;
+}
+
+span.SettingDefaultValue
+{
+	font-style: normal;
+	color: #008000;
+	font-weight: normal;
 }
 
 li.StepInstruction
@@ -133,15 +172,55 @@ li.StepInstruction
 	margin-left: 0pt;
 }
 
+span.Formula
+{
+	color: #4a6903;
+	font-family: 'Lucida Sans Unicode';
+}
+
 span.CodeSnippet
 {
-	font-family: "Courier New", monospace;
+	font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, sans-serif;
+	font-size: .9rem;
+	margin-bottom: 0px;
+	margin-top: 0px;
 }
 
 p.CodeSnippet
 {
 	font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, sans-serif;
-	font-size: 13px;
+	font-size: .9rem;
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+
+MadCap|expandingHead.expandspot
+{
+	cursor: hand;
+	font-size: 9pt;
+	font-family: 'Segoe UI', sans-serif;
+	font-style: normal;
+	x-on-hover: fontchange(Underline=on);
+	text-decoration: none;
+	font-weight: bold;
+	color: #808000;
+}
+
+MadCap|expandingBody.expandtext
+{
+	font-style: normal;
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 9pt;
+	font-weight: normal;
+	color: #808000;
+}
+
+MadCap|toggler
+{
+	mc-closed-image: url('../../Images/TreeViewPlusSimple.png');
+	mc-open-image: url('../../Images/TreeViewMinusSimple.png');
+	padding: 0px;
+	color: #000080;
 }
 
 MadCap|expanding
@@ -155,11 +234,26 @@ img
 	position: relative;
 }
 
+MadCap|toggler.Toggler_Example
+{
+	mc-image-spacing: 3px;
+	margin: 10px;
+	margin-bottom: 0px;
+	margin-right: 0px;
+	margin-left: 0px;
+	padding: 0px;
+	border: solid 0px;
+	font-family: 'Segoe UI', sans-serif;
+	color: #008000;
+	mc-closed-image: url('../../Images/ExampleImagePlus.png');
+	mc-open-image: url('../../Images/ExampleImageMinus.png');
+}
+
 dl
 {
 	list-style-type: disc;
-	margin-bottom: 0em;
-	margin-top: 0em;
+	margin-bottom: 0rem;
+	margin-top: 0rem;
 	margin-left: 20px;
 }
 
@@ -179,43 +273,20 @@ dd
 
 blockquote
 {
-	margin-bottom: 1.12em;
-	margin-top: 0em;
+	margin-bottom: 1.12rem;
+	margin-top: 1.12rem;
 }
 
 td
 {
 	vertical-align: top;
 	font-family: 'Segoe UI', sans-serif;
-	font-size: 9pt;
+	font-size: 0.9rem;
 }
 
 caption
 {
 	
-}
-
-table.Advanced
-{
-	font-family: 'Segoe UI', sans-serif;
-	font-size: 9pt;
-	text-align: left;
-	vertical-align: top;
-	margin-bottom: 1.12em;
-	margin-top: 1.12em;
-	border-left-color: #aeffd7;
-	border-right-color: #aeffd7;
-	border-top-color: #aeffd7;
-	border-right-style: solid;
-	border-top-style: solid;
-	border-left-style: solid;
-	border-bottom-style: solid;
-	border-bottom-width: 2px;
-	border-left-width: 2px;
-	border-right-width: 2px;
-	border-top-width: 2px;
-	width: 100%;
-	border: solid 1px #66cdaa;
 }
 
 table
@@ -225,49 +296,14 @@ table
 	font-family: 'Segoe UI', SansSerif;
 }
 
-table.OptionalFeatureTable
+p.MediumHeading
 {
 	font-family: 'Segoe UI', sans-serif;
-	font-size: 9pt;
-	color: #191970;
-	background-color: #e0ffff;
-	border-bottom-color: #e0ffff;
-	border-left-color: #e0ffff;
-	border-right-color: #e0ffff;
-	border-top-color: #e0ffff;
-	border-top-style: solid;
-	border-right-style: solid;
-	border-bottom-style: solid;
-	border-left-style: solid;
-	border-left-width: 2px;
-	border-right-width: 2px;
-	border-top-width: 2px;
-	border-bottom-width: 2px;
-	margin-bottom: 1.12em;
-	margin-top: 1.12em;
-}
-
-table.Important
-{
-	font-family: 'Segoe UI', sans-serif;
-	font-size: 9pt;
-	border-bottom-color: #b0e0e6;
-	border-left-color: #b0e0e6;
-	border-right-color: #b0e0e6;
-	border-top-color: #b0e0e6;
-	border-top-style: solid;
-	border-right-style: solid;
-	border-left-style: solid;
-	border-bottom-style: solid;
-	border-bottom-width: 2px;
-	border-left-width: 2px;
-	border-right-width: 2px;
-	border-top-width: 2px;
-	margin-bottom: 1.12em;
-	margin-top: 1.12em;
-	width: 100%;
-	border: solid 1px #9bc4c9;
-	padding: 0px;
+	margin-bottom: 2px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 22px;
+	font-weight: bold;
 }
 
 MadCap|expandingHead:hover
@@ -275,111 +311,36 @@ MadCap|expandingHead:hover
 	text-decoration: underline;
 }
 
-td.note
+li.LinkInternalTopic
 {
-	background-repeat: no-repeat;
-	font-family: 'Segoe UI', sans-serif;
-	font-size: 9pt;
-	color: #314e63;
-	background-image: url('../../Images/NoteImage.png');
-	border-spacing: 0 px;
-	padding-right: 4px;
-	padding-top: 4px;
-	padding-bottom: 4px;
-	table-layout: fixed;
-	background-color: #e6edf2;
-	padding-left: 19px;
-	width: 34px;
-	white-space: nowrap;
+	list-style-image: url('../../Images/ArefDown.png');
+	margin-bottom: 4.5px;
+	margin-top: 4.5px;
 }
 
-td.tip
+p.ImageCaption
 {
-	background-repeat: no-repeat;
-	table-layout: auto;
-	font-family: 'Segoe UI', sans-serif;
-	font-size: 9pt;
-	background-image: url('../../Images/TipImage.png');
-	padding-bottom: 4px;
-	padding-right: 4px;
-	padding-top: 4px;
-	padding-left: 17px;
-	width: 28px;
-	color: #8b7701;
-	background-color: #ffffd1;
-}
-
-td.important
-{
-	font-family: 'Segoe UI', sans-serif;
-	font-size: 9pt;
-	background-image: url('../../Images/ImportantImage.png');
-	background-repeat: no-repeat;
-	padding-right: 4px;
-	padding-bottom: 4px;
-	padding: 4px;
-	padding-left: 18px;
-	width: 65px;
-	color: #3178ab;
-	background-color: #e0ffff;
-}
-
-table.Tip
-{
-	font-family: 'Segoe UI', sans-serif;
-	text-align: left;
-	vertical-align: top;
-	margin-bottom: 1.12em;
-	margin-top: 1.12em;
-	width: 100%;
-	font-size: 9pt;
-	border: solid 1px #ffd691;
-	border-spacing: 0px;
-	border-bottom-color: #ffdead;
-	border-left-color: #ffdead;
-	border-right-color: #ffdead;
-	border-top-color: #ffdead;
-}
-
-table.Note
-{
-	font-family: 'Segoe UI', sans-serif;
-	font-size: 9pt;
-	border-width: 100%;
-	width: 100%;
-	border-bottom-color: #b0e0e6;
-	border: solid 1px #bbc6ce;
-	display: table;
-	border-spacing: 0px;
-	border-collapse: collapse;
-	margin-left: 0px;
-	margin-bottom: 1.12em;
-	margin-top: 1.12em;
-}
-
-td.advanced
-{
-	background-color: #aeffd7;
-	background-image: url('../../Images/AdvancedImage.png');
-	color: #006400;
-	font-size: 9pt;
-	font-family: 'Segoe UI', sans-serif;
-	background-repeat: no-repeat;
-	padding: 4px;
-	padding-left: 18px;
-	width: 62px;
+	font-style: italic;
+	margin-bottom: 12px;
+	margin-top: 3px;
+	margin-left: 25px;
 }
 
 p.Related
 {
-	font-weight: bold;
 	font-style: normal;
 	color: #696969;
+	font-weight: normal;
 }
 
-td.SecondCell
+p.GeneralConcept
 {
-	padding: 4px;
+	font-style: italic;
+	margin: 0;
+	margin-bottom: 6px;
+	font-family: 'Segoe UI';
+	margin-top: 20px;
+	font-size: 1.10rem;
 }
 
 MadCap|xref
@@ -400,12 +361,12 @@ ol
 MadCap|relatedTopics
 {
 	color: #696969;
-	font-weight: bold;
 	mc-help-control-display: list;
 	mc-label: 'Related articles';
 	mc-image: none;
 	mc-image-position: none;
-	font-size: 12px;
+	font-weight: normal;
+	font-size: 0.9rem;
 }
 
 MadCap|relatedTopicsControlListItem
@@ -419,113 +380,68 @@ MadCap|relatedTopicsControlListItemLink
 	font-weight: normal;
 }
 
-div.WelcomePanels
+a
 {
-	border-radius: 3px;
-	border: solid 1px #000000;
-	padding: 4px;
-	width: 350px;
-	max-width: 350px;
-	text-align: center;
-	vertical-align: middle;
-	margin: 20px;
+	
 }
 
-div.WelcomePanels:hover
+MadCap|menuProxy
 {
-	border: solid 3px #000000;
+	float: right;
+	position: fixed;
 }
 
-div.WelcomePanelsContainer
+div.RowClassMenu	/*This is a custom responsive layout row style (div class) in your stylesheet. To provide your own description for this style: (1) Open the stylesheet; (2) Find and select the div class with this name; and (3) In the Comment field, replace this text with your own. For more information on adding comments to styles, see the online Help.*/
 {
-	max-width: 350px;
+	mc-grid-row: true;
+	margin-left: auto;
+	margin-right: auto;
 }
 
-.column_small
+div.RowClassMenu::before
 {
-	float: left;
-	width: 200px;
+	content: ' ';
+	display: table;
 }
 
-.row:after
+div.RowClassMenu::after
 {
-	content: "";
+	content: ' ';
 	display: table;
 	clear: both;
 }
 
+div.RowClassMenu > div
+{
+	float: left;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+div.RowClassMenu > div:nth-child(1)
+{
+	width: 75%;
+	margin-left: 0%;
+}
+
+div.RowClassMenu > div:nth-child(2)
+{
+	width: 25%;
+	margin-left: 0%;
+}
+
+h1.TOC3NoBreakBefore
+{
+	margin-top: 16px;
+}
+
+MadCap|bodyProxy
+{
+	max-width: 950px;
+}
+
 @media print
 {
-	table.Advanced
-	{
-		width: 100%;
-		border: solid 1px #000000;
-	}
-
-	table.ExampleTable
-	{
-		width: 100%;
-	}
-
-	table.Important
-	{
-		width: 100%;
-		border: solid 1px #000000;
-	}
-
-	table.Note
-	{
-		width: 100%;
-		border: solid 1px #000000;
-		margin-top: 0.20in;
-		margin-bottom: 0.20in;
-	}
-
-	td.advanced
-	{
-		padding-left: 4px;
-		color: #000000;
-		background-image: none;
-		background-color: #dcdcdc;
-		width: 1.2in;
-	}
-
-	td.important
-	{
-		padding-left: 4px;
-		background-image: none;
-		color: #000000;
-		background-color: #dcdcdc;
-		width: 1.0in;
-	}
-
-	td.note
-	{
-		padding-left: 4px;
-		color: #000000;
-		background-image: none;
-		background-color: #dcdcdc;
-		width: 0.75in;
-	}
-
-	td.note_star
-	{
-		padding-left: 4px;
-		background-image: none;
-		color: #000000;
-		background-color: #dcdcdc;
-		width: 0.75in;
-	}
-
-	td.tip
-	{
-		padding-left: 4px;
-		color: #000000;
-		background-image: none;
-		background-color: #dcdcdc;
-		width: 0.5in;
-	}
-
 	h2
 	{
 		font-size: 12pt;
@@ -577,22 +493,6 @@ div.WelcomePanelsContainer
 		white-space: pre-wrap;
 	}
 
-	h1.TOC1
-	{
-		mc-toc-depth: 1;
-		mc-heading-level: 1;
-		text-transform: none;
-		border-bottom-width: 0px;
-		color: #000000;
-		font-style: normal;
-		border-bottom: solid 0;
-		border-bottom-color: #ffffff;
-		text-decoration: none;
-		font-variant: normal;
-		text-align: left;
-		background-color: #ffffff;
-	}
-
 	h1.TOC2
 	{
 		mc-heading-level: 2;
@@ -631,6 +531,20 @@ div.WelcomePanelsContainer
 		border-bottom-width: 0px;
 		border-bottom-color: #ffffff;
 		border-bottom: solid 0px;
+		text-decoration: none;
+		font-variant: normal;
+	}
+
+	h1.TOC3NoBreakBefore
+	{
+		mc-heading-level: 3;
+		page-break-before: avoid;
+		mc-toc-depth: 3;
+		text-transform: none;
+		border-bottom: solid 0px;
+		border-bottom-color: #ffffff;
+		color: #000000;
+		font-style: normal;
 		text-decoration: none;
 		font-variant: normal;
 	}
@@ -728,11 +642,6 @@ div.WelcomePanelsContainer
 		font-size: 8pt;
 	}
 
-	p.PageBreak
-	{
-		page-break-after: always;
-	}
-
 	MadCap|indexProxy
 	{
 		border-top-style: none;
@@ -762,11 +671,6 @@ div.WelcomePanelsContainer
 	p.TOC3
 	{
 		
-	}
-
-	img.ProductVsPower
-	{
-		mc-thumbnail-max-height: auto;
 	}
 
 	p.ImageCaption
@@ -806,7 +710,7 @@ div.WelcomePanelsContainer
 {
 	h2
 	{
-		font-size: 12pt;
+		
 	}
 
 	MadCap|xref.PageRef
@@ -827,12 +731,6 @@ div.WelcomePanelsContainer
 	MadCap|xref:visited
 	{
 		color: #7f007f;
-	}
-
-	h1.WelcomeLogo_TOC1
-	{
-		padding-top: 2px;
-		margin-top: 5pt;
 	}
 
 	kbd
@@ -857,12 +755,12 @@ div.WelcomePanelsContainer
 
 	h1
 	{
-		font-size: 18pt;
+		
 	}
 
 	p
 	{
-		font-size: 9pt;
+		
 	}
 
 	h5
@@ -876,9 +774,20 @@ div.WelcomePanelsContainer
 	}
 }
 
+MadCap|xref.PageRef
+{
+	mc-format: ;
+	color: #0066cc;
+}
+
 a:visited
 {
 	
+}
+
+MadCap|xref.PageRef:visited
+{
+	color: #7f007f;
 }
 
 MadCap|xref:visited
@@ -911,10 +820,9 @@ p.Procedure
 	margin: 0;
 	margin-bottom: 12px;
 	margin-top: 20px;
-	font-weight: normal;
-	color: #d2691e;
-	font-size: 10pt;
 	font-family: 'Segoe UI';
+	font-size: 1.25 rem;
+	background-image: none;
 }
 
 tbody
@@ -922,24 +830,64 @@ tbody
 	font-family: 'Segoe UI', SansSerif;
 }
 
+span.SettingHighlightRed
+{
+	font-style: normal;
+	font-weight: normal;
+	color: #ff4500;
+}
+
+div.IndentSetting
+{
+	margin-top: 12px;
+	margin-bottom: 12px;
+	padding-left: 30px;
+}
+
+div.SettingBody
+{
+	padding-left: 12px;
+	margin-bottom: 12px;
+	border-left: solid 4px #f5f5f5;
+}
+
 p.SettingChoice
 {
-	color: #800000;
-	font-size: 9pt;
 	margin-top: 14px;
 	margin-bottom: 3px;
 	margin-left: 0px;
 	margin-right: 0px;
 	font-family: 'Segoe UI', sans-serif;
-	font-weight: 600;
+	font-weight: normal;
+	color: #800000;
 }
 
 div.Example
 {
 	background-color: #efefef;
 	padding: 4px;
-	margin-left: 12px;
 	border: solid 1px #b9b9b9;
+	margin-top: 6px;
+	margin-left: 0;
+}
+
+span.WarningBox
+{
+	background-color: #ffff00;
+	border: solid 1px #000000;
+}
+
+li.ReportIconList
+{
+	margin-bottom: 4.5px;
+	margin-top: 4.5px;
+	list-style-image: url('../../Images/IconReport.PNG');
+	list-style-position: inside;
+}
+
+p.Formula
+{
+	color: #556b2f;
 }
 
 kbd
@@ -952,7 +900,17 @@ kbd
 	box-shadow: 1px 1px 1px;
 	border-radius: 3px;
 	border: solid 1px #a9a9a9;
-	font-size: 8pt;
+	font-size: 0.9rem;
+}
+
+code
+{
+	background-color: #e4e6e8;
+	border-radius: 3px;
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-top: 1px;
+	padding-bottom: 0px;
 }
 
 span
@@ -960,14 +918,36 @@ span
 	height: 24px;
 }
 
+p.ErrorWarningText
+{
+	font-family: Consolas, sans-serif;
+	padding-bottom: 2px;
+	padding-top: 12px;
+	font-weight: bold;
+}
+
+div.OutputCode
+{
+	margin-left: 18px;
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+
+div.ExampleNoIndent
+{
+	background-color: #efefef;
+	padding: 4px;
+	border: solid 1px #b9b9b9;
+}
+
 div.TopicFooter
 {
 	border-top-color: #808080;
-	padding-top: 6px;
 	padding-bottom: 6px;
-	margin-top: 8px;
 	margin-bottom: 8px;
 	border-top: dotted 1px #a9a9a9;
+	margin-top: 24px;
+	padding-top: 16px;
 }
 
 div.Tip
@@ -1017,35 +997,87 @@ div.TopicNav
 	border-top: dotted 1px #a9a9a9;
 }
 
-h2
+p.ImageHolder
 {
-	font-size: 12pt;
+	margin-bottom: 2px;
+	margin-top: 6px;
+	margin-left: 24px;
 }
 
-MadCap|xref.PageRef
+div.Footer
 {
-	color: #0000ff;
+	/*position: fixed;*/
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	background-color: #EAEAEA;
+	padding: 3px;
 }
 
-MadCap|xref.PageRef:visited
+span.Hash
 {
-	color: #7f007f;
+	color: #b22222;
+	background-color: #fbf3f4;
+	font-family: 'Lucida Console';
 }
 
-MadCap|xref.PageRef:hover
+p.Example
 {
-	color: #FFD800;
+	font-style: italic;
+	color: #696969;
+	padding-top: 4px;
+	padding-bottom: 6px;
 }
 
-MadCap|xref:visited
+h2.Procedure
 {
-	color: #7f007f;
+	
 }
 
-h1.WelcomeLogo_TOC1
+span.DataLabel
 {
-	padding-top: 2px;
-	margin-top: 5pt;
+	color: #808080;
+}
+
+p.GroupCentered
+{
+	color: #808080;
+	text-align: center;
+	text-transform: uppercase;
+	margin-top: 16px;
+	margin-bottom: 16px;
+	font-weight: normal;
+	font-size: 1.15rem;
+}
+
+div.SettingBody
+{
+	padding-left: 14px;
+}
+
+h5
+{
+	font-size: 10pt;
+}
+
+p
+{
+	
+}
+
+h1
+{
+	
+}
+
+p.SettingHeader
+{
+	font-family: 'Segoe UI';
+}
+
+a
+{
+	color: #0066cc;
 }
 
 kbd
@@ -1058,33 +1090,88 @@ kbd
 	font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-a
+MadCap|xref:visited
 {
-	color: #0066cc;
+	color: #7f007f;
 }
 
-p.SettingHeader
+MadCap|xref.PageRef:hover
+{
+	color: #FFD800;
+}
+
+MadCap|xref.PageRef:visited
+{
+	color: #7f007f;
+}
+
+MadCap|xref.PageRef
+{
+	color: #0000ff;
+}
+
+h2
+{
+	
+}
+
+@media only screen and (max-width: 900px)
+{
+	div.RowClassMenu > div:nth-child(1)
+	{
+		width: 66.66667%;
+		margin-left: 0%;
+	}
+
+	div.RowClassMenu > div:nth-child(2)
+	{
+		width: 33.33333%;
+		margin-left: 0%;
+	}
+}
+
+@media only screen and (max-width: 400px)
+{
+	div.RowClassMenu > div:nth-child(1)
+	{
+		width: 100%;
+		margin-left: 0%;
+	}
+
+	div.RowClassMenu > div:nth-child(2)
+	{
+		width: 100%;
+		margin-left: 0%;
+	}
+}
+
+p.Path
+{
+	font-family: monospace;
+}
+
+span.Path
+{
+	font-family: monospace;
+}
+
+p.PseudoH1
 {
 	font-family: 'Segoe UI';
+	padding: 2px;
+	padding-left: 0px;
+	padding-right: 0px;
+	z: ;
+	font-weight: normal;
+	margin-bottom: 6px;
+	margin-top: 8px;
+	font-size: 1.7rem;
 }
 
-h1
+td.Welcome-table
 {
-	font-size: 18pt;
-}
-
-p
-{
-	font-size: 9pt;
-}
-
-h5
-{
-	font-size: 10pt;
-}
-
-div.SettingBody
-{
-	padding-left: 14px;
+	font-family: 'Segoe UI', sans-serif;
+	font-size: 0.9rem;
+	vertical-align: middle;
 }
 

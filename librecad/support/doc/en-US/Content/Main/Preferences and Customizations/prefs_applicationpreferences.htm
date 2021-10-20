@@ -45,141 +45,178 @@
             <div role="main" id="mc-main-content">
                 <h1 class="TOC4"><a name="kanchor11"></a>Application Preferences</h1>
                 <p>You can control the graphical appearance of LibreCAD for ProNest, set file paths for fonts, part libraries, and so forth, and set other defaults for LibreCAD for ProNest in Application Preferences (<b>Options</b> &gt;&#160;<b>Application Preferences</b>).</p>
-                <h2>Appearance</h2>
+                <p class="SettingHeader">Appearance</p>
                 <p>Modify the visual look of LibreCAD, including snap indicators, grid spacing, and colors used throughout the application.</p>
-                <p>
+                <p class="ImageHolder">
                     <img src="../../Images/trans_appprefs_appearance.png" />
                 </p>
-                <p>&#160;</p>
-                <h3 style="font-weight: bold;">Snap indicator lines</h3>
-                <p style="font-weight: normal;">Display lines shown for alignment purposes when using a tool.</p>
-                <table style="mc-table-style: url('../../Resources/TableStyles/Basic.css');border-left-style: solid;border-left-width: 1px;border-left-color: #808080;border-right-style: solid;border-right-width: 1px;border-right-color: #808080;border-top-style: solid;border-top-width: 1px;border-top-color: #808080;border-bottom-style: solid;border-bottom-width: 1px;border-bottom-color: #808080;margin-left: 0;margin-right: auto;" class="TableStyle-Basic" cellspacing="0">
-                    <col class="Column-Column1" />
-                    <col class="Column-Column1" />
-                    <tbody>
-                        <tr class="Body-Body1">
-                            <td class="BodyE-Column1-Body1">
-                                <p class="SettingChoice">Crosshair</p>
-                                <p>
-                                    <img src="../../Images/snaplines_crosshair.png" />
-                                </p>
-                            </td>
-                            <td class="BodyD-Column1-Body1">
-                                <p class="SettingChoice">Crosshair 2</p>
-                                <p>
-                                    <img src="../../Images/snaplines_crosshair2.png" />
-                                </p>
-                            </td>
-                        </tr>
-                        <tr class="Body-Body1">
-                            <td class="BodyB-Column1-Body1">
-                                <p class="SettingChoice">Isometric</p>
-                                <img src="../../Images/snaplines_isometric.png" />
-                            </td>
-                            <td class="BodyA-Column1-Body1">
-                                <p class="SettingChoice">Spiderweb</p>
-                                <p>The angle of the lines adjust dynamically based on the position of the cursor.</p>
-                                <p>
-                                    <img src="../../Images/snaplines_spiderweb.png" />
-                                </p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <h3 style="font-weight: bold;">Snap indicator shape</h3>
-                <p style="font-weight: normal;">Display shape of the cursor when using a tool.</p>
-                <p class="SettingChoice">Circle</p>
-                <p>
-                    <img src="../../Images/snapindicator_circle.png" />
-                </p>
-                <p class="SettingChoice">Square</p>
-                <p>
-                    <img src="../../Images/snapindicator_square.png" />
-                </p>
-                <p class="SettingChoice">Point</p>
-                <p>
-                    <img src="../../Images/snapindicator_point.png" />
-                </p>
-                <h3>Anti-aliasing</h3>
-                <p>When enabled, this option causes jagged lines to appear smoother.</p>
-                <h3><a name="kanchor12"></a>Automatically scale grid</h3>
-                <p>When checked, this option will automatically space the grid, or adjust the scale of the Grid Status, as you zoom in or out of the drawing.</p>
-                <p>&#160;</p>
-                <p>When unchecked, this option will not automatically scale the grid as adjust the zoom in the drawing. This option should remain unchecked if you want a constant grid scale, such as 1/10. If this option is unchecked, confirm that you are using the correct grid scale that is set in <a href="prefs_drawingpreferences.htm">Current Drawing Preferences</a> on the Grid tab.</p>
-                <h3><a name="Graphics"></a>Graphics Colors</h3>
-                <p>Enter the hexadecimal value or the color name, or pick a custom color from the color picker ( <img src="../../Images/customcolor.png" /> ) for the color you want to use for each available option in this section.</p>
-                <h2>Paths</h2>
+                <p class="SettingNameNoToggle">Snap indicator lines</p>
+                <div class="SettingBody">
+                    <p style="font-weight: normal;">Display lines shown for alignment purposes when using a tool.</p>
+                    <table style="mc-table-style: url('../../Resources/TableStyles/Basic.css');border-left-style: solid;border-left-width: 1px;border-left-color: #808080;border-right-style: solid;border-right-width: 1px;border-right-color: #808080;border-top-style: solid;border-top-width: 1px;border-top-color: #808080;border-bottom-style: solid;border-bottom-width: 1px;border-bottom-color: #808080;margin-left: 0;margin-right: auto;" class="TableStyle-Basic" cellspacing="0">
+                        <col class="Column-Column1" />
+                        <col class="Column-Column1" />
+                        <tbody>
+                            <tr class="Body-Body1">
+                                <td class="BodyE-Column1-Body1">
+                                    <p class="SettingChoice">Crosshair</p>
+                                    <p>
+                                        <img src="../../Images/snaplines_crosshair.png" />
+                                    </p>
+                                </td>
+                                <td class="BodyD-Column1-Body1">
+                                    <p class="SettingChoice">Crosshair 2</p>
+                                    <p>
+                                        <img src="../../Images/snaplines_crosshair2.png" />
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr class="Body-Body1">
+                                <td class="BodyB-Column1-Body1">
+                                    <p class="SettingChoice">Isometric</p>
+                                    <img src="../../Images/snaplines_isometric.png" />
+                                </td>
+                                <td class="BodyA-Column1-Body1">
+                                    <p class="SettingChoice">Spiderweb</p>
+                                    <p>The angle of the lines adjust dynamically based on the position of the cursor.</p>
+                                    <p>
+                                        <img src="../../Images/snaplines_spiderweb.png" />
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="SettingNameNoToggle">Snap indicator shape</p>
+                <div class="SettingBody">
+                    <p style="font-weight: normal;">Display shape of the cursor when using a tool.</p>
+                    <p class="SettingChoice">Circle</p>
+                    <p>
+                        <img src="../../Images/snapindicator_circle.png" />
+                    </p>
+                    <p class="SettingChoice">Square</p>
+                    <p>
+                        <img src="../../Images/snapindicator_square.png" />
+                    </p>
+                    <p class="SettingChoice">Point</p>
+                    <p>
+                        <img src="../../Images/snapindicator_point.png" />
+                    </p>
+                </div>
+                <p class="SettingNameNoToggle">Anti-aliasing</p>
+                <div class="SettingBody">
+                    <p>When enabled, this option causes jagged lines to appear smoother.</p>
+                </div>
+                <p class="SettingNameNoToggle"><a name="kanchor12"></a>Automatically scale grid</p>
+                <div class="SettingBody">
+                    <p>When checked, this option will automatically space the grid, or adjust the scale of the Grid Status, as you zoom in or out of the drawing.</p>
+                    <p>When unchecked, this option will not automatically scale the grid as adjust the zoom in the drawing. This option should remain unchecked if you want a constant grid scale, such as 1/10. If this option is unchecked, confirm that you are using the correct grid scale that is set in <a href="prefs_drawingpreferences.htm">Current Drawing Preferences</a> on the Grid tab.</p>
+                </div>
+                <p class="SettingNameNoToggle"><a name="Graphics"></a>Graphics Colors</p>
+                <div class="SettingBody">
+                    <p>Enter the hexadecimal value or the color name, or pick a custom color from the color picker ( <img src="../../Images/customcolor.png" /> ) for the color you want to use for each available option in this section.</p>
+                </div>
+                <p class="SettingHeader">Paths</p>
                 <p>Set file paths for Translations, Hatch Patterns, Fonts, Part Libraries, the drawing Template, and a Variable File. These paths do not override any defaults in the software but are used as supplements.</p>
-                <p>
+                <p class="ImageHolder">
                     <img src="../../Images/trans_prefs_app_paths.png" />
                 </p>
-                <h3>Translations</h3>
-                <p>Use only if you have a QM translation file, which handles translations from English to other languages.</p>
-                <h3>Hatch Patterns</h3>
-                <p>Use only if you have hatch pattern files stored on your computer. When blank, the default LibreCAD <a href="../Appendices/append_hatch.htm">hatch patterns</a> are still available for use.</p>
-                <h3>Fonts</h3>
-                <p>Specify the unique folder you are using to save <a href="../User Guides/guide_convertFonts.htm#Microsof">imported AutoCAD or Microsoft fonts</a>.</p>
-                <h3>Part Libraries</h3>
-                <p>Specify the folder that stores another folder containing DXF file drawings that you want available in the <a href="../User Guides/guide_library.htm">Library Browser</a>. These DXF files can be inserted into another drawing as a block.</p>
-                <h3>Template</h3>
-                <p>The file that LibreCAD uses as a template for new drawings.</p>
-                <h3>Variable File</h3>
-                <p>A <a href="../User Guides/guide_command_multi.htm#Multi-Co">variable text file</a> that can be loaded from the Command Line when a new drawing is created.</p>
-                <h2>Defaults</h2>
+                <p class="SettingNameNoToggle">Translations</p>
+                <div class="SettingBody">
+                    <p>Use only if you have a QM translation file, which handles translations from English to other languages.</p>
+                </div>
+                <p class="SettingNameNoToggle">Hatch Patterns</p>
+                <div class="SettingBody">
+                    <p>Use only if you have hatch pattern files stored on your computer. When blank, the default LibreCAD <a href="../Appendices/append_hatch.htm">hatch patterns</a> are still available for use.</p>
+                </div>
+                <p class="SettingNameNoToggle">Fonts</p>
+                <div class="SettingBody">
+                    <p>Specify the unique folder you are using to save <a href="../User Guides/guide_convertFonts.htm#Microsof">imported AutoCAD or Microsoft fonts</a>.</p>
+                </div>
+                <p class="SettingNameNoToggle">Part Libraries</p>
+                <div class="SettingBody">
+                    <p>Specify the folder that stores another folder containing DXF file drawings that you want available in the <a href="../User Guides/guide_library.htm">Library Browser</a>. These DXF files can be inserted into another drawing as a block.</p>
+                </div>
+                <p class="SettingNameNoToggle">Template</p>
+                <div class="SettingBody">
+                    <p>The file that LibreCAD uses as a template for new drawings.</p>
+                </div>
+                <p class="SettingNameNoToggle">Variable File</p>
+                <div class="SettingBody">
+                    <p>A <a href="../User Guides/guide_command_multi.htm#Multi-Co">variable text file</a> that can be loaded from the Command Line when a new drawing is created.</p>
+                </div>
+                <p class="SettingHeader">Defaults</p>
                 <p>Configure defaults for your drawings, including units, auto-save operations, and so forth.</p>
-                <p>
+                <p class="ImageHolder">
                     <img src="../../Images/trans_prefs_app_defaults.png" />
                 </p>
-                <h3>Defaults for new drawings</h3>
-                <p><b>Units</b>
-                </p>
-                <p>Choose units from the dropdown menu.</p>
-                <h3><a name="Program"></a>Program Defaults</h3>
-                <p style="font-weight: normal;"><b>Auto backup</b>
-                </p>
-                <p style="font-weight: normal;">When enabled, LibreCAD will automatically create a backup file that updates based on your <b>Auto save time</b>.</p>
-                <p style="font-weight: normal;">&#160;</p>
-                <p><b>Don't use native OS file open dialog</b>
-                </p>
-                <p>When enabled, the dialog window that appears when opening a file will have the same look and feel as the LibreCAD application, instead of using the look and feel from the operating system your PC uses.</p>
-                <p>&#160;</p>
-                <p style="font-weight: bold;">Invert . . . direction</p>
-                <p style="font-weight: normal;">When any option is checked, the direction of horizontal scrolling, vertical scrolling, and zoom will be inverted.</p>
-                <h3><a name="Keyboard"></a>Keyboard Settings</h3>
-                <p style="font-weight: bold;">Evaluate commands when SPACE BAR is pressed</p>
-                <p style="font-weight: normal;">When enabled, the Space Bar can be used to submit commands in the Command Line.</p>
-                <p style="font-weight: normal;">&#160;</p>
-                <p style="font-weight: bold;">Toggle free snap mode when SPACE BAR is pressed</p>
-                <p style="font-weight: normal;">When enabled, the Space Bar can be used to toggle the free snap mode on/off.</p>
-                <h3>Clear Settings</h3>
-                <p style="font-weight: bold;">Layout</p>
-                <p style="font-weight: normal;">When selected, all modifications made to the layout of the application will be cleared, and the layout will return to the original state.</p>
-                <p style="font-weight: normal;">&#160;</p>
-                <p style="font-weight: bold;">All</p>
-                <p style="font-weight: normal;">When selected, all modifications made to the application, including layout, will be cleared, and the application will return to the original install state.</p>
-                <h3>Startup</h3>
-                <p style="font-weight: bold;">Display loading screen</p>
-                <p style="font-weight: normal;">When enabled, you will see the LibreCAD for ProNest splash screen appear on startup.</p>
-                <p style="font-weight: normal;">&#160;</p>
-                <p style="font-weight: bold;">Start in tab mode</p>
-                <p style="font-weight: normal;">When enabled, the application will start up in tab mode rather than window mode. </p>
-                <p>&#160;</p>
-                <p style="font-weight: bold;">Start with main window maximized</p>
-                <p style="font-weight: normal;">When enabled, the application will be maximized when opened.</p>
-                <p style="font-weight: normal;">&#160;</p>
-                <p style="font-weight: bold;">Enable CAD dockwidgets</p>
-                <p style="font-weight: normal;">When enabled, <a href="../Toolbars and Widgets/tw_dockwidgets.htm">dockwidgets</a> can be used.</p>
-                <p style="font-weight: normal;">&#160;</p>
-                <p style="font-weight: bold;">Enable CAD toolbars</p>
-                <p style="font-weight: normal;">When enabled, <a href="../Toolbars and Widgets/tw_general.htm">toolbars</a> can be used.</p>
-                <h3>CAD Preferences</h3>
-                <p style="font-weight: bold;">Modify layer of selected entities, at layer activation</p>
-                <p style="font-weight: normal;">When enabled, any entities that are currently selected in a drawing will move to the next layer that is selected.</p>
-                <p style="font-weight: normal;">&#160;</p>
-                <p style="font-weight: normal;">For example, if I&#160;have an entity on Layer 0, click the entity, and then click Layer SCRIBE, the entity I&#160;have selected will move to the SCRIBE layer.</p>
-                <p style="font-weight: normal;">&#160;</p>
-                <p style="font-weight: bold;">Automatically zoom drawing when opening</p>
-                <p style="font-weight: normal;">When enabled, the application will automatically zoom to the extents of a drawing then when a drawing is opened.</p>
+                <p class="SettingHeader">Defaults for new drawings</p>
+                <p class="SettingNameNoToggle">Units</p>
+                <div class="SettingBody">
+                    <p>Choose units from the dropdown menu.</p>
+                </div>
+                <p class="SettingHeader"><a name="Program"></a>Program Defaults</p>
+                <p class="SettingNameNoToggle">Auto backup</p>
+                <div class="SettingBody">
+                    <p style="font-weight: normal;">When enabled, LibreCAD will automatically create a backup file that updates based on your <b>Auto save time</b>.</p>
+                </div>
+                <p class="SettingNameNoToggle">Don't use native OS file open dialog</p>
+                <div class="SettingBody">
+                    <p>When enabled, the dialog window that appears when opening a file will have the same look and feel as the LibreCAD application, instead of using the look and feel from the operating system your PC uses.</p>
+                </div>
+                <p class="SettingNameNoToggle">Invert . . . direction</p>
+                <div class="SettingBody">
+                    <p style="font-weight: normal;">When any option is checked, the direction of horizontal scrolling, vertical scrolling, and zoom will be inverted.</p>
+                </div>
+                <p class="SettingHeader"><a name="Keyboard"></a>Keyboard Settings</p>
+                <p class="SettingNameNoToggle">Evaluate commands when SPACE BAR is pressed</p>
+                <div class="SettingBody">
+                    <p style="font-weight: normal;">When enabled, the Space Bar can be used to submit commands in the Command Line.</p>
+                </div>
+                <p class="SettingNameNoToggle">Toggle free snap mode when SPACE BAR is pressed</p>
+                <div class="SettingBody">
+                    <p style="font-weight: normal;">When enabled, the Space Bar can be used to toggle the free snap mode on/off.</p>
+                </div>
+                <p class="SettingHeader">Clear Settings</p>
+                <p class="SettingNameNoToggle">Layout</p>
+                <div class="SettingBody">
+                    <p style="font-weight: normal;">When selected, all modifications made to the layout of the application will be cleared, and the layout will return to the original state.</p>
+                </div>
+                <p class="SettingNameNoToggle">All</p>
+                <div class="SettingBody">
+                    <p style="font-weight: normal;">When selected, all modifications made to the application, including layout, will be cleared, and the application will return to the original install state.</p>
+                </div>
+                <p class="SettingHeader">Startup</p>
+                <p class="SettingNameNoToggle">Display loading screen</p>
+                <div class="SettingBody">
+                    <p style="font-weight: normal;">When enabled, you will see the LibreCAD for ProNest splash screen appear on startup.</p>
+                </div>
+                <p class="SettingNameNoToggle">Start in tab mode</p>
+                <div class="SettingBody">
+                    <p style="font-weight: normal;">When enabled, the application will start up in tab mode rather than window mode. </p>
+                </div>
+                <p class="SettingNameNoToggle">Start with main window maximized</p>
+                <div class="SettingBody">
+                    <p style="font-weight: normal;">When enabled, the application will be maximized when opened.</p>
+                </div>
+                <p class="SettingNameNoToggle">Enable CAD dockwidgets</p>
+                <div class="SettingBody">
+                    <p style="font-weight: normal;">When enabled, <a href="../Toolbars and Widgets/tw_dockwidgets.htm">dockwidgets</a> can be used.</p>
+                </div>
+                <p class="SettingNameNoToggle">Enable CAD toolbars</p>
+                <div class="SettingBody">
+                    <p style="font-weight: normal;">When enabled, <a href="../Toolbars and Widgets/tw_general.htm">toolbars</a> can be used.</p>
+                </div>
+                <p class="SettingHeader">CAD Preferences</p>
+                <p class="SettingNameNoToggle">Modify layer of selected entities, at layer activation</p>
+                <div class="SettingBody">
+                    <p style="font-weight: normal;">When enabled, any entities that are currently selected in a drawing will move to the next layer that is selected.</p>
+                    <p style="font-weight: normal;">For example, if I&#160;have an entity on Layer 0, click the entity, and then click Layer SCRIBE, the entity I&#160;have selected will move to the SCRIBE layer.</p>
+                </div>
+                <p class="SettingNameNoToggle">Automatically zoom drawing when opening</p>
+                <div class="SettingBody">
+                    <p style="font-weight: normal;">When enabled, the application will automatically zoom to the extents of a drawing then when a drawing is opened.</p>
+                </div>
                 <div class="TopicFooter">
                     <div class="MCHelpControl MCHelpControl-Related relatedTopics"><span class="MCHelpControl-RelatedHotSpot_">Related articles</span>
                         <ul class="MCHelpControlList MCRelatedTopicsControlList">

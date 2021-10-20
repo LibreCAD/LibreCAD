@@ -562,8 +562,8 @@
 .micro-response .relatedTopics
 {
 	color: #696969;
-	font-weight: bold;
-	font-size: 12px;
+	font-weight: normal;
+	font-size: 0.9rem;
 }
 
 .micro-response .mcReset

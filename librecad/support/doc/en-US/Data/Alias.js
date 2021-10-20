@@ -48,5 +48,6 @@ xmlAliasData += '    <Map Name=\"topic_tool_select\" Link=\"Main/Tools/tool_sele
 xmlAliasData += '    <Map Name=\"topic_prefs_applicationpreferences\" Link=\"Main/Preferences and Customizations/prefs_applicationpreferences.htm\" ResolvedId=\"1012\" />';
 xmlAliasData += '    <Map Name=\"topic_guide_convertFonts\" Link=\"Main/User Guides/guide_convertFonts.htm\" ResolvedId=\"1013\" />';
 xmlAliasData += '    <Map Name=\"topic_intro_exportProNest\" Link=\"Main/Getting Started/intro_exportProNest.htm\" ResolvedId=\"1014\" />';
+xmlAliasData += '    <Map Name=\"topic_videos_container\" Link=\"Main/Videos/videos_container.htm\" ResolvedId=\"1015\" />';
 xmlAliasData += '</CatapultAliasFile>';
 MadCap.Utilities.Xhr._FilePathToXmlStringMap.Add('Alias', xmlAliasData);

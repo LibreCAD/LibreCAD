@@ -43,29 +43,28 @@
         <div>
             <div role="main" id="mc-main-content">
                 <h1 class="TOC4"><a name="kanchor14"></a>Importing Microsoft and AutoCAD fonts to LibreCAD fonts</h1>
-                <h2>Fonts</h2>
                 <p>Many font options are available in LibreCAD, including ProNest fonts. In general, ProNest fonts are already imported in LibreCAD, but you can also import TrueType Fonts (.ttf). To use <a href="#Microsof">Microsoft® fonts</a> (including TTF) or <a href="#AutoCAD">AutoCAD® fonts</a>, you'll need to follow steps below to first convert those fonts into a readable format for LibreCAD.</p>
                 <div class="Note">
                     <p>If you are opening AutoCAD .dwg drawings that use AutoCAD fonts, you'll need to convert the font to ensure it comes into LibreCAD properly. The font conversion process will convert all AutoCAD fonts and only needs to be done once.</p>
                 </div>
-                <h3>Importing fonts</h3>
-                <h5>ProNest fonts</h5>
+                <h2>Importing fonts</h2>
+                <h3>ProNest fonts</h3>
                 <p>LibreCAD includes ProNest fonts in the font list. These are the same fonts listed on the ProNest CAD Font Preferences page, such as the no lift font. </p>
                 <ul>
                     <li>To use ProNest fonts, simply locate the font from the Font dropdown menu in the Text and MText dialog.</li>
                 </ul>
-                <h5><a name="Microsof"></a>Microsoft fonts</h5>
+                <h3><a name="Microsof"></a>Microsoft fonts</h3>
                 <p>Use default fonts from Microsoft, or any other TTF or OTF font file, and customize letter, word, and line spacing for these fonts using the Convert Font dialog from the Text or MText dialog.</p>
                 <p>LibreCAD will look for fonts in the default Microsoft font folder on your PC:&#160;<span class="CodeSnippet">C:/Windows/Fonts</span>.</p>
-                <p class="Procedure">Importing Microsoft fonts</p>
+                <h2 class="Procedure">Importing Microsoft fonts</h2>
                 <ol>
                     <li value="1">Click either <b>Text</b> or <b>MText</b>.</li>
                     <li value="2">Click <b>Convert Text</b> (<img src="../../Images/add_font.svg" />) in the upper right-hand corner.</li>
-                    <p>
+                    <p class="ImageHolder">
                         <img src="../../Images/trans_openConvertTextDialog.png" />
                     </p>
                     <li value="3">Select a font you want to convert from the <b>Font Family</b> dropdown menu. Adjust Letter spacing, Word spacing, and Line Spacing, if needed.</li>
-                    <p>
+                    <p class="ImageHolder">
                         <img src="../../Images/trans_ConvertFontDialog.png" />
                     </p>
                     <li value="4">Click <b>OK</b>.</li>
@@ -76,7 +75,7 @@
                 </div>
                 <h5><a name="AutoCAD"></a>AutoCAD fonts</h5>
                 <p>LibreCAD for ProNest supports AutoCAD fonts (.shx). If your AutoCAD fonts are stored in the default font folder for AutoCAD &lt;<span class="CodeSnippet">C:\Program Files\AutoDesk\AutoCAD 2019\Fonts</span>&gt;, no action is needed (note that this file path is for AutoCAD 2019 and may differ slightly depending on your version of AutoCAD). </p>
-                <p class="Procedure">Importing AutoCAD fonts manually</p>
+                <h2 class="Procedure">Importing AutoCAD fonts manually</h2>
                 <p>If you have AutoCAD (.shx) fonts stored outside of this location, the following needs to be done only once:</p>
                 <ol>
                     <li value="1">Open a file explorer on your PC.</li>
