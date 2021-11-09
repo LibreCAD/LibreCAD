@@ -311,6 +311,8 @@ protected:
 
 private:
 
+    bool windowIsInBlockMode = false;
+
     QMenu* createPopupMenu() override;
 
     QString format_filename_caption(const QString &qstring_in);
