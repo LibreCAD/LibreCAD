@@ -85,20 +85,29 @@ void dwgRSCodec::decode251I(unsigned char *in, unsigned char *out, duint32 blk){
     }
 }
 
+duint8 *dwgCompressor::compressedBuffer {nullptr};
+duint32 dwgCompressor::compressedSize {0};
+duint32 dwgCompressor::compressedPos {0};
+bool    dwgCompressor::compressedGood {true};
+duint8 *dwgCompressor::decompBuffer {nullptr};
+duint32 dwgCompressor::decompSize {0};
+duint32 dwgCompressor::decompPos {0};
+bool    dwgCompressor::decompGood {true};
+
 duint32 dwgCompressor::twoByteOffset(duint32 *ll){
     duint32 cont = 0;
-    duint8 fb = bufC[pos++];
-    cont = (fb >> 2) | (bufC[pos++] << 6);
+    duint8 fb = compressedByte();
+    cont = (fb >> 2) | (compressedByte() << 6);
     *ll = (fb & 0x03);
     return cont;
 }
 
 duint32 dwgCompressor::longCompressionOffset(){
     duint32 cont = 0;
-    duint8 ll = bufC[pos++];
-    while (ll == 0x00){
+    duint8 ll = compressedByte();
+    while (ll == 0x00 && compressedGood) {
         cont += 0xFF;
-        ll = bufC[pos++];
+        ll = compressedByte();
     }
     cont += ll;
     return cont;
@@ -107,60 +116,58 @@ duint32 dwgCompressor::longCompressionOffset(){
 duint32 dwgCompressor::long20CompressionOffset(){
 //    duint32 cont = 0;
     duint32 cont = 0x0F;
-    duint8 ll = bufC[pos++];
-    while (ll == 0x00){
+    duint8 ll = compressedByte();
+    while (ll == 0x00 && compressedGood){
 //        cont += 0xFF;
-        ll = bufC[pos++];
+        ll = compressedByte();
     }
     cont += ll;
     return cont;
 }
 
 duint32 dwgCompressor::litLength18(){
-    duint32 cont=0;
-    duint8 ll = bufC[pos++];
+    duint32 cont = 0;
+    duint8 ll = compressedByte();
     //no literal length, this byte is next opCode
     if (ll > 0x0F) {
-        pos--;
+        --compressedPos;
         return 0;
     }
 
     if (ll == 0x00) {
         cont = 0x0F;
-        ll = bufC[pos++];
-        while (ll == 0x00){//repeat until ll != 0x00
-            cont +=0xFF;
-            ll = bufC[pos++];
+        ll = compressedByte();
+        while (ll == 0x00 && compressedGood) {//repeat until ll != 0x00
+            cont += 0xFF;
+            ll = compressedByte();
         }
     }
-    cont +=ll;
-    cont +=3; //already sum 3
-    return cont;
+
+    return cont + ll + 3;
 }
 
-void dwgCompressor::decompress18(duint8 *cbuf, duint8 *dbuf, duint32 csize, duint32 dsize){
-    bufC = cbuf;
-    bufD = dbuf;
-    sizeC = csize -2;
-    sizeD = dsize;
+bool dwgCompressor::decompress18(duint8 *cbuf, duint8 *dbuf, duint64 csize, duint64 dsize){
+    compressedBuffer = cbuf;
+    decompBuffer = dbuf;
+    compressedSize = csize;
+    decompSize = dsize;
+    compressedPos = 0;
+    decompPos = 0;
+
     DRW_DBG("dwgCompressor::decompress, last 2 bytes: ");
-    DRW_DBGH(bufC[sizeC]);DRW_DBGH(bufC[sizeC+1]);DRW_DBG("\n");
-    sizeC = csize;
+    DRW_DBGH(compressedBuffer[compressedSize - 2]);DRW_DBG(" ");DRW_DBGH(compressedBuffer[compressedSize - 1]);DRW_DBG("\n");
 
-    duint32 compBytes;
-    duint32 compOffset;
-    duint32 litCount;
+    duint32 compBytes {0};
+    duint32 compOffset {0};
+    duint32 litCount {litLength18()};
 
-    pos=0; //current position in compresed buffer
-    rpos=0; //current position in resulting decompresed buffer
-    litCount = litLength18();
-    //copy first lileral lenght
-    for (duint32 i=0; i < litCount; ++i) {
-        bufD[rpos++] = bufC[pos++];
+    //copy first literal length
+    for (duint32 i = 0; i < litCount && buffersGood(); ++i) {
+        decompSet( compressedByte());
     }
 
-    while (pos < csize && (rpos < dsize+1)){//rpos < dsize to prevent crash more robust are needed
-        duint8 oc = bufC[pos++]; //next opcode
+    while (buffersGood()) {
+        duint8 oc = compressedByte(); //next opcode
         if (oc == 0x10){
             compBytes = longCompressionOffset()+ 9;
             compOffset = twoByteOffset(&litCount) + 0x3FFF;
@@ -183,43 +190,112 @@ void dwgCompressor::decompress18(duint8 *cbuf, duint8 *dbuf, duint32 csize, duin
                 litCount= litLength18();
         } else if ( oc > 0x3F){
             compBytes = ((oc & 0xF0) >> 4) - 1;
-            duint8 ll2 = bufC[pos++];
+            duint8 ll2 = compressedByte();
             compOffset =  (ll2 << 2) | ((oc & 0x0C) >> 2);
             litCount = oc & 0x03;
             if (litCount < 1){
                 litCount= litLength18();}
         } else if (oc == 0x11){
             DRW_DBG("dwgCompressor::decompress, end of input stream, Cpos: ");
-            DRW_DBG(pos);DRW_DBG(", Dpos: ");DRW_DBG(rpos);DRW_DBG("\n");
-            return; //end of input stream
+            DRW_DBG(compressedPos);DRW_DBG(", Dpos: ");DRW_DBG(decompPos);DRW_DBG("\n");
+            return true; //end of input stream
         } else { //ll < 0x10
-            DRW_DBG("WARNING dwgCompressor::decompress, failed, illegal char, Cpos: ");
-            DRW_DBG(pos);DRW_DBG(", Dpos: ");DRW_DBG(rpos);DRW_DBG("\n");
-            return; //fails, not valid
+            DRW_DBG("WARNING dwgCompressor::decompress, failed, illegal char: "); DRW_DBGH(oc);
+            DRW_DBG(", Cpos: "); DRW_DBG(compressedPos);
+            DRW_DBG(", Dpos: "); DRW_DBG(decompPos); DRW_DBG("\n");
+            return false; //fails, not valid
         }
-        //copy "compresed data", TODO Needed verify out of bounds
-        duint32 remaining = sizeD - (litCount+rpos);
-        if (remaining < compBytes){
-            compBytes = remaining;
-            DRW_DBG("WARNING dwgCompressor::decompress, bad compBytes size, Cpos: ");
-            DRW_DBG(pos);DRW_DBG(", Dpos: ");DRW_DBG(rpos);DRW_DBG("\n");
+
+        //copy "compressed data", if size allows
+        if (decompSize < decompPos + compBytes) {
+            DRW_DBG("WARNING dwgCompressor::decompress18, bad compBytes size, Cpos: ");
+            DRW_DBG(compressedPos);DRW_DBG(", Dpos: ");DRW_DBG(decompPos);DRW_DBG(", need ");DRW_DBG(compBytes);DRW_DBG(", available ");DRW_DBG(decompSize - decompPos);DRW_DBG("\n");
+            // only copy what we can fit
+            compBytes = decompSize - decompPos;
         }
-        for (duint32 i=0, j= rpos - compOffset -1; i < compBytes; i++) {
-            bufD[rpos++] = bufD[j++];
+        duint32 j {decompPos - compOffset - 1};
+        for (duint32 i = 0; i < compBytes && buffersGood(); i++) {
+            decompSet( decompByte( j++));
         }
-        //copy "uncompresed data", TODO Needed verify out of bounds
-        for (duint32 i=0; i < litCount; i++) {
-            bufD[rpos++] = bufC[pos++];
+
+        //copy "uncompressed data", if size allows
+        if (decompSize < decompPos + litCount) {
+            DRW_DBG("WARNING dwgCompressor::decompress18, bad litCount size, Cpos: ");
+            DRW_DBG(compressedPos);DRW_DBG(", Dpos: ");DRW_DBG(decompPos);DRW_DBG(", need ");DRW_DBG(litCount);DRW_DBG(", available ");DRW_DBG(decompSize - decompPos);DRW_DBG("\n");
+            // only copy what we can fit
+            litCount = decompSize - decompPos;
+        }
+        for (duint32 i=0; i < litCount && buffersGood(); i++) {
+            decompSet( compressedByte());
         }
     }
-    DRW_DBG("WARNING dwgCompressor::decompress, bad out, Cpos: ");DRW_DBG(pos);DRW_DBG(", Dpos: ");DRW_DBG(rpos);DRW_DBG("\n");
+
+    DRW_DBG("WARNING dwgCompressor::decompress, bad out, Cpos: ");DRW_DBG(compressedPos);DRW_DBG(", Dpos: ");DRW_DBG(decompPos);DRW_DBG("\n");
+    return false;
 }
 
+duint8 dwgCompressor::compressedByte(void)
+{
+    duint8 result {0};
 
-void dwgCompressor::decrypt18Hdr(duint8 *buf, duint32 size, duint32 offset){
+    compressedGood = (compressedPos < compressedSize);
+    if (compressedGood) {
+        result = compressedBuffer[compressedPos];
+        ++compressedPos;
+    }
+
+    return result;
+}
+
+duint8 dwgCompressor::compressedByte(const duint32 index)
+{
+    if (index < compressedSize) {
+        return compressedBuffer[index];
+    }
+
+    return 0;
+}
+
+duint32 dwgCompressor::compressedHiByte(void)
+{
+    return static_cast<duint32>(compressedByte()) << 8;
+}
+
+bool dwgCompressor::compressedInc(const dint32 inc /*= 1*/)
+{
+    compressedPos += inc;
+    compressedGood = (compressedPos <= compressedSize);
+
+    return compressedGood;
+}
+
+duint8 dwgCompressor::decompByte(const duint32 index)
+{
+    if (index < decompSize) {
+        return decompBuffer[index];
+    }
+
+    return 0;
+}
+
+void dwgCompressor::decompSet(const duint8 value)
+{
+    decompGood = (decompPos < decompSize);
+    if (decompGood) {
+        decompBuffer[decompPos] = value;
+        ++decompPos;
+    }
+}
+
+bool dwgCompressor::buffersGood(void)
+{
+    return compressedGood && decompGood;
+}
+
+void dwgCompressor::decrypt18Hdr(duint8 *buf, duint64 size, duint64 offset){
     duint8 max = size / 4;
     duint32 secMask = 0x4164536b ^ offset;
-    duint32* pHdr = (duint32*)buf;
+    duint32* pHdr = reinterpret_cast<duint32*>(buf);
     for (duint8 j = 0; j < max; j++)
         *pHdr++ ^= secMask;
 }
@@ -232,422 +308,217 @@ void dwgCompressor::decrypt18Hdr(duint8 *buf, duint32 size, duint32 offset){
         *pHdr++ ^= secMask;
 }*/
 
-duint32 dwgCompressor::litLength21(duint8 *cbuf, duint8 oc, duint32 *si){
-
-    duint32 srcIndex=*si;
-
-    duint32 length = oc + 8;
-    if (length == 0x17) {
-        duint32 n = cbuf[srcIndex++];
+duint32 dwgCompressor::litLength21(duint8 opCode)
+{
+    duint32 length = 8u + opCode;
+    if (0x17 == length) {
+        duint32 n = compressedByte();
         length += n;
-        if (n == 0xff) {
+        if (0xffu == n) {
             do {
-                n = cbuf[srcIndex++];
-                n |= (duint32)(cbuf[srcIndex++] << 8);
+                n = compressedByte();
+                n |= compressedHiByte();
                 length += n;
-            } while (n == 0xffff);
+            }
+            while (0xffffu == n);
         }
     }
 
-    *si = srcIndex;
     return length;
 }
 
-void dwgCompressor::decompress21(duint8 *cbuf, duint8 *dbuf, duint32 csize, duint32 dsize){
-    duint32 srcIndex=0;
-    duint32 dstIndex=0;
-    duint32 length=0;
-    duint32 sourceOffset;
-    duint8 opCode;
+bool dwgCompressor::decompress21(duint8 *cbuf, duint8 *dbuf, duint64 csize, duint64 dsize){
+    compressedBuffer = cbuf;
+    decompBuffer = dbuf;
+    compressedSize = csize;
+    decompSize = dsize;
+    compressedPos = 0;
+    decompPos = 0;
+    compressedGood = true;
+    decompGood = true;
 
-    opCode = cbuf[srcIndex++];
+    duint32 length {0};
+    duint32 sourceOffset {0};
+    duint8 opCode {compressedByte()};
     if ((opCode >> 4) == 2){
-        srcIndex = srcIndex +2;
-        length = cbuf[srcIndex++] & 0x07;
+        compressedInc( 2);
+        length = compressedByte() & 0x07;
     }
 
-    while (srcIndex < csize && (dstIndex < dsize+1)){//dstIndex < dsize to prevent crash more robust are needed
-        if (length == 0)
-            length = litLength21(cbuf, opCode, &srcIndex);
-        copyCompBytes21(cbuf, dbuf, length, srcIndex, dstIndex);
-        srcIndex += length;
-        dstIndex += length;
-        if (dstIndex >=dsize) break; //check if last chunk are compresed & terminate
+    while (buffersGood()) {
+        if (length == 0) {
+            length = litLength21(opCode);
+        }
+        copyCompBytes21( length);
+
+        if (decompPos >= decompSize) {
+            break; //check if last chunk are compressed & terminate
+        }
 
         length = 0;
-        opCode = cbuf[srcIndex++];
-        readInstructions21(cbuf, &srcIndex, &opCode, &sourceOffset, &length);
+        opCode = compressedByte();
+        readInstructions21( opCode,  sourceOffset,  length);
         while (true) {
             //prevent crash with corrupted data
-            if (sourceOffset > dstIndex){
+            if (sourceOffset > decompPos) {
                 DRW_DBG("\nWARNING dwgCompressor::decompress21 => sourceOffset> dstIndex.\n");
-                DRW_DBG("csize = "); DRW_DBG(csize); DRW_DBG("  srcIndex = "); DRW_DBG(srcIndex);
-                DRW_DBG("\ndsize = "); DRW_DBG(dsize); DRW_DBG("  dstIndex = "); DRW_DBG(dstIndex);
-                sourceOffset = dstIndex;
+                DRW_DBG("csize = "); DRW_DBG(compressedSize); DRW_DBG("  srcIndex = "); DRW_DBG(compressedPos);
+                DRW_DBG("\ndsize = "); DRW_DBG(decompSize); DRW_DBG("  dstIndex = "); DRW_DBG(decompPos);
+                sourceOffset = decompPos;
             }
             //prevent crash with corrupted data
-            if (length > dsize - dstIndex){
+            if (length > decompSize - decompPos){
                 DRW_DBG("\nWARNING dwgCompressor::decompress21 => length > dsize - dstIndex.\n");
-                DRW_DBG("csize = "); DRW_DBG(csize); DRW_DBG("  srcIndex = "); DRW_DBG(srcIndex);
-                DRW_DBG("\ndsize = "); DRW_DBG(dsize); DRW_DBG("  dstIndex = "); DRW_DBG(dstIndex);
-                length = dsize - dstIndex;
-                srcIndex = csize;//force exit
+                DRW_DBG("csize = "); DRW_DBG(compressedSize); DRW_DBG("  srcIndex = "); DRW_DBG(compressedPos);
+                DRW_DBG("\ndsize = "); DRW_DBG(decompSize); DRW_DBG("  dstIndex = "); DRW_DBG(decompPos);
+                length = decompSize - decompPos;
+                compressedPos = compressedSize; //force exit
+                compressedGood = false;
             }
-            sourceOffset = dstIndex-sourceOffset;
+            sourceOffset = decompPos - sourceOffset;
             for (duint32 i=0; i< length; i++)
-                dbuf[dstIndex++] = dbuf[sourceOffset+i];
+                decompSet( decompByte( sourceOffset + i));
 
             length = opCode & 7;
-            if ((length != 0) || (srcIndex >= csize)) {
+            if ((length != 0) || (compressedPos >= compressedSize)) {
                 break;
             }
-            opCode = cbuf[srcIndex++];
+            opCode = compressedByte();
             if ((opCode >> 4) == 0) {
                 break;
             }
             if ((opCode >> 4) == 15) {
                 opCode &= 15;
             }
-            readInstructions21(cbuf, &srcIndex, &opCode, &sourceOffset, &length);
+            readInstructions21( opCode, sourceOffset, length);
+        }
+
+        if (compressedPos >= compressedSize) {
+            break;
         }
     }
-    DRW_DBG("\ncsize = "); DRW_DBG(csize); DRW_DBG("  srcIndex = "); DRW_DBG(srcIndex);
-    DRW_DBG("\ndsize = "); DRW_DBG(dsize); DRW_DBG("  dstIndex = "); DRW_DBG(dstIndex);DRW_DBG("\n");
+    DRW_DBG("\ncsize = "); DRW_DBG(compressedSize); DRW_DBG("  srcIndex = "); DRW_DBG(compressedPos);
+    DRW_DBG("\ndsize = "); DRW_DBG(decompSize); DRW_DBG("  dstIndex = "); DRW_DBG(decompPos);DRW_DBG("\n");
+
+    return buffersGood();
 }
 
-void dwgCompressor::readInstructions21(duint8 *cbuf, duint32 *si, duint8 *oc, duint32 *so, duint32 *l){
-    duint32 length;
-    duint32 srcIndex = *si;
-    duint32 sourceOffset;
-    unsigned char opCode = *oc;
-    switch ((opCode >> 4)) {
+void dwgCompressor::readInstructions21(duint8 &opCode, duint32 &sourceOffset, duint32 &length){
+
+    switch (opCode >> 4) {
     case 0:
-        length = (opCode & 0xf) + 0x13;
-        sourceOffset = cbuf[srcIndex++];
-        opCode = cbuf[srcIndex++];
+        length = (opCode & 0x0f) + 0x13;
+        sourceOffset = compressedByte();
+        opCode = compressedByte();
         length = ((opCode >> 3) & 0x10) + length;
         sourceOffset = ((opCode & 0x78) << 5) + 1 + sourceOffset;
         break;
     case 1:
         length = (opCode & 0xf) + 3;
-        sourceOffset = cbuf[srcIndex++];
-        opCode = cbuf[srcIndex++];
+        sourceOffset = compressedByte();
+        opCode = compressedByte();
         sourceOffset = ((opCode & 0xf8) << 5) + 1 + sourceOffset;
         break;
     case 2:
-        sourceOffset = cbuf[srcIndex++];
-        sourceOffset = ((cbuf[srcIndex++] << 8) & 0xff00) | sourceOffset;
+        sourceOffset = compressedByte();
+        sourceOffset = (compressedHiByte() & 0xff00) | sourceOffset;
         length = opCode & 7;
         if ((opCode & 8) == 0) {
-            opCode = cbuf[srcIndex++];
+            opCode = compressedByte();
             length = (opCode & 0xf8) + length;
         } else {
-            sourceOffset++;
-            length = (cbuf[srcIndex++] << 3) + length;
-            opCode = cbuf[srcIndex++];
+            ++sourceOffset;
+            length = (static_cast<duint32>(compressedByte()) << 3) + length;
+            opCode = compressedByte();
             length = (((opCode & 0xf8) << 8) + length) + 0x100;
         }
         break;
     default:
         length = opCode >> 4;
         sourceOffset = opCode & 15;
-        opCode = cbuf[srcIndex++];
+        opCode = compressedByte();
         sourceOffset = (((opCode & 0xf8) << 1) + sourceOffset) + 1;
         break;
     }
-    *oc = opCode;
-    *si = srcIndex;
-    *so = sourceOffset;
-    *l = length;
+}
+
+const duint8 dwgCompressor::CopyOrder21_01[] = {0};
+const duint8 dwgCompressor::CopyOrder21_02[] = {1,0};
+const duint8 dwgCompressor::CopyOrder21_03[] = {2,1,0};
+const duint8 dwgCompressor::CopyOrder21_04[] = {0,1,2,3};
+const duint8 dwgCompressor::CopyOrder21_05[] = {4,0,1,2,3};
+const duint8 dwgCompressor::CopyOrder21_06[] = {5,1,2,3,4,0};
+const duint8 dwgCompressor::CopyOrder21_07[] = {6,5,1,2,3,4,0};
+const duint8 dwgCompressor::CopyOrder21_08[] = {0,1,2,3,4,5,6,7};
+const duint8 dwgCompressor::CopyOrder21_09[] = {8,0,1,2,3,4,5,6,7};
+const duint8 dwgCompressor::CopyOrder21_10[] = {9,1,2,3,4,5,6,7,8,0};
+const duint8 dwgCompressor::CopyOrder21_11[] = {10,9,1,2,3,4,5,6,7,8,0};
+const duint8 dwgCompressor::CopyOrder21_12[] = {8,9,10,11,0,1,2,3,4,5,6,7};
+const duint8 dwgCompressor::CopyOrder21_13[] = {12,8,9,10,11,0,1,2,3,4,5,6,7};
+const duint8 dwgCompressor::CopyOrder21_14[] = {13,9,10,11,12,1,2,3,4,5,6,7,8,0};
+const duint8 dwgCompressor::CopyOrder21_15[] = {14,13,9,10,11,12,1,2,3,4,5,6,7,8,0};
+const duint8 dwgCompressor::CopyOrder21_16[] = {8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const duint8 dwgCompressor::CopyOrder21_17[] = {9,10,11,12,13,14,15,16,8,0,1,2,3,4,5,6,7};
+const duint8 dwgCompressor::CopyOrder21_18[] = {17,9,10,11,12,13,14,15,16,1,2,3,4,5,6,7,8,0};
+const duint8 dwgCompressor::CopyOrder21_19[] = {18,17,16,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const duint8 dwgCompressor::CopyOrder21_20[] = {16,17,18,19,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const duint8 dwgCompressor::CopyOrder21_21[] = {20,16,17,18,19,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const duint8 dwgCompressor::CopyOrder21_22[] = {21,20,16,17,18,19,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const duint8 dwgCompressor::CopyOrder21_23[] = {22,21,20,16,17,18,19,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const duint8 dwgCompressor::CopyOrder21_24[] = {16,17,18,19,20,21,22,23,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const duint8 dwgCompressor::CopyOrder21_25[] = {17,18,19,20,21,22,23,24,16,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const duint8 dwgCompressor::CopyOrder21_26[] = {25,17,18,19,20,21,22,23,24,16,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const duint8 dwgCompressor::CopyOrder21_27[] = {26,25,17,18,19,20,21,22,23,24,16,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const duint8 dwgCompressor::CopyOrder21_28[] = {24,25,26,27,16,17,18,19,20,21,22,23,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const duint8 dwgCompressor::CopyOrder21_29[] = {28,24,25,26,27,16,17,18,19,20,21,22,23,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const duint8 dwgCompressor::CopyOrder21_30[] = {29,28,24,25,26,27,16,17,18,19,20,21,22,23,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const duint8 dwgCompressor::CopyOrder21_31[] = {30,26,27,28,29,18,19,20,21,22,23,24,25,10,11,12,13,14,15,16,17,2,3,4,5,6,7,8,9,1,0};
+const duint8 dwgCompressor::CopyOrder21_32[] = {24,25,26,27,28,29,30,31,16,17,18,19,20,21,22,23,8,9,10,11,12,13,14,15,0,1,2,3,4,5,6,7};
+const duint8 *dwgCompressor::CopyOrder21[dwgCompressor::Block21OrderArray] = {
+        nullptr,
+        CopyOrder21_01, CopyOrder21_02, CopyOrder21_03, CopyOrder21_04,
+        CopyOrder21_05, CopyOrder21_06, CopyOrder21_07, CopyOrder21_08,
+        CopyOrder21_09, CopyOrder21_10, CopyOrder21_11, CopyOrder21_12,
+        CopyOrder21_13, CopyOrder21_14, CopyOrder21_15, CopyOrder21_16,
+        CopyOrder21_17, CopyOrder21_18, CopyOrder21_19, CopyOrder21_20,
+        CopyOrder21_21, CopyOrder21_22, CopyOrder21_23, CopyOrder21_24,
+        CopyOrder21_25, CopyOrder21_26, CopyOrder21_27, CopyOrder21_28,
+        CopyOrder21_29, CopyOrder21_30, CopyOrder21_31, CopyOrder21_32
+};
+
+void dwgCompressor::copyBlock21(const duint32 length)
+{
+    if (MaxBlock21Length < length) {
+        return;
+    }
+
+    const duint8 *order {CopyOrder21[length]};
+    if (nullptr == order) {
+        return;
+    }
+
+    for (duint32 index = 0; (length > index) && buffersGood(); ++index) {
+        decompSet( compressedByte( compressedPos + order[index]));
+    }
+    compressedInc( length);
+}
+
+bool dwgCompressor::copyCompBytes21(duint32 length)
+{
+    DRW_DBG("\ncopyCompBytes21() "); DRW_DBG(length); DRW_DBG("\n");
+
+    while (length >= MaxBlock21Length) {
+        copyBlock21( MaxBlock21Length);
+        length -= MaxBlock21Length;
+    }
+
+    copyBlock21( length);
+
+    return buffersGood();
 }
 
 
-void dwgCompressor::copyCompBytes21(duint8 *cbuf, duint8 *dbuf, duint32 l, duint32 si, duint32 di){
-    duint32 length =l;
-    duint32 dix = di;
-    duint32 six = si;
-
-    while (length > 31){
-        //in doc: 16-31, 0-15
-        for (duint32 i = six+24; i<six+32; i++)
-            dbuf[dix++] = cbuf[i];
-        for (duint32 i = six+16; i<six+24; i++)
-            dbuf[dix++] = cbuf[i];
-        for (duint32 i = six+8; i<six+16; i++)
-            dbuf[dix++] = cbuf[i];
-        for (duint32 i = six; i<six+8; i++)
-            dbuf[dix++] = cbuf[i];
-        six = six + 32;
-        length = length -32;
-    }
-
-    switch (length) {
-    case 0:
-        break;
-    case 1: //Ok
-        dbuf[dix] = cbuf[six];
-        break;
-    case 2: //Ok
-        dbuf[dix++] = cbuf[six+1];
-        dbuf[dix] = cbuf[six];
-        break;
-    case 3: //Ok
-        dbuf[dix++] = cbuf[six+2];
-        dbuf[dix++] = cbuf[six+1];
-        dbuf[dix] = cbuf[six];
-        break;
-    case 4: //Ok
-        for (int i = 0; i<4;i++) //RLZ is OK, or are inverse?, OK
-            dbuf[dix++] = cbuf[six++];
-        break;
-    case 5: //Ok
-        dbuf[dix++] = cbuf[six+4];
-        for (int i = 0; i<4;i++)
-            dbuf[dix++] = cbuf[six++];
-        break;
-    case 6: //Ok
-        dbuf[dix++] = cbuf[six+5];
-        for (int i = 1; i<5;i++)
-            dbuf[dix++] = cbuf[six+i];
-        dbuf[dix] = cbuf[six];
-        break;
-    case 7:
-        //in doc: six+5, six+6, 1-5, six+0
-        dbuf[dix++] = cbuf[six+6];
-        dbuf[dix++] = cbuf[six+5];
-        for (int i = 1; i<5;i++)
-            dbuf[dix++] = cbuf[six+i];
-        dbuf[dix] = cbuf[six];
-    case 8: //Ok
-        for (int i = 0; i<8;i++) //RLZ 4[0],4[4] or 4[4],4[0]
-            dbuf[dix++] = cbuf[six++];
-        break;
-    case 9: //Ok
-        dbuf[dix++] = cbuf[six+8];
-        for (int i = 0; i<8;i++)
-            dbuf[dix++] = cbuf[six++];
-        break;
-    case 10: //Ok
-        dbuf[dix++] = cbuf[six+9];
-        for (int i = 1; i<9;i++)
-            dbuf[dix++] = cbuf[six+i];
-        dbuf[dix] = cbuf[six];
-        break;
-    case 11:
-        //in doc: six+9, six+10, 1-9, six+0
-        dbuf[dix++] = cbuf[six+10];
-        dbuf[dix++] = cbuf[six+9];
-        for (int i = 1; i<9;i++)
-            dbuf[dix++] = cbuf[six+i];
-        dbuf[dix] = cbuf[six];
-        break;
-    case 12: //Ok
-        for (int i = 8; i<12;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 0; i<8;i++)
-            dbuf[dix++] = cbuf[six++];
-        break;
-    case 13: //Ok
-        dbuf[dix++] = cbuf[six+12];
-        for (int i = 8; i<12;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 0; i<8;i++)
-            dbuf[dix++] = cbuf[six++];
-        break;
-    case 14: //Ok
-        dbuf[dix++] = cbuf[six+13];
-        for (int i = 9; i<13; i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 1; i<9; i++)
-            dbuf[dix++] = cbuf[six+i];
-        dbuf[dix] = cbuf[six];
-        break;
-    case 15:
-        //in doc: six+13, six+14, 9-12, 1-8, six+0
-        dbuf[dix++] = cbuf[six+14];
-        dbuf[dix++] = cbuf[six+13];
-        for (int i = 9; i<13; i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 1; i<9; i++)
-            dbuf[dix++] = cbuf[six+i];
-        dbuf[dix] = cbuf[six];
-        break;
-    case 16: //Ok
-        for (int i = 8; i<16;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 0; i<8;i++)
-            dbuf[dix++] = cbuf[six++];
-        break;
-    case 17: //Seems Ok
-        for (int i = 9; i<17;i++)
-            dbuf[dix++] = cbuf[six+i];
-        dbuf[dix++] = cbuf[six+8];
-        for (int i = 0; i<8;i++)
-            dbuf[dix++] = cbuf[six++];
-        break;
-    case 18:
-        //in doc: six+17, 1-16, six+0
-        dbuf[dix++] = cbuf[six+17];
-        for (int i = 9; i<17;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 1; i<9;i++)
-            dbuf[dix++] = cbuf[six+i];
-        dbuf[dix] = cbuf[six];
-        break;
-    case 19:
-        //in doc: 16-18, 0-15
-        dbuf[dix++] = cbuf[six+18];
-        dbuf[dix++] = cbuf[six+17];
-        dbuf[dix++] = cbuf[six+16];
-        for (int i = 8; i<16;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 0; i<8;i++)
-            dbuf[dix++] = cbuf[six++];
-        break;
-    case 20:
-        //in doc: 16-19, 0-15
-        for (int i = 16; i<20;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 8; i<16;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 0; i<8;i++)
-            dbuf[dix++] = cbuf[six++];
-        break;
-    case 21:
-        //in doc: six+20, 16-19, 0-15
-        dbuf[dix++] = cbuf[six+20];
-        for (int i = 16; i<20;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 8; i<16;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 0; i<8;i++)
-            dbuf[dix++] = cbuf[six+i];
-        break;
-    case 22:
-        //in doc: six+20, six+21, 16-19, 0-15
-        dbuf[dix++] = cbuf[six+21];
-        dbuf[dix++] = cbuf[six+20];
-        for (int i = 16; i<20;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 8; i<16;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 0; i<8;i++)
-            dbuf[dix++] = cbuf[six++];
-        break;
-    case 23:
-        //in doc: six+20, six+21, six+22, 16-19, 0-15
-        dbuf[dix++] = cbuf[six+22];
-        dbuf[dix++] = cbuf[six+21];
-        dbuf[dix++] = cbuf[six+20];
-        for (int i = 16; i<20;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 8; i<16;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 0; i<8;i++)
-            dbuf[dix++] = cbuf[six+i];
-        break;
-    case 24:
-        //in doc: 16-23, 0-15
-        for (int i = 16; i<24;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 8; i<16;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 0; i<8; i++)
-            dbuf[dix++] = cbuf[six++];
-        break;
-    case 25:
-        //in doc: 17-24, six+16, 0-15
-        for (int i = 17; i<25;i++)
-            dbuf[dix++] = cbuf[six+i];
-        dbuf[dix++] = cbuf[six+16];
-        for (int i = 8; i<16; i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 0; i<8; i++)
-            dbuf[dix++] = cbuf[six++];
-        break;
-    case 26:
-        //in doc: six+25, 17-24, six+16, 0-15
-        dbuf[dix++] = cbuf[six+25];
-        for (int i = 17; i<25;i++)
-            dbuf[dix++] = cbuf[six+i];
-        dbuf[dix++] = cbuf[six+16];
-        for (int i = 8; i<16;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 0; i<8; i++)
-            dbuf[dix++] = cbuf[six++];
-        break;
-    case 27:
-        //in doc: six+25, six+26, 17-24, six+16, 0-15
-        dbuf[dix++] = cbuf[six+26];
-        dbuf[dix++] = cbuf[six+25];
-        for (int i = 17; i<25;i++)
-            dbuf[dix++] = cbuf[six+i];
-        dbuf[dix++] = cbuf[six+16];
-        for (int i = 8; i<16;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 0; i<8; i++)
-            dbuf[dix++] = cbuf[six++];
-        break;
-    case 28:
-        //in doc: 24-27, 16-23, 0-15
-        for (int i = 24; i<28; i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 16; i<24;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 8; i<16; i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 0; i<8; i++)
-            dbuf[dix++] = cbuf[six++];
-        break;
-    case 29:
-        //in doc: six+28, 24-27, 16-23, 0-15
-        dbuf[dix++] = cbuf[six+28];
-        for (int i = 24; i<28; i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 16; i<24;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 8; i<16;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 0; i<8; i++)
-            dbuf[dix++] = cbuf[six++];
-        break;
-    case 30:
-        //in doc: six+28, six+29, 24-27, 16-23, 0-15
-        dbuf[dix++] = cbuf[six+29];
-        dbuf[dix++] = cbuf[six+28];
-        for (int i = 24; i<28; i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 16; i<24;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 8; i<16;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 0; i<8; i++)
-            dbuf[dix++] = cbuf[six++];
-        break;
-    case 31:
-        //in doc: six+30, 26-29, 18-25, 2-17, 0-1
-        dbuf[dix++] = cbuf[six+30];
-        for (int i = 26; i<30;i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 18; i<26;i++)
-            dbuf[dix++] = cbuf[six+i];
-/*        for (int i = 2; i<18; i++)
-            dbuf[dix++] = cbuf[six+i];*/
-        for (int i = 10; i<18; i++)
-            dbuf[dix++] = cbuf[six+i];
-        for (int i = 2; i<10; i++)
-            dbuf[dix++] = cbuf[six+i];
-        dbuf[dix++] = cbuf[six+1];
-        dbuf[dix] = cbuf[six];
-        break;
-    default:
-        DRW_DBG("WARNING dwgCompressor::copyCompBytes21, bad output.\n");
-        break;
-    }
-}
-
-
-secEnum::DWGSection secEnum::getEnum(std::string nameSec){
+secEnum::DWGSection secEnum::getEnum(const std::string &nameSec){
     //TODO: complete it
     if (nameSec=="AcDb:Header"){
         return HEADER;

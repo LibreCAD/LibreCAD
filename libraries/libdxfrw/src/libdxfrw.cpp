@@ -34,7 +34,7 @@
 };*/
 
 dxfRW::dxfRW(const char* name){
-    DRW_DBGSL(DRW_dbg::NONE);
+    DRW_DBGSL(DRW_dbg::Level::None);
     fileName = name;
     reader = NULL;
     writer = NULL;
@@ -52,13 +52,13 @@ dxfRW::~dxfRW(){
     imageDef.clear();
 }
 
-void dxfRW::setDebug(DRW::DBG_LEVEL lvl){
+void dxfRW::setDebug(DRW::DebugLevel lvl){
     switch (lvl){
-    case DRW::DEBUG:
-        DRW_DBGSL(DRW_dbg::DEBUG);
+    case DRW::DebugLevel::Debug:
+        DRW_DBGSL(DRW_dbg::Level::Debug);
         break;
-    default:
-        DRW_DBGSL(DRW_dbg::NONE);
+    case DRW::DebugLevel::None:
+        DRW_DBGSL(DRW_dbg::Level::None);
     }
 }
 
@@ -72,7 +72,7 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
     DRW_DBG("dxfRW::read 1def\n");
     filestr.open (fileName.c_str(), std::ios_base::in | std::ios::binary);
     if (!filestr.is_open()
-            || !filestr.good()) {
+        || !filestr.good()) {
         return setError(DRW::BAD_OPEN);
     }
 
@@ -101,7 +101,7 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
     filestr.close();
     version = (DRW::Version) reader->getVersion();
     delete reader;
-    reader = NULL;
+    reader = nullptr;
     return isOk;
 }
 
@@ -383,8 +383,8 @@ bool dxfRW::writeVport(DRW_Vport *ent){
     writer->writeDouble(16, ent->viewDir.x);
     writer->writeDouble(26, ent->viewDir.y);
     writer->writeDouble(36, ent->viewDir.z);
-    writer->writeDouble(17, ent->viewTarget.z);
-    writer->writeDouble(27, ent->viewTarget.z);
+    writer->writeDouble(17, ent->viewTarget.x);
+    writer->writeDouble(27, ent->viewTarget.y);
     writer->writeDouble(37, ent->viewTarget.z);
     writer->writeDouble(40, ent->height);
     writer->writeDouble(41, ent->ratio);
@@ -922,6 +922,9 @@ bool dxfRW::writeSpline(DRW_Spline *ent){
         //RLZ: warning check if nknots are correct and ncontrol
         for (int i = 0;  i< ent->nknots; i++){
             writer->writeDouble(40, ent->knotslist.at(i));
+        }
+        for (std::size_t i = 0; i< ent->weightlist.size(); i++) {
+            writer->writeDouble(41, ent->weightlist.at(i));
         }
         for (int i = 0;  i< ent->ncontrol; i++){
             auto crd = ent->controllist.at(i);
@@ -1485,7 +1488,7 @@ bool dxfRW::writeTables() {
     writer->writeInt16(72, 65);
     writer->writeInt16(73, 0);
     writer->writeDouble(40, 0.0);
-//Aplication linetypes
+//Application linetypes
     iface->writeLTypes();
     writer->writeString(0, "ENDTAB");
 /*** LAYER ***/
@@ -1636,7 +1639,7 @@ bool dxfRW::writeTables() {
             writer->writeInt16(281, 0);
         }
     }
-    /* allways call writeBlockRecords to iface for prepare unnamed blocks */
+    /* always call writeBlockRecords to iface for prepare unnamed blocks */
     iface->writeBlockRecords();
     if (version > DRW::AC1009) {
         writer->writeString(0, "ENDTAB");
@@ -1758,8 +1761,7 @@ bool dxfRW::writeObjects() {
 //write IMAGEDEF_REACTOR
     for (unsigned int i=0; i<imageDef.size(); i++) {
         DRW_ImageDef *id = imageDef.at(i);
-        std::map<std::string, std::string>::iterator it;
-        for ( it=id->reactors.begin() ; it != id->reactors.end(); ++it ) {
+        for (auto it=id->reactors.begin() ; it != id->reactors.end(); ++it ) {
             writer->writeString(0, "IMAGEDEF_REACTOR");
             writer->writeString(5, (*it).first);
             writer->writeString(330, (*it).second);
@@ -1791,8 +1793,7 @@ bool dxfRW::writeObjects() {
 //            writer->writeString(330, "0"); handle to DICTIONARY
         }
         writer->writeString(102, "{ACAD_REACTORS");
-        std::map<std::string, std::string>::iterator it;
-        for ( it=id->reactors.begin() ; it != id->reactors.end(); ++it ) {
+        for (auto it=id->reactors.begin() ; it != id->reactors.end(); ++it ) {
             writer->writeString(330, (*it).first);
         }
         writer->writeString(102, "}");

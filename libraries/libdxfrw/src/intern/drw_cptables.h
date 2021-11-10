@@ -3,7 +3,7 @@
 
 //first entry in all tables are 0x80
 #define CPOFFSET 0x80
-#define CPLENGHTCOMMON 128
+#define CPLENGTHCOMMON 128
 
 //Table 874
 static const int DRW_Table874[] = {

@@ -49,22 +49,22 @@ public:
     bool readDwgClasses() override;
     bool readDwgHandles() override;
     bool readDwgTables(DRW_Header& hdr) override;
-    bool readDwgBlocks(DRW_Interface& intfa) override{
+    bool readDwgBlocks(DRW_Interface& intfa) override {
         bool ret = true;
-        dwgBuffer dataBuf(objData.data(), uncompSize, &decoder);
+        dwgBuffer dataBuf(objData.get(), uncompSize, &decoder);
         ret = dwgReader::readDwgBlocks(intfa, &dataBuf);
         return ret;
     }
 
-    virtual bool readDwgEntities(DRW_Interface& intfa) override{
+    bool readDwgEntities(DRW_Interface& intfa) override {
         bool ret = true;
-        dwgBuffer dataBuf(objData.data(), uncompSize, &decoder);
+        dwgBuffer dataBuf(objData.get(), uncompSize, &decoder);
         ret = dwgReader::readDwgEntities(intfa, &dataBuf);
         return ret;
     }
-    virtual bool readDwgObjects(DRW_Interface& intfa) override{
+    bool readDwgObjects(DRW_Interface& intfa) override {
         bool ret = true;
-        dwgBuffer dataBuf(objData.data(), uncompSize, &decoder);
+        dwgBuffer dataBuf(objData.get(), uncompSize, &decoder);
         ret = dwgReader::readDwgObjects(intfa, &dataBuf);
         return ret;
     }
@@ -75,18 +75,18 @@ public:
 //    }
 
 protected:
-    std::vector<duint8> objData;
+    std::unique_ptr<duint8[]> objData;
     duint64 uncompSize;
 
 private:
     void genMagicNumber();
 //    dwgBuffer* bufObj;
-    void parseSysPage(duint8 *decompSec, duint32 decompSize); //called: Section page map: 0x41630e3b
-    bool parseDataPage(dwgSectionInfo si/*, duint8 *dData*/); //called ???: Section map: 0x4163003b
-    duint32 checksum(duint32 seed, duint8* data, duint32 sz);
+    bool parseSysPage(duint8 *decompSec, duint32 decompSize); //called: Section page map: 0x41630e3b
+    bool parseDataPage(const dwgSectionInfo &si/*, duint8 *dData*/); //called ???: Section map: 0x4163003b
+    duint32 checksum(duint32 seed, duint8* data, duint64 sz);
 
 private:
-duint32 securityFlags;
+    duint32 securityFlags;
 };
 
 #endif // DWGREADER18_H

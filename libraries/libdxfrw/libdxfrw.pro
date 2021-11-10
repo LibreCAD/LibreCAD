@@ -30,6 +30,7 @@ QT -= svg
 SOURCES += \
     src/libdxfrw.cpp \
     src/libdwgr.cpp \
+    src/drw_base.cpp \
     src/drw_header.cpp \
     src/drw_classes.cpp \
     src/drw_entities.cpp \

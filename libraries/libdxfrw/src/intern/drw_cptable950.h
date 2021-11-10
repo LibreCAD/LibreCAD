@@ -5,7 +5,7 @@
 
 //first entry in this table are 0x80
 #define CPOFFSET950 0x80
-#define CPLENGHT950 13503
+#define CPLENGTH950 13503
 #define NOTFOUND950 0x003F
 
 //Table 950 one byte
