@@ -74,6 +74,7 @@ RS_Entity* RS_DimRadial::clone() const {
 	d->setOwner(isOwner());
 	d->initId();
 	d->detach();
+    d->updateDim();
 	return d;
 }
 
@@ -223,6 +224,11 @@ void RS_DimRadial::updateDim(bool autoText) {
         textAngle = angle+M_PI;
     }
 
+    if (!this->getInsideHorizontalText())
+    {
+        text->rotate({0., 0.}, textAngle);
+    }
+
     // move text label:
     RS_Vector textPos;
 
@@ -239,12 +245,10 @@ void RS_DimRadial::updateDim(bool autoText) {
         textPos += distV;
         data.middleOfText = textPos;
     }
-
-	text->rotate({0., 0.}, textAngle);
     text->move(textPos);
 
     text->setPen(RS_Pen(getTextColor(), RS2::WidthByBlock, RS2::SolidLine));
-	text->setLayer(nullptr);
+    text->setLayer(nullptr);
     addEntity(text);
 
     calculateBorders();
