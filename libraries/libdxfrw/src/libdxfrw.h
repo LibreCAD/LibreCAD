@@ -15,6 +15,7 @@
 #define LIBDXFRW_H
 
 #include <string>
+#include <unordered_map>
 #include "drw_entities.h"
 #include "drw_objects.h"
 #include "drw_header.h"
@@ -28,7 +29,7 @@ class dxfRW {
 public:
     dxfRW(const char* name);
     ~dxfRW();
-    void setDebug(DRW::DBG_LEVEL lvl);
+    void setDebug(DRW::DebugLevel lvl);
     /// reads the file specified in constructor
     /*!
      * An interface must be provided. It is used by the class to signal various
@@ -148,7 +149,7 @@ private:
     bool applyExt;
     bool writingBlock;
     int elParts;  /*!< parts number when convert ellipse to polyline */
-    std::map<std::string,int> blockMap;
+    std::unordered_map<std::string,int> blockMap;
     std::vector<DRW_ImageDef*> imageDef;  /*!< imageDef list */
 
     int currHandle;

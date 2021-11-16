@@ -1222,7 +1222,7 @@ bool DRW_LWPolyline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     DRW_DBG("end flags value: "); DRW_DBG(flags);
 
     if (vertexnum > 0) { //verify if is lwpol without vertex (empty)
-        // add vertexs
+        // add vertexes
 		vertex = std::make_shared<DRW_Vertex2D>();
         vertex->x = buf->getRawDouble();
         vertex->y = buf->getRawDouble();
@@ -1267,7 +1267,7 @@ bool DRW_LWPolyline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
             }
         }
     }
-    if (DRW_DBGGL == DRW_dbg::DEBUG){
+    if (DRW_DBGGL == DRW_dbg::Level::Debug){
         DRW_DBG("\nVertex list: ");
 		for (auto& pv: vertlist) {
             DRW_DBG("\n   x: "); DRW_DBG(pv->x); DRW_DBG(" y: "); DRW_DBG(pv->y); DRW_DBG(" bulge: "); DRW_DBG(pv->bulge);
@@ -1331,10 +1331,10 @@ bool DRW_Text::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         return ret;
     DRW_DBG("\n***************************** parsing text *********************************************\n");
 
- // DataFlags RC Used to determine presence of subsquent data, set to 0xFF for R14-
+ // DataFlags RC Used to determine presence of subsequent data, set to 0xFF for R14-
     duint8 data_flags = 0x00;
     if (version > DRW::AC1014) {//2000+
-        data_flags = buf->getRawChar8(); /* DataFlags RC Used to determine presence of subsquent data */
+        data_flags = buf->getRawChar8(); /* DataFlags RC Used to determine presence of subsequent data */
         DRW_DBG("data_flags: "); DRW_DBG(data_flags); DRW_DBG("\n");
         if ( !(data_flags & 0x01) ) { /* Elevation RD --- present if !(DataFlags & 0x01) */
             basePoint.z = buf->getRawDouble();
@@ -1469,7 +1469,7 @@ bool DRW_MText::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     DRW_UNUSED(ext_ht);
     /* Extents wid BD Undocumented and not present in DXF or entget The extents
     rectangle, when rotated the same as the text, fits the actual text image on
-    the screen (altough we've seen it include an extra row of text in height). */
+    the screen (although we've seen it include an extra row of text in height). */
     double ext_wid = buf->getBitDouble();
     DRW_UNUSED(ext_wid);
     /* Text TV 1 All text in one long string (without '\n's 3 for line wrapping).
@@ -1911,7 +1911,6 @@ bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
                     }
                     for (dint32 j = 0; j < spline->ncontrol;++j){
                         std::shared_ptr<DRW_Coord> crd = std::make_shared<DRW_Coord>(buf->get2RawDouble());
-                        spline->controllist.push_back(crd);
                         if(isRational)
                             crd->z =  buf->getBitDouble(); //RLZ: investigate how store weight
                         spline->controllist.push_back(crd);
@@ -1968,8 +1967,8 @@ bool DRW_Hatch::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
             DRW_DBG("\ndef line: "); DRW_DBG(angleL); DRW_DBG(","); DRW_DBG(ptL.x); DRW_DBG(","); DRW_DBG(ptL.y);
             DRW_DBG(","); DRW_DBG(offL.x); DRW_DBG(","); DRW_DBG(offL.y); DRW_DBG(","); DRW_DBG(angleL);
             for (duint16 i = 0 ; i < numDashL; ++i){
-                double lenghtL = buf->getBitDouble();
-                DRW_DBG(","); DRW_DBG(lenghtL);
+                double lengthL = buf->getBitDouble();
+                DRW_DBG(","); DRW_DBG(lengthL);
             }
         }//end deflines
     } //end not solid
@@ -2085,8 +2084,9 @@ void DRW_Spline::parseCode(int code, dxfReader *reader){
     case 40:
         knotslist.push_back(reader->getDouble());
         break;
-//    case 41:
-//        break;
+    case 41:
+        weightlist.push_back(reader->getDouble());
+        break;
     default:
         DRW_Entity::parseCode(code, reader);
         break;
@@ -2158,7 +2158,7 @@ bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     for (dint32 i= 0; i<nfit; ++i)
         fitlist.push_back(std::make_shared<DRW_Coord>(buf->get3BitDouble()));
 
-    if (DRW_DBGGL == DRW_dbg::DEBUG){
+    if (DRW_DBGGL == DRW_dbg::Level::Debug) {
         DRW_DBG("\nknots list: ");
         for (auto const& v: knotslist) {
             DRW_DBG("\n"); DRW_DBG(v);
@@ -2171,7 +2171,6 @@ bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         for (auto const& v: fitlist) {
             DRW_DBG("\n"); DRW_DBGPT(v->x, v->y, v->z);
         }
-
     }
 
     /* Common Entity Handle Data */
@@ -2795,7 +2794,7 @@ bool DRW_Leader::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     dint32 nPt = buf->getBitLong();
     DRW_DBG(" Num pts "); DRW_DBG(nPt);
 
-    // add vertexs
+    // add vertexes
     for (int i = 0; i< nPt; i++){
         DRW_Coord vertex = buf->get3BitDouble();
         vertexlist.push_back(std::make_shared<DRW_Coord>(vertex));
@@ -2943,7 +2942,7 @@ bool DRW_Viewport::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         frozenLyCount = buf->getBitLong();
         DRW_DBG("Frozen Layer count?: "); DRW_DBG(frozenLyCount); DRW_DBG("\n");
         DRW_DBG("Status Flags?: "); DRW_DBG(buf->getBitLong()); DRW_DBG("\n");
-        //RLZ: Warning needed separate string bufer
+        //RLZ: Warning needed separate string buffer
         DRW_DBG("Style sheet?: "); DRW_DBG(sBuf->getVariableText(version, false)); DRW_DBG("\n");
         DRW_DBG("Render mode?: "); DRW_DBG(buf->getRawChar8()); DRW_DBG("\n");
         DRW_DBG("UCS OMore...: "); DRW_DBG(buf->getBit()); DRW_DBG("\n");
@@ -2958,8 +2957,8 @@ bool DRW_Viewport::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         DRW_DBG("ShadePlot Mode...: "); DRW_DBG(buf->getBitShort()); DRW_DBG("\n");
     }
     if (version > DRW::AC1018) {//2007+
-        DRW_DBG("Use def Ligth...: "); DRW_DBG(buf->getBit()); DRW_DBG("\n");
-        DRW_DBG("Def ligth tipe?: "); DRW_DBG(buf->getRawChar8()); DRW_DBG("\n");
+        DRW_DBG("Use def Light...: "); DRW_DBG(buf->getBit()); DRW_DBG("\n");
+        DRW_DBG("Def light type?: "); DRW_DBG(buf->getRawChar8()); DRW_DBG("\n");
         DRW_DBG("Brightness: "); DRW_DBG(buf->getBitDouble()); DRW_DBG("\n");
         DRW_DBG("Contrast: "); DRW_DBG(buf->getBitDouble()); DRW_DBG("\n");
 //        DRW_DBG("Ambient Cmc or Enc: "); DRW_DBG(buf->getCmColor(version)); DRW_DBG("\n");

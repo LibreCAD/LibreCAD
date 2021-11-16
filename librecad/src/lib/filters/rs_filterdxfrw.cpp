@@ -166,7 +166,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
         dwgR dwgr(QFile::encodeName(file));
         RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file");
         if (RS_DEBUG->getLevel()== RS_Debug::D_DEBUGGING)
-            dwgr.setDebug(DRW::DEBUG);
+            dwgr.setDebug(DRW::DebugLevel::Debug);
         bool success = dwgr.read(this, true);
         RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading DWG file: OK");
         RS_DIALOGFACTORY->commandMessage(QObject::tr("Opened dwg file version %1.").arg(printDwgVersion(dwgr.getVersion())));
@@ -1298,8 +1298,7 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
         container = (RS_Graphic*)currentContainer;
     } else return;
 
-    map<std::string,DRW_Variant *>::const_iterator it;
-    for ( it=data->vars.begin() ; it != data->vars.end(); ++it ){
+    for (auto it = data->vars.begin() ; it != data->vars.end(); ++it ) {
         QString key = QString::fromStdString((*it).first);
         DRW_Variant *var = (*it).second;
         switch (var->type()) {

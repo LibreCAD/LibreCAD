@@ -47,7 +47,7 @@ void DRW_Header::parseCode(int code, dxfReader *reader){
     case 1:
         curr->addString(code, reader->getUtf8String());
         if (name =="$ACADVER") {
-            reader->setVersion(curr->content.s, true);
+            reader->setVersion(*curr->content.s, true);
             version = reader->getVersion();
         }
         break;
@@ -57,7 +57,7 @@ void DRW_Header::parseCode(int code, dxfReader *reader){
     case 3:
         curr->addString(code, reader->getUtf8String());
         if (name =="$DWGCODEPAGE") {
-            reader->setCodePage(curr->content.s);
+            reader->setCodePage(*curr->content.s);
             curr->addString(code, reader->getCodePage());
         }
         break;
@@ -148,7 +148,7 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
         break;
     }
     writer->writeString(1, varStr);
-    writer->setVersion(&varStr, true);
+    writer->setVersion(varStr, true);
 
     getStr("$ACADVER", &varStr);
     getStr("$ACADMAINTVER", &varStr);
@@ -157,7 +157,7 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
         varStr = "ANSI_1252";
     }
     writer->writeString(9, "$DWGCODEPAGE");
-    writer->setCodePage(&varStr);
+    writer->setCodePage(varStr);
     writer->writeString(3, writer->getCodePage() );
     writer->writeString(9, "$INSBASE");
     if (getCoord("$INSBASE", &varCoord)) {
@@ -1668,8 +1668,7 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
     }
 
 #ifdef DRW_DBG
-    std::map<std::string,DRW_Variant *>::const_iterator it;
-    for ( it=vars.begin() ; it != vars.end(); ++it ){
+    for ( auto it=vars.begin() ; it != vars.end(); ++it ){
         DRW_DBG((*it).first); DRW_DBG("\n");
     }
 #endif
@@ -1697,8 +1696,7 @@ void DRW_Header::addCoord(std::string key, DRW_Coord value, int code){
 
 bool DRW_Header::getDouble(std::string key, double *varDouble){
     bool result = false;
-    std::map<std::string,DRW_Variant *>::iterator it;
-    it=vars.find( key);
+    auto it=vars.find( key);
     if (it != vars.end()) {
         DRW_Variant *var = (*it).second;
         if (var->type() == DRW_Variant::DOUBLE) {
@@ -1713,8 +1711,7 @@ bool DRW_Header::getDouble(std::string key, double *varDouble){
 
 bool DRW_Header::getInt(std::string key, int *varInt){
     bool result = false;
-    std::map<std::string,DRW_Variant *>::iterator it;
-    it=vars.find( key);
+    auto it=vars.find( key);
     if (it != vars.end()) {
         DRW_Variant *var = (*it).second;
         if (var->type() == DRW_Variant::INTEGER) {
@@ -1729,8 +1726,7 @@ bool DRW_Header::getInt(std::string key, int *varInt){
 
 bool DRW_Header::getStr(std::string key, std::string *varStr){
     bool result = false;
-    std::map<std::string,DRW_Variant *>::iterator it;
-    it=vars.find( key);
+    auto it=vars.find( key);
     if (it != vars.end()) {
         DRW_Variant *var = (*it).second;
         if (var->type() == DRW_Variant::STRING) {
@@ -1745,8 +1741,7 @@ bool DRW_Header::getStr(std::string key, std::string *varStr){
 
 bool DRW_Header::getCoord(std::string key, DRW_Coord *varCoord){
     bool result = false;
-    std::map<std::string,DRW_Variant *>::iterator it;
-    it=vars.find( key);
+    auto it=vars.find( key);
     if (it != vars.end()) {
         DRW_Variant *var = (*it).second;
         if (var->type() == DRW_Variant::COORD) {
@@ -1759,16 +1754,16 @@ bool DRW_Header::getCoord(std::string key, DRW_Coord *varCoord){
     return result;
 }
 
-bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf, duint8 mv){
+bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf, duint8 maintenanceVersion){
     bool result = true;
     duint32 size = buf->getRawLong32();
     duint32 bitSize = 0;
     duint32 endBitPos = 160; //start bit: 16 sentinel + 4 size
     DRW_DBG("\nbyte size of data: "); DRW_DBG(size);
-    if (version > DRW::AC1021 && mv > 3) { //2010+
+    if (((version == DRW::AC1021 || version == DRW::AC1027 ) && maintenanceVersion > 3) || version >= DRW::AC1032 ) { //2010+
         duint32 hSize = buf->getRawLong32();
-        endBitPos += 32; //start bit: + 4 hight size
-        DRW_DBG("\n2010+ & MV> 3, higth 32b: "); DRW_DBG(hSize);
+        endBitPos += 32; //start bit: + 4 height size
+        DRW_DBG("\n2010+ & MV> 3, height 32b: "); DRW_DBG(hSize);
     }
 //RLZ TODO add $ACADVER var & $DWGCODEPAGE & $MEASUREMENT
 //RLZ TODO EN 2000 falta $CELWEIGHT, $ENDCAPS, $EXTNAMES $JOINSTYLE $LWDISPLAY $PSTYLEMODE $TDUCREATE  $TDUUPDATE $XEDIT
@@ -1949,7 +1944,7 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
 //    vars["TDUSRTIMER"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
 //    vars["TDUSRTIMER"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
     vars["CECOLOR"]=new DRW_Variant(62, buf->getCmColor(version));//RLZ: TODO read CMC or EMC color
-    dwgHandle HANDSEED = buf->getHandle();//allways present in data stream
+    dwgHandle HANDSEED = buf->getHandle();//always present in data stream
     DRW_DBG("\nHANDSEED: "); DRW_DBGHL(HANDSEED.code, HANDSEED.size, HANDSEED.ref);
     dwgHandle CLAYER = hBbuf->getHandle();
     DRW_DBG("\nCLAYER: "); DRW_DBGHL(CLAYER.code, CLAYER.size, CLAYER.ref);
@@ -2369,8 +2364,8 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     DRW_DBG("\nstring buf position: "); DRW_DBG(buf->getPosition());
     DRW_DBG("  string buf bit position: "); DRW_DBG(buf->getBitPos());
 
-    if (DRW_DBGGL == DRW_dbg::DEBUG){
-        for (std::map<std::string,DRW_Variant*>::iterator it=vars.begin(); it!=vars.end(); ++it){
+    if (DRW_DBGGL == DRW_dbg::Level::Debug){
+        for (auto it=vars.begin(); it!=vars.end(); ++it){
             DRW_DBG("\n"); DRW_DBG(it->first); DRW_DBG(": ");
             switch (it->second->type()){
             case DRW_Variant::INTEGER:
@@ -2394,11 +2389,11 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
         }
     }
 
-    buf->setPosition(size+16+4); //readed size +16 start sentinel + 4 size
-    if (version > DRW::AC1021 && mv > 3) { //2010+
+    buf->setPosition(size+16+4); //read size +16 start sentinel + 4 size
+    if (((version == DRW::AC1021 || version == DRW::AC1027 ) && maintenanceVersion > 3) || version >= DRW::AC1032 ) { //2010+
         buf->getRawLong32();//advance 4 bytes (hisize)
     }
-    DRW_DBG("\nseting position to: "); DRW_DBG(buf->getPosition());
+    DRW_DBG("\nsetting position to: "); DRW_DBG(buf->getPosition());
     DRW_DBG("\nHeader CRC: "); DRW_DBGH(buf->getRawShort16());
     DRW_DBG("\nbuf position: "); DRW_DBG(buf->getPosition());
     DRW_DBG("\ndwg header end sentinel= ");
@@ -2411,7 +2406,7 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     if (version < DRW::AC1018) {//pre 2004
         sz= buf->size()-16;
         buf->setPosition(sz);
-        DRW_DBG("\nseting position to: "); DRW_DBG(buf->getPosition());
+        DRW_DBG("\nsetting position to: "); DRW_DBG(buf->getPosition());
         DRW_DBG("\ndwg header end sentinel= ");
         for (int i=0; i<16;i++) {
             DRW_DBGH(buf->getRawChar8()); DRW_DBG(" ");
@@ -2420,7 +2415,7 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
 //        sz= buf->size()-132;
 //        buf->setPosition(sz);
         buf->moveBitPos(-128);
-        DRW_DBG("\nseting position to: "); DRW_DBG(buf->getPosition());
+        DRW_DBG("\nsetting position to: "); DRW_DBG(buf->getPosition());
         DRW_DBG("\ndwg header end sentinel= ");
         for (int i=0; i<16;i++) {
             DRW_DBGH(buf->getRawChar8()); DRW_DBG(" ");
@@ -2428,7 +2423,7 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     } else if (version == DRW::AC1021) {//2007
         sz= buf->size()-16;
         buf->setPosition(sz);
-        DRW_DBG("\nseting position to: "); DRW_DBG(buf->getPosition());
+        DRW_DBG("\nsetting position to: "); DRW_DBG(buf->getPosition());
         DRW_DBG("\ndwg header end sentinel= ");
         for (int i=0; i<16;i++) {
             DRW_DBGH(buf->getRawChar8()); DRW_DBG(" ");
@@ -2437,7 +2432,7 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
 //        sz= buf->size()-93;
 //        buf->setPosition(sz);
         buf->moveBitPos(-128);
-        DRW_DBG("\nseting position to: "); DRW_DBG(buf->getPosition());
+        DRW_DBG("\nsetting position to: "); DRW_DBG(buf->getPosition());
         DRW_DBG("\ndwg header end sentinel= ");
         for (int i=0; i<16;i++) {
             DRW_DBGH(buf->getRawChar8()); DRW_DBG(" ");
@@ -2446,7 +2441,7 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
 //        sz= buf->size()-76;
 //        buf->setPosition(sz);
         buf->moveBitPos(-128);
-        DRW_DBG("\nseting position to: "); DRW_DBG(buf->getPosition());
+        DRW_DBG("\nsetting position to: "); DRW_DBG(buf->getPosition());
         DRW_DBG("\ndwg header end sentinel= ");
         for (int i=0; i<16;i++) {
             DRW_DBGH(buf->getRawChar8()); DRW_DBG(" ");

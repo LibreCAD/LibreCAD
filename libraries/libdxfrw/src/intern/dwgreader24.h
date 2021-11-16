@@ -13,8 +13,6 @@
 #ifndef DWGREADER24_H
 #define DWGREADER24_H
 
-#include <map>
-#include <list>
 #include "drw_textcodec.h"
 #include "dwgbuffer.h"
 #include "dwgreader18.h"
@@ -27,21 +25,21 @@ public:
     bool readDwgClasses() override;
 //    bool readDwgHandles(){return false;}
 //    bool readDwgTables(){return false;}
-    bool readDwgBlocks(DRW_Interface& intfa) override{
+    bool readDwgBlocks(DRW_Interface& intfa) override {
         bool ret = true;
-        dwgBuffer dataBuf(objData.data(), uncompSize, &decoder);
+        dwgBuffer dataBuf(objData.get(), uncompSize, &decoder);
         ret = dwgReader::readDwgBlocks(intfa, &dataBuf);
         return ret;
     }
-    virtual bool readDwgEntities(DRW_Interface& intfa) override{
+    bool readDwgEntities(DRW_Interface& intfa) override {
         bool ret = true;
-        dwgBuffer dataBuf(objData.data(), uncompSize, &decoder);
+        dwgBuffer dataBuf(objData.get(), uncompSize, &decoder);
         ret = dwgReader::readDwgEntities(intfa, &dataBuf);
         return ret;
     }
-    virtual bool readDwgObjects(DRW_Interface& intfa) override{
+    bool readDwgObjects(DRW_Interface& intfa) override {
         bool ret = true;
-        dwgBuffer dataBuf(objData.data(), uncompSize, &decoder);
+        dwgBuffer dataBuf(objData.get(), uncompSize, &decoder);
         ret = dwgReader::readDwgObjects(intfa, &dataBuf);
         return ret;
     }

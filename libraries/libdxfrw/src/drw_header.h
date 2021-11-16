@@ -14,7 +14,7 @@
 #define DRW_HEADER_H
 
 
-#include <map>
+#include <unordered_map>
 #include "drw_base.h"
 
 class dxfReader;
@@ -26,8 +26,8 @@ class dwgBuffer;
 
 //! Class to handle header entries
 /*!
-*  Class to handle header vars, to read iterate over "std::map vars"
-*  to write add a DRW_Variant* into "std::map vars" (do not delete it, are cleared in dtor)
+*  Class to handle header vars, to read iterate over "std::unordered_map vars"
+*  to write add a DRW_Variant* into "std::unordered_map vars" (do not delete it, are cleared in dtor)
 *  or use add* helper functions.
 *  @author Rallaz
 */
@@ -42,7 +42,7 @@ public:
     DRW_Header(const DRW_Header& h){
         this->version = h.version;
         this->comments = h.comments;
-        for (std::map<std::string,DRW_Variant*>::const_iterator it=h.vars.begin(); it!=h.vars.end(); ++it){
+        for (auto it=h.vars.begin(); it!=h.vars.end(); ++it){
             this->vars[it->first] = new DRW_Variant( *(it->second) );
         }
         this->curr = NULL;
@@ -52,7 +52,7 @@ public:
            clearVars();
            this->version = h.version;
            this->comments = h.comments;
-           for (std::map<std::string,DRW_Variant*>::const_iterator it=h.vars.begin(); it!=h.vars.end(); ++it){
+           for (auto it=h.vars.begin(); it!=h.vars.end(); ++it){
                this->vars[it->first] = new DRW_Variant( *(it->second) );
            }
        }
@@ -76,14 +76,14 @@ private:
     bool getStr(std::string key, std::string *varStr);
     bool getCoord(std::string key, DRW_Coord *varStr);
     void clearVars(){
-        for (std::map<std::string,DRW_Variant*>::iterator it=vars.begin(); it!=vars.end(); ++it)
+        for (auto it=vars.begin(); it!=vars.end(); ++it)
             delete it->second;
 
         vars.clear();
     }
 
 public:
-    std::map<std::string,DRW_Variant*> vars;
+    std::unordered_map<std::string,DRW_Variant*> vars;
 private:
     std::string comments;
     std::string name;

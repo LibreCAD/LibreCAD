@@ -50,23 +50,40 @@ void DRW_TableEntry::parseCode(int code, dxfReader *reader){
     case 1011:
     case 1012:
     case 1013:
-        curr = new DRW_Variant(code, DRW_Coord(reader->getDouble(), 0.0, 0.0));
-        extData.push_back(curr);
+        // don't trust in X, Y, Z order!
+        if (nullptr != curr) {
+            curr->setCoordX( reader->getDouble());
+        }
+        else {
+            curr = new DRW_Variant( code, DRW_Coord( reader->getDouble(), 0.0, 0.0));
+            extData.push_back(curr);
+        }
         break;
     case 1020:
     case 1021:
     case 1022:
     case 1023:
-        if (curr)
-            curr->setCoordY(reader->getDouble());
+        // don't trust in X, Y, Z order!
+        if (nullptr != curr) {
+            curr->setCoordY( reader->getDouble());
+        }
+        else {
+            curr = new DRW_Variant( code, DRW_Coord( 0.0, reader->getDouble(), 0.0));
+            extData.push_back(curr);
+        }
         break;
     case 1030:
     case 1031:
     case 1032:
     case 1033:
-        if (curr)
-            curr->setCoordZ(reader->getDouble());
-        curr=NULL;
+        // don't trust in X, Y, Z order!
+        if (nullptr != curr) {
+            curr->setCoordZ( reader->getDouble());
+        }
+        else {
+            curr = new DRW_Variant( code, DRW_Coord( 0.0, 0.0, reader->getDouble()));
+            extData.push_back(curr);
+        }
         break;
     case 1040:
     case 1041:
@@ -449,7 +466,7 @@ void DRW_LType::parseCode(int code, dxfReader *reader){
 
 //! Update line type
 /*!
-*  Update the size and length of line type acording to the path
+*  Update the size and length of line type according to the path
 *  @author Rallaz
 */
 /*TODO: control max length permited */

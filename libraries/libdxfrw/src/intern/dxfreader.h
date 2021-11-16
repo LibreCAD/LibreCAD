@@ -43,13 +43,13 @@ public:
     unsigned long long int getInt64() {return int64;}
     bool getBool() { return (intData==0) ? false : true;}
     int getVersion(){return decoder.getVersion();}
-    void setVersion(std::string *v, bool dxfFormat){decoder.setVersion(v, dxfFormat);}
-    void setCodePage(std::string *c){decoder.setCodePage(c, true);}
+    void setVersion(const std::string &v, bool dxfFormat){decoder.setVersion(v, dxfFormat);}
+    void setCodePage(const std::string &c){decoder.setCodePage(c, true);}
     std::string getCodePage(){ return decoder.getCodePage();}
-    void setIgnoreComments( const bool bValue) { m_bIgnoreComments = bValue;};
+    void setIgnoreComments(const bool bValue) {m_bIgnoreComments = bValue;}
 
 protected:
-    virtual bool readCode(int *code) = 0; //return true if sucesful (not EOF)
+    virtual bool readCode(int *code) = 0; //return true if successful (not EOF)
     virtual bool readString(std::string *text) = 0;
     virtual bool readString() = 0;
     virtual bool readBinary() = 0;
@@ -93,12 +93,12 @@ public:
     virtual bool readCode(int *code);
     virtual bool readString(std::string *text);
     virtual bool readString();
+    virtual bool readBinary();
     virtual bool readInt16();
     virtual bool readDouble();
     virtual bool readInt32();
     virtual bool readInt64();
     virtual bool readBool();
-    virtual bool readBinary();
 };
 
 #endif // DXFREADER_H
