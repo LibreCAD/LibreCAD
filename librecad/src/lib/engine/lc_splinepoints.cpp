@@ -999,7 +999,9 @@ RS_Vector LC_SplinePoints::GetSplinePointAtDist(double dDist, int iStartSeg,
 
 	if(dDist <= dQuadDist)
 	{
-		double dt = GetQuadPointAtDist(vStart, vControl, vEnd, 0.0, dDist);
+        double t0 = 0.0;
+        if (i == (iStartSeg + 1)) { t0 = dStartT; }
+		double dt = GetQuadPointAtDist(vStart, vControl, vEnd, t0, dDist);
 		vRes = GetQuadPoint(vStart, vControl, vEnd, dt);
 		*piSeg = i - 1;
 		*pdt = dt;
@@ -1070,7 +1072,7 @@ RS_Vector LC_SplinePoints::getNearestMiddle(const RS_Vector& coord,
     vRes = GetSplinePointAtDist(dDist, 1, 0.0, &iNext, &dt);
 	if(vRes.valid) dMinDist = (vRes - coord).magnitude();
     i = 2;
-	while(vRes.valid && i < middlePoints)
+	while(vRes.valid && i <= middlePoints)
 	{
 		vNext = GetSplinePointAtDist(dDist, iNext, dt, &iNext, &dt);
 		dCurDist = (vNext - coord).magnitude();
