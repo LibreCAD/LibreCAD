@@ -83,7 +83,8 @@ LC_ActionGroupManager::LC_ActionGroupManager(QObject* parent)
     foreach (auto ag, findChildren<QActionGroup*>())
     {
         ag->setExclusive(false);
-        if (ag->objectName() != QObject::tr("File"))
+        if ((ag->objectName() != QObject::tr("File")) 
+        &&  (ag->objectName() != QObject::tr("Options")))
         {
             connect(parent, SIGNAL(windowsChanged(bool)),
                     ag, SLOT(setEnabled(bool)));

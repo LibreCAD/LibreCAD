@@ -983,18 +983,19 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action_handler, SLOT(slotOptionsDrawing()));
     action->setObjectName("OptionsDrawing");
     a_map["OptionsDrawing"] = action;
+    connect(main_window, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     action = new QAction(tr("Widget Options"), agm->options);
     action->setObjectName("WidgetOptions");
     a_map["WidgetOptions"] = action;
-    connect(action, SIGNAL(triggered()),
-            main_window, SLOT(widgetOptionsDialog()));
+    connect(action, SIGNAL(triggered()), main_window, SLOT(widgetOptionsDialog()));
+    connect(main_window, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     action = new QAction(tr("Device Options"), agm->options);
     action->setObjectName("DeviceOptions");
     a_map["DeviceOptions"] = action;
-    connect(action, SIGNAL(triggered()),
-            main_window, SLOT(showDeviceOptions()));
+    connect(action, SIGNAL(triggered()), main_window, SLOT(showDeviceOptions()));
+    connect(main_window, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // <[~ Modify ~]>
 
@@ -1183,6 +1184,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
             main_window, SLOT(reloadStyleSheet()));
     action->setObjectName("ReloadStyleSheet");
     a_map["ReloadStyleSheet"] = action;
+    connect(main_window, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     action = new QAction(tr("Menu Creator"), agm->widgets);
     action->setIcon(QIcon(":/icons/create_menu.svg"));
