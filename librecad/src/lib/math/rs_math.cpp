@@ -34,6 +34,7 @@
 #include <QDebug>
 
 #include "rs_math.h"
+#include "rs_units.h"
 #include "rs_vector.h"
 #include "rs_debug.h"
 
