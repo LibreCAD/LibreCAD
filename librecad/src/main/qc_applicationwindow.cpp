@@ -1889,9 +1889,13 @@ void QC_ApplicationWindow::slotFileOpen(const QString& fileName, RS2::FormatType
         commandWidget->appendHistory(message);
         statusBar()->showMessage(message, 2000);
 
-	} else {
-		QG_DIALOGFACTORY->commandMessage(tr("File '%1' does not exist. Opening aborted").arg(fileName));
+    }
+    else
+    {
+        QG_DIALOGFACTORY->commandMessage(tr("File '%1' does not exist. Opening aborted").arg(fileName));
         statusBar()->showMessage(tr("Opening aborted"), 2000);
+
+        recentFiles->remove(fileName);
     }
 
     QApplication::restoreOverrideCursor();

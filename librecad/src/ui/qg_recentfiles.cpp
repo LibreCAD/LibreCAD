@@ -80,6 +80,27 @@ void QG_RecentFiles::add(const QString& filename) {
 }
 
 
+/**
+ * Removes a file from the list of recently loaded files if
+ * it no longer exists on it's intended path.
+ */
+void QG_RecentFiles::remove(const QString& filename)
+{
+    RS_DEBUG->print("QG_RecentFiles::remove");
+
+    int index = files.indexOf(filename);
+
+    if (index != -1)
+    {
+        files.erase(files.begin() + index);
+
+        updateRecentFilesMenu();
+    }
+
+    RS_DEBUG->print("QG_RecentFiles::remove: OK");
+}
+
+
 QString QG_RecentFiles::get(int i) const{
 	if (i<files.size()) {
 		return files[i];

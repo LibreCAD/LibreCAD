@@ -47,6 +47,8 @@ public:
 
     void add(const QString& filename);
 
+    void remove(const QString& filename);
+
     /**
      * @return complete path and name of the file stored in the
      * list at index i
