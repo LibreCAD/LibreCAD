@@ -28,7 +28,7 @@
 **********************************************************************/
 
 // Changes: https://github.com/LibreCAD/LibreCAD/commits/master/librecad/src/main/qc_applicationwindow.cpp
-#include <iostream>
+
 #include "qc_applicationwindow.h"
 
 #include <QStatusBar>
@@ -106,6 +106,8 @@
 #include "lc_penwizard.h"
 #include "textfileviewer.h"
 #include "lc_undosection.h"
+
+#include "rs_actionblockssave.h"
 
 #include <boost/version.hpp>
 
@@ -1920,9 +1922,6 @@ void QC_ApplicationWindow::slotFileSave() {
 		recentFiles->updateRecentFilesMenu();
 }
 
-#include "qg_actionhandler.h"
-#include "rs_actionblockssave.h"
-#include <iostream>
 
 /**
  * Menu file -> save as.
