@@ -1751,23 +1751,28 @@ QString QC_ApplicationWindow::
  *	Returns:			void
  *	Notes:			Menu file -> open.
  *	*/
-void QC_ApplicationWindow::
-        slotFileOpen(const QString& fileName, RS2::FormatType type)
+void QC_ApplicationWindow::slotFileOpen(const QString& fileName, RS2::FormatType type)
 {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen(..)");
 
     QSettings settings;
 
-    QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
-    if ( QFileInfo(fileName).exists())
-         {
+    if (QFileInfo(fileName).exists())
+    {
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: creating new doc window");
-        if (openedFiles.indexOf(fileName) >=0) {
+
+        if (openedFiles.indexOf(fileName) != -1)
+        {
             QString message=tr("Warning: File already opened : ")+fileName;
             commandWidget->appendHistory(message);
             statusBar()->showMessage(message, 2000);
+
+            QApplication::setOverrideCursor(QCursor(Qt::ArrowCursor));
+            return;
         }
+
         // Create new document window:
 		QMdiSubWindow* old=activedMdiSubWindow;
         QRect geo;
