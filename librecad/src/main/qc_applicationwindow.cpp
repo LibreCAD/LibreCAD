@@ -129,6 +129,8 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
  *	*/
 #define WTB_MAX_SIZE        79
 
+#define DEFAULT_STATUS_BAR_HEIGHT 50
+
 /**
  * Constructor. Initializes the app.
  */
@@ -191,12 +193,18 @@ QC_ApplicationWindow::QC_ApplicationWindow()
         font.setPointSize(fontsize);
         status_bar->setFont(font);
     }
+
+    int statusBarHeight = DEFAULT_STATUS_BAR_HEIGHT;
     if (allow_statusbar_height)
     {
-        int height = settings.value("StatusbarHeight", 28).toInt();
-        status_bar->setMinimumHeight(height);
+        statusBarHeight = settings.value("StatusbarHeight", DEFAULT_STATUS_BAR_HEIGHT).toInt();
     }
+    status_bar->setFixedHeight(statusBarHeight);
+
     settings.endGroup();
+
+    mouseWidget->findChild<QLabel*>("lMousePixmap")->setPixmap(
+    mouseWidget->findChild<QLabel*>("lMousePixmap")->pixmap()->scaled(statusBarHeight, statusBarHeight));
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating LC_CentralWidget");
 
@@ -3175,7 +3183,7 @@ void QC_ApplicationWindow::widgetOptionsDialog()
 
     int allow_statusbar_height = settings.value("AllowStatusbarHeight", 0).toInt();
     dlg.statusbar_height_checkbox->setChecked(allow_statusbar_height);
-    int statusbar_height = settings.value("StatusbarHeight", 32).toInt();
+    int statusbar_height = settings.value("StatusbarHeight", DEFAULT_STATUS_BAR_HEIGHT).toInt();
     dlg.statusbar_height_spinbox->setValue(statusbar_height);
 
     int allow_statusbar_fontsize = settings.value("AllowStatusbarFontSize", 0).toInt();
@@ -3226,9 +3234,12 @@ void QC_ApplicationWindow::widgetOptionsDialog()
         settings.setValue("AllowStatusbarHeight", allow_statusbar_height);
         if (allow_statusbar_height)
         {
-            int statusbar_height = dlg.statusbar_height_spinbox->value();
+            statusbar_height = dlg.statusbar_height_spinbox->value();
             settings.setValue("StatusbarHeight", statusbar_height);
-            statusBar()->setMinimumHeight(statusbar_height);
+            statusBar()->setFixedHeight(statusbar_height);
+
+            mouseWidget->findChild<QLabel*>("lMousePixmap")->setPixmap(
+            mouseWidget->findChild<QLabel*>("lMousePixmap")->pixmap()->scaled(statusbar_height, statusbar_height));
         }
     }
     settings.endGroup();
