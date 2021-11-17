@@ -204,7 +204,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     settings.endGroup();
 
     mouseWidget->findChild<QLabel*>("lMousePixmap")->setPixmap(
-    mouseWidget->findChild<QLabel*>("lMousePixmap")->pixmap()->scaled(statusBarHeight, statusBarHeight));
+    QPixmap(":/icons/mouse.svg").scaled(statusBarHeight, statusBarHeight));
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating LC_CentralWidget");
 
@@ -3239,7 +3239,7 @@ void QC_ApplicationWindow::widgetOptionsDialog()
             statusBar()->setFixedHeight(statusbar_height);
 
             mouseWidget->findChild<QLabel*>("lMousePixmap")->setPixmap(
-            mouseWidget->findChild<QLabel*>("lMousePixmap")->pixmap()->scaled(statusbar_height, statusbar_height));
+            QPixmap(":/icons/mouse.svg").scaled(statusbar_height, statusbar_height));
         }
     }
     settings.endGroup();
