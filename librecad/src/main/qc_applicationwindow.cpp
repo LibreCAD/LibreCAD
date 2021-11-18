@@ -1769,7 +1769,7 @@ void QC_ApplicationWindow::slotFileOpen(const QString& fileName, RS2::FormatType
             commandWidget->appendHistory(message);
             statusBar()->showMessage(message, 2000);
 
-            QApplication::setOverrideCursor(QCursor(Qt::ArrowCursor));
+            QApplication::restoreOverrideCursor();
             return;
         }
 
