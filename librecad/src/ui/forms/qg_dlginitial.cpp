@@ -88,10 +88,8 @@ void QG_DlgInitial::setPixmap(const QPixmap& p) {
 
 void QG_DlgInitial::ok() {
     RS_SETTINGS->beginGroup("/Appearance");
-    RS_SETTINGS->writeEntry("/Language",
-                            cbLanguage->itemData(cbLanguage->currentIndex()));
-    RS_SETTINGS->writeEntry("/LanguageCmd",
-                            cbLanguage->itemData(cbLanguage->currentIndex()));
+    RS_SETTINGS->writeEntry("/Language",    cbLanguage   ->itemData(cbLanguage   ->currentIndex()));
+    RS_SETTINGS->writeEntry("/LanguageCmd", cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()));
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Defaults");
