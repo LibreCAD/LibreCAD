@@ -227,7 +227,7 @@ public slots:
 
     void invokeLicenseWindow();
 
-    void status_bar_widgets_visibility(bool clear);
+    void status_bar_widgets_visibility(bool isVisible);
 
 
 signals:
