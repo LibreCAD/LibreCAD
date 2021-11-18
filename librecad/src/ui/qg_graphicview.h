@@ -167,6 +167,7 @@ private:
 signals:
     void xbutton1_released();
     void gridStatusChanged(const QString&);
+    void status_bar_widgets_visibility_request(bool);
 };
 
 #endif

@@ -448,12 +448,14 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
 
 void QG_GraphicView::leaveEvent(QEvent* e) {
     eventHandler->mouseLeaveEvent();
+    emit status_bar_widgets_visibility_request(true);
     QWidget::leaveEvent(e);
 }
 
 
 void QG_GraphicView::enterEvent(QEvent* e) {
     eventHandler->mouseEnterEvent();
+    emit status_bar_widgets_visibility_request(false);
     QWidget::enterEvent(e);
 }
 

@@ -129,6 +129,9 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
  *	*/
 #define WTB_MAX_SIZE        79
 
+#define DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT 2000
+
+
 /**
  * Constructor. Initializes the app.
  */
@@ -178,6 +181,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     status_bar->addWidget(m_pActiveLayerName);
     grid_status = new TwoStackedLabels(status_bar);
     grid_status->setTopLabel(tr("Grid Status"));
+    grid_status->setObjectName("grid status");
     status_bar->addWidget(grid_status);
 
     settings.beginGroup("Widgets");
@@ -373,7 +377,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     //plugin load
     loadPlugins();
 
-    statusBar()->showMessage(qApp->applicationName() + " Ready", 2000);
+    statusBar()->showMessage(qApp->applicationName() + " Ready", DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
 }
 
 /**
@@ -476,12 +480,12 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs)
 		bool res = forceSaveAs ? w->slotFileSaveAs(cancelled) : w->slotFileSave(cancelled);
 		if (res) {
 			if (cancelled) {
-				statusBar()->showMessage(tr("Save cancelled"), 2000);
+				statusBar()->showMessage(tr("Save cancelled"), DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
 				return false;
 			}
 			name = w->getDocument()->getFilename();			
 			msg = tr("Saved drawing: %1").arg(name);
-			statusBar()->showMessage(msg, 2000);
+			statusBar()->showMessage(msg, DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
 			commandWidget->appendHistory(msg);
 			if (!recentFiles->indexOf(name))
 				recentFiles->add(name);
@@ -500,7 +504,7 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs)
 			msg = tr("Cannot save the file ") +
 				w->getDocument()->getFilename()
 				+ tr(" , please check the filename and permissions.");
-			statusBar()->showMessage(msg, 2000);
+			statusBar()->showMessage(msg, DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
 			commandWidget->appendHistory(msg);
 			return doSave(w, true);
 		}
@@ -1484,6 +1488,9 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     connect(view, SIGNAL(gridStatusChanged(const QString&)),
             this, SLOT(updateGridStatus(const QString&)));
 
+    connect(view, SIGNAL(status_bar_widgets_visibility_request(bool)),
+            this, SLOT(status_bar_widgets_visibility(bool)));
+
     actionHandler->set_view(view);
     actionHandler->set_document(w->getDocument());
 
@@ -1545,7 +1552,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     RS_DEBUG->print("  showing MDI window");
 	doActivate(w);
 	doArrangeWindows(RS2::CurrentMode);
-    statusBar()->showMessage(tr("New Drawing created."), 2000);
+    statusBar()->showMessage(tr("New Drawing created."), DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
 
     layerWidget->activateLayer(0);
 
@@ -1602,7 +1609,7 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow* w) 
     if (!fileName.isEmpty()) {
         QString message=tr("New document from template: ")+fileName;
         commandWidget->appendHistory(message);
-        statusBar()->showMessage(message, 2000);
+        statusBar()->showMessage(message, DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
     }
     if (w->getGraphic()) {
         emit(gridChanged(w->getGraphic()->isGridOn()));
@@ -1648,7 +1655,7 @@ void QC_ApplicationWindow::slotFileNewTemplate() {
     QString fileName = dlg.getOpenFile(&type);
 
     if (fileName.isEmpty()) {
-           statusBar()->showMessage(tr("Select Template aborted"), 2000);
+           statusBar()->showMessage(tr("Select Template aborted"), DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
            return;
        }
 
@@ -1766,7 +1773,7 @@ void QC_ApplicationWindow::
         if (openedFiles.indexOf(fileName) >=0) {
             QString message=tr("Warning: File already opened : ")+fileName;
             commandWidget->appendHistory(message);
-            statusBar()->showMessage(message, 2000);
+            statusBar()->showMessage(message, DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
         }
         // Create new document window:
 		QMdiSubWindow* old=activedMdiSubWindow;
@@ -1882,11 +1889,11 @@ void QC_ApplicationWindow::
 
         QString message=tr("Loaded document: ")+fileName;
         commandWidget->appendHistory(message);
-        statusBar()->showMessage(message, 2000);
+        statusBar()->showMessage(message, DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
 
 	} else {
 		QG_DIALOGFACTORY->commandMessage(tr("File '%1' does not exist. Opening aborted").arg(fileName));
-        statusBar()->showMessage(tr("Opening aborted"), 2000);
+        statusBar()->showMessage(tr("Opening aborted"), DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
     }
 
     QApplication::restoreOverrideCursor();
@@ -1927,7 +1934,7 @@ bool QC_ApplicationWindow::slotFileSaveAll()
 		if (w && w->getDocument()->isModified()) {
 			result = doSave(w);
 			if (!result) {
-				statusBar()->showMessage(tr("Save All cancelled"), 2000);
+				statusBar()->showMessage(tr("Save All cancelled"), DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
 				break;
 			}
 		}
@@ -1945,7 +1952,7 @@ bool QC_ApplicationWindow::slotFileSaveAll()
 void QC_ApplicationWindow::slotFileAutoSave() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileAutoSave()");
 
-    statusBar()->showMessage(tr("Auto-saving drawing..."), 2000);
+    statusBar()->showMessage(tr("Auto-saving drawing..."), DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
 
     QC_MDIWindow* w = getMDIWindow();
     if (w) {
@@ -1953,7 +1960,7 @@ void QC_ApplicationWindow::slotFileAutoSave() {
         if (w->slotFileSave(cancelled, true)) {
             // auto-save cannot be cancelled by user, so the
             // "cancelled" parameter is a dummy
-            statusBar()->showMessage(tr("Auto-saved drawing"), 2000);
+            statusBar()->showMessage(tr("Auto-saved drawing"), DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
         } else {
             // error
             autosaveTimer->stop();
@@ -1963,7 +1970,7 @@ void QC_ApplicationWindow::slotFileAutoSave() {
                                         "Auto-save disabled.")
                                      .arg(w->getDocument()->getAutoSaveFilename()),
                                      QMessageBox::Ok);
-            statusBar()->showMessage(tr("Auto-saving failed"), 2000);
+            statusBar()->showMessage(tr("Auto-saving failed"), DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
         }
     }
 }
@@ -1976,7 +1983,7 @@ void QC_ApplicationWindow::slotFileAutoSave() {
 void QC_ApplicationWindow::slotFileExport() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileExport()");
 
-    statusBar()->showMessage(tr("Exporting drawing..."), 2000);
+    statusBar()->showMessage(tr("Exporting drawing..."), DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
 
     QC_MDIWindow* w = getMDIWindow();
     QString fn;
@@ -2067,7 +2074,7 @@ void QC_ApplicationWindow::slotFileExport() {
                             dlg.isBackgroundBlack(), dlg.isBlackWhite());
                 if (ret) {
                     QString message = tr("Exported: %1").arg(fn);
-                    statusBar()->showMessage(message, 2000);
+                    statusBar()->showMessage(message, DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
                     commandWidget->appendHistory(message);
                 }
             }
@@ -2179,9 +2186,9 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
     delete vector;
 
     if (ret) {
-        statusBar()->showMessage(tr("Export complete"), 2000);
+        statusBar()->showMessage(tr("Export complete"), DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
     } else {
-        statusBar()->showMessage(tr("Export failed!"), 2000);
+        statusBar()->showMessage(tr("Export failed!"),  DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
     }
 
     return ret;
@@ -2248,7 +2255,7 @@ bool QC_ApplicationWindow::slotFileCloseAll()
 			}
 		}
 		if (cancel) {
-			statusBar()->showMessage(tr("Close All cancelled"), 2000);
+			statusBar()->showMessage(tr("Close All cancelled"), DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
 			return false;
 		}
 
@@ -2500,7 +2507,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         QApplication::restoreOverrideCursor();
     }
 
-    statusBar()->showMessage(tr("Printing complete"), 2000);
+    statusBar()->showMessage(tr("Printing complete"), DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
 }
 
 void QC_ApplicationWindow::slotFilePrintPDF() {
@@ -2769,6 +2776,30 @@ void QC_ApplicationWindow::slotViewStatusBar(bool toggle) {
 
     statusBar()->setVisible(toggle);
 }
+
+
+/*
+    Toggles the visibility of widgets within the status bar.
+
+    - by Melwyn Francis Carlo
+*/
+void QC_ApplicationWindow::status_bar_user_widgets_visibility(bool clear)
+{
+    QString statusBarMessage = statusBar()->currentMessage();
+
+    statusBar()->clearMessage();
+
+    foreach(QWidget *statusBarChildWidget, statusBar()->findChildren<QWidget*>())
+    {
+        if (!statusBarChildWidget->objectName().isEmpty())
+        {
+            statusBarChildWidget->setVisible(!clear);
+        }
+    }
+
+    if (!statusBarMessage.isEmpty()) statusBar()->showMessage(statusBarMessage, DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
+}
+
 
 /**
  * Shows the dialog for general application preferences.

@@ -227,6 +227,8 @@ public slots:
 
     void invokeLicenseWindow();
 
+    void status_bar_widgets_visibility(bool clear);
+
 
 signals:
     void gridChanged(bool on);
