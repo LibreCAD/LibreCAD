@@ -2783,7 +2783,7 @@ void QC_ApplicationWindow::slotViewStatusBar(bool toggle) {
 
     - by Melwyn Francis Carlo
 */
-void QC_ApplicationWindow::status_bar_user_widgets_visibility(bool clear)
+void QC_ApplicationWindow::status_bar_widgets_visibility(bool clear)
 {
     QString statusBarMessage = statusBar()->currentMessage();
 
