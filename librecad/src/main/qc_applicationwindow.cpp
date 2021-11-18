@@ -2201,6 +2201,7 @@ bool QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
 		switch (showCloseDialog(win)) {
 		case QG_ExitDialog::Save:
 			cancel = !doSave(win);
+			recentFiles->updateRecentFilesMenu();
 			break;
 		case QG_ExitDialog::Cancel:
 			cancel = true;
