@@ -224,11 +224,21 @@ QC_MDIWindow* QC_MDIWindow::getPrintPreview() {
 /**
  * Called by Qt when the user closes this MDI window.
  */
-void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
+void QC_MDIWindow::closeEvent(QCloseEvent* ce)
+{
     RS_DEBUG->print("QC_MDIWindow::closeEvent begin");
 
-    emit(signalClosing(this));
-    ce->accept(); // handling delegated to QApplication
+    bool canClose = emit close_window_signal(this);
+
+    if (canClose)
+    {
+        /* Handling delegated to QApplication. */
+        ce->accept();
+    }
+    else
+    {
+        ce->ignore();
+    }
 
     RS_DEBUG->print("QC_MDIWindow::closeEvent end");
 }
