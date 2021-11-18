@@ -2793,7 +2793,7 @@ void QC_ApplicationWindow::status_bar_widgets_visibility(bool clear)
     {
         if (!statusBarChildWidget->objectName().isEmpty())
         {
-            statusBarChildWidget->setVisible(!clear);
+            statusBarChildWidget->setVisible(clear);
         }
     }
 
