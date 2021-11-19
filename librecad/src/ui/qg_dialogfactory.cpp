@@ -657,7 +657,6 @@ QString QG_DialogFactory::requestImageOpenDialog()
     }
     QString strAllImageFiles = QObject::tr("All Image Files (%1)").arg(all);
     filters.append(strAllImageFiles);
-    filters.append(QObject::tr("All Files (*.*)"));
 
 	QFileDialog fileDlg(nullptr, "");
     fileDlg.setModal(true);

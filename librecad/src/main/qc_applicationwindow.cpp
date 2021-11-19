@@ -2325,8 +2325,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         QString     defFilter("PDF files (*.pdf)");
         QStringList filters;
 
-        filters << defFilter
-                << "Any files (*)";
+        filters << defFilter;
 
         fileDlg.setNameFilters(filters);
         fileDlg.setFileMode(QFileDialog::AnyFile);
