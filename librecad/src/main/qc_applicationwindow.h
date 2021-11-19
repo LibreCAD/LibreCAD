@@ -301,6 +301,8 @@ public:
      */
     QC_MDIWindow* getWindowWithDoc(const RS_Document* doc);
 
+    QString getCurrentDocumentName();
+
 protected:
     void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open
