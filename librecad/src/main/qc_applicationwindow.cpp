@@ -1487,7 +1487,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     actionHandler->set_view(view);
     actionHandler->set_document(w->getDocument());
 
-    connect(w, SIGNAL(close_window_signal(QC_MDIWindow*)), this, SLOT(slotFileClosing(QC_MDIWindow*)));
+    connect(w, &QC_MDIWindow::signalClosing, this, &QC_ApplicationWindow::slotFileClosing);
 
     if (w->getDocument()->rtti()==RS2::EntityBlock) {
         w->setWindowTitle(tr("Block '%1'").arg(((RS_Block*)(w->getDocument()))->getName()) + "[*]");
@@ -2192,28 +2192,35 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
  * If modified, show the Save/Close/Cancel dialog, then do the request.
  * If a save is needed but the user cancels, the window is not closed.
  */
-bool QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
+void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win, bool* closeWindow /* = nullptr */)
 {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClosing()");
-	bool cancel = false;
-	bool hasParent = win->getParentWindow() != nullptr;
-	if (win && win->getDocument()->isModified() && !hasParent) {
-		switch (showCloseDialog(win)) {
-		case QG_ExitDialog::Save:
-			cancel = !doSave(win);
-			recentFiles->updateRecentFilesMenu();
-			break;
-		case QG_ExitDialog::Cancel:
-			cancel = true;
-			break;
-		}
-	}
-	if (!cancel)
-	{
-		doClose(win);
-		doArrangeWindows(RS2::CurrentMode);
-	}
-    return !cancel;
+
+    bool closeWin  = true;
+    bool hasParent = (win->getParentWindow() != nullptr);
+
+    if (win && win->getDocument()->isModified() && !hasParent)
+    {
+        switch (showCloseDialog(win))
+        {
+            case QG_ExitDialog::Save:
+                closeWin = doSave(win);
+                recentFiles->updateRecentFilesMenu();
+                break;
+
+            case QG_ExitDialog::Cancel:
+                closeWin = false;
+                break;
+        }
+    }
+
+    if (closeWin)
+    {
+        doClose(win);
+        doArrangeWindows(RS2::CurrentMode);
+    }
+
+    if (closeWindow != nullptr) *closeWindow = closeWin;
 }
 
 /**
@@ -2577,7 +2584,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                 mdiAreaCAD->addSubWindow(w);
                 parent->addChildWindow(w);
 
-                connect(w, SIGNAL(close_window_signal(QC_MDIWindow*)), this, SLOT(slotFileClosing(QC_MDIWindow*)));
+                connect(w, &QC_MDIWindow::signalClosing, this, &QC_ApplicationWindow::slotFileClosing);
 
                 w->setWindowTitle(tr("Print preview for %1").arg(parent->windowTitle()));
                 w->setWindowIcon(QIcon(":/main/document.png"));

@@ -164,7 +164,7 @@ public slots:
                         bool black,
                         bool bw=true);
     /** closing the current file */
-    bool slotFileClosing(QC_MDIWindow*);
+    void slotFileClosing(QC_MDIWindow*, bool* = nullptr);
 	/** close all files; return false == operation cancelled */
 	bool slotFileCloseAll();
     /** prints the current file */

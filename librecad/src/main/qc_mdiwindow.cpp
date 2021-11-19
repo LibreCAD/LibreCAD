@@ -228,7 +228,9 @@ void QC_MDIWindow::closeEvent(QCloseEvent* ce)
 {
     RS_DEBUG->print("QC_MDIWindow::closeEvent begin");
 
-    bool canClose = emit close_window_signal(this);
+    bool canClose;
+
+    emit signalClosing(this, &canClose);
 
     if (canClose)
     {
