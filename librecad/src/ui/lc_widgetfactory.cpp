@@ -725,6 +725,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     tools_menu->addAction(a_map["DrawText"]);
     tools_menu->addAction(a_map["DrawHatch"]);
     tools_menu->addAction(a_map["DrawPoint"]);
+    tools_menu->addAction(a_map["SnapMiddleManual"]);
 
     // <[~ Layer ~]>
 
