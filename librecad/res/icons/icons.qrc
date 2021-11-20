@@ -51,6 +51,7 @@
         <file>snap_grid.svg</file>
         <file>snap_intersection.svg</file>
         <file>snap_middle.svg</file>
+        <file>snap_middle_manual.svg</file>
         <file>lock_rel_zero.svg</file>
         <file>set_rel_zero.svg</file>
         <file>arc_3_points.svg</file>

@@ -118,6 +118,16 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("DrawPoint");
     a_map["DrawPoint"] = action;
 
+
+    /* Snap Middle Manual */
+    action = new QAction(tr("Snap Middle M&anual"), agm->line);
+    action->setIcon(QIcon(":/icons/snap_middle_manual.svg"));
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotSnapMiddleManual()));
+    action->setObjectName("SnapMiddleManual");
+    a_map["SnapMiddleManual"] = action;
+
+
     // <[~ Line ~]>
 
     action = new QAction(tr("&2 Points"), agm->line);

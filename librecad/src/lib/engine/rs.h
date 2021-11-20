@@ -347,6 +347,7 @@ namespace RS2 {
         ActionSnapCenter,
         ActionSnapMiddle,
         ActionSnapDist,
+        ActionSnapMiddleManual,
         ActionSnapIntersection,
         ActionSnapIntersectionManual,
 

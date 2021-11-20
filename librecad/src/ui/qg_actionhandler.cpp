@@ -154,6 +154,7 @@
 #include "rs_actionselectwindow.h"
 #include "rs_actionsetrelativezero.h"
 #include "rs_actionsetsnapmode.h"
+#include "rs_actionsnapmiddlemanual.h"
 #include "rs_actionsetsnaprestriction.h"
 #include "rs_actionsnapintersectionmanual.h"
 #include "rs_actiontoolregeneratedimensions.h"
@@ -240,6 +241,14 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
                 "QG_ActionHandler::setCurrentAction: graphic view or "
                 "document is nullptr");
         return nullptr;
+    }
+
+    if (currentAppPen != nullptr)
+    {
+        document->setActivePen(*currentAppPen);
+
+        delete currentAppPen;
+        currentAppPen = nullptr;
     }
 
     auto a_layer = document->getLayerList()->getActive();
@@ -799,6 +808,16 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 //    case RS2::ActionSnapIntersectionManual:
 //        a = new RS_ActionSnapIntersectionManual(*document, *view);
 //        break;
+    case RS2::ActionSnapMiddleManual:
+        {
+            const RS_Color redPenColor = RS_Color(255,0,0);
+            currentAppPen = new RS_Pen();
+           *currentAppPen = document->getActivePen();
+            const RS_Pen snapMiddleManual_pen = RS_Pen(redPenColor, RS2::Width01, RS2::DashDotLineTiny);
+            document->setActivePen(snapMiddleManual_pen);
+            a = new RS_ActionSnapMiddleManual(*document, *view);
+        }
+        break;
 
         // Snap restriction actions:
         //
@@ -1769,6 +1788,10 @@ void QG_ActionHandler::slotSnapIntersectionManual() {
         snapToolBar->setSnapMode(RS2::SnapIntersectionManual);
 }*/
     //setCurrentAction(RS2::ActionSnapIntersectionManual);
+}
+
+void QG_ActionHandler::slotSnapMiddleManual() {
+    setCurrentAction(RS2::ActionSnapMiddleManual);
 }
 
 void QG_ActionHandler::disableSnaps() {
