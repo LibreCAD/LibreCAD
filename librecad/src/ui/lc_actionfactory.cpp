@@ -448,6 +448,15 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("PolylineDel");
     a_map["PolylineDel"] = action;
 
+    action = new QAction(tr("&Delete a polyline node promptly"), agm->polyline);
+    action->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL + Qt::Key_Delete) 
+                                               << QKeySequence(Qt::CTRL + Qt::Key_Backspace));
+    action->setIcon(QIcon(":/icons/delete_node.svg"));
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotDeletePolylineNodePromptly()));
+    action->setObjectName("DeletePolylineNodePromptly");
+    a_map["DeletePolylineNodePromptly"] = action;
+
     action = new QAction(tr("Delete &between two nodes"), agm->polyline);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/icons/delete_between_nodes.svg"));

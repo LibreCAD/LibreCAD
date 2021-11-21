@@ -28,6 +28,7 @@
 #ifndef RS_POLYLINE_H
 #define RS_POLYLINE_H
 
+#include "rs_point.h"
 #include "rs_entity.h"
 #include "rs_entitycontainer.h"
 
@@ -71,6 +72,10 @@ public:
     RS_PolylineData getData() const {
         return data;
     }
+
+    bool toggleSelected() override;
+
+    RS_Vector getHighlightedVertex();
 
     /** sets a new start point of the polyline */
 	void setStartpoint(RS_Vector const& v);
@@ -149,6 +154,10 @@ protected:
     RS_PolylineData data;
     RS_Entity* closingEntity;
 	double nextBulge;
+
+    private:
+
+        RS_Point* highlightedVertex;
 };
 
 #endif

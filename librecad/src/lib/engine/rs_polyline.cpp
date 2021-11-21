@@ -35,6 +35,12 @@
 #include "rs_math.h"
 #include "rs_information.h"
 
+#include "rs.h"
+#include "rs_color.h"
+#include "rs_point.h"
+#include "rs_document.h"
+#include "qc_applicationwindow.h"
+
 RS_PolylineData::RS_PolylineData():
 	startpoint(false)
 	,endpoint(false)
@@ -92,6 +98,38 @@ RS_Entity* RS_Polyline::clone() const {
 	p->detach();
 	return p;
 }
+
+
+bool RS_Polyline::toggleSelected()
+{
+    if (!isSelected())
+    {
+        const RS_Color cyanPenColor = RS_Color(0,255,255);
+
+        const RS_Vector selectedVertexPoint = getNearestRef(QC_ApplicationWindow::getAppWindow()->getMouseAbsolutePosition());
+
+        highlightedVertex = new RS_Point (this, RS_PointData(selectedVertexPoint));
+
+        highlightedVertex->setPen(RS_Pen(cyanPenColor, RS2::Width20, RS2::SolidLine));
+
+		QC_ApplicationWindow::getAppWindow()->getDocument()->addEntity(highlightedVertex);
+    }
+    else
+    {
+        QC_ApplicationWindow::getAppWindow()->getDocument()->removeEntity(highlightedVertex);
+
+        highlightedVertex = nullptr;
+    }
+
+    return this->setSelected(!isSelected());
+}
+
+
+RS_Vector RS_Polyline::getHighlightedVertex()
+{
+    return highlightedVertex->getPos();
+}
+
 
 /**
  * Removes the last vertex of this polyline.

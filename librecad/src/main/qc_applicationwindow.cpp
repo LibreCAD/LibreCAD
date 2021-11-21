@@ -3656,3 +3656,20 @@ QC_MDIWindow* QC_ApplicationWindow::getWindowWithDoc(const RS_Document* doc)
 
     return wwd;
 }
+
+
+RS_Vector QC_ApplicationWindow::getMouseAbsolutePosition()
+{
+    if (coordinateWidget != nullptr) return coordinateWidget->getAbsoluteCoordinates();
+
+    return RS_Vector(false);
+}
+
+
+RS_Vector QC_ApplicationWindow::getMouseRelativePosition()
+{
+    if (coordinateWidget != nullptr) return coordinateWidget->getRelativeCoordinates();
+
+    return RS_Vector(false);
+}
+

@@ -301,6 +301,9 @@ public:
      */
     QC_MDIWindow* getWindowWithDoc(const RS_Document* doc);
 
+    RS_Vector getMouseAbsolutePosition();
+    RS_Vector getMouseRelativePosition();
+
 protected:
     void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open

@@ -90,23 +90,46 @@ RS_Modification::RS_Modification(RS_EntityContainer& container,
 /**
  * Deletes all selected entities.
  */
-void RS_Modification::remove() {
-
+void RS_Modification::remove()
+{
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::remove");
 
-	if (!container) {
+	if (!container)
+    {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::remove: no valid container");
+
         return;
     }
 
     LC_UndoSection undo( document);
 	// not safe (?)
-    for(auto e: *container) {
-        if (e && e->isSelected()) {
+    for(auto e: *container)
+    {
+        if (e && e->isSelected())
+        {
             e->setSelected(false);
-            e->changeUndoState();
-            undo.addUndoable(e);
-        } else {
+
+            if (deletePolylineNodeMode)
+            {
+                if (e->rtti() == RS2::EntityPolyline)
+                {
+                    e = deletePolylineNode((RS_Polyline&) *e, ((RS_Polyline&) *e).getHighlightedVertex());
+                }
+                else
+                {
+                    RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::remove: no polyline selected");
+                }
+
+                deletePolylineNodeMode = false;
+            }
+            else
+            {
+                e->changeUndoState();
+                undo.addUndoable(e);
+            }
+        }
+        else
+        {
             RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::remove: no valid container is selected");
         }
     }
@@ -114,6 +137,13 @@ void RS_Modification::remove() {
     graphicView->redraw(RS2::RedrawDrawing);
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::remove: OK");
+}
+
+
+
+void RS_Modification::setDeletePolylineNodeMode()
+{
+    deletePolylineNodeMode = true;
 }
 
 

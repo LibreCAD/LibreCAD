@@ -233,6 +233,8 @@ public:
 	bool changeAttributes(RS_AttributesData& data);
     bool changeAttributes(RS_AttributesData& data, RS_EntityContainer* container);
 
+    void setDeletePolylineNodeMode();
+
         void copy(const RS_Vector& ref, const bool cut);
 private:
         void copyEntity(RS_Entity* e, const RS_Vector& ref, const bool cut);
@@ -297,6 +299,8 @@ private:
 	void addNewEntities(std::vector<RS_Entity*>& addList);
 	bool explodeTextIntoLetters(RS_MText* text, std::vector<RS_Entity*>& addList);
 	bool explodeTextIntoLetters(RS_Text* text, std::vector<RS_Entity*>& addList);
+
+    bool deletePolylineNodeMode;
 
 protected:
     RS_EntityContainer* container;

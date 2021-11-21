@@ -130,5 +130,21 @@ void QG_CoordinateWidget::setCoordinates(double x, double y,
                                                aformat, aprec);
         str = rStr + " < " + aStr;
         lCoord2b->setText(str);
+
+        absoluteCoordinates = RS_Vector( x,  y, 0.0);
+        relativeCoordinates = RS_Vector(rx, ry, 0.0);
     }
 }
+
+
+RS_Vector QG_CoordinateWidget::getAbsoluteCoordinates()
+{
+    return absoluteCoordinates;
+}
+
+
+RS_Vector QG_CoordinateWidget::getRelativeCoordinates()
+{
+    return relativeCoordinates;
+}
+
