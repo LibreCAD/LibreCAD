@@ -22,8 +22,8 @@
 **
 **********************************************************************/
 
-#ifndef RS_ACTIONSNAPMIDDLEMANUAL_H
-#define RS_ACTIONSNAPMIDDLEMANUAL_H
+
+#pragma once
 
 
 #include "rs_pen.h"
@@ -84,6 +84,4 @@ class RS_ActionSnapMiddleManual : public RS_PreviewActionInterface
         RS_Vector startPoint;
         RS_Vector endPoint;
 };
-
-#endif
 
