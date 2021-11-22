@@ -1,0 +1,45 @@
+name: Linux build
+on: [push]
+jobs:
+  Build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: '5.15.2'
+          host: 'linux'
+      - name: Install boost
+        uses: MarkusJx/install-boost@v2.0.0
+        with:
+          boost_version: 1.75.0
+          boost_install_dir: '${{ github.workspace }}/'
+      - name: Install Clang
+        run: |
+          sudo apt-get update
+          sudo apt-get -qq install clang-10 clang-tools-10
+      - name: Build and analyze
+        run: |
+          export CC=gcc
+          export ANALYZE="scan-build-10 -o out " GH_REF=github.com/${{ github.repository_owner }}/static-analyzer-reports.git
+          ${ANALYZE}qmake -r librecad.pro CONFIG+=release PREFIX=/usr BOOST_DIR=${{ github.workspace }}/boost/boost
+          ${ANALYZE}make -j$(nproc)
+      - name: Create report repository
+        run: |
+          cd out
+          find . -mindepth 2 -type f -print -exec mv {} . \;
+          git config --global user.email "github@librecad.org"
+          git config --global user.name "GHA CI [bot]"
+          git config --global init.defaultBranch gh-pages
+          git init
+          git add .
+          git commit -m "latest analyzer report"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          repository: ${{ github.repository_owner }}/static-analyzer-reports
+          github_token: ${{ secrets.LC_PUSH_ANALYZER_REPORT }}
+          branch: gh-pages
+          force: true
+          directory: out
