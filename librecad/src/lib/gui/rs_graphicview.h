@@ -421,7 +421,7 @@ protected:
 	RS_Color relativeZeroColor;
 
     /* Relative-zero hidden state */
-    int hideRelativeZero;
+    int hideRelativeZero = 0;
 
 	/** Grid */
 	std::unique_ptr<RS_Grid> grid;
