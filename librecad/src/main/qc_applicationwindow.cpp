@@ -2785,11 +2785,15 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
     QColor startHandleColor(RS_SETTINGS->readEntry("/start_handle", Colors::start_handle));
     QColor handleColor(RS_SETTINGS->readEntry("/handle", Colors::handle));
 	QColor endHandleColor(RS_SETTINGS->readEntry("/end_handle", Colors::end_handle));
+    QColor relativeZeroColor(RS_SETTINGS->readEntry("/relativeZeroColor", Colors::relativeZeroColor));
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Appearance");
     int antialiasing = RS_SETTINGS->readNumEntry("/Antialiasing");
+    int hideRelativeZero = RS_SETTINGS->readNumEntry("/hideRelativeZero");
     RS_SETTINGS->endGroup();
+
+    emit signalEnableRelativeZeroSnaps(!hideRelativeZero);
 
     QList<QMdiSubWindow*> windows = mdiAreaCAD->subWindowList();
     for (int i = 0; i < windows.size(); ++i) {
@@ -2805,6 +2809,8 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
                 gv->setStartHandleColor(startHandleColor);
                 gv->setHandleColor(handleColor);
                 gv->setEndHandleColor(endHandleColor);
+                gv->setRelativeZeroColor(relativeZeroColor);
+                gv->setRelativeZeroHiddenState(hideRelativeZero);
                 gv->setAntialiasing(antialiasing?true:false);
                 gv->redraw(RS2::RedrawGrid);
             }

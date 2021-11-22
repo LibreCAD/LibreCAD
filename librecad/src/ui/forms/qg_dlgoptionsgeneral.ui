@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>783</width>
+    <width>847</width>
     <height>603</height>
    </rect>
   </property>
@@ -39,7 +39,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
@@ -203,6 +203,16 @@
            </widget>
           </item>
           <item row="6" column="0">
+           <widget class="QCheckBox" name="cbHideRelativeZero">
+            <property name="text">
+             <string>Hide the relative-&amp;zero marker</string>
+            </property>
+            <property name="shortcut">
+             <string>Alt+Z</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
            <widget class="QLabel" name="lMinGridSpacing">
             <property name="text">
              <string>Minimal Grid Spacing (p&amp;x):</string>
@@ -215,7 +225,7 @@
             </property>
            </widget>
           </item>
-          <item row="6" column="1">
+          <item row="7" column="1">
            <widget class="QComboBox" name="cbMinGridSpacing">
             <property name="editable">
              <bool>true</bool>
@@ -262,7 +272,7 @@
             </item>
            </widget>
           </item>
-          <item row="7" column="0">
+          <item row="8" column="0">
            <widget class="QLabel" name="lMaxPreview">
             <property name="text">
              <string>N&amp;umber of preview entities:</string>
@@ -275,7 +285,7 @@
             </property>
            </widget>
           </item>
-          <item row="7" column="1">
+          <item row="8" column="1">
            <widget class="QComboBox" name="cbMaxPreview">
             <property name="editable">
              <bool>true</bool>
@@ -355,6 +365,16 @@
             </property>
            </widget>
           </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="lRelativeZeroColor">
+            <property name="text">
+             <string>&amp;Relative-Zero Marker Color:</string>
+            </property>
+            <property name="buddy">
+             <cstring>cbRelativeZeroColor</cstring>
+            </property>
+           </widget>
+          </item>
           <item row="2" column="0">
            <widget class="QLabel" name="lGridColor">
             <property name="text">
@@ -379,6 +399,26 @@
             <item>
              <property name="text">
               <string notr="true">#0000FF</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="9" column="2">
+           <widget class="QComboBox" name="cbRelativeZeroColor">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#1E90FF</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">#FFC200</string>
              </property>
             </item>
            </widget>
@@ -504,6 +544,23 @@
           </item>
           <item row="8" column="3">
            <widget class="QPushButton" name="pb_end">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="3">
+           <widget class="QPushButton" name="pb_relativeZeroColor">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -925,7 +982,7 @@
             <item>
              <widget class="QLabel" name="label">
               <property name="text">
-               <string>Auto save time:</string>
+               <string>Auto save time (in minutes) :  </string>
               </property>
              </widget>
             </item>
@@ -1202,6 +1259,7 @@
   <tabstop>cbStartHandleColor</tabstop>
   <tabstop>cbHandleColor</tabstop>
   <tabstop>cbEndHandleColor</tabstop>
+  <tabstop>cbRelativeZeroColor</tabstop>
   <tabstop>buttonBox</tabstop>
   <tabstop>lePathLibrary</tabstop>
   <tabstop>cbUnit</tabstop>

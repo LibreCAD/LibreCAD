@@ -71,6 +71,8 @@ private slots:
 
     void on_pb_snap_color_clicked();
 
+    void on_pb_relativeZeroColor_clicked();
+
     void setVariableFile();
 
     void setFontsFolder();

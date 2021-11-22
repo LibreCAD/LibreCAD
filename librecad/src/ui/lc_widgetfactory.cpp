@@ -370,6 +370,8 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
     snap_toolbar->setSizePolicy(toolBarPolicy);
     snap_toolbar->setObjectName("snap_toolbar" );
     action_handler->set_snap_toolbar(snap_toolbar);
+    connect( main_window,  &QC_ApplicationWindow::signalEnableRelativeZeroSnaps, 
+             snap_toolbar, &QG_SnapToolBar::slotEnableRelativeZeroSnaps);
 
     pen_toolbar = new QG_PenToolBar(QC_ApplicationWindow::tr("Pen"), main_window);
     pen_toolbar->setSizePolicy(toolBarPolicy);

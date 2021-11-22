@@ -123,6 +123,9 @@ void QG_DlgOptionsGeneral::init()
 
     bool cursor_hiding = RS_SETTINGS->readNumEntry("/cursor_hiding", 0);
     cursor_hiding_checkbox->setChecked(cursor_hiding);
+
+    bool hideRelativeZero = RS_SETTINGS->readNumEntry("/hideRelativeZero", 0);
+    cbHideRelativeZero->setChecked(hideRelativeZero);
     
     // scale grid:
     QString scaleGrid = RS_SETTINGS->readEntry("/ScaleGrid", "1");
@@ -150,6 +153,7 @@ void QG_DlgOptionsGeneral::init()
     initComboBox(cbStartHandleColor, RS_SETTINGS->readEntry("/start_handle", Colors::start_handle));
     initComboBox(cbHandleColor, RS_SETTINGS->readEntry("/handle", Colors::handle));
     initComboBox(cbEndHandleColor, RS_SETTINGS->readEntry("/end_handle", Colors::end_handle));
+    initComboBox(cbRelativeZeroColor, RS_SETTINGS->readEntry("/relativeZeroColor", Colors::relativeZeroColor));
     initComboBox(cb_snap_color, RS_SETTINGS->readEntry("/snap_indicator", Colors::snap_indicator));
     RS_SETTINGS->endGroup();
 
@@ -240,6 +244,7 @@ void QG_DlgOptionsGeneral::ok()
         //RS_SYSTEM->loadTranslation(cbLanguage->currentText());
         RS_SETTINGS->beginGroup("/Appearance");
         RS_SETTINGS->writeEntry("/ScaleGrid", QString("%1").arg((int)cbScaleGrid->isChecked()));
+        RS_SETTINGS->writeEntry("/hideRelativeZero", QString("%1").arg((int)cbHideRelativeZero->isChecked()));
         RS_SETTINGS->writeEntry("/MinGridSpacing", cbMinGridSpacing->currentText());
         RS_SETTINGS->writeEntry("/MaxPreview", cbMaxPreview->currentText());
         RS_SETTINGS->writeEntry("/Language",cbLanguage->itemData(cbLanguage->currentIndex()));
@@ -262,6 +267,7 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/start_handle", cbStartHandleColor->currentText());
         RS_SETTINGS->writeEntry("/handle", cbHandleColor->currentText());
         RS_SETTINGS->writeEntry("/end_handle", cbEndHandleColor->currentText());
+        RS_SETTINGS->writeEntry("/relativeZeroColor", cbRelativeZeroColor->currentText());
         RS_SETTINGS->writeEntry("/snap_indicator", cb_snap_color->currentText());
         RS_SETTINGS->endGroup();
 
@@ -379,6 +385,11 @@ void QG_DlgOptionsGeneral::on_pb_end_clicked()
 void QG_DlgOptionsGeneral::on_pb_snap_color_clicked()
 {
     set_color(cb_snap_color, QColor(Colors::snap_indicator));
+}
+
+void QG_DlgOptionsGeneral::on_pb_relativeZeroColor_clicked()
+{
+    set_color(cbRelativeZeroColor, QColor(Colors::relativeZeroColor));
 }
 
 void QG_DlgOptionsGeneral::on_pb_clear_all_clicked()

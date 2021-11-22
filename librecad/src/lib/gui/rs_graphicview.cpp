@@ -78,6 +78,11 @@ RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
     setStartHandleColor(QColor(RS_SETTINGS->readEntry("/start_handle", Colors::start_handle)));
     setHandleColor(QColor(RS_SETTINGS->readEntry("/handle", Colors::handle)));
     setEndHandleColor(QColor(RS_SETTINGS->readEntry("/end_handle", Colors::end_handle)));
+    setRelativeZeroColor(QColor(RS_SETTINGS->readEntry("/relativeZeroColor", Colors::relativeZeroColor)));
+    RS_SETTINGS->endGroup();
+
+    RS_SETTINGS->beginGroup("/Appearance");
+    RS_SETTINGS->writeEntry("/hideRelativeZero", RS_SETTINGS->readNumEntry("/hideRelativeZero", 0));
     RS_SETTINGS->endGroup();
 }
 
@@ -1359,7 +1364,11 @@ void RS_GraphicView::drawRelativeZero(RS_Painter *painter) {
 		return;
 	}
 
-    RS_Pen p(RS_Color(255,0,0), RS2::Width00, RS2::SolidLine);
+    RS2::LineType relativeZeroPenType = RS2::SolidLine;
+
+    if (hideRelativeZero) relativeZeroPenType = RS2::NoPen;
+
+    RS_Pen p(relativeZeroColor, RS2::Width00, relativeZeroPenType);
 	p.setScreenWidth(0);
 	painter->setPen(p);
 

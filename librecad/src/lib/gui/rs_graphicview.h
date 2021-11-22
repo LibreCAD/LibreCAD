@@ -187,6 +187,18 @@ public:
 		endHandleColor = c;
 	}
 
+	/* Sets the color for the relative-zero marker. */
+	void setRelativeZeroColor(const RS_Color& c)
+    {
+        relativeZeroColor = c;
+	}
+
+	/* Sets the hidden state for the relative-zero marker. */
+	void setRelativeZeroHiddenState(const int isHidden)
+    {
+        hideRelativeZero = isHidden;
+	}
+
 	/**
 	 * This virtual method can be overwritten to set the mouse
 	 * cursor to the given type.
@@ -405,6 +417,12 @@ protected:
 	RS_Color handleColor;
 	/** End handle color */
 	RS_Color endHandleColor;
+	/** Relative-zero marker color */
+	RS_Color relativeZeroColor;
+
+    /* Relative-zero hidden state */
+    int hideRelativeZero;
+
 	/** Grid */
 	std::unique_ptr<RS_Grid> grid;
 	/**
