@@ -26,7 +26,6 @@
 #pragma once
 
 
-#include "rs_pen.h"
 #include "rs_vector.h"
 #include "rs_previewactioninterface.h"
 
