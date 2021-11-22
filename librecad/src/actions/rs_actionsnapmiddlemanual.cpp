@@ -23,7 +23,6 @@
 **********************************************************************/
 
 
-#include "rs_pen.h"
 #include "rs_line.h"
 #include "rs_debug.h"
 #include "rs_preview.h"
