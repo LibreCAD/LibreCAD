@@ -28,6 +28,8 @@
 #include <QObject>
 #include <QMap>
 
+#include "qg_actionhandler.h"
+
 class QActionGroup;
 class QAction;
 class LC_ActionGroupManager;
