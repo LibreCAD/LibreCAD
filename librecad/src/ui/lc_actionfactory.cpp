@@ -33,7 +33,7 @@
 #include <QAction>
 #include <QActionGroup>
 
-LC_ActionFactory::LC_ActionFactory(QObject* parent, QObject* a_handler)
+LC_ActionFactory::LC_ActionFactory(QObject* parent, QG_ActionHandler* a_handler)
     : QObject(parent)
     , using_theme(false)
     , main_window(parent)
@@ -119,8 +119,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     /* Snap Middle Manual */
     action = new QAction(tr("Snap Middle M&anual"), agm->line);
     action->setIcon(QIcon(":/icons/snap_middle_manual.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotSnapMiddleManual()));
+    connect(action, &QAction::triggered, action_handler, &QG_ActionHandler::slotSnapMiddleManual);
     action->setObjectName("SnapMiddleManual");
     a_map["SnapMiddleManual"] = action;
 
