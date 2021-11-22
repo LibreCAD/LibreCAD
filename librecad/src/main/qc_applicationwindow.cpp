@@ -2790,7 +2790,7 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
 
     RS_SETTINGS->beginGroup("/Appearance");
     int antialiasing = RS_SETTINGS->readNumEntry("/Antialiasing");
-    int hideRelativeZero = RS_SETTINGS->readNumEntry("/hideRelativeZero");
+    int hideRelativeZero = RS_SETTINGS->readNumEntry("/hideRelativeZero", 0);
     RS_SETTINGS->endGroup();
 
     emit signalEnableRelativeZeroSnaps(!hideRelativeZero);
