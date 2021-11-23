@@ -360,26 +360,21 @@ void RS_DimAngular::updateDim(bool autoText /*= false*/)
         refArc->setPen(pen);
         refArc->setLayer(nullptr);
         addEntity(refArc);
-    }
 
-    RS_MTextData textData;
-
-    if (!this->getInsideHorizontalText())
-    {
         // move text away from dimension line:
         textPos += distV;
     }
 
-    textData = RS_MTextData( textPos,
-                             av.txt(), 30.0,
-                             RS_MTextData::VABottom,
-                             RS_MTextData::HACenter,
-                             RS_MTextData::LeftToRight,
-                             RS_MTextData::Exact,
-                             1.0,
-                             getLabel(),
-                             getTextStyle(),
-                             textAngle);
+    RS_MTextData textData { RS_MTextData( textPos,
+                                          av.txt(), 30.0,
+                                          RS_MTextData::VABottom,
+                                          RS_MTextData::HACenter,
+                                          RS_MTextData::LeftToRight,
+                                          RS_MTextData::Exact,
+                                          1.0,
+                                          getLabel(),
+                                          getTextStyle(),
+                                          textAngle) };
 
     RS_MText* text {new RS_MText( this, textData)};
     text->setPen( RS_Pen( getTextColor(), RS2::WidthByBlock, RS2::SolidLine));
