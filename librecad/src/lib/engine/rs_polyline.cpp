@@ -23,23 +23,20 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include<iostream>
-#include<cmath>
-#include<cassert>
+
+
+#include <cmath>
+#include <cassert>
+
+#include "rs_arc.h"
+#include "rs_line.h"
+#include "rs_debug.h"
+#include "rs_graphicview.h"
+#include "rs_information.h"
+#include "qc_applicationwindow.h"
+
 #include "rs_polyline.h"
 
-#include "rs_debug.h"
-#include "rs_line.h"
-#include "rs_arc.h"
-#include "rs_graphicview.h"
-#include "rs_math.h"
-#include "rs_information.h"
-
-#include "rs.h"
-#include "rs_color.h"
-#include "rs_point.h"
-#include "rs_document.h"
-#include "qc_applicationwindow.h"
 
 RS_PolylineData::RS_PolylineData():
 	startpoint(false)
@@ -104,21 +101,9 @@ bool RS_Polyline::toggleSelected()
 {
     if (!isSelected())
     {
-        const RS_Color cyanPenColor = RS_Color(0,255,255);
+        highlightedVertex = getNearestRef(QC_ApplicationWindow::getAppWindow()->getMouseAbsolutePosition());
 
-        const RS_Vector selectedVertexPoint = getNearestRef(QC_ApplicationWindow::getAppWindow()->getMouseAbsolutePosition());
-
-        highlightedVertex = new RS_Point (this, RS_PointData(selectedVertexPoint));
-
-        highlightedVertex->setPen(RS_Pen(cyanPenColor, RS2::Width20, RS2::SolidLine));
-
-		QC_ApplicationWindow::getAppWindow()->getDocument()->addEntity(highlightedVertex);
-    }
-    else
-    {
-        QC_ApplicationWindow::getAppWindow()->getDocument()->removeEntity(highlightedVertex);
-
-        highlightedVertex = nullptr;
+        QC_ApplicationWindow::getAppWindow()->getGraphicView()->moveRelativeZero(highlightedVertex);
     }
 
     return this->setSelected(!isSelected());
@@ -127,7 +112,7 @@ bool RS_Polyline::toggleSelected()
 
 RS_Vector RS_Polyline::getHighlightedVertex()
 {
-    return highlightedVertex->getPos();
+    return highlightedVertex;
 }
 
 
@@ -803,4 +788,3 @@ std::ostream& operator << (std::ostream& os, const RS_Polyline& l) {
 
     return os;
 }
-
