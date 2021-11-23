@@ -44,7 +44,7 @@
 #include "qg_dialogfactory.h"
 #include "rs_eventhandler.h"
 #include "rs_actiondefault.h"
-
+#include "rs_dimension.h"
 
 #include "qg_scrollbar.h"
 #include "rs_modification.h"
@@ -927,6 +927,15 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
         this->drawEntity(cl);
 
         if (!graphic) continue;
+	    
+	if ((cl->rtti() == RS2::EntityDimAligned) 
+        ||  (cl->rtti() == RS2::EntityDimLinear) 
+        ||  (cl->rtti() == RS2::EntityDimRadial) 
+        ||  (cl->rtti() == RS2::EntityDimDiametric) 
+        ||  (cl->rtti() == RS2::EntityDimAngular))
+        {
+            ((RS_Dimension *) cl)->updateDim(true);
+        }
 
         graphic->addUndoable(cl);
     }
