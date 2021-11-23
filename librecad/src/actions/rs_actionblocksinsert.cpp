@@ -95,7 +95,7 @@ void RS_ActionBlocksInsert::init(int status) {
 void RS_ActionBlocksInsert::reset() {
 	data.reset(new RS_InsertData("",
                          RS_Vector(0.0,0.0),
-                         RS_Vector(1.0,1.0),
+                         RS_Vector(1.0,1.0,1.0),
                          0.0,
                          1, 1,
                          RS_Vector(1.0,1.0),

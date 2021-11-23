@@ -447,7 +447,7 @@ void RS_FilterJWW::addInsert(const DL_InsertData& data) {
         }
 
         RS_Vector ip(data.ipx, data.ipy);
-        RS_Vector sc(data.sx, data.sy);
+        RS_Vector sc(data.sx, data.sy, data.sz);
         RS_Vector sp(data.colSp, data.rowSp);
 
         //cout << "Insert: " << name << " " << ip << " " << cols << "/" << rows << endl;

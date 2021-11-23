@@ -343,7 +343,7 @@ void QC_MDIWindow::drawChars() {
     sep = sep*3;
     for (int i=0; i<bl->count(); ++i) {
         RS_Block* ch = bl->at(i);
-        RS_InsertData data(ch->getName(), RS_Vector(i*sep,0), RS_Vector(1,1), 0, 1, 1, RS_Vector(0,0));
+        RS_InsertData data(ch->getName(), RS_Vector(i*sep,0), RS_Vector(1,1,1), 0, 1, 1, RS_Vector(0,0));
         RS_Insert* in = new RS_Insert(document, data);
         document->addEntity(in);
         QFileInfo info(document->getFilename() );

@@ -456,7 +456,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     // adjust scaling factor for units conversion in case of clipboard paste
     double factor = (RS_TOLERANCE < fabs(data.factor)) ? data.factor : 1.0;
     // scale factor as vector
-    RS_Vector vfactor = RS_Vector(factor, factor);
+    RS_Vector vfactor = RS_Vector(factor, factor, factor);
     // select source for paste
 	if (!source) {
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: add graphic source from clipboard");
@@ -465,7 +465,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
         RS2::Unit sourceUnit = source->getUnit();
         RS2::Unit targetUnit = graphic->getUnit();
         factor = RS_Units::convert(1.0, sourceUnit, targetUnit);
-        vfactor = RS_Vector(factor, factor);
+	vfactor = RS_Vector(factor, factor, factor);
     } else {
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: add graphic source from parts library");
     }
@@ -658,7 +658,7 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
     bc->reparent(graphic);
     graphic->addBlock(bc);
     // create insert for the new block
-    RS_InsertData di = RS_InsertData(name_new, insertionPoint, RS_Vector(1.0, 1.0), i->getAngle(), 1, 1, RS_Vector(0.0,0.0));
+    RS_InsertData di = RS_InsertData(name_new, insertionPoint, RS_Vector(1.0, 1.0, 1.0), i->getAngle(), 1, 1, RS_Vector(0.0,0.0));
     RS_Insert* ic = new RS_Insert(container, di);
     ic->reparent(container);
     container->addEntity(ic);

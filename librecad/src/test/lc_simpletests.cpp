@@ -549,7 +549,7 @@ void LC_SimpleTests::slotTestInsertBlock() {
 		RS_Insert* ins;
 		RS_InsertData insData("debugblock",
 							  RS_Vector(0.0,0.0),
-							  RS_Vector(1.0,1.0), 0.0,
+                                                          RS_Vector(1.0,1.0,1.0), 0.0,
 							  1, 1, RS_Vector(0.0, 0.0),
 							  NULL, RS2::NoUpdate);
 
@@ -565,7 +565,7 @@ void LC_SimpleTests::slotTestInsertBlock() {
 		// insert one green instance of the block (rotate):
 		insData = RS_InsertData("debugblock",
 								RS_Vector(-50.0,20.0),
-								RS_Vector(1.0,1.0), M_PI/6.,
+                                                                RS_Vector(1.0,1.0,1.0), M_PI/6.,
 								1, 1, RS_Vector(0.0, 0.0),
 								NULL, RS2::NoUpdate);
 		ins = new RS_Insert(graphic, insData);
@@ -579,7 +579,7 @@ void LC_SimpleTests::slotTestInsertBlock() {
 		// insert one cyan instance of the block (move):
 		insData = RS_InsertData("debugblock",
 								RS_Vector(10.0,20.0),
-								RS_Vector(1.0,1.0), 0.0,
+                                                                RS_Vector(1.0,1.0,1.0), 0.0,
 								1, 1, RS_Vector(0.0, 0.0),
 								NULL, RS2::NoUpdate);
 		ins = new RS_Insert(graphic, insData);
@@ -594,7 +594,7 @@ void LC_SimpleTests::slotTestInsertBlock() {
 		for (double a=0.0; a<360.0; a+=45.0) {
 			insData = RS_InsertData("debugblock",
 									RS_Vector(60.0,0.0),
-									RS_Vector(2.0/5,2.0/5), RS_Math::deg2rad(a),
+                                                                        RS_Vector(2.0/5,2.0/5,2.0/5), RS_Math::deg2rad(a),
 									1, 1, RS_Vector(0.0, 0.0),
 									NULL, RS2::NoUpdate);
 			ins = new RS_Insert(graphic, insData);
@@ -609,7 +609,7 @@ void LC_SimpleTests::slotTestInsertBlock() {
 		// insert an array of yellow instances of the block:
 		insData = RS_InsertData("debugblock",
 								RS_Vector(-100.0,-100.0),
-								RS_Vector(0.2,0.2), M_PI/6.0,
+                                                                RS_Vector(0.2,0.2,0.2), M_PI/6.0,
 								6, 4, RS_Vector(100.0, 100.0),
 								NULL, RS2::NoUpdate);
 		ins = new RS_Insert(graphic, insData);
@@ -1001,7 +1001,7 @@ void LC_SimpleTests::slotTestUnicode() {
 				if (graphic->findBlock(strCode)) {
 					RS_InsertData d(strCode,
 									RS_Vector(col/0x10*20.0,row*20.0),
-									RS_Vector(1.0,1.0), 0.0,
+                                                                        RS_Vector(1.0,1.0,1.0), 0.0,
 									1, 1, RS_Vector(0.0, 0.0),
 									NULL, RS2::NoUpdate);
 					ins = new RS_Insert(graphic, d);

@@ -427,7 +427,7 @@ void RS_MText::update()
 
             RS_InsertData d( letterText,
                              letterPos,
-                             RS_Vector( 1.0, 1.0),
+                             RS_Vector( 1.0, 1.0, 1.0 ),
                              0.0,
                              1,
                              1,

@@ -298,7 +298,7 @@ void RS_Text::update() {
 
             RS_InsertData d(letterText,
                             letterPos,
-                            RS_Vector(1.0, 1.0),
+                            RS_Vector(1.0, 1.0, 1.0),
                             0.0,
                             1,1, RS_Vector(0.0,0.0),
                             font->getLetterList(), RS2::NoUpdate);
