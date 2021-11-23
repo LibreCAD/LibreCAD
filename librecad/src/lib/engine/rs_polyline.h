@@ -25,13 +25,10 @@
 **********************************************************************/
 
 
-#ifndef RS_POLYLINE_H
-#define RS_POLYLINE_H
+#pragma once
 
-#include "rs_point.h"
-#include "rs_entity.h"
+
 #include "rs_entitycontainer.h"
-
 
 
 /**
@@ -157,7 +154,5 @@ protected:
 
     private:
 
-        RS_Point* highlightedVertex;
+        RS_Vector highlightedVertex;
 };
-
-#endif
