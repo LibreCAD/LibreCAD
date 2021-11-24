@@ -851,6 +851,11 @@ RS_Pen RS_Entity::getPen(bool resolve) const {
             //}
         }
 
+        if (p.getWidth() == RS2::WidthDefault)
+        {
+            p.setWidth(RS2::Width07);
+        }
+
         return p;
     }
 }
