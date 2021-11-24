@@ -311,18 +311,17 @@ void QG_BlockWidget::activateBlock(RS_Block* block)
 {
     RS_DEBUG->print("QG_BlockWidget::activateBlock()");
 
-    if (block != nullptr)
+    if ((block == nullptr) || (blockList == nullptr))
     {
-        if (block->isSelectedInBlockList())
-        {
-            QC_ApplicationWindow::getAppWindow()->statusBar()
-                                                ->showMessage( QString("Block '%1' selected").arg(block->getName()), 
-                                                               QC_ApplicationWindow::DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
-        }
+        RS_DEBUG->print(RS_Debug::D_ERROR, "QG_BlockWidget::activateBlock: nullptr block or blockList");
+        return;
     }
 
-    if (block==NULL || blockList==NULL) {
-        return;
+    if (block->isSelectedInBlockList())
+    {
+        QC_ApplicationWindow::getAppWindow()->statusBar()
+                                            ->showMessage( QString("Block '%1' selected").arg(block->getName()), 
+                                                           QC_ApplicationWindow::DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
     }
 
     lastBlock = blockList->getActive();
