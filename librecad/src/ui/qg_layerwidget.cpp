@@ -405,11 +405,14 @@ void QG_LayerWidget::activateLayer(RS_Layer* layer, bool updateScroll)
 {
     RS_DEBUG->print("QG_LayerWidget::activateLayer() begin");
 
-    if (layer->isSelectedInLayerList())
+    if (layer != nullptr)
     {
-        QC_ApplicationWindow::getAppWindow()->statusBar()
-                                            ->showMessage( QString("Layer '%1' selected").arg(layer->getName()), 
-                                                           QC_ApplicationWindow::DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
+       if (layer->isSelectedInLayerList())
+       {
+           QC_ApplicationWindow::getAppWindow()->statusBar()
+                                               ->showMessage( QString("Layer '%1' selected").arg(layer->getName()), 
+                                                              QC_ApplicationWindow::DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
+       }
     }
 
     if (!layer || !layerList) {
