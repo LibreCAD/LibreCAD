@@ -40,6 +40,7 @@
 #include <QLineEdit>
 #include <QContextMenuEvent>
 #include <QKeyEvent>
+#include <QStatusBar>
 #include "rs_debug.h"
 
 QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
@@ -400,8 +401,16 @@ void QG_LayerWidget::restoreSelections() {
  * Activates the given layer and makes it the active
  * layer in the layerlist.
  */
-void QG_LayerWidget::activateLayer(RS_Layer* layer, bool updateScroll) {
+void QG_LayerWidget::activateLayer(RS_Layer* layer, bool updateScroll)
+{
     RS_DEBUG->print("QG_LayerWidget::activateLayer() begin");
+
+    if (layer->isSelectedInLayerList())
+    {
+        QC_ApplicationWindow::getAppWindow()->statusBar()
+                                            ->showMessage( QString("Layer '%1' selected").arg(layer->getName()), 
+                                                           QC_ApplicationWindow::DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
+    }
 
     if (!layer || !layerList) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::activateLayer: nullptr layer or layerList");
