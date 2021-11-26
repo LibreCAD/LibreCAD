@@ -103,6 +103,7 @@ void RS_Layer::setConverted(bool c) {
 void RS_Layer::toggle() {
 	//toggleFlag(RS2::FlagFrozen);
 	data.frozen = !data.frozen;
+   data.visibleInLayerList = !data.frozen;
 }
 
 /**
@@ -112,6 +113,7 @@ void RS_Layer::toggle() {
  */
 void RS_Layer::freeze(bool freeze) {
 	data.frozen = freeze;
+   data.visibleInLayerList = !freeze;
 }
 
 /**

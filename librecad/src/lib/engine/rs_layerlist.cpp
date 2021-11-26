@@ -409,11 +409,8 @@ void RS_LayerList::toggleConstruction(RS_Layer* layer) {
  */
 void RS_LayerList::freezeAll(bool freeze) {
 
-    for (unsigned l=0; l<count(); l++) {
-        if (at(l)->isVisibleInLayerList()) {
-             at(l)->freeze(freeze);
-         }
-    }
+    for (unsigned l=0; l<count(); l++) at(l)->freeze(freeze);
+
     setModified(true);
 
     for (int i=0; i<layerListListeners.size(); ++i) {
