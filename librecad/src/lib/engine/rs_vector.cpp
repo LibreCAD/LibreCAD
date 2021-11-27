@@ -483,6 +483,14 @@ RS_Vector RS_Vector::operator /= (double s) {
 	return *this;
 }
 
+
+/* The '<' overload operator. */
+bool RS_Vector::operator < (const RS_Vector& v) const
+{
+    return ((x < v.x) && (y < v.y) && (z < v.z) && valid && v.valid);
+}
+
+
 /**
  * == operator
  */

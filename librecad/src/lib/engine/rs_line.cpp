@@ -38,6 +38,7 @@
 #include "rs_painterqt.h"
 #include "rs_circle.h"
 #include "lc_rect.h"
+#include "qc_applicationwindow.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -83,6 +84,25 @@ RS_Entity* RS_Line::clone() const {
 void RS_Line::calculateBorders() {
     minV = RS_Vector::minimum(data.startpoint, data.endpoint);
     maxV = RS_Vector::maximum(data.startpoint, data.endpoint);
+}
+
+
+bool RS_Line::toggleSelected()
+{
+    if (!isSelected())
+    {
+        highlightedVertex = getNearestEndpoint(QC_ApplicationWindow::getAppWindow()->getMouseAbsolutePosition());
+
+        QC_ApplicationWindow::getAppWindow()->getGraphicView()->moveRelativeZero(highlightedVertex);
+    }
+
+    return this->setSelected(!isSelected());
+}
+
+
+RS_Vector RS_Line::getHighlightedVertex()
+{
+    return highlightedVertex;
 }
 
 

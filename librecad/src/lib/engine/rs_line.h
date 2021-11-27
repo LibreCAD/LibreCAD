@@ -25,12 +25,14 @@
 **********************************************************************/
 
 
-#ifndef RS_LINE_H
-#define RS_LINE_H
+#pragma once
+
 
 #include "rs_atomicentity.h"
 
+
 class LC_Quadratic;
+
 
 /**
  * Holds the data that defines a line.
@@ -76,6 +78,10 @@ public:
     bool isEdge() const override{
         return true;
     }
+
+    bool toggleSelected() override;
+
+    RS_Vector getHighlightedVertex();
 
     /** @return Copy of data that defines the line. */
     RS_LineData getData() const{
@@ -229,6 +235,10 @@ public:
 
 protected:
     RS_LineData data;
+
+    private:
+
+        RS_Vector highlightedVertex;
+
 };
 
-#endif

@@ -36,6 +36,7 @@ class RS_Entity;
 class RS_EntityContainer;
 class RS_MText;
 class RS_Text;
+class RS_Line;
 class RS_Polyline;
 class RS_Document;
 class RS_Graphic;
@@ -277,6 +278,8 @@ public:
         bool explode(const bool remove = true);
 		bool explodeTextIntoLetters();
         bool moveRef(RS_MoveRefData& data);
+
+        void deleteLineNode(RS_Line* polyline, const RS_Vector& node);
 
     bool splitPolyline(RS_Polyline& polyline,
                        RS_Entity& e1, RS_Vector v1,
