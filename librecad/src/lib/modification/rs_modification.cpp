@@ -1029,8 +1029,6 @@ void RS_Modification::deleteLineNode(RS_Line* line, const RS_Vector& node)
     }
 
 
-    const RS_Vector minimumTolerance { RS_Vector( RS_TOLERANCE, RS_TOLERANCE, RS_TOLERANCE ) };
-
     bool nodeIsStartPoint { true };
 
     if (node == line->getEndpoint()) nodeIsStartPoint = false;
@@ -1052,11 +1050,11 @@ void RS_Modification::deleteLineNode(RS_Line* line, const RS_Vector& node)
             {
                 RS_DEBUG->print("RS_Modification::deleteLineNode: node is original line's start point");
 
-                if ((node - anotherLine->getStartpoint()) < minimumTolerance)
+                if (node.distanceTo(anotherLine->getStartpoint()) < RS_TOLERANCE)
                 {
                     startEndPoints[0] = anotherLine->getEndpoint();
                 }
-                else if ((node - anotherLine->getEndpoint()) < minimumTolerance)
+                else if (node.distanceTo(anotherLine->getEndpoint()) < RS_TOLERANCE)
                 {
                     startEndPoints[0] = anotherLine->getStartpoint();
                 }
@@ -1069,11 +1067,11 @@ void RS_Modification::deleteLineNode(RS_Line* line, const RS_Vector& node)
             {
                 RS_DEBUG->print("RS_Modification::deleteLineNode: node is original line's end point");
 
-                if ((node - anotherLine->getStartpoint()) < minimumTolerance)
+                if (node.distanceTo(anotherLine->getStartpoint()) < RS_TOLERANCE)
                 {
                     startEndPoints[1] = anotherLine->getEndpoint();
                 }
-                else if ((node - anotherLine->getEndpoint()) < minimumTolerance)
+                else if (node.distanceTo(anotherLine->getEndpoint()) < RS_TOLERANCE)
                 {
                     startEndPoints[1] = anotherLine->getStartpoint();
                 }
