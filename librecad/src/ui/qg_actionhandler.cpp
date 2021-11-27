@@ -110,6 +110,8 @@
 #include "rs_actionlayerstoggleview.h"
 #include "rs_actionlayerstoggleprint.h"
 #include "lc_actionlayerstoggleconstruction.h"
+#include "lc_actionlayersexport.h"
+#include "rs_actionlibraryinsert.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_actionlockrelativezero.h"
 #include "rs_actionmodifyattributes.h"
@@ -163,6 +165,8 @@
 #include "rs_actionpolylinesegment.h"
 #include "rs_selection.h"
 #include "rs_actionorder.h"
+
+#include "rs_modification.h"
 
 #include "qg_snaptoolbar.h"
 #include "rs_debug.h"
@@ -871,6 +875,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionLayersToggleConstruction:
         a = new LC_ActionLayersToggleConstruction(*document, *view, a_layer);
+        break;
+    case RS2::ActionLayersExportSelected:
+        a = new LC_ActionLayersExport(*document, *view, document->getLayerList(), LC_ActionLayersExport::SelectedMode);
+        break;
+    case RS2::ActionLayersExportVisible:
+        a = new LC_ActionLayersExport(*document, *view, document->getLayerList(), LC_ActionLayersExport::VisibleMode);
         break;
         // Block actions:
         //
@@ -1859,6 +1869,14 @@ void QG_ActionHandler::slotLayersToggleConstruction() {
     setCurrentAction(RS2::ActionLayersToggleConstruction);
 }
 
+void QG_ActionHandler::slotLayersExportSelected() {
+    setCurrentAction(RS2::ActionLayersExportSelected);
+}
+
+void QG_ActionHandler::slotLayersExportVisible() {
+    setCurrentAction(RS2::ActionLayersExportVisible);
+}
+
 
 void QG_ActionHandler::slotBlocksDefreezeAll() {
     setCurrentAction(RS2::ActionBlocksDefreezeAll);
@@ -1942,6 +1960,15 @@ void QG_ActionHandler::toggleConstruction(RS_Layer* layer)
 {
     auto a = new LC_ActionLayersToggleConstruction(*document, *view, layer);
     view->setCurrentAction(a);
+}
+
+void QG_ActionHandler::slotDeletePolylineNodePromptly()
+{
+    RS_Modification m(*document, view);
+
+    m.setDeletePolylineNodeMode();
+
+    m.remove();
 }
 
 // EOF

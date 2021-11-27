@@ -583,6 +583,15 @@ void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
                                  SLOT(slotLayersAdd()), 0);
         contextMenu->addAction( tr("Edit Layer &Attributes"), actionHandler,
                                  SLOT(slotLayersEdit()), 0);
+
+        contextMenu->addSeparator();
+
+        contextMenu->addAction( tr("&Export Selected Layer(s)"), actionHandler,
+                                &QG_ActionHandler::slotLayersExportSelected, 0);
+
+        contextMenu->addAction( tr("Export &Visible Layer(s)"), actionHandler,
+                                &QG_ActionHandler::slotLayersExportVisible,  0);
+
         contextMenu->exec(QCursor::pos());
         delete contextMenu;
     }

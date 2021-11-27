@@ -241,6 +241,8 @@ public slots:
 	void slotLayersToggleLock();
 	void slotLayersTogglePrint();
 	void slotLayersToggleConstruction();
+    void slotLayersExportSelected();
+    void slotLayersExportVisible();
 
 	void slotBlocksDefreezeAll();
 	void slotBlocksFreezeAll();
@@ -254,6 +256,8 @@ public slots:
 	void slotBlocksCreate();
 	void slotBlocksExplode();
 	void slotOptionsDrawing();
+
+   void slotDeletePolylineNodePromptly();
 
     void toggleVisibility(RS_Layer* layer);
     void toggleLock(RS_Layer* layer);

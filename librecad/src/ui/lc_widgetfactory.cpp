@@ -111,6 +111,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["PolylineAdd"]
             << a_map["PolylineAppend"]
             << a_map["PolylineDel"]
+            << a_map["DeletePolylineNodePromptly"]
             << a_map["PolylineDelBetween"]
             << a_map["PolylineTrim"]
             << a_map["PolylineEquidistant"]
@@ -178,7 +179,9 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["LayersToggleLock"]
             << a_map["LayersToggleView"]
             << a_map["LayersTogglePrint"]
-            << a_map["LayersToggleConstruction"];
+            << a_map["LayersToggleConstruction"]
+            << a_map["LayersExportSelected"]
+            << a_map["LayersExportVisible"];
 
     block_actions
             << a_map["BlocksDefreezeAll"]
