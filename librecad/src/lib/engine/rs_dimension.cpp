@@ -431,9 +431,13 @@ void RS_Dimension::updateCreateHorizontalTextDimensionLine(const RS_Vector& p1,
 
     // finally, add the dimension line(s) and text to the drawing
     if (outsideArrows && dimensionLineOutside1) {
+        dimensionLineOutside1->setPen(pen);
+        dimensionLineOutside2->setPen(pen);
         addEntity(dimensionLineOutside1);
         addEntity(dimensionLineOutside2);
     } else if (splitDimensionLine && dimensionLineInside1) {
+        dimensionLineInside1->setPen(pen);
+        dimensionLineInside2->setPen(pen);
         addEntity(dimensionLineInside1);
         addEntity(dimensionLineInside2);
     } else {
