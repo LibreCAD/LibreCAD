@@ -30,8 +30,10 @@ fi
 mkdir -p appdir/usr/bin
 mkdir -p appdir/usr/lib/librecad
 mkdir -p appdir/usr/share/applications
+mkdir -p appdir/usr/share/librecad
+mkdir -p appdir/usr/share/metainfo
 mkdir -p appdir/usr/share/doc/librecad
-mkdir -p appdir/usr/share/icons/hicolor/48x48/apps
+mkdir -p appdir/usr/share/icons/hicolor/256x256/apps
 mkdir -p appdir/usr/share/icons/hicolor/scalable/apps
 mkdir -p appdir/usr/share/librecad
 
@@ -45,18 +47,18 @@ cp unix/resources/plugins/*.so appdir/usr/lib/librecad/
 cp -r unix/resources/qm appdir/usr/share/librecad/
 
 cp desktop/librecad.desktop appdir/usr/share/applications/
+cp librecad/support/librecad.appdata.xml appdir/usr/share/metainfo/librecad.desktop.appdata.xml
 
 cp -r librecad/support/doc/* appdir/usr/share/doc/librecad/
 cp -r librecad/support/fonts appdir/usr/share/librecad/
 cp -r librecad/support/library appdir/usr/share/librecad/
 cp -r librecad/support/patterns appdir/usr/share/librecad/
 
-cp desktop/graphics_icons_and_splash/Icon\ LibreCAD/Icon_Librecad.svg appdir/usr/share/icons/hicolor/scalable/apps/librecad.svg
+cp CI/librecad.svg appdir/usr/share/icons/hicolor/scalable/apps/
+convert -resize 256x256 CI/librecad.svg appdir/usr/share/icons/hicolor/256x256/apps/librecad.png
 
-find appdir/
 
-wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
-chmod a+x linuxdeployqt-continuous-x86_64.AppImage
-
-./linuxdeployqt-continuous-x86_64.AppImage appdir/usr/share/applications/librecad.desktop -appimage
-
+wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases -O - | grep "appimagetool-.*-x86_64.AppImage" | head -n 1 | cut -d '"' -f 2)
+chmod +x appimagetool-*.AppImage
+./appimagetool-*.AppImage -s deploy appdir/usr/share/applications/librecad.desktop
+VERSION=0.0 ./appimagetool-*.AppImage appdir/

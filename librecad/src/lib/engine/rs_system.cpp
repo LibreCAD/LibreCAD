@@ -3,6 +3,7 @@
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
+** Copyright (C) 2021 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -60,7 +61,6 @@ void RS_System::init(const QString& appName, const QString& appVersion,
     else {
         this->appDir = appDir;
     }
-    binDir = QCoreApplication::applicationDirPath();
 
     RS_DEBUG->print("RS_System::init: System %s initialized.", appName.toLatin1().data());
     RS_DEBUG->print("RS_System::init: App dir: %s", appDir.toLatin1().data());
@@ -570,18 +570,20 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     }
 
 #ifdef Q_OS_UNIX
-    RS_DEBUG->print( RS_Debug::D_ERROR, "RS_System::getDirectoryList: %s", binDir.toStdString().c_str());
+    RS_DEBUG->print( RS_Debug::D_ERROR, "RS_System::getDirectoryList: %s", appDir.toStdString().c_str());
     // for AppImage use relative paths from executable
     // from packet manager the executable is in /usr/bin
     // in AppImage the executable is APPDIR/usr/bin
     // so this should work for paket manager and AppImage distribution
-    dirList.append( QDir::cleanPath( binDir + "/../share/doc/" + appDirName + "/" + subDirectory));
+    dirList.append( QDir::cleanPath( appDir + "/../share/doc/" + appDirName + "/" + subDirectory));
 
     // Redhat style:
-    dirList.append( QDir::cleanPath( binDir + "/../share/" + appDirName + "/" + subDirectory));
+    dirList.append( QDir::cleanPath( appDir + "/../share/" + appDirName + "/" + subDirectory));
+    // Debian style:
+    dirList.append( QDir::cleanPath( appDir + "/../lib/" + appDirName + "/" + subDirectory));
 
     if (QStringLiteral( "plugins") == subDirectory) {
-        dirList.append( QDir::cleanPath( binDir + "/../lib/" + appDirName));
+        dirList.append( QDir::cleanPath( appDir + "/../lib/" + appDirName));
     }
 #endif
 
