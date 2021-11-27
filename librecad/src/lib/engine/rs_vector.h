@@ -106,9 +106,6 @@ public:
     bool operator != (const RS_Vector& v) const {
         return !operator==(v);
     }
-
-    bool operator <  (const RS_Vector& v) const;
-
 	//!
 	//! \brief operator == comparison of validity with bool
 	//! \param valid boolean parameter
