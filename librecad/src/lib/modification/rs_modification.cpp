@@ -103,6 +103,8 @@ void RS_Modification::remove()
 
     bool found = false;
 
+    bool deselectEntitiesMode = false;
+
     LC_UndoSection undo(document);
 	// not safe (?)
     for (auto e : *container)
@@ -110,8 +112,6 @@ void RS_Modification::remove()
         if (e && e->isSelected())
         {
             found = true;
-
-            e->setSelected(false);
 
             if (deletePolylineNodeMode)
             {
@@ -121,7 +121,15 @@ void RS_Modification::remove()
                 }
                 else if (e->rtti() == RS2::EntityLine)
                 {
-                    deleteLineNode((RS_Line *) e, ((RS_Line&) *e).getHighlightedVertex());
+                    if (document->countSelected() != 1)
+                    {
+                        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::remove: multiple lines selected");
+                        deselectEntitiesMode = true;
+                    }
+                    else
+                    {
+                        deleteLineNode((RS_Line *) e, ((RS_Line&) *e).getHighlightedVertex());
+                    }
                 }
                 else
                 {
@@ -130,11 +138,13 @@ void RS_Modification::remove()
 
                 deletePolylineNodeMode = false;
             }
-            else
+            else if (!deselectEntitiesMode)
             {
                 e->changeUndoState();
                 undo.addUndoable(e);
             }
+
+            e->setSelected(false);
         }
     }
 
