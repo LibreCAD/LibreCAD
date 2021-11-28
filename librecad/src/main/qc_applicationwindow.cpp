@@ -357,7 +357,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
         commandWidget->leCommand->readCommandFile(command_file);
 
     // Activate autosave timer
-    if (settings.value("Defaults/AutoBackupDocument", 1).toBool())
+    if (settings.value("Defaults/AutoBackupDocument", 0).toBool())
     {
         autosaveTimer = new QTimer(this);
         autosaveTimer->setObjectName("autosave");

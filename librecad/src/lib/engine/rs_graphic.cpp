@@ -347,8 +347,7 @@ bool RS_Graphic::save(bool isAutoSave)
             }
 
 			actualName = filename;
-            if (RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1)!=0)
-                BackupDrawingFile(filename);
+            if (RS_SETTINGS->readNumEntry("/AutoBackupDocument", 0)) BackupDrawingFile(filename);
         }
 
         /*	Save drawing file if able to created associated object.
