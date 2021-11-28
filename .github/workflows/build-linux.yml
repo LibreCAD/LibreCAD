@@ -5,6 +5,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Install Qt and dependencies
         run: |
@@ -26,7 +28,6 @@ jobs:
 
       - name: Build and analyze
         run: |
-          git tag
           export CC=gcc
           export ANALYZE="scan-build-10 -o out "
           ${ANALYZE}qmake -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr BOOST_DIR=${{ github.workspace }}/boost/boost
@@ -62,3 +63,15 @@ jobs:
         with:
           name: appimage
           path: LibreCAD*.AppImage
+
+      - name: Upload latest pre-release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Continuous Build"
+          files: |
+            LibreCAD*.AppImage
+            LICENSE
+
