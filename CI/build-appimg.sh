@@ -60,4 +60,4 @@ convert -resize 256x256 CI/librecad.svg appdir/usr/share/icons/hicolor/256x256/a
 wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases -O - | grep "appimagetool-.*-x86_64.AppImage" | head -n 1 | cut -d '"' -f 2)
 chmod +x appimagetool-*.AppImage
 ./appimagetool-*.AppImage -s deploy appdir/usr/share/applications/librecad.desktop
-VERSION=`git describe --tags` ./appimagetool-*.AppImage appdir/
+VERSION=`git describe ` ./appimagetool-*.AppImage appdir/
