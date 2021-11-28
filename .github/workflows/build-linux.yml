@@ -1,5 +1,8 @@
 name: Linux build
-on: [push]
+on:
+  push:
+    branches:
+      - master
 jobs:
   Build:
     runs-on: ubuntu-20.04
