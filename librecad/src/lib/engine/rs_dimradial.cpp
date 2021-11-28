@@ -164,25 +164,26 @@ void RS_DimRadial::updateDim(bool autoText) {
     RS_MText* text = new RS_MText(this, textData);
     double textWidth = text->getSize().x;
 
-    double tick_size = getTickSize()*dimscale;
     double arrow_size = getArrowSize()*dimscale;
     double length = p1.distanceTo(p2); // line length
 
-    bool outsideArrow = false;
+    // do we have to put the arrow / text outside of the arc?
+    bool outsideArrow = (length < ((arrow_size * 2.0) + textWidth));
 
-    if (tick_size == 0 && arrow_size != 0)
+    double arrowAngle;
+
+    if (outsideArrow)
     {
-        // do we have to put the arrow / text outside of the arc?
-        outsideArrow = (length < arrow_size*2+textWidth);
-        double arrowAngle;
+        length += (arrow_size * 2) + textWidth;
+        arrowAngle = angle + M_PI;
+    }
+    else
+    {
+        arrowAngle = angle;
+    }
 
-        if (outsideArrow) {
-            length += arrow_size*2 + textWidth;
-            arrowAngle = angle+M_PI;
-        } else {
-            arrowAngle = angle;
-        }
-
+    if ((getTickSize() * getGeneralScale()) < 0.01)
+    {
         // create arrow:
         RS_SolidData sd;
         RS_Solid* arrow;
@@ -192,6 +193,17 @@ void RS_DimRadial::updateDim(bool autoText) {
         arrow->setPen(pen);
         arrow->setLayer(nullptr);
         addEntity(arrow);
+    }
+    else
+    {
+        RS_Line* tick;
+        RS_Vector tickVector = RS_Vector::polar( getTickSize() * dimscale, 
+                                                 arrowAngle + (M_PI_2 / 2.0));
+
+        tick = new RS_Line(this, p2 - tickVector, p2 + tickVector);
+        tick->setPen(pen);
+        tick->setLayer(nullptr);
+        addEntity(tick);
     }
 
 	RS_Vector p3 = RS_Vector::polar(length, angle);
