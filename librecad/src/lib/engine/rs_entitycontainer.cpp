@@ -1679,10 +1679,12 @@ void RS_EntityContainer::move(const RS_Vector& offset) {
         e->move(offset);
         if (autoUpdateBorders) {
             e->moveBorders(offset);
+            e->calculateBorders();
         }
     }
     if (autoUpdateBorders) {
         moveBorders(offset);
+        calculateBorders();
     }
 }
 
