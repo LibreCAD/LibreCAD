@@ -20,13 +20,18 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#ifndef RS_ACTIONDRAWCIRCLETAN2_1P_H
-#define RS_ACTIONDRAWCIRCLETAN2_1P_H
+
+#pragma once
+
 
 #include "rs_previewactioninterface.h"
 
+
+class RS_Line;
 class RS_AtomicEntity;
+
 struct RS_CircleData;
+
 
 /**
  * Given two circles and a point, draw a common tangent circle passing the point
@@ -76,6 +81,7 @@ private:
 
     //list of entity types supported by current action
     const EntityTypeList enTypeList = EntityTypeList {RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
+
+    RS_Line *lineEntity;
 };
 
-#endif

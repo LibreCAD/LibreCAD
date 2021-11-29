@@ -28,6 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_arc.h"
+#include "rs_line.h"
 #include "rs_circle.h"
 #include "lc_quadratic.h"
 #include "rs_coordinateevent.h"
@@ -56,6 +57,7 @@ RS_ActionDrawCircleTan2_1P::RS_ActionDrawCircleTan2_1P(
     :RS_PreviewActionInterface("Draw tangent circle 2P",
 							   container, graphicView)
 	, pPoints(new Points{})
+    , lineEntity(nullptr)
 {
 	actionType=RS2::ActionDrawCircleTan2_1P;
 }
@@ -171,12 +173,76 @@ void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawCircleTan2_1P::mouseMoveEvent end");
 }
 
-bool RS_ActionDrawCircleTan2_1P::preparePreview(){
+
+/*
+    In case of a line and a circle, calculates and checks for tangency between the two.
+
+    Edited by Melwyn Francis Carlo.
+*/
+bool RS_ActionDrawCircleTan2_1P::preparePreview()
+{
 	if (!getCenters()) return false;
+
 	pPoints->cData.center=pPoints->centers.getClosest(pPoints->coord);
 	pPoints->cData.radius=pPoints->point.distanceTo(pPoints->cData.center);
+
+    lineEntity = nullptr;
+
+    for(auto e : pPoints->circles)
+    {
+        if (e->rtti() == RS2::EntityLine)
+        {
+            lineEntity = (RS_Line *) e;
+            break;
+        }
+    }
+
+    if (lineEntity != nullptr)
+    {
+        /* Coefficients of a line equation. */
+        double A, B, C;
+
+        const double p = pPoints->cData.center.x;
+        const double q = pPoints->cData.center.x;
+        const double r = pPoints->cData.radius;
+
+        /* A perfectly vertical line. */
+        if (lineEntity->getStartpoint().x == lineEntity->getEndpoint().x)
+        {
+            /* X-intercept of a line. */
+            const double k = lineEntity->getStartpoint().x;
+
+            A = 1.0;
+
+            B = -2.0 * q;
+
+            C = (k * k) + (p * p) + (q * q) - (r * r) - (2.0 * k * p);
+        }
+        else
+        {
+            /* Slope of a line. */
+            const double m = (lineEntity->getEndpoint().y - lineEntity->getStartpoint().y) 
+                           / (lineEntity->getEndpoint().x - lineEntity->getStartpoint().x);
+
+            /* Y-intercept of a line. */
+            const double c =  lineEntity->getStartpoint().y 
+                           - (lineEntity->getStartpoint().x * m);
+
+            A = (m * m) + 1.0;
+
+            B = 2.0 * ((m * (c - q)) - p);
+
+            C = (c * c) + (p * p) + (q * q) - (r * r) - (2.0 * c * q);
+        }
+
+        const double discriminant_sqrt_term = (B * B) - (4.0 * A * C);
+
+        if (fabs(discriminant_sqrt_term) > RS_TOLERANCE) return false;
+    }
+
     return true;
 }
+
 
 RS_Entity* RS_ActionDrawCircleTan2_1P::catchCircle(QMouseEvent* e) {
 	RS_Entity* ret=nullptr;
@@ -243,11 +309,18 @@ void RS_ActionDrawCircleTan2_1P::coordinateEvent(RS_CoordinateEvent* e) {
     case SetPoint:
 		pPoints->point=mouse;
 		pPoints->coord=mouse;
-        if(getCenters()) {
-			if(pPoints->centers.size()==1) trigger();
-            else setStatus(getStatus()+1);
+        if(getCenters())
+        {
+		    if (pPoints->centers.size() == 1)
+            {
+                if (lineEntity == nullptr) trigger();
+            }
+            else
+            {
+                setStatus(getStatus() + 1);
+            }
         }
-        break;
+
         default:
         break;
 //    case SetCenter:
