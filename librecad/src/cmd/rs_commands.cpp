@@ -588,6 +588,7 @@ RS_Commands::RS_Commands() {
         {"chord length",QObject::tr("chord length")},
         {"columns",QObject::tr("columns")},
         {"columnspacing",QObject::tr("columnspacing")},
+        {"equation",QObject::tr("equation")},
         {"factor",QObject::tr("factor")},
         {"length",QObject::tr("length")},
         {"length1",QObject::tr("length1", "bevel/fillet length1")},
@@ -628,6 +629,10 @@ RS_Commands::RS_Commands() {
         {QObject::tr("factor"),"factor"},
         {QObject::tr("fact", "factor"),"factor"},
         {QObject::tr("f", "factor"),"factor"},
+
+        {QObject::tr("equation"),"equation"},
+        {QObject::tr("eqn", "equation"),"equation"},
+        {QObject::tr("eq", "equation"),"equation"},
 
         {QObject::tr("help"),"help"},
         {QObject::tr("?", "help"),"help"},
